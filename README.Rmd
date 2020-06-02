@@ -1,0 +1,63 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# MiscMetabar
+
+The goal of MiscMetabar is to complete the great package dada2 and phyloseq. 
+
+## Installation
+
+There is no CRAN version of MiscMetabar for now.
+
+You can install the development version from [GitHub](https://github.com/) with:
+
+```{r installation}
+# install.packages("devtools")
+devtools::install_github("adrientaudiere/MiscMetabar")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+### Summarize a physeq object
+
+```{r example}
+library("MiscMetabar")
+library("phyloseq")
+data("esophagus")
+summary_plot_phyloseq(esophagus)
+```
+
+### Create an interactive table of the tax_table
+
+```{r}
+data("GlobalPatterns")
+tax_datatable(subset_taxa(GlobalPatterns,
+             rowSums(GlobalPatterns@otu_table)>100000))
+```
+
+### Sankey diagramme of the tax_table
+
+```{r}
+GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[,1] == "Archaea")
+sankey_phyloseq(GP, taxa = c(1:5))
+```
+
+### Circle for visualise distribution of taxa in function of samples variables
+
+```{r}
+otu_circle(GP, 'SampleType', taxa = "Class")
+```
