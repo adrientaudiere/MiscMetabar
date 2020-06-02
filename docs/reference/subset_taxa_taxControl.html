@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Subset taxa using a taxa control (e.g. truffle root tips) through 3 methods. — subset_taxa_taxControl • MiscMetabar</title>
+<title>Subset taxa using a taxa control (e.g. truffle root tips) through 3 methods. — subset_taxa_tax_control • MiscMetabar</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="Subset taxa using a taxa control (e.g. truffle root tips) through 3 methods. — subset_taxa_taxControl" />
+<meta property="og:title" content="Subset taxa using a taxa control (e.g. truffle root tips) through 3 methods. — subset_taxa_tax_control" />
 <meta property="og:description" content="Subset taxa using a taxa control (e.g. truffle root tips) through 3 methods." />
 
 
@@ -89,7 +89,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/adrientaudiere/MiscMetabar/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -104,15 +109,15 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Subset taxa using a taxa control (e.g. truffle root tips) through 3 methods.</h1>
-    
-    <div class="hidden name"><code>subset_taxa_taxControl.Rd</code></div>
+    <small class="dont-index">Source: <a href='https://github.com/adrientaudiere/MiscMetabar/blob/master/R/controls.R'><code>R/controls.R</code></a></small>
+    <div class="hidden name"><code>subset_taxa_tax_control.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>Subset taxa using a taxa control (e.g. truffle root tips) through 3 methods.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>subset_taxa_taxControl</span>(
+    <pre class="usage"><span class='fu'>subset_taxa_tax_control</span>(
   <span class='no'>physeq</span>,
   <span class='no'>taxa_distri</span>,
   <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
@@ -133,16 +138,16 @@
     <tr>
       <th>method</th>
       <td><p>(default = "mean"): a method to calculate the cut-off value. There is 6 methods:
-(i) cutoffSeq: discard taxa with less than the number of sequence than taxa control,
-(ii) cutoffMixt: using mixture models,
-(iii) cutoffDiff: using a minimum difference threshold (need the argument min_diff_for_cutoff)
+(i) cutoff_seq: discard taxa with less than the number of sequence than taxa control,
+(ii) cutoff_mixt: using mixture models,
+(iii) cutoff_diff: using a minimum difference threshold (need the argument min_diff_for_cutoff)
 (iv) min: the minimum of the three firsts methods
 (v) max: the maximum of the three firsts methods
 (vi) mean: the mean of the three firsts methods</p></td>
     </tr>
     <tr>
       <th>min_diff_for_cutoff</th>
-      <td><p>(default = 10): argument for method cutoffDiff</p></td>
+      <td><p>(default = 10): argument for method cutoff_diff</p></td>
     </tr>
     </table>
 

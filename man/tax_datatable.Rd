@@ -14,10 +14,15 @@ tax_datatable(physeq, abundance = TRUE, ...)
 \item{...}{Other argument for the datatable function}
 }
 \value{
-a datatable
+A datatable
 }
 \description{
 Make a datatable with the taxonomy of a \code{\link{phyloseq-class}} object
+}
+\examples{
+data("GlobalPatterns")
+tax_datatable(subset_taxa(GlobalPatterns,
+              rowSums(GlobalPatterns@otu_table)>10000))
 }
 \author{
 Adrien Taudière

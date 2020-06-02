@@ -4,7 +4,7 @@
 \alias{venn_phyloseq}
 \title{Venn diagram of \code{\link{phyloseq-class}} object}
 \usage{
-venn_phyloseq(physeq, fact, min.nb.seq = 0, printValues = TRUE)
+venn_phyloseq(physeq, fact, min_nb_seq = 0, print_values = TRUE)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
@@ -12,21 +12,26 @@ venn_phyloseq(physeq, fact, min.nb.seq = 0, printValues = TRUE)
 \item{fact}{(required): Name of the factor to cluster samples by modalities.
 Need to be in \code{physeq@sam_data}.}
 
-\item{min.nb.seq}{(Default: 0)): minimum number of sequences by OTUs by samples
-to take into count this OTUs in this sample. For example, if min.nb.seq=2, each value of 2 or less in the OTU table
+\item{min_nb_seq}{(Default: 0)): minimum number of sequences by OTUs by
+samples to take into count this OTUs in this sample. For example,
+if min_nb_seq=2,each value of 2 or less in the OTU table
 will be change into 0 for the analysis}
 
-\item{printValues}{(logical) : Print (or not) the table of number of OTUs
-for each combination. If printValues is TRUE the object is not a ggplot object.
-Please use printValues = FALSE if you want to add ggplot function (cf example).
+\item{print_values}{(logical) : Print (or not) the table of number of OTUs
+for each combination.
+If print_values is TRUE the object is not a ggplot object.
+Please use print_values = FALSE if you want to add ggplot function
+(cf example).
 
 
 data("enterotype")
 venn_phyloseq(enterotype, fact = 'SeqTech')
 venn_phyloseq(enterotype, fact = 'ClinicalStatus')
-venn_phyloseq(enterotype, fact = 'Nationality', printValues = F)
-venn_phyloseq(enterotype, fact = 'ClinicalStatus', printValues = F) + scale_fill_hue()
-venn_phyloseq(enterotype, fact = 'ClinicalStatus', printValues = F) + scale_fill_hue()}
+venn_phyloseq(enterotype, fact = 'Nationality', print_values = F)
+venn_phyloseq(enterotype, fact = 'ClinicalStatus', print_values = F) +
+scale_fill_hue()
+venn_phyloseq(enterotype, fact = 'ClinicalStatus', print_values = F) +
+scale_fill_hue()}
 }
 \value{
 A \code{\link{ggplot}}2 plot representing Venn diagramm of

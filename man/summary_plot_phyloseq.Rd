@@ -15,3 +15,7 @@ A ggplot2 object
 \description{
 Summarise a \code{\link{phyloseq-class}} object using a plot.
 }
+\examples{
+  data(esophagus)
+  summary_plot_phyloseq(esophagus)
+}

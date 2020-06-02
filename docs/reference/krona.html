@@ -89,7 +89,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/adrientaudiere/MiscMetabar/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -104,7 +109,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Make Krona files</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/adrientaudiere/MiscMetabar/blob/master/R/krona.R'><code>R/krona.R</code></a></small>
     <div class="hidden name"><code>krona.Rd</code></div>
     </div>
 
@@ -115,7 +120,7 @@
     <pre class="usage"><span class='fu'>krona</span>(
   <span class='no'>physeq</span>,
   <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"krona.html"</span>,
-  <span class='kw'>nbSeq</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>nb_seq</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>ranks</span> <span class='kw'>=</span> <span class='st'>"All"</span>,
   <span class='kw'>add_unassigned_rank</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
@@ -133,7 +138,7 @@
       <td><p>(required): the location of the html file to save</p></td>
     </tr>
     <tr>
-      <th>nbSeq</th>
+      <th>nb_seq</th>
       <td><p>(logical, default to TRUE): If true, Krona set the distribution
 of sequences in the taxonomy. If False, Krona set the distribution of OTUs
 in the taxonomy.</p></td>
@@ -155,7 +160,7 @@ dataset when merge using merge_krona</p>
 <p>data("GlobalPatterns")
 GlobalPatterns_Acidobacter &lt;- subset_taxa(GlobalPatterns, Phylum=="Acidobacteria")
 krona(GlobalPatterns_Acidobacter, "Number.of.sequences.html")
-krona(GlobalPatterns_Acidobacter, "Number.of.OTUs.html", nbSeq = F)
+krona(GlobalPatterns_Acidobacter, "Number.of.OTUs.html", nb_seq = F)
 merge_krona(c("Number.of.sequences.html", "Number.of.OTUs.html"))</p></td>
     </tr>
     </table>

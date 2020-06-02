@@ -17,9 +17,12 @@ A ggplot2 object
 \description{
 Calculate hill number and compute Tuckey post-hoc test
 }
+\examples{
+data("GlobalPatterns")
+GlobalPatterns@sam_data[,'Soil_logical'] <-
+ ifelse(GlobalPatterns@sam_data[,"SampleType"] == "Soil", "Soil", "Not Soil")
+hill_tuckey_phyloseq(GlobalPatterns, "Soil_logical")
+}
 \author{
 Adrien Taudière
-data("GlobalPatterns")
-GlobalPatterns@sam_data[,'Soil_logical'] <- ifelse(GlobalPatterns@sam_data[,"SampleType"] == "Soil", "Soil", "Not Soil")
-hill_tuckey_phyloseq(GlobalPatterns, "Soil_logical")
 }

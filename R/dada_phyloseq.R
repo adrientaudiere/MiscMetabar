@@ -28,11 +28,13 @@ add_dna_to_phyloseq <- function(physeq) {
 #' Track the number of reads (= sequences), samples and cluster (e.g. ASV)
 #' from various objects including dada-class and derep-class.
 #'
-#'  - List of fastq and fastg.gz files -> nb of reads and samples
-#'  - List of dada-class -> nb of reads, clusters (ASV) and samples
-#'  - List of derep-class -> nb of reads, clusters (unique sequences) and samples
-#'  - Matrix of samples x clusters (e.g. otu_table) -> nb of reads, clusters and samples
-#'  - Phyloseq-class -> nb of reads, clusters and samples
+#'  * List of fastq and fastg.gz files -> nb of reads and samples
+#'  * List of dada-class -> nb of reads, clusters (ASV) and samples
+#'  * List of derep-class -> nb of reads, clusters (unique sequences)
+#'    and samples
+#'  * Matrix of samples x clusters (e.g. otu_table) -> nb of reads,
+#'    clusters and samples
+#'  * Phyloseq-class -> nb of reads, clusters and samples
 #'
 #' @param list_of_objects (required): A list of objects
 #' @param obj_names (default: NULL) :
@@ -200,7 +202,7 @@ asv2otu <- function(physeq,
   } else if (method == "vsearch") {
     Biostrings::writeXStringSet(dna, "temp.fasta")
 
-    A <-
+    cmd <-
       system2(
         vsearchpath,
         paste(
@@ -217,8 +219,8 @@ asv2otu <- function(physeq,
     vsearch_cluster_dna <-
       Biostrings::readDNAStringSet("cluster.fasta")
 
-    packClusts <- utils::read.table("temp.uc", sep = "\t")
-    colnames(packClusts) <-
+    pack_clusts <- utils::read.table("temp.uc", sep = "\t")
+    colnames(pack_clusts) <-
       c(
         "type",
         "cluster",
@@ -232,10 +234,13 @@ asv2otu <- function(physeq,
         "target"
       )
 
-    clusters <- packClusts$cluster
+    clusters <- pack_clusts$cluster
     clusters <-
-      tapply(clusters, paste(packClusts$cluster, packClusts$query), function(x)
-        x[1])
+      tapply(clusters, paste(pack_clusts$cluster, pack_clusts$query),
+             function(x) {
+               x[1]
+             }
+      )
 
     new_phyloseq <-
       speedyseq::merge_taxa_vec(physeq,
@@ -279,12 +284,12 @@ vsearch_search_global <- function(physeq,
 
   Biostrings::writeXStringSet(dna, "temp.fasta")
 
-  A <- system2(
+  cmd <- system2(
     vsearchpath,
     paste(
       " --usearch_global ",
       here::here("temp.fasta"),
-      " --db " ,
+      " --db ",
       here::here(seq2search),
       " --uc",
       " temp.uc",
@@ -298,8 +303,8 @@ vsearch_search_global <- function(physeq,
     )
   )
 
-  packClusts <- utils::read.table("temp.uc", sep = "\t")
-  colnames(packClusts) <- c(
+  pack_clusts <- utils::read.table("temp.uc", sep = "\t")
+  colnames(pack_clusts) <- c(
     "type",
     "cluster",
     "width",
@@ -312,7 +317,7 @@ vsearch_search_global <- function(physeq,
     "target"
   )
 
-  return(invisible(packClusts))
+  return(invisible(pack_clusts))
 
   if (file.exists("temp.fasta")) {
     file.remove("temp.fasta")

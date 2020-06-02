@@ -89,7 +89,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/adrientaudiere/MiscMetabar/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -104,7 +109,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot OTU circle for <code>phyloseq-class</code> object</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/adrientaudiere/MiscMetabar/blob/master/R/plot_functions.R'><code>R/plot_functions.R</code></a></small>
     <div class="hidden name"><code>otu_circle.Rd</code></div>
     </div>
 
@@ -116,10 +121,10 @@
   <span class='kw'>physeq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>fact</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>taxa</span> <span class='kw'>=</span> <span class='st'>"Order"</span>,
-  <span class='kw'>nbSeq</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>nb_seq</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>rarefy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>min.prop.tax</span> <span class='kw'>=</span> <span class='fl'>0.01</span>,
-  <span class='kw'>min.prop.mod</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
+  <span class='kw'>min_prop_tax</span> <span class='kw'>=</span> <span class='fl'>0.01</span>,
+  <span class='kw'>min_prop_mod</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
   <span class='kw'>gap.degree</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>start.degree</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>row.col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -144,19 +149,19 @@
       <td><p>(Default:'Order'): Name of the taxonomic rank of interest</p></td>
     </tr>
     <tr>
-      <th>nbSeq</th>
-      <td><p>(Default: TRUE): Represent the number of sequences or the number of OTUs (nbSeq = FALSE)</p></td>
+      <th>nb_seq</th>
+      <td><p>(Default: TRUE): Represent the number of sequences or the number of OTUs (nb_seq = FALSE)</p></td>
     </tr>
     <tr>
       <th>rarefy</th>
       <td><p>(logical): Does each samples modalities need to be rarefy in order to compare them with the same amount of sequences?</p></td>
     </tr>
     <tr>
-      <th>min.prop.tax</th>
+      <th>min_prop_tax</th>
       <td><p>(Default: 0.01): The minimum proportion for taxon to be ploted</p></td>
     </tr>
     <tr>
-      <th>min.prop.mod</th>
+      <th>min_prop_mod</th>
       <td><p>(Default: 0.1) : The minimum proportion for modalities to be ploted</p></td>
     </tr>
     <tr>

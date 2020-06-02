@@ -15,7 +15,7 @@ plot_mt(mt = NULL, alpha = 0.05, color_tax = "Class", taxa = "Species")
 
 \item{taxa}{: The taxonomic level choose for x-positioning
 data("GlobalPatterns")
-res = mt(GlobalPatterns, "SampleType", test="f")
+res <- mt(GlobalPatterns, "SampleType", test="f")
 plot_mt(res, color_tax = "Phylum") + scale_color_hue()}
 }
 \value{

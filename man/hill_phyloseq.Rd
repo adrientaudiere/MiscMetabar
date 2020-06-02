@@ -15,10 +15,13 @@ hill_phyloseq(physeq, variable, color_fac)
 }
 \value{
 A list of 4 ggplot2 plot.
-  - plot_Hill_0 : the boxplot of Hill number 0 (= species richness) against the variable
-  - plot_Hill_1 : the boxplot of Hill number 1 (= Shannon index) against the variable
-  - plot_Hill_2 : the boxplot of Hill number 2 (= Simpson index) against the variable
-  - plot_tuckey : plot the result of the Tuckey HSD test
+  * plot_Hill_0 : the boxplot of Hill number 0 (= species richness)
+    against the variable
+  * plot_Hill_1 : the boxplot of Hill number 1 (= Shannon index)
+     against the variable
+  * plot_Hill_2 : the boxplot of Hill number 2 (= Simpson index)
+    against the variable
+  * plot_tuckey : plot the result of the Tuckey HSD test
 }
 \description{
 Graphical representation of hill number 0, 1 and 2 accross a factor

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Transform the otu_table of a <code>phyloseq-class</code> object into a <code>phyloseq-class</code> object
-with à binary otu_table. — as.binaryOtuTable • MiscMetabar</title>
+with à binary otu_table. — as_binary_otu_table • MiscMetabar</title>
 
 
 <!-- jquery -->
@@ -41,7 +41,7 @@ with à binary otu_table. — as.binaryOtuTable • MiscMetabar</title>
 
 
 <meta property="og:title" content="Transform the otu_table of a <code>phyloseq-class</code> object into a <code>phyloseq-class</code> object
-with à binary otu_table. — as.binaryOtuTable" />
+with à binary otu_table. — as_binary_otu_table" />
 <meta property="og:description" content="Transform the otu_table of a phyloseq-class object into a phyloseq-class object
 with à binary otu_table." />
 
@@ -92,7 +92,12 @@ with à binary otu_table." />
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/adrientaudiere/MiscMetabar/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -108,8 +113,8 @@ with à binary otu_table." />
     <div class="page-header">
     <h1>Transform the otu_table of a <code>phyloseq-class</code> object into a <code>phyloseq-class</code> object
 with à binary otu_table.</h1>
-    
-    <div class="hidden name"><code>as.binaryOtuTable.Rd</code></div>
+    <small class="dont-index">Source: <a href='https://github.com/adrientaudiere/MiscMetabar/blob/master/R/miscellanous.R'><code>R/miscellanous.R</code></a></small>
+    <div class="hidden name"><code>as_binary_otu_table.Rd</code></div>
     </div>
 
     <div class="ref-description">
@@ -117,7 +122,7 @@ with à binary otu_table.</h1>
 with à binary otu_table.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>as.binaryOtuTable</span>(<span class='no'>physeq</span>, <span class='kw'>minNumber</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+    <pre class="usage"><span class='fu'>as_binary_otu_table</span>(<span class='no'>physeq</span>, <span class='kw'>minNumber</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -137,7 +142,7 @@ a 1 in the otu table.</p></td>
 
     <p>A <code>physeq</code> object with only 0/1 in the OTU table</p>
 <p>data(enterotype)
-#enterotype.bin &lt;- as.binaryOtuTable(enterotype)</p>
+#enterotype.bin &lt;- as_binary_otu_table(enterotype)</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Usefull to test if the results are not biaised by sequences bias that appended during PCR or NGS pipeline.</p>

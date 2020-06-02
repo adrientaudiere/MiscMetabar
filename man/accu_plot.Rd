@@ -7,53 +7,62 @@
 accu_plot(
   physeq,
   fact = NULL,
-  nbSeq = TRUE,
+  nb_seq = TRUE,
   step = NULL,
   by.fact = FALSE,
-  ci.col = NULL,
+  ci_col = NULL,
   col = NULL,
   lwd = 3,
   leg = TRUE,
-  printSamplesNames = FALSE,
-  CI = 2,
+  print_sam_names = FALSE,
+  ci = 2,
   ...
 )
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
 
-\item{fact}{(required): Name of the factor in physeq@sam_data used to plot different lines}
+\item{fact}{(required): Name of the factor in physeq@sam_data used to plot
+different lines}
 
-\item{nbSeq}{(logical): Either plot accumulation curves using sequences or using samples}
+\item{nb_seq}{(logical): Either plot accumulation curves using sequences or
+using samples}
 
 \item{step}{(integer): distance among points calculated to plot lines. A
-low value give better plot but is more time consuming. Only use if nbSeq = TRUE}
+low value give better plot but is more time consuming.
+Only used if nb_seq = TRUE.}
 
-\item{by.fact}{(logical): First merge the OTU table by factor to plot only one line by factor}
+\item{by.fact}{(logical): First merge the OTU table by factor to plot only
+one line by factor}
 
-\item{ci.col}{: Color vector for confidence intervall. Only use if nbSeq = FALSE. If nbSeq = TRUE, you can use ggplot to cange plot.}
+\item{ci_col}{: Color vector for confidence intervall.
+Only use if nb_seq = FALSE.
+If nb_seq = TRUE, you can use ggplot to modify the plot.}
 
-\item{col}{: Color vector for lines. Only use if nbSeq = FALSE. If nbSeq = TRUE, you can use ggplot to change plot.}
+\item{col}{: Color vector for lines. Only use if nb_seq = FALSE.
+If nb_seq = TRUE, you can use ggplot to modify the plot.}
 
-\item{lwd}{(default = 3): thickness for lines. Only use if nbSeq = FALSE. If nbSeq = TRUE, you can use ggplot to cange plot.}
+\item{lwd}{(default = 3): thickness for lines. Only use if nb_seq = FALSE.}
 
-\item{leg}{(logical): Plot legend or not. Only use if nbSeq = FALSE. If nbSeq = TRUE, you can use ggplot to cange plot.}
+\item{leg}{(logical): Plot legend or not. Only use if nb_seq = FALSE.}
 
-\item{printSamplesNames}{(logical): Print samples names or not? Only use if nbSeq = TRUE.}
+\item{print_sam_names}{(logical): Print samples names or not?
+Only use if nb_seq = TRUE.}
 
-\item{CI}{(default = 2) : Confidence intervall value used to multiply the standard error to plot confidence intervall}
+\item{ci}{(default = 2) : Confidence intervall value used to multiply the
+standard error to plot confidence intervall}
 
-\item{...}{Additional arguments passed on to \code{\link{ggplot}} if nbSeq = TRUE
-or \code{\link{plot}} if nbSeq = FALSE
+\item{...}{Additional arguments passed on to \code{\link{ggplot}}
+if nb_seq = TRUE or to \code{\link{plot}} if nb_seq = FALSE
 
 data("GlobalPatterns")
-GlobalPatterns_Archaea <- subset_taxa(GlobalPatterns,
- GlobalPatterns@tax_table[, 1] == 'Archaea')
-accu_plot(GlobalPatterns_Archaea, 'SampleType', nbSeq = TRUE, by.fact = TRUE)}
+GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == 'Archaea')
+accu_plot(GP, 'SampleType', nb_seq = TRUE,
+ by.fact = TRUE)}
 }
 \value{
 A \code{\link{ggplot}}2 plot representing the richness
-accumulation plot if nbSeq = TRUE, else, if nbSeq = FALSE
+accumulation plot if nb_seq = TRUE, else, if nb_seq = FALSE
 return a base plot.
 }
 \description{

@@ -89,7 +89,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/adrientaudiere/MiscMetabar/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -104,7 +109,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Venn diagram of <code>phyloseq-class</code> object</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/adrientaudiere/MiscMetabar/blob/master/R/plot_functions.R'><code>R/plot_functions.R</code></a></small>
     <div class="hidden name"><code>venn_phyloseq.Rd</code></div>
     </div>
 
@@ -112,7 +117,7 @@
     <p>Venn diagram of <code>phyloseq-class</code> object</p>
     </div>
 
-    <pre class="usage"><span class='fu'>venn_phyloseq</span>(<span class='no'>physeq</span>, <span class='no'>fact</span>, <span class='kw'>min.nb.seq</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>printValues</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>venn_phyloseq</span>(<span class='no'>physeq</span>, <span class='no'>fact</span>, <span class='kw'>min_nb_seq</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>print_values</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -127,23 +132,23 @@
 Need to be in <code>physeq@sam_data</code>.</p></td>
     </tr>
     <tr>
-      <th>min.nb.seq</th>
+      <th>min_nb_seq</th>
       <td><p>(Default: 0)): minimum number of sequences by OTUs by samples
-to take into count this OTUs in this sample. For example, if min.nb.seq=2, each value of 2 or less in the OTU table
+to take into count this OTUs in this sample. For example, if min_nb_seq=2, each value of 2 or less in the OTU table
 will be change into 0 for the analysis</p></td>
     </tr>
     <tr>
-      <th>printValues</th>
+      <th>print_values</th>
       <td><p>(logical) : Print (or not) the table of number of OTUs
-for each combination. If printValues is TRUE the object is not a ggplot object.
-Please use printValues = FALSE if you want to add ggplot function (cf example).</p>
+for each combination. If print_values is TRUE the object is not a ggplot object.
+Please use print_values = FALSE if you want to add ggplot function (cf example).</p>
 
 <p>data("enterotype")
 venn_phyloseq(enterotype, fact = 'SeqTech')
 venn_phyloseq(enterotype, fact = 'ClinicalStatus')
-venn_phyloseq(enterotype, fact = 'Nationality', printValues = F)
-venn_phyloseq(enterotype, fact = 'ClinicalStatus', printValues = F) + scale_fill_hue()
-venn_phyloseq(enterotype, fact = 'ClinicalStatus', printValues = F) + scale_fill_hue()</p></td>
+venn_phyloseq(enterotype, fact = 'Nationality', print_values = F)
+venn_phyloseq(enterotype, fact = 'ClinicalStatus', print_values = F) + scale_fill_hue()
+venn_phyloseq(enterotype, fact = 'ClinicalStatus', print_values = F) + scale_fill_hue()</p></td>
     </tr>
     </table>
 

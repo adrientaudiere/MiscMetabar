@@ -8,14 +8,14 @@ otu_circle(
   physeq = NULL,
   fact = NULL,
   taxa = "Order",
-  nbSeq = TRUE,
+  nb_seq = TRUE,
   rarefy = FALSE,
-  min.prop.tax = 0.01,
-  min.prop.mod = 0.1,
-  gap.degree = NULL,
-  start.degree = NULL,
-  row.col = NULL,
-  grid.col = NULL,
+  min_prop_tax = 0.01,
+  min_prop_mod = 0.1,
+  gap_degree = NULL,
+  start_degree = NULL,
+  row_col = NULL,
+  grid_col = NULL,
   log10trans = F,
   ...
 )
@@ -23,40 +23,60 @@ otu_circle(
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
 
-\item{fact}{(required): Name of the factor to cluster samples by modalities. Need to be in \code{physeq@sam_data}.}
+\item{fact}{(required): Name of the factor to cluster samples by modalities.
+Need to be in \code{physeq@sam_data}.}
 
 \item{taxa}{(Default:'Order'): Name of the taxonomic rank of interest}
 
-\item{nbSeq}{(Default: TRUE): Represent the number of sequences or the number of OTUs (nbSeq = FALSE)}
+\item{nb_seq}{(Default: TRUE): Represent the number of sequences or the
+number of OTUs (nb_seq = FALSE)}
 
-\item{rarefy}{(logical): Does each samples modalities need to be rarefy in order to compare them with the same amount of sequences?}
+\item{rarefy}{(logical): Does each samples modalities need to be rarefy in
+order to compare them with the same amount of sequences?}
 
-\item{min.prop.tax}{(Default: 0.01): The minimum proportion for taxon to be ploted}
+\item{min_prop_tax}{(Default: 0.01): The minimum proportion for taxon to be
+ploted}
 
-\item{min.prop.mod}{(Default: 0.1) : The minimum proportion for modalities to be ploted}
+\item{min_prop_mod}{(Default: 0.1) : The minimum proportion for modalities
+to be ploted}
 
-\item{gap.degree}{: Gap between two neighbour sectors. It can be a single value or a vector. If it is a vector, the first value corresponds to the gap after the first sector.}
+\item{gap_degree}{: Gap between two neighbour sectors.
+It can be a single value or a vector. If it is a vector,
+ the first value corresponds to the gap after the first
+ sector.}
 
-\item{start.degree}{: The starting degree from which the circle begins to draw. Note this degree is measured in the standard polar coordinate which means it is always reverse-clockwise.}
+\item{start_degree}{: The starting degree from which the circle begins to
+draw. Note this degree is measured in the standard polar coordinate
+which means it is always reverse-clockwise.}
 
-\item{row.col}{: Color vector for row}
+\item{row_col}{: Color vector for row}
 
-\item{grid.col}{: Grid colors which correspond to sectors. The length of the vector should be either 1 or the number of sectors. It's preferred that grid.col is a named vector of which names correspond to sectors. If it is not a named vector, the order of grid.col corresponds to order of sectors.}
+\item{grid_col}{: Grid colors which correspond to sectors. The length of the
+vector should be either 1 or the number of sectors.
+It's preferred that grid_col is a named vector of which names
+correspond to sectors. If it is not a named vector, the
+order of grid_col corresponds to order of sectors.}
 
-\item{log10trans}{(logical): Should sequence be log10 transformed (more precisely by log10(1+x))?}
+\item{log10trans}{(logical): Should sequence be log10 transformed
+(more precisely by log10(1+x))?}
 
-\item{...}{Additional arguments passed on to \code{\link[circlize]{chordDiagram}} or \code{\link[circlize]{circos.par}}
-
-data("GlobalPatterns")
-# GlobalPatterns_Archaea <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == 'Archaea')
-# otu_circle(GlobalPatterns_Archaea, 'SampleType')}
+\item{...}{Additional arguments passed on to
+\code{\link[circlize]{chordDiagram}} or \code{\link[circlize]{circos.par}}}
 }
 \value{
-A \code{\link[circlize]{chordDiagram}} plot representing the distribution
-of OTUs or sequences in the different modalities of the factor fact
+A \code{\link[circlize]{chordDiagram}} plot representing the
+  distribution of OTUs or sequences in the different modalities of the factor
+  fact
 }
 \description{
 Plot OTU circle for \code{\link{phyloseq-class}} object
+}
+\examples{
+data("GlobalPatterns")
+GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == 'Archaea')
+otu_circle(GP, 'SampleType')
+otu_circle(GP, 'SampleType', nb_seq = FALSE)
+otu_circle(GP, 'SampleType', taxa = "Class")
 }
 \seealso{
 \code{\link[circlize]{chordDiagram}}
