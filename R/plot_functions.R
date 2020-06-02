@@ -629,7 +629,7 @@ sankey_phyloseq <-
       data.frame((seq_len(length(names_nodes))) - 1, names_nodes)
     names(tax_sank$nodes) <- c("code", "name")
     mat2 <- mat
-    for (i in seq_len(tax_sank$nodes)) {
+    for (i in seq_len(nrow(tax_sank$nodes))) {
       mat2[, 1] <-
         gsub(paste("\\<", tax_sank$nodes[i, 2], "\\>", sep = ""),
              tax_sank$nodes[i,
