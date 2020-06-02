@@ -9,7 +9,8 @@
 #'
 #' @author Adrien Taudière
 #' data("GlobalPatterns")
-#' GlobalPatterns@sam_data[,'Soil_logical'] <- ifelse(GlobalPatterns@sam_data[,"SampleType"] == "Soil", "Soil", "Not Soil")
+#' GlobalPatterns@sam_data[,'Soil_logical'] <-
+#'  ifelse(GlobalPatterns@sam_data[,"SampleType"] == "Soil", "Soil", "Not Soil")
 #' hill_tuckey_phyloseq(GlobalPatterns, "Soil_logical")
 
 hill_tuckey_phyloseq <- function(physeq, modality) {
@@ -19,28 +20,23 @@ hill_tuckey_phyloseq <- function(physeq, modality) {
   if (length(modality_vector) != dim(physeq@otu_table)[2]) {
     physeq@otu_table <- t(physeq@otu_table)
   }
-  read_numbers = apply(physeq@otu_table, 2, sum)
+  read_numbers <- apply(physeq@otu_table, 2, sum)
 
-  otuHill <-
+  otu_hill <-
     renyi(t(physeq@otu_table),
           scale = c(0, 1, 2),
           hill = T)
 
-  hill.1 = otuHill$"0"
-  hill.2 = otuHill$"1"
-  hill.3 = otuHill$"2"
-
-
-  hill.1.m1 = lm(hill.1 ~ sqrt(read_numbers) + modality_vector)
-  hill.2.m1 = lm(hill.2 ~ sqrt(read_numbers) + modality_vector)
-  hill.3.m1 = lm(hill.3 ~ sqrt(read_numbers) + modality_vector)
+  hill_1 <- otu_hill$"0"
+  hill_2 <- otu_hill$"1"
+  hill_3 <- otu_hill$"2"
 
   tuk1 <-
-    TukeyHSD(aov(lm(hill.1 ~ sqrt(read_numbers))$residuals ~ modality_vector))
+    TukeyHSD(aov(lm(hill_1 ~ sqrt(read_numbers))$residuals ~ modality_vector))
   tuk2 <-
-    TukeyHSD(aov(lm(hill.2 ~ sqrt(read_numbers))$residuals ~ modality_vector))
+    TukeyHSD(aov(lm(hill_2 ~ sqrt(read_numbers))$residuals ~ modality_vector))
   tuk3 <-
-    TukeyHSD(aov(lm(hill.3 ~ sqrt(read_numbers))$residuals ~ modality_vector))
+    TukeyHSD(aov(lm(hill_3 ~ sqrt(read_numbers))$residuals ~ modality_vector))
 
   df <-
     rbind(tuk1$modality_vector,
@@ -71,7 +67,8 @@ hill_tuckey_phyloseq <- function(physeq, modality) {
     geom_hline(yintercept = 0) +
     ylab("Differences in mean levels (value and confidence intervall at 95%)") +
     xlab("") +
-    ggtitle("Results of the Tuckey HSD testing for differences in mean Hill numbers")
+    ggtitle("Results of the Tuckey HSD testing for differences in mean Hill
+            numbers")
 
   return(p)
 }

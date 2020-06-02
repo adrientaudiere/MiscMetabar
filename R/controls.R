@@ -29,7 +29,7 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
   dist_control <- vector()
 
   for (i in levels(samples_names)) {
-    interm <- physeq@otu_table[samples_names ==  i,]
+    interm <- physeq@otu_table[samples_names ==  i, ]
     if (dim(interm)[1] > 1) {
       dist_control <-
         c(dist_control, as.numeric(vegan::vegdist(interm, method = method)))
@@ -39,7 +39,7 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
     }
   }
   names(dist_control) <-  levels(samples_names)
-  res$dist_controlontrolSamples <- data.frame("dist_control" =
+  res$dist_control_samples <- data.frame("dist_control" =
                                          na.omit(dist_control))
 
   # Compute distance among all samples
@@ -55,7 +55,7 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
       matdist_interm, diag = FALSE, upper = TRUE
     )))
   res[[2]] <-
-    data.frame("dist_controlontrolSamples" = as.vector(na.omit(dist_control)))
+    data.frame("dist_control_samples" = as.vector(na.omit(dist_control)))
   names(res) <- c("distAllSamples", "dist_controlontrolSamp
 les")
 
@@ -67,33 +67,33 @@ les")
 
 ################################################################################
 #' Subset taxa using a taxa control (e.g. truffle root tips) through 3 methods.
-#' @aliases subset_taxa_taxControl
+#' @aliases subset_taxa_tax_control
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param taxa_distri (required): a vector of length equal to the number of
 #'   samples with the number of sequences per samples for the taxa control
 #' @param method (default = "mean"): a method to calculate the cut-off value.
 #'   There is 6 methods:
-#'   (i)   cutoffSeq: discard taxa with less than the number of sequence
+#'   (i)   cutoff_seq: discard taxa with less than the number of sequence
 #'           than taxa control,
-#'   (ii)  cutoffMixt: using mixture models,
-#'   (iii) cutoffDiff: using a minimum difference threshold
+#'   (ii)  cutoff_mixt: using mixture models,
+#'   (iii) cutoff_diff: using a minimum difference threshold
 #'           (need the argument min_diff_for_cutoff)
 #'   (iv)  min: the minimum of the three firsts methods
 #'   (v)   max: the maximum of the three firsts methods
 #'   (vi)  mean: the mean of the three firsts methods
-#' @param min_diff_for_cutoff (default = 10): argument for method cutoffDiff
+#' @param min_diff_for_cutoff (default = 10): argument for method cutoff_diff
 #' @return A new \code{\link{phyloseq-class}} object.
 #'
 #' @author Adrien Taudière
-subset_taxa_taxControl <-
+subset_taxa_tax_control <-
   function(physeq,
            taxa_distri,
            method = "mean",
            min_diff_for_cutoff = 10) {
-    cutoffSeq <- vector(mode = "numeric", length = nsamples(physeq))
-    cutoffMixt <-
+    cutoff_seq <- vector(mode = "numeric", length = nsamples(physeq))
+    cutoff_mixt <-
       vector(mode = "numeric", length = nsamples(physeq))
-    cutoffDiff <-
+    cutoff_diff <-
       vector(mode = "numeric", length = nsamples(physeq))
     cutoffs <- vector(mode = "numeric", length = nsamples(physeq))
 
@@ -101,8 +101,8 @@ subset_taxa_taxControl <-
     for (i in 1:nsamples(physeq)) {
       # for each samples
 
-      if (method %in% c("min", "max", "mean", "cutoffMixt")) {
-        find.cutoff <- function(proba = 0.5, il = index.lower) {
+      if (method %in% c("min", "max", "mean", "cutoff_mixt")) {
+        find_cutoff <- function(proba = 0.5, il = index_lower) {
           ## Cutoff such that Pr[drawn from bad component] == proba
           f <- function(x) {
             proba - (
@@ -120,7 +120,7 @@ subset_taxa_taxControl <-
           )$root)  # Careful with division by zero if changing lower and upper
         }
 
-        physeq_mixture <- as.vector(physeq@otu_table[i,])
+        physeq_mixture <- as.vector(physeq@otu_table[i, ])
         x_mixture <- physeq_mixture[physeq_mixture > 0]
         if (length(x_mixture) > 25) {
           try(model <-
@@ -131,63 +131,63 @@ subset_taxa_taxControl <-
                   maxrestarts = 1000
                 ),
               silent = TRUE)
-          try(index.lower <-
+          try(index_lower <-
                 which.min(model$mu), silent = TRUE)
           # Index of component with lower mean)
 
-          cutoffMixt[i] <-
-            try(find.cutoff(proba = 0.5,  il = index.lower))
+          cutoff_mixt[i] <-
+            try(find_cutoff(proba = 0.5,  il = index_lower))
         } else {
-          cutoffMixt[i] <- NA
+          cutoff_mixt[i] <- NA
         }
-        cutoffMixt <- as.numeric(cutoffMixt)
+        cutoff_mixt <- as.numeric(cutoff_mixt)
       }
 
-      if (method %in% c("min", "max", "mean", "cutoffDiff")) {
-        physeq_Diff <- sort(as.vector(as.vector(physeq@otu_table[i,])))
-        cond <- diff(physeq_Diff) > min_diff_for_cutoff
-        cutoffDiff[i] <- min(physeq_Diff[cond])
+      if (method %in% c("min", "max", "mean", "cutoff_diff")) {
+        physeq_diff <- sort(as.vector(as.vector(physeq@otu_table[i, ])))
+        cond <- diff(physeq_diff) > min_diff_for_cutoff
+        cutoff_diff[i] <- min(physeq_diff[cond])
       }
 
-      if (method %in% c("min", "max", "mean", "cutoffSeq")) {
-        physeq_Seq <- sort(as.vector(as.vector(physeq@otu_table[i,])))
-        cutoffSeq[i] <- min(physeq_Seq[physeq_Seq > taxa_distri[i]])
-        if (is.infinite(cutoffSeq[i])) {
-          cutoffSeq[i] <- taxa_distri[i]
+      if (method %in% c("min", "max", "mean", "cutoff_seq")) {
+        physeq_seq <- sort(as.vector(as.vector(physeq@otu_table[i, ])))
+        cutoff_seq[i] <- min(physeq_seq[physeq_seq > taxa_distri[i]])
+        if (is.infinite(cutoff_seq[i])) {
+          cutoff_seq[i] <- taxa_distri[i]
         }
       }
     }
 
-    if (method == "cutoffMixt")  {
-      cutoffs <- cutoffMixt
-    } else if (method == "cutoffDiff")  {
-      cutoffs <- cutoffDiff
-    } else  if (method == "cutoffSeq")  {
-      cutoffs <-  cutoffSeq
+    if (method == "cutoff_mixt")  {
+      cutoffs <- cutoff_mixt
+    } else if (method == "cutoff_diff")  {
+      cutoffs <- cutoff_diff
+    } else  if (method == "cutoff_seq")  {
+      cutoffs <-  cutoff_seq
     } else  if (method == "mean")  {
       cutoffs <-
-        apply(cbind(cutoffMixt, cutoffDiff, cutoffSeq), 1, mean, na.rm = T)
+        apply(cbind(cutoff_mixt, cutoff_diff, cutoff_seq), 1, mean, na.rm = T)
     } else  if (method == "min")  {
       cutoffs <-
-        apply(cbind(cutoffMixt, cutoffDiff, cutoffSeq), 1, min, na.rm = T)
+        apply(cbind(cutoff_mixt, cutoff_diff, cutoff_seq), 1, min, na.rm = T)
     } else  if (method == "max")  {
       cutoffs <-
-        apply(cbind(cutoffMixt, cutoffDiff, cutoffSeq), 1, max, na.rm = T)
+        apply(cbind(cutoff_mixt, cutoff_diff, cutoff_seq), 1, max, na.rm = T)
     } else {
       stop("The method name is not valid.")
     }
 
-    new.physeq <- physeq
-    for (i in 1:nsamples(new.physeq)) {
-      new.physeq@otu_table[i, new.physeq@otu_table[i,] < floor(cutoffs)[i]] <-
+    new_physeq <- physeq
+    for (i in 1:nsamples(new_physeq)) {
+      new_physeq@otu_table[i, new_physeq@otu_table[i, ] < floor(cutoffs)[i]] <-
         0
     }
 
-    new.physeq <-
-      prune_taxa(colSums(new.physeq@otu_table) > 0, new.physeq)
-    ntaxa_discard <- ntaxa(physeq) - ntaxa(new.physeq)
+    new_physeq <-
+      prune_taxa(colSums(new_physeq@otu_table) > 0, new_physeq)
+    ntaxa_discard <- ntaxa(physeq) - ntaxa(new_physeq)
     nseq_discard <-
-      sum(physeq@otu_table) - sum(new.physeq@otu_table)
+      sum(physeq@otu_table) - sum(new_physeq@otu_table)
     message(
       paste(
         "The filtering processes discard",
@@ -198,5 +198,5 @@ subset_taxa_taxControl <-
         sep = " "
       )
     )
-    return(new.physeq)
+    return(new_physeq)
   }

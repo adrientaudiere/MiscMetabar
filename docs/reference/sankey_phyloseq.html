@@ -89,7 +89,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/adrientaudiere/MiscMetabar/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -104,7 +109,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Sankey plot of <code>phyloseq-class</code> object</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/adrientaudiere/MiscMetabar/blob/master/R/plot_functions.R'><code>R/plot_functions.R</code></a></small>
     <div class="hidden name"><code>sankey_phyloseq.Rd</code></div>
     </div>
 
@@ -116,11 +121,11 @@
   <span class='kw'>physeq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>fact</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>taxa</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>),
-  <span class='kw'>nbSeq</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>min.prop.tax</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>nb_seq</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>min_prop_tax</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>tax2remove</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>units</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>Symbol2sub</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"\\."</span>, <span class='st'>"-"</span>),
+  <span class='kw'>symbol2sub</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"\\."</span>, <span class='st'>"-"</span>),
   <span class='no'>...</span>
 )</pre>
 
@@ -141,11 +146,11 @@ Need to be in <code>physeq@sam_data</code>.</p></td>
       <td><p>(Default: c(1:4)): a vector of taxonomic rank to plot</p></td>
     </tr>
     <tr>
-      <th>nbSeq</th>
-      <td><p>(Default: FALSE): Represent the number of sequences or the number of OTUs (nbSeq = FALSE). Note that ploting the number of sequences is slower.</p></td>
+      <th>nb_seq</th>
+      <td><p>(Default: FALSE): Represent the number of sequences or the number of OTUs (nb_seq = FALSE). Note that ploting the number of sequences is slower.</p></td>
     </tr>
     <tr>
-      <th>min.prop.tax</th>
+      <th>min_prop_tax</th>
       <td><p>(Default: 0): The minimum proportion for taxon to be ploted. EXPERIMENTAL. For the moment each links below the min.prop. tax is discard from the sankey network resulting in sometimes weird plot.</p></td>
     </tr>
     <tr>
@@ -157,7 +162,7 @@ Need to be in <code>physeq@sam_data</code>.</p></td>
       <td><p>: character string describing physical units (if any) for Value</p></td>
     </tr>
     <tr>
-      <th>Symbol2sub</th>
+      <th>symbol2sub</th>
       <td><p>(default = c('\.', '-')): vector of symbol to delete in the taxonomy</p></td>
     </tr>
     <tr>
@@ -167,8 +172,8 @@ Need to be in <code>physeq@sam_data</code>.</p></td>
 #GlobalPatterns_Archaea &lt;- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == 'Archaea')
 #sankey_phyloseq(GlobalPatterns_Archaea)
 #sankey_phyloseq(GlobalPatterns_Archaea, fact = 'SampleType')
-sankey_phyloseq(GlobalPatterns, taxa = c(1:5), min.prop.tax = 0.01)
-sankey_phyloseq(GlobalPatterns, taxa = c(2:6), min.prop.tax = 0.01, nbSeq = TRUE)</p></td>
+sankey_phyloseq(GlobalPatterns, taxa = c(1:5), min_prop_tax = 0.01)
+sankey_phyloseq(GlobalPatterns, taxa = c(2:6), min_prop_tax = 0.01, nb_seq = TRUE)</p></td>
     </tr>
     </table>
 

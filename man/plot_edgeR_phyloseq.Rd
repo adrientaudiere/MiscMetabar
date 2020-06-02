@@ -5,7 +5,7 @@
 \title{Plot edgeR results for a phyloseq or a edgeR object.}
 \usage{
 plot_edgeR_phyloseq(
-  data,
+  physeq,
   contrast = NULL,
   alpha = 0.01,
   taxa = "Genus",
@@ -15,22 +15,26 @@ plot_edgeR_phyloseq(
 )
 }
 \arguments{
-\item{data}{(required): a \code{\link{phyloseq-class}} or a \code{\link[edgeR]{edgeR}} object.}
+\item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
 
-\item{contrast}{(required):This argument specifies what comparison to extract from the object to build a results table. See \code{\link[DESeq2]{results}} man page for more details.}
+\item{contrast}{(required):This argument specifies what comparison
+to extract from the object to build a results table.
+See \code{\link[DESeq2]{results}} man page for more details.}
 
-\item{alpha}{(default = 0.01): the significance cutoff used for optimizing the independent filtering. If the adjusted p-value cutoff (FDR) will be a value other than 0.1, alpha should be set to that value.}
+\item{alpha}{(default = 0.01): the significance cutoff used for optimizing
+the independent filtering. If the adjusted p-value cutoff (FDR) will be a
+value other than 0.1, alpha should be set to that value.}
 
 \item{taxa}{(default = 'Genus'): taxonomic level of interest}
 
-\item{color_tax}{(default = 'Phylum'): taxonomic level used for color assignation}
+\item{color_tax}{(default = 'Phylum'): taxonomic level used for
+color assignation}
 
-\item{verbose}{(default = FALSE): whether the function print some information during the computation}
+\item{verbose}{(default = FALSE): whether the function print some
+information during the computation}
 
-\item{...}{Additional arguments passed on to \code{\link[edgeR]{exactTest}} or \code{\link[ggplot2]{ggplot}}}
-
-\item{tax_table:}{Require if data is a \code{\link[edgeR]{edgeR}} object.
-The taxonomic table used to find the \code{taxa} and \code{color_taxa} arguments. If data is a \code{\link{phyloseq-class}} object, data@tax_table is used.}
+\item{...}{Additional arguments passed on to \code{\link[edgeR]{exactTest}}
+or \code{\link[ggplot2]{ggplot}}}
 }
 \value{
 A \code{\link{ggplot}}2 plot representing edgeR results

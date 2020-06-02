@@ -89,7 +89,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/adrientaudiere/MiscMetabar/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -104,7 +109,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot accumulation curves for <code>phyloseq-class</code> object</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/adrientaudiere/MiscMetabar/blob/master/R/plot_functions.R'><code>R/plot_functions.R</code></a></small>
     <div class="hidden name"><code>accu_plot.Rd</code></div>
     </div>
 
@@ -115,14 +120,14 @@
     <pre class="usage"><span class='fu'>accu_plot</span>(
   <span class='no'>physeq</span>,
   <span class='kw'>fact</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>nbSeq</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>nb_seq</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>step</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>by.fact</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>ci.col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>ci_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>3</span>,
   <span class='kw'>leg</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>printSamplesNames</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>print_sam_names</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>CI</span> <span class='kw'>=</span> <span class='fl'>2</span>,
   <span class='no'>...</span>
 )</pre>
@@ -139,37 +144,37 @@
       <td><p>(required): Name of the factor in physeq@sam_data used to plot different lines</p></td>
     </tr>
     <tr>
-      <th>nbSeq</th>
+      <th>nb_seq</th>
       <td><p>(logical): Either plot accumulation curves using sequences or using samples</p></td>
     </tr>
     <tr>
       <th>step</th>
       <td><p>(integer): distance among points calculated to plot lines. A
-low value give better plot but is more time consuming. Only use if nbSeq = TRUE</p></td>
+low value give better plot but is more time consuming. Only use if nb_seq = TRUE</p></td>
     </tr>
     <tr>
       <th>by.fact</th>
       <td><p>(logical): First merge the OTU table by factor to plot only one line by factor</p></td>
     </tr>
     <tr>
-      <th>ci.col</th>
-      <td><p>: Color vector for confidence intervall. Only use if nbSeq = FALSE. If nbSeq = TRUE, you can use ggplot to cange plot.</p></td>
+      <th>ci_col</th>
+      <td><p>: Color vector for confidence intervall. Only use if nb_seq = FALSE. If nb_seq = TRUE, you can use ggplot to cange plot.</p></td>
     </tr>
     <tr>
       <th>col</th>
-      <td><p>: Color vector for lines. Only use if nbSeq = FALSE. If nbSeq = TRUE, you can use ggplot to change plot.</p></td>
+      <td><p>: Color vector for lines. Only use if nb_seq = FALSE. If nb_seq = TRUE, you can use ggplot to change plot.</p></td>
     </tr>
     <tr>
       <th>lwd</th>
-      <td><p>(default = 3): thickness for lines. Only use if nbSeq = FALSE. If nbSeq = TRUE, you can use ggplot to cange plot.</p></td>
+      <td><p>(default = 3): thickness for lines. Only use if nb_seq = FALSE. If nb_seq = TRUE, you can use ggplot to cange plot.</p></td>
     </tr>
     <tr>
       <th>leg</th>
-      <td><p>(logical): Plot legend or not. Only use if nbSeq = FALSE. If nbSeq = TRUE, you can use ggplot to cange plot.</p></td>
+      <td><p>(logical): Plot legend or not. Only use if nb_seq = FALSE. If nb_seq = TRUE, you can use ggplot to cange plot.</p></td>
     </tr>
     <tr>
-      <th>printSamplesNames</th>
-      <td><p>(logical): Print samples names or not? Only use if nbSeq = TRUE.</p></td>
+      <th>print_sam_names</th>
+      <td><p>(logical): Print samples names or not? Only use if nb_seq = TRUE.</p></td>
     </tr>
     <tr>
       <th>CI</th>
@@ -177,19 +182,19 @@ low value give better plot but is more time consuming. Only use if nbSeq = TRUE<
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments passed on to <code>ggplot</code> if nbSeq = TRUE
-or <code><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></code> if nbSeq = FALSE</p>
+      <td><p>Additional arguments passed on to <code>ggplot</code> if nb_seq = TRUE
+or <code><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></code> if nb_seq = FALSE</p>
 <p>data("GlobalPatterns")
 GlobalPatterns_Archaea &lt;- subset_taxa(GlobalPatterns,
  GlobalPatterns@tax_table[, 1] == 'Archaea')
-accu_plot(GlobalPatterns_Archaea, 'SampleType', nbSeq = TRUE, by.fact = TRUE)</p></td>
+accu_plot(GlobalPatterns_Archaea, 'SampleType', nb_seq = TRUE, by.fact = TRUE)</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>ggplot</code>2 plot representing the richness
-accumulation plot if nbSeq = TRUE, else, if nbSeq = FALSE
+accumulation plot if nb_seq = TRUE, else, if nb_seq = FALSE
 return a base plot.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

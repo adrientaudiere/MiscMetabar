@@ -89,7 +89,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/adrientaudiere/MiscMetabar/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -104,7 +109,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot DESeq2 results for a phyloseq or a DESeq2 object.</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/adrientaudiere/MiscMetabar/blob/master/R/Deseq2_edgeR.R'><code>R/Deseq2_edgeR.R</code></a></small>
     <div class="hidden name"><code>plot_deseq2_phyloseq.Rd</code></div>
     </div>
 
@@ -120,7 +125,7 @@
   <span class='kw'>taxa</span> <span class='kw'>=</span> <span class='st'>"Genus"</span>,
   <span class='kw'>select_taxa</span> <span class='kw'>=</span> <span class='st'>"No"</span>,
   <span class='kw'>color_tax</span> <span class='kw'>=</span> <span class='st'>"Phylum"</span>,
-  <span class='kw'>taxDepth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>tax_depth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='no'>...</span>
 )</pre>
@@ -158,7 +163,7 @@ The taxonomic table used to find the <code>taxa</code> and <code>color_taxa</cod
       <td><p>(default = 'Phylum'): taxonomic level used for color or a color vector.</p></td>
     </tr>
     <tr>
-      <th>taxDepth</th>
+      <th>tax_depth</th>
       <td><p>(default = NULL): Taxonomic depth to test for differential distribution among contrast. If Null the analysis is done at the OTU (i.e. Species) level. If not Null data need to be a <code>phyloseq-class</code> object.</p></td>
     </tr>
     <tr>

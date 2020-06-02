@@ -20,6 +20,7 @@ Calculate hill number and compute Tuckey post-hoc test
 \author{
 Adrien Taudière
 data("GlobalPatterns")
-GlobalPatterns@sam_data[,'Soil_logical'] <- ifelse(GlobalPatterns@sam_data[,"SampleType"] == "Soil", "Soil", "Not Soil")
+GlobalPatterns@sam_data[,'Soil_logical'] <-
+ ifelse(GlobalPatterns@sam_data[,"SampleType"] == "Soil", "Soil", "Not Soil")
 hill_tuckey_phyloseq(GlobalPatterns, "Soil_logical")
 }

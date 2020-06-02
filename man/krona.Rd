@@ -8,7 +8,7 @@
 krona(
   physeq,
   file = "krona.html",
-  nbSeq = TRUE,
+  nb_seq = TRUE,
   ranks = "All",
   add_unassigned_rank = 0,
   name = NULL
@@ -19,30 +19,33 @@ krona(
 
 \item{file}{(required): the location of the html file to save}
 
-\item{nbSeq}{(logical, default to TRUE): If true, Krona set the distribution
+\item{nb_seq}{(logical, default to TRUE): If true, Krona set the distribution
 of sequences in the taxonomy. If False, Krona set the distribution of OTUs
 in the taxonomy.}
 
-\item{ranks}{(default="All"): Number of the taxonomic ranks to plot (num of the column in tax_table
-of your physeq object). Default setting plot all the ranks (argument 'All').}
+\item{ranks}{(default="All"): Number of the taxonomic ranks to plot
+(num of the column in tax_table of your physeq object).
+Default setting plot all the ranks (argument 'All').}
 
 \item{add_unassigned_rank}{(number; default = 0). Add unassigned for rank
 inferior to 'add_unassigned_rank' when necessary}
 
-\item{name}{(default=NULL) : A name for intermediary files, usefull to name your krona
-dataset when merge using merge_krona
-
-data("GlobalPatterns")
-GlobalPatterns_Acidobacter <- subset_taxa(GlobalPatterns, Phylum=="Acidobacteria")
-krona(GlobalPatterns_Acidobacter, "Number.of.sequences.html")
-krona(GlobalPatterns_Acidobacter, "Number.of.OTUs.html", nbSeq = F)
-merge_krona(c("Number.of.sequences.html", "Number.of.OTUs.html"))}
+\item{name}{(default=NULL) : A name for intermediary files, usefull to name
+your krona dataset when merge using merge_krona}
 }
 \value{
 A html file
 }
 \description{
 Make Krona files
+}
+\examples{
+data("GlobalPatterns")
+GA <- subset_taxa(GlobalPatterns, Phylum=="Acidobacteria")
+krona(GA, "Number.of.sequences.html")
+krona(GA, "Number.of.OTUs.html", nb_seq = F)
+merge_krona(c("Number.of.sequences.html", "Number.of.OTUs.html"))
+
 }
 \author{
 Adrien Taudière

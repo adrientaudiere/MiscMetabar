@@ -12,32 +12,46 @@ plot_deseq2_phyloseq(
   taxa = "Genus",
   select_taxa = "No",
   color_tax = "Phylum",
-  taxDepth = NULL,
+  tax_depth = NULL,
   verbose = TRUE,
   ...
 )
 }
 \arguments{
-\item{data}{(required): a \code{\link{phyloseq-class}} or a \code{\link[DESeq2]{DESeqDataSet-class}} object.}
+\item{data}{(required): a \code{\link{phyloseq-class}} or a
+\code{\link[DESeq2]{DESeqDataSet-class}} object.}
 
-\item{contrast}{(required):This argument specifies what comparison to extract from the object to build a results table. See \code{\link[DESeq2]{results}} man page for more details.}
+\item{contrast}{(required):This argument specifies what comparison to extract
+from the object to build a results table. See \code{\link[DESeq2]{results}}
+man page for more details.}
 
-\item{tax_table}{: Required if data is a \code{\link[DESeq2]{DESeqDataSet-class}} object.
-The taxonomic table used to find the \code{taxa} and \code{color_taxa} arguments. If data is a \code{\link{phyloseq-class}} object, data@tax_table is used.}
+\item{tax_table}{: Required if data is a
+\code{\link[DESeq2]{DESeqDataSet-class}} object.
+The taxonomic table used to find the \code{taxa} and \code{color_taxa}
+arguments. If data is a \code{\link{phyloseq-class}} object, data@tax_table
+is used.}
 
-\item{alpha}{(default = 0.01): the significance cutoff used for optimizing the independent filtering. If the adjusted p-value cutoff (FDR) will be a value other than 0.1, alpha should be set to that value.}
+\item{alpha}{(default = 0.01): the significance cutoff used for optimizing
+the independent filtering. If the adjusted p-value cutoff (FDR) will be a
+value other than 0.1, alpha should be set to that value.}
 
 \item{taxa}{(default = 'Genus'): taxonomic level of interest}
 
 \item{select_taxa}{(default = 'No'): logical vector to select taxa to plot}
 
-\item{color_tax}{(default = 'Phylum'): taxonomic level used for color or a color vector.}
+\item{color_tax}{(default = 'Phylum'): taxonomic level used for color or a
+color vector.}
 
-\item{taxDepth}{(default = NULL): Taxonomic depth to test for differential distribution among contrast. If Null the analysis is done at the OTU (i.e. Species) level. If not Null data need to be a \code{\link{phyloseq-class}} object.}
+\item{tax_depth}{(default = NULL): Taxonomic depth to test for differential
+distribution among contrast. If Null the analysis is done at the OTU
+(i.e. Species) level. If not Null data need to be a
+\code{\link{phyloseq-class}} object.}
 
-\item{verbose}{: whether the function print some information during the computation}
+\item{verbose}{: whether the function print some information during
+the computation}
 
-\item{...}{Additional arguments passed on to \code{\link[DESeq2]{DESeq}} or \code{\link[ggplot2]{ggplot}}}
+\item{...}{Additional arguments passed on to \code{\link[DESeq2]{DESeq}}
+or \code{\link[ggplot2]{ggplot}}}
 }
 \value{
 A \code{\link{ggplot}}2 plot representing DESeq2 results

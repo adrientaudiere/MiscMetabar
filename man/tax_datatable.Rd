@@ -14,7 +14,7 @@ tax_datatable(physeq, abundance = TRUE, ...)
 \item{...}{Other argument for the datatable function}
 }
 \value{
-a datatable
+A datatable
 }
 \description{
 Make a datatable with the taxonomy of a \code{\link{phyloseq-class}} object
