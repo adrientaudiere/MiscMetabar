@@ -38,6 +38,8 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 
 <meta property="og:title" content="Plot the result of a mt test (<code><a href='https://rdrr.io/pkg/phyloseq/man/mt-methods.html'>mt</a></code>) — plot_mt" />
 <meta property="og:description" content="Plot the result of a mt test (mt)" />
@@ -138,7 +140,7 @@
       <th>taxa</th>
       <td><p>: The taxonomic level choose for x-positioning
 data("GlobalPatterns")
-res = mt(GlobalPatterns, "SampleType", test="f")
+res &lt;- mt(GlobalPatterns, "SampleType", test="f")
 plot_mt(res, color_tax = "Phylum") + scale_color_hue()</p></td>
     </tr>
     </table>

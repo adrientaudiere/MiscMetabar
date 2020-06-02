@@ -38,6 +38,8 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 
 <meta property="og:title" content="Compute paired distances among matrix (e.g. otu_table) — dist_bycol" />
 <meta property="og:description" content="Compute paired distances among matrix (e.g. otu_table)" />
@@ -132,7 +134,8 @@
     </tr>
     <tr>
       <th>method</th>
-      <td><p>(default = 'bray'): the method to use internally in the vegdist function.</p></td>
+      <td><p>(default = 'bray'): the method to use internally in the vegdist
+function.</p></td>
     </tr>
     <tr>
       <th>nperm</th>
@@ -146,10 +149,13 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of length two : (i) a vector of observed distance ($obs) and (ii) a matrix of the distance after randomization ($null)</p>
+    <p>A list of length two : (i) a vector of observed distance ($obs) and
+  (ii) a matrix of the distance after randomization ($null)</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>the first column of the first matrix is compare to the first column of the second matrix, the second column of the first matrix is compare to the second column of the second matrix and so on.</p>
+    <p>the first column of the first matrix is compare to the first column of
+  the second matrix, the second column of the first matrix is compare to the
+  second column of the second matrix and so on.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/vegan/man/vegdist.html'>vegdist</a></code></p></div>

@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Make a datatable with the taxonomy of a <code>phyloseq-class</code> object — tax_datatable • MiscMetabar</title>
+<title>Transform the otu_table of a <code>phyloseq-class</code> object into a
+  <code>phyloseq-class</code> object with à binary otu_table. — as_binary_otu_table • MiscMetabar</title>
 
 
 <!-- jquery -->
@@ -41,8 +42,10 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Make a datatable with the taxonomy of a <code>phyloseq-class</code> object — tax_datatable" />
-<meta property="og:description" content="Make a datatable with the taxonomy of a phyloseq-class object" />
+<meta property="og:title" content="Transform the otu_table of a <code>phyloseq-class</code> object into a
+  <code>phyloseq-class</code> object with à binary otu_table. — as_binary_otu_table" />
+<meta property="og:description" content="Transform the otu_table of a phyloseq-class object into a
+  phyloseq-class object with à binary otu_table." />
 
 
 
@@ -110,42 +113,44 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Make a datatable with the taxonomy of a <code>phyloseq-class</code> object</h1>
-    <small class="dont-index">Source: <a href='https://github.com/adrientaudiere/MiscMetabar/blob/master/R/plot_functions.R'><code>R/plot_functions.R</code></a></small>
-    <div class="hidden name"><code>tax_datatable.Rd</code></div>
+    <h1>Transform the otu_table of a <code>phyloseq-class</code> object into a
+  <code>phyloseq-class</code> object with à binary otu_table.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/adrientaudiere/MiscMetabar/blob/master/R/miscellanous.R'><code>R/miscellanous.R</code></a></small>
+    <div class="hidden name"><code>as_binary_otu_table.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Make a datatable with the taxonomy of a <code>phyloseq-class</code> object</p>
+    <p>Transform the otu_table of a <code>phyloseq-class</code> object into a
+  <code>phyloseq-class</code> object with à binary otu_table.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tax_datatable</span>(<span class='no'>physeq</span>, <span class='kw'>abundance</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>as_binary_otu_table</span>(<span class='no'>physeq</span>, <span class='kw'>min_number</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>physeq</th>
-      <td><p>(required): A <code>phyloseq-class</code> object</p></td>
+      <td><p>(required): a <code>phyloseq-class</code> object.</p></td>
     </tr>
     <tr>
-      <th>abundance</th>
-      <td><p>(Default: TRUE): Does the number of sequences is print</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Other argument for the datatable function</p></td>
+      <th>minNumber</th>
+      <td><p>(default = 1): the minimum number of sequences to put
+a 1 in the otu table.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A datatable</p>
+    <p>A <code>physeq</code> object with only 0/1 in the OTU table</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>Usefull to test if the results are not biaised by sequences bias
+  that appended during PCR or NGS pipeline.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"GlobalPatterns"</span>)
-<span class='fu'>tax_datatable</span>(<span class='fu'>subset_taxa</span>(<span class='no'>GlobalPatterns</span>,
-              <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>rowSums</a></span>(<span class='no'>GlobalPatterns</span>@<span class='kw'>otu_table</span>)<span class='kw'>&gt;</span><span class='fl'>10000</span>))</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>enterotype</span>)
+<span class='no'>enterotype_bin</span> <span class='kw'>&lt;-</span> <span class='fu'>as_binary_otu_table</span>(<span class='no'>enterotype</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

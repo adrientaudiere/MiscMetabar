@@ -17,9 +17,9 @@
 #' @examples
 #' data("GlobalPatterns")
 #' GA <- subset_taxa(GlobalPatterns, Phylum=="Acidobacteria")
-#' krona(GA, "Number.of.sequences.html")
-#' krona(GA, "Number.of.OTUs.html", nb_seq = F)
-#' merge_krona(c("Number.of.sequences.html", "Number.of.OTUs.html"))
+#' # krona(GA, "Number.of.sequences.html")
+#' # krona(GA, "Number.of.OTUs.html", nb_seq = F)
+#' # merge_krona(c("Number.of.sequences.html", "Number.of.OTUs.html"))
 #'
 #' @return A html file
 #' @export

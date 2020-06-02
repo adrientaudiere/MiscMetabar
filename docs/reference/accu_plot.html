@@ -38,6 +38,8 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 
 <meta property="og:title" content="Plot accumulation curves for <code>phyloseq-class</code> object — accu_plot" />
 <meta property="og:description" content="Plot accumulation curves for phyloseq-class object" />
@@ -128,7 +130,7 @@
   <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>3</span>,
   <span class='kw'>leg</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>print_sam_names</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>CI</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>2</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -141,53 +143,62 @@
     </tr>
     <tr>
       <th>fact</th>
-      <td><p>(required): Name of the factor in physeq@sam_data used to plot different lines</p></td>
+      <td><p>(required): Name of the factor in physeq@sam_data used to plot
+different lines</p></td>
     </tr>
     <tr>
       <th>nb_seq</th>
-      <td><p>(logical): Either plot accumulation curves using sequences or using samples</p></td>
+      <td><p>(logical): Either plot accumulation curves using sequences or
+using samples</p></td>
     </tr>
     <tr>
       <th>step</th>
       <td><p>(integer): distance among points calculated to plot lines. A
-low value give better plot but is more time consuming. Only use if nb_seq = TRUE</p></td>
+low value give better plot but is more time consuming.
+Only used if nb_seq = TRUE.</p></td>
     </tr>
     <tr>
       <th>by.fact</th>
-      <td><p>(logical): First merge the OTU table by factor to plot only one line by factor</p></td>
+      <td><p>(logical): First merge the OTU table by factor to plot only
+one line by factor</p></td>
     </tr>
     <tr>
       <th>ci_col</th>
-      <td><p>: Color vector for confidence intervall. Only use if nb_seq = FALSE. If nb_seq = TRUE, you can use ggplot to cange plot.</p></td>
+      <td><p>: Color vector for confidence intervall.
+Only use if nb_seq = FALSE.
+If nb_seq = TRUE, you can use ggplot to modify the plot.</p></td>
     </tr>
     <tr>
       <th>col</th>
-      <td><p>: Color vector for lines. Only use if nb_seq = FALSE. If nb_seq = TRUE, you can use ggplot to change plot.</p></td>
+      <td><p>: Color vector for lines. Only use if nb_seq = FALSE.
+If nb_seq = TRUE, you can use ggplot to modify the plot.</p></td>
     </tr>
     <tr>
       <th>lwd</th>
-      <td><p>(default = 3): thickness for lines. Only use if nb_seq = FALSE. If nb_seq = TRUE, you can use ggplot to cange plot.</p></td>
+      <td><p>(default = 3): thickness for lines. Only use if nb_seq = FALSE.</p></td>
     </tr>
     <tr>
       <th>leg</th>
-      <td><p>(logical): Plot legend or not. Only use if nb_seq = FALSE. If nb_seq = TRUE, you can use ggplot to cange plot.</p></td>
+      <td><p>(logical): Plot legend or not. Only use if nb_seq = FALSE.</p></td>
     </tr>
     <tr>
       <th>print_sam_names</th>
-      <td><p>(logical): Print samples names or not? Only use if nb_seq = TRUE.</p></td>
+      <td><p>(logical): Print samples names or not?
+Only use if nb_seq = TRUE.</p></td>
     </tr>
     <tr>
-      <th>CI</th>
-      <td><p>(default = 2) : Confidence intervall value used to multiply the standard error to plot confidence intervall</p></td>
+      <th>ci</th>
+      <td><p>(default = 2) : Confidence intervall value used to multiply the
+standard error to plot confidence intervall</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments passed on to <code>ggplot</code> if nb_seq = TRUE
-or <code><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></code> if nb_seq = FALSE</p>
+      <td><p>Additional arguments passed on to <code>ggplot</code>
+if nb_seq = TRUE or to <code><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></code> if nb_seq = FALSE</p>
 <p>data("GlobalPatterns")
-GlobalPatterns_Archaea &lt;- subset_taxa(GlobalPatterns,
- GlobalPatterns@tax_table[, 1] == 'Archaea')
-accu_plot(GlobalPatterns_Archaea, 'SampleType', nb_seq = TRUE, by.fact = TRUE)</p></td>
+GP &lt;- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == 'Archaea')
+accu_plot(GP, 'SampleType', nb_seq = TRUE,
+ by.fact = TRUE)</p></td>
     </tr>
     </table>
 

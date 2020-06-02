@@ -38,6 +38,8 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 
 <meta property="og:title" content="Sankey plot of <code>phyloseq-class</code> object — sankey_phyloseq" />
 <meta property="og:description" content="Sankey plot of phyloseq-class object" />
@@ -147,15 +149,20 @@ Need to be in <code>physeq@sam_data</code>.</p></td>
     </tr>
     <tr>
       <th>nb_seq</th>
-      <td><p>(Default: FALSE): Represent the number of sequences or the number of OTUs (nb_seq = FALSE). Note that ploting the number of sequences is slower.</p></td>
+      <td><p>(Default: FALSE): Represent the number of sequences or the
+number of OTUs (nb_seq = FALSE). Note that ploting the number of sequences
+is slower.</p></td>
     </tr>
     <tr>
       <th>min_prop_tax</th>
-      <td><p>(Default: 0): The minimum proportion for taxon to be ploted. EXPERIMENTAL. For the moment each links below the min.prop. tax is discard from the sankey network resulting in sometimes weird plot.</p></td>
+      <td><p>(Default: 0): The minimum proportion for taxon to be
+ploted. EXPERIMENTAL. For the moment each links below the min.prop.
+tax is discard from the sankey network resulting in sometimes weird plot.</p></td>
     </tr>
     <tr>
       <th>tax2remove</th>
-      <td><p>: a vector of taxonomic groups to remove from the analysis (e.g. <code><a href='https://rdrr.io/r/base/c.html'>c('Incertae sedis', 'unidentified')</a></code>)</p></td>
+      <td><p>: a vector of taxonomic groups to remove from the analysis
+(e.g. <code><a href='https://rdrr.io/r/base/c.html'>c('Incertae sedis', 'unidentified')</a></code>)</p></td>
     </tr>
     <tr>
       <th>units</th>
@@ -163,29 +170,31 @@ Need to be in <code>physeq@sam_data</code>.</p></td>
     </tr>
     <tr>
       <th>symbol2sub</th>
-      <td><p>(default = c('\.', '-')): vector of symbol to delete in the taxonomy</p></td>
+      <td><p>(default = c('\.', '-')): vector of symbol to delete in
+the taxonomy</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments passed on to <code><a href='https://rdrr.io/pkg/networkD3/man/sankeyNetwork.html'>sankeyNetwork</a></code></p>
-<p>data("GlobalPatterns")
-#GlobalPatterns_Archaea &lt;- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == 'Archaea')
-#sankey_phyloseq(GlobalPatterns_Archaea)
-#sankey_phyloseq(GlobalPatterns_Archaea, fact = 'SampleType')
-sankey_phyloseq(GlobalPatterns, taxa = c(1:5), min_prop_tax = 0.01)
-sankey_phyloseq(GlobalPatterns, taxa = c(2:6), min_prop_tax = 0.01, nb_seq = TRUE)</p></td>
+      <td><p>Additional arguments passed on to
+<code><a href='https://rdrr.io/pkg/networkD3/man/sankeyNetwork.html'>sankeyNetwork</a></code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code><a href='https://rdrr.io/pkg/networkD3/man/sankeyNetwork.html'>sankeyNetwork</a></code> plot representing the taxonomic distribution
-of OTUs or sequences. If <code>fact</code> is set, represent the distribution of
-the last taxonomic level in the modalities of <code>fact</code></p>
+    <p>A <code><a href='https://rdrr.io/pkg/networkD3/man/sankeyNetwork.html'>sankeyNetwork</a></code> plot representing the
+ taxonomic distribution of OTUs or sequences. If <code>fact</code> is set,
+ represent the distribution of the last taxonomic level in the modalities
+ of <code>fact</code></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/networkD3/man/sankeyNetwork.html'>sankeyNetwork</a></code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"GlobalPatterns"</span>)
+<span class='no'>GP</span> <span class='kw'>&lt;-</span> <span class='fu'>subset_taxa</span>(<span class='no'>GlobalPatterns</span>, <span class='no'>GlobalPatterns</span>@<span class='kw'>tax_table</span>[,<span class='fl'>1</span>] <span class='kw'>==</span> <span class='st'>"Archaea"</span>)
+<span class='fu'>sankey_phyloseq</span>(<span class='no'>GP</span>, <span class='kw'>fact</span> <span class='kw'>=</span> <span class='st'>'SampleType'</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduits lors de la conversion automatique</span></div><div class='input'><span class='fu'>sankey_phyloseq</span>(<span class='no'>GP</span>, <span class='kw'>taxa</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>), <span class='kw'>min_prop_tax</span> <span class='kw'>=</span> <span class='fl'>0.01</span>)
+<span class='fu'>sankey_phyloseq</span>(<span class='no'>GP</span>, <span class='kw'>taxa</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>4</span>), <span class='kw'>min_prop_tax</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>nb_seq</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

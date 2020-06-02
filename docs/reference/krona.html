@@ -38,6 +38,8 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 
 <meta property="og:title" content="Make Krona files — krona" />
 <meta property="og:description" content="Make Krona files" />
@@ -145,8 +147,9 @@ in the taxonomy.</p></td>
     </tr>
     <tr>
       <th>ranks</th>
-      <td><p>(default="All"): Number of the taxonomic ranks to plot (num of the column in tax_table
-of your physeq object). Default setting plot all the ranks (argument 'All').</p></td>
+      <td><p>(default="All"): Number of the taxonomic ranks to plot
+(num of the column in tax_table of your physeq object).
+Default setting plot all the ranks (argument 'All').</p></td>
     </tr>
     <tr>
       <th>add_unassigned_rank</th>
@@ -155,13 +158,8 @@ inferior to 'add_unassigned_rank' when necessary</p></td>
     </tr>
     <tr>
       <th>name</th>
-      <td><p>(default=NULL) : A name for intermediary files, usefull to name your krona
-dataset when merge using merge_krona</p>
-<p>data("GlobalPatterns")
-GlobalPatterns_Acidobacter &lt;- subset_taxa(GlobalPatterns, Phylum=="Acidobacteria")
-krona(GlobalPatterns_Acidobacter, "Number.of.sequences.html")
-krona(GlobalPatterns_Acidobacter, "Number.of.OTUs.html", nb_seq = F)
-merge_krona(c("Number.of.sequences.html", "Number.of.OTUs.html"))</p></td>
+      <td><p>(default=NULL) : A name for intermediary files, usefull to name
+your krona dataset when merge using merge_krona</p></td>
     </tr>
     </table>
 
@@ -169,6 +167,11 @@ merge_krona(c("Number.of.sequences.html", "Number.of.OTUs.html"))</p></td>
 
     <p>A html file</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"GlobalPatterns"</span>)
+<span class='no'>GA</span> <span class='kw'>&lt;-</span> <span class='fu'>subset_taxa</span>(<span class='no'>GlobalPatterns</span>, <span class='no'>Phylum</span><span class='kw'>==</span><span class='st'>"Acidobacteria"</span>)
+<span class='fu'>krona</span>(<span class='no'>GA</span>, <span class='st'>"Number.of.sequences.html"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: erreur lors de l'exécution d'une commande</span></div><div class='input'><span class='fu'>krona</span>(<span class='no'>GA</span>, <span class='st'>"Number.of.OTUs.html"</span>, <span class='kw'>nb_seq</span> <span class='kw'>=</span> <span class='no'>F</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: erreur lors de l'exécution d'une commande</span></div><div class='input'><span class='fu'>merge_krona</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Number.of.sequences.html"</span>, <span class='st'>"Number.of.OTUs.html"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in merge_krona(c("Number.of.sequences.html", "Number.of.OTUs.html")): impossible de trouver la fonction "merge_krona"</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

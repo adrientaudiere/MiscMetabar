@@ -38,6 +38,8 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 
 <meta property="og:title" content="Plot edgeR results for a phyloseq or a edgeR object. — plot_edgeR_phyloseq" />
 <meta property="og:description" content="Plot edgeR results for a phyloseq or a edgeR object." />
@@ -118,7 +120,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>plot_edgeR_phyloseq</span>(
-  <span class='no'>data</span>,
+  <span class='no'>physeq</span>,
   <span class='kw'>contrast</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.01</span>,
   <span class='kw'>taxa</span> <span class='kw'>=</span> <span class='st'>"Genus"</span>,
@@ -131,16 +133,20 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data</th>
-      <td><p>(required): a <code>phyloseq-class</code> or a <code><a href='https://rdrr.io/pkg/edgeR/man/edgeR-package.html'>edgeR</a></code> object.</p></td>
+      <th>physeq</th>
+      <td><p>(required): a <code>phyloseq-class</code> object.</p></td>
     </tr>
     <tr>
       <th>contrast</th>
-      <td><p>(required):This argument specifies what comparison to extract from the object to build a results table. See <code><a href='https://rdrr.io/pkg/DESeq2/man/results.html'>results</a></code> man page for more details.</p></td>
+      <td><p>(required):This argument specifies what comparison
+to extract from the object to build a results table.
+See <code><a href='https://rdrr.io/pkg/DESeq2/man/results.html'>results</a></code> man page for more details.</p></td>
     </tr>
     <tr>
       <th>alpha</th>
-      <td><p>(default = 0.01): the significance cutoff used for optimizing the independent filtering. If the adjusted p-value cutoff (FDR) will be a value other than 0.1, alpha should be set to that value.</p></td>
+      <td><p>(default = 0.01): the significance cutoff used for optimizing
+the independent filtering. If the adjusted p-value cutoff (FDR) will be a
+value other than 0.1, alpha should be set to that value.</p></td>
     </tr>
     <tr>
       <th>taxa</th>
@@ -148,20 +154,18 @@
     </tr>
     <tr>
       <th>color_tax</th>
-      <td><p>(default = 'Phylum'): taxonomic level used for color assignation</p></td>
+      <td><p>(default = 'Phylum'): taxonomic level used for
+color assignation</p></td>
     </tr>
     <tr>
       <th>verbose</th>
-      <td><p>(default = FALSE): whether the function print some information during the computation</p></td>
+      <td><p>(default = FALSE): whether the function print some
+information during the computation</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments passed on to <code><a href='https://rdrr.io/pkg/edgeR/man/exactTest.html'>exactTest</a></code> or <code><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></code></p></td>
-    </tr>
-    <tr>
-      <th>tax_table:</th>
-      <td><p>Require if data is a <code><a href='https://rdrr.io/pkg/edgeR/man/edgeR-package.html'>edgeR</a></code> object.
-The taxonomic table used to find the <code>taxa</code> and <code>color_taxa</code> arguments. If data is a <code>phyloseq-class</code> object, data@tax_table is used.</p></td>
+      <td><p>Additional arguments passed on to <code><a href='https://rdrr.io/pkg/edgeR/man/exactTest.html'>exactTest</a></code>
+or <code><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></code></p></td>
     </tr>
     </table>
 
@@ -173,6 +177,11 @@ The taxonomic table used to find the <code>taxa</code> and <code>color_taxa</cod
     <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/edgeR/man/exactTest.html'>exactTest</a></code></p>
 <p><code><a href='plot_deseq2_phyloseq.html'>plot_deseq2_phyloseq</a></code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>GlobalPatterns</span>)
+<span class='fu'>plot_edgeR_phyloseq</span>(<span class='no'>GlobalPatterns</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'SampleType'</span>, <span class='st'>'Soil'</span>, <span class='st'>'Feces'</span>),
+                   <span class='kw'>color_tax</span> <span class='kw'>=</span> <span class='st'>'Kingdom'</span>)</div><div class='output co'>#&gt; <span class='message'>Conversion to edgeR format</span></div><div class='output co'>#&gt; <span class='error'>Error in DGEList(counts = x, group = group, genes = taxonomy, remove.zeros = TRUE,     ...): impossible de trouver la fonction "DGEList"</span></div><div class='input'><span class='fu'>plot_edgeR_phyloseq</span>(<span class='no'>GlobalPatterns</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'SampleType'</span>, <span class='st'>'Soil'</span>, <span class='st'>'Feces'</span>),
+                   <span class='kw'>taxa</span> <span class='kw'>=</span> <span class='st'>'Class'</span>, <span class='kw'>color_tax</span> <span class='kw'>=</span> <span class='st'>'Kingdom'</span>)</div><div class='output co'>#&gt; <span class='message'>Conversion to edgeR format</span></div><div class='output co'>#&gt; <span class='error'>Error in DGEList(counts = x, group = group, genes = taxonomy, remove.zeros = TRUE,     ...): impossible de trouver la fonction "DGEList"</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

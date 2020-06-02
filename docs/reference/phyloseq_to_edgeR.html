@@ -38,6 +38,8 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 
 <meta property="og:title" content="Convert phyloseq OTU count data into DGEList for edgeR package — phyloseq_to_edgeR" />
 <meta property="og:description" content="Further details." />
@@ -125,8 +127,8 @@
     <tr>
       <th>physeq</th>
       <td><p>(required).  A <code>phyloseq-class</code> or
-an <code>otu_table-class</code> object. 
-The latter is only appropriate if <code>group</code> argument is also a 
+an <code>otu_table-class</code> object.
+The latter is only appropriate if <code>group</code> argument is also a
 vector or factor with length equal to <code>nsamples(physeq)</code>.</p></td>
     </tr>
     <tr>
@@ -135,18 +137,20 @@ vector or factor with length equal to <code>nsamples(physeq)</code>.</p></td>
 group/condition for each sample/library. Alternatively, you may provide
 the name of a sample variable. This name should be among the output of
 <code>sample_variables(physeq)</code>, in which case
-<code>get_variable(physeq, group)</code> would return either a character vector or factor.
+<code>get_variable(physeq, group)</code> would return either a character vector or
+  factor.
 This is passed on to <code><a href='https://rdrr.io/pkg/edgeR/man/DGEList.html'>DGEList</a></code>,
 and you may find further details or examples in its documentation.</p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>(Optional). The label of the edgeR-implemented normalization to use.
-See <code><a href='https://rdrr.io/pkg/edgeR/man/calcNormFactors.html'>calcNormFactors</a></code> for supported options and details. 
-The default option is <code>"RLE"</code>, which is a scaling factor method 
-proposed by Anders and Huber (2010).
-At time of writing, the <a href='https://rdrr.io/pkg/edgeR/man/edgeR-package.html'>edgeR</a> package supported 
-the following options to the <code>method</code> argument:</p>
+      <td><p>(Optional). The label of the edgeR-implemented normalization
+  to use.
+ See <code><a href='https://rdrr.io/pkg/edgeR/man/calcNormFactors.html'>calcNormFactors</a></code> for supported options and details.
+ The default option is <code>"RLE"</code>, which is a scaling factor method
+ proposed by Anders and Huber (2010).
+ At time of writing, the <a href='https://rdrr.io/pkg/edgeR/man/edgeR-package.html'>edgeR</a> package supported
+ the following options to the <code>method</code> argument:</p>
 <p><code><a href='https://rdrr.io/r/base/c.html'>c("TMM", "RLE", "upperquartile", "none")</a></code>.</p></td>
     </tr>
     <tr>
