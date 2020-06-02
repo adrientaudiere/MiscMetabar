@@ -14,6 +14,7 @@
 #' @examples
 #' data(enterotype)
 #' enterotype_bin <- as_binary_otu_table(enterotype)
+
 as_binary_otu_table <- function(physeq, min_number = 1) {
   if (!inherits(physeq, "phyloseq")) {
     stop("physeq must be a phyloseq object")
