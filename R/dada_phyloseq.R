@@ -239,8 +239,7 @@ asv2otu <- function(physeq,
       tapply(clusters, paste(pack_clusts$cluster, pack_clusts$query),
              function(x) {
                x[1]
-             }
-      )
+             })
 
     new_phyloseq <-
       speedyseq::merge_taxa_vec(physeq,
@@ -264,7 +263,7 @@ asv2otu <- function(physeq,
 
 ################################################################################
 #' Search for a list of sequence in a fasta file against physeq reference
-#'   sequences using Vsearch
+#'   sequences using [vsearch](https://github.com/torognes/vsearch)
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param seq2search (required): path to fasta file
@@ -325,4 +324,84 @@ vsearch_search_global <- function(physeq,
   if (file.exists("temp.uc")) {
     file.remove("temp.uc")
   }
+}
+################################################################################
+
+################################################################################
+
+
+#' Blast some sequence against `refseq` slot of a \code{\link{phyloseq-class}}
+#'   object.
+#'
+#' @param physeq (required): a \code{\link{phyloseq-class}} object.
+#' @param seq2search (required): path to fasta file
+#' @param blastpath (default = NULL): path to blast program
+#' @param id_cut (default = 90): cut of in identity percent to keep result
+#' @param bit_score_cut (default = 10000): cut of in bit score to keep result
+
+#' @param unique_per_seq (default = FALSE) : only return the first match for
+#'  each sequence in seq2search
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' data(data_fungi)
+#' blastpath =
+#' "/home/adrien/Bureau/ncbi-blast-2.10.0+-x64-linux/ncbi-blast-2.10.0+/bin/"
+#' blast_to_phyloseq(data_fungi, seq2search = "data/ex.fasta",
+#'                  blastpath = blastpath)
+blast_to_phyloseq <- function(physeq,
+                              seq2search,
+                              blastpath = NULL,
+                              id_cut=90,
+                              bit_score_cut=10000) {
+  dna <- Biostrings::DNAStringSet(physeq@refseq)
+  Biostrings::writeXStringSet(dna, "db.fasta")
+
+  cmd <- system(paste(blastpath,
+                       "makeblastdb -dbtype nucl -in db.fasta -out dbase",
+                       sep="")
+                 )
+
+  file.remove("db.fasta")
+
+  cmd2 <- system(
+    paste(
+      blastpath,
+      "blastn -query ",
+      seq2search,
+      " -db dbase",
+      " -out blast_result.txt",
+      " -outfmt \"6 qseqid qlen sseqid length pident evalue bitscore qcovs\"",
+      sep="")
+  )
+
+  blast_tab <- read.table(
+    "blast_result.txt",
+    sep = "\t",
+    header = F,
+    stringsAsFactors = F
+  )
+  names(blast_tab) <- c("Query name",
+                        "Query seq. length",
+                        "Taxa name",
+                        "Taxa seq. length",
+                        "% id. match",
+                        "bit score",
+                        "e-value",
+                        "Query cover"
+                        )
+
+  blast_tab <- blast_tab[order(blast_tab["bit score",], decreasing = T), ]
+
+  if(unique_per_seq) {
+    blast_tab <-  blast_tab[which(!duplicated(blast_tab[, 1])), ]
+  }
+
+  blast_tab <- blast_tab[blast_tab["bit score",] > bit_score_cut, ]
+  blast_tab <- blast_tab[blast_tab["% id. match",] > id_cut, ]
+
+  file.remove("blast_result.txt")
+  file.remove(list.files(pattern="dbase"))
 }
