@@ -1102,3 +1102,42 @@ summary_plot_phyloseq <- function(physeq) {
     )
 }
 ################################################################################
+
+
+#' Heat tree from `metacoder` package using `tax_table` slot
+#'
+#' @param physeq (required): A \code{\link{phyloseq-class}} object
+#' @param ... : Arguments parsed to \code{\link[metacoder]{heat_tree}}
+#'
+#' @return A plot
+#' @export
+#' @author Adrien Taudière
+#'
+#' @examples
+#' data("GlobalPatterns")
+#' GPsubset <- subset_taxa(GlobalPatterns,
+#'                         GlobalPatterns@tax_table[, 1] == 'Bacteria')
+#' GPsubset <- subset_taxa(GPsubset,
+#'                         rowSums(GPsubset@otu_table) > 1000)
+#' GPsubset <- subset_taxa(GPsubset, rowSums(is.na(GPsubset@tax_table)) == 0)
+#'
+#' physeq_heat_tree(GPsubset,
+#'                  node_size = n_obs,
+#'                  node_color = n_obs,
+#'                  node_label = taxon_names,
+#'                  tree_label = taxon_names,
+#'                  node_size_trans = "log10 area")
+
+physeq_heat_tree <- function(physeq, ...){
+  data_metacoder <- metacoder::parse_phyloseq(physeq)
+  metacoder::heat_tree(data_metacoder, ...)
+}
+
+
+
+
+
+
+
+
+
