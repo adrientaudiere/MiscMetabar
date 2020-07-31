@@ -328,8 +328,6 @@ vsearch_search_global <- function(physeq,
 ################################################################################
 
 ################################################################################
-
-
 #' Blast some sequence against `refseq` slot of a \code{\link{phyloseq-class}}
 #'   object.
 #'
@@ -337,10 +335,13 @@ vsearch_search_global <- function(physeq,
 #' @param seq2search (required): path to fasta file
 #' @param blastpath (default = NULL): path to blast program
 #' @param id_cut (default = 90): cut of in identity percent to keep result
-#' @param bit_score_cut (default = 10000): cut of in bit score to keep result
-
+#' @param bit_score_cut (default = 1e-10): cut of in bit score to keep result
 #' @param unique_per_seq (default = FALSE) : only return the first match for
 #'  each sequence in seq2search
+#' @param score_filter (default = TRUE): does results are filter by score. If
+#'   FALSE, `id_cut` and `bit_score_cut` are ignored
+#' @param list_no_output_query (default to FALSE): does the result table include
+#'   query sequences for which `blastn` does not find any correspondence
 #'
 #' @return
 #' @export
@@ -354,17 +355,18 @@ vsearch_search_global <- function(physeq,
 blast_to_phyloseq <- function(physeq,
                               seq2search,
                               blastpath = NULL,
-                              id_cut=90,
-                              bit_score_cut=10000) {
+                              id_cut = 90,
+                              bit_score_cut = 1e-10,
+                              unique_per_seq = FALSE,
+                              score_filter = TRUE,
+                              list_no_output_query = FALSE) {
   dna <- Biostrings::DNAStringSet(physeq@refseq)
   Biostrings::writeXStringSet(dna, "db.fasta")
 
   cmd <- system(paste(blastpath,
                        "makeblastdb -dbtype nucl -in db.fasta -out dbase",
-                       sep="")
+                       sep = "")
                  )
-
-  file.remove("db.fasta")
 
   cmd2 <- system(
     paste(
@@ -373,35 +375,91 @@ blast_to_phyloseq <- function(physeq,
       seq2search,
       " -db dbase",
       " -out blast_result.txt",
-      " -outfmt \"6 qseqid qlen sseqid length pident evalue bitscore qcovs\"",
-      sep="")
+      " -outfmt \"6 qseqid qlen sseqid slen length pident evalue bitscore qcovs\"",
+      sep = "")
   )
 
-  blast_tab <- read.table(
-    "blast_result.txt",
-    sep = "\t",
-    header = F,
-    stringsAsFactors = F
-  )
+  if (file.info("blast_result.txt")$size > 0){
+    blast_tab <- read.table(
+      "blast_result.txt",
+      sep = "\t",
+      header = F,
+      stringsAsFactors = F
+    )
+  } else {
+    stop("None query sequences matched your phyloseq references sequences.")
+  }
+
+  file.remove("blast_result.txt")
+  file.remove(list.files(pattern = "dbase"))
+  file.remove("db.fasta")
+
   names(blast_tab) <- c("Query name",
                         "Query seq. length",
                         "Taxa name",
                         "Taxa seq. length",
+                        "Alignment length",
                         "% id. match",
                         "bit score",
                         "e-value",
                         "Query cover"
                         )
 
-  blast_tab <- blast_tab[order(blast_tab["bit score",], decreasing = T), ]
+  blast_tab <- blast_tab[order(blast_tab[,"bit score"], decreasing = FALSE), ]
 
-  if(unique_per_seq) {
+  if (unique_per_seq) {
     blast_tab <-  blast_tab[which(!duplicated(blast_tab[, 1])), ]
   }
 
-  blast_tab <- blast_tab[blast_tab["bit score",] > bit_score_cut, ]
-  blast_tab <- blast_tab[blast_tab["% id. match",] > id_cut, ]
+  if(score_filter){
+    blast_tab <- blast_tab[blast_tab[, "bit score"] < bit_score_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "% id. match"] > id_cut, ]
+  } else {
+    blast_tab <- blast_tab
+  }
 
-  file.remove("blast_result.txt")
-  file.remove(list.files(pattern="dbase"))
+  if (list_no_output_query) {
+    fastaFile <- Biostrings::readDNAStringSet(seq2search)
+    seq_name <- names(fastaFile)
+    no_output_query <- seq_name[!seq_name %in% blast_tab[1, ]]
+    if(length(no_output_query)>0) {
+      mat_no_output_query <- matrix(NA,
+                                    ncol = ncol(blast_tab),
+                                    nrow = length(no_output_query))
+      mat_no_output_query[,1] <- no_output_query
+      colnames(mat_no_output_query) <- colnames(blast_tab)
+      blast_tab <- rbind(blast_tab, mat_no_output_query)
+    }
+  } else {
+    blast_tab <- blast_tab
+  }
 }
+################################################################################
+
+################################################################################
+#' Save phyloseq object in the form of mutiple csv tables. EXPERIMENTAL
+#'
+#' @param physeq (required): a \code{\link{phyloseq-class}} object.
+#' @param path (defaut: NULL) : a path to the folder to save the phyloseq object
+#'
+#' @return
+#' @export
+#'
+#' @examples
+write_phyloseq <- function(physeq, path = NULL) {
+  if (!is.null(physeq@otu_table)) {
+    write.csv(physeq@otu_table, paste(path, "otu_table.csv", sep=""))
+  }
+  if (!is.null(physeq@refseq)) {
+    write.csv(physeq@refseq, paste(path, "refseq.csv", sep=""))
+  }
+  if (!is.null(physeq@tax_table)) {
+    write.csv(physeq@tax_table, paste(path, "tax_table.csv", sep=""))
+  }
+  if (!is.null(physeq@sam_data)) {
+    write.csv(physeq@sam_data, paste(path, "sam_data.csv", sep=""))
+  }
+}
+################################################################################
+
+
