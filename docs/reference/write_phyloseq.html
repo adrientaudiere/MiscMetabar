@@ -6,8 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Search for a list of sequence in a fasta file against physeq reference
-  sequences using [vsearch](https://github.com/torognes/vsearch) — vsearch_search_global • MiscMetabar</title>
+<title>Save phyloseq object in the form of multiple csv tables. EXPERIMENTAL — write_phyloseq • MiscMetabar</title>
 
 
 <!-- jquery -->
@@ -42,10 +41,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Search for a list of sequence in a fasta file against physeq reference
-  sequences using [vsearch](https://github.com/torognes/vsearch) — vsearch_search_global" />
-<meta property="og:description" content="Search for a list of sequence in a fasta file against physeq reference
-  sequences using [vsearch](https://github.com/torognes/vsearch)" />
+<meta property="og:title" content="Save phyloseq object in the form of multiple csv tables. EXPERIMENTAL — write_phyloseq" />
+<meta property="og:description" content="Save phyloseq object in the form of multiple csv tables. EXPERIMENTAL" />
 
 
 
@@ -113,24 +110,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Search for a list of sequence in a fasta file against physeq reference
-  sequences using [vsearch](https://github.com/torognes/vsearch)</h1>
+    <h1>Save phyloseq object in the form of multiple csv tables. EXPERIMENTAL</h1>
     <small class="dont-index">Source: <a href='https://github.com/adrientaudiere/MiscMetabar/blob/master/R/dada_phyloseq.R'><code>R/dada_phyloseq.R</code></a></small>
-    <div class="hidden name"><code>vsearch_search_global.Rd</code></div>
+    <div class="hidden name"><code>write_phyloseq.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Search for a list of sequence in a fasta file against physeq reference
-  sequences using [vsearch](https://github.com/torognes/vsearch)</p>
+    <p>Save phyloseq object in the form of multiple csv tables. EXPERIMENTAL</p>
     </div>
 
-    <pre class="usage"><span class='fu'>vsearch_search_global</span>(
-  <span class='no'>physeq</span>,
-  <span class='no'>seq2search</span>,
-  <span class='kw'>vsearchpath</span> <span class='kw'>=</span> <span class='st'>"vsearch"</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
-  <span class='kw'>iddef</span> <span class='kw'>=</span> <span class='fl'>0</span>
-)</pre>
+    <pre class="usage"><span class='fu'>write_phyloseq</span>(<span class='no'>physeq</span>, <span class='kw'>path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -140,26 +129,16 @@
       <td><p>(required): a <code>phyloseq-class</code> object.</p></td>
     </tr>
     <tr>
-      <th>seq2search</th>
-      <td><p>(required): path to fasta file</p></td>
-    </tr>
-    <tr>
-      <th>vsearchpath</th>
-      <td><p>(default = "vsearch"): path to vsearch</p></td>
-    </tr>
-    <tr>
-      <th>id</th>
-      <td><p>(default = 0.8): id for --usearch_global</p></td>
-    </tr>
-    <tr>
-      <th>iddef</th>
-      <td><p>(default = 0): iddef for --usearch_global</p></td>
+      <th>path</th>
+      <td><p>(defaut: NULL) : a path to the folder to save the phyloseq object</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A dataframe with uc results (invisible)</p>
+    
+
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -6,8 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Search for a list of sequence in a fasta file against physeq reference
-  sequences using [vsearch](https://github.com/torognes/vsearch) — vsearch_search_global • MiscMetabar</title>
+<title>Blast some sequence against `refseq` slot of a <code>phyloseq-class</code>
+  object. — blast_to_phyloseq • MiscMetabar</title>
 
 
 <!-- jquery -->
@@ -42,10 +42,10 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Search for a list of sequence in a fasta file against physeq reference
-  sequences using [vsearch](https://github.com/torognes/vsearch) — vsearch_search_global" />
-<meta property="og:description" content="Search for a list of sequence in a fasta file against physeq reference
-  sequences using [vsearch](https://github.com/torognes/vsearch)" />
+<meta property="og:title" content="Blast some sequence against `refseq` slot of a <code>phyloseq-class</code>
+  object. — blast_to_phyloseq" />
+<meta property="og:description" content="Blast some sequence against `refseq` slot of a phyloseq-class
+  object." />
 
 
 
@@ -113,23 +113,26 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Search for a list of sequence in a fasta file against physeq reference
-  sequences using [vsearch](https://github.com/torognes/vsearch)</h1>
+    <h1>Blast some sequence against `refseq` slot of a <code>phyloseq-class</code>
+  object.</h1>
     <small class="dont-index">Source: <a href='https://github.com/adrientaudiere/MiscMetabar/blob/master/R/dada_phyloseq.R'><code>R/dada_phyloseq.R</code></a></small>
-    <div class="hidden name"><code>vsearch_search_global.Rd</code></div>
+    <div class="hidden name"><code>blast_to_phyloseq.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Search for a list of sequence in a fasta file against physeq reference
-  sequences using [vsearch](https://github.com/torognes/vsearch)</p>
+    <p>Blast some sequence against `refseq` slot of a <code>phyloseq-class</code>
+  object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>vsearch_search_global</span>(
+    <pre class="usage"><span class='fu'>blast_to_phyloseq</span>(
   <span class='no'>physeq</span>,
   <span class='no'>seq2search</span>,
-  <span class='kw'>vsearchpath</span> <span class='kw'>=</span> <span class='st'>"vsearch"</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
-  <span class='kw'>iddef</span> <span class='kw'>=</span> <span class='fl'>0</span>
+  <span class='kw'>blastpath</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>id_cut</span> <span class='kw'>=</span> <span class='fl'>90</span>,
+  <span class='kw'>bit_score_cut</span> <span class='kw'>=</span> <span class='fl'>1e-10</span>,
+  <span class='kw'>unique_per_seq</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>score_filter</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>list_no_output_query</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -144,23 +147,46 @@
       <td><p>(required): path to fasta file</p></td>
     </tr>
     <tr>
-      <th>vsearchpath</th>
-      <td><p>(default = "vsearch"): path to vsearch</p></td>
+      <th>blastpath</th>
+      <td><p>(default = NULL): path to blast program</p></td>
     </tr>
     <tr>
-      <th>id</th>
-      <td><p>(default = 0.8): id for --usearch_global</p></td>
+      <th>id_cut</th>
+      <td><p>(default = 90): cut of in identity percent to keep result</p></td>
     </tr>
     <tr>
-      <th>iddef</th>
-      <td><p>(default = 0): iddef for --usearch_global</p></td>
+      <th>bit_score_cut</th>
+      <td><p>(default = 1e-10): cut of in bit score to keep result</p></td>
+    </tr>
+    <tr>
+      <th>unique_per_seq</th>
+      <td><p>(default = FALSE) : only return the first match for
+each sequence in seq2search</p></td>
+    </tr>
+    <tr>
+      <th>score_filter</th>
+      <td><p>(default = TRUE): does results are filter by score. If
+FALSE, `id_cut` and `bit_score_cut` are ignored</p></td>
+    </tr>
+    <tr>
+      <th>list_no_output_query</th>
+      <td><p>(default to FALSE): does the result table include
+query sequences for which `blastn` does not find any correspondence</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A dataframe with uc results (invisible)</p>
+    
 
+
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>data_fungi</span>)
+<span class='no'>blastpath</span> <span class='kw'>=</span>
+<span class='st'>"/home/adrien/Bureau/ncbi-blast-2.10.0+-x64-linux/ncbi-blast-2.10.0+/bin/"</span>
+<span class='fu'>blast_to_phyloseq</span>(<span class='no'>data_fungi</span>, <span class='kw'>seq2search</span> <span class='kw'>=</span> <span class='st'>"data/ex.fasta"</span>,
+                 <span class='kw'>blastpath</span> <span class='kw'>=</span> <span class='no'>blastpath</span>)</div><div class='output co'>#&gt; <span class='error'>Error in if (file.info("blast_result.txt")$size &gt; 0) {    blast_tab &lt;- read.table("blast_result.txt", sep = "\t", header = F,         stringsAsFactors = F)} else {    stop("None query sequences matched your phyloseq references sequences.")}: valeur manquante là où TRUE / FALSE est requis</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -6,8 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Search for a list of sequence in a fasta file against physeq reference
-  sequences using [vsearch](https://github.com/torognes/vsearch) — vsearch_search_global • MiscMetabar</title>
+<title>Heat tree from `metacoder` package using `tax_table` slot — physeq_heat_tree • MiscMetabar</title>
 
 
 <!-- jquery -->
@@ -42,10 +41,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Search for a list of sequence in a fasta file against physeq reference
-  sequences using [vsearch](https://github.com/torognes/vsearch) — vsearch_search_global" />
-<meta property="og:description" content="Search for a list of sequence in a fasta file against physeq reference
-  sequences using [vsearch](https://github.com/torognes/vsearch)" />
+<meta property="og:title" content="Heat tree from `metacoder` package using `tax_table` slot — physeq_heat_tree" />
+<meta property="og:description" content="Heat tree from `metacoder` package using `tax_table` slot" />
 
 
 
@@ -113,54 +110,50 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Search for a list of sequence in a fasta file against physeq reference
-  sequences using [vsearch](https://github.com/torognes/vsearch)</h1>
-    <small class="dont-index">Source: <a href='https://github.com/adrientaudiere/MiscMetabar/blob/master/R/dada_phyloseq.R'><code>R/dada_phyloseq.R</code></a></small>
-    <div class="hidden name"><code>vsearch_search_global.Rd</code></div>
+    <h1>Heat tree from `metacoder` package using `tax_table` slot</h1>
+    <small class="dont-index">Source: <a href='https://github.com/adrientaudiere/MiscMetabar/blob/master/R/plot_functions.R'><code>R/plot_functions.R</code></a></small>
+    <div class="hidden name"><code>physeq_heat_tree.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Search for a list of sequence in a fasta file against physeq reference
-  sequences using [vsearch](https://github.com/torognes/vsearch)</p>
+    <p>Heat tree from `metacoder` package using `tax_table` slot</p>
     </div>
 
-    <pre class="usage"><span class='fu'>vsearch_search_global</span>(
-  <span class='no'>physeq</span>,
-  <span class='no'>seq2search</span>,
-  <span class='kw'>vsearchpath</span> <span class='kw'>=</span> <span class='st'>"vsearch"</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
-  <span class='kw'>iddef</span> <span class='kw'>=</span> <span class='fl'>0</span>
-)</pre>
+    <pre class="usage"><span class='fu'>physeq_heat_tree</span>(<span class='no'>physeq</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>physeq</th>
-      <td><p>(required): a <code>phyloseq-class</code> object.</p></td>
+      <td><p>(required): A <code>phyloseq-class</code> object</p></td>
     </tr>
     <tr>
-      <th>seq2search</th>
-      <td><p>(required): path to fasta file</p></td>
-    </tr>
-    <tr>
-      <th>vsearchpath</th>
-      <td><p>(default = "vsearch"): path to vsearch</p></td>
-    </tr>
-    <tr>
-      <th>id</th>
-      <td><p>(default = 0.8): id for --usearch_global</p></td>
-    </tr>
-    <tr>
-      <th>iddef</th>
-      <td><p>(default = 0): iddef for --usearch_global</p></td>
+      <th>...</th>
+      <td><p>: Arguments parsed to <code><a href='https://rdrr.io/pkg/metacoder/man/heat_tree.html'>heat_tree</a></code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A dataframe with uc results (invisible)</p>
+    <p>A plot</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"GlobalPatterns"</span>)
+<span class='no'>GPsubset</span> <span class='kw'>&lt;-</span> <span class='fu'>subset_taxa</span>(<span class='no'>GlobalPatterns</span>,
+                        <span class='no'>GlobalPatterns</span>@<span class='kw'>tax_table</span>[, <span class='fl'>1</span>] <span class='kw'>==</span> <span class='st'>'Bacteria'</span>)
+<span class='no'>GPsubset</span> <span class='kw'>&lt;-</span> <span class='fu'>subset_taxa</span>(<span class='no'>GPsubset</span>,
+                        <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>rowSums</a></span>(<span class='no'>GPsubset</span>@<span class='kw'>otu_table</span>) <span class='kw'>&gt;</span> <span class='fl'>1000</span>)</div><div class='output co'>#&gt; <span class='error'>Error in rowSums(GPsubset@otu_table): objet 'GPsubset' introuvable</span></div><div class='input'><span class='no'>GPsubset</span> <span class='kw'>&lt;-</span> <span class='fu'>subset_taxa</span>(<span class='no'>GPsubset</span>, <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>rowSums</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>GPsubset</span>@<span class='kw'>tax_table</span>)) <span class='kw'>==</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='error'>Error in rowSums(is.na(GPsubset@tax_table)): objet 'GPsubset' introuvable</span></div><div class='input'>
+<span class='fu'>physeq_heat_tree</span>(<span class='no'>GPsubset</span>,
+                 <span class='kw'>node_size</span> <span class='kw'>=</span> <span class='no'>n_obs</span>,
+                 <span class='kw'>node_color</span> <span class='kw'>=</span> <span class='no'>n_obs</span>,
+                 <span class='kw'>node_label</span> <span class='kw'>=</span> <span class='no'>taxon_names</span>,
+                 <span class='kw'>tree_label</span> <span class='kw'>=</span> <span class='no'>taxon_names</span>,
+                 <span class='kw'>node_size_trans</span> <span class='kw'>=</span> <span class='st'>"log10 area"</span>)</div><div class='output co'>#&gt; <span class='message'>The following 17689 of 19008 (93.1%) input indexes have `NA` in their classifications:</span>
+#&gt; <span class='message'>   4, 6, 7, 8, 9, 10 ... 19003, 19004, 19005, 19006, 19007, 19008</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `as.tbl()` is deprecated as of dplyr 1.0.0.</span>
+#&gt; <span class='warning'>Please use `tibble::as_tibble()` instead.</span>
+#&gt; <span class='warning'><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
+#&gt; <span class='warning'></span><span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span><span></span></div><div class='img'><img src='physeq_heat_tree-1.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

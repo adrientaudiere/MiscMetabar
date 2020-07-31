@@ -3,7 +3,7 @@
 \name{vsearch_search_global}
 \alias{vsearch_search_global}
 \title{Search for a list of sequence in a fasta file against physeq reference
-  sequences using Vsearch}
+  sequences using [vsearch](https://github.com/torognes/vsearch)}
 \usage{
 vsearch_search_global(
   physeq,
@@ -29,5 +29,5 @@ A dataframe with uc results (invisible)
 }
 \description{
 Search for a list of sequence in a fasta file against physeq reference
-  sequences using Vsearch
+  sequences using [vsearch](https://github.com/torognes/vsearch)
 }
