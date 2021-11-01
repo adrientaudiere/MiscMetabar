@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">MiscMetabar</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.21</span>
       </span>
     </div>
 
@@ -40,7 +40,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -51,7 +51,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/adrientaudiere/MiscMetabar/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -76,8 +76,9 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>There is no CRAN version of MiscMetabar for now.</p>
 <p>You can install the development version from <a href="https://github.com/">GitHub</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="co"># install.packages("devtools")</span>
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"adrientaudiere/MiscMetabar"</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"adrientaudiere/MiscMetabar"</span><span class="op">)</span>
 <span class="co">#&gt; Downloading GitHub repo adrientaudiere/MiscMetabar@master</span>
 <span class="co">#&gt; Skipping 1 packages not available: phyloseq</span>
 <span class="co">#&gt;      checking for file ‘/tmp/RtmpzqxuoJ/remotes6d2c45404455/adrientaudiere-MiscMetabar-ab13a95/DESCRIPTION’ ...  ✓  checking for file ‘/tmp/RtmpzqxuoJ/remotes6d2c45404455/adrientaudiere-MiscMetabar-ab13a95/DESCRIPTION’</span>
@@ -89,7 +90,7 @@
 <span class="co">#&gt;      </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Installing package into '/home/adrien/R/x86_64-pc-linux-gnu-library/3.6'</span>
-<span class="co">#&gt; (as 'lib' is unspecified)</span></pre></div>
+<span class="co">#&gt; (as 'lib' is unspecified)</span></code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
@@ -98,7 +99,8 @@
 <div id="summarize-a-physeq-object" class="section level3">
 <h3 class="hasAnchor">
 <a href="#summarize-a-physeq-object" class="anchor"></a>Summarize a physeq object</h3>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"MiscMetabar"</span>)
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/adrientaudiere/MiscMetabar">"MiscMetabar"</a></span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: ggplot2</span>
 <span class="co">#&gt; Loading required package: phyloseq</span>
 <span class="co">#&gt; Loading required package: grid</span>
@@ -114,32 +116,35 @@
 <span class="co">#&gt; The following object is masked from 'package:phyloseq':</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;     phyloseq_to_deseq2</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"phyloseq"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"esophagus"</span>)
-<span class="fu"><a href="reference/summary_plot_phyloseq.html">summary_plot_phyloseq</a></span>(<span class="no">esophagus</span>)</pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://dx.plos.org/10.1371/journal.pone.0061217">"phyloseq"</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"esophagus"</span><span class="op">)</span>
+<span class="fu"><a href="reference/summary_plot_phyloseq.html">summary_plot_phyloseq</a></span><span class="op">(</span><span class="va">esophagus</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-example-1.png" width="100%"></p>
 </div>
 <div id="create-an-interactive-table-of-the-tax_table" class="section level3">
 <h3 class="hasAnchor">
 <a href="#create-an-interactive-table-of-the-tax_table" class="anchor"></a>Create an interactive table of the tax_table</h3>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"GlobalPatterns"</span>)
-<span class="fu"><a href="reference/tax_datatable.html">tax_datatable</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html">subset_taxa</a></span>(<span class="no">GlobalPatterns</span>,
-             <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(<span class="no">GlobalPatterns</span>@<span class="kw">otu_table</span>)<span class="kw">&gt;</span><span class="fl">100000</span>))</pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"GlobalPatterns"</span><span class="op">)</span>
+<span class="fu"><a href="reference/tax_datatable.html">tax_datatable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html">subset_taxa</a></span><span class="op">(</span><span class="va">GlobalPatterns</span>,
+             <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">GlobalPatterns</span><span class="op">@</span><span class="va">otu_table</span><span class="op">)</span><span class="op">&gt;</span><span class="fl">100000</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-2-1.png" width="100%"></p>
 </div>
 <div id="sankey-diagramme-of-the-tax_table" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sankey-diagramme-of-the-tax_table" class="anchor"></a>Sankey diagramme of the tax_table</h3>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="no">GP</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html">subset_taxa</a></span>(<span class="no">GlobalPatterns</span>, <span class="no">GlobalPatterns</span>@<span class="kw">tax_table</span>[,<span class="fl">1</span>] <span class="kw">==</span> <span class="st">"Archaea"</span>)
-<span class="fu"><a href="reference/sankey_phyloseq.html">sankey_phyloseq</a></span>(<span class="no">GP</span>, <span class="kw">taxa</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>:<span class="fl">5</span>))</pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">GP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html">subset_taxa</a></span><span class="op">(</span><span class="va">GlobalPatterns</span>, <span class="va">GlobalPatterns</span><span class="op">@</span><span class="va">tax_table</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="st">"Archaea"</span><span class="op">)</span>
+<span class="fu"><a href="reference/sankey_phyloseq.html">sankey_phyloseq</a></span><span class="op">(</span><span class="va">GP</span>, taxa <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-3-1.png" width="100%"></p>
 </div>
 <div id="circle-for-visualise-distribution-of-taxa-in-function-of-samples-variables" class="section level3">
 <h3 class="hasAnchor">
 <a href="#circle-for-visualise-distribution-of-taxa-in-function-of-samples-variables" class="anchor"></a>Circle for visualise distribution of taxa in function of samples variables</h3>
-<div class="sourceCode" id="cb5"><pre class="r"><span class="fu"><a href="reference/otu_circle.html">otu_circle</a></span>(<span class="no">GP</span>, <span class="st">'SampleType'</span>, <span class="kw">taxa</span> <span class="kw">=</span> <span class="st">"Class"</span>)
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/otu_circle.html">otu_circle</a></span><span class="op">(</span><span class="va">GP</span>, <span class="st">'SampleType'</span>, taxa <span class="op">=</span> <span class="st">"Class"</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Only 4 modalities are plot (44.44%). Use 'min_prop_mod' to plot more samples."</span>
-<span class="co">#&gt; [1] "Only 4 taxa are plot (44.44%). Use 'min_prop_tax' to plot more taxa"</span></pre></div>
+<span class="co">#&gt; [1] "Only 4 taxa are plot (44.44%). Use 'min_prop_tax' to plot more taxa"</span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
 </div>
 </div>
@@ -178,7 +183,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

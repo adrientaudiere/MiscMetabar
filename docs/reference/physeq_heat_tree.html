@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MiscMetabar</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.21</span>
       </span>
     </div>
 
@@ -82,7 +82,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -93,7 +93,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/adrientaudiere/MiscMetabar/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -119,14 +119,14 @@
     <p>Heat tree from `metacoder` package using `tax_table` slot</p>
     </div>
 
-    <pre class="usage"><span class='fu'>physeq_heat_tree</span>(<span class='no'>physeq</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>physeq_heat_tree</span><span class='op'>(</span><span class='va'>physeq</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>physeq</th>
-      <td><p>(required): A <code>phyloseq-class</code> object</p></td>
+      <td><p>(required): A <code><a href='https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html'>phyloseq-class</a></code> object</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -137,23 +137,28 @@
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A plot</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Adrien Taudière</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"GlobalPatterns"</span>)
-<span class='no'>GPsubset</span> <span class='kw'>&lt;-</span> <span class='fu'>subset_taxa</span>(<span class='no'>GlobalPatterns</span>,
-                        <span class='no'>GlobalPatterns</span>@<span class='kw'>tax_table</span>[, <span class='fl'>1</span>] <span class='kw'>==</span> <span class='st'>'Bacteria'</span>)
-<span class='no'>GPsubset</span> <span class='kw'>&lt;-</span> <span class='fu'>subset_taxa</span>(<span class='no'>GPsubset</span>,
-                        <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>rowSums</a></span>(<span class='no'>GPsubset</span>@<span class='kw'>otu_table</span>) <span class='kw'>&gt;</span> <span class='fl'>1000</span>)</div><div class='output co'>#&gt; <span class='error'>Error in rowSums(GPsubset@otu_table): objet 'GPsubset' introuvable</span></div><div class='input'><span class='no'>GPsubset</span> <span class='kw'>&lt;-</span> <span class='fu'>subset_taxa</span>(<span class='no'>GPsubset</span>, <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>rowSums</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>GPsubset</span>@<span class='kw'>tax_table</span>)) <span class='kw'>==</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='error'>Error in rowSums(is.na(GPsubset@tax_table)): objet 'GPsubset' introuvable</span></div><div class='input'>
-<span class='fu'>physeq_heat_tree</span>(<span class='no'>GPsubset</span>,
-                 <span class='kw'>node_size</span> <span class='kw'>=</span> <span class='no'>n_obs</span>,
-                 <span class='kw'>node_color</span> <span class='kw'>=</span> <span class='no'>n_obs</span>,
-                 <span class='kw'>node_label</span> <span class='kw'>=</span> <span class='no'>taxon_names</span>,
-                 <span class='kw'>tree_label</span> <span class='kw'>=</span> <span class='no'>taxon_names</span>,
-                 <span class='kw'>node_size_trans</span> <span class='kw'>=</span> <span class='st'>"log10 area"</span>)</div><div class='output co'>#&gt; <span class='message'>The following 17689 of 19008 (93.1%) input indexes have `NA` in their classifications:</span>
-#&gt; <span class='message'>   4, 6, 7, 8, 9, 10 ... 19003, 19004, 19005, 19006, 19007, 19008</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `as.tbl()` is deprecated as of dplyr 1.0.0.</span>
-#&gt; <span class='warning'>Please use `tibble::as_tibble()` instead.</span>
-#&gt; <span class='warning'><span style='color: #555555;'>This warning is displayed once every 8 hours.</span><span></span>
-#&gt; <span class='warning'></span><span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span><span></span></div><div class='img'><img src='physeq_heat_tree-1.png' alt='' width='700' height='433' /></div></span></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"GlobalPatterns"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>GPsubset</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html'>subset_taxa</a></span><span class='op'>(</span><span class='va'>GlobalPatterns</span>,</span>
+<span class='r-in'>                        <span class='va'>GlobalPatterns</span><span class='op'>@</span><span class='va'>tax_table</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span> <span class='op'>==</span> <span class='st'>'Bacteria'</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>GPsubset</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html'>subset_taxa</a></span><span class='op'>(</span><span class='va'>GPsubset</span>,</span>
+<span class='r-in'>                        <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>rowSums</a></span><span class='op'>(</span><span class='va'>GPsubset</span><span class='op'>@</span><span class='va'>otu_table</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>1000</span><span class='op'>)</span></span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in h(simpleError(msg, call)):</span> erreur d'ï¿½valuation de l'argument 'x' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'rowSums' : objet 'GPsubset' introuvable</span>
+<span class='r-in'><span class='va'>GPsubset</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html'>subset_taxa</a></span><span class='op'>(</span><span class='va'>GPsubset</span>, <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>rowSums</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>GPsubset</span><span class='op'>@</span><span class='va'>tax_table</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>==</span> <span class='fl'>0</span><span class='op'>)</span></span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in h(simpleError(msg, call)):</span> erreur d'ï¿½valuation de l'argument 'x' lors de la sï¿½lection d'une mï¿½thode pour la fonction 'rowSums' : objet 'GPsubset' introuvable</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>physeq_heat_tree</span><span class='op'>(</span><span class='va'>GPsubset</span>,</span>
+<span class='r-in'>                 node_size <span class='op'>=</span> <span class='va'>n_obs</span>,</span>
+<span class='r-in'>                 node_color <span class='op'>=</span> <span class='va'>n_obs</span>,</span>
+<span class='r-in'>                 node_label <span class='op'>=</span> <span class='va'>taxon_names</span>,</span>
+<span class='r-in'>                 tree_label <span class='op'>=</span> <span class='va'>taxon_names</span>,</span>
+<span class='r-in'>                 node_size_trans <span class='op'>=</span> <span class='st'>"log10 area"</span><span class='op'>)</span></span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in strsplit(ranks_ref$ranks, split = ","):</span> objet 'ranks_ref' introuvable</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -169,7 +174,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

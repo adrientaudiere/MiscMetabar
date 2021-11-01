@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MiscMetabar</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.21</span>
       </span>
     </div>
 
@@ -82,7 +82,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -93,7 +93,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/adrientaudiere/MiscMetabar/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -119,25 +119,25 @@
     <p>Plot DESeq2 results for a phyloseq or a DESeq2 object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plot_deseq2_phyloseq</span>(
-  <span class='no'>data</span>,
-  <span class='kw'>contrast</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tax_table</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.01</span>,
-  <span class='kw'>taxa</span> <span class='kw'>=</span> <span class='st'>"Genus"</span>,
-  <span class='kw'>select_taxa</span> <span class='kw'>=</span> <span class='st'>"No"</span>,
-  <span class='kw'>color_tax</span> <span class='kw'>=</span> <span class='st'>"Phylum"</span>,
-  <span class='kw'>tax_depth</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>plot_deseq2_phyloseq</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  contrast <span class='op'>=</span> <span class='cn'>NULL</span>,
+  tax_table <span class='op'>=</span> <span class='cn'>NULL</span>,
+  alpha <span class='op'>=</span> <span class='fl'>0.01</span>,
+  taxa <span class='op'>=</span> <span class='st'>"Genus"</span>,
+  select_taxa <span class='op'>=</span> <span class='st'>"No"</span>,
+  color_tax <span class='op'>=</span> <span class='st'>"Phylum"</span>,
+  tax_depth <span class='op'>=</span> <span class='cn'>NULL</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data</th>
-      <td><p>(required): a <code>phyloseq-class</code> or a
+      <td><p>(required): a <code><a href='https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html'>phyloseq-class</a></code> or a
 <code><a href='https://rdrr.io/pkg/DESeq2/man/DESeqDataSet.html'>DESeqDataSet-class</a></code> object.</p></td>
     </tr>
     <tr>
@@ -151,7 +151,7 @@ man page for more details.</p></td>
       <td><p>: Required if data is a
 <code><a href='https://rdrr.io/pkg/DESeq2/man/DESeqDataSet.html'>DESeqDataSet-class</a></code> object.
 The taxonomic table used to find the <code>taxa</code> and <code>color_taxa</code>
-arguments. If data is a <code>phyloseq-class</code> object, data@tax_table
+arguments. If data is a <code><a href='https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html'>phyloseq-class</a></code> object, data@tax_table
 is used.</p></td>
     </tr>
     <tr>
@@ -178,7 +178,7 @@ color vector.</p></td>
       <td><p>(default = NULL): Taxonomic depth to test for differential
 distribution among contrast. If Null the analysis is done at the OTU
 (i.e. Species) level. If not Null data need to be a
-<code>phyloseq-class</code> object.</p></td>
+<code><a href='https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html'>phyloseq-class</a></code> object.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -194,24 +194,38 @@ or <code><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>ggplot</code>2 plot representing DESeq2 results</p>
+    <p>A <code><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></code>2 plot representing DESeq2 results</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/DESeq2/man/DESeq.html'>DESeq</a></code></p>
 <p><code><a href='https://rdrr.io/pkg/DESeq2/man/results.html'>results</a></code></p>
 <p><code><a href='plot_edgeR_phyloseq.html'>plot_edgeR_phyloseq</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Adrien Taudière</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"GlobalPatterns"</span>)
-<span class='no'>GP</span> <span class='kw'>&lt;-</span> <span class='fu'>subset_taxa</span>(<span class='no'>GlobalPatterns</span>, <span class='no'>GlobalPatterns</span>@<span class='kw'>tax_table</span>[, <span class='fl'>1</span>] <span class='kw'>==</span> <span class='st'>'Archaea'</span>)
-<span class='no'>GP</span> <span class='kw'>&lt;-</span> <span class='fu'>subset_samples</span>(<span class='no'>GP</span>, <span class='no'>GP</span>@<span class='kw'>sam_data</span>$<span class='no'>SampleType</span> <span class='kw'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Soil"</span>, <span class='st'>"Skin"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in GP@sam_data$SampleType %in% c("Soil", "Skin"): objet 'GP' introuvable</span></div><div class='input'><span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>DESeq2</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/DESeq2/man/DESeq.html'>DESeq</a></span>(<span class='fu'><a href='phyloseq_to_deseq2.html'>phyloseq_to_deseq2</a></span>(<span class='no'>GP</span>, ~ <span class='no'>SampleType</span>),
-<span class='kw'>test</span> <span class='kw'>=</span> <span class='st'>'Wald'</span>, <span class='kw'>fitType</span> <span class='kw'>=</span> <span class='st'>'local'</span>)</div><div class='output co'>#&gt; <span class='message'>converting counts to integer mode</span></div><div class='output co'>#&gt; <span class='message'>  Note: levels of factors in the design contain characters other than</span>
-#&gt; <span class='message'>  letters, numbers, '_' and '.'. It is recommended (but not required) to use</span>
-#&gt; <span class='message'>  only letters, numbers, and delimiters '_' or '.', as these are safe characters</span>
-#&gt; <span class='message'>  for column names in R. [This is a message, not an warning or error]</span></div><div class='output co'>#&gt; <span class='message'>estimating size factors</span></div><div class='output co'>#&gt; <span class='error'>Error in estimateSizeFactorsForMatrix(counts(object), locfunc = locfunc,     geoMeans = geoMeans, controlGenes = controlGenes): every gene contains at least one zero, cannot compute log geometric means</span></div><div class='input'><span class='fu'>plot_deseq2_phyloseq</span>(<span class='no'>res</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'SampleType'</span>, <span class='st'>'Soil'</span>, <span class='st'>'Skin'</span>),
-                   <span class='kw'>tax_table</span> <span class='kw'>=</span> <span class='no'>GP</span>@<span class='kw'>tax_table</span>, <span class='kw'>color_tax</span> <span class='kw'>=</span> <span class='st'>'Kingdom'</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot_deseq2_phyloseq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table,     color_tax = "Kingdom"): objet 'res' introuvable</span></div><div class='input'><span class='fu'>plot_deseq2_phyloseq</span>(<span class='no'>res</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'SampleType'</span>, <span class='st'>'Soil'</span>, <span class='st'>'Skin'</span>),
-                   <span class='kw'>tax_table</span> <span class='kw'>=</span> <span class='no'>GP</span>@<span class='kw'>tax_table</span>, <span class='kw'>color_tax</span> <span class='kw'>=</span> <span class='st'>'Kingdom'</span>,
-                   <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.7</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot_deseq2_phyloseq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table,     color_tax = "Kingdom", alpha = 0.7): objet 'res' introuvable</span></div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"GlobalPatterns"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>GP</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html'>subset_taxa</a></span><span class='op'>(</span><span class='va'>GlobalPatterns</span>, <span class='va'>GlobalPatterns</span><span class='op'>@</span><span class='va'>tax_table</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span> <span class='op'>==</span> <span class='st'>'Archaea'</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>GP</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html'>subset_samples</a></span><span class='op'>(</span><span class='va'>GP</span>, <span class='va'>GP</span><span class='op'>@</span><span class='va'>sam_data</span><span class='op'>$</span><span class='va'>SampleType</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Soil"</span>, <span class='st'>"Skin"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in h(simpleError(msg, call)):</span> erreur d'ï¿½valuation de l'argument 'x' lors de la sï¿½lection d'une mï¿½thode pour la fonction '%in%' : objet 'GP' introuvable</span>
+<span class='r-in'><span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'>DESeq2</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/DESeq2/man/DESeq.html'>DESeq</a></span><span class='op'>(</span><span class='fu'><a href='phyloseq_to_deseq2.html'>phyloseq_to_deseq2</a></span><span class='op'>(</span><span class='va'>GP</span>, <span class='op'>~</span> <span class='va'>SampleType</span><span class='op'>)</span>,</span>
+<span class='r-in'>test <span class='op'>=</span> <span class='st'>'Wald'</span>, fitType <span class='op'>=</span> <span class='st'>'local'</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> converting counts to integer mode</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   Note: levels of factors in the design contain characters other than</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   letters, numbers, '_' and '.'. It is recommended (but not required) to use</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   only letters, numbers, and delimiters '_' or '.', as these are safe characters</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   for column names in R. [This is a message, not a warning or an error]</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> estimating size factors</span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in estimateSizeFactorsForMatrix(counts(object), locfunc = locfunc,     geoMeans = geoMeans, controlGenes = controlGenes):</span> every gene contains at least one zero, cannot compute log geometric means</span>
+<span class='r-in'><span class='fu'>plot_deseq2_phyloseq</span><span class='op'>(</span><span class='va'>res</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'SampleType'</span>, <span class='st'>'Soil'</span>, <span class='st'>'Skin'</span><span class='op'>)</span>,</span>
+<span class='r-in'>                   tax_table <span class='op'>=</span> <span class='va'>GP</span><span class='op'>@</span><span class='va'>tax_table</span>, color_tax <span class='op'>=</span> <span class='st'>'Kingdom'</span><span class='op'>)</span></span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in plot_deseq2_phyloseq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table,     color_tax = "Kingdom"):</span> objet 'res' introuvable</span>
+<span class='r-in'><span class='fu'>plot_deseq2_phyloseq</span><span class='op'>(</span><span class='va'>res</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>'SampleType'</span>, <span class='st'>'Soil'</span>, <span class='st'>'Skin'</span><span class='op'>)</span>,</span>
+<span class='r-in'>                   tax_table <span class='op'>=</span> <span class='va'>GP</span><span class='op'>@</span><span class='va'>tax_table</span>, color_tax <span class='op'>=</span> <span class='st'>'Kingdom'</span>,</span>
+<span class='r-in'>                   alpha <span class='op'>=</span> <span class='fl'>0.7</span><span class='op'>)</span></span>
+<span class='r-err co'><span class='r-pr'>#&gt;</span> <span class='error'>Error in plot_deseq2_phyloseq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table,     color_tax = "Kingdom", alpha = 0.7):</span> objet 'res' introuvable</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -227,7 +241,7 @@ or <code><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

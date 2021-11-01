@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot accumulation curves for <code>phyloseq-class</code> object — accu_plot • MiscMetabar</title>
+<title>Plot accumulation curves for phyloseq-class object — accu_plot • MiscMetabar</title>
 
 
 <!-- jquery -->
@@ -41,7 +41,7 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Plot accumulation curves for <code>phyloseq-class</code> object — accu_plot" />
+<meta property="og:title" content="Plot accumulation curves for phyloseq-class object — accu_plot" />
 <meta property="og:description" content="Plot accumulation curves for phyloseq-class object" />
 
 
@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MiscMetabar</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.21</span>
       </span>
     </div>
 
@@ -82,7 +82,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -93,7 +93,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/adrientaudiere/MiscMetabar/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -110,36 +110,36 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot accumulation curves for <code>phyloseq-class</code> object</h1>
+    <h1>Plot accumulation curves for <code><a href='https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html'>phyloseq-class</a></code> object</h1>
     <small class="dont-index">Source: <a href='https://github.com/adrientaudiere/MiscMetabar/blob/master/R/plot_functions.R'><code>R/plot_functions.R</code></a></small>
     <div class="hidden name"><code>accu_plot.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Plot accumulation curves for <code>phyloseq-class</code> object</p>
+    <p>Plot accumulation curves for <code><a href='https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html'>phyloseq-class</a></code> object</p>
     </div>
 
-    <pre class="usage"><span class='fu'>accu_plot</span>(
-  <span class='no'>physeq</span>,
-  <span class='kw'>fact</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>nb_seq</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>step</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>by.fact</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>ci_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='kw'>leg</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>print_sam_names</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>accu_plot</span><span class='op'>(</span>
+  <span class='va'>physeq</span>,
+  fact <span class='op'>=</span> <span class='cn'>NULL</span>,
+  nb_seq <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  step <span class='op'>=</span> <span class='cn'>NULL</span>,
+  by.fact <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  ci_col <span class='op'>=</span> <span class='cn'>NULL</span>,
+  col <span class='op'>=</span> <span class='cn'>NULL</span>,
+  lwd <span class='op'>=</span> <span class='fl'>3</span>,
+  leg <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  print_sam_names <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  ci <span class='op'>=</span> <span class='fl'>2</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>physeq</th>
-      <td><p>(required): a <code>phyloseq-class</code> object.</p></td>
+      <td><p>(required): a <code><a href='https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html'>phyloseq-class</a></code> object.</p></td>
     </tr>
     <tr>
       <th>fact</th>
@@ -193,8 +193,8 @@ standard error to plot confidence intervall</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments passed on to <code>ggplot</code>
-if nb_seq = TRUE or to <code><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></code> if nb_seq = FALSE</p>
+      <td><p>Additional arguments passed on to <code><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></code>
+if nb_seq = TRUE or to <code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></code> if nb_seq = FALSE</p>
 <p>data("GlobalPatterns")
 GP &lt;- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == 'Archaea')
 accu_plot(GP, 'SampleType', nb_seq = TRUE,
@@ -204,12 +204,15 @@ accu_plot(GP, 'SampleType', nb_seq = TRUE,
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>ggplot</code>2 plot representing the richness
+    <p>A <code><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></code>2 plot representing the richness
 accumulation plot if nb_seq = TRUE, else, if nb_seq = FALSE
 return a base plot.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/vegan/man/specaccum.html'>specaccum</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Adrien Taudière</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -226,7 +229,7 @@ return a base plot.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot OTU circle for <code>phyloseq-class</code> object — otu_circle • MiscMetabar</title>
+<title>Plot OTU circle for phyloseq-class object — otu_circle • MiscMetabar</title>
 
 
 <!-- jquery -->
@@ -41,7 +41,7 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Plot OTU circle for <code>phyloseq-class</code> object — otu_circle" />
+<meta property="og:title" content="Plot OTU circle for phyloseq-class object — otu_circle" />
 <meta property="og:description" content="Plot OTU circle for phyloseq-class object" />
 
 
@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MiscMetabar</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.21</span>
       </span>
     </div>
 
@@ -82,7 +82,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -93,7 +93,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/adrientaudiere/MiscMetabar/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -110,37 +110,37 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot OTU circle for <code>phyloseq-class</code> object</h1>
+    <h1>Plot OTU circle for <code><a href='https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html'>phyloseq-class</a></code> object</h1>
     <small class="dont-index">Source: <a href='https://github.com/adrientaudiere/MiscMetabar/blob/master/R/plot_functions.R'><code>R/plot_functions.R</code></a></small>
     <div class="hidden name"><code>otu_circle.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Plot OTU circle for <code>phyloseq-class</code> object</p>
+    <p>Plot OTU circle for <code><a href='https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html'>phyloseq-class</a></code> object</p>
     </div>
 
-    <pre class="usage"><span class='fu'>otu_circle</span>(
-  <span class='kw'>physeq</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>fact</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>taxa</span> <span class='kw'>=</span> <span class='st'>"Order"</span>,
-  <span class='kw'>nb_seq</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>rarefy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>min_prop_tax</span> <span class='kw'>=</span> <span class='fl'>0.01</span>,
-  <span class='kw'>min_prop_mod</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
-  <span class='kw'>gap_degree</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>start_degree</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>row_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>grid_col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>log10trans</span> <span class='kw'>=</span> <span class='no'>F</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>otu_circle</span><span class='op'>(</span>
+  physeq <span class='op'>=</span> <span class='cn'>NULL</span>,
+  fact <span class='op'>=</span> <span class='cn'>NULL</span>,
+  taxa <span class='op'>=</span> <span class='st'>"Order"</span>,
+  nb_seq <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  rarefy <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  min_prop_tax <span class='op'>=</span> <span class='fl'>0.01</span>,
+  min_prop_mod <span class='op'>=</span> <span class='fl'>0.1</span>,
+  gap_degree <span class='op'>=</span> <span class='cn'>NULL</span>,
+  start_degree <span class='op'>=</span> <span class='cn'>NULL</span>,
+  row_col <span class='op'>=</span> <span class='cn'>NULL</span>,
+  grid_col <span class='op'>=</span> <span class='cn'>NULL</span>,
+  log10trans <span class='op'>=</span> <span class='cn'>F</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>physeq</th>
-      <td><p>(required): a <code>phyloseq-class</code> object.</p></td>
+      <td><p>(required): a <code><a href='https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html'>phyloseq-class</a></code> object.</p></td>
     </tr>
     <tr>
       <th>fact</th>
@@ -217,14 +217,26 @@ order of grid_col corresponds to order of sectors.</p></td>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/circlize/man/chordDiagram.html'>chordDiagram</a></code></p>
 <p><code><a href='https://rdrr.io/pkg/circlize/man/circos.par.html'>circos.par</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Adrien Taudière</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"GlobalPatterns"</span>)
-<span class='no'>GP</span> <span class='kw'>&lt;-</span> <span class='fu'>subset_taxa</span>(<span class='no'>GlobalPatterns</span>, <span class='no'>GlobalPatterns</span>@<span class='kw'>tax_table</span>[, <span class='fl'>1</span>] <span class='kw'>==</span> <span class='st'>'Archaea'</span>)
-<span class='fu'>otu_circle</span>(<span class='no'>GP</span>, <span class='st'>'SampleType'</span>)</div><div class='output co'>#&gt; [1] "Only 4 modalities are plot (44.44%). Use 'min_prop_mod' to plot more samples."
-#&gt; [1] "Only 5 taxa are plot (45.45%). Use 'min_prop_tax' to plot more taxa"</div><div class='img'><img src='otu_circle-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>otu_circle</span>(<span class='no'>GP</span>, <span class='st'>'SampleType'</span>, <span class='kw'>nb_seq</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "Only 4 modalities are plot (44.44%). Use 'min_prop_mod' to plot more samples."
-#&gt; [1] "Only 9 taxa are plot (81.82%). Use 'min_prop_tax' to plot more taxa"</div><div class='img'><img src='otu_circle-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>otu_circle</span>(<span class='no'>GP</span>, <span class='st'>'SampleType'</span>, <span class='kw'>taxa</span> <span class='kw'>=</span> <span class='st'>"Class"</span>)</div><div class='output co'>#&gt; [1] "Only 4 modalities are plot (44.44%). Use 'min_prop_mod' to plot more samples."
-#&gt; [1] "Only 4 taxa are plot (44.44%). Use 'min_prop_tax' to plot more taxa"</div><div class='img'><img src='otu_circle-3.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"GlobalPatterns"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>GP</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html'>subset_taxa</a></span><span class='op'>(</span><span class='va'>GlobalPatterns</span>, <span class='va'>GlobalPatterns</span><span class='op'>@</span><span class='va'>tax_table</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span> <span class='op'>==</span> <span class='st'>'Archaea'</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>otu_circle</span><span class='op'>(</span><span class='va'>GP</span>, <span class='st'>'SampleType'</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Only 4 modalities are plot (44.44%). Use 'min_prop_mod' to plot more samples."</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Only 5 taxa are plot (45.45%). Use 'min_prop_tax' to plot more taxa"</span>
+<span class='r-plt img'><img src='otu_circle-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'>otu_circle</span><span class='op'>(</span><span class='va'>GP</span>, <span class='st'>'SampleType'</span>, nb_seq <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Only 4 modalities are plot (44.44%). Use 'min_prop_mod' to plot more samples."</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Only 9 taxa are plot (81.82%). Use 'min_prop_tax' to plot more taxa"</span>
+<span class='r-plt img'><img src='otu_circle-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'>otu_circle</span><span class='op'>(</span><span class='va'>GP</span>, <span class='st'>'SampleType'</span>, taxa <span class='op'>=</span> <span class='st'>"Class"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Only 4 modalities are plot (44.44%). Use 'min_prop_mod' to plot more samples."</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Only 4 taxa are plot (44.44%). Use 'min_prop_tax' to plot more taxa"</span>
+<span class='r-plt img'><img src='otu_circle-3.png' alt='' width='700' height='433' /></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -240,7 +252,7 @@ order of grid_col corresponds to order of sectors.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

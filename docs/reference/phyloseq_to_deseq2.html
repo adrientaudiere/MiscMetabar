@@ -80,7 +80,7 @@ tutorials for more details." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">MiscMetabar</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.21</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ tutorials for more details." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -99,7 +99,7 @@ tutorials for more details." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/adrientaudiere/MiscMetabar/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -131,20 +131,20 @@ See the
 tutorials for more details.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>phyloseq_to_deseq2</span>(<span class='no'>physeq</span>, <span class='no'>design</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>phyloseq_to_deseq2</span><span class='op'>(</span><span class='va'>physeq</span>, <span class='va'>design</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>physeq</th>
-      <td><p>(required). <code>phyloseq-class</code>.
-Must have a <code>sample_data</code> component.</p></td>
+      <td><p>(required). <code><a href='https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html'>phyloseq-class</a></code>.
+Must have a <code><a href='https://rdrr.io/pkg/phyloseq/man/sample_data-methods.html'>sample_data</a></code> component.</p></td>
     </tr>
     <tr>
       <th>design</th>
       <td><p>(required). A <code><a href='https://rdrr.io/r/stats/formula.html'>formula</a></code> which specifies the design
- of the experiment, taking the form <code><a href='https://rdrr.io/r/stats/formula.html'>formula(~ x + y + z)</a></code>.
+ of the experiment, taking the form <code>formula(~ x + y + z)</code>.
  That is, a formula with right-hand side only.
  By default, the functions in this package and DESeq2
  will use the last variable in the formula (e.g. <code>z</code>)
@@ -172,7 +172,7 @@ a following call to <code><a href='https://rdrr.io/pkg/DESeq2/man/DESeq.html'>DE
     <p>A <code><a href='https://rdrr.io/pkg/DESeq2/man/DESeqDataSet.html'>DESeqDataSet</a></code> object.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>vignette("phyloseq-mixture-models")</code></p>
+    <div class='dont-index'><p><code><a href='https://cran.rstudio.com/web/packages/phyloseq/vignettes/phyloseq-mixture-models.html'>vignette("phyloseq-mixture-models")</a></code></p>
 <p>The
 <a href='http://joey711.github.io/phyloseq-extensions'>phyloseq-extensions</a>
 tutorials.</p>
@@ -180,17 +180,21 @@ tutorials.</p>
 <p><code><a href='https://rdrr.io/pkg/DESeq2/man/results.html'>results</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'> <span class='co'># Check out the vignette phyloseq-mixture-models for more details.</span>
- <span class='co'># vignette("phyloseq-mixture-models")</span>
- <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>soilrep</span>)
- <span class='fu'>phyloseq_to_deseq2</span>(<span class='no'>soilrep</span>, ~<span class='no'>warmed</span>)</div><div class='output co'>#&gt; <span class='message'>Le chargement a nécessité le package : DESeq2</span></div><div class='output co'>#&gt; <span class='message'>converting counts to integer mode</span></div><div class='output co'>#&gt; class: DESeqDataSet 
-#&gt; dim: 16825 56 
-#&gt; metadata(1): version
-#&gt; assays(1): counts
-#&gt; rownames(16825): OTU_R0 OTU_R1 ... OTU_R9997 OTU_R9998
-#&gt; rowData names(0):
-#&gt; colnames(56): a_C026 a_C066 ... a_C161 a_C162
-#&gt; colData names(4): Treatment warmed clipped Sample</div></pre>
+    <pre class="examples"><span class='r-in'> <span class='co'># Check out the vignette phyloseq-mixture-models for more details.</span></span>
+<span class='r-in'> <span class='co'># vignette("phyloseq-mixture-models")</span></span>
+<span class='r-in'> <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>soilrep</span><span class='op'>)</span></span>
+<span class='r-in'> <span class='fu'>phyloseq_to_deseq2</span><span class='op'>(</span><span class='va'>soilrep</span>, <span class='op'>~</span><span class='va'>warmed</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Le chargement a nécessité le package : DESeq2</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> converting counts to integer mode</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> class: DESeqDataSet </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> dim: 16825 56 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> metadata(1): version</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> assays(1): counts</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> rownames(16825): OTU_R0 OTU_R1 ... OTU_R9997 OTU_R9998</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> rowData names(0):</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> colnames(56): a_C026 a_C066 ... a_C161 a_C162</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> colData names(4): Treatment warmed clipped Sample</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -206,7 +210,7 @@ tutorials.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
