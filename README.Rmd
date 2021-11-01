@@ -15,7 +15,8 @@ knitr::opts_chunk$set(
 
 # MiscMetabar
 
-The goal of MiscMetabar is to complete the great package dada2 and phyloseq. See the pkdown site [here](https://adrientaudiere.github.io/MiscMetabar/)
+The goal of MiscMetabar is to complete the great package dada2 and phyloseq. 
+See the pkdown site [here](https://adrientaudiere.github.io/MiscMetabar/).
 
 ## Installation
 
