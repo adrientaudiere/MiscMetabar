@@ -552,7 +552,7 @@ sankey_phyloseq <-
       mat <- matrix(ncol = 3)
       colnames(mat) <- c("Var1", "Var2", "value")
       tax_table_interm <-
-        physeq@tax_table[rep(1:dim(physeq@tax_table)[1],
+        physeq@tax_table[rep(1:ntaxa(physeq),
                              times = taxa_sums(physeq))]
 
       for (i in 1:(length(taxa) - 1)) {
