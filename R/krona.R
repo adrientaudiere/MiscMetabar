@@ -1,5 +1,7 @@
 ################################################################################
-#' Make Krona files
+#' Make Krona files using [KronaTools](https://github.com/marbl/Krona/wiki).
+#' Need the installation of kronatools on the computer ([installation instruction](https://github.com/marbl/Krona/wiki/Installing)).
+#' Functino merge_krona allows merging multiple html files in one interactive krona file
 #' @aliases merge_krona
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param file (required): the location of the html file to save

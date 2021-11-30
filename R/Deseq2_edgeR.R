@@ -168,6 +168,11 @@ phyloseq_to_deseq2 <- function(physeq, design, ...) {
       See ?phyloseq_to_deseq2"
     )
   }
+  if (!physeq@otu_table@taxa_are_rows) {
+    otu_tab <- t(physeq@otu_table)
+  } else {
+    otu_tab <- physeq@otu_table
+  }
   # Enforce orientation. Samples are columns
   if (!taxa_are_rows(physeq)) {
     physeq <- t(physeq)
@@ -214,6 +219,7 @@ phyloseq_to_deseq2 <- function(physeq, design, ...) {
 #'   \code{\link{phyloseq-class}} object.
 #' @param verbose : whether the function print some information during
 #'   the computation
+#' @param jitter_width (default=0.1) : width for the jitter positionning
 #' @param ... Additional arguments passed on to \code{\link[DESeq2]{DESeq}}
 #'   or \code{\link[ggplot2]{ggplot}}
 #'
@@ -248,6 +254,7 @@ plot_deseq2_phyloseq <-
            color_tax = "Phylum",
            tax_depth = NULL,
            verbose = TRUE,
+           jitter_width = 0.1,
            ...) {
     if (!inherits(data, "phyloseq")) {
       if (!inherits(data, "DESeqDataSet")) {
@@ -347,7 +354,8 @@ plot_deseq2_phyloseq <-
     if (!sum(are_colors(color_tax)) > 0) {
       p <-
         ggplot(d, aes(x = tax, y = log2FoldChange, color = col_tax), ...) +
-        geom_point(size = 6) +
+        geom_point(size = 6,
+                   position = position_jitter(w=jitter_width, h=0)) +
         theme(axis.text.x = element_text(
           angle = -90,
           hjust = 0,
@@ -357,9 +365,9 @@ plot_deseq2_phyloseq <-
           title = paste(
             "Change in abundance for ",
             contrast[1],
-            " (",
+            " (top:",
             contrast[2],
-            " vs ",
+            " vs down:",
             contrast[3],
             ")",
             sep = ""
@@ -368,7 +376,8 @@ plot_deseq2_phyloseq <-
     } else {
       p <-
         ggplot(d, aes(x = tax, y = log2FoldChange), ...) +
-        geom_point(size = 6, color = d$col_tax) +
+        geom_point(size = 6, color = d$col_tax,
+                   position = position_jitter(w=jitter_width, h=0)) +
         theme(axis.text.x = element_text(
           angle = -90,
           hjust = 0,
@@ -378,9 +387,9 @@ plot_deseq2_phyloseq <-
           title = paste(
             "Change in abundance for ",
             contrast[1],
-            " (",
+            " (top:",
             contrast[2],
-            " vs ",
+            " vs down:",
             contrast[3],
             ")",
             sep = ""
