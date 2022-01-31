@@ -25,6 +25,7 @@ Suggests:
     edgeR,
     gridExtra,
     here,
+    multcompView,
     networkD3,
     pbapply,
     plyr, 

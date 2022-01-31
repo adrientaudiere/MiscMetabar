@@ -180,7 +180,8 @@ accu_plot <-
     }
 
     if (nb_seq) {
-      fact_interm <- as.factor(unlist(unclass(physeq@sam_data[, fact])[fact]))
+      fact_interm <-
+        as.factor(unlist(unclass(physeq@sam_data[, fact])[fact]))
 
       if (!by.fact) {
         x <- t(physeq@otu_table)
@@ -633,19 +634,20 @@ sankey_phyloseq <-
       mat2[, 1] <-
         gsub(paste("\\<", tax_sank$nodes[i, 2], "\\>", sep = ""),
              tax_sank$nodes[i,
-                           1],
+                            1],
              mat2[, 1])
       mat2[, 2] <-
         gsub(paste("\\<", tax_sank$nodes[i, 2], "\\>", sep = ""),
              tax_sank$nodes[i,
-                           1],
+                            1],
              mat2[, 2])
     }
 
     tax_sank$links <- apply(mat2, 2, as.numeric)
     tax_sank$links <-
       data.frame(tax_sank$links[rowSums(is.na(tax_sank$links)) == 0, ])
-    tax_sank$nodes <- as.data.frame(as.character(tax_sank$nodes[, 2]))
+    tax_sank$nodes <-
+      as.data.frame(as.character(tax_sank$nodes[, 2]))
     names(tax_sank$nodes) <- c("name")
     names(tax_sank$links) <- c("source", "target", "value")
     if (is.null(units)) {
@@ -908,45 +910,128 @@ multiplot <-
 #' @param physeq (required): A \code{\link{phyloseq-class}} object
 #' @param variable (required): The variable to test
 #' @param color_fac (optional): The variable to color the barplot
+#' @param letters (optional, default=FALSE): If set to TRUE, the plot
+#' show letters based on p-values for comparison. Use the
+#'  \code{\link[multcompView]{multcompLetters}} function from the package
+#'  multcompLetters.
 #'
 #' @return A list of 4 ggplot2 plot.
-#'   * plot_Hill_0 : the boxplot of Hill number 0 (= species richness)
+#' - plot_Hill_0 : the boxplot of Hill number 0 (= species richness)
 #'     against the variable
-#'   * plot_Hill_1 : the boxplot of Hill number 1 (= Shannon index)
+#' - plot_Hill_1 : the boxplot of Hill number 1 (= Shannon index)
 #'      against the variable
-#'   * plot_Hill_2 : the boxplot of Hill number 2 (= Simpson index)
+#' - plot_Hill_2 : the boxplot of Hill number 2 (= Simpson index)
 #'     against the variable
-#'   * plot_tuckey : plot the result of the Tuckey HSD test
+#' - plot_tuckey : plot the result of the Tuckey HSD test
 #'
 #' @export
 
-hill_phyloseq <- function(physeq, variable, color_fac) {
-  var <- sym(variable)
-  color_fac <- sym(color_fac)
+hill_phyloseq <-
+  function(physeq,
+           variable,
+           color_fac = NA,
+           letters = FALSE) {
+    var <- sym(variable)
+    if (is.na(color_fac)) {
+      color_fac <- sym(variable)
+    }
+    else{
+      color_fac <- sym(color_fac)
+    }
 
-  otu_hill <-
-    vegan::renyi(physeq@otu_table, scale = c(0, 1, 2), hill = T)
-  colnames(otu_hill) <- c("Hill_0", "Hill_1", "Hill_2")
+    otu_hill <-
+      vegan::renyi(physeq@otu_table, scale = c(0, 1, 2), hill = T)
+    colnames(otu_hill) <- c("Hill_0", "Hill_1", "Hill_2")
 
-  df_hill <- data.frame(otu_hill, physeq@sam_data)
-  df_hill[, c(1:3)] <- apply(df_hill[, c(1:3)], 2, as.numeric)
+    df_hill <- data.frame(otu_hill, physeq@sam_data)
+    df_hill[, c(1:3)] <- apply(df_hill[, c(1:3)], 2, as.numeric)
 
-  p_0 <- ggplot(df_hill, aes(group = !!var, Hill_0))  +
-    geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac)))
-  p_1 <- ggplot(df_hill, aes(group = !!var, Hill_1))  +
-    geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac)))
-  p_2 <- ggplot(df_hill, aes(group = !!var, Hill_2))  +
-    geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac)))
 
-  p_var <- hill_tuckey_phyloseq(physeq, variable)
+    p_var <- hill_tuckey_phyloseq(physeq, variable)
 
-  res <- list(
-    "plot_Hill_0" = p_0,
-    "plot_Hill_1" = p_1,
-    "plot_Hill_2" = p_2,
-    "plot_tuckey" = p_var
-  )
-}
+    p_0 <- ggplot(df_hill, aes(group = !!var, Hill_0))  +
+      geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac)))
+    p_1 <- ggplot(df_hill, aes(group = !!var, Hill_1))  +
+      geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac)))
+    p_2 <- ggplot(df_hill, aes(group = !!var, Hill_2))  +
+      geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac)))
+
+
+    if (letters) {
+      ### HILL 0
+      data_h0 <-
+        p_var$data[grep("Hill Number 0", p_var$data[, 5]),]
+      data_h0_pval <- data_h0$p.adj
+      names(data_h0_pval) <- data_h0$modality
+      letters <- multcompLetters(data_h0_pval, reversed = T)$Letters
+
+      p_0 <- p_0 +
+        geom_label(
+          data = p_0$data %>% group_by(!!var) %>%
+            summarise(max_Hill = max(Hill_0)),
+          aes(x = max_Hill + 1),
+          label = letters[match(names(letters), levels(factor(as.matrix(
+            physeq@sam_data[, variable]
+          ))))],
+          y = ggplot_build(p_0)$data[[1]]$y,
+          size = 4,
+          stat = "unique",
+          parse = TRUE
+        )
+
+      ### HILL 1
+
+      data_h1 <-
+        p_var$data[grep("Hill Number 1", p_var$data[, 5]),]
+      data_h1_pval <- data_h1$p.adj
+      names(data_h1_pval) <- data_h1$modality
+      letters <- multcompLetters(data_h1_pval, reversed = T)$Letters
+
+      p_1 <- p_1 +
+        geom_label(
+          data = p_1$data %>% group_by(!!var) %>%
+            summarise(max_Hill = max(Hill_1)),
+          aes(x = max_Hill + 1),
+          label = letters[match(names(letters), levels(factor(as.matrix(
+            physeq@sam_data[, variable]
+          ))))],
+          y = ggplot_build(p_1)$data[[1]]$y,
+          size = 4,
+          stat = "unique",
+          parse = TRUE
+        )
+
+      ### HILL 2
+
+      data_h2 <-
+        p_var$data[grep("Hill Number 2", p_var$data[, 5]),]
+      data_h2_pval <- data_h2$p.adj
+      names(data_h2_pval) <- data_h2$modality
+      letters <- multcompLetters(data_h2_pval, reversed = T)$Letters
+
+      p_2 <- p_2 +
+        geom_label(
+          data = p_2$data %>% group_by(!!var) %>%
+            summarise(max_Hill = max(Hill_2)),
+          aes(x = max_Hill + 0.5),
+          label = letters[match(names(letters), levels(factor(as.matrix(
+            physeq@sam_data[, variable]
+          ))))],
+          y = ggplot_build(p_1)$data[[1]]$y,
+          size = 4,
+          stat = "unique",
+          parse = TRUE
+        )
+
+    }
+
+    res <- list(
+      "plot_Hill_0" = p_0,
+      "plot_Hill_1" = p_1,
+      "plot_Hill_2" = p_2,
+      "plot_tuckey" = p_var
+    )
+  }
 ################################################################################
 
 ################################################################################
@@ -1128,16 +1213,7 @@ summary_plot_phyloseq <- function(physeq) {
 #'                  tree_label = taxon_names,
 #'                  node_size_trans = "log10 area")
 
-physeq_heat_tree <- function(physeq, ...){
+physeq_heat_tree <- function(physeq, ...) {
   data_metacoder <- metacoder::parse_phyloseq(physeq)
   metacoder::heat_tree(data_metacoder, ...)
 }
-
-
-
-
-
-
-
-
-

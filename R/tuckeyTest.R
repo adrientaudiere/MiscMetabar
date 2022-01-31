@@ -1,5 +1,6 @@
 
 
+
 ################################################################################
 #' Calculate hill number and compute Tuckey post-hoc test
 #' @aliases hill_tuckey_phyloseq
@@ -46,19 +47,24 @@ hill_tuckey_phyloseq <- function(physeq, modality) {
           tuk2$modality_vector,
           tuk3$modality_vector)
   df <-
-    data.frame(df, "x" = paste(
-      "Hill Number",
-      c(rep("0", dim(
-        tuk3$modality_vector
-      )[1]),
-      rep("1", dim(
-        tuk3$modality_vector
-      )[1]),
-      rep("2", dim(
-        tuk3$modality_vector
-      )[1])),
-      rownames(tuk1$modality_vector)
-    ))
+    data.frame(
+      df,
+      "x" = paste(
+        "Hill Number",
+        c(rep("0", dim(
+          tuk3$modality_vector
+        )[1]),
+        rep("1", dim(
+          tuk3$modality_vector
+        )[1]),
+        rep("2", dim(
+          tuk3$modality_vector
+        )[1])),
+        rownames(tuk1$modality_vector)
+      ),
+      "modality" =
+        rownames(tuk1$modality_vector)
+    )
 
   p <- ggplot(data = df) +
     geom_linerange(aes(ymax = upr, ymin = lwr, x = x), size = 2) +
