@@ -69,17 +69,17 @@ group/condition for each sample/library. Alternatively, you may provide
 the name of a sample variable. This name should be among the output of
 <code>sample_variables(physeq)</code>, in which case
 <code>get_variable(physeq, group)</code> would return either a character vector or
-  factor.
+factor.
 This is passed on to <code><a href="https://rdrr.io/pkg/edgeR/man/DGEList.html" class="external-link">DGEList</a></code>,
 and you may find further details or examples in its documentation.</p></dd>
 <dt>method</dt>
 <dd><p>(Optional). The label of the edgeR-implemented normalization
-  to use.
- See <code><a href="https://rdrr.io/pkg/edgeR/man/calcNormFactors.html" class="external-link">calcNormFactors</a></code> for supported options and details.
- The default option is <code>"RLE"</code>, which is a scaling factor method
- proposed by Anders and Huber (2010).
- At time of writing, the <a href="https://rdrr.io/pkg/edgeR/man/edgeR-package.html" class="external-link">edgeR</a> package supported
- the following options to the <code>method</code> argument:</p>
+to use.
+See <code><a href="https://rdrr.io/pkg/edgeR/man/calcNormFactors.html" class="external-link">calcNormFactors</a></code> for supported options and details.
+The default option is <code>"RLE"</code>, which is a scaling factor method
+proposed by Anders and Huber (2010).
+At time of writing, the <a href="https://rdrr.io/pkg/edgeR/man/edgeR-package.html" class="external-link">edgeR</a> package supported
+the following options to the <code>method</code> argument:</p>
 <p><code>c("TMM", "RLE", "upperquartile", "none")</code>.</p></dd>
 <dt>...</dt>
 <dd><p>Additional arguments passed on to <code><a href="https://rdrr.io/pkg/edgeR/man/DGEList.html" class="external-link">DGEList</a></code></p></dd>

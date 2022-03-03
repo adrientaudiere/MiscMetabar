@@ -2,8 +2,8 @@
 % Please edit documentation in R/dada_phyloseq.R
 \name{blast_to_phyloseq}
 \alias{blast_to_phyloseq}
-\title{Blast some sequence against `refseq` slot of a \code{\link{phyloseq-class}}
-  object.}
+\title{Blast some sequence against \code{refseq} slot of a \code{\link{phyloseq-class}}
+object.}
 \usage{
 blast_to_phyloseq(
   physeq,
@@ -31,16 +31,16 @@ blast_to_phyloseq(
 each sequence in seq2search}
 
 \item{score_filter}{(default = TRUE): does results are filter by score. If
-FALSE, `id_cut` and `bit_score_cut` are ignored}
+FALSE, \code{id_cut} and \code{bit_score_cut} are ignored}
 
 \item{list_no_output_query}{(default to FALSE): does the result table include
-query sequences for which `blastn` does not find any correspondence}
+query sequences for which \code{blastn} does not find any correspondence}
 }
 \value{
 the blast table
 }
 \description{
-`r lifecycle::badge("maturing")`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
 \dontrun{

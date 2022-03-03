@@ -2,19 +2,19 @@
 % Please edit documentation in R/dada_phyloseq.R
 \name{add_dna_to_phyloseq}
 \alias{add_dna_to_phyloseq}
-\title{Add dna in `refseq` slot of a physeq object using taxa names and renames taxa
-  using ASV_1, ASV_2, …}
+\title{Add dna in \code{refseq} slot of a physeq object using taxa names and renames taxa
+using ASV_1, ASV_2, …}
 \usage{
 add_dna_to_phyloseq(physeq)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
-using the `dada2` package}
+using the \code{dada2} package}
 }
 \value{
-A new \code{\link{phyloseq-class}} object with `refseq` slot and new
-  taxa names
+A new \code{\link{phyloseq-class}} object with \code{refseq} slot and new
+taxa names
 }
 \description{
-`r lifecycle::badge("stable")`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }

@@ -56,9 +56,9 @@ standard error to plot confidence intervall}
 if nb_seq = TRUE or to \code{\link{plot}} if nb_seq = FALSE
 
 data("GlobalPatterns")
-GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == 'Archaea')
+GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table\link{, 1} == 'Archaea')
 accu_plot(GP, 'SampleType', nb_seq = TRUE,
- by.fact = TRUE)}
+by.fact = TRUE)}
 }
 \value{
 A \code{\link{ggplot}}2 plot representing the richness
@@ -66,7 +66,7 @@ accumulation plot if nb_seq = TRUE, else, if nb_seq = FALSE
 return a base plot.
 }
 \description{
-`r lifecycle::badge("maturing")`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \seealso{
 \code{\link[vegan]{specaccum}}

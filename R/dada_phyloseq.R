@@ -1,4 +1,4 @@
-if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
+if (getRversion() >= "2.15.1") utils::globalVariables(c("."))
 
 ################################################################################
 #' Add dna in `refseq` slot of a physeq object using taxa names and renames taxa
@@ -45,12 +45,12 @@ add_dna_to_phyloseq <- function(physeq) {
 #' @param obj_names (default: NULL) :
 #'   A list of names corresponding to the list of objects
 #' @param clean_physeq (Logical, default = FALSE) If true, empty samples and empty ASV are discarded before clustering.
-#' 
+#'
 #' @return The number of sequences, clusters (e.g. OTUs, ASVs) and samples for
 #'   each object.
 #' @export
 
-track_wkflow <- function(list_of_objects,obj_names = NULL, clean_physeq = FALSE) {
+track_wkflow <- function(list_of_objects, obj_names = NULL, clean_physeq = FALSE) {
   message("Compute the number of sequences")
   if (!is.null(obj_names)) {
     names(list_of_objects) <- obj_names
@@ -60,12 +60,12 @@ track_wkflow <- function(list_of_objects,obj_names = NULL, clean_physeq = FALSE)
       message(paste("Start object of class:", class(object), sep = " "))
       if (class(object) == "phyloseq") {
         rowSums(object@otu_table)
-        if (clean_physeq){
-          if (sum(sample_sums(physeq)==0)>0){
-            physeq <- subset_samples(physeq, sample_sums(physeq)>0)
+        if (clean_physeq) {
+          if (sum(sample_sums(physeq) == 0) > 0) {
+            physeq <- subset_samples(physeq, sample_sums(physeq) > 0)
           }
-          if (sum(taxa_sums(physeq)==0)>0){
-            physeq <- subset_taxa(physeq, taxa_sums(physeq)>0)
+          if (sum(taxa_sums(physeq) == 0) > 0) {
+            physeq <- subset_taxa(physeq, taxa_sums(physeq) > 0)
           }
         }
       } else if (class(object) == "matrix") {
@@ -517,15 +517,15 @@ write_phyloseq <- function(physeq, path = NULL) {
 #'
 #' @return a list of for object
 #' - "new_physeq": The new phyloseq object (class physeq)
-#' - "discrepancy_vector": A vector of discrepancy showing for each taxonomic level the proportion of identic value 
-#'   before and after lulu reclustering. A value of 0.6 stands for 60% of ASV before re-clusering have 
-#'   identical value after re-clustering. In other word, 40% of ASV are assigned to a different taxonomic 
+#' - "discrepancy_vector": A vector of discrepancy showing for each taxonomic level the proportion of identic value
+#'   before and after lulu reclustering. A value of 0.6 stands for 60% of ASV before re-clusering have
+#'   identical value after re-clustering. In other word, 40% of ASV are assigned to a different taxonomic
 #'   value. NA value are not counted as discrepancy.
-#' - "res_lulu": A list of the result from the lulu function 
+#' - "res_lulu": A list of the result from the lulu function
 #' - "merged_ASV": the data.frame used to merged ASV
 #'
-#' @export 
-#' @examples 
+#' @export
+#' @examples
 #' data(data_fungi_sp_known)
 #' lulu_phyloseq(data_fungi_sp_known)
 #' @author Adrien Taudière \email{adrien.taudiere@@zaclys.net}
@@ -541,15 +541,15 @@ lulu_phyloseq <- function(physeq,
                           vsearchpath = "vsearch",
                           verbose = FALSE,
                           clean_physeq = FALSE) {
-  if (clean_physeq){
-    if (sum(sample_sums(physeq)==0)>0){
-      physeq <- subset_samples(physeq, sample_sums(physeq)>0)
+  if (clean_physeq) {
+    if (sum(sample_sums(physeq) == 0) > 0) {
+      physeq <- subset_samples(physeq, sample_sums(physeq) > 0)
     }
-    if (sum(taxa_sums(physeq)==0)>0){
-      physeq <- subset_taxa(physeq, taxa_sums(physeq)>0)
+    if (sum(taxa_sums(physeq) == 0) > 0) {
+      physeq <- subset_taxa(physeq, taxa_sums(physeq) > 0)
     }
   }
-  
+
   message("Start Vsearch usearch_global")
   dna <- Biostrings::DNAStringSet(physeq@refseq)
   Biostrings::writeXStringSet(dna, "temp.fasta")
@@ -569,10 +569,10 @@ lulu_phyloseq <- function(physeq,
     )
 
   match_list <- utils::read.csv(file = "match_list.txt", sep = "\t")
-  
+
   if (!requireNamespace("lulu")) {
     requireNamespace(devtools)
-    install_github("adrientaudiere/lulu")  
+    install_github("adrientaudiere/lulu")
   }
 
   message("Lulu algorithm")
@@ -587,6 +587,9 @@ lulu_phyloseq <- function(physeq,
   }
   if (file.exists("temp.uc")) {
     file.remove("temp.uc")
+  }
+  if (file.exists("match_list.txt")) {
+    file.remove("match_list.txt")
   }
 
   merged <- res_lulu$otu_map[res_lulu$otu_map$curated == "merged", ]
@@ -604,14 +607,15 @@ lulu_phyloseq <- function(physeq,
   new_physeq@otu_table <- otu_table(res_lulu$curated_table, taxa_are_rows = TRUE)
 
   if (verbose) {
-    message(paste("The number of taxa decrease from ", ntaxa(physeq), " to ", ntaxa(new_physeq), ".", sep=""))
-     message("See the discrepancy_vector to verify the degree of discrepancy in taxonomy due to lulu re-clustering.")
+    message(paste("The number of taxa decrease from ", ntaxa(physeq), " to ", ntaxa(new_physeq), ".", sep = ""))
+    message("See the discrepancy_vector to verify the degree of discrepancy in taxonomy due to lulu re-clustering.")
   }
-  return(list("new_physeq" = new_physeq,
-              "discrepancy_vector" = test_vector, 
-              "res_lulu" = res_lulu, 
-              "merged_ASV" = merged)
-        )
+  return(list(
+    "new_physeq" = new_physeq,
+    "discrepancy_vector" = test_vector,
+    "res_lulu" = res_lulu,
+    "merged_ASV" = merged
+  ))
 }
 
 ################################################################################

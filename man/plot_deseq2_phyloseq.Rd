@@ -60,19 +60,22 @@ or \code{\link[ggplot2]{ggplot}}}
 A \code{\link{ggplot}}2 plot representing DESeq2 results
 }
 \description{
-`r lifecycle::badge("experimental")`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
 data("GlobalPatterns")
-GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == 'Archaea')
+GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 GP <- subset_samples(GP, GP@sam_data$SampleType \%in\% c("Soil", "Skin"))
-res <- DESeq2::DESeq(phyloseq_to_deseq2(GP, ~ SampleType),
-test = 'Wald', fitType = 'local')
-plot_deseq2_phyloseq(res, c('SampleType', 'Soil', 'Skin'),
-                   tax_table = GP@tax_table, color_tax = 'Kingdom')
-plot_deseq2_phyloseq(res, c('SampleType', 'Soil', 'Skin'),
-                   tax_table = GP@tax_table, color_tax = 'Kingdom',
-                   alpha = 0.7)
+res <- DESeq2::DESeq(phyloseq_to_deseq2(GP, ~SampleType),
+  test = "Wald", fitType = "local"
+)
+plot_deseq2_phyloseq(res, c("SampleType", "Soil", "Skin"),
+  tax_table = GP@tax_table, color_tax = "Kingdom"
+)
+plot_deseq2_phyloseq(res, c("SampleType", "Soil", "Skin"),
+  tax_table = GP@tax_table, color_tax = "Kingdom",
+  alpha = 0.7
+)
 }
 \seealso{
 \code{\link[DESeq2]{DESeq}}

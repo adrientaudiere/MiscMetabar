@@ -1,11 +1,11 @@
 ################################################################################
 #' Make Krona files using [KronaTools](https://github.com/marbl/Krona/wiki).
-#' @description 
-#'`r lifecycle::badge("maturing")`
-#' 
+#' @description
+#' `r lifecycle::badge("maturing")`
+#'
 #' Need the installation of kronatools on the computer ([installation instruction](https://github.com/marbl/Krona/wiki/Installing)).
 #' Function merge_krona allows merging multiple html files in one interactive krona file
-#' 
+#'
 #' @aliases merge_krona
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param file (required): the location of the html file to save
@@ -22,11 +22,10 @@
 #'
 #' @examples
 #' data("GlobalPatterns")
-#' GA <- subset_taxa(GlobalPatterns, Phylum=="Acidobacteria")
+#' GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
 #' # krona(GA, "Number.of.sequences.html")
 #' # krona(GA, "Number.of.OTUs.html", nb_seq = F)
 #' # merge_krona(c("Number.of.sequences.html", "Number.of.OTUs.html"))
-#'
 #' @return A html file
 #' @export
 #' @author Adrien Taudière
@@ -49,8 +48,7 @@ krona <-
     if (is.null(name)) {
       if (nb_seq) {
         name <- "Number.of.sequences"
-      }
-      else {
+      } else {
         name <- "Number.of.OTUs"
       }
     }
@@ -63,26 +61,29 @@ krona <-
 
     df <- df[c(ncol(df), 2:ncol(df) - 1)]
     res <-
-      lapply(split(df, seq_along(physeq@tax_table[, 1])), function(x)
-        as.vector(as.matrix(x))[!is.na(unlist(x))])
+      lapply(split(df, seq_along(physeq@tax_table[, 1])), function(x) {
+        as.vector(as.matrix(x))[!is.na(unlist(x))]
+      })
 
     res <-
-      lapply(res, function(x)
+      lapply(res, function(x) {
         if (length(x) < add_unassigned_rank) {
           x <-
             c(x, "unassigned")[c(seq_len(x) - 1, length(x) + 1, length(x))]
         } else {
           x
-        })
+        }
+      })
 
     interm_txt <- paste(tempdir(), "/", name, ".html", sep = "")
 
     lapply(res,
-           cat,
-           "\n",
-           file = interm_txt,
-           append = TRUE,
-           sep = "\t")
+      cat,
+      "\n",
+      file = interm_txt,
+      append = TRUE,
+      sep = "\t"
+    )
 
     cmd <- paste("ktImportText ", interm_txt, " -o ", file, sep = "")
     system(command = cmd)
@@ -92,10 +93,11 @@ krona <-
 merge_krona <- function(files = NULL, output = "mergeKrona.html") {
   cmd <-
     paste("ktImportKrona ",
-          paste(files, collapse = " "),
-          " -o ",
-          output,
-          sep = "")
+      paste(files, collapse = " "),
+      " -o ",
+      output,
+      sep = ""
+    )
 
   system(command = cmd)
 }

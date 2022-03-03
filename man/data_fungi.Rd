@@ -5,7 +5,8 @@
 \alias{data_fungi}
 \title{Some fungal OTU in phyloseq format}
 \format{
-A physeq object containing 1420 taxa with references sequences described by 14 taxonomic ranks
+A physeq object containing 1420 taxa with references sequences
+described by 14 taxonomic ranks
 and 185 samples described by 14 sample variables:
 }
 \usage{

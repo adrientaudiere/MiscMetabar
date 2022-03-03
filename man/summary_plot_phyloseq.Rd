@@ -7,15 +7,15 @@
 summary_plot_phyloseq(physeq)
 }
 \arguments{
-\item{physeq}{(required): A \code{\link{phyloseq-class}} object}
+\item{physeq}{(required): A \code{\link{phyloseq-class}} object. For the moment refseq slot need to be not Null.}
 }
 \value{
 A ggplot2 object
 }
 \description{
-`r lifecycle::badge("maturing")`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
-  data(esophagus)
-  summary_plot_phyloseq(esophagus)
+data(data_fungi)
+summary_plot_phyloseq(data_fungi)
 }

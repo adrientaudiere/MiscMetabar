@@ -45,17 +45,17 @@ the taxonomy}
 }
 \value{
 A \code{\link[networkD3]{sankeyNetwork}} plot representing the
- taxonomic distribution of OTUs or sequences. If \code{fact} is set,
- represent the distribution of the last taxonomic level in the modalities
- of \code{fact}
+taxonomic distribution of OTUs or sequences. If \code{fact} is set,
+represent the distribution of the last taxonomic level in the modalities
+of \code{fact}
 }
 \description{
-`r lifecycle::badge("maturing")`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
 data("GlobalPatterns")
-GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[,1] == "Archaea")
-sankey_phyloseq(GP, fact = 'SampleType')
+GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+sankey_phyloseq(GP, fact = "SampleType")
 sankey_phyloseq(GP, taxa = c(1:4), min_prop_tax = 0.01)
 sankey_phyloseq(GP, taxa = c(1:4), min_prop_tax = 0.01, nb_seq = TRUE)
 }

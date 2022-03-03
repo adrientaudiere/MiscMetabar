@@ -3,7 +3,7 @@
 \name{dist_pos_control}
 \alias{dist_pos_control}
 \title{Calculate ecological distance among positive controls vs
-  distance for all samples}
+distance for all samples}
 \usage{
 dist_pos_control(physeq, samples_names, method = "bray")
 }
@@ -18,19 +18,19 @@ the distance, parsed to vegdist}
 }
 \value{
 A list of two dataframes with
-  (i) the distance among positive controls and
-  (ii) the distance among all samples
+(i) the distance among positive controls and
+(ii) the distance among all samples
 }
 \description{
-#' `r lifecycle::badge("maturing")`
+#' \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \details{
 Compute distance among positive controls,
-  i.e. samples which are duplicated
-  to test for variation, for example in
-   (i) a step in the sampling,
-   (ii) a step in the extraction,
-   (iii) a step in the sequencing.
+i.e. samples which are duplicated
+to test for variation, for example in
+(i) a step in the sampling,
+(ii) a step in the extraction,
+(iii) a step in the sequencing.
 }
 \author{
 Adrien Taudière

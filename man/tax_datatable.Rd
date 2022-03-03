@@ -20,12 +20,14 @@ level using their column numbers (e.g. taxonomic_level = c(1:7))}
 A datatable
 }
 \description{
-`r lifecycle::badge("maturing")`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
 data("GlobalPatterns")
-tax_datatable(subset_taxa(GlobalPatterns,
-              rowSums(GlobalPatterns@otu_table)>10000))
+tax_datatable(subset_taxa(
+  GlobalPatterns,
+  rowSums(GlobalPatterns@otu_table) > 10000
+))
 }
 \author{
 Adrien Taudière

@@ -16,5 +16,5 @@ multiplot(..., plotlist = NULL, cols = 1, layout = NULL)
 \item{layout}{: A matrix specifying the layout. If present, 'cols' is ignored.}
 }
 \description{
-`r lifecycle::badge("stable")`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }

@@ -40,14 +40,16 @@ or \code{\link[ggplot2]{ggplot}}}
 A \code{\link{ggplot}}2 plot representing edgeR results
 }
 \description{
-`r lifecycle::badge("maturing")`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
 data(GlobalPatterns)
-plot_edgeR_phyloseq(GlobalPatterns, c('SampleType', 'Soil', 'Feces'),
-                   color_tax = 'Kingdom')
-plot_edgeR_phyloseq(GlobalPatterns, c('SampleType', 'Soil', 'Feces'),
-                   taxa = 'Class', color_tax = 'Kingdom')
+plot_edgeR_phyloseq(GlobalPatterns, c("SampleType", "Soil", "Feces"),
+  color_tax = "Kingdom"
+)
+plot_edgeR_phyloseq(GlobalPatterns, c("SampleType", "Soil", "Feces"),
+  taxa = "Class", color_tax = "Kingdom"
+)
 }
 \seealso{
 \code{\link[edgeR]{exactTest}}

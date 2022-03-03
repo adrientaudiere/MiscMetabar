@@ -22,7 +22,7 @@ plot_mt(res, color_tax = "Phylum") + scale_color_hue()}
 a \code{\link{ggplot}}2 plot of result of a mt test
 }
 \description{
-`r lifecycle::badge("maturing")`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \seealso{
 \code{\link[phyloseq]{mt}}

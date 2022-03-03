@@ -15,12 +15,12 @@ hill_tuckey_phyloseq(physeq, modality)
 A ggplot2 object
 }
 \description{
-`r lifecycle::badge("maturing")`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
 data("GlobalPatterns")
-GlobalPatterns@sam_data[,'Soil_logical'] <-
- ifelse(GlobalPatterns@sam_data[,"SampleType"] == "Soil", "Soil", "Not Soil")
+GlobalPatterns@sam_data[, "Soil_logical"] <-
+  ifelse(GlobalPatterns@sam_data[, "SampleType"] == "Soil", "Soil", "Not Soil")
 hill_tuckey_phyloseq(GlobalPatterns, "Soil_logical")
 }
 \author{

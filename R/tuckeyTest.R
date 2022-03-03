@@ -1,6 +1,6 @@
 ################################################################################
 #' Calculate hill number and compute Tuckey post-hoc test
-#' @description 
+#' @description
 #' `r lifecycle::badge("maturing")`
 #' @aliases hill_tuckey_phyloseq
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
@@ -12,10 +12,9 @@
 #' @author Adrien Taudière
 #' @examples
 #' data("GlobalPatterns")
-#' GlobalPatterns@sam_data[,'Soil_logical'] <-
-#'  ifelse(GlobalPatterns@sam_data[,"SampleType"] == "Soil", "Soil", "Not Soil")
+#' GlobalPatterns@sam_data[, "Soil_logical"] <-
+#'   ifelse(GlobalPatterns@sam_data[, "SampleType"] == "Soil", "Soil", "Not Soil")
 #' hill_tuckey_phyloseq(GlobalPatterns, "Soil_logical")
-
 hill_tuckey_phyloseq <- function(physeq, modality) {
   modality_vector <-
     as.factor(as.vector(unlist(unclass(physeq@sam_data[, modality]))))
@@ -27,8 +26,9 @@ hill_tuckey_phyloseq <- function(physeq, modality) {
 
   otu_hill <-
     vegan::renyi(t(physeq@otu_table),
-          scale = c(0, 1, 2),
-          hill = T)
+      scale = c(0, 1, 2),
+      hill = T
+    )
 
   hill_1 <- otu_hill$"0"
   hill_2 <- otu_hill$"1"
@@ -42,23 +42,27 @@ hill_tuckey_phyloseq <- function(physeq, modality) {
     stats::TukeyHSD(stats::aov(lm(hill_3 ~ sqrt(read_numbers))$residuals ~ modality_vector))
 
   df <-
-    rbind(tuk1$modality_vector,
-          tuk2$modality_vector,
-          tuk3$modality_vector)
+    rbind(
+      tuk1$modality_vector,
+      tuk2$modality_vector,
+      tuk3$modality_vector
+    )
   df <-
     data.frame(
       df,
       "x" = paste(
         "Hill Number",
-        c(rep("0", dim(
-          tuk3$modality_vector
-        )[1]),
-        rep("1", dim(
-          tuk3$modality_vector
-        )[1]),
-        rep("2", dim(
-          tuk3$modality_vector
-        )[1])),
+        c(
+          rep("0", dim(
+            tuk3$modality_vector
+          )[1]),
+          rep("1", dim(
+            tuk3$modality_vector
+          )[1]),
+          rep("2", dim(
+            tuk3$modality_vector
+          )[1])
+        ),
         rownames(tuk1$modality_vector)
       ),
       "modality" =
@@ -68,10 +72,12 @@ hill_tuckey_phyloseq <- function(physeq, modality) {
   p <- ggplot(data = df) +
     geom_linerange(aes(ymax = upr, ymin = lwr, x = x), size = 2) +
     geom_point(aes(x = x, y = diff),
-               size = 4,
-               shape = 21,
-               fill = "white") +
-    coord_flip() + theme_gray() +
+      size = 4,
+      shape = 21,
+      fill = "white"
+    ) +
+    coord_flip() +
+    theme_gray() +
     geom_hline(yintercept = 0) +
     ylab("Differences in mean levels (value and confidence intervall at 95%)") +
     xlab("") +

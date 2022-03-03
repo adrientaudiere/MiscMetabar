@@ -1,8 +1,8 @@
 ################################################################################
 #' Plot edgeR results for a phyloseq or a edgeR object.
-#' 
+#'
 #' `r lifecycle::badge("maturing")`
-#'  
+#'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param contrast (required):This argument specifies what comparison
 #'   to extract from the object to build a results table.
@@ -21,11 +21,13 @@
 #' @export
 #'
 #' @examples
-#'data(GlobalPatterns)
-#'plot_edgeR_phyloseq(GlobalPatterns, c('SampleType', 'Soil', 'Feces'),
-#'                    color_tax = 'Kingdom')
-#'plot_edgeR_phyloseq(GlobalPatterns, c('SampleType', 'Soil', 'Feces'),
-#'                    taxa = 'Class', color_tax = 'Kingdom')
+#' data(GlobalPatterns)
+#' plot_edgeR_phyloseq(GlobalPatterns, c("SampleType", "Soil", "Feces"),
+#'   color_tax = "Kingdom"
+#' )
+#' plot_edgeR_phyloseq(GlobalPatterns, c("SampleType", "Soil", "Feces"),
+#'   taxa = "Class", color_tax = "Kingdom"
+#' )
 #' @author Adrien Taudière
 #'
 #' @return A \code{\link{ggplot}}2 plot representing edgeR results
@@ -69,15 +71,17 @@ plot_edgeR_phyloseq <-
     sigtabgen <- subset(sigtab, !is.na(taxa))
 
     d <-
-      tapply(sigtabgen$logFC, sigtabgen[, color_tax], function(x)
-        max(x))
+      tapply(sigtabgen$logFC, sigtabgen[, color_tax], function(x) {
+        max(x)
+      })
     d <- sort(d, TRUE)
     sigtabgen$col_tax <-
       factor(as.character(sigtabgen[, color_tax]), levels = names(d))
 
     d <-
-      tapply(sigtabgen$logFC, sigtabgen[, taxa], function(x)
-        max(x))
+      tapply(sigtabgen$logFC, sigtabgen[, taxa], function(x) {
+        max(x)
+      })
     d <- sort(d, TRUE)
     sigtabgen$tax <-
       factor(as.character(sigtabgen[, taxa]), levels = names(d))
@@ -108,12 +112,12 @@ plot_edgeR_phyloseq <-
 ################################################################################
 
 ################################################################################
-#Plot the result of a DESeq2 test
+# Plot the result of a DESeq2 test
 ################################################################################
 #' Plot DESeq2 results for a phyloseq or a DESeq2 object.
-#' @description 
-#'`r lifecycle::badge("experimental")`
-#' 
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
 #' @param data (required): a \code{\link{phyloseq-class}} or a
 #' \code{\link[DESeq2]{DESeqDataSet-class}} object.
 #' @param tax_table : Required if data is a
@@ -145,15 +149,18 @@ plot_edgeR_phyloseq <-
 #'
 #' @examples
 #' data("GlobalPatterns")
-#' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == 'Archaea')
+#' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #' GP <- subset_samples(GP, GP@sam_data$SampleType %in% c("Soil", "Skin"))
-#' res <- DESeq2::DESeq(phyloseq_to_deseq2(GP, ~ SampleType),
-#' test = 'Wald', fitType = 'local')
-#' plot_deseq2_phyloseq(res, c('SampleType', 'Soil', 'Skin'),
-#'                    tax_table = GP@tax_table, color_tax = 'Kingdom')
-#' plot_deseq2_phyloseq(res, c('SampleType', 'Soil', 'Skin'),
-#'                    tax_table = GP@tax_table, color_tax = 'Kingdom',
-#'                    alpha = 0.7)
+#' res <- DESeq2::DESeq(phyloseq_to_deseq2(GP, ~SampleType),
+#'   test = "Wald", fitType = "local"
+#' )
+#' plot_deseq2_phyloseq(res, c("SampleType", "Soil", "Skin"),
+#'   tax_table = GP@tax_table, color_tax = "Kingdom"
+#' )
+#' plot_deseq2_phyloseq(res, c("SampleType", "Soil", "Skin"),
+#'   tax_table = GP@tax_table, color_tax = "Kingdom",
+#'   alpha = 0.7
+#' )
 #' @author Adrien Taudière
 #'
 #' @return A \code{\link{ggplot}}2 plot representing DESeq2 results
@@ -183,17 +190,29 @@ plot_deseq2_phyloseq <-
       if (!is.null(tax_depth)) {
         data_tax <- data
         data_tax@otu_table <-
-          otu_table(apply(data@otu_table, 2, function(x)
-            tapply(x,
-                   data@tax_table[, tax_depth], sum)),
-            taxa_are_rows = T)
+          otu_table(apply(data@otu_table, 2, function(x) {
+            tapply(
+              x,
+              data@tax_table[, tax_depth], sum
+            )
+          }),
+          taxa_are_rows = T
+          )
         data_tax@tax_table <-
-          tax_table(apply(data@tax_table[, 1:match(tax_depth,
-                                                   colnames(data@tax_table))],
-                          2, function(x)
-                            xxx <- tapply(x, data@tax_table[, tax_depth],
-                                        function(xx)
-                              xx[1])))
+          tax_table(apply(
+            data@tax_table[, 1:match(
+              tax_depth,
+              colnames(data@tax_table)
+            )],
+            2, function(x) {
+              xxx <- tapply(
+                x, data@tax_table[, tax_depth],
+                function(xx) {
+                  xx[1]
+                }
+              )
+            }
+          ))
         data_tax@refseq <- NULL
         data <- data_tax
         if (is.na(match(taxa, colnames(data@tax_table)))) {
@@ -247,15 +266,17 @@ plot_deseq2_phyloseq <-
       sapply(x, function(xx) {
         tryCatch(
           is.matrix(grDevices::col2rgb(xx)),
-          error = function(e)
+          error = function(e) {
             FALSE
+          }
         )
       })
     }
 
     if (!sum(are_colors(color_tax)) > 0) {
-      x <- tapply(d$log2FoldChange, d[, color_tax], function(x)
-        max(x))
+      x <- tapply(d$log2FoldChange, d[, color_tax], function(x) {
+        max(x)
+      })
       x <- sort(x, TRUE)
       d$col_tax <-
         factor(as.character(d[, color_tax]), levels = names(x))
@@ -264,16 +285,19 @@ plot_deseq2_phyloseq <-
     }
 
     # Compute log2FoldChange values
-    x <- tapply(d$log2FoldChange, d[, taxa], function(x)
-      max(x))
+    x <- tapply(d$log2FoldChange, d[, taxa], function(x) {
+      max(x)
+    })
     x <- sort(x, TRUE)
     d$tax <- factor(as.character(d[, taxa]), levels = names(x))
 
     if (!sum(are_colors(color_tax)) > 0) {
       p <-
         ggplot(d, aes(x = tax, y = log2FoldChange, color = col_tax), ...) +
-        geom_point(size = 6,
-                   position = position_jitter(w=jitter_width, h=0)) +
+        geom_point(
+          size = 6,
+          position = position_jitter(width = jitter_width, h = 0)
+        ) +
         theme(axis.text.x = element_text(
           angle = -90,
           hjust = 0,
@@ -294,8 +318,10 @@ plot_deseq2_phyloseq <-
     } else {
       p <-
         ggplot(d, aes(x = tax, y = log2FoldChange), ...) +
-        geom_point(size = 6, color = d$col_tax,
-                   position = position_jitter(w=jitter_width, h=0)) +
+        geom_point(
+          size = 6, color = d$col_tax,
+          position = position_jitter(width = jitter_width, h = 0)
+        ) +
         theme(axis.text.x = element_text(
           angle = -90,
           hjust = 0,
@@ -362,7 +388,7 @@ phyloseq_to_edgeR <- function(physeq, group, method = "RLE", ...) {
   x <- x + 1
   # Check `group` argument
   if (identical(all.equal(length(group), 1), TRUE) &
-      nsamples(physeq) > 1) {
+    nsamples(physeq) > 1) {
     # Assume that group was a sample variable name (must be categorical)
     group <- get_variable(physeq, group)
   }
@@ -372,7 +398,7 @@ phyloseq_to_edgeR <- function(physeq, group, method = "RLE", ...) {
     taxonomy <- data.frame(methods::as(taxonomy, "matrix"))
   }
   # Now turn into a DGEList
-  y <- DGEList(
+  y <- edgeR::DGEList(
     counts = x,
     group = group,
     genes = taxonomy,

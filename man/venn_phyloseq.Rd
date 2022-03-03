@@ -23,7 +23,6 @@ If print_values is TRUE the object is not a ggplot object.
 Please use print_values = FALSE if you want to add ggplot function
 (cf example).
 
-
 data("enterotype")
 venn_phyloseq(enterotype, fact = 'SeqTech')
 venn_phyloseq(enterotype, fact = 'ClinicalStatus')
@@ -38,7 +37,7 @@ A \code{\link{ggplot}}2 plot representing Venn diagramm of
 modalities of the argument \code{factor}
 }
 \description{
-`r lifecycle::badge("maturing")`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \seealso{
 \code{\link[venneuler]{venneuler}}

@@ -3,9 +3,9 @@
 #'   \code{\link{phyloseq-class}} object with à binary otu_table.
 #' @note  Usefull to test if the results are not biaised by sequences bias
 #'   that appended during PCR or NGS pipeline.
-#' 
-#' @description 
-#'`r lifecycle::badge("maturing")`
+#'
+#' @description
+#' `r lifecycle::badge("maturing")`
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param min_number (default = 1): the minimum number of sequences to put
@@ -17,7 +17,6 @@
 #' @examples
 #' data(enterotype)
 #' enterotype_bin <- as_binary_otu_table(enterotype)
-
 as_binary_otu_table <- function(physeq, min_number = 1) {
   if (!inherits(physeq, "phyloseq")) {
     stop("physeq must be a phyloseq object")
@@ -32,10 +31,10 @@ as_binary_otu_table <- function(physeq, min_number = 1) {
 
 ################################################################################
 #' Compute paired distances among matrix (e.g. otu_table)
-#' 
-#' @description 
-#'`r lifecycle::badge("experimental")`
-#' 
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
 #' @note the first column of the first matrix is compare to the first column of
 #'   the second matrix, the second column of the first matrix is compare to the
 #'   second column of the second matrix and so on.
@@ -62,7 +61,7 @@ dist_bycol <- function(x,
   y <- as.matrix(unclass(y))
 
   if (nrow(x) != nrow(y) |
-      ncol(x) != ncol(y)) {
+    ncol(x) != ncol(y)) {
     stop("x and y must be of the same dimension")
   }
 
@@ -93,11 +92,11 @@ dist_bycol <- function(x,
 
 ################################################################################
 #' List the size of all object of the GlobalEnv.
-#' @description 
-#'`r lifecycle::badge("stable")`
-#' 
+#' @description
+#' `r lifecycle::badge("stable")`
+#'
 #' Code from https://tolstoy.newcastle.edu.au/R/e6/help/09/01/1121.html
-#' 
+#'
 #' @aliases all_object_size
 #' @return a list of size
 #' @export
@@ -114,9 +113,9 @@ all_object_size <- function() {
 #' Simplify taxonomy by removing some unused character such as "k__"
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #'
-#' @description 
-#'`r lifecycle::badge("maturing")`
-#' 
+#' @description
+#' `r lifecycle::badge("maturing")`
+#'
 #' @author Adrien Taudière
 #'
 #' @return A  \code{\link{phyloseq-class}} object with simplified taxonomy

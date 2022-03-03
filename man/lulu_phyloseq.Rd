@@ -2,9 +2,9 @@
 % Please edit documentation in R/dada_phyloseq.R
 \name{lulu_phyloseq}
 \alias{lulu_phyloseq}
-\title{(Lulu)[https://github.com/adrientaudiere/lulu] reclustering of class `physeq` (forked from \url{https://github.com/tobiasgf/lulu}).
- See https://www.nature.com/articles/s41467-017-01312-x for more information on the method.
-`r lifecycle::badge("experimental")`}
+\title{(Lulu)\link{https://github.com/adrientaudiere/lulu} reclustering of class \code{physeq} (forked from \url{https://github.com/tobiasgf/lulu}).
+See https://www.nature.com/articles/s41467-017-01312-x for more information on the method.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}}
 \usage{
 lulu_phyloseq(
   physeq,
@@ -31,28 +31,32 @@ Set to number of cpus/processors to use for the clustering}
 }
 \value{
 a list of for object
-- "new_physeq": The new phyloseq object (class physeq)
-- "discrepancy_vector": A vector of discrepancy showing for each taxonomic level the proportion of identic value 
-  before and after lulu reclustering. A value of 0.6 stands for 60% of ASV before re-clusering have 
-  identical value after re-clustering. In other word, 40% of ASV are assigned to a different taxonomic 
-  value. NA value are not counted as discrepancy.
-- "res_lulu": A list of the result from the lulu function 
-- "merged_ASV": the data.frame used to merged ASV
+\itemize{
+\item "new_physeq": The new phyloseq object (class physeq)
+\item "discrepancy_vector": A vector of discrepancy showing for each taxonomic level the proportion of identic value
+before and after lulu reclustering. A value of 0.6 stands for 60\% of ASV before re-clusering have
+identical value after re-clustering. In other word, 40\% of ASV are assigned to a different taxonomic
+value. NA value are not counted as discrepancy.
+\item "res_lulu": A list of the result from the lulu function
+\item "merged_ASV": the data.frame used to merged ASV
+}
 }
 \description{
-(Lulu)[https://github.com/adrientaudiere/lulu] reclustering of class `physeq` (forked from \url{https://github.com/tobiasgf/lulu}).
- See https://www.nature.com/articles/s41467-017-01312-x for more information on the method.
-`r lifecycle::badge("experimental")`
+(Lulu)\link{https://github.com/adrientaudiere/lulu} reclustering of class \code{physeq} (forked from \url{https://github.com/tobiasgf/lulu}).
+See https://www.nature.com/articles/s41467-017-01312-x for more information on the method.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
 data(data_fungi_sp_known)
 lulu_phyloseq(data_fungi_sp_known)
 }
 \references{
-- LULU : \url{https://github.com/adrientaudiere/lulu}
- forked from \url{https://github.com/tobiasgf/lulu}.
-- VSEARCH can be downloaded from
- \url{https://github.com/torognes/vsearch}.
+\itemize{
+\item LULU : \url{https://github.com/adrientaudiere/lulu}
+forked from \url{https://github.com/tobiasgf/lulu}.
+\item VSEARCH can be downloaded from
+\url{https://github.com/torognes/vsearch}.
+}
 }
 \author{
 Adrien Taudière \email{adrien.taudiere@zaclys.net}

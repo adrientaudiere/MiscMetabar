@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_functions.R
 \name{physeq_heat_tree}
 \alias{physeq_heat_tree}
-\title{Heat tree from `metacoder` package using `tax_table` slot}
+\title{Heat tree from \code{metacoder} package using \code{tax_table} slot}
 \usage{
 physeq_heat_tree(physeq, taxonomic_level = NULL, ...)
 }
@@ -18,22 +18,30 @@ their column numbers (e.g. taxonomic_level = c(1:7))}
 A plot
 }
 \description{
-`r lifecycle::badge("maturing")`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
+\dontrun{
 data("GlobalPatterns")
-GPsubset <- subset_taxa(GlobalPatterns,
-                        GlobalPatterns@tax_table[, 1] == 'Bacteria')
-GPsubset <- subset_taxa(GPsubset,
-                        rowSums(GPsubset@otu_table) > 1000)
+GPsubset <- subset_taxa(
+  GlobalPatterns,
+  GlobalPatterns@tax_table[, 1] == "Bacteria"
+)
+GPsubset <- subset_taxa(
+  GPsubset,
+  rowSums(GPsubset@otu_table) > 1000
+)
 GPsubset <- subset_taxa(GPsubset, rowSums(is.na(GPsubset@tax_table)) == 0)
 
 physeq_heat_tree(GPsubset,
-                 node_size = n_obs,
-                 node_color = n_obs,
-                 node_label = taxon_names,
-                 tree_label = taxon_names,
-                 node_size_trans = "log10 area")
+  node_size = n_obs,
+  node_color = n_obs,
+  node_label = taxon_names,
+  tree_label = taxon_names,
+  node_size_trans = "log10 area"
+)
+}
+
 }
 \author{
 Adrien Taudière

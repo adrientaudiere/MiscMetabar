@@ -20,10 +20,10 @@ samples with the number of sequences per samples for the taxa control}
 \item{method}{(default = "mean"): a method to calculate the cut-off value.
 There is 6 methods:
 (i)   cutoff_seq: discard taxa with less than the number of sequence
-        than taxa control,
+than taxa control,
 (ii)  cutoff_mixt: using mixture models,
 (iii) cutoff_diff: using a minimum difference threshold
-        (need the argument min_diff_for_cutoff)
+(need the argument min_diff_for_cutoff)
 (iv)  min: the minimum of the three firsts methods
 (v)   max: the maximum of the three firsts methods
 (vi)  mean: the mean of the three firsts methods}
@@ -34,7 +34,7 @@ There is 6 methods:
 A new \code{\link{phyloseq-class}} object.
 }
 \description{
-`r lifecycle::badge("experimental")`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \author{
 Adrien Taudière

@@ -17,17 +17,19 @@ A list of names corresponding to the list of objects}
 }
 \value{
 The number of sequences, clusters (e.g. OTUs, ASVs) and samples for
-  each object.
+each object.
 }
 \description{
-`r lifecycle::badge("maturing")`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \details{
-* List of fastq and fastg.gz files -> nb of reads and samples
- * List of dada-class -> nb of reads, clusters (ASV) and samples
- * List of derep-class -> nb of reads, clusters (unique sequences)
-   and samples
- * Matrix of samples x clusters (e.g. otu_table) -> nb of reads,
-   clusters and samples
- * Phyloseq-class -> nb of reads, clusters and samples
+\itemize{
+\item List of fastq and fastg.gz files -> nb of reads and samples
+\item List of dada-class -> nb of reads, clusters (ASV) and samples
+\item List of derep-class -> nb of reads, clusters (unique sequences)
+and samples
+\item Matrix of samples x clusters (e.g. otu_table) -> nb of reads,
+clusters and samples
+\item Phyloseq-class -> nb of reads, clusters and samples
+}
 }

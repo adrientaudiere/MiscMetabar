@@ -3,7 +3,7 @@
 \name{vsearch_search_global}
 \alias{vsearch_search_global}
 \title{Search for a list of sequence in a fasta file against physeq reference
-  sequences using [vsearch](https://github.com/torognes/vsearch)}
+sequences using \href{https://github.com/torognes/vsearch}{vsearch}}
 \usage{
 vsearch_search_global(
   physeq,
@@ -28,5 +28,5 @@ vsearch_search_global(
 A dataframe with uc results (invisible)
 }
 \description{
-`r lifecycle::badge("maturing")`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }

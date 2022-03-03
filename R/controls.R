@@ -5,9 +5,9 @@
 ################################################################################
 #' Calculate ecological distance among positive controls vs
 #'   distance for all samples
-#' 
+#'
 #' #' `r lifecycle::badge("maturing")`
-#' 
+#'
 #' @aliases dist_pos_control
 #' @details  Compute distance among positive controls,
 #'   i.e. samples which are duplicated
@@ -28,35 +28,35 @@
 #' @author Adrien Taudière
 
 dist_pos_control <- function(physeq, samples_names, method = "bray") {
-
   res <- list()
   dist_control <- vector()
 
   for (i in levels(samples_names)) {
-    interm <- physeq@otu_table[samples_names ==  i, ]
+    interm <- physeq@otu_table[samples_names == i, ]
     if (dim(interm)[1] > 1) {
       dist_control <-
         c(dist_control, as.numeric(vegan::vegdist(interm, method = method)))
-    }
-    else {
+    } else {
       dist_control <- c(dist_control, NA)
     }
   }
-  names(dist_control) <-  levels(samples_names)
-  res$dist_control_samples <- data.frame("dist_control" =
-                                         stats::na.omit(dist_control))
+  names(dist_control) <- levels(samples_names)
+  res$dist_control_samples <- data.frame(
+    "dist_control" =
+      stats::na.omit(dist_control)
+  )
 
   # Compute distance among all samples
   if (taxa_are_rows(physeq)) {
     matdist_interm <- t(physeq@otu_table)
-  }
-  else {
+  } else {
     matdist_interm <- physeq@otu_table
   }
 
   res[[1]] <-
     data.frame("distAllSamples" = as.vector(vegdist(
-      matdist_interm, diag = FALSE, upper = TRUE
+      matdist_interm,
+      diag = FALSE, upper = TRUE
     )))
   res[[2]] <-
     data.frame("dist_control_samples" = as.vector(stats::na.omit(dist_control)))
@@ -71,9 +71,9 @@ les")
 
 ################################################################################
 #' Subset taxa using a taxa control (e.g. truffle root tips) through 3 methods.
-#' 
+#'
 #' `r lifecycle::badge("experimental")`
-#' 
+#'
 #' @aliases subset_taxa_tax_control
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param taxa_distri (required): a vector of length equal to the number of
@@ -125,26 +125,27 @@ subset_taxa_tax_control <-
             f = f,
             lower = 1,
             upper = 1000
-          )$root)  # Careful with division by zero if changing lower and upper
+          )$root) # Careful with division by zero if changing lower and upper
         }
 
         physeq_mixture <- as.vector(physeq@otu_table[i, ])
         x_mixture <- physeq_mixture[physeq_mixture > 0]
         if (length(x_mixture) > 25) {
           try(model <-
-                mixtools::normalmixEM(
-                  x = x_mixture,
-                  k = 2,
-                  epsilon = 1e-03,
-                  maxrestarts = 1000
-                ),
-              silent = TRUE)
+            mixtools::normalmixEM(
+              x = x_mixture,
+              k = 2,
+              epsilon = 1e-03,
+              maxrestarts = 1000
+            ),
+          silent = TRUE
+          )
           try(index_lower <-
-                which.min(model$mu), silent = TRUE)
+            which.min(model$mu), silent = TRUE)
           # Index of component with lower mean)
 
           cutoff_mixt[i] <-
-            try(find_cutoff(proba = 0.5,  il = index_lower))
+            try(find_cutoff(proba = 0.5, il = index_lower))
         } else {
           cutoff_mixt[i] <- NA
         }
@@ -166,19 +167,19 @@ subset_taxa_tax_control <-
       }
     }
 
-    if (method == "cutoff_mixt")  {
+    if (method == "cutoff_mixt") {
       cutoffs <- cutoff_mixt
-    } else if (method == "cutoff_diff")  {
+    } else if (method == "cutoff_diff") {
       cutoffs <- cutoff_diff
-    } else  if (method == "cutoff_seq")  {
-      cutoffs <-  cutoff_seq
-    } else  if (method == "mean")  {
+    } else if (method == "cutoff_seq") {
+      cutoffs <- cutoff_seq
+    } else if (method == "mean") {
       cutoffs <-
         apply(cbind(cutoff_mixt, cutoff_diff, cutoff_seq), 1, mean, na.rm = T)
-    } else  if (method == "min")  {
+    } else if (method == "min") {
       cutoffs <-
         apply(cbind(cutoff_mixt, cutoff_diff, cutoff_seq), 1, min, na.rm = T)
-    } else  if (method == "max")  {
+    } else if (method == "max") {
       cutoffs <-
         apply(cbind(cutoff_mixt, cutoff_diff, cutoff_seq), 1, max, na.rm = T)
     } else {

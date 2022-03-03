@@ -1,10 +1,10 @@
 ################################################################################
-#Plot the result of a mt test
+# Plot the result of a mt test
 ################################################################################
 #' Plot the result of a mt test (\code{\link[phyloseq]{mt}})
-#' @description 
+#' @description
 #' `r lifecycle::badge("maturing")`
-#'  
+#'
 #' @param mt (required): result of a mt test
 #' @param alpha (default = 0.05): Choose the cut off p-value to plot taxa
 #' @param color_tax : A taxonomic level to color the points
@@ -29,9 +29,11 @@ plot_mt <-
     d$tax <- as.character(d[, taxa])
     d$tax[is.na(d$tax)] <- "unidentified"
     d$tax <-
-      factor(d$tax, levels =
-               unique(factor(as.character(d[, "Species"]))
-                      [rev(order(d$teststat))]))
+      factor(d$tax,
+        levels =
+          unique(factor(as.character(d[, "Species"]))
+          [rev(order(d$teststat))])
+      )
 
     p <-
       ggplot(d, aes(x = tax, y = teststat, color = tax_col)) +
@@ -48,7 +50,7 @@ plot_mt <-
 
 ################################################################################
 #' Plot accumulation curves for \code{\link{phyloseq-class}} object
-#' @description 
+#' @description
 #' `r lifecycle::badge("maturing")`
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param fact (required): Name of the factor in physeq@sam_data used to plot
@@ -116,7 +118,7 @@ accu_plot <-
       for (i in 1:nlevels(factor_interm)) {
         accu[[i]] <-
           vegan::specaccum(physeq_accu[factor_interm ==
-                                         levels(factor_interm)[i], ])
+            levels(factor_interm)[i], ])
       }
 
       funky_color <-
@@ -143,8 +145,9 @@ accu_plot <-
       if (is.null(ci_col)) {
         transp <- function(col, alpha = 0.5) {
           res <-
-            apply(grDevices::col2rgb(col), 2, function(c)
-              grDevices::rgb(c[1] / 255, c[2] / 255, c[3] / 255, alpha))
+            apply(grDevices::col2rgb(col), 2, function(c) {
+              grDevices::rgb(c[1] / 255, c[2] / 255, c[3] / 255, alpha)
+            })
           return(res)
         }
         ci_col <-
@@ -190,8 +193,9 @@ accu_plot <-
       if (!by.fact) {
         x <- t(physeq@otu_table)
       } else {
-        x <- apply(physeq@otu_table, 1, function(x)
-          tapply(x, fact_interm, sum))
+        x <- apply(physeq@otu_table, 1, function(x) {
+          tapply(x, fact_interm, sum)
+        })
       }
 
       tot <- rowSums(x)
@@ -231,8 +235,8 @@ accu_plot <-
       if (!by.fact) {
         df$fact <-
           as.factor(unlist(unclass(physeq@sam_data
-                                   [match(df$.id, sample_names(physeq)), fact])
-                           [fact]))
+          [match(df$.id, sample_names(physeq)), fact])
+          [fact]))
       } else {
         df$fact <- df$.id
       }
@@ -245,7 +249,7 @@ accu_plot <-
       dff$xlab <- tapply(df$x, df$.id, max)
       dff$xlab <- dff$xlab + max(dff$xlab, na.rm = TRUE) / 20
       dff$ylab <- tapply(df$X1, df$.id, max)
-      dff$.id <-  names(dff$ylab)
+      dff$.id <- names(dff$ylab)
       p <-
         ggplot(data = df, aes(
           x = x,
@@ -259,7 +263,8 @@ accu_plot <-
           col = NULL,
           fill = fact
         ), alpha = 0.2) +
-        geom_line() + xlab("Number of sequences") +
+        geom_line() +
+        xlab("Number of sequences") +
         ylab("Number of OTUs (with standard error)")
 
       if (print_sam_names) {
@@ -279,7 +284,7 @@ accu_plot <-
 
 ################################################################################
 #' Plot OTU circle for \code{\link{phyloseq-class}} object
-#' @description 
+#' @description
 #' `r lifecycle::badge("maturing")`
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param fact (required): Name of the factor to cluster samples by modalities.
@@ -313,10 +318,10 @@ accu_plot <-
 #'
 #' @examples
 #' data("GlobalPatterns")
-#' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == 'Archaea')
-#' otu_circle(GP, 'SampleType')
-#' otu_circle(GP, 'SampleType', nb_seq = FALSE)
-#' otu_circle(GP, 'SampleType', taxa = "Class")
+#' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+#' otu_circle(GP, "SampleType")
+#' otu_circle(GP, "SampleType", nb_seq = FALSE)
+#' otu_circle(GP, "SampleType", taxa = "Class")
 #' @author Adrien Taudière
 #'
 #' @return A \code{\link[circlize]{chordDiagram}} plot representing the
@@ -367,15 +372,23 @@ otu_circle <-
     }
 
     otu_table_tax <-
-      apply(otu_tab, 2, function(x)
-        tapply(x, physeq@tax_table[, taxcol],
-               function(xx)
-                 sum(xx, na.rm = T)))
+      apply(otu_tab, 2, function(x) {
+        tapply(
+          x, physeq@tax_table[, taxcol],
+          function(xx) {
+            sum(xx, na.rm = T)
+          }
+        )
+      })
     otu_table_ech <-
-      apply(otu_table_tax, 1, function(x)
-        tapply(x, physeq@sam_data[, taxsamp],
-               function(xx)
-                 sum(xx, na.rm = T)))
+      apply(otu_table_tax, 1, function(x) {
+        tapply(
+          x, physeq@sam_data[, taxsamp],
+          function(xx) {
+            sum(xx, na.rm = T)
+          }
+        )
+      })
     if (rarefy) {
       otu_table_ech_interm <-
         rrarefy(otu_table_ech, min(rowSums(otu_table_ech)))
@@ -384,10 +397,12 @@ otu_circle <-
           "Rarefaction by modalities deletes ",
           sum(otu_table_ech) - sum(otu_table_ech_interm),
           " (",
-          round(100 * (
-            sum(otu_table_ech) - sum(otu_table_ech_interm)
-          ) / sum(otu_table_ech),
-          2),
+          round(
+            100 * (
+              sum(otu_table_ech) - sum(otu_table_ech_interm)
+            ) / sum(otu_table_ech),
+            2
+          ),
           "%) sequences.",
           sep = ""
         )
@@ -400,10 +415,12 @@ otu_circle <-
     # Keep only taxa and modalities with a sufficient proportion (min_prop_tax,
     # min_prop_mod) to plot
     o_t_e_interm <-
-      otu_table_ech[(rowSums(otu_table_ech) / sum(otu_table_ech)) >
-                      min_prop_mod,
-                    (colSums(otu_table_ech) / sum(otu_table_ech)) >
-                      min_prop_tax]
+      otu_table_ech[
+        (rowSums(otu_table_ech) / sum(otu_table_ech)) >
+          min_prop_mod,
+        (colSums(otu_table_ech) / sum(otu_table_ech)) >
+          min_prop_tax
+      ]
     if (nrow(o_t_e_interm) != nrow(otu_table_ech)) {
       message(
         paste(
@@ -411,8 +428,8 @@ otu_circle <-
           nrow(o_t_e_interm),
           " modalities are plot (",
           round(100 *
-                  nrow(o_t_e_interm) /
-                  nrow(otu_table_ech), 2),
+            nrow(o_t_e_interm) /
+            nrow(otu_table_ech), 2),
           "%). Use 'min_prop_mod' to plot more samples.",
           sep = ""
         )
@@ -425,8 +442,10 @@ otu_circle <-
           "Only ",
           ncol(o_t_e_interm),
           " taxa are plot (",
-          round(100 * ncol(o_t_e_interm) / ncol(otu_table_ech),
-                2),
+          round(
+            100 * ncol(o_t_e_interm) / ncol(otu_table_ech),
+            2
+          ),
           "%). Use 'min_prop_tax' to plot more taxa",
           sep = ""
         )
@@ -435,8 +454,9 @@ otu_circle <-
     otu_table_ech <- o_t_e_interm
 
     if (log10trans) {
-      otu_table_ech <- apply(otu_table_ech, 2, function(x)
-        log10(1 + x))
+      otu_table_ech <- apply(otu_table_ech, 2, function(x) {
+        log10(1 + x)
+      })
     }
 
 
@@ -444,7 +464,6 @@ otu_circle <-
       col2keep <- rep(1, ncol(otu_table_ech) - 1)
       row2keep <- rep(1, nrow(otu_table_ech) - 1)
       gap_degree <- c(row2keep, 10, col2keep, 10)
-
     }
     if (is.null(start_degree)) {
       start_degree <- 170
@@ -478,17 +497,21 @@ otu_circle <-
         c(funky_color(nrow(otu_table_ech)), rep("grey", ncol(otu_table_ech)))
     }
 
-    circlize::circos.par(gap.degree = gap_degree, start.degree = start_degree,
-                         ...)
-    circlize::chordDiagram(otu_table_ech, row.col = row_col,
-                           grid.col = grid_col, ...)
+    circlize::circos.par(
+      gap.degree = gap_degree, start.degree = start_degree,
+      ...
+    )
+    circlize::chordDiagram(otu_table_ech,
+      row.col = row_col,
+      grid.col = grid_col, ...
+    )
     circlize::circos.clear()
   }
 ################################################################################
 
 ################################################################################
 #' Sankey plot of \code{\link{phyloseq-class}} object
-#' @description 
+#' @description
 #' `r lifecycle::badge("maturing")`
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param fact (Optional): Name of the factor to cluster samples by modalities.
@@ -510,8 +533,8 @@ otu_circle <-
 #'
 #' @examples
 #' data("GlobalPatterns")
-#' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[,1] == "Archaea")
-#' sankey_phyloseq(GP, fact = 'SampleType')
+#' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+#' sankey_phyloseq(GP, fact = "SampleType")
 #' sankey_phyloseq(GP, taxa = c(1:4), min_prop_tax = 0.01)
 #' sankey_phyloseq(GP, taxa = c(1:4), min_prop_tax = 0.01, nb_seq = TRUE)
 #' @author Adrien Taudière
@@ -562,7 +585,8 @@ sankey_phyloseq <-
       colnames(mat) <- c("Var1", "Var2", "value")
       tax_table_interm <-
         physeq@tax_table[rep(1:ntaxa(physeq),
-                             times = taxa_sums(physeq))]
+          times = taxa_sums(physeq)
+        )]
 
       for (i in 1:(length(taxa) - 1)) {
         res_interm <-
@@ -587,21 +611,31 @@ sankey_phyloseq <-
       }
 
       mat_interm <-
-        apply(otu_tab, 1, function(x)
-          tapply(x, physeq@sam_data[, fact],
-                 sum))
+        apply(otu_tab, 1, function(x) {
+          tapply(
+            x, physeq@sam_data[, fact],
+            sum
+          )
+        })
 
       if (!nb_seq) {
         mat_interm <-
-          apply(mat_interm, 1, function(x)
-            tapply(x, physeq@tax_table[,
-                                       taxa[length(taxa)]], function(x)
-                                         sum(x > 0)))
+          apply(mat_interm, 1, function(x) {
+            tapply(x, physeq@tax_table[
+              ,
+              taxa[length(taxa)]
+            ], function(x) {
+              sum(x > 0)
+            })
+          })
       } else if (nb_seq) {
         mat_interm <-
-          apply(mat_interm, 1, function(x)
-            tapply(x, physeq@tax_table[,
-                                       taxa[length(taxa)]], sum))
+          apply(mat_interm, 1, function(x) {
+            tapply(x, physeq@tax_table[
+              ,
+              taxa[length(taxa)]
+            ], sum)
+          })
       }
 
       samp_links <- net_matrix2links(mat_interm)
@@ -626,8 +660,9 @@ sankey_phyloseq <-
     }
 
     for (i in seq_len(length(symbol2sub))) {
-      mat <- apply(mat, 2, function(x)
-        gsub(symbol2sub[i], "", x))
+      mat <- apply(mat, 2, function(x) {
+        gsub(symbol2sub[i], "", x)
+      })
     }
 
     tax_sank <- list()
@@ -640,15 +675,23 @@ sankey_phyloseq <-
     mat2 <- mat
     for (i in seq_len(nrow(tax_sank$nodes))) {
       mat2[, 1] <-
-        gsub(paste("\\<", tax_sank$nodes[i, 2], "\\>", sep = ""),
-             tax_sank$nodes[i,
-                            1],
-             mat2[, 1])
+        gsub(
+          paste("\\<", tax_sank$nodes[i, 2], "\\>", sep = ""),
+          tax_sank$nodes[
+            i,
+            1
+          ],
+          mat2[, 1]
+        )
       mat2[, 2] <-
-        gsub(paste("\\<", tax_sank$nodes[i, 2], "\\>", sep = ""),
-             tax_sank$nodes[i,
-                            1],
-             mat2[, 2])
+        gsub(
+          paste("\\<", tax_sank$nodes[i, 2], "\\>", sep = ""),
+          tax_sank$nodes[
+            i,
+            1
+          ],
+          mat2[, 2]
+        )
     }
 
     tax_sank$links <- apply(mat2, 2, as.numeric)
@@ -680,7 +723,7 @@ sankey_phyloseq <-
 
 ################################################################################
 #' Venn diagram of \code{\link{phyloseq-class}} object
-#' @description 
+#' @description
 #' `r lifecycle::badge("maturing")`
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param fact (required): Name of the factor to cluster samples by modalities.
@@ -725,12 +768,14 @@ venn_phyloseq <-
       as.factor(unlist(unclass(physeq@sam_data[, fact])[fact]))
     if (length(moda) != dim(physeq@otu_table)[1]) {
       data_venn <-
-        t(apply(physeq@otu_table, 1, function(x)
-          by(x, moda, max)))
+        t(apply(physeq@otu_table, 1, function(x) {
+          by(x, moda, max)
+        }))
     } else if (length(moda) != dim(physeq@otu_table)[2]) {
       data_venn <-
-        t(apply(t(physeq@otu_table), 1, function(x)
-          by(x, moda, max)))
+        t(apply(t(physeq@otu_table), 1, function(x) {
+          by(x, moda, max)
+        }))
     } else {
       stop("The factor length and the number of samples must be identical")
     }
@@ -738,22 +783,26 @@ venn_phyloseq <-
 
     e <- new.env(TRUE, emptyenv())
     cn <- colnames(combinations)
-    for (i in seq.int(dim(combinations)[1]))
+    for (i in seq.int(dim(combinations)[1])) {
       if (any(combinations[i, ])) {
         ec <- paste(cn[combinations[i, ]], collapse = "&")
-        e[[ec]] <- if (is.null(e[[ec]]))
+        e[[ec]] <- if (is.null(e[[ec]])) {
           1L
-        else
+        } else {
           (e[[ec]] + 1L)
+        }
       }
+    }
 
     en <- ls(e, all.names = TRUE)
     weights <- as.numeric(unlist(lapply(en, get, e)))
     combinations <- as.character(en)
 
     table_value <-
-      data.frame(combinations = as.character(combinations),
-                 weights = as.double(weights))
+      data.frame(
+        combinations = as.character(combinations),
+        weights = as.double(weights)
+      )
 
     venn <- venneuler::venneuler(data_venn > min_nb_seq)
     venn_res <-
@@ -771,13 +820,19 @@ venn_phyloseq <-
 
     for (i in seq_len(nrow(table_value))) {
       table_value$x[i] <-
-        mean(venn$centers[, "x"][unlist(lapply(x1,
-                                               function(x)
-                                                 sum(x %in% i) > 0))])
+        mean(venn$centers[, "x"][unlist(lapply(
+          x1,
+          function(x) {
+            sum(x %in% i) > 0
+          }
+        ))])
       table_value$y[i] <-
-        mean(venn$centers[, "y"][unlist(lapply(x1,
-                                               function(x)
-                                                 sum(x %in% i) > 0))])
+        mean(venn$centers[, "y"][unlist(lapply(
+          x1,
+          function(x) {
+            sum(x %in% i) > 0
+          }
+        ))])
     }
 
     df <- venn_res
@@ -787,9 +842,11 @@ venn_phyloseq <-
     circularise <- function(d, n = 360) {
       angle <- seq(-pi, pi, length = n)
       make_circle <- function(x, y, r, modality) {
-        data.frame(x = x + r * cos(angle),
-                   y = y + r * sin(angle),
-                   modality)
+        data.frame(
+          x = x + r * cos(angle),
+          y = y + r * sin(angle),
+          modality
+        )
       }
       lmat <- mapply(
         make_circle,
@@ -805,16 +862,21 @@ venn_phyloseq <-
     circles <- circularise(df)
 
     p <-
-      ggplot() + geom_polygon(data = circles,
-                              aes(x, y, group = modality, fill = modality),
-                              alpha = 0.5) + theme_void()
+      ggplot() +
+      geom_polygon(
+        data = circles,
+        aes(x, y, group = modality, fill = modality),
+        alpha = 0.5
+      ) +
+      theme_void()
 
     if (print_values) {
       g_legend <- function(agplot) {
         tmp <- ggplot_gtable(ggplot_build(agplot))
         leg <-
-          which(sapply(tmp$grobs, function(x)
-            x$name) == "guide-box")
+          which(sapply(tmp$grobs, function(x) {
+            x$name
+          }) == "guide-box")
         legend <- tmp$grobs[[leg]]
         return(legend)
       }
@@ -845,12 +907,11 @@ venn_phyloseq <-
       upViewport(0)
       pushViewport(vpleg)
       grid.draw(legend)
-      #Make the new viewport active and draw
+      # Make the new viewport active and draw
       upViewport(0)
       pushViewport(subvp)
       grid.draw(gridExtra::tableGrob(table_value[, c(1, 2)], rows = NULL))
-    }
-    else{
+    } else {
       return(p)
     }
   }
@@ -858,9 +919,9 @@ venn_phyloseq <-
 
 ################################################################################
 #' Multiple plot function
-#' @description 
+#' @description
 #' `r lifecycle::badge("stable")`
-#'  
+#'
 # ggplot objects can be passed in ..., or to plotlist (as a list of ggplot
 # objects)
 #
@@ -889,18 +950,20 @@ multiplot <-
       # ncol: Number of columns of plots
       # nrow: Number of rows needed, calculated from # of cols
       layout <- matrix(seq(1, cols * ceiling(num_plots / cols)),
-                       ncol = cols,
-                       nrow = ceiling(num_plots / cols))
+        ncol = cols,
+        nrow = ceiling(num_plots / cols)
+      )
     }
 
     if (num_plots == 1) {
       message(plots[[1]])
-
     } else {
       # Set up the page
       grid::grid.newpage()
-      grid::pushViewport(viewport(layout = grid.layout(nrow(layout),
-                                                       ncol(layout))))
+      grid::pushViewport(viewport(layout = grid.layout(
+        nrow(layout),
+        ncol(layout)
+      )))
 
       # Make each plot, in the correct location
       for (i in 1:num_plots) {
@@ -909,10 +972,11 @@ multiplot <-
           as.data.frame(which(layout == i, arr.ind = TRUE))
 
         print(plots[[i]],
-              vp = viewport(
-                layout.pos.row = matchidx$row,
-                layout.pos.col = matchidx$col
-              ))
+          vp = viewport(
+            layout.pos.row = matchidx$row,
+            layout.pos.col = matchidx$col
+          )
+        )
       }
     }
   }
@@ -920,7 +984,7 @@ multiplot <-
 
 ################################################################################
 #' Graphical representation of hill number 0, 1 and 2 accross a factor
-#' @description 
+#' @description
 #' `r lifecycle::badge("maturing")`
 #' @param physeq (required): A \code{\link{phyloseq-class}} object
 #' @param variable (required): The variable to test
@@ -949,8 +1013,7 @@ hill_phyloseq <-
     var <- sym(variable)
     if (is.na(color_fac)) {
       color_fac <- sym(variable)
-    }
-    else{
+    } else {
       color_fac <- sym(color_fac)
     }
 
@@ -964,18 +1027,18 @@ hill_phyloseq <-
 
     p_var <- hill_tuckey_phyloseq(physeq, variable)
 
-    p_0 <- ggplot(df_hill, aes(group = !!var, Hill_0))  +
+    p_0 <- ggplot(df_hill, aes(group = !!var, Hill_0)) +
       geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac)))
-    p_1 <- ggplot(df_hill, aes(group = !!var, Hill_1))  +
+    p_1 <- ggplot(df_hill, aes(group = !!var, Hill_1)) +
       geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac)))
-    p_2 <- ggplot(df_hill, aes(group = !!var, Hill_2))  +
+    p_2 <- ggplot(df_hill, aes(group = !!var, Hill_2)) +
       geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac)))
 
 
     if (letters) {
       ### HILL 0
       data_h0 <-
-        p_var$data[grep("Hill Number 0", p_var$data[, 5]),]
+        p_var$data[grep("Hill Number 0", p_var$data[, 5]), ]
       data_h0_pval <- data_h0$p.adj
       names(data_h0_pval) <- data_h0$modality
       letters <- multcompLetters(data_h0_pval, reversed = T)$Letters
@@ -1019,7 +1082,7 @@ hill_phyloseq <-
       ### HILL 2
 
       data_h2 <-
-        p_var$data[grep("Hill Number 2", p_var$data[, 5]),]
+        p_var$data[grep("Hill Number 2", p_var$data[, 5]), ]
       data_h2_pval <- data_h2$p.adj
       names(data_h2_pval) <- data_h2$modality
       letters <- multcompLetters(data_h2_pval, reversed = T)$Letters
@@ -1037,7 +1100,6 @@ hill_phyloseq <-
           stat = "unique",
           parse = TRUE
         )
-
     }
 
     res <- list(
@@ -1051,7 +1113,7 @@ hill_phyloseq <-
 
 ################################################################################
 #' Make a datatable with the taxonomy of a \code{\link{phyloseq-class}} object
-#' @description 
+#' @description
 #' `r lifecycle::badge("maturing")`
 #' @param physeq (required): A \code{\link{phyloseq-class}} object
 #' @param abundance (Default: TRUE): Does the number of sequences is print
@@ -1065,13 +1127,15 @@ hill_phyloseq <-
 #'
 #' @examples
 #' data("GlobalPatterns")
-#' tax_datatable(subset_taxa(GlobalPatterns,
-#'               rowSums(GlobalPatterns@otu_table)>10000))
-tax_datatable <- function(physeq, abundance = TRUE, taxonomic_level=NULL, ...) {
+#' tax_datatable(subset_taxa(
+#'   GlobalPatterns,
+#'   rowSums(GlobalPatterns@otu_table) > 10000
+#' ))
+tax_datatable <- function(physeq, abundance = TRUE, taxonomic_level = NULL, ...) {
   df <- as.data.frame(physeq@tax_table)
 
-  if (!is.null(taxonomic_level)){
-    df <- df[,taxonomic_level]
+  if (!is.null(taxonomic_level)) {
+    df <- df[, taxonomic_level]
   }
 
   if (abundance) {
@@ -1082,7 +1146,7 @@ tax_datatable <- function(physeq, abundance = TRUE, taxonomic_level=NULL, ...) {
     }
   }
 
-  DT::datatable(df, ...) %>%  DT::formatStyle(
+  DT::datatable(df, ...) %>% DT::formatStyle(
     "nb_seq",
     background = DT::styleColorBar(df$nb_seq, "steelblue"),
     backgroundSize = "100% 90%",
@@ -1094,12 +1158,12 @@ tax_datatable <- function(physeq, abundance = TRUE, taxonomic_level=NULL, ...) {
 
 ################################################################################
 #' Summarise a \code{\link{phyloseq-class}} object using a plot.
-#' @description 
+#' @description
 #' `r lifecycle::badge("maturing")`
-#' @param physeq (required): A \code{\link{phyloseq-class}} object
+#' @param physeq (required): A \code{\link{phyloseq-class}} object. For the moment refseq slot need to be not Null.
 #' @examples
-#'   data(esophagus)
-#'   summary_plot_phyloseq(esophagus)
+#' data(data_fungi)
+#' summary_plot_phyloseq(data_fungi)
 #' @return A ggplot2 object
 #' @export
 summary_plot_phyloseq <- function(physeq) {
@@ -1130,18 +1194,20 @@ summary_plot_phyloseq <- function(physeq) {
         nsamples(physeq),
         "samples"
       ),
-      paste("Sequences length:\n",
-            round(mean(
-              Biostrings::width(physeq@refseq)
-            ), 2), "+/-",
-            round(stats::sd(
-              Biostrings::width(physeq@refseq)
-            ), 2))
+      paste(
+        "Sequences length:\n",
+        round(mean(
+          Biostrings::width(physeq@refseq)
+        ), 2), "+/-",
+        round(stats::sd(
+          Biostrings::width(physeq@refseq)
+        ), 2)
+      )
     )
   )
   ggplot() +
     scale_x_continuous(name = "x") +
-    scale_y_reverse(name = "y")  +
+    scale_y_reverse(name = "y") +
     theme_void() +
     theme(legend.position = "none") +
     scale_fill_manual(values = c("#aa4c26", "#003f5f", "khaki4", "#c8a734")) +
@@ -1157,20 +1223,24 @@ summary_plot_phyloseq <- function(physeq) {
       color = "black",
       alpha = 0.5
     ) +
-    geom_text(data = d,
-              aes(
-                x = x1 + (x2 - x1) / 2,
-                y = y1 + (y2 - y1) / 1.7,
-                label = nb_values
-              ),
-              size = 5) +
-    geom_text(data = d,
-              aes(
-                x = x1 + (x2 - x1) / 2,
-                y = y1 + (y2 - y1) / 5,
-                label = names
-              ),
-              size = 7) +
+    geom_text(
+      data = d,
+      aes(
+        x = x1 + (x2 - x1) / 2,
+        y = y1 + (y2 - y1) / 1.7,
+        label = nb_values
+      ),
+      size = 5
+    ) +
+    geom_text(
+      data = d,
+      aes(
+        x = x1 + (x2 - x1) / 2,
+        y = y1 + (y2 - y1) / 5,
+        label = names
+      ),
+      size = 7
+    ) +
     annotate(
       geom = "text",
       x = 0.65,
@@ -1204,7 +1274,7 @@ summary_plot_phyloseq <- function(physeq) {
 
 
 #' Heat tree from `metacoder` package using `tax_table` slot
-#' @description 
+#' @description
 #' `r lifecycle::badge("maturing")`
 #' @param physeq (required): A \code{\link{phyloseq-class}} object
 #' @param taxonomic_level (Default: NULL): a vector of selected taxonomic level using
@@ -1216,25 +1286,32 @@ summary_plot_phyloseq <- function(physeq) {
 #' @author Adrien Taudière
 #'
 #' @examples
+#' \dontrun{
 #' data("GlobalPatterns")
-#' GPsubset <- subset_taxa(GlobalPatterns,
-#'                         GlobalPatterns@tax_table[, 1] == 'Bacteria')
-#' GPsubset <- subset_taxa(GPsubset,
-#'                         rowSums(GPsubset@otu_table) > 1000)
+#' GPsubset <- subset_taxa(
+#'   GlobalPatterns,
+#'   GlobalPatterns@tax_table[, 1] == "Bacteria"
+#' )
+#' GPsubset <- subset_taxa(
+#'   GPsubset,
+#'   rowSums(GPsubset@otu_table) > 1000
+#' )
 #' GPsubset <- subset_taxa(GPsubset, rowSums(is.na(GPsubset@tax_table)) == 0)
 #'
 #' physeq_heat_tree(GPsubset,
-#'                  node_size = n_obs,
-#'                  node_color = n_obs,
-#'                  node_label = taxon_names,
-#'                  tree_label = taxon_names,
-#'                  node_size_trans = "log10 area")
-
-physeq_heat_tree <- function(physeq, taxonomic_level=NULL, ...) {
+#'   node_size = n_obs,
+#'   node_color = n_obs,
+#'   node_label = taxon_names,
+#'   tree_label = taxon_names,
+#'   node_size_trans = "log10 area"
+#' )
+#' }
+#'
+physeq_heat_tree <- function(physeq, taxonomic_level = NULL, ...) {
   if (!is.null(taxonomic_level)) {
-    physeq@tax_table <- physeq@tax_table[,taxonomic_level]
+    physeq@tax_table <- physeq@tax_table[, taxonomic_level]
   }
-  
+
   data_metacoder <- metacoder::parse_phyloseq(physeq)
   metacoder::heat_tree(data_metacoder, ...)
 }

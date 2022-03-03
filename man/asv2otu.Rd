@@ -2,7 +2,7 @@
 % Please edit documentation in R/dada_phyloseq.R
 \name{asv2otu}
 \alias{asv2otu}
-\title{Recluster sequences of an object of class `physeq`
+\title{Recluster sequences of an object of class \code{physeq}
 (e.g. OTUs or ASV from dada)}
 \usage{
 asv2otu(
@@ -21,28 +21,30 @@ Set to number of cpus/processors to use for the clustering}
 
 \item{method}{(default IdClusters)
 Set the clustering method.
-- `IdClusters` use the DECIPHER::IdClusters fonction,
-- `vsearch` use the vsearch software (https://github.com/torognes/vsearch/)
-  with arguments `-cluster_fast` and `-strand both`}
+\itemize{
+\item \code{IdClusters} use the DECIPHER::IdClusters fonction,
+\item \code{vsearch} use the vsearch software (https://github.com/torognes/vsearch/)
+with arguments \code{-cluster_fast} and \verb{-strand both}
+}}
 
 \item{id}{(default=0.97): level of identity to cluster}
 
 \item{vsearchpath}{(default = "vsearch"): path to vsearch}
 }
 \value{
-A new object of class `physeq`
+A new object of class \code{physeq}
 }
 \description{
-`r lifecycle::badge("maturing")`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \details{
-This function use the `speedyseq::merge_taxa_vec` function to
-  merge taxa into clusters. By default tax_adjust = 1L. See the man page
-  of `speedyseq::merge_taxa_vec`.
+This function use the \code{speedyseq::merge_taxa_vec} function to
+merge taxa into clusters. By default tax_adjust = 1L. See the man page
+of \code{speedyseq::merge_taxa_vec}.
 }
 \references{
 VSEARCH can be downloaded from
-  \url{https://github.com/torognes/vsearch}.
-  More information in the associated publication
-  \url{https://www.ncbi.nlm.nih.gov/pubmed/27781170}.
+\url{https://github.com/torognes/vsearch}.
+More information in the associated publication
+\url{https://www.ncbi.nlm.nih.gov/pubmed/27781170}.
 }

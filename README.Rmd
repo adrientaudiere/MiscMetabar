@@ -1,5 +1,6 @@
 ---
 output: github_document
+always_allow_html: yes
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -24,21 +25,21 @@ There is no CRAN version of MiscMetabar for now.
 
 You can install the development version from [GitHub](https://github.com/) with:
 
-```{r installation}
+```{r installation, message=FALSE}
 install.packages("devtools")
-devtools::install_github("adrientaudiere/MiscMetabar", force = TRUE)
+devtools::install_github("adrientaudiere/MiscMetabar")
 ```
 
 ## Some use of MiscMetabar
 
 ### Summarize a physeq object
 
-```{r example}
+```{r example, message=FALSE}
 library("MiscMetabar")
 library("phyloseq")
 library("magrittr")
-data("esophagus")
-summary_plot_phyloseq(esophagus)
+data("data_fungi")
+summary_plot_phyloseq(data_fungi)
 ```
 
 ### Create an interactive table of the tax_table
@@ -79,12 +80,12 @@ summary_plot_phyloseq(otu_vs)
 
 #### Using lulu algorithm (https://www.nature.com/articles/s41467-017-01312-x)
 
-```{r}
+```{r, message=FALSE}
 data(data_fungi_sp_known)
 lulu_res <- lulu_phyloseq(data_fungi_sp_known)
 ```
 
 ```{r}
 summary_plot_phyloseq(data_fungi_sp_known)
-summary_plot_phyloseq(lulu_res@new_physeq)
+summary_plot_phyloseq(lulu_res$new_physeq)
 ```

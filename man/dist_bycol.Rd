@@ -16,19 +16,19 @@ function.}
 
 \item{nperm}{(default = 99): The number of permutations}
 
-\item{...}{(optional): others argument for `vegan::vegdist` function}
+\item{...}{(optional): others argument for \code{vegan::vegdist} function}
 }
 \value{
 A list of length two : (i) a vector of observed distance ($obs) and
-  (ii) a matrix of the distance after randomization ($null)
+(ii) a matrix of the distance after randomization ($null)
 }
 \description{
-`r lifecycle::badge("experimental")`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \note{
 the first column of the first matrix is compare to the first column of
-  the second matrix, the second column of the first matrix is compare to the
-  second column of the second matrix and so on.
+the second matrix, the second column of the first matrix is compare to the
+second column of the second matrix and so on.
 }
 \seealso{
 \code{\link[vegan]{vegdist}}

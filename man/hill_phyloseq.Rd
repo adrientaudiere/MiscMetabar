@@ -15,19 +15,21 @@ hill_phyloseq(physeq, variable, color_fac = NA, letters = FALSE)
 
 \item{letters}{(optional, default=FALSE): If set to TRUE, the plot
 show letters based on p-values for comparison. Use the
- \code{\link[multcompView]{multcompLetters}} function from the package
- multcompLetters.}
+\code{\link[multcompView]{multcompLetters}} function from the package
+multcompLetters.}
 }
 \value{
 A list of 4 ggplot2 plot.
-- plot_Hill_0 : the boxplot of Hill number 0 (= species richness)
-    against the variable
-- plot_Hill_1 : the boxplot of Hill number 1 (= Shannon index)
-     against the variable
-- plot_Hill_2 : the boxplot of Hill number 2 (= Simpson index)
-    against the variable
-- plot_tuckey : plot the result of the Tuckey HSD test
+\itemize{
+\item plot_Hill_0 : the boxplot of Hill number 0 (= species richness)
+against the variable
+\item plot_Hill_1 : the boxplot of Hill number 1 (= Shannon index)
+against the variable
+\item plot_Hill_2 : the boxplot of Hill number 2 (= Simpson index)
+against the variable
+\item plot_tuckey : plot the result of the Tuckey HSD test
+}
 }
 \description{
-`r lifecycle::badge("maturing")`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }

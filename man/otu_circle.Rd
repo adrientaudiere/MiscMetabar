@@ -42,8 +42,8 @@ to be ploted}
 
 \item{gap_degree}{: Gap between two neighbour sectors.
 It can be a single value or a vector. If it is a vector,
- the first value corresponds to the gap after the first
- sector.}
+the first value corresponds to the gap after the first
+sector.}
 
 \item{start_degree}{: The starting degree from which the circle begins to
 draw. Note this degree is measured in the standard polar coordinate
@@ -65,18 +65,18 @@ order of grid_col corresponds to order of sectors.}
 }
 \value{
 A \code{\link[circlize]{chordDiagram}} plot representing the
-  distribution of OTUs or sequences in the different modalities of the factor
-  fact
+distribution of OTUs or sequences in the different modalities of the factor
+fact
 }
 \description{
-`r lifecycle::badge("maturing")`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
 data("GlobalPatterns")
-GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == 'Archaea')
-otu_circle(GP, 'SampleType')
-otu_circle(GP, 'SampleType', nb_seq = FALSE)
-otu_circle(GP, 'SampleType', taxa = "Class")
+GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+otu_circle(GP, "SampleType")
+otu_circle(GP, "SampleType", nb_seq = FALSE)
+otu_circle(GP, "SampleType", taxa = "Class")
 }
 \seealso{
 \code{\link[circlize]{chordDiagram}}

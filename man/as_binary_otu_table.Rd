@@ -3,7 +3,7 @@
 \name{as_binary_otu_table}
 \alias{as_binary_otu_table}
 \title{Transform the otu_table of a \code{\link{phyloseq-class}} object into a
-  \code{\link{phyloseq-class}} object with à binary otu_table.}
+\code{\link{phyloseq-class}} object with à binary otu_table.}
 \usage{
 as_binary_otu_table(physeq, min_number = 1)
 }
@@ -17,11 +17,11 @@ a 1 in the otu table.}
 A \code{physeq} object with only 0/1 in the OTU table
 }
 \description{
-`r lifecycle::badge("maturing")`
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \note{
 Usefull to test if the results are not biaised by sequences bias
-  that appended during PCR or NGS pipeline.
+that appended during PCR or NGS pipeline.
 }
 \examples{
 data(enterotype)
