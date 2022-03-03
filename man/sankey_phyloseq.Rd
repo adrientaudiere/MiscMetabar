@@ -50,7 +50,7 @@ A \code{\link[networkD3]{sankeyNetwork}} plot representing the
  of \code{fact}
 }
 \description{
-Sankey plot of \code{\link{phyloseq-class}} object
+`r lifecycle::badge("maturing")`
 }
 \examples{
 data("GlobalPatterns")

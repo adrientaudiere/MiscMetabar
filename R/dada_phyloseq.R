@@ -2,6 +2,8 @@
 #' Add dna in `refseq` slot of a physeq object using taxa names and renames taxa
 #'   using ASV_1, ASV_2, …
 #'
+#' `r lifecycle::badge("stable")`
+#'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object obtained
 #'   using the `dada2` package
 #'
@@ -10,10 +12,9 @@
 #' @export
 
 add_dna_to_phyloseq <- function(physeq) {
-  if (!validObject(physeq) | class(physeq) != "phyloseq") {
+  if (!methods::validObject(physeq) | class(physeq) != "phyloseq") {
     stop("The physeq argument is not a valid phyloseq object.")
-  }
-  else {
+  } else {
     dna <- Biostrings::DNAStringSet(phyloseq::taxa_names(physeq))
     names(dna) <- phyloseq::taxa_names(physeq)
     physeq <- phyloseq::merge_phyloseq(physeq, dna)
@@ -28,6 +29,8 @@ add_dna_to_phyloseq <- function(physeq) {
 #' Track the number of reads (= sequences), samples and cluster (e.g. ASV)
 #' from various objects including dada-class and derep-class.
 #'
+#' `r lifecycle::badge("maturing")`
+#'
 #'  * List of fastq and fastg.gz files -> nb of reads and samples
 #'  * List of dada-class -> nb of reads, clusters (ASV) and samples
 #'  * List of derep-class -> nb of reads, clusters (unique sequences)
@@ -39,12 +42,13 @@ add_dna_to_phyloseq <- function(physeq) {
 #' @param list_of_objects (required): A list of objects
 #' @param obj_names (default: NULL) :
 #'   A list of names corresponding to the list of objects
-#'
+#' @param clean_physeq (Logical, default = FALSE) If true, empty samples and empty ASV are discarded before clustering.
+#' 
 #' @return The number of sequences, clusters (e.g. OTUs, ASVs) and samples for
 #'   each object.
 #' @export
 
-track_wkflow <- function(list_of_objects, obj_names = NULL) {
+track_wkflow <- function(list_of_objects,obj_names = NULL, clean_physeq = FALSE) {
   message("Compute the number of sequences")
   if (!is.null(obj_names)) {
     names(list_of_objects) <- obj_names
@@ -54,26 +58,35 @@ track_wkflow <- function(list_of_objects, obj_names = NULL) {
       message(paste("Start object of class:", class(object), sep = " "))
       if (class(object) == "phyloseq") {
         rowSums(object@otu_table)
+        if (clean_physeq){
+          if (sum(sample_sums(physeq)==0)>0){
+            physeq <- subset_samples(physeq, sample_sums(physeq)>0)
+          }
+          if (sum(taxa_sums(physeq)==0)>0){
+            physeq <- subset_taxa(physeq, taxa_sums(physeq)>0)
+          }
+        }
       } else if (class(object) == "matrix") {
         sum(object, na.rm = TRUE)
       } else if (is.character(object[1]) &&
-                 length(object[1]) == 1 &&
-                 file.exists(object[1])) {
+        length(object[1]) == 1 &&
+        file.exists(object[1])) {
         if (summary(file(object[[1]]))$class == "gzfile") {
           pbapply::pbsapply(object, function(x) {
             as.numeric(system(paste("zcat ", x, " | grep -c '^+$'", sep = ""),
-                              intern = TRUE))
+              intern = TRUE
+            ))
           })
         } else if (grepl("\\.fastq$", object[1])) {
           pbapply::pbsapply(object, function(x) {
             as.numeric(system(paste("cat ", x, " | grep -c '^+$'", sep = ""),
-                              intern = TRUE))
+              intern = TRUE
+            ))
           })
         } else {
           stop("Files must be either gzfile or .fastq")
         }
-      }
-      else {
+      } else {
         pbapply::pbsapply(object, function(x) {
           sum(dada2::getUniques(x, silence = TRUE))
         })
@@ -93,7 +106,7 @@ track_wkflow <- function(list_of_objects, obj_names = NULL) {
       } else if (class(object[[1]]) == "dada") {
         dim(suppressMessages(dada2::makeSequenceTable(object)))[2]
       } else if (is.data.frame(object[[1]]) &&
-                 all(c("sequence", "abundance") %in% colnames(object[[1]]))) {
+        all(c("sequence", "abundance") %in% colnames(object[[1]]))) {
         dim(suppressMessages(dada2::makeSequenceTable(object)))[2]
       } else if (class(object[[1]]) == "derep") {
         length(unique(unlist(lapply(object, function(x) {
@@ -115,25 +128,26 @@ track_wkflow <- function(list_of_objects, obj_names = NULL) {
       } else if (class(object[[1]]) == "dada") {
         dim(suppressMessages(dada2::makeSequenceTable(object)))[1]
       } else if (is.data.frame(object[[1]]) &&
-                 all(c("sequence", "abundance") %in% colnames(object[[1]]))) {
+        all(c("sequence", "abundance") %in% colnames(object[[1]]))) {
         dim(suppressMessages(dada2::makeSequenceTable(object)))[1]
       } else if (class(object[[1]]) == "derep") {
         length(object)
       } else if (is.character(object[1]) &&
-                 length(object[1]) == 1 &&
-                 file.exists(object[1])) {
+        length(object[1]) == 1 &&
+        file.exists(object[1])) {
         length(object)
       } else {
         NA
       }
-
     })
 
 
   track <- matrix(nrow = length(list_of_objects), ncol = 3)
-  colnames(track) <- c("nb_sequences",
-                       "nb_clusters",
-                       "nb_samples")
+  colnames(track) <- c(
+    "nb_sequences",
+    "nb_clusters",
+    "nb_samples"
+  )
   track <- as.data.frame(track)
   if (!is.null(obj_names)) {
     rownames(track) <- obj_names
@@ -153,6 +167,8 @@ track_wkflow <- function(list_of_objects, obj_names = NULL) {
 ################################################################################
 #' Recluster sequences of an object of class `physeq`
 #' (e.g. OTUs or ASV from dada)
+#'
+#' `r lifecycle::badge("maturing")`
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param nproc (default 1)
@@ -190,15 +206,17 @@ asv2otu <- function(physeq,
     aln <- DECIPHER::AlignSeqs(dna, processors = nproc)
     d <- DECIPHER::DistanceMatrix(aln, processors = nproc)
     clusters <- DECIPHER::IdClusters(d,
-                                     method = "complete",
-                                     cutoff = 1 - id,
-                                     # e.g. `cutoff = 0.03` for a 97% OTU
-                                     processors = nproc)
+      method = "complete",
+      cutoff = 1 - id,
+      # e.g. `cutoff = 0.03` for a 97% OTU
+      processors = nproc
+    )
 
-    new_phyloseq <-
+    new_physeq <-
       speedyseq::merge_taxa_vec(physeq,
-                                clusters$cluster,
-                                tax_adjust = 1)
+        clusters$cluster,
+        tax_adjust = 1
+      )
   } else if (method == "vsearch") {
     Biostrings::writeXStringSet(dna, "temp.fasta")
 
@@ -236,16 +254,19 @@ asv2otu <- function(physeq,
 
     clusters <- pack_clusts$cluster
     clusters <-
-      tapply(clusters, paste(pack_clusts$cluster, pack_clusts$query),
-             function(x) {
-               x[1]
-             })
+      tapply(
+        clusters, paste(pack_clusts$cluster, pack_clusts$query),
+        function(x) {
+          x[1]
+        }
+      )
 
-    new_phyloseq <-
+    new_physeq <-
       speedyseq::merge_taxa_vec(physeq,
-                                clusters,
-                                tax_adjust = 1)
-    new_phyloseq@refseq <- vsearch_cluster_dna
+        clusters,
+        tax_adjust = 1
+      )
+    new_physeq@refseq <- vsearch_cluster_dna
 
     if (file.exists("temp.fasta")) {
       file.remove("temp.fasta")
@@ -257,13 +278,15 @@ asv2otu <- function(physeq,
       file.remove("temp.uc")
     }
   }
-  return(new_phyloseq)
+  return(new_physeq)
 }
 ################################################################################
 
 ################################################################################
 #' Search for a list of sequence in a fasta file against physeq reference
 #'   sequences using [vsearch](https://github.com/torognes/vsearch)
+#'
+#' `r lifecycle::badge("maturing")`
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param seq2search (required): path to fasta file
@@ -331,6 +354,8 @@ vsearch_search_global <- function(physeq,
 #' Blast some sequence against `refseq` slot of a \code{\link{phyloseq-class}}
 #'   object.
 #'
+#' `r lifecycle::badge("maturing")`
+#'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param seq2search (required): path to fasta file
 #' @param blastpath (default = NULL): path to blast program
@@ -347,11 +372,14 @@ vsearch_search_global <- function(physeq,
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' data(data_fungi)
-#' blastpath =
-#' "/home/adrien/Bureau/ncbi-blast-2.10.0+-x64-linux/ncbi-blast-2.10.0+/bin/"
-#' blast_to_phyloseq(data_fungi, seq2search = "data/ex.fasta",
-#'                  blastpath = blastpath)
+#' blastpath <- "...YOUR_PATH_TO_BLAST..."
+#' blast_to_phyloseq(data_fungi,
+#'   seq2search = "inst/extdata/ex.fasta",
+#'   blastpath = blastpath
+#' )
+#' }
 blast_to_phyloseq <- function(physeq,
                               seq2search,
                               blastpath = NULL,
@@ -364,9 +392,9 @@ blast_to_phyloseq <- function(physeq,
   Biostrings::writeXStringSet(dna, "db.fasta")
 
   cmd <- system(paste(blastpath,
-                       "makeblastdb -dbtype nucl -in db.fasta -out dbase",
-                       sep = "")
-                 )
+    "makeblastdb -dbtype nucl -in db.fasta -out dbase",
+    sep = ""
+  ))
 
   cmd2 <- system(
     paste(
@@ -375,11 +403,13 @@ blast_to_phyloseq <- function(physeq,
       seq2search,
       " -db dbase",
       " -out blast_result.txt",
-      " -outfmt \"6 qseqid qlen sseqid slen length pident evalue bitscore qcovs\"",
-      sep = "")
+      " -outfmt \"6 qseqid qlen sseqid slen",
+      " length pident evalue bitscore qcovs\"",
+      sep = ""
+    )
   )
 
-  if (file.info("blast_result.txt")$size > 0){
+  if (file.info("blast_result.txt")$size > 0) {
     blast_tab <- read.table(
       "blast_result.txt",
       sep = "\t",
@@ -394,24 +424,25 @@ blast_to_phyloseq <- function(physeq,
   file.remove(list.files(pattern = "dbase"))
   file.remove("db.fasta")
 
-  names(blast_tab) <- c("Query name",
-                        "Query seq. length",
-                        "Taxa name",
-                        "Taxa seq. length",
-                        "Alignment length",
-                        "% id. match",
-                        "bit score",
-                        "e-value",
-                        "Query cover"
-                        )
+  names(blast_tab) <- c(
+    "Query name",
+    "Query seq. length",
+    "Taxa name",
+    "Taxa seq. length",
+    "Alignment length",
+    "% id. match",
+    "bit score",
+    "e-value",
+    "Query cover"
+  )
 
-  blast_tab <- blast_tab[order(blast_tab[,"bit score"], decreasing = FALSE), ]
+  blast_tab <- blast_tab[order(blast_tab[, "bit score"], decreasing = FALSE), ]
 
   if (unique_per_seq) {
-    blast_tab <-  blast_tab[which(!duplicated(blast_tab[, 1])), ]
+    blast_tab <- blast_tab[which(!duplicated(blast_tab[, 1])), ]
   }
 
-  if(score_filter){
+  if (score_filter) {
     blast_tab <- blast_tab[blast_tab[, "bit score"] < bit_score_cut, ]
     blast_tab <- blast_tab[blast_tab[, "% id. match"] > id_cut, ]
   } else {
@@ -422,11 +453,12 @@ blast_to_phyloseq <- function(physeq,
     fastaFile <- Biostrings::readDNAStringSet(seq2search)
     seq_name <- names(fastaFile)
     no_output_query <- seq_name[!seq_name %in% blast_tab[1, ]]
-    if(length(no_output_query)>0) {
+    if (length(no_output_query) > 0) {
       mat_no_output_query <- matrix(NA,
-                                    ncol = ncol(blast_tab),
-                                    nrow = length(no_output_query))
-      mat_no_output_query[,1] <- no_output_query
+        ncol = ncol(blast_tab),
+        nrow = length(no_output_query)
+      )
+      mat_no_output_query[, 1] <- no_output_query
       colnames(mat_no_output_query) <- colnames(blast_tab)
       blast_tab <- rbind(blast_tab, mat_no_output_query)
     }
@@ -437,29 +469,144 @@ blast_to_phyloseq <- function(physeq,
 ################################################################################
 
 ################################################################################
-#' Save phyloseq object in the form of multiple csv tables. EXPERIMENTAL
+#' Save phyloseq object in the form of multiple csv tables.
+#'
+#' `r lifecycle::badge("maturing")`
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param path (defaut: NULL) : a path to the folder to save the phyloseq object
 #'
-#' @return
+#' @return Four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 #' @export
 #'
-#' @examples
+#' @examples write_phyloseq(data_fungi, path = "phyloseq")
 write_phyloseq <- function(physeq, path = NULL) {
+  dir.create(file.path(path))
   if (!is.null(physeq@otu_table)) {
-    write.csv(physeq@otu_table, paste(path, "otu_table.csv", sep=""))
+    write.csv(physeq@otu_table, paste(path, "/otu_table.csv", sep = ""))
   }
   if (!is.null(physeq@refseq)) {
-    write.csv(physeq@refseq, paste(path, "refseq.csv", sep=""))
+    write.csv(physeq@refseq, paste(path, "/refseq.csv", sep = ""))
   }
   if (!is.null(physeq@tax_table)) {
-    write.csv(physeq@tax_table, paste(path, "tax_table.csv", sep=""))
+    write.csv(physeq@tax_table, paste(path, "/tax_table.csv", sep = ""))
   }
   if (!is.null(physeq@sam_data)) {
-    write.csv(physeq@sam_data, paste(path, "sam_data.csv", sep=""))
+    write.csv(physeq@sam_data, paste(path, "/sam_data.csv", sep = ""))
   }
 }
 ################################################################################
 
 
+################################################################################
+#' (Lulu)[https://github.com/adrientaudiere/lulu] reclustering of class `physeq` (forked from \url{https://github.com/tobiasgf/lulu}).
+#'  See https://www.nature.com/articles/s41467-017-01312-x for more information on the method.
+#' `r lifecycle::badge("experimental")`
+#'
+#' @param physeq (required): a \code{\link{phyloseq-class}} object.
+#' @param nproc (default 1)
+#'   Set to number of cpus/processors to use for the clustering
+#' @param id (default = 0.84): id for --usearch_global
+#' @param vsearchpath (default = "vsearch"): path to vsearch
+#' @param verbose (Logical): if true, print some additional messages
+#' @param clean_physeq (Logical, default = FALSE) If true, empty samples and empty ASV are discarded before clustering.
+#'
+#' @return a list of for object
+#' - "new_physeq": The new phyloseq object (class physeq)
+#' - "discrepancy_vector": A vector of discrepancy showing for each taxonomic level the proportion of identic value 
+#'   before and after lulu reclustering. A value of 0.6 stands for 60% of ASV before re-clusering have 
+#'   identical value after re-clustering. In other word, 40% of ASV are assigned to a different taxonomic 
+#'   value. NA value are not counted as discrepancy.
+#' - "res_lulu": A list of the result from the lulu function 
+#' - "merged_ASV": the data.frame used to merged ASV
+#'   
+#' @examples 
+#' data(data_fungi_sp_known)
+#' lulu_phyloseq(data_fungi_sp_known)
+#' @author Adrien Taudière \email{adrien.taudiere@@zaclys.net}
+#' @references
+#' - LULU : \url{https://github.com/adrientaudiere/lulu}
+#'  forked from \url{https://github.com/tobiasgf/lulu}.
+#' - VSEARCH can be downloaded from
+#'  \url{https://github.com/torognes/vsearch}.
+
+lulu_phyloseq <- function(physeq,
+                          nproc = 1,
+                          id = 0.84,
+                          vsearchpath = "vsearch",
+                          verbose = FALSE,
+                          clean_physeq = FALSE) {
+  if (clean_physeq){
+    if (sum(sample_sums(physeq)==0)>0){
+      physeq <- subset_samples(physeq, sample_sums(physeq)>0)
+    }
+    if (sum(taxa_sums(physeq)==0)>0){
+      physeq <- subset_taxa(physeq, taxa_sums(physeq)>0)
+    }
+  }
+  
+  message("Start Vsearch usearch_global")
+  dna <- Biostrings::DNAStringSet(physeq@refseq)
+  Biostrings::writeXStringSet(dna, "temp.fasta")
+  cmd <-
+    system2(
+      vsearchpath,
+      paste(
+        " --usearch_global temp.fasta --db temp.fasta --self --iddef 1",
+        " -userfields query+target+id --maxaccepts 0 --query_cov .9 --maxhits 10",
+        " -id ",
+        id,
+        "  --userout match_list.txt",
+        sep = ""
+      ),
+      stdout = T,
+      stderr = T
+    )
+
+  match_list <- read.csv(file = "match_list.txt", sep = "\t")
+  
+  if (!requireNamespace("lulu")) {
+    library(devtools)
+    install_github("adrientaudiere/lulu")  
+  }
+
+  message("Lulu algorithm")
+  res_lulu <-
+    lulu::lulu(data.frame(t(physeq@otu_table)), match_list)
+
+  if (file.exists("temp.fasta")) {
+    file.remove("temp.fasta")
+  }
+  if (file.exists("cluster.fasta")) {
+    file.remove("cluster.fasta")
+  }
+  if (file.exists("temp.uc")) {
+    file.remove("temp.uc")
+  }
+
+  merged <- res_lulu$otu_map[res_lulu$otu_map$curated == "merged", ]
+  merged <- merged[rownames(merged) != merged$parent_id, ]
+
+  test_vector <- c()
+  for (tax_rank in colnames(physeq@tax_table)) {
+    test <- physeq@tax_table[rownames(merged), tax_rank] == physeq@tax_table[merged$parent_id, tax_rank]
+    test_vector <- c(test_vector, sum(test, na.rm = T) / length(na.exclude(test)))
+  }
+
+  names(test_vector) <- colnames(physeq@tax_table)
+
+  new_physeq <- physeq
+  new_physeq@otu_table <- otu_table(res_lulu$curated_table, taxa_are_rows = TRUE)
+
+  if (verbose) {
+    message(paste("The number of taxa decrease from ", ntaxa(physeq), " to ", ntaxa(new_physeq), ".", sep=""))
+     message("See the discrepancy_vector to verify the degree of discrepancy in taxonomy due to lulu re-clustering.")
+  }
+  return(list("new_physeq" = new_physeq,
+              "discrepancy_vector" = test_vector, 
+              "res_lulu" = res_lulu, 
+              "merged_ASV" = merged)
+        )
+}
+
+################################################################################

@@ -3,7 +3,7 @@
 \name{krona}
 \alias{krona}
 \alias{merge_krona}
-\title{Make Krona files}
+\title{Make Krona files using [KronaTools](https://github.com/marbl/Krona/wiki).}
 \usage{
 krona(
   physeq,
@@ -37,7 +37,10 @@ your krona dataset when merge using merge_krona}
 A html file
 }
 \description{
-Make Krona files
+`r lifecycle::badge("maturing")`
+
+Need the installation of kronatools on the computer ([installation instruction](https://github.com/marbl/Krona/wiki/Installing)).
+Function merge_krona allows merging multiple html files in one interactive krona file
 }
 \examples{
 data("GlobalPatterns")

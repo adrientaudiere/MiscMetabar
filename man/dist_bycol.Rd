@@ -23,7 +23,7 @@ A list of length two : (i) a vector of observed distance ($obs) and
   (ii) a matrix of the distance after randomization ($null)
 }
 \description{
-Compute paired distances among matrix (e.g. otu_table)
+`r lifecycle::badge("experimental")`
 }
 \note{
 the first column of the first matrix is compare to the first column of

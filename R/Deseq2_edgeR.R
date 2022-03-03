@@ -1,5 +1,8 @@
 ################################################################################
 #' Plot edgeR results for a phyloseq or a edgeR object.
+#' 
+#' `r lifecycle::badge("maturing")`
+#'  
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param contrast (required):This argument specifies what comparison
 #'   to extract from the object to build a results table.
@@ -61,7 +64,7 @@ plot_edgeR_phyloseq <-
       )
     res <- tt@.Data[[1]]
     sigtab <- res[(res$FDR < alpha), ]
-    sigtab <- cbind(as(sigtab, "data.frame"))
+    sigtab <- cbind(methods::as(sigtab, "data.frame"))
 
     sigtabgen <- subset(sigtab, !is.na(taxa))
 
@@ -106,7 +109,10 @@ plot_edgeR_phyloseq <-
 
 ################################################################################
 #' Convert phyloseq data to DESeq2 dds object
-#'
+#' 
+#' @description 
+#'`r lifecycle::badge("experimental")`
+#' 
 #' No testing is performed by this function. The phyloseq data is converted
 #' to the relevant \code{\link[DESeq2]{DESeqDataSet}} object, which can then be
 #' tested in the negative binomial generalized linear model framework
@@ -178,7 +184,7 @@ phyloseq_to_deseq2 <- function(physeq, design, ...) {
     physeq <- t(physeq)
   }
   # Coerce count data to vanilla matrix of integers
-  count_data <- round(as(otu_table(physeq), "matrix"), digits = 0)
+  count_data <- round(methods::as(otu_table(physeq), "matrix"), digits = 0)
   col_data <- data.frame(sample_data(physeq))
   # Create the DESeq data set, dds.
   if (requireNamespace("DESeq2")) {
@@ -196,6 +202,9 @@ phyloseq_to_deseq2 <- function(physeq, design, ...) {
 #Plot the result of a DESeq2 test
 ################################################################################
 #' Plot DESeq2 results for a phyloseq or a DESeq2 object.
+#' @description 
+#'`r lifecycle::badge("experimental")`
+#' 
 #' @param data (required): a \code{\link{phyloseq-class}} or a
 #' \code{\link[DESeq2]{DESeqDataSet-class}} object.
 #' @param tax_table : Required if data is a
@@ -322,13 +331,13 @@ plot_deseq2_phyloseq <-
              contrast.")
     }
     d <-
-      cbind(as(d, "data.frame"), as(tax_table[rownames(d), ], "matrix"))
+      cbind(methods::as(d, "data.frame"), methods::as(tax_table[rownames(d), ], "matrix"))
 
     # Compute colors
     are_colors <- function(x) {
       sapply(x, function(xx) {
         tryCatch(
-          is.matrix(col2rgb(xx)),
+          is.matrix(grDevices::col2rgb(xx)),
           error = function(e)
             FALSE
         )
@@ -439,7 +448,7 @@ phyloseq_to_edgeR <- function(physeq, group, method = "RLE", ...) {
   if (!taxa_are_rows(physeq)) {
     physeq <- t(physeq)
   }
-  x <- as(otu_table(physeq), "matrix")
+  x <- methods::as(otu_table(physeq), "matrix")
   # Add one to protect against overflow, log(0) issues.
   x <- x + 1
   # Check `group` argument
@@ -451,7 +460,7 @@ phyloseq_to_edgeR <- function(physeq, group, method = "RLE", ...) {
   # Define gene annotations (`genes`) as tax_table
   taxonomy <- tax_table(physeq, errorIfNULL = FALSE)
   if (!is.null(taxonomy)) {
-    taxonomy <- data.frame(as(taxonomy, "matrix"))
+    taxonomy <- data.frame(methods::as(taxonomy, "matrix"))
   }
   # Now turn into a DGEList
   y <- DGEList(

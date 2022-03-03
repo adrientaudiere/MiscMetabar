@@ -4,12 +4,15 @@
 \alias{tax_datatable}
 \title{Make a datatable with the taxonomy of a \code{\link{phyloseq-class}} object}
 \usage{
-tax_datatable(physeq, abundance = TRUE, ...)
+tax_datatable(physeq, abundance = TRUE, taxonomic_level = NULL, ...)
 }
 \arguments{
 \item{physeq}{(required): A \code{\link{phyloseq-class}} object}
 
 \item{abundance}{(Default: TRUE): Does the number of sequences is print}
+
+\item{taxonomic_level}{(Default: NULL): a vector of selected taxonomic
+level using their column numbers (e.g. taxonomic_level = c(1:7))}
 
 \item{...}{Other argument for the datatable function}
 }
@@ -17,7 +20,7 @@ tax_datatable(physeq, abundance = TRUE, ...)
 A datatable
 }
 \description{
-Make a datatable with the taxonomy of a \code{\link{phyloseq-class}} object
+`r lifecycle::badge("maturing")`
 }
 \examples{
 data("GlobalPatterns")

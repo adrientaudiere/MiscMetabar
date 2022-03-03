@@ -5,19 +5,24 @@
 \title{Track the number of reads (= sequences), samples and cluster (e.g. ASV)
 from various objects including dada-class and derep-class.}
 \usage{
-track_wkflow(list_of_objects, obj_names = NULL)
+track_wkflow(list_of_objects, obj_names = NULL, clean_physeq = FALSE)
 }
 \arguments{
 \item{list_of_objects}{(required): A list of objects}
 
 \item{obj_names}{(default: NULL) :
 A list of names corresponding to the list of objects}
+
+\item{clean_physeq}{(Logical, default = FALSE) If true, empty samples and empty ASV are discarded before clustering.}
 }
 \value{
 The number of sequences, clusters (e.g. OTUs, ASVs) and samples for
   each object.
 }
 \description{
+`r lifecycle::badge("maturing")`
+}
+\details{
 * List of fastq and fastg.gz files -> nb of reads and samples
  * List of dada-class -> nb of reads, clusters (ASV) and samples
  * List of derep-class -> nb of reads, clusters (unique sequences)

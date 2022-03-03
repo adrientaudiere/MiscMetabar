@@ -16,6 +16,5 @@ A new \code{\link{phyloseq-class}} object with `refseq` slot and new
   taxa names
 }
 \description{
-Add dna in `refseq` slot of a physeq object using taxa names and renames taxa
-  using ASV_1, ASV_2, …
+`r lifecycle::badge("stable")`
 }

@@ -69,7 +69,7 @@ A \code{\link[circlize]{chordDiagram}} plot representing the
   fact
 }
 \description{
-Plot OTU circle for \code{\link{phyloseq-class}} object
+`r lifecycle::badge("maturing")`
 }
 \examples{
 data("GlobalPatterns")

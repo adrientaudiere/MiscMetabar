@@ -40,7 +40,7 @@ or \code{\link[ggplot2]{ggplot}}}
 A \code{\link{ggplot}}2 plot representing edgeR results
 }
 \description{
-Plot edgeR results for a phyloseq or a edgeR object.
+`r lifecycle::badge("maturing")`
 }
 \examples{
 data(GlobalPatterns)

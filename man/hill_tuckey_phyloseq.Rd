@@ -15,7 +15,7 @@ hill_tuckey_phyloseq(physeq, modality)
 A ggplot2 object
 }
 \description{
-Calculate hill number and compute Tuckey post-hoc test
+`r lifecycle::badge("maturing")`
 }
 \examples{
 data("GlobalPatterns")

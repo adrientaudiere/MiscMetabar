@@ -4,10 +4,13 @@
 \alias{physeq_heat_tree}
 \title{Heat tree from `metacoder` package using `tax_table` slot}
 \usage{
-physeq_heat_tree(physeq, ...)
+physeq_heat_tree(physeq, taxonomic_level = NULL, ...)
 }
 \arguments{
 \item{physeq}{(required): A \code{\link{phyloseq-class}} object}
+
+\item{taxonomic_level}{(Default: NULL): a vector of selected taxonomic level using
+their column numbers (e.g. taxonomic_level = c(1:7))}
 
 \item{...}{: Arguments parsed to \code{\link[metacoder]{heat_tree}}}
 }
@@ -15,7 +18,7 @@ physeq_heat_tree(physeq, ...)
 A plot
 }
 \description{
-Heat tree from `metacoder` package using `tax_table` slot
+`r lifecycle::badge("maturing")`
 }
 \examples{
 data("GlobalPatterns")

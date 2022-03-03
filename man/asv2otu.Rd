@@ -33,8 +33,7 @@ Set the clustering method.
 A new object of class `physeq`
 }
 \description{
-Recluster sequences of an object of class `physeq`
-(e.g. OTUs or ASV from dada)
+`r lifecycle::badge("maturing")`
 }
 \details{
 This function use the `speedyseq::merge_taxa_vec` function to

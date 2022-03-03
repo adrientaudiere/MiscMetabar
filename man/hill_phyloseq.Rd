@@ -4,7 +4,7 @@
 \alias{hill_phyloseq}
 \title{Graphical representation of hill number 0, 1 and 2 accross a factor}
 \usage{
-hill_phyloseq(physeq, variable, color_fac)
+hill_phyloseq(physeq, variable, color_fac = NA, letters = FALSE)
 }
 \arguments{
 \item{physeq}{(required): A \code{\link{phyloseq-class}} object}
@@ -12,17 +12,22 @@ hill_phyloseq(physeq, variable, color_fac)
 \item{variable}{(required): The variable to test}
 
 \item{color_fac}{(optional): The variable to color the barplot}
+
+\item{letters}{(optional, default=FALSE): If set to TRUE, the plot
+show letters based on p-values for comparison. Use the
+ \code{\link[multcompView]{multcompLetters}} function from the package
+ multcompLetters.}
 }
 \value{
 A list of 4 ggplot2 plot.
-  * plot_Hill_0 : the boxplot of Hill number 0 (= species richness)
+- plot_Hill_0 : the boxplot of Hill number 0 (= species richness)
     against the variable
-  * plot_Hill_1 : the boxplot of Hill number 1 (= Shannon index)
+- plot_Hill_1 : the boxplot of Hill number 1 (= Shannon index)
      against the variable
-  * plot_Hill_2 : the boxplot of Hill number 2 (= Simpson index)
+- plot_Hill_2 : the boxplot of Hill number 2 (= Simpson index)
     against the variable
-  * plot_tuckey : plot the result of the Tuckey HSD test
+- plot_tuckey : plot the result of the Tuckey HSD test
 }
 \description{
-Graphical representation of hill number 0, 1 and 2 accross a factor
+`r lifecycle::badge("maturing")`
 }

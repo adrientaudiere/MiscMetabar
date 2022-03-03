@@ -14,6 +14,7 @@ plot_deseq2_phyloseq(
   color_tax = "Phylum",
   tax_depth = NULL,
   verbose = TRUE,
+  jitter_width = 0.1,
   ...
 )
 }
@@ -50,6 +51,8 @@ distribution among contrast. If Null the analysis is done at the OTU
 \item{verbose}{: whether the function print some information during
 the computation}
 
+\item{jitter_width}{(default=0.1) : width for the jitter positionning}
+
 \item{...}{Additional arguments passed on to \code{\link[DESeq2]{DESeq}}
 or \code{\link[ggplot2]{ggplot}}}
 }
@@ -57,7 +60,7 @@ or \code{\link[ggplot2]{ggplot}}}
 A \code{\link{ggplot}}2 plot representing DESeq2 results
 }
 \description{
-Plot DESeq2 results for a phyloseq or a DESeq2 object.
+`r lifecycle::badge("experimental")`
 }
 \examples{
 data("GlobalPatterns")

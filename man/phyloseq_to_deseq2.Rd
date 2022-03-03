@@ -35,6 +35,8 @@ a following call to \code{\link[DESeq2]{DESeq}}.}
 A \code{\link[DESeq2]{DESeqDataSet}} object.
 }
 \description{
+`r lifecycle::badge("experimental")`
+
 No testing is performed by this function. The phyloseq data is converted
 to the relevant \code{\link[DESeq2]{DESeqDataSet}} object, which can then be
 tested in the negative binomial generalized linear model framework

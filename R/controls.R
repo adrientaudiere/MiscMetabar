@@ -5,6 +5,9 @@
 ################################################################################
 #' Calculate ecological distance among positive controls vs
 #'   distance for all samples
+#' 
+#' #' `r lifecycle::badge("maturing")`
+#' 
 #' @aliases dist_pos_control
 #' @details  Compute distance among positive controls,
 #'   i.e. samples which are duplicated
@@ -68,6 +71,9 @@ les")
 
 ################################################################################
 #' Subset taxa using a taxa control (e.g. truffle root tips) through 3 methods.
+#' 
+#' `r lifecycle::badge("experimental")`
+#' 
 #' @aliases subset_taxa_tax_control
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param taxa_distri (required): a vector of length equal to the number of

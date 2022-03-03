@@ -2,7 +2,7 @@
 % Please edit documentation in R/dada_phyloseq.R
 \name{write_phyloseq}
 \alias{write_phyloseq}
-\title{Save phyloseq object in the form of multiple csv tables. EXPERIMENTAL}
+\title{Save phyloseq object in the form of multiple csv tables.}
 \usage{
 write_phyloseq(physeq, path = NULL)
 }
@@ -12,8 +12,11 @@ write_phyloseq(physeq, path = NULL)
 \item{path}{(defaut: NULL) : a path to the folder to save the phyloseq object}
 }
 \value{
-
+Four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 }
 \description{
-Save phyloseq object in the form of multiple csv tables. EXPERIMENTAL
+`r lifecycle::badge("maturing")`
+}
+\examples{
+write_phyloseq(data_fungi, path = "phyloseq")
 }

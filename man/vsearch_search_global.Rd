@@ -28,6 +28,5 @@ vsearch_search_global(
 A dataframe with uc results (invisible)
 }
 \description{
-Search for a list of sequence in a fasta file against physeq reference
-  sequences using [vsearch](https://github.com/torognes/vsearch)
+`r lifecycle::badge("maturing")`
 }

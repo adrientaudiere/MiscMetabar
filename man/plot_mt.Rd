@@ -22,7 +22,7 @@ plot_mt(res, color_tax = "Phylum") + scale_color_hue()}
 a \code{\link{ggplot}}2 plot of result of a mt test
 }
 \description{
-Plot the result of a mt test (\code{\link[phyloseq]{mt}})
+`r lifecycle::badge("maturing")`
 }
 \seealso{
 \code{\link[phyloseq]{mt}}

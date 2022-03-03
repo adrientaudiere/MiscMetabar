@@ -66,7 +66,7 @@ accumulation plot if nb_seq = TRUE, else, if nb_seq = FALSE
 return a base plot.
 }
 \description{
-Plot accumulation curves for \code{\link{phyloseq-class}} object
+`r lifecycle::badge("maturing")`
 }
 \seealso{
 \code{\link[vegan]{specaccum}}

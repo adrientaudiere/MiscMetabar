@@ -13,7 +13,7 @@ summary_plot_phyloseq(physeq)
 A ggplot2 object
 }
 \description{
-Summarise a \code{\link{phyloseq-class}} object using a plot.
+`r lifecycle::badge("maturing")`
 }
 \examples{
   data(esophagus)

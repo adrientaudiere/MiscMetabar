@@ -22,8 +22,7 @@ A list of two dataframes with
   (ii) the distance among all samples
 }
 \description{
-Calculate ecological distance among positive controls vs
-  distance for all samples
+#' `r lifecycle::badge("maturing")`
 }
 \details{
 Compute distance among positive controls,

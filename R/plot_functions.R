@@ -2,6 +2,9 @@
 #Plot the result of a mt test
 ################################################################################
 #' Plot the result of a mt test (\code{\link[phyloseq]{mt}})
+#' @description 
+#' `r lifecycle::badge("maturing")`
+#'  
 #' @param mt (required): result of a mt test
 #' @param alpha (default = 0.05): Choose the cut off p-value to plot taxa
 #' @param color_tax : A taxonomic level to color the points
@@ -45,7 +48,8 @@ plot_mt <-
 
 ################################################################################
 #' Plot accumulation curves for \code{\link{phyloseq-class}} object
-#'
+#' @description 
+#' `r lifecycle::badge("maturing")`
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param fact (required): Name of the factor in physeq@sam_data used to plot
 #'    different lines
@@ -139,8 +143,8 @@ accu_plot <-
       if (is.null(ci_col)) {
         transp <- function(col, alpha = 0.5) {
           res <-
-            apply(col2rgb(col), 2, function(c)
-              rgb(c[1] / 255, c[2] / 255, c[3] / 255, alpha))
+            apply(grDevices::col2rgb(col), 2, function(c)
+              grDevices::rgb(c[1] / 255, c[2] / 255, c[3] / 255, alpha))
           return(res)
         }
         ci_col <-
@@ -159,7 +163,7 @@ accu_plot <-
       )
 
       for (i in 1:nlevels(factor_interm)) {
-        lines(
+        graphics::lines(
           accu[[i]],
           ci_type = "poly",
           ci_col = ci_col[i + 1],
@@ -169,7 +173,7 @@ accu_plot <-
         )
       }
       if (leg) {
-        legend(
+        graphics::legend(
           "bottomright",
           c("all", levels(factor_interm)),
           col = col,
@@ -275,6 +279,8 @@ accu_plot <-
 
 ################################################################################
 #' Plot OTU circle for \code{\link{phyloseq-class}} object
+#' @description 
+#' `r lifecycle::badge("maturing")`
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param fact (required): Name of the factor to cluster samples by modalities.
 #'        Need to be in \code{physeq@sam_data}.
@@ -373,7 +379,7 @@ otu_circle <-
     if (rarefy) {
       otu_table_ech_interm <-
         rrarefy(otu_table_ech, min(rowSums(otu_table_ech)))
-      print(
+      message(
         paste(
           "Rarefaction by modalities deletes ",
           sum(otu_table_ech) - sum(otu_table_ech_interm),
@@ -399,7 +405,7 @@ otu_circle <-
                     (colSums(otu_table_ech) / sum(otu_table_ech)) >
                       min_prop_tax]
     if (nrow(o_t_e_interm) != nrow(otu_table_ech)) {
-      print(
+      message(
         paste(
           "Only ",
           nrow(o_t_e_interm),
@@ -414,7 +420,7 @@ otu_circle <-
     }
 
     if (ncol(o_t_e_interm) != ncol(otu_table_ech)) {
-      print(
+      message(
         paste(
           "Only ",
           ncol(o_t_e_interm),
@@ -445,7 +451,7 @@ otu_circle <-
     }
 
     funky_color <-
-      colorRampPalette(
+      grDevices::colorRampPalette(
         c(
           "#A6CEE3",
           "#1F78B4",
@@ -482,6 +488,8 @@ otu_circle <-
 
 ################################################################################
 #' Sankey plot of \code{\link{phyloseq-class}} object
+#' @description 
+#' `r lifecycle::badge("maturing")`
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param fact (Optional): Name of the factor to cluster samples by modalities.
 #' Need to be in \code{physeq@sam_data}.
@@ -672,6 +680,8 @@ sankey_phyloseq <-
 
 ################################################################################
 #' Venn diagram of \code{\link{phyloseq-class}} object
+#' @description 
+#' `r lifecycle::badge("maturing")`
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param fact (required): Name of the factor to cluster samples by modalities.
 #' Need to be in \code{physeq@sam_data}.
@@ -847,21 +857,25 @@ venn_phyloseq <-
 ################################################################################
 
 ################################################################################
-# Multiple plot function
-#
+#' Multiple plot function
+#' @description 
+#' `r lifecycle::badge("stable")`
+#'  
 # ggplot objects can be passed in ..., or to plotlist (as a list of ggplot
 # objects)
-# - cols:   Number of columns in layout
-# - layout: A matrix specifying the layout. If present, 'cols' is ignored.
 #
 # If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
 # then plot 1 will go in the upper left, 2 will go in the upper right, and
 # 3 will go all the way across the bottom.
 #
+#' @param ... : list of ggplot objects
+#' @param plotlist : list of ggplot objects
+#' @param cols : number of columns
+#' @param layout : A matrix specifying the layout. If present, 'cols' is ignored.
+
 multiplot <-
   function(...,
            plotlist = NULL,
-           file,
            cols = 1,
            layout = NULL) {
     # Make a list from the ... arguments and plotlist
@@ -880,7 +894,7 @@ multiplot <-
     }
 
     if (num_plots == 1) {
-      print(plots[[1]])
+      message(plots[[1]])
 
     } else {
       # Set up the page
@@ -906,7 +920,8 @@ multiplot <-
 
 ################################################################################
 #' Graphical representation of hill number 0, 1 and 2 accross a factor
-#'
+#' @description 
+#' `r lifecycle::badge("maturing")`
 #' @param physeq (required): A \code{\link{phyloseq-class}} object
 #' @param variable (required): The variable to test
 #' @param color_fac (optional): The variable to color the barplot
@@ -982,7 +997,7 @@ hill_phyloseq <-
       ### HILL 1
 
       data_h1 <-
-        p_var$data[grep("Hill Number 1", p_var$data[, 5]),]
+        p_var$data[grep("Hill Number 1", p_var$data[, 5]), ]
       data_h1_pval <- data_h1$p.adj
       names(data_h1_pval) <- data_h1$modality
       letters <- multcompLetters(data_h1_pval, reversed = T)$Letters
@@ -1036,9 +1051,12 @@ hill_phyloseq <-
 
 ################################################################################
 #' Make a datatable with the taxonomy of a \code{\link{phyloseq-class}} object
-#'
+#' @description 
+#' `r lifecycle::badge("maturing")`
 #' @param physeq (required): A \code{\link{phyloseq-class}} object
 #' @param abundance (Default: TRUE): Does the number of sequences is print
+#' @param taxonomic_level (Default: NULL): a vector of selected taxonomic
+#' level using their column numbers (e.g. taxonomic_level = c(1:7))
 #' @param ... Other argument for the datatable function
 #'
 #' @author Adrien Taudière
@@ -1049,8 +1067,12 @@ hill_phyloseq <-
 #' data("GlobalPatterns")
 #' tax_datatable(subset_taxa(GlobalPatterns,
 #'               rowSums(GlobalPatterns@otu_table)>10000))
-tax_datatable <- function(physeq, abundance = TRUE, ...) {
+tax_datatable <- function(physeq, abundance = TRUE, taxonomic_level=NULL, ...) {
   df <- as.data.frame(physeq@tax_table)
+
+  if (!is.null(taxonomic_level)){
+    df <- df[,taxonomic_level]
+  }
 
   if (abundance) {
     if (physeq@otu_table@taxa_are_rows) {
@@ -1061,27 +1083,19 @@ tax_datatable <- function(physeq, abundance = TRUE, ...) {
   }
 
   DT::datatable(df, ...) %>%  DT::formatStyle(
-    'nb_seq',
-    background = DT::styleColorBar(df$nb_seq, 'steelblue'),
-    backgroundSize = '100% 90%',
-    backgroundRepeat = 'no-repeat',
-    backgroundPosition = 'center'
-  ) %>%
-    DT::formatStyle(
-      'Order',
-      borderBottom = '5px solid',
-      # textDecorationLine = 'underline',
-      borderColor = DT::styleEqual(unique(df$Order),
-                                   viridis::viridis(length(unique(
-                                     df$Order
-                                   ))))
-    )
+    "nb_seq",
+    background = DT::styleColorBar(df$nb_seq, "steelblue"),
+    backgroundSize = "100% 90%",
+    backgroundRepeat = "no-repeat",
+    backgroundPosition = "center"
+  )
 }
 ################################################################################
 
 ################################################################################
 #' Summarise a \code{\link{phyloseq-class}} object using a plot.
-#'
+#' @description 
+#' `r lifecycle::badge("maturing")`
 #' @param physeq (required): A \code{\link{phyloseq-class}} object
 #' @examples
 #'   data(esophagus)
@@ -1190,8 +1204,11 @@ summary_plot_phyloseq <- function(physeq) {
 
 
 #' Heat tree from `metacoder` package using `tax_table` slot
-#'
+#' @description 
+#' `r lifecycle::badge("maturing")`
 #' @param physeq (required): A \code{\link{phyloseq-class}} object
+#' @param taxonomic_level (Default: NULL): a vector of selected taxonomic level using
+#'   their column numbers (e.g. taxonomic_level = c(1:7))
 #' @param ... : Arguments parsed to \code{\link[metacoder]{heat_tree}}
 #'
 #' @return A plot
@@ -1213,7 +1230,11 @@ summary_plot_phyloseq <- function(physeq) {
 #'                  tree_label = taxon_names,
 #'                  node_size_trans = "log10 area")
 
-physeq_heat_tree <- function(physeq, ...) {
+physeq_heat_tree <- function(physeq, taxonomic_level=NULL, ...) {
+  if (!is.null(taxonomic_level)) {
+    physeq@tax_table <- physeq@tax_table[,taxonomic_level]
+  }
+  
   data_metacoder <- metacoder::parse_phyloseq(physeq)
   metacoder::heat_tree(data_metacoder, ...)
 }

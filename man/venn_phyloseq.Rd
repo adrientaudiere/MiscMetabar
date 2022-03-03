@@ -38,7 +38,7 @@ A \code{\link{ggplot}}2 plot representing Venn diagramm of
 modalities of the argument \code{factor}
 }
 \description{
-Venn diagram of \code{\link{phyloseq-class}} object
+`r lifecycle::badge("maturing")`
 }
 \seealso{
 \code{\link[venneuler]{venneuler}}

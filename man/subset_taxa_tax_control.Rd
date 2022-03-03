@@ -34,7 +34,7 @@ There is 6 methods:
 A new \code{\link{phyloseq-class}} object.
 }
 \description{
-Subset taxa using a taxa control (e.g. truffle root tips) through 3 methods.
+`r lifecycle::badge("experimental")`
 }
 \author{
 Adrien Taudière

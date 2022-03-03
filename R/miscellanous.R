@@ -3,9 +3,12 @@
 #'   \code{\link{phyloseq-class}} object with à binary otu_table.
 #' @note  Usefull to test if the results are not biaised by sequences bias
 #'   that appended during PCR or NGS pipeline.
+#' 
+#' @description 
+#'`r lifecycle::badge("maturing")`
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param minNumber (default = 1): the minimum number of sequences to put
+#' @param min_number (default = 1): the minimum number of sequences to put
 #' a 1 in the otu table.
 #' @author Adrien Taudière
 #'
@@ -29,6 +32,10 @@ as_binary_otu_table <- function(physeq, min_number = 1) {
 
 ################################################################################
 #' Compute paired distances among matrix (e.g. otu_table)
+#' 
+#' @description 
+#'`r lifecycle::badge("experimental")`
+#' 
 #' @note the first column of the first matrix is compare to the first column of
 #'   the second matrix, the second column of the first matrix is compare to the
 #'   second column of the second matrix and so on.
@@ -75,7 +82,7 @@ dist_bycol <- function(x,
       res$null[[n]][i] <-
         vegan::vegdist(rbind(x[, i], y_null[, i]), method = method, ...)
     }
-    print(n)
+    message(n)
   }
 
   names(res$obs) <- colnames(x)
@@ -86,7 +93,11 @@ dist_bycol <- function(x,
 
 ################################################################################
 #' List the size of all object of the GlobalEnv.
+#' @description 
+#'`r lifecycle::badge("stable")`
+#' 
 #' Code from https://tolstoy.newcastle.edu.au/R/e6/help/09/01/1121.html
+#' 
 #' @aliases all_object_size
 #' @return a list of size
 #' @export
@@ -96,3 +107,25 @@ all_object_size <- function() {
   })))
 }
 ################################################################################
+
+
+
+################################################################################
+#' Simplify taxonomy by removing some unused character such as "k__"
+#' @param physeq (required): a \code{\link{phyloseq-class}} object.
+#'
+#' @description 
+#'`r lifecycle::badge("maturing")`
+#' 
+#' @author Adrien Taudière
+#'
+#' @return A  \code{\link{phyloseq-class}} object with simplified taxonomy
+#' @export
+#' @seealso
+
+simplify_taxo <- function(physeq) {
+  taxo <- physeq@tax_table
+  taxo <- gsub(".__", "", taxo, perl = T)
+  physeq@tax_table <- taxo
+  return(physeq)
+}

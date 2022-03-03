@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 
 # MiscMetabar
 
-The goal of MiscMetabar is to complete the great package dada2 and phyloseq. 
+The goal of MiscMetabar is to complete the great packages [dada2](https://benjjneb.github.io/dada2/index.html), [phyloseq](https://joey711.github.io/phyloseq/) and [targets](https://books.ropensci.org/targets/). 
 See the pkdown site [here](https://adrientaudiere.github.io/MiscMetabar/).
 
 ## Installation
@@ -25,13 +25,11 @@ There is no CRAN version of MiscMetabar for now.
 You can install the development version from [GitHub](https://github.com/) with:
 
 ```{r installation}
-# install.packages("devtools")
+install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar")
 ```
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
+## Some use of MiscMetabar
 
 ### Summarize a physeq object
 
@@ -47,18 +45,45 @@ summary_plot_phyloseq(esophagus)
 ```{r}
 data("GlobalPatterns")
 tax_datatable(subset_taxa(GlobalPatterns,
-             rowSums(GlobalPatterns@otu_table)>100000))
+             rowSums(GlobalPatterns@otu_table) > 100000))
 ```
 
 ### Sankey diagramme of the tax_table
 
 ```{r}
-GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[,1] == "Archaea")
-sankey_phyloseq(GP, taxa = c(1:5))
+gp <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+sankey_phyloseq(gp, taxa = c(1:5))
 ```
 
 ### Circle for visualise distribution of taxa in function of samples variables
 
 ```{r}
-otu_circle(GP, 'SampleType', taxa = "Class")
+otu_circle(gp, "SampleType", taxa = "Class")
+```
+
+### Re-clustering ASV
+
+#### Using decipher or Vsearch algorithm
+```{r}
+data(data_fungi_sp_known)
+otu <- asv2otu(data_fungi_sp_known, method = "IdClusters")
+otu_vs <- asv2otu(data_fungi_sp_known, method = "vsearch")
+```
+
+```{r}
+summary_plot_phyloseq(data_fungi_sp_known)
+summary_plot_phyloseq(otu)
+summary_plot_phyloseq(otu_vs)
+```
+
+#### Using lulu algorithm (https://www.nature.com/articles/s41467-017-01312-x)
+
+```{r}
+data(data_fungi_sp_known)
+lulu_res <- lulu_phyloseq(data_fungi_sp_known)
+```
+
+```{r}
+summary_plot_phyloseq(data_fungi_sp_known)
+summary_plot_phyloseq(lulu_res@new_physeq)
 ```

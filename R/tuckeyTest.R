@@ -1,8 +1,7 @@
-
-
-
 ################################################################################
 #' Calculate hill number and compute Tuckey post-hoc test
+#' @description 
+#' `r lifecycle::badge("maturing")`
 #' @aliases hill_tuckey_phyloseq
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param modality (required): the variable to test
@@ -27,7 +26,7 @@ hill_tuckey_phyloseq <- function(physeq, modality) {
   read_numbers <- apply(physeq@otu_table, 2, sum)
 
   otu_hill <-
-    renyi(t(physeq@otu_table),
+    vegan::renyi(t(physeq@otu_table),
           scale = c(0, 1, 2),
           hill = T)
 

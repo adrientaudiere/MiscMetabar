@@ -40,13 +40,15 @@ query sequences for which `blastn` does not find any correspondence}
 
 }
 \description{
-Blast some sequence against `refseq` slot of a \code{\link{phyloseq-class}}
-  object.
+`r lifecycle::badge("maturing")`
 }
 \examples{
+\dontrun{
 data(data_fungi)
-blastpath =
-"/home/adrien/Bureau/ncbi-blast-2.10.0+-x64-linux/ncbi-blast-2.10.0+/bin/"
-blast_to_phyloseq(data_fungi, seq2search = "data/ex.fasta",
-                 blastpath = blastpath)
+blastpath <- "...YOUR_PATH_TO_BLAST..."
+blast_to_phyloseq(data_fungi,
+  seq2search = "inst/extdata/ex.fasta",
+  blastpath = blastpath
+)
+}
 }
