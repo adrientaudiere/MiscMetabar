@@ -35,11 +35,11 @@ hill_tuckey_phyloseq <- function(physeq, modality) {
   hill_3 <- otu_hill$"2"
 
   tuk1 <-
-    TukeyHSD(aov(lm(hill_1 ~ sqrt(read_numbers))$residuals ~ modality_vector))
+    stats::TukeyHSD(stats::aov(lm(hill_1 ~ sqrt(read_numbers))$residuals ~ modality_vector))
   tuk2 <-
-    TukeyHSD(aov(lm(hill_2 ~ sqrt(read_numbers))$residuals ~ modality_vector))
+    stats::TukeyHSD(stats::aov(lm(hill_2 ~ sqrt(read_numbers))$residuals ~ modality_vector))
   tuk3 <-
-    TukeyHSD(aov(lm(hill_3 ~ sqrt(read_numbers))$residuals ~ modality_vector))
+    stats::TukeyHSD(stats::aov(lm(hill_3 ~ sqrt(read_numbers))$residuals ~ modality_vector))
 
   df <-
     rbind(tuk1$modality_vector,

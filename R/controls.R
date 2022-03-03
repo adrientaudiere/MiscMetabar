@@ -44,7 +44,7 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
   }
   names(dist_control) <-  levels(samples_names)
   res$dist_control_samples <- data.frame("dist_control" =
-                                         na.omit(dist_control))
+                                         stats::na.omit(dist_control))
 
   # Compute distance among all samples
   if (taxa_are_rows(physeq)) {
@@ -59,7 +59,7 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
       matdist_interm, diag = FALSE, upper = TRUE
     )))
   res[[2]] <-
-    data.frame("dist_control_samples" = as.vector(na.omit(dist_control)))
+    data.frame("dist_control_samples" = as.vector(stats::na.omit(dist_control)))
   names(res) <- c("distAllSamples", "dist_controlontrolSamp
 les")
 
@@ -114,14 +114,14 @@ subset_taxa_tax_control <-
           ## Cutoff such that Pr[drawn from bad component] == proba
           f <- function(x) {
             proba - (
-              model$lambda[il] * dnorm(x, model$mu[il], model$sigma[il]) /
+              model$lambda[il] * stats::dnorm(x, model$mu[il], model$sigma[il]) /
                 (
-                  model$lambda[1] * dnorm(x, model$mu[1], model$sigma[1]) +
-                    model$lambda[2] * dnorm(x, model$mu[2], model$sigma[2])
+                  model$lambda[1] * stats::dnorm(x, model$mu[1], model$sigma[1]) +
+                    model$lambda[2] * stats::dnorm(x, model$mu[2], model$sigma[2])
                 )
             )
           }
-          return(uniroot(
+          return(stats::uniroot(
             f = f,
             lower = 1,
             upper = 1000

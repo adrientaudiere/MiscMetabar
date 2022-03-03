@@ -13,9 +13,9 @@ Depends:
     R (>= 3.5.0),
     ggplot2,
     phyloseq,
-    dada2
+    dada2,
+    magrittr
 Suggests: 
-    magrittr,
     lulu,
     metacoder,
     grid,

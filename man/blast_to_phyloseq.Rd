@@ -37,7 +37,7 @@ FALSE, `id_cut` and `bit_score_cut` are ignored}
 query sequences for which `blastn` does not find any correspondence}
 }
 \value{
-
+the blast table
 }
 \description{
 `r lifecycle::badge("maturing")`

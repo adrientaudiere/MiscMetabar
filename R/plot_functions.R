@@ -1132,10 +1132,10 @@ summary_plot_phyloseq <- function(physeq) {
       ),
       paste("Sequences length:\n",
             round(mean(
-              nchar(physeq@refseq)
+              Biostrings::width(physeq@refseq)
             ), 2), "+/-",
-            round(sd(
-              nchar(physeq@refseq)
+            round(stats::sd(
+              Biostrings::width(physeq@refseq)
             ), 2))
     )
   )

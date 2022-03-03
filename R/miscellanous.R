@@ -103,7 +103,7 @@ dist_bycol <- function(x,
 #' @export
 all_object_size <- function() {
   return(sort(sapply(ls(envir = .GlobalEnv), function(x) {
-    object.size(get(x))
+    utils::object.size(get(x))
   })))
 }
 ################################################################################
@@ -121,8 +121,6 @@ all_object_size <- function() {
 #'
 #' @return A  \code{\link{phyloseq-class}} object with simplified taxonomy
 #' @export
-#' @seealso
-
 simplify_taxo <- function(physeq) {
   taxo <- physeq@tax_table
   taxo <- gsub(".__", "", taxo, perl = T)

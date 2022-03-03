@@ -15,9 +15,6 @@ A  \code{\link{phyloseq-class}} object with simplified taxonomy
 \description{
 `r lifecycle::badge("maturing")`
 }
-\seealso{
-
-}
 \author{
 Adrien Taudière
 }

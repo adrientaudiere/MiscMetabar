@@ -1,3 +1,5 @@
+if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
+
 ################################################################################
 #' Add dna in `refseq` slot of a physeq object using taxa names and renames taxa
 #'   using ASV_1, ASV_2, …
@@ -368,7 +370,7 @@ vsearch_search_global <- function(physeq,
 #' @param list_no_output_query (default to FALSE): does the result table include
 #'   query sequences for which `blastn` does not find any correspondence
 #'
-#' @return
+#' @return  the blast table
 #' @export
 #'
 #' @examples
@@ -410,7 +412,7 @@ blast_to_phyloseq <- function(physeq,
   )
 
   if (file.info("blast_result.txt")$size > 0) {
-    blast_tab <- read.table(
+    blast_tab <- utils::read.table(
       "blast_result.txt",
       sep = "\t",
       header = F,
@@ -465,6 +467,8 @@ blast_to_phyloseq <- function(physeq,
   } else {
     blast_tab <- blast_tab
   }
+
+  return(blast_tab)
 }
 ################################################################################
 
@@ -483,16 +487,16 @@ blast_to_phyloseq <- function(physeq,
 write_phyloseq <- function(physeq, path = NULL) {
   dir.create(file.path(path))
   if (!is.null(physeq@otu_table)) {
-    write.csv(physeq@otu_table, paste(path, "/otu_table.csv", sep = ""))
+    utils::write.csv(physeq@otu_table, paste(path, "/otu_table.csv", sep = ""))
   }
   if (!is.null(physeq@refseq)) {
-    write.csv(physeq@refseq, paste(path, "/refseq.csv", sep = ""))
+    utils::write.csv(physeq@refseq, paste(path, "/refseq.csv", sep = ""))
   }
   if (!is.null(physeq@tax_table)) {
-    write.csv(physeq@tax_table, paste(path, "/tax_table.csv", sep = ""))
+    utils::write.csv(physeq@tax_table, paste(path, "/tax_table.csv", sep = ""))
   }
   if (!is.null(physeq@sam_data)) {
-    write.csv(physeq@sam_data, paste(path, "/sam_data.csv", sep = ""))
+    utils::write.csv(physeq@sam_data, paste(path, "/sam_data.csv", sep = ""))
   }
 }
 ################################################################################
@@ -519,7 +523,8 @@ write_phyloseq <- function(physeq, path = NULL) {
 #'   value. NA value are not counted as discrepancy.
 #' - "res_lulu": A list of the result from the lulu function 
 #' - "merged_ASV": the data.frame used to merged ASV
-#'   
+#'
+#' @export 
 #' @examples 
 #' data(data_fungi_sp_known)
 #' lulu_phyloseq(data_fungi_sp_known)
@@ -563,10 +568,10 @@ lulu_phyloseq <- function(physeq,
       stderr = T
     )
 
-  match_list <- read.csv(file = "match_list.txt", sep = "\t")
+  match_list <- utils::read.csv(file = "match_list.txt", sep = "\t")
   
   if (!requireNamespace("lulu")) {
-    library(devtools)
+    requireNamespace(devtools)
     install_github("adrientaudiere/lulu")  
   }
 
@@ -590,7 +595,7 @@ lulu_phyloseq <- function(physeq,
   test_vector <- c()
   for (tax_rank in colnames(physeq@tax_table)) {
     test <- physeq@tax_table[rownames(merged), tax_rank] == physeq@tax_table[merged$parent_id, tax_rank]
-    test_vector <- c(test_vector, sum(test, na.rm = T) / length(na.exclude(test)))
+    test_vector <- c(test_vector, sum(test, na.rm = T) / length(stats::na.exclude(test)))
   }
 
   names(test_vector) <- colnames(physeq@tax_table)

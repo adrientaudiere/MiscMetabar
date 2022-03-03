@@ -20,6 +20,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -32,25 +34,22 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">MiscMetabar</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.22</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/adrientaudiere/MiscMetabar/">
+  <a href="https://github.com/adrientaudiere/MiscMetabar/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -67,123 +66,54 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="miscmetabar" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#miscmetabar" class="anchor"></a>MiscMetabar</h1></div>
-<p>The goal of MiscMetabar is to complete the great package dada2 and phyloseq.</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>There is no CRAN version of MiscMetabar for now.</p>
-<p>You can install the development version from <a href="https://github.com/">GitHub</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"adrientaudiere/MiscMetabar"</span><span class="op">)</span>
-<span class="co">#&gt; Downloading GitHub repo adrientaudiere/MiscMetabar@master</span>
-<span class="co">#&gt; Skipping 1 packages not available: phyloseq</span>
-<span class="co">#&gt;      checking for file ‘/tmp/RtmpzqxuoJ/remotes6d2c45404455/adrientaudiere-MiscMetabar-ab13a95/DESCRIPTION’ ...  ✓  checking for file ‘/tmp/RtmpzqxuoJ/remotes6d2c45404455/adrientaudiere-MiscMetabar-ab13a95/DESCRIPTION’</span>
-<span class="co">#&gt;   ─  preparing ‘MiscMetabar’:</span>
-<span class="co">#&gt;      checking DESCRIPTION meta-information ...  ✓  checking DESCRIPTION meta-information</span>
-<span class="co">#&gt;   ─  checking for LF line-endings in source and make files and shell scripts</span>
-<span class="co">#&gt;   ─  checking for empty or unneeded directories</span>
-<span class="co">#&gt;   ─  building ‘MiscMetabar_0.20.tar.gz’</span>
-<span class="co">#&gt;      </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Installing package into '/home/adrien/R/x86_64-pc-linux-gnu-library/3.6'</span>
-<span class="co">#&gt; (as 'lib' is unspecified)</span></code></pre></div>
-</div>
-<div id="example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
-<p>This is a basic example which shows you how to solve a common problem:</p>
-<div id="summarize-a-physeq-object" class="section level3">
-<h3 class="hasAnchor">
-<a href="#summarize-a-physeq-object" class="anchor"></a>Summarize a physeq object</h3>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/adrientaudiere/MiscMetabar">"MiscMetabar"</a></span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: ggplot2</span>
-<span class="co">#&gt; Loading required package: phyloseq</span>
-<span class="co">#&gt; Loading required package: grid</span>
-<span class="co">#&gt; Loading required package: vegan</span>
-<span class="co">#&gt; Loading required package: permute</span>
-<span class="co">#&gt; Loading required package: lattice</span>
-<span class="co">#&gt; This is vegan 2.5-6</span>
-<span class="co">#&gt; Loading required package: dada2</span>
-<span class="co">#&gt; Loading required package: Rcpp</span>
-<span class="co">#&gt; Loading required package: magrittr</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'MiscMetabar'</span>
-<span class="co">#&gt; The following object is masked from 'package:phyloseq':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     phyloseq_to_deseq2</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://dx.plos.org/10.1371/journal.pone.0061217">"phyloseq"</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"esophagus"</span><span class="op">)</span>
-<span class="fu"><a href="reference/summary_plot_phyloseq.html">summary_plot_phyloseq</a></span><span class="op">(</span><span class="va">esophagus</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-example-1.png" width="100%"></p>
-</div>
-<div id="create-an-interactive-table-of-the-tax_table" class="section level3">
-<h3 class="hasAnchor">
-<a href="#create-an-interactive-table-of-the-tax_table" class="anchor"></a>Create an interactive table of the tax_table</h3>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"GlobalPatterns"</span><span class="op">)</span>
-<span class="fu"><a href="reference/tax_datatable.html">tax_datatable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html">subset_taxa</a></span><span class="op">(</span><span class="va">GlobalPatterns</span>,
-             <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">GlobalPatterns</span><span class="op">@</span><span class="va">otu_table</span><span class="op">)</span><span class="op">&gt;</span><span class="fl">100000</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-2-1.png" width="100%"></p>
-</div>
-<div id="sankey-diagramme-of-the-tax_table" class="section level3">
-<h3 class="hasAnchor">
-<a href="#sankey-diagramme-of-the-tax_table" class="anchor"></a>Sankey diagramme of the tax_table</h3>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">GP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html">subset_taxa</a></span><span class="op">(</span><span class="va">GlobalPatterns</span>, <span class="va">GlobalPatterns</span><span class="op">@</span><span class="va">tax_table</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="st">"Archaea"</span><span class="op">)</span>
-<span class="fu"><a href="reference/sankey_phyloseq.html">sankey_phyloseq</a></span><span class="op">(</span><span class="va">GP</span>, taxa <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-3-1.png" width="100%"></p>
-</div>
-<div id="circle-for-visualise-distribution-of-taxa-in-function-of-samples-variables" class="section level3">
-<h3 class="hasAnchor">
-<a href="#circle-for-visualise-distribution-of-taxa-in-function-of-samples-variables" class="anchor"></a>Circle for visualise distribution of taxa in function of samples variables</h3>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/otu_circle.html">otu_circle</a></span><span class="op">(</span><span class="va">GP</span>, <span class="st">'SampleType'</span>, taxa <span class="op">=</span> <span class="st">"Class"</span><span class="op">)</span>
-<span class="co">#&gt; [1] "Only 4 modalities are plot (44.44%). Use 'min_prop_mod' to plot more samples."</span>
-<span class="co">#&gt; [1] "Only 4 taxa are plot (44.44%). Use 'min_prop_tax' to plot more taxa"</span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
-</div>
-</div>
-</div>
+Functions to help analyse and visualise metabarcoding data. Mainly based on the phyloseq and dada2 packages.
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/adrientaudiere/MiscMetabar/">https://​github.com/​adrientaudiere/​MiscMetabar/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/adrientaudiere/MiscMetabar/issues">https://​github.com/​adrientaudiere/​MiscMetabar/​issues</a>
-</li>
+<li><a href="https://github.com/adrientaudiere/MiscMetabar/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/adrientaudiere/MiscMetabar/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>GPL</li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing MiscMetabar</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Adrien Taudière <br><small class="roles"> Maintainer </small>  </li>
 </ul>
 </div>
+
+
 
   </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Adrien Taudière.</p>
+  <p></p>
+<p>Developed by Adrien Taudière.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -191,6 +121,8 @@
 
   
 
+
+  
 
   </body>
 </html>

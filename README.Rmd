@@ -26,7 +26,7 @@ You can install the development version from [GitHub](https://github.com/) with:
 
 ```{r installation}
 install.packages("devtools")
-devtools::install_github("adrientaudiere/MiscMetabar")
+devtools::install_github("adrientaudiere/MiscMetabar", force = TRUE)
 ```
 
 ## Some use of MiscMetabar
@@ -36,6 +36,7 @@ devtools::install_github("adrientaudiere/MiscMetabar")
 ```{r example}
 library("MiscMetabar")
 library("phyloseq")
+library("magrittr")
 data("esophagus")
 summary_plot_phyloseq(esophagus)
 ```
