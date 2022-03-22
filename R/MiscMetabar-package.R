@@ -2,8 +2,8 @@
 #'
 #' Functions to help analyse and visualise metabarcoding data. Mainly based on
 #' the phyloseq and dada2 packages.
+#' @name MiscMetabar-package
 #' @docType package
-#' @name MiscMetabar
 #' @import ggplot2 phyloseq magrittr dada2
 NULL
 

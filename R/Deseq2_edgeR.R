@@ -21,6 +21,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' data(GlobalPatterns)
 #' plot_edgeR_phyloseq(GlobalPatterns, c("SampleType", "Soil", "Feces"),
 #'   color_tax = "Kingdom"
@@ -28,6 +29,7 @@
 #' plot_edgeR_phyloseq(GlobalPatterns, c("SampleType", "Soil", "Feces"),
 #'   taxa = "Class", color_tax = "Kingdom"
 #' )
+#' }
 #' @author Adrien Taudière
 #'
 #' @return A \code{\link{ggplot}}2 plot representing edgeR results
@@ -296,7 +298,7 @@ plot_deseq2_phyloseq <-
         ggplot(d, aes(x = tax, y = log2FoldChange, color = col_tax), ...) +
         geom_point(
           size = 6,
-          position = position_jitter(width = jitter_width, h = 0)
+          position = position_jitter(width = jitter_width, height = 0)
         ) +
         theme(axis.text.x = element_text(
           angle = -90,
@@ -320,7 +322,7 @@ plot_deseq2_phyloseq <-
         ggplot(d, aes(x = tax, y = log2FoldChange), ...) +
         geom_point(
           size = 6, color = d$col_tax,
-          position = position_jitter(width = jitter_width, h = 0)
+          position = position_jitter(width = jitter_width, height = 0)
         ) +
         theme(axis.text.x = element_text(
           angle = -90,

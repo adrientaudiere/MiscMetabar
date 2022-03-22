@@ -17,6 +17,3 @@ Four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
-\examples{
-write_phyloseq(data_fungi, path = "phyloseq")
-}

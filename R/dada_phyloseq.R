@@ -27,6 +27,64 @@ add_dna_to_phyloseq <- function(physeq) {
 }
 ################################################################################
 
+
+
+################################################################################
+#'  Clean phyloseq object by removing empty samples and taxa
+#'  In addition, this function check for discrepancy (and rename) between 
+#' (i) taxa names in refseq, taxonomy table and otu_table and between
+#' (ii) sample names in sam_data and otu_table.
+#'
+#'
+#' `r lifecycle::badge("experimental")`
+#'
+#' @param physeq (required): a \code{\link{phyloseq-class}} object obtained
+#'   using the `dada2` package
+#'
+#' @return A new \code{\link{phyloseq-class}} object 
+#' @export
+clean_physeq <-  function(physeq){
+  if (!is.null(physeq@refseq)){
+    if (sum(!names(physeq@refseq) %in% taxa_names(physeq)) > 0){
+      names(physeq@refseq) <- taxa_names(physeq)
+      message("Change the names in refseq slot")
+    }
+  }
+  if (!is.null(physeq@tax_table)){
+    if (sum(!rownames(physeq@tax_table) %in% taxa_names(physeq)) > 0){
+      rownames(physeq@tax_table) <- taxa_names(physeq)
+      message("Change the names in tax_table slot")
+    }
+  }
+
+  if (!is.null(physeq@sam_data)){
+    if (sum(!rownames(physeq@sam_data) %in% sample_names(physeq)) > 0){
+      rownames(physeq@sam_data) <- sample_names(physeq)
+      message("Change the names in sam_data slot")
+    }
+  }
+  
+  new_physeq <- physeq
+  if (sum(taxa_sums(new_physeq) == 0) > 0) {
+    new_otu_table <- otu_table(new_physeq, taxa_are_rows =T)[,taxa_sums(new_physeq) > 0]
+    new_tax_table <- tax_table(new_physeq)[taxa_sums(new_physeq) > 0,]
+    new_physeq <- merge_phyloseq(physeq, new_otu_table, new_tax_table)
+  }
+  if (sum(sample_sums(new_physeq) == 0) > 0) {
+    new_physeq <- subset_samples(new_physeq, sample_sums(physeq) > 0)
+  }
+  message(paste("Supress", ntaxa(physeq)-ntaxa(new_physeq), "taxa and", 
+          nsamples(physeq)-nsamples(new_physeq), 
+          "samples.")
+         )
+  return(new_physeq)
+}
+
+
+
+
+
+
 ################################################################################
 #' Track the number of reads (= sequences), samples and cluster (e.g. ASV)
 #' from various objects including dada-class and derep-class.
@@ -55,20 +113,21 @@ track_wkflow <- function(list_of_objects, obj_names = NULL, clean_physeq = FALSE
   if (!is.null(obj_names)) {
     names(list_of_objects) <- obj_names
   }
+
+  if (clean_physeq) {
+    for (i in 1:length(list_of_objects)) {
+      if (inherits(list_of_objects[[i]], "phyloseq")) {
+        list_of_objects[[i]] <- clean_physeq(list_of_objects[[i]])
+      }
+    }
+  }
+
   track_nb_seq_per_obj <-
     pbapply::pblapply(list_of_objects, function(object) {
       message(paste("Start object of class:", class(object), sep = " "))
-      if (class(object) == "phyloseq") {
-        rowSums(object@otu_table)
-        if (clean_physeq) {
-          if (sum(sample_sums(physeq) == 0) > 0) {
-            physeq <- subset_samples(physeq, sample_sums(physeq) > 0)
-          }
-          if (sum(taxa_sums(physeq) == 0) > 0) {
-            physeq <- subset_taxa(physeq, taxa_sums(physeq) > 0)
-          }
-        }
-      } else if (class(object) == "matrix") {
+      if (inherits(object, "phyloseq")) {
+        sum(object@otu_table)
+      } else if (inherits(object, "matrix")) {
         sum(object, na.rm = TRUE)
       } else if (is.character(object[1]) &&
         length(object[1]) == 1 &&
@@ -101,16 +160,16 @@ track_wkflow <- function(list_of_objects, obj_names = NULL, clean_physeq = FALSE
   track_nb_cluster_per_obj <-
     pbapply::pblapply(list_of_objects, function(object) {
       message(paste("Start object of class:", class(object), sep = " "))
-      if (class(object) == "phyloseq") {
+      if (inherits(object, "phyloseq")) {
         ncol(object@otu_table)
-      } else if (class(object) == "matrix") {
+      } else if (inherits(object, "matrix")) {
         ncol(object)
-      } else if (class(object[[1]]) == "dada") {
+      } else if (inherits(object[[1]], "dada")) {
         dim(suppressMessages(dada2::makeSequenceTable(object)))[2]
       } else if (is.data.frame(object[[1]]) &&
         all(c("sequence", "abundance") %in% colnames(object[[1]]))) {
         dim(suppressMessages(dada2::makeSequenceTable(object)))[2]
-      } else if (class(object[[1]]) == "derep") {
+      } else if (inherits(object[[1]], "derep")) {
         length(unique(unlist(lapply(object, function(x) {
           names(x$uniques)
         }))))
@@ -123,16 +182,16 @@ track_wkflow <- function(list_of_objects, obj_names = NULL, clean_physeq = FALSE
   track_nb_sam_per_obj <-
     pbapply::pblapply(list_of_objects, function(object) {
       message(paste("Start object of class:", class(object), sep = " "))
-      if (class(object) == "phyloseq") {
+      if (inherits(object, "phyloseq")) {
         nrow(object@otu_table)
-      } else if (class(object) == "matrix") {
+      } else if (inherits(object, "matrix")) {
         nrow(object)
-      } else if (class(object[[1]]) == "dada") {
+      } else if (inherits(object[[1]], "dada")) {
         dim(suppressMessages(dada2::makeSequenceTable(object)))[1]
       } else if (is.data.frame(object[[1]]) &&
         all(c("sequence", "abundance") %in% colnames(object[[1]]))) {
         dim(suppressMessages(dada2::makeSequenceTable(object)))[1]
-      } else if (class(object[[1]]) == "derep") {
+      } else if (inherits(object[[1]], "derep")) {
         length(object)
       } else if (is.character(object[1]) &&
         length(object[1]) == 1 &&
@@ -268,7 +327,6 @@ asv2otu <- function(physeq,
         clusters,
         tax_adjust = 1
       )
-    new_physeq@refseq <- vsearch_cluster_dna
 
     if (file.exists("temp.fasta")) {
       file.remove("temp.fasta")
@@ -483,7 +541,11 @@ blast_to_phyloseq <- function(physeq,
 #' @return Four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 #' @export
 #'
-#' @examples write_phyloseq(data_fungi, path = "phyloseq")
+#' @examples
+#' \dontrun{
+#' write_phyloseq(data_fungi, path = "phyloseq")
+#' }
+
 write_phyloseq <- function(physeq, path = NULL) {
   dir.create(file.path(path))
   if (!is.null(physeq@otu_table)) {
@@ -503,7 +565,7 @@ write_phyloseq <- function(physeq, path = NULL) {
 
 
 ################################################################################
-#' (Lulu)[https://github.com/adrientaudiere/lulu] reclustering of class `physeq` (forked from \url{https://github.com/tobiasgf/lulu}).
+#' \href{https://github.com/adrientaudiere/lulu}{Lulu} reclustering of class `physeq` (forked from \url{https://github.com/tobiasgf/lulu}).
 #'  See https://www.nature.com/articles/s41467-017-01312-x for more information on the method.
 #' `r lifecycle::badge("experimental")`
 #'
@@ -526,8 +588,10 @@ write_phyloseq <- function(physeq, path = NULL) {
 #'
 #' @export
 #' @examples
+#' \dontrun{
 #' data(data_fungi_sp_known)
 #' lulu_phyloseq(data_fungi_sp_known)
+#' }
 #' @author Adrien Taudière \email{adrien.taudiere@@zaclys.net}
 #' @references
 #' - LULU : \url{https://github.com/adrientaudiere/lulu}
@@ -542,12 +606,7 @@ lulu_phyloseq <- function(physeq,
                           verbose = FALSE,
                           clean_physeq = FALSE) {
   if (clean_physeq) {
-    if (sum(sample_sums(physeq) == 0) > 0) {
-      physeq <- subset_samples(physeq, sample_sums(physeq) > 0)
-    }
-    if (sum(taxa_sums(physeq) == 0) > 0) {
-      physeq <- subset_taxa(physeq, taxa_sums(physeq) > 0)
-    }
+      physeq <- clean_physeq(physeq)
   }
 
   message("Start Vsearch usearch_global")
@@ -603,8 +662,9 @@ lulu_phyloseq <- function(physeq,
 
   names(test_vector) <- colnames(physeq@tax_table)
 
-  new_physeq <- physeq
-  new_physeq@otu_table <- otu_table(res_lulu$curated_table, taxa_are_rows = TRUE)
+  new_physeq <- prune_taxa(taxa_names(physeq) %in% rownames(res_lulu$curated_table), physeq)
+  new_physeq@otu_table <- otu_table(t(res_lulu$curated_table), taxa_are_rows = FALSE)
+  sample_names(new_physeq) <- sample_names(physeq)
 
   if (verbose) {
     message(paste("The number of taxa decrease from ", ntaxa(physeq), " to ", ntaxa(new_physeq), ".", sep = ""))
@@ -617,5 +677,4 @@ lulu_phyloseq <- function(physeq,
     "merged_ASV" = merged
   ))
 }
-
 ################################################################################

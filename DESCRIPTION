@@ -33,14 +33,16 @@ Suggests:
     multcompView,
     networkD3,
     pbapply,
-    plyr, 
+    plyr,
     reshape2,
     speedyseq,
     venneuler,
-    viridis
+    viridis,
+    testthat (>= 3.0.0)
 RoxygenNote: 7.1.2
 URL: https://github.com/adrientaudiere/MiscMetabar
 BugReports: https://github.com/adrientaudiere/MiscMetabar/issues
 Roxygen: list(markdown = TRUE)
 Imports: 
     lifecycle
+Config/testthat/edition: 3

@@ -76,11 +76,12 @@ plot_mt <-
 #' @param ... Additional arguments passed on to \code{\link{ggplot}}
 #' if nb_seq = TRUE or to \code{\link{plot}} if nb_seq = FALSE
 #'
+#' @examples 
+#' \dontrun{
 #' data("GlobalPatterns")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == 'Archaea')
-#' accu_plot(GP, 'SampleType', nb_seq = TRUE,
-#'  by.fact = TRUE)
-#'
+#' accu_plot(GP, 'SampleType', nb_seq = TRUE,  by.fact = TRUE)
+#' }
 #' @return A \code{\link{ggplot}}2 plot representing the richness
 #' accumulation plot if nb_seq = TRUE, else, if nb_seq = FALSE
 #' return a base plot.
@@ -317,11 +318,13 @@ accu_plot <-
 #'   \code{\link[circlize]{chordDiagram}} or \code{\link[circlize]{circos.par}}
 #'
 #' @examples
-#' data("GlobalPatterns")
-#' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
-#' otu_circle(GP, "SampleType")
-#' otu_circle(GP, "SampleType", nb_seq = FALSE)
-#' otu_circle(GP, "SampleType", taxa = "Class")
+#'  data("GlobalPatterns")
+#'  GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+#'  otu_circle(GP, "SampleType")
+#' \dontrun{
+#'  otu_circle(GP, "SampleType", nb_seq = FALSE)
+#'  otu_circle(GP, "SampleType", taxa = "Class")
+#' }
 #' @author Adrien Taudière
 #'
 #' @return A \code{\link[circlize]{chordDiagram}} plot representing the

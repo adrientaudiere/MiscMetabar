@@ -2,7 +2,7 @@
 % Please edit documentation in R/dada_phyloseq.R
 \name{lulu_phyloseq}
 \alias{lulu_phyloseq}
-\title{(Lulu)\link{https://github.com/adrientaudiere/lulu} reclustering of class \code{physeq} (forked from \url{https://github.com/tobiasgf/lulu}).
+\title{\href{https://github.com/adrientaudiere/lulu}{Lulu} reclustering of class \code{physeq} (forked from \url{https://github.com/tobiasgf/lulu}).
 See https://www.nature.com/articles/s41467-017-01312-x for more information on the method.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}}
 \usage{
@@ -42,13 +42,15 @@ value. NA value are not counted as discrepancy.
 }
 }
 \description{
-(Lulu)\link{https://github.com/adrientaudiere/lulu} reclustering of class \code{physeq} (forked from \url{https://github.com/tobiasgf/lulu}).
+\href{https://github.com/adrientaudiere/lulu}{Lulu} reclustering of class \code{physeq} (forked from \url{https://github.com/tobiasgf/lulu}).
 See https://www.nature.com/articles/s41467-017-01312-x for more information on the method.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
+\dontrun{
 data(data_fungi_sp_known)
 lulu_phyloseq(data_fungi_sp_known)
+}
 }
 \references{
 \itemize{

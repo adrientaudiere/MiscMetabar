@@ -72,11 +72,13 @@ fact
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
-data("GlobalPatterns")
-GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
-otu_circle(GP, "SampleType")
-otu_circle(GP, "SampleType", nb_seq = FALSE)
-otu_circle(GP, "SampleType", taxa = "Class")
+ data("GlobalPatterns")
+ GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+ otu_circle(GP, "SampleType")
+\dontrun{
+ otu_circle(GP, "SampleType", nb_seq = FALSE)
+ otu_circle(GP, "SampleType", taxa = "Class")
+}
 }
 \seealso{
 \code{\link[circlize]{chordDiagram}}

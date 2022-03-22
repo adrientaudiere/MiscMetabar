@@ -53,12 +53,7 @@ Only use if nb_seq = TRUE.}
 standard error to plot confidence intervall}
 
 \item{...}{Additional arguments passed on to \code{\link{ggplot}}
-if nb_seq = TRUE or to \code{\link{plot}} if nb_seq = FALSE
-
-data("GlobalPatterns")
-GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table\link{, 1} == 'Archaea')
-accu_plot(GP, 'SampleType', nb_seq = TRUE,
-by.fact = TRUE)}
+if nb_seq = TRUE or to \code{\link{plot}} if nb_seq = FALSE}
 }
 \value{
 A \code{\link{ggplot}}2 plot representing the richness
@@ -67,6 +62,13 @@ return a base plot.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+}
+\examples{
+\dontrun{
+data("GlobalPatterns")
+GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == 'Archaea')
+accu_plot(GP, 'SampleType', nb_seq = TRUE,  by.fact = TRUE)
+}
 }
 \seealso{
 \code{\link[vegan]{specaccum}}
