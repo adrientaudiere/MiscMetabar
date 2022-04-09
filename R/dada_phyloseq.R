@@ -565,8 +565,9 @@ write_phyloseq <- function(physeq, path = NULL) {
 
 
 ################################################################################
-#' \href{https://github.com/adrientaudiere/lulu}{Lulu} reclustering of class `physeq` (forked from \url{https://github.com/tobiasgf/lulu}).
+#' Lulu reclustering of class `physeq` 
 #'  See https://www.nature.com/articles/s41467-017-01312-x for more information on the method.
+#' 
 #' `r lifecycle::badge("experimental")`
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
@@ -593,6 +594,8 @@ write_phyloseq <- function(physeq, path = NULL) {
 #' lulu_phyloseq(data_fungi_sp_known)
 #' }
 #' @author Adrien Taudière \email{adrien.taudiere@@zaclys.net}
+#' @details 
+#' The version of LULU is a fork of Adrien Taudière (\url{https://github.com/adrientaudiere/lulu}) from \url{https://github.com/tobiasgf/lulu}
 #' @references
 #' - LULU : \url{https://github.com/adrientaudiere/lulu}
 #'  forked from \url{https://github.com/tobiasgf/lulu}.

@@ -4,9 +4,7 @@
 #' `r lifecycle::badge("maturing")`
 #'
 #' Need the installation of kronatools on the computer ([installation instruction](https://github.com/marbl/Krona/wiki/Installing)).
-#' Function merge_krona allows merging multiple html files in one interactive krona file
 #'
-#' @aliases merge_krona
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param file (required): the location of the html file to save
 #' @param nb_seq (logical, default to TRUE): If true, Krona set the distribution
@@ -28,6 +26,7 @@
 #' # merge_krona(c("Number.of.sequences.html", "Number.of.OTUs.html"))
 #' @return A html file
 #' @export
+#' @seealso \code{\link{merge_krona}}
 #' @author Adrien Taudière
 #'
 
@@ -90,6 +89,28 @@ krona <-
     system(command = paste("rm", interm_txt))
   }
 
+###############################################################################
+#' Merge Krona files using [KronaTools](https://github.com/marbl/Krona/wiki).
+#' @description
+#' `r lifecycle::badge("maturing")`
+#'
+#' Need the installation of kronatools on the computer ([installation instruction](https://github.com/marbl/Krona/wiki/Installing)).
+#' Function merge_krona allows merging multiple html files in one interactive krona file
+#' 
+#' @param files (required): path to html files to merged
+#' @param output (default="mergeKrona.html") : path to the output files
+#'
+#' @examples
+#' data("GlobalPatterns")
+#' GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
+#' # krona(GA, "Number.of.sequences.html")
+#' # krona(GA, "Number.of.OTUs.html", nb_seq = F)
+#' # merge_krona(c("Number.of.sequences.html", "Number.of.OTUs.html"))
+#' @return A html file
+#' @seealso \code{\link{krona}}
+#' @export
+#' @author Adrien Taudière
+#'
 merge_krona <- function(files = NULL, output = "mergeKrona.html") {
   cmd <-
     paste("ktImportKrona ",
