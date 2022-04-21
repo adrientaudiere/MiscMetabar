@@ -446,7 +446,7 @@ blast_to_phyloseq <- function(physeq,
                               seq2search,
                               blastpath = NULL,
                               id_cut = 90,
-                              bit_score_cut = 1e-10,
+                              bit_score_cut = 50,
                               unique_per_seq = FALSE,
                               score_filter = TRUE,
                               list_no_output_query = FALSE) {
@@ -493,8 +493,8 @@ blast_to_phyloseq <- function(physeq,
     "Taxa seq. length",
     "Alignment length",
     "% id. match",
-    "bit score",
     "e-value",
+    "bit score",
     "Query cover"
   )
 
@@ -505,7 +505,7 @@ blast_to_phyloseq <- function(physeq,
   }
 
   if (score_filter) {
-    blast_tab <- blast_tab[blast_tab[, "bit score"] < bit_score_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "bit score"] > bit_score_cut, ]
     blast_tab <- blast_tab[blast_tab[, "% id. match"] > id_cut, ]
   } else {
     blast_tab <- blast_tab
@@ -540,7 +540,8 @@ blast_to_phyloseq <- function(physeq,
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param path (defaut: NULL) : a path to the folder to save the phyloseq object
 #'
-#' @return Four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
+#' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv) 
+#' and if present a phy_tree in Newick format
 #' @export
 #'
 #' @examples
@@ -562,9 +563,64 @@ write_phyloseq <- function(physeq, path = NULL) {
   if (!is.null(physeq@sam_data)) {
     utils::write.csv(physeq@sam_data, paste(path, "/sam_data.csv", sep = ""))
   }
+  if (!is.null(physeq@phy_tree)) {
+    ape::write.tree(physeq@phy_tree, paste(path, "/phy_tree.txt", sep = ""))
+  }
 }
 ################################################################################
 
+################################################################################
+#' Read phyloseq object from multiple csv tables and a phylogenetic tree 
+#' in Newick format.
+#'
+#' `r lifecycle::badge("maturing")`
+#'
+#' @param path (required) : a path to the folder to read the phyloseq object
+#' @param taxa_are_rows (required, default to FALSE) : see ?phyloseq for details
+#'
+#' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv) 
+#' and if present a phy_tree in Newick format. At least the otu_table.csv need to be present.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' read_phyloseq(path = "phyloseq_data")
+#' }
+
+read_phyloseq <- function(path = NULL, taxa_are_rows = FALSE) {
+
+  if (file.exists(paste(path, "/otu_table.csv", sep = ""))) {
+    otu_table_csv <- as.matrix(utils::read.csv(paste(path, "/otu_table.csv", sep = "")))
+    rownames(otu_table_csv) <- otu_table_csv[,1]
+    otu_table_csv <- otu_table_csv [,-1]
+    otu_table_csv <- apply(otu_table_csv, 2, as.numeric)
+    physeq <- phyloseq(otu_table(otu_table_csv, taxa_are_rows = taxa_are_rows))
+  }
+  if (file.exists(paste(path, "/refseq.csv", sep = ""))) {
+    dna <- Biostrings::DNAStringSet(utils::read.csv2(paste(path, "/refseq.csv", sep = ""), sep=",")[,2])
+    names(dna) <- utils::read.csv2(paste(path, "/refseq.csv", sep = ""), sep=",")[,1]
+    physeq <- phyloseq::merge_phyloseq(physeq, refseq(dna))
+  }
+  if (file.exists(paste(path, "/tax_table.csv", sep = ""))) {
+    tax_table_csv <- utils::read.csv(paste(path, "/tax_table.csv", sep = ""))
+    rownames(tax_table_csv) <- tax_table_csv[,1]
+    tax_table_csv <- as.matrix(tax_table_csv [,-1])
+    physeq <- phyloseq::merge_phyloseq(physeq, tax_table(tax_table_csv) )
+  }
+   if (file.exists(paste(path, "/sam_data.csv", sep = ""))) {
+    sam_data_csv <- utils::read.csv(paste(path, "/sam_data.csv", sep = ""))
+    physeq <- phyloseq::merge_phyloseq(physeq, sample_data(sam_data_csv) )
+  }
+
+  if (!is.null(physeq@phy_tree)) {
+    tree <- ape::read.tree(paste(path, "/phy_tree.txt", sep = ""))
+    physeq <- phyloseq::merge_phyloseq(physeq, phy_tree(tree))
+  }
+
+  return(physeq)
+}
+
+################################################################################
 
 ################################################################################
 #' Lulu reclustering of class `physeq` 
