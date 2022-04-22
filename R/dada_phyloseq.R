@@ -538,7 +538,8 @@ blast_to_phyloseq <- function(physeq,
 #' `r lifecycle::badge("maturing")`
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param path (defaut: NULL) : a path to the folder to save the phyloseq object
+#' @param path (default: NULL) : a path to the folder to save the phyloseq object
+#' @param Rdata (default: FALSE) : does the phyloseq object is also save in Rdata format
 #'
 #' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv) 
 #' and if present a phy_tree in Newick format
@@ -549,7 +550,7 @@ blast_to_phyloseq <- function(physeq,
 #' write_phyloseq(data_fungi, path = "phyloseq")
 #' }
 
-write_phyloseq <- function(physeq, path = NULL) {
+write_phyloseq <- function(physeq, path = NULL, rdata = FALSE) {
   dir.create(file.path(path))
   if (!is.null(physeq@otu_table)) {
     utils::write.csv(physeq@otu_table, paste(path, "/otu_table.csv", sep = ""))
@@ -565,6 +566,9 @@ write_phyloseq <- function(physeq, path = NULL) {
   }
   if (!is.null(physeq@phy_tree)) {
     ape::write.tree(physeq@phy_tree, paste(path, "/phy_tree.txt", sep = ""))
+  }
+  if (rdata){
+    save(physeq,  paste(path, "/physeq.RData", sep = ""))
   }
 }
 ################################################################################
