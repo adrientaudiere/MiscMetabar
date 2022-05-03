@@ -568,7 +568,7 @@ write_phyloseq <- function(physeq, path = NULL, rdata = FALSE) {
     ape::write.tree(physeq@phy_tree, paste(path, "/phy_tree.txt", sep = ""))
   }
   if (rdata){
-    save(physeq,  paste(path, "/physeq.RData", sep = ""))
+    save(physeq, file=paste(path, "/physeq.RData", sep = ""))
   }
 }
 ################################################################################

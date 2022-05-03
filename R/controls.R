@@ -1,7 +1,3 @@
-
-
-
-
 ################################################################################
 #' Calculate ecological distance among positive controls vs
 #'   distance for all samples
