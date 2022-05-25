@@ -40,40 +40,52 @@ add_dna_to_phyloseq <- function(physeq) {
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object obtained
 #'   using the `dada2` package
-#'
+#' 
+#' @param remove_empty_samples (logical, default TRUE) Do you want to remove samples without sequences (this is done after removing empty taxa)
+#' @param remove_empty_taxa (logical, default TRUE) Do you want to remove taxa without sequences (this is done before removing empty samples)
+#' @param clean_samples_samples 
 #' @return A new \code{\link{phyloseq-class}} object 
 #' @export
-clean_physeq <-  function(physeq){
-  if (!is.null(physeq@refseq)){
-    if (sum(!names(physeq@refseq) %in% taxa_names(physeq)) > 0){
-      names(physeq@refseq) <- taxa_names(physeq)
-      message("Change the names in refseq slot")
+clean_physeq <-  function(physeq,  
+                          remove_empty_samples = TRUE, 
+                          remove_empty_taxa = TRUE, 
+                          clean_samples_samples =TRUE
+                          ){
+  if (clean_samples_samples) {
+    if (!is.null(physeq@refseq)){
+      if (sum(!names(physeq@refseq) %in% taxa_names(physeq)) > 0){
+        names(physeq@refseq) <- taxa_names(physeq)
+        message("Change the names in refseq slot")
+      }
     }
-  }
-  if (!is.null(physeq@tax_table)){
-    if (sum(!rownames(physeq@tax_table) %in% taxa_names(physeq)) > 0){
-      rownames(physeq@tax_table) <- taxa_names(physeq)
-      message("Change the names in tax_table slot")
+    if (!is.null(physeq@tax_table)){
+      if (sum(!rownames(physeq@tax_table) %in% taxa_names(physeq)) > 0){
+        rownames(physeq@tax_table) <- taxa_names(physeq)
+        message("Change the names in tax_table slot")
+      }
     }
-  }
 
-  if (!is.null(physeq@sam_data)){
-    if (sum(!rownames(physeq@sam_data) %in% sample_names(physeq)) > 0){
-      rownames(physeq@sam_data) <- sample_names(physeq)
-      message("Change the names in sam_data slot")
+    if (!is.null(physeq@sam_data)){
+      if (sum(!rownames(physeq@sam_data) %in% sample_names(physeq)) > 0){
+        rownames(physeq@sam_data) <- sample_names(physeq)
+        message("Change the names in sam_data slot")
+      }
     }
   }
-  
   new_physeq <- physeq
-  if (sum(taxa_sums(new_physeq) == 0) > 0) {
+  
+  if (remove_empty_taxa) {
+    if (sum(taxa_sums(new_physeq) == 0) > 0) {
     # new_otu_table <- otu_table(new_physeq, taxa_are_rows =T)[,taxa_sums(new_physeq) > 0]
     # new_tax_table <- tax_table(new_physeq)[taxa_sums(new_physeq) > 0,]
     # new_physeq <- merge_phyloseq(new_otu_table, new_tax_table, physeq)
-    
-    new_physeq <- subset_taxa(physeq, taxa_sums(physeq)>0)
+      new_physeq <- subset_taxa(physeq, taxa_sums(physeq)>0)
+    }
   }
-  if (sum(sample_sums(new_physeq) == 0) > 0) {
-    new_physeq <- subset_samples(new_physeq, sample_sums(physeq) > 0)
+  if (remove_empty_samples) {
+    if (sum(sample_sums(new_physeq) == 0) > 0) {
+      new_physeq <- subset_samples(new_physeq, sample_sums(physeq) > 0)
+    }
   }
   message(paste("Supress", ntaxa(physeq)-ntaxa(new_physeq), "taxa and", 
           nsamples(physeq)-nsamples(new_physeq), 
@@ -628,8 +640,8 @@ read_phyloseq <- function(path = NULL, taxa_are_rows = FALSE) {
 
 ################################################################################
 #' Lulu reclustering of class `physeq` 
-#'  See https://www.nature.com/articles/s41467-017-01312-x for more information on the method.
 #' 
+#' See https://www.nature.com/articles/s41467-017-01312-x for more information on the method.
 #' `r lifecycle::badge("experimental")`
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.

@@ -4,14 +4,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="Functions to help analyse and visualise metabarcoding data. Mainly based on the phyloseq and dada2 packages.">
 <title>Miscellaneous functions for metabarcoding analysis • MiscMetabar</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
-<script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="Miscellaneous functions for metabarcoding analysis">
 <meta property="og:description" content="Functions to help analyse and visualise metabarcoding data. Mainly based on the phyloseq and dada2 packages.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -19,55 +19,49 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body data-spy="scroll" data-target="#toc">
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <div class="container template-home">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">MiscMetabar</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.22</span>
-      </span>
-    </div>
+    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-secondary"><div class="container">
+    
+    <a class="navbar-brand me-2" href="index.html">MiscMetabar</a>
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="reference/index.html">Reference</a>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.22</small>
+
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="news/index.html">Changelog</a>
+<li class="nav-item">
+  <a class="nav-link" href="news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/adrientaudiere/MiscMetabar/" class="external-link">
-    <span class="fab fa-github fa-lg"></span>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/adrientaudiere/MiscMetabar/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
       </ul>
 </div>
-<!--/.nav-collapse -->
+
+    
   </div>
-<!--/.container -->
-</div>
-<!--/.navbar -->
-
-      
-
-      </header><div class="row">
-  <div class="contents col-md-9">
-
-<div class="section level1">
+</nav><div class="container template-home">
+<div class="row">
+  <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="readme-for-miscmetabar-package">README for MiscMetabar package<a class="anchor" aria-label="anchor" href="#readme-for-miscmetabar-package"></a>
 </h1></div>
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -115,9 +109,7 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GlobalPatterns"</span><span class="op">)</span>
 <span class="fu"><a href="reference/tax_datatable.html">tax_datatable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html" class="external-link">subset_taxa</a></span><span class="op">(</span><span class="va">GlobalPatterns</span>,
              <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">GlobalPatterns</span><span class="op">@</span><span class="va">otu_table</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">100000</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-0b857f363bd29ba4279f" class="datatables html-widget" style="width:100%;height:auto;">
-
-</div>
+<div id="htmlwidget-0b857f363bd29ba4279f" class="datatables html-widget" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-0b857f363bd29ba4279f">{"x":{"filter":"none","vertical":false,"data":[["12812","317658","329744","471141","326977","64396","317182","549656","327536","340216","279599","235567","557211","263681","360229","536311","9514","94166","550960","323845","534609","339261","322235","469778","158660","331820","244304","471122","361496","248140","259569","298875","359171","192573","470973","316732","325407","171551","189047","180658","316587","98605"],["Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria","Bacteria"],["Actinobacteria","Actinobacteria","Actinobacteria","Actinobacteria","Actinobacteria","Fusobacteria","Cyanobacteria","Cyanobacteria","Cyanobacteria","Cyanobacteria","Cyanobacteria","Cyanobacteria","Cyanobacteria","Cyanobacteria","Proteobacteria","Proteobacteria","Proteobacteria","Proteobacteria","Proteobacteria","Proteobacteria","Proteobacteria","Bacteroidetes","Bacteroidetes","Bacteroidetes","Bacteroidetes","Bacteroidetes","Bacteroidetes","Bacteroidetes","Bacteroidetes","Bacteroidetes","Bacteroidetes","Firmicutes","Firmicutes","Firmicutes","Firmicutes","Firmicutes","Firmicutes","Firmicutes","Firmicutes","Firmicutes","Firmicutes","Firmicutes"],["Actinobacteria","Actinobacteria","Actinobacteria","Actinobacteria","Actinobacteria","Fusobacteria","Chloroplast","Chloroplast","Chloroplast","Chloroplast","Nostocophycideae","Nostocophycideae","Synechococcophycideae","4C0d-2","Betaproteobacteria","Betaproteobacteria","Gammaproteobacteria","Gammaproteobacteria","Gammaproteobacteria","Gammaproteobacteria","Alphaproteobacteria","Flavobacteria","Bacteroidia","Bacteroidia","Bacteroidia","Bacteroidia","Bacteroidia","Bacteroidia","Bacteroidia","Bacteroidia","Bacteroidia","Clostridia","Clostridia","Clostridia","Clostridia","Clostridia","Clostridia","Clostridia","Clostridia","Clostridia","Bacilli","Bacilli"],["koll13","Actinomycetales","Actinomycetales","Actinomycetales","Bifidobacteriales","Fusobacteriales","Stramenopiles","Stramenopiles","Stramenopiles","Stramenopiles","Nostocales","Nostocales","Synechococcales","YS2","Neisseriales","Neisseriales","Pasteurellales","Pasteurellales","Enterobacteriales","Oceanospirillales","Rhodobacterales",null,"Bacteroidales","Bacteroidales","Bacteroidales","Bacteroidales","Bacteroidales","Bacteroidales","Bacteroidales","Bacteroidales","Bacteroidales","Clostridiales","Clostridiales","Clostridiales","Clostridiales","Clostridiales","Clostridiales","Clostridiales","Clostridiales","Clostridiales","Lactobacillales","Lactobacillales"],[null,"ACK-M1","ACK-M1","Micrococcaceae","Bifidobacteriaceae","Fusobacteriaceae",null,null,null,null,"Nostocaceae","Nostocaceae","Synechococcaceae",null,"Neisseriaceae","Neisseriaceae","Pasteurellaceae","Pasteurellaceae","Enterobacteriaceae","Halomonadaceae","Rhodobacteraceae",null,"Bacteroidaceae","Bacteroidaceae","Bacteroidaceae","Bacteroidaceae","Bacteroidaceae","Prevotellaceae","Bacteroidaceae","Bacteroidaceae","Rikenellaceae","Clostridiaceae","ClostridialesFamilyXI.IncertaeSedis","Ruminococcaceae","Lachnospiraceae","Lachnospiraceae","Ruminococcaceae","Ruminococcaceae","Ruminococcaceae","Ruminococcaceae","Streptococcaceae","Streptococcaceae"],[null,null,null,"Rothia","Bifidobacterium","Fusobacterium",null,null,null,null,"Dolichospermum",null,"Prochlorococcus",null,"Neisseria","Kingella","Actinobacillus","Haemophilus","Providencia","CandidatusPortiera",null,null,"Bacteroides","Bacteroides","Bacteroides","Bacteroides","Bacteroides","Prevotella","Bacteroides","Bacteroides","Alistipes","Clostridium","Anaerococcus",null,"Ruminococcus","Lachnospira","Faecalibacterium","Faecalibacterium",null,null,"Streptococcus","Streptococcus"],[null,null,null,"Rothiamucilaginosa","Bifidobacteriumadolescentis",null,null,null,null,null,null,null,null,null,null,null,"Actinobacillusporcinus","Haemophilusparainfluenzae",null,null,null,null,"Bacteroidesuniformis","Bacteroidescoprophilus",null,null,null,"Prevotellamelaninogenica",null,"Bacteroidescaccae","Alistipesputredinis",null,"Anaerococcushydrogenalis",null,"Ruminococcustorques",null,null,"Faecalibacteriumprausnitzii",null,null,null,"Streptococcussanguinis"],[196550,234024,436539,104260,291577,155864,528629,2481214,143627,104199,927850,122697,169240,212089,556441,196355,158228,444142,384205,139264,177026,124393,169042,133795,443938,1001492,222365,146594,109007,149891,149352,177879,106772,179312,137132,101484,110044,215470,312161,152940,106399,203583]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Kingdom<\/th>\n      <th>Phylum<\/th>\n      <th>Class<\/th>\n      <th>Order<\/th>\n      <th>Family<\/th>\n      <th>Genus<\/th>\n      <th>Species<\/th>\n      <th>nb_seq<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":8},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[8]; $(this.api().cell(row, 8).node()).css({'background':isNaN(parseFloat(value)) || value <= 101484.000000 ? '' : 'linear-gradient(90.000000deg, transparent ' + Math.max(2481214.000000 - value, 0)/2379730.000000 * 100 + '%, steelblue ' + Math.max(2481214.000000 - value, 0)/2379730.000000 * 100 + '%)','background-size':'100% 90%','background-repeat':'no-repeat','background-position':'center'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
 </div>
 <div class="section level3">
@@ -126,9 +118,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html" class="external-link">subset_taxa</a></span><span class="op">(</span><span class="va">GlobalPatterns</span>, <span class="va">GlobalPatterns</span><span class="op">@</span><span class="va">tax_table</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="st">"Archaea"</span><span class="op">)</span>
 <span class="fu"><a href="reference/sankey_phyloseq.html">sankey_phyloseq</a></span><span class="op">(</span><span class="va">gp</span>, taxa <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-c1f3ce7a5bc2b4ddd04a" class="sankeyNetwork html-widget" style="width:100%;height:480px;">
-
-</div>
+<div id="htmlwidget-c1f3ce7a5bc2b4ddd04a" class="sankeyNetwork html-widget" style="width:100%;height:480px;"></div>
 <script type="application/json" data-for="htmlwidget-c1f3ce7a5bc2b4ddd04a">{"x":{"links":{"source":[0,0,1,2,2,2,1,1,1,2,1,3,4,5,6,7,8,8,4,9,3,10,11,12,13,13,14,15,16,16,13,14,17,13,11,18,13,14],"target":[1,2,3,6,7,8,19,9,4,5,10,20,11,13,12,14,15,16,17,21,22,18,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38],"value":[106,102,27,7,27,24,8,8,57,44,3,7,37,44,7,27,12,12,20,5,18,1,34,7,10,1,25,2,5,6,3,1,20,16,3,1,12,1]},"nodes":{"name":["Archaea","Crenarchaeota","Euryarchaeota","C2","Thaumarchaeota","Thermoplasmata","Halobacteria","Methanobacteria","Methanomicrobia","SdNA","Thermoprotei","Cenarchaeales","Halobacteriales","E2","Methanobacteriales","Methanomicrobiales","Methanosarcinales","Nitrososphaerales","Sulfolobales","pMC2A209","B10","NRPJ","pGrfC26","Cenarchaeaceae","Halobacteriaceae","MarinegroupII","MarinegroupIII","Methanobacteriaceae","Methanocorpusculaceae","Methanosaetaceae","Methanosarcinaceae","MOB79","MSBL1","Nitrososphaeraceae","pMC2A33","SAGMAX","Sulfolobaceae","WCHD302","WSA2"],"group":["Archaea","Crenarchaeota","Euryarchaeota","C2","Thaumarchaeota","Thermoplasmata","Halobacteria","Methanobacteria","Methanomicrobia","SdNA","Thermoprotei","Cenarchaeales","Halobacteriales","E2","Methanobacteriales","Methanomicrobiales","Methanosarcinales","Nitrososphaerales","Sulfolobales","pMC2A209","B10","NRPJ","pGrfC26","Cenarchaeaceae","Halobacteriaceae","MarinegroupII","MarinegroupIII","Methanobacteriaceae","Methanocorpusculaceae","Methanosaetaceae","Methanosarcinaceae","MOB79","MSBL1","Nitrososphaeraceae","pMC2A33","SAGMAX","Sulfolobaceae","WCHD302","WSA2"]},"options":{"NodeID":"name","NodeGroup":"name","LinkGroup":null,"colourScale":"d3.scaleOrdinal(d3.schemeCategory20);","fontSize":7,"fontFamily":null,"nodeWidth":15,"nodePadding":10,"units":"OTUs","margin":{"top":null,"right":null,"bottom":null,"left":null},"iterations":32,"sinksRight":true}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level3">
@@ -251,10 +241,7 @@
 </div>
 </div>
 
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="links">
+  </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/adrientaudiere/MiscMetabar/" class="external-link">Browse source code</a></li>
@@ -286,25 +273,24 @@
 
 
 
-  </div>
+  </aside>
 </div>
 
 
-      <footer><div class="copyright">
+    <footer><div class="pkgdown-footer-left">
   <p></p>
 <p>Developed by Adrien Taudière.</p>
 </div>
 
-<div class="pkgdown">
+<div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
   
-
 
   
 
