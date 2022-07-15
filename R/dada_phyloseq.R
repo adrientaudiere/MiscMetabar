@@ -55,23 +55,28 @@ clean_physeq <-  function(physeq,
     if (!is.null(physeq@refseq)){
       if (sum(!names(physeq@refseq) %in% taxa_names(physeq)) > 0){
         names(physeq@refseq) <- taxa_names(physeq)
-        message("Change the names in refseq slot")
+        message("Change the samples names in refseq slot")
       }
     }
     if (!is.null(physeq@tax_table)){
       if (sum(!rownames(physeq@tax_table) %in% taxa_names(physeq)) > 0){
         rownames(physeq@tax_table) <- taxa_names(physeq)
-        message("Change the names in tax_table slot")
+        message("Change the taxa names in tax_table slot")
       }
     }
 
     if (!is.null(physeq@sam_data)){
       if (sum(!rownames(physeq@sam_data) %in% sample_names(physeq)) > 0){
         rownames(physeq@sam_data) <- sample_names(physeq)
-        message("Change the names in sam_data slot")
+        message("Change the samples names in sam_data slot")
       }
     }
   }
+
+  if (sum(grepl("^0", "", sample_names(physeq)) )){
+    message("At least one sample name start with a zero. That can be a problem for some phyloseq functions such as plot_bar and psmelt.")
+  }
+
   new_physeq <- physeq
   
   if (remove_empty_taxa) {
