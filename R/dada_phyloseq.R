@@ -31,7 +31,7 @@ add_dna_to_phyloseq <- function(physeq) {
 
 ################################################################################
 #'  Clean phyloseq object by removing empty samples and taxa
-#'  In addition, this function check for discrepancy (and rename) between 
+#'  In addition, this function check for discrepancy (and rename) between
 #' (i) taxa names in refseq, taxonomy table and otu_table and between
 #' (ii) sample names in sam_data and otu_table.
 #'
@@ -40,15 +40,15 @@ add_dna_to_phyloseq <- function(physeq) {
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object obtained
 #'   using the `dada2` package
-#' 
+#'
 #' @param remove_empty_samples (logical, default TRUE) Do you want to remove samples without sequences (this is done after removing empty taxa)
 #' @param remove_empty_taxa (logical, default TRUE) Do you want to remove taxa without sequences (this is done before removing empty samples)
-#' @param clean_samples_samples 
-#' @return A new \code{\link{phyloseq-class}} object 
+#' @param clean_samples_samples
+#' @return A new \code{\link{phyloseq-class}} object
 #' @export
-clean_physeq <-  function(physeq,  
-                          remove_empty_samples = TRUE, 
-                          remove_empty_taxa = TRUE, 
+clean_physeq <-  function(physeq,
+                          remove_empty_samples = TRUE,
+                          remove_empty_taxa = TRUE,
                           clean_samples_samples =TRUE
                           ){
   if (clean_samples_samples) {
@@ -73,7 +73,7 @@ clean_physeq <-  function(physeq,
     }
   }
   new_physeq <- physeq
-  
+
   if (remove_empty_taxa) {
     if (sum(taxa_sums(new_physeq) == 0) > 0) {
     # new_otu_table <- otu_table(new_physeq, taxa_are_rows =T)[,taxa_sums(new_physeq) > 0]
@@ -87,8 +87,8 @@ clean_physeq <-  function(physeq,
       new_physeq <- subset_samples(new_physeq, sample_sums(physeq) > 0)
     }
   }
-  message(paste("Supress", ntaxa(physeq)-ntaxa(new_physeq), "taxa and", 
-          nsamples(physeq)-nsamples(new_physeq), 
+  message(paste("Supress", ntaxa(physeq)-ntaxa(new_physeq), "taxa and",
+          nsamples(physeq)-nsamples(new_physeq),
           "samples.")
          )
   return(new_physeq)
@@ -281,7 +281,6 @@ asv2otu <- function(physeq,
     aln <- DECIPHER::AlignSeqs(dna, processors = nproc)
     d <- DECIPHER::DistanceMatrix(aln, processors = nproc)
     clusters <- DECIPHER::IdClusters(d,
-      method = "complete",
       cutoff = 1 - id,
       # e.g. `cutoff = 0.03` for a 97% OTU
       processors = nproc
@@ -553,7 +552,7 @@ blast_to_phyloseq <- function(physeq,
 #' @param path (default: NULL) : a path to the folder to save the phyloseq object
 #' @param Rdata (default: FALSE) : does the phyloseq object is also save in Rdata format
 #'
-#' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv) 
+#' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 #' and if present a phy_tree in Newick format
 #' @export
 #'
@@ -586,7 +585,7 @@ write_phyloseq <- function(physeq, path = NULL, rdata = FALSE) {
 ################################################################################
 
 ################################################################################
-#' Read phyloseq object from multiple csv tables and a phylogenetic tree 
+#' Read phyloseq object from multiple csv tables and a phylogenetic tree
 #' in Newick format.
 #'
 #' `r lifecycle::badge("maturing")`
@@ -594,7 +593,7 @@ write_phyloseq <- function(physeq, path = NULL, rdata = FALSE) {
 #' @param path (required) : a path to the folder to read the phyloseq object
 #' @param taxa_are_rows (required, default to FALSE) : see ?phyloseq for details
 #'
-#' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv) 
+#' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 #' and if present a phy_tree in Newick format. At least the otu_table.csv need to be present.
 #' @export
 #'
@@ -639,8 +638,8 @@ read_phyloseq <- function(path = NULL, taxa_are_rows = FALSE) {
 ################################################################################
 
 ################################################################################
-#' Lulu reclustering of class `physeq` 
-#' 
+#' Lulu reclustering of class `physeq`
+#'
 #' See https://www.nature.com/articles/s41467-017-01312-x for more information on the method.
 #' `r lifecycle::badge("experimental")`
 #'
@@ -668,7 +667,7 @@ read_phyloseq <- function(path = NULL, taxa_are_rows = FALSE) {
 #' lulu_phyloseq(data_fungi_sp_known)
 #' }
 #' @author Adrien Taudière \email{adrien.taudiere@@zaclys.net}
-#' @details 
+#' @details
 #' The version of LULU is a fork of Adrien Taudière (\url{https://github.com/adrientaudiere/lulu}) from \url{https://github.com/tobiasgf/lulu}
 #' @references
 #' - LULU : \url{https://github.com/adrientaudiere/lulu}

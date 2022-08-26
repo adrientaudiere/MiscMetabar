@@ -1134,7 +1134,7 @@ hill_phyloseq <-
 #'   rowSums(GlobalPatterns@otu_table) > 10000
 #' ))
 tax_datatable <- function(physeq, abundance = TRUE, taxonomic_level = NULL, ...) {
-  df <- as.data.frame(physeq@tax_table)
+  df <- as.data.frame(unclass(physeq@tax_table))
 
   if (!is.null(taxonomic_level)) {
     df <- df[, taxonomic_level]
