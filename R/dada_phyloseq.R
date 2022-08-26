@@ -283,9 +283,7 @@ asv2otu <- function(physeq,
 
   if (method == "IdClusters") {
     ## Find clusters of ASVs to form the new OTUs
-    # aln <- DECIPHER::AlignSeqs(dna, processors = nproc)
-    # d <- DECIPHER::DistanceMatrix(aln, processors = nproc)
-    clusters <- DECIPHER::IdClusters(d,
+    clusters <- DECIPHER::IdClusters(dna,
       cutoff = 1 - id,
       # e.g. `cutoff = 0.03` for a 97% OTU
       processors = nproc
