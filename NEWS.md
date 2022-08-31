@@ -1,3 +1,9 @@
+# MiscMetabar 0.23 (in development)
+
+* Adapt the function *asv2otu* to *IdClusters* change in the DECIPHER package (commit 254100922f2093cc789d018c18a26752a3cda1e3).  
+
+* Better functioning of blast_to_phyloseq when none query sequences are founded.
+
 # MiscMetabar 0.22
 
 * Add badge to set the development lifecycle of each function

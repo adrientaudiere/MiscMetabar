@@ -43,15 +43,15 @@ add_dna_to_phyloseq <- function(physeq) {
 #'
 #' @param remove_empty_samples (logical, default TRUE) Do you want to remove samples without sequences (this is done after removing empty taxa)
 #' @param remove_empty_taxa (logical, default TRUE) Do you want to remove taxa without sequences (this is done before removing empty samples)
-#' @param clean_samples_samples
+#' @param clean_samples_names
 #' @return A new \code{\link{phyloseq-class}} object
 #' @export
 clean_physeq <-  function(physeq,
                           remove_empty_samples = TRUE,
                           remove_empty_taxa = TRUE,
-                          clean_samples_samples =TRUE
+                          clean_samples_names =TRUE
                           ){
-  if (clean_samples_samples) {
+  if (clean_samples_names) {
     if (!is.null(physeq@refseq)){
       if (sum(!names(physeq@refseq) %in% taxa_names(physeq)) > 0){
         names(physeq@refseq) <- taxa_names(physeq)
@@ -492,13 +492,16 @@ blast_to_phyloseq <- function(physeq,
       header = F,
       stringsAsFactors = F
     )
+    file.remove("blast_result.txt")
+    file.remove(list.files(pattern = "dbase"))
+    file.remove("db.fasta")
   } else {
+    file.remove("blast_result.txt")
+    file.remove(list.files(pattern = "dbase"))
+    file.remove("db.fasta")
     stop("None query sequences matched your phyloseq references sequences.")
   }
 
-  file.remove("blast_result.txt")
-  file.remove(list.files(pattern = "dbase"))
-  file.remove("db.fasta")
 
   names(blast_tab) <- c(
     "Query name",
@@ -757,3 +760,5 @@ lulu_phyloseq <- function(physeq,
   ))
 }
 ################################################################################
+
+
