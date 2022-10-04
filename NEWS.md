@@ -4,6 +4,9 @@
 
 * Better functioning of blast_to_phyloseq when none query sequences are founded.
 
+* Add tax_adjust argument to asv2otu function
+
+* Add some functions useful for the targets package
 # MiscMetabar 0.22
 
 * Add badge to set the development lifecycle of each function

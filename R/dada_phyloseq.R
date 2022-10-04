@@ -14,7 +14,7 @@ if (getRversion() >= "2.15.1") utils::globalVariables(c("."))
 #' @export
 
 add_dna_to_phyloseq <- function(physeq) {
-  if (!methods::validObject(physeq) | class(physeq) != "phyloseq") {
+  if (!methods::validObject(physeq) || class(physeq) != "phyloseq") {
     stop("The physeq argument is not a valid phyloseq object.")
   } else {
     dna <- Biostrings::DNAStringSet(phyloseq::taxa_names(physeq))
@@ -134,7 +134,7 @@ track_wkflow <- function(list_of_objects, obj_names = NULL, clean_physeq = FALSE
   }
 
   if (clean_physeq) {
-    for (i in 1:length(list_of_objects)) {
+    for (i in seq_along(list_of_objects)) {
       if (inherits(list_of_objects[[i]], "phyloseq")) {
         list_of_objects[[i]] <- clean_physeq(list_of_objects[[i]])
       }
@@ -260,6 +260,8 @@ track_wkflow <- function(list_of_objects, obj_names = NULL, clean_physeq = FALSE
 #'     with arguments `-cluster_fast` and `-strand both`
 #' @param vsearchpath (default = "vsearch"): path to vsearch
 #' @param id (default=0.97): level of identity to cluster
+#' @param  tax_adjust: By default tax_adjust = 1L. See the man page
+#'   of `speedyseq::merge_taxa_vec`. 
 #' @details This function use the `speedyseq::merge_taxa_vec` function to
 #'   merge taxa into clusters. By default tax_adjust = 1L. See the man page
 #'   of `speedyseq::merge_taxa_vec`.
@@ -278,7 +280,9 @@ asv2otu <- function(physeq,
                     nproc = 1,
                     method = "IdClusters",
                     id = 0.97,
-                    vsearchpath = "vsearch") {
+                    vsearchpath = "vsearch",
+                    tax_adjust = 1
+                    ) {
   dna <- Biostrings::DNAStringSet(physeq@refseq)
 
   if (method == "IdClusters") {
@@ -292,7 +296,7 @@ asv2otu <- function(physeq,
     new_physeq <-
       speedyseq::merge_taxa_vec(physeq,
         clusters$cluster,
-        tax_adjust = 1
+        tax_adjust = tax_adjust
       )
   } else if (method == "vsearch") {
     Biostrings::writeXStringSet(dna, "temp.fasta")
@@ -341,7 +345,7 @@ asv2otu <- function(physeq,
     new_physeq <-
       speedyseq::merge_taxa_vec(physeq,
         clusters,
-        tax_adjust = 1
+        tax_adjust = tax_adjust
       )
 
     if (file.exists("temp.fasta")) {
@@ -568,7 +572,9 @@ blast_to_phyloseq <- function(physeq,
 #' }
 
 write_phyloseq <- function(physeq, path = NULL, rdata = FALSE) {
-  dir.create(file.path(path))
+  if (!dir.exists(path)){
+    dir.create(file.path(path), recursive = TRUE)
+  }
   if (!is.null(physeq@otu_table)) {
     utils::write.csv(physeq@otu_table, paste(path, "/otu_table.csv", sep = ""))
   }

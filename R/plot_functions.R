@@ -1133,7 +1133,7 @@ hill_phyloseq <-
 #'   GlobalPatterns,
 #'   rowSums(GlobalPatterns@otu_table) > 10000
 #' ))
-tax_datatable <- function(physeq, abundance = TRUE, taxonomic_level = NULL, ...) {
+tax_datatable <- function(physeq, abundance = TRUE, taxonomic_level = NULL, modality = NULL, ...) {
   df <- as.data.frame(unclass(physeq@tax_table))
 
   if (!is.null(taxonomic_level)) {
@@ -1147,6 +1147,15 @@ tax_datatable <- function(physeq, abundance = TRUE, taxonomic_level = NULL, ...)
       df$nb_seq <- colSums(physeq@otu_table)
     }
   }
+
+  if (!is.null(modality)){
+    if (physeq@otu_table@taxa_are_rows) {
+      df <- cbind(df, apply(physeq@otu_table, 2))
+    } else {
+  
+    }    
+  }
+
 
   DT::datatable(df, ...) %>% DT::formatStyle(
     "nb_seq",
