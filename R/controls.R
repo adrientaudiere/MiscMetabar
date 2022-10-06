@@ -171,13 +171,16 @@ subset_taxa_tax_control <-
       cutoffs <- cutoff_seq
     } else if (method == "mean") {
       cutoffs <-
-        apply(cbind(cutoff_mixt, cutoff_diff, cutoff_seq), 1, mean, na.rm = T)
+        apply(cbind(cutoff_mixt, cutoff_diff, cutoff_seq), 1, mean, 
+        na.rm = TRUE)
     } else if (method == "min") {
       cutoffs <-
-        apply(cbind(cutoff_mixt, cutoff_diff, cutoff_seq), 1, min, na.rm = T)
+        apply(cbind(cutoff_mixt, cutoff_diff, cutoff_seq), 1, min,
+         na.rm = TRUE)
     } else if (method == "max") {
       cutoffs <-
-        apply(cbind(cutoff_mixt, cutoff_diff, cutoff_seq), 1, max, na.rm = T)
+        apply(cbind(cutoff_mixt, cutoff_diff, cutoff_seq), 1, max,
+         na.rm = TRUE)
     } else {
       stop("The method name is not valid.")
     }

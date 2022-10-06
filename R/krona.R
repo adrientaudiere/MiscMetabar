@@ -96,7 +96,7 @@ krona <-
 #'
 #' Need the installation of kronatools on the computer ([installation instruction](https://github.com/marbl/Krona/wiki/Installing)).
 #' Function merge_krona allows merging multiple html files in one interactive krona file
-#' 
+#'
 #' @param files (required): path to html files to merged
 #' @param output (default="mergeKrona.html") : path to the output files
 #'

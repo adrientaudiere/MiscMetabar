@@ -46,34 +46,33 @@ add_dna_to_phyloseq <- function(physeq) {
 #' @param clean_samples_names
 #' @return A new \code{\link{phyloseq-class}} object
 #' @export
-clean_physeq <-  function(physeq,
-                          remove_empty_samples = TRUE,
-                          remove_empty_taxa = TRUE,
-                          clean_samples_names =TRUE
-                          ){
+clean_physeq <- function(physeq,
+                         remove_empty_samples = TRUE,
+                         remove_empty_taxa = TRUE,
+                         clean_samples_names = TRUE) {
   if (clean_samples_names) {
-    if (!is.null(physeq@refseq)){
-      if (sum(!names(physeq@refseq) %in% taxa_names(physeq)) > 0){
+    if (!is.null(physeq@refseq)) {
+      if (sum(!names(physeq@refseq) %in% taxa_names(physeq)) > 0) {
         names(physeq@refseq) <- taxa_names(physeq)
         message("Change the samples names in refseq slot")
       }
     }
-    if (!is.null(physeq@tax_table)){
-      if (sum(!rownames(physeq@tax_table) %in% taxa_names(physeq)) > 0){
+    if (!is.null(physeq@tax_table)) {
+      if (sum(!rownames(physeq@tax_table) %in% taxa_names(physeq)) > 0) {
         rownames(physeq@tax_table) <- taxa_names(physeq)
         message("Change the taxa names in tax_table slot")
       }
     }
 
-    if (!is.null(physeq@sam_data)){
-      if (sum(!rownames(physeq@sam_data) %in% sample_names(physeq)) > 0){
+    if (!is.null(physeq@sam_data)) {
+      if (sum(!rownames(physeq@sam_data) %in% sample_names(physeq)) > 0) {
         rownames(physeq@sam_data) <- sample_names(physeq)
         message("Change the samples names in sam_data slot")
       }
     }
   }
 
-  if (sum(grepl("^0", "", sample_names(physeq)) )){
+  if (sum(grepl("^0", "", sample_names(physeq)))) {
     message("At least one sample name start with a zero. That can be a problem for some phyloseq functions such as plot_bar and psmelt.")
   }
 
@@ -81,10 +80,10 @@ clean_physeq <-  function(physeq,
 
   if (remove_empty_taxa) {
     if (sum(taxa_sums(new_physeq) == 0) > 0) {
-    # new_otu_table <- otu_table(new_physeq, taxa_are_rows =T)[,taxa_sums(new_physeq) > 0]
-    # new_tax_table <- tax_table(new_physeq)[taxa_sums(new_physeq) > 0,]
-    # new_physeq <- merge_phyloseq(new_otu_table, new_tax_table, physeq)
-      new_physeq <- subset_taxa(physeq, taxa_sums(physeq)>0)
+      # new_otu_table <- otu_table(new_physeq, taxa_are_rows =T)[,taxa_sums(new_physeq) > 0]
+      # new_tax_table <- tax_table(new_physeq)[taxa_sums(new_physeq) > 0,]
+      # new_physeq <- merge_phyloseq(new_otu_table, new_tax_table, physeq)
+      new_physeq <- subset_taxa(physeq, taxa_sums(physeq) > 0)
     }
   }
   if (remove_empty_samples) {
@@ -92,10 +91,11 @@ clean_physeq <-  function(physeq,
       new_physeq <- subset_samples(new_physeq, sample_sums(physeq) > 0)
     }
   }
-  message(paste("Supress", ntaxa(physeq)-ntaxa(new_physeq), "taxa and",
-          nsamples(physeq)-nsamples(new_physeq),
-          "samples.")
-         )
+  message(paste(
+    "Supress", ntaxa(physeq) - ntaxa(new_physeq), "taxa and",
+    nsamples(physeq) - nsamples(new_physeq),
+    "samples."
+  ))
   return(new_physeq)
 }
 
@@ -261,7 +261,7 @@ track_wkflow <- function(list_of_objects, obj_names = NULL, clean_physeq = FALSE
 #' @param vsearchpath (default = "vsearch"): path to vsearch
 #' @param id (default=0.97): level of identity to cluster
 #' @param  tax_adjust: By default tax_adjust = 1L. See the man page
-#'   of `speedyseq::merge_taxa_vec`. 
+#'   of `speedyseq::merge_taxa_vec`.
 #' @details This function use the `speedyseq::merge_taxa_vec` function to
 #'   merge taxa into clusters. By default tax_adjust = 1L. See the man page
 #'   of `speedyseq::merge_taxa_vec`.
@@ -281,8 +281,7 @@ asv2otu <- function(physeq,
                     method = "IdClusters",
                     id = 0.97,
                     vsearchpath = "vsearch",
-                    tax_adjust = 1
-                    ) {
+                    tax_adjust = 1) {
   dna <- Biostrings::DNAStringSet(physeq@refseq)
 
   if (method == "IdClusters") {
@@ -301,22 +300,19 @@ asv2otu <- function(physeq,
   } else if (method == "vsearch") {
     Biostrings::writeXStringSet(dna, "temp.fasta")
 
-    cmd <-
-      system2(
-        vsearchpath,
-        paste(
-          " -cluster_fast temp.fasta -strand both",
-          " -id ",
-          id,
-          " --centroids cluster.fasta",
-          " --uc temp.uc",
-          sep = ""
-        ),
-        stdout = T,
-        stderr = T
-      )
-    vsearch_cluster_dna <-
-      Biostrings::readDNAStringSet("cluster.fasta")
+    system2(
+      vsearchpath,
+      paste(
+        " -cluster_fast temp.fasta -strand both",
+        " -id ",
+        id,
+        " --centroids cluster.fasta",
+        " --uc temp.uc",
+        sep = ""
+      ),
+      stdout = T,
+      stderr = T
+    )
 
     pack_clusts <- utils::read.table("temp.uc", sep = "\t")
     colnames(pack_clusts) <-
@@ -386,7 +382,7 @@ vsearch_search_global <- function(physeq,
 
   Biostrings::writeXStringSet(dna, "temp.fasta")
 
-  cmd <- system2(
+  system2(
     vsearchpath,
     paste(
       " --usearch_global ",
@@ -471,12 +467,12 @@ blast_to_phyloseq <- function(physeq,
   dna <- Biostrings::DNAStringSet(physeq@refseq)
   Biostrings::writeXStringSet(dna, "db.fasta")
 
-  cmd <- system(paste(blastpath,
+  system(paste(blastpath,
     "makeblastdb -dbtype nucl -in db.fasta -out dbase",
     sep = ""
   ))
 
-  cmd2 <- system(
+  system(
     paste(
       blastpath,
       "blastn -query ",
@@ -570,9 +566,9 @@ blast_to_phyloseq <- function(physeq,
 #' \dontrun{
 #' write_phyloseq(data_fungi, path = "phyloseq")
 #' }
-
+#'
 write_phyloseq <- function(physeq, path = NULL, rdata = FALSE) {
-  if (!dir.exists(path)){
+  if (!dir.exists(path)) {
     dir.create(file.path(path), recursive = TRUE)
   }
   if (!is.null(physeq@otu_table)) {
@@ -590,8 +586,8 @@ write_phyloseq <- function(physeq, path = NULL, rdata = FALSE) {
   if (!is.null(physeq@phy_tree)) {
     ape::write.tree(physeq@phy_tree, paste(path, "/phy_tree.txt", sep = ""))
   }
-  if (rdata){
-    save(physeq, file=paste(path, "/physeq.RData", sep = ""))
+  if (rdata) {
+    save(physeq, file = paste(path, "/physeq.RData", sep = ""))
   }
 }
 ################################################################################
@@ -613,30 +609,29 @@ write_phyloseq <- function(physeq, path = NULL, rdata = FALSE) {
 #' \dontrun{
 #' read_phyloseq(path = "phyloseq_data")
 #' }
-
+#'
 read_phyloseq <- function(path = NULL, taxa_are_rows = FALSE) {
-
   if (file.exists(paste(path, "/otu_table.csv", sep = ""))) {
     otu_table_csv <- as.matrix(utils::read.csv(paste(path, "/otu_table.csv", sep = "")))
-    rownames(otu_table_csv) <- otu_table_csv[,1]
-    otu_table_csv <- otu_table_csv [,-1]
+    rownames(otu_table_csv) <- otu_table_csv[, 1]
+    otu_table_csv <- otu_table_csv[, -1]
     otu_table_csv <- apply(otu_table_csv, 2, as.numeric)
     physeq <- phyloseq(otu_table(otu_table_csv, taxa_are_rows = taxa_are_rows))
   }
   if (file.exists(paste(path, "/refseq.csv", sep = ""))) {
-    dna <- Biostrings::DNAStringSet(utils::read.csv2(paste(path, "/refseq.csv", sep = ""), sep=",")[,2])
-    names(dna) <- utils::read.csv2(paste(path, "/refseq.csv", sep = ""), sep=",")[,1]
+    dna <- Biostrings::DNAStringSet(utils::read.csv2(paste(path, "/refseq.csv", sep = ""), sep = ",")[, 2])
+    names(dna) <- utils::read.csv2(paste(path, "/refseq.csv", sep = ""), sep = ",")[, 1]
     physeq <- phyloseq::merge_phyloseq(physeq, refseq(dna))
   }
   if (file.exists(paste(path, "/tax_table.csv", sep = ""))) {
     tax_table_csv <- utils::read.csv(paste(path, "/tax_table.csv", sep = ""))
-    rownames(tax_table_csv) <- tax_table_csv[,1]
-    tax_table_csv <- as.matrix(tax_table_csv [,-1])
-    physeq <- phyloseq::merge_phyloseq(physeq, tax_table(tax_table_csv) )
+    rownames(tax_table_csv) <- tax_table_csv[, 1]
+    tax_table_csv <- as.matrix(tax_table_csv[, -1])
+    physeq <- phyloseq::merge_phyloseq(physeq, tax_table(tax_table_csv))
   }
-   if (file.exists(paste(path, "/sam_data.csv", sep = ""))) {
+  if (file.exists(paste(path, "/sam_data.csv", sep = ""))) {
     sam_data_csv <- utils::read.csv(paste(path, "/sam_data.csv", sep = ""))
-    physeq <- phyloseq::merge_phyloseq(physeq, sample_data(sam_data_csv) )
+    physeq <- phyloseq::merge_phyloseq(physeq, sample_data(sam_data_csv))
   }
 
   if (!is.null(physeq@phy_tree)) {
@@ -694,26 +689,25 @@ lulu_phyloseq <- function(physeq,
                           verbose = FALSE,
                           clean_physeq = FALSE) {
   if (clean_physeq) {
-      physeq <- clean_physeq(physeq)
+    physeq <- clean_physeq(physeq)
   }
 
   message("Start Vsearch usearch_global")
   dna <- Biostrings::DNAStringSet(physeq@refseq)
   Biostrings::writeXStringSet(dna, "temp.fasta")
-  cmd <-
-    system2(
-      vsearchpath,
-      paste(
-        " --usearch_global temp.fasta --db temp.fasta --self --iddef 1",
-        " -userfields query+target+id --maxaccepts 0 --query_cov .9 --maxhits 10",
-        " -id ",
-        id,
-        "  --userout match_list.txt",
-        sep = ""
-      ),
-      stdout = T,
-      stderr = T
-    )
+  system2(
+    vsearchpath,
+    paste(
+      " --usearch_global temp.fasta --db temp.fasta --self --iddef 1",
+      " -userfields query+target+id --maxaccepts 0 --query_cov .9 --maxhits 10",
+      " -id ",
+      id,
+      "  --userout match_list.txt",
+      sep = ""
+    ),
+    stdout = T,
+    stderr = T
+  )
 
   match_list <- utils::read.csv(file = "match_list.txt", sep = "\t")
 
@@ -766,5 +760,3 @@ lulu_phyloseq <- function(physeq,
   ))
 }
 ################################################################################
-
-

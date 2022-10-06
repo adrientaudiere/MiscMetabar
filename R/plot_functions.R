@@ -76,11 +76,11 @@ plot_mt <-
 #' @param ... Additional arguments passed on to \code{\link{ggplot}}
 #' if nb_seq = TRUE or to \code{\link{plot}} if nb_seq = FALSE
 #'
-#' @examples 
+#' @examples
 #' data("GlobalPatterns")
-#' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == 'Archaea')
-#' accu_plot(GP, 'SampleType', nb_seq = TRUE,  by.fact = TRUE)
-#' 
+#' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+#' accu_plot(GP, "SampleType", nb_seq = TRUE, by.fact = TRUE)
+#'
 #' @return A \code{\link{ggplot}}2 plot representing the richness
 #' accumulation plot if nb_seq = TRUE, else, if nb_seq = FALSE
 #' return a base plot.
@@ -317,12 +317,12 @@ accu_plot <-
 #'   \code{\link[circlize]{chordDiagram}} or \code{\link[circlize]{circos.par}}
 #'
 #' @examples
-#'  data("GlobalPatterns")
-#'  GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
-#'  otu_circle(GP, "SampleType")
+#' data("GlobalPatterns")
+#' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+#' otu_circle(GP, "SampleType")
 #' \dontrun{
-#'  otu_circle(GP, "SampleType", nb_seq = FALSE)
-#'  otu_circle(GP, "SampleType", taxa = "Class")
+#' otu_circle(GP, "SampleType", nb_seq = FALSE)
+#' otu_circle(GP, "SampleType", taxa = "Class")
 #' }
 #' @author Adrien Taudière
 #'
@@ -387,7 +387,7 @@ otu_circle <-
         tapply(
           x, physeq@sam_data[, taxsamp],
           function(xx) {
-            sum(xx, na.rm = T)
+            sum(xx, na.rm = TRUE)
           }
         )
       })
@@ -602,8 +602,8 @@ sankey_phyloseq <-
     if (!is.null(fact)) {
       net_matrix2links <- function(m = NULL) {
         res <- matrix(ncol = 3)
-        for (i in 1:dim(m)[1]) {
-          for (j in 1:dim(m)[2]) {
+        for (i in seq_len(dim(m)[1])) {
+          for (j in seq_len(dim(m)[2])) {
             if (m[i, j] > 0) {
               res <- rbind(res, c(rownames(m)[i], colnames(m)[j], m[i, j]))
             }
@@ -1043,7 +1043,7 @@ hill_phyloseq <-
         p_var$data[grep("Hill Number 0", p_var$data[, 5]), ]
       data_h0_pval <- data_h0$p.adj
       names(data_h0_pval) <- data_h0$modality
-      letters <- multcompLetters(data_h0_pval, reversed = T)$Letters
+      letters <- multcompLetters(data_h0_pval, reversed = TRUE)$Letters
 
       p_0 <- p_0 +
         geom_label(
@@ -1065,7 +1065,7 @@ hill_phyloseq <-
         p_var$data[grep("Hill Number 1", p_var$data[, 5]), ]
       data_h1_pval <- data_h1$p.adj
       names(data_h1_pval) <- data_h1$modality
-      letters <- multcompLetters(data_h1_pval, reversed = T)$Letters
+      letters <- multcompLetters(data_h1_pval, reversed = TRUE)$Letters
 
       p_1 <- p_1 +
         geom_label(
@@ -1087,7 +1087,7 @@ hill_phyloseq <-
         p_var$data[grep("Hill Number 2", p_var$data[, 5]), ]
       data_h2_pval <- data_h2$p.adj
       names(data_h2_pval) <- data_h2$modality
-      letters <- multcompLetters(data_h2_pval, reversed = T)$Letters
+      letters <- multcompLetters(data_h2_pval, reversed = TRUE)$Letters
 
       p_2 <- p_2 +
         geom_label(
@@ -1110,6 +1110,8 @@ hill_phyloseq <-
       "plot_Hill_2" = p_2,
       "plot_tuckey" = p_var
     )
+
+    return(res)
   }
 ################################################################################
 
@@ -1133,7 +1135,10 @@ hill_phyloseq <-
 #'   GlobalPatterns,
 #'   rowSums(GlobalPatterns@otu_table) > 10000
 #' ))
-tax_datatable <- function(physeq, abundance = TRUE, taxonomic_level = NULL, modality = NULL, ...) {
+tax_datatable <- function(physeq,
+                          abundance = TRUE,
+                          taxonomic_level = NULL,
+                          modality = NULL, ...) {
   df <- as.data.frame(unclass(physeq@tax_table))
 
   if (!is.null(taxonomic_level)) {
@@ -1148,14 +1153,11 @@ tax_datatable <- function(physeq, abundance = TRUE, taxonomic_level = NULL, moda
     }
   }
 
-  if (!is.null(modality)){
+  if (!is.null(modality)) {
     if (physeq@otu_table@taxa_are_rows) {
       df <- cbind(df, apply(physeq@otu_table, 2))
-    } else {
-  
-    }    
+    } else {}
   }
-
 
   DT::datatable(df, ...) %>% DT::formatStyle(
     "nb_seq",
@@ -1171,7 +1173,8 @@ tax_datatable <- function(physeq, abundance = TRUE, taxonomic_level = NULL, moda
 #' Summarise a \code{\link{phyloseq-class}} object using a plot.
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @param physeq (required): A \code{\link{phyloseq-class}} object. For the moment refseq slot need to be not Null.
+#' @param physeq (required): A \code{\link{phyloseq-class}} object.
+#' For the moment refseq slot need to be not Null.
 #' @examples
 #' data(data_fungi)
 #' summary_plot_phyloseq(data_fungi)
@@ -1287,8 +1290,10 @@ summary_plot_phyloseq <- function(physeq) {
 #' Heat tree from `metacoder` package using `tax_table` slot
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @param physeq (required): A \code{\link{phyloseq-class}} object
-#' @param taxonomic_level (Default: NULL): a vector of selected taxonomic level using
+#' @param physeq (required): A \code{\link{phyloseq-class}}
+#' object
+#' @param taxonomic_level (Default: NULL): a vector of selected
+#' taxonomic level using
 #'   their column numbers (e.g. taxonomic_level = c(1:7))
 #' @param ... : Arguments parsed to \code{\link[metacoder]{heat_tree}}
 #'

@@ -46,8 +46,10 @@ summary_plot_phyloseq(data_fungi)
 
 ```{r}
 data("GlobalPatterns")
-tax_datatable(subset_taxa(GlobalPatterns,
-             rowSums(GlobalPatterns@otu_table) > 100000))
+tax_datatable(subset_taxa(
+  GlobalPatterns,
+  rowSums(GlobalPatterns@otu_table) > 100000
+))
 ```
 
 ### Sankey diagramme of the tax_table
@@ -55,10 +57,12 @@ tax_datatable(subset_taxa(GlobalPatterns,
 ```{r}
 gp <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 sankey_phyloseq(gp, taxa = c(1:5))
-htmlwidgets::onRender(sk,
-                      'function(el) {
+htmlwidgets::onRender(
+  sk,
+  'function(el) {
                         el.querySelector("svg").removeAttribute("viewBox")
-                      }')
+                      }'
+)
 ```
 
 ### Circle for visualise distribution of taxa in function of samples variables

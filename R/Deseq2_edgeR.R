@@ -192,13 +192,14 @@ plot_deseq2_phyloseq <-
       if (!is.null(tax_depth)) {
         data_tax <- data
         data_tax@otu_table <-
-          otu_table(apply(data@otu_table, 2, function(x) {
-            tapply(
-              x,
-              data@tax_table[, tax_depth], sum
-            )
-          }),
-          taxa_are_rows = T
+          otu_table(
+            apply(data@otu_table, 2, function(x) {
+              tapply(
+                x,
+                data@tax_table[, tax_depth], sum
+              )
+            }),
+            taxa_are_rows = T
           )
         data_tax@tax_table <-
           tax_table(apply(
