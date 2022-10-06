@@ -346,7 +346,7 @@ otu_circle <-
            start_degree = NULL,
            row_col = NULL,
            grid_col = NULL,
-           log10trans = F,
+           log10trans = FALSE,
            ...) {
     if (!inherits(physeq, "phyloseq")) {
       stop("physeq must be an object of class 'phyloseq'")
@@ -378,7 +378,7 @@ otu_circle <-
         tapply(
           x, physeq@tax_table[, taxcol],
           function(xx) {
-            sum(xx, na.rm = T)
+            sum(xx, na.rm = TRUE)
           }
         )
       })
@@ -1020,7 +1020,7 @@ hill_phyloseq <-
     }
 
     otu_hill <-
-      vegan::renyi(physeq@otu_table, scale = c(0, 1, 2), hill = T)
+      vegan::renyi(physeq@otu_table, scale = c(0, 1, 2), hill = TRUE)
     colnames(otu_hill) <- c("Hill_0", "Hill_1", "Hill_2")
 
     df_hill <- data.frame(otu_hill, physeq@sam_data)

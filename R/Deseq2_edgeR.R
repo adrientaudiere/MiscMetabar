@@ -199,7 +199,7 @@ plot_deseq2_phyloseq <-
                 data@tax_table[, tax_depth], sum
               )
             }),
-            taxa_are_rows = T
+            taxa_are_rows = TRUE
           )
         data_tax@tax_table <-
           tax_table(apply(
@@ -223,7 +223,7 @@ plot_deseq2_phyloseq <-
         }
       }
 
-      if (is.null(tax_table) & inherits(data, "phyloseq")) {
+      if (is.null(tax_table) && inherits(data, "phyloseq")) {
         tax_table <- data@tax_table
       }
 
@@ -390,7 +390,7 @@ phyloseq_to_edgeR <- function(physeq, group, method = "RLE", ...) {
   # Add one to protect against overflow, log(0) issues.
   x <- x + 1
   # Check `group` argument
-  if (identical(all.equal(length(group), 1), TRUE) &
+  if (identical(all.equal(length(group), 1), TRUE) &&
     nsamples(physeq) > 1) {
     # Assume that group was a sample variable name (must be categorical)
     group <- get_variable(physeq, group)

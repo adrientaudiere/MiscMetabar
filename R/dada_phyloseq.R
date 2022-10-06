@@ -310,8 +310,8 @@ asv2otu <- function(physeq,
         " --uc temp.uc",
         sep = ""
       ),
-      stdout = T,
-      stderr = T
+      stdout = TRUE,
+      stderr = TRUE
     )
 
     pack_clusts <- utils::read.table("temp.uc", sep = "\t")
@@ -705,8 +705,8 @@ lulu_phyloseq <- function(physeq,
       "  --userout match_list.txt",
       sep = ""
     ),
-    stdout = T,
-    stderr = T
+    stdout = TRUE,
+    stderr = TRUE
   )
 
   match_list <- utils::read.csv(file = "match_list.txt", sep = "\t")
@@ -739,7 +739,7 @@ lulu_phyloseq <- function(physeq,
   test_vector <- c()
   for (tax_rank in colnames(physeq@tax_table)) {
     test <- physeq@tax_table[rownames(merged), tax_rank] == physeq@tax_table[merged$parent_id, tax_rank]
-    test_vector <- c(test_vector, sum(test, na.rm = T) / length(stats::na.exclude(test)))
+    test_vector <- c(test_vector, sum(test, na.rm = TRUE) / length(stats::na.exclude(test)))
   }
 
   names(test_vector) <- colnames(physeq@tax_table)

@@ -30,7 +30,7 @@ Default setting plot all the ranks (argument 'All').}
 \item{add_unassigned_rank}{(number; default = 0). Add unassigned for rank
 inferior to 'add_unassigned_rank' when necessary}
 
-\item{name}{(default=NULL) : A name for intermediary files, usefull to name
+\item{name}{(default=NULL) : A name for intermediary files, Useful to name
 your krona dataset when merge using merge_krona}
 }
 \value{

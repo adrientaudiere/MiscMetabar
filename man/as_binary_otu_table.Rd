@@ -20,7 +20,7 @@ A \code{physeq} object with only 0/1 in the OTU table
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \note{
-Usefull to test if the results are not biaised by sequences bias
+Useful to test if the results are not biaised by sequences bias
 that appended during PCR or NGS pipeline.
 }
 \examples{

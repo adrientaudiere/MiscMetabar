@@ -1,7 +1,7 @@
 ################################################################################
 #' Transform the otu_table of a \code{\link{phyloseq-class}} object into a
 #'   \code{\link{phyloseq-class}} object with à binary otu_table.
-#' @note  Usefull to test if the results are not biaised by sequences bias
+#' @note  Useful to test if the results are not biaised by sequences bias
 #'   that appended during PCR or NGS pipeline.
 #'
 #' @description
@@ -60,7 +60,7 @@ dist_bycol <- function(x,
   x <- as.matrix(unclass(x))
   y <- as.matrix(unclass(y))
 
-  if (nrow(x) != nrow(y) |
+  if (nrow(x) != nrow(y) ||
     ncol(x) != ncol(y)) {
     stop("x and y must be of the same dimension")
   }
@@ -122,7 +122,7 @@ all_object_size <- function() {
 #' @export
 simplify_taxo <- function(physeq) {
   taxo <- physeq@tax_table
-  taxo <- gsub(".__", "", taxo, perl = T)
+  taxo <- gsub(".__", "", taxo, perl = TRUE)
   physeq@tax_table <- taxo
   return(physeq)
 }
