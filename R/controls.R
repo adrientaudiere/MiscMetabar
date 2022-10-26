@@ -127,14 +127,15 @@ subset_taxa_tax_control <-
         physeq_mixture <- as.vector(physeq@otu_table[i, ])
         x_mixture <- physeq_mixture[physeq_mixture > 0]
         if (length(x_mixture) > 25) {
-          try(model <-
-            mixtools::normalmixEM(
-              x = x_mixture,
-              k = 2,
-              epsilon = 1e-03,
-              maxrestarts = 1000
-            ),
-          silent = TRUE
+          try(
+            model <-
+              mixtools::normalmixEM(
+                x = x_mixture,
+                k = 2,
+                epsilon = 1e-03,
+                maxrestarts = 1000
+              ),
+            silent = TRUE
           )
           try(index_lower <-
             which.min(model$mu), silent = TRUE)
@@ -171,16 +172,19 @@ subset_taxa_tax_control <-
       cutoffs <- cutoff_seq
     } else if (method == "mean") {
       cutoffs <-
-        apply(cbind(cutoff_mixt, cutoff_diff, cutoff_seq), 1, mean, 
-        na.rm = TRUE)
+        apply(cbind(cutoff_mixt, cutoff_diff, cutoff_seq), 1, mean,
+          na.rm = TRUE
+        )
     } else if (method == "min") {
       cutoffs <-
         apply(cbind(cutoff_mixt, cutoff_diff, cutoff_seq), 1, min,
-         na.rm = TRUE)
+          na.rm = TRUE
+        )
     } else if (method == "max") {
       cutoffs <-
         apply(cbind(cutoff_mixt, cutoff_diff, cutoff_seq), 1, max,
-         na.rm = TRUE)
+          na.rm = TRUE
+        )
     } else {
       stop("The method name is not valid.")
     }

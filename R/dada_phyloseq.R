@@ -489,8 +489,8 @@ blast_to_phyloseq <- function(physeq,
     blast_tab <- utils::read.table(
       "blast_result.txt",
       sep = "\t",
-      header = F,
-      stringsAsFactors = F
+      header = FALSE,
+      stringsAsFactors = FALSE
     )
     file.remove("blast_result.txt")
     file.remove(list.files(pattern = "dbase"))
@@ -556,7 +556,8 @@ blast_to_phyloseq <- function(physeq,
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param path (default: NULL) : a path to the folder to save the phyloseq object
-#' @param Rdata (default: FALSE) : does the phyloseq object is also save in Rdata format
+#' @param Rdata (default: FALSE) : does the phyloseq object is also saved in Rdata format
+#' @param one_file_ASV (default: FALSE) : combine all data in one file only
 #'
 #' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 #' and if present a phy_tree in Newick format
@@ -567,18 +568,42 @@ blast_to_phyloseq <- function(physeq,
 #' write_phyloseq(data_fungi, path = "phyloseq")
 #' }
 #'
-write_phyloseq <- function(physeq, path = NULL, rdata = FALSE) {
+write_phyloseq <- function(physeq, path = NULL, rdata = FALSE, one_file_ASV = FALSE) {
   if (!dir.exists(path)) {
     dir.create(file.path(path), recursive = TRUE)
   }
-  if (!is.null(physeq@otu_table)) {
-    utils::write.csv(physeq@otu_table, paste(path, "/otu_table.csv", sep = ""))
-  }
-  if (!is.null(physeq@refseq)) {
-    utils::write.csv(physeq@refseq, paste(path, "/refseq.csv", sep = ""))
-  }
-  if (!is.null(physeq@tax_table)) {
-    utils::write.csv(physeq@tax_table, paste(path, "/tax_table.csv", sep = ""))
+  if (one_file_ASV) {
+    if (!is.null(physeq@refseq) & !is.null(physeq@otu_table) & !is.null(physeq@tax_table)) {
+      if (!taxa_are_rows(physeq)) {
+        physeq@otu_table <- t(physeq@otu_table)
+      }
+      utils::write.csv(
+        cbind(
+          physeq@otu_table,
+          physeq@tax_table,
+          as.vector(physeq@refseq)
+        ),
+        paste(path, "/ASV_table.csv", sep = "")
+      )
+    } else if (!is.null(physeq@otu_table) & !is.null(physeq@tax_table)) {
+      utils::write.csv(
+        cbind(
+          physeq@otu_table,
+          physeq@tax_table
+        ),
+        paste(path, "/ASV_table.csv", sep = "")
+      )
+    }
+  } else {
+    if (!is.null(physeq@otu_table)) {
+      utils::write.csv(physeq@otu_table, paste(path, "/otu_table.csv", sep = ""))
+    }
+    if (!is.null(physeq@refseq)) {
+      utils::write.csv(physeq@refseq, paste(path, "/refseq.csv", sep = ""))
+    }
+    if (!is.null(physeq@tax_table)) {
+      utils::write.csv(physeq@tax_table, paste(path, "/tax_table.csv", sep = ""))
+    }
   }
   if (!is.null(physeq@sam_data)) {
     utils::write.csv(physeq@sam_data, paste(path, "/sam_data.csv", sep = ""))
