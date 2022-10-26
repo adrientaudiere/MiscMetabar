@@ -208,7 +208,7 @@ plot_deseq2_phyloseq <-
               colnames(data@tax_table)
             )],
             2, function(x) {
-              xxx <- tapply(
+              tapply(
                 x, data@tax_table[, tax_depth],
                 function(xx) {
                   xx[1]
