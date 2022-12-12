@@ -2,7 +2,6 @@
 % Please edit documentation in R/krona.R
 \name{krona}
 \alias{krona}
-\alias{merge_krona}
 \title{Make Krona files using \href{https://github.com/marbl/Krona/wiki}{KronaTools}.}
 \usage{
 krona(
@@ -40,7 +39,6 @@ A html file
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 
 Need the installation of kronatools on the computer (\href{https://github.com/marbl/Krona/wiki/Installing}{installation instruction}).
-Function merge_krona allows merging multiple html files in one interactive krona file
 }
 \examples{
 data("GlobalPatterns")
@@ -48,6 +46,9 @@ GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
 # krona(GA, "Number.of.sequences.html")
 # krona(GA, "Number.of.OTUs.html", nb_seq = F)
 # merge_krona(c("Number.of.sequences.html", "Number.of.OTUs.html"))
+}
+\seealso{
+\code{\link{merge_krona}}
 }
 \author{
 Adrien Taudière

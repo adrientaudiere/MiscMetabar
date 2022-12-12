@@ -64,11 +64,10 @@ return a base plot.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
-\dontrun{
 data("GlobalPatterns")
-GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == 'Archaea')
-accu_plot(GP, 'SampleType', nb_seq = TRUE,  by.fact = TRUE)
-}
+GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+accu_plot(GP, "SampleType", nb_seq = TRUE, by.fact = TRUE)
+
 }
 \seealso{
 \code{\link[vegan]{specaccum}}

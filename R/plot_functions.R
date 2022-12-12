@@ -1331,3 +1331,123 @@ physeq_heat_tree <- function(physeq, taxonomic_level = NULL, ...) {
   data_metacoder <- metacoder::parse_phyloseq(physeq)
   metacoder::heat_tree(data_metacoder, ...)
 }
+
+
+#' Visualization of two samples for comparison of physeq object
+#' @description
+#' `r lifecycle::badge("maturing")`
+#' @param physeq (required): A \code{\link{phyloseq-class}}
+#' object
+#' @param right_cond : A condition to select the right sample.
+#' @param left_name : Name fo the left sample.
+#' @param right_name : Name fo the rigth sample.
+#' @param left_fill : Fill fo the left sample.
+#' @param left_col : Color fo the left sample.
+#' @param right_fill : Fill fo the right sample.
+#' @param right_col : Color fo the right sample.
+#' @param log_10 (default : TRUE) : Does abundancy is log10 transformed ?
+#' @param nudge_y : A parameter to control the y position of abundancy values. 
+
+#' @return A plot
+#' @export
+#' @author Adrien Taudière
+#'
+biplot_physeq <- function(physeq,
+                          right_cond = c(FALSE, TRUE),
+                          left_name = NA,
+                          right_name = NA,
+                          left_fill = "#4B3E1E",
+                          left_col = "#f3f2d9",
+                          right_fill = "#1d2949",
+                          right_col = "#1d2949",
+                          log_10 = TRUE,
+                          nudge_y = 0.3) {
+  if (nsamples(physeq) != 2) {
+    stop("biplot_physeq needs only two samples in the physeq object")
+  }
+
+  physeq@sam_data$right_cond <- right_cond
+  mdf <- phyloseq::psmelt(physeq)
+  mdf$Samples <- left_name
+  mdf$Samples[mdf$right_cond] <- right_name
+  mdf <- mdf[mdf$Abundance > 0, ]
+  mdf <- dplyr::rename(mdf, Abundance = Abundance)
+
+  if (log_10) {
+    mdf$Ab <- log10(mdf$Abundance + 1)
+  } else {
+    mdf$Ab <- mdf$Abundance
+    nudge_y <- mean(mdf$Abundance)*nudge_y
+  }
+
+  mdf$Ab[mdf$right_cond] <-
+    -mdf$Ab[mdf$right_cond]
+  mdf$Proportion <- paste0(round(100 * mdf$Abundance /
+    sum(mdf$Abundance[!mdf$right_cond]), 2), "%")
+  mdf$Percent[mdf$right_cond] <-
+    paste0(round(100 * mdf$Abundance[mdf$right_cond] /
+      sum(mdf$Abundance[mdf$right_cond]), 2), "%")
+
+  p <- mdf %>%
+    ggplot(
+      aes(
+        x = reorder(OTU, Abundance),
+        y = Ab,
+        fill = Samples,
+        names = OTU,
+        Ab = Abundance,
+        Proportion = Proportion,
+        Family = Family,
+        Genus = Genus,
+        Species = Species
+      )
+    ) +
+    geom_bar(stat = "identity", width = .6) +
+    annotate(
+      "rect",
+      xmin = "Samples",
+      xmax = "Samples",
+      ymin = -max(mdf$Ab),
+      ymax = max(mdf$Ab)
+    ) +
+    annotate(
+      geom = "text",
+      label = right_name,
+      x = "Samples",
+      y = max(mdf$Ab) / 2,
+      hjust = 1,
+      vjust = 1,
+      size = 6,
+      fontface = "bold"
+    ) +
+    annotate(
+      geom = "text",
+      label = left_name,
+      x = "Samples",
+      y = -(max(mdf$Ab) / 2),
+      hjust = 1,
+      vjust = 1,
+      size = 6,
+      fontface = "bold"
+    ) +
+    geom_hline(aes(yintercept = 0)) +
+    scale_x_discrete(limits = c(names(sort(
+      tapply(mdf$Abundance, mdf$OTU, sum)
+    )), "Samples")) +
+    ylim(min(mdf$Ab) * 1.1, max(mdf$Ab) *
+      1.1)
+
+
+    p <- p +
+      geom_text(aes(label = Abundance, color = Samples),
+        size = 3,
+        nudge_y = nudge_y
+      )
+
+  p <- p + coord_flip() +
+    theme_minimal() +
+    theme(plot.title = element_text(hjust = .5), axis.ticks = element_blank()) +
+    scale_fill_manual(values = c(left_fill, right_fill)) +
+    scale_color_manual(values = c(left_col, right_col), guide = "none") 
+  return(p)
+}

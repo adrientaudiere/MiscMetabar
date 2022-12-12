@@ -7,7 +7,8 @@
 summary_plot_phyloseq(physeq)
 }
 \arguments{
-\item{physeq}{(required): A \code{\link{phyloseq-class}} object. For the moment refseq slot need to be not Null.}
+\item{physeq}{(required): A \code{\link{phyloseq-class}} object.
+For the moment refseq slot need to be not Null.}
 }
 \value{
 A ggplot2 object

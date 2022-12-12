@@ -9,7 +9,6 @@
 #' column of the resulted tibble
 #' @param ... Additional arguments passed on to \code{\link[DECIPHER]{IdTaxa}}
 #'
-#' @examples
 #' @author Adrien Taudière
 #'
 #' @return a tibble that can be used for tax_table

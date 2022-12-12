@@ -13,6 +13,9 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
+    <loc>/reference/MM_idtaxa.html</loc>
+  </url>
+  <url>
     <loc>/reference/MiscMetabar-package.html</loc>
   </url>
   <url>
@@ -34,7 +37,13 @@
     <loc>/reference/asv2otu.html</loc>
   </url>
   <url>
+    <loc>/reference/biplot_physeq.html</loc>
+  </url>
+  <url>
     <loc>/reference/blast_to_phyloseq.html</loc>
+  </url>
+  <url>
+    <loc>/reference/clean_physeq.html</loc>
   </url>
   <url>
     <loc>/reference/data_fungi.html</loc>
@@ -64,6 +73,9 @@
     <loc>/reference/lulu_phyloseq.html</loc>
   </url>
   <url>
+    <loc>/reference/merge_krona.html</loc>
+  </url>
+  <url>
     <loc>/reference/multiplot.html</loc>
   </url>
   <url>
@@ -83,6 +95,9 @@
   </url>
   <url>
     <loc>/reference/plot_mt.html</loc>
+  </url>
+  <url>
+    <loc>/reference/read_phyloseq.html</loc>
   </url>
   <url>
     <loc>/reference/sankey_phyloseq.html</loc>

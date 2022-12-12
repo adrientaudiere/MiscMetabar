@@ -10,7 +10,7 @@ blast_to_phyloseq(
   seq2search,
   blastpath = NULL,
   id_cut = 90,
-  bit_score_cut = 1e-10,
+  bit_score_cut = 50,
   unique_per_seq = FALSE,
   score_filter = TRUE,
   list_no_output_query = FALSE

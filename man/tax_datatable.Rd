@@ -4,7 +4,13 @@
 \alias{tax_datatable}
 \title{Make a datatable with the taxonomy of a \code{\link{phyloseq-class}} object}
 \usage{
-tax_datatable(physeq, abundance = TRUE, taxonomic_level = NULL, ...)
+tax_datatable(
+  physeq,
+  abundance = TRUE,
+  taxonomic_level = NULL,
+  modality = NULL,
+  ...
+)
 }
 \arguments{
 \item{physeq}{(required): A \code{\link{phyloseq-class}} object}

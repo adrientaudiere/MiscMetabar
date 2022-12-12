@@ -10,7 +10,8 @@ asv2otu(
   nproc = 1,
   method = "IdClusters",
   id = 0.97,
-  vsearchpath = "vsearch"
+  vsearchpath = "vsearch",
+  tax_adjust = 1
 )
 }
 \arguments{
@@ -30,6 +31,9 @@ with arguments \code{-cluster_fast} and \verb{-strand both}
 \item{id}{(default=0.97): level of identity to cluster}
 
 \item{vsearchpath}{(default = "vsearch"): path to vsearch}
+
+\item{tax_adjust:}{By default tax_adjust = 1L. See the man page
+of \code{speedyseq::merge_taxa_vec}.}
 }
 \value{
 A new object of class \code{physeq}

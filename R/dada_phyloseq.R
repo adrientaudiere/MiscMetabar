@@ -41,9 +41,9 @@ add_dna_to_phyloseq <- function(physeq) {
 #' @param physeq (required): a \code{\link{phyloseq-class}} object obtained
 #'   using the `dada2` package
 #'
-#' @param remove_empty_samples (logical, default TRUE) Do you want to remove samples without sequences (this is done after removing empty taxa)
-#' @param remove_empty_taxa (logical, default TRUE) Do you want to remove taxa without sequences (this is done before removing empty samples)
-#' @param clean_samples_names
+#' @param remove_empty_samples (logical, default TRUE) : Do you want to remove samples without sequences (this is done after removing empty taxa)
+#' @param remove_empty_taxa (logical, default TRUE) : Do you want to remove taxa without sequences (this is done before removing empty samples)
+#' @param clean_samples_names : Do you want to clean samples names?
 #' @return A new \code{\link{phyloseq-class}} object
 #' @export
 clean_physeq <- function(physeq,

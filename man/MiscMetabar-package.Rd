@@ -2,10 +2,13 @@
 % Please edit documentation in R/MiscMetabar-package.R
 \docType{package}
 \name{MiscMetabar-package}
-\alias{MiscMetabar}
 \alias{MiscMetabar-package}
-\title{MiscMetabar: Miscellaneous functions for metabarcoding analysis}
+\alias{MiscMetabar}
+\title{\code{MiscMetabar} package}
 \description{
+Functions to help analyse and visualise metabarcoding data. Mainly based on
+the phyloseq and dada2 packages.
+
 Functions to help analyse and visualise metabarcoding data. Mainly based on the phyloseq and dada2 packages.
 }
 \seealso{

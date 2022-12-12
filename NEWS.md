@@ -7,6 +7,9 @@
 * Add tax_adjust argument to asv2otu function
 
 * Add some functions useful for the targets package
+
+* Add a *biplot_physeq*  function to visualize of two samples for comparison of physeq object
+
 # MiscMetabar 0.22
 
 * Add badge to set the development lifecycle of each function

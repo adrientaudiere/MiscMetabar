@@ -39,7 +39,7 @@ Suggests:
     venneuler,
     viridis,
     testthat (>= 3.0.0)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 URL: https://github.com/adrientaudiere/MiscMetabar
 BugReports: https://github.com/adrientaudiere/MiscMetabar/issues
 Roxygen: list(markdown = TRUE)

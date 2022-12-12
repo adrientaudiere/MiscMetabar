@@ -4,16 +4,27 @@
 \alias{write_phyloseq}
 \title{Save phyloseq object in the form of multiple csv tables.}
 \usage{
-write_phyloseq(physeq, path = NULL)
+write_phyloseq(physeq, path = NULL, rdata = FALSE, one_file_ASV = FALSE)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
 
-\item{path}{(defaut: NULL) : a path to the folder to save the phyloseq object}
+\item{path}{(default: NULL) : a path to the folder to save the phyloseq object}
+
+\item{one_file_ASV}{(default: FALSE) : combine all data in one file only}
+
+\item{Rdata}{(default: FALSE) : does the phyloseq object is also saved in Rdata format}
 }
 \value{
-Four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
+One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
+and if present a phy_tree in Newick format
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+}
+\examples{
+\dontrun{
+write_phyloseq(data_fungi, path = "phyloseq")
+}
+
 }

@@ -2,9 +2,7 @@
 % Please edit documentation in R/dada_phyloseq.R
 \name{lulu_phyloseq}
 \alias{lulu_phyloseq}
-\title{\href{https://github.com/adrientaudiere/lulu}{Lulu} reclustering of class \code{physeq} (forked from \url{https://github.com/tobiasgf/lulu}).
-See https://www.nature.com/articles/s41467-017-01312-x for more information on the method.
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}}
+\title{Lulu reclustering of class \code{physeq}}
 \usage{
 lulu_phyloseq(
   physeq,
@@ -42,9 +40,11 @@ value. NA value are not counted as discrepancy.
 }
 }
 \description{
-\href{https://github.com/adrientaudiere/lulu}{Lulu} reclustering of class \code{physeq} (forked from \url{https://github.com/tobiasgf/lulu}).
 See https://www.nature.com/articles/s41467-017-01312-x for more information on the method.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+}
+\details{
+The version of LULU is a fork of Adrien Taudière (\url{https://github.com/adrientaudiere/lulu}) from \url{https://github.com/tobiasgf/lulu}
 }
 \examples{
 \dontrun{
