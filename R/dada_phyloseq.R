@@ -573,7 +573,7 @@ write_phyloseq <- function(physeq, path = NULL, rdata = FALSE, one_file_ASV = FA
     dir.create(file.path(path), recursive = TRUE)
   }
   if (one_file_ASV) {
-    if (!is.null(physeq@refseq) & !is.null(physeq@otu_table) & !is.null(physeq@tax_table)) {
+    if (!is.null(physeq@refseq) && !is.null(physeq@otu_table) && !is.null(physeq@tax_table)) {
       if (!taxa_are_rows(physeq)) {
         physeq@otu_table <- t(physeq@otu_table)
       }
@@ -583,15 +583,15 @@ write_phyloseq <- function(physeq, path = NULL, rdata = FALSE, one_file_ASV = FA
           physeq@tax_table,
           as.vector(physeq@refseq)
         ),
-        paste(path, "/ASV_table.csv", sep = "")
+        paste(path, "/ASV_table_allInOne.csv", sep = "")
       )
-    } else if (!is.null(physeq@otu_table) & !is.null(physeq@tax_table)) {
+    } else if (!is.null(physeq@otu_table) && !is.null(physeq@tax_table)) {
       utils::write.csv(
         cbind(
           physeq@otu_table,
           physeq@tax_table
         ),
-        paste(path, "/ASV_table.csv", sep = "")
+        paste(path, "/ASV_table_allInOne.csv", sep = "")
       )
     }
   } else {
