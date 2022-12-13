@@ -36,6 +36,11 @@ tax_datatable(subset_taxa(
   GlobalPatterns,
   rowSums(GlobalPatterns@otu_table) > 10000
 ))
+
+#Using modality
+ tax_datatable(GlobalPatterns,
+ modality = GlobalPatterns@sam_data$SampleType
+)
 }
 \author{
 Adrien Taudière

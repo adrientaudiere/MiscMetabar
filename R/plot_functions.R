@@ -1136,6 +1136,11 @@ hill_phyloseq <-
 #'   GlobalPatterns,
 #'   rowSums(GlobalPatterns@otu_table) > 10000
 #' ))
+#' 
+#' #Using modality
+#'  tax_datatable(GlobalPatterns,
+#'  modality = GlobalPatterns@sam_data$SampleType
+#' )
 tax_datatable <- function(physeq,
                           abundance = TRUE,
                           taxonomic_level = NULL,
@@ -1156,6 +1161,7 @@ tax_datatable <- function(physeq,
       }
     }
   } else {
+    modality <- as.factor(modality)
     if (physeq@otu_table@taxa_are_rows) {
       for (mod in levels(modality)) {
         varname <- paste("nb_seq_", mod, sep = "")
@@ -1165,7 +1171,7 @@ tax_datatable <- function(physeq,
     } else {
       for (mod in levels(modality)) {
         varname <- paste("nb_seq_", mod, sep = "")
-        df[[varname]] <- colSums(physeq@otu_table[, modality == mod])
+        df[[varname]] <- colSums(physeq@otu_table[modality == mod,])
       }
       df$nb_seq_tot <- colSums(physeq@otu_table)
     }
@@ -1192,7 +1198,7 @@ tax_datatable <- function(physeq,
         )
     }
   }
-  dt
+  return(dt)
 }
 ################################################################################
 
@@ -1398,7 +1404,7 @@ biplot_physeq <- function(physeq,
   mdf$Samples <- left_name
   mdf$Samples[mdf$right_cond] <- right_name
   mdf <- mdf[mdf$Abundance > 0, ]
-  mdf <- dplyr::rename(mdf, Abundance = Abundance)
+  mdf <- dplyr::rename(mdf, Abundance = Abundance) # nolint
 
   if (log_10) {
     mdf$Ab <- log10(mdf$Abundance + 1)
@@ -1418,7 +1424,7 @@ biplot_physeq <- function(physeq,
   p <- mdf %>%
     ggplot(
       aes(
-        x = reorder(OTU, Abundance),
+        x = reorder(OTU, Abundance), # nolint # nolint
         y = Ab,
         fill = Samples,
         names = OTU,
@@ -1466,7 +1472,7 @@ biplot_physeq <- function(physeq,
 
 
   p <- p +
-    geom_text(aes(label = Abundance, color = Samples),
+    geom_text(aes(label = Abundance, color = Samples), # nolint
       size = 3,
       nudge_y = nudge_y
     )
