@@ -20,6 +20,8 @@ tax_datatable(
 \item{taxonomic_level}{(Default: NULL): a vector of selected taxonomic
 level using their column numbers (e.g. taxonomic_level = c(1:7))}
 
+\item{modality}{(Default: NULL) : A sample modality to split OTU abundancy by level of the modality}
+
 \item{...}{Other argument for the datatable function}
 }
 \value{

@@ -1123,6 +1123,7 @@ hill_phyloseq <-
 #' @param abundance (Default: TRUE): Does the number of sequences is print
 #' @param taxonomic_level (Default: NULL): a vector of selected taxonomic
 #' level using their column numbers (e.g. taxonomic_level = c(1:7))
+#' @param modality (Default: NULL) : A sample modality to split OTU abundancy by level of the modality
 #' @param ... Other argument for the datatable function
 #'
 #' @author Adrien Taudière
@@ -1138,34 +1139,60 @@ hill_phyloseq <-
 tax_datatable <- function(physeq,
                           abundance = TRUE,
                           taxonomic_level = NULL,
-                          modality = NULL, ...) {
+                          modality = NULL, 
+                          ...) {
   df <- as.data.frame(unclass(physeq@tax_table))
 
   if (!is.null(taxonomic_level)) {
     df <- df[, taxonomic_level]
   }
 
-  if (abundance) {
+  if (is.null(modality)) {
+    if (abundance) {
+      if (physeq@otu_table@taxa_are_rows) {
+        df$nb_seq <- rowSums(physeq@otu_table)
+      } else {
+        df$nb_seq <- colSums(physeq@otu_table)
+      }
+    }
+  } else {
     if (physeq@otu_table@taxa_are_rows) {
-      df$nb_seq <- rowSums(physeq@otu_table)
+      for (mod in levels(modality)) {
+        varname <- paste("nb_seq_", mod, sep = "")
+        df[[varname]] <- rowSums(physeq@otu_table[, modality == mod])
+      }
+      df$nb_seq_tot <- rowSums(physeq@otu_table)
     } else {
-      df$nb_seq <- colSums(physeq@otu_table)
+      for (mod in levels(modality)) {
+        varname <- paste("nb_seq_", mod, sep = "")
+        df[[varname]] <- colSums(physeq@otu_table[, modality == mod])
+      }
+      df$nb_seq_tot <- colSums(physeq@otu_table)
     }
   }
 
-  if (!is.null(modality)) {
-    if (physeq@otu_table@taxa_are_rows) {
-      df <- cbind(df, apply(physeq@otu_table, 2))
-    } else {}
+  if (is.null(modality)) {
+    dt <- DT::datatable(df, ...) %>% DT::formatStyle(
+      "nb_seq",
+      background = DT::styleColorBar(df$nb_seq, "steelblue"),
+      backgroundSize = "100% 90%",
+      backgroundRepeat = "no-repeat",
+      backgroundPosition = "center"
+    )
+  } else {
+    dt <- DT::datatable(df, ...)
+    for (cn in colnames(df)[grepl("nb_seq", colnames(df))]) {
+      dt <- dt %>%
+        DT::formatStyle(
+          cn,
+          background = DT::styleColorBar(df[[cn]], "steelblue"),
+          backgroundSize = "90% 90%",
+          backgroundRepeat = "no-repeat",
+          backgroundPosition = "center"
+        )
+    }
   }
-
-  DT::datatable(df, ...) %>% DT::formatStyle(
-    "nb_seq",
-    background = DT::styleColorBar(df$nb_seq, "steelblue"),
-    backgroundSize = "100% 90%",
-    backgroundRepeat = "no-repeat",
-    backgroundPosition = "center"
-  )
+  dt
 }
 ################################################################################
 
@@ -1346,7 +1373,7 @@ physeq_heat_tree <- function(physeq, taxonomic_level = NULL, ...) {
 #' @param right_fill : Fill fo the right sample.
 #' @param right_col : Color fo the right sample.
 #' @param log_10 (default : TRUE) : Does abundancy is log10 transformed ?
-#' @param nudge_y : A parameter to control the y position of abundancy values. 
+#' @param nudge_y : A parameter to control the y position of abundancy values.
 
 #' @return A plot
 #' @export
@@ -1377,7 +1404,7 @@ biplot_physeq <- function(physeq,
     mdf$Ab <- log10(mdf$Abundance + 1)
   } else {
     mdf$Ab <- mdf$Abundance
-    nudge_y <- mean(mdf$Abundance)*nudge_y
+    nudge_y <- mean(mdf$Abundance) * nudge_y
   }
 
   mdf$Ab[mdf$right_cond] <-
@@ -1438,16 +1465,16 @@ biplot_physeq <- function(physeq,
       1.1)
 
 
-    p <- p +
-      geom_text(aes(label = Abundance, color = Samples),
-        size = 3,
-        nudge_y = nudge_y
-      )
+  p <- p +
+    geom_text(aes(label = Abundance, color = Samples),
+      size = 3,
+      nudge_y = nudge_y
+    )
 
   p <- p + coord_flip() +
     theme_minimal() +
     theme(plot.title = element_text(hjust = .5), axis.ticks = element_blank()) +
     scale_fill_manual(values = c(left_fill, right_fill)) +
-    scale_color_manual(values = c(left_col, right_col), guide = "none") 
+    scale_color_manual(values = c(left_col, right_col), guide = "none")
   return(p)
 }
