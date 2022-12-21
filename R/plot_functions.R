@@ -933,6 +933,8 @@ venn_phyloseq <-
 #'  samples to take into count this OTUs in this sample. For example,
 #'  if min_nb_seq=2,each value of 2 or less in the OTU table
 #'  will not count in the venn diagramm
+#' @param taxonomic_rank (Default: Null): Name (or number) of a taxonomic rank 
+#' to count. If set to Null (the default) the number of OTUs is counted.
 #' @return A \code{\link{ggplot}}2 plot representing Venn diagramm of
 #' modalities of the argument \code{factor}
 #'
@@ -940,17 +942,25 @@ venn_phyloseq <-
 #' @author Adrien Taudière
 
 
-ggVenn_phyloseq <- function(physeq = NULL, fact = NULL, min_nb_seq = 0){
+ggVenn_phyloseq <- function(physeq = NULL, fact = NULL, min_nb_seq = 0,
+taxonomic_rank = NULL){
   res <- list()
-  if(!is.factor(d_2@sam_data[[fact]])){
-    d_2@sam_data[[fact]] <- as.factor(d_2@sam_data[[fact]])
+  if(!is.factor(physeq@sam_data[[fact]])){
+    physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
   }
-  for(f in levels(d_2@sam_data[[fact]])){
+  for(f in levels(physeq@sam_data[[fact]])){
     newphyseq <- physeq
     newDF <- newphyseq@sam_data[newphyseq@sam_data[[fact]] == f, ]
     sample_data(newphyseq) <- sample_data(newDF)
-    res[[f]] <- colnames(newphyseq@otu_table[,
-    colSums(newphyseq@otu_table)>min_nb_seq])
+    if(is.null(taxonomic_rank)){
+      res[[f]] <- colnames(newphyseq@otu_table[,
+      colSums(newphyseq@otu_table)>min_nb_seq])
+    }
+    else {
+      res[[f]] <- as.character(na.exclude(unique(newphyseq@tax_table[
+        colSums(newphyseq@otu_table)>min_nb_seq, 
+        taxonomic_rank])))
+    }
   }
   p <- ggVennDiagram::ggVennDiagram(res)
   return(p)
