@@ -1,6 +1,6 @@
 # MiscMetabar 0.23 (in development)
 
-* Adapt the function `asv2otu` to *IdClusters* change in the DECIPHER package (commit 254100922f2093cc789d018c18a26752a3cda1e3).  
+* Adapt the function `asv2otu` to *IdClusters* change in the DECIPHER package (commit 254100922f2093cc789d018c18a26752a3cda1e3). Then change the *IdClusters* function that was removed from DECIPHER to *Clusterize* function.
 
 * Better functioning of `blast_to_phyloseq` when none query sequences are founded.
 
@@ -11,6 +11,10 @@
 * Add a `biplot_physeq` function to visualize of two samples for comparison of physeq object
 
 * Add an argument *modality* in the `tax_datatable` function to split OTU abundancy by level of the sample modality
+
+* Add a function `multiple_share_bisamples` to help compare samples by pairs
+
+* Add a new function (`ggVenn_phyloseq`) for better venn diagramm but without area calculation (use `venn_phyloseq` in this case).
 
 # MiscMetabar 0.22
 

@@ -57,10 +57,11 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">asv2otu</span><span class="op">(</span></span>
 <span>  <span class="va">physeq</span>,</span>
 <span>  nproc <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"IdClusters"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"Clusterize"</span>,</span>
 <span>  id <span class="op">=</span> <span class="fl">0.97</span>,</span>
 <span>  vsearchpath <span class="op">=</span> <span class="st">"vsearch"</span>,</span>
-<span>  tax_adjust <span class="op">=</span> <span class="fl">1</span></span>
+<span>  tax_adjust <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -76,8 +77,8 @@ Set to number of cpus/processors to use for the clustering</p></dd>
 
 
 <dt>method</dt>
-<dd><p>(default IdClusters)
-Set the clustering method.</p><ul><li><p><code>IdClusters</code> use the DECIPHER::IdClusters fonction,</p></li>
+<dd><p>(default Clusterize)
+Set the clustering method.</p><ul><li><p><code>Clusterize</code> use the <code><a href="https://rdrr.io/pkg/DECIPHER/man/Clusterize.html" class="external-link">DECIPHER::Clusterize</a></code> fonction,</p></li>
 <li><p><code>vsearch</code> use the vsearch software (https://github.com/torognes/vsearch/)
 with arguments <code>-cluster_fast</code> and <code>-strand both</code></p></li>
 </ul></dd>
@@ -91,9 +92,13 @@ with arguments <code>-cluster_fast</code> and <code>-strand both</code></p></li>
 <dd><p>(default = "vsearch"): path to vsearch</p></dd>
 
 
-<dt>tax_adjust:</dt>
-<dd><p>By default tax_adjust = 1L. See the man page
+<dt>tax_adjust</dt>
+<dd><p>(By default tax_adjust = 1L): See the man page
 of <code><a href="https://mikemc.github.io/speedyseq/reference/merge_taxa_vec.html" class="external-link">speedyseq::merge_taxa_vec</a></code>.</p></dd>
+
+
+<dt>...</dt>
+<dd><p>Others arguments path to <code><a href="https://rdrr.io/pkg/DECIPHER/man/Clusterize.html" class="external-link">DECIPHER::Clusterize</a></code></p></dd>
 
 </dl></div>
     <div class="section level2">

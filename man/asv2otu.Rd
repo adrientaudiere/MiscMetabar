@@ -8,10 +8,11 @@
 asv2otu(
   physeq,
   nproc = 1,
-  method = "IdClusters",
+  method = "Clusterize",
   id = 0.97,
   vsearchpath = "vsearch",
-  tax_adjust = 1
+  tax_adjust = 1,
+  ...
 )
 }
 \arguments{
@@ -20,10 +21,10 @@ asv2otu(
 \item{nproc}{(default 1)
 Set to number of cpus/processors to use for the clustering}
 
-\item{method}{(default IdClusters)
+\item{method}{(default Clusterize)
 Set the clustering method.
 \itemize{
-\item \code{IdClusters} use the DECIPHER::IdClusters fonction,
+\item \code{Clusterize} use the \code{DECIPHER::Clusterize} fonction,
 \item \code{vsearch} use the vsearch software (https://github.com/torognes/vsearch/)
 with arguments \code{-cluster_fast} and \verb{-strand both}
 }}
@@ -32,8 +33,10 @@ with arguments \code{-cluster_fast} and \verb{-strand both}
 
 \item{vsearchpath}{(default = "vsearch"): path to vsearch}
 
-\item{tax_adjust:}{By default tax_adjust = 1L. See the man page
+\item{tax_adjust}{(By default tax_adjust = 1L): See the man page
 of \code{speedyseq::merge_taxa_vec}.}
+
+\item{...}{Others arguments path to \code{DECIPHER::Clusterize}}
 }
 \value{
 A new object of class \code{physeq}

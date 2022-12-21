@@ -14,7 +14,7 @@ if (getRversion() >= "2.15.1") utils::globalVariables(c("."))
 #' @export
 
 add_dna_to_phyloseq <- function(physeq) {
-  if (!methods::validObject(physeq) || class(physeq) != "phyloseq") {
+  if (!methods::validObject(physeq) || !inherits(physeq, "phyloseq")) {
     stop("The physeq argument is not a valid phyloseq object.")
   } else {
     dna <- Biostrings::DNAStringSet(phyloseq::taxa_names(physeq))
@@ -253,15 +253,16 @@ track_wkflow <- function(list_of_objects, obj_names = NULL, clean_physeq = FALSE
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param nproc (default 1)
 #'   Set to number of cpus/processors to use for the clustering
-#' @param method (default IdClusters)
+#' @param method (default Clusterize)
 #'   Set the clustering method.
-#'   - `IdClusters` use the DECIPHER::IdClusters fonction,
+#'   - `Clusterize` use the `DECIPHER::Clusterize` fonction,
 #'   - `vsearch` use the vsearch software (https://github.com/torognes/vsearch/)
 #'     with arguments `-cluster_fast` and `-strand both`
 #' @param vsearchpath (default = "vsearch"): path to vsearch
 #' @param id (default=0.97): level of identity to cluster
-#' @param  tax_adjust: By default tax_adjust = 1L. See the man page
+#' @param tax_adjust (By default tax_adjust = 1L): See the man page
 #'   of `speedyseq::merge_taxa_vec`.
+#' @param ... Others arguments path to `DECIPHER::Clusterize`
 #' @details This function use the `speedyseq::merge_taxa_vec` function to
 #'   merge taxa into clusters. By default tax_adjust = 1L. See the man page
 #'   of `speedyseq::merge_taxa_vec`.
@@ -278,18 +279,21 @@ track_wkflow <- function(list_of_objects, obj_names = NULL, clean_physeq = FALSE
 
 asv2otu <- function(physeq,
                     nproc = 1,
-                    method = "IdClusters",
+                    method = "Clusterize",
                     id = 0.97,
                     vsearchpath = "vsearch",
-                    tax_adjust = 1) {
+                    tax_adjust = 1,
+                    ...) {
   dna <- Biostrings::DNAStringSet(physeq@refseq)
 
-  if (method == "IdClusters") {
+  if (method == "Clusterize") {
     ## Find clusters of ASVs to form the new OTUs
-    clusters <- DECIPHER::IdClusters(dna,
+    clusters <- DECIPHER::Clusterize(
+      dna,
       cutoff = 1 - id,
       # e.g. `cutoff = 0.03` for a 97% OTU
-      processors = nproc
+      processors = nproc,
+      ...
     )
 
     new_physeq <-
@@ -556,7 +560,7 @@ blast_to_phyloseq <- function(physeq,
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param path (default: NULL) : a path to the folder to save the phyloseq object
-#' @param Rdata (default: FALSE) : does the phyloseq object is also saved in Rdata format
+#' @param rdata (default: FALSE) : does the phyloseq object is also saved in Rdata format
 #' @param one_file_ASV (default: FALSE) : combine all data in one file only
 #'
 #' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)

@@ -919,6 +919,47 @@ venn_phyloseq <-
   }
 ################################################################################
 
+
+
+################################################################################
+#' Venn diagram of \code{\link{phyloseq-class}} object using
+#' `ggVennDiagram::ggVennDiagram` function
+#' @description
+#' `r lifecycle::badge("maturing")`
+#' @param physeq (required): a \code{\link{phyloseq-class}} object.
+#' @param fact (required): Name of the factor to cluster samples by modalities.
+#' Need to be in \code{physeq@sam_data}.
+#' @param min_nb_seq (Default: 0)): minimum number of sequences by OTUs by
+#'  samples to take into count this OTUs in this sample. For example,
+#'  if min_nb_seq=2,each value of 2 or less in the OTU table
+#'  will not count in the venn diagramm
+#' @return A \code{\link{ggplot}}2 plot representing Venn diagramm of
+#' modalities of the argument \code{factor}
+#'
+#' @export
+#' @author Adrien Taudière
+
+
+ggVenn_phyloseq <- function(physeq = NULL, fact = NULL, min_nb_seq = 0){
+  res <- list()
+  if(!is.factor(d_2@sam_data[[fact]])){
+    d_2@sam_data[[fact]] <- as.factor(d_2@sam_data[[fact]])
+  }
+  for(f in levels(d_2@sam_data[[fact]])){
+    newphyseq <- physeq
+    newDF <- newphyseq@sam_data[newphyseq@sam_data[[fact]] == f, ]
+    sample_data(newphyseq) <- sample_data(newDF)
+    res[[f]] <- colnames(newphyseq@otu_table[,
+    colSums(newphyseq@otu_table)>min_nb_seq])
+  }
+  p <- ggVennDiagram::ggVennDiagram(res)
+  return(p)
+}
+################################################################################
+
+
+
+
 ################################################################################
 #' Multiple plot function
 #' @description
@@ -934,7 +975,8 @@ venn_phyloseq <-
 #' @param ... : list of ggplot objects
 #' @param plotlist : list of ggplot objects
 #' @param cols : number of columns
-#' @param layout : A matrix specifying the layout. If present, 'cols' is ignored.
+#' @param layout : A matrix specifying the layout. 
+#' If present, 'cols' is ignored.
 
 multiplot <-
   function(...,
@@ -1047,7 +1089,8 @@ hill_phyloseq <-
 
       p_0 <- p_0 +
         geom_label(
-          data = p_0$data %>% group_by(!!var) %>%
+          data = p_0$data %>%
+          group_by(!!var) %>%
             summarise(max_Hill = max(Hill_0)),
           aes(x = max_Hill + 1),
           label = letters[match(names(letters), levels(factor(as.matrix(
@@ -1069,7 +1112,8 @@ hill_phyloseq <-
 
       p_1 <- p_1 +
         geom_label(
-          data = p_1$data %>% group_by(!!var) %>%
+          data = p_1$data %>%
+          group_by(!!var) %>%
             summarise(max_Hill = max(Hill_1)),
           aes(x = max_Hill + 1),
           label = letters[match(names(letters), levels(factor(as.matrix(
@@ -1091,7 +1135,8 @@ hill_phyloseq <-
 
       p_2 <- p_2 +
         geom_label(
-          data = p_2$data %>% group_by(!!var) %>%
+          data = p_2$data %>%
+          group_by(!!var) %>%
             summarise(max_Hill = max(Hill_2)),
           aes(x = max_Hill + 0.5),
           label = letters[match(names(letters), levels(factor(as.matrix(
@@ -1113,93 +1158,6 @@ hill_phyloseq <-
 
     return(res)
   }
-################################################################################
-
-################################################################################
-#' Make a datatable with the taxonomy of a \code{\link{phyloseq-class}} object
-#' @description
-#' `r lifecycle::badge("maturing")`
-#' @param physeq (required): A \code{\link{phyloseq-class}} object
-#' @param abundance (Default: TRUE): Does the number of sequences is print
-#' @param taxonomic_level (Default: NULL): a vector of selected taxonomic
-#' level using their column numbers (e.g. taxonomic_level = c(1:7))
-#' @param modality (Default: NULL) : A sample modality to split OTU abundancy by level of the modality
-#' @param ... Other argument for the datatable function
-#'
-#' @author Adrien Taudière
-#' @return A datatable
-#' @export
-#'
-#' @examples
-#' data("GlobalPatterns")
-#' tax_datatable(subset_taxa(
-#'   GlobalPatterns,
-#'   rowSums(GlobalPatterns@otu_table) > 10000
-#' ))
-#' 
-#' #Using modality
-#'  tax_datatable(GlobalPatterns,
-#'  modality = GlobalPatterns@sam_data$SampleType
-#' )
-tax_datatable <- function(physeq,
-                          abundance = TRUE,
-                          taxonomic_level = NULL,
-                          modality = NULL, 
-                          ...) {
-  df <- as.data.frame(unclass(physeq@tax_table))
-
-  if (!is.null(taxonomic_level)) {
-    df <- df[, taxonomic_level]
-  }
-
-  if (is.null(modality)) {
-    if (abundance) {
-      if (physeq@otu_table@taxa_are_rows) {
-        df$nb_seq <- rowSums(physeq@otu_table)
-      } else {
-        df$nb_seq <- colSums(physeq@otu_table)
-      }
-    }
-  } else {
-    modality <- as.factor(modality)
-    if (physeq@otu_table@taxa_are_rows) {
-      for (mod in levels(modality)) {
-        varname <- paste("nb_seq_", mod, sep = "")
-        df[[varname]] <- rowSums(physeq@otu_table[, modality == mod])
-      }
-      df$nb_seq_tot <- rowSums(physeq@otu_table)
-    } else {
-      for (mod in levels(modality)) {
-        varname <- paste("nb_seq_", mod, sep = "")
-        df[[varname]] <- colSums(physeq@otu_table[modality == mod,])
-      }
-      df$nb_seq_tot <- colSums(physeq@otu_table)
-    }
-  }
-
-  if (is.null(modality)) {
-    dt <- DT::datatable(df, ...) %>% DT::formatStyle(
-      "nb_seq",
-      background = DT::styleColorBar(df$nb_seq, "steelblue"),
-      backgroundSize = "100% 90%",
-      backgroundRepeat = "no-repeat",
-      backgroundPosition = "center"
-    )
-  } else {
-    dt <- DT::datatable(df, ...)
-    for (cn in colnames(df)[grepl("nb_seq", colnames(df))]) {
-      dt <- dt %>%
-        DT::formatStyle(
-          cn,
-          background = DT::styleColorBar(df[[cn]], "steelblue"),
-          backgroundSize = "90% 90%",
-          backgroundRepeat = "no-repeat",
-          backgroundPosition = "center"
-        )
-    }
-  }
-  return(dt)
-}
 ################################################################################
 
 ################################################################################

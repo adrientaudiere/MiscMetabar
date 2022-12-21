@@ -11,9 +11,9 @@ write_phyloseq(physeq, path = NULL, rdata = FALSE, one_file_ASV = FALSE)
 
 \item{path}{(default: NULL) : a path to the folder to save the phyloseq object}
 
-\item{one_file_ASV}{(default: FALSE) : combine all data in one file only}
+\item{rdata}{(default: FALSE) : does the phyloseq object is also saved in Rdata format}
 
-\item{Rdata}{(default: FALSE) : does the phyloseq object is also saved in Rdata format}
+\item{one_file_ASV}{(default: FALSE) : combine all data in one file only}
 }
 \value{
 One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)

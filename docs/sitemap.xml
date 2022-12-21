@@ -58,6 +58,9 @@
     <loc>/reference/dist_pos_control.html</loc>
   </url>
   <url>
+    <loc>/reference/ggVenn_phyloseq.html</loc>
+  </url>
+  <url>
     <loc>/reference/hill_phyloseq.html</loc>
   </url>
   <url>
@@ -74,6 +77,9 @@
   </url>
   <url>
     <loc>/reference/merge_krona.html</loc>
+  </url>
+  <url>
+    <loc>/reference/multiple_share_bisamples.html</loc>
   </url>
   <url>
     <loc>/reference/multiplot.html</loc>

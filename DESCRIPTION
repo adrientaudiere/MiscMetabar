@@ -29,6 +29,7 @@ Suggests:
     edgeR,
     gridExtra,
     here,
+    ggVennDiagram,
     methods,
     multcompView,
     networkD3,
