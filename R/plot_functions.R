@@ -1339,7 +1339,10 @@ physeq_heat_tree <- function(physeq, taxonomic_level = NULL, ...) {
 #' `r lifecycle::badge("maturing")`
 #' @param physeq (required): A \code{\link{phyloseq-class}}
 #' object
-#' @param right_cond : A condition to select the right sample.
+#' @param merge_sample_by (default : NULL) : a boolean vector to determine
+#' wich samples to merge for a total of 2 samples at the end.
+#' @param left_cond (default : c(FALSE, TRUE)) : A condition to select the left sample in the form
+#' of a two-size vector of boolean (e.g. c(TRUE, FALSE)).
 #' @param left_name : Name fo the left sample.
 #' @param right_name : Name fo the rigth sample.
 #' @param left_fill : Fill fo the left sample.
@@ -1354,7 +1357,8 @@ physeq_heat_tree <- function(physeq, taxonomic_level = NULL, ...) {
 #' @author Adrien Taudière
 #'
 biplot_physeq <- function(physeq,
-                          right_cond = c(FALSE, TRUE),
+                          merge_sample_by = NULL,
+                          left_cond = c(FALSE, TRUE),
                           left_name = NA,
                           right_name = NA,
                           left_fill = "#4B3E1E",
@@ -1363,14 +1367,21 @@ biplot_physeq <- function(physeq,
                           right_col = "#1d2949",
                           log_10 = TRUE,
                           nudge_y = 0.3) {
-  if (nsamples(physeq) != 2) {
-    stop("biplot_physeq needs only two samples in the physeq object")
+
+  if(!is.null(merge_sample_by)){
+    physeq <- merge_samples(physeq, merge_sample_by)
+    physeq <- clean_physeq(physeq)
   }
 
-  physeq@sam_data$right_cond <- right_cond
+  if (nsamples(physeq) != 2) {
+    stop("biplot_physeq needs only two samples in the 
+    physeq object or a valid merge_sample_by parameter")
+  }
+
+  physeq@sam_data$left_cond <- left_cond
   mdf <- phyloseq::psmelt(physeq)
   mdf$Samples <- left_name
-  mdf$Samples[mdf$right_cond] <- right_name
+  mdf$Samples[mdf$left_cond] <- right_name
   mdf <- mdf[mdf$Abundance > 0, ]
   mdf <- dplyr::rename(mdf, Abundance = Abundance) # nolint
 
@@ -1381,13 +1392,13 @@ biplot_physeq <- function(physeq,
     nudge_y <- mean(mdf$Abundance) * nudge_y
   }
 
-  mdf$Ab[mdf$right_cond] <-
-    -mdf$Ab[mdf$right_cond]
+  mdf$Ab[mdf$left_cond] <-
+    -mdf$Ab[mdf$left_cond]
   mdf$Proportion <- paste0(round(100 * mdf$Abundance /
-    sum(mdf$Abundance[!mdf$right_cond]), 2), "%")
-  mdf$Percent[mdf$right_cond] <-
-    paste0(round(100 * mdf$Abundance[mdf$right_cond] /
-      sum(mdf$Abundance[mdf$right_cond]), 2), "%")
+    sum(mdf$Abundance[!mdf$left_cond]), 2), "%")
+  mdf$Percent[mdf$left_cond] <-
+    paste0(round(100 * mdf$Abundance[mdf$left_cond] /
+      sum(mdf$Abundance[mdf$left_cond]), 2), "%")
 
   p <- mdf %>%
     ggplot(
