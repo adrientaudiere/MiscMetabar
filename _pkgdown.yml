@@ -1,0 +1,10 @@
+url: https://adrientaudiere.github.io/MiscMetabar/
+template:
+  bootstrap: 5
+  bslib:
+    bg: "#faefd1"
+    fg: "#003f5f"
+    primary: "#b96821"
+    secondary: "#c8a734"
+navbar:
+  bg: secondary

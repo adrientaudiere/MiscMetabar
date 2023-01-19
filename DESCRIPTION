@@ -41,7 +41,8 @@ Suggests:
     viridis,
     testthat (>= 3.0.0)
 RoxygenNote: 7.2.3
-URL: https://github.com/adrientaudiere/MiscMetabar
+URL: https://github.com/adrientaudiere/MiscMetabar,
+    https://adrientaudiere.github.io/MiscMetabar/
 BugReports: https://github.com/adrientaudiere/MiscMetabar/issues
 Roxygen: list(markdown = TRUE)
 Imports: 
