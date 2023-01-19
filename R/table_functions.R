@@ -88,14 +88,18 @@ tax_datatable <- function(physeq,
 ################################################################################
 
 ################################################################################
-#' Compare samples in pairs using diversity and .
+#' Compare samples in pairs using diversity and number of ASV including
+#' shared ASV.
 #' @description
 #' `r lifecycle::badge("maturing")`
 #' @param physeq (required): A \code{\link{phyloseq-class}} object.
 #' For the moment refseq slot need to be not Null.
-#' @param modality (required): the name of the column in the `sam_data` slot of the physeq object to split samples by pairs
-#' @param bifactor (required): a factor (present in the `sam_data` slot of the physeq object) presenting the pair names
-#' @param nb_min_seq (default: 0): minimum number of sequences per sample to count the ASV/OTU
+#' @param modality : the name of the column in the `sam_data`
+#' slot of the physeq object to split samples by pairs
+#' @param bifactor (required): a factor (present in the `sam_data` slot of
+#' the physeq object) presenting the pair names
+#' @param nb_min_seq (default: 0): minimum number of sequences per sample
+#' to count the ASV/OTU
 #' @param vegIndex (default: "shannon"): index for the `vegan::diversity` function
 #' @return A tibble
 #' @export
@@ -114,15 +118,21 @@ multiple_share_bisamples <- function(physeq = NULL,
   lev2 <- levels(physeq@sam_data[[bifactor]])[2]
 
   res <- list()
-  physeq@sam_data[[modality]] <- as.factor(physeq@sam_data[[modality]])
+  if (!is.null(modality)){
+    physeq@sam_data[[modality]] <- as.factor(physeq@sam_data[[modality]])
+  } else {
+    physeq@sam_data[[modality]] <- rep("mod", nsamples(physeq))
+  }
 
   for (i in levels(physeq@sam_data[[modality]])) {
     newphyseq <- physeq
-    newDF <- newphyseq@sam_data[newphyseq@sam_data[[modality]] == i, ]
-    sample_data(newphyseq) <- sample_data(newDF)
-
+    if (!is.null(modality)){
+      newDF <- newphyseq@sam_data[newphyseq@sam_data[[modality]] == i, ]
+      sample_data(newphyseq) <- sample_data(newDF)
+    }   
     if (nsamples(newphyseq) != 2) {
       res[[i]] <- c(NA, NA, NA, NA, NA)
+      warning("At least one case do not contain 2 samples, so NA were introduced.")
     } else {
       cond1 <- newphyseq@sam_data[[bifactor]] == lev1
       cond2 <- newphyseq@sam_data[[bifactor]] == lev2

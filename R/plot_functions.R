@@ -1351,6 +1351,10 @@ physeq_heat_tree <- function(physeq, taxonomic_level = NULL, ...) {
 #' @param right_col : Color fo the right sample.
 #' @param log_10 (default : TRUE) : Does abundancy is log10 transformed ?
 #' @param nudge_y : A parameter to control the y position of abundancy values.
+#' @param geomLabel (default FALSE) : if true use the `geom_label` function
+#' instead of `geom_text` to indicate the numbers of sequences
+#' @param text_size (default : 3): default size for the number of sequences
+#' @param ... : other arguments for the ggplot function
 
 #' @return A plot
 #' @export
@@ -1366,10 +1370,13 @@ biplot_physeq <- function(physeq,
                           right_fill = "#1d2949",
                           right_col = "#1d2949",
                           log_10 = TRUE,
-                          nudge_y = 0.3) {
+                          nudge_y = 0.3,
+                          geomLabel = FALSE,
+                          text_size = 3,
+                          ...) {
 
   if(!is.null(merge_sample_by)){
-    physeq <- merge_samples(physeq, merge_sample_by)
+    physeq <- merge_samples2(physeq, merge_sample_by)
     physeq <- clean_physeq(physeq)
   }
 
@@ -1412,7 +1419,8 @@ biplot_physeq <- function(physeq,
         Family = Family,
         Genus = Genus,
         Species = Species
-      )
+      ),
+      ...
     ) +
     geom_bar(stat = "identity", width = .6) +
     annotate(
@@ -1450,11 +1458,19 @@ biplot_physeq <- function(physeq,
       1.1)
 
 
-  p <- p +
-    geom_text(aes(label = Abundance, color = Samples), # nolint
-      size = 3,
+  if(geomLabel) {
+    p <- p +
+    geom_label(aes(label = Abundance, color = Samples, fill = Samples, alpha = 0.5), # nolint
+      size = text_size,
       nudge_y = nudge_y
     )
+  } else {
+    p <- p +
+    geom_text(aes(label = Abundance, color = Samples), # nolint
+      size = text_size,
+      nudge_y = nudge_y
+    )
+  }
 
   p <- p + coord_flip() +
     theme_minimal() +
