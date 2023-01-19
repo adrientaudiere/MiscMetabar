@@ -46,5 +46,7 @@ URL: https://github.com/adrientaudiere/MiscMetabar,
 BugReports: https://github.com/adrientaudiere/MiscMetabar/issues
 Roxygen: list(markdown = TRUE)
 Imports: 
-    lifecycle
+    lifecycle,
+    speedyseq
+Remotes: github::mikemc/speedyseq
 Config/testthat/edition: 3
