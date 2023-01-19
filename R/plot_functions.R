@@ -1376,7 +1376,7 @@ biplot_physeq <- function(physeq,
                           ...) {
 
   if(!is.null(merge_sample_by)){
-    physeq <- merge_samples2(physeq, merge_sample_by)
+    physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
     physeq <- clean_physeq(physeq)
   }
 
