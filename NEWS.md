@@ -16,6 +16,8 @@
 
 * Add a new function (`ggVenn_phyloseq`) for better venn diagramm but without area calculation (use `venn_phyloseq` in this case).
 
+* Add two functions helpful for beta-diversity analysis (`adonis_phyloseq` and `physeq_graph_test`)
+
 # MiscMetabar 0.22
 
 * Add badge to set the development lifecycle of each function
