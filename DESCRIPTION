@@ -8,7 +8,6 @@ Description: Functions to help analyse and visualise metabarcoding data. Mainly 
 License: GPL
 Encoding: UTF-8
 LazyData: true
-Remotes: adrientaudiere/lulu
 Depends:
     R (>= 3.5.0),
     ggplot2,
@@ -48,5 +47,7 @@ Roxygen: list(markdown = TRUE)
 Imports: 
     lifecycle,
     speedyseq
-Remotes: github::mikemc/speedyseq
+Remotes: 
+    github::mikemc/speedyseq,
+    github::adrientaudiere/lulu
 Config/testthat/edition: 3
