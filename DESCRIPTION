@@ -5,7 +5,7 @@ Version: 0.23
 Author: Adrien Taudière <adrien.taudiere@zaclys.net>
 Maintainer: Adrien Taudière <adrien.taudiere@zaclys.net>
 Description: Functions to help analyse and visualise metabarcoding data. Mainly based on the phyloseq and dada2 packages.
-License: GPL
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Depends:
