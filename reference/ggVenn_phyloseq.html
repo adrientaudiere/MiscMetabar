@@ -54,7 +54,12 @@ ggVennDiagram::ggVennDiagram function — ggVenn_phyloseq"><meta property="og:de
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ggVenn_phyloseq</span><span class="op">(</span>physeq <span class="op">=</span> <span class="cn">NULL</span>, fact <span class="op">=</span> <span class="cn">NULL</span>, min_nb_seq <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ggVenn_phyloseq</span><span class="op">(</span></span>
+<span>  physeq <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  fact <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  min_nb_seq <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  taxonomic_rank <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -73,6 +78,11 @@ Need to be in <code>physeq@sam_data</code>.</p></dd>
 samples to take into count this OTUs in this sample. For example,
 if min_nb_seq=2,each value of 2 or less in the OTU table
 will not count in the venn diagramm</p></dd>
+
+
+<dt>taxonomic_rank</dt>
+<dd><p>(Default: Null): Name (or number) of a taxonomic rank
+to count. If set to Null (the default) the number of OTUs is counted.</p></dd>
 
 </dl></div>
     <div class="section level2">
