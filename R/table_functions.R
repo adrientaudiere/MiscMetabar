@@ -102,6 +102,7 @@ tax_datatable <- function(physeq,
 #' to count the ASV/OTU
 #' @param vegIndex (default: "shannon"): index for the `vegan::diversity` function
 #' @return A tibble
+#' @importFrom rlang .data
 #' @export
 multiple_share_bisamples <- function(physeq = NULL,
                                      modality = NULL,
@@ -156,14 +157,14 @@ multiple_share_bisamples <- function(physeq = NULL,
 
   res_df <- as_tibble(res_df)
   res_df <- res_df %>%
-    mutate(percent_shared_lv1 = round(100 * V3 /
-      V1, 2)) %>%
-    mutate(percent_shared_lv2 = round(100 * V3 /
-      V2, 2)) %>%
-    mutate(ratio_nb_lv1_lv2 = round(V1 /
-      V2, 3)) %>%
-    mutate(ratio_div_lv1_lv2 = round(V4 /
-      V5, 3))
+    mutate(percent_shared_lv1 = round(100 * .data$V3 /
+      .data$V1, 2)) %>%
+    mutate(percent_shared_lv2 = round(100 * .data$V3 /
+      .data$V2, 2)) %>%
+    mutate(ratio_nb_lv1_lv2 = round(.data$V1 /
+      .data$V2, 3)) %>%
+    mutate(ratio_div_lv1_lv2 = round(.data$V4 /
+      .data$V5, 3))
 
   colnames(res_df) <- c(
     paste0("nb_", lev1),
