@@ -1390,7 +1390,7 @@ biplot_physeq <- function(physeq,
   mdf$Samples <- left_name
   mdf$Samples[mdf$left_cond] <- right_name
   mdf <- mdf[mdf$Abundance > 0, ]
-  mdf <- dplyr::rename(mdf, Abundance = Abundance) # nolint
+  mdf <- dplyr::rename(mdf, Abundance = Abundance) 
 
   if (log_10) {
     mdf$Ab <- log10(mdf$Abundance + 1)
@@ -1410,8 +1410,8 @@ biplot_physeq <- function(physeq,
   p <- mdf %>%
     ggplot(
       aes(
-        x = reorder(OTU, Abundance), # nolint # nolint
-        y = Ab,
+        x = reorder(OTU, Abundance),  
+        y = Ab, 
         fill = Samples,
         names = OTU,
         Ab = Abundance,
@@ -1460,13 +1460,13 @@ biplot_physeq <- function(physeq,
 
   if(geomLabel) {
     p <- p +
-    geom_label(aes(label = Abundance, color = Samples, fill = Samples, alpha = 0.5), # nolint
+    geom_label(aes(label = Abundance, color = Samples, fill = Samples, alpha = 0.5), 
       size = text_size,
       nudge_y = nudge_y
     )
   } else {
     p <- p +
-    geom_text(aes(label = Abundance, color = Samples), # nolint
+    geom_text(aes(label = Abundance, color = Samples), 
       size = text_size,
       nudge_y = nudge_y
     )

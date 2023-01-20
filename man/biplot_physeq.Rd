@@ -6,7 +6,8 @@
 \usage{
 biplot_physeq(
   physeq,
-  right_cond = c(FALSE, TRUE),
+  merge_sample_by = NULL,
+  left_cond = c(FALSE, TRUE),
   left_name = NA,
   right_name = NA,
   left_fill = "#4B3E1E",
@@ -14,14 +15,21 @@ biplot_physeq(
   right_fill = "#1d2949",
   right_col = "#1d2949",
   log_10 = TRUE,
-  nudge_y = 0.3
+  nudge_y = 0.3,
+  geomLabel = FALSE,
+  text_size = 3,
+  ...
 )
 }
 \arguments{
 \item{physeq}{(required): A \code{\link{phyloseq-class}}
 object}
 
-\item{right_cond}{: A condition to select the right sample.}
+\item{merge_sample_by}{(default : NULL) : a boolean vector to determine
+wich samples to merge for a total of 2 samples at the end.}
+
+\item{left_cond}{(default : c(FALSE, TRUE)) : A condition to select the left sample in the form
+of a two-size vector of boolean (e.g. c(TRUE, FALSE)).}
 
 \item{left_name}{: Name fo the left sample.}
 
@@ -38,6 +46,13 @@ object}
 \item{log_10}{(default : TRUE) : Does abundancy is log10 transformed ?}
 
 \item{nudge_y}{: A parameter to control the y position of abundancy values.}
+
+\item{geomLabel}{(default FALSE) : if true use the \code{geom_label} function
+instead of \code{geom_text} to indicate the numbers of sequences}
+
+\item{text_size}{(default : 3): default size for the number of sequences}
+
+\item{...}{: other arguments for the ggplot function}
 }
 \value{
 A plot

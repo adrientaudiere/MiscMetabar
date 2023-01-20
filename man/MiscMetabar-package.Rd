@@ -15,6 +15,7 @@ Functions to help analyse and visualise metabarcoding data. Mainly based on the 
 Useful links:
 \itemize{
   \item \url{https://github.com/adrientaudiere/MiscMetabar}
+  \item \url{https://adrientaudiere.github.io/MiscMetabar/}
   \item Report bugs at \url{https://github.com/adrientaudiere/MiscMetabar/issues}
 }
 

@@ -2,7 +2,8 @@
 % Please edit documentation in R/table_functions.R
 \name{multiple_share_bisamples}
 \alias{multiple_share_bisamples}
-\title{Compare samples in pairs using diversity and .}
+\title{Compare samples in pairs using diversity and number of ASV including
+shared ASV.}
 \usage{
 multiple_share_bisamples(
   physeq = NULL,
@@ -16,11 +17,14 @@ multiple_share_bisamples(
 \item{physeq}{(required): A \code{\link{phyloseq-class}} object.
 For the moment refseq slot need to be not Null.}
 
-\item{modality}{(required): the name of the column in the \code{sam_data} slot of the physeq object to split samples by pairs}
+\item{modality}{: the name of the column in the \code{sam_data}
+slot of the physeq object to split samples by pairs}
 
-\item{bifactor}{(required): a factor (present in the \code{sam_data} slot of the physeq object) presenting the pair names}
+\item{bifactor}{(required): a factor (present in the \code{sam_data} slot of
+the physeq object) presenting the pair names}
 
-\item{nb_min_seq}{(default: 0): minimum number of sequences per sample to count the ASV/OTU}
+\item{nb_min_seq}{(default: 0): minimum number of sequences per sample
+to count the ASV/OTU}
 
 \item{vegIndex}{(default: "shannon"): index for the \code{vegan::diversity} function}
 }

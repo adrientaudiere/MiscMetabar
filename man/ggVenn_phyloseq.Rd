@@ -5,7 +5,12 @@
 \title{Venn diagram of \code{\link{phyloseq-class}} object using
 \code{ggVennDiagram::ggVennDiagram} function}
 \usage{
-ggVenn_phyloseq(physeq = NULL, fact = NULL, min_nb_seq = 0)
+ggVenn_phyloseq(
+  physeq = NULL,
+  fact = NULL,
+  min_nb_seq = 0,
+  taxonomic_rank = NULL
+)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
@@ -17,6 +22,9 @@ Need to be in \code{physeq@sam_data}.}
 samples to take into count this OTUs in this sample. For example,
 if min_nb_seq=2,each value of 2 or less in the OTU table
 will not count in the venn diagramm}
+
+\item{taxonomic_rank}{(Default: Null): Name (or number) of a taxonomic rank
+to count. If set to Null (the default) the number of OTUs is counted.}
 }
 \value{
 A \code{\link{ggplot}}2 plot representing Venn diagramm of
