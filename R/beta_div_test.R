@@ -8,7 +8,7 @@
 #' Need to be in \code{physeq@sam_data}. This should be a factor.
 #' with two or more levels.
 #' @param merge_sample_by (default : NULL) : a vector to determine
-#' which samples to merge using the `\code{\link[speedyseq]{merge_samples2}}.
+#' which samples to merge using the \code{\link[speedyseq]{merge_samples2}} function.
 #' Need to be in \code{physeq@sam_data}
 #' @param  nperm (default = 999): The number of permutations to perform.
 #' @param return_plot (default = TRUE) : do we return only the result
@@ -62,13 +62,13 @@ physeq_graph_test <- function(physeq,
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param formula
 #' @param merge_sample_by (default : NULL) : a vector to determine
-#' which samples to merge using the `\code{\link[speedyseq]{merge_samples2}}.
-#' Need to be in \code{physeq@sam_data}
+#' which samples to merge using the \code{\link[speedyseq]{merge_samples2}}
+#' function. Need to be in \code{physeq@sam_data}
 #' @return
 #' @export
 #' @author Adrien Taudière
 
-adonis_phyloseq <- function(physeq, formula, merge_sample_by = NUL){
+adonis_phyloseq <- function(physeq, formula, merge_sample_by = NULL){
   if(!is.null(merge_sample_by)) {
     physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
     physeq <- clean_physeq(physeq)
