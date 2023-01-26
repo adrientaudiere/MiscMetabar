@@ -4,7 +4,7 @@
 \alias{adonis_phyloseq}
 \title{Permanova on a phyloseq object}
 \usage{
-adonis_phyloseq(physeq, formula, merge_sample_by = NUL)
+adonis_phyloseq(physeq, formula, merge_sample_by = NULL)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
