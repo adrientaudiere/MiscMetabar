@@ -926,6 +926,9 @@ venn_phyloseq <-
 #' `ggVennDiagram::ggVennDiagram` function
 #' @description
 #' `r lifecycle::badge("maturing")`
+#' 
+#' Note that you can use ggplot2 function to customize the plot
+#' par ex. `+ scale_fill_distiller(palette = "BuPu", direction = 1)`
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param fact (required): Name of the factor to cluster samples by modalities.
 #' Need to be in \code{physeq@sam_data}.
