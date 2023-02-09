@@ -938,6 +938,8 @@ venn_phyloseq <-
 #'  will not count in the venn diagramm
 #' @param taxonomic_rank (Default: Null): Name (or number) of a taxonomic rank 
 #' to count. If set to Null (the default) the number of OTUs is counted.
+#' @param ... other arguments for the `ggVennDiagram::ggVennDiagram` function
+#' for ex. `category.names`.
 #' @return A \code{\link{ggplot}}2 plot representing Venn diagramm of
 #' modalities of the argument \code{factor}
 #'
@@ -946,7 +948,7 @@ venn_phyloseq <-
 
 
 ggVenn_phyloseq <- function(physeq = NULL, fact = NULL, min_nb_seq = 0,
-taxonomic_rank = NULL){
+taxonomic_rank = NULL, ...){
   res <- list()
   if(!is.factor(physeq@sam_data[[fact]])){
     physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
@@ -965,7 +967,7 @@ taxonomic_rank = NULL){
         taxonomic_rank])))
     }
   }
-  p <- ggVennDiagram::ggVennDiagram(res)
+  p <- ggVennDiagram::ggVennDiagram(res, ...)
   return(p)
 }
 ################################################################################
