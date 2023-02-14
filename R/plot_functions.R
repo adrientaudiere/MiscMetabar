@@ -1408,7 +1408,7 @@ biplot_physeq <- function(physeq,
     -mdf$Ab[mdf$left_cond]
   mdf$Proportion <- paste0(round(100 * mdf$Abundance /
     sum(mdf$Abundance[!mdf$left_cond]), 2), "%")
-  mdf$Percent[mdf$left_cond] <-
+  mdf$Proportion[mdf$left_cond] <-
     paste0(round(100 * mdf$Abundance[mdf$left_cond] /
       sum(mdf$Abundance[mdf$left_cond]), 2), "%")
 
