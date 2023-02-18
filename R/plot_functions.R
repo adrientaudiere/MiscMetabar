@@ -105,6 +105,10 @@ accu_plot <-
       stop("physeq must be a phyloseq object")
     }
 
+    if(!taxa_are_rows(physeq)){
+      physeq@otu_table <- otu_table(t(physeq@otu_table), taxa_are_rows = T)
+    }
+
     if (!nb_seq) {
       factor_interm <-
         eval(parse(text = paste("physeq@sam_data$", fact, sep = "")))
@@ -1346,10 +1350,14 @@ physeq_heat_tree <- function(physeq, taxonomic_level = NULL, ...) {
 #' object
 #' @param merge_sample_by (default : NULL) : a boolean vector to determine
 #' wich samples to merge for a total of 2 samples at the end.
-#' @param left_cond (default : c(FALSE, TRUE)) : A condition to select the left sample in the form
-#' of a two-size vector of boolean (e.g. c(TRUE, FALSE)).
-#' @param left_name : Name fo the left sample.
-#' @param right_name : Name fo the rigth sample.
+#' merge_sample_by is not suitable with the modality param.
+#' In that case you can merged samples before the visualisation using
+#' `physeq <- clean_physeq(speedyseq::merge_samples2(physeq, merge_sample_by))`
+#' @param fact (default : NULL), Name of the factor in `physeq@sam_data`. 
+#' If set to NULL use the `left_name` and `right_name` parameter as modality.
+#' @param merge_sample_by (default : NULL)
+#' @param left_name (default : "A"): Name fo the left sample.
+#' @param right_name  (default : "B"): Name fo the right sample.
 #' @param left_fill : Fill fo the left sample.
 #' @param left_col : Color fo the left sample.
 #' @param right_fill : Fill fo the right sample.
@@ -1366,10 +1374,11 @@ physeq_heat_tree <- function(physeq, taxonomic_level = NULL, ...) {
 #' @author Adrien Taudière
 #'
 biplot_physeq <- function(physeq,
+                          fact = NULL,
                           merge_sample_by = NULL,
-                          left_cond = c(FALSE, TRUE),
-                          left_name = NA,
-                          right_name = NA,
+                          inverse_side = FALSE,
+                          left_name = NULL,
+                          right_name = NULL,
                           left_fill = "#4B3E1E",
                           left_col = "#f3f2d9",
                           right_fill = "#1d2949",
@@ -1390,12 +1399,34 @@ biplot_physeq <- function(physeq,
     physeq object or a valid merge_sample_by parameter")
   }
 
-  physeq@sam_data$left_cond <- left_cond
+  if (is.null(fact)) {
+    if (is.null(left_name)) {
+      left_name <- "A"
+    }
+    if (is.null(right_name)) {
+      right_name <- "B"
+    }
+    modality <- factor(c(left_name, right_name))
+  } else {
+    modality <- as.factor(eval(parse(text = paste("physeq@sam_data$", fact, sep = ""))))
+  }
+
+  if (inverse_side) {
+    modality <- factor(modality, rev(levels(as.factor(modality))))
+  }
+
+  if (is.null(left_name)) {
+    left_name <- levels(modality)[1]
+  }
+  if (is.null(right_name)) {
+    right_name <- levels(modality)[2]
+  }
+
+  physeq@sam_data$modality <- modality
+
   mdf <- phyloseq::psmelt(physeq)
-  mdf$Samples <- left_name
-  mdf$Samples[mdf$left_cond] <- right_name
   mdf <- mdf[mdf$Abundance > 0, ]
-  mdf <- dplyr::rename(mdf, Abundance = Abundance) 
+  #mdf <- dplyr::rename(mdf, Abundance = Abundance)
 
   if (log_10) {
     mdf$Ab <- log10(mdf$Abundance + 1)
@@ -1404,20 +1435,20 @@ biplot_physeq <- function(physeq,
     nudge_y <- mean(mdf$Abundance) * nudge_y
   }
 
-  mdf$Ab[mdf$left_cond] <-
-    -mdf$Ab[mdf$left_cond]
+  mdf$Ab[mdf$modality == levels(modality)[1]] <-
+    -mdf$Ab[mdf$modality == levels(modality)[1]]
   mdf$Proportion <- paste0(round(100 * mdf$Abundance /
-    sum(mdf$Abundance[!mdf$left_cond]), 2), "%")
-  mdf$Proportion[mdf$left_cond] <-
-    paste0(round(100 * mdf$Abundance[mdf$left_cond] /
-      sum(mdf$Abundance[mdf$left_cond]), 2), "%")
+    sum(mdf$Abundance[mdf$modality == levels(modality)[2]]), 2), "%")
+  mdf$Proportion[mdf$modality == levels(modality)[1]] <-
+    paste0(round(100 * mdf$Abundance[mdf$modality == levels(modality)[1]] /
+      sum(mdf$Abundance[mdf$modality == levels(modality)[1]]), 2), "%")
 
   p <- mdf %>%
     ggplot(
       aes(
-        x = reorder(OTU, Abundance),  
+        x = reorder(OTU, Abundance),
         y = Ab, 
-        fill = Samples,
+        fill = modality,
         names = OTU,
         Ab = Abundance,
         Proportion = Proportion,
@@ -1465,13 +1496,13 @@ biplot_physeq <- function(physeq,
 
   if(geomLabel) {
     p <- p +
-    geom_label(aes(label = Abundance, color = Samples, fill = Samples, alpha = 0.5), 
+    geom_label(aes(label = Abundance, color = modality, fill = modality, alpha = 0.5), 
       size = text_size,
       nudge_y = nudge_y
     )
   } else {
     p <- p +
-    geom_text(aes(label = Abundance, color = Samples), 
+    geom_text(aes(label = Abundance, color = modality),
       size = text_size,
       nudge_y = nudge_y
     )
