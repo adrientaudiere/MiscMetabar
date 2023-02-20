@@ -1185,12 +1185,17 @@ hill_phyloseq <-
 #' `r lifecycle::badge("maturing")`
 #' @param physeq (required): A \code{\link{phyloseq-class}} object.
 #' For the moment refseq slot need to be not Null.
+#' @param add_info (default TRUE): Does the bottom down corner contain
+#' extra informations.
+#' @param min_seq_samples (default 500): Used only when add_info is set
+#' to true to print the number of samples with less sequences than 
+#' this number.
 #' @examples
 #' data(data_fungi)
 #' summary_plot_phyloseq(data_fungi)
 #' @return A ggplot2 object
 #' @export
-summary_plot_phyloseq <- function(physeq) {
+summary_plot_phyloseq <- function(physeq, add_info = TRUE, min_seq_samples = 500) {
   if (physeq@otu_table@taxa_are_rows) {
     otu_tab <- t(physeq@otu_table)
   } else {
@@ -1229,7 +1234,8 @@ summary_plot_phyloseq <- function(physeq) {
       )
     )
   )
-  ggplot() +
+
+  p <- ggplot() +
     scale_x_continuous(name = "x") +
     scale_y_reverse(name = "y") +
     theme_void() +
@@ -1293,6 +1299,42 @@ summary_plot_phyloseq <- function(physeq) {
       fontface = 2,
       color = "khaki4"
     )
+
+  if (add_info) {
+    supplementary_info <-
+     data.frame(
+       y1 = 5.3,
+       y2 = 7.5,
+       x1 = 3.15,
+       nb_values = 
+       paste0("Min nb seq per sample (",
+         substring(names(sort(sample_sums(otu_tab)))[1], 1, 15),
+         "...): ", min(sample_sums(otu_tab)), "\n",
+       "Nb samples with less than ", min_seq_samples , " seq : ", sum(sample_sums(otu_tab)>min_seq_samples), "\n",
+       "Min nb seq per taxa: ", min(taxa_sums(otu_tab)), "(",
+         sum(taxa_sums(otu_tab)==min(taxa_sums(otu_tab))), " ASV)" , "\n",
+       "Min seq length: ", min(Biostrings::width(physeq@refseq)), "\n",
+       "Max nb seq 1 taxa in 1 sample: ", max(otu_tab), "\n",
+       "Max nb of sample for one taxa (", names(sort(taxa_sums(otu_tab>0), decreasing = T))[1], 
+         "): ", max(taxa_sums(otu_tab>0)), "\n",
+       "Nb of taxa present in 1 sample only: ", sum(taxa_sums(otu_tab>0)==1)
+       )
+      )
+
+    p <- p +
+     geom_text(
+      data = supplementary_info,
+      aes(
+        x = x1,
+        y = y1 + (y2 - y1) / 2.1,
+        label = nb_values
+      ),
+      size = 3.5,
+      hjust = 0
+    )
+  }
+
+  return(p)
 }
 ################################################################################
 

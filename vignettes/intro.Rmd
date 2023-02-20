@@ -1,0 +1,7 @@
+# Introduction to MiscMetabar : a R packages to facilitate visualization and reproductibility in metabarcoding analysis
+
+## Raison d'être
+
+- Complete R packages dada2 and phyloseq
+- Usefull visualizations (`biplot_physeq`, `otu_circle`) 
+- Facilitate the use of targets 
