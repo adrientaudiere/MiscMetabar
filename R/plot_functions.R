@@ -1190,12 +1190,21 @@ hill_phyloseq <-
 #' @param min_seq_samples (default 500): Used only when add_info is set
 #' to true to print the number of samples with less sequences than 
 #' this number.
+#' @param clean_phyloseq (Bool, default to TRUE): Does the phyloseq
+#' object is cleaned using the \code{\link[MiscMetabar]{clean_physeq}}
+#' function.
 #' @examples
 #' data(data_fungi)
 #' summary_plot_phyloseq(data_fungi)
 #' @return A ggplot2 object
 #' @export
-summary_plot_phyloseq <- function(physeq, add_info = TRUE, min_seq_samples = 500) {
+summary_plot_phyloseq <- function(physeq, 
+  add_info = TRUE, 
+  min_seq_samples = 500,
+  clean_phyloseq = TRUE) {
+  if (clean_phyloseq){
+    clean_physeq(d)
+  }
   if (physeq@otu_table@taxa_are_rows) {
     otu_tab <- t(physeq@otu_table)
   } else {
@@ -1260,7 +1269,7 @@ summary_plot_phyloseq <- function(physeq, add_info = TRUE, min_seq_samples = 500
         y = y1 + (y2 - y1) / 1.7,
         label = nb_values
       ),
-      size = 5
+      size = 4.5
     ) +
     geom_text(
       data = d,
@@ -1269,14 +1278,14 @@ summary_plot_phyloseq <- function(physeq, add_info = TRUE, min_seq_samples = 500
         y = y1 + (y2 - y1) / 5,
         label = names
       ),
-      size = 7
+      size = 6
     ) +
     annotate(
       geom = "text",
       x = 0.65,
       y = 3,
       label = "Taxa",
-      size = 7,
+      size = 6,
       color = "#aa4c26",
       angle = 90,
       fontface = 2
@@ -1295,7 +1304,7 @@ summary_plot_phyloseq <- function(physeq, add_info = TRUE, min_seq_samples = 500
       x = 2,
       y = 0.65,
       label = "Samples",
-      size = 7,
+      size = 6,
       fontface = 2,
       color = "khaki4"
     )
@@ -1310,14 +1319,14 @@ summary_plot_phyloseq <- function(physeq, add_info = TRUE, min_seq_samples = 500
        paste0("Min nb seq per sample (",
          substring(names(sort(sample_sums(otu_tab)))[1], 1, 15),
          "...): ", min(sample_sums(otu_tab)), "\n",
-       "Nb samples with less than ", min_seq_samples , " seq : ", sum(sample_sums(otu_tab)>min_seq_samples), "\n",
+       "Nb samples with less than ", min_seq_samples , " seq : ", sum(sample_sums(otu_tab) < min_seq_samples), "\n",
        "Min nb seq per taxa: ", min(taxa_sums(otu_tab)), "(",
-         sum(taxa_sums(otu_tab)==min(taxa_sums(otu_tab))), " ASV)" , "\n",
+         sum(taxa_sums(otu_tab) == min(taxa_sums(otu_tab))), " ASV)", "\n",
        "Min seq length: ", min(Biostrings::width(physeq@refseq)), "\n",
        "Max nb seq 1 taxa in 1 sample: ", max(otu_tab), "\n",
        "Max nb of sample for one taxa (", names(sort(taxa_sums(otu_tab>0), decreasing = T))[1], 
          "): ", max(taxa_sums(otu_tab>0)), "\n",
-       "Nb of taxa present in 1 sample only: ", sum(taxa_sums(otu_tab>0)==1)
+       "Nb of taxa present in 1 sample only: ", sum(taxa_sums(otu_tab>0) == 1)
        )
       )
 
