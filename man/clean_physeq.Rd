@@ -11,7 +11,9 @@ clean_physeq(
   physeq,
   remove_empty_samples = TRUE,
   remove_empty_taxa = TRUE,
-  clean_samples_names = TRUE
+  clean_samples_names = TRUE,
+  silent = FALSE,
+  verbose = FALSE
 )
 }
 \arguments{
@@ -22,7 +24,12 @@ using the \code{dada2} package}
 
 \item{remove_empty_taxa}{(logical, default TRUE) : Do you want to remove taxa without sequences (this is done before removing empty samples)}
 
-\item{clean_samples_names}{: Do you want to clean samples names?}
+\item{clean_samples_names}{(logical, default TRUE) : Do you want to clean samples names?}
+
+\item{silent}{(logical, default FALSE) : If true, no message are printing.}
+
+\item{verbose}{(logical, default FALSE) : Additional informations in the message
+the verbose parameter overwrite the silent parameter.}
 }
 \value{
 A new \code{\link{phyloseq-class}} object

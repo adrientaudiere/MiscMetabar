@@ -4,11 +4,27 @@
 \alias{summary_plot_phyloseq}
 \title{Summarise a \code{\link{phyloseq-class}} object using a plot.}
 \usage{
-summary_plot_phyloseq(physeq)
+summary_plot_phyloseq(
+  physeq,
+  add_info = TRUE,
+  min_seq_samples = 500,
+  clean_phyloseq = TRUE
+)
 }
 \arguments{
 \item{physeq}{(required): A \code{\link{phyloseq-class}} object.
 For the moment refseq slot need to be not Null.}
+
+\item{add_info}{(default TRUE): Does the bottom down corner contain
+extra informations.}
+
+\item{min_seq_samples}{(default 500): Used only when add_info is set
+to true to print the number of samples with less sequences than
+this number.}
+
+\item{clean_phyloseq}{(Bool, default to TRUE): Does the phyloseq
+object is cleaned using the \code{\link[MiscMetabar]{clean_physeq}}
+function.}
 }
 \value{
 A ggplot2 object

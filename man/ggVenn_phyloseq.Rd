@@ -9,7 +9,8 @@ ggVenn_phyloseq(
   physeq = NULL,
   fact = NULL,
   min_nb_seq = 0,
-  taxonomic_rank = NULL
+  taxonomic_rank = NULL,
+  ...
 )
 }
 \arguments{
@@ -25,6 +26,9 @@ will not count in the venn diagramm}
 
 \item{taxonomic_rank}{(Default: Null): Name (or number) of a taxonomic rank
 to count. If set to Null (the default) the number of OTUs is counted.}
+
+\item{...}{other arguments for the \code{ggVennDiagram::ggVennDiagram} function
+for ex. \code{category.names}.}
 }
 \value{
 A \code{\link{ggplot}}2 plot representing Venn diagramm of
@@ -32,6 +36,9 @@ modalities of the argument \code{factor}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+
+Note that you can use ggplot2 function to customize the plot
+par ex. \code{+ scale_fill_distiller(palette = "BuPu", direction = 1)}
 }
 \author{
 Adrien Taudière

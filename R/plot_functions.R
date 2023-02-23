@@ -105,8 +105,8 @@ accu_plot <-
       stop("physeq must be a phyloseq object")
     }
 
-    if(!taxa_are_rows(physeq)){
-      physeq@otu_table <- otu_table(t(physeq@otu_table), taxa_are_rows = T)
+    if (!taxa_are_rows(physeq)) {
+      physeq@otu_table <- otu_table(t(physeq@otu_table), taxa_are_rows = TRUE)
     }
 
     if (!nb_seq) {
@@ -219,7 +219,7 @@ accu_plot <-
         if (n[length(n)] != tot[i]) {
           n <- c(n, tot[i])
         }
-        res_interm <- rarefy(x[i, ], n, se = TRUE)
+        res_interm <- vegan::rarefy(x[i, ], n, se = TRUE)
         res <-
           cbind(as.matrix(res_interm)[1, ], as.matrix(res_interm)[2, ])
         return(res)
@@ -930,7 +930,7 @@ venn_phyloseq <-
 #' `ggVennDiagram::ggVennDiagram` function
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' 
+#'
 #' Note that you can use ggplot2 function to customize the plot
 #' par ex. `+ scale_fill_distiller(palette = "BuPu", direction = 1)`
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
@@ -940,7 +940,7 @@ venn_phyloseq <-
 #'  samples to take into count this OTUs in this sample. For example,
 #'  if min_nb_seq=2,each value of 2 or less in the OTU table
 #'  will not count in the venn diagramm
-#' @param taxonomic_rank (Default: Null): Name (or number) of a taxonomic rank 
+#' @param taxonomic_rank (Default: Null): Name (or number) of a taxonomic rank
 #' to count. If set to Null (the default) the number of OTUs is counted.
 #' @param ... other arguments for the `ggVennDiagram::ggVennDiagram` function
 #' for ex. `category.names`.
@@ -952,23 +952,25 @@ venn_phyloseq <-
 
 
 ggVenn_phyloseq <- function(physeq = NULL, fact = NULL, min_nb_seq = 0,
-taxonomic_rank = NULL, ...){
+                            taxonomic_rank = NULL, ...) {
   res <- list()
-  if(!is.factor(physeq@sam_data[[fact]])){
+  if (!is.factor(physeq@sam_data[[fact]])) {
     physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
   }
-  for(f in levels(physeq@sam_data[[fact]])){
+  for (f in levels(physeq@sam_data[[fact]])) {
     newphyseq <- physeq
     newDF <- newphyseq@sam_data[newphyseq@sam_data[[fact]] == f, ]
     sample_data(newphyseq) <- sample_data(newDF)
-    if(is.null(taxonomic_rank)){
-      res[[f]] <- colnames(newphyseq@otu_table[,
-      colSums(newphyseq@otu_table)>min_nb_seq])
-    }
-    else {
+    if (is.null(taxonomic_rank)) {
+      res[[f]] <- colnames(newphyseq@otu_table[
+        ,
+        colSums(newphyseq@otu_table) > min_nb_seq
+      ])
+    } else {
       res[[f]] <- as.character(na.exclude(unique(newphyseq@tax_table[
-        colSums(newphyseq@otu_table)>min_nb_seq, 
-        taxonomic_rank])))
+        colSums(newphyseq@otu_table) > min_nb_seq,
+        taxonomic_rank
+      ])))
     }
   }
   p <- ggVennDiagram::ggVennDiagram(res, ...)
@@ -994,7 +996,7 @@ taxonomic_rank = NULL, ...){
 #' @param ... : list of ggplot objects
 #' @param plotlist : list of ggplot objects
 #' @param cols : number of columns
-#' @param layout : A matrix specifying the layout. 
+#' @param layout : A matrix specifying the layout.
 #' If present, 'cols' is ignored.
 
 multiplot <-
@@ -1109,7 +1111,7 @@ hill_phyloseq <-
       p_0 <- p_0 +
         geom_label(
           data = p_0$data %>%
-          group_by(!!var) %>%
+            group_by(!!var) %>%
             summarise(max_Hill = max(Hill_0)),
           aes(x = max_Hill + 1),
           label = letters[match(names(letters), levels(factor(as.matrix(
@@ -1132,7 +1134,7 @@ hill_phyloseq <-
       p_1 <- p_1 +
         geom_label(
           data = p_1$data %>%
-          group_by(!!var) %>%
+            group_by(!!var) %>%
             summarise(max_Hill = max(Hill_1)),
           aes(x = max_Hill + 1),
           label = letters[match(names(letters), levels(factor(as.matrix(
@@ -1155,7 +1157,7 @@ hill_phyloseq <-
       p_2 <- p_2 +
         geom_label(
           data = p_2$data %>%
-          group_by(!!var) %>%
+            group_by(!!var) %>%
             summarise(max_Hill = max(Hill_2)),
           aes(x = max_Hill + 0.5),
           label = letters[match(names(letters), levels(factor(as.matrix(
@@ -1188,7 +1190,7 @@ hill_phyloseq <-
 #' @param add_info (default TRUE): Does the bottom down corner contain
 #' extra informations.
 #' @param min_seq_samples (default 500): Used only when add_info is set
-#' to true to print the number of samples with less sequences than 
+#' to true to print the number of samples with less sequences than
 #' this number.
 #' @param clean_phyloseq (Bool, default to TRUE): Does the phyloseq
 #' object is cleaned using the \code{\link[MiscMetabar]{clean_physeq}}
@@ -1198,11 +1200,11 @@ hill_phyloseq <-
 #' summary_plot_phyloseq(data_fungi)
 #' @return A ggplot2 object
 #' @export
-summary_plot_phyloseq <- function(physeq, 
-  add_info = TRUE, 
-  min_seq_samples = 500,
-  clean_phyloseq = TRUE) {
-  if (clean_phyloseq){
+summary_plot_phyloseq <- function(physeq,
+                                  add_info = TRUE,
+                                  min_seq_samples = 500,
+                                  clean_phyloseq = TRUE) {
+  if (clean_phyloseq) {
     clean_physeq(d)
   }
   if (physeq@otu_table@taxa_are_rows) {
@@ -1311,36 +1313,37 @@ summary_plot_phyloseq <- function(physeq,
 
   if (add_info) {
     supplementary_info <-
-     data.frame(
-       y1 = 5.3,
-       y2 = 7.5,
-       x1 = 3.15,
-       nb_values = 
-       paste0("Min nb seq per sample (",
-         substring(names(sort(sample_sums(otu_tab)))[1], 1, 15),
-         "...): ", min(sample_sums(otu_tab)), "\n",
-       "Nb samples with less than ", min_seq_samples , " seq : ", sum(sample_sums(otu_tab) < min_seq_samples), "\n",
-       "Min nb seq per taxa: ", min(taxa_sums(otu_tab)), "(",
-         sum(taxa_sums(otu_tab) == min(taxa_sums(otu_tab))), " ASV)", "\n",
-       "Min seq length: ", min(Biostrings::width(physeq@refseq)), "\n",
-       "Max nb seq 1 taxa in 1 sample: ", max(otu_tab), "\n",
-       "Max nb of sample for one taxa (", names(sort(taxa_sums(otu_tab>0), decreasing = T))[1], 
-         "): ", max(taxa_sums(otu_tab>0)), "\n",
-       "Nb of taxa present in 1 sample only: ", sum(taxa_sums(otu_tab>0) == 1)
-       )
+      data.frame(
+        y1 = 5.3,
+        y2 = 7.5,
+        x1 = 3.15,
+        nb_values =
+          paste0(
+            "Min nb seq per sample (",
+            substring(names(sort(sample_sums(otu_tab)))[1], 1, 15),
+            "...): ", min(sample_sums(otu_tab)), "\n",
+            "Nb samples with less than ", min_seq_samples, " seq : ", sum(sample_sums(otu_tab) < min_seq_samples), "\n",
+            "Min nb seq per taxa: ", min(taxa_sums(otu_tab)), "(",
+            sum(taxa_sums(otu_tab) == min(taxa_sums(otu_tab))), " ASV)", "\n",
+            "Min seq length: ", min(Biostrings::width(physeq@refseq)), "\n",
+            "Max nb seq 1 taxa in 1 sample: ", max(otu_tab), "\n",
+            "Max nb of sample for one taxa (", names(sort(taxa_sums(otu_tab > 0), decreasing = TRUE))[1],
+            "): ", max(taxa_sums(otu_tab > 0)), "\n",
+            "Nb of taxa present in 1 sample only: ", sum(taxa_sums(otu_tab > 0) == 1)
+          )
       )
 
     p <- p +
-     geom_text(
-      data = supplementary_info,
-      aes(
-        x = x1,
-        y = y1 + (y2 - y1) / 2.1,
-        label = nb_values
-      ),
-      size = 3.5,
-      hjust = 0
-    )
+      geom_text(
+        data = supplementary_info,
+        aes(
+          x = x1,
+          y = y1 + (y2 - y1) / 2.1,
+          label = nb_values
+        ),
+        size = 3.5,
+        hjust = 0
+      )
   }
 
   return(p)
@@ -1404,7 +1407,7 @@ physeq_heat_tree <- function(physeq, taxonomic_level = NULL, ...) {
 #' merge_sample_by is not suitable with the modality param.
 #' In that case you can merged samples before the visualisation using
 #' `physeq <- clean_physeq(speedyseq::merge_samples2(physeq, merge_sample_by))`
-#' @param fact (default : NULL), Name of the factor in `physeq@sam_data`. 
+#' @param fact (default : NULL), Name of the factor in `physeq@sam_data`.
 #' If set to NULL use the `left_name` and `right_name` parameter as modality.
 #' @param merge_sample_by (default : NULL)
 #' @param left_name (default : "A"): Name fo the left sample.
@@ -1439,14 +1442,13 @@ biplot_physeq <- function(physeq,
                           geomLabel = FALSE,
                           text_size = 3,
                           ...) {
-
-  if(!is.null(merge_sample_by)){
+  if (!is.null(merge_sample_by)) {
     physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
     physeq <- clean_physeq(physeq)
   }
 
   if (nsamples(physeq) != 2) {
-    stop("biplot_physeq needs only two samples in the 
+    stop("biplot_physeq needs only two samples in the
     physeq object or a valid merge_sample_by parameter")
   }
 
@@ -1477,7 +1479,7 @@ biplot_physeq <- function(physeq,
 
   mdf <- phyloseq::psmelt(physeq)
   mdf <- mdf[mdf$Abundance > 0, ]
-  #mdf <- dplyr::rename(mdf, Abundance = Abundance)
+  # mdf <- dplyr::rename(mdf, Abundance = Abundance)
 
   if (log_10) {
     mdf$Ab <- log10(mdf$Abundance + 1)
@@ -1498,7 +1500,7 @@ biplot_physeq <- function(physeq,
     ggplot(
       aes(
         x = reorder(OTU, Abundance),
-        y = Ab, 
+        y = Ab,
         fill = modality,
         names = OTU,
         Ab = Abundance,
@@ -1545,18 +1547,18 @@ biplot_physeq <- function(physeq,
       1.1)
 
 
-  if(geomLabel) {
+  if (geomLabel) {
     p <- p +
-    geom_label(aes(label = Abundance, color = modality, fill = modality, alpha = 0.5), 
-      size = text_size,
-      nudge_y = nudge_y
-    )
+      geom_label(aes(label = Abundance, color = modality, fill = modality, alpha = 0.5),
+        size = text_size,
+        nudge_y = nudge_y
+      )
   } else {
     p <- p +
-    geom_text(aes(label = Abundance, color = modality),
-      size = text_size,
-      nudge_y = nudge_y
-    )
+      geom_text(aes(label = Abundance, color = modality),
+        size = text_size,
+        nudge_y = nudge_y
+      )
   }
 
   p <- p + coord_flip() +

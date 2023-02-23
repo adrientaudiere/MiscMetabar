@@ -4,7 +4,7 @@ Title: Miscellaneous functions for metabarcoding analysis
 Version: 0.23
 Author: Adrien Taudière <adrien.taudiere@zaclys.net>
 Maintainer: Adrien Taudière <adrien.taudiere@zaclys.net>
-Description: Functions to help analyse and visualise metabarcoding data. Mainly based on the phyloseq and dada2 packages.
+Description: Functions to help analyse and visualise metabarcoding data. Mainly build on the top of phyloseq, dada2 and targets R packages.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -13,7 +13,9 @@ Depends:
     ggplot2,
     phyloseq,
     dada2,
-    magrittr
+    magrittr,
+    dplyr,
+    rlang
 Suggests: 
     lulu,
     metacoder,
@@ -35,7 +37,6 @@ Suggests:
     pbapply,
     plyr,
     reshape2,
-    speedyseq,
     venneuler,
     viridis,
     testthat (>= 3.0.0)

@@ -59,7 +59,7 @@ clean_physeq <- function(physeq,
     if (!is.null(physeq@refseq)) {
       if (sum(!names(physeq@refseq) %in% taxa_names(physeq)) > 0) {
         names(physeq@refseq) <- taxa_names(physeq)
-        if(!silent){
+        if (!silent) {
           message("Change the samples names in refseq slot")
         }
       }
@@ -67,23 +67,23 @@ clean_physeq <- function(physeq,
     if (!is.null(physeq@tax_table)) {
       if (sum(!rownames(physeq@tax_table) %in% taxa_names(physeq)) > 0) {
         rownames(physeq@tax_table) <- taxa_names(physeq)
-        if(!silent){
+        if (!silent) {
           message("Change the taxa names in tax_table slot")
-        }        
+        }
       }
     }
 
     if (!is.null(physeq@sam_data)) {
       if (sum(!rownames(physeq@sam_data) %in% sample_names(physeq)) > 0) {
         rownames(physeq@sam_data) <- sample_names(physeq)
-        if(!silent){
+        if (!silent) {
           message("Change the samples names in sam_data slot")
         }
       }
     }
   }
 
-  if (sum(grepl("^0", "", sample_names(physeq)) & !silent) {
+  if (sum(grepl("^0", "", sample_names(physeq)) > 0) & !silent) {
     message("At least one sample name start with a zero.
     That can be a problem for some phyloseq functions such as plot_bar and psmelt.")
   }
@@ -103,20 +103,20 @@ clean_physeq <- function(physeq,
       new_physeq <- subset_samples(new_physeq, sample_sums(physeq) > 0)
     }
   }
- 
-  if(verbose){
+
+  if (verbose) {
     message(paste(
-      "Supress", ntaxa(physeq) - ntaxa(new_physeq), "taxa (", 
+      "Supress", ntaxa(physeq) - ntaxa(new_physeq), "taxa (",
       names(taxa_sums(physeq) > 0), ") and",
       nsamples(physeq) - nsamples(new_physeq),
-      "sample(s) (", names(sample_sums(physeq) > 0), ")." 
-      ))
-    } else if (!silent) {
+      "sample(s) (", names(sample_sums(physeq) > 0), ")."
+    ))
+  } else if (!silent) {
     message(paste(
       "Supress", ntaxa(physeq) - ntaxa(new_physeq), "taxa and",
       nsamples(physeq) - nsamples(new_physeq),
       "samples."
-      ))
+    ))
   }
 
   return(new_physeq)

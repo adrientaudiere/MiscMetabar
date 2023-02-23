@@ -9,9 +9,15 @@ adonis_phyloseq(physeq, formula, merge_sample_by = NULL)
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
 
+\item{formula}{(required): todo}
+
 \item{merge_sample_by}{(default : NULL) : a vector to determine
-which samples to merge using the `\code{\link[speedyseq]{merge_samples2}}.
-Need to be in \code{physeq@sam_data}}
+which samples to merge using the \code{\link[speedyseq]{merge_samples2}}
+function. Need to be in \code{physeq@sam_data}}
+}
+\value{
+The function returns an anova.cca result object with a new column for partial R^2.
+See ?adonis2 for more information.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}

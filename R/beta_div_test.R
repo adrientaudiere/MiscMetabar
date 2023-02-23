@@ -30,8 +30,7 @@ physeq_graph_test <- function(physeq,
                               return_plot = TRUE,
                               title = "Graph Test",
                               ...) {
-
-  if(!is.null(merge_sample_by)) {
+  if (!is.null(merge_sample_by)) {
     physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
     physeq <- clean_physeq(physeq)
   }
@@ -60,16 +59,17 @@ physeq_graph_test <- function(physeq,
 #' @description
 #' `r lifecycle::badge("experimental")`
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param formula
+#' @param formula (required): todo
 #' @param merge_sample_by (default : NULL) : a vector to determine
 #' which samples to merge using the \code{\link[speedyseq]{merge_samples2}}
 #' function. Need to be in \code{physeq@sam_data}
-#' @return
+#' @return The function returns an anova.cca result object with a new column for partial R^2.
+#' See ?adonis2 for more information.
 #' @export
 #' @author Adrien Taudière
 
-adonis_phyloseq <- function(physeq, formula, merge_sample_by = NULL){
-  if(!is.null(merge_sample_by)) {
+adonis_phyloseq <- function(physeq, formula, merge_sample_by = NULL) {
+  if (!is.null(merge_sample_by)) {
     physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
     physeq <- clean_physeq(physeq)
   }

@@ -6,10 +6,11 @@
 \usage{
 biplot_physeq(
   physeq,
+  fact = NULL,
   merge_sample_by = NULL,
-  left_cond = c(FALSE, TRUE),
-  left_name = NA,
-  right_name = NA,
+  inverse_side = FALSE,
+  left_name = NULL,
+  right_name = NULL,
   left_fill = "#4B3E1E",
   left_col = "#f3f2d9",
   right_fill = "#1d2949",
@@ -25,15 +26,14 @@ biplot_physeq(
 \item{physeq}{(required): A \code{\link{phyloseq-class}}
 object}
 
-\item{merge_sample_by}{(default : NULL) : a boolean vector to determine
-wich samples to merge for a total of 2 samples at the end.}
+\item{fact}{(default : NULL), Name of the factor in \code{physeq@sam_data}.
+If set to NULL use the \code{left_name} and \code{right_name} parameter as modality.}
 
-\item{left_cond}{(default : c(FALSE, TRUE)) : A condition to select the left sample in the form
-of a two-size vector of boolean (e.g. c(TRUE, FALSE)).}
+\item{merge_sample_by}{(default : NULL)}
 
-\item{left_name}{: Name fo the left sample.}
+\item{left_name}{(default : "A"): Name fo the left sample.}
 
-\item{right_name}{: Name fo the rigth sample.}
+\item{right_name}{(default : "B"): Name fo the right sample.}
 
 \item{left_fill}{: Fill fo the left sample.}
 

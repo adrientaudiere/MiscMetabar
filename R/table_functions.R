@@ -119,7 +119,7 @@ multiple_share_bisamples <- function(physeq = NULL,
   lev2 <- levels(physeq@sam_data[[bifactor]])[2]
 
   res <- list()
-  if (!is.null(modality)){
+  if (!is.null(modality)) {
     physeq@sam_data[[modality]] <- as.factor(physeq@sam_data[[modality]])
   } else {
     physeq@sam_data[[modality]] <- rep("mod", nsamples(physeq))
@@ -127,10 +127,10 @@ multiple_share_bisamples <- function(physeq = NULL,
 
   for (i in levels(physeq@sam_data[[modality]])) {
     newphyseq <- physeq
-    if (!is.null(modality)){
+    if (!is.null(modality)) {
       newDF <- newphyseq@sam_data[newphyseq@sam_data[[modality]] == i, ]
       sample_data(newphyseq) <- sample_data(newDF)
-    }   
+    }
     if (nsamples(newphyseq) != 2) {
       res[[i]] <- c(NA, NA, NA, NA, NA)
       warning("At least one case do not contain 2 samples, so NA were introduced.")
