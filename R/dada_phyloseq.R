@@ -43,37 +43,49 @@ add_dna_to_phyloseq <- function(physeq) {
 #'
 #' @param remove_empty_samples (logical, default TRUE) : Do you want to remove samples without sequences (this is done after removing empty taxa)
 #' @param remove_empty_taxa (logical, default TRUE) : Do you want to remove taxa without sequences (this is done before removing empty samples)
-#' @param clean_samples_names : Do you want to clean samples names?
+#' @param clean_samples_names (logical, default TRUE) : Do you want to clean samples names?
+#' @param silent (logical, default FALSE) : If true, no message are printing.
+#' @param verbose (logical, default FALSE) : Additional informations in the message
+#' the verbose parameter overwrite the silent parameter.
 #' @return A new \code{\link{phyloseq-class}} object
 #' @export
 clean_physeq <- function(physeq,
                          remove_empty_samples = TRUE,
                          remove_empty_taxa = TRUE,
-                         clean_samples_names = TRUE) {
+                         clean_samples_names = TRUE,
+                         silent = FALSE,
+                         verbose = FALSE) {
   if (clean_samples_names) {
     if (!is.null(physeq@refseq)) {
       if (sum(!names(physeq@refseq) %in% taxa_names(physeq)) > 0) {
         names(physeq@refseq) <- taxa_names(physeq)
-        message("Change the samples names in refseq slot")
+        if(!silent){
+          message("Change the samples names in refseq slot")
+        }
       }
     }
     if (!is.null(physeq@tax_table)) {
       if (sum(!rownames(physeq@tax_table) %in% taxa_names(physeq)) > 0) {
         rownames(physeq@tax_table) <- taxa_names(physeq)
-        message("Change the taxa names in tax_table slot")
+        if(!silent){
+          message("Change the taxa names in tax_table slot")
+        }        
       }
     }
 
     if (!is.null(physeq@sam_data)) {
       if (sum(!rownames(physeq@sam_data) %in% sample_names(physeq)) > 0) {
         rownames(physeq@sam_data) <- sample_names(physeq)
-        message("Change the samples names in sam_data slot")
+        if(!silent){
+          message("Change the samples names in sam_data slot")
+        }
       }
     }
   }
 
-  if (sum(grepl("^0", "", sample_names(physeq)))) {
-    message("At least one sample name start with a zero. That can be a problem for some phyloseq functions such as plot_bar and psmelt.")
+  if (sum(grepl("^0", "", sample_names(physeq)) & !silent) {
+    message("At least one sample name start with a zero.
+    That can be a problem for some phyloseq functions such as plot_bar and psmelt.")
   }
 
   new_physeq <- physeq
@@ -91,11 +103,22 @@ clean_physeq <- function(physeq,
       new_physeq <- subset_samples(new_physeq, sample_sums(physeq) > 0)
     }
   }
-  message(paste(
-    "Supress", ntaxa(physeq) - ntaxa(new_physeq), "taxa and",
-    nsamples(physeq) - nsamples(new_physeq),
-    "samples."
-  ))
+ 
+  if(verbose){
+    message(paste(
+      "Supress", ntaxa(physeq) - ntaxa(new_physeq), "taxa (", 
+      names(taxa_sums(physeq) > 0), ") and",
+      nsamples(physeq) - nsamples(new_physeq),
+      "sample(s) (", names(sample_sums(physeq) > 0), ")." 
+      ))
+    } else if (!silent) {
+    message(paste(
+      "Supress", ntaxa(physeq) - ntaxa(new_physeq), "taxa and",
+      nsamples(physeq) - nsamples(new_physeq),
+      "samples."
+      ))
+  }
+
   return(new_physeq)
 }
 
