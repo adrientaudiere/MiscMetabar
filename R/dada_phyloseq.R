@@ -83,7 +83,7 @@ clean_physeq <- function(physeq,
     }
   }
 
-  if (sum(grepl("^0", "", sample_names(physeq)) > 0) & !silent) {
+  if (sum(grepl("^0", "", sample_names(physeq)) > 0) && !silent) {
     message("At least one sample name start with a zero.
     That can be a problem for some phyloseq functions such as plot_bar and psmelt.")
   }
