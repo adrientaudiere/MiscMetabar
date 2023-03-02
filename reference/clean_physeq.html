@@ -70,7 +70,9 @@ In addition, this function check for discrepancy (and rename) between
 <span>  <span class="va">physeq</span>,</span>
 <span>  remove_empty_samples <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  remove_empty_taxa <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  clean_samples_names <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  clean_samples_names <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  silent <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -90,7 +92,16 @@ using the <code>dada2</code> package</p></dd>
 
 
 <dt>clean_samples_names</dt>
-<dd><p>: Do you want to clean samples names?</p></dd>
+<dd><p>(logical, default TRUE) : Do you want to clean samples names?</p></dd>
+
+
+<dt>silent</dt>
+<dd><p>(logical, default FALSE) : If true, no message are printing.</p></dd>
+
+
+<dt>verbose</dt>
+<dd><p>(logical, default FALSE) : Additional informations in the message
+the verbose parameter overwrite the silent parameter.</p></dd>
 
 </dl></div>
     <div class="section level2">

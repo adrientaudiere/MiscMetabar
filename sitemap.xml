@@ -25,6 +25,9 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/news/index.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/paper.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/MM_idtaxa.html</loc>
   </url>
   <url>
@@ -146,8 +149,5 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/write_phyloseq.html</loc>
-  </url>
-  <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/snippet_bioinfo_knitr.html</loc>
   </url>
 </urlset>

@@ -66,12 +66,23 @@
 <dd><p>(required): a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object.</p></dd>
 
 
+<dt>formula</dt>
+<dd><p>(required): todo</p></dd>
+
+
 <dt>merge_sample_by</dt>
 <dd><p>(default : NULL) : a vector to determine
-which samples to merge using the `<code><a href="https://mikemc.github.io/speedyseq/reference/merge_samples2.html" class="external-link">merge_samples2</a></code>.
-Need to be in <code>physeq@sam_data</code></p></dd>
+which samples to merge using the <code><a href="https://mikemc.github.io/speedyseq/reference/merge_samples2.html" class="external-link">merge_samples2</a></code>
+function. Need to be in <code>physeq@sam_data</code></p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    
+
+<p>The function returns an anova.cca result object with a new column for partial R^2.
+See ?adonis2 for more information.</p>
+    </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
     <p>Adrien Taudière</p>

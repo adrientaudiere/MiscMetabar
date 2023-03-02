@@ -57,7 +57,12 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">summary_plot_phyloseq</span><span class="op">(</span><span class="va">physeq</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">summary_plot_phyloseq</span><span class="op">(</span></span>
+<span>  <span class="va">physeq</span>,</span>
+<span>  add_info <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  min_seq_samples <span class="op">=</span> <span class="fl">500</span>,</span>
+<span>  clean_phyloseq <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -65,6 +70,23 @@
     <dl><dt>physeq</dt>
 <dd><p>(required): A <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object.
 For the moment refseq slot need to be not Null.</p></dd>
+
+
+<dt>add_info</dt>
+<dd><p>(default TRUE): Does the bottom down corner contain
+extra informations.</p></dd>
+
+
+<dt>min_seq_samples</dt>
+<dd><p>(default 500): Used only when add_info is set
+to true to print the number of samples with less sequences than
+this number.</p></dd>
+
+
+<dt>clean_phyloseq</dt>
+<dd><p>(Bool, default to TRUE): Does the phyloseq
+object is cleaned using the <code><a href="clean_physeq.html">clean_physeq</a></code>
+function.</p></dd>
 
 </dl></div>
     <div class="section level2">
