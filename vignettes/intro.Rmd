@@ -3,5 +3,5 @@
 ## Raison d'être
 
 - Complete R packages dada2 and phyloseq
-- Usefull visualizations (`biplot_physeq`, `otu_circle`) 
+- Useful visualizations (`biplot_physeq`, `otu_circle`) 
 - Facilitate the use of targets 

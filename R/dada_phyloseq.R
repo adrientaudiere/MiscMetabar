@@ -85,16 +85,14 @@ clean_physeq <- function(physeq,
 
   if (sum(grepl("^0", "", sample_names(physeq)) > 0) && !silent) {
     message("At least one sample name start with a zero.
-    That can be a problem for some phyloseq functions such as plot_bar and psmelt.")
+    That can be a problem for some phyloseq functions such as 
+    plot_bar and psmelt.")
   }
 
   new_physeq <- physeq
 
   if (remove_empty_taxa) {
     if (sum(taxa_sums(new_physeq) == 0) > 0) {
-      # new_otu_table <- otu_table(new_physeq, taxa_are_rows =T)[,taxa_sums(new_physeq) > 0]
-      # new_tax_table <- tax_table(new_physeq)[taxa_sums(new_physeq) > 0,]
-      # new_physeq <- merge_phyloseq(new_otu_table, new_tax_table, physeq)
       new_physeq <- subset_taxa(physeq, taxa_sums(physeq) > 0)
     }
   }
