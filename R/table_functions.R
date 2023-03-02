@@ -98,9 +98,9 @@ tax_datatable <- function(physeq,
 #' slot of the physeq object to split samples by pairs
 #' @param bifactor (required): a factor (present in the `sam_data` slot of
 #' the physeq object) presenting the pair names
-#' @param nb_min_seq (default: 0): minimum number of sequences per sample
+#' @param nb_min_seq (Default: 0): minimum number of sequences per sample
 #' to count the ASV/OTU
-#' @param vegIndex (default: "shannon"): index for the `vegan::diversity` function
+#' @param vegIndex (Default: "shannon"): index for the `vegan::diversity` function
 #' @return A tibble
 #' @importFrom rlang .data
 #' @export

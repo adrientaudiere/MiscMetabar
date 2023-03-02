@@ -7,13 +7,13 @@
 #' @param contrast (required):This argument specifies what comparison
 #'   to extract from the object to build a results table.
 #'   See \code{\link[DESeq2]{results}} man page for more details.
-#' @param alpha (default = 0.01): the significance cutoff used for optimizing
+#' @param alpha (Default: 0.01): the significance cutoff used for optimizing
 #'   the independent filtering. If the adjusted p-value cutoff (FDR) will be a
 #'   value other than 0.1, alpha should be set to that value.
-#' @param taxa (default = 'Genus'): taxonomic level of interest
-#' @param color_tax (default = 'Phylum'): taxonomic level used for
+#' @param taxa (Default: 'Genus'): taxonomic level of interest
+#' @param color_tax (Default: 'Phylum'): taxonomic level used for
 #'   color assignation
-#' @param verbose (default = FALSE): whether the function print some
+#' @param verbose (Default: FALSE): whether the function print some
 #'   information during the computation
 #' @param ... Additional arguments passed on to \code{\link[edgeR]{exactTest}}
 #'   or \code{\link[ggplot2]{ggplot}}
@@ -130,20 +130,20 @@ plot_edgeR_phyloseq <-
 #' @param contrast (required):This argument specifies what comparison to extract
 #'   from the object to build a results table. See \code{\link[DESeq2]{results}}
 #'   man page for more details.
-#' @param alpha (default = 0.01): the significance cutoff used for optimizing
+#' @param alpha (Default: 0.01): the significance cutoff used for optimizing
 #'   the independent filtering. If the adjusted p-value cutoff (FDR) will be a
 #'   value other than 0.1, alpha should be set to that value.
-#' @param taxa (default = 'Genus'): taxonomic level of interest
-#' @param select_taxa (default = 'No'): logical vector to select taxa to plot
-#' @param color_tax (default = 'Phylum'): taxonomic level used for color or a
+#' @param taxa (Default: 'Genus'): taxonomic level of interest
+#' @param select_taxa (Default: 'No'): logical vector to select taxa to plot
+#' @param color_tax (Default: 'Phylum'): taxonomic level used for color or a
 #'   color vector.
-#' @param tax_depth (default = NULL): Taxonomic depth to test for differential
+#' @param tax_depth (Default: NULL): Taxonomic depth to test for differential
 #'   distribution among contrast. If Null the analysis is done at the OTU
 #'   (i.e. Species) level. If not Null data need to be a
 #'   \code{\link{phyloseq-class}} object.
 #' @param verbose : whether the function print some information during
 #'   the computation
-#' @param jitter_width (default=0.1) : width for the jitter positionning
+#' @param jitter_width (Default: 0.1) : width for the jitter positionning
 #' @param ... Additional arguments passed on to \code{\link[DESeq2]{DESeq}}
 #'   or \code{\link[ggplot2]{ggplot}}
 #'

@@ -10,12 +10,12 @@
 #' @param nb_seq (logical, default to TRUE): If true, Krona set the distribution
 #' of sequences in the taxonomy. If False, Krona set the distribution of OTUs
 #' in the taxonomy.
-#' @param ranks (default="All"): Number of the taxonomic ranks to plot
+#' @param ranks (Default: "All"): Number of the taxonomic ranks to plot
 #' (num of the column in tax_table of your physeq object).
 #' Default setting plot all the ranks (argument 'All').
 #' @param add_unassigned_rank (number; default = 0). Add unassigned for rank
 #' inferior to 'add_unassigned_rank' when necessary
-#' @param name (default=NULL) : A name for intermediary files, Useful to name
+#' @param name (Default: NULL) : A name for intermediary files, Useful to name
 #' your krona dataset when merge using merge_krona
 #'
 #' @examples
@@ -98,7 +98,7 @@ krona <-
 #' Function merge_krona allows merging multiple html files in one interactive krona file
 #'
 #' @param files (required): path to html files to merged
-#' @param output (default="mergeKrona.html") : path to the output files
+#' @param output (Default: "mergeKrona.html") : path to the output files
 #'
 #' @examples
 #' data("GlobalPatterns")

@@ -140,7 +140,7 @@ clean_physeq <- function(physeq,
 #'  * Phyloseq-class -> nb of reads, clusters and samples
 #'
 #' @param list_of_objects (required): A list of objects
-#' @param obj_names (default: NULL) :
+#' @param obj_names (Default: NULL) :
 #'   A list of names corresponding to the list of objects
 #' @param clean_physeq (Logical, default = FALSE) If true, empty samples and empty ASV are discarded before clustering.
 #'
@@ -272,15 +272,15 @@ track_wkflow <- function(list_of_objects, obj_names = NULL, clean_physeq = FALSE
 #' `r lifecycle::badge("maturing")`
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param nproc (default 1)
+#' @param nproc (Default 1)
 #'   Set to number of cpus/processors to use for the clustering
-#' @param method (default Clusterize)
+#' @param method (Default Clusterize)
 #'   Set the clustering method.
 #'   - `Clusterize` use the `DECIPHER::Clusterize` fonction,
 #'   - `vsearch` use the vsearch software (https://github.com/torognes/vsearch/)
 #'     with arguments `-cluster_fast` and `-strand both`
-#' @param vsearchpath (default = "vsearch"): path to vsearch
-#' @param id (default=0.97): level of identity to cluster
+#' @param vsearchpath (Default: "vsearch"): path to vsearch
+#' @param id (Default: 0.97): level of identity to cluster
 #' @param tax_adjust (By default tax_adjust = 1L): See the man page
 #'   of `speedyseq::merge_taxa_vec`.
 #' @param ... Others arguments path to `DECIPHER::Clusterize`
@@ -391,9 +391,9 @@ asv2otu <- function(physeq,
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param seq2search (required): path to fasta file
-#' @param vsearchpath (default = "vsearch"): path to vsearch
-#' @param id (default = 0.8): id for --usearch_global
-#' @param iddef (default = 0): iddef for --usearch_global
+#' @param vsearchpath (Default: "vsearch"): path to vsearch
+#' @param id (Default: 0.8): id for --usearch_global
+#' @param iddef (Default: 0): iddef for --usearch_global
 #'
 #' @return A dataframe with uc results (invisible)
 #' @export
@@ -459,14 +459,14 @@ vsearch_search_global <- function(physeq,
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param seq2search (required): path to fasta file
-#' @param blastpath (default = NULL): path to blast program
-#' @param id_cut (default = 90): cut of in identity percent to keep result
-#' @param bit_score_cut (default = 1e-10): cut of in bit score to keep result
-#' @param unique_per_seq (default = FALSE) : only return the first match for
+#' @param blastpath (Default: NULL): path to blast program
+#' @param id_cut (Default: 90): cut of in identity percent to keep result
+#' @param bit_score_cut (Default: 1e-10): cut of in bit score to keep result
+#' @param unique_per_seq (Default: FALSE) : only return the first match for
 #'  each sequence in seq2search
-#' @param score_filter (default = TRUE): does results are filter by score. If
+#' @param score_filter (Default: TRUE): does results are filter by score. If
 #'   FALSE, `id_cut` and `bit_score_cut` are ignored
-#' @param list_no_output_query (default to FALSE): does the result table include
+#' @param list_no_output_query (Default to FALSE): does the result table include
 #'   query sequences for which `blastn` does not find any correspondence
 #'
 #' @return  the blast table
@@ -580,9 +580,9 @@ blast_to_phyloseq <- function(physeq,
 #' `r lifecycle::badge("maturing")`
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param path (default: NULL) : a path to the folder to save the phyloseq object
-#' @param rdata (default: FALSE) : does the phyloseq object is also saved in Rdata format
-#' @param one_file_ASV (default: FALSE) : combine all data in one file only
+#' @param path (Default: NULL) : a path to the folder to save the phyloseq object
+#' @param rdata (Default: FALSE) : does the phyloseq object is also saved in Rdata format
+#' @param one_file_ASV (Default: FALSE) : combine all data in one file only
 #'
 #' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 #' and if present a phy_tree in Newick format
@@ -701,10 +701,10 @@ read_phyloseq <- function(path = NULL, taxa_are_rows = FALSE) {
 #' `r lifecycle::badge("experimental")`
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param nproc (default 1)
+#' @param nproc (Default 1)
 #'   Set to number of cpus/processors to use for the clustering
-#' @param id (default = 0.84): id for --usearch_global
-#' @param vsearchpath (default = "vsearch"): path to vsearch
+#' @param id (Default: 0.84): id for --usearch_global
+#' @param vsearchpath (Default: "vsearch"): path to vsearch
 #' @param verbose (Logical): if true, print some additional messages
 #' @param clean_physeq (Logical, default = FALSE) If true, empty samples and empty ASV are discarded before clustering.
 #'

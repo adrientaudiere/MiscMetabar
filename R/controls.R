@@ -14,7 +14,7 @@
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param samples_names (required): a vector of names for samples with
 #'   positives controls of the same samples having the same name
-#' @param method (default = "bray"): a method to calculate
+#' @param method (Default: "bray"): a method to calculate
 #'    the distance, parsed to vegdist
 #' @return A list of two dataframes with
 #'   (i) the distance among positive controls and
@@ -74,7 +74,7 @@ les")
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param taxa_distri (required): a vector of length equal to the number of
 #'   samples with the number of sequences per samples for the taxa control
-#' @param method (default = "mean"): a method to calculate the cut-off value.
+#' @param method (Default: "mean"): a method to calculate the cut-off value.
 #'   There is 6 methods:
 #'   (i)   cutoff_seq: discard taxa with less than the number of sequence
 #'           than taxa control,
@@ -84,7 +84,7 @@ les")
 #'   (iv)  min: the minimum of the three firsts methods
 #'   (v)   max: the maximum of the three firsts methods
 #'   (vi)  mean: the mean of the three firsts methods
-#' @param min_diff_for_cutoff (default = 10): argument for method cutoff_diff
+#' @param min_diff_for_cutoff (Default: 10): argument for method cutoff_diff
 #' @return A new \code{\link{phyloseq-class}} object.
 #' @export
 #'

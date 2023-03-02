@@ -1,4 +1,14 @@
-# MiscMetabar 0.23 (in development)
+# MiscMetabar 0.24 (in development)
+
+* Add supplementary info in `summary_plot_physeq`
+* Better arguments in biplot_physeq
+* Add merge_sample_by argument in biplot_physeq
+* Better documentation with more example.
+* For other minors bugs fixes and addition, see the list of commits
+
+
+
+# MiscMetabar 0.23
 
 * Adapt the function `asv2otu` to *IdClusters* change in the DECIPHER package (commit 254100922f2093cc789d018c18a26752a3cda1e3). Then change the *IdClusters* function that was removed from DECIPHER to *Clusterize* function.
 

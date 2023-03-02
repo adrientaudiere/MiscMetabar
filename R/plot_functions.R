@@ -6,14 +6,20 @@
 #' `r lifecycle::badge("maturing")`
 #'
 #' @param mt (required): result of a mt test
-#' @param alpha (default = 0.05): Choose the cut off p-value to plot taxa
-#' @param color_tax : A taxonomic level to color the points
-#' @param taxa : The taxonomic level choose for x-positioning
+#' @param alpha (Default: 0.05): Choose the cut off p-value to plot taxa
+#' @param color_tax (Default: "Class"): A taxonomic level to color the points
+#' @param taxa (Default: "Species") : The taxonomic level choose for x-positioning
 #' data("GlobalPatterns")
 #' res <- mt(GlobalPatterns, "SampleType", test="f")
 #' plot_mt(res, color_tax = "Phylum") + scale_color_hue()
 #' @author Adrien Taudière
-#'
+#' @example
+#' data(data_fungi)
+#' # Filter samples that don't have Enterotype
+#' data_fungi <- subset_samples(data_fungi, !is.na(Time))
+#' res <- mt(data_fungi, "Time", method="fdr", test="f", B=300)
+#' plot_mt(res)
+#' plot_mt(res, taxa="Genus", color_tax = "Order")
 #' @return a \code{\link{ggplot}}2 plot of result of a mt test
 #' @export
 #' @seealso \code{\link[phyloseq]{mt}}
@@ -31,7 +37,7 @@ plot_mt <-
     d$tax <-
       factor(d$tax,
         levels =
-          unique(factor(as.character(d[, "Species"]))
+          unique(factor(as.character(d[, taxa]))
           [rev(order(d$teststat))])
       )
 
@@ -55,34 +61,34 @@ plot_mt <-
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param fact (required): Name of the factor in physeq@sam_data used to plot
 #'    different lines
-#' @param nb_seq (logical): Either plot accumulation curves using sequences or
-#'   using samples
-#' @param step (integer): distance among points calculated to plot lines. A
+#' @param add_nb_seq (Default: TRUE, logical): 
+#' Either plot accumulation curves using sequences or using samples
+#' @param step (Integer): distance among points calculated to plot lines. A
 #'  low value give better plot but is more time consuming.
-#'  Only used if nb_seq = TRUE.
-#' @param by.fact (logical): First merge the OTU table by factor to plot only
-#'   one line by factor
+#'  Only used if add_nb_seq = TRUE.
+#' @param by.fact (Default: FALSE, logical): 
+#' First merge the OTU table by factor to plot only one line by factor
 #' @param ci_col : Color vector for confidence intervall.
-#'   Only use if nb_seq = FALSE.
-#'   If nb_seq = TRUE, you can use ggplot to modify the plot.
-#' @param col : Color vector for lines. Only use if nb_seq = FALSE.
-#'   If nb_seq = TRUE, you can use ggplot to modify the plot.
-#' @param lwd  (default = 3): thickness for lines. Only use if nb_seq = FALSE.
-#' @param leg (logical): Plot legend or not. Only use if nb_seq = FALSE.
-#' @param print_sam_names (logical): Print samples names or not?
-#'    Only use if nb_seq = TRUE.
-#' @param ci (default = 2) : Confidence intervall value used to multiply the
+#'   Only use if add_nb_seq = FALSE.
+#'   If add_nb_seq = TRUE, you can use ggplot to modify the plot.
+#' @param col : Color vector for lines. Only use if add_nb_seq = FALSE.
+#'   If add_nb_seq = TRUE, you can use ggplot to modify the plot.
+#' @param lwd  (Default: 3): thickness for lines. Only use if add_nb_seq = FALSE.
+#' @param leg (Default: TRUE, logical): Plot legend or not. Only use if add_nb_seq = FALSE.
+#' @param print_sam_names (Default: FALSE, logical): Print samples names or not?
+#'    Only use if add_nb_seq = TRUE.
+#' @param ci (Default: 2, integer) : Confidence intervall value used to multiply the
 #'   standard error to plot confidence intervall
 #' @param ... Additional arguments passed on to \code{\link{ggplot}}
-#' if nb_seq = TRUE or to \code{\link{plot}} if nb_seq = FALSE
+#' if add_nb_seq = TRUE or to \code{\link{plot}} if add_nb_seq = FALSE
 #'
 #' @examples
 #' data("GlobalPatterns")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
-#' accu_plot(GP, "SampleType", nb_seq = TRUE, by.fact = TRUE)
+#' accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE)
 #'
 #' @return A \code{\link{ggplot}}2 plot representing the richness
-#' accumulation plot if nb_seq = TRUE, else, if nb_seq = FALSE
+#' accumulation plot if add_nb_seq = TRUE, else, if add_nb_seq = FALSE
 #' return a base plot.
 #'
 #' @export
@@ -91,7 +97,7 @@ plot_mt <-
 accu_plot <-
   function(physeq,
            fact = NULL,
-           nb_seq = TRUE,
+           add_nb_seq = TRUE,
            step = NULL,
            by.fact = FALSE,
            ci_col = NULL,
@@ -109,7 +115,7 @@ accu_plot <-
       physeq@otu_table <- otu_table(t(physeq@otu_table), taxa_are_rows = TRUE)
     }
 
-    if (!nb_seq) {
+    if (!add_nb_seq) {
       factor_interm <-
         eval(parse(text = paste("physeq@sam_data$", fact, sep = "")))
       factor_interm <- as.factor(factor_interm)
@@ -190,7 +196,7 @@ accu_plot <-
       }
     }
 
-    if (nb_seq) {
+    if (add_nb_seq) {
       fact_interm <-
         as.factor(unlist(unclass(physeq@sam_data[, fact])[fact]))
 
@@ -293,9 +299,9 @@ accu_plot <-
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param fact (required): Name of the factor to cluster samples by modalities.
 #'        Need to be in \code{physeq@sam_data}.
-#' @param taxa (Default:'Order'): Name of the taxonomic rank of interest
-#' @param nb_seq (Default: TRUE): Represent the number of sequences or the
-#'    number of OTUs (nb_seq = FALSE)
+#' @param taxa (Default: 'Order'): Name of the taxonomic rank of interest
+#' @param add_nb_seq (Default: TRUE): Represent the number of sequences or the
+#'    number of OTUs (add_nb_seq = FALSE)
 #' @param rarefy (logical): Does each samples modalities need to be rarefy in
 #'               order to compare them with the same amount of sequences?
 #' @param min_prop_tax (Default: 0.01): The minimum proportion for taxon to be
@@ -325,7 +331,7 @@ accu_plot <-
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #' otu_circle(GP, "SampleType")
 #' \dontrun{
-#' otu_circle(GP, "SampleType", nb_seq = FALSE)
+#' otu_circle(GP, "SampleType", add_nb_seq = FALSE)
 #' otu_circle(GP, "SampleType", taxa = "Class")
 #' }
 #' @author Adrien Taudière
@@ -342,7 +348,7 @@ otu_circle <-
   function(physeq = NULL,
            fact = NULL,
            taxa = "Order",
-           nb_seq = TRUE,
+           add_nb_seq = TRUE,
            rarefy = FALSE,
            min_prop_tax = 0.01,
            min_prop_mod = 0.1,
@@ -362,7 +368,7 @@ otu_circle <-
       otu_tab <- physeq@otu_table
     }
 
-    if (!nb_seq) {
+    if (!add_nb_seq) {
       otu_tab[otu_tab > 0] <- 1
     }
 
@@ -523,8 +529,8 @@ otu_circle <-
 #' @param fact (Optional): Name of the factor to cluster samples by modalities.
 #' Need to be in \code{physeq@sam_data}.
 #' @param taxa (Default: c(1:4)): a vector of taxonomic rank to plot
-#' @param nb_seq (Default: FALSE): Represent the number of sequences or the
-#'   number of OTUs (nb_seq = FALSE). Note that ploting the number of sequences
+#' @param add_nb_seq (Default: FALSE): Represent the number of sequences or the
+#'   number of OTUs (add_nb_seq = FALSE). Note that ploting the number of sequences
 #'   is slower.
 #' @param min_prop_tax (Default: 0): The minimum proportion for taxon to be
 #'  ploted. EXPERIMENTAL. For the moment each links below the min.prop.
@@ -532,7 +538,7 @@ otu_circle <-
 #' @param tax2remove : a vector of taxonomic groups to remove from the analysis
 #'   (e.g. \code{c('Incertae sedis', 'unidentified')})
 #' @param units : character string describing physical units (if any) for Value
-#' @param symbol2sub (default = c('\\.', '-')): vector of symbol to delete in
+#' @param symbol2sub (Default: c('\\.', '-')): vector of symbol to delete in
 #'   the taxonomy
 #' @param ... Additional arguments passed on to
 #'   \code{\link[networkD3]{sankeyNetwork}}
@@ -542,7 +548,7 @@ otu_circle <-
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #' sankey_phyloseq(GP, fact = "SampleType")
 #' sankey_phyloseq(GP, taxa = c(1:4), min_prop_tax = 0.01)
-#' sankey_phyloseq(GP, taxa = c(1:4), min_prop_tax = 0.01, nb_seq = TRUE)
+#' sankey_phyloseq(GP, taxa = c(1:4), min_prop_tax = 0.01, add_nb_seq = TRUE)
 #' @author Adrien Taudière
 #'
 #' @return A \code{\link[networkD3]{sankeyNetwork}} plot representing the
@@ -557,7 +563,7 @@ sankey_phyloseq <-
   function(physeq = NULL,
            fact = NULL,
            taxa = c(1:4),
-           nb_seq = FALSE,
+           add_nb_seq = FALSE,
            min_prop_tax = 0,
            tax2remove = NULL,
            units = NULL,
@@ -573,7 +579,7 @@ sankey_phyloseq <-
       otu_tab <- physeq@otu_table
     }
 
-    if (!nb_seq) {
+    if (!add_nb_seq) {
       otu_tab[otu_tab > 0] <- 1
       mat_interm <- matrix()
       mat <- matrix(ncol = 3)
@@ -585,7 +591,7 @@ sankey_phyloseq <-
         mat_interm <- mat_interm[mat_interm[, 3] > 0, ]
         mat <- rbind(mat, mat_interm)
       }
-    } else if (nb_seq) {
+    } else if (add_nb_seq) {
       mat_interm <- matrix()
       mat <- matrix(ncol = 3)
       colnames(mat) <- c("Var1", "Var2", "value")
@@ -624,7 +630,7 @@ sankey_phyloseq <-
           )
         })
 
-      if (!nb_seq) {
+      if (!add_nb_seq) {
         mat_interm <-
           apply(mat_interm, 1, function(x) {
             tapply(x, physeq@tax_table[
@@ -634,7 +640,7 @@ sankey_phyloseq <-
               sum(x > 0)
             })
           })
-      } else if (nb_seq) {
+      } else if (add_nb_seq) {
         mat_interm <-
           apply(mat_interm, 1, function(x) {
             tapply(x, physeq@tax_table[
@@ -708,9 +714,9 @@ sankey_phyloseq <-
     names(tax_sank$nodes) <- c("name")
     names(tax_sank$links) <- c("source", "target", "value")
     if (is.null(units)) {
-      if (!nb_seq) {
+      if (!add_nb_seq) {
         units <- "OTUs"
-      } else if (nb_seq) {
+      } else if (add_nb_seq) {
         units <- "Sequences"
       }
     }
@@ -1187,9 +1193,9 @@ hill_phyloseq <-
 #' `r lifecycle::badge("maturing")`
 #' @param physeq (required): A \code{\link{phyloseq-class}} object.
 #' For the moment refseq slot need to be not Null.
-#' @param add_info (default TRUE): Does the bottom down corner contain
+#' @param add_info (Default TRUE): Does the bottom down corner contain
 #' extra informations.
-#' @param min_seq_samples (default 500): Used only when add_info is set
+#' @param min_seq_samples (Default 500): Used only when add_info is set
 #' to true to print the number of samples with less sequences than
 #' this number.
 #' @param clean_phyloseq (Bool, default to TRUE): Does the phyloseq
@@ -1402,25 +1408,25 @@ physeq_heat_tree <- function(physeq, taxonomic_level = NULL, ...) {
 #' `r lifecycle::badge("maturing")`
 #' @param physeq (required): A \code{\link{phyloseq-class}}
 #' object
-#' @param merge_sample_by (default : NULL) : a boolean vector to determine
+#' @param merge_sample_by (Default : NULL) : a boolean vector to determine
 #' wich samples to merge for a total of 2 samples at the end.
 #' merge_sample_by is not suitable with the modality param.
 #' In that case you can merged samples before the visualisation using
 #' `physeq <- clean_physeq(speedyseq::merge_samples2(physeq, merge_sample_by))`
-#' @param fact (default : NULL), Name of the factor in `physeq@sam_data`.
+#' @param fact (Default : NULL), Name of the factor in `physeq@sam_data`.
 #' If set to NULL use the `left_name` and `right_name` parameter as modality.
-#' @param merge_sample_by (default : NULL)
-#' @param left_name (default : "A"): Name fo the left sample.
-#' @param right_name  (default : "B"): Name fo the right sample.
+#' @param merge_sample_by (Default : NULL)
+#' @param left_name (Default : "A"): Name fo the left sample.
+#' @param right_name  (Default : "B"): Name fo the right sample.
 #' @param left_fill : Fill fo the left sample.
 #' @param left_col : Color fo the left sample.
 #' @param right_fill : Fill fo the right sample.
 #' @param right_col : Color fo the right sample.
-#' @param log_10 (default : TRUE) : Does abundancy is log10 transformed ?
+#' @param log_10 (Default : TRUE) : Does abundancy is log10 transformed ?
 #' @param nudge_y : A parameter to control the y position of abundancy values.
-#' @param geomLabel (default FALSE) : if true use the `geom_label` function
+#' @param geomLabel (Default FALSE) : if true use the `geom_label` function
 #' instead of `geom_text` to indicate the numbers of sequences
-#' @param text_size (default : 3): default size for the number of sequences
+#' @param text_size (Default : 3): default size for the number of sequences
 #' @param ... : other arguments for the ggplot function
 
 #' @return A plot
