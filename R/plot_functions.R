@@ -941,7 +941,7 @@ venn_phyloseq <-
 #'   Need to be in \code{physeq@sam_data}.
 #' @param merge_sample_by (Default: NULL): if not `NULL` samples of
 #'   physeq are mereged using the vector set by `merge_sample_by`. This
-#'   merging used the [speedyseq::merge_samples2]. 
+#'   merging used the [speedyseq::merge_samples2].
 #'   If `merge_sample_by` is equal to `fact`
 #'   it give the same result as if `merge_sample_by` is NULL.
 #' @param min_nb_seq (Default: 0)): minimum number of sequences by OTUs by
@@ -963,9 +963,8 @@ ggVenn_phyloseq <- function(physeq = NULL,
                             fact = NULL,
                             merge_sample_by = NULL,
                             min_nb_seq = 0,
-                            taxonomic_rank = NULL, 
+                            taxonomic_rank = NULL,
                             ...) {
-  
   if (!is.factor(physeq@sam_data[[fact]])) {
     physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
   }
@@ -976,7 +975,7 @@ ggVenn_phyloseq <- function(physeq = NULL,
   }
 
   res <- list()
-  
+
   for (f in levels(physeq@sam_data[[fact]])) {
     newphyseq <- physeq
     newDF <- newphyseq@sam_data[newphyseq@sam_data[[fact]] == f, ]
