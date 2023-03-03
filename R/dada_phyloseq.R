@@ -580,20 +580,28 @@ blast_to_phyloseq <- function(physeq,
 #' `r lifecycle::badge("maturing")`
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param path (Default: NULL) : a path to the folder to save the phyloseq object
-#' @param rdata (Default: FALSE, logical): does the phyloseq object is also saved in Rdata format
-#' @param one_file_ASV (Default: FALSE, logical): combine all data in one file only
-#'
+#' @param path (Default: NULL): a path to the folder to save the phyloseq object
+#' @param rdata (Default: FALSE, logical): does the phyloseq object is also saved in Rdata format?
+#' @param one_file_ASV (Default: FALSE, logical): if TRUE, combine all data in one file only
+#' @param write_sam_data (Default: TRUE, logical): does the samples data are add to
+#'   the file. Only used if `one_file_ASV` is TRUE. Note that this result in a lot of
+#'   NA values.
+#' @param ... Other arguments passed to [utils::write.csv()] function.
 #' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
-#' and if present a phy_tree in Newick format
+#'   and if present a phy_tree in Newick format
 #' @export
 #'
 #' @examples
 #' \dontrun{
 #' write_phyloseq(data_fungi, path = "phyloseq")
+#' write_phyloseq(data_fungi, path = "phyloseq", one_file_ASV = TRUE)
 #' }
 #'
-write_phyloseq <- function(physeq, path = NULL, rdata = FALSE, one_file_ASV = FALSE) {
+write_phyloseq <- function(physeq,
+                           path = NULL,
+                           rdata = FALSE,
+                           one_file_ASV = FALSE,
+                           write_sam_data = TRUE) {
   if (!dir.exists(path)) {
     dir.create(file.path(path), recursive = TRUE)
   }
@@ -602,13 +610,24 @@ write_phyloseq <- function(physeq, path = NULL, rdata = FALSE, one_file_ASV = FA
       if (!taxa_are_rows(physeq)) {
         physeq@otu_table <- t(physeq@otu_table)
       }
+      df_physeq_interm <- cbind(
+        physeq@otu_table,
+        physeq@tax_table,
+        as.vector(physeq@refseq)
+      )
+      colnames(df_physeq_interm) <- c(sample_names(physeq), colnames(physeq@tax_table), "Reference Sequences")
+
+      df_physeq_interm <- as.data.frame(df_physeq_interm)
+
+      if (write_sam_data) {
+        sam_data <- data.frame(t(data.frame(unclass(physeq@sam_data))))
+        colnames(sam_data) <- sample_names(physeq)
+        df_physeq <- dplyr::full_join(df_physeq_interm, sam_data)
+        rownames(df_physeq) <- c(rownames(df_physeq_interm), rownames(sam_data))
+      }
       utils::write.csv(
-        cbind(
-          physeq@otu_table,
-          physeq@tax_table,
-          as.vector(physeq@refseq)
-        ),
-        paste(path, "/ASV_table_allInOne.csv", sep = "")
+        df_physeq,
+        paste(path, "/ASV_table_allInOne.csv", sep = ""),
       )
     } else if (!is.null(physeq@otu_table) && !is.null(physeq@tax_table)) {
       utils::write.csv(
@@ -616,22 +635,35 @@ write_phyloseq <- function(physeq, path = NULL, rdata = FALSE, one_file_ASV = FA
           physeq@otu_table,
           physeq@tax_table
         ),
-        paste(path, "/ASV_table_allInOne.csv", sep = "")
+        paste(path, "/ASV_table_allInOne.csv", sep = ""),
+        ...
       )
     }
   } else {
     if (!is.null(physeq@otu_table)) {
-      utils::write.csv(physeq@otu_table, paste(path, "/otu_table.csv", sep = ""))
+      utils::write.csv(
+        physeq@otu_table, paste(path, "/otu_table.csv", sep = ""),
+        ...
+      )
     }
     if (!is.null(physeq@refseq)) {
-      utils::write.csv(physeq@refseq, paste(path, "/refseq.csv", sep = ""))
+      utils::write.csv(
+        physeq@refseq, paste(path, "/refseq.csv", sep = ""),
+        ...
+      )
     }
     if (!is.null(physeq@tax_table)) {
-      utils::write.csv(physeq@tax_table, paste(path, "/tax_table.csv", sep = ""))
+      utils::write.csv(
+        physeq@tax_table, paste(path, "/tax_table.csv", sep = ""),
+        ...
+      )
     }
   }
   if (!is.null(physeq@sam_data)) {
-    utils::write.csv(physeq@sam_data, paste(path, "/sam_data.csv", sep = ""))
+    utils::write.csv(
+      physeq@sam_data, paste(path, "/sam_data.csv", sep = ""),
+      ...
+    )
   }
   if (!is.null(physeq@phy_tree)) {
     ape::write.tree(physeq@phy_tree, paste(path, "/phy_tree.txt", sep = ""))
@@ -723,9 +755,11 @@ read_phyloseq <- function(path = NULL, taxa_are_rows = FALSE) {
 #' data(data_fungi_sp_known)
 #' lulu_phyloseq(data_fungi_sp_known)
 #' }
-#' @author Adrien Taudière \email{adrien.taudiere@@zaclys.net}
+#' @author Tobias Guldberg Frøslev \email{tobiasgf@snm.ku.dk}
+#'   & Adrien Taudière \email{adrien.taudiere@@zaclys.net}
 #' @details
-#' The version of LULU is a fork of Adrien Taudière (\url{https://github.com/adrientaudiere/lulu}) from \url{https://github.com/tobiasgf/lulu}
+#' The version of LULU is a fork of Adrien Taudière (\url{https://github.com/adrientaudiere/lulu})
+#'  from \url{https://github.com/tobiasgf/lulu}
 #' @references
 #' - LULU : \url{https://github.com/adrientaudiere/lulu}
 #'  forked from \url{https://github.com/tobiasgf/lulu}.
