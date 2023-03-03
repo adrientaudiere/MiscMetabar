@@ -1,6 +1,6 @@
 ################################################################################
 #' Plot the result of a mt test [phyloseq::mt()]
-#' 
+#'
 #' @description
 #' `r lifecycle::badge("maturing")`
 #'
@@ -13,9 +13,9 @@
 #' data(data_fungi)
 #' # Filter samples that don't have Enterotype
 #' data_fungi <- subset_samples(data_fungi, !is.na(Time))
-#' res <- mt(data_fungi, "Time", method="fdr", test="f", B=300)
+#' res <- mt(data_fungi, "Time", method = "fdr", test = "f", B = 300)
 #' plot_mt(res)
-#' plot_mt(res, taxa="Genus", color_tax = "Order")
+#' plot_mt(res, taxa = "Genus", color_tax = "Order")
 #' @return a \code{\link{ggplot}}2 plot of result of a mt test
 #' @export
 #' @seealso [phyloseq::mt()]
@@ -52,7 +52,7 @@ plot_mt <-
 
 ################################################################################
 #' Plot accumulation curves for \code{\link{phyloseq-class}} object
-#' 
+#'
 #' @description
 #' `r lifecycle::badge("maturing")`
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
@@ -935,31 +935,48 @@ venn_phyloseq <-
 #' `r lifecycle::badge("maturing")`
 #'
 #' Note that you can use ggplot2 function to customize the plot
-#' par ex. `+ scale_fill_distiller(palette = "BuPu", direction = 1)`
+#' for ex. `+ scale_fill_distiller(palette = "BuPu", direction = 1)`
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param fact (required): Name of the factor to cluster samples by modalities.
-#' Need to be in \code{physeq@sam_data}.
+#'   Need to be in \code{physeq@sam_data}.
+#' @param merge_sample_by (Default: NULL): if not `NULL` samples of
+#'   physeq are mereged using the vector set by `merge_sample_by`. This
+#'   merging used the [speedyseq::merge_samples2]. 
+#'   If `merge_sample_by` is equal to `fact`
+#'   it give the same result as if `merge_sample_by` is NULL.
 #' @param min_nb_seq (Default: 0)): minimum number of sequences by OTUs by
-#'  samples to take into count this OTUs in this sample. For example,
-#'  if min_nb_seq=2,each value of 2 or less in the OTU table
-#'  will not count in the venn diagramm
+#'   samples to take into count this OTUs in this sample. For example,
+#'   if min_nb_seq=2,each value of 2 or less in the OTU table
+#'   will not count in the venn diagramm
 #' @param taxonomic_rank (Default: Null): Name (or number) of a taxonomic rank
-#' to count. If set to Null (the default) the number of OTUs is counted.
+#'   to count. If set to Null (the default) the number of OTUs is counted.
 #' @param ... other arguments for the `ggVennDiagram::ggVennDiagram` function
-#' for ex. `category.names`.
+#'   for ex. `category.names`.
 #' @return A \code{\link{ggplot}}2 plot representing Venn diagramm of
-#' modalities of the argument \code{factor}
+#'   modalities of the argument \code{factor}
 #'
 #' @export
 #' @author Adrien Taudière
 
 
-ggVenn_phyloseq <- function(physeq = NULL, fact = NULL, min_nb_seq = 0,
-                            taxonomic_rank = NULL, ...) {
-  res <- list()
+ggVenn_phyloseq <- function(physeq = NULL,
+                            fact = NULL,
+                            merge_sample_by = NULL,
+                            min_nb_seq = 0,
+                            taxonomic_rank = NULL, 
+                            ...) {
+  
   if (!is.factor(physeq@sam_data[[fact]])) {
     physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
   }
+
+  if (!is.null(merge_sample_by)) {
+    physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
+    physeq <- clean_physeq(physeq)
+  }
+
+  res <- list()
+  
   for (f in levels(physeq@sam_data[[fact]])) {
     newphyseq <- physeq
     newDF <- newphyseq@sam_data[newphyseq@sam_data[[fact]] == f, ]
@@ -1405,14 +1422,12 @@ physeq_heat_tree <- function(physeq, taxonomic_level = NULL, ...) {
 #' `r lifecycle::badge("maturing")`
 #' @param physeq (required): A \code{\link{phyloseq-class}}
 #' object
-#' @param merge_sample_by (Default: NULL) : a boolean vector to determine
-#' wich samples to merge for a total of 2 samples at the end.
-#' merge_sample_by is not suitable with the modality param.
-#' In that case you can merged samples before the visualisation using
-#' `physeq <- clean_physeq(speedyseq::merge_samples2(physeq, merge_sample_by))`
 #' @param fact (Default: NULL), Name of the factor in `physeq@sam_data`.
 #' If set to NULL use the `left_name` and `right_name` parameter as modality.
-#' @param merge_sample_by (Default: NULL)
+#' @param merge_sample_by (Default: NULL): if not `NULL` samples of
+#'   physeq are mereged using the vector set by `merge_sample_by`. This
+#'   merging used the [ speedyseq::merge_samples2]. In the case of
+#'   [biplot_physeq()] this must be a factor with two levels only.
 #' @param left_name (Default: "A"): Name fo the left sample.
 #' @param right_name  (Default: "B"): Name fo the right sample.
 #' @param left_fill : Fill fo the left sample.
