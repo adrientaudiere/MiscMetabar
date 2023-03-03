@@ -6,10 +6,10 @@
 \alias{MiscMetabar}
 \title{\code{MiscMetabar} package}
 \description{
-Functions to help analyse and visualise metabarcoding data. Mainly based on
+Functions to help analyze and visualize metabarcoding data. Mainly based on
 the phyloseq and dada2 packages.
 
-Functions to help analyse and visualise metabarcoding data. Mainly build on the top of phyloseq, dada2 and targets R packages.
+Functions to help analyze and visualize metabarcoding data. Mainly build on the top of phyloseq, dada2 and targets R packages.
 }
 \seealso{
 Useful links:

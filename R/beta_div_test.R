@@ -7,11 +7,11 @@
 #' @param fact (required): Name of the factor to cluster samples by modalities.
 #' Need to be in \code{physeq@sam_data}. This should be a factor.
 #' with two or more levels.
-#' @param merge_sample_by (Default : NULL) : a vector to determine
+#' @param merge_sample_by (Default: NULL) : a vector to determine
 #' which samples to merge using the \code{\link[speedyseq]{merge_samples2}} function.
 #' Need to be in \code{physeq@sam_data}
 #' @param  nperm (Default: 999): The number of permutations to perform.
-#' @param return_plot (Default: TRUE) : do we return only the result
+#' @param return_plot (Default: TRUE, logical): do we return only the result
 #' of the test or do we plot the result
 #' @param ... other params for be passed on
 #' `phyloseqGraphTest::graph_perm_test` function
@@ -60,7 +60,7 @@ physeq_graph_test <- function(physeq,
 #' `r lifecycle::badge("experimental")`
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param formula (required): todo
-#' @param merge_sample_by (Default : NULL) : a vector to determine
+#' @param merge_sample_by (Default: NULL) : a vector to determine
 #' which samples to merge using the \code{\link[speedyseq]{merge_samples2}}
 #' function. Need to be in \code{physeq@sam_data}
 #' @return The function returns an anova.cca result object with a new column for partial R^2.

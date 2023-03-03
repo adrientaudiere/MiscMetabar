@@ -67,7 +67,7 @@ htmlwidgets::onRender(
 )
 ```
 
-### Circle for visualise distribution of taxa in function of samples variables
+### Circle for visualize distribution of taxa in function of samples variables
 
 ```{r}
 otu_circle(gp, "SampleType", taxa = "Class")

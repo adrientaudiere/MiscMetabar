@@ -91,7 +91,7 @@ dist_bycol <- function(x,
 
 
 ################################################################################
-#' List the size of all object of the GlobalEnv.
+#' List the size of all objects of the GlobalEnv.
 #' @description
 #' `r lifecycle::badge("stable")`
 #'
@@ -110,7 +110,7 @@ all_object_size <- function() {
 
 
 ################################################################################
-#' Simplify taxonomy by removing some unused character such as "k__"
+#' Simplify taxonomy by removing some unused characters such as "k__"
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #'
 #' @description

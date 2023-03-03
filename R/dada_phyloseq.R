@@ -85,7 +85,7 @@ clean_physeq <- function(physeq,
 
   if (sum(grepl("^0", "", sample_names(physeq)) > 0) && !silent) {
     message("At least one sample name start with a zero.
-    That can be a problem for some phyloseq functions such as 
+    That can be a problem for some phyloseq functions such as
     plot_bar and psmelt.")
   }
 
@@ -462,7 +462,7 @@ vsearch_search_global <- function(physeq,
 #' @param blastpath (Default: NULL): path to blast program
 #' @param id_cut (Default: 90): cut of in identity percent to keep result
 #' @param bit_score_cut (Default: 1e-10): cut of in bit score to keep result
-#' @param unique_per_seq (Default: FALSE) : only return the first match for
+#' @param unique_per_seq (Default: FALSE, logical): only return the first match for
 #'  each sequence in seq2search
 #' @param score_filter (Default: TRUE): does results are filter by score. If
 #'   FALSE, `id_cut` and `bit_score_cut` are ignored
@@ -581,8 +581,8 @@ blast_to_phyloseq <- function(physeq,
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param path (Default: NULL) : a path to the folder to save the phyloseq object
-#' @param rdata (Default: FALSE) : does the phyloseq object is also saved in Rdata format
-#' @param one_file_ASV (Default: FALSE) : combine all data in one file only
+#' @param rdata (Default: FALSE, logical): does the phyloseq object is also saved in Rdata format
+#' @param one_file_ASV (Default: FALSE, logical): combine all data in one file only
 #'
 #' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 #' and if present a phy_tree in Newick format

@@ -1,6 +1,6 @@
 #' \code{MiscMetabar} package
 #'
-#' Functions to help analyse and visualise metabarcoding data. Mainly based on
+#' Functions to help analyze and visualize metabarcoding data. Mainly based on
 #' the phyloseq and dada2 packages.
 #' @name MiscMetabar-package
 #' @docType package

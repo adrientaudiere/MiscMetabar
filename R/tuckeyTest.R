@@ -79,7 +79,7 @@ hill_tuckey_phyloseq <- function(physeq, modality) {
     coord_flip() +
     theme_gray() +
     geom_hline(yintercept = 0) +
-    ylab("Differences in mean levels (value and confidence intervall at 95%)") +
+    ylab("Differences in mean levels (value and confidence intervals at 95%)") +
     xlab("") +
     ggtitle("Results of the Tuckey HSD testing for differences in mean Hill
             numbers")
