@@ -1,19 +1,15 @@
 ################################################################################
-# Plot the result of a mt test
-################################################################################
-#' Plot the result of a mt test (\code{\link[phyloseq]{mt}})
+#' Plot the result of a mt test [phyloseq::mt()]
+#' 
 #' @description
 #' `r lifecycle::badge("maturing")`
 #'
-#' @param mt (required): result of a mt test
-#' @param alpha (Default: 0.05): Choose the cut off p-value to plot taxa
-#' @param color_tax (Default: "Class"): A taxonomic level to color the points
-#' @param taxa (Default: "Species") : The taxonomic level choose for x-positioning
-#' data("GlobalPatterns")
-#' res <- mt(GlobalPatterns, "SampleType", test="f")
-#' plot_mt(res, color_tax = "Phylum") + scale_color_hue()
+#' @param mt (required): Result of a mt test from the function [phyloseq::mt()].
+#' @param alpha (Default: 0.05): Choose the cut off p-value to plot taxa.
+#' @param color_tax (Default: "Class"): A taxonomic level to color the points.
+#' @param taxa (Default: "Species"): The taxonomic level you choose for x-positioning.
 #' @author Adrien Taudière
-#' @example
+#' @examples
 #' data(data_fungi)
 #' # Filter samples that don't have Enterotype
 #' data_fungi <- subset_samples(data_fungi, !is.na(Time))
@@ -22,7 +18,7 @@
 #' plot_mt(res, taxa="Genus", color_tax = "Order")
 #' @return a \code{\link{ggplot}}2 plot of result of a mt test
 #' @export
-#' @seealso \code{\link[phyloseq]{mt}}
+#' @seealso [phyloseq::mt()]
 
 plot_mt <-
   function(mt = NULL,
@@ -56,17 +52,18 @@ plot_mt <-
 
 ################################################################################
 #' Plot accumulation curves for \code{\link{phyloseq-class}} object
+#' 
 #' @description
 #' `r lifecycle::badge("maturing")`
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param fact (required): Name of the factor in physeq@sam_data used to plot
 #'    different lines
-#' @param add_nb_seq (Default: TRUE, logical): 
+#' @param add_nb_seq (Default: TRUE, logical):
 #' Either plot accumulation curves using sequences or using samples
 #' @param step (Integer): distance among points calculated to plot lines. A
 #'  low value give better plot but is more time consuming.
 #'  Only used if add_nb_seq = TRUE.
-#' @param by.fact (Default: FALSE, logical): 
+#' @param by.fact (Default: FALSE, logical):
 #' First merge the OTU table by factor to plot only one line by factor
 #' @param ci_col : Color vector for confidence intervall.
 #'   Only use if add_nb_seq = FALSE.
@@ -1054,7 +1051,7 @@ multiplot <-
 ################################################################################
 
 ################################################################################
-#' Graphical representation of hill number 0, 1 and 2 accross a factor
+#' Graphical representation of hill number 0, 1 and 2 across a factor
 #' @description
 #' `r lifecycle::badge("maturing")`
 #' @param physeq (required): A \code{\link{phyloseq-class}} object
@@ -1118,7 +1115,7 @@ hill_phyloseq <-
         geom_label(
           data = p_0$data %>%
             group_by(!!var) %>%
-            summarise(max_Hill = max(Hill_0)),
+            summarize(max_Hill = max(Hill_0)),
           aes(x = max_Hill + 1),
           label = letters[match(names(letters), levels(factor(as.matrix(
             physeq@sam_data[, variable]
@@ -1141,7 +1138,7 @@ hill_phyloseq <-
         geom_label(
           data = p_1$data %>%
             group_by(!!var) %>%
-            summarise(max_Hill = max(Hill_1)),
+            summarize(max_Hill = max(Hill_1)),
           aes(x = max_Hill + 1),
           label = letters[match(names(letters), levels(factor(as.matrix(
             physeq@sam_data[, variable]
@@ -1164,7 +1161,7 @@ hill_phyloseq <-
         geom_label(
           data = p_2$data %>%
             group_by(!!var) %>%
-            summarise(max_Hill = max(Hill_2)),
+            summarize(max_Hill = max(Hill_2)),
           aes(x = max_Hill + 0.5),
           label = letters[match(names(letters), levels(factor(as.matrix(
             physeq@sam_data[, variable]
@@ -1408,25 +1405,26 @@ physeq_heat_tree <- function(physeq, taxonomic_level = NULL, ...) {
 #' `r lifecycle::badge("maturing")`
 #' @param physeq (required): A \code{\link{phyloseq-class}}
 #' object
-#' @param merge_sample_by (Default : NULL) : a boolean vector to determine
+#' @param merge_sample_by (Default: NULL) : a boolean vector to determine
 #' wich samples to merge for a total of 2 samples at the end.
 #' merge_sample_by is not suitable with the modality param.
 #' In that case you can merged samples before the visualisation using
 #' `physeq <- clean_physeq(speedyseq::merge_samples2(physeq, merge_sample_by))`
-#' @param fact (Default : NULL), Name of the factor in `physeq@sam_data`.
+#' @param fact (Default: NULL), Name of the factor in `physeq@sam_data`.
 #' If set to NULL use the `left_name` and `right_name` parameter as modality.
-#' @param merge_sample_by (Default : NULL)
-#' @param left_name (Default : "A"): Name fo the left sample.
-#' @param right_name  (Default : "B"): Name fo the right sample.
+#' @param merge_sample_by (Default: NULL)
+#' @param left_name (Default: "A"): Name fo the left sample.
+#' @param right_name  (Default: "B"): Name fo the right sample.
 #' @param left_fill : Fill fo the left sample.
 #' @param left_col : Color fo the left sample.
 #' @param right_fill : Fill fo the right sample.
 #' @param right_col : Color fo the right sample.
-#' @param log_10 (Default : TRUE) : Does abundancy is log10 transformed ?
+#' @param log_10 (Default: TRUE, logical): Does abundancy is log10 transformed ?
 #' @param nudge_y : A parameter to control the y position of abundancy values.
-#' @param geomLabel (Default FALSE) : if true use the `geom_label` function
-#' instead of `geom_text` to indicate the numbers of sequences
-#' @param text_size (Default : 3): default size for the number of sequences
+#' @param geomLabel (Default: FALSE, logical): if true use the `geom_label` function
+#'   instead of `geom_text` to indicate the numbers of sequences
+#' @param text_size (Default: 3): default size for the number of sequences
+#' @param plotly_version (Default: FALSE)
 #' @param ... : other arguments for the ggplot function
 
 #' @return A plot
@@ -1447,6 +1445,7 @@ biplot_physeq <- function(physeq,
                           nudge_y = 0.3,
                           geomLabel = FALSE,
                           text_size = 3,
+                          plotly_version = FALSE,
                           ...) {
   if (!is.null(merge_sample_by)) {
     physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
@@ -1572,5 +1571,18 @@ biplot_physeq <- function(physeq,
     theme(plot.title = element_text(hjust = .5), axis.ticks = element_blank()) +
     scale_fill_manual(values = c(left_fill, right_fill)) +
     scale_color_manual(values = c(left_col, right_col), guide = "none")
+
+  if (plotly_version) {
+    p <- ggplotly(p,
+      tooltip = c("OTU", "Ab", "Proportion", "Family", "Genus", "Species"),
+      height = 1200, width = 800
+    ) %>%
+      plotly::layout(
+        xaxis = list(autorange = TRUE),
+        yaxis = list(autorange = TRUE)
+      ) %>%
+      config(locale = "fr") %>%
+      hide_legend()
+  }
   return(p)
 }
