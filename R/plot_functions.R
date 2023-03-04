@@ -1125,7 +1125,7 @@ hill_phyloseq <-
         p_var$data[grep("Hill Number 0", p_var$data[, 5]), ]
       data_h0_pval <- data_h0$p.adj
       names(data_h0_pval) <- data_h0$modality
-      letters <- multcompLetters(data_h0_pval, reversed = TRUE)$Letters
+      letters <- multcompView::multcompLetters(data_h0_pval, reversed = TRUE)$Letters
 
       p_0 <- p_0 +
         geom_label(
@@ -1148,7 +1148,7 @@ hill_phyloseq <-
         p_var$data[grep("Hill Number 1", p_var$data[, 5]), ]
       data_h1_pval <- data_h1$p.adj
       names(data_h1_pval) <- data_h1$modality
-      letters <- multcompLetters(data_h1_pval, reversed = TRUE)$Letters
+      letters <- multcompView::multcompLetters(data_h1_pval, reversed = TRUE)$Letters
 
       p_1 <- p_1 +
         geom_label(
@@ -1171,7 +1171,7 @@ hill_phyloseq <-
         p_var$data[grep("Hill Number 2", p_var$data[, 5]), ]
       data_h2_pval <- data_h2$p.adj
       names(data_h2_pval) <- data_h2$modality
-      letters <- multcompLetters(data_h2_pval, reversed = TRUE)$Letters
+      letters <- multcompView::multcompLetters(data_h2_pval, reversed = TRUE)$Letters
 
       p_2 <- p_2 +
         geom_label(

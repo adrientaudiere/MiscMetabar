@@ -14,15 +14,12 @@ if (getRversion() >= "2.15.1") utils::globalVariables(c("."))
 #' @export
 
 add_dna_to_phyloseq <- function(physeq) {
-  if (!methods::validObject(physeq) || !inherits(physeq, "phyloseq")) {
-    stop("The physeq argument is not a valid phyloseq object.")
-  } else {
-    dna <- Biostrings::DNAStringSet(phyloseq::taxa_names(physeq))
-    names(dna) <- phyloseq::taxa_names(physeq)
-    physeq <- phyloseq::merge_phyloseq(physeq, dna)
-    phyloseq::taxa_names(physeq) <-
-      paste0("ASV_", seq(phyloseq::ntaxa(physeq)))
-  }
+  verify_pq(physeq)
+  dna <- Biostrings::DNAStringSet(phyloseq::taxa_names(physeq))
+  names(dna) <- phyloseq::taxa_names(physeq)
+  physeq <- phyloseq::merge_phyloseq(physeq, dna)
+  phyloseq::taxa_names(physeq) <-
+    paste0("ASV_", seq(phyloseq::ntaxa(physeq)))
   return(physeq)
 }
 ################################################################################
@@ -31,11 +28,10 @@ add_dna_to_phyloseq <- function(physeq) {
 
 ################################################################################
 #'  Clean phyloseq object by removing empty samples and taxa
+#' 
 #'  In addition, this function check for discrepancy (and rename) between
 #' (i) taxa names in refseq, taxonomy table and otu_table and between
 #' (ii) sample names in sam_data and otu_table.
-#'
-#'
 #' `r lifecycle::badge("experimental")`
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object obtained
@@ -55,6 +51,7 @@ clean_physeq <- function(physeq,
                          clean_samples_names = TRUE,
                          silent = FALSE,
                          verbose = FALSE) {
+  verify_pq(physeq)
   if (clean_samples_names) {
     if (!is.null(physeq@refseq)) {
       if (sum(!names(physeq@refseq) %in% taxa_names(physeq)) > 0) {
@@ -305,6 +302,7 @@ asv2otu <- function(physeq,
                     vsearchpath = "vsearch",
                     tax_adjust = 1,
                     ...) {
+  verify_pq(physeq)                    
   dna <- Biostrings::DNAStringSet(physeq@refseq)
 
   if (method == "Clusterize") {
@@ -403,6 +401,7 @@ vsearch_search_global <- function(physeq,
                                   vsearchpath = "vsearch",
                                   id = 0.8,
                                   iddef = 0) {
+  verify_pq(physeq)                                    
   dna <- Biostrings::DNAStringSet(physeq@refseq)
 
   Biostrings::writeXStringSet(dna, "temp.fasta")
@@ -489,6 +488,7 @@ blast_to_phyloseq <- function(physeq,
                               unique_per_seq = FALSE,
                               score_filter = TRUE,
                               list_no_output_query = FALSE) {
+  verify_pq(physeq)                                
   dna <- Biostrings::DNAStringSet(physeq@refseq)
   Biostrings::writeXStringSet(dna, "db.fasta")
 
@@ -602,6 +602,7 @@ write_phyloseq <- function(physeq,
                            rdata = FALSE,
                            one_file_ASV = FALSE,
                            write_sam_data = TRUE) {
+  verify_pq(physeq)                            
   if (!dir.exists(path)) {
     dir.create(file.path(path), recursive = TRUE)
   }
@@ -772,6 +773,7 @@ lulu_phyloseq <- function(physeq,
                           vsearchpath = "vsearch",
                           verbose = FALSE,
                           clean_physeq = FALSE) {
+  verify_pq(physeq)                            
   if (clean_physeq) {
     physeq <- clean_physeq(physeq)
   }
@@ -844,3 +846,10 @@ lulu_phyloseq <- function(physeq,
   ))
 }
 ################################################################################
+
+
+verify_pq <- function(physeq){
+  if (!methods::validObject(physeq) || !inherits(physeq, "phyloseq")) {
+    stop("The physeq argument is not a valid phyloseq object.")
+  }
+}

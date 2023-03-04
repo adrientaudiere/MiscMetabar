@@ -24,6 +24,9 @@
 #' @author Adrien Taudière
 
 dist_pos_control <- function(physeq, samples_names, method = "bray") {
+
+  verify_pq(physeq)
+
   res <- list()
   dist_control <- vector()
 
@@ -74,17 +77,17 @@ les")
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param taxa_distri (required): a vector of length equal to the number of
 #'   samples with the number of sequences per samples for the taxa control
-#' @param method (Default: "mean"): a method to calculate the cut-off value.
+#' @param method (Default: "mean"): a method to calculate the cut-off value.
 #'   There is 6 methods:
-#'   (i)   cutoff_seq: discard taxa with less than the number of sequence
+#'   1. `cutoff_seq`: discard taxa with less than the number of sequence
 #'           than taxa control,
-#'   (ii)  cutoff_mixt: using mixture models,
-#'   (iii) cutoff_diff: using a minimum difference threshold
+#'   2. `cutoff_mixt`: using mixture models,
+#'   3. `cutoff_diff`: using a minimum difference threshold
 #'           (need the argument min_diff_for_cutoff)
-#'   (iv)  min: the minimum of the three firsts methods
-#'   (v)   max: the maximum of the three firsts methods
-#'   (vi)  mean: the mean of the three firsts methods
-#' @param min_diff_for_cutoff (Default: 10): argument for method cutoff_diff
+#'   4. `min`: the minimum of the three firsts methods
+#'   5. `max`: the maximum of the three firsts methods
+#'   6. `mean`: the mean of the three firsts methods
+#' @param min_diff_for_cutoff (Default: 10): argument for method `cutoff_diff`
 #' @return A new \code{\link{phyloseq-class}} object.
 #' @export
 #'
@@ -94,6 +97,9 @@ subset_taxa_tax_control <-
            taxa_distri,
            method = "mean",
            min_diff_for_cutoff = 10) {
+
+  verify_pq(physeq)
+
     cutoff_seq <- vector(mode = "numeric", length = nsamples(physeq))
     cutoff_mixt <-
       vector(mode = "numeric", length = nsamples(physeq))

@@ -382,6 +382,7 @@ plot_deseq2_phyloseq <-
 #' @export
 #'
 phyloseq_to_edgeR <- function(physeq, group, method = "RLE", ...) {
+  verify_pq(physeq)
   # Enforce orientation.
   if (!taxa_are_rows(physeq)) {
     physeq <- t(physeq)
