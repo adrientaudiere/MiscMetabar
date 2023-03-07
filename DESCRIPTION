@@ -35,6 +35,7 @@ Suggests:
     multcompView,
     networkD3,
     pbapply,
+    plotly,
     plyr,
     reshape2,
     venneuler,

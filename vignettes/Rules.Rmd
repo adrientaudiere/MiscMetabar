@@ -1,0 +1,10 @@
+# Rules for the package
+
+## Documentation
+
+- Always indicate required params `(required)`
+- Indicate default values only when (i) a set of values is possible [e.g bray method in vegdist] or (ii) when this value 
+is well thought out and a good default value for most users [e.g. the number of permutation or processors, or the level of identity to cluster at 97%]. 
+- Indicate the type for logical and integer params.
+- Try to homogenize the params names across function.
+- Prefer ASVs to OTUs denomination, even thought both are almost interchangeable in the MiscMetabar package.

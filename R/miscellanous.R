@@ -8,8 +8,8 @@
 #' `r lifecycle::badge("maturing")`
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param min_number (Default: 1): the minimum number of sequences to put
-#' a 1 in the otu table.
+#' @param min_number: the minimum number of sequences to put
+#'   a 1 in the otu table.
 #' @author Adrien Taudière
 #'
 #' @return A \code{physeq} object with only 0/1 in the OTU table

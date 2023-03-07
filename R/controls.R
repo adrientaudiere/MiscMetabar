@@ -2,10 +2,10 @@
 #' Calculate ecological distance among positive controls vs
 #'   distance for all samples
 #'
-#' #' `r lifecycle::badge("maturing")`
+#' `r lifecycle::badge("maturing")`
 #'
 #' @aliases dist_pos_control
-#' @details  Compute distance among positive controls,
+#' @details Compute distance among positive controls,
 #'   i.e. samples which are duplicated
 #'   to test for variation, for example in
 #'    (i) a step in the sampling,
@@ -15,8 +15,9 @@
 #' @param samples_names (required): a vector of names for samples with
 #'   positives controls of the same samples having the same name
 #' @param method (Default: "bray"): a method to calculate
-#'    the distance, parsed to vegdist
-#' @return A list of two dataframes with
+#'   the distance, parsed to [vegan::vegdist()]. See ?vegdist for a list
+#'   of possible values.
+#' @return A list of two data-frames with
 #'   (i) the distance among positive controls and
 #'   (ii) the distance among all samples
 #' @export
@@ -24,7 +25,6 @@
 #' @author Adrien Taudière
 
 dist_pos_control <- function(physeq, samples_names, method = "bray") {
-
   verify_pq(physeq)
 
   res <- list()
@@ -78,7 +78,7 @@ les")
 #' @param taxa_distri (required): a vector of length equal to the number of
 #'   samples with the number of sequences per samples for the taxa control
 #' @param method (Default: "mean"): a method to calculate the cut-off value.
-#'   There is 6 methods:
+#'   There is 6 available methods:
 #'   1. `cutoff_seq`: discard taxa with less than the number of sequence
 #'           than taxa control,
 #'   2. `cutoff_mixt`: using mixture models,
@@ -87,7 +87,8 @@ les")
 #'   4. `min`: the minimum of the three firsts methods
 #'   5. `max`: the maximum of the three firsts methods
 #'   6. `mean`: the mean of the three firsts methods
-#' @param min_diff_for_cutoff (Default: 10): argument for method `cutoff_diff`
+#' @param min_diff_for_cutoff (int): argument for method `cutoff_diff`.
+#'   Required if method is `cutoff_diff`, `min`, `max` or `min`
 #' @return A new \code{\link{phyloseq-class}} object.
 #' @export
 #'
@@ -96,9 +97,8 @@ subset_taxa_tax_control <-
   function(physeq,
            taxa_distri,
            method = "mean",
-           min_diff_for_cutoff = 10) {
-
-  verify_pq(physeq)
+           min_diff_for_cutoff) {
+    verify_pq(physeq)
 
     cutoff_seq <- vector(mode = "numeric", length = nsamples(physeq))
     cutoff_mixt <-
@@ -156,6 +156,11 @@ subset_taxa_tax_control <-
       }
 
       if (method %in% c("min", "max", "mean", "cutoff_diff")) {
+        if (missing(cutoff_diff)) {
+          stop("You need to set the `min_diff_for_cutoff` values
+          when using one of the following methods : min, max, mean and
+          cutoff_diff.")
+        }
         physeq_diff <- sort(as.vector(as.vector(physeq@otu_table[i, ])))
         cond <- diff(physeq_diff) > min_diff_for_cutoff
         cutoff_diff[i] <- min(physeq_diff[cond])

@@ -11,6 +11,7 @@
 #' OTU abundancy by level of the modality
 #' @param ... Other argument for the datatable function
 #'
+#'
 #' @author Adrien Taudière
 #' @return A datatable
 #' @export

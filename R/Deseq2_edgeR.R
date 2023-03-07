@@ -10,10 +10,10 @@
 #' @param alpha (Default: 0.01): the significance cutoff used for optimizing
 #'   the independent filtering. If the adjusted p-value cutoff (FDR) will be a
 #'   value other than 0.1, alpha should be set to that value.
-#' @param taxa (Default: 'Genus'): taxonomic level of interest
-#' @param color_tax (Default: 'Phylum'): taxonomic level used for
+#' @param taxolev: taxonomic level of interest
+#' @param color_tax: taxonomic level used for
 #'   color assignation
-#' @param verbose (Default: FALSE): whether the function print some
+#' @param verbose (logical): whether the function print some
 #'   information during the computation
 #' @param ... Additional arguments passed on to \code{\link[edgeR]{exactTest}}
 #'   or \code{\link[ggplot2]{ggplot}}
@@ -27,7 +27,7 @@
 #'   color_tax = "Kingdom"
 #' )
 #' plot_edgeR_phyloseq(GlobalPatterns, c("SampleType", "Soil", "Feces"),
-#'   taxa = "Class", color_tax = "Kingdom"
+#'   taxolev = "Class", color_tax = "Kingdom"
 #' )
 #' }
 #' @author Adrien Taudière
@@ -41,7 +41,7 @@ plot_edgeR_phyloseq <-
   function(physeq,
            contrast = NULL,
            alpha = 0.01,
-           taxa = "Genus",
+           taxolev = "Genus",
            color_tax = "Phylum",
            verbose = TRUE,
            ...) {
@@ -70,7 +70,7 @@ plot_edgeR_phyloseq <-
     sigtab <- res[(res$FDR < alpha), ]
     sigtab <- cbind(methods::as(sigtab, "data.frame"))
 
-    sigtabgen <- subset(sigtab, !is.na(taxa))
+    sigtabgen <- subset(sigtab, !is.na(taxolev))
 
     d <-
       tapply(sigtabgen$logFC, sigtabgen[, color_tax], function(x) {
@@ -81,12 +81,12 @@ plot_edgeR_phyloseq <-
       factor(as.character(sigtabgen[, color_tax]), levels = names(d))
 
     d <-
-      tapply(sigtabgen$logFC, sigtabgen[, taxa], function(x) {
+      tapply(sigtabgen$logFC, sigtabgen[, taxolev], function(x) {
         max(x)
       })
     d <- sort(d, TRUE)
     sigtabgen$tax <-
-      factor(as.character(sigtabgen[, taxa]), levels = names(d))
+      factor(as.character(sigtabgen[, taxolev]), levels = names(d))
 
     p <-
       ggplot(sigtabgen, aes(x = tax, y = logFC, color = col_tax), ...) +
@@ -133,17 +133,17 @@ plot_edgeR_phyloseq <-
 #' @param alpha (Default: 0.01): the significance cutoff used for optimizing
 #'   the independent filtering. If the adjusted p-value cutoff (FDR) will be a
 #'   value other than 0.1, alpha should be set to that value.
-#' @param taxa (Default: 'Genus'): taxonomic level of interest
-#' @param select_taxa (Default: 'No'): logical vector to select taxa to plot
-#' @param color_tax (Default: 'Phylum'): taxonomic level used for color or a
+#' @param taxolev: taxonomic level of interest
+#' @param select_taxa: logical vector to select taxa to plot.
+#' @param color_tax : taxonomic level used for color or a
 #'   color vector.
-#' @param tax_depth (Default: NULL): Taxonomic depth to test for differential
+#' @param tax_depth: Taxonomic depth to test for differential
 #'   distribution among contrast. If Null the analysis is done at the OTU
-#'   (i.e. Species) level. If not Null data need to be a
-#'   \code{\link{phyloseq-class}} object.
-#' @param verbose : whether the function print some information during
+#'   (i.e. Species) level. If not Null, data need to be a column name in 
+#'   the `tax_table` slot of the \code{\link{phyloseq-class}} object.
+#' @param verbose: whether the function print some information during
 #'   the computation
-#' @param jitter_width (Default: 0.1) : width for the jitter positionning
+#' @param jitter_width: width for the jitter positioning
 #' @param ... Additional arguments passed on to \code{\link[DESeq2]{DESeq}}
 #'   or \code{\link[ggplot2]{ggplot}}
 #'
@@ -176,8 +176,8 @@ plot_deseq2_phyloseq <-
            contrast = NULL,
            tax_table = NULL,
            alpha = 0.01,
-           taxa = "Genus",
-           select_taxa = "No",
+           taxolev = "Genus",
+           select_taxa = NULL,
            color_tax = "Phylum",
            tax_depth = NULL,
            verbose = TRUE,
@@ -218,8 +218,8 @@ plot_deseq2_phyloseq <-
           ))
         data_tax@refseq <- NULL
         data <- data_tax
-        if (is.na(match(taxa, colnames(data@tax_table)))) {
-          taxa <- tax_depth
+        if (is.na(match(taxolev, colnames(data@tax_table)))) {
+          taxolev <- tax_depth
         }
       }
 
@@ -249,7 +249,7 @@ plot_deseq2_phyloseq <-
     # Calcul deseq2 results
     res <- DESeq2::results(data, contrast = contrast)
 
-    if (select_taxa[1] != "No") {
+    if (!is.null(select_taxa[1])) {
       res <- res[select_taxa, ]
     }
 
@@ -288,11 +288,11 @@ plot_deseq2_phyloseq <-
     }
 
     # Compute log2FoldChange values
-    x <- tapply(d$log2FoldChange, d[, taxa], function(x) {
+    x <- tapply(d$log2FoldChange, d[, taxolev], function(x) {
       max(x)
     })
     x <- sort(x, TRUE)
-    d$tax <- factor(as.character(d[, taxa]), levels = names(x))
+    d$tax <- factor(as.character(d[, taxolev]), levels = names(x))
 
     if (!sum(are_colors(color_tax)) > 0) {
       p <-

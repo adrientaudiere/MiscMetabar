@@ -59,43 +59,10 @@ tax_datatable(subset_taxa(
 ```{r}
 gp <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 sankey_phyloseq(gp, taxa = c(1:5))
-htmlwidgets::onRender(
-  sk,
-  'function(el) {
-                        el.querySelector("svg").removeAttribute("viewBox")
-                      }'
-)
 ```
 
 ### Circle for visualize distribution of taxa in function of samples variables
 
 ```{r}
 otu_circle(gp, "SampleType", taxa = "Class")
-```
-
-### Re-clustering ASV
-
-#### Using decipher or Vsearch algorithm
-```{r}
-data(data_fungi_sp_known)
-otu <- asv2otu(data_fungi_sp_known, method = "IdClusters")
-otu_vs <- asv2otu(data_fungi_sp_known, method = "vsearch")
-```
-
-```{r}
-summary_plot_phyloseq(data_fungi_sp_known)
-summary_plot_phyloseq(otu)
-summary_plot_phyloseq(otu_vs)
-```
-
-#### Using lulu algorithm (https://www.nature.com/articles/s41467-017-01312-x)
-
-```{r, message=FALSE}
-data(data_fungi_sp_known)
-lulu_res <- lulu_phyloseq(data_fungi_sp_known)
-```
-
-```{r}
-summary_plot_phyloseq(data_fungi_sp_known)
-summary_plot_phyloseq(lulu_res$new_physeq)
 ```

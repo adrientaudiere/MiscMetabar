@@ -1,12 +1,24 @@
-# MiscMetabar 0.24 (in development)
+# MiscMetabar 0.3 (in development)
+
+* Change some function names replacing `physeq` by `pk`.
+\tabular{rl}{
+ [graph_test_pq] \tab now a synonym for [physeq_graph_test]\cr
+ [adonis_pq] \tab now a synonym for [adonis_phyloseq]\cr
+ [clean_pq] \tab now a synonym for [clean_physeq]\cr
+ [lulu_pq] \tab now a synonym for [lulu_phyloseq]\cr
+ [circle_pq] \tab now a synonym for [otu_circle]\cr
+ [biplot_pq] \tab now a synonym for [biplot_physeq]\cr
+}
+* Improve documentation using some Rules 
+
+
+# MiscMetabar 0.24
 
 * Add supplementary info in `summary_plot_physeq`
 * Better arguments in biplot_physeq
 * Add merge_sample_by argument in biplot_physeq
 * Better documentation with more example.
 * For other minors bugs fixes and addition, see the list of commits
-
-
 
 # MiscMetabar 0.23
 
