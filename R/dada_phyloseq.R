@@ -399,9 +399,13 @@ asv2otu <- function(physeq,
 #' @param id (Default: 0.8): id for --usearch_global
 #' @param iddef (Default: 0): iddef for --usearch_global
 #' @examples
-#' seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCAACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG", file = "dna.fa", name = "seq1")
-#' res <- vsearch_search_global(data_fungi, "dna.fa")
-#' unlink(dna.fa)
+#' file_dna <- tempfile("dna.fa")
+#' seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCA
+#' ACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG", 
+#' file = file_dna, name = "seq1")
+#' res <- vsearch_search_global(data_fungi, file_dna)
+#' unlink(file_dna)
+#' 
 #' res[res$identity != "*", ]
 #'
 #' clean_physeq(subset_taxa(data_fungi, res$identity != "*"))
@@ -450,15 +454,10 @@ vsearch_search_global <- function(physeq,
     "query",
     "target"
   )
+  unlink("temp.fasta")
+  unlink("temp.uc")
 
   return(invisible(pack_clusts))
-
-  if (file.exists("temp.fasta")) {
-    file.remove("temp.fasta")
-  }
-  if (file.exists("temp.uc")) {
-    file.remove("temp.uc")
-  }
 }
 ################################################################################
 
