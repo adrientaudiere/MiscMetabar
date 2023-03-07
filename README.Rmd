@@ -23,13 +23,20 @@ See the pkdown site [here](https://adrientaudiere.github.io/MiscMetabar/).
 
 ## Installation
 
-There is no CRAN version of MiscMetabar for now.
+There is no CRAN or bioconductor version of MiscMetabar for now (work in progress).
 
-You can install the development version from [GitHub](https://github.com/) with:
+You can install the stable version from [GitHub](https://github.com/) with:
 
 ```{r installation, message=FALSE}
 install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar")
+```
+
+You can install the developement version from [GitHub](https://github.com/) with:
+
+```{r installation, message=FALSE}
+install.packages("devtools")
+devtools::install_github("adrientaudiere/MiscMetabar", ref="dev")
 ```
 
 ## Some use of MiscMetabar

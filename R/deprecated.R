@@ -21,33 +21,33 @@
 #'
 
 physeq_graph_test <- function(...) {
-  .Deprecated("graph_test_pq", package = "yourPackageName")
+  .Deprecated("graph_test_pq", package = "MiscMetabar")
   graph_test_pq(...)
 }
 
 adonis_phyloseq <- function(...) {
-  .Deprecated("adonis_pq", package = "yourPackageName")
+  .Deprecated("adonis_pq", package = "MiscMetabar")
   adonis_pq(...)
 }
 
 clean_physeq <- function(...) {
-  .Deprecated("clean_pq", package = "yourPackageName")
+  .Deprecated("clean_pq", package = "MiscMetabar")
   clean_pq(...)
 }
 
 
 lulu_phyloseq <- function(...) {
-  .Deprecated("lulu_pq", package = "yourPackageName")
+  .Deprecated("lulu_pq", package = "MiscMetabar")
   lulu_pq(...)
 }
 
 otu_circle <- function(...) {
-  .Deprecated("circle_pq", package = "yourPackageName")
+  .Deprecated("circle_pq", package = "MiscMetabar")
   circle_pq(...)
 }
 
 biplot_physeq <- function(...) {
-  .Deprecated("biplot_pq", package = "yourPackageName")
+  .Deprecated("biplot_pq", package = "MiscMetabar")
   biplot_pq(...)
 }
 NULL
