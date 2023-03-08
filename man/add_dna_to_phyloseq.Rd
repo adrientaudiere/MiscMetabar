@@ -2,7 +2,7 @@
 % Please edit documentation in R/dada_phyloseq.R
 \name{add_dna_to_phyloseq}
 \alias{add_dna_to_phyloseq}
-\title{Add dna in \code{refseq} slot of a physeq object using taxa names and renames taxa
+\title{Add dna in \code{refseq} slot of a \code{physeq} object using taxa names and renames taxa
 using ASV_1, ASV_2, …}
 \usage{
 add_dna_to_phyloseq(physeq)

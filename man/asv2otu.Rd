@@ -18,10 +18,10 @@ asv2otu(
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
 
-\item{nproc}{(default 1)
+\item{nproc}{(Default: 1)
 Set to number of cpus/processors to use for the clustering}
 
-\item{method}{(default Clusterize)
+\item{method}{(Default: Clusterize)
 Set the clustering method.
 \itemize{
 \item \code{Clusterize} use the \code{DECIPHER::Clusterize} fonction,
@@ -29,14 +29,14 @@ Set the clustering method.
 with arguments \code{-cluster_fast} and \verb{-strand both}
 }}
 
-\item{id}{(default=0.97): level of identity to cluster}
-
-\item{vsearchpath}{(default = "vsearch"): path to vsearch}
-
-\item{tax_adjust}{(By default tax_adjust = 1L): See the man page
-of \code{speedyseq::merge_taxa_vec}.}
+\item{id}{(Default: 0.97): level of identity to cluster}
 
 \item{...}{Others arguments path to \code{DECIPHER::Clusterize}}
+
+\item{vsearchpath:}{path to vsearch}
+
+\item{tax_adjust:}{See the man page
+of \code{\link[speedyseq:merge_taxa_vec]{speedyseq::merge_taxa_vec()}} for more details.}
 }
 \value{
 A new object of class \code{physeq}

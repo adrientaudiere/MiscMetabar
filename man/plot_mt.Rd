@@ -2,21 +2,18 @@
 % Please edit documentation in R/plot_functions.R
 \name{plot_mt}
 \alias{plot_mt}
-\title{Plot the result of a mt test (\code{\link[phyloseq]{mt}})}
+\title{Plot the result of a mt test \code{\link[phyloseq:mt-methods]{phyloseq::mt()}}}
 \usage{
 plot_mt(mt = NULL, alpha = 0.05, color_tax = "Class", taxa = "Species")
 }
 \arguments{
-\item{mt}{(required): result of a mt test}
+\item{mt}{(required): Result of a mt test from the function \code{\link[phyloseq:mt-methods]{phyloseq::mt()}}.}
 
-\item{alpha}{(default = 0.05): Choose the cut off p-value to plot taxa}
+\item{alpha}{(Default: 0.05): Choose the cut off p-value to plot taxa.}
 
-\item{color_tax}{: A taxonomic level to color the points}
+\item{color_tax}{(Default: "Class"): A taxonomic level to color the points.}
 
-\item{taxa}{: The taxonomic level choose for x-positioning
-data("GlobalPatterns")
-res <- mt(GlobalPatterns, "SampleType", test="f")
-plot_mt(res, color_tax = "Phylum") + scale_color_hue()}
+\item{taxa}{(Default: "Species"): The taxonomic level you choose for x-positioning.}
 }
 \value{
 a \code{\link{ggplot}}2 plot of result of a mt test
@@ -24,8 +21,16 @@ a \code{\link{ggplot}}2 plot of result of a mt test
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
+\examples{
+data(data_fungi)
+# Filter samples that don't have Enterotype
+data_fungi <- subset_samples(data_fungi, !is.na(Time))
+res <- mt(data_fungi, "Time", method = "fdr", test = "f", B = 300)
+plot_mt(res)
+plot_mt(res, taxa = "Genus", color_tax = "Order")
+}
 \seealso{
-\code{\link[phyloseq]{mt}}
+\code{\link[phyloseq:mt-methods]{phyloseq::mt()}}
 }
 \author{
 Adrien Taudière

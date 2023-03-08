@@ -8,7 +8,7 @@ plot_edgeR_phyloseq(
   physeq,
   contrast = NULL,
   alpha = 0.01,
-  taxa = "Genus",
+  taxolev = "Genus",
   color_tax = "Phylum",
   verbose = TRUE,
   ...
@@ -21,20 +21,20 @@ plot_edgeR_phyloseq(
 to extract from the object to build a results table.
 See \code{\link[DESeq2]{results}} man page for more details.}
 
-\item{alpha}{(default = 0.01): the significance cutoff used for optimizing
+\item{alpha}{(Default: 0.01): the significance cutoff used for optimizing
 the independent filtering. If the adjusted p-value cutoff (FDR) will be a
 value other than 0.1, alpha should be set to that value.}
 
-\item{taxa}{(default = 'Genus'): taxonomic level of interest}
-
-\item{color_tax}{(default = 'Phylum'): taxonomic level used for
-color assignation}
-
-\item{verbose}{(default = FALSE): whether the function print some
+\item{verbose}{(logical): whether the function print some
 information during the computation}
 
 \item{...}{Additional arguments passed on to \code{\link[edgeR]{exactTest}}
 or \code{\link[ggplot2]{ggplot}}}
+
+\item{taxolev:}{taxonomic level of interest}
+
+\item{color_tax:}{taxonomic level used for
+color assignation}
 }
 \value{
 A \code{\link{ggplot}}2 plot representing edgeR results
@@ -49,7 +49,7 @@ plot_edgeR_phyloseq(GlobalPatterns, c("SampleType", "Soil", "Feces"),
   color_tax = "Kingdom"
 )
 plot_edgeR_phyloseq(GlobalPatterns, c("SampleType", "Soil", "Feces"),
-  taxa = "Class", color_tax = "Kingdom"
+  taxolev = "Class", color_tax = "Kingdom"
 )
 }
 }

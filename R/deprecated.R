@@ -50,4 +50,5 @@ biplot_physeq <- function(...) {
   .Deprecated("biplot_pq", package = "MiscMetabar")
   biplot_pq(...)
 }
+
 NULL

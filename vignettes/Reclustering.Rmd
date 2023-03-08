@@ -1,3 +1,23 @@
+---
+title: "Reclustering"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Reclustering}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(MiscMetabar)
+```
+
 # Re-clustering ASVs
 
 ## Using decipher or Vsearch algorithm

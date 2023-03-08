@@ -13,16 +13,17 @@ dist_pos_control(physeq, samples_names, method = "bray")
 \item{samples_names}{(required): a vector of names for samples with
 positives controls of the same samples having the same name}
 
-\item{method}{(default = "bray"): a method to calculate
-the distance, parsed to vegdist}
+\item{method}{(Default: "bray"): a method to calculate
+the distance, parsed to \code{\link[vegan:vegdist]{vegan::vegdist()}}. See ?vegdist for a list
+of possible values.}
 }
 \value{
-A list of two dataframes with
+A list of two data-frames with
 (i) the distance among positive controls and
 (ii) the distance among all samples
 }
 \description{
-#' \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \details{
 Compute distance among positive controls,

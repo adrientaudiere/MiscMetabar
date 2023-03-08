@@ -156,7 +156,7 @@ multiple_share_bisamples <- function(physeq = NULL,
 
   res_df <- t(data.frame(res))
 
-  res_df <- as_tibble(res_df)
+  res_df <- tibble::as_tibble(res_df)
   res_df <- res_df %>%
     mutate(percent_shared_lv1 = round(100 * .data$V3 /
       .data$V1, 2)) %>%

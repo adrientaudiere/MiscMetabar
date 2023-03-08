@@ -4,16 +4,29 @@
 \alias{write_phyloseq}
 \title{Save phyloseq object in the form of multiple csv tables.}
 \usage{
-write_phyloseq(physeq, path = NULL, rdata = FALSE, one_file_ASV = FALSE)
+write_phyloseq(
+  physeq,
+  path = NULL,
+  rdata = FALSE,
+  one_file_ASV = FALSE,
+  write_sam_data = TRUE,
+  ...
+)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
 
-\item{path}{(default: NULL) : a path to the folder to save the phyloseq object}
+\item{rdata}{(logical): does the phyloseq object is also saved in Rdata format?}
 
-\item{rdata}{(default: FALSE) : does the phyloseq object is also saved in Rdata format}
+\item{one_file_ASV}{(logical): if TRUE, combine all data in one file only}
 
-\item{one_file_ASV}{(default: FALSE) : combine all data in one file only}
+\item{write_sam_data}{(logical): does the samples data are add to
+the file. Only used if \code{one_file_ASV} is TRUE.
+Note that this result in a lot of NA values.}
+
+\item{...}{Other arguments passed to \code{\link[utils:write.table]{utils::write.csv()}} function.}
+
+\item{path:}{a path to the folder to save the phyloseq object}
 }
 \value{
 One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
@@ -25,6 +38,7 @@ and if present a phy_tree in Newick format
 \examples{
 \dontrun{
 write_phyloseq(data_fungi, path = "phyloseq")
+write_phyloseq(data_fungi, path = "phyloseq", one_file_ASV = TRUE)
 }
 
 }

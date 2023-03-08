@@ -27,7 +27,7 @@ with two or more levels.}
 of the test or do we plot the result}
 
 \item{...}{other params for be passed on
-\code{phyloseqGraphTest::graph_perm_test} function}
+\code{\link[phyloseqGraphTest:graph_perm_test]{phyloseqGraphTest::graph_perm_test()}} function}
 
 \item{merge_sample_by:}{a vector to determine
 which samples to merge using the
@@ -46,11 +46,11 @@ important statistics
 }
 \examples{
 data(enterotype)
-physeq_graph_test(enterotype, fact = "SeqTech")
+graph_test_pq(enterotype, fact = "SeqTech")
 
 clean_enterotype <- subset_samples(enterotype,
                                    !is.na(enterotype@sam_data$Enterotype))
-physeq_graph_test(clean_enterotype, fact = "Enterotype")
+graph_test_pq(clean_enterotype, fact = "Enterotype")
 }
 \author{
 Adrien Taudière

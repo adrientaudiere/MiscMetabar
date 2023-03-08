@@ -2,7 +2,7 @@
 % Please edit documentation in R/miscellanous.R
 \name{all_object_size}
 \alias{all_object_size}
-\title{List the size of all object of the GlobalEnv.}
+\title{List the size of all objects of the GlobalEnv.}
 \usage{
 all_object_size()
 }

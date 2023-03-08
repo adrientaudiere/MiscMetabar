@@ -18,15 +18,15 @@
 #' @param return_plot (logical): do we return only the result
 #'   of the test or do we plot the result
 #' @param ... other params for be passed on
-#'   `phyloseqGraphTest::graph_perm_test` function
+#'   [phyloseqGraphTest::graph_perm_test()] function
 #'
 #' @examples
 #' data(enterotype)
-#' physeq_graph_test(enterotype, fact = "SeqTech")
+#' graph_test_pq(enterotype, fact = "SeqTech")
 #'
 #' clean_enterotype <- subset_samples(enterotype,
 #'                                    !is.na(enterotype@sam_data$Enterotype))
-#' physeq_graph_test(clean_enterotype, fact = "Enterotype")
+#' graph_test_pq(clean_enterotype, fact = "Enterotype")
 #' @author Adrien Taudière
 #'
 #' @return a ggplot with a subtitle indicating the pvalue
@@ -90,6 +90,7 @@ graph_test_pq <- function(physeq,
 #' )
 #' adonis_pq(clean_enterotype, "SeqTech*Enterotype")
 #' @export
+#' @importFrom stats reformulate
 #' @author Adrien Taudière
 
 adonis_pq <- function(physeq, formula, merge_sample_by = NULL) {

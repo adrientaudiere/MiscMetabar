@@ -18,15 +18,27 @@ vsearch_search_global(
 
 \item{seq2search}{(required): path to fasta file}
 
-\item{vsearchpath}{(default = "vsearch"): path to vsearch}
+\item{id}{(Default: 0.8): id for --usearch_global}
 
-\item{id}{(default = 0.8): id for --usearch_global}
+\item{iddef}{(Default: 0): iddef for --usearch_global}
 
-\item{iddef}{(default = 0): iddef for --usearch_global}
+\item{vsearchpath:}{path to vsearch}
 }
 \value{
 A dataframe with uc results (invisible)
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+}
+\examples{
+file_dna <- tempfile("dna.fa")
+seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCA
+ACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG", 
+file = file_dna, name = "seq1")
+res <- vsearch_search_global(data_fungi, file_dna)
+unlink(file_dna)
+
+res[res$identity != "*", ]
+
+clean_pq(subset_taxa(data_fungi, res$identity != "*"))
 }

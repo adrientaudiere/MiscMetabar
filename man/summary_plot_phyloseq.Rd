@@ -13,18 +13,17 @@ summary_plot_phyloseq(
 }
 \arguments{
 \item{physeq}{(required): A \code{\link{phyloseq-class}} object.
-For the moment refseq slot need to be not Null.}
+refseq slot need to be not Null.}
 
-\item{add_info}{(default TRUE): Does the bottom down corner contain
-extra informations.}
-
-\item{min_seq_samples}{(default 500): Used only when add_info is set
+\item{min_seq_samples}{(int): Used only when add_info is set
 to true to print the number of samples with less sequences than
 this number.}
 
-\item{clean_phyloseq}{(Bool, default to TRUE): Does the phyloseq
-object is cleaned using the \code{\link[MiscMetabar]{clean_physeq}}
-function.}
+\item{clean_phyloseq}{(logical): Does the phyloseq
+object is cleaned using the \code{\link[=clean_pq]{clean_pq()}} function?}
+
+\item{add_info:}{Does the bottom down corner contain
+extra informations?}
 }
 \value{
 A ggplot2 object

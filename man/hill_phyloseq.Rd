@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_functions.R
 \name{hill_phyloseq}
 \alias{hill_phyloseq}
-\title{Graphical representation of hill number 0, 1 and 2 accross a factor}
+\title{Graphical representation of hill number 0, 1 and 2 across a factor}
 \usage{
 hill_phyloseq(physeq, variable, color_fac = NA, letters = FALSE)
 }

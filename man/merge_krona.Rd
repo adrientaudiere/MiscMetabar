@@ -9,7 +9,7 @@ merge_krona(files = NULL, output = "mergeKrona.html")
 \arguments{
 \item{files}{(required): path to html files to merged}
 
-\item{output}{(default="mergeKrona.html") : path to the output files}
+\item{output:}{path to the output file}
 }
 \value{
 A html file
@@ -24,8 +24,8 @@ Function merge_krona allows merging multiple html files in one interactive krona
 data("GlobalPatterns")
 GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
 # krona(GA, "Number.of.sequences.html")
-# krona(GA, "Number.of.OTUs.html", nb_seq = F)
-# merge_krona(c("Number.of.sequences.html", "Number.of.OTUs.html"))
+# krona(GA, "Number.of.ASVs.html", nb_seq = F)
+# merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"))
 }
 \seealso{
 \code{\link{krona}}

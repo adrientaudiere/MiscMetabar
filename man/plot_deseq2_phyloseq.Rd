@@ -9,8 +9,8 @@ plot_deseq2_phyloseq(
   contrast = NULL,
   tax_table = NULL,
   alpha = 0.01,
-  taxa = "Genus",
-  select_taxa = "No",
+  taxolev = "Genus",
+  select_taxa = NULL,
   color_tax = "Phylum",
   tax_depth = NULL,
   verbose = TRUE,
@@ -32,29 +32,29 @@ The taxonomic table used to find the \code{taxa} and \code{color_taxa}
 arguments. If data is a \code{\link{phyloseq-class}} object, data@tax_table
 is used.}
 
-\item{alpha}{(default = 0.01): the significance cutoff used for optimizing
+\item{alpha}{(Default: 0.01): the significance cutoff used for optimizing
 the independent filtering. If the adjusted p-value cutoff (FDR) will be a
 value other than 0.1, alpha should be set to that value.}
 
-\item{taxa}{(default = 'Genus'): taxonomic level of interest}
-
-\item{select_taxa}{(default = 'No'): logical vector to select taxa to plot}
-
-\item{color_tax}{(default = 'Phylum'): taxonomic level used for color or a
+\item{color_tax}{: taxonomic level used for color or a
 color vector.}
-
-\item{tax_depth}{(default = NULL): Taxonomic depth to test for differential
-distribution among contrast. If Null the analysis is done at the OTU
-(i.e. Species) level. If not Null data need to be a
-\code{\link{phyloseq-class}} object.}
-
-\item{verbose}{: whether the function print some information during
-the computation}
-
-\item{jitter_width}{(default=0.1) : width for the jitter positionning}
 
 \item{...}{Additional arguments passed on to \code{\link[DESeq2]{DESeq}}
 or \code{\link[ggplot2]{ggplot}}}
+
+\item{taxolev:}{taxonomic level of interest}
+
+\item{select_taxa:}{logical vector to select taxa to plot.}
+
+\item{tax_depth:}{Taxonomic depth to test for differential
+distribution among contrast. If Null the analysis is done at the OTU
+(i.e. Species) level. If not Null, data need to be a column name in
+the \code{tax_table} slot of the \code{\link{phyloseq-class}} object.}
+
+\item{verbose:}{whether the function print some information during
+the computation}
+
+\item{jitter_width:}{width for the jitter positioning}
 }
 \value{
 A \code{\link{ggplot}}2 plot representing DESeq2 results

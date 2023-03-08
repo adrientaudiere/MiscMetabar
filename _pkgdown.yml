@@ -8,3 +8,14 @@ template:
     secondary: "#c8a734"
 navbar:
   bg: secondary
+articles:
+- title: Tutorials
+  navbar: ~
+  contents:
+  - Alpha-div
+  - Reclustering
+
+- title: Developer
+  desc: Vignettes aimed at package developers
+  contents:
+  - Rules

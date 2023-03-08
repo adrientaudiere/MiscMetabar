@@ -2,7 +2,7 @@
 % Please edit documentation in R/miscellanous.R
 \name{simplify_taxo}
 \alias{simplify_taxo}
-\title{Simplify taxonomy by removing some unused character such as "k__"}
+\title{Simplify taxonomy by removing some unused characters such as "k__"}
 \usage{
 simplify_taxo(physeq)
 }

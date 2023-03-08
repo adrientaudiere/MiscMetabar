@@ -11,10 +11,10 @@ dist_bycol(x, y, method = "bray", nperm = 99, ...)
 
 \item{y}{(required): A second matrix.}
 
-\item{method}{(default = 'bray'): the method to use internally in the vegdist
+\item{method}{(Default: 'bray'): the method to use internally in the vegdist
 function.}
 
-\item{nperm}{(default = 99): The number of permutations}
+\item{nperm}{(Default: 99): The number of permutations}
 
 \item{...}{(optional): others argument for \code{vegan::vegdist} function}
 }

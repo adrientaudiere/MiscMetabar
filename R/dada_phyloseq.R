@@ -408,7 +408,7 @@ asv2otu <- function(physeq,
 #' 
 #' res[res$identity != "*", ]
 #'
-#' clean_physeq(subset_taxa(data_fungi, res$identity != "*"))
+#' clean_pq(subset_taxa(data_fungi, res$identity != "*"))
 #' @return A dataframe with uc results (invisible)
 #' @export
 
@@ -612,7 +612,8 @@ write_phyloseq <- function(physeq,
                            path = NULL,
                            rdata = FALSE,
                            one_file_ASV = FALSE,
-                           write_sam_data = TRUE) {
+                           write_sam_data = TRUE,
+                           ...) {
   verify_pq(physeq)
   if (!dir.exists(path)) {
     dir.create(file.path(path), recursive = TRUE)
@@ -768,6 +769,7 @@ read_phyloseq <- function(path = NULL, taxa_are_rows = FALSE) {
 #' - "res_lulu": A list of the result from the lulu function
 #' - "merged_ASV": the data.frame used to merged ASV
 #'
+#' @importFrom stats na.exclude
 #' @export
 #' @examples
 #' \dontrun{

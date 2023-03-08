@@ -5,30 +5,32 @@
 \title{Track the number of reads (= sequences), samples and cluster (e.g. ASV)
 from various objects including dada-class and derep-class.}
 \usage{
-track_wkflow(list_of_objects, obj_names = NULL, clean_physeq = FALSE)
+track_wkflow(list_of_objects, obj_names = NULL, clean_pq = FALSE)
 }
 \arguments{
-\item{list_of_objects}{(required): A list of objects}
+\item{list_of_objects}{(Required): A list of objects}
 
-\item{obj_names}{(default: NULL) :
-A list of names corresponding to the list of objects}
+\item{clean_pq}{(Logical):
+If true, empty samples and empty ASV are discarded before clustering.}
 
-\item{clean_physeq}{(Logical, default = FALSE) If true, empty samples and empty ASV are discarded before clustering.}
+\item{obj_names:}{A list of names corresponding to the list of objects}
 }
 \value{
 The number of sequences, clusters (e.g. OTUs, ASVs) and samples for
 each object.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+Track the number of reads (= sequences), samples and cluster (e.g. ASV)
+from various objects including dada-class and derep-class.
 }
 \details{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 \itemize{
 \item List of fastq and fastg.gz files -> nb of reads and samples
 \item List of dada-class -> nb of reads, clusters (ASV) and samples
 \item List of derep-class -> nb of reads, clusters (unique sequences)
 and samples
-\item Matrix of samples x clusters (e.g. otu_table) -> nb of reads,
+\item Matrix of samples x clusters (e.g. \code{otu_table}) -> nb of reads,
 clusters and samples
 \item Phyloseq-class -> nb of reads, clusters and samples
 }

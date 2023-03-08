@@ -8,7 +8,7 @@ subset_taxa_tax_control(
   physeq,
   taxa_distri,
   method = "mean",
-  min_diff_for_cutoff = 10
+  min_diff_for_cutoff
 )
 }
 \arguments{
@@ -17,18 +17,21 @@ subset_taxa_tax_control(
 \item{taxa_distri}{(required): a vector of length equal to the number of
 samples with the number of sequences per samples for the taxa control}
 
-\item{method}{(default = "mean"): a method to calculate the cut-off value.
-There is 6 methods:
-(i)   cutoff_seq: discard taxa with less than the number of sequence
+\item{method}{(Default: "mean"): a method to calculate the cut-off value.
+There is 6 available methods:
+\enumerate{
+\item \code{cutoff_seq}: discard taxa with less than the number of sequence
 than taxa control,
-(ii)  cutoff_mixt: using mixture models,
-(iii) cutoff_diff: using a minimum difference threshold
+\item \code{cutoff_mixt}: using mixture models,
+\item \code{cutoff_diff}: using a minimum difference threshold
 (need the argument min_diff_for_cutoff)
-(iv)  min: the minimum of the three firsts methods
-(v)   max: the maximum of the three firsts methods
-(vi)  mean: the mean of the three firsts methods}
+\item \code{min}: the minimum of the three firsts methods
+\item \code{max}: the maximum of the three firsts methods
+\item \code{mean}: the mean of the three firsts methods
+}}
 
-\item{min_diff_for_cutoff}{(default = 10): argument for method cutoff_diff}
+\item{min_diff_for_cutoff}{(int): argument for method \code{cutoff_diff}.
+Required if method is \code{cutoff_diff}, \code{min}, \code{max} or \code{min}}
 }
 \value{
 A new \code{\link{phyloseq-class}} object.

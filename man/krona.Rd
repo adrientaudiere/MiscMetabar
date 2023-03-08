@@ -18,19 +18,19 @@ krona(
 
 \item{file}{(required): the location of the html file to save}
 
-\item{nb_seq}{(logical, default to TRUE): If true, Krona set the distribution
-of sequences in the taxonomy. If False, Krona set the distribution of OTUs
+\item{nb_seq}{(logical): If true, Krona set the distribution
+of sequences in the taxonomy. If False, Krona set the distribution of ASVs
 in the taxonomy.}
 
-\item{ranks}{(default="All"): Number of the taxonomic ranks to plot
-(num of the column in tax_table of your physeq object).
+\item{add_unassigned_rank}{(int). Add unassigned for rank
+inferior to 'add_unassigned_rank' when necessary.}
+
+\item{ranks:}{Number of the taxonomic ranks to plot
+(num of the column in \code{tax_table} slot of your \code{physeq} object).
 Default setting plot all the ranks (argument 'All').}
 
-\item{add_unassigned_rank}{(number; default = 0). Add unassigned for rank
-inferior to 'add_unassigned_rank' when necessary}
-
-\item{name}{(default=NULL) : A name for intermediary files, Useful to name
-your krona dataset when merge using merge_krona}
+\item{name:}{A name for intermediary files, Useful to name
+your krona result files before merging using \code{\link[=merge_krona]{merge_krona()}}}
 }
 \value{
 A html file
@@ -44,8 +44,8 @@ Need the installation of kronatools on the computer (\href{https://github.com/ma
 data("GlobalPatterns")
 GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
 # krona(GA, "Number.of.sequences.html")
-# krona(GA, "Number.of.OTUs.html", nb_seq = F)
-# merge_krona(c("Number.of.sequences.html", "Number.of.OTUs.html"))
+# krona(GA, "Number.of.ASVs.html", nb_seq = F)
+# merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"))
 }
 \seealso{
 \code{\link{merge_krona}}

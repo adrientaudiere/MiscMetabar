@@ -1,4 +1,13 @@
-# Rules for the package
+---
+title: "Rules"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Rules}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Rules for the package developement
 
 ## Documentation
 

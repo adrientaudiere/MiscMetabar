@@ -326,10 +326,10 @@ accu_plot <-
 #' @examples
 #' data("GlobalPatterns")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
-#' otu_circle(GP, "SampleType")
+#' circle_pq(GP, "SampleType")
 #' \dontrun{
-#' otu_circle(GP, "SampleType", add_nb_seq = FALSE)
-#' otu_circle(GP, "SampleType", taxa = "Class")
+#' circle_pq(GP, "SampleType", add_nb_seq = FALSE)
+#' circle_pq(GP, "SampleType", taxa = "Class")
 #' }
 #' @author Adrien Taudière
 #'
@@ -341,7 +341,7 @@ accu_plot <-
 #' @seealso \code{\link[circlize]{chordDiagram}}
 #' @seealso \code{\link[circlize]{circos.par}}
 
-otu_circle <-
+circle_pq <-
   function(physeq = NULL,
            fact = NULL,
            taxa = "Order",
@@ -526,9 +526,9 @@ otu_circle <-
 #' @param fact (Optional): Name of the factor to cluster samples by modalities.
 #' Need to be in \code{physeq@sam_data}.
 #' @param taxa (Default: c(1:4)): a vector of taxonomic rank to plot
-#' @param add_nb_seq (Default: FALSE): Represent the number of sequences or the
-#'   number of OTUs (add_nb_seq = FALSE). Note that ploting the number of sequences
-#'   is slower.
+#' @param add_nb_seq: Represent the number of sequences or the
+#'   number of OTUs (add_nb_seq = FALSE). Note that ploting the number of
+#'   sequences is slower.
 #' @param min_prop_tax (Default: 0): The minimum proportion for taxon to be
 #'  ploted. EXPERIMENTAL. For the moment each links below the min.prop.
 #'  tax is discard from the sankey network resulting in sometimes weird plot.
@@ -941,7 +941,7 @@ venn_phyloseq <-
 #'   Need to be in \code{physeq@sam_data}.
 #' @param merge_sample_by (Default: NULL): if not `NULL` samples of
 #'   physeq are mereged using the vector set by `merge_sample_by`. This
-#'   merging used the [speedyseq::merge_samples2].
+#'   merging used the [speedyseq::merge_samples2()].
 #'   If `merge_sample_by` is equal to `fact`
 #'   it give the same result as if `merge_sample_by` is NULL.
 #' @param min_nb_seq (Default: 0)): minimum number of sequences by OTUs by
@@ -971,7 +971,7 @@ ggVenn_phyloseq <- function(physeq = NULL,
 
   if (!is.null(merge_sample_by)) {
     physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
-    physeq <- clean_physeq(physeq)
+    physeq <- clean_pq(physeq)
   }
 
   res <- list()
@@ -1205,15 +1205,14 @@ hill_phyloseq <-
 #' @description
 #' `r lifecycle::badge("maturing")`
 #' @param physeq (required): A \code{\link{phyloseq-class}} object.
-#' For the moment refseq slot need to be not Null.
-#' @param add_info (Default TRUE): Does the bottom down corner contain
-#' extra informations.
-#' @param min_seq_samples (Default 500): Used only when add_info is set
-#' to true to print the number of samples with less sequences than
-#' this number.
-#' @param clean_phyloseq (Bool, default to TRUE): Does the phyloseq
-#' object is cleaned using the \code{\link[MiscMetabar]{clean_physeq}}
-#' function.
+#'   refseq slot need to be not Null.
+#' @param add_info: Does the bottom down corner contain
+#'   extra informations?
+#' @param min_seq_samples (int): Used only when add_info is set
+#'   to true to print the number of samples with less sequences than
+#'   this number.
+#' @param clean_phyloseq (logical): Does the phyloseq
+#'   object is cleaned using the [clean_pq()] function?
 #' @examples
 #' data(data_fungi)
 #' summary_plot_phyloseq(data_fungi)
@@ -1224,7 +1223,7 @@ summary_plot_phyloseq <- function(physeq,
                                   min_seq_samples = 500,
                                   clean_phyloseq = TRUE) {
   if (clean_phyloseq) {
-    clean_physeq(d)
+    clean_pq(physeq)
   }
   if (physeq@otu_table@taxa_are_rows) {
     otu_tab <- t(physeq@otu_table)
@@ -1425,8 +1424,8 @@ physeq_heat_tree <- function(physeq, taxonomic_level = NULL, ...) {
 #' If set to NULL use the `left_name` and `right_name` parameter as modality.
 #' @param merge_sample_by (Default: NULL): if not `NULL` samples of
 #'   physeq are mereged using the vector set by `merge_sample_by`. This
-#'   merging used the [ speedyseq::merge_samples2]. In the case of
-#'   [biplot_physeq()] this must be a factor with two levels only.
+#'   merging used the [speedyseq::merge_samples2()]. In the case of
+#'   [biplot_pq()] this must be a factor with two levels only.
 #' @param left_name (Default: "A"): Name fo the left sample.
 #' @param right_name  (Default: "B"): Name fo the right sample.
 #' @param left_fill : Fill fo the left sample.
@@ -1440,12 +1439,12 @@ physeq_heat_tree <- function(physeq, taxonomic_level = NULL, ...) {
 #' @param text_size (Default: 3): default size for the number of sequences
 #' @param plotly_version (Default: FALSE)
 #' @param ... : other arguments for the ggplot function
-
+#' @importFrom stats reorder
 #' @return A plot
 #' @export
 #' @author Adrien Taudière
 #'
-biplot_physeq <- function(physeq,
+biplot_pq <- function(physeq,
                           fact = NULL,
                           merge_sample_by = NULL,
                           inverse_side = FALSE,
@@ -1463,11 +1462,11 @@ biplot_physeq <- function(physeq,
                           ...) {
   if (!is.null(merge_sample_by)) {
     physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
-    physeq <- clean_physeq(physeq)
+    physeq <- clean_pq(physeq)
   }
 
   if (nsamples(physeq) != 2) {
-    stop("biplot_physeq needs only two samples in the
+    stop("biplot_pq needs only two samples in the
     physeq object or a valid merge_sample_by parameter")
   }
 
@@ -1587,7 +1586,7 @@ biplot_physeq <- function(physeq,
     scale_color_manual(values = c(left_col, right_col), guide = "none")
 
   if (plotly_version) {
-    p <- ggplotly(p,
+    p <- plotly::ggplotly(p,
       tooltip = c("OTU", "Ab", "Proportion", "Family", "Genus", "Species"),
       height = 1200, width = 800
     ) %>%
@@ -1595,8 +1594,8 @@ biplot_physeq <- function(physeq,
         xaxis = list(autorange = TRUE),
         yaxis = list(autorange = TRUE)
       ) %>%
-      config(locale = "fr") %>%
-      hide_legend()
+      plotly::config(locale = "fr") %>%
+      plotly::hide_legend()
   }
   return(p)
 }

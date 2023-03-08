@@ -9,7 +9,8 @@ NULL
 
 if (getRversion() >= "2.15.1") {
   utils::globalVariables(c(
-    "%>%", ".id", "Hill_0", "Hill_1", "Hill_2", "X1",
+    "%>%", ".id", "Ab", "Abundance", "Hill_0", "Hill_1",
+    "Hill_2", "X1", "Family", "Genus", "OTU", "Proportion", "Species",
     "col_tax", "devtools", "grid.draw", "grid.layout",
     "group_by", "install_github", "log2FoldChange",
     "logFC", "lwr", "max_Hill", "modality",
@@ -20,6 +21,8 @@ if (getRversion() >= "2.15.1") {
     "y1", "y2", "ymax", "ymin"
   ))
 }
+
+ 
 
 #' @keywords internal
 "_PACKAGE"
