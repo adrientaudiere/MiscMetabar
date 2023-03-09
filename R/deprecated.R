@@ -7,8 +7,8 @@
 #' @name MiscMetabar-deprecated
 #' @param ... Parameters to be passed to the modern version of the function
 #' @docType package
-#' @export  physeq_graph_test adonis_phyloseq clean_physeq lulu_phyloseq otu_circle biplot_physeq read_phyloseq write_phyloseq
-#' @aliases physeq_graph_test adonis_phyloseq clean_physeq lulu_phyloseq otu_circle biplot_physeq read_phyloseq write_phyloseq
+#' @export  physeq_graph_test adonis_phyloseq clean_physeq lulu_phyloseq otu_circle biplot_physeq read_phyloseq write_phyloseq sankey_phyloseq
+#' @aliases physeq_graph_test adonis_phyloseq clean_physeq lulu_phyloseq otu_circle biplot_physeq read_phyloseq write_phyloseq sankey_phyloseq
 #' @section Details:
 #' \tabular{rl}{
 #'   [graph_test_pq] \tab now a synonym for [physeq_graph_test]\cr
@@ -19,6 +19,7 @@
 #'   [biplot_pq] \tab now a synonym for [biplot_physeq]\cr
 #'   [read_pq] \tab now a synonym for [read_phyloseq]\cr
 #'   [write_pq] \tab now a synonym for [write_phyloseq]\cr
+#'   [sankey_pq] \tab now a synonym for [sankey_phyloseq]\cr
 #' }
 #'
 
@@ -63,5 +64,9 @@ write_phyloseq <- function(...) {
   write_pq(...)
 }
 
+sankey_phyloseq <- function(...) {
+  .Deprecated("sankey_pq", package = "MiscMetabar")
+  sankey_pq(...)
+}
 
 NULL

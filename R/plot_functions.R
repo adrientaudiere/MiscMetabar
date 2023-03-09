@@ -543,9 +543,9 @@ circle_pq <-
 #' @examples
 #' data("GlobalPatterns")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
-#' sankey_phyloseq(GP, fact = "SampleType")
-#' sankey_phyloseq(GP, taxa = c(1:4), min_prop_tax = 0.01)
-#' sankey_phyloseq(GP, taxa = c(1:4), min_prop_tax = 0.01, add_nb_seq = TRUE)
+#' sankey_pq(GP, fact = "SampleType")
+#' sankey_pq(GP, taxa = c(1:4), min_prop_tax = 0.01)
+#' sankey_pq(GP, taxa = c(1:4), min_prop_tax = 0.01, add_nb_seq = TRUE)
 #' @author Adrien Taudière
 #'
 #' @return A \code{\link[networkD3]{sankeyNetwork}} plot representing the
@@ -556,7 +556,7 @@ circle_pq <-
 #' @export
 #' @seealso \code{\link[networkD3]{sankeyNetwork}}
 
-sankey_phyloseq <-
+sankey_pq <-
   function(physeq = NULL,
            fact = NULL,
            taxa = c(1:4),

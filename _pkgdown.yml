@@ -8,14 +8,16 @@ template:
     secondary: "#c8a734"
 navbar:
   bg: secondary
-articles:
-- title: Tutorials
-  navbar: ~
-  contents:
-  - Alpha-div
-  - Reclustering
-
-- title: Developer
-  desc: Vignettes aimed at package developers
-  contents:
-  - Rules
+  components:
+   articles:
+    text: Articles
+    menu:
+    - text: Tutorials
+    - text: Alpha-diversity
+      href: articles/alpha-div.html
+    - text: Reclustering
+      href: articles/Reclustering.html
+    - text: -------
+    - text: "For developpers"
+    - text: Rules of code
+      href: articles/Rules.html

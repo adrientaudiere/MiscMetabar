@@ -10,6 +10,7 @@
  [biplot_pq] \tab now a synonym for [biplot_physeq]\cr
  [read_pq] \tab now a synonym for [read_phyloseq]\cr
  [write_pq] \tab now a synonym for [write_phyloseq]\cr
+ [sankey_pq] \tab now a synonym for [sankey_phyloseq]\cr
 }
 * Improve documentation using some rules documented in the Rules vignettes.
 * Add a option `sam_names` to [read_pq()]
