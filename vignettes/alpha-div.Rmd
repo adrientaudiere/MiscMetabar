@@ -41,7 +41,7 @@ One way to keep into account for difference in the number of sequences per sampl
 
 ```r
 stats::TukeyHSD()
-MiscMetabar::hill_tuckey_phyloseq()
+MiscMetabar::hill_tuckey_pq()
 ```
 
 #### Testing differences in alpha diversity following the [tutorial](https://microbiome.github.io/tutorials/Alphadiversity.html) of the microbiome package. 

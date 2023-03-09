@@ -28,19 +28,19 @@ otu_vs <- asv2otu(data_fungi_sp_known, method = "vsearch")
 ```
 
 ```{r}
-summary_plot_phyloseq(data_fungi_sp_known)
-summary_plot_phyloseq(otu)
-summary_plot_phyloseq(otu_vs)
+summary_plot_pq(data_fungi_sp_known)
+summary_plot_pq(otu)
+summary_plot_pq(otu_vs)
 ```
 
 ## Using lulu algorithm (https://www.nature.com/articles/s41467-017-01312-x)
 
 ```{r, message=FALSE}
 data(data_fungi_sp_known)
-lulu_res <- lulu_phyloseq(data_fungi_sp_known)
+lulu_res <- lulu_pq(data_fungi_sp_known)
 ```
 
 ```{r}
-summary_plot_phyloseq(data_fungi_sp_known)
-summary_plot_phyloseq(lulu_res$new_physeq)
+summary_plot_pq(data_fungi_sp_known)
+summary_plot_pq(lulu_res$new_physeq)
 ```

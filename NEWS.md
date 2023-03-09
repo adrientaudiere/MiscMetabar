@@ -1,6 +1,6 @@
 # MiscMetabar 0.3 (in development)
 
-* Change some function names replacing `physeq` by `pk`.
+* Change some function names, mainly replacing `physeq` by `pk`.
 \tabular{rl}{
  [graph_test_pq] \tab now a synonym for [physeq_graph_test]\cr
  [adonis_pq] \tab now a synonym for [adonis_phyloseq]\cr
@@ -11,6 +11,14 @@
  [read_pq] \tab now a synonym for [read_phyloseq]\cr
  [write_pq] \tab now a synonym for [write_phyloseq]\cr
  [sankey_pq] \tab now a synonym for [sankey_phyloseq]\cr
+ [summary_plot_pq] \tab now a synonym for [summary_plot_phyloseq]\cr
+ [plot_edgeR_pq] \tab now a synonym for [plot_edgeR_phyloseq]\cr
+ [plot_deseq2_pq] \tab now a synonym for [plot_deseq2_phyloseq]\cr
+ [venn_pq] \tab now a synonym for [venn_phyloseq]\cr
+ [ggvenn_pq] \tab now a synonym for [ggVenn_phyloseq]\cr
+ [hill_tuckey_pq] \tab now a synonym for [hill_tuckey_phyloseq]\cr
+ [hill_pq] \tab now a synonym for [hill_phyloseq]\cr
+ [heat_tree_pq] \tab now a synonym for [physeq_heat_tree]\cr
 }
 * Improve documentation using some rules documented in the Rules vignettes.
 * Add a option `sam_names` to [read_pq()]

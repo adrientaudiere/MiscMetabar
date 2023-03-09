@@ -7,8 +7,8 @@
 #' @name MiscMetabar-deprecated
 #' @param ... Parameters to be passed to the modern version of the function
 #' @docType package
-#' @export  physeq_graph_test adonis_phyloseq clean_physeq lulu_phyloseq otu_circle biplot_physeq read_phyloseq write_phyloseq sankey_phyloseq
-#' @aliases physeq_graph_test adonis_phyloseq clean_physeq lulu_phyloseq otu_circle biplot_physeq read_phyloseq write_phyloseq sankey_phyloseq
+#' @export  physeq_graph_test adonis_phyloseq clean_physeq lulu_phyloseq otu_circle biplot_physeq read_phyloseq write_phyloseq sankey_phyloseq summary_plot_phyloseq plot_plot_deseq2_phyloseq plot_edgeR_phyloseq venn_phyloseq ggVenn_phyloseq hill_tuckey_phyloseq hill_phyloseq physeq_heat_tree
+#' @aliases physeq_graph_test adonis_phyloseq clean_physeq lulu_phyloseq otu_circle biplot_physeq read_phyloseq write_phyloseq sankey_phyloseq summary_plot_phyloseq plot_plot_deseq2_phyloseq plot_edgeR_phyloseq venn_phyloseq ggVenn_phyloseq hill_tuckey_phyloseq hill_phyloseq physeq_heat_tree
 #' @section Details:
 #' \tabular{rl}{
 #'   [graph_test_pq] \tab now a synonym for [physeq_graph_test]\cr
@@ -20,6 +20,14 @@
 #'   [read_pq] \tab now a synonym for [read_phyloseq]\cr
 #'   [write_pq] \tab now a synonym for [write_phyloseq]\cr
 #'   [sankey_pq] \tab now a synonym for [sankey_phyloseq]\cr
+#'   [summary_plot_pq] \tab now a synonym for [summary_plot_phyloseq]\cr
+#'   [plot_edgeR_pq] \tab now a synonym for [plot_edgeR_phyloseq]\cr
+#'   [plot_deseq2_pq] \tab now a synonym for [plot_deseq2_phyloseq]\cr
+#'   [venn_pq] \tab now a synonym for [venn_phyloseq]\cr
+#'   [ggvenn_pq] \tab now a synonym for [ggVenn_phyloseq]\cr
+#'   [hill_tuckey_pq] \tab now a synonym for [hill_tuckey_phyloseq]\cr
+#'   [hill_pq] \tab now a synonym for [hill_phyloseq]\cr
+#'   [heat_tree_pq] \tab now a synonym for [physeq_heat_tree]\cr
 #' }
 #'
 
@@ -67,6 +75,46 @@ write_phyloseq <- function(...) {
 sankey_phyloseq <- function(...) {
   .Deprecated("sankey_pq", package = "MiscMetabar")
   sankey_pq(...)
+}
+
+summary_plot_phyloseq <- function(...) {
+  .Deprecated("summary_plot_pq", package = "MiscMetabar")
+  summary_plot_pq(...)
+}
+
+plot_edgeR_phyloseq <- function(...) {
+  .Deprecated("plot_edgeR_pq", package = "MiscMetabar")
+  plot_edgeR_pq(...)
+}
+
+plot_deseq2_phyloseq <- function(...) {
+  .Deprecated("plot_deseq2_pq", package = "MiscMetabar")
+  plot_deseq2_pq(...)
+}
+
+venn_phyloseq <- function(...) {
+  .Deprecated("venn_pq", package = "MiscMetabar")
+  venn_pq(...)
+}
+
+ggVenn_phyloseq <- function(...) {
+  .Deprecated("ggvenn_pq", package = "MiscMetabar")
+  ggvenn_pq(...)
+}
+
+hill_tuckey_phyloseq <- function(...) {
+  .Deprecated("hill_tuckey_pq", package = "MiscMetabar")
+  hill_tuckey_pq(...)
+}
+
+hill_phyloseq <- function(...) {
+  .Deprecated("hill_pq", package = "MiscMetabar")
+  hill_pq(...)
+}
+
+physeq_heat_tree <- function(...) {
+  .Deprecated("heat_tree_pq", package = "MiscMetabar")
+  heat_tree_pq(...)
 }
 
 NULL

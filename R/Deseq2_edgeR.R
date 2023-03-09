@@ -23,10 +23,10 @@
 #' @examples
 #' \dontrun{
 #' data(GlobalPatterns)
-#' plot_edgeR_phyloseq(GlobalPatterns, c("SampleType", "Soil", "Feces"),
+#' plot_edgeR_pq(GlobalPatterns, c("SampleType", "Soil", "Feces"),
 #'   color_tax = "Kingdom"
 #' )
-#' plot_edgeR_phyloseq(GlobalPatterns, c("SampleType", "Soil", "Feces"),
+#' plot_edgeR_pq(GlobalPatterns, c("SampleType", "Soil", "Feces"),
 #'   taxolev = "Class", color_tax = "Kingdom"
 #' )
 #' }
@@ -35,9 +35,9 @@
 #' @return A \code{\link{ggplot}}2 plot representing edgeR results
 #'
 #' @seealso \code{\link[edgeR]{exactTest}}
-#' @seealso \code{\link{plot_deseq2_phyloseq}}
+#' @seealso \code{\link{plot_deseq2_pq}}
 
-plot_edgeR_phyloseq <-
+plot_edgeR_pq <-
   function(physeq,
            contrast = NULL,
            alpha = 0.01,
@@ -156,10 +156,10 @@ plot_edgeR_phyloseq <-
 #' res <- DESeq2::DESeq(phyloseq_to_deseq2(GP, ~SampleType),
 #'   test = "Wald", fitType = "local"
 #' )
-#' plot_deseq2_phyloseq(res, c("SampleType", "Soil", "Skin"),
+#' plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
 #'   tax_table = GP@tax_table, color_tax = "Kingdom"
 #' )
-#' plot_deseq2_phyloseq(res, c("SampleType", "Soil", "Skin"),
+#' plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
 #'   tax_table = GP@tax_table, color_tax = "Kingdom",
 #'   alpha = 0.7
 #' )
@@ -169,9 +169,9 @@ plot_edgeR_phyloseq <-
 #'
 #' @seealso \code{\link[DESeq2]{DESeq}}
 #' @seealso \code{\link[DESeq2]{results}}
-#' @seealso \code{\link{plot_edgeR_phyloseq}}
+#' @seealso \code{\link{plot_edgeR_pq}}
 
-plot_deseq2_phyloseq <-
+plot_deseq2_pq <-
   function(data,
            contrast = NULL,
            tax_table = NULL,

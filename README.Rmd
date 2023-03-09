@@ -48,7 +48,7 @@ library("MiscMetabar")
 library("phyloseq")
 library("magrittr")
 data("data_fungi")
-summary_plot_phyloseq(data_fungi)
+summary_plot_pq(data_fungi)
 ```
 
 ### Create an interactive table of the tax_table

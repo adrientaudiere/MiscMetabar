@@ -62,22 +62,11 @@ MiscMetabar is already used by scientific communities in different teams ([@Plei
 
 
 
-# Mathematics
 
-Single dollars ($) are required for inline mathematics e.g. $f(x) = e^{\pi/x}$
 
-Double dollars make self-standing equations:
 
-$$\Theta(x) = \left\{\begin{array}{l}
-0\textrm{ if } x < 0\cr
-1\textrm{ else}
-\end{array}\right.$$
 
-You can also use plain \LaTeX for equations
-\begin{equation}\label{eq:fourier}
-\hat f(\omega) = \int_{-\infty}^{\infty} f(x) e^{i\omega x} dx
-\end{equation}
-and refer to \autoref{eq:fourier} from text.
+
 
 # Citations
 
@@ -95,6 +84,8 @@ For a quick reference, the following citation commands can be used:
 
 # Figures
 
+<--!
+
 Figures can be included like this:
 ![Caption for example figure.\label{fig:example}](figure.png)
 and referenced from text using \autoref{fig:example}.
@@ -102,6 +93,7 @@ and referenced from text using \autoref{fig:example}.
 Figure sizes can be customized by adding an optional second parameter:
 ![Caption for example figure.](figure.png){ width=20% }
 
+-->
 # Acknowledgements
 
 We acknowledge contributions from Brigitta Sipocz, Syrtis Major, and Semyeong

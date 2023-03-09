@@ -749,12 +749,12 @@ sankey_pq <-
 #'
 #'
 #' data("enterotype")
-#' venn_phyloseq(enterotype, fact = 'SeqTech')
-#' venn_phyloseq(enterotype, fact = 'ClinicalStatus')
-#' venn_phyloseq(enterotype, fact = 'Nationality', print_values = F)
-#' venn_phyloseq(enterotype, fact = 'ClinicalStatus', print_values = F) +
+#' venn_pq(enterotype, fact = 'SeqTech')
+#' venn_pq(enterotype, fact = 'ClinicalStatus')
+#' venn_pq(enterotype, fact = 'Nationality', print_values = F)
+#' venn_pq(enterotype, fact = 'ClinicalStatus', print_values = F) +
 #' scale_fill_hue()
-#' venn_phyloseq(enterotype, fact = 'ClinicalStatus', print_values = F) +
+#' venn_pq(enterotype, fact = 'ClinicalStatus', print_values = F) +
 #' scale_fill_hue()
 #'
 #' @return A \code{\link{ggplot}}2 plot representing Venn diagramm of
@@ -764,7 +764,7 @@ sankey_pq <-
 #' @author Adrien Taudière
 #' @seealso \code{\link[venneuler]{venneuler}}
 
-venn_phyloseq <-
+venn_pq <-
   function(physeq,
            fact,
            min_nb_seq = 0,
@@ -959,7 +959,7 @@ venn_phyloseq <-
 #' @author Adrien Taudière
 
 
-ggVenn_phyloseq <- function(physeq = NULL,
+ggvenn_pq <- function(physeq = NULL,
                             fact = NULL,
                             merge_sample_by = NULL,
                             min_nb_seq = 0,
@@ -1089,7 +1089,7 @@ multiplot <-
 #'
 #' @export
 
-hill_phyloseq <-
+hill_pq <-
   function(physeq,
            variable,
            color_fac = NA,
@@ -1109,7 +1109,7 @@ hill_phyloseq <-
     df_hill[, c(1:3)] <- apply(df_hill[, c(1:3)], 2, as.numeric)
 
 
-    p_var <- hill_tuckey_phyloseq(physeq, variable)
+    p_var <- hill_tuckey_pq(physeq, variable)
 
     p_0 <- ggplot(df_hill, aes(group = !!var, Hill_0)) +
       geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac)))
@@ -1215,10 +1215,10 @@ hill_phyloseq <-
 #'   object is cleaned using the [clean_pq()] function?
 #' @examples
 #' data(data_fungi)
-#' summary_plot_phyloseq(data_fungi)
+#' summary_plot_pq(data_fungi)
 #' @return A ggplot2 object
 #' @export
-summary_plot_phyloseq <- function(physeq,
+summary_plot_pq <- function(physeq,
                                   add_info = TRUE,
                                   min_seq_samples = 500,
                                   clean_phyloseq = TRUE) {
@@ -1397,7 +1397,7 @@ summary_plot_phyloseq <- function(physeq,
 #' GPsubset <- subset_taxa(GPsubset, 
 #'                         rowSums(is.na(GPsubset@tax_table)) == 0)
 #'
-#' physeq_heat_tree(GPsubset,
+#' heat_tree_pq(GPsubset,
 #'   node_size = n_obs,
 #'   node_color = n_obs,
 #'   node_label = taxon_names,
@@ -1406,7 +1406,7 @@ summary_plot_phyloseq <- function(physeq,
 #' )
 #' }
 #'
-physeq_heat_tree <- function(physeq, taxonomic_level = NULL, ...) {
+heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
   if (!is.null(taxonomic_level)) {
     physeq@tax_table <- physeq@tax_table[, taxonomic_level]
   }

@@ -2,7 +2,7 @@
 #' Calculate hill number and compute Tuckey post-hoc test
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @aliases hill_tuckey_phyloseq
+#' @aliases hill_tuckey_pq
 #' @param physeq (required) a \code{\link{phyloseq-class}} object.
 #' @param modality (required) the variable to test
 #' @return A ggplot2 object
@@ -14,8 +14,8 @@
 #' data("GlobalPatterns")
 #' GlobalPatterns@sam_data[, "Soil_logical"] <-
 #'   ifelse(GlobalPatterns@sam_data[, "SampleType"] == "Soil", "Soil", "Not Soil")
-#' hill_tuckey_phyloseq(GlobalPatterns, "Soil_logical")
-hill_tuckey_phyloseq <- function(physeq, modality) {
+#' hill_tuckey_pq(GlobalPatterns, "Soil_logical")
+hill_tuckey_pq <- function(physeq, modality) {
   modality_vector <-
     as.factor(as.vector(unlist(unclass(physeq@sam_data[, modality]))))
 
