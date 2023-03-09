@@ -17,15 +17,15 @@ clean_pq(
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{dada2} package}
 
-\item{remove_empty_samples}{(logical) : Do you want to remove samples without sequences (this is done after removing empty taxa)}
+\item{remove_empty_samples}{(logical) Do you want to remove samples without sequences (this is done after removing empty taxa)}
 
-\item{remove_empty_taxa}{(logical) : Do you want to remove taxa without sequences (this is done before removing empty samples)}
+\item{remove_empty_taxa}{(logical) Do you want to remove taxa without sequences (this is done before removing empty samples)}
 
-\item{clean_samples_names}{(logical) : Do you want to clean samples names?}
+\item{clean_samples_names}{(logical) Do you want to clean samples names?}
 
-\item{silent}{(logical) : If true, no message are printing.}
+\item{silent}{(logical) If true, no message are printing.}
 
-\item{verbose}{(logical) : Additional informations in the message
+\item{verbose}{(logical) Additional informations in the message
 the verbose parameter overwrite the silent parameter.}
 }
 \value{

@@ -4,10 +4,10 @@
 #' @description
 #' `r lifecycle::badge("maturing")`
 #'
-#' @param mt (required): Result of a mt test from the function [phyloseq::mt()].
-#' @param alpha (Default: 0.05): Choose the cut off p-value to plot taxa.
-#' @param color_tax (Default: "Class"): A taxonomic level to color the points.
-#' @param taxa (Default: "Species"): The taxonomic level you choose for x-positioning.
+#' @param mt (required) Result of a mt test from the function [phyloseq::mt()].
+#' @param alpha (default: 0.05) Choose the cut off p-value to plot taxa.
+#' @param color_tax (default: "Class") A taxonomic level to color the points.
+#' @param taxa (default: "Species") The taxonomic level you choose for x-positioning.
 #' @author Adrien Taudière
 #' @examples
 #' data(data_fungi)
@@ -55,26 +55,26 @@ plot_mt <-
 #'
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param fact (required): Name of the factor in physeq@sam_data used to plot
+#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @param fact (required) Name of the factor in physeq@sam_data used to plot
 #'    different lines
-#' @param add_nb_seq (Default: TRUE, logical):
+#' @param add_nb_seq (default: TRUE, logical)
 #' Either plot accumulation curves using sequences or using samples
-#' @param step (Integer): distance among points calculated to plot lines. A
+#' @param step (Integer) distance among points calculated to plot lines. A
 #'  low value give better plot but is more time consuming.
 #'  Only used if add_nb_seq = TRUE.
-#' @param by.fact (Default: FALSE, logical):
+#' @param by.fact (default: FALSE, logical)
 #' First merge the OTU table by factor to plot only one line by factor
-#' @param ci_col : Color vector for confidence intervall.
+#' @param ci_col Color vector for confidence intervall.
 #'   Only use if add_nb_seq = FALSE.
 #'   If add_nb_seq = TRUE, you can use ggplot to modify the plot.
-#' @param col : Color vector for lines. Only use if add_nb_seq = FALSE.
+#' @param col Color vector for lines. Only use if add_nb_seq = FALSE.
 #'   If add_nb_seq = TRUE, you can use ggplot to modify the plot.
-#' @param lwd  (Default: 3): thickness for lines. Only use if add_nb_seq = FALSE.
-#' @param leg (Default: TRUE, logical): Plot legend or not. Only use if add_nb_seq = FALSE.
-#' @param print_sam_names (Default: FALSE, logical): Print samples names or not?
+#' @param lwd  (default: 3) thickness for lines. Only use if add_nb_seq = FALSE.
+#' @param leg (default: TRUE, logical) Plot legend or not. Only use if add_nb_seq = FALSE.
+#' @param print_sam_names (default: FALSE, logical) Print samples names or not?
 #'    Only use if add_nb_seq = TRUE.
-#' @param ci (Default: 2, integer) : Confidence intervall value used to multiply the
+#' @param ci (default: 2, integer) Confidence intervall value used to multiply the
 #'   standard error to plot confidence intervall
 #' @param ... Additional arguments passed on to \code{\link{ggplot}}
 #' if add_nb_seq = TRUE or to \code{\link{plot}} if add_nb_seq = FALSE
@@ -293,32 +293,32 @@ accu_plot <-
 #' Plot OTU circle for \code{\link{phyloseq-class}} object
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param fact (required): Name of the factor to cluster samples by modalities.
+#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @param fact (required) Name of the factor to cluster samples by modalities.
 #'        Need to be in \code{physeq@sam_data}.
-#' @param taxa (Default: 'Order'): Name of the taxonomic rank of interest
-#' @param add_nb_seq (Default: TRUE): Represent the number of sequences or the
+#' @param taxa (default: 'Order') Name of the taxonomic rank of interest
+#' @param add_nb_seq (default: TRUE) Represent the number of sequences or the
 #'    number of OTUs (add_nb_seq = FALSE)
-#' @param rarefy (logical): Does each samples modalities need to be rarefy in
+#' @param rarefy (logical) Does each samples modalities need to be rarefy in
 #'               order to compare them with the same amount of sequences?
-#' @param min_prop_tax (Default: 0.01): The minimum proportion for taxon to be
+#' @param min_prop_tax (default: 0.01) The minimum proportion for taxon to be
 #'                     ploted
-#' @param min_prop_mod (Default: 0.1) : The minimum proportion for modalities
+#' @param min_prop_mod (default: 0.1) The minimum proportion for modalities
 #'                     to be ploted
-#' @param gap_degree : Gap between two neighbour sectors.
+#' @param gap_degree Gap between two neighbour sectors.
 #'                    It can be a single value or a vector. If it is a vector,
 #'                     the first value corresponds to the gap after the first
 #'                     sector.
-#' @param start_degree : The starting degree from which the circle begins to
+#' @param start_degree The starting degree from which the circle begins to
 #'   draw. Note this degree is measured in the standard polar coordinate
 #'   which means it is always reverse-clockwise.
-#' @param row_col : Color vector for row
-#' @param grid_col : Grid colors which correspond to sectors. The length of the
+#' @param row_col Color vector for row
+#' @param grid_col Grid colors which correspond to sectors. The length of the
 #'    vector should be either 1 or the number of sectors.
 #'    It's preferred that grid_col is a named vector of which names
 #'    correspond to sectors. If it is not a named vector, the
 #'    order of grid_col corresponds to order of sectors.
-#' @param log10trans (logical): Should sequence be log10 transformed
+#' @param log10trans (logical) Should sequence be log10 transformed
 #'                   (more precisely by log10(1+x))?
 #' @param ... Additional arguments passed on to
 #'   \code{\link[circlize]{chordDiagram}} or \code{\link[circlize]{circos.par}}
@@ -522,20 +522,20 @@ circle_pq <-
 #' Sankey plot of \code{\link{phyloseq-class}} object
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param fact (Optional): Name of the factor to cluster samples by modalities.
+#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @param fact Name of the factor to cluster samples by modalities.
 #' Need to be in \code{physeq@sam_data}.
-#' @param taxa (Default: c(1:4)): a vector of taxonomic rank to plot
-#' @param add_nb_seq: Represent the number of sequences or the
+#' @param taxa a vector of taxonomic rank to plot
+#' @param add_nb_seq Represent the number of sequences or the
 #'   number of OTUs (add_nb_seq = FALSE). Note that ploting the number of
 #'   sequences is slower.
-#' @param min_prop_tax (Default: 0): The minimum proportion for taxon to be
+#' @param min_prop_tax (default: 0) The minimum proportion for taxon to be
 #'  ploted. EXPERIMENTAL. For the moment each links below the min.prop.
 #'  tax is discard from the sankey network resulting in sometimes weird plot.
-#' @param tax2remove : a vector of taxonomic groups to remove from the analysis
+#' @param tax2remove  a vector of taxonomic groups to remove from the analysis
 #'   (e.g. \code{c('Incertae sedis', 'unidentified')})
-#' @param units : character string describing physical units (if any) for Value
-#' @param symbol2sub (Default: c('\\.', '-')): vector of symbol to delete in
+#' @param units  character string describing physical units (if any) for Value
+#' @param symbol2sub (default: c('\\.', '-')) vector of symbol to delete in
 #'   the taxonomy
 #' @param ... Additional arguments passed on to
 #'   \code{\link[networkD3]{sankeyNetwork}}
@@ -737,7 +737,7 @@ sankey_phyloseq <-
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param fact (required): Name of the factor to cluster samples by modalities.
 #' Need to be in \code{physeq@sam_data}.
-#' @param min_nb_seq (Default: 0)): minimum number of sequences by OTUs by
+#' @param min_nb_seq (default: 0)): minimum number of sequences by OTUs by
 #'  samples to take into count this OTUs in this sample. For example,
 #'  if min_nb_seq=2,each value of 2 or less in the OTU table
 #'  will be change into 0 for the analysis
@@ -939,16 +939,16 @@ venn_phyloseq <-
 #' @param physeq (required): a \code{\link{phyloseq-class}} object.
 #' @param fact (required): Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}.
-#' @param merge_sample_by (Default: NULL): if not `NULL` samples of
+#' @param merge_sample_by (default: NULL): if not `NULL` samples of
 #'   physeq are mereged using the vector set by `merge_sample_by`. This
 #'   merging used the [speedyseq::merge_samples2()].
 #'   If `merge_sample_by` is equal to `fact`
 #'   it give the same result as if `merge_sample_by` is NULL.
-#' @param min_nb_seq (Default: 0)): minimum number of sequences by OTUs by
+#' @param min_nb_seq (default: 0)): minimum number of sequences by OTUs by
 #'   samples to take into count this OTUs in this sample. For example,
 #'   if min_nb_seq=2,each value of 2 or less in the OTU table
 #'   will not count in the venn diagramm
-#' @param taxonomic_rank (Default: Null): Name (or number) of a taxonomic rank
+#' @param taxonomic_rank (default: Null): Name (or number) of a taxonomic rank
 #'   to count. If set to Null (the default) the number of OTUs is counted.
 #' @param ... other arguments for the `ggVennDiagram::ggVennDiagram` function
 #'   for ex. `category.names`.
@@ -1206,7 +1206,7 @@ hill_phyloseq <-
 #' `r lifecycle::badge("maturing")`
 #' @param physeq (required): A \code{\link{phyloseq-class}} object.
 #'   refseq slot need to be not Null.
-#' @param add_info: Does the bottom down corner contain
+#' @param add_info Does the bottom down corner contain
 #'   extra informations?
 #' @param min_seq_samples (int): Used only when add_info is set
 #'   to true to print the number of samples with less sequences than
@@ -1374,7 +1374,7 @@ summary_plot_phyloseq <- function(physeq,
 #' `r lifecycle::badge("maturing")`
 #' @param physeq (required): A \code{\link{phyloseq-class}}
 #' object
-#' @param taxonomic_level (Default: NULL): a vector of selected
+#' @param taxonomic_level (default: NULL): a vector of selected
 #' taxonomic level using
 #'   their column numbers (e.g. taxonomic_level = c(1:7))
 #' @param ... : Arguments parsed to \code{\link[metacoder]{heat_tree}}
@@ -1394,7 +1394,8 @@ summary_plot_phyloseq <- function(physeq,
 #'   GPsubset,
 #'   rowSums(GPsubset@otu_table) > 1000
 #' )
-#' GPsubset <- subset_taxa(GPsubset, rowSums(is.na(GPsubset@tax_table)) == 0)
+#' GPsubset <- subset_taxa(GPsubset, 
+#'                         rowSums(is.na(GPsubset@tax_table)) == 0)
 #'
 #' physeq_heat_tree(GPsubset,
 #'   node_size = n_obs,
@@ -1415,29 +1416,31 @@ physeq_heat_tree <- function(physeq, taxonomic_level = NULL, ...) {
 }
 
 
-#' Visualization of two samples for comparison of physeq object
+#' Visualization of two samples for comparison 
 #' @description
 #' `r lifecycle::badge("maturing")`
 #' @param physeq (required): A \code{\link{phyloseq-class}}
-#' object
-#' @param fact (Default: NULL), Name of the factor in `physeq@sam_data`.
-#' If set to NULL use the `left_name` and `right_name` parameter as modality.
-#' @param merge_sample_by (Default: NULL): if not `NULL` samples of
+#'   object
+#' @param fact, Name of the factor in `physeq@sam_data`.
+#'   If left to NULL use the `left_name` and `right_name` parameter as modality.
+#' @param merge_sample_by (default: NULL): if not `NULL` samples of
 #'   physeq are mereged using the vector set by `merge_sample_by`. This
 #'   merging used the [speedyseq::merge_samples2()]. In the case of
 #'   [biplot_pq()] this must be a factor with two levels only.
-#' @param left_name (Default: "A"): Name fo the left sample.
-#' @param right_name  (Default: "B"): Name fo the right sample.
-#' @param left_fill : Fill fo the left sample.
-#' @param left_col : Color fo the left sample.
-#' @param right_fill : Fill fo the right sample.
-#' @param right_col : Color fo the right sample.
-#' @param log_10 (Default: TRUE, logical): Does abundancy is log10 transformed ?
-#' @param nudge_y : A parameter to control the y position of abundancy values.
-#' @param geomLabel (Default: FALSE, logical): if true use the `geom_label` function
-#'   instead of `geom_text` to indicate the numbers of sequences
-#' @param text_size (Default: 3): default size for the number of sequences
-#' @param plotly_version (Default: FALSE)
+#' @param inverse_side Inverse the side (put the right modality in the left side).
+#' @param left_name Name fo the left sample.
+#' @param right_name Name fo the right sample.
+#' @param left_fill Fill fo the left sample.
+#' @param left_col Color fo the left sample.
+#' @param right_fill Fill fo the right sample.
+#' @param right_col Color fo the right sample.
+#' @param log_10 (logical) Does abundancy is log10 transformed ?
+#' @param nudge_y A parameter to control the y position of abundancy values.
+#' @param geomLabel (default: FALSE, logical) if TRUE use the [ggplot2::geom_label()] function
+#'   instead of [ggplot2::geom_text()] to indicate the numbers of sequences.
+#' @param text_size default size for the number of sequences
+#' @param plotly_version If TRUE, use [plotly::ggplotly()] to return 
+#'   a interactive ggplot.
 #' @param ... : other arguments for the ggplot function
 #' @importFrom stats reorder
 #' @return A plot

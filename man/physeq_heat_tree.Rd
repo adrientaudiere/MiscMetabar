@@ -10,7 +10,7 @@ physeq_heat_tree(physeq, taxonomic_level = NULL, ...)
 \item{physeq}{(required): A \code{\link{phyloseq-class}}
 object}
 
-\item{taxonomic_level}{(Default: NULL): a vector of selected
+\item{taxonomic_level}{(default: NULL): a vector of selected
 taxonomic level using
 their column numbers (e.g. taxonomic_level = c(1:7))}
 
@@ -33,7 +33,8 @@ GPsubset <- subset_taxa(
   GPsubset,
   rowSums(GPsubset@otu_table) > 1000
 )
-GPsubset <- subset_taxa(GPsubset, rowSums(is.na(GPsubset@tax_table)) == 0)
+GPsubset <- subset_taxa(GPsubset, 
+                        rowSums(is.na(GPsubset@tax_table)) == 0)
 
 physeq_heat_tree(GPsubset,
   node_size = n_obs,

@@ -21,43 +21,43 @@ circle_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
+\item{physeq}{(required) a \code{\link{phyloseq-class}} object.}
 
-\item{fact}{(required): Name of the factor to cluster samples by modalities.
+\item{fact}{(required) Name of the factor to cluster samples by modalities.
 Need to be in \code{physeq@sam_data}.}
 
-\item{taxa}{(Default: 'Order'): Name of the taxonomic rank of interest}
+\item{taxa}{(default: 'Order') Name of the taxonomic rank of interest}
 
-\item{add_nb_seq}{(Default: TRUE): Represent the number of sequences or the
+\item{add_nb_seq}{(default: TRUE) Represent the number of sequences or the
 number of OTUs (add_nb_seq = FALSE)}
 
-\item{rarefy}{(logical): Does each samples modalities need to be rarefy in
+\item{rarefy}{(logical) Does each samples modalities need to be rarefy in
 order to compare them with the same amount of sequences?}
 
-\item{min_prop_tax}{(Default: 0.01): The minimum proportion for taxon to be
+\item{min_prop_tax}{(default: 0.01) The minimum proportion for taxon to be
 ploted}
 
-\item{min_prop_mod}{(Default: 0.1) : The minimum proportion for modalities
+\item{min_prop_mod}{(default: 0.1) The minimum proportion for modalities
 to be ploted}
 
-\item{gap_degree}{: Gap between two neighbour sectors.
+\item{gap_degree}{Gap between two neighbour sectors.
 It can be a single value or a vector. If it is a vector,
 the first value corresponds to the gap after the first
 sector.}
 
-\item{start_degree}{: The starting degree from which the circle begins to
+\item{start_degree}{The starting degree from which the circle begins to
 draw. Note this degree is measured in the standard polar coordinate
 which means it is always reverse-clockwise.}
 
-\item{row_col}{: Color vector for row}
+\item{row_col}{Color vector for row}
 
-\item{grid_col}{: Grid colors which correspond to sectors. The length of the
+\item{grid_col}{Grid colors which correspond to sectors. The length of the
 vector should be either 1 or the number of sectors.
 It's preferred that grid_col is a named vector of which names
 correspond to sectors. If it is not a named vector, the
 order of grid_col corresponds to order of sectors.}
 
-\item{log10trans}{(logical): Should sequence be log10 transformed
+\item{log10trans}{(logical) Should sequence be log10 transformed
 (more precisely by log10(1+x))?}
 
 \item{...}{Additional arguments passed on to

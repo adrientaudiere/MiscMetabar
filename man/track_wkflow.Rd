@@ -8,12 +8,12 @@ from various objects including dada-class and derep-class.}
 track_wkflow(list_of_objects, obj_names = NULL, clean_pq = FALSE)
 }
 \arguments{
-\item{list_of_objects}{(Required): A list of objects}
+\item{list_of_objects}{(required) a list of objects}
 
-\item{clean_pq}{(Logical):
+\item{obj_names}{A list of names corresponding to the list of objects}
+
+\item{clean_pq}{(logical)
 If true, empty samples and empty ASV are discarded before clustering.}
-
-\item{obj_names:}{A list of names corresponding to the list of objects}
 }
 \value{
 The number of sequences, clusters (e.g. OTUs, ASVs) and samples for

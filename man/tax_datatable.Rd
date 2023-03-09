@@ -13,14 +13,14 @@ tax_datatable(
 )
 }
 \arguments{
-\item{physeq}{(required): A \code{\link{phyloseq-class}} object}
+\item{physeq}{(required) A \code{\link{phyloseq-class}} object}
 
-\item{abundance}{(Default: TRUE): Does the number of sequences is print}
+\item{abundance}{(default: TRUE) Does the number of sequences is print}
 
-\item{taxonomic_level}{(Default: NULL): a vector of selected taxonomic
+\item{taxonomic_level}{(default: NULL) a vector of selected taxonomic
 level using their column numbers (e.g. taxonomic_level = c(1:7))}
 
-\item{modality}{(Default: NULL) : A sample modality to split
+\item{modality}{(default: NULL) A sample modality to split
 OTU abundancy by level of the modality}
 
 \item{...}{Other argument for the datatable function}

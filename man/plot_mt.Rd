@@ -7,13 +7,13 @@
 plot_mt(mt = NULL, alpha = 0.05, color_tax = "Class", taxa = "Species")
 }
 \arguments{
-\item{mt}{(required): Result of a mt test from the function \code{\link[phyloseq:mt-methods]{phyloseq::mt()}}.}
+\item{mt}{(required) Result of a mt test from the function \code{\link[phyloseq:mt-methods]{phyloseq::mt()}}.}
 
-\item{alpha}{(Default: 0.05): Choose the cut off p-value to plot taxa.}
+\item{alpha}{(default: 0.05) Choose the cut off p-value to plot taxa.}
 
-\item{color_tax}{(Default: "Class"): A taxonomic level to color the points.}
+\item{color_tax}{(default: "Class") A taxonomic level to color the points.}
 
-\item{taxa}{(Default: "Species"): The taxonomic level you choose for x-positioning.}
+\item{taxa}{(default: "Species") The taxonomic level you choose for x-positioning.}
 }
 \value{
 a \code{\link{ggplot}}2 plot of result of a mt test

@@ -8,8 +8,12 @@
  [lulu_pq] \tab now a synonym for [lulu_phyloseq]\cr
  [circle_pq] \tab now a synonym for [otu_circle]\cr
  [biplot_pq] \tab now a synonym for [biplot_physeq]\cr
+ [read_pq] \tab now a synonym for [read_phyloseq]\cr
+ [write_pq] \tab now a synonym for [write_phyloseq]\cr
 }
-* Improve documentation using some Rules 
+* Improve documentation using some rules documented in the Rules vignettes.
+* Add a option `sam_names` to [read_pq()]
+* Correction of `data_fungi` and `data_fungi_sp_known` metadata
 
 
 # MiscMetabar 0.24

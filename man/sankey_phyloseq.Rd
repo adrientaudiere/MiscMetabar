@@ -17,31 +17,31 @@ sankey_phyloseq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
+\item{physeq}{(required) a \code{\link{phyloseq-class}} object.}
 
-\item{fact}{(Optional): Name of the factor to cluster samples by modalities.
+\item{fact}{Name of the factor to cluster samples by modalities.
 Need to be in \code{physeq@sam_data}.}
 
-\item{taxa}{(Default: c(1:4)): a vector of taxonomic rank to plot}
+\item{taxa}{a vector of taxonomic rank to plot}
 
-\item{min_prop_tax}{(Default: 0): The minimum proportion for taxon to be
+\item{add_nb_seq}{Represent the number of sequences or the
+number of OTUs (add_nb_seq = FALSE). Note that ploting the number of
+sequences is slower.}
+
+\item{min_prop_tax}{(default: 0) The minimum proportion for taxon to be
 ploted. EXPERIMENTAL. For the moment each links below the min.prop.
 tax is discard from the sankey network resulting in sometimes weird plot.}
 
-\item{tax2remove}{: a vector of taxonomic groups to remove from the analysis
+\item{tax2remove}{a vector of taxonomic groups to remove from the analysis
 (e.g. \code{c('Incertae sedis', 'unidentified')})}
 
-\item{units}{: character string describing physical units (if any) for Value}
+\item{units}{character string describing physical units (if any) for Value}
 
-\item{symbol2sub}{(Default: c('\\.', '-')): vector of symbol to delete in
+\item{symbol2sub}{(default: c('\\.', '-')) vector of symbol to delete in
 the taxonomy}
 
 \item{...}{Additional arguments passed on to
 \code{\link[networkD3]{sankeyNetwork}}}
-
-\item{add_nb_seq:}{Represent the number of sequences or the
-number of OTUs (add_nb_seq = FALSE). Note that ploting the number of
-sequences is slower.}
 }
 \value{
 A \code{\link[networkD3]{sankeyNetwork}} plot representing the

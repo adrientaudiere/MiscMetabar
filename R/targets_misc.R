@@ -3,8 +3,8 @@
 #' A wrapper of \code{\link[DECIPHER]{IdTaxa}} which result in a tibble with
 #' @description
 #' `r lifecycle::badge("experimental")`
-#' @param test (required):
-#' @param trainingSet (required):
+#' @param test (required)
+#' @param trainingSet (required)
 #' @param column_names (optional but often needed): names for the
 #' column of the resulted tibble
 #' @param ... Additional arguments passed on to \code{\link[DECIPHER]{IdTaxa}}

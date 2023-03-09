@@ -15,15 +15,15 @@ summary_plot_phyloseq(
 \item{physeq}{(required): A \code{\link{phyloseq-class}} object.
 refseq slot need to be not Null.}
 
+\item{add_info}{Does the bottom down corner contain
+extra informations?}
+
 \item{min_seq_samples}{(int): Used only when add_info is set
 to true to print the number of samples with less sequences than
 this number.}
 
 \item{clean_phyloseq}{(logical): Does the phyloseq
 object is cleaned using the \code{\link[=clean_pq]{clean_pq()}} function?}
-
-\item{add_info:}{Does the bottom down corner contain
-extra informations?}
 }
 \value{
 A ggplot2 object

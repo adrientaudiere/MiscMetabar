@@ -14,15 +14,15 @@ vsearch_search_global(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
+\item{physeq}{(required) a \code{\link{phyloseq-class}} object.}
 
-\item{seq2search}{(required): path to fasta file}
+\item{seq2search}{(required) path to fasta file}
 
-\item{id}{(Default: 0.8): id for --usearch_global}
+\item{vsearchpath}{path to vsearch}
 
-\item{iddef}{(Default: 0): iddef for --usearch_global}
+\item{id}{(default: 0.8) id for --usearch_global}
 
-\item{vsearchpath:}{path to vsearch}
+\item{iddef}{(default: 0) iddef for --usearch_global}
 }
 \value{
 A dataframe with uc results (invisible)

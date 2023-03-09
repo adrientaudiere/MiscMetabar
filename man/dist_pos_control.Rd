@@ -8,12 +8,12 @@ distance for all samples}
 dist_pos_control(physeq, samples_names, method = "bray")
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
+\item{physeq}{(required) a \code{\link{phyloseq-class}} object.}
 
-\item{samples_names}{(required): a vector of names for samples with
+\item{samples_names}{(required) a vector of names for samples with
 positives controls of the same samples having the same name}
 
-\item{method}{(Default: "bray"): a method to calculate
+\item{method}{(default: "bray") a method to calculate
 the distance, parsed to \code{\link[vegan:vegdist]{vegan::vegdist()}}. See ?vegdist for a list
 of possible values.}
 }

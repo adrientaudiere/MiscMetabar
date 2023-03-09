@@ -20,36 +20,36 @@ accu_plot(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
+\item{physeq}{(required) a \code{\link{phyloseq-class}} object.}
 
-\item{fact}{(required): Name of the factor in physeq@sam_data used to plot
+\item{fact}{(required) Name of the factor in physeq@sam_data used to plot
 different lines}
 
-\item{add_nb_seq}{(Default: TRUE, logical):
+\item{add_nb_seq}{(default: TRUE, logical)
 Either plot accumulation curves using sequences or using samples}
 
-\item{step}{(Integer): distance among points calculated to plot lines. A
+\item{step}{(Integer) distance among points calculated to plot lines. A
 low value give better plot but is more time consuming.
 Only used if add_nb_seq = TRUE.}
 
-\item{by.fact}{(Default: FALSE, logical):
+\item{by.fact}{(default: FALSE, logical)
 First merge the OTU table by factor to plot only one line by factor}
 
-\item{ci_col}{: Color vector for confidence intervall.
+\item{ci_col}{Color vector for confidence intervall.
 Only use if add_nb_seq = FALSE.
 If add_nb_seq = TRUE, you can use ggplot to modify the plot.}
 
-\item{col}{: Color vector for lines. Only use if add_nb_seq = FALSE.
+\item{col}{Color vector for lines. Only use if add_nb_seq = FALSE.
 If add_nb_seq = TRUE, you can use ggplot to modify the plot.}
 
-\item{lwd}{(Default: 3): thickness for lines. Only use if add_nb_seq = FALSE.}
+\item{lwd}{(default: 3) thickness for lines. Only use if add_nb_seq = FALSE.}
 
-\item{leg}{(Default: TRUE, logical): Plot legend or not. Only use if add_nb_seq = FALSE.}
+\item{leg}{(default: TRUE, logical) Plot legend or not. Only use if add_nb_seq = FALSE.}
 
-\item{print_sam_names}{(Default: FALSE, logical): Print samples names or not?
+\item{print_sam_names}{(default: FALSE, logical) Print samples names or not?
 Only use if add_nb_seq = TRUE.}
 
-\item{ci}{(Default: 2, integer) : Confidence intervall value used to multiply the
+\item{ci}{(default: 2, integer) Confidence intervall value used to multiply the
 standard error to plot confidence intervall}
 
 \item{...}{Additional arguments passed on to \code{\link{ggplot}}

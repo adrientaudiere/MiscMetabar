@@ -5,17 +5,17 @@
 #'
 #' Need the installation of kronatools on the computer ([installation instruction](https://github.com/marbl/Krona/wiki/Installing)).
 #'
-#' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param file (required): the location of the html file to save
-#' @param nb_seq (logical): If true, Krona set the distribution
+#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @param file (required) the location of the html file to save
+#' @param nb_seq (logical) If true, Krona set the distribution
 #'   of sequences in the taxonomy. If False, Krona set the distribution of ASVs
 #'   in the taxonomy.
-#' @param ranks: Number of the taxonomic ranks to plot
+#' @param ranks Number of the taxonomic ranks to plot
 #'   (num of the column in `tax_table` slot of your `physeq` object).
 #'   Default setting plot all the ranks (argument 'All').
-#' @param add_unassigned_rank (int). Add unassigned for rank
+#' @param add_unassigned_rank (int) Add unassigned for rank
 #'   inferior to 'add_unassigned_rank' when necessary.
-#' @param name: A name for intermediary files, Useful to name
+#' @param name A name for intermediary files, Useful to name
 #'   your krona result files before merging using [merge_krona()]
 #'
 #' @examples
@@ -97,8 +97,8 @@ krona <-
 #' Need the installation of kronatools on the computer ([installation instruction](https://github.com/marbl/Krona/wiki/Installing)).
 #' Function merge_krona allows merging multiple html files in one interactive krona file
 #'
-#' @param files (required): path to html files to merged
-#' @param output: path to the output file
+#' @param files (required) path to html files to merged
+#' @param output path to the output file
 #'
 #' @examples
 #' data("GlobalPatterns")

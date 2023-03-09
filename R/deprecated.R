@@ -7,8 +7,8 @@
 #' @name MiscMetabar-deprecated
 #' @param ... Parameters to be passed to the modern version of the function
 #' @docType package
-#' @export  physeq_graph_test adonis_phyloseq clean_physeq lulu_phyloseq otu_circle biplot_physeq
-#' @aliases physeq_graph_test adonis_phyloseq clean_physeq lulu_phyloseq otu_circle biplot_physeq
+#' @export  physeq_graph_test adonis_phyloseq clean_physeq lulu_phyloseq otu_circle biplot_physeq read_phyloseq write_phyloseq
+#' @aliases physeq_graph_test adonis_phyloseq clean_physeq lulu_phyloseq otu_circle biplot_physeq read_phyloseq write_phyloseq
 #' @section Details:
 #' \tabular{rl}{
 #'   [graph_test_pq] \tab now a synonym for [physeq_graph_test]\cr
@@ -17,6 +17,8 @@
 #'   [lulu_pq] \tab now a synonym for [lulu_phyloseq]\cr
 #'   [circle_pq] \tab now a synonym for [otu_circle]\cr
 #'   [biplot_pq] \tab now a synonym for [biplot_physeq]\cr
+#'   [read_pq] \tab now a synonym for [read_phyloseq]\cr
+#'   [write_pq] \tab now a synonym for [write_phyloseq]\cr
 #' }
 #'
 
@@ -50,5 +52,16 @@ biplot_physeq <- function(...) {
   .Deprecated("biplot_pq", package = "MiscMetabar")
   biplot_pq(...)
 }
+
+read_phyloseq <- function(...) {
+  .Deprecated("read_pq", package = "MiscMetabar")
+  read_pq(...)
+}
+
+write_phyloseq <- function(...) {
+  .Deprecated("write_pq", package = "MiscMetabar")
+  write_pq(...)
+}
+
 
 NULL

@@ -15,24 +15,26 @@ graph_test_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
+\item{physeq}{(required) a \code{\link{phyloseq-class}} object.}
 
-\item{fact}{(required): Name of the factor to cluster samples by modalities.
-Need to be in \code{physeq@sam_data}. This should be a factor.
+\item{fact}{(required) Name of the factor to cluster samples by modalities.
+Need to be in \code{physeq@sam_data}. This should be a factor
 with two or more levels.}
 
-\item{nperm}{(int): The number of permutations to perform.}
-
-\item{return_plot}{(logical): do we return only the result
-of the test or do we plot the result}
-
-\item{...}{other params for be passed on
-\code{\link[phyloseqGraphTest:graph_perm_test]{phyloseqGraphTest::graph_perm_test()}} function}
-
-\item{merge_sample_by:}{a vector to determine
+\item{merge_sample_by}{a vector to determine
 which samples to merge using the
 \code{\link[speedyseq]{merge_samples2}} function.
 Need to be in \code{physeq@sam_data}}
+
+\item{nperm}{(int) The number of permutations to perform.}
+
+\item{return_plot}{(logical) Do we return only the result
+of the test or do we plot the result?}
+
+\item{title}{The title of the Graph.}
+
+\item{...}{other params for be passed on
+\code{\link[phyloseqGraphTest:graph_perm_test]{phyloseqGraphTest::graph_perm_test()}} function}
 }
 \value{
 a ggplot with a subtitle indicating the pvalue

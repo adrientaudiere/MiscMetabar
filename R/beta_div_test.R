@@ -6,17 +6,18 @@
 #' A wrapper of [phyloseqGraphTest::graph_perm_test()] for quick plot with
 #' important statistics
 
-#' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param fact (required): Name of the factor to cluster samples by modalities.
-#'   Need to be in \code{physeq@sam_data}. This should be a factor.
+#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @param fact (required) Name of the factor to cluster samples by modalities.
+#'   Need to be in \code{physeq@sam_data}. This should be a factor
 #'   with two or more levels.
-#' @param merge_sample_by: a vector to determine
+#' @param merge_sample_by a vector to determine
 #'   which samples to merge using the
 #'   \code{\link[speedyseq]{merge_samples2}} function.
 #'   Need to be in \code{physeq@sam_data}
-#' @param  nperm (int): The number of permutations to perform.
-#' @param return_plot (logical): do we return only the result
-#'   of the test or do we plot the result
+#' @param nperm (int) The number of permutations to perform.
+#' @param return_plot (logical) Do we return only the result
+#'   of the test or do we plot the result?
+#' @param title The title of the Graph.
 #' @param ... other params for be passed on
 #'   [phyloseqGraphTest::graph_perm_test()] function
 #'
@@ -73,9 +74,9 @@ graph_test_pq <- function(physeq,
 #' `r lifecycle::badge("experimental")`
 #'
 #' A wrapper for the [vegan::adonis2()] function in the case of `physeq` object.
-#' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param formula (required): todo
-#' @param merge_sample_by: a vector to determine
+#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @param formula (required) todo
+#' @param merge_sample_by a vector to determine
 #'   which samples to merge using the [speedyseq::merge_samples2()]
 #'   function. Need to be in `physeq@sam_data`
 #' @return The function returns an anova.cca result object with a

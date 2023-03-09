@@ -19,42 +19,42 @@ plot_deseq2_phyloseq(
 )
 }
 \arguments{
-\item{data}{(required): a \code{\link{phyloseq-class}} or a
+\item{data}{(required) a \code{\link{phyloseq-class}} or a
 \code{\link[DESeq2]{DESeqDataSet-class}} object.}
 
-\item{contrast}{(required):This argument specifies what comparison to extract
+\item{contrast}{(required) contrast specifies what comparison to extract
 from the object to build a results table. See \code{\link[DESeq2]{results}}
 man page for more details.}
 
-\item{tax_table}{: Required if data is a
+\item{tax_table}{Required if data is a
 \code{\link[DESeq2]{DESeqDataSet-class}} object.
 The taxonomic table used to find the \code{taxa} and \code{color_taxa}
 arguments. If data is a \code{\link{phyloseq-class}} object, data@tax_table
 is used.}
 
-\item{alpha}{(Default: 0.01): the significance cutoff used for optimizing
+\item{alpha}{(default: 0.01) the significance cutoff used for optimizing
 the independent filtering. If the adjusted p-value cutoff (FDR) will be a
 value other than 0.1, alpha should be set to that value.}
 
-\item{color_tax}{: taxonomic level used for color or a
+\item{taxolev}{taxonomic level of interest}
+
+\item{select_taxa}{logical vector to select taxa to plot.}
+
+\item{color_tax}{taxonomic level used for color or a
 color vector.}
 
-\item{...}{Additional arguments passed on to \code{\link[DESeq2]{DESeq}}
-or \code{\link[ggplot2]{ggplot}}}
-
-\item{taxolev:}{taxonomic level of interest}
-
-\item{select_taxa:}{logical vector to select taxa to plot.}
-
-\item{tax_depth:}{Taxonomic depth to test for differential
+\item{tax_depth}{Taxonomic depth to test for differential
 distribution among contrast. If Null the analysis is done at the OTU
 (i.e. Species) level. If not Null, data need to be a column name in
 the \code{tax_table} slot of the \code{\link{phyloseq-class}} object.}
 
-\item{verbose:}{whether the function print some information during
+\item{verbose}{whether the function print some information during
 the computation}
 
-\item{jitter_width:}{width for the jitter positioning}
+\item{jitter_width}{width for the jitter positioning}
+
+\item{...}{Additional arguments passed on to \code{\link[DESeq2]{DESeq}}
+or \code{\link[ggplot2]{ggplot}}}
 }
 \value{
 A \code{\link{ggplot}}2 plot representing DESeq2 results

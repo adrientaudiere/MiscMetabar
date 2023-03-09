@@ -3,8 +3,8 @@
 #' @description
 #' `r lifecycle::badge("maturing")`
 #' @aliases hill_tuckey_phyloseq
-#' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param modality (required): the variable to test
+#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @param modality (required) the variable to test
 #' @return A ggplot2 object
 #'
 #' @export

@@ -7,11 +7,11 @@
 adonis_pq(physeq, formula, merge_sample_by = NULL)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
+\item{physeq}{(required) a \code{\link{phyloseq-class}} object.}
 
-\item{formula}{(required): todo}
+\item{formula}{(required) todo}
 
-\item{merge_sample_by:}{a vector to determine
+\item{merge_sample_by}{a vector to determine
 which samples to merge using the \code{\link[speedyseq:merge_samples2]{speedyseq::merge_samples2()}}
 function. Need to be in \code{physeq@sam_data}}
 }

@@ -20,18 +20,18 @@ ggVenn_phyloseq(
 \item{fact}{(required): Name of the factor to cluster samples by modalities.
 Need to be in \code{physeq@sam_data}.}
 
-\item{merge_sample_by}{(Default: NULL): if not \code{NULL} samples of
+\item{merge_sample_by}{(default: NULL): if not \code{NULL} samples of
 physeq are mereged using the vector set by \code{merge_sample_by}. This
 merging used the \code{\link[speedyseq:merge_samples2]{speedyseq::merge_samples2()}}.
 If \code{merge_sample_by} is equal to \code{fact}
 it give the same result as if \code{merge_sample_by} is NULL.}
 
-\item{min_nb_seq}{(Default: 0)): minimum number of sequences by OTUs by
+\item{min_nb_seq}{(default: 0)): minimum number of sequences by OTUs by
 samples to take into count this OTUs in this sample. For example,
 if min_nb_seq=2,each value of 2 or less in the OTU table
 will not count in the venn diagramm}
 
-\item{taxonomic_rank}{(Default: Null): Name (or number) of a taxonomic rank
+\item{taxonomic_rank}{(default: Null): Name (or number) of a taxonomic rank
 to count. If set to Null (the default) the number of OTUs is counted.}
 
 \item{...}{other arguments for the \code{ggVennDiagram::ggVennDiagram} function

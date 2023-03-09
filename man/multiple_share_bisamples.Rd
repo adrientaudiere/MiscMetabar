@@ -14,19 +14,19 @@ multiple_share_bisamples(
 )
 }
 \arguments{
-\item{physeq}{(required): A \code{\link{phyloseq-class}} object.
+\item{physeq}{(required) A \code{\link{phyloseq-class}} object.
 For the moment refseq slot need to be not Null.}
 
-\item{modality}{: the name of the column in the \code{sam_data}
+\item{modality}{the name of the column in the \code{sam_data}
 slot of the physeq object to split samples by pairs}
 
-\item{bifactor}{(required): a factor (present in the \code{sam_data} slot of
+\item{bifactor}{(required) a factor (present in the \code{sam_data} slot of
 the physeq object) presenting the pair names}
 
-\item{nb_min_seq}{(Default: 0): minimum number of sequences per sample
+\item{nb_min_seq}{minimum number of sequences per sample
 to count the ASV/OTU}
 
-\item{vegIndex}{(Default: "shannon"): index for the \code{vegan::diversity} function}
+\item{vegIndex}{(default: "shannon") index for the \code{vegan::diversity} function}
 }
 \value{
 A tibble

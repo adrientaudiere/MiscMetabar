@@ -17,24 +17,24 @@ blast_to_phyloseq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
+\item{physeq}{(required) a \code{\link{phyloseq-class}} object.}
 
-\item{seq2search}{(required): path to fasta file}
+\item{seq2search}{(required) path to fasta file}
 
-\item{id_cut}{(Default: 90): cut of in identity percent to keep result}
+\item{blastpath}{path to blast program}
 
-\item{bit_score_cut}{(Default: 1e-10): cut of in bit score to keep result}
+\item{id_cut}{(default: 90) cut of in identity percent to keep result}
 
-\item{unique_per_seq}{(logical): if TRUE only return the first match for
+\item{bit_score_cut}{(default: 1e-10) cut of in bit score to keep result}
+
+\item{unique_per_seq}{(logical) if TRUE only return the first match for
 each sequence in seq2search}
 
-\item{score_filter}{(logical): does results are filter by score? If
+\item{score_filter}{(logical) does results are filter by score? If
 FALSE, \code{id_cut} and \code{bit_score_cut} are ignored}
 
-\item{list_no_output_query}{(logical): does the result table include
+\item{list_no_output_query}{(logical) does the result table include
 query sequences for which \code{blastn} does not find any correspondence?}
-
-\item{blastpath:}{path to blast program}
 }
 \value{
 the blast table

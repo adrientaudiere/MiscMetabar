@@ -7,12 +7,12 @@
 \format{
 A physeq object containing 1420 taxa with references sequences
 described by 14 taxonomic ranks
-and 185 samples described by 14 sample variables:
+and 185 samples described by 7 sample variables:
 }
 \usage{
 data_fungi
 }
 \description{
-A dataset
+Some fungal OTU in phyloseq format
 }
 \keyword{datasets}

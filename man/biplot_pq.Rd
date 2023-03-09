@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_functions.R
 \name{biplot_pq}
 \alias{biplot_pq}
-\title{Visualization of two samples for comparison of physeq object}
+\title{Visualization of two samples for comparison}
 \usage{
 biplot_pq(
   physeq,
@@ -27,36 +27,39 @@ biplot_pq(
 \item{physeq}{(required): A \code{\link{phyloseq-class}}
 object}
 
-\item{fact}{(Default: NULL), Name of the factor in \code{physeq@sam_data}.
-If set to NULL use the \code{left_name} and \code{right_name} parameter as modality.}
+\item{fact, }{Name of the factor in \code{physeq@sam_data}.
+If left to NULL use the \code{left_name} and \code{right_name} parameter as modality.}
 
-\item{merge_sample_by}{(Default: NULL): if not \code{NULL} samples of
+\item{merge_sample_by}{(default: NULL): if not \code{NULL} samples of
 physeq are mereged using the vector set by \code{merge_sample_by}. This
 merging used the \code{\link[speedyseq:merge_samples2]{speedyseq::merge_samples2()}}. In the case of
 \code{\link[=biplot_pq]{biplot_pq()}} this must be a factor with two levels only.}
 
-\item{left_name}{(Default: "A"): Name fo the left sample.}
+\item{inverse_side}{Inverse the side (put the right modality in the left side).}
 
-\item{right_name}{(Default: "B"): Name fo the right sample.}
+\item{left_name}{Name fo the left sample.}
 
-\item{left_fill}{: Fill fo the left sample.}
+\item{right_name}{Name fo the right sample.}
 
-\item{left_col}{: Color fo the left sample.}
+\item{left_fill}{Fill fo the left sample.}
 
-\item{right_fill}{: Fill fo the right sample.}
+\item{left_col}{Color fo the left sample.}
 
-\item{right_col}{: Color fo the right sample.}
+\item{right_fill}{Fill fo the right sample.}
 
-\item{log_10}{(Default: TRUE, logical): Does abundancy is log10 transformed ?}
+\item{right_col}{Color fo the right sample.}
 
-\item{nudge_y}{: A parameter to control the y position of abundancy values.}
+\item{log_10}{(logical) Does abundancy is log10 transformed ?}
 
-\item{geomLabel}{(Default: FALSE, logical): if true use the \code{geom_label} function
-instead of \code{geom_text} to indicate the numbers of sequences}
+\item{nudge_y}{A parameter to control the y position of abundancy values.}
 
-\item{text_size}{(Default: 3): default size for the number of sequences}
+\item{geomLabel}{(default: FALSE, logical) if TRUE use the \code{\link[ggplot2:geom_text]{ggplot2::geom_label()}} function
+instead of \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}} to indicate the numbers of sequences.}
 
-\item{plotly_version}{(Default: FALSE)}
+\item{text_size}{default size for the number of sequences}
+
+\item{plotly_version}{If TRUE, use \code{\link[plotly:ggplotly]{plotly::ggplotly()}} to return
+a interactive ggplot.}
 
 \item{...}{: other arguments for the ggplot function}
 }

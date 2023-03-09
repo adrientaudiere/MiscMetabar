@@ -7,16 +7,16 @@
 dist_bycol(x, y, method = "bray", nperm = 99, ...)
 }
 \arguments{
-\item{x}{(required): A first matrix.}
+\item{x}{(required) A first matrix.}
 
-\item{y}{(required): A second matrix.}
+\item{y}{(required) A second matrix.}
 
-\item{method}{(Default: 'bray'): the method to use internally in the vegdist
+\item{method}{(default: 'bray') the method to use internally in the vegdist
 function.}
 
-\item{nperm}{(Default: 99): The number of permutations}
+\item{nperm}{(default: 99) The number of permutations}
 
-\item{...}{(optional): others argument for \code{vegan::vegdist} function}
+\item{...}{others argument for \code{vegan::vegdist} function}
 }
 \value{
 A list of length two : (i) a vector of observed distance ($obs) and

@@ -8,7 +8,7 @@ if (getRversion() >= "2.15.1") {
 #'
 #' `r lifecycle::badge("stable")`
 #'
-#' @param physeq (required): a \code{\link{phyloseq-class}} object obtained
+#' @param physeq (required) a \code{\link{phyloseq-class}} object obtained
 #'   using the `dada2` package
 #'
 #' @return A new \code{\link{phyloseq-class}} object with `refseq` slot and new
@@ -41,11 +41,11 @@ add_dna_to_phyloseq <- function(physeq) {
 #' @param physeq (required): a \code{\link{phyloseq-class}} object obtained
 #'   using the `dada2` package
 #'
-#' @param remove_empty_samples (logical) : Do you want to remove samples without sequences (this is done after removing empty taxa)
-#' @param remove_empty_taxa (logical) : Do you want to remove taxa without sequences (this is done before removing empty samples)
-#' @param clean_samples_names (logical) : Do you want to clean samples names?
-#' @param silent (logical) : If true, no message are printing.
-#' @param verbose (logical) : Additional informations in the message
+#' @param remove_empty_samples (logical) Do you want to remove samples without sequences (this is done after removing empty taxa)
+#' @param remove_empty_taxa (logical) Do you want to remove taxa without sequences (this is done before removing empty samples)
+#' @param clean_samples_names (logical) Do you want to clean samples names?
+#' @param silent (logical) If true, no message are printing.
+#' @param verbose (logical) Additional informations in the message
 #'   the verbose parameter overwrite the silent parameter.
 #' @return A new \code{\link{phyloseq-class}} object
 #' @export
@@ -141,10 +141,10 @@ clean_pq <- function(physeq,
 #'    clusters and samples
 #'  * Phyloseq-class -> nb of reads, clusters and samples
 #'
-#' @param list_of_objects (Required): A list of objects
-#' @param obj_names:
+#' @param list_of_objects (required) a list of objects
+#' @param obj_names
 #'   A list of names corresponding to the list of objects
-#' @param clean_pq (Logical):
+#' @param clean_pq (logical)
 #'   If true, empty samples and empty ASV are discarded before clustering.
 #'
 #' @return The number of sequences, clusters (e.g. OTUs, ASVs) and samples for
@@ -274,22 +274,22 @@ track_wkflow <- function(list_of_objects, obj_names = NULL, clean_pq = FALSE) {
 #'
 #' `r lifecycle::badge("maturing")`
 #'
-#' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param nproc (Default: 1)
+#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @param nproc (default: 1)
 #'   Set to number of cpus/processors to use for the clustering
-#' @param method (Default: Clusterize)
+#' @param method (default: clusterize)
 #'   Set the clustering method.
-#'   - `Clusterize` use the `DECIPHER::Clusterize` fonction,
+#'   - `clusterize` use the [DECIPHER::Clusterize()] fonction,
 #'   - `vsearch` use the vsearch software (https://github.com/torognes/vsearch/)
 #'     with arguments `-cluster_fast` and `-strand both`
-#' @param vsearchpath: path to vsearch
-#' @param id (Default: 0.97): level of identity to cluster
-#' @param tax_adjust: See the man page
+#' @param vsearchpath path to vsearch
+#' @param id (default: 0.97): level of identity to cluster
+#' @param tax_adjust See the man page
 #'   of [speedyseq::merge_taxa_vec()] for more details.
-#' @param ... Others arguments path to `DECIPHER::Clusterize`
+#' @param ... Others arguments path to [DECIPHER::Clusterize()]
 #' @details This function use the `speedyseq::merge_taxa_vec` function to
 #'   merge taxa into clusters. By default tax_adjust = 1L. See the man page
-#'   of `speedyseq::merge_taxa_vec`.
+#'   of [speedyseq::merge_taxa_vec()].
 #'
 #' @return A new object of class `physeq`
 #'
@@ -303,15 +303,18 @@ track_wkflow <- function(list_of_objects, obj_names = NULL, clean_pq = FALSE) {
 
 asv2otu <- function(physeq,
                     nproc = 1,
-                    method = "Clusterize",
+                    method = "clusterize",
                     id = 0.97,
                     vsearchpath = "vsearch",
                     tax_adjust = 1,
                     ...) {
   verify_pq(physeq)
   dna <- Biostrings::DNAStringSet(physeq@refseq)
+  if(!method %in%c("clusterize", "vsearch")){
+    stop("Method allows 2 values only : `clusterize` or `vsearch`")
+  }
 
-  if (method == "Clusterize") {
+  if (method == "clusterize") {
     ## Find clusters of ASVs to form the new OTUs
     clusters <- DECIPHER::Clusterize(
       dna,
@@ -393,11 +396,11 @@ asv2otu <- function(physeq,
 #'
 #' `r lifecycle::badge("maturing")`
 #'
-#' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param seq2search (required): path to fasta file
-#' @param vsearchpath: path to vsearch
-#' @param id (Default: 0.8): id for --usearch_global
-#' @param iddef (Default: 0): iddef for --usearch_global
+#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @param seq2search (required) path to fasta file
+#' @param vsearchpath path to vsearch
+#' @param id (default: 0.8) id for --usearch_global
+#' @param iddef (default: 0) iddef for --usearch_global
 #' @examples
 #' file_dna <- tempfile("dna.fa")
 #' seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCA
@@ -467,16 +470,16 @@ vsearch_search_global <- function(physeq,
 #'
 #' `r lifecycle::badge("maturing")`
 #'
-#' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param seq2search (required): path to fasta file
-#' @param blastpath: path to blast program
-#' @param id_cut (Default: 90): cut of in identity percent to keep result
-#' @param bit_score_cut (Default: 1e-10): cut of in bit score to keep result
-#' @param unique_per_seq (logical): if TRUE only return the first match for
+#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @param seq2search (required) path to fasta file
+#' @param blastpath path to blast program
+#' @param id_cut (default: 90) cut of in identity percent to keep result
+#' @param bit_score_cut (default: 1e-10) cut of in bit score to keep result
+#' @param unique_per_seq (logical) if TRUE only return the first match for
 #'   each sequence in seq2search
-#' @param score_filter (logical): does results are filter by score? If
+#' @param score_filter (logical) does results are filter by score? If
 #'   FALSE, `id_cut` and `bit_score_cut` are ignored
-#' @param list_no_output_query (logical): does the result table include
+#' @param list_no_output_query (logical) does the result table include
 #'   query sequences for which `blastn` does not find any correspondence?
 #'
 #' @return  the blast table
@@ -590,11 +593,11 @@ blast_to_phyloseq <- function(physeq,
 #'
 #' `r lifecycle::badge("maturing")`
 #'
-#' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param path: a path to the folder to save the phyloseq object
-#' @param rdata (logical): does the phyloseq object is also saved in Rdata format?
-#' @param one_file_ASV (logical): if TRUE, combine all data in one file only
-#' @param write_sam_data (logical): does the samples data are add to
+#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @param path a path to the folder to save the phyloseq object
+#' @param rdata (logical) does the phyloseq object is also saved in Rdata format?
+#' @param one_file_ASV (logical) if TRUE, combine all data in one file only
+#' @param write_sam_data (logical) does the samples data are add to
 #'   the file. Only used if `one_file_ASV` is TRUE.
 #'   Note that this result in a lot of NA values.
 #' @param ... Other arguments passed to [utils::write.csv()] function.
@@ -604,11 +607,11 @@ blast_to_phyloseq <- function(physeq,
 #'
 #' @examples
 #' \dontrun{
-#' write_phyloseq(data_fungi, path = "phyloseq")
-#' write_phyloseq(data_fungi, path = "phyloseq", one_file_ASV = TRUE)
+#' write_pq(data_fungi, path = "phyloseq")
+#' write_pq(data_fungi, path = "phyloseq", one_file_ASV = TRUE)
 #' }
 #'
-write_phyloseq <- function(physeq,
+write_pq <- function(physeq,
                            path = NULL,
                            rdata = FALSE,
                            one_file_ASV = FALSE,
@@ -693,19 +696,23 @@ write_phyloseq <- function(physeq,
 #'
 #' `r lifecycle::badge("maturing")`
 #'
-#' @param path (required) : a path to the folder to read the phyloseq object
-#' @param taxa_are_rows (required, default to FALSE) : see ?phyloseq for details
-#'
+#' @param path (required) a path to the folder to read the phyloseq object
+#' @param taxa_are_rows (required, default to FALSE) see ?phyloseq for details
+#' @param sam_names The name of the variable (column) in sam_data.csv to rename
+#'   samples. Note that if you use [write_phyloseq()] function to save your 
+#'   physeq object, you may use sam_names = "X" to rename the samples names 
+#'   as before.
+#' 
 #' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 #' and if present a phy_tree in Newick format. At least the otu_table.csv need to be present.
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' read_phyloseq(path = "phyloseq_data")
+#' read_pq(path = "phyloseq_data")
 #' }
 #'
-read_phyloseq <- function(path = NULL, taxa_are_rows = FALSE) {
+read_pq <- function(path = NULL, taxa_are_rows = FALSE, sam_names = NULL) {
   if (file.exists(paste(path, "/otu_table.csv", sep = ""))) {
     otu_table_csv <- as.matrix(utils::read.csv(paste(path, "/otu_table.csv", sep = "")))
     rownames(otu_table_csv) <- otu_table_csv[, 1]
@@ -733,6 +740,9 @@ read_phyloseq <- function(path = NULL, taxa_are_rows = FALSE) {
     tree <- ape::read.tree(paste(path, "/phy_tree.txt", sep = ""))
     physeq <- phyloseq::merge_phyloseq(physeq, phy_tree(tree))
   }
+  if(!is.null(sam_names)) {
+    sample_names(physeq) <- unclass(physeq@sam_data[,sam_names])[[1]]
+  }
 
   return(physeq)
 }
@@ -749,13 +759,13 @@ read_phyloseq <- function(path = NULL, taxa_are_rows = FALSE) {
 #'  on the method.
 
 #'
-#' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param nproc (Default 1)
+#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @param nproc (default 1)
 #'   Set to number of cpus/processors to use for the clustering
-#' @param id (Default: 0.84): id for --usearch_global.
-#' @param vsearchpath: path to vsearch.
-#' @param verbose (logical): if true, print some additional messages.
-#' @param clean_pq (logical): if true, empty samples and empty ASV are discarded
+#' @param id (default: 0.84) id for --usearch_global.
+#' @param vsearchpath path to vsearch.
+#' @param verbose (logical) if true, print some additional messages.
+#' @param clean_pq (logical) if true, empty samples and empty ASV are discarded
 #'   before clustering.
 #'
 #' @return a list of for object

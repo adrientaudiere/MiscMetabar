@@ -11,10 +11,10 @@
 #'    (i) a step in the sampling,
 #'    (ii) a step in the extraction,
 #'    (iii) a step in the sequencing.
-#' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param samples_names (required): a vector of names for samples with
+#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @param samples_names (required) a vector of names for samples with
 #'   positives controls of the same samples having the same name
-#' @param method (Default: "bray"): a method to calculate
+#' @param method (default: "bray") a method to calculate
 #'   the distance, parsed to [vegan::vegdist()]. See ?vegdist for a list
 #'   of possible values.
 #' @return A list of two data-frames with
@@ -74,10 +74,10 @@ les")
 #' `r lifecycle::badge("experimental")`
 #'
 #' @aliases subset_taxa_tax_control
-#' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param taxa_distri (required): a vector of length equal to the number of
+#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @param taxa_distri (required) a vector of length equal to the number of
 #'   samples with the number of sequences per samples for the taxa control
-#' @param method (Default: "mean"): a method to calculate the cut-off value.
+#' @param method (default: "mean") a method to calculate the cut-off value.
 #'   There is 6 available methods:
 #'   1. `cutoff_seq`: discard taxa with less than the number of sequence
 #'           than taxa control,
@@ -87,7 +87,7 @@ les")
 #'   4. `min`: the minimum of the three firsts methods
 #'   5. `max`: the maximum of the three firsts methods
 #'   6. `mean`: the mean of the three firsts methods
-#' @param min_diff_for_cutoff (int): argument for method `cutoff_diff`.
+#' @param min_diff_for_cutoff (int) argument for method `cutoff_diff`.
 #'   Required if method is `cutoff_diff`, `min`, `max` or `min`
 #' @return A new \code{\link{phyloseq-class}} object.
 #' @export

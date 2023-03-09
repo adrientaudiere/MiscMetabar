@@ -8,7 +8,7 @@ using ASV_1, ASV_2, …}
 add_dna_to_phyloseq(physeq)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link{phyloseq-class}} object obtained
 using the \code{dada2} package}
 }
 \value{

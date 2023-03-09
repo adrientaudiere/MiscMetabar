@@ -7,8 +7,8 @@
 #' @description
 #' `r lifecycle::badge("maturing")`
 #'
-#' @param physeq (required): a \code{\link{phyloseq-class}} object.
-#' @param min_number (int): the minimum number of sequences to put
+#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @param min_number (int) the minimum number of sequences to put
 #'   a 1 in the otu table.
 #' @author Adrien Taudière
 #'
@@ -38,12 +38,12 @@ as_binary_otu_table <- function(physeq, min_number = 1) {
 #' @note the first column of the first matrix is compare to the first column of
 #'   the second matrix, the second column of the first matrix is compare to the
 #'   second column of the second matrix and so on.
-#' @param x (required): A first matrix.
-#' @param y (required): A second matrix.
-#' @param method (Default: 'bray'): the method to use internally in the vegdist
+#' @param x (required) A first matrix.
+#' @param y (required) A second matrix.
+#' @param method (default: 'bray') the method to use internally in the vegdist
 #'   function.
-#' @param nperm (Default: 99): The number of permutations
-#' @param ... (optional): others argument for `vegan::vegdist` function
+#' @param nperm (default: 99) The number of permutations
+#' @param ... others argument for `vegan::vegdist` function
 #'
 #' @author Adrien Taudière
 #'
@@ -111,7 +111,7 @@ all_object_size <- function() {
 
 ################################################################################
 #' Simplify taxonomy by removing some unused characters such as "k__"
-#' @param physeq (required): a \code{\link{phyloseq-class}} object.
+#' @param physeq (required) a \code{\link{phyloseq-class}} object.
 #'
 #' @description
 #' `r lifecycle::badge("maturing")`

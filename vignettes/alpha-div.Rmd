@@ -17,3 +17,44 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(MiscMetabar)
 ```
+### Alpha diversity
+
+Voir aussi le [tutoriel](https://microbiome.github.io/tutorials/Alphadiversity.html) du package microbiome. 
+
+
+#### Hill number
+
+Numerous metrics of diversity exist. 
+Hill numbers [^Hill73] is a kind of general framework for alpha diversity index. 
+
+[^Hill73]: Hill MO. 1973. Diversity and evenness: a unifying notation and its consequences. Ecology 54, 427-473.
+
+```r
+vegan::renyi()
+```
+
+#### Test for difference in diversity (hill number)
+
+One way to keep into account for difference in the number of sequences per samples is to use a Tukey test on a linear model with the square roots of the number of sequence as the first explanatory variable of the linear model [^Balint15].
+
+[^Balint15]: Bálint M et al. 2015. Relocation, high-latitude warming and host genetic identity shape the foliar fungal microbiome of poplars. Molecular Ecology 24, 235-248. https://doi.org/10.1111/mec.13018
+
+```r
+stats::TukeyHSD()
+MiscMetabar::hill_tuckey_phyloseq()
+```
+
+#### Testing differences in alpha diversity following the [tutorial](https://microbiome.github.io/tutorials/Alphadiversity.html) of the microbiome package. 
+
+We recommend the non-parametric [Kolmogorov-Smirnov test](https://www.rdocumentation.org/packages/dgof/versions/1.2/topics/ks.test) for two-group comparisons when there are no relevant covariates.
+
+```r
+# Construct the data
+d <- meta(pseq)
+d$diversity <- microbiome::diversity(pseq, "shannon")$shannon
+# Split the values by group
+spl <- split(d$diversity, d$sex)
+# Kolmogorov-Smironv test
+pv <- ks.test(spl$female, spl$male)$p.value
+# Adjust the p-value
+padj <- p.adjust(pv)

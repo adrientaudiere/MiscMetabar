@@ -12,12 +12,12 @@ subset_taxa_tax_control(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
+\item{physeq}{(required) a \code{\link{phyloseq-class}} object.}
 
-\item{taxa_distri}{(required): a vector of length equal to the number of
+\item{taxa_distri}{(required) a vector of length equal to the number of
 samples with the number of sequences per samples for the taxa control}
 
-\item{method}{(Default: "mean"): a method to calculate the cut-off value.
+\item{method}{(default: "mean") a method to calculate the cut-off value.
 There is 6 available methods:
 \enumerate{
 \item \code{cutoff_seq}: discard taxa with less than the number of sequence
@@ -30,7 +30,7 @@ than taxa control,
 \item \code{mean}: the mean of the three firsts methods
 }}
 
-\item{min_diff_for_cutoff}{(int): argument for method \code{cutoff_diff}.
+\item{min_diff_for_cutoff}{(int) argument for method \code{cutoff_diff}.
 Required if method is \code{cutoff_diff}, \code{min}, \code{max} or \code{min}}
 }
 \value{

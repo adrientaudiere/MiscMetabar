@@ -7,9 +7,9 @@
 merge_krona(files = NULL, output = "mergeKrona.html")
 }
 \arguments{
-\item{files}{(required): path to html files to merged}
+\item{files}{(required) path to html files to merged}
 
-\item{output:}{path to the output file}
+\item{output}{path to the output file}
 }
 \value{
 A html file

@@ -12,7 +12,7 @@ venn_phyloseq(physeq, fact, min_nb_seq = 0, print_values = TRUE)
 \item{fact}{(required): Name of the factor to cluster samples by modalities.
 Need to be in \code{physeq@sam_data}.}
 
-\item{min_nb_seq}{(Default: 0)): minimum number of sequences by OTUs by
+\item{min_nb_seq}{(default: 0)): minimum number of sequences by OTUs by
 samples to take into count this OTUs in this sample. For example,
 if min_nb_seq=2,each value of 2 or less in the OTU table
 will be change into 0 for the analysis}

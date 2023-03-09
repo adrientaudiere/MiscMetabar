@@ -37,6 +37,7 @@ Suggests:
     plotly,
     plyr,
     reshape2,
+    seqinr,
     venneuler,
     viridis,
     testthat (>= 3.0.0),
@@ -51,7 +52,11 @@ Imports:
     lifecycle,
     speedyseq,
     rlang,
-    stats
+    stats,
+    ape,
+    tibble,
+    stringr,
+    phyloseqGraphTest
 Remotes: 
     github::mikemc/speedyseq,
     github::adrientaudiere/lulu

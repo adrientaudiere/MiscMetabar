@@ -34,20 +34,15 @@ Metabarcoding is
 
 The Metabarcoding ecosystem in R language is mature, well constructed and 
 rely on a very active communities in both [bioconductor](https://www.bioconductor.org/) 
-and [cran](https://cran.r-project.org/) project. `dada2` [@Callahan:2016] (http://bioconductor.org/packages/release/bioc/html/dada2.html)
-provides a clustering method highly cited () and recommended [@Pauvert:]. `dada2` also
-provides tools for complete pipeline of metabarcoding analysis. `phyloseq` [@McMurdie:2013] (http://bioconductor.org/packages/release/bioc/html/phyloseq.html)
-is a 
+and [cran](https://cran.r-project.org/) projects. `dada2` [@Callahan:2016] (http://bioconductor.org/packages/release/bioc/html/dada2.html)
+provides a clustering method highly cited and recommended [@Pauvert:]. `dada2` also
+provides tools to complete pipeline of metabarcoding analysis. `phyloseq` [@McMurdie:2013] (http://bioconductor.org/packages/release/bioc/html/phyloseq.html) facilitate metagenomics analysis by providing a way to stock data (the `phyloseq` class) and graphical/statistical functions. 
 
-Some packages already extend the phyloseq packages. For instance the `microbiome` package [@Lahti2017] (https://microbiome.github.io/) 
-propose some scripts and function to manipulate microbiome data sets. 
+Some packages already extend the phyloseq packages. For instance the `microbiome` package [@Lahti2017] (https://microbiome.github.io/) propose some scripts and functions to manipulate microbiome data sets. The `speedyseq` package [@mclaren2020] provides faster versions of phyloseq's plotting and taxonomic merging functions, some of which are used in MiscMetabar.
 
-Speedyseq
+Others packages (e.g. the `mia` package) extend a recent data structure using the `TreeSummarizedExperiment` package [@]  to facilitate phylogenetic tree analysis and to benefits from the comprehensive Bioconductor ecosystem of the `SummarizedExperiment` family.
 
-Other packages extend a more recent data structure using the `TreeSummarizedExperiment` package [@] (e.g. the `mia` package) to facilitate
-phylogenetic tree analysis and to benefits from the comprehensive Bioconductor ecosystem of the `SummarizedExperiment` family.
-
-
+MiscMetabar enrich this R ecosystem by proposing (i) new bioinformatics functions (e.g. `asv2otu`, ),
 
 
 Bioconductor task views [Metagenomics](http://bioconductor.org/packages/release/BiocViews.html#___Metagenomics) and 

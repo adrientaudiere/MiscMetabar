@@ -8,9 +8,9 @@
 as_binary_otu_table(physeq, min_number = 1)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
+\item{physeq}{(required) a \code{\link{phyloseq-class}} object.}
 
-\item{min_number}{(int): the minimum number of sequences to put
+\item{min_number}{(int) the minimum number of sequences to put
 a 1 in the otu table.}
 }
 \value{

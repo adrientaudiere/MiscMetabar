@@ -7,7 +7,7 @@
 \format{
 A physeq object containing 651 taxa with references sequences
 described by 14 taxonomic ranks
-and 185 samples described by 14 sample variables:
+and 185 samples described by 7 sample variables:
 }
 \usage{
 data_fungi_sp_known
@@ -15,5 +15,8 @@ data_fungi_sp_known
 \description{
 A subset of the data_fungi dataset including only taxa with information
 at the species level
+}
+\details{
+Obtain using \code{data_fungi_sp_known <- subset_taxa(data_fungi, !is.na(data_fungi@tax_table[,"Species"]))}
 }
 \keyword{datasets}

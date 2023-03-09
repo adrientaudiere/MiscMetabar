@@ -9,6 +9,8 @@
 \alias{lulu_phyloseq}
 \alias{otu_circle}
 \alias{biplot_physeq}
+\alias{read_phyloseq}
+\alias{write_phyloseq}
 \title{Deprecated function(s) in the MiscMetabar package}
 \usage{
 physeq_graph_test(...)
@@ -30,6 +32,8 @@ removed.
 \link{lulu_pq} \tab now a synonym for \link{lulu_phyloseq}\cr
 \link{circle_pq} \tab now a synonym for \link{otu_circle}\cr
 \link{biplot_pq} \tab now a synonym for \link{biplot_physeq}\cr
+\link{read_pq} \tab now a synonym for \link{read_phyloseq}\cr
+\link{write_pq} \tab now a synonym for \link{write_phyloseq}\cr
 }
 }
 

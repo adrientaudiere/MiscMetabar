@@ -13,9 +13,9 @@ MM_idtaxa(
 )
 }
 \arguments{
-\item{test}{(required):}
+\item{test}{(required)}
 
-\item{trainingSet}{(required):}
+\item{trainingSet}{(required)}
 
 \item{column_names}{(optional but often needed): names for the
 column of the resulted tibble}

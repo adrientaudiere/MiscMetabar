@@ -3,11 +3,11 @@
 #' Make a datatable with the taxonomy of a \code{\link{phyloseq-class}} object
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @param physeq (required): A \code{\link{phyloseq-class}} object
-#' @param abundance (Default: TRUE): Does the number of sequences is print
-#' @param taxonomic_level (Default: NULL): a vector of selected taxonomic
+#' @param physeq (required) A \code{\link{phyloseq-class}} object
+#' @param abundance (default: TRUE) Does the number of sequences is print
+#' @param taxonomic_level (default: NULL) a vector of selected taxonomic
 #' level using their column numbers (e.g. taxonomic_level = c(1:7))
-#' @param modality (Default: NULL) : A sample modality to split
+#' @param modality (default: NULL) A sample modality to split
 #' OTU abundancy by level of the modality
 #' @param ... Other argument for the datatable function
 #'
@@ -93,15 +93,15 @@ tax_datatable <- function(physeq,
 #' shared ASV.
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @param physeq (required): A \code{\link{phyloseq-class}} object.
+#' @param physeq (required) A \code{\link{phyloseq-class}} object.
 #' For the moment refseq slot need to be not Null.
-#' @param modality : the name of the column in the `sam_data`
+#' @param modality the name of the column in the `sam_data`
 #' slot of the physeq object to split samples by pairs
-#' @param bifactor (required): a factor (present in the `sam_data` slot of
+#' @param bifactor (required) a factor (present in the `sam_data` slot of
 #' the physeq object) presenting the pair names
-#' @param nb_min_seq (Default: 0): minimum number of sequences per sample
+#' @param nb_min_seq minimum number of sequences per sample
 #' to count the ASV/OTU
-#' @param vegIndex (Default: "shannon"): index for the `vegan::diversity` function
+#' @param vegIndex (default: "shannon") index for the `vegan::diversity` function
 #' @return A tibble
 #' @importFrom rlang .data
 #' @export

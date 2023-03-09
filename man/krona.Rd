@@ -14,22 +14,22 @@ krona(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
+\item{physeq}{(required) a \code{\link{phyloseq-class}} object.}
 
-\item{file}{(required): the location of the html file to save}
+\item{file}{(required) the location of the html file to save}
 
-\item{nb_seq}{(logical): If true, Krona set the distribution
+\item{nb_seq}{(logical) If true, Krona set the distribution
 of sequences in the taxonomy. If False, Krona set the distribution of ASVs
 in the taxonomy.}
 
-\item{add_unassigned_rank}{(int). Add unassigned for rank
-inferior to 'add_unassigned_rank' when necessary.}
-
-\item{ranks:}{Number of the taxonomic ranks to plot
+\item{ranks}{Number of the taxonomic ranks to plot
 (num of the column in \code{tax_table} slot of your \code{physeq} object).
 Default setting plot all the ranks (argument 'All').}
 
-\item{name:}{A name for intermediary files, Useful to name
+\item{add_unassigned_rank}{(int) Add unassigned for rank
+inferior to 'add_unassigned_rank' when necessary.}
+
+\item{name}{A name for intermediary files, Useful to name
 your krona result files before merging using \code{\link[=merge_krona]{merge_krona()}}}
 }
 \value{

@@ -8,7 +8,7 @@
 asv2otu(
   physeq,
   nproc = 1,
-  method = "Clusterize",
+  method = "clusterize",
   id = 0.97,
   vsearchpath = "vsearch",
   tax_adjust = 1,
@@ -16,27 +16,27 @@ asv2otu(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
+\item{physeq}{(required) a \code{\link{phyloseq-class}} object.}
 
-\item{nproc}{(Default: 1)
+\item{nproc}{(default: 1)
 Set to number of cpus/processors to use for the clustering}
 
-\item{method}{(Default: Clusterize)
+\item{method}{(default: clusterize)
 Set the clustering method.
 \itemize{
-\item \code{Clusterize} use the \code{DECIPHER::Clusterize} fonction,
+\item \code{clusterize} use the \code{\link[DECIPHER:Clusterize]{DECIPHER::Clusterize()}} fonction,
 \item \code{vsearch} use the vsearch software (https://github.com/torognes/vsearch/)
 with arguments \code{-cluster_fast} and \verb{-strand both}
 }}
 
-\item{id}{(Default: 0.97): level of identity to cluster}
+\item{id}{(default: 0.97): level of identity to cluster}
 
-\item{...}{Others arguments path to \code{DECIPHER::Clusterize}}
+\item{vsearchpath}{path to vsearch}
 
-\item{vsearchpath:}{path to vsearch}
-
-\item{tax_adjust:}{See the man page
+\item{tax_adjust}{See the man page
 of \code{\link[speedyseq:merge_taxa_vec]{speedyseq::merge_taxa_vec()}} for more details.}
+
+\item{...}{Others arguments path to \code{\link[DECIPHER:Clusterize]{DECIPHER::Clusterize()}}}
 }
 \value{
 A new object of class \code{physeq}
@@ -47,7 +47,7 @@ A new object of class \code{physeq}
 \details{
 This function use the \code{speedyseq::merge_taxa_vec} function to
 merge taxa into clusters. By default tax_adjust = 1L. See the man page
-of \code{speedyseq::merge_taxa_vec}.
+of \code{\link[speedyseq:merge_taxa_vec]{speedyseq::merge_taxa_vec()}}.
 }
 \references{
 VSEARCH can be downloaded from

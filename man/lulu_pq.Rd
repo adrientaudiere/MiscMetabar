@@ -14,19 +14,19 @@ lulu_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
+\item{physeq}{(required) a \code{\link{phyloseq-class}} object.}
 
-\item{nproc}{(Default 1)
+\item{nproc}{(default 1)
 Set to number of cpus/processors to use for the clustering}
 
-\item{id}{(Default: 0.84): id for --usearch_global.}
+\item{id}{(default: 0.84) id for --usearch_global.}
 
-\item{verbose}{(logical): if true, print some additional messages.}
+\item{vsearchpath}{path to vsearch.}
 
-\item{clean_pq}{(logical): if true, empty samples and empty ASV are discarded
+\item{verbose}{(logical) if true, print some additional messages.}
+
+\item{clean_pq}{(logical) if true, empty samples and empty ASV are discarded
 before clustering.}
-
-\item{vsearchpath:}{path to vsearch.}
 }
 \value{
 a list of for object

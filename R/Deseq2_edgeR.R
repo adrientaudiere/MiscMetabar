@@ -7,11 +7,11 @@
 #' @param contrast (required):This argument specifies what comparison
 #'   to extract from the object to build a results table.
 #'   See \code{\link[DESeq2]{results}} man page for more details.
-#' @param alpha (Default: 0.01): the significance cutoff used for optimizing
+#' @param alpha (default: 0.01): the significance cutoff used for optimizing
 #'   the independent filtering. If the adjusted p-value cutoff (FDR) will be a
 #'   value other than 0.1, alpha should be set to that value.
-#' @param taxolev: taxonomic level of interest
-#' @param color_tax: taxonomic level used for
+#' @param taxolev taxonomic level of interest
+#' @param color_tax taxonomic level used for
 #'   color assignation
 #' @param verbose (logical): whether the function print some
 #'   information during the computation
@@ -120,30 +120,30 @@ plot_edgeR_phyloseq <-
 #' @description
 #' `r lifecycle::badge("experimental")`
 #'
-#' @param data (required): a \code{\link{phyloseq-class}} or a
+#' @param data (required) a \code{\link{phyloseq-class}} or a
 #' \code{\link[DESeq2]{DESeqDataSet-class}} object.
-#' @param tax_table : Required if data is a
+#' @param tax_table Required if data is a
 #' \code{\link[DESeq2]{DESeqDataSet-class}} object.
 #' The taxonomic table used to find the \code{taxa} and \code{color_taxa}
 #' arguments. If data is a \code{\link{phyloseq-class}} object, data@tax_table
 #' is used.
-#' @param contrast (required):This argument specifies what comparison to extract
+#' @param contrast (required) contrast specifies what comparison to extract
 #'   from the object to build a results table. See \code{\link[DESeq2]{results}}
 #'   man page for more details.
-#' @param alpha (Default: 0.01): the significance cutoff used for optimizing
+#' @param alpha (default: 0.01) the significance cutoff used for optimizing
 #'   the independent filtering. If the adjusted p-value cutoff (FDR) will be a
 #'   value other than 0.1, alpha should be set to that value.
-#' @param taxolev: taxonomic level of interest
-#' @param select_taxa: logical vector to select taxa to plot.
-#' @param color_tax : taxonomic level used for color or a
+#' @param taxolev taxonomic level of interest
+#' @param select_taxa logical vector to select taxa to plot.
+#' @param color_tax taxonomic level used for color or a
 #'   color vector.
-#' @param tax_depth: Taxonomic depth to test for differential
+#' @param tax_depth Taxonomic depth to test for differential
 #'   distribution among contrast. If Null the analysis is done at the OTU
 #'   (i.e. Species) level. If not Null, data need to be a column name in 
 #'   the `tax_table` slot of the \code{\link{phyloseq-class}} object.
-#' @param verbose: whether the function print some information during
+#' @param verbose whether the function print some information during
 #'   the computation
-#' @param jitter_width: width for the jitter positioning
+#' @param jitter_width width for the jitter positioning
 #' @param ... Additional arguments passed on to \code{\link[DESeq2]{DESeq}}
 #'   or \code{\link[ggplot2]{ggplot}}
 #'
@@ -354,12 +354,12 @@ plot_deseq2_phyloseq <-
 #'
 #' Further details.
 #'
-#' @param physeq (required).  A \code{\link{phyloseq-class}} or
+#' @param physeq (required)  A \code{\link{phyloseq-class}} or
 #'  an \code{\link{otu_table-class}} object.
 #'  The latter is only appropriate if \code{group} argument is also a
 #'  vector or factor with length equal to \code{nsamples(physeq)}.
 #'
-#' @param group (required). A character vector or factor giving the experimental
+#' @param group (required) A character vector or factor giving the experimental
 #'  group/condition for each sample/library. Alternatively, you may provide
 #'  the name of a sample variable. This name should be among the output of
 #'  \code{sample_variables(physeq)}, in which case
@@ -368,7 +368,7 @@ plot_deseq2_phyloseq <-
 #'  This is passed on to \code{\link[edgeR]{DGEList}},
 #'  and you may find further details or examples in its documentation.
 #'
-#' @param method (Optional). The label of the edgeR-implemented normalization
+#' @param method The label of the edgeR-implemented normalization
 #'   to use.
 #'  See \code{\link[edgeR]{calcNormFactors}} for supported options and details.
 #'  The default option is \code{"RLE"}, which is a scaling factor method

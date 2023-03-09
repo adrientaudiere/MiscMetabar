@@ -23,7 +23,7 @@ library(MiscMetabar)
 ## Using decipher or Vsearch algorithm
 ```{r}
 data(data_fungi_sp_known)
-otu <- asv2otu(data_fungi_sp_known, method = "IdClusters")
+otu <- asv2otu(data_fungi_sp_known, method = "clusterize")
 otu_vs <- asv2otu(data_fungi_sp_known, method = "vsearch")
 ```
 
