@@ -402,16 +402,18 @@ asv2otu <- function(physeq,
 #' @param id (default: 0.8) id for --usearch_global
 #' @param iddef (default: 0) iddef for --usearch_global
 #' @examples
-#' file_dna <- tempfile("dna.fa")
-#' seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCA
-#' ACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG", 
-#' file = file_dna, name = "seq1")
-#' res <- vsearch_search_global(data_fungi, file_dna)
-#' unlink(file_dna)
-#' 
-#' res[res$identity != "*", ]
+#' \dontrun{
+#'   file_dna <- tempfile("dna.fa")
+#'   seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCA
+#'   ACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG", 
+#'   file = file_dna, name = "seq1")
+#'   res <- vsearch_search_global(data_fungi, file_dna)
+#'   unlink(file_dna)
+#'   
+#'   res[res$identity != "*", ]
 #'
-#' clean_pq(subset_taxa(data_fungi, res$identity != "*"))
+#'   clean_pq(subset_taxa(data_fungi, res$identity != "*"))
+#' }
 #' @return A dataframe with uc results (invisible)
 #' @export
 
