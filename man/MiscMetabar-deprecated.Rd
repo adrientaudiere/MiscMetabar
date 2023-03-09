@@ -11,6 +11,15 @@
 \alias{biplot_physeq}
 \alias{read_phyloseq}
 \alias{write_phyloseq}
+\alias{sankey_phyloseq}
+\alias{summary_plot_phyloseq}
+\alias{plot_deseq2_phyloseq}
+\alias{plot_edgeR_phyloseq}
+\alias{venn_phyloseq}
+\alias{ggVenn_phyloseq}
+\alias{hill_tuckey_phyloseq}
+\alias{hill_phyloseq}
+\alias{physeq_heat_tree}
 \title{Deprecated function(s) in the MiscMetabar package}
 \usage{
 physeq_graph_test(...)
@@ -34,6 +43,15 @@ removed.
 \link{biplot_pq} \tab now a synonym for \link{biplot_physeq}\cr
 \link{read_pq} \tab now a synonym for \link{read_phyloseq}\cr
 \link{write_pq} \tab now a synonym for \link{write_phyloseq}\cr
+\link{sankey_pq} \tab now a synonym for \link{sankey_phyloseq}\cr
+\link{summary_plot_pq} \tab now a synonym for \link{summary_plot_phyloseq}\cr
+\link{plot_edgeR_pq} \tab now a synonym for \link{plot_edgeR_phyloseq}\cr
+\link{plot_deseq2_pq} \tab now a synonym for \link{plot_deseq2_phyloseq}\cr
+\link{venn_pq} \tab now a synonym for \link{venn_phyloseq}\cr
+\link{ggvenn_pq} \tab now a synonym for \link{ggVenn_phyloseq}\cr
+\link{hill_tuckey_pq} \tab now a synonym for \link{hill_tuckey_phyloseq}\cr
+\link{hill_pq} \tab now a synonym for \link{hill_phyloseq}\cr
+\link{heat_tree_pq} \tab now a synonym for \link{physeq_heat_tree}\cr
 }
 }
 

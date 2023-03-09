@@ -27,14 +27,14 @@ There is no CRAN or bioconductor version of MiscMetabar for now (work in progres
 
 You can install the stable version from [GitHub](https://github.com/) with:
 
-```{r installation, message=FALSE}
+```{r, message=FALSE}
 install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar")
 ```
 
 You can install the developement version from [GitHub](https://github.com/) with:
 
-```{r installation, message=FALSE}
+```{r, message=FALSE}
 install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar", ref="dev")
 ```

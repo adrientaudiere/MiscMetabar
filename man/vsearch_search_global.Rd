@@ -31,14 +31,16 @@ A dataframe with uc results (invisible)
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
-file_dna <- tempfile("dna.fa")
-seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCA
-ACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG", 
-file = file_dna, name = "seq1")
-res <- vsearch_search_global(data_fungi, file_dna)
-unlink(file_dna)
+\dontrun{
+  file_dna <- tempfile("dna.fa")
+  seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCA
+  ACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG", 
+  file = file_dna, name = "seq1")
+  res <- vsearch_search_global(data_fungi, file_dna)
+  unlink(file_dna)
+  
+  res[res$identity != "*", ]
 
-res[res$identity != "*", ]
-
-clean_pq(subset_taxa(data_fungi, res$identity != "*"))
+  clean_pq(subset_taxa(data_fungi, res$identity != "*"))
+}
 }
