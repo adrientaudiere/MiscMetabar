@@ -35,7 +35,7 @@ summary_plot_pq(otu_vs)
 
 ## Using lulu algorithm (https://www.nature.com/articles/s41467-017-01312-x)
 
-```{r, message=FALSE}
+```{r, message=FALSE, results="hide"}
 data(data_fungi_sp_known)
 lulu_res <- lulu_pq(data_fungi_sp_known)
 ```

@@ -1016,7 +1016,8 @@ ggvenn_pq <- function(physeq = NULL,
 #' @param plotlist : list of ggplot objects
 #' @param cols : number of columns
 #' @param layout : A matrix specifying the layout.
-#' If present, 'cols' is ignored.
+#'   If present, 'cols' is ignored.
+#' @export
 
 multiplot <-
   function(...,

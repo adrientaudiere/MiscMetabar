@@ -13,10 +13,12 @@ navbar:
     text: Articles
     menu:
     - text: Tutorials
-    - text: Alpha-diversity
-      href: articles/alpha-div.html
     - text: Reclustering
       href: articles/Reclustering.html
+    - text: Alpha-diversity
+      href: articles/alpha-div.html
+    - text: Beta-diversity
+      href: articles/beta-div.html
     - text: -------
     - text: "For developpers"
     - text: Rules of code

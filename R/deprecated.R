@@ -11,23 +11,24 @@
 #' @aliases physeq_graph_test adonis_phyloseq clean_physeq lulu_phyloseq otu_circle biplot_physeq read_phyloseq write_phyloseq sankey_phyloseq summary_plot_phyloseq plot_deseq2_phyloseq plot_edgeR_phyloseq venn_phyloseq ggVenn_phyloseq hill_tuckey_phyloseq hill_phyloseq physeq_heat_tree
 #' @section Details:
 #' \tabular{rl}{
-#'   [graph_test_pq] \tab now a synonym for [physeq_graph_test]\cr
-#'   [adonis_pq] \tab now a synonym for [adonis_phyloseq]\cr
-#'   [clean_pq] \tab now a synonym for [clean_physeq]\cr
-#'   [lulu_pq] \tab now a synonym for [lulu_phyloseq]\cr
-#'   [circle_pq] \tab now a synonym for [otu_circle]\cr
-#'   [biplot_pq] \tab now a synonym for [biplot_physeq]\cr
-#'   [read_pq] \tab now a synonym for [read_phyloseq]\cr
-#'   [write_pq] \tab now a synonym for [write_phyloseq]\cr
-#'   [sankey_pq] \tab now a synonym for [sankey_phyloseq]\cr
-#'   [summary_plot_pq] \tab now a synonym for [summary_plot_phyloseq]\cr
-#'   [plot_edgeR_pq] \tab now a synonym for [plot_edgeR_phyloseq]\cr
-#'   [plot_deseq2_pq] \tab now a synonym for [plot_deseq2_phyloseq]\cr
-#'   [venn_pq] \tab now a synonym for [venn_phyloseq]\cr
-#'   [ggvenn_pq] \tab now a synonym for [ggVenn_phyloseq]\cr
-#'   [hill_tuckey_pq] \tab now a synonym for [hill_tuckey_phyloseq]\cr
-#'   [hill_pq] \tab now a synonym for [hill_phyloseq]\cr
-#'   [heat_tree_pq] \tab now a synonym for [physeq_heat_tree]\cr
+#'   [graph_test_pq] \tab now a synonym for `physeq_graph_test`\cr
+#'   [adonis_pq] \tab now a synonym for `adonis_phyloseq`\cr
+#'   [clean_pq] \tab now a synonym for `clean_physeq`\cr
+#'   [lulu_pq] \tab now a synonym for `lulu_phyloseq`\cr
+#'   [circle_pq] \tab now a synonym for `otu_circle`\cr
+#'   [biplot_pq] \tab now a synonym for `biplot_physeq`\cr
+#'   [read_pq] \tab now a synonym for `read_phyloseq`\cr
+#'   [write_pq] \tab now a synonym for `write_phyloseq`\cr
+#'   [sankey_pq] \tab now a synonym for `sankey_phyloseq`\cr
+#'   [summary_plot_pq] \tab now a synonym for `summary_plot_phyloseq`\cr
+#'   [plot_edgeR_pq] \tab now a synonym for `plot_edgeR_phyloseq`\cr
+#'   [plot_deseq2_pq] \tab now a synonym for `plot_deseq2_phyloseq`\cr
+#'   [venn_pq] \tab now a synonym for `venn_phyloseq`\cr
+#'   [ggvenn_pq] \tab now a synonym for `ggVenn_phyloseq`\cr
+#'   [hill_tuckey_pq] \tab now a synonym for `hill_tuckey_phyloseq`\cr
+#'   [hill_pq] \tab now a synonym for `hill_phyloseq`\cr
+#'   [heat_tree_pq] \tab now a synonym for `physeq_heat_tree`\cr
+#'   [compare_pairs_pq] \tab now a synonym for `multiple_share_bisamples`\cr
 #' }
 #'
 
@@ -117,4 +118,8 @@ physeq_heat_tree <- function(...) {
   heat_tree_pq(...)
 }
 
+multiple_share_bisamples <- function(...) {
+  .Deprecated("compare_pairs_pq", package = "MiscMetabar")
+  compare_pairs_pq(...)
+}
 NULL

@@ -2,7 +2,7 @@
 % Please edit documentation in R/targets_misc.R
 \name{MM_idtaxa}
 \alias{MM_idtaxa}
-\title{A wrapper of \code{\link[DECIPHER]{IdTaxa}} which result in a tibble with}
+\title{A wrapper of \code{\link[DECIPHER:IdTaxa]{DECIPHER::IdTaxa()}}}
 \usage{
 MM_idtaxa(
   test,

@@ -105,7 +105,7 @@ tax_datatable <- function(physeq,
 #' @return A tibble
 #' @importFrom rlang .data
 #' @export
-multiple_share_bisamples <- function(physeq = NULL,
+compare_pairs_pq <- function(physeq = NULL,
                                      modality = NULL,
                                      bifactor = NULL,
                                      nb_min_seq = 0,

@@ -35,23 +35,24 @@ removed.
 \section{Details}{
 
 \tabular{rl}{
-\link{graph_test_pq} \tab now a synonym for \link{physeq_graph_test}\cr
-\link{adonis_pq} \tab now a synonym for \link{adonis_phyloseq}\cr
-\link{clean_pq} \tab now a synonym for \link{clean_physeq}\cr
-\link{lulu_pq} \tab now a synonym for \link{lulu_phyloseq}\cr
-\link{circle_pq} \tab now a synonym for \link{otu_circle}\cr
-\link{biplot_pq} \tab now a synonym for \link{biplot_physeq}\cr
-\link{read_pq} \tab now a synonym for \link{read_phyloseq}\cr
-\link{write_pq} \tab now a synonym for \link{write_phyloseq}\cr
-\link{sankey_pq} \tab now a synonym for \link{sankey_phyloseq}\cr
-\link{summary_plot_pq} \tab now a synonym for \link{summary_plot_phyloseq}\cr
-\link{plot_edgeR_pq} \tab now a synonym for \link{plot_edgeR_phyloseq}\cr
-\link{plot_deseq2_pq} \tab now a synonym for \link{plot_deseq2_phyloseq}\cr
-\link{venn_pq} \tab now a synonym for \link{venn_phyloseq}\cr
-\link{ggvenn_pq} \tab now a synonym for \link{ggVenn_phyloseq}\cr
-\link{hill_tuckey_pq} \tab now a synonym for \link{hill_tuckey_phyloseq}\cr
-\link{hill_pq} \tab now a synonym for \link{hill_phyloseq}\cr
-\link{heat_tree_pq} \tab now a synonym for \link{physeq_heat_tree}\cr
+\link{graph_test_pq} \tab now a synonym for \code{physeq_graph_test}\cr
+\link{adonis_pq} \tab now a synonym for \code{adonis_phyloseq}\cr
+\link{clean_pq} \tab now a synonym for \code{clean_physeq}\cr
+\link{lulu_pq} \tab now a synonym for \code{lulu_phyloseq}\cr
+\link{circle_pq} \tab now a synonym for \code{otu_circle}\cr
+\link{biplot_pq} \tab now a synonym for \code{biplot_physeq}\cr
+\link{read_pq} \tab now a synonym for \code{read_phyloseq}\cr
+\link{write_pq} \tab now a synonym for \code{write_phyloseq}\cr
+\link{sankey_pq} \tab now a synonym for \code{sankey_phyloseq}\cr
+\link{summary_plot_pq} \tab now a synonym for \code{summary_plot_phyloseq}\cr
+\link{plot_edgeR_pq} \tab now a synonym for \code{plot_edgeR_phyloseq}\cr
+\link{plot_deseq2_pq} \tab now a synonym for \code{plot_deseq2_phyloseq}\cr
+\link{venn_pq} \tab now a synonym for \code{venn_phyloseq}\cr
+\link{ggvenn_pq} \tab now a synonym for \code{ggVenn_phyloseq}\cr
+\link{hill_tuckey_pq} \tab now a synonym for \code{hill_tuckey_phyloseq}\cr
+\link{hill_pq} \tab now a synonym for \code{hill_phyloseq}\cr
+\link{heat_tree_pq} \tab now a synonym for \code{physeq_heat_tree}\cr
+\link{compare_pairs_pq} \tab now a synonym for \code{multiple_share_bisamples}\cr
 }
 }
 

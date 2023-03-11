@@ -16,7 +16,9 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(MiscMetabar)
+data(data_fungi)
 ```
+
 ### Alpha diversity
 
 Voir aussi le [tutoriel](https://microbiome.github.io/tutorials/Alphadiversity.html) du package microbiome. 
@@ -29,8 +31,8 @@ Hill numbers [^Hill73] is a kind of general framework for alpha diversity index.
 
 [^Hill73]: Hill MO. 1973. Diversity and evenness: a unifying notation and its consequences. Ecology 54, 427-473.
 
-```r
-vegan::renyi()
+```{r}
+vegan::renyi(data_fungi@otu_table)
 ```
 
 #### Test for difference in diversity (hill number)
@@ -39,22 +41,13 @@ One way to keep into account for difference in the number of sequences per sampl
 
 [^Balint15]: Bálint M et al. 2015. Relocation, high-latitude warming and host genetic identity shape the foliar fungal microbiome of poplars. Molecular Ecology 24, 235-248. https://doi.org/10.1111/mec.13018
 
-```r
-stats::TukeyHSD()
-MiscMetabar::hill_tuckey_pq()
+```{r, fig.cap="Hill number 1"}
+p <- MiscMetabar::hill_pq(data_fungi, variable = "Height")
+p$plot_Hill_0
 ```
 
-#### Testing differences in alpha diversity following the [tutorial](https://microbiome.github.io/tutorials/Alphadiversity.html) of the microbiome package. 
+```{r, fig.cap="Result of the Tuckey post-hoc test"}
+p$plot_tuckey
+```
 
-We recommend the non-parametric [Kolmogorov-Smirnov test](https://www.rdocumentation.org/packages/dgof/versions/1.2/topics/ks.test) for two-group comparisons when there are no relevant covariates.
-
-```r
-# Construct the data
-d <- meta(pseq)
-d$diversity <- microbiome::diversity(pseq, "shannon")$shannon
-# Split the values by group
-spl <- split(d$diversity, d$sex)
-# Kolmogorov-Smironv test
-pv <- ks.test(spl$female, spl$male)$p.value
-# Adjust the p-value
-padj <- p.adjust(pv)
+See also the [tutorial](https://microbiome.github.io/tutorials/Alphadiversity.html) of the microbiome package for an alternative using the non-parametric [Kolmogorov-Smirnov test](https://www.rdocumentation.org/packages/dgof/versions/1.2/topics/ks.test) for two-group comparisons when there are no relevant covariates.

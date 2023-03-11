@@ -14,3 +14,40 @@ vignette: >
 - Complete R packages dada2 and phyloseq
 - Useful visualizations (`biplot_pq`, `circle_pq`) 
 - Facilitate the use of targets 
+
+## Quick overview
+
+### Summarize a physeq object
+
+```{r example, message=FALSE}
+library("MiscMetabar")
+library("phyloseq")
+library("magrittr")
+data("data_fungi")
+summary_plot_pq(data_fungi)
+```
+
+
+### Create an interactive table of the tax_table
+
+```{r}
+data("GlobalPatterns")
+tax_datatable(subset_taxa(
+  GlobalPatterns,
+  rowSums(GlobalPatterns@otu_table) > 100000
+))
+```
+
+### Sankey diagramme of the tax_table
+
+```{r}
+gp <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+sankey_pq(gp, taxa = c(1:5))
+```
+
+
+### Circle for visualize distribution of taxa in function of samples variables
+
+```{r}
+circle_pq(gp, "SampleType", taxa = "Class")
+```

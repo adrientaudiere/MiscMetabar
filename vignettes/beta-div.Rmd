@@ -1,0 +1,41 @@
+---
+title: "beta-div"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{beta-div}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(MiscMetabar)
+data(data_fungi)
+```
+
+## Permanova
+
+```{r}
+data_fungi_woNA4height <- subset_samples(data_fungi, !is.na(data_fungi@sam_data$Height))
+adonis_pq(data_fungi_woNA4height, "Tree_name+Height")
+```
+
+
+## Graph Test
+
+```{r}
+data_fungi_woNA4height <- subset_samples(data_fungi, !is.na(data_fungi@sam_data$Height))
+graph_test_pq(data_fungi_woNA4height, "Height")
+```
+
+## Circle of ASVs
+
+```{r}
+circle_pq(data_fungi_woNA4height, "Height")
+```

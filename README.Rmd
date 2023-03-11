@@ -36,7 +36,7 @@ You can install the developement version from [GitHub](https://github.com/) with
 
 ```{r, message=FALSE}
 install.packages("devtools")
-devtools::install_github("adrientaudiere/MiscMetabar", ref="dev")
+devtools::install_github("adrientaudiere/MiscMetabar", ref = "dev")
 ```
 
 ## Some use of MiscMetabar
@@ -51,25 +51,8 @@ data("data_fungi")
 summary_plot_pq(data_fungi)
 ```
 
-### Create an interactive table of the tax_table
-
-```{r}
-data("GlobalPatterns")
-tax_datatable(subset_taxa(
-  GlobalPatterns,
-  rowSums(GlobalPatterns@otu_table) > 100000
-))
-```
-
-### Sankey diagramme of the tax_table
-
-```{r}
-gp <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
-sankey_pq(gp, taxa = c(1:5))
-```
-
 ### Circle for visualize distribution of taxa in function of samples variables
 
 ```{r}
-otu_circle(gp, "SampleType", taxa = "Class")
+circle_pq(data_fungi, "Height", taxa = "Class", add_nb_seq = F)
 ```
