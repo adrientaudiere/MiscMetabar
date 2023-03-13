@@ -10,10 +10,22 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/articles/index.html</loc>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/articles/MiscMetabar.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/articles/intro.html</loc>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/articles/Reclustering.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/articles/alpha-div.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/articles/beta-div.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/articles/index.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/authors.html</loc>
@@ -31,6 +43,9 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/MM_idtaxa.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/MiscMetabar-deprecated.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/MiscMetabar-package.html</loc>
   </url>
   <url>
@@ -40,7 +55,7 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/add_dna_to_phyloseq.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/adonis_phyloseq.html</loc>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/adonis_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/all_object_size.html</loc>
@@ -52,13 +67,19 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/asv2otu.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/biplot_physeq.html</loc>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/biplot_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/blast_to_phyloseq.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/clean_physeq.html</loc>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/circle_pq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/clean_pq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/compare_pairs_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/data_fungi.html</loc>
@@ -73,13 +94,19 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/dist_pos_control.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/ggVenn_phyloseq.html</loc>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/ggvenn_pq.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/hill_phyloseq.html</loc>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/graph_test_pq.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/hill_tuckey_phyloseq.html</loc>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/heat_tree_pq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/hill_pq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/hill_tuckey_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/index.html</loc>
@@ -88,43 +115,37 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/krona.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/lulu_phyloseq.html</loc>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/list_fastq_files.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/lulu_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/merge_krona.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/multiple_share_bisamples.html</loc>
-  </url>
-  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/multiplot.html</loc>
-  </url>
-  <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/otu_circle.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/phyloseq_to_edgeR.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/physeq_graph_test.html</loc>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_deseq2_pq.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/physeq_heat_tree.html</loc>
-  </url>
-  <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_deseq2_phyloseq.html</loc>
-  </url>
-  <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_edgeR_phyloseq.html</loc>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_edgeR_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_mt.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/read_phyloseq.html</loc>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/read_pq.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/sankey_phyloseq.html</loc>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/rename_samples_otu_table.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/sankey_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/simplify_taxo.html</loc>
@@ -133,7 +154,7 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/subset_taxa_tax_control.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/summary_plot_phyloseq.html</loc>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/summary_plot_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/tax_datatable.html</loc>
@@ -142,12 +163,12 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/track_wkflow.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/venn_phyloseq.html</loc>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/venn_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/vsearch_search_global.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/write_phyloseq.html</loc>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/write_pq.html</loc>
   </url>
 </urlset>

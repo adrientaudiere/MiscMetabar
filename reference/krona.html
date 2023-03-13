@@ -12,7 +12,7 @@ Need the installation of kronatools on the computer (installation instruction)."
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.23</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,13 +20,22 @@ Need the installation of kronatools on the computer (installation instruction)."
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item">
+      <ul class="navbar-nav me-auto"><li class="nav-item">
+  <a class="nav-link" href="../articles/MiscMetabar.html">Get started</a>
+</li>
+<li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/intro.html">UNKNOWN TITLE</a>
+    <h6 class="dropdown-header" data-toc-skip>Tutorials</h6>
+    <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
+    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
+    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>For developpers</h6>
+    <a class="dropdown-item" href="../articles/Rules.html">Rules of code</a>
   </div>
 </li>
 <li class="nav-item">
@@ -73,33 +82,33 @@ Need the installation of kronatools on the computer (installation instruction)."
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>physeq</dt>
-<dd><p>(required): a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object.</p></dd>
+<dd><p>(required) a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object.</p></dd>
 
 
 <dt>file</dt>
-<dd><p>(required): the location of the html file to save</p></dd>
+<dd><p>(required) the location of the html file to save</p></dd>
 
 
 <dt>nb_seq</dt>
-<dd><p>(logical, default to TRUE): If true, Krona set the distribution
-of sequences in the taxonomy. If False, Krona set the distribution of OTUs
+<dd><p>(logical) If true, Krona set the distribution
+of sequences in the taxonomy. If False, Krona set the distribution of ASVs
 in the taxonomy.</p></dd>
 
 
 <dt>ranks</dt>
-<dd><p>(default="All"): Number of the taxonomic ranks to plot
-(num of the column in tax_table of your physeq object).
+<dd><p>Number of the taxonomic ranks to plot
+(num of the column in <code>tax_table</code> slot of your <code>physeq</code> object).
 Default setting plot all the ranks (argument 'All').</p></dd>
 
 
 <dt>add_unassigned_rank</dt>
-<dd><p>(number; default = 0). Add unassigned for rank
-inferior to 'add_unassigned_rank' when necessary</p></dd>
+<dd><p>(int) Add unassigned for rank
+inferior to 'add_unassigned_rank' when necessary.</p></dd>
 
 
 <dt>name</dt>
-<dd><p>(default=NULL) : A name for intermediary files, Useful to name
-your krona dataset when merge using merge_krona</p></dd>
+<dd><p>A name for intermediary files, Useful to name
+your krona result files before merging using <code><a href="merge_krona.html">merge_krona()</a></code></p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -122,8 +131,8 @@ your krona dataset when merge using merge_krona</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GlobalPatterns"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">GA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html" class="external-link">subset_taxa</a></span><span class="op">(</span><span class="va">GlobalPatterns</span>, <span class="va">Phylum</span> <span class="op">==</span> <span class="st">"Acidobacteria"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># krona(GA, "Number.of.sequences.html")</span></span></span>
-<span class="r-in"><span><span class="co"># krona(GA, "Number.of.OTUs.html", nb_seq = F)</span></span></span>
-<span class="r-in"><span><span class="co"># merge_krona(c("Number.of.sequences.html", "Number.of.OTUs.html"))</span></span></span>
+<span class="r-in"><span><span class="co"># krona(GA, "Number.of.ASVs.html", nb_seq = F)</span></span></span>
+<span class="r-in"><span><span class="co"># merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"))</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

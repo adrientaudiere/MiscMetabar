@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.23</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,13 +18,22 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item">
+      <ul class="navbar-nav me-auto"><li class="nav-item">
+  <a class="nav-link" href="../articles/MiscMetabar.html">Get started</a>
+</li>
+<li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/intro.html">UNKNOWN TITLE</a>
+    <h6 class="dropdown-header" data-toc-skip>Tutorials</h6>
+    <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
+    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
+    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>For developpers</h6>
+    <a class="dropdown-item" href="../articles/Rules.html">Rules of code</a>
   </div>
 </li>
 <li class="nav-item">
@@ -63,14 +72,14 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>physeq</dt>
-<dd><p>(required).  A <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> or
+<dd><p>(required)  A <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> or
 an <code><a href="https://rdrr.io/pkg/phyloseq/man/otu_table-class.html" class="external-link">otu_table-class</a></code> object.
 The latter is only appropriate if <code>group</code> argument is also a
 vector or factor with length equal to <code>nsamples(physeq)</code>.</p></dd>
 
 
 <dt>group</dt>
-<dd><p>(required). A character vector or factor giving the experimental
+<dd><p>(required) A character vector or factor giving the experimental
 group/condition for each sample/library. Alternatively, you may provide
 the name of a sample variable. This name should be among the output of
 <code>sample_variables(physeq)</code>, in which case
@@ -81,7 +90,7 @@ and you may find further details or examples in its documentation.</p></dd>
 
 
 <dt>method</dt>
-<dd><p>(Optional). The label of the edgeR-implemented normalization
+<dd><p>The label of the edgeR-implemented normalization
 to use.
 See <code><a href="https://rdrr.io/pkg/edgeR/man/calcNormFactors.html" class="external-link">calcNormFactors</a></code> for supported options and details.
 The default option is <code>"RLE"</code>, which is a scaling factor method

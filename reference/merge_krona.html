@@ -14,7 +14,7 @@ Function merge_krona allows merging multiple html files in one interactive krona
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.23</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,13 +22,22 @@ Function merge_krona allows merging multiple html files in one interactive krona
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item">
+      <ul class="navbar-nav me-auto"><li class="nav-item">
+  <a class="nav-link" href="../articles/MiscMetabar.html">Get started</a>
+</li>
+<li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/intro.html">UNKNOWN TITLE</a>
+    <h6 class="dropdown-header" data-toc-skip>Tutorials</h6>
+    <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
+    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
+    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>For developpers</h6>
+    <a class="dropdown-item" href="../articles/Rules.html">Rules of code</a>
   </div>
 </li>
 <li class="nav-item">
@@ -69,11 +78,11 @@ Function merge_krona allows merging multiple html files in one interactive krona
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>files</dt>
-<dd><p>(required): path to html files to merged</p></dd>
+<dd><p>(required) path to html files to merged</p></dd>
 
 
 <dt>output</dt>
-<dd><p>(default="mergeKrona.html") : path to the output files</p></dd>
+<dd><p>path to the output file</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -96,8 +105,8 @@ Function merge_krona allows merging multiple html files in one interactive krona
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GlobalPatterns"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">GA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html" class="external-link">subset_taxa</a></span><span class="op">(</span><span class="va">GlobalPatterns</span>, <span class="va">Phylum</span> <span class="op">==</span> <span class="st">"Acidobacteria"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># krona(GA, "Number.of.sequences.html")</span></span></span>
-<span class="r-in"><span><span class="co"># krona(GA, "Number.of.OTUs.html", nb_seq = F)</span></span></span>
-<span class="r-in"><span><span class="co"># merge_krona(c("Number.of.sequences.html", "Number.of.OTUs.html"))</span></span></span>
+<span class="r-in"><span><span class="co"># krona(GA, "Number.of.ASVs.html", nb_seq = F)</span></span></span>
+<span class="r-in"><span><span class="co"># merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"))</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

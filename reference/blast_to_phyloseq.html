@@ -12,7 +12,7 @@ object. — blast_to_phyloseq"><meta property="og:description" content=""><!-- m
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.23</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,13 +20,22 @@ object. — blast_to_phyloseq"><meta property="og:description" content=""><!-- m
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item">
+      <ul class="navbar-nav me-auto"><li class="nav-item">
+  <a class="nav-link" href="../articles/MiscMetabar.html">Get started</a>
+</li>
+<li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/intro.html">UNKNOWN TITLE</a>
+    <h6 class="dropdown-header" data-toc-skip>Tutorials</h6>
+    <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
+    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
+    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>For developpers</h6>
+    <a class="dropdown-item" href="../articles/Rules.html">Rules of code</a>
   </div>
 </li>
 <li class="nav-item">
@@ -75,38 +84,38 @@ object.</h1>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>physeq</dt>
-<dd><p>(required): a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object.</p></dd>
+<dd><p>(required) a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object.</p></dd>
 
 
 <dt>seq2search</dt>
-<dd><p>(required): path to fasta file</p></dd>
+<dd><p>(required) path to fasta file</p></dd>
 
 
 <dt>blastpath</dt>
-<dd><p>(default = NULL): path to blast program</p></dd>
+<dd><p>path to blast program</p></dd>
 
 
 <dt>id_cut</dt>
-<dd><p>(default = 90): cut of in identity percent to keep result</p></dd>
+<dd><p>(default: 90) cut of in identity percent to keep result</p></dd>
 
 
 <dt>bit_score_cut</dt>
-<dd><p>(default = 1e-10): cut of in bit score to keep result</p></dd>
+<dd><p>(default: 1e-10) cut of in bit score to keep result</p></dd>
 
 
 <dt>unique_per_seq</dt>
-<dd><p>(default = FALSE) : only return the first match for
+<dd><p>(logical) if TRUE only return the first match for
 each sequence in seq2search</p></dd>
 
 
 <dt>score_filter</dt>
-<dd><p>(default = TRUE): does results are filter by score. If
+<dd><p>(logical) does results are filter by score? If
 FALSE, <code>id_cut</code> and <code>bit_score_cut</code> are ignored</p></dd>
 
 
 <dt>list_no_output_query</dt>
-<dd><p>(default to FALSE): does the result table include
-query sequences for which <code>blastn</code> does not find any correspondence</p></dd>
+<dd><p>(logical) does the result table include
+query sequences for which <code>blastn</code> does not find any correspondence?</p></dd>
 
 </dl></div>
     <div class="section level2">

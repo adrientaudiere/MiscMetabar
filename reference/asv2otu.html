@@ -12,7 +12,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.23</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,13 +20,22 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item">
+      <ul class="navbar-nav me-auto"><li class="nav-item">
+  <a class="nav-link" href="../articles/MiscMetabar.html">Get started</a>
+</li>
+<li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/intro.html">UNKNOWN TITLE</a>
+    <h6 class="dropdown-header" data-toc-skip>Tutorials</h6>
+    <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
+    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
+    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>For developpers</h6>
+    <a class="dropdown-item" href="../articles/Rules.html">Rules of code</a>
   </div>
 </li>
 <li class="nav-item">
@@ -63,7 +72,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">asv2otu</span><span class="op">(</span></span>
 <span>  <span class="va">physeq</span>,</span>
 <span>  nproc <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"Clusterize"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"clusterize"</span>,</span>
 <span>  id <span class="op">=</span> <span class="fl">0.97</span>,</span>
 <span>  vsearchpath <span class="op">=</span> <span class="st">"vsearch"</span>,</span>
 <span>  tax_adjust <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -74,37 +83,37 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>physeq</dt>
-<dd><p>(required): a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object.</p></dd>
+<dd><p>(required) a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object.</p></dd>
 
 
 <dt>nproc</dt>
-<dd><p>(default 1)
+<dd><p>(default: 1)
 Set to number of cpus/processors to use for the clustering</p></dd>
 
 
 <dt>method</dt>
-<dd><p>(default Clusterize)
-Set the clustering method.</p><ul><li><p><code>Clusterize</code> use the <code><a href="https://rdrr.io/pkg/DECIPHER/man/Clusterize.html" class="external-link">DECIPHER::Clusterize</a></code> fonction,</p></li>
+<dd><p>(default: clusterize)
+Set the clustering method.</p><ul><li><p><code>clusterize</code> use the <code><a href="https://rdrr.io/pkg/DECIPHER/man/Clusterize.html" class="external-link">DECIPHER::Clusterize()</a></code> fonction,</p></li>
 <li><p><code>vsearch</code> use the vsearch software (https://github.com/torognes/vsearch/)
 with arguments <code>-cluster_fast</code> and <code>-strand both</code></p></li>
 </ul></dd>
 
 
 <dt>id</dt>
-<dd><p>(default=0.97): level of identity to cluster</p></dd>
+<dd><p>(default: 0.97): level of identity to cluster</p></dd>
 
 
 <dt>vsearchpath</dt>
-<dd><p>(default = "vsearch"): path to vsearch</p></dd>
+<dd><p>path to vsearch</p></dd>
 
 
 <dt>tax_adjust</dt>
-<dd><p>(By default tax_adjust = 1L): See the man page
-of <code><a href="https://mikemc.github.io/speedyseq/reference/merge_taxa_vec.html" class="external-link">speedyseq::merge_taxa_vec</a></code>.</p></dd>
+<dd><p>See the man page
+of <code><a href="https://mikemc.github.io/speedyseq/reference/merge_taxa_vec.html" class="external-link">speedyseq::merge_taxa_vec()</a></code> for more details.</p></dd>
 
 
 <dt>...</dt>
-<dd><p>Others arguments path to <code><a href="https://rdrr.io/pkg/DECIPHER/man/Clusterize.html" class="external-link">DECIPHER::Clusterize</a></code></p></dd>
+<dd><p>Others arguments path to <code><a href="https://rdrr.io/pkg/DECIPHER/man/Clusterize.html" class="external-link">DECIPHER::Clusterize()</a></code></p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -119,7 +128,7 @@ of <code><a href="https://mikemc.github.io/speedyseq/reference/merge_taxa_vec.ht
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This function use the <code><a href="https://mikemc.github.io/speedyseq/reference/merge_taxa_vec.html" class="external-link">speedyseq::merge_taxa_vec</a></code> function to
 merge taxa into clusters. By default tax_adjust = 1L. See the man page
-of <code><a href="https://mikemc.github.io/speedyseq/reference/merge_taxa_vec.html" class="external-link">speedyseq::merge_taxa_vec</a></code>.</p>
+of <code><a href="https://mikemc.github.io/speedyseq/reference/merge_taxa_vec.html" class="external-link">speedyseq::merge_taxa_vec()</a></code>.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

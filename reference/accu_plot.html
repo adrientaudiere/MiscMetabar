@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.23</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,13 +18,22 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item">
+      <ul class="navbar-nav me-auto"><li class="nav-item">
+  <a class="nav-link" href="../articles/MiscMetabar.html">Get started</a>
+</li>
+<li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/intro.html">UNKNOWN TITLE</a>
+    <h6 class="dropdown-header" data-toc-skip>Tutorials</h6>
+    <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
+    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
+    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>For developpers</h6>
+    <a class="dropdown-item" href="../articles/Rules.html">Rules of code</a>
   </div>
 </li>
 <li class="nav-item">
@@ -60,7 +69,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">accu_plot</span><span class="op">(</span></span>
 <span>  <span class="va">physeq</span>,</span>
 <span>  fact <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  nb_seq <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  add_nb_seq <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  step <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  by.fact <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  ci_col <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -76,62 +85,62 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>physeq</dt>
-<dd><p>(required): a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object.</p></dd>
+<dd><p>(required) a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object.</p></dd>
 
 
 <dt>fact</dt>
-<dd><p>(required): Name of the factor in physeq@sam_data used to plot
+<dd><p>(required) Name of the factor in physeq@sam_data used to plot
 different lines</p></dd>
 
 
-<dt>nb_seq</dt>
-<dd><p>(logical): Either plot accumulation curves using sequences or
-using samples</p></dd>
+<dt>add_nb_seq</dt>
+<dd><p>(default: TRUE, logical)
+Either plot accumulation curves using sequences or using samples</p></dd>
 
 
 <dt>step</dt>
-<dd><p>(integer): distance among points calculated to plot lines. A
+<dd><p>(Integer) distance among points calculated to plot lines. A
 low value give better plot but is more time consuming.
-Only used if nb_seq = TRUE.</p></dd>
+Only used if add_nb_seq = TRUE.</p></dd>
 
 
 <dt>by.fact</dt>
-<dd><p>(logical): First merge the OTU table by factor to plot only
-one line by factor</p></dd>
+<dd><p>(default: FALSE, logical)
+First merge the OTU table by factor to plot only one line by factor</p></dd>
 
 
 <dt>ci_col</dt>
-<dd><p>: Color vector for confidence intervall.
-Only use if nb_seq = FALSE.
-If nb_seq = TRUE, you can use ggplot to modify the plot.</p></dd>
+<dd><p>Color vector for confidence intervall.
+Only use if add_nb_seq = FALSE.
+If add_nb_seq = TRUE, you can use ggplot to modify the plot.</p></dd>
 
 
 <dt>col</dt>
-<dd><p>: Color vector for lines. Only use if nb_seq = FALSE.
-If nb_seq = TRUE, you can use ggplot to modify the plot.</p></dd>
+<dd><p>Color vector for lines. Only use if add_nb_seq = FALSE.
+If add_nb_seq = TRUE, you can use ggplot to modify the plot.</p></dd>
 
 
 <dt>lwd</dt>
-<dd><p>(default = 3): thickness for lines. Only use if nb_seq = FALSE.</p></dd>
+<dd><p>(default: 3) thickness for lines. Only use if add_nb_seq = FALSE.</p></dd>
 
 
 <dt>leg</dt>
-<dd><p>(logical): Plot legend or not. Only use if nb_seq = FALSE.</p></dd>
+<dd><p>(default: TRUE, logical) Plot legend or not. Only use if add_nb_seq = FALSE.</p></dd>
 
 
 <dt>print_sam_names</dt>
-<dd><p>(logical): Print samples names or not?
-Only use if nb_seq = TRUE.</p></dd>
+<dd><p>(default: FALSE, logical) Print samples names or not?
+Only use if add_nb_seq = TRUE.</p></dd>
 
 
 <dt>ci</dt>
-<dd><p>(default = 2) : Confidence intervall value used to multiply the
+<dd><p>(default: 2, integer) Confidence intervall value used to multiply the
 standard error to plot confidence intervall</p></dd>
 
 
 <dt>...</dt>
 <dd><p>Additional arguments passed on to <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></code>
-if nb_seq = TRUE or to <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></code> if nb_seq = FALSE</p></dd>
+if add_nb_seq = TRUE or to <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></code> if add_nb_seq = FALSE</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -139,7 +148,7 @@ if nb_seq = TRUE or to <code><a href="https://rdrr.io/r/graphics/plot.default.ht
     
 
 <p>A <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></code>2 plot representing the richness
-accumulation plot if nb_seq = TRUE, else, if nb_seq = FALSE
+accumulation plot if add_nb_seq = TRUE, else, if add_nb_seq = FALSE
 return a base plot.</p>
     </div>
     <div class="section level2">
@@ -155,7 +164,7 @@ return a base plot.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GlobalPatterns"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">GP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html" class="external-link">subset_taxa</a></span><span class="op">(</span><span class="va">GlobalPatterns</span>, <span class="va">GlobalPatterns</span><span class="op">@</span><span class="va">tax_table</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="st">"Archaea"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">accu_plot</span><span class="op">(</span><span class="va">GP</span>, <span class="st">"SampleType"</span>, nb_seq <span class="op">=</span> <span class="cn">TRUE</span>, by.fact <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">accu_plot</span><span class="op">(</span><span class="va">GP</span>, <span class="st">"SampleType"</span>, add_nb_seq <span class="op">=</span> <span class="cn">TRUE</span>, by.fact <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 1 row containing missing values (`geom_line()`).</span>
 <span class="r-plt img"><img src="accu_plot-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>

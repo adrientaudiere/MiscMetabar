@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.23</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,13 +18,22 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item">
+      <ul class="navbar-nav me-auto"><li class="nav-item">
+  <a class="nav-link" href="../articles/MiscMetabar.html">Get started</a>
+</li>
+<li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/intro.html">UNKNOWN TITLE</a>
+    <h6 class="dropdown-header" data-toc-skip>Tutorials</h6>
+    <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
+    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
+    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>For developpers</h6>
+    <a class="dropdown-item" href="../articles/Rules.html">Rules of code</a>
   </div>
 </li>
 <li class="nav-item">
@@ -64,7 +73,12 @@
           
           <code><a href="MM_idtaxa.html">MM_idtaxa()</a></code> 
         </dt>
-        <dd>A wrapper of <code><a href="https://rdrr.io/pkg/DECIPHER/man/IdTaxa.html" class="external-link">IdTaxa</a></code> which result in a tibble with</dd>
+        <dd>A wrapper of <code><a href="https://rdrr.io/pkg/DECIPHER/man/IdTaxa.html" class="external-link">DECIPHER::IdTaxa()</a></code></dd>
+      </dl><dl><dt>
+          
+          <code><a href="MiscMetabar-deprecated.html">physeq_graph_test()</a></code> 
+        </dt>
+        <dd>Deprecated function(s) in the MiscMetabar package</dd>
       </dl><dl><dt>
           
           <code><a href="accu_plot.html">accu_plot()</a></code> 
@@ -74,18 +88,18 @@
           
           <code><a href="add_dna_to_phyloseq.html">add_dna_to_phyloseq()</a></code> 
         </dt>
-        <dd>Add dna in <code>refseq</code> slot of a physeq object using taxa names and renames taxa
+        <dd>Add dna in <code>refseq</code> slot of a <code>physeq</code> object using taxa names and renames taxa
 using ASV_1, ASV_2, …</dd>
       </dl><dl><dt>
           
-          <code><a href="adonis_phyloseq.html">adonis_phyloseq()</a></code> 
+          <code><a href="adonis_pq.html">adonis_pq()</a></code> 
         </dt>
         <dd>Permanova on a phyloseq object</dd>
       </dl><dl><dt>
           
           <code><a href="all_object_size.html">all_object_size()</a></code> 
         </dt>
-        <dd>List the size of all object of the GlobalEnv.</dd>
+        <dd>List the size of all objects of the GlobalEnv.</dd>
       </dl><dl><dt>
           
           <code><a href="as_binary_otu_table.html">as_binary_otu_table()</a></code> 
@@ -100,9 +114,9 @@ using ASV_1, ASV_2, …</dd>
 (e.g. OTUs or ASV from dada)</dd>
       </dl><dl><dt>
           
-          <code><a href="biplot_physeq.html">biplot_physeq()</a></code> 
+          <code><a href="biplot_pq.html">biplot_pq()</a></code> 
         </dt>
-        <dd>Visualization of two samples for comparison of physeq object</dd>
+        <dd>Visualization of two samples for comparison</dd>
       </dl><dl><dt>
           
           <code><a href="blast_to_phyloseq.html">blast_to_phyloseq()</a></code> 
@@ -111,12 +125,20 @@ using ASV_1, ASV_2, …</dd>
 object.</dd>
       </dl><dl><dt>
           
-          <code><a href="clean_physeq.html">clean_physeq()</a></code> 
+          <code><a href="circle_pq.html">circle_pq()</a></code> 
         </dt>
-        <dd>Clean phyloseq object by removing empty samples and taxa
-In addition, this function check for discrepancy (and rename) between
-(i) taxa names in refseq, taxonomy table and otu_table and between
-(ii) sample names in sam_data and otu_table.</dd>
+        <dd>Plot OTU circle for <code>phyloseq-class</code> object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="clean_pq.html">clean_pq()</a></code> 
+        </dt>
+        <dd>Clean phyloseq object by removing empty samples and taxa</dd>
+      </dl><dl><dt>
+          
+          <code><a href="compare_pairs_pq.html">compare_pairs_pq()</a></code> 
+        </dt>
+        <dd>Compare samples in pairs using diversity and number of ASV including
+shared ASV.</dd>
       </dl><dl><dt>
           
           <code><a href="data_fungi.html">data_fungi</a></code> 
@@ -140,18 +162,28 @@ In addition, this function check for discrepancy (and rename) between
 distance for all samples</dd>
       </dl><dl><dt>
           
-          <code><a href="ggVenn_phyloseq.html">ggVenn_phyloseq()</a></code> 
+          <code><a href="ggvenn_pq.html">ggvenn_pq()</a></code> 
         </dt>
         <dd>Venn diagram of <code>phyloseq-class</code> object using
 <code><a href="https://rdrr.io/pkg/ggVennDiagram/man/ggVennDiagram.html" class="external-link">ggVennDiagram::ggVennDiagram</a></code> function</dd>
       </dl><dl><dt>
           
-          <code><a href="hill_phyloseq.html">hill_phyloseq()</a></code> 
+          <code><a href="graph_test_pq.html">graph_test_pq()</a></code> 
         </dt>
-        <dd>Graphical representation of hill number 0, 1 and 2 accross a factor</dd>
+        <dd>Performs graph-based permutation tests on phyloseq object</dd>
       </dl><dl><dt>
           
-          <code><a href="hill_tuckey_phyloseq.html">hill_tuckey_phyloseq()</a></code> 
+          <code><a href="heat_tree_pq.html">heat_tree_pq()</a></code> 
+        </dt>
+        <dd>Heat tree from <code>metacoder</code> package using <code>tax_table</code> slot</dd>
+      </dl><dl><dt>
+          
+          <code><a href="hill_pq.html">hill_pq()</a></code> 
+        </dt>
+        <dd>Graphical representation of hill number 0, 1 and 2 across a factor</dd>
+      </dl><dl><dt>
+          
+          <code><a href="hill_tuckey_pq.html">hill_tuckey_pq()</a></code> 
         </dt>
         <dd>Calculate hill number and compute Tuckey post-hoc test</dd>
       </dl><dl><dt>
@@ -161,7 +193,12 @@ distance for all samples</dd>
         <dd>Make Krona files using <a href="https://github.com/marbl/Krona/wiki" class="external-link">KronaTools</a>.</dd>
       </dl><dl><dt>
           
-          <code><a href="lulu_phyloseq.html">lulu_phyloseq()</a></code> 
+          <code><a href="list_fastq_files.html">list_fastq_files()</a></code> 
+        </dt>
+        <dd>List fastq files</dd>
+      </dl><dl><dt>
+          
+          <code><a href="lulu_pq.html">lulu_pq()</a></code> 
         </dt>
         <dd>Lulu reclustering of class <code>physeq</code></dd>
       </dl><dl><dt>
@@ -171,20 +208,9 @@ distance for all samples</dd>
         <dd>Merge Krona files using <a href="https://github.com/marbl/Krona/wiki" class="external-link">KronaTools</a>.</dd>
       </dl><dl><dt>
           
-          <code><a href="multiple_share_bisamples.html">multiple_share_bisamples()</a></code> 
-        </dt>
-        <dd>Compare samples in pairs using diversity and number of ASV including
-shared ASV.</dd>
-      </dl><dl><dt>
-          
           <code><a href="multiplot.html">multiplot()</a></code> 
         </dt>
         <dd>Multiple plot function</dd>
-      </dl><dl><dt>
-          
-          <code><a href="otu_circle.html">otu_circle()</a></code> 
-        </dt>
-        <dd>Plot OTU circle for <code>phyloseq-class</code> object</dd>
       </dl><dl><dt>
           
           <code><a href="phyloseq_to_edgeR.html">phyloseq_to_edgeR()</a></code> 
@@ -192,46 +218,40 @@ shared ASV.</dd>
         <dd>Convert phyloseq OTU count data into DGEList for edgeR package</dd>
       </dl><dl><dt>
           
-          <code><a href="physeq_graph_test.html">physeq_graph_test()</a></code> 
-        </dt>
-        <dd>A wrapper of <code>graph_perm_test</code> for quick plot with
-important statistics</dd>
-      </dl><dl><dt>
-          
-          <code><a href="physeq_heat_tree.html">physeq_heat_tree()</a></code> 
-        </dt>
-        <dd>Heat tree from <code>metacoder</code> package using <code>tax_table</code> slot</dd>
-      </dl><dl><dt>
-          
-          <code><a href="plot_deseq2_phyloseq.html">plot_deseq2_phyloseq()</a></code> 
+          <code><a href="plot_deseq2_pq.html">plot_deseq2_pq()</a></code> 
         </dt>
         <dd>Plot DESeq2 results for a phyloseq or a DESeq2 object.</dd>
       </dl><dl><dt>
           
-          <code><a href="plot_edgeR_phyloseq.html">plot_edgeR_phyloseq()</a></code> 
+          <code><a href="plot_edgeR_pq.html">plot_edgeR_pq()</a></code> 
         </dt>
         <dd>Plot edgeR results for a phyloseq or a edgeR object.</dd>
       </dl><dl><dt>
           
           <code><a href="plot_mt.html">plot_mt()</a></code> 
         </dt>
-        <dd>Plot the result of a mt test (<code><a href="https://rdrr.io/pkg/phyloseq/man/mt-methods.html" class="external-link">mt</a></code>)</dd>
+        <dd>Plot the result of a mt test <code><a href="https://rdrr.io/pkg/phyloseq/man/mt-methods.html" class="external-link">phyloseq::mt()</a></code></dd>
       </dl><dl><dt>
           
-          <code><a href="read_phyloseq.html">read_phyloseq()</a></code> 
+          <code><a href="read_pq.html">read_pq()</a></code> 
         </dt>
         <dd>Read phyloseq object from multiple csv tables and a phylogenetic tree
 in Newick format.</dd>
       </dl><dl><dt>
           
-          <code><a href="sankey_phyloseq.html">sankey_phyloseq()</a></code> 
+          <code><a href="rename_samples_otu_table.html">rename_samples_otu_table()</a></code> 
+        </dt>
+        <dd>Rename samples of an otu_table</dd>
+      </dl><dl><dt>
+          
+          <code><a href="sankey_pq.html">sankey_pq()</a></code> 
         </dt>
         <dd>Sankey plot of <code>phyloseq-class</code> object</dd>
       </dl><dl><dt>
           
           <code><a href="simplify_taxo.html">simplify_taxo()</a></code> 
         </dt>
-        <dd>Simplify taxonomy by removing some unused character such as "k__"</dd>
+        <dd>Simplify taxonomy by removing some unused characters such as "k__"</dd>
       </dl><dl><dt>
           
           <code><a href="subset_taxa_tax_control.html">subset_taxa_tax_control()</a></code> 
@@ -239,7 +259,7 @@ in Newick format.</dd>
         <dd>Subset taxa using a taxa control (e.g. truffle root tips) through 3 methods.</dd>
       </dl><dl><dt>
           
-          <code><a href="summary_plot_phyloseq.html">summary_plot_phyloseq()</a></code> 
+          <code><a href="summary_plot_pq.html">summary_plot_pq()</a></code> 
         </dt>
         <dd>Summarise a <code>phyloseq-class</code> object using a plot.</dd>
       </dl><dl><dt>
@@ -255,7 +275,7 @@ in Newick format.</dd>
 from various objects including dada-class and derep-class.</dd>
       </dl><dl><dt>
           
-          <code><a href="venn_phyloseq.html">venn_phyloseq()</a></code> 
+          <code><a href="venn_pq.html">venn_pq()</a></code> 
         </dt>
         <dd>Venn diagram of <code>phyloseq-class</code> object</dd>
       </dl><dl><dt>
@@ -266,7 +286,7 @@ from various objects including dada-class and derep-class.</dd>
 sequences using <a href="https://github.com/torognes/vsearch" class="external-link">vsearch</a></dd>
       </dl><dl><dt>
           
-          <code><a href="write_phyloseq.html">write_phyloseq()</a></code> 
+          <code><a href="write_pq.html">write_pq()</a></code> 
         </dt>
         <dd>Save phyloseq object in the form of multiple csv tables.</dd>
       </dl></div>

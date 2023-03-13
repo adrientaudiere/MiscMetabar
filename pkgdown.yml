@@ -2,8 +2,12 @@ pandoc: 2.19.2
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
-  intro: intro.html
-last_built: 2023-03-02T17:50Z
+  MiscMetabar: MiscMetabar.html
+  Reclustering: Reclustering.html
+  Rules: Rules.html
+  alpha-div: alpha-div.html
+  beta-div: beta-div.html
+last_built: 2023-03-13T15:28Z
 urls:
   reference: https://adrientaudiere.github.io/MiscMetabar/reference
   article: https://adrientaudiere.github.io/MiscMetabar/articles

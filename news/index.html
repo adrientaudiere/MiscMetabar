@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.23</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,12 +19,21 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item">
+  <a class="nav-link" href="../articles/MiscMetabar.html">Get started</a>
+</li>
+<li class="nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/intro.html">UNKNOWN TITLE</a>
+    <h6 class="dropdown-header" data-toc-skip>Tutorials</h6>
+    <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
+    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
+    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>For developpers</h6>
+    <a class="dropdown-item" href="../articles/Rules.html">Rules of code</a>
   </div>
 </li>
 <li class="active nav-item">
@@ -51,7 +60,23 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.23" id="miscmetabar-023-in-development">MiscMetabar 0.23 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-023-in-development"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.3" id="miscmetabar-03-in-development">MiscMetabar 0.3 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-03-in-development"></a></h2>
+<ul><li>Change some function names, mainly replacing <code>physeq</code> by <code>pk</code>. </li>
+<li>Improve documentation using some rules documented in the Rules vignettes.</li>
+<li>Add a option <code>sam_names</code> to [read_pq()]</li>
+<li>Correction of <code>data_fungi</code> and <code>data_fungi_sp_known</code> metadata</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.24" id="miscmetabar-024">MiscMetabar 0.24<a class="anchor" aria-label="anchor" href="#miscmetabar-024"></a></h2>
+<ul><li>Add supplementary info in <code>summary_plot_physeq</code>
+</li>
+<li>Better arguments in biplot_physeq</li>
+<li>Add merge_sample_by argument in biplot_physeq</li>
+<li>Better documentation with more example.</li>
+<li>For other minors bugs fixes and addition, see the list of commits</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.23" id="miscmetabar-023">MiscMetabar 0.23<a class="anchor" aria-label="anchor" href="#miscmetabar-023"></a></h2>
 <ul><li><p>Adapt the function <code>asv2otu</code> to <em>IdClusters</em> change in the DECIPHER package (commit 254100922f2093cc789d018c18a26752a3cda1e3). Then change the <em>IdClusters</em> function that was removed from DECIPHER to <em>Clusterize</em> function.</p></li>
 <li><p>Better functioning of <code>blast_to_phyloseq</code> when none query sequences are founded.</p></li>
 <li><p>Add <em>tax_adjust</em> argument to <code>asv2otu</code>function</p></li>
