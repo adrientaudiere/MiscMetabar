@@ -30,7 +30,7 @@ summary_plot_pq(data_fungi)
 
 ### Create an interactive table of the tax_table
 
-```{r}
+```{r results="asis"}
 data("GlobalPatterns")
 tax_datatable(subset_taxa(
   GlobalPatterns,

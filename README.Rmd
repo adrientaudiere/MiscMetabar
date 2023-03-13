@@ -6,6 +6,7 @@ always_allow_html: yes
 <a href="https://zenodo.org/badge/latestdoi/268765075"><img src="https://zenodo.org/badge/268765075.svg" alt="DOI"></a>
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- devtools::build_readme() -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
