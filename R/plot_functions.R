@@ -297,6 +297,8 @@ accu_plot <-
 #' @param fact (required) Name of the factor to cluster samples by modalities.
 #'        Need to be in \code{physeq@sam_data}.
 #' @param taxa (default: 'Order') Name of the taxonomic rank of interest
+#' @param nproc (default 1)
+#'   Set to number of cpus/processors to use for parallelization 
 #' @param add_nb_seq (default: TRUE) Represent the number of sequences or the
 #'    number of OTUs (add_nb_seq = FALSE)
 #' @param rarefy (logical) Does each samples modalities need to be rarefy in
@@ -345,6 +347,7 @@ circle_pq <-
   function(physeq = NULL,
            fact = NULL,
            taxa = "Order",
+           nproc = 1,
            add_nb_seq = TRUE,
            rarefy = FALSE,
            min_prop_tax = 0.01,
@@ -388,7 +391,7 @@ circle_pq <-
             sum(xx, na.rm = TRUE)
           }
         )
-      }, cl=7)
+      }, cl = nproc)
     otu_table_ech <-
       pbapply::pbapply(otu_table_tax, 1, function(x) {
         pbapply::pbtapply(
@@ -397,7 +400,7 @@ circle_pq <-
             sum(xx, na.rm = TRUE)
           }
         )
-      }, cl=7)
+      }, cl = nproc)
     if (rarefy) {
       otu_table_ech_interm <-
         rrarefy(otu_table_ech, min(rowSums(otu_table_ech)))
