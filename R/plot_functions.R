@@ -381,23 +381,23 @@ circle_pq <-
     }
 
     otu_table_tax <-
-      apply(otu_tab, 2, function(x) {
-        tapply(
+      pbapply::pbapply(otu_tab, 2, function(x) {
+        pbapply::pbtapply(
           x, physeq@tax_table[, taxcol],
           function(xx) {
             sum(xx, na.rm = TRUE)
           }
         )
-      })
+      }, cl=7)
     otu_table_ech <-
-      apply(otu_table_tax, 1, function(x) {
-        tapply(
+      pbapply::pbapply(otu_table_tax, 1, function(x) {
+        pbapply::pbtapply(
           x, physeq@sam_data[, taxsamp],
           function(xx) {
             sum(xx, na.rm = TRUE)
           }
         )
-      })
+      }, cl=7)
     if (rarefy) {
       otu_table_ech_interm <-
         rrarefy(otu_table_ech, min(rowSums(otu_table_ech)))
