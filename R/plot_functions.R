@@ -403,7 +403,7 @@ circle_pq <-
       }, cl = nproc)
     if (rarefy) {
       otu_table_ech_interm <-
-        rrarefy(otu_table_ech, min(rowSums(otu_table_ech)))
+        vegan::rrarefy(otu_table_ech, min(rowSums(otu_table_ech)))
       message(
         paste(
           "Rarefaction by modalities deletes ",
