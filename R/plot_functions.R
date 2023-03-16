@@ -967,6 +967,7 @@ ggvenn_pq <- function(physeq = NULL,
                             merge_sample_by = NULL,
                             min_nb_seq = 0,
                             taxonomic_rank = NULL,
+                            split_by = NULL,
                             ...) {
   if (!is.factor(physeq@sam_data[[fact]])) {
     physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
@@ -995,7 +996,20 @@ ggvenn_pq <- function(physeq = NULL,
       ])))
     }
   }
-  p <- ggVennDiagram::ggVennDiagram(res, ...)
+  if (is.null(split_by)){
+    p <- ggVennDiagram::ggVennDiagram(res, ...)
+  } else {
+    p <- list()
+    modalities <- as.factor(unlist(unclass(physeq@sam_data[[split_by]])))
+    for (moda in modalities) {
+      physeq_interm <- subset_samples(physeq, physeq@sam_data[[split_by]] == moda)
+      p[[moda]] <- ggvenn_pq(physeq_interm,  fact = fact,
+                      merge_sample_by = merge_sample_by,
+                      min_nb_seq = min_nb_seq,
+                      taxonomic_rank = taxonomic_rank, split_by = NULL) +
+                       ggtitle(moda)
+    }
+  }
   return(p)
 }
 ################################################################################
@@ -1345,7 +1359,7 @@ summary_plot_pq <- function(physeq,
             substring(names(sort(sample_sums(otu_tab)))[1], 1, 15),
             "...): ", min(sample_sums(otu_tab)), "\n",
             "Nb samples with less than ", min_seq_samples, " seq : ", sum(sample_sums(otu_tab) < min_seq_samples), "\n",
-            "Min nb seq per taxa: ", min(taxa_sums(otu_tab)), "(",
+            "Min nb seq per taxa: ", min(taxa_sums(otu_tab)), "( ",
             sum(taxa_sums(otu_tab) == min(taxa_sums(otu_tab))), " ASV)", "\n",
             "Min seq length: ", min(Biostrings::width(physeq@refseq)), "\n",
             "Max nb seq 1 taxa in 1 sample: ", max(otu_tab), "\n",
