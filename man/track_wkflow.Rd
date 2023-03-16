@@ -13,7 +13,8 @@ track_wkflow(list_of_objects, obj_names = NULL, clean_pq = FALSE)
 \item{obj_names}{A list of names corresponding to the list of objects}
 
 \item{clean_pq}{(logical)
-If true, empty samples and empty ASV are discarded before clustering.}
+If set to TRUE, empty samples and empty ASV are discarded
+before clustering.}
 }
 \value{
 The number of sequences, clusters (e.g. OTUs, ASVs) and samples for

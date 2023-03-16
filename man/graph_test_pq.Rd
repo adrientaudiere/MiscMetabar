@@ -15,8 +15,6 @@ graph_test_pq(
 )
 }
 \arguments{
-\item{physeq}{(required) a \code{\link{phyloseq-class}} object.}
-
 \item{fact}{(required) Name of the factor to cluster samples by modalities.
 Need to be in \code{physeq@sam_data}. This should be a factor
 with two or more levels.}
@@ -50,8 +48,10 @@ important statistics
 data(enterotype)
 graph_test_pq(enterotype, fact = "SeqTech")
 
-clean_enterotype <- subset_samples(enterotype,
-                                   !is.na(enterotype@sam_data$Enterotype))
+clean_enterotype <- subset_samples(
+  enterotype,
+  !is.na(enterotype@sam_data$Enterotype)
+)
 graph_test_pq(clean_enterotype, fact = "Enterotype")
 }
 \author{

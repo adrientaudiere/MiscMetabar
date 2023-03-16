@@ -14,8 +14,6 @@ vsearch_search_global(
 )
 }
 \arguments{
-\item{physeq}{(required) a \code{\link{phyloseq-class}} object.}
-
 \item{seq2search}{(required) path to fasta file}
 
 \item{vsearchpath}{path to vsearch}
@@ -32,15 +30,16 @@ A dataframe with uc results (invisible)
 }
 \examples{
 \dontrun{
-  file_dna <- tempfile("dna.fa")
-  seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCA
-  ACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG", 
-  file = file_dna, name = "seq1")
-  res <- vsearch_search_global(data_fungi, file_dna)
-  unlink(file_dna)
-  
-  res[res$identity != "*", ]
+file_dna <- tempfile("dna.fa")
+seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCA
+  ACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG",
+  file = file_dna, name = "seq1"
+)
+res <- vsearch_search_global(data_fungi, file_dna)
+unlink(file_dna)
 
-  clean_pq(subset_taxa(data_fungi, res$identity != "*"))
+res[res$identity != "*", ]
+
+clean_pq(subset_taxa(data_fungi, res$identity != "*"))
 }
 }

@@ -24,5 +24,6 @@ the matrix with new colnames
 \examples{
 data(data_fungi)
 rename_samples_otu_table(data_fungi@otu_table, as.character(1:185),
-  taxa_are_rows=T)
+  taxa_are_rows = T
+)
 }

@@ -7,11 +7,6 @@
 phyloseq_to_edgeR(physeq, group, method = "RLE", ...)
 }
 \arguments{
-\item{physeq}{(required)  A \code{\link{phyloseq-class}} or
-an \code{\link{otu_table-class}} object.
-The latter is only appropriate if \code{group} argument is also a
-vector or factor with length equal to \code{nsamples(physeq)}.}
-
 \item{group}{(required) A character vector or factor giving the experimental
 group/condition for each sample/library. Alternatively, you may provide
 the name of a sample variable. This name should be among the output of

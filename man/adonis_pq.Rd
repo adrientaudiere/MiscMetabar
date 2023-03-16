@@ -7,8 +7,6 @@
 adonis_pq(physeq, formula, merge_sample_by = NULL)
 }
 \arguments{
-\item{physeq}{(required) a \code{\link{phyloseq-class}} object.}
-
 \item{formula}{(required) todo}
 
 \item{merge_sample_by}{a vector to determine

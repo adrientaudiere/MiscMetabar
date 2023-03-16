@@ -12,9 +12,6 @@ summary_plot_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): A \code{\link{phyloseq-class}} object.
-refseq slot need to be not Null.}
-
 \item{add_info}{Does the bottom down corner contain
 extra informations?}
 

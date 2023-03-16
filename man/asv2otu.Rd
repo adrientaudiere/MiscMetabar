@@ -16,8 +16,6 @@ asv2otu(
 )
 }
 \arguments{
-\item{physeq}{(required) a \code{\link{phyloseq-class}} object.}
-
 \item{nproc}{(default: 1)
 Set to number of cpus/processors to use for the clustering}
 

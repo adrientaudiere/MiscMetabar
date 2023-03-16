@@ -7,8 +7,6 @@
 venn_pq(physeq, fact, min_nb_seq = 0, print_values = TRUE)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object.}
-
 \item{fact}{(required): Name of the factor to cluster samples by modalities.
 Need to be in \code{physeq@sam_data}.}
 

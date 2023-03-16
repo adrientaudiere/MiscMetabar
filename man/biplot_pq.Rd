@@ -24,9 +24,6 @@ biplot_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): A \code{\link{phyloseq-class}}
-object}
-
 \item{fact, }{Name of the factor in \code{physeq@sam_data}.
 If left to NULL use the \code{left_name} and \code{right_name} parameter as modality.}
 

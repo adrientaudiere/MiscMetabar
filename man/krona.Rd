@@ -14,8 +14,6 @@ krona(
 )
 }
 \arguments{
-\item{physeq}{(required) a \code{\link{phyloseq-class}} object.}
-
 \item{file}{(required) the location of the html file to save}
 
 \item{nb_seq}{(logical) If true, Krona set the distribution

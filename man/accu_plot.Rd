@@ -20,8 +20,6 @@ accu_plot(
 )
 }
 \arguments{
-\item{physeq}{(required) a \code{\link{phyloseq-class}} object.}
-
 \item{fact}{(required) Name of the factor in physeq@sam_data used to plot
 different lines}
 

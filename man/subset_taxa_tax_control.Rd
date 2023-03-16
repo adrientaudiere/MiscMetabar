@@ -12,8 +12,6 @@ subset_taxa_tax_control(
 )
 }
 \arguments{
-\item{physeq}{(required) a \code{\link{phyloseq-class}} object.}
-
 \item{taxa_distri}{(required) a vector of length equal to the number of
 samples with the number of sequences per samples for the taxa control}
 

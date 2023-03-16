@@ -15,11 +15,13 @@ clean_pq(
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
-using the \code{dada2} package}
+using the \code{phyloseq} package.}
 
-\item{remove_empty_samples}{(logical) Do you want to remove samples without sequences (this is done after removing empty taxa)}
+\item{remove_empty_samples}{(logical) Do you want to remove samples
+without sequences (this is done after removing empty taxa)}
 
-\item{remove_empty_taxa}{(logical) Do you want to remove taxa without sequences (this is done before removing empty samples)}
+\item{remove_empty_taxa}{(logical) Do you want to remove taxa
+without sequences (this is done before removing empty samples)}
 
 \item{clean_samples_names}{(logical) Do you want to clean samples names?}
 

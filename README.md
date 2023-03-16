@@ -2,6 +2,7 @@
 <a href="https://zenodo.org/badge/latestdoi/268765075"><img src="https://zenodo.org/badge/268765075.svg" alt="DOI"></a>
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- devtools::build_readme() -->
 
 # MiscMetabar
 
@@ -22,9 +23,11 @@ with:
 ``` r
 install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar")
-#> 
+#> vctrs (0.5.2 -> 0.6.0) [CRAN]
+#> rlang (1.0.6 -> 1.1.0) [CRAN]
+#> ape   (5.7   -> 5.7-1) [CRAN]
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/RtmpoPvlBR/remotes598b5411659a5/adrientaudiere-MiscMetabar-bb84b7c/DESCRIPTION’ ... OK
+#> * checking for file ‘/tmp/RtmpcOP8u3/remotesc5fe96e5c96d7/adrientaudiere-MiscMetabar-939338b/DESCRIPTION’ ... OK
 #> * preparing ‘MiscMetabar’:
 #> * checking DESCRIPTION meta-information ... OK
 #> * checking for LF line-endings in source and make files and shell scripts
@@ -38,6 +41,14 @@ You can install the developement version from
 ``` r
 install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar", ref = "dev")
+#> 
+#> ── R CMD build ─────────────────────────────────────────────────────────────────
+#> * checking for file ‘/tmp/RtmpcOP8u3/remotesc5fe9617dd0c4/adrientaudiere-MiscMetabar-59f230b/DESCRIPTION’ ... OK
+#> * preparing ‘MiscMetabar’:
+#> * checking DESCRIPTION meta-information ... OK
+#> * checking for LF line-endings in source and make files and shell scripts
+#> * checking for empty or unneeded directories
+#> * building ‘MiscMetabar_0.3.tar.gz’
 ```
 
 ## Some use of MiscMetabar

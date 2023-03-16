@@ -8,6 +8,7 @@ circle_pq(
   physeq = NULL,
   fact = NULL,
   taxa = "Order",
+  nproc = 1,
   add_nb_seq = TRUE,
   rarefy = FALSE,
   min_prop_tax = 0.01,
@@ -21,12 +22,13 @@ circle_pq(
 )
 }
 \arguments{
-\item{physeq}{(required) a \code{\link{phyloseq-class}} object.}
-
 \item{fact}{(required) Name of the factor to cluster samples by modalities.
 Need to be in \code{physeq@sam_data}.}
 
 \item{taxa}{(default: 'Order') Name of the taxonomic rank of interest}
+
+\item{nproc}{(default 1)
+Set to number of cpus/processors to use for parallelization}
 
 \item{add_nb_seq}{(default: TRUE) Represent the number of sequences or the
 number of OTUs (add_nb_seq = FALSE)}

@@ -108,9 +108,9 @@ clean_pq <- function(physeq,
   if (verbose) {
     message(paste(
       "Supress", ntaxa(physeq) - ntaxa(new_physeq), "taxa (",
-      cat(names(taxa_sums(physeq) > 0), sep = " / "), ") and",
+      cat(names(taxa_sums(physeq) == 0), sep = " / "), ") and",
       nsamples(physeq) - nsamples(new_physeq),
-      "sample(s) (", cat(names(sample_sums(physeq) > 0), sep = " / "), ")."
+      "sample(s) (", cat(names(sample_sums(physeq) == 0), sep = " / "), ")."
     ))
   } else if (!silent) {
     message(paste(
@@ -911,10 +911,10 @@ verify_pq <- function(physeq) {
 #'
 #' The main objective of this function is to complete the [phyloseq::subset_samples()]
 #' function by propose a more easy (but more prone to error) way of subset_samples.
-#' It replace the subsetting expression which used the name of the variable 
-#' in the sam_data by a boolean vector. 
-#' 
-#' Warnings: you must verify the result of this function as the 
+#' It replace the subsetting expression which used the name of the variable
+#' in the sam_data by a boolean vector.
+#'
+#' Warnings: you must verify the result of this function as the
 #' boolean condition must match the order of samples in the `sam_data`
 #' slot.
 #'

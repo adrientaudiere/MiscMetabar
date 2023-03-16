@@ -17,8 +17,6 @@ blast_to_phyloseq(
 )
 }
 \arguments{
-\item{physeq}{(required) a \code{\link{phyloseq-class}} object.}
-
 \item{seq2search}{(required) path to fasta file}
 
 \item{blastpath}{path to blast program}

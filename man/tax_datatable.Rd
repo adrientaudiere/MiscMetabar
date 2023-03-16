@@ -13,8 +13,6 @@ tax_datatable(
 )
 }
 \arguments{
-\item{physeq}{(required) A \code{\link{phyloseq-class}} object}
-
 \item{abundance}{(default: TRUE) Does the number of sequences is print}
 
 \item{taxonomic_level}{(default: NULL) a vector of selected taxonomic
