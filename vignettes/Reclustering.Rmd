@@ -41,7 +41,7 @@ summary_plot_pq(otu)
 
 ```{r, message=FALSE, results="hide", eval = FALSE}
 library(devtools)
-install_github("adrientaudiere/lulu")  
+install_github("adrientaudiere/lulu")
 library("lulu")
 data(data_fungi_sp_known)
 lulu_res <- lulu_pq(data_fungi_sp_known)

@@ -1,9 +1,8 @@
-
 ################################################################################
 #' Make a datatable with the taxonomy of a \code{\link{phyloseq-class}} object
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @param physeq (required) A \code{\link{phyloseq-class}} object
+#' @inheritParams clean_pq (required) A \code{\link{phyloseq-class}} object
 #' @param abundance (default: TRUE) Does the number of sequences is print
 #' @param taxonomic_level (default: NULL) a vector of selected taxonomic
 #' level using their column numbers (e.g. taxonomic_level = c(1:7))
@@ -93,7 +92,7 @@ tax_datatable <- function(physeq,
 #' shared ASV.
 #' @description
 #' `r lifecycle::badge("experimental")`
-#' @param physeq (required) A \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq (required) A \code{\link{phyloseq-class}} object.
 #'   For the moment refseq slot need to be not Null.
 #' @param modality the name of the column in the `sam_data`
 #'   slot of the physeq object to split samples by pairs
@@ -106,10 +105,10 @@ tax_datatable <- function(physeq,
 #' @importFrom rlang .data
 #' @export
 compare_pairs_pq <- function(physeq = NULL,
-                                     modality = NULL,
-                                     bifactor = NULL,
-                                     nb_min_seq = 0,
-                                     vegIndex = "shannon") {
+                             modality = NULL,
+                             bifactor = NULL,
+                             nb_min_seq = 0,
+                             vegIndex = "shannon") {
   if (!is.factor(physeq@sam_data[[bifactor]])) {
     physeq@sam_data[[bifactor]] <- as.factor(physeq@sam_data[[bifactor]])
   }

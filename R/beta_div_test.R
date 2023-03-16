@@ -1,4 +1,3 @@
-
 #' @title Performs graph-based permutation tests on phyloseq object
 #' @description
 #' `r lifecycle::badge("maturing")`
@@ -6,7 +5,7 @@
 #' A wrapper of [phyloseqGraphTest::graph_perm_test()] for quick plot with
 #' important statistics
 
-#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
 #' @param fact (required) Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}. This should be a factor
 #'   with two or more levels.
@@ -25,8 +24,10 @@
 #' data(enterotype)
 #' graph_test_pq(enterotype, fact = "SeqTech")
 #'
-#' clean_enterotype <- subset_samples(enterotype,
-#'                                    !is.na(enterotype@sam_data$Enterotype))
+#' clean_enterotype <- subset_samples(
+#'   enterotype,
+#'   !is.na(enterotype@sam_data$Enterotype)
+#' )
 #' graph_test_pq(clean_enterotype, fact = "Enterotype")
 #' @author Adrien Taudière
 #'
@@ -74,7 +75,7 @@ graph_test_pq <- function(physeq,
 #' `r lifecycle::badge("experimental")`
 #'
 #' A wrapper for the [vegan::adonis2()] function in the case of `physeq` object.
-#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
 #' @param formula (required) todo
 #' @param merge_sample_by a vector to determine
 #'   which samples to merge using the [speedyseq::merge_samples2()]

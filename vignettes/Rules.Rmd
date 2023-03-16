@@ -17,3 +17,9 @@ is well thought out and a good default value for most users [e.g. the number of 
 - Indicate the type for logical and integer params.
 - Try to homogenize the params names across function.
 - Prefer ASVs to OTUs denomination, even thought both are almost interchangeable in the MiscMetabar package.
+
+## Lifecycle 
+
+- Experimental: First status for a function
+- Maturing: Some tests and/or analyses make stronger these functions
+- Stable: Good level of confidence

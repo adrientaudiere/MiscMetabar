@@ -7,7 +7,7 @@
 #' @description
 #' `r lifecycle::badge("maturing")`
 #'
-#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
 #' @param min_number (int) the minimum number of sequences to put
 #'   a 1 in the otu table.
 #' @author Adrien Taudière
@@ -111,7 +111,7 @@ all_object_size <- function() {
 
 ################################################################################
 #' Simplify taxonomy by removing some unused characters such as "k__"
-#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
 #'
 #' @description
 #' `r lifecycle::badge("maturing")`

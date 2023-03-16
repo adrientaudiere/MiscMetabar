@@ -1,4 +1,3 @@
-
 ################################################################################
 #' A wrapper of [DECIPHER::IdTaxa()]
 #' @description
@@ -38,7 +37,7 @@ MM_idtaxa <- function(test, trainingSet, column_names = c("Kingdom_idtaxa", "Phy
 #' List fastq files
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' 
+#'
 #' @param path path to files (required)
 #' @param paired_end do you have paired_end files? (default TRUE)
 #' @param pattern a pattern to filter files (passed to list.files function).
@@ -82,21 +81,22 @@ list_fastq_files <-
 #'
 #' @param otu_tab (required) The matrix or otu_table
 #' @param names_of_samples (required) The
-#' @param taxa_are_rows (default : FALSE) Does the taxa are rows or 
-#'   columns. 
+#' @param taxa_are_rows (default : FALSE) Does the taxa are rows or
+#'   columns.
 #'
-#' @return the matrix with new colnames 
+#' @return the matrix with new colnames
 #'   (or rownames if `taxa_are_rows` is true)
-#'   
+#'
 #' @export
 #' @md
 #'
 #' @examples
 #' data(data_fungi)
 #' rename_samples_otu_table(data_fungi@otu_table, as.character(1:185),
-#'   taxa_are_rows=T)
+#'   taxa_are_rows = T
+#' )
 rename_samples_otu_table <- function(otu_tab, names_of_samples,
-                          taxa_are_rows = FALSE) {
+                                     taxa_are_rows = FALSE) {
   if (taxa_are_rows) {
     if (length(names_of_samples) == dim(otu_tab)[1]) {
       rownames(otu_tab) <- names_of_samples

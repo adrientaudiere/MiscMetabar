@@ -1,4 +1,8 @@
-# MiscMetabar 0.3 (in development)
+# MiscMetabar 0.31 (in development)
+
+* Argument `split_by` to make multiple plot given a variable in `sam_data` slot(function `ggvenn_pq`)  
+
+# MiscMetabar 0.3 
 
 * Change some function names, mainly replacing `physeq` by `pk`.
 \tabular{rl}{

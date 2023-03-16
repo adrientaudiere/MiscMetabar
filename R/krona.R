@@ -5,7 +5,7 @@
 #'
 #' Need the installation of kronatools on the computer ([installation instruction](https://github.com/marbl/Krona/wiki/Installing)).
 #'
-#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
 #' @param file (required) the location of the html file to save
 #' @param nb_seq (logical) If true, Krona set the distribution
 #'   of sequences in the taxonomy. If False, Krona set the distribution of ASVs

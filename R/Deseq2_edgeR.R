@@ -3,7 +3,7 @@
 #'
 #' `r lifecycle::badge("maturing")`
 #'
-#' @param physeq (required): a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq (required): a \code{\link{phyloseq-class}} object.
 #' @param contrast (required):This argument specifies what comparison
 #'   to extract from the object to build a results table.
 #'   See \code{\link[DESeq2]{results}} man page for more details.
@@ -139,7 +139,7 @@ plot_edgeR_pq <-
 #'   color vector.
 #' @param tax_depth Taxonomic depth to test for differential
 #'   distribution among contrast. If Null the analysis is done at the OTU
-#'   (i.e. Species) level. If not Null, data need to be a column name in 
+#'   (i.e. Species) level. If not Null, data need to be a column name in
 #'   the `tax_table` slot of the \code{\link{phyloseq-class}} object.
 #' @param verbose whether the function print some information during
 #'   the computation
@@ -354,7 +354,7 @@ plot_deseq2_pq <-
 #'
 #' Further details.
 #'
-#' @param physeq (required)  A \code{\link{phyloseq-class}} or
+#' @inheritParams clean_pq (required)  A \code{\link{phyloseq-class}} or
 #'  an \code{\link{otu_table-class}} object.
 #'  The latter is only appropriate if \code{group} argument is also a
 #'  vector or factor with length equal to \code{nsamples(physeq)}.

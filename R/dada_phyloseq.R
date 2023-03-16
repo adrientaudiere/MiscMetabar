@@ -8,7 +8,7 @@ if (getRversion() >= "2.15.1") {
 #'
 #' `r lifecycle::badge("stable")`
 #'
-#' @param physeq (required) a \code{\link{phyloseq-class}} object obtained
+#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object obtained
 #'   using the `dada2` package
 #'
 #' @return A new \code{\link{phyloseq-class}} object with `refseq` slot and new
@@ -39,10 +39,12 @@ add_dna_to_phyloseq <- function(physeq) {
 #'
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object obtained
-#'   using the `dada2` package
+#'   using the `phyloseq` package.
 #'
-#' @param remove_empty_samples (logical) Do you want to remove samples without sequences (this is done after removing empty taxa)
-#' @param remove_empty_taxa (logical) Do you want to remove taxa without sequences (this is done before removing empty samples)
+#' @param remove_empty_samples (logical) Do you want to remove samples
+#'   without sequences (this is done after removing empty taxa)
+#' @param remove_empty_taxa (logical) Do you want to remove taxa
+#'   without sequences (this is done before removing empty samples)
 #' @param clean_samples_names (logical) Do you want to clean samples names?
 #' @param silent (logical) If true, no message are printing.
 #' @param verbose (logical) Additional informations in the message
@@ -145,7 +147,8 @@ clean_pq <- function(physeq,
 #' @param obj_names
 #'   A list of names corresponding to the list of objects
 #' @param clean_pq (logical)
-#'   If true, empty samples and empty ASV are discarded before clustering.
+#'   If set to TRUE, empty samples and empty ASV are discarded
+#'   before clustering.
 #'
 #' @return The number of sequences, clusters (e.g. OTUs, ASVs) and samples for
 #'   each object.
@@ -274,7 +277,7 @@ track_wkflow <- function(list_of_objects, obj_names = NULL, clean_pq = FALSE) {
 #'
 #' `r lifecycle::badge("maturing")`
 #'
-#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
 #' @param nproc (default: 1)
 #'   Set to number of cpus/processors to use for the clustering
 #' @param method (default: clusterize)
@@ -310,7 +313,7 @@ asv2otu <- function(physeq,
                     ...) {
   verify_pq(physeq)
   dna <- Biostrings::DNAStringSet(physeq@refseq)
-  if(!method %in%c("clusterize", "vsearch")){
+  if (!method %in% c("clusterize", "vsearch")) {
     stop("Method allows 2 values only : `clusterize` or `vsearch`")
   }
 
@@ -396,23 +399,24 @@ asv2otu <- function(physeq,
 #'
 #' `r lifecycle::badge("maturing")`
 #'
-#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
 #' @param seq2search (required) path to fasta file
 #' @param vsearchpath path to vsearch
 #' @param id (default: 0.8) id for --usearch_global
 #' @param iddef (default: 0) iddef for --usearch_global
 #' @examples
 #' \dontrun{
-#'   file_dna <- tempfile("dna.fa")
-#'   seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCA
-#'   ACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG", 
-#'   file = file_dna, name = "seq1")
-#'   res <- vsearch_search_global(data_fungi, file_dna)
-#'   unlink(file_dna)
-#'   
-#'   res[res$identity != "*", ]
+#' file_dna <- tempfile("dna.fa")
+#' seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCA
+#'   ACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG",
+#'   file = file_dna, name = "seq1"
+#' )
+#' res <- vsearch_search_global(data_fungi, file_dna)
+#' unlink(file_dna)
 #'
-#'   clean_pq(subset_taxa(data_fungi, res$identity != "*"))
+#' res[res$identity != "*", ]
+#'
+#' clean_pq(subset_taxa(data_fungi, res$identity != "*"))
 #' }
 #' @return A dataframe with uc results (invisible)
 #' @export
@@ -472,7 +476,7 @@ vsearch_search_global <- function(physeq,
 #'
 #' `r lifecycle::badge("maturing")`
 #'
-#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
 #' @param seq2search (required) path to fasta file
 #' @param blastpath path to blast program
 #' @param id_cut (default: 90) cut of in identity percent to keep result
@@ -595,7 +599,7 @@ blast_to_phyloseq <- function(physeq,
 #'
 #' `r lifecycle::badge("maturing")`
 #'
-#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
 #' @param path a path to the folder to save the phyloseq object
 #' @param rdata (logical) does the phyloseq object is also saved in Rdata format?
 #' @param one_file_ASV (logical) if TRUE, combine all data in one file only
@@ -614,11 +618,11 @@ blast_to_phyloseq <- function(physeq,
 #' }
 #'
 write_pq <- function(physeq,
-                           path = NULL,
-                           rdata = FALSE,
-                           one_file_ASV = FALSE,
-                           write_sam_data = TRUE,
-                           ...) {
+                     path = NULL,
+                     rdata = FALSE,
+                     one_file_ASV = FALSE,
+                     write_sam_data = TRUE,
+                     ...) {
   verify_pq(physeq)
   if (!dir.exists(path)) {
     dir.create(file.path(path), recursive = TRUE)
@@ -701,10 +705,10 @@ write_pq <- function(physeq,
 #' @param path (required) a path to the folder to read the phyloseq object
 #' @param taxa_are_rows (required, default to FALSE) see ?phyloseq for details
 #' @param sam_names The name of the variable (column) in sam_data.csv to rename
-#'   samples. Note that if you use [write_phyloseq()] function to save your 
-#'   physeq object, you may use sam_names = "X" to rename the samples names 
+#'   samples. Note that if you use [write_phyloseq()] function to save your
+#'   physeq object, you may use sam_names = "X" to rename the samples names
 #'   as before.
-#' 
+#'
 #' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 #' and if present a phy_tree in Newick format. At least the otu_table.csv need to be present.
 #' @export
@@ -742,8 +746,8 @@ read_pq <- function(path = NULL, taxa_are_rows = FALSE, sam_names = NULL) {
     tree <- ape::read.tree(paste(path, "/phy_tree.txt", sep = ""))
     physeq <- phyloseq::merge_phyloseq(physeq, phy_tree(tree))
   }
-  if(!is.null(sam_names)) {
-    sample_names(physeq) <- unclass(physeq@sam_data[,sam_names])[[1]]
+  if (!is.null(sam_names)) {
+    sample_names(physeq) <- unclass(physeq@sam_data[, sam_names])[[1]]
   }
 
   return(physeq)
@@ -761,7 +765,7 @@ read_pq <- function(path = NULL, taxa_are_rows = FALSE, sam_names = NULL) {
 #'  on the method.
 
 #'
-#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
 #' @param nproc (default 1)
 #'   Set to number of cpus/processors to use for the clustering
 #' @param id (default: 0.84) id for --usearch_global.
@@ -880,8 +884,63 @@ lulu_pq <- function(physeq,
 ################################################################################
 
 
+#' Verify the validity of a phyloseq object
+#'
+#' @details
+#' `r lifecycle::badge("maturing")`
+#'
+#' Mostly for internal use in MiscMetabar functions.
+#'
+#' @inheritParams clean_pq
+#'
+#' @return Nothing if the phyloseq object is valid. An error in the other case.
+#' @export
+#'
+#' @examples
 verify_pq <- function(physeq) {
   if (!methods::validObject(physeq) || !inherits(physeq, "phyloseq")) {
     stop("The physeq argument is not a valid phyloseq object.")
+  }
+}
+
+
+#' Subset samples using a conditional boolean vector.
+#'
+#' @details
+#' `r lifecycle::badge("experimental")`
+#'
+#' The main objective of this function is to complete the [phyloseq::subset_samples()]
+#' function by propose a more easy (but more prone to error) way of subset_samples.
+#' It replace the subsetting expression which used the name of the variable 
+#' in the sam_data by a boolean vector. 
+#' 
+#' Warnings: you must verify the result of this function as the 
+#' boolean condition must match the order of samples in the `sam_data`
+#' slot.
+#'
+#' @inheritParams clean_pq
+#' @param condition A boolean vector to subset samples. Length must fit
+#'   the number of samples
+#'
+#' @return
+#' @export
+#'
+#' @examples
+subset_samples_pq <- function(physeq, condition) {
+  if (length(condition) != nsamples(physeq)) {
+    stop("Length of condition is different from the number of samples.")
+  }
+  if (is.null(sample_data(physeq))) {
+    cat("Nothing subset. No sample_data in physeq.\n")
+    return(physeq)
+  } else {
+    oldDF <- as(sample_data(physeq), "data.frame")
+    newDF <- oldDF[condition, ]
+    if (class(physeq) == "sample_data") {
+      return(sample_data(newDF))
+    } else {
+      sample_data(physeq) <- sample_data(newDF)
+      return(physeq)
+    }
   }
 }

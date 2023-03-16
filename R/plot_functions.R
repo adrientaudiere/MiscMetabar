@@ -55,7 +55,7 @@ plot_mt <-
 #'
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
 #' @param fact (required) Name of the factor in physeq@sam_data used to plot
 #'    different lines
 #' @param add_nb_seq (default: TRUE, logical)
@@ -293,12 +293,12 @@ accu_plot <-
 #' Plot OTU circle for \code{\link{phyloseq-class}} object
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
 #' @param fact (required) Name of the factor to cluster samples by modalities.
 #'        Need to be in \code{physeq@sam_data}.
 #' @param taxa (default: 'Order') Name of the taxonomic rank of interest
 #' @param nproc (default 1)
-#'   Set to number of cpus/processors to use for parallelization 
+#'   Set to number of cpus/processors to use for parallelization
 #' @param add_nb_seq (default: TRUE) Represent the number of sequences or the
 #'    number of OTUs (add_nb_seq = FALSE)
 #' @param rarefy (logical) Does each samples modalities need to be rarefy in
@@ -525,7 +525,7 @@ circle_pq <-
 #' Sankey plot of \code{\link{phyloseq-class}} object
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @param physeq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
 #' @param fact Name of the factor to cluster samples by modalities.
 #' Need to be in \code{physeq@sam_data}.
 #' @param taxa a vector of taxonomic rank to plot
@@ -737,7 +737,7 @@ sankey_pq <-
 #' Venn diagram of \code{\link{phyloseq-class}} object
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @param physeq (required): a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq (required): a \code{\link{phyloseq-class}} object.
 #' @param fact (required): Name of the factor to cluster samples by modalities.
 #' Need to be in \code{physeq@sam_data}.
 #' @param min_nb_seq (default: 0)): minimum number of sequences by OTUs by
@@ -939,36 +939,49 @@ venn_pq <-
 #'
 #' Note that you can use ggplot2 function to customize the plot
 #' for ex. `+ scale_fill_distiller(palette = "BuPu", direction = 1)`
-#' @param physeq (required): a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq (required): a \code{\link{phyloseq-class}} object.
 #' @param fact (required): Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}.
-#' @param merge_sample_by (default: NULL): if not `NULL` samples of
+#' @param merge_sample_by if not `NULL` samples of
 #'   physeq are mereged using the vector set by `merge_sample_by`. This
 #'   merging used the [speedyseq::merge_samples2()].
-#'   If `merge_sample_by` is equal to `fact`
+#'   If `merge_sample_by` is equal to `fact` args
 #'   it give the same result as if `merge_sample_by` is NULL.
-#' @param min_nb_seq (default: 0)): minimum number of sequences by OTUs by
+#' @param min_nb_seq minimum number of sequences by OTUs by
 #'   samples to take into count this OTUs in this sample. For example,
 #'   if min_nb_seq=2,each value of 2 or less in the OTU table
 #'   will not count in the venn diagramm
-#' @param taxonomic_rank (default: Null): Name (or number) of a taxonomic rank
+#' @param taxonomic_rank Name (or number) of a taxonomic rank
 #'   to count. If set to Null (the default) the number of OTUs is counted.
+#' @param  split_by Split into multiple plot using variable split_by.
+#'   The name of a variable present in `sam_data` slot
+#'   of the physeq object.
 #' @param ... other arguments for the `ggVennDiagram::ggVennDiagram` function
 #'   for ex. `category.names`.
 #' @return A \code{\link{ggplot}}2 plot representing Venn diagramm of
-#'   modalities of the argument \code{factor}
+#'   modalities of the argument \code{factor} or if split_by is set a list
+#'   of plots.
 #'
+#' @exemples
+#' data(data_fungi)
+#' ggvenn_pq(data_fungi, fact = "Height")
+#' ggvenn_pq(data_fungi, fact = "Height") + ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
+#' pl <- ggvenn_pq(data_fungi, fact = "Height", split_by = "Time")
+#' for (i in 1:length(pl)) {
+#'  p <- pl[[i]] + scale_fill_distiller(palette = "BuPu", direction = 1)
+#'  print(p)
+#' }
 #' @export
 #' @author Adrien Taudière
 
 
 ggvenn_pq <- function(physeq = NULL,
-                            fact = NULL,
-                            merge_sample_by = NULL,
-                            min_nb_seq = 0,
-                            taxonomic_rank = NULL,
-                            split_by = NULL,
-                            ...) {
+                      fact = NULL,
+                      merge_sample_by = NULL,
+                      min_nb_seq = 0,
+                      taxonomic_rank = NULL,
+                      split_by = NULL,
+                      ...) {
   if (!is.factor(physeq@sam_data[[fact]])) {
     physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
   }
@@ -996,18 +1009,22 @@ ggvenn_pq <- function(physeq = NULL,
       ])))
     }
   }
-  if (is.null(split_by)){
+  if (is.null(split_by)) {
     p <- ggVennDiagram::ggVennDiagram(res, ...)
   } else {
     p <- list()
     modalities <- as.factor(unlist(unclass(physeq@sam_data[[split_by]])))
-    for (moda in modalities) {
-      physeq_interm <- subset_samples(physeq, physeq@sam_data[[split_by]] == moda)
-      p[[moda]] <- ggvenn_pq(physeq_interm,  fact = fact,
-                      merge_sample_by = merge_sample_by,
-                      min_nb_seq = min_nb_seq,
-                      taxonomic_rank = taxonomic_rank, split_by = NULL) +
-                       ggtitle(moda)
+    for (moda in levels(modalities)) {
+      physeq_interm <- clean_pq(subset_samples_pq(physeq, modalities == moda),
+        silent = TRUE
+      )
+      p[[moda]] <- ggvenn_pq(physeq_interm,
+        fact = fact,
+        merge_sample_by = NULL,
+        min_nb_seq = 0,
+        taxonomic_rank = NULL
+      ) +
+        ggtitle(moda)
     }
   }
   return(p)
@@ -1088,7 +1105,7 @@ multiplot <-
 #' Graphical representation of hill number 0, 1 and 2 across a factor
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @param physeq (required): A \code{\link{phyloseq-class}} object
+#' @inheritParams clean_pq (required): A \code{\link{phyloseq-class}} object
 #' @param variable (required): The variable to test
 #' @param color_fac (optional): The variable to color the barplot
 #' @param letters (optional, default=FALSE): If set to TRUE, the plot
@@ -1222,7 +1239,7 @@ hill_pq <-
 #' Summarise a \code{\link{phyloseq-class}} object using a plot.
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @param physeq (required): A \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq (required): A \code{\link{phyloseq-class}} object.
 #'   refseq slot need to be not Null.
 #' @param add_info Does the bottom down corner contain
 #'   extra informations?
@@ -1237,9 +1254,9 @@ hill_pq <-
 #' @return A ggplot2 object
 #' @export
 summary_plot_pq <- function(physeq,
-                                  add_info = TRUE,
-                                  min_seq_samples = 500,
-                                  clean_phyloseq = TRUE) {
+                            add_info = TRUE,
+                            min_seq_samples = 500,
+                            clean_phyloseq = TRUE) {
   if (clean_phyloseq) {
     clean_pq(physeq)
   }
@@ -1390,7 +1407,7 @@ summary_plot_pq <- function(physeq,
 #' Heat tree from `metacoder` package using `tax_table` slot
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @param physeq (required): A \code{\link{phyloseq-class}}
+#' @inheritParams clean_pq (required): A \code{\link{phyloseq-class}}
 #' object
 #' @param taxonomic_level (default: NULL): a vector of selected
 #' taxonomic level using
@@ -1412,8 +1429,10 @@ summary_plot_pq <- function(physeq,
 #'   GPsubset,
 #'   rowSums(GPsubset@otu_table) > 1000
 #' )
-#' GPsubset <- subset_taxa(GPsubset, 
-#'                         rowSums(is.na(GPsubset@tax_table)) == 0)
+#' GPsubset <- subset_taxa(
+#'   GPsubset,
+#'   rowSums(is.na(GPsubset@tax_table)) == 0
+#' )
 #'
 #' heat_tree_pq(GPsubset,
 #'   node_size = n_obs,
@@ -1434,10 +1453,10 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 }
 
 
-#' Visualization of two samples for comparison 
+#' Visualization of two samples for comparison
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @param physeq (required): A \code{\link{phyloseq-class}}
+#' @inheritParams clean_pq (required): A \code{\link{phyloseq-class}}
 #'   object
 #' @param fact, Name of the factor in `physeq@sam_data`.
 #'   If left to NULL use the `left_name` and `right_name` parameter as modality.
@@ -1457,7 +1476,7 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #' @param geomLabel (default: FALSE, logical) if TRUE use the [ggplot2::geom_label()] function
 #'   instead of [ggplot2::geom_text()] to indicate the numbers of sequences.
 #' @param text_size default size for the number of sequences
-#' @param plotly_version If TRUE, use [plotly::ggplotly()] to return 
+#' @param plotly_version If TRUE, use [plotly::ggplotly()] to return
 #'   a interactive ggplot.
 #' @param ... : other arguments for the ggplot function
 #' @importFrom stats reorder
@@ -1466,21 +1485,21 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #' @author Adrien Taudière
 #'
 biplot_pq <- function(physeq,
-                          fact = NULL,
-                          merge_sample_by = NULL,
-                          inverse_side = FALSE,
-                          left_name = NULL,
-                          right_name = NULL,
-                          left_fill = "#4B3E1E",
-                          left_col = "#f3f2d9",
-                          right_fill = "#1d2949",
-                          right_col = "#1d2949",
-                          log_10 = TRUE,
-                          nudge_y = 0.3,
-                          geomLabel = FALSE,
-                          text_size = 3,
-                          plotly_version = FALSE,
-                          ...) {
+                      fact = NULL,
+                      merge_sample_by = NULL,
+                      inverse_side = FALSE,
+                      left_name = NULL,
+                      right_name = NULL,
+                      left_fill = "#4B3E1E",
+                      left_col = "#f3f2d9",
+                      right_fill = "#1d2949",
+                      right_col = "#1d2949",
+                      log_10 = TRUE,
+                      nudge_y = 0.3,
+                      geomLabel = FALSE,
+                      text_size = 3,
+                      plotly_version = FALSE,
+                      ...) {
   if (!is.null(merge_sample_by)) {
     physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
     physeq <- clean_pq(physeq)
