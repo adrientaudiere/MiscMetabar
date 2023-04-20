@@ -108,9 +108,9 @@ clean_pq <- function(physeq,
   if (verbose) {
     message(paste(
       "Supress", ntaxa(physeq) - ntaxa(new_physeq), "taxa (",
-      cat(names(taxa_sums(physeq) == 0), sep = " / "), ") and",
+      paste(taxa_names(physeq)[taxa_sums(physeq) == 0], collapse = " / "), ") and",
       nsamples(physeq) - nsamples(new_physeq),
-      "sample(s) (", cat(names(sample_sums(physeq) == 0), sep = " / "), ")."
+      "sample(s) (", paste(sample_names(physeq)[sample_sums(physeq) == 0], collapse = " / "), ")."
     ))
   } else if (!silent) {
     message(paste(
