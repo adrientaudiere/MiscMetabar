@@ -277,7 +277,10 @@ track_wkflow <- function(list_of_objects, obj_names = NULL, clean_pq = FALSE) {
 #'
 #' `r lifecycle::badge("maturing")`
 #'
-#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq a \code{\link{phyloseq-class}} object.
+#' @param seq_names : You may directly use a character vector of DNA sequences
+#'   in place of physeq args. When physeq is set, dna sequences take the value of
+#'   `physeq@refseq`
 #' @param nproc (default: 1)
 #'   Set to number of cpus/processors to use for the clustering
 #' @param method (default: clusterize)
@@ -294,7 +297,8 @@ track_wkflow <- function(list_of_objects, obj_names = NULL, clean_pq = FALSE) {
 #'   merge taxa into clusters. By default tax_adjust = 1L. See the man page
 #'   of [speedyseq::merge_taxa_vec()].
 #'
-#' @return A new object of class `physeq`
+#' @return A new object of class `physeq` or a list of cluster if seq_names
+#'   args was used.
 #'
 #' @references
 #'   VSEARCH can be downloaded from
@@ -304,15 +308,27 @@ track_wkflow <- function(list_of_objects, obj_names = NULL, clean_pq = FALSE) {
 #'
 #' @export
 
-asv2otu <- function(physeq,
+asv2otu <- function(physeq = NULL,
+                    seq_names = NULL,
                     nproc = 1,
                     method = "clusterize",
                     id = 0.97,
                     vsearchpath = "vsearch",
                     tax_adjust = 1,
                     ...) {
-  verify_pq(physeq)
-  dna <- Biostrings::DNAStringSet(physeq@refseq)
+  if (inherits(physeq, "phyloseq")) {
+    verify_pq(physeq)
+    dna <- Biostrings::DNAStringSet(physeq@refseq)
+    if (!is.null(seq_names)) {
+      stop("You must use either physeq or seq_names args but not both")
+    }
+  } else if (inherits(seq_names, "character")) {
+    dna <- Biostrings::DNAStringSet(seq_names)
+  } else {
+    stop("You must set the args physeq (object of class phyloseq) or
+    seq_names (character vector).")
+  }
+
   if (!method %in% c("clusterize", "vsearch")) {
     stop("Method allows 2 values only : `clusterize` or `vsearch`")
   }
@@ -327,11 +343,18 @@ asv2otu <- function(physeq,
       ...
     )
 
-    new_physeq <-
-      speedyseq::merge_taxa_vec(physeq,
-        clusters$cluster,
-        tax_adjust = tax_adjust
-      )
+    if (inherits(physeq, "phyloseq")) {
+      new_obj <-
+        speedyseq::merge_taxa_vec(physeq,
+          clusters$cluster,
+          tax_adjust = tax_adjust
+        )
+    } else if (inherits(seq_names, "character")) {
+      new_obj <- clusters
+    } else {
+      stop("You must set the args physeq (object of class phyloseq) or
+    seq_names (character vector).")
+    }
   } else if (method == "vsearch") {
     Biostrings::writeXStringSet(dna, "temp.fasta")
 
@@ -373,11 +396,17 @@ asv2otu <- function(physeq,
         }
       )
 
-    new_physeq <-
-      speedyseq::merge_taxa_vec(physeq,
-        clusters,
-        tax_adjust = tax_adjust
-      )
+    if (inherits(physeq, "phyloseq")) {
+      new_obj <-
+        speedyseq::merge_taxa_vec(physeq,
+          clusters,
+          tax_adjust = tax_adjust
+        )
+    } else if (inherits(seq_names, "character")) {
+      new_obj <- pack_clusts
+    } else {
+      stop("You must set the args physeq (object of class phyloseq) or seq_names (character vector).")
+    }
 
     if (file.exists("temp.fasta")) {
       file.remove("temp.fasta")
@@ -389,7 +418,7 @@ asv2otu <- function(physeq,
       file.remove("temp.uc")
     }
   }
-  return(new_physeq)
+  return(new_obj)
 }
 ################################################################################
 
@@ -402,8 +431,8 @@ asv2otu <- function(physeq,
 #' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
 #' @param seq2search (required) path to fasta file
 #' @param vsearchpath path to vsearch
-#' @param id (default: 0.8) id for --usearch_global
-#' @param iddef (default: 0) iddef for --usearch_global
+#' @param id (default: 0.8) id for the option `--usearch_global` of the vsearch software
+#' @param iddef (default: 0) iddef for the option `--usearch_global` of the vsearch software
 #' @examples
 #' \dontrun{
 #' file_dna <- tempfile("dna.fa")

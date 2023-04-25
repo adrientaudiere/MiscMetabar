@@ -1,6 +1,7 @@
 # MiscMetabar 0.31 (in development)
 
 * Argument `split_by` to make multiple plot given a variable in `sam_data` slot(function `ggvenn_pq`)  
+* Argument `seq_names` in `asv2otu` function allow to clusterize sequences from a character vector of DNA.
 
 # MiscMetabar 0.3 
 
