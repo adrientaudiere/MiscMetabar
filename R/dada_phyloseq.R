@@ -645,6 +645,7 @@ blast_to_phyloseq <- function(physeq,
 #' @param add_info_to_taxtable: add some info from blast query to taxtable of the
 #'   new physeq object
 #'
+#' @export 
 #' @return A new \code{\link{phyloseq-class}} object.
 
 filter_asv_blast <- function(physeq,
