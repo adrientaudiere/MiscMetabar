@@ -30,7 +30,7 @@ devtools::install_github("adrientaudiere/MiscMetabar")
 #> gtable (0.3.1 -> 0.3.3) [CRAN]
 #> ape    (5.7   -> 5.7-1) [CRAN]
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/RtmpYkMULc/remotes15c4e049072d4c/adrientaudiere-MiscMetabar-939338b/DESCRIPTION’ ... OK
+#> * checking for file ‘/tmp/RtmppMPENK/remotes23541c7104e48f/adrientaudiere-MiscMetabar-939338b/DESCRIPTION’ ... OK
 #> * preparing ‘MiscMetabar’:
 #> * checking DESCRIPTION meta-information ... OK
 #> * checking for LF line-endings in source and make files and shell scripts
@@ -46,7 +46,7 @@ install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar", ref = "dev")
 #> 
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/RtmpYkMULc/remotes15c4e05ce2d96c/adrientaudiere-MiscMetabar-d08f34e/DESCRIPTION’ ... OK
+#> * checking for file ‘/tmp/RtmppMPENK/remotes23541c219c816d/adrientaudiere-MiscMetabar-6ea480f/DESCRIPTION’ ... OK
 #> * preparing ‘MiscMetabar’:
 #> * checking DESCRIPTION meta-information ... OK
 #> * checking for LF line-endings in source and make files and shell scripts

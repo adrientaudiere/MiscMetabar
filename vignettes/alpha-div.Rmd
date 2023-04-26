@@ -32,7 +32,8 @@ Hill numbers [^Hill73] is a kind of general framework for alpha diversity index.
 [^Hill73]: Hill MO. 1973. Diversity and evenness: a unifying notation and its consequences. Ecology 54, 427-473.
 
 ```{r}
-vegan::renyi(data_fungi@otu_table)
+renyi_res <- vegan::renyi(data_fungi@otu_table)
+head(renyi_res)
 ```
 
 #### Test for difference in diversity (hill number)
