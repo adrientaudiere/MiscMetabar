@@ -509,13 +509,17 @@ vsearch_search_global <- function(physeq,
 #' @param seq2search (required) path to fasta file
 #' @param blastpath path to blast program
 #' @param id_cut (default: 90) cut of in identity percent to keep result
-#' @param bit_score_cut (default: 1e-10) cut of in bit score to keep result
+#' @param bit_score_cut (default: 50) cut of in bit score to keep result
+#' @param min_cover_cut (default: 50) cut of in query cover (%) to keep result
 #' @param unique_per_seq (logical) if TRUE only return the first match for
 #'   each sequence in seq2search
 #' @param score_filter (logical) does results are filter by score? If
-#'   FALSE, `id_cut` and `bit_score_cut` are ignored
+#'   FALSE, `id_cut`,`bit_score_cut` and `min_cover_cut` are ignored
 #' @param list_no_output_query (logical) does the result table include
 #'   query sequences for which `blastn` does not find any correspondence?
+#'
+#' @seealso  [MiscMetabar::blast_pq()] to use `refseq` slot as query sequences
+#'   against un custom database.
 #'
 #' @return  the blast table
 #' @export
@@ -598,6 +602,7 @@ blast_to_phyloseq <- function(physeq,
   if (score_filter) {
     blast_tab <- blast_tab[blast_tab[, "bit score"] > bit_score_cut, ]
     blast_tab <- blast_tab[blast_tab[, "% id. match"] > id_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "Query cover"] > min_cover_cut, ]
   } else {
     blast_tab <- blast_tab
   }
@@ -622,6 +627,163 @@ blast_to_phyloseq <- function(physeq,
   return(blast_tab)
 }
 ################################################################################
+
+
+
+
+################################################################################
+#' Filter indesirable taxa using blast against a against a custom database.
+#'
+#' `r lifecycle::badge("experimental")`
+#'
+#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
+#' @param database (required) path to a fasta file to make the blast database
+#' @param blastpath path to blast program
+#' @param id_cut (default: 80) cut of in identity percent to keep ASV
+#' @param bit_score_cut (default: 50) cut of in bit score to keep result
+#' @param min_cover_cut (default: 50) cut of in query cover (%) to keep result
+#' @param add_info_to_taxtable: add some info from blast query to taxtable of the
+#'   new physeq object
+#'
+#' @return A new \code{\link{phyloseq-class}} object.
+
+filter_asv_blast <- function(physeq,
+                             clean_pq = TRUE,
+                             database = NULL,
+                             blastpath = NULL,
+                             id_cut = 80,
+                             bit_score_cut = 50,
+                             min_cover_cut = 50,
+                             add_info_to_taxtable = TRUE) {
+  blast_tab <- blast_pq(
+    physeq = physeq,
+    database = database,
+    id_cut = id_cut,
+    bit_score_cut = bit_score_cut,
+    min_cover_cut = min_cover_cut,
+    unique_per_seq = TRUE,
+    score_filter = TRUE,
+    list_no_output_query = FALSE
+  )
+
+  new_physeq <- subset_taxa(physeq, blast_tab)
+  if (clean_pq) {
+    new_physeq <- clean_pq(new_physeq)
+  }
+
+  if (add_info_to_taxtable) {
+    new_physeq@tax_datatable <- tax_table(as.matrix(cbind(
+      new_physeq@tax_datatable,
+      blast_tab[, c("Query name", "Taxa name", "bit score", "% id. match", "Query cover")]
+    )))
+  }
+
+  return(new_physeq)
+}
+
+
+
+################################################################################
+#' Blast all sequence of `refseq` slot of a \code{\link{phyloseq-class}}
+#'   object against a custom database.
+#'
+#' `r lifecycle::badge("experimental")`
+#'
+#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
+#' @param database (required) path to a fasta file to make the blast database
+#' @param blastpath path to blast program
+#' @param id_cut (default: 90) cut of in identity percent to keep result
+#' @param bit_score_cut (default: 50) cut of in bit score to keep result
+#' @param min_cover_cut (default: 50) cut of in query cover (%) to keep result
+#' @param unique_per_seq (logical) if TRUE only return the first match for
+#'   each sequence in seq2search
+#' @param score_filter (logical) does results are filter by score? If
+#'   FALSE, `id_cut`,`bit_score_cut` and `min_cover_cut` are ignored
+#'
+#' @seealso  [MiscMetabar::blast_to_phyloseq()] to use `refseq` slot as a database
+#' @return  a blast table
+#' @export
+#'
+blast_pq <- function(physeq,
+                     database = NULL,
+                     blastpath = NULL,
+                     id_cut = 90,
+                     bit_score_cut = 50,
+                     min_cover_cut = 50,
+                     unique_per_seq = FALSE,
+                     score_filter = TRUE,
+                     list_no_output_query = FALSE) {
+  verify_pq(physeq)
+  dna <- Biostrings::DNAStringSet(physeq@refseq)
+  Biostrings::writeXStringSet(dna, "physeq_refseq.fasta")
+
+  system(paste(blastpath,
+    "makeblastdb -dbtype nucl -in ", database, " -out dbase",
+    sep = ""
+  ))
+
+  system(
+    paste(
+      blastpath,
+      "blastn -query ",
+      "physeq_refseq.fasta",
+      " -db dbase",
+      " -out blast_result.txt",
+      " -outfmt \"6 qseqid qlen sseqid slen",
+      " length pident evalue bitscore qcovs\"",
+      sep = ""
+    )
+  )
+
+  if (file.info("blast_result.txt")$size > 0) {
+    blast_tab <- utils::read.table(
+      "blast_result.txt",
+      sep = "\t",
+      header = FALSE,
+      stringsAsFactors = FALSE,
+      comment.char = ""
+    )
+    file.remove("blast_result.txt")
+    file.remove(list.files(pattern = "dbase"))
+    file.remove("db.fasta")
+  } else {
+    file.remove("blast_result.txt")
+    file.remove(list.files(pattern = "dbase"))
+    file.remove("db.fasta")
+    stop("None query sequences matched your phyloseq references sequences.")
+  }
+
+
+  names(blast_tab) <- c(
+    "Query name",
+    "Query seq. length",
+    "Taxa name",
+    "Taxa seq. length",
+    "Alignment length",
+    "% id. match",
+    "e-value",
+    "bit score",
+    "Query cover"
+  )
+
+  blast_tab <- blast_tab[order(blast_tab[, "% id. match"], decreasing = FALSE), ]
+
+  if (unique_per_seq) {
+    blast_tab <- blast_tab[which(!duplicated(blast_tab[, 1])), ]
+  }
+
+  if (score_filter) {
+    blast_tab <- blast_tab[blast_tab[, "bit score"] > bit_score_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "% id. match"] > id_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "Query cover"] > min_cover_cut, ]
+  } else {
+    blast_tab <- blast_tab
+  }
+
+  return(blast_tab)
+}
+
+
 
 ################################################################################
 #' Save phyloseq object in the form of multiple csv tables.

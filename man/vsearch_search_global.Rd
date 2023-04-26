@@ -18,9 +18,9 @@ vsearch_search_global(
 
 \item{vsearchpath}{path to vsearch}
 
-\item{id}{(default: 0.8) id for --usearch_global}
+\item{id}{(default: 0.8) id for the option \code{--usearch_global} of the vsearch software}
 
-\item{iddef}{(default: 0) iddef for --usearch_global}
+\item{iddef}{(default: 0) iddef for the option \code{--usearch_global} of the vsearch software}
 }
 \value{
 A dataframe with uc results (invisible)

@@ -23,16 +23,18 @@ blast_to_phyloseq(
 
 \item{id_cut}{(default: 90) cut of in identity percent to keep result}
 
-\item{bit_score_cut}{(default: 1e-10) cut of in bit score to keep result}
+\item{bit_score_cut}{(default: 50) cut of in bit score to keep result}
 
 \item{unique_per_seq}{(logical) if TRUE only return the first match for
 each sequence in seq2search}
 
 \item{score_filter}{(logical) does results are filter by score? If
-FALSE, \code{id_cut} and \code{bit_score_cut} are ignored}
+FALSE, \code{id_cut},\code{bit_score_cut} and \code{min_cover_cut} are ignored}
 
 \item{list_no_output_query}{(logical) does the result table include
 query sequences for which \code{blastn} does not find any correspondence?}
+
+\item{min_cover_cut}{(default: 50) cut of in query cover (\%) to keep result}
 }
 \value{
 the blast table
@@ -49,4 +51,8 @@ blast_to_phyloseq(data_fungi,
   blastpath = blastpath
 )
 }
+}
+\seealso{
+\code{\link[=blast_pq]{blast_pq()}} to use \code{refseq} slot as query sequences
+against un custom database.
 }

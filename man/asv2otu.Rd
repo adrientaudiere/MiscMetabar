@@ -6,7 +6,8 @@
 (e.g. OTUs or ASV from dada)}
 \usage{
 asv2otu(
-  physeq,
+  physeq = NULL,
+  seq_names = NULL,
   nproc = 1,
   method = "clusterize",
   id = 0.97,
@@ -16,6 +17,10 @@ asv2otu(
 )
 }
 \arguments{
+\item{seq_names}{: You may directly use a character vector of DNA sequences
+in place of physeq args. When physeq is set, dna sequences take the value of
+\code{physeq@refseq}}
+
 \item{nproc}{(default: 1)
 Set to number of cpus/processors to use for the clustering}
 
@@ -37,7 +42,8 @@ of \code{\link[speedyseq:merge_taxa_vec]{speedyseq::merge_taxa_vec()}} for more 
 \item{...}{Others arguments path to \code{\link[DECIPHER:Clusterize]{DECIPHER::Clusterize()}}}
 }
 \value{
-A new object of class \code{physeq}
+A new object of class \code{physeq} or a list of cluster if seq_names
+args was used.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
