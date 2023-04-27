@@ -207,7 +207,7 @@ track_wkflow <- function(list_of_objects, obj_names = NULL, clean_pq = FALSE) {
     pbapply::pblapply(list_of_objects, function(object) {
       message(paste("Start object of class:", class(object), sep = " "))
       if (inherits(object, "phyloseq")) {
-        ncol(object@otu_table)
+        ntaxa(object)
       } else if (inherits(object, "matrix")) {
         ncol(object)
       } else if (inherits(object[[1]], "dada")) {
@@ -229,7 +229,7 @@ track_wkflow <- function(list_of_objects, obj_names = NULL, clean_pq = FALSE) {
     pbapply::pblapply(list_of_objects, function(object) {
       message(paste("Start object of class:", class(object), sep = " "))
       if (inherits(object, "phyloseq")) {
-        nrow(object@otu_table)
+        nsamples(object)
       } else if (inherits(object, "matrix")) {
         nrow(object)
       } else if (inherits(object[[1]], "dada")) {
@@ -670,12 +670,12 @@ blast_pq <- function(physeq,
   } else if (!is.null(fasta_for_db) && !is.null(database)) {
     stop("You assign value for both `fasta_for_db` and `database` args. Please use only one.")
   } else if (!is.null(fasta_for_db) && is.null(database)) {
-    print("Build the database from fasta_for_db")
+    message("Build the database from fasta_for_db")
     system(paste(blastpath,
       "makeblastdb -dbtype nucl -in ", fasta_for_db, " -out dbase",
       sep = ""
     ))
-    print("Blast refseq from physeq object against the database")
+    message("Blast refseq from physeq object against the database")
     system(
       paste(
         blastpath,
@@ -704,7 +704,7 @@ blast_pq <- function(physeq,
       stop("None query sequences matched your phyloseq references sequences.")
     }
   } else if (is.null(fasta_for_db) && !is.null(database)) {
-    print("Blast refseq from physeq object against the database")
+    message("Blast refseq from physeq object against the database")
     system(
       paste(
         blastpath,
