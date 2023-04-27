@@ -10,7 +10,7 @@ test_that("clean_pq return a phyloseq object after cleaning empty taxa and sampl
 })
 
 test_that("clean_pq clean empty taxa and samples", {
-  expect_message(clean_pq(data_fungi_test), "Supress 2 taxa and 1 samples")
+  expect_message(clean_pq(data_fungi_test), "Cleaning suppress 2 taxa and 1 samples")
   expect_equal(nrow(data_fungi_test@otu_table) -
     nrow(clean_pq(data_fungi_test)@otu_table), 1)
   expect_equal(ncol(data_fungi_test@otu_table) -

@@ -17,7 +17,8 @@ blast_to_phyloseq(
 )
 }
 \arguments{
-\item{seq2search}{(required) path to fasta file}
+\item{seq2search}{(required) path to a fasta file defining the sequences
+you want to blast against the ASV sequences from the physeq object.}
 
 \item{blastpath}{path to blast program}
 

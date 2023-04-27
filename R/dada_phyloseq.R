@@ -107,14 +107,14 @@ clean_pq <- function(physeq,
 
   if (verbose) {
     message(paste(
-      "Supress", ntaxa(physeq) - ntaxa(new_physeq), "taxa (",
+      "Cleaning suppress", ntaxa(physeq) - ntaxa(new_physeq), "taxa (",
       paste(taxa_names(physeq)[taxa_sums(physeq) == 0], collapse = " / "), ") and",
       nsamples(physeq) - nsamples(new_physeq),
       "sample(s) (", paste(sample_names(physeq)[sample_sums(physeq) == 0], collapse = " / "), ")."
     ))
   } else if (!silent) {
     message(paste(
-      "Supress", ntaxa(physeq) - ntaxa(new_physeq), "taxa and",
+      "Cleaning suppress", ntaxa(physeq) - ntaxa(new_physeq), "taxa and",
       nsamples(physeq) - nsamples(new_physeq),
       "samples."
     ))
@@ -506,7 +506,8 @@ vsearch_search_global <- function(physeq,
 #' `r lifecycle::badge("maturing")`
 #'
 #' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
-#' @param seq2search (required) path to fasta file
+#' @param seq2search (required) path to a fasta file defining the sequences
+#'   you want to blast against the ASV sequences from the physeq object.
 #' @param blastpath path to blast program
 #' @param id_cut (default: 90) cut of in identity percent to keep result
 #' @param bit_score_cut (default: 50) cut of in bit score to keep result
@@ -791,9 +792,10 @@ filter_asv_blast <- function(physeq,
     list_no_output_query = FALSE
   )
 
-  cond <- blast_tab[, "Query cover"] > min_cover_cut & blast_tab[, "bit score"] > bit_score_cut & blast_tab[, "% id. match"] > id_cut
-  cond <- cond[match(taxa_names(physeq), blast_tab[, "Query name"])]
-  new_physeq <- subset_taxa(physeq, cond)
+  condition <- blast_tab[, "Query cover"] > min_cover_cut & blast_tab[, "bit score"] > bit_score_cut & blast_tab[, "% id. match"] > id_cut
+  names(condition) <- blast_tab[, "Query name"]
+
+  new_physeq <- subset_taxa_pq(physeq, condition)
 
   if (clean_pq) {
     new_physeq <- clean_pq(new_physeq)
@@ -1160,4 +1162,64 @@ subset_samples_pq <- function(physeq, condition) {
       return(physeq)
     }
   }
+}
+
+
+#' Subset taxa using a conditional named boolean vector.
+#'
+#' @details
+#' `r lifecycle::badge("experimental")`
+#'
+#' The main objective of this function is to complete the [phyloseq::subset_taxa()]
+#' function by propose a more easy way of subset_taxa using a named boolean vector.
+#' Names must match taxa_names.
+#'
+#'
+#' @inheritParams clean_pq
+#' @param condition A named boolean vector to subset taxa. Length must fit
+#'   the number of taxa and names must match taxa_names
+#' @param clean_pq (logical)
+#'   If set to TRUE, empty samples are discarded after subsetting ASV
+#' @param verbose (logical) Informations are printed
+#'
+#' @return
+#' @export
+#'
+#' @examples
+subset_taxa_pq <- function(physeq, condition, verbose = TRUE, clean_pq = TRUE) {
+  if (!sum(names(condition) %in% taxa_names(physeq)) == length(condition)) {
+    stop(paste(
+      "Some names in condition do not fit taxa_names of physeq : ",
+      paste(names(condition)[!names(condition) %in% taxa_names(physeq)], collapse = "/")
+    ))
+  }
+
+  new_physeq <- physeq
+
+  if (!taxa_are_rows(new_physeq)) {
+    new_physeq@otu_table <- otu_table(t(new_physeq@otu_table), taxa_are_rows = TRUE)
+    taxa_are_rows(new_physeq) <- TRUE
+  }
+
+  cond <- condition[match(taxa_names(new_physeq), names(condition))]
+  cond[is.na(cond)] <- FALSE
+
+  oldMA <- as(otu_table(new_physeq), "matrix")
+  newMA <- oldMA[cond, ]
+
+  otu_table(new_physeq) <- otu_table(newMA, taxa_are_rows = TRUE)
+
+  if (clean_pq) {
+    new_physeq <- clean_pq(new_physeq, verbose = TRUE)
+  }
+
+  if (verbose) {
+    message(paste("Number of non-matching ASV", sum(is.na(match(taxa_names(physeq), names(condition))))))
+    message(paste("Number of matching ASV", sum(!is.na(match(taxa_names(physeq), names(condition))))))
+    message(paste("Number of filtered-out ASV", ntaxa(physeq) - ntaxa(new_physeq)))
+    message(paste("Number of kept ASV", ntaxa(new_physeq)))
+    message(paste("Number of kept samples", nsamples(new_physeq)))
+  }
+
+  return(new_physeq)
 }

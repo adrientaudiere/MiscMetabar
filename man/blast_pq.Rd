@@ -19,9 +19,9 @@ blast_pq(
 )
 }
 \arguments{
-\item{database}{(required) path to a fasta file to make the blast database}
+\item{fasta_for_db}{: path to a fasta file to make the blast database}
 
-\item{blastpath}{path to blast program}
+\item{database}{: path to a blast database}
 
 \item{id_cut}{(default: 90) cut of in identity percent to keep result}
 
