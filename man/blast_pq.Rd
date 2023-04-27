@@ -7,6 +7,7 @@ object against a custom database.}
 \usage{
 blast_pq(
   physeq,
+  fasta_for_db = NULL,
   database = NULL,
   blastpath = NULL,
   id_cut = 90,

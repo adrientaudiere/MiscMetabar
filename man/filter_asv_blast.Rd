@@ -6,8 +6,9 @@
 \usage{
 filter_asv_blast(
   physeq,
-  clean_pq = TRUE,
+  fasta_for_db = NULL,
   database = NULL,
+  clean_pq = TRUE,
   blastpath = NULL,
   id_cut = 80,
   bit_score_cut = 50,
@@ -16,7 +17,13 @@ filter_asv_blast(
 )
 }
 \arguments{
-\item{database}{(required) path to a fasta file to make the blast database}
+\item{fasta_for_db}{: path to a fasta file to make the blast database}
+
+\item{database}{: path to a blast database}
+
+\item{clean_pq}{(logical)
+If set to TRUE, empty samples and empty ASV are discarded
+after filtering.}
 
 \item{blastpath}{path to blast program}
 
