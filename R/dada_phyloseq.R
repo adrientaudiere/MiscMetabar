@@ -636,8 +636,8 @@ blast_to_phyloseq <- function(physeq,
 #' `r lifecycle::badge("experimental")`
 #'
 #' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
-#' @param database (required) path to a fasta file to make the blast database
-#' @param blastpath path to blast program
+#' @param fasta_for_db : path to a fasta file to make the blast database
+#' @param database : path to a blast database
 #' @param id_cut (default: 90) cut of in identity percent to keep result
 #' @param bit_score_cut (default: 50) cut of in bit score to keep result
 #' @param min_cover_cut (default: 50) cut of in query cover (%) to keep result
@@ -669,11 +669,12 @@ blast_pq <- function(physeq,
   } else if (!is.null(fasta_for_db) && !is.null(database)) {
     stop("You assign value for both `fasta_for_db` and `database` args. Please use only one.")
   } else if (!is.null(fasta_for_db) && is.null(database)) {
+    print("Build the database from fasta_for_db")
     system(paste(blastpath,
       "makeblastdb -dbtype nucl -in ", fasta_for_db, " -out dbase",
       sep = ""
     ))
-
+    print("Blast refseq from physeq object against the database")
     system(
       paste(
         blastpath,
@@ -686,23 +687,6 @@ blast_pq <- function(physeq,
         sep = ""
       )
     )
-  } else if (is.null(fasta_for_db) && !is.null(database)) {
-    system(
-      paste(
-        blastpath,
-        "blastn -query ",
-        "physeq_refseq.fasta",
-        " -db ", database,
-        " -out blast_result.txt",
-        " -outfmt \"6 qseqid qlen sseqid slen",
-        " length pident evalue bitscore qcovs\"",
-        sep = ""
-      )
-    )
-  }
-
-
-  if (!is.null(fasta_for_db) && is.null(database)) {
     if (file.info("blast_result.txt")$size > 0) {
       blast_tab <- utils::read.table(
         "blast_result.txt",
@@ -718,6 +702,20 @@ blast_pq <- function(physeq,
       file.remove(list.files(pattern = "dbase"))
       stop("None query sequences matched your phyloseq references sequences.")
     }
+  } else if (is.null(fasta_for_db) && !is.null(database)) {
+    print("Blast refseq from physeq object against the database")
+    system(
+      paste(
+        blastpath,
+        "blastn -query ",
+        "physeq_refseq.fasta",
+        " -db ", database,
+        " -out blast_result.txt",
+        " -outfmt \"6 qseqid qlen sseqid slen",
+        " length pident evalue bitscore qcovs\"",
+        sep = ""
+      )
+    )
   }
 
   names(blast_tab) <- c(
