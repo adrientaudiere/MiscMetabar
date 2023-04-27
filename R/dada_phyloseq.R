@@ -649,7 +649,7 @@ blast_to_phyloseq <- function(physeq,
 #' @return A new \code{\link{phyloseq-class}} object.
 
 
-filter_asv_blast_id <- function(physeq,
+filter_asv_blast <- function(physeq,
                                 clean_pq = TRUE,
                                 database = NULL,
                                 blastpath = NULL,
