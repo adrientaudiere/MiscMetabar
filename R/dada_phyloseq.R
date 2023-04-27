@@ -648,14 +648,15 @@ blast_to_phyloseq <- function(physeq,
 #' @export 
 #' @return A new \code{\link{phyloseq-class}} object.
 
-filter_asv_blast <- function(physeq,
-                             clean_pq = TRUE,
-                             database = NULL,
-                             blastpath = NULL,
-                             id_cut = 80,
-                             bit_score_cut = 50,
-                             min_cover_cut = 50,
-                             add_info_to_taxtable = TRUE) {
+
+filter_asv_blast_id <- function(physeq,
+                                clean_pq = TRUE,
+                                database = NULL,
+                                blastpath = NULL,
+                                id_cut = 80,
+                                bit_score_cut = 50,
+                                min_cover_cut = 50,
+                                add_info_to_taxtable = TRUE) {
   blast_tab <- blast_pq(
     physeq = physeq,
     database = database,
@@ -667,16 +668,21 @@ filter_asv_blast <- function(physeq,
     list_no_output_query = FALSE
   )
 
-  new_physeq <- subset_taxa(physeq, blast_tab)
-  if (clean_pq) {
+    cond <- blast_tab[, "Query cover"] > min_cover_cut &
+        blast_tab[, "bit score"] > bit_score_cut &
+        blast_tab[, "% id. match"] > id_cut
+
+    cond <- cond[match(taxa_names(physeq), blast_tab[,"Query name"])]
+    
+    new_physeq <- subset_taxa(physeq, cond)
+  
+  if(clean_pq){
     new_physeq <- clean_pq(new_physeq)
   }
-
-  if (add_info_to_taxtable) {
-    new_physeq@tax_datatable <- tax_table(as.matrix(cbind(
-      new_physeq@tax_datatable,
-      blast_tab[, c("Query name", "Taxa name", "bit score", "% id. match", "Query cover")]
-    )))
+  
+  if(add_info_to_taxtable) {
+    new_physeq@tax_table <-  tax_table(as.matrix(cbind(new_physeq@tax_table,
+     blast_tab[match(taxa_names(new_physeq), blast_tab[,"Query name"]), c("Query name", "Taxa name" ,"bit score", "% id. match", "Query cover")])))
   }
 
   return(new_physeq)
