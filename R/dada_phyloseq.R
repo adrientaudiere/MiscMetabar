@@ -49,6 +49,10 @@ add_dna_to_phyloseq <- function(physeq) {
 #' @param silent (logical) If true, no message are printing.
 #' @param verbose (logical) Additional informations in the message
 #'   the verbose parameter overwrite the silent parameter.
+#' @param force_taxa_as_columns (logical) If true, if the taxa are rows
+#'   transpose the otu_table and set taxa_are_rows to false
+#' @param force_taxa_as_rows (logical) If true, if the taxa are columns
+#'   transpose the otu_table and set taxa_are_rows to true 
 #' @return A new \code{\link{phyloseq-class}} object
 #' @export
 clean_pq <- function(physeq,
@@ -56,7 +60,9 @@ clean_pq <- function(physeq,
                      remove_empty_taxa = TRUE,
                      clean_samples_names = TRUE,
                      silent = FALSE,
-                     verbose = FALSE) {
+                     verbose = FALSE,
+                     force_taxa_as_columns = FALSE,
+                     force_taxa_as_rows = FALSE) {
   verify_pq(physeq)
   if (clean_samples_names) {
     if (!is.null(physeq@refseq)) {
@@ -90,6 +96,22 @@ clean_pq <- function(physeq,
     message("At least one sample name start with a zero.
     That can be a problem for some phyloseq functions such as
     plot_bar and psmelt.")
+  }
+
+  if (force_taxa_as_columns && force_taxa_as_rows){
+    stop("You can't force taxa as column and taxa as row in the same time.")
+  }
+
+  if (force_taxa_as_columns && taxa_are_rows(physeq)){
+    otu_table(physeq) <- otu_table(t(as.matrix(unclass(physeq@otu_table))), 
+                                   taxa_are_rows = FALSE)
+    message("Taxa are now in columns.")
+  } 
+
+  if (force_taxa_as_rows && !taxa_are_rows(physeq)){
+    otu_table(physeq) <- otu_table(t(as.matrix(unclass(physeq@otu_table))), 
+                                   taxa_are_rows = TRUE)
+    message("Taxa are now in rows.")
   }
 
   new_physeq <- physeq
