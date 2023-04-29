@@ -5,6 +5,7 @@
 * Add a `blast_pq` function to blast the sequences of the `ref_seq` slot against a custom database
 * Add a `filter_asv_blast` function to filter ASV in phyloseq dataset using blast against a custom database
 * Add a `subset_taxa_pq` function to filter ASV based on a named conditional vector. Used in `filter_asv_blast`.
+* Add parameter `force_taxa_as_columns` (default FALSE) and `force_taxa_as_rows` (default FALSE) to `clean_pq`.
 
 # MiscMetabar 0.3 
 
