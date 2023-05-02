@@ -924,7 +924,7 @@ write_pq <- function(physeq,
   }
   if (!is.null(physeq@sam_data)) {
     utils::write.csv(
-      physeq@sam_data, paste(path, "/sam_data.csv", sep = ""),
+      as.matrix(physeq@sam_data), paste(path, "/sam_data.csv", sep = ""),
       ...
     )
   }
