@@ -172,7 +172,7 @@ count_seq <- function(file = NULL) {
                    intern = TRUE)
     }
   } else {
-    stop(paste0("The file extension",get_file_extension(file) ,"") 
+    stop(paste0("The file extension",get_file_extension(file) ,"") )
   }
   return(as.numeric(seq_nb))
 }

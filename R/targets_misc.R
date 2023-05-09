@@ -75,39 +75,6 @@ list_fastq_files <-
   }
 
 
-#' Count sequences 
-#'
-#' @description
-#'  `r lifecycle::badge("experimental")`
-#'   Use grep to count the number of line with only one '+' (fastq, fastq.gz) 
-#'   or lines starting with a '>' (fasta) to count sequences.
-#'
-#' @param file (required) The path to a  fasta, fastq or fastq.gz file
-#'
-#' @return the number of sequences
-#' @author Adrien Taudière
-#' @export
-#' 
-count_seq <- function(file = NULL) {
-
-  if(get_file_extension(file) %in% "fasta"){
-    seq_nb <- system(paste0("cat " , file, " | grep -ce '^>'"),
-                   intern = TRUE)
-  } else if (get_file_extension(file) %in% "fastq"){
-    if(get_file_extension(file) %in% "gz"){
-      seq_nb <- system(paste0("zcat " , file, " | grep -ce '^+$'"),
-                     intern = TRUE)
-    }
-    else {
-      seq_nb <- system(paste0("cat " , file, " | grep -ce '^+$'"),
-                   intern = TRUE)
-    }
-  } else {
-    stop(paste0("The file extension",get_file_extension(file) ,"") 
-  }
-  return(as.numeric(seq_nb))
-}
-
 
 #' Rename samples of an otu_table
 #'
