@@ -6,6 +6,7 @@
 * Add a `filter_asv_blast` function to filter ASV in phyloseq dataset using blast against a custom database
 * Add a `subset_taxa_pq` function to filter ASV based on a named conditional vector. Used in `filter_asv_blast`.
 * Add parameter `force_taxa_as_columns` (default FALSE) and `force_taxa_as_rows` (default FALSE) to `clean_pq`.
+* Add a first version of the function `count_fastq_seq`  to count sequences from fastq.gz files directly from R.
 
 # MiscMetabar 0.3 
 
