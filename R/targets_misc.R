@@ -91,7 +91,7 @@ list_fastq_files <-
 #'
 #' @export
 #' @md
-#' 
+#'
 #' @author Adrien Taudière
 #'
 #' @examples

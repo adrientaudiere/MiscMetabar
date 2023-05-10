@@ -129,7 +129,7 @@ simplify_taxo <- function(physeq) {
 
 ################################################################################
 #' Get the extension of a file
-#' 
+#'
 #' @param file (required): path to a file
 #' @description
 #' `r lifecycle::badge("maturing")`
@@ -138,17 +138,44 @@ simplify_taxo <- function(physeq) {
 #'
 #' @return A  \code{\link{phyloseq-class}} object with simplified taxonomy
 #' @export
-get_file_extension <- function(file){ 
+get_file_extension <- function(file) {
   file_ext <- strsplit(basename(file), ".", fixed = TRUE)[[1]][-1]
   return(file_ext)
 }
 
+################################################################################
+#' Convert a value (or a fraction x/y) in percentage
+#'
+#' @param x (required): value
+#' @param y: if y is set, compute the division of x by y
+#' @param accuracy: number of digits (number of digits after zero)
+#' @param add_symbol: if set to TRUE add the % symbol to the value
+#' @description
+#' `r lifecycle::badge("maturing")`
+#'
+#' @author Adrien Taudière
+#'
+#' @return The percentage value (number or character if add_symbol
+#'   is set to TRUE)
+#' @export
+perc <- function(x, y = NULL, accuracy = 0, add_symbol = FALSE) {
+  if (is.null(y)) {
+    res <- round(x * 100, digits = accuracy)
+  } else {
+    res <- round(x / y * 100, digits = accuracy)
+  }
 
-#' Count sequences 
+  if (add_symbol) {
+    res <- paste0(res, "%")
+  }
+  return(res)
+}
+
+#' Count sequences in fasta or fastq file
 #'
 #' @description
 #'  `r lifecycle::badge("experimental")`
-#'   Use grep to count the number of line with only one '+' (fastq, fastq.gz) 
+#'   Use grep to count the number of line with only one '+' (fastq, fastq.gz)
 #'   or lines starting with a '>' (fasta) to count sequences.
 #'
 #' @param file (required) The path to a  fasta, fastq or fastq.gz file
@@ -156,23 +183,24 @@ get_file_extension <- function(file){
 #' @return the number of sequences
 #' @author Adrien Taudière
 #' @export
-#' 
+#'
 count_seq <- function(file = NULL) {
-
-  if(get_file_extension(file) %in% "fasta"){
-    seq_nb <- system(paste0("cat " , file, " | grep -ce '^>'"),
-                   intern = TRUE)
-  } else if (get_file_extension(file) %in% "fastq"){
-    if(get_file_extension(file) %in% "gz"){
-      seq_nb <- system(paste0("zcat " , file, " | grep -ce '^+$'"),
-                     intern = TRUE)
-    }
-    else {
-      seq_nb <- system(paste0("cat " , file, " | grep -ce '^+$'"),
-                   intern = TRUE)
+  if (get_file_extension(file) %in% "fasta") {
+    seq_nb <- system(paste0("cat ", file, " | grep -ce '^>'"),
+      intern = TRUE
+    )
+  } else if (get_file_extension(file) %in% "fastq") {
+    if (get_file_extension(file) %in% "gz") {
+      seq_nb <- system(paste0("zcat ", file, " | grep -ce '^+$'"),
+        intern = TRUE
+      )
+    } else {
+      seq_nb <- system(paste0("cat ", file, " | grep -ce '^+$'"),
+        intern = TRUE
+      )
     }
   } else {
-    stop(paste0("The file extension",get_file_extension(file) ,"") )
+    stop(paste0("The file extension", get_file_extension(file), ""))
   }
   return(as.numeric(seq_nb))
 }

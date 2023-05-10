@@ -52,7 +52,7 @@ add_dna_to_phyloseq <- function(physeq) {
 #' @param force_taxa_as_columns (logical) If true, if the taxa are rows
 #'   transpose the otu_table and set taxa_are_rows to false
 #' @param force_taxa_as_rows (logical) If true, if the taxa are columns
-#'   transpose the otu_table and set taxa_are_rows to true 
+#'   transpose the otu_table and set taxa_are_rows to true
 #' @return A new \code{\link{phyloseq-class}} object
 #' @export
 clean_pq <- function(physeq,
@@ -98,19 +98,21 @@ clean_pq <- function(physeq,
     plot_bar and psmelt.")
   }
 
-  if (force_taxa_as_columns && force_taxa_as_rows){
+  if (force_taxa_as_columns && force_taxa_as_rows) {
     stop("You can't force taxa as column and taxa as row in the same time.")
   }
 
-  if (force_taxa_as_columns && taxa_are_rows(physeq)){
-    otu_table(physeq) <- otu_table(t(as.matrix(unclass(physeq@otu_table))), 
-                                   taxa_are_rows = FALSE)
+  if (force_taxa_as_columns && taxa_are_rows(physeq)) {
+    otu_table(physeq) <- otu_table(t(as.matrix(unclass(physeq@otu_table))),
+      taxa_are_rows = FALSE
+    )
     message("Taxa are now in columns.")
-  } 
+  }
 
-  if (force_taxa_as_rows && !taxa_are_rows(physeq)){
-    otu_table(physeq) <- otu_table(t(as.matrix(unclass(physeq@otu_table))), 
-                                   taxa_are_rows = TRUE)
+  if (force_taxa_as_rows && !taxa_are_rows(physeq)) {
+    otu_table(physeq) <- otu_table(t(as.matrix(unclass(physeq@otu_table))),
+      taxa_are_rows = TRUE
+    )
     message("Taxa are now in rows.")
   }
 
@@ -669,7 +671,12 @@ blast_to_phyloseq <- function(physeq,
 #' @param score_filter (logical) does results are filter by score? If
 #'   FALSE, `id_cut`,`bit_score_cut` and `min_cover_cut` are ignored
 #'
-#' @seealso  [MiscMetabar::blast_to_phyloseq()] to use `refseq` slot as a database
+#' @param nproc (default: 1)
+#'   Set to number of cpus/processors to use for blast (args -num_threads
+#'   for blastn command)
+#'
+#' @seealso  [MiscMetabar::blast_to_phyloseq()] to use `refseq`
+#'   slot as a database
 #' @return  a blast table
 #' @export
 #'
@@ -682,15 +689,17 @@ blast_pq <- function(physeq,
                      min_cover_cut = 50,
                      unique_per_seq = FALSE,
                      score_filter = TRUE,
-                     list_no_output_query = FALSE) {
+                     nproc = 1) {
   verify_pq(physeq)
   dna <- Biostrings::DNAStringSet(physeq@refseq)
   Biostrings::writeXStringSet(dna, "physeq_refseq.fasta")
 
   if (is.null(fasta_for_db) && is.null(database)) {
-    stop("The function required a value for the parameters `fasta_for_db` or `database` to run.")
+    stop("The function required a value for the parameters
+         `fasta_for_db` or `database` to run.")
   } else if (!is.null(fasta_for_db) && !is.null(database)) {
-    stop("You assign value for both `fasta_for_db` and `database` args. Please use only one.")
+    stop("You assign value for both `fasta_for_db` and
+         `database` args. Please use only one.")
   } else if (!is.null(fasta_for_db) && is.null(database)) {
     message("Build the database from fasta_for_db")
     system(paste(blastpath,
@@ -705,6 +714,7 @@ blast_pq <- function(physeq,
         "physeq_refseq.fasta",
         " -db dbase",
         " -out blast_result.txt",
+        " -num_threads", nproc,
         " -outfmt \"6 qseqid qlen sseqid slen",
         " length pident evalue bitscore qcovs\"",
         sep = ""
@@ -734,6 +744,7 @@ blast_pq <- function(physeq,
         "physeq_refseq.fasta",
         " -db ", database,
         " -out blast_result.txt",
+        " -num_threads", nproc,
         " -outfmt \"6 qseqid qlen sseqid slen",
         " length pident evalue bitscore qcovs\"",
         sep = ""
@@ -753,7 +764,9 @@ blast_pq <- function(physeq,
     "Query cover"
   )
 
-  blast_tab <- blast_tab[order(blast_tab[, "% id. match"], decreasing = FALSE), ]
+  blast_tab <- blast_tab[order(blast_tab[, "% id. match"],
+    decreasing = FALSE
+  ), ]
 
   if (unique_per_seq) {
     blast_tab <- blast_tab[which(!duplicated(blast_tab[, 1])), ]
@@ -788,7 +801,9 @@ blast_pq <- function(physeq,
 #' @param min_cover_cut (default: 50) cut of in query cover (%) to keep result
 #' @param add_info_to_taxtable: add some info from blast query to taxtable of the
 #'   new physeq object
-#'
+#' @param nproc (default: 1)
+#'   Set to number of cpus/processors to use for blast (args -num_threads
+#'   for blastn command)
 #' @export
 #' @return A new \code{\link{phyloseq-class}} object.
 
@@ -801,7 +816,8 @@ filter_asv_blast <- function(physeq,
                              id_cut = 80,
                              bit_score_cut = 50,
                              min_cover_cut = 50,
-                             add_info_to_taxtable = TRUE) {
+                             add_info_to_taxtable = TRUE,
+                             nproc = 1) {
   blast_tab <- blast_pq(
     physeq = physeq,
     fasta_for_db = fasta_for_db,
@@ -811,7 +827,8 @@ filter_asv_blast <- function(physeq,
     min_cover_cut = min_cover_cut,
     unique_per_seq = TRUE,
     score_filter = TRUE,
-    list_no_output_query = FALSE
+    list_no_output_query = FALSE,
+    nproc = nproc
   )
 
   condition <- blast_tab[, "Query cover"] > min_cover_cut & blast_tab[, "bit score"] > bit_score_cut & blast_tab[, "% id. match"] > id_cut
@@ -1229,14 +1246,14 @@ subset_taxa_pq <- function(physeq, condition, verbose = TRUE, clean_pq = TRUE) {
   oldMA <- as(otu_table(new_physeq), "matrix")
   newMA <- oldMA[cond, ]
 
-  if(!is.matrix(newMA)){
+  if (!is.matrix(newMA)) {
     newMA <- as.matrix(newMA)
     new_otu_table <- otu_table(newMA, taxa_are_rows = TRUE)
     sample_names(new_otu_table) <- sample_names(new_physeq)
   } else {
     new_otu_table <- otu_table(newMA, taxa_are_rows = TRUE)
   }
-  
+
   otu_table(new_physeq) <- new_otu_table
 
   if (clean_pq) {
