@@ -827,7 +827,6 @@ filter_asv_blast <- function(physeq,
     min_cover_cut = min_cover_cut,
     unique_per_seq = TRUE,
     score_filter = TRUE,
-    list_no_output_query = FALSE,
     nproc = nproc
   )
 
