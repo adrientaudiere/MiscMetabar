@@ -7,6 +7,7 @@
 * Add a `subset_taxa_pq` function to filter ASV based on a named conditional vector. Used in `filter_asv_blast`.
 * Add parameter `force_taxa_as_columns` (default FALSE) and `force_taxa_as_rows` (default FALSE) to `clean_pq`.
 * Add a first version of the function `count_fastq_seq`  to count sequences from fastq.gz files directly from R.
+* Add taxonomic info to `track_wkflow` function (parameter taxonomy_rank)
 
 # MiscMetabar 0.3 
 
