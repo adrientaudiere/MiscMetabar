@@ -173,12 +173,19 @@ clean_pq <- function(physeq,
 #' @param clean_pq (logical)
 #'   If set to TRUE, empty samples and empty ASV are discarded
 #'   before clustering.
+#' @param taxonomy_rank A vector of int. Define the column number of
+#'   taxonomic rank `in physeq@tax_table` to compute the number of unique value.
+#'   Default is NULL and do not compute values for any taxonomic rank
 #'
 #' @return The number of sequences, clusters (e.g. OTUs, ASVs) and samples for
 #'   each object.
 #' @export
 
-track_wkflow <- function(list_of_objects, obj_names = NULL, clean_pq = FALSE) {
+track_wkflow <- function(
+    list_of_objects,
+    obj_names = NULL,
+    clean_pq = FALSE,
+    taxonomy_rank = NULL) {
   message("Compute the number of sequences")
   if (!is.null(obj_names)) {
     names(list_of_objects) <- obj_names
@@ -272,24 +279,56 @@ track_wkflow <- function(list_of_objects, obj_names = NULL, clean_pq = FALSE) {
       }
     })
 
+  if (!is.null(taxonomy_rank)) {
+    message("Compute the number of values in taxonomic rank")
+    track_nb_tax_value_per_obj <-
+      pbapply::pblapply(list_of_objects, function(object) {
+        message(paste("Start object of class:", class(object), sep = " "))
+        if (inherits(object, "phyloseq")) {
+          if (taxa_are_rows(object)) {
+            apply(object@tax_table[taxonomy_rank, ], 1, function(x) {
+              length(unique(na.omit(x)))
+            })
+          } else {
+            apply(object@tax_table[, taxonomy_rank], 2, function(x) {
+              length(unique(na.omit(x)))
+            })
+          }
+        } else {
+          rep(NA, length(taxonmy_rank))
+        }
+      })
 
-  track <- matrix(nrow = length(list_of_objects), ncol = 3)
-  colnames(track) <- c(
+    names_taxonomic_rank <-
+      pbapply::pblapply(list_of_objects, function(object) {
+        message(paste("Start object of class:", class(object), sep = " "))
+        if (inherits(object, "phyloseq")) {
+          if (taxa_are_rows(object)) {
+            names_taxonomic_rank <- rownames(object@tax_table)[taxonomy_rank]
+          } else {
+            names_taxonomic_rank <- colnames(object@tax_table)[taxonomy_rank]
+          }
+        }
+      })
+  }
+
+  track <- plyr::rbind.fill.matrix(matrix(ncol = length(list_of_objects), unlist(track_nb_seq_per_obj)),
+     matrix(ncol = length(list_of_objects), unlist(track_nb_cluster_per_obj)),
+     matrix(ncol = length(list_of_objects), unlist(track_nb_sam_per_obj)), 
+     matrix(ncol = length(list_of_objects), unlist(track_nb_tax_value_per_obj)))
+
+  rownames(track) <- c(
     "nb_sequences",
     "nb_clusters",
-    "nb_samples"
+    "nb_samples",
+    names_taxonomic_rank[[1]]
   )
-  track <- as.data.frame(track)
+  track <- as.data.frame(t(track))
   if (!is.null(obj_names)) {
     rownames(track) <- obj_names
   } else {
     rownames(track) <- names(list_of_objects)
   }
-
-  track$nb_sequences <- unlist(track_nb_seq_per_obj)
-  track$nb_clusters <- unlist(track_nb_cluster_per_obj)
-  track$nb_samples <- unlist(track_nb_sam_per_obj)
-
 
   return(track)
 }
@@ -302,7 +341,7 @@ track_wkflow <- function(list_of_objects, obj_names = NULL, clean_pq = FALSE) {
 #' `r lifecycle::badge("maturing")`
 #'
 #' @inheritParams clean_pq a \code{\link{phyloseq-class}} object.
-#' @param seq_names : You may directly use a character vector of DNA sequences
+#' @param seq_names You may directly use a character vector of DNA sequences
 #'   in place of physeq args. When physeq is set, dna sequences take the value of
 #'   `physeq@refseq`
 #' @param nproc (default: 1)
@@ -313,7 +352,7 @@ track_wkflow <- function(list_of_objects, obj_names = NULL, clean_pq = FALSE) {
 #'   - `vsearch` use the vsearch software (https://github.com/torognes/vsearch/)
 #'     with arguments `-cluster_fast` and `-strand both`
 #' @param vsearchpath path to vsearch
-#' @param id (default: 0.97): level of identity to cluster
+#' @param id (default: 0.97) level of identity to cluster
 #' @param tax_adjust See the man page
 #'   of [speedyseq::merge_taxa_vec()] for more details.
 #' @param ... Others arguments path to [DECIPHER::Clusterize()]
@@ -639,7 +678,7 @@ blast_to_phyloseq <- function(physeq,
     if (length(no_output_query) > 0) {
       mat_no_output_query <- matrix(NA,
         ncol = ncol(blast_tab),
-        nrow = length(no_output_query)
+        ncol = length(no_output_query)
       )
       mat_no_output_query[, 1] <- no_output_query
       colnames(mat_no_output_query) <- colnames(blast_tab)
@@ -661,8 +700,8 @@ blast_to_phyloseq <- function(physeq,
 #' `r lifecycle::badge("experimental")`
 #'
 #' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
-#' @param fasta_for_db : path to a fasta file to make the blast database
-#' @param database : path to a blast database
+#' @param fasta_for_db path to a fasta file to make the blast database
+#' @param database path to a blast database
 #' @param id_cut (default: 90) cut of in identity percent to keep result
 #' @param bit_score_cut (default: 50) cut of in bit score to keep result
 #' @param min_cover_cut (default: 50) cut of in query cover (%) to keep result
@@ -790,8 +829,8 @@ blast_pq <- function(physeq,
 #' `r lifecycle::badge("experimental")`
 #'
 #' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
-#' @param fasta_for_db : path to a fasta file to make the blast database
-#' @param database : path to a blast database
+#' @param fasta_for_db path to a fasta file to make the blast database
+#' @param database path to a blast database
 #' @param clean_pq (logical)
 #'   If set to TRUE, empty samples and empty ASV are discarded
 #'   after filtering.

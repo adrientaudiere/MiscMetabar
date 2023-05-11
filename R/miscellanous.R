@@ -147,7 +147,7 @@ get_file_extension <- function(file) {
 #' Convert a value (or a fraction x/y) in percentage
 #'
 #' @param x (required): value
-#' @param y: if y is set, compute the division of x by y
+#' @param y if y is set, compute the division of x by y
 #' @param accuracy: number of digits (number of digits after zero)
 #' @param add_symbol: if set to TRUE add the % symbol to the value
 #' @description
