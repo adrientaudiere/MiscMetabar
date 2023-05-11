@@ -1,13 +1,13 @@
 # MiscMetabar 0.31 (in development)
 
-* Argument `split_by` to make multiple plot given a variable in `sam_data` slot(function `ggvenn_pq`)  
-* Argument `seq_names` in `asv2otu` function allow to clusterize sequences from a character vector of DNA.
-* Add a `blast_pq` function to blast the sequences of the `ref_seq` slot against a custom database
-* Add a `filter_asv_blast` function to filter ASV in phyloseq dataset using blast against a custom database
-* Add a `subset_taxa_pq` function to filter ASV based on a named conditional vector. Used in `filter_asv_blast`.
-* Add parameter `force_taxa_as_columns` (default FALSE) and `force_taxa_as_rows` (default FALSE) to `clean_pq`.
-* Add a first version of the function `count_fastq_seq`  to count sequences from fastq.gz files directly from R.
-* Add taxonomic info to `track_wkflow` function (parameter taxonomy_rank)
+* Argument `split_by` to make multiple plot given a variable in `sam_data` slot (function [ggvenn_pq()])  
+* Argument `seq_names` in [asv2otu()] function allow to clusterize sequences from a character vector of DNA.
+* Add a [blast_pq()] function to blast the sequences of the `@ref_seq` slot against a custom database
+* Add a [filter_asv_blast()] function to filter ASV in phyloseq dataset using blast against a custom database
+* Add a [subset_taxa_pq()] function to filter ASV based on a named conditional vector. Used in [filter_asv_blast()].
+* Add parameter `force_taxa_as_columns` (default FALSE) and `force_taxa_as_rows` (default FALSE) to [clean_pq()].
+* Add a first version of the function [count_fastq_seq()]  to count sequences from fastq.gz files directly from R.
+* Add taxonomic info to [track_wkflow()] function (parameter `taxonomy_rank`)
 
 # MiscMetabar 0.3 
 

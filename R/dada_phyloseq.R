@@ -176,6 +176,7 @@ clean_pq <- function(physeq,
 #' @param taxonomy_rank A vector of int. Define the column number of
 #'   taxonomic rank `in physeq@tax_table` to compute the number of unique value.
 #'   Default is NULL and do not compute values for any taxonomic rank
+#' @param ... Other arguments passed to [clean_pq()] function.
 #'
 #' @return The number of sequences, clusters (e.g. OTUs, ASVs) and samples for
 #'   each object.
@@ -194,7 +195,7 @@ track_wkflow <- function(
   if (clean_pq) {
     for (i in seq_along(list_of_objects)) {
       if (inherits(list_of_objects[[i]], "phyloseq")) {
-        list_of_objects[[i]] <- clean_pq(list_of_objects[[i]])
+        list_of_objects[[i]] <- clean_pq(list_of_objects[[i]], ...)
       }
     }
   }
