@@ -3,7 +3,7 @@
 #' @description
 #' `r lifecycle::badge("maturing")`
 #' @aliases hill_tuckey_pq
-#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq
 #' @param modality (required) the variable to test
 #' @return A ggplot2 object
 #'

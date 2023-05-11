@@ -7,6 +7,10 @@ using ASV_1, ASV_2, …}
 \usage{
 add_dna_to_phyloseq(physeq)
 }
+\arguments{
+\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+using the \code{phyloseq} package.}
+}
 \value{
 A new \code{\link{phyloseq-class}} object with \code{refseq} slot and new
 taxa names

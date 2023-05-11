@@ -32,3 +32,6 @@ a list of one (single end) or two (paired end) list of files
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
+\author{
+Adrien Taudière
+}

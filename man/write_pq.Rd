@@ -14,6 +14,9 @@ write_pq(
 )
 }
 \arguments{
+\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+using the \code{phyloseq} package.}
+
 \item{path}{a path to the folder to save the phyloseq object}
 
 \item{rdata}{(logical) does the phyloseq object is also saved in Rdata format?}

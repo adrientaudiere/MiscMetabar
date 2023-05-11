@@ -83,7 +83,7 @@ list_fastq_files <-
 #'
 #' @param otu_tab (required) The matrix or otu_table
 #' @param names_of_samples (required) The
-#' @param taxa_are_rows (default : FALSE) Does the taxa are rows or
+#' @param taxa_are_rows (default: FALSE) Does the taxa are rows or
 #'   columns.
 #'
 #' @return the matrix with new colnames

@@ -5,7 +5,12 @@
 \title{Track the number of reads (= sequences), samples and cluster (e.g. ASV)
 from various objects including dada-class and derep-class.}
 \usage{
-track_wkflow(list_of_objects, obj_names = NULL, clean_pq = FALSE)
+track_wkflow(
+  list_of_objects,
+  obj_names = NULL,
+  clean_pq = FALSE,
+  taxonomy_rank = NULL
+)
 }
 \arguments{
 \item{list_of_objects}{(required) a list of objects}
@@ -15,6 +20,12 @@ track_wkflow(list_of_objects, obj_names = NULL, clean_pq = FALSE)
 \item{clean_pq}{(logical)
 If set to TRUE, empty samples and empty ASV are discarded
 before clustering.}
+
+\item{taxonomy_rank}{A vector of int. Define the column number of
+taxonomic rank \verb{in physeq@tax_table} to compute the number of unique value.
+Default is NULL and do not compute values for any taxonomic rank}
+
+\item{...}{Other arguments passed to \code{\link[=clean_pq]{clean_pq()}} function.}
 }
 \value{
 The number of sequences, clusters (e.g. OTUs, ASVs) and samples for

@@ -12,6 +12,9 @@ summary_plot_pq(
 )
 }
 \arguments{
+\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+using the \code{phyloseq} package.}
+
 \item{add_info}{Does the bottom down corner contain
 extra informations?}
 

@@ -13,6 +13,9 @@ using the \code{phyloseq} package.}
 \item{condition}{A boolean vector to subset samples. Length must fit
 the number of samples}
 }
+\value{
+a new phyloseq object
+}
 \description{
 Subset samples using a conditional boolean vector.
 }

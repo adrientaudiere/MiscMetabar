@@ -2,7 +2,7 @@
 #' Make a datatable with the taxonomy of a \code{\link{phyloseq-class}} object
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @inheritParams clean_pq (required) A \code{\link{phyloseq-class}} object
+#' @inheritParams clean_pq
 #' @param abundance (default: TRUE) Does the number of sequences is print
 #' @param taxonomic_level (default: NULL) a vector of selected taxonomic
 #' level using their column numbers (e.g. taxonomic_level = c(1:7))
@@ -91,9 +91,9 @@ tax_datatable <- function(physeq,
 #' Compare samples in pairs using diversity and number of ASV including
 #' shared ASV.
 #' @description
-#' `r lifecycle::badge("experimental")`
-#' @inheritParams clean_pq (required) A \code{\link{phyloseq-class}} object.
-#'   For the moment refseq slot need to be not Null.
+#' `r lifecycle::badge("experimental")` #'   For the moment refseq slot need to be not Null.
+#' 
+#' @inheritParams clean_pq
 #' @param modality the name of the column in the `sam_data`
 #'   slot of the physeq object to split samples by pairs
 #' @param bifactor (required) a factor (present in the `sam_data` slot of

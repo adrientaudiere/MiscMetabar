@@ -11,7 +11,7 @@
 #'    (i) a step in the sampling,
 #'    (ii) a step in the extraction,
 #'    (iii) a step in the sequencing.
-#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq
 #' @param samples_names (required) a vector of names for samples with
 #'   positives controls of the same samples having the same name
 #' @param method (default: "bray") a method to calculate
@@ -74,7 +74,7 @@ les")
 #' `r lifecycle::badge("experimental")`
 #'
 #' @aliases subset_taxa_tax_control
-#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq
 #' @param taxa_distri (required) a vector of length equal to the number of
 #'   samples with the number of sequences per samples for the taxa control
 #' @param method (default: "mean") a method to calculate the cut-off value.

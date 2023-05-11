@@ -16,6 +16,9 @@ ggvenn_pq(
 )
 }
 \arguments{
+\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+using the \code{phyloseq} package.}
+
 \item{fact}{(required): Name of the factor to cluster samples by modalities.
 Need to be in \code{physeq@sam_data}.}
 
@@ -50,6 +53,18 @@ of plots.
 
 Note that you can use ggplot2 function to customize the plot
 for ex. \code{+ scale_fill_distiller(palette = "BuPu", direction = 1)}
+}
+\examples{
+  data(data_fungi)
+ggvenn_pq(data_fungi, fact = "Height")
+ggvenn_pq(data_fungi, fact = "Height") + ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
+pl <- ggvenn_pq(data_fungi, fact = "Height", split_by = "Time")
+for (i in 1:length(pl)) {
+  p <- pl[[i]] +
+    scale_fill_distiller(palette = "BuPu", direction = 1) +
+    theme(plot.title = element_text(hjust = 0.5, size = 22))
+  print(p)
+}
 }
 \author{
 Adrien Taudière

@@ -3,7 +3,7 @@
 #'
 #' `r lifecycle::badge("maturing")`
 #'
-#' @inheritParams clean_pq (required): a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq
 #' @param contrast (required):This argument specifies what comparison
 #'   to extract from the object to build a results table.
 #'   See \code{\link[DESeq2]{results}} man page for more details.
@@ -352,12 +352,8 @@ plot_deseq2_pq <-
 ################################################################################
 #' Convert phyloseq OTU count data into DGEList for edgeR package
 #'
-#' Further details.
 #'
-#' @inheritParams clean_pq (required)  A \code{\link{phyloseq-class}} or
-#'  an \code{\link{otu_table-class}} object.
-#'  The latter is only appropriate if \code{group} argument is also a
-#'  vector or factor with length equal to \code{nsamples(physeq)}.
+#' @inheritParams clean_pq
 #'
 #' @param group (required) A character vector or factor giving the experimental
 #'  group/condition for each sample/library. Alternatively, you may provide

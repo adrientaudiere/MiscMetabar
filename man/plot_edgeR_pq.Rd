@@ -15,6 +15,9 @@ plot_edgeR_pq(
 )
 }
 \arguments{
+\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+using the \code{phyloseq} package.}
+
 \item{contrast}{(required):This argument specifies what comparison
 to extract from the object to build a results table.
 See \code{\link[DESeq2]{results}} man page for more details.}

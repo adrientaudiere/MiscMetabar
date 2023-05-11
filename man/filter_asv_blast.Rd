@@ -13,13 +13,17 @@ filter_asv_blast(
   id_cut = 80,
   bit_score_cut = 50,
   min_cover_cut = 50,
-  add_info_to_taxtable = TRUE
+  add_info_to_taxtable = TRUE,
+  nproc = 1
 )
 }
 \arguments{
-\item{fasta_for_db}{: path to a fasta file to make the blast database}
+\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+using the \code{phyloseq} package.}
 
-\item{database}{: path to a blast database}
+\item{fasta_for_db}{path to a fasta file to make the blast database}
+
+\item{database}{path to a blast database}
 
 \item{clean_pq}{(logical)
 If set to TRUE, empty samples and empty ASV are discarded
@@ -32,6 +36,10 @@ after filtering.}
 \item{bit_score_cut}{(default: 50) cut of in bit score to keep result}
 
 \item{min_cover_cut}{(default: 50) cut of in query cover (\%) to keep result}
+
+\item{nproc}{(default: 1)
+Set to number of cpus/processors to use for blast (args -num_threads
+for blastn command)}
 
 \item{add_info_to_taxtable:}{add some info from blast query to taxtable of the
 new physeq object}

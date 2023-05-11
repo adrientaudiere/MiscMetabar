@@ -7,13 +7,13 @@
 multiplot(..., plotlist = NULL, cols = 1, layout = NULL)
 }
 \arguments{
-\item{...}{: list of ggplot objects}
+\item{...}{list of ggplot objects}
 
-\item{plotlist}{: list of ggplot objects}
+\item{plotlist}{list of ggplot objects}
 
-\item{cols}{: number of columns}
+\item{cols}{number of columns}
 
-\item{layout}{: A matrix specifying the layout.
+\item{layout}{A matrix specifying the layout.
 If present, 'cols' is ignored.}
 }
 \description{

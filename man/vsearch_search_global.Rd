@@ -14,6 +14,9 @@ vsearch_search_global(
 )
 }
 \arguments{
+\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+using the \code{phyloseq} package.}
+
 \item{seq2search}{(required) path to fasta file}
 
 \item{vsearchpath}{path to vsearch}

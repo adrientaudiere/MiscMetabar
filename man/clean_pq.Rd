@@ -10,7 +10,9 @@ clean_pq(
   remove_empty_taxa = TRUE,
   clean_samples_names = TRUE,
   silent = FALSE,
-  verbose = FALSE
+  verbose = FALSE,
+  force_taxa_as_columns = FALSE,
+  force_taxa_as_rows = FALSE
 )
 }
 \arguments{
@@ -29,6 +31,12 @@ without sequences (this is done before removing empty samples)}
 
 \item{verbose}{(logical) Additional informations in the message
 the verbose parameter overwrite the silent parameter.}
+
+\item{force_taxa_as_columns}{(logical) If true, if the taxa are rows
+transpose the otu_table and set taxa_are_rows to false}
+
+\item{force_taxa_as_rows}{(logical) If true, if the taxa are columns
+transpose the otu_table and set taxa_are_rows to true}
 }
 \value{
 A new \code{\link{phyloseq-class}} object

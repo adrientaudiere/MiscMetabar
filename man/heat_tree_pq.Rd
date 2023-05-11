@@ -7,11 +7,14 @@
 heat_tree_pq(physeq, taxonomic_level = NULL, ...)
 }
 \arguments{
+\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+using the \code{phyloseq} package.}
+
 \item{taxonomic_level}{(default: NULL): a vector of selected
 taxonomic level using
 their column numbers (e.g. taxonomic_level = c(1:7))}
 
-\item{...}{: Arguments parsed to \code{\link[metacoder]{heat_tree}}}
+\item{...}{Arguments parsed to \code{\link[metacoder]{heat_tree}}}
 }
 \value{
 A plot

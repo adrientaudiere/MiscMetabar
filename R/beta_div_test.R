@@ -5,7 +5,7 @@
 #' A wrapper of [phyloseqGraphTest::graph_perm_test()] for quick plot with
 #' important statistics
 
-#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq
 #' @param fact (required) Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}. This should be a factor
 #'   with two or more levels.
@@ -75,7 +75,7 @@ graph_test_pq <- function(physeq,
 #' `r lifecycle::badge("experimental")`
 #'
 #' A wrapper for the [vegan::adonis2()] function in the case of `physeq` object.
-#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq
 #' @param formula (required) todo
 #' @param merge_sample_by a vector to determine
 #'   which samples to merge using the [speedyseq::merge_samples2()]

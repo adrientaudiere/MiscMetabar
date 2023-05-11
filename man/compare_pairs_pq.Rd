@@ -14,6 +14,9 @@ compare_pairs_pq(
 )
 }
 \arguments{
+\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+using the \code{phyloseq} package.}
+
 \item{modality}{the name of the column in the \code{sam_data}
 slot of the physeq object to split samples by pairs}
 
@@ -29,5 +32,5 @@ to count the ASV/OTU}
 A tibble
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} #'   For the moment refseq slot need to be not Null.
 }

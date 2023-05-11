@@ -24,13 +24,9 @@ with:
 ``` r
 install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar")
-#> cli    (3.6.0 -> 3.6.1) [CRAN]
-#> tibble (3.2.0 -> 3.2.1) [CRAN]
-#> igraph (1.4.1 -> 1.4.2) [CRAN]
-#> gtable (0.3.1 -> 0.3.3) [CRAN]
-#> ape    (5.7   -> 5.7-1) [CRAN]
+#> 
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/RtmpsPB9rX/remotes34ab541fd04dc/adrientaudiere-MiscMetabar-939338b/DESCRIPTION’ ... OK
+#> * checking for file ‘/tmp/Rtmp0IAOkJ/remotes5211c12f78ac8/adrientaudiere-MiscMetabar-939338b/DESCRIPTION’ ... OK
 #> * preparing ‘MiscMetabar’:
 #> * checking DESCRIPTION meta-information ... OK
 #> * checking for LF line-endings in source and make files and shell scripts
@@ -46,7 +42,7 @@ install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar", ref = "dev")
 #> 
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/RtmpsPB9rX/remotes34ab54731c036/adrientaudiere-MiscMetabar-e63a09b/DESCRIPTION’ ... OK
+#> * checking for file ‘/tmp/Rtmp0IAOkJ/remotes5211c21254462/adrientaudiere-MiscMetabar-dc2d4eb/DESCRIPTION’ ... OK
 #> * preparing ‘MiscMetabar’:
 #> * checking DESCRIPTION meta-information ... OK
 #> * checking for LF line-endings in source and make files and shell scripts

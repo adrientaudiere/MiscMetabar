@@ -7,6 +7,9 @@
 hill_tuckey_pq(physeq, modality)
 }
 \arguments{
+\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+using the \code{phyloseq} package.}
+
 \item{modality}{(required) the variable to test}
 }
 \value{

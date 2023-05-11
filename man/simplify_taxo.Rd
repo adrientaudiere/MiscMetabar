@@ -6,6 +6,10 @@
 \usage{
 simplify_taxo(physeq)
 }
+\arguments{
+\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+using the \code{phyloseq} package.}
+}
 \value{
 A  \code{\link{phyloseq-class}} object with simplified taxonomy
 }

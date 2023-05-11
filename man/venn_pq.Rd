@@ -7,6 +7,9 @@
 venn_pq(physeq, fact, min_nb_seq = 0, print_values = TRUE)
 }
 \arguments{
+\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+using the \code{phyloseq} package.}
+
 \item{fact}{(required): Name of the factor to cluster samples by modalities.
 Need to be in \code{physeq@sam_data}.}
 
@@ -15,7 +18,7 @@ samples to take into count this OTUs in this sample. For example,
 if min_nb_seq=2,each value of 2 or less in the OTU table
 will be change into 0 for the analysis}
 
-\item{print_values}{(logical) : Print (or not) the table of number of OTUs
+\item{print_values}{(logical) Print (or not) the table of number of OTUs
 for each combination.
 If print_values is TRUE the object is not a ggplot object.
 Please use print_values = FALSE if you want to add ggplot function

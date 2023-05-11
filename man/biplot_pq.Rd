@@ -24,6 +24,9 @@ biplot_pq(
 )
 }
 \arguments{
+\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+using the \code{phyloseq} package.}
+
 \item{fact, }{Name of the factor in \code{physeq@sam_data}.
 If left to NULL use the \code{left_name} and \code{right_name} parameter as modality.}
 
@@ -58,7 +61,7 @@ instead of \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}} to indicate the
 \item{plotly_version}{If TRUE, use \code{\link[plotly:ggplotly]{plotly::ggplotly()}} to return
 a interactive ggplot.}
 
-\item{...}{: other arguments for the ggplot function}
+\item{...}{other arguments for the ggplot function}
 }
 \value{
 A plot

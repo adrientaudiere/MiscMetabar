@@ -7,6 +7,9 @@
 hill_pq(physeq, variable, color_fac = NA, letters = FALSE)
 }
 \arguments{
+\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+using the \code{phyloseq} package.}
+
 \item{variable}{(required): The variable to test}
 
 \item{color_fac}{(optional): The variable to color the barplot}

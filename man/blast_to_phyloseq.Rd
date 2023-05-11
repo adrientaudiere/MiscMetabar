@@ -17,6 +17,9 @@ blast_to_phyloseq(
 )
 }
 \arguments{
+\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+using the \code{phyloseq} package.}
+
 \item{seq2search}{(required) path to a fasta file defining the sequences
 you want to blast against the ASV sequences from the physeq object.}
 

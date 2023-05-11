@@ -55,7 +55,7 @@ plot_mt <-
 #'
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq
 #' @param fact (required) Name of the factor in physeq@sam_data used to plot
 #'    different lines
 #' @param add_nb_seq (default: TRUE, logical)
@@ -293,7 +293,7 @@ accu_plot <-
 #' Plot OTU circle for \code{\link{phyloseq-class}} object
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq
 #' @param fact (required) Name of the factor to cluster samples by modalities.
 #'        Need to be in \code{physeq@sam_data}.
 #' @param taxa (default: 'Order') Name of the taxonomic rank of interest
@@ -525,7 +525,7 @@ circle_pq <-
 #' Sankey plot of \code{\link{phyloseq-class}} object
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq
 #' @param fact Name of the factor to cluster samples by modalities.
 #' Need to be in \code{physeq@sam_data}.
 #' @param taxa a vector of taxonomic rank to plot
@@ -737,14 +737,14 @@ sankey_pq <-
 #' Venn diagram of \code{\link{phyloseq-class}} object
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @inheritParams clean_pq (required): a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq
 #' @param fact (required): Name of the factor to cluster samples by modalities.
 #' Need to be in \code{physeq@sam_data}.
 #' @param min_nb_seq (default: 0)): minimum number of sequences by OTUs by
 #'  samples to take into count this OTUs in this sample. For example,
 #'  if min_nb_seq=2,each value of 2 or less in the OTU table
 #'  will be change into 0 for the analysis
-#' @param print_values (logical) : Print (or not) the table of number of OTUs
+#' @param print_values (logical) Print (or not) the table of number of OTUs
 #' for each combination.
 #' If print_values is TRUE the object is not a ggplot object.
 #' Please use print_values = FALSE if you want to add ggplot function
@@ -939,7 +939,7 @@ venn_pq <-
 #'
 #' Note that you can use ggplot2 function to customize the plot
 #' for ex. `+ scale_fill_distiller(palette = "BuPu", direction = 1)`
-#' @inheritParams clean_pq (required): a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq
 #' @param fact (required): Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}.
 #' @param merge_sample_by if not `NULL` samples of
@@ -962,8 +962,8 @@ venn_pq <-
 #'   modalities of the argument \code{factor} or if split_by is set a list
 #'   of plots.
 #'
-#' @exemples
-#' data(data_fungi)
+#' @examples 
+#'   data(data_fungi)
 #' ggvenn_pq(data_fungi, fact = "Height")
 #' ggvenn_pq(data_fungi, fact = "Height") + ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
 #' pl <- ggvenn_pq(data_fungi, fact = "Height", split_by = "Time")
@@ -1048,10 +1048,10 @@ ggvenn_pq <- function(physeq = NULL,
 # then plot 1 will go in the upper left, 2 will go in the upper right, and
 # 3 will go all the way across the bottom.
 #
-#' @param ... : list of ggplot objects
-#' @param plotlist : list of ggplot objects
-#' @param cols : number of columns
-#' @param layout : A matrix specifying the layout.
+#' @param ... list of ggplot objects
+#' @param plotlist list of ggplot objects
+#' @param cols number of columns
+#' @param layout A matrix specifying the layout.
 #'   If present, 'cols' is ignored.
 #' @export
 
@@ -1107,7 +1107,7 @@ multiplot <-
 #' Graphical representation of hill number 0, 1 and 2 across a factor
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @inheritParams clean_pq (required): A \code{\link{phyloseq-class}} object
+#' @inheritParams clean_pq
 #' @param variable (required): The variable to test
 #' @param color_fac (optional): The variable to color the barplot
 #' @param letters (optional, default=FALSE): If set to TRUE, the plot
@@ -1241,8 +1241,7 @@ hill_pq <-
 #' Summarise a \code{\link{phyloseq-class}} object using a plot.
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @inheritParams clean_pq (required): A \code{\link{phyloseq-class}} object.
-#'   refseq slot need to be not Null.
+#' @inheritParams clean_pq
 #' @param add_info Does the bottom down corner contain
 #'   extra informations?
 #' @param min_seq_samples (int): Used only when add_info is set
@@ -1409,12 +1408,11 @@ summary_plot_pq <- function(physeq,
 #' Heat tree from `metacoder` package using `tax_table` slot
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @inheritParams clean_pq (required): A \code{\link{phyloseq-class}}
-#' object
+#' @inheritParams clean_pq
 #' @param taxonomic_level (default: NULL): a vector of selected
 #' taxonomic level using
 #'   their column numbers (e.g. taxonomic_level = c(1:7))
-#' @param ... : Arguments parsed to \code{\link[metacoder]{heat_tree}}
+#' @param ... Arguments parsed to \code{\link[metacoder]{heat_tree}}
 #'
 #' @return A plot
 #' @export
@@ -1458,8 +1456,7 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #' Visualization of two samples for comparison
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' @inheritParams clean_pq (required): A \code{\link{phyloseq-class}}
-#'   object
+#' @inheritParams clean_pq
 #' @param fact, Name of the factor in `physeq@sam_data`.
 #'   If left to NULL use the `left_name` and `right_name` parameter as modality.
 #' @param merge_sample_by (default: NULL): if not `NULL` samples of
@@ -1480,7 +1477,7 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #' @param text_size default size for the number of sequences
 #' @param plotly_version If TRUE, use [plotly::ggplotly()] to return
 #'   a interactive ggplot.
-#' @param ... : other arguments for the ggplot function
+#' @param ... other arguments for the ggplot function
 #' @importFrom stats reorder
 #' @return A plot
 #' @export

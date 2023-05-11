@@ -8,8 +8,7 @@ if (getRversion() >= "2.15.1") {
 #'
 #' `r lifecycle::badge("stable")`
 #'
-#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object obtained
-#'   using the `dada2` package
+#' @inheritParams clean_pq
 #'
 #' @return A new \code{\link{phyloseq-class}} object with `refseq` slot and new
 #'   taxa names
@@ -356,7 +355,7 @@ track_wkflow <- function(
 #'
 #' `r lifecycle::badge("maturing")`
 #'
-#' @inheritParams clean_pq a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq
 #' @param seq_names You may directly use a character vector of DNA sequences
 #'   in place of physeq args. When physeq is set, dna sequences take the value of
 #'   `physeq@refseq`
@@ -507,7 +506,7 @@ asv2otu <- function(physeq = NULL,
 #'
 #' `r lifecycle::badge("maturing")`
 #'
-#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq
 #' @param seq2search (required) path to fasta file
 #' @param vsearchpath path to vsearch
 #' @param id (default: 0.8) id for the option `--usearch_global` of the vsearch software
@@ -584,7 +583,7 @@ vsearch_search_global <- function(physeq,
 #'
 #' `r lifecycle::badge("maturing")`
 #'
-#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq
 #' @param seq2search (required) path to a fasta file defining the sequences
 #'   you want to blast against the ASV sequences from the physeq object.
 #' @param blastpath path to blast program
@@ -715,7 +714,7 @@ blast_to_phyloseq <- function(physeq,
 #'
 #' `r lifecycle::badge("experimental")`
 #'
-#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq
 #' @param fasta_for_db path to a fasta file to make the blast database
 #' @param database path to a blast database
 #' @param id_cut (default: 90) cut of in identity percent to keep result
@@ -844,7 +843,7 @@ blast_pq <- function(physeq,
 #'
 #' `r lifecycle::badge("experimental")`
 #'
-#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq
 #' @param fasta_for_db path to a fasta file to make the blast database
 #' @param database path to a blast database
 #' @param clean_pq (logical)
@@ -911,7 +910,7 @@ filter_asv_blast <- function(physeq,
 #'
 #' `r lifecycle::badge("maturing")`
 #'
-#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq
 #' @param path a path to the folder to save the phyloseq object
 #' @param rdata (logical) does the phyloseq object is also saved in Rdata format?
 #' @param one_file_ASV (logical) if TRUE, combine all data in one file only
@@ -1077,7 +1076,7 @@ read_pq <- function(path = NULL, taxa_are_rows = FALSE, sam_names = NULL) {
 #'  on the method.
 
 #'
-#' @inheritParams clean_pq (required) a \code{\link{phyloseq-class}} object.
+#' @inheritParams clean_pq
 #' @param nproc (default 1)
 #'   Set to number of cpus/processors to use for the clustering
 #' @param id (default: 0.84) id for --usearch_global.
@@ -1208,7 +1207,6 @@ lulu_pq <- function(physeq,
 #' @return Nothing if the phyloseq object is valid. An error in the other case.
 #' @export
 #'
-#' @examples
 verify_pq <- function(physeq) {
   if (!methods::validObject(physeq) || !inherits(physeq, "phyloseq")) {
     stop("The physeq argument is not a valid phyloseq object.")
@@ -1234,10 +1232,9 @@ verify_pq <- function(physeq) {
 #' @param condition A boolean vector to subset samples. Length must fit
 #'   the number of samples
 #'
-#' @return
+#' @return a new phyloseq object
 #' @export
 #'
-#' @examples
 subset_samples_pq <- function(physeq, condition) {
   if (length(condition) != nsamples(physeq)) {
     stop("Length of condition is different from the number of samples.")
@@ -1274,11 +1271,10 @@ subset_samples_pq <- function(physeq, condition) {
 #' @param clean_pq (logical)
 #'   If set to TRUE, empty samples are discarded after subsetting ASV
 #' @param verbose (logical) Informations are printed
-#'
-#' @return
+
+#' @return a new phyloseq object
 #' @export
 #'
-#' @examples
 subset_taxa_pq <- function(physeq, condition, verbose = TRUE, clean_pq = TRUE) {
   if (!sum(names(condition) %in% taxa_names(physeq)) == length(condition)) {
     stop(paste(

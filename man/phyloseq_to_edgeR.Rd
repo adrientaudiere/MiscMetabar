@@ -7,6 +7,9 @@
 phyloseq_to_edgeR(physeq, group, method = "RLE", ...)
 }
 \arguments{
+\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+using the \code{phyloseq} package.}
+
 \item{group}{(required) A character vector or factor giving the experimental
 group/condition for each sample/library. Alternatively, you may provide
 the name of a sample variable. This name should be among the output of
@@ -29,5 +32,5 @@ the following options to the \code{method} argument:
 \item{...}{Additional arguments passed on to \code{\link[edgeR]{DGEList}}}
 }
 \description{
-Further details.
+Convert phyloseq OTU count data into DGEList for edgeR package
 }

@@ -18,6 +18,9 @@ the number of taxa and names must match taxa_names}
 \item{clean_pq}{(logical)
 If set to TRUE, empty samples are discarded after subsetting ASV}
 }
+\value{
+a new phyloseq object
+}
 \description{
 Subset taxa using a conditional named boolean vector.
 }

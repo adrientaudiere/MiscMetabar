@@ -15,13 +15,16 @@ blast_pq(
   min_cover_cut = 50,
   unique_per_seq = FALSE,
   score_filter = TRUE,
-  list_no_output_query = FALSE
+  nproc = 1
 )
 }
 \arguments{
-\item{fasta_for_db}{: path to a fasta file to make the blast database}
+\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+using the \code{phyloseq} package.}
 
-\item{database}{: path to a blast database}
+\item{fasta_for_db}{path to a fasta file to make the blast database}
+
+\item{database}{path to a blast database}
 
 \item{id_cut}{(default: 90) cut of in identity percent to keep result}
 
@@ -34,6 +37,10 @@ each sequence in seq2search}
 
 \item{score_filter}{(logical) does results are filter by score? If
 FALSE, \code{id_cut},\code{bit_score_cut} and \code{min_cover_cut} are ignored}
+
+\item{nproc}{(default: 1)
+Set to number of cpus/processors to use for blast (args -num_threads
+for blastn command)}
 }
 \value{
 a blast table
@@ -42,5 +49,6 @@ a blast table
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \seealso{
-\code{\link[=blast_to_phyloseq]{blast_to_phyloseq()}} to use \code{refseq} slot as a database
+\code{\link[=blast_to_phyloseq]{blast_to_phyloseq()}} to use \code{refseq}
+slot as a database
 }

@@ -11,7 +11,7 @@ rename_samples_otu_table(otu_tab, names_of_samples, taxa_are_rows = FALSE)
 
 \item{names_of_samples}{(required) The}
 
-\item{taxa_are_rows}{(default : FALSE) Does the taxa are rows or
+\item{taxa_are_rows}{(default: FALSE) Does the taxa are rows or
 columns.}
 }
 \value{
@@ -26,4 +26,7 @@ data(data_fungi)
 rename_samples_otu_table(data_fungi@otu_table, as.character(1:185),
   taxa_are_rows = T
 )
+}
+\author{
+Adrien Taudière
 }

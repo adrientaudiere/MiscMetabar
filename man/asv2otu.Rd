@@ -17,7 +17,10 @@ asv2otu(
 )
 }
 \arguments{
-\item{seq_names}{: You may directly use a character vector of DNA sequences
+\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+using the \code{phyloseq} package.}
+
+\item{seq_names}{You may directly use a character vector of DNA sequences
 in place of physeq args. When physeq is set, dna sequences take the value of
 \code{physeq@refseq}}
 
@@ -32,7 +35,7 @@ Set the clustering method.
 with arguments \code{-cluster_fast} and \verb{-strand both}
 }}
 
-\item{id}{(default: 0.97): level of identity to cluster}
+\item{id}{(default: 0.97) level of identity to cluster}
 
 \item{vsearchpath}{path to vsearch}
 
