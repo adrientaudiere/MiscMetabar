@@ -295,7 +295,7 @@ track_wkflow <- function(
             })
           }
         } else {
-          rep(NA, length(taxonmy_rank))
+          rep(NA, length(taxonomy_rank))
         }
       })
 
@@ -304,25 +304,40 @@ track_wkflow <- function(
         message(paste("Start object of class:", class(object), sep = " "))
         if (inherits(object, "phyloseq")) {
           if (taxa_are_rows(object)) {
-            names_taxonomic_rank <- rownames(object@tax_table)[taxonomy_rank]
+            rownames(object@tax_table)[taxonomy_rank]
           } else {
-            names_taxonomic_rank <- colnames(object@tax_table)[taxonomy_rank]
+            colnames(object@tax_table)[taxonomy_rank]
           }
         }
       })
+    track <- plyr::rbind.fill.matrix(
+      matrix(ncol = length(list_of_objects), unlist(track_nb_seq_per_obj)),
+      matrix(ncol = length(list_of_objects), unlist(track_nb_cluster_per_obj)),
+      matrix(ncol = length(list_of_objects), unlist(track_nb_sam_per_obj)),
+      matrix(ncol = length(list_of_objects), unlist(track_nb_tax_value_per_obj))
+    )
+
+    rownames(track) <- c(
+      "nb_sequences",
+      "nb_clusters",
+      "nb_samples",
+      names_taxonomic_rank[[1]]
+    )
+  } else {
+    track <- plyr::rbind.fill.matrix(
+      matrix(ncol = length(list_of_objects), unlist(track_nb_seq_per_obj)),
+      matrix(ncol = length(list_of_objects), unlist(track_nb_cluster_per_obj)),
+      matrix(ncol = length(list_of_objects), unlist(track_nb_sam_per_obj))
+    )
+
+    rownames(track) <- c(
+      "nb_sequences",
+      "nb_clusters",
+      "nb_samples"
+    )
   }
 
-  track <- plyr::rbind.fill.matrix(matrix(ncol = length(list_of_objects), unlist(track_nb_seq_per_obj)),
-     matrix(ncol = length(list_of_objects), unlist(track_nb_cluster_per_obj)),
-     matrix(ncol = length(list_of_objects), unlist(track_nb_sam_per_obj)), 
-     matrix(ncol = length(list_of_objects), unlist(track_nb_tax_value_per_obj)))
 
-  rownames(track) <- c(
-    "nb_sequences",
-    "nb_clusters",
-    "nb_samples",
-    names_taxonomic_rank[[1]]
-  )
   track <- as.data.frame(t(track))
   if (!is.null(obj_names)) {
     rownames(track) <- obj_names
