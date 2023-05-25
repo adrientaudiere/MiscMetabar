@@ -185,12 +185,12 @@ perc <- function(x, y = NULL, accuracy = 0, add_symbol = FALSE) {
 #' @export
 #'
 count_seq <- function(file = NULL) {
-  if (get_file_extension(file) %in% "fasta") {
+  if (sum(get_file_extension(file) %in% "fasta")>0) {
     seq_nb <- system(paste0("cat ", file, " | grep -ce '^>'"),
       intern = TRUE
     )
-  } else if (get_file_extension(file) %in% "fastq") {
-    if (get_file_extension(file) %in% "gz") {
+  } else if (sum(get_file_extension(file) %in% "fastq")>0) {
+    if (sum(get_file_extension(file) %in% "gz")>0) {
       seq_nb <- system(paste0("zcat ", file, " | grep -ce '^+$'"),
         intern = TRUE
       )
