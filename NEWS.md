@@ -1,6 +1,6 @@
 # MiscMetabar 0.32 (in development)
 
-
+* Add the possibility to select a folder in the function [count_seq()]
 
 # MiscMetabar 0.31 (in development)
 
