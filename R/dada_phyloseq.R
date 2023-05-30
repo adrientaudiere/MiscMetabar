@@ -350,6 +350,43 @@ track_wkflow <- function(
 ################################################################################
 
 ################################################################################
+#' Track the number of reads (= sequences), samples and cluster (e.g. ASV)
+#' for each samples
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' More information are available in the manual of the function [track_wkflow()]
+#'
+#' @param list_pq_obj (required): a list of object passed to [track_wkflow()]
+#' @param ... : other args passed to [track_wkflow()]
+#'
+#' @return A list of dataframe. cf [track_wkflow()] for more information
+#'
+#' @export
+#' @md
+#'
+#' @author Adrien Taudière
+#'
+#' @examples
+#' data(data_fungi)
+#' tree_A10_005 <- subset_samples(data_fungi, Tree_name == "A10-005")
+#' track_wkflow_samples(tree_A10_005)
+track_wkflow_samples <- function(list_pq_obj, ...) {
+  if(!inherits(list_pq_obj, "list")){
+    list_pq_obj <- list(list_pq_obj)
+  }
+  res <- list()
+  for (s in sample_names(list_pq_obj[[1]])) {
+    list_pq_obj_samples <- lapply(list_pq_obj, select_one_sample, sam_name = s)
+    res[[s]] <- track_wkflow(list_pq_obj_samples, ...)
+  }
+  return(res)
+}
+################################################################################
+
+
+################################################################################
 #' Recluster sequences of an object of class `physeq`
 #' (e.g. OTUs or ASV from dada)
 #'
@@ -1194,7 +1231,7 @@ lulu_pq <- function(physeq,
 }
 ################################################################################
 
-
+################################################################################
 #' Verify the validity of a phyloseq object
 #'
 #' @details
@@ -1212,8 +1249,10 @@ verify_pq <- function(physeq) {
     stop("The physeq argument is not a valid phyloseq object.")
   }
 }
+################################################################################
 
 
+################################################################################
 #' Subset samples using a conditional boolean vector.
 #'
 #' @details
@@ -1253,8 +1292,9 @@ subset_samples_pq <- function(physeq, condition) {
     }
   }
 }
+################################################################################
 
-
+################################################################################
 #' Subset taxa using a conditional named boolean vector.
 #'
 #' @details
@@ -1320,3 +1360,41 @@ subset_taxa_pq <- function(physeq, condition, verbose = TRUE, clean_pq = TRUE) {
 
   return(new_physeq)
 }
+################################################################################
+
+
+################################################################################
+#' Select one sample from a physeq object
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' Mostly for internal used, for example in function [track_wkflow_samples()].
+#'
+#' @inheritParams clean_pq
+#' @param sam_name (required) The sample name to select
+#' @param silent (logical) If true, no message are printing.
+#' @return a physeq object with one sample
+#'
+#' @export
+#' @md
+#'
+#' @author Adrien Taudière
+#'
+#' @examples
+#' data(data_fungi)
+#' A8_005 <- select_one_sample(data_fungi, "A8-005_S4_MERGED.fastq.gz")
+#' A8_005
+select_one_sample <- function(physeq, sam_name, silent = FALSE) {
+  if (sum(sample_names(physeq) %in% sam_name) == 0) {
+    stop(paste0("The sample ", sam_name, " is not present in the names of samples of your phyloseq physeq object. You may use the sample_names() function."))
+  }
+  cl_sam <- clean_pq(subset_samples_pq(physeq, sample_names(physeq) == sam_name), silent = TRUE)
+
+  if(!silent){
+    message(paste0("You select 1 of ", nsamples(physeq), " samples and conserved ", ntaxa(cl_sam), " out of ", ntaxa(physeq), " taxa represented by ", sum(cl_sam@otu_table), " sequences (out of ", sum(physeq@otu_table), " sequences [", perc(sum(cl_sam@otu_table), sum(physeq@otu_table)), "%])"))
+  }
+
+  return(cl_sam)
+}
+################################################################################

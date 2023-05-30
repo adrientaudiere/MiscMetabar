@@ -9,7 +9,7 @@ rename_samples_otu_table(otu_tab, names_of_samples, taxa_are_rows = FALSE)
 \arguments{
 \item{otu_tab}{(required) The matrix or otu_table}
 
-\item{names_of_samples}{(required) The}
+\item{names_of_samples}{(required) The new names of the samples}
 
 \item{taxa_are_rows}{(default: FALSE) Does the taxa are rows or
 columns.}

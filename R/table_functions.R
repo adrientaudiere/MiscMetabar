@@ -92,7 +92,7 @@ tax_datatable <- function(physeq,
 #' shared ASV.
 #' @description
 #' `r lifecycle::badge("experimental")` #'   For the moment refseq slot need to be not Null.
-#' 
+#'
 #' @inheritParams clean_pq
 #' @param modality the name of the column in the `sam_data`
 #'   slot of the physeq object to split samples by pairs

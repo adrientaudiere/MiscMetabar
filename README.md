@@ -2,7 +2,6 @@
 <a href="https://zenodo.org/badge/latestdoi/268765075"><img src="https://zenodo.org/badge/268765075.svg" alt="DOI"></a>
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
 <!-- devtools::build_readme() -->
 
 # MiscMetabar
@@ -26,7 +25,7 @@ install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar")
 #> 
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/Rtmp0IAOkJ/remotes5211c12f78ac8/adrientaudiere-MiscMetabar-939338b/DESCRIPTION’ ... OK
+#> * checking for file ‘/tmp/RtmpEXd8K1/remotes35f04241b2b12/adrientaudiere-MiscMetabar-939338b/DESCRIPTION’ ... OK
 #> * preparing ‘MiscMetabar’:
 #> * checking DESCRIPTION meta-information ... OK
 #> * checking for LF line-endings in source and make files and shell scripts
@@ -42,12 +41,12 @@ install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar", ref = "dev")
 #> 
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/Rtmp0IAOkJ/remotes5211c21254462/adrientaudiere-MiscMetabar-dc2d4eb/DESCRIPTION’ ... OK
+#> * checking for file ‘/tmp/RtmpEXd8K1/remotes35f047d5ea1bd/adrientaudiere-MiscMetabar-f7da2bf/DESCRIPTION’ ... OK
 #> * preparing ‘MiscMetabar’:
 #> * checking DESCRIPTION meta-information ... OK
 #> * checking for LF line-endings in source and make files and shell scripts
 #> * checking for empty or unneeded directories
-#> * building ‘MiscMetabar_0.3.tar.gz’
+#> * building ‘MiscMetabar_0.31.tar.gz’
 ```
 
 ## Some use of MiscMetabar

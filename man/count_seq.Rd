@@ -4,10 +4,12 @@
 \alias{count_seq}
 \title{Count sequences in fasta or fastq file}
 \usage{
-count_seq(file = NULL)
+count_seq(file_path = NULL, folder_path = NULL)
 }
 \arguments{
-\item{file}{(required) The path to a  fasta, fastq or fastq.gz file}
+\item{file_path}{The path to a  fasta, fastq or fastq.gz file}
+
+\item{folder_path}{The path to a folder with fasta, fastq or fastq.gz files}
 }
 \value{
 the number of sequences
@@ -16,6 +18,10 @@ the number of sequences
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 Use grep to count the number of line with only one '+' (fastq, fastq.gz)
 or lines starting with a '>' (fasta) to count sequences.
+}
+\examples{
+count_seq(file = "inst/extdata/ex.fasta")
+count_seq(folder = "inst/extdata/")
 }
 \author{
 Adrien Taudière

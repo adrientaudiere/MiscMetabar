@@ -14,7 +14,7 @@ using the \code{phyloseq} package.}
 taxonomic level using
 their column numbers (e.g. taxonomic_level = c(1:7))}
 
-\item{...}{Arguments parsed to \code{\link[metacoder]{heat_tree}}}
+\item{...}{Arguments passed to \code{\link[metacoder]{heat_tree}}}
 }
 \value{
 A plot

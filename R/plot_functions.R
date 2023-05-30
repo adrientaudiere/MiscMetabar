@@ -962,8 +962,8 @@ venn_pq <-
 #'   modalities of the argument \code{factor} or if split_by is set a list
 #'   of plots.
 #'
-#' @examples 
-#'   data(data_fungi)
+#' @examples
+#' data(data_fungi)
 #' ggvenn_pq(data_fungi, fact = "Height")
 #' ggvenn_pq(data_fungi, fact = "Height") + ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
 #' pl <- ggvenn_pq(data_fungi, fact = "Height", split_by = "Time")
@@ -1412,7 +1412,7 @@ summary_plot_pq <- function(physeq,
 #' @param taxonomic_level (default: NULL): a vector of selected
 #' taxonomic level using
 #'   their column numbers (e.g. taxonomic_level = c(1:7))
-#' @param ... Arguments parsed to \code{\link[metacoder]{heat_tree}}
+#' @param ... Arguments passed to \code{\link[metacoder]{heat_tree}}
 #'
 #' @return A plot
 #' @export

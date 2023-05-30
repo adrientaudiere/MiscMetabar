@@ -180,25 +180,25 @@ perc <- function(x, y = NULL, accuracy = 0, add_symbol = FALSE) {
 #'
 #' @param file_path The path to a  fasta, fastq or fastq.gz file
 #' @param folder_path The path to a folder with fasta, fastq or fastq.gz files
-#' 
+#'
 #' @return the number of sequences
 #' @author Adrien Taudière
 #' @export
-#' @examples 
+#' @examples
 #' count_seq(file = "inst/extdata/ex.fasta")
 #' count_seq(folder = "inst/extdata/")
 count_seq <- function(file_path = NULL, folder_path = NULL) {
-  if(is.null(file_path) && is.null(folder_path)){
+  if (is.null(file_path) && is.null(folder_path)) {
     stop("You need to specify one of file_path or folder_path param!")
-  } else if(!is.null(file_path) && !is.null(folder_path)){
+  } else if (!is.null(file_path) && !is.null(folder_path)) {
     stop("You need to specify either file_path or folder_path param not both!")
-  } else if(!is.null(file_path) && is.null(folder_path)){
-    if (sum(get_file_extension(file_path) %in% "fasta")>0) {
+  } else if (!is.null(file_path) && is.null(folder_path)) {
+    if (sum(get_file_extension(file_path) %in% "fasta") > 0) {
       seq_nb <- system(paste0("cat ", file_path, " | grep -ce '^>'"),
         intern = TRUE
       )
-    } else if (sum(get_file_extension(file_path) %in% "fastq")>0) {
-      if (sum(get_file_extension(file_path) %in% "gz")>0) {
+    } else if (sum(get_file_extension(file_path) %in% "fastq") > 0) {
+      if (sum(get_file_extension(file_path) %in% "gz") > 0) {
         seq_nb <- system(paste0("zcat ", file_path, " | grep -ce '^+$'"),
           intern = TRUE
         )
@@ -208,12 +208,15 @@ count_seq <- function(file_path = NULL, folder_path = NULL) {
         )
       }
     } else {
-      stop(paste0("The file extension ", 
-                  get_file_extension(file_path), 
-                  " is not supported."))
+      stop(paste0(
+        "The file extension ",
+        get_file_extension(file_path),
+        " is not supported."
+      ))
     }
   } else {
-    seq_nb <- sapply(list.files(folder_path, full.names = TRUE), 
+    seq_nb <- sapply(
+      list.files(folder_path, full.names = TRUE),
       function(f) {
         count_seq(file_path = f)
       }

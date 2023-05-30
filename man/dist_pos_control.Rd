@@ -15,7 +15,7 @@ using the \code{phyloseq} package.}
 positives controls of the same samples having the same name}
 
 \item{method}{(default: "bray") a method to calculate
-the distance, parsed to \code{\link[vegan:vegdist]{vegan::vegdist()}}. See ?vegdist for a list
+the distance, passed to \code{\link[vegan:vegdist]{vegan::vegdist()}}. See ?vegdist for a list
 of possible values.}
 }
 \value{
