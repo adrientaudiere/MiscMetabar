@@ -208,9 +208,9 @@ count_seq <- function(file_path = NULL, folder_path = NULL) {
         )
       }
     } else {
-      stop(paste0("The file extension", 
+      stop(paste0("The file extension ", 
                   get_file_extension(file_path), 
-                  "is not supported."))
+                  " is not supported."))
     }
   } else {
     seq_nb <- sapply(list.files(folder_path, full.names = TRUE), 
@@ -219,5 +219,5 @@ count_seq <- function(file_path = NULL, folder_path = NULL) {
       }
     )
   }
-  return(seq_nb)
+  return(as.numeric(seq_nb))
 }
