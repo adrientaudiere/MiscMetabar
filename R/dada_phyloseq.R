@@ -997,10 +997,12 @@ write_pq <- function(physeq,
         colnames(sam_data) <- sample_names(physeq)
         if(sam_data_first){
           df_physeq <- dplyr::full_join(sam_data, df_physeq_interm)
+          rownames(df_physeq) <- c(rownames(sam_data), rownames(df_physeq_interm))
         } else {
           df_physeq <- dplyr::full_join(df_physeq_interm, sam_data)
+          rownames(df_physeq) <- c(rownames(df_physeq_interm), rownames(sam_data))
         }
-        rownames(df_physeq) <- c(rownames(df_physeq_interm), rownames(sam_data))
+        
       }
       utils::write.csv(
         df_physeq,
@@ -1024,10 +1026,11 @@ write_pq <- function(physeq,
         colnames(sam_data) <- sample_names(physeq)
         if(sam_data_first){
           df_physeq <- dplyr::full_join(sam_data, df_physeq_interm)
+          rownames(df_physeq) <- c(rownames(sam_data), rownames(df_physeq_interm))
         } else {
           df_physeq <- dplyr::full_join(df_physeq_interm, sam_data)
+          rownames(df_physeq) <- c(rownames(df_physeq_interm), rownames(sam_data))
         }
-        rownames(df_physeq) <- c(rownames(df_physeq_interm), rownames(sam_data))
       }
       utils::write.csv(
         df_physeq,
