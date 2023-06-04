@@ -950,10 +950,12 @@ filter_asv_blast <- function(physeq,
 #' @inheritParams clean_pq
 #' @param path a path to the folder to save the phyloseq object
 #' @param rdata (logical) does the phyloseq object is also saved in Rdata format?
-#' @param one_file_ASV (logical) if TRUE, combine all data in one file only
+#' @param one_file (logical) if TRUE, combine all data in one file only
 #' @param write_sam_data (logical) does the samples data are add to
-#'   the file. Only used if `one_file_ASV` is TRUE.
-#'   Note that this result in a lot of NA values.
+#'   the file. Only used if `one_file` is TRUE.
+#'   Note that these option result in a lot of NA values.
+#' @param sam_data_first (logical) if TRUE, put the sample data at the top of the table
+#'   Only used if `one_file` and write_sam_data are both TRUE.
 #' @param ... Other arguments passed to [utils::write.csv()] function.
 #' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 #'   and if present a phy_tree in Newick format
@@ -962,20 +964,21 @@ filter_asv_blast <- function(physeq,
 #' @examples
 #' \dontrun{
 #' write_pq(data_fungi, path = "phyloseq")
-#' write_pq(data_fungi, path = "phyloseq", one_file_ASV = TRUE)
+#' write_pq(data_fungi, path = "phyloseq", one_file = TRUE)
 #' }
 #'
 write_pq <- function(physeq,
                      path = NULL,
                      rdata = FALSE,
-                     one_file_ASV = FALSE,
+                     one_file = FALSE,
                      write_sam_data = TRUE,
+                     sam_data_first = FALSE
                      ...) {
   verify_pq(physeq)
   if (!dir.exists(path)) {
     dir.create(file.path(path), recursive = TRUE)
   }
-  if (one_file_ASV) {
+  if (one_file) {
     if (!is.null(physeq@refseq) && !is.null(physeq@otu_table) && !is.null(physeq@tax_table)) {
       if (!taxa_are_rows(physeq)) {
         physeq@otu_table <- t(physeq@otu_table)
@@ -992,19 +995,42 @@ write_pq <- function(physeq,
       if (write_sam_data) {
         sam_data <- data.frame(t(data.frame(unclass(physeq@sam_data))))
         colnames(sam_data) <- sample_names(physeq)
-        df_physeq <- dplyr::full_join(df_physeq_interm, sam_data)
+        if(sam_data_first){
+          df_physeq <- dplyr::full_join(sam_data, df_physeq_interm)
+        } else {
+          df_physeq <- dplyr::full_join(df_physeq_interm, sam_data)
+        }
         rownames(df_physeq) <- c(rownames(df_physeq_interm), rownames(sam_data))
       }
       utils::write.csv(
         df_physeq,
         paste(path, "/ASV_table_allInOne.csv", sep = ""),
+        ...
       )
     } else if (!is.null(physeq@otu_table) && !is.null(physeq@tax_table)) {
+      if (!taxa_are_rows(physeq)) {
+        physeq@otu_table <- t(physeq@otu_table)
+      }
+      df_physeq_interm <- cbind(
+        physeq@otu_table,
+        physeq@tax_table
+      )
+      colnames(df_physeq_interm) <- c(sample_names(physeq), colnames(physeq@tax_table), "Reference Sequences")
+
+      df_physeq_interm <- as.data.frame(df_physeq_interm)
+
+      if (write_sam_data) {
+        sam_data <- data.frame(t(data.frame(unclass(physeq@sam_data))))
+        colnames(sam_data) <- sample_names(physeq)
+        if(sam_data_first){
+          df_physeq <- dplyr::full_join(sam_data, df_physeq_interm)
+        } else {
+          df_physeq <- dplyr::full_join(df_physeq_interm, sam_data)
+        }
+        rownames(df_physeq) <- c(rownames(df_physeq_interm), rownames(sam_data))
+      }
       utils::write.csv(
-        cbind(
-          physeq@otu_table,
-          physeq@tax_table
-        ),
+        df_physeq,
         paste(path, "/ASV_table_allInOne.csv", sep = ""),
         ...
       )
