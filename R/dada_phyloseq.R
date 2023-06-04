@@ -972,7 +972,7 @@ write_pq <- function(physeq,
                      rdata = FALSE,
                      one_file = FALSE,
                      write_sam_data = TRUE,
-                     sam_data_first = FALSE
+                     sam_data_first = FALSE,
                      ...) {
   verify_pq(physeq)
   if (!dir.exists(path)) {
