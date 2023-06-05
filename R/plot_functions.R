@@ -1472,9 +1472,17 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #' @param right_col Color fo the right sample.
 #' @param log_10 (logical) Does abundancy is log10 transformed ?
 #' @param nudge_y A parameter to control the y position of abundancy values.
+#'   If a vector of two values are set. The first value is for the left side.
+#'   and the second value for the right one. If one value is set,
+#'   this value is used for both side.
 #' @param geomLabel (default: FALSE, logical) if TRUE use the [ggplot2::geom_label()] function
 #'   instead of [ggplot2::geom_text()] to indicate the numbers of sequences.
-#' @param text_size default size for the number of sequences
+#' @param text_size size for the number of sequences
+#' @param size_names size for the names of the 2 samples
+#' @param y_names y position for the names of the 2 samples. If NA (default), 
+#'   computed using the maximum abundances values. 
+#' @param ylim_modif vector of two values. Modificator (by a multiplication) 
+#'   of ylim. If one value is set, this value is used for both limits.
 #' @param plotly_version If TRUE, use [plotly::ggplotly()] to return
 #'   a interactive ggplot.
 #' @param ... other arguments for the ggplot function
@@ -1494,9 +1502,12 @@ biplot_pq <- function(physeq,
                       right_fill = "#1d2949",
                       right_col = "#1d2949",
                       log_10 = TRUE,
-                      nudge_y = 0.3,
+                      nudge_y = c(0.3, 0.3),
                       geomLabel = FALSE,
                       text_size = 3,
+                      size_names = 5,
+                      y_names = NA,
+                      ylim_modif = c(1, 1),
                       plotly_version = FALSE,
                       ...) {
   if (!is.null(merge_sample_by)) {
@@ -1538,6 +1549,13 @@ biplot_pq <- function(physeq,
   mdf <- mdf[mdf$Abundance > 0, ]
   # mdf <- dplyr::rename(mdf, Abundance = Abundance)
 
+  if(length(ylim_modif) == 1) {
+    ylim_modif <- c(ylim_modif, ylim_modif)
+  }
+
+  if(length(nudge_y) == 1) {
+    nudge_y <- c(nudge_y, nudge_y)
+  }
   if (log_10) {
     mdf$Ab <- log10(mdf$Abundance + 1)
   } else {
@@ -1580,41 +1598,48 @@ biplot_pq <- function(physeq,
       geom = "text",
       label = right_name,
       x = "Samples",
-      y = max(mdf$Ab) / 2,
-      hjust = 1,
-      vjust = 1,
-      size = 6,
+      y = ifelse(is.na(y_names), max(mdf$Ab) / 2, y_names),
+      hjust = 0.5,
+      vjust = 0.5,
+      size = size_names,
       fontface = "bold"
     ) +
     annotate(
       geom = "text",
       label = left_name,
       x = "Samples",
-      y = -(max(mdf$Ab) / 2),
-      hjust = 1,
-      vjust = 1,
-      size = 6,
+      y = ifelse(is.na(y_names), -(max(mdf$Ab) / 2), - y_names),
+      hjust = 0.5,
+      vjust = 0.5,
+      size = size_names,
       fontface = "bold"
     ) +
     geom_hline(aes(yintercept = 0)) +
     scale_x_discrete(limits = c(names(sort(
       tapply(mdf$Abundance, mdf$OTU, sum)
     )), "Samples")) +
-    ylim(min(mdf$Ab) * 1.1, max(mdf$Ab) *
-      1.1)
+    ylim(min(mdf$Ab), max(mdf$Ab) * 1.1)
 
 
   if (geomLabel) {
     p <- p +
-      geom_label(aes(label = Abundance, color = modality, fill = modality, alpha = 0.5),
-        size = text_size,
-        nudge_y = nudge_y
+      geom_label(aes(
+        label = Abundance,
+        color = modality,
+        fill = modality,
+        alpha = 0.5,
+        y = ifelse(Ab>0, Ab+nudge_y[2], Ab+nudge_y[1])
+      ),
+        size = text_size
       )
   } else {
     p <- p +
-      geom_text(aes(label = Abundance, color = modality),
-        size = text_size,
-        nudge_y = nudge_y
+      geom_text(aes(
+        label = Abundance,
+        color = modality,
+        y = ifelse(Ab>0, Ab+nudge_y[2], Ab+nudge_y[1])
+      ),
+        size = text_size
       )
   }
 
@@ -1622,7 +1647,9 @@ biplot_pq <- function(physeq,
     theme_minimal() +
     theme(plot.title = element_text(hjust = .5), axis.ticks = element_blank()) +
     scale_fill_manual(values = c(left_fill, right_fill)) +
-    scale_color_manual(values = c(left_col, right_col), guide = "none")
+    scale_color_manual(values = c(left_col, right_col), guide = "none") +
+    ylim(c(layer_scales(p)$y$get_limits()[1] * ylim_modif[1],
+           layer_scales(p)$y$get_limits()[2] * ylim_modif[2]))
 
   if (plotly_version) {
     p <- plotly::ggplotly(p,
