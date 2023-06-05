@@ -1552,6 +1552,10 @@ biplot_pq <- function(physeq,
   if(length(ylim_modif) == 1) {
     ylim_modif <- c(ylim_modif, ylim_modif)
   }
+  
+  if(length(y_names) == 1) {
+    y_names <- c(y_names, y_names)
+  }
 
   if(length(nudge_y) == 1) {
     nudge_y <- c(nudge_y, nudge_y)
@@ -1598,7 +1602,7 @@ biplot_pq <- function(physeq,
       geom = "text",
       label = right_name,
       x = "Samples",
-      y = ifelse(is.na(y_names), max(mdf$Ab) / 2, y_names),
+      y = ifelse(is.na(y_names), max(mdf$Ab) / 2, y_names[2]),
       hjust = 0.5,
       vjust = 0.5,
       size = size_names,
@@ -1608,7 +1612,7 @@ biplot_pq <- function(physeq,
       geom = "text",
       label = left_name,
       x = "Samples",
-      y = ifelse(is.na(y_names), -(max(mdf$Ab) / 2), - y_names),
+      y = ifelse(is.na(y_names), -(max(mdf$Ab) / 2), - y_names[1]),
       hjust = 0.5,
       vjust = 0.5,
       size = size_names,
