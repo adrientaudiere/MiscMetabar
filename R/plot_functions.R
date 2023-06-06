@@ -1465,9 +1465,11 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #'   [biplot_pq()] this must be a factor with two levels only.
 #' @param inverse_side Inverse the side (put the right modality in the left side).
 #' @param left_name Name fo the left sample.
-#' @param right_name Name fo the right sample.
+#' @param left_name_col Color for the left name
 #' @param left_fill Fill fo the left sample.
 #' @param left_col Color fo the left sample.
+#' @param right_name Name fo the right sample.
+#' @param right_name_col Color for the right name
 #' @param right_fill Fill fo the right sample.
 #' @param right_col Color fo the right sample.
 #' @param log_10 (logical) Does abundancy is log10 transformed ?
@@ -1496,9 +1498,11 @@ biplot_pq <- function(physeq,
                       merge_sample_by = NULL,
                       inverse_side = FALSE,
                       left_name = NULL,
-                      right_name = NULL,
+                      left_name_col = "#4B3E1E",
                       left_fill = "#4B3E1E",
                       left_col = "#f3f2d9",
+                      right_name = NULL,
+                      right_name_col = "#1d2949",
                       right_fill = "#1d2949",
                       right_col = "#1d2949",
                       log_10 = TRUE,
@@ -1606,17 +1610,19 @@ biplot_pq <- function(physeq,
       hjust = 0.5,
       vjust = 0.5,
       size = size_names,
-      fontface = "bold"
+      fontface = "bold",
+      col = right_name_col
     ) +
     annotate(
       geom = "text",
       label = left_name,
       x = "Samples",
-      y = ifelse(is.na(y_names), -(max(mdf$Ab) / 2), - y_names[1]),
+      y = ifelse(is.na(y_names), (min(mdf$Ab) / 2), - y_names[1]),
       hjust = 0.5,
       vjust = 0.5,
       size = size_names,
-      fontface = "bold"
+      fontface = "bold",
+      col = left_name_col
     ) +
     geom_hline(aes(yintercept = 0)) +
     scale_x_discrete(limits = c(names(sort(
