@@ -3,6 +3,7 @@
 * Add the possibility to select a folder in the function `count_seq()`
 * Add functions `track_wkflow_samples()` and `select_one_sample()`
 * Add option `sam_data_first` in function `write_pq()`
+* Add option `reorder_asv` and `rename_asv` to in function `write_pq()` and `clean_pq`
 
 # MiscMetabar 0.31 (in development)
 

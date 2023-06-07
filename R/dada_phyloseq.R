@@ -39,7 +39,6 @@ add_dna_to_phyloseq <- function(physeq) {
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object obtained
 #'   using the `phyloseq` package.
-#'
 #' @param remove_empty_samples (logical) Do you want to remove samples
 #'   without sequences (this is done after removing empty taxa)
 #' @param remove_empty_taxa (logical) Do you want to remove taxa
@@ -52,6 +51,12 @@ add_dna_to_phyloseq <- function(physeq) {
 #'   transpose the otu_table and set taxa_are_rows to false
 #' @param force_taxa_as_rows (logical) If true, if the taxa are columns
 #'   transpose the otu_table and set taxa_are_rows to true
+#' @param reorder_asv (logical) if TRUE the otu_table is ordered by the number of 
+#'   sequences of ASV (descending order). Default to FALSE. 
+#'   Need the [microViz] package.
+#' @param rename_asv reorder_asv (logical) if TRUE, ASV are renamed by their position
+#'   in the OTU_table (asv_1, asv_2, ...). Default to FALSE. If rename ASV is true,
+#'   the ASV names in verbose information can be misleading.
 #' @return A new \code{\link{phyloseq-class}} object
 #' @export
 clean_pq <- function(physeq,
@@ -61,7 +66,10 @@ clean_pq <- function(physeq,
                      silent = FALSE,
                      verbose = FALSE,
                      force_taxa_as_columns = FALSE,
-                     force_taxa_as_rows = FALSE) {
+                     force_taxa_as_rows = FALSE,
+                     reorder_asv = FALSE,
+                     rename_asv = FALSE
+                     ) {
   verify_pq(physeq)
   if (clean_samples_names) {
     if (!is.null(physeq@refseq)) {
@@ -91,6 +99,14 @@ clean_pq <- function(physeq,
     }
   }
 
+  if (reorder_asv) {
+    physeq <- microViz::tax_sort(physeq, sum)
+  }
+
+  if (rename_asv) {
+    taxa_names(physeq) <- paste0("ASV_", seq(1, ntaxa(physeq)))
+  }
+  
   if (sum(grepl("^0", "", sample_names(physeq)) > 0) && !silent) {
     message("At least one sample name start with a zero.
     That can be a problem for some phyloseq functions such as
@@ -956,6 +972,14 @@ filter_asv_blast <- function(physeq,
 #'   Note that these option result in a lot of NA values.
 #' @param sam_data_first (logical) if TRUE, put the sample data at the top of the table
 #'   Only used if `one_file` and write_sam_data are both TRUE.
+#' @param clean_pq (logical)
+#'   If set to TRUE, empty samples are discarded after subsetting ASV
+#' @param reorder_asv (logical) if TRUE the otu_table is ordered by the number of 
+#'   sequences of ASV (descending order). Default to TRUE. Only possible if clean_pq
+#'   is set to TRUE.
+#' @param rename_asv reorder_asv (logical) if TRUE, ASV are renamed by their position
+#'   in the OTU_table (asv_1, asv_2, ...). Default to FALSE. Only possible if clean_pq
+#'   is set to TRUE.
 #' @param ... Other arguments passed to [utils::write.csv()] function.
 #' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 #'   and if present a phy_tree in Newick format
@@ -973,8 +997,27 @@ write_pq <- function(physeq,
                      one_file = FALSE,
                      write_sam_data = TRUE,
                      sam_data_first = FALSE,
+                     clean_pq = TRUE,
+                     reorder_asv = TRUE,
+                     rename_asv = FALSE,
+                     remove_empty_samples = TRUE,
+                     remove_empty_taxa = TRUE,
+                     clean_samples_names = TRUE,
+                     silent = FALSE,
+                     verbose = FALSE,
                      ...) {
   verify_pq(physeq)
+
+  physeq <- clean_pq(physeq, 
+    reorder_asv = reorder_asv,
+    rename_asv = rename_asv,
+    remove_empty_samples = remove_empty_samples,
+    remove_empty_taxa = remove_empty_taxa, 
+    clean_samples_names = clean_samples_names,
+    silent = silent, 
+    verbose = verbose
+  )
+
   if (!dir.exists(path)) {
     dir.create(file.path(path), recursive = TRUE)
   }
