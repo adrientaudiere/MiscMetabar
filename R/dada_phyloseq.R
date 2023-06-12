@@ -904,10 +904,13 @@ blast_pq <- function(physeq,
 #'   after filtering.
 #' @param blastpath path to blast program
 #' @param id_cut (default: 80) cut of in identity percent to keep ASV
-#' @param bit_score_cut (default: 50) cut of in bit score to keep result
+#' @param bit_score_cut (default: 150) cut of in bit score to keep result
 #' @param min_cover_cut (default: 50) cut of in query cover (%) to keep result
 #' @param add_info_to_taxtable: add some info from blast query to taxtable of the
-#'   new physeq object
+#'   new physeq object. Only the information ("Query name", "Taxa name", "bit score", 
+#'   "% id. match", "Query cover", "e-value") for higher e-value hit. 
+#'   for each ASV is add to taxtable. Note that query name may be different from 
+#'   final taxa names as some function proposed to change the ASV names.
 #' @param nproc (default: 1)
 #'   Set to number of cpus/processors to use for blast (args -num_threads
 #'   for blastn command)
@@ -921,7 +924,7 @@ filter_asv_blast <- function(physeq,
                              clean_pq = TRUE,
                              blastpath = NULL,
                              id_cut = 80,
-                             bit_score_cut = 50,
+                             bit_score_cut = 150,
                              min_cover_cut = 50,
                              add_info_to_taxtable = TRUE,
                              nproc = 1) {
@@ -937,19 +940,22 @@ filter_asv_blast <- function(physeq,
     nproc = nproc
   )
 
-  condition <- blast_tab[, "Query cover"] > min_cover_cut & blast_tab[, "bit score"] > bit_score_cut & blast_tab[, "% id. match"] > id_cut
+   condition <- blast_tab[, "Query cover"] > min_cover_cut & blast_tab[, "bit score"] > bit_score_cut & blast_tab[, "% id. match"] > id_cut
   names(condition) <- blast_tab[, "Query name"]
 
-  new_physeq <- subset_taxa_pq(physeq, condition)
+  new_physeq <- subset_taxa_pq(physeq, condition, clean_pq = FALSE)
 
   if (clean_pq) {
     new_physeq <- clean_pq(new_physeq)
   }
-
+  
   if (add_info_to_taxtable) {
+    info_to_taxtable <- blast_tab %>% group_by(`Query name`) %>% slice(which.min(`e-value`)) %>% ungroup()
     new_physeq@tax_table <- tax_table(as.matrix(cbind(
       new_physeq@tax_table,
-      blast_tab[match(taxa_names(new_physeq), blast_tab[, "Query name"]), c("Query name", "Taxa name", "bit score", "% id. match", "Query cover")]
+      info_to_taxtable[match(taxa_names(new_physeq), 
+                             info_to_taxtable[, "Query name"]$`Query name`), 
+      c("Query name", "Taxa name", "bit score", "% id. match", "Query cover", "e-value")]
     )))
   }
 
