@@ -59,7 +59,7 @@ Imports:
     phyloseqGraphTest
 Remotes: 
     github::mikemc/speedyseq,
-    github::adrientaudiere/lulu
+    github::adrientaudiere/lulu,
     github::david-barnett/microViz
 Config/testthat/edition: 3
 VignetteBuilder: knitr
