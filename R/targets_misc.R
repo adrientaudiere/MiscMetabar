@@ -67,6 +67,7 @@ list_fastq_files <-
       }
       return(list("fnfs" = fnfs, "fnrs" = fnrs))
     } else {
+      fnfs <- sort(list_files[grepl(list_files, pattern = pattern_r1)])
       if (is.finite(nb_files)) {
         fnfs <- fnfs[1:nb_files]
       }
