@@ -986,6 +986,11 @@ filter_asv_blast <- function(physeq,
 #' @param rename_asv reorder_asv (logical) if TRUE, ASV are renamed by their position
 #'   in the OTU_table (asv_1, asv_2, ...). Default to FALSE. Only possible if clean_pq
 #'   is set to TRUE.
+#' @param quote : a logical value (default FALSE) or a numeric vector.
+#'   If TRUE, any character or factor columns will be surrounded by
+#'   double quotes.  If a numeric vector, its elements are taken
+#'   as the indices of columns to quote.  In both cases, row and
+#'   column names are quoted if they are written. If FALSE nothing is quoted.
 #' @param ... Other arguments passed to [utils::write.csv()] function.
 #' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 #'   and if present a phy_tree in Newick format
@@ -1011,6 +1016,7 @@ write_pq <- function(physeq,
                      clean_samples_names = TRUE,
                      silent = FALSE,
                      verbose = FALSE,
+                     quote = FALSE,
                      ...) {
   verify_pq(physeq)
 
@@ -1056,6 +1062,7 @@ write_pq <- function(physeq,
       utils::write.csv(
         df_physeq,
         paste(path, "/ASV_table_allInOne.csv", sep = ""),
+        quote = quote,
         ...
       )
     } else if (!is.null(physeq@otu_table) && !is.null(physeq@tax_table)) {
@@ -1084,6 +1091,7 @@ write_pq <- function(physeq,
       utils::write.csv(
         df_physeq,
         paste(path, "/ASV_table_allInOne.csv", sep = ""),
+        quote = quote,
         ...
       )
     }
@@ -1091,27 +1099,31 @@ write_pq <- function(physeq,
     if (!is.null(physeq@otu_table)) {
       utils::write.csv(
         physeq@otu_table, paste(path, "/otu_table.csv", sep = ""),
+        quote = quote,
         ...
       )
     }
     if (!is.null(physeq@refseq)) {
       utils::write.csv(
         physeq@refseq, paste(path, "/refseq.csv", sep = ""),
+        quote = quote,
         ...
       )
     }
     if (!is.null(physeq@tax_table)) {
       utils::write.csv(
         physeq@tax_table, paste(path, "/tax_table.csv", sep = ""),
+        quote = quote,
         ...
       )
     }
-  }
-  if (!is.null(physeq@sam_data)) {
-    utils::write.csv(
-      as.matrix(physeq@sam_data), paste(path, "/sam_data.csv", sep = ""),
-      ...
-    )
+    if (!is.null(physeq@sam_data)) {
+      utils::write.csv(
+        as.matrix(physeq@sam_data), paste(path, "/sam_data.csv", sep = ""),
+        quote = quote,
+        ...
+      )
+    }
   }
   if (!is.null(physeq@phy_tree)) {
     ape::write.tree(physeq@phy_tree, paste(path, "/phy_tree.txt", sep = ""))
