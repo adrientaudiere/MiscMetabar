@@ -1138,8 +1138,13 @@ hill_pq <-
       color_fac <- sym(color_fac)
     }
 
+    physeq <- clean_pq(physeq, force_taxa_as_rows = TRUE,
+                       remove_empty_samples = FALSE,
+                       remove_empty_taxa = FALSE,
+                       clean_samples_names = FALSE)
+
     otu_hill <-
-      vegan::renyi(physeq@otu_table, scale = c(0, 1, 2), hill = TRUE)
+      vegan::renyi(t(physeq)@otu_table, scale = c(0, 1, 2), hill = TRUE)
     colnames(otu_hill) <- c("Hill_0", "Hill_1", "Hill_2")
 
     df_hill <- data.frame(otu_hill, physeq@sam_data)
@@ -1405,6 +1410,55 @@ summary_plot_pq <- function(physeq,
 ################################################################################
 
 
+#' rotl wrapper for phyloseq data
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'   Make a phylogenetic tree using the ASV names of a physeq object and the
+#'   Open Tree of Life tree.
+#'
+#' @inheritParams clean_pq
+#' @param species_colnames (default: "Genus_species"): the name of the column
+#'   where the species binominal name is stored in `@tax_table` slot.
+#'   Can also be a vector of two columns names e.g. `c("Genus", "Species")`
+#' @param context_name : can bue used to select only a part of the Open Tree
+#'   of Life. See `?rotl::tnrs_contexts()` for available values
+#' @return A plot
+#' @export
+#' @author Adrien Taudière
+#'
+#' @examples
+#' library("rotl")
+#' tr <- rotl_pq(data_fungi, species_colnames = "Genus_species")
+#' plot(tr)
+#' tr_Asco <- rotl_pq(data_fungi, species_colnames = "Genus_species", context_name = "Ascomycetes")
+#' plot(tr_Asco)
+rotl_pq <- function(
+    physeq,
+    species_colnames = "Genus_species",
+    context_name = "All life") {
+  if (length(species_colnames) == 2) {
+    physeq@tax_table <- tax_table(cbind(physeq@tax_table,
+      "Genus_species" = paste(physeq@tax_table[, species_colnames[1]],
+        physeq@tax_table[, species_colnames[2]],
+        sep = "_"
+      )
+    ))
+    species_colnames <- "Genus_species"
+  }
+  taxa_names_rotl <- physeq@tax_table[, species_colnames]
+  taxa_names_rotl <- taxa_names_rotl[!grepl("NA", taxa_names_rotl)]
+  taxa_names_rotl <- c(unclass(gsub("_", " ", taxa_names_rotl)))
+
+  resolved_names <- tnrs_match_names(taxa_names_rotl)
+  resolved_names <- resolved_names[resolved_names$flags == "", ]
+  clean_taxa_names_rotl <- taxa_names_rotl[taxa_names_rotl %in% resolved_names$unique_name]
+
+  resolved_names2 <- tnrs_match_names(clean_taxa_names_rotl, context_name = context_name)
+
+  tr <- tol_induced_subtree(ott_ids = ott_id(resolved_names2))
+  return(tr)
+}
+
 #' Heat tree from `metacoder` package using `tax_table` slot
 #' @description
 #' `r lifecycle::badge("maturing")`
@@ -1481,9 +1535,9 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #'   instead of [ggplot2::geom_text()] to indicate the numbers of sequences.
 #' @param text_size size for the number of sequences
 #' @param size_names size for the names of the 2 samples
-#' @param y_names y position for the names of the 2 samples. If NA (default), 
-#'   computed using the maximum abundances values. 
-#' @param ylim_modif vector of two values. Modificator (by a multiplication) 
+#' @param y_names y position for the names of the 2 samples. If NA (default),
+#'   computed using the maximum abundances values.
+#' @param ylim_modif vector of two values. Modificator (by a multiplication)
 #'   of ylim. If one value is set, this value is used for both limits.
 #' @param plotly_version If TRUE, use [plotly::ggplotly()] to return
 #'   a interactive ggplot.
@@ -1553,15 +1607,15 @@ biplot_pq <- function(physeq,
   mdf <- mdf[mdf$Abundance > 0, ]
   # mdf <- dplyr::rename(mdf, Abundance = Abundance)
 
-  if(length(ylim_modif) == 1) {
+  if (length(ylim_modif) == 1) {
     ylim_modif <- c(ylim_modif, ylim_modif)
   }
-  
-  if(length(y_names) == 1) {
+
+  if (length(y_names) == 1) {
     y_names <- c(y_names, y_names)
   }
 
-  if(length(nudge_y) == 1) {
+  if (length(nudge_y) == 1) {
     nudge_y <- c(nudge_y, nudge_y)
   }
   if (log_10) {
@@ -1617,7 +1671,7 @@ biplot_pq <- function(physeq,
       geom = "text",
       label = left_name,
       x = "Samples",
-      y = ifelse(is.na(y_names), (min(mdf$Ab) / 2), - y_names[1]),
+      y = ifelse(is.na(y_names), (min(mdf$Ab) / 2), -y_names[1]),
       hjust = 0.5,
       vjust = 0.5,
       size = size_names,
@@ -1633,22 +1687,24 @@ biplot_pq <- function(physeq,
 
   if (geomLabel) {
     p <- p +
-      geom_label(aes(
-        label = Abundance,
-        color = modality,
-        fill = modality,
-        alpha = 0.5,
-        y = ifelse(Ab>0, Ab+nudge_y[2], Ab+nudge_y[1])
-      ),
+      geom_label(
+        aes(
+          label = Abundance,
+          color = modality,
+          fill = modality,
+          alpha = 0.5,
+          y = ifelse(Ab > 0, Ab + nudge_y[2], Ab + nudge_y[1])
+        ),
         size = text_size
       )
   } else {
     p <- p +
-      geom_text(aes(
-        label = Abundance,
-        color = modality,
-        y = ifelse(Ab>0, Ab+nudge_y[2], Ab+nudge_y[1])
-      ),
+      geom_text(
+        aes(
+          label = Abundance,
+          color = modality,
+          y = ifelse(Ab > 0, Ab + nudge_y[2], Ab + nudge_y[1])
+        ),
         size = text_size
       )
   }
@@ -1658,8 +1714,10 @@ biplot_pq <- function(physeq,
     theme(plot.title = element_text(hjust = .5), axis.ticks = element_blank()) +
     scale_fill_manual(values = c(left_fill, right_fill)) +
     scale_color_manual(values = c(left_col, right_col), guide = "none") +
-    ylim(c(layer_scales(p)$y$get_limits()[1] * ylim_modif[1],
-           layer_scales(p)$y$get_limits()[2] * ylim_modif[2]))
+    ylim(c(
+      layer_scales(p)$y$get_limits()[1] * ylim_modif[1],
+      layer_scales(p)$y$get_limits()[2] * ylim_modif[2]
+    ))
 
   if (plotly_version) {
     p <- plotly::ggplotly(p,

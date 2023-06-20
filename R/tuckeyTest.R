@@ -24,6 +24,10 @@ hill_tuckey_pq <- function(physeq, modality) {
   }
   read_numbers <- apply(physeq@otu_table, 2, sum)
 
+  physeq <- clean_pq(physeq, force_taxa_as_rows = TRUE,
+                     remove_empty_samples = FALSE,
+                     remove_empty_taxa = FALSE,
+                     clean_samples_names = FALSE)
   otu_hill <-
     vegan::renyi(t(physeq@otu_table),
       scale = c(0, 1, 2),

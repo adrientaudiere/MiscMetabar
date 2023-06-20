@@ -4,6 +4,7 @@
 * Add functions `track_wkflow_samples()` and `select_one_sample()`
 * Add option `sam_data_first` in function `write_pq()`
 * Add option `reorder_asv` and `rename_asv` to in function `write_pq()` and `clean_pq`
+* Add a function `rotl_pq()` to build a phylogenetic tree using the ASV binomial names of a physeq object and the Open Tree of Life tree.
 
 # MiscMetabar 0.31 (in development)
 

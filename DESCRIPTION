@@ -36,7 +36,8 @@ Suggests:
     pbapply,
     plotly,
     plyr,
-    reshape2,
+    reshape2,'
+    rotl,
     seqinr,
     venneuler,
     viridis,

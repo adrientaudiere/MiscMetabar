@@ -51,8 +51,8 @@ add_dna_to_phyloseq <- function(physeq) {
 #'   transpose the otu_table and set taxa_are_rows to false
 #' @param force_taxa_as_rows (logical) If true, if the taxa are columns
 #'   transpose the otu_table and set taxa_are_rows to true
-#' @param reorder_asv (logical) if TRUE the otu_table is ordered by the number of 
-#'   sequences of ASV (descending order). Default to FALSE. 
+#' @param reorder_asv (logical) if TRUE the otu_table is ordered by the number of
+#'   sequences of ASV (descending order). Default to FALSE.
 #'   Need the [microViz] package.
 #' @param rename_asv reorder_asv (logical) if TRUE, ASV are renamed by their position
 #'   in the OTU_table (asv_1, asv_2, ...). Default to FALSE. If rename ASV is true,
@@ -68,8 +68,7 @@ clean_pq <- function(physeq,
                      force_taxa_as_columns = FALSE,
                      force_taxa_as_rows = FALSE,
                      reorder_asv = FALSE,
-                     rename_asv = FALSE
-                     ) {
+                     rename_asv = FALSE) {
   verify_pq(physeq)
   if (clean_samples_names) {
     if (!is.null(physeq@refseq)) {
@@ -106,7 +105,7 @@ clean_pq <- function(physeq,
   if (rename_asv) {
     taxa_names(physeq) <- paste0("ASV_", seq(1, ntaxa(physeq)))
   }
-  
+
   if (sum(grepl("^0", "", sample_names(physeq)) > 0) && !silent) {
     message("At least one sample name start with a zero.
     That can be a problem for some phyloseq functions such as
@@ -389,7 +388,7 @@ track_wkflow <- function(
 #' tree_A10_005 <- subset_samples(data_fungi, Tree_name == "A10-005")
 #' track_wkflow_samples(tree_A10_005)
 track_wkflow_samples <- function(list_pq_obj, ...) {
-  if(!inherits(list_pq_obj, "list")){
+  if (!inherits(list_pq_obj, "list")) {
     list_pq_obj <- list(list_pq_obj)
   }
   res <- list()
@@ -907,9 +906,9 @@ blast_pq <- function(physeq,
 #' @param bit_score_cut (default: 150) cut of in bit score to keep result
 #' @param min_cover_cut (default: 50) cut of in query cover (%) to keep result
 #' @param add_info_to_taxtable: add some info from blast query to taxtable of the
-#'   new physeq object. Only the information ("Query name", "Taxa name", "bit score", 
-#'   "% id. match", "Query cover", "e-value") for higher e-value hit. 
-#'   for each ASV is add to taxtable. Note that query name may be different from 
+#'   new physeq object. Only the information ("Query name", "Taxa name", "bit score",
+#'   "% id. match", "Query cover", "e-value") for higher e-value hit.
+#'   for each ASV is add to taxtable. Note that query name may be different from
 #'   final taxa names as some function proposed to change the ASV names.
 #' @param nproc (default: 1)
 #'   Set to number of cpus/processors to use for blast (args -num_threads
@@ -940,7 +939,7 @@ filter_asv_blast <- function(physeq,
     nproc = nproc
   )
 
-   condition <- blast_tab[, "Query cover"] > min_cover_cut & blast_tab[, "bit score"] > bit_score_cut & blast_tab[, "% id. match"] > id_cut
+  condition <- blast_tab[, "Query cover"] > min_cover_cut & blast_tab[, "bit score"] > bit_score_cut & blast_tab[, "% id. match"] > id_cut
   names(condition) <- blast_tab[, "Query name"]
 
   new_physeq <- subset_taxa_pq(physeq, condition, clean_pq = FALSE)
@@ -948,14 +947,21 @@ filter_asv_blast <- function(physeq,
   if (clean_pq) {
     new_physeq <- clean_pq(new_physeq)
   }
-  
+
   if (add_info_to_taxtable) {
-    info_to_taxtable <- blast_tab %>% group_by(`Query name`) %>% slice(which.min(`e-value`)) %>% ungroup()
+    info_to_taxtable <- blast_tab %>%
+      group_by(`Query name`) %>%
+      slice(which.min(`e-value`)) %>%
+      ungroup()
     new_physeq@tax_table <- tax_table(as.matrix(cbind(
       new_physeq@tax_table,
-      info_to_taxtable[match(taxa_names(new_physeq), 
-                             info_to_taxtable[, "Query name"]$`Query name`), 
-      c("Query name", "Taxa name", "bit score", "% id. match", "Query cover", "e-value")]
+      info_to_taxtable[
+        match(
+          taxa_names(new_physeq),
+          info_to_taxtable[, "Query name"]$`Query name`
+        ),
+        c("Query name", "Taxa name", "bit score", "% id. match", "Query cover", "e-value")
+      ]
     )))
   }
 
@@ -980,7 +986,7 @@ filter_asv_blast <- function(physeq,
 #'   Only used if `one_file` and write_sam_data are both TRUE.
 #' @param clean_pq (logical)
 #'   If set to TRUE, empty samples are discarded after subsetting ASV
-#' @param reorder_asv (logical) if TRUE the otu_table is ordered by the number of 
+#' @param reorder_asv (logical) if TRUE the otu_table is ordered by the number of
 #'   sequences of ASV (descending order). Default to TRUE. Only possible if clean_pq
 #'   is set to TRUE.
 #' @param rename_asv reorder_asv (logical) if TRUE, ASV are renamed by their position
@@ -1020,13 +1026,13 @@ write_pq <- function(physeq,
                      ...) {
   verify_pq(physeq)
 
-  physeq <- clean_pq(physeq, 
+  physeq <- clean_pq(physeq,
     reorder_asv = reorder_asv,
     rename_asv = rename_asv,
     remove_empty_samples = remove_empty_samples,
-    remove_empty_taxa = remove_empty_taxa, 
+    remove_empty_taxa = remove_empty_taxa,
     clean_samples_names = clean_samples_names,
-    silent = silent, 
+    silent = silent,
     verbose = verbose
   )
 
@@ -1050,14 +1056,13 @@ write_pq <- function(physeq,
       if (write_sam_data) {
         sam_data <- data.frame(t(data.frame(unclass(physeq@sam_data))))
         colnames(sam_data) <- sample_names(physeq)
-        if(sam_data_first){
+        if (sam_data_first) {
           df_physeq <- dplyr::full_join(sam_data, df_physeq_interm)
           rownames(df_physeq) <- c(rownames(sam_data), rownames(df_physeq_interm))
         } else {
           df_physeq <- dplyr::full_join(df_physeq_interm, sam_data)
           rownames(df_physeq) <- c(rownames(df_physeq_interm), rownames(sam_data))
         }
-        
       }
       utils::write.csv(
         df_physeq,
@@ -1080,7 +1085,7 @@ write_pq <- function(physeq,
       if (write_sam_data) {
         sam_data <- data.frame(t(data.frame(unclass(physeq@sam_data))))
         colnames(sam_data) <- sample_names(physeq)
-        if(sam_data_first){
+        if (sam_data_first) {
           df_physeq <- dplyr::full_join(sam_data, df_physeq_interm)
           rownames(df_physeq) <- c(rownames(sam_data), rownames(df_physeq_interm))
         } else {
@@ -1481,7 +1486,7 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
   }
   cl_sam <- clean_pq(subset_samples_pq(physeq, sample_names(physeq) == sam_name), silent = TRUE)
 
-  if(!silent){
+  if (!silent) {
     message(paste0("You select 1 of ", nsamples(physeq), " samples and conserved ", ntaxa(cl_sam), " out of ", ntaxa(physeq), " taxa represented by ", sum(cl_sam@otu_table), " sequences (out of ", sum(physeq@otu_table), " sequences [", perc(sum(cl_sam@otu_table), sum(physeq@otu_table)), "%])"))
   }
 
