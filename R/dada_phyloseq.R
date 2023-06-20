@@ -53,8 +53,8 @@ add_dna_to_phyloseq <- function(physeq) {
 #'   transpose the otu_table and set taxa_are_rows to true
 #' @param reorder_asv (logical) if TRUE the otu_table is ordered by the number of
 #'   sequences of ASV (descending order). Default to FALSE.
-#'   Need the [microViz] package.
-#' @param rename_asv reorder_asv (logical) if TRUE, ASV are renamed by their position
+#'   Need the [microViz](https://github.com/david-barnett/microViz) package.
+#' @param rename_asv (logical) if TRUE, ASV are renamed by their position
 #'   in the OTU_table (asv_1, asv_2, ...). Default to FALSE. If rename ASV is true,
 #'   the ASV names in verbose information can be misleading.
 #' @return A new \code{\link{phyloseq-class}} object
@@ -989,7 +989,7 @@ filter_asv_blast <- function(physeq,
 #'   If set to TRUE, empty samples are discarded after subsetting ASV
 #' @param reorder_asv (logical) if TRUE the otu_table is ordered by the number of
 #'   sequences of ASV (descending order). Default to TRUE. Only possible if clean_pq
-#'   is set to TRUE.
+#'   is set to TRUE. Need the [microViz](https://github.com/david-barnett/microViz) package.
 #' @param rename_asv reorder_asv (logical) if TRUE, ASV are renamed by their position
 #'   in the OTU_table (asv_1, asv_2, ...). Default to FALSE. Only possible if clean_pq
 #'   is set to TRUE.
@@ -1016,7 +1016,7 @@ write_pq <- function(physeq,
                      write_sam_data = TRUE,
                      sam_data_first = FALSE,
                      clean_pq = TRUE,
-                     reorder_asv = TRUE,
+                     reorder_asv = FALSE,
                      rename_asv = FALSE,
                      remove_empty_samples = TRUE,
                      remove_empty_taxa = TRUE,
