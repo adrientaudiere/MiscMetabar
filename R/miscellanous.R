@@ -180,14 +180,14 @@ perc <- function(x, y = NULL, accuracy = 0, add_symbol = FALSE) {
 #'
 #' @param file_path The path to a  fasta, fastq or fastq.gz file
 #' @param folder_path The path to a folder with fasta, fastq or fastq.gz files
-#'
+#' @param pattern A pattern to filter files in a folder. E.g. _R2_
 #' @return the number of sequences
 #' @author Adrien Taudière
 #' @export
 #' @examples
 #' count_seq(file = "inst/extdata/ex.fasta")
 #' count_seq(folder = "inst/extdata/")
-count_seq <- function(file_path = NULL, folder_path = NULL) {
+count_seq <- function(file_path = NULL, folder_path = NULL, pattern = NULL) {
   if (is.null(file_path) && is.null(folder_path)) {
     stop("You need to specify one of file_path or folder_path param!")
   } else if (!is.null(file_path) && !is.null(folder_path)) {
@@ -216,7 +216,7 @@ count_seq <- function(file_path = NULL, folder_path = NULL) {
     }
   } else {
     seq_nb <- sapply(
-      list.files(folder_path, full.names = TRUE),
+      list.files(folder_path, full.names = TRUE, pattern = pattern),
       function(f) {
         count_seq(file_path = f)
       }

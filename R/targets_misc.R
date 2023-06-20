@@ -46,6 +46,7 @@ MM_idtaxa <- function(test, trainingSet, column_names = c("Kingdom_idtaxa", "Phy
 #' @param nb_files the number of fastq files to list (default FALSE)
 #'
 #' @return a list of one (single end) or two (paired end) list of files
+#'   files are sorted by names (default behavior of `list.files()`)
 #' @export
 #' @author Adrien Taudière
 
