@@ -10,15 +10,20 @@ biplot_pq(
   merge_sample_by = NULL,
   inverse_side = FALSE,
   left_name = NULL,
-  right_name = NULL,
+  left_name_col = "#4B3E1E",
   left_fill = "#4B3E1E",
   left_col = "#f3f2d9",
+  right_name = NULL,
+  right_name_col = "#1d2949",
   right_fill = "#1d2949",
   right_col = "#1d2949",
   log_10 = TRUE,
-  nudge_y = 0.3,
+  nudge_y = c(0.3, 0.3),
   geomLabel = FALSE,
   text_size = 3,
+  size_names = 5,
+  y_names = NA,
+  ylim_modif = c(1, 1),
   plotly_version = FALSE,
   ...
 )
@@ -39,11 +44,15 @@ merging used the \code{\link[speedyseq:merge_samples2]{speedyseq::merge_samples2
 
 \item{left_name}{Name fo the left sample.}
 
-\item{right_name}{Name fo the right sample.}
+\item{left_name_col}{Color for the left name}
 
 \item{left_fill}{Fill fo the left sample.}
 
 \item{left_col}{Color fo the left sample.}
+
+\item{right_name}{Name fo the right sample.}
+
+\item{right_name_col}{Color for the right name}
 
 \item{right_fill}{Fill fo the right sample.}
 
@@ -51,12 +60,23 @@ merging used the \code{\link[speedyseq:merge_samples2]{speedyseq::merge_samples2
 
 \item{log_10}{(logical) Does abundancy is log10 transformed ?}
 
-\item{nudge_y}{A parameter to control the y position of abundancy values.}
+\item{nudge_y}{A parameter to control the y position of abundancy values.
+If a vector of two values are set. The first value is for the left side.
+and the second value for the right one. If one value is set,
+this value is used for both side.}
 
 \item{geomLabel}{(default: FALSE, logical) if TRUE use the \code{\link[ggplot2:geom_text]{ggplot2::geom_label()}} function
 instead of \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}} to indicate the numbers of sequences.}
 
-\item{text_size}{default size for the number of sequences}
+\item{text_size}{size for the number of sequences}
+
+\item{size_names}{size for the names of the 2 samples}
+
+\item{y_names}{y position for the names of the 2 samples. If NA (default),
+computed using the maximum abundances values.}
+
+\item{ylim_modif}{vector of two values. Modificator (by a multiplication)
+of ylim. If one value is set, this value is used for both limits.}
 
 \item{plotly_version}{If TRUE, use \code{\link[plotly:ggplotly]{plotly::ggplotly()}} to return
 a interactive ggplot.}

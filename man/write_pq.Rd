@@ -8,8 +8,18 @@ write_pq(
   physeq,
   path = NULL,
   rdata = FALSE,
-  one_file_ASV = FALSE,
+  one_file = FALSE,
   write_sam_data = TRUE,
+  sam_data_first = FALSE,
+  clean_pq = TRUE,
+  reorder_asv = TRUE,
+  rename_asv = FALSE,
+  remove_empty_samples = TRUE,
+  remove_empty_taxa = TRUE,
+  clean_samples_names = TRUE,
+  silent = FALSE,
+  verbose = FALSE,
+  quote = FALSE,
   ...
 )
 }
@@ -21,11 +31,44 @@ using the \code{phyloseq} package.}
 
 \item{rdata}{(logical) does the phyloseq object is also saved in Rdata format?}
 
-\item{one_file_ASV}{(logical) if TRUE, combine all data in one file only}
+\item{one_file}{(logical) if TRUE, combine all data in one file only}
 
 \item{write_sam_data}{(logical) does the samples data are add to
-the file. Only used if \code{one_file_ASV} is TRUE.
-Note that this result in a lot of NA values.}
+the file. Only used if \code{one_file} is TRUE.
+Note that these option result in a lot of NA values.}
+
+\item{sam_data_first}{(logical) if TRUE, put the sample data at the top of the table
+Only used if \code{one_file} and write_sam_data are both TRUE.}
+
+\item{clean_pq}{(logical)
+If set to TRUE, empty samples are discarded after subsetting ASV}
+
+\item{reorder_asv}{(logical) if TRUE the otu_table is ordered by the number of
+sequences of ASV (descending order). Default to TRUE. Only possible if clean_pq
+is set to TRUE.}
+
+\item{rename_asv}{reorder_asv (logical) if TRUE, ASV are renamed by their position
+in the OTU_table (asv_1, asv_2, ...). Default to FALSE. Only possible if clean_pq
+is set to TRUE.}
+
+\item{remove_empty_samples}{(logical) Do you want to remove samples
+without sequences (this is done after removing empty taxa)}
+
+\item{remove_empty_taxa}{(logical) Do you want to remove taxa
+without sequences (this is done before removing empty samples)}
+
+\item{clean_samples_names}{(logical) Do you want to clean samples names?}
+
+\item{silent}{(logical) If true, no message are printing.}
+
+\item{verbose}{(logical) Additional informations in the message
+the verbose parameter overwrite the silent parameter.}
+
+\item{quote}{: a logical value (default FALSE) or a numeric vector.
+If TRUE, any character or factor columns will be surrounded by
+double quotes.  If a numeric vector, its elements are taken
+as the indices of columns to quote.  In both cases, row and
+column names are quoted if they are written. If FALSE nothing is quoted.}
 
 \item{...}{Other arguments passed to \code{\link[utils:write.table]{utils::write.csv()}} function.}
 }
@@ -39,7 +82,7 @@ and if present a phy_tree in Newick format
 \examples{
 \dontrun{
 write_pq(data_fungi, path = "phyloseq")
-write_pq(data_fungi, path = "phyloseq", one_file_ASV = TRUE)
+write_pq(data_fungi, path = "phyloseq", one_file = TRUE)
 }
 
 }

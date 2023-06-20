@@ -12,7 +12,9 @@ clean_pq(
   silent = FALSE,
   verbose = FALSE,
   force_taxa_as_columns = FALSE,
-  force_taxa_as_rows = FALSE
+  force_taxa_as_rows = FALSE,
+  reorder_asv = FALSE,
+  rename_asv = FALSE
 )
 }
 \arguments{
@@ -37,6 +39,14 @@ transpose the otu_table and set taxa_are_rows to false}
 
 \item{force_taxa_as_rows}{(logical) If true, if the taxa are columns
 transpose the otu_table and set taxa_are_rows to true}
+
+\item{reorder_asv}{(logical) if TRUE the otu_table is ordered by the number of
+sequences of ASV (descending order). Default to FALSE.
+Need the \link{microViz} package.}
+
+\item{rename_asv}{reorder_asv (logical) if TRUE, ASV are renamed by their position
+in the OTU_table (asv_1, asv_2, ...). Default to FALSE. If rename ASV is true,
+the ASV names in verbose information can be misleading.}
 }
 \value{
 A new \code{\link{phyloseq-class}} object

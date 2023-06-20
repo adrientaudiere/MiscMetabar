@@ -11,7 +11,7 @@ filter_asv_blast(
   clean_pq = TRUE,
   blastpath = NULL,
   id_cut = 80,
-  bit_score_cut = 50,
+  bit_score_cut = 150,
   min_cover_cut = 50,
   add_info_to_taxtable = TRUE,
   nproc = 1
@@ -33,7 +33,7 @@ after filtering.}
 
 \item{id_cut}{(default: 80) cut of in identity percent to keep ASV}
 
-\item{bit_score_cut}{(default: 50) cut of in bit score to keep result}
+\item{bit_score_cut}{(default: 150) cut of in bit score to keep result}
 
 \item{min_cover_cut}{(default: 50) cut of in query cover (\%) to keep result}
 
@@ -42,7 +42,10 @@ Set to number of cpus/processors to use for blast (args -num_threads
 for blastn command)}
 
 \item{add_info_to_taxtable:}{add some info from blast query to taxtable of the
-new physeq object}
+new physeq object. Only the information ("Query name", "Taxa name", "bit score",
+"\% id. match", "Query cover", "e-value") for higher e-value hit.
+for each ASV is add to taxtable. Note that query name may be different from
+final taxa names as some function proposed to change the ASV names.}
 }
 \value{
 A new \code{\link{phyloseq-class}} object.

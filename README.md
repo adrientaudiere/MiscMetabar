@@ -25,7 +25,7 @@ install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar")
 #> 
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/RtmpEXd8K1/remotes35f04241b2b12/adrientaudiere-MiscMetabar-939338b/DESCRIPTION’ ... OK
+#> * checking for file ‘/tmp/RtmpjhfZ5T/remotes2ea4f6396e429/adrientaudiere-MiscMetabar-939338b/DESCRIPTION’ ... OK
 #> * preparing ‘MiscMetabar’:
 #> * checking DESCRIPTION meta-information ... OK
 #> * checking for LF line-endings in source and make files and shell scripts
@@ -41,7 +41,7 @@ install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar", ref = "dev")
 #> 
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/RtmpEXd8K1/remotes35f047d5ea1bd/adrientaudiere-MiscMetabar-f7da2bf/DESCRIPTION’ ... OK
+#> * checking for file ‘/tmp/RtmpjhfZ5T/remotes2ea4f14bdf9d/adrientaudiere-MiscMetabar-9944b43/DESCRIPTION’ ... OK
 #> * preparing ‘MiscMetabar’:
 #> * checking DESCRIPTION meta-information ... OK
 #> * checking for LF line-endings in source and make files and shell scripts
