@@ -12,7 +12,7 @@ object. — blast_to_phyloseq"><meta property="og:description" content=""><!-- m
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.31</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,11 +84,13 @@ object.</h1>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>physeq</dt>
-<dd><p>(required) a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object.</p></dd>
+<dd><p>(required): a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object obtained
+using the <code>phyloseq</code> package.</p></dd>
 
 
 <dt>seq2search</dt>
-<dd><p>(required) path to fasta file</p></dd>
+<dd><p>(required) path to a fasta file defining the sequences
+you want to blast against the ASV sequences from the physeq object.</p></dd>
 
 
 <dt>blastpath</dt>
@@ -100,7 +102,7 @@ object.</h1>
 
 
 <dt>bit_score_cut</dt>
-<dd><p>(default: 1e-10) cut of in bit score to keep result</p></dd>
+<dd><p>(default: 50) cut of in bit score to keep result</p></dd>
 
 
 <dt>unique_per_seq</dt>
@@ -110,12 +112,16 @@ each sequence in seq2search</p></dd>
 
 <dt>score_filter</dt>
 <dd><p>(logical) does results are filter by score? If
-FALSE, <code>id_cut</code> and <code>bit_score_cut</code> are ignored</p></dd>
+FALSE, <code>id_cut</code>,<code>bit_score_cut</code> and <code>min_cover_cut</code> are ignored</p></dd>
 
 
 <dt>list_no_output_query</dt>
 <dd><p>(logical) does the result table include
 query sequences for which <code>blastn</code> does not find any correspondence?</p></dd>
+
+
+<dt>min_cover_cut</dt>
+<dd><p>(default: 50) cut of in query cover (%) to keep result</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -123,6 +129,11 @@ query sequences for which <code>blastn</code> does not find any correspondence?<
     
 
 <p>the blast table</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code><a href="blast_pq.html">blast_pq()</a></code> to use <code>refseq</code> slot as query sequences
+against un custom database.</p></div>
     </div>
 
     <div class="section level2">

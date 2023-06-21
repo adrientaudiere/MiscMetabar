@@ -12,7 +12,7 @@ A wrapper for the vegan::adonis2() function in the case of physeq object."><!-- 
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.31</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,7 +75,8 @@ A wrapper for the vegan::adonis2() function in the case of physeq object."><!-- 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>physeq</dt>
-<dd><p>(required) a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object.</p></dd>
+<dd><p>(required): a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object obtained
+using the <code>phyloseq</code> package.</p></dd>
 
 
 <dt>formula</dt>
@@ -118,7 +119,7 @@ See ?adonis2 for more information.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     Df SumOfSqs      R2        F Pr(&gt;F)    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SeqTech              2   29.175 0.54055 242.2289  0.001 ***</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Enterotype           2    8.651 0.16028  71.8250  0.001 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTech:Enterotype   4    0.368 0.00683   1.5293  0.104    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTech:Enterotype   4    0.368 0.00683   1.5293  0.116    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residual           262   15.778 0.29234                    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total              270   53.972 1.00000                    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>

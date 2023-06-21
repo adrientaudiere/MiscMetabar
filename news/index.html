@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.31</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,32 +60,55 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3" id="miscmetabar-03-in-development">MiscMetabar 0.3 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-03-in-development"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.32" id="miscmetabar-032-in-development">MiscMetabar 0.32 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-032-in-development"></a></h2>
+<ul><li>Add the possibility to select a folder in the function <code><a href="../reference/count_seq.html">count_seq()</a></code>
+</li>
+<li>Add functions <code><a href="../reference/track_wkflow_samples.html">track_wkflow_samples()</a></code> and <code><a href="../reference/select_one_sample.html">select_one_sample()</a></code>
+</li>
+<li>Add option <code>sam_data_first</code> in function <code><a href="../reference/write_pq.html">write_pq()</a></code>
+</li>
+<li>Add option <code>reorder_asv</code> and <code>rename_asv</code> to in function <code><a href="../reference/write_pq.html">write_pq()</a></code> and <code>clean_pq</code>
+</li>
+<li>Add a function <code><a href="../reference/rotl_pq.html">rotl_pq()</a></code> to build a phylogenetic tree using the ASV binomial names of a physeq object and the Open Tree of Life tree.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.31" id="miscmetabar-031-in-development">MiscMetabar 0.31 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-031-in-development"></a></h2>
+<ul><li>Argument <code>split_by</code> to make multiple plot given a variable in <code>sam_data</code> slot (function <code><a href="../reference/ggvenn_pq.html">ggvenn_pq()</a></code>)<br></li>
+<li>Argument <code>seq_names</code> in <code><a href="../reference/asv2otu.html">asv2otu()</a></code> function allow to clusterize sequences from a character vector of DNA.</li>
+<li>Add a <code><a href="../reference/blast_pq.html">blast_pq()</a></code> function to blast the sequences of the <code>@ref_seq</code> slot against a custom database</li>
+<li>Add a <code><a href="../reference/filter_asv_blast.html">filter_asv_blast()</a></code> function to filter ASV in phyloseq dataset using blast against a custom database</li>
+<li>Add a <code><a href="../reference/subset_taxa_pq.html">subset_taxa_pq()</a></code> function to filter ASV based on a named conditional vector. Used in <code><a href="../reference/filter_asv_blast.html">filter_asv_blast()</a></code>.</li>
+<li>Add parameter <code>force_taxa_as_columns</code> (default FALSE) and <code>force_taxa_as_rows</code> (default FALSE) to <code><a href="../reference/clean_pq.html">clean_pq()</a></code>.</li>
+<li>Add a first version of the function <code>count_fastq_seq()</code> to count sequences from fastq.gz files directly from R.</li>
+<li>Add taxonomic info to <code><a href="../reference/track_wkflow.html">track_wkflow()</a></code> function (parameter <code>taxonomy_rank</code>)</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3" id="miscmetabar-03">MiscMetabar 0.3<a class="anchor" aria-label="anchor" href="#miscmetabar-03"></a></h2>
 <ul><li>Change some function names, mainly replacing <code>physeq</code> by <code>pk</code>. </li>
 <li>Improve documentation using some rules documented in the Rules vignettes.</li>
-<li>Add a option <code>sam_names</code> to [read_pq()]</li>
+<li>Add a option <code>sam_names()</code> to <code><a href="../reference/read_pq.html">read_pq()</a></code>
+</li>
 <li>Correction of <code>data_fungi</code> and <code>data_fungi_sp_known</code> metadata</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.24" id="miscmetabar-024">MiscMetabar 0.24<a class="anchor" aria-label="anchor" href="#miscmetabar-024"></a></h2>
-<ul><li>Add supplementary info in <code>summary_plot_physeq</code>
-</li>
-<li>Better arguments in biplot_physeq</li>
-<li>Add merge_sample_by argument in biplot_physeq</li>
+<ul><li>Add supplementary info in summary_plot_physeq()`</li>
+<li>Better arguments in biplot_physeq()`)</li>
+<li>Add merge_sample_by argument in biplot_physeq()`</li>
 <li>Better documentation with more example.</li>
 <li>For other minors bugs fixes and addition, see the list of commits</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.23" id="miscmetabar-023">MiscMetabar 0.23<a class="anchor" aria-label="anchor" href="#miscmetabar-023"></a></h2>
-<ul><li><p>Adapt the function <code>asv2otu</code> to <em>IdClusters</em> change in the DECIPHER package (commit 254100922f2093cc789d018c18a26752a3cda1e3). Then change the <em>IdClusters</em> function that was removed from DECIPHER to <em>Clusterize</em> function.</p></li>
-<li><p>Better functioning of <code>blast_to_phyloseq</code> when none query sequences are founded.</p></li>
-<li><p>Add <em>tax_adjust</em> argument to <code>asv2otu</code>function</p></li>
+<ul><li><p>Adapt the function <code><a href="../reference/asv2otu.html">asv2otu()</a></code> to <em>IdClusters</em> change in the DECIPHER package (commit 254100922f2093cc789d018c18a26752a3cda1e3). Then change the <em>IdClusters</em> function that was removed from DECIPHER to <em>Clusterize</em> function.</p></li>
+<li><p>Better functioning of <code><a href="../reference/blast_to_phyloseq.html">blast_to_phyloseq()</a></code> when none query sequences are founded.</p></li>
+<li><p>Add <em>tax_adjust</em> argument to <code><a href="../reference/asv2otu.html">asv2otu()</a></code>function</p></li>
 <li><p>Add some functions useful for the targets package</p></li>
-<li><p>Add a <code>biplot_physeq</code> function to visualize of two samples for comparison of physeq object</p></li>
-<li><p>Add an argument <em>modality</em> in the <code>tax_datatable</code> function to split OTU abundancy by level of the sample modality</p></li>
-<li><p>Add a function <code>multiple_share_bisamples</code> to help compare samples by pairs</p></li>
-<li><p>Add a new function (<code>ggVenn_phyloseq</code>) for better venn diagramm but without area calculation (use <code>venn_phyloseq</code> in this case).</p></li>
-<li><p>Add two functions helpful for beta-diversity analysis (<code>adonis_phyloseq</code> and <code>physeq_graph_test</code>)</p></li>
+<li><p>Add a <code><a href="../reference/MiscMetabar-deprecated.html">biplot_physeq()</a></code> function to visualize of two samples for comparison of physeq object</p></li>
+<li><p>Add an argument <em>modality</em> in the <code><a href="../reference/tax_datatable.html">tax_datatable()</a></code> function to split OTU abundancy by level of the sample modality</p></li>
+<li><p>Add a function <code>multiple_share_bisamples()</code> to help compare samples by pairs</p></li>
+<li><p>Add a new function (<code><a href="../reference/MiscMetabar-deprecated.html">ggVenn_phyloseq()</a></code>) for better venn diagramm but without area calculation (use <code><a href="../reference/MiscMetabar-deprecated.html">venn_phyloseq()</a></code> in this case).</p></li>
+<li><p>Add two functions helpful for beta-diversity analysis (<code><a href="../reference/MiscMetabar-deprecated.html">adonis_phyloseq()</a></code> and <code><a href="../reference/MiscMetabar-deprecated.html">physeq_graph_test()</a></code>)</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.22" id="miscmetabar-022">MiscMetabar 0.22<a class="anchor" aria-label="anchor" href="#miscmetabar-022"></a></h2>

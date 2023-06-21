@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.31</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -119,6 +119,12 @@ using ASV_1, ASV_2, …</dd>
         <dd>Visualization of two samples for comparison</dd>
       </dl><dl><dt>
           
+          <code><a href="blast_pq.html">blast_pq()</a></code> 
+        </dt>
+        <dd>Blast all sequence of <code>refseq</code> slot of a <code>phyloseq-class</code>
+object against a custom database.</dd>
+      </dl><dl><dt>
+          
           <code><a href="blast_to_phyloseq.html">blast_to_phyloseq()</a></code> 
         </dt>
         <dd>Blast some sequence against <code>refseq</code> slot of a <code>phyloseq-class</code>
@@ -141,6 +147,11 @@ object.</dd>
 shared ASV.</dd>
       </dl><dl><dt>
           
+          <code><a href="count_seq.html">count_seq()</a></code> 
+        </dt>
+        <dd>Count sequences in fasta or fastq file</dd>
+      </dl><dl><dt>
+          
           <code><a href="data_fungi.html">data_fungi</a></code> 
         </dt>
         <dd>Some fungal OTU in phyloseq format</dd>
@@ -160,6 +171,16 @@ shared ASV.</dd>
         </dt>
         <dd>Calculate ecological distance among positive controls vs
 distance for all samples</dd>
+      </dl><dl><dt>
+          
+          <code><a href="filter_asv_blast.html">filter_asv_blast()</a></code> 
+        </dt>
+        <dd>Filter indesirable taxa using blast against a against a custom database.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="get_file_extension.html">get_file_extension()</a></code> 
+        </dt>
+        <dd>Get the extension of a file</dd>
       </dl><dl><dt>
           
           <code><a href="ggvenn_pq.html">ggvenn_pq()</a></code> 
@@ -213,6 +234,11 @@ distance for all samples</dd>
         <dd>Multiple plot function</dd>
       </dl><dl><dt>
           
+          <code><a href="perc.html">perc()</a></code> 
+        </dt>
+        <dd>Convert a value (or a fraction x/y) in percentage</dd>
+      </dl><dl><dt>
+          
           <code><a href="phyloseq_to_edgeR.html">phyloseq_to_edgeR()</a></code> 
         </dt>
         <dd>Convert phyloseq OTU count data into DGEList for edgeR package</dd>
@@ -244,14 +270,34 @@ in Newick format.</dd>
         <dd>Rename samples of an otu_table</dd>
       </dl><dl><dt>
           
+          <code><a href="rotl_pq.html">rotl_pq()</a></code> 
+        </dt>
+        <dd>rotl wrapper for phyloseq data</dd>
+      </dl><dl><dt>
+          
           <code><a href="sankey_pq.html">sankey_pq()</a></code> 
         </dt>
         <dd>Sankey plot of <code>phyloseq-class</code> object</dd>
       </dl><dl><dt>
           
+          <code><a href="select_one_sample.html">select_one_sample()</a></code> 
+        </dt>
+        <dd>Select one sample from a physeq object</dd>
+      </dl><dl><dt>
+          
           <code><a href="simplify_taxo.html">simplify_taxo()</a></code> 
         </dt>
         <dd>Simplify taxonomy by removing some unused characters such as "k__"</dd>
+      </dl><dl><dt>
+          
+          <code><a href="subset_samples_pq.html">subset_samples_pq()</a></code> 
+        </dt>
+        <dd>Subset samples using a conditional boolean vector.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="subset_taxa_pq.html">subset_taxa_pq()</a></code> 
+        </dt>
+        <dd>Subset taxa using a conditional named boolean vector.</dd>
       </dl><dl><dt>
           
           <code><a href="subset_taxa_tax_control.html">subset_taxa_tax_control()</a></code> 
@@ -275,9 +321,20 @@ in Newick format.</dd>
 from various objects including dada-class and derep-class.</dd>
       </dl><dl><dt>
           
+          <code><a href="track_wkflow_samples.html">track_wkflow_samples()</a></code> 
+        </dt>
+        <dd>Track the number of reads (= sequences), samples and cluster (e.g. ASV)
+for each samples</dd>
+      </dl><dl><dt>
+          
           <code><a href="venn_pq.html">venn_pq()</a></code> 
         </dt>
         <dd>Venn diagram of <code>phyloseq-class</code> object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="verify_pq.html">verify_pq()</a></code> 
+        </dt>
+        <dd>Verify the validity of a phyloseq object</dd>
       </dl><dl><dt>
           
           <code><a href="vsearch_search_global.html">vsearch_search_global()</a></code> 

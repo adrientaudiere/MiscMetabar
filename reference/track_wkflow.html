@@ -14,7 +14,7 @@ from various objects including dada-class and derep-class."><!-- mathjax --><scr
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.31</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +72,12 @@ from various objects including dada-class and derep-class.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">track_wkflow</span><span class="op">(</span><span class="va">list_of_objects</span>, obj_names <span class="op">=</span> <span class="cn">NULL</span>, clean_pq <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">track_wkflow</span><span class="op">(</span></span>
+<span>  <span class="va">list_of_objects</span>,</span>
+<span>  obj_names <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  clean_pq <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  taxonomy_rank <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -87,7 +92,18 @@ from various objects including dada-class and derep-class.</p>
 
 <dt>clean_pq</dt>
 <dd><p>(logical)
-If true, empty samples and empty ASV are discarded before clustering.</p></dd>
+If set to TRUE, empty samples and empty ASV are discarded
+before clustering.</p></dd>
+
+
+<dt>taxonomy_rank</dt>
+<dd><p>A vector of int. Define the column number of
+taxonomic rank <code>in physeq@tax_table</code> to compute the number of unique value.
+Default is NULL and do not compute values for any taxonomic rank</p></dd>
+
+
+<dt>...</dt>
+<dd><p>Other arguments passed to <code><a href="clean_pq.html">clean_pq()</a></code> function.</p></dd>
 
 </dl></div>
     <div class="section level2">

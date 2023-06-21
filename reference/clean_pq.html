@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.31</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +72,11 @@
 <span>  remove_empty_taxa <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  clean_samples_names <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  silent <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  force_taxa_as_columns <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  force_taxa_as_rows <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  reorder_asv <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  rename_asv <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -80,15 +84,17 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>physeq</dt>
 <dd><p>(required): a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object obtained
-using the <code>dada2</code> package</p></dd>
+using the <code>phyloseq</code> package.</p></dd>
 
 
 <dt>remove_empty_samples</dt>
-<dd><p>(logical) Do you want to remove samples without sequences (this is done after removing empty taxa)</p></dd>
+<dd><p>(logical) Do you want to remove samples
+without sequences (this is done after removing empty taxa)</p></dd>
 
 
 <dt>remove_empty_taxa</dt>
-<dd><p>(logical) Do you want to remove taxa without sequences (this is done before removing empty samples)</p></dd>
+<dd><p>(logical) Do you want to remove taxa
+without sequences (this is done before removing empty samples)</p></dd>
 
 
 <dt>clean_samples_names</dt>
@@ -102,6 +108,28 @@ using the <code>dada2</code> package</p></dd>
 <dt>verbose</dt>
 <dd><p>(logical) Additional informations in the message
 the verbose parameter overwrite the silent parameter.</p></dd>
+
+
+<dt>force_taxa_as_columns</dt>
+<dd><p>(logical) If true, if the taxa are rows
+transpose the otu_table and set taxa_are_rows to false</p></dd>
+
+
+<dt>force_taxa_as_rows</dt>
+<dd><p>(logical) If true, if the taxa are columns
+transpose the otu_table and set taxa_are_rows to true</p></dd>
+
+
+<dt>reorder_asv</dt>
+<dd><p>(logical) if TRUE the otu_table is ordered by the number of
+sequences of ASV (descending order). Default to FALSE.
+Need the microViz package.</p></dd>
+
+
+<dt>rename_asv</dt>
+<dd><p>reorder_asv (logical) if TRUE, ASV are renamed by their position
+in the OTU_table (asv_1, asv_2, ...). Default to FALSE. If rename ASV is true,
+the ASV names in verbose information can be misleading.</p></dd>
 
 </dl></div>
     <div class="section level2">

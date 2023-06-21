@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.31</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,6 +70,7 @@
 <span>  physeq <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fact <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  taxa <span class="op">=</span> <span class="st">"Order"</span>,</span>
+<span>  nproc <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  add_nb_seq <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  rarefy <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  min_prop_tax <span class="op">=</span> <span class="fl">0.01</span>,</span>
@@ -86,7 +87,8 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>physeq</dt>
-<dd><p>(required) a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object.</p></dd>
+<dd><p>(required): a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object obtained
+using the <code>phyloseq</code> package.</p></dd>
 
 
 <dt>fact</dt>
@@ -96,6 +98,11 @@ Need to be in <code>physeq@sam_data</code>.</p></dd>
 
 <dt>taxa</dt>
 <dd><p>(default: 'Order') Name of the taxonomic rank of interest</p></dd>
+
+
+<dt>nproc</dt>
+<dd><p>(default 1)
+Set to number of cpus/processors to use for parallelization</p></dd>
 
 
 <dt>add_nb_seq</dt>

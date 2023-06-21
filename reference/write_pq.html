@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.31</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,8 +70,18 @@
 <span>  <span class="va">physeq</span>,</span>
 <span>  path <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  rdata <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  one_file_ASV <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  one_file <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  write_sam_data <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  sam_data_first <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  clean_pq <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  reorder_asv <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  rename_asv <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  remove_empty_samples <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  remove_empty_taxa <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  clean_samples_names <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  silent <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  quote <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -79,7 +89,8 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>physeq</dt>
-<dd><p>(required) a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object.</p></dd>
+<dd><p>(required): a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object obtained
+using the <code>phyloseq</code> package.</p></dd>
 
 
 <dt>path</dt>
@@ -90,14 +101,67 @@
 <dd><p>(logical) does the phyloseq object is also saved in Rdata format?</p></dd>
 
 
-<dt>one_file_ASV</dt>
+<dt>one_file</dt>
 <dd><p>(logical) if TRUE, combine all data in one file only</p></dd>
 
 
 <dt>write_sam_data</dt>
 <dd><p>(logical) does the samples data are add to
-the file. Only used if <code>one_file_ASV</code> is TRUE.
-Note that this result in a lot of NA values.</p></dd>
+the file. Only used if <code>one_file</code> is TRUE.
+Note that these option result in a lot of NA values.</p></dd>
+
+
+<dt>sam_data_first</dt>
+<dd><p>(logical) if TRUE, put the sample data at the top of the table
+Only used if <code>one_file</code> and write_sam_data are both TRUE.</p></dd>
+
+
+<dt>clean_pq</dt>
+<dd><p>(logical)
+If set to TRUE, empty samples are discarded after subsetting ASV</p></dd>
+
+
+<dt>reorder_asv</dt>
+<dd><p>(logical) if TRUE the otu_table is ordered by the number of
+sequences of ASV (descending order). Default to TRUE. Only possible if clean_pq
+is set to TRUE.</p></dd>
+
+
+<dt>rename_asv</dt>
+<dd><p>reorder_asv (logical) if TRUE, ASV are renamed by their position
+in the OTU_table (asv_1, asv_2, ...). Default to FALSE. Only possible if clean_pq
+is set to TRUE.</p></dd>
+
+
+<dt>remove_empty_samples</dt>
+<dd><p>(logical) Do you want to remove samples
+without sequences (this is done after removing empty taxa)</p></dd>
+
+
+<dt>remove_empty_taxa</dt>
+<dd><p>(logical) Do you want to remove taxa
+without sequences (this is done before removing empty samples)</p></dd>
+
+
+<dt>clean_samples_names</dt>
+<dd><p>(logical) Do you want to clean samples names?</p></dd>
+
+
+<dt>silent</dt>
+<dd><p>(logical) If true, no message are printing.</p></dd>
+
+
+<dt>verbose</dt>
+<dd><p>(logical) Additional informations in the message
+the verbose parameter overwrite the silent parameter.</p></dd>
+
+
+<dt>quote</dt>
+<dd><p>: a logical value (default FALSE) or a numeric vector.
+If TRUE, any character or factor columns will be surrounded by
+double quotes.  If a numeric vector, its elements are taken
+as the indices of columns to quote.  In both cases, row and
+column names are quoted if they are written. If FALSE nothing is quoted.</p></dd>
 
 
 <dt>...</dt>
@@ -116,7 +180,7 @@ and if present a phy_tree in Newick format</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="fu">write_pq</span><span class="op">(</span><span class="va">data_fungi</span>, path <span class="op">=</span> <span class="st">"phyloseq"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">write_pq</span><span class="op">(</span><span class="va">data_fungi</span>, path <span class="op">=</span> <span class="st">"phyloseq"</span>, one_file_ASV <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">write_pq</span><span class="op">(</span><span class="va">data_fungi</span>, path <span class="op">=</span> <span class="st">"phyloseq"</span>, one_file <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
