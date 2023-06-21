@@ -23,3 +23,5 @@ navbar:
     - text: "For developpers"
     - text: Rules of code
       href: articles/Rules.html
+development:
+  mode: auto
