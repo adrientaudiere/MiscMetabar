@@ -1043,7 +1043,9 @@ write_pq <- function(physeq,
   if (one_file) {
     if (!is.null(physeq@refseq) && !is.null(physeq@otu_table) && !is.null(physeq@tax_table)) {
       if (!taxa_are_rows(physeq)) {
-        physeq@otu_table <- t(physeq@otu_table)
+        otu_table(physeq) <- otu_table(t(as.matrix(unclass(physeq@otu_table))),
+          taxa_are_rows = TRUE
+        )
       }
       df_physeq_interm <- cbind(
         physeq@otu_table,
@@ -1064,6 +1066,8 @@ write_pq <- function(physeq,
           df_physeq <- dplyr::full_join(df_physeq_interm, sam_data)
           rownames(df_physeq) <- c(rownames(df_physeq_interm), rownames(sam_data))
         }
+      } else {
+        df_physeq <- df_physeq_interm
       }
       utils::write.csv(
         df_physeq,
@@ -1073,7 +1077,9 @@ write_pq <- function(physeq,
       )
     } else if (!is.null(physeq@otu_table) && !is.null(physeq@tax_table)) {
       if (!taxa_are_rows(physeq)) {
-        physeq@otu_table <- t(physeq@otu_table)
+        otu_table(physeq) <- otu_table(t(as.matrix(unclass(physeq@otu_table))),
+          taxa_are_rows = TRUE
+        )
       }
       df_physeq_interm <- cbind(
         physeq@otu_table,
