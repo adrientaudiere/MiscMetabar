@@ -1,4 +1,7 @@
-# MiscMetabar 0.32 (in development)
+# MiscMetabar 0.33 (in development)
+
+
+# MiscMetabar 0.32
 
 * Add the possibility to select a folder in the function `count_seq()`
 * Add functions `track_wkflow_samples()` and `select_one_sample()`
@@ -6,7 +9,7 @@
 * Add option `reorder_asv` and `rename_asv` to in function `write_pq()` and `clean_pq`
 * Add a function `rotl_pq()` to build a phylogenetic tree using the ASV binomial names of a physeq object and the Open Tree of Life tree.
 
-# MiscMetabar 0.31 (in development)
+# MiscMetabar 0.31
 
 * Argument `split_by` to make multiple plot given a variable in `sam_data` slot (function `ggvenn_pq()`)  
 * Argument `seq_names` in `asv2otu()` function allow to clusterize sequences from a character vector of DNA.
