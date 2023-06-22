@@ -9,7 +9,8 @@ track_wkflow(
   list_of_objects,
   obj_names = NULL,
   clean_pq = FALSE,
-  taxonomy_rank = NULL
+  taxonomy_rank = NULL,
+  ...
 )
 }
 \arguments{

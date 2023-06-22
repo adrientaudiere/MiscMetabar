@@ -1743,7 +1743,7 @@ biplot_pq <- function(physeq,
 #' @param nb_print_value number of higher values to print
 #'    (replace prop_print_value if both are set).
 #'
-#' @return
+#' @return A ggplot2 graphic
 #' @export
 #'
 #' @examples

@@ -4,12 +4,14 @@
 \alias{count_seq}
 \title{Count sequences in fasta or fastq file}
 \usage{
-count_seq(file_path = NULL, folder_path = NULL)
+count_seq(file_path = NULL, folder_path = NULL, pattern = NULL)
 }
 \arguments{
 \item{file_path}{The path to a  fasta, fastq or fastq.gz file}
 
 \item{folder_path}{The path to a folder with fasta, fastq or fastq.gz files}
+
+\item{pattern}{A pattern to filter files in a folder. E.g. \emph{R2}}
 }
 \value{
 the number of sequences
