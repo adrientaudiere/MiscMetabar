@@ -1721,11 +1721,14 @@ biplot_pq <- function(physeq,
 }
 
 
-#' Plot taxonomic distribution in function of a factor
-#' Extend the power of `plot_bar()` function
+#' Plot taxonomic distribution in function of a factor.
+
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
+#' 
+#'   An alternative to `phyloseq::plot_bar()` function.
+#' 
 #' @inheritParams clean_pq
 #' @param fact :
 #' @param merge_sample_by a vector to determine
