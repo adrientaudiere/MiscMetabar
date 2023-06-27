@@ -1,6 +1,7 @@
 # MiscMetabar 0.33 (in development)
 
 * Add function `plot_tax_pq()` to plot taxonomic distribution (nb of sequences or nb of ASV) across factor.
+* Add option `add_points` and make better axis of `hill_pq()` function
 
 
 # MiscMetabar 0.32
