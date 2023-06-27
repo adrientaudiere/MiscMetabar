@@ -1062,14 +1062,14 @@ multiplot <-
 ################################################################################
 #' Graphical representation of hill number 0, 1 and 2 across a factor
 #' @description
-#' `r lifecycle::badge("maturing")`
+#' `r lifecycle::badge("experimental")`
 #' @inheritParams clean_pq
 #' @param variable (required): The variable to test
 #' @param color_fac (optional): The variable to color the barplot
 #' @param letters (optional, default=FALSE): If set to TRUE, the plot
 #' show letters based on p-values for comparison. Use the
 #'  \code{\link[multcompView]{multcompLetters}} function from the package
-#'  multcompLetters.
+#'  multcompLetters. BROKEN for the moment.
 #'
 #' @return A list of 4 ggplot2 plot.
 #' - plot_Hill_0 : the boxplot of Hill number 0 (= species richness)
@@ -1081,6 +1081,13 @@ multiplot <-
 #' - plot_tuckey : plot the result of the Tuckey HSD test
 #'
 #' @export
+#' @example 
+#' data(data_fungi)
+#' p <- hill_pq(data_fungi, "Height")
+#' p_h1 <- p[[1]] + theme(legend.position = "none") 
+#' p_h2 <- p[[2]] + theme(legend.position = "none") 
+#' p_h3 <- p[[3]] + theme(legend.position = "none") 
+#' multiplot(plotlist = list(p_h1, p_h2, p_h3, p[[4]]), cols = 4)
 
 hill_pq <-
   function(physeq,
@@ -1115,17 +1122,20 @@ hill_pq <-
     p_var <- hill_tuckey_pq(physeq, variable)
 
     p_0 <- ggplot(df_hill, aes(group = !!var, Hill_0)) +
-      geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac)))
+      geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac), y = !!var)) + 
+      labs(x = "Richness (Hill 0)")
     p_1 <- ggplot(df_hill, aes(group = !!var, Hill_1)) +
-      geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac)))
+      geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac), y = !!var)) +
+      labs(x = "Shannon (Hill 1)")
     p_2 <- ggplot(df_hill, aes(group = !!var, Hill_2)) +
-      geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac)))
+      geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac), y = !!var)) +
+      labs(x = "Simpson (Hill 2)")
 
 
     if (letters) {
       ### HILL 0
       data_h0 <-
-        p_var$data[grep("Hill Number 0", p_var$data[, 5]),]
+        p_var$data[grep("Hill 0", p_var$data[, 5]),]
       data_h0_pval <- data_h0$p.adj
       names(data_h0_pval) <- data_h0$modality
       letters <-
@@ -1149,7 +1159,7 @@ hill_pq <-
       ### HILL 1
 
       data_h1 <-
-        p_var$data[grep("Hill Number 1", p_var$data[, 5]),]
+        p_var$data[grep("Hill 1", p_var$data[, 5]),]
       data_h1_pval <- data_h1$p.adj
       names(data_h1_pval) <- data_h1$modality
       letters <-
@@ -1173,7 +1183,7 @@ hill_pq <-
       ### HILL 2
 
       data_h2 <-
-        p_var$data[grep("Hill Number 2", p_var$data[, 5]),]
+        p_var$data[grep("Hill 2", p_var$data[, 5]),]
       data_h2_pval <- data_h2$p.adj
       names(data_h2_pval) <- data_h2$modality
       letters <-
