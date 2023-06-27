@@ -1070,7 +1070,8 @@ multiplot <-
 #' show letters based on p-values for comparison. Use the
 #'  \code{\link[multcompView]{multcompLetters}} function from the package
 #'  multcompLetters. BROKEN for the moment.
-#'
+#' @param add_points (logical): add jitter point on boxplot
+#' 
 #' @return A list of 4 ggplot2 plot.
 #' - plot_Hill_0 : the boxplot of Hill number 0 (= species richness)
 #'     against the variable
@@ -1093,7 +1094,8 @@ hill_pq <-
   function(physeq,
            variable,
            color_fac = NA,
-           letters = FALSE) {
+           letters = FALSE,
+           add_points = FALSE) {
     var <- sym(variable)
     if (is.na(color_fac)) {
       color_fac <- sym(variable)
@@ -1131,6 +1133,11 @@ hill_pq <-
       geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac), y = !!var)) +
       labs(x = "Simpson (Hill 2)")
 
+    if (add_points) {
+      p_0 <- p_0 + geom_jitter(aes(y = !!var, colour = as.factor(!!color_fac)), alpha = 0.5)
+      p_1 <- p_1 + geom_jitter(aes(y = !!var, colour = as.factor(!!color_fac)), alpha = 0.5)
+      p_2 <- p_2 + geom_jitter(aes(y = !!var, colour = as.factor(!!color_fac)), alpha = 0.5)
+    }
 
     if (letters) {
       ### HILL 0
