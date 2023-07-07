@@ -118,22 +118,22 @@
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>iteration <span class="dv">16</span> of up to <span class="dv">400</span> (<span class="fl">100.0</span>% coverage)</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 1.12 secs</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 0.64 secs</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Sorting by relatedness within 4 groups:</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>iteration <span class="dv">52</span> of up to <span class="dv">324</span> (<span class="fl">100.0</span>% stability) </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>iteration <span class="dv">51</span> of up to <span class="dv">324</span> (<span class="fl">100.0</span>% stability) </span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 3.9 secs</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 2.68 secs</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clustering sequences by 8-mer similarity:</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ================================================================================</span></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clusters via relatedness sorting: 99% (0% exclusively)</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clusters via rare 6-mers: 100% (1% exclusively)</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clusters via relatedness sorting: 99.7% (0% exclusively)</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clusters via rare 6-mers: 100% (0.3% exclusively)</span></span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Estimated clustering effectiveness: 100%</span></span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 1.23 secs</span></span></code></pre></div>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 0.95 secs</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">otu_vs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/asv2otu.html">asv2otu</a></span><span class="op">(</span><span class="va">data_fungi_sp_known</span>, method <span class="op">=</span> <span class="st">"vsearch"</span><span class="op">)</span></span></code></pre></div>
 <p>The vsearch method requires the installation of <a href="https://github.com/torognes/vsearch" class="external-link">Vsearch</a>.</p>
@@ -147,7 +147,8 @@
 <p><img src="Reclustering_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
 </div>
 <div class="section level3">
-<h3 id="using-lulu-algorithm-httpswww-nature-comarticless41467-017-01312-x">Using lulu algorithm (<a href="https://www.nature.com/articles/s41467-017-01312-x" class="external-link uri">https://www.nature.com/articles/s41467-017-01312-x</a>)<a class="anchor" aria-label="anchor" href="#using-lulu-algorithm-httpswww-nature-comarticless41467-017-01312-x"></a>
+<h3 id="using-lulu-algorithm-link-to-lulu-article">Using lulu algorithm <a href="https://www.nature.com/articles/s41467-017-01312-x" class="external-link">link to LULU
+article</a><a class="anchor" aria-label="anchor" href="#using-lulu-algorithm-link-to-lulu-article"></a>
 </h3>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
