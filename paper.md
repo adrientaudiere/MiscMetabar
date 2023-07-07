@@ -47,7 +47,9 @@ and [cran](https://cran.r-project.org/) projects. [bioconductor](https://www.bio
 
 `dada2` [@Callahan:2016] (http://bioconductor.org/packages/release/bioc/html/dada2.html) provides a clustering method highly cited and recommended [@Pauvert:]. `dada2` also supply tools to complete pipeline of metabarcoding analysis including chimera detection and taxonomic assignation. `phyloseq` [@McMurdie:2013] (http://bioconductor.org/packages/release/bioc/html/phyloseq.html) facilitate metagenomics analysis by providing a way to stock data (the `phyloseq` class) and both graphical and statistical functions. 
 
-Some packages already extend the phyloseq packages. For instance the `microbiome` package [@Lahti2017] (https://microbiome.github.io/) propose some scripts and functions to manipulate microbiome data sets. The `speedyseq` package [@mclaren2020] provides faster versions of phyloseq's plotting and taxonomic merging functions, some of which are used in MiscMetabar.
+The phyloseq package introduce the S4-class object (class physeq).  S4-class object that contains  (i) a OTU-samples matrix,  (ii) a taxonomic table,  (iii) a sample metadata table as well as a two optionnal slot for (iv) phylogenetic tree and (v) reference sequences. 
+
+Some packages already extend the phyloseq packages. For instance the `microbiome` package [@Lahti2017] (https://microbiome.github.io/) propose some scripts and functions to manipulate microbiome data sets. The `speedyseq` package [@mclaren2020] provides faster versions of phyloseq's plotting and taxonomic merging functions, some of which are used in MiscMetabar. The package [phylosmith](https://schuyler-smith.github.io/phylosmith/) [Smith2019](https://joss.theoj.org/papers/10.21105/joss.01442) already offers some functions to extend and facilitate the use of the phyloseq packages. 
 
 Others packages (e.g. the `mia` package) extend a recent data structure using the `TreeSummarizedExperiment` package [@]  to facilitate phylogenetic tree analysis and to benefits from the comprehensive Bioconductor ecosystem of the `SummarizedExperiment` family.
 
@@ -84,7 +86,7 @@ MiscMetabar is already used by scientific communities in different teams ([@Plei
 
 
 
-https://schuyler-smith.github.io/phylosmith/
+
 
 
 
