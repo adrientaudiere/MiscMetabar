@@ -51,9 +51,10 @@ The phyloseq package introduce the S4-class object (class physeq).  S4-class obj
 
 Some packages already extend the phyloseq packages. For instance the `microbiome` package [@Lahti2017] (https://microbiome.github.io/) propose some scripts and functions to manipulate microbiome data sets. The `speedyseq` package [@mclaren2020] provides faster versions of phyloseq's plotting and taxonomic merging functions, some of which are used in MiscMetabar. The package [phylosmith](https://schuyler-smith.github.io/phylosmith/) [Smith2019](https://joss.theoj.org/papers/10.21105/joss.01442) already offers some functions to extend and facilitate the use of the phyloseq packages. 
 
-Others packages (e.g. the `mia` package) extend a recent data structure using the `TreeSummarizedExperiment` package [@]  to facilitate phylogenetic tree analysis and to benefits from the comprehensive Bioconductor ecosystem of the `SummarizedExperiment` family.
+Others packages ([mia](https://github.com/microbiome/mia/) [@] and [MicrobiotaProcess](https://github.com/YuLab-SMU/MicrobiotaProcess) [@xu2023] packages) extend a recent data structure using the comprehensive Bioconductor ecosystem of the `SummarizedExperiment` family. 
 
-MiscMetabar enrich this R ecosystem by proposing functions to (i) describe your dataset visually, (ii) transform your data, (iii) explore the biological diversity (alpha, beta and taxonomic diversity) and (iv) simplify reproductibility.
+MiscMetabar enrich this R ecosystem by proposing functions to (i) **describe** your dataset visually, (ii) **transform** your data, (iii) **explore** the biological diversity (alpha, beta and taxonomic diversity) and (iv) simplify **reproductibility**. MiscMetabar is designed to complete and not compete others R packages previuosly cited. For ex. `mia` package is recommended for studies focusing on phylogenetic tree and `phylosmith` allow to visualize easily co-occurrence networks. Using as.MPSE function, most of utilities in `MicrobiotaProcess` package are available in conjonction with functions form `MiscMetabar`.  
+
 
 # Features
 
@@ -62,7 +63,7 @@ MiscMetabar enrich this R ecosystem by proposing functions to (i) describe your 
 
 
 
-# Already used packages
+# Already cited package
 
 MiscMetabar is already used by scientific communities in different teams ([@Pleic2022], [@Vieira2021], [@McCauley2022]). 
 
