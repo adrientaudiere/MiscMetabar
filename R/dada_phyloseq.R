@@ -631,7 +631,7 @@ vsearch_search_global <- function(physeq,
 ################################################################################
 
 ################################################################################
-#' Blast some sequence against `refseq` slot of a \code{\link{phyloseq-class}}
+#' Blast fasta sequences against `refseq` slot of a \code{\link{phyloseq-class}}
 #'   object.
 #'
 #' `r lifecycle::badge("maturing")`
