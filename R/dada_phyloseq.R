@@ -746,7 +746,7 @@ blast_to_phyloseq <- function(physeq,
     if (length(no_output_query) > 0) {
       mat_no_output_query <- matrix(NA,
         ncol = ncol(blast_tab),
-        ncol = length(no_output_query)
+        nrow = length(no_output_query)
       )
       mat_no_output_query[, 1] <- no_output_query
       colnames(mat_no_output_query) <- colnames(blast_tab)
