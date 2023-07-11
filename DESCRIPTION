@@ -31,6 +31,7 @@ Suggests:
     here,
     ggVennDiagram,
     methods,
+    MicrobiotaProcess,
     multcompView,
     networkD3,
     pbapply,

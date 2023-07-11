@@ -39,3 +39,57 @@ graph_test_pq(data_fungi_woNA4height, "Height")
 ```{r}
 circle_pq(data_fungi_woNA4height, "Height")
 ```
+
+## Compare two (group of) samples
+
+### Biplot
+
+
+```{r}
+data_fungi_low_high <- subset_samples(data_fungi, data_fungi@sam_data$Height %in% c("Low", "High"))
+data_fungi_low_high <- subset_taxa_pq(data_fungi_low_high, taxa_sums(data_fungi_low_high)>5000)
+biplot_pq(data_fungi_low_high, fact = "Height", merge_sample_by = "Height")
+```
+
+### Compare two (group of) samples with a table
+
+```{r}
+#compare_pairs_pq(data_fungi_low_high, bifactor = "Height", merge_sample_by = "Height")
+```
+
+## Venn diagramm
+
+```{r}
+venn_pq(data_fungi, fact = "Height")
+```
+
+```{r}
+ggvenn_pq(data_fungi, fact = "Height") +
+  ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1) + 
+  labs(title = "Share number of ASV among Height in tree")
+```
+
+```{r}
+ggvenn_pq(data_fungi, fact = "Height", min_nb_seq = 5000) +
+  ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1) +
+  labs(title = "Share number of ASV with more than 5000 seqs")
+```
+
+```{r}
+ggvenn_pq(data_fungi, fact = "Height", taxonomic_rank = "Genus", min_nb_seq = 100) +
+  ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1) +
+  labs(title = "Share number of Genus represented by at least one ASV with more than 100 seqs")
+```
+
+
+## Change in abundance across a factor 
+
+### Using Deseq2 package
+
+```{r}
+data("GlobalPatterns")
+GP <- subset_samples(GlobalPatterns, GlobalPatterns@sam_data$SampleType %in% c("Soil", "Skin"))
+
+plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), alpha = 0.001)
+```
+

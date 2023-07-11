@@ -3,8 +3,10 @@ title: "alpha-div"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{alpha-div}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r, include = FALSE}
@@ -49,3 +51,13 @@ p$plot_tuckey
 ```
 
 See also the [tutorial](https://microbiome.github.io/tutorials/Alphadiversity.html) of the microbiome package for an alternative using the non-parametric [Kolmogorov-Smirnov test](https://www.rdocumentation.org/packages/dgof/versions/1.2/topics/ks.test) for two-group comparisons when there are no relevant covariates.
+
+## Alpha diversity using package `MicrobiotaProcess`
+
+```{r}
+library("MicrobiotaProcess")
+clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height))) %>% as.MPSE() %>% mp_cal_alpha()  %>% mp_plot_alpha(.group = "Height")
+```
+
+
+
