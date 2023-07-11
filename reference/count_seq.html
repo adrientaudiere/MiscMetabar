@@ -72,7 +72,7 @@ or lines starting with a '&gt;' (fasta) to count sequences.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">count_seq</span><span class="op">(</span>file_path <span class="op">=</span> <span class="cn">NULL</span>, folder_path <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">count_seq</span><span class="op">(</span>file_path <span class="op">=</span> <span class="cn">NULL</span>, folder_path <span class="op">=</span> <span class="cn">NULL</span>, pattern <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -83,6 +83,10 @@ or lines starting with a '&gt;' (fasta) to count sequences.</p>
 
 <dt>folder_path</dt>
 <dd><p>The path to a folder with fasta, fastq or fastq.gz files</p></dd>
+
+
+<dt>pattern</dt>
+<dd><p>A pattern to filter files in a folder. E.g. <em>R2</em></p></dd>
 
 </dl></div>
     <div class="section level2">

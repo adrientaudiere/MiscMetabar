@@ -74,7 +74,7 @@
 <span>  write_sam_data <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  sam_data_first <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  clean_pq <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  reorder_asv <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  reorder_asv <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  rename_asv <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  remove_empty_samples <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  remove_empty_taxa <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -124,7 +124,7 @@ If set to TRUE, empty samples are discarded after subsetting ASV</p></dd>
 <dt>reorder_asv</dt>
 <dd><p>(logical) if TRUE the otu_table is ordered by the number of
 sequences of ASV (descending order). Default to TRUE. Only possible if clean_pq
-is set to TRUE.</p></dd>
+is set to TRUE. Need the <a href="https://github.com/david-barnett/microViz" class="external-link">microViz</a> package.</p></dd>
 
 
 <dt>rename_asv</dt>
