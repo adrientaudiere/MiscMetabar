@@ -1,5 +1,7 @@
 # MiscMetabar 0.34 (in development)
 
+* Add option `add_nb_samples` to `ggvenn_pq()` which add the number of samples to level name in the plot. Useful to see disequilibrium in the number of samples among the factor's levels.
+
 # MiscMetabar 0.33
 
 * Add function `plot_tax_pq()` to plot taxonomic distribution (nb of sequences or nb of ASV) across factor.

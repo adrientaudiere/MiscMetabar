@@ -25,17 +25,16 @@ plot_mt <-
            alpha = 0.05,
            color_tax = "Class",
            taxa = "Species") {
-    d <- mt[mt$plower < alpha, ]
+    d <- mt[mt$plower < alpha,]
     d$tax_col <- factor(as.character(d[, color_tax]))
     d$tax_col[is.na(d$tax_col)] <- "unidentified"
     d$tax <- as.character(d[, taxa])
     d$tax[is.na(d$tax)] <- "unidentified"
     d$tax <-
       factor(d$tax,
-        levels =
-          unique(factor(as.character(d[, taxa]))
-          [rev(order(d$teststat))])
-      )
+             levels =
+               unique(factor(as.character(d[, taxa]))
+                      [rev(order(d$teststat))]))
 
     p <-
       ggplot(d, aes(x = tax, y = teststat, color = tax_col)) +
@@ -126,7 +125,7 @@ accu_plot <-
       for (i in 1:nlevels(factor_interm)) {
         accu[[i]] <-
           vegan::specaccum(physeq_accu[factor_interm ==
-            levels(factor_interm)[i], ])
+                                         levels(factor_interm)[i],])
       }
 
       funky_color <-
@@ -223,9 +222,9 @@ accu_plot <-
         if (n[length(n)] != tot[i]) {
           n <- c(n, tot[i])
         }
-        res_interm <- vegan::rarefy(x[i, ], n, se = TRUE)
+        res_interm <- vegan::rarefy(x[i,], n, se = TRUE)
         res <-
-          cbind(as.matrix(res_interm)[1, ], as.matrix(res_interm)[2, ])
+          cbind(as.matrix(res_interm)[1,], as.matrix(res_interm)[2,])
         return(res)
       })
 
@@ -243,8 +242,8 @@ accu_plot <-
       if (!by.fact) {
         df$fact <-
           as.factor(unlist(unclass(physeq@sam_data
-          [match(df$.id, sample_names(physeq)), fact])
-          [fact]))
+                                   [match(df$.id, sample_names(physeq)), fact])
+                           [fact]))
       } else {
         df$fact <- df$.id
       }
@@ -386,21 +385,17 @@ circle_pq <-
 
     otu_table_tax <-
       pbapply::pbapply(otu_tab, 2, function(x) {
-        pbapply::pbtapply(
-          x, physeq@tax_table[, taxcol],
-          function(xx) {
-            sum(xx, na.rm = TRUE)
-          }
-        )
+        pbapply::pbtapply(x, physeq@tax_table[, taxcol],
+                          function(xx) {
+                            sum(xx, na.rm = TRUE)
+                          })
       }, cl = nproc)
     otu_table_ech <-
       pbapply::pbapply(otu_table_tax, 1, function(x) {
-        pbapply::pbtapply(
-          x, physeq@sam_data[, taxsamp],
-          function(xx) {
-            sum(xx, na.rm = TRUE)
-          }
-        )
+        pbapply::pbtapply(x, physeq@sam_data[, taxsamp],
+                          function(xx) {
+                            sum(xx, na.rm = TRUE)
+                          })
       }, cl = nproc)
     if (rarefy) {
       otu_table_ech_interm <-
@@ -410,12 +405,10 @@ circle_pq <-
           "Rarefaction by modalities deletes ",
           sum(otu_table_ech) - sum(otu_table_ech_interm),
           " (",
-          round(
-            100 * (
-              sum(otu_table_ech) - sum(otu_table_ech_interm)
-            ) / sum(otu_table_ech),
-            2
-          ),
+          round(100 * (
+            sum(otu_table_ech) - sum(otu_table_ech_interm)
+          ) / sum(otu_table_ech),
+          2),
           "%) sequences.",
           sep = ""
         )
@@ -428,12 +421,10 @@ circle_pq <-
     # Keep only taxa and modalities with a sufficient proportion (min_prop_tax,
     # min_prop_mod) to plot
     o_t_e_interm <-
-      otu_table_ech[
-        (rowSums(otu_table_ech) / sum(otu_table_ech)) >
-          min_prop_mod,
-        (colSums(otu_table_ech) / sum(otu_table_ech)) >
-          min_prop_tax
-      ]
+      otu_table_ech[(rowSums(otu_table_ech) / sum(otu_table_ech)) >
+                      min_prop_mod,
+                    (colSums(otu_table_ech) / sum(otu_table_ech)) >
+                      min_prop_tax]
     if (nrow(o_t_e_interm) != nrow(otu_table_ech)) {
       message(
         paste(
@@ -441,8 +432,8 @@ circle_pq <-
           nrow(o_t_e_interm),
           " modalities are plot (",
           round(100 *
-            nrow(o_t_e_interm) /
-            nrow(otu_table_ech), 2),
+                  nrow(o_t_e_interm) /
+                  nrow(otu_table_ech), 2),
           "%). Use 'min_prop_mod' to plot more samples.",
           sep = ""
         )
@@ -455,10 +446,8 @@ circle_pq <-
           "Only ",
           ncol(o_t_e_interm),
           " taxa are plot (",
-          round(
-            100 * ncol(o_t_e_interm) / ncol(otu_table_ech),
-            2
-          ),
+          round(100 * ncol(o_t_e_interm) / ncol(otu_table_ech),
+                2),
           "%). Use 'min_prop_tax' to plot more taxa",
           sep = ""
         )
@@ -510,14 +499,11 @@ circle_pq <-
         c(funky_color(nrow(otu_table_ech)), rep("grey", ncol(otu_table_ech)))
     }
 
-    circlize::circos.par(
-      gap.degree = gap_degree, start.degree = start_degree,
-      ...
-    )
+    circlize::circos.par(gap.degree = gap_degree, start.degree = start_degree,
+                         ...)
     circlize::chordDiagram(otu_table_ech,
-      row.col = row_col,
-      grid.col = grid_col, ...
-    )
+                           row.col = row_col,
+                           grid.col = grid_col, ...)
     circlize::circos.clear()
   }
 ################################################################################
@@ -589,7 +575,7 @@ sankey_pq <-
         res_interm <-
           table(physeq@tax_table[, taxa[i]], physeq@tax_table[, taxa[i + 1]])
         mat_interm <- reshape2::melt(res_interm)
-        mat_interm <- mat_interm[mat_interm[, 3] > 0, ]
+        mat_interm <- mat_interm[mat_interm[, 3] > 0,]
         mat <- rbind(mat, mat_interm)
       }
     } else if (add_nb_seq) {
@@ -598,14 +584,13 @@ sankey_pq <-
       colnames(mat) <- c("Var1", "Var2", "value")
       tax_table_interm <-
         physeq@tax_table[rep(1:ntaxa(physeq),
-          times = taxa_sums(physeq)
-        )]
+                             times = taxa_sums(physeq))]
 
       for (i in 1:(length(taxa) - 1)) {
         res_interm <-
           table(tax_table_interm[, taxa[i]], tax_table_interm[, taxa[i + 1]])
         mat_interm <- reshape2::melt(res_interm)
-        mat_interm <- mat_interm[mat_interm[, 3] > 0, ]
+        mat_interm <- mat_interm[mat_interm[, 3] > 0,]
         mat <- rbind(mat, mat_interm)
       }
     }
@@ -625,29 +610,23 @@ sankey_pq <-
 
       mat_interm <-
         apply(otu_tab, 1, function(x) {
-          tapply(
-            x, physeq@sam_data[, fact],
-            sum
-          )
+          tapply(x, physeq@sam_data[, fact],
+                 sum)
         })
 
       if (!add_nb_seq) {
         mat_interm <-
           apply(mat_interm, 1, function(x) {
-            tapply(x, physeq@tax_table[
-              ,
-              taxa[length(taxa)]
-            ], function(x) {
-              sum(x > 0)
-            })
+            tapply(x, physeq@tax_table[,
+                                       taxa[length(taxa)]], function(x) {
+                                         sum(x > 0)
+                                       })
           })
       } else if (add_nb_seq) {
         mat_interm <-
           apply(mat_interm, 1, function(x) {
-            tapply(x, physeq@tax_table[
-              ,
-              taxa[length(taxa)]
-            ], sum)
+            tapply(x, physeq@tax_table[,
+                                       taxa[length(taxa)]], sum)
           })
       }
 
@@ -657,19 +636,19 @@ sankey_pq <-
       mat <- rbind(mat, samp_links)
     }
 
-    mat <- as.data.frame(mat[rowSums(is.na(mat)) == 0, ])
+    mat <- as.data.frame(mat[rowSums(is.na(mat)) == 0,])
     mat[, 3] <- as.numeric(as.vector(mat[, 3]))
-    mat <- mat[rowSums(is.na(mat)) == 0, ]
+    mat <- mat[rowSums(is.na(mat)) == 0,]
 
 
     if (!is.null(tax2remove)) {
-      mat <- mat[!mat[, 1] %in% tax2remove, ]
-      mat <- mat[!mat[, 2] %in% tax2remove, ]
+      mat <- mat[!mat[, 1] %in% tax2remove,]
+      mat <- mat[!mat[, 2] %in% tax2remove,]
     }
 
     if (min_prop_tax != 0) {
       min_nb_tax <- min_prop_tax * sum(mat[, 3]) / length(taxa)
-      mat <- mat[mat[, 3] >= min_nb_tax, ]
+      mat <- mat[mat[, 3] >= min_nb_tax,]
     }
 
     for (i in seq_len(length(symbol2sub))) {
@@ -688,28 +667,20 @@ sankey_pq <-
     mat2 <- mat
     for (i in seq_len(nrow(tax_sank$nodes))) {
       mat2[, 1] <-
-        gsub(
-          paste("\\<", tax_sank$nodes[i, 2], "\\>", sep = ""),
-          tax_sank$nodes[
-            i,
-            1
-          ],
-          mat2[, 1]
-        )
+        gsub(paste("\\<", tax_sank$nodes[i, 2], "\\>", sep = ""),
+             tax_sank$nodes[i,
+                            1],
+             mat2[, 1])
       mat2[, 2] <-
-        gsub(
-          paste("\\<", tax_sank$nodes[i, 2], "\\>", sep = ""),
-          tax_sank$nodes[
-            i,
-            1
-          ],
-          mat2[, 2]
-        )
+        gsub(paste("\\<", tax_sank$nodes[i, 2], "\\>", sep = ""),
+             tax_sank$nodes[i,
+                            1],
+             mat2[, 2])
     }
 
     tax_sank$links <- apply(mat2, 2, as.numeric)
     tax_sank$links <-
-      data.frame(tax_sank$links[rowSums(is.na(tax_sank$links)) == 0, ])
+      data.frame(tax_sank$links[rowSums(is.na(tax_sank$links)) == 0,])
     tax_sank$nodes <-
       as.data.frame(as.character(tax_sank$nodes[, 2]))
     names(tax_sank$nodes) <- c("name")
@@ -797,8 +768,8 @@ venn_pq <-
     e <- new.env(TRUE, emptyenv())
     cn <- colnames(combinations)
     for (i in seq.int(dim(combinations)[1])) {
-      if (any(combinations[i, ])) {
-        ec <- paste(cn[combinations[i, ]], collapse = "&")
+      if (any(combinations[i,])) {
+        ec <- paste(cn[combinations[i,]], collapse = "&")
         e[[ec]] <- if (is.null(e[[ec]])) {
           1L
         } else {
@@ -812,10 +783,8 @@ venn_pq <-
     combinations <- as.character(en)
 
     table_value <-
-      data.frame(
-        combinations = as.character(combinations),
-        weights = as.double(weights)
-      )
+      data.frame(combinations = as.character(combinations),
+                 weights = as.double(weights))
 
     venn <- venneuler::venneuler(data_venn > min_nb_seq)
     venn_res <-
@@ -833,19 +802,15 @@ venn_pq <-
 
     for (i in seq_len(nrow(table_value))) {
       table_value$x[i] <-
-        mean(venn$centers[, "x"][unlist(lapply(
-          x1,
-          function(x) {
-            sum(x %in% i) > 0
-          }
-        ))])
+        mean(venn$centers[, "x"][unlist(lapply(x1,
+                                               function(x) {
+                                                 sum(x %in% i) > 0
+                                               }))])
       table_value$y[i] <-
-        mean(venn$centers[, "y"][unlist(lapply(
-          x1,
-          function(x) {
-            sum(x %in% i) > 0
-          }
-        ))])
+        mean(venn$centers[, "y"][unlist(lapply(x1,
+                                               function(x) {
+                                                 sum(x %in% i) > 0
+                                               }))])
     }
 
     df <- venn_res
@@ -855,11 +820,9 @@ venn_pq <-
     circularise <- function(d, n = 360) {
       angle <- seq(-pi, pi, length = n)
       make_circle <- function(x, y, r, modality) {
-        data.frame(
-          x = x + r * cos(angle),
-          y = y + r * sin(angle),
-          modality
-        )
+        data.frame(x = x + r * cos(angle),
+                   y = y + r * sin(angle),
+                   modality)
       }
       lmat <- mapply(
         make_circle,
@@ -876,11 +839,9 @@ venn_pq <-
 
     p <-
       ggplot() +
-      geom_polygon(
-        data = circles,
-        aes(x, y, group = modality, fill = modality),
-        alpha = 0.5
-      ) +
+      geom_polygon(data = circles,
+                   aes(x, y, group = modality, fill = modality),
+                   alpha = 0.5) +
       theme_void()
 
     if (print_values) {
@@ -944,7 +905,7 @@ venn_pq <-
 #' @param fact (required): Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}.
 #' @param merge_sample_by if not `NULL` samples of
-#'   physeq are mereged using the vector set by `merge_sample_by`. This
+#'   physeq are merged using the vector set by `merge_sample_by`. This
 #'   merging used the [speedyseq::merge_samples2()].
 #'   If `merge_sample_by` is equal to `fact` args
 #'   it give the same result as if `merge_sample_by` is NULL.
@@ -955,8 +916,10 @@ venn_pq <-
 #' @param taxonomic_rank Name (or number) of a taxonomic rank
 #'   to count. If set to Null (the default) the number of OTUs is counted.
 #' @param  split_by Split into multiple plot using variable split_by.
-#'   The name of a variable present in `sam_data` slot
+#'   The name of a variable must be present in `sam_data` slot
 #'   of the physeq object.
+#'  @param add_nb_samples (logical, default TRUE) Add the number of samples to
+#'    levels names
 #' @param ... other arguments for the `ggVennDiagram::ggVennDiagram` function
 #'   for ex. `category.names`.
 #' @return A \code{\link{ggplot}}2 plot representing Venn diagramm of
@@ -984,6 +947,7 @@ ggvenn_pq <- function(physeq = NULL,
                       min_nb_seq = 0,
                       taxonomic_rank = NULL,
                       split_by = NULL,
+                      add_nb_samples = TRUE,
                       ...) {
   if (!is.factor(physeq@sam_data[[fact]])) {
     physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
@@ -995,24 +959,27 @@ ggvenn_pq <- function(physeq = NULL,
   }
 
   res <- list()
+  nb_samples <- c()
 
   for (f in levels(physeq@sam_data[[fact]])) {
     newphyseq <- physeq
-    newDF <- newphyseq@sam_data[newphyseq@sam_data[[fact]] == f, ]
+    newDF <- newphyseq@sam_data[newphyseq@sam_data[[fact]] == f,]
     sample_data(newphyseq) <- sample_data(newDF)
     if (is.null(taxonomic_rank)) {
-      res[[f]] <- colnames(newphyseq@otu_table[
-        ,
-        colSums(newphyseq@otu_table) > min_nb_seq
-      ])
+      res[[f]] <- colnames(newphyseq@otu_table[,
+                                               colSums(newphyseq@otu_table) > min_nb_seq])
     } else {
       res[[f]] <-
-        as.character(na.exclude(unique(newphyseq@tax_table[
-          colSums(newphyseq@otu_table) > min_nb_seq,
-          taxonomic_rank
-        ])))
+        as.character(na.exclude(unique(newphyseq@tax_table[colSums(newphyseq@otu_table) > min_nb_seq,
+                                                           taxonomic_rank])))
     }
+    nb_samples <- c(nb_samples, sum(physeq@sam_data[[fact]] == f, na.rm = T))
   }
+
+  if(add_nb_samples){
+    names(res) <- paste0(names(res), "\n (", nb_samples, ")")
+  }
+
   if (is.null(split_by)) {
     p <- ggVennDiagram::ggVennDiagram(res, ...)
   } else {
@@ -1022,8 +989,7 @@ ggvenn_pq <- function(physeq = NULL,
     for (moda in levels(modalities)) {
       physeq_interm <-
         clean_pq(subset_samples_pq(physeq, modalities == moda),
-          silent = TRUE
-        )
+                 silent = TRUE)
       p[[moda]] <- ggvenn_pq(
         physeq_interm,
         fact = fact,
@@ -1076,9 +1042,8 @@ multiplot <-
       # ncol: Number of columns of plots
       # nrow: Number of rows needed, calculated from # of cols
       layout <- matrix(seq(1, cols * ceiling(num_plots / cols)),
-        ncol = cols,
-        nrow = ceiling(num_plots / cols)
-      )
+                       ncol = cols,
+                       nrow = ceiling(num_plots / cols))
     }
 
     if (num_plots == 1) {
@@ -1086,10 +1051,8 @@ multiplot <-
     } else {
       # Set up the page
       grid::grid.newpage()
-      grid::pushViewport(viewport(layout = grid.layout(
-        nrow(layout),
-        ncol(layout)
-      )))
+      grid::pushViewport(viewport(layout = grid.layout(nrow(layout),
+                                                       ncol(layout))))
 
       # Make each plot, in the correct location
       for (i in 1:num_plots) {
@@ -1098,11 +1061,10 @@ multiplot <-
           as.data.frame(which(layout == i, arr.ind = TRUE))
 
         print(plots[[i]],
-          vp = viewport(
-            layout.pos.row = matchidx$row,
-            layout.pos.col = matchidx$col
-          )
-        )
+              vp = viewport(
+                layout.pos.row = matchidx$row,
+                layout.pos.col = matchidx$col
+              ))
       }
     }
   }
@@ -1167,9 +1129,8 @@ hill_pq <-
 
     otu_hill <-
       vegan::renyi(t(physeq)@otu_table,
-        scale = c(0, 1, 2),
-        hill = TRUE
-      )
+                   scale = c(0, 1, 2),
+                   hill = TRUE)
     colnames(otu_hill) <- c("Hill_0", "Hill_1", "Hill_2")
 
     df_hill <- data.frame(otu_hill, physeq@sam_data)
@@ -1199,7 +1160,7 @@ hill_pq <-
     if (letters) {
       ### HILL 0
       data_h0 <-
-        p_var$data[grep("Hill Number 0", p_var$data[, 5]), ]
+        p_var$data[grep("Hill Number 0", p_var$data[, 5]),]
       data_h0_pval <- data_h0$p.adj
       names(data_h0_pval) <- data_h0$modality
       letters <-
@@ -1213,10 +1174,8 @@ hill_pq <-
       p_0 <- p_0 +
         geom_label(
           data = data_letters,
-          aes(
-            x = max_Hill + 1,
-            label = letters
-          ),
+          aes(x = max_Hill + 1,
+              label = letters),
           y = ggplot_build(p_0)$data[[1]]$y,
           size = 4,
           stat = "unique",
@@ -1226,7 +1185,7 @@ hill_pq <-
       ### HILL 1
 
       data_h1 <-
-        p_var$data[grep("Hill Number 1", p_var$data[, 5]), ]
+        p_var$data[grep("Hill Number 1", p_var$data[, 5]),]
       data_h1_pval <- data_h1$p.adj
       names(data_h1_pval) <- data_h1$modality
       letters <-
@@ -1240,10 +1199,8 @@ hill_pq <-
       p_1 <- p_1 +
         geom_label(
           data = data_letters,
-          aes(
-            x = max_Hill + 1,
-            label = letters
-          ),
+          aes(x = max_Hill + 1,
+              label = letters),
           y = ggplot_build(p_0)$data[[1]]$y,
           size = 4,
           stat = "unique",
@@ -1253,7 +1210,7 @@ hill_pq <-
       ### HILL 2
 
       data_h2 <-
-        p_var$data[grep("Hill Number 2", p_var$data[, 5]), ]
+        p_var$data[grep("Hill Number 2", p_var$data[, 5]),]
       data_h2_pval <- data_h2$p.adj
       names(data_h2_pval) <- data_h2$modality
       letters <-
@@ -1267,10 +1224,8 @@ hill_pq <-
       p_2 <- p_2 +
         geom_label(
           data = data_letters,
-          aes(
-            x = max_Hill + 1,
-            label = letters
-          ),
+          aes(x = max_Hill + 1,
+              label = letters),
           y = ggplot_build(p_0)$data[[1]]$y,
           size = 4,
           stat = "unique",
@@ -1367,24 +1322,20 @@ summary_plot_pq <- function(physeq,
       color = "black",
       alpha = 0.5
     ) +
-    geom_text(
-      data = d,
-      aes(
-        x = x1 + (x2 - x1) / 2,
-        y = y1 + (y2 - y1) / 1.7,
-        label = nb_values
-      ),
-      size = 4.5
-    ) +
-    geom_text(
-      data = d,
-      aes(
-        x = x1 + (x2 - x1) / 2,
-        y = y1 + (y2 - y1) / 5,
-        label = names
-      ),
-      size = 6
-    ) +
+    geom_text(data = d,
+              aes(
+                x = x1 + (x2 - x1) / 2,
+                y = y1 + (y2 - y1) / 1.7,
+                label = nb_values
+              ),
+              size = 4.5) +
+    geom_text(data = d,
+              aes(
+                x = x1 + (x2 - x1) / 2,
+                y = y1 + (y2 - y1) / 5,
+                label = names
+              ),
+              size = 6) +
     annotate(
       geom = "text",
       x = 0.65,
@@ -1503,9 +1454,8 @@ rotl_pq <- function(physeq,
     physeq@tax_table <- tax_table(cbind(
       physeq@tax_table,
       "Genus_species" = paste(physeq@tax_table[, species_colnames[1]],
-        physeq@tax_table[, species_colnames[2]],
-        sep = "_"
-      )
+                              physeq@tax_table[, species_colnames[2]],
+                              sep = "_")
     ))
     species_colnames <- "Genus_species"
   }
@@ -1514,7 +1464,7 @@ rotl_pq <- function(physeq,
   taxa_names_rotl <- c(unclass(gsub("_", " ", taxa_names_rotl)))
 
   resolved_names <- tnrs_match_names(taxa_names_rotl)
-  resolved_names <- resolved_names[resolved_names$flags == "", ]
+  resolved_names <- resolved_names[resolved_names$flags == "",]
   clean_taxa_names_rotl <-
     taxa_names_rotl[taxa_names_rotl %in% resolved_names$unique_name]
 
@@ -1678,7 +1628,7 @@ biplot_pq <- function(physeq,
   physeq@sam_data$modality <- modality
 
   mdf <- phyloseq::psmelt(physeq)
-  mdf <- mdf[mdf$Abundance > 0, ]
+  mdf <- mdf[mdf$Abundance > 0,]
   # mdf <- dplyr::rename(mdf, Abundance = Abundance)
 
   if (length(ylim_modif) == 1) {
@@ -1702,10 +1652,10 @@ biplot_pq <- function(physeq,
   mdf$Ab[mdf$modality == levels(modality)[1]] <-
     -mdf$Ab[mdf$modality == levels(modality)[1]]
   mdf$Proportion <- paste0(round(100 * mdf$Abundance /
-    sum(mdf$Abundance[mdf$modality == levels(modality)[2]]), 2), "%")
+                                   sum(mdf$Abundance[mdf$modality == levels(modality)[2]]), 2), "%")
   mdf$Proportion[mdf$modality == levels(modality)[1]] <-
     paste0(round(100 * mdf$Abundance[mdf$modality == levels(modality)[1]] /
-      sum(mdf$Abundance[mdf$modality == levels(modality)[1]]), 2), "%")
+                   sum(mdf$Abundance[mdf$modality == levels(modality)[1]]), 2), "%")
 
   p <- mdf %>%
     ggplot(
@@ -1745,7 +1695,7 @@ biplot_pq <- function(physeq,
       geom = "text",
       label = left_name,
       x = "Samples",
-      y = ifelse(is.na(y_names), (min(mdf$Ab) / 2), -y_names[1]),
+      y = ifelse(is.na(y_names), (min(mdf$Ab) / 2),-y_names[1]),
       hjust = 0.5,
       vjust = 0.5,
       size = size_names,
@@ -1773,14 +1723,12 @@ biplot_pq <- function(physeq,
       )
   } else {
     p <- p +
-      geom_text(
-        aes(
-          label = Abundance,
-          color = modality,
-          y = ifelse(Ab > 0, Ab + nudge_y[2], Ab + nudge_y[1])
-        ),
-        size = text_size
-      )
+      geom_text(aes(
+        label = Abundance,
+        color = modality,
+        y = ifelse(Ab > 0, Ab + nudge_y[2], Ab + nudge_y[1])
+      ),
+      size = text_size)
   }
 
   p <- p + coord_flip() +
@@ -1802,10 +1750,8 @@ biplot_pq <- function(physeq,
       height = 1200,
       width = 800
     ) %>%
-      plotly::layout(
-        xaxis = list(autorange = TRUE),
-        yaxis = list(autorange = TRUE)
-      ) %>%
+      plotly::layout(xaxis = list(autorange = TRUE),
+                     yaxis = list(autorange = TRUE)) %>%
       plotly::config(locale = "fr") %>%
       plotly::hide_legend()
   }
@@ -1859,7 +1805,7 @@ plot_tax_pq <-
            prop_print_value = 0.01,
            nb_print_value = NULL) {
     physeq <-
-      clean_pq(subset_samples_pq(physeq, !is.na(physeq@sam_data[[fact]])))
+      clean_pq(subset_samples_pq(physeq,!is.na(physeq@sam_data[[fact]])))
 
 
     if (!is.null(merge_sample_by)) {
@@ -2013,12 +1959,12 @@ plot_tsne_pq <- function(physeq,
                          force_factor = TRUE,
                          ...) {
   if (!is.factor(physeq@sam_data[[fact]]) &&
-    !is.na(fact) && force_factor) {
+      !is.na(fact) && force_factor) {
     physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
   }
 
   if (filter_na_fact && !is.na(fact)) {
-    physeq <- subset_samples_pq(physeq, !is.na(physeq@sam_data[[fact]]))
+    physeq <- subset_samples_pq(physeq,!is.na(physeq@sam_data[[fact]]))
   }
 
   tsne <- tsne_pq(
@@ -2033,11 +1979,9 @@ plot_tsne_pq <- function(physeq,
   res_tSNE_A <- tsne$Y[, plot_dims[1]] / 100
   res_tSNE_B <- tsne$Y[, plot_dims[2]] / 100
 
-  df <- data.table::data.table(
-    res_tSNE_A,
-    res_tSNE_B,
-    as(physeq@sam_data, "data.frame")
-  )
+  df <- data.table::data.table(res_tSNE_A,
+                               res_tSNE_B,
+                               as(physeq@sam_data, "data.frame"))
 
 
   g <-
