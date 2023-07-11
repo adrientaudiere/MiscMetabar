@@ -73,6 +73,9 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/blast_pq.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/blast_to_derep.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/blast_to_phyloseq.html</loc>
   </url>
   <url>
@@ -157,6 +160,9 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_tax_pq.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_tsne_pq.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/read_pq.html</loc>
   </url>
   <url>
@@ -194,6 +200,9 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/track_wkflow_samples.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/tsne_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/venn_pq.html</loc>

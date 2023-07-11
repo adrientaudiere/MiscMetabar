@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.32</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.33</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,9 +60,27 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.33" id="miscmetabar-033-in-development">MiscMetabar 0.33 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-033-in-development"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.34" id="miscmetabar-034-in-development">MiscMetabar 0.34 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-034-in-development"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.33" id="miscmetabar-033">MiscMetabar 0.33<a class="anchor" aria-label="anchor" href="#miscmetabar-033"></a></h2>
 <ul><li>Add function <code><a href="../reference/plot_tax_pq.html">plot_tax_pq()</a></code> to plot taxonomic distribution (nb of sequences or nb of ASV) across factor.</li>
 <li>Add option <code>add_points</code> and make better axis of <code><a href="../reference/hill_pq.html">hill_pq()</a></code> function</li>
+<li>Add function <code><a href="../reference/blast_to_derep.html">blast_to_derep()</a></code> in order to facilitate searching some fasta sequences in dereplicated sequences (obtained by <code><a href="https://rdrr.io/pkg/dada2/man/derepFastq.html" class="external-link">dada2::derepFastq</a></code>)</li>
+</ul><table class="table"><colgroup><col width="21%"><col width="45%"><col width="33%"></colgroup><thead><tr class="header"><th></th>
+<th>Database (makeblastdb)</th>
+<th>Sequences to blast (blastn)</th>
+</tr></thead><tbody><tr class="odd"><td><code><a href="../reference/blast_to_phyloseq.html">blast_to_phyloseq()</a></code></td>
+<td>Built from <code>ref_seq</code> slot(physeq-class)</td>
+<td>Custom fasta file</td>
+</tr><tr class="even"><td><code><a href="../reference/blast_to_derep.html">blast_to_derep()</a></code></td>
+<td>Built from dereplicate sequences (derep-class)</td>
+<td>Custom fasta file</td>
+</tr><tr class="odd"><td><code><a href="../reference/blast_pq.html">blast_pq()</a></code></td>
+<td>Custom database or custom fasta file</td>
+<td>
+<code>ref_seq</code> slot of a physeq object</td>
+</tr></tbody></table><ul><li>Add functions <code><a href="../reference/tsne_pq.html">tsne_pq()</a></code> and <code><a href="../reference/plot_tsne_pq.html">plot_tsne_pq()</a></code> to quickly visualize results of the t-SNE multidimensional analysis based on the <code><a href="https://rdrr.io/pkg/Rtsne/man/Rtsne.html" class="external-link">Rtsne::Rtsne()</a></code> function.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.32" id="miscmetabar-032">MiscMetabar 0.32<a class="anchor" aria-label="anchor" href="#miscmetabar-032"></a></h2>

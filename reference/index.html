@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.32</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.33</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -123,6 +123,12 @@ using ASV_1, ASV_2, …</dd>
         </dt>
         <dd>Blast all sequence of <code>refseq</code> slot of a <code>phyloseq-class</code>
 object against a custom database.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="blast_to_derep.html">blast_to_derep()</a></code> 
+        </dt>
+        <dd>Blast some sequence against sequences from of a <code>derep-class</code>
+object.</dd>
       </dl><dl><dt>
           
           <code><a href="blast_to_phyloseq.html">blast_to_phyloseq()</a></code> 
@@ -261,8 +267,12 @@ distance for all samples</dd>
           
           <code><a href="plot_tax_pq.html">plot_tax_pq()</a></code> 
         </dt>
-        <dd>Plot taxonomic distribution in function of a factor
-Extend the power of <code><a href="https://rdrr.io/pkg/phyloseq/man/plot_bar.html" class="external-link">plot_bar()</a></code> function</dd>
+        <dd>Plot taxonomic distribution in function of a factor.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="plot_tsne_pq.html">plot_tsne_pq()</a></code> 
+        </dt>
+        <dd>Plot a tsne low dimensional representation of a phyloseq object</dd>
       </dl><dl><dt>
           
           <code><a href="read_pq.html">read_pq()</a></code> 
@@ -331,6 +341,11 @@ from various objects including dada-class and derep-class.</dd>
         </dt>
         <dd>Track the number of reads (= sequences), samples and cluster (e.g. ASV)
 for each samples</dd>
+      </dl><dl><dt>
+          
+          <code><a href="tsne_pq.html">tsne_pq()</a></code> 
+        </dt>
+        <dd>Compute tSNE position of samples from a phyloseq object</dd>
       </dl><dl><dt>
           
           <code><a href="venn_pq.html">venn_pq()</a></code> 
