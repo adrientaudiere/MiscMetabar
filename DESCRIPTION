@@ -16,36 +16,38 @@ Depends:
     magrittr,
     dplyr
 Suggests: 
-    lulu,
-    metacoder,
-    grid,
-    vegan,
-    mixtools,
     Biostrings,
+    circlize,
     DECIPHER,
     DESeq2,
     DT,
-    circlize,
     edgeR,
+    gghalves,
+    ggVennDiagram,
+    grid,
     gridExtra,
     here,
-    ggVennDiagram,
+    knitr,
+    lulu,
+    metacoder,
     methods,
     MicrobiotaProcess,
+    microViz,
+    mixtools,
     multcompView,
     networkD3,
     pbapply,
     plotly,
     plyr,
     reshape2,
+    rmarkdown,
     rotl,
     Rtsne,
     seqinr,
+    testthat (>= 3.0.0),
+    vegan,
     venneuler,
     viridis,
-    testthat (>= 3.0.0),
-    knitr,
-    rmarkdown
 RoxygenNote: 7.2.3
 URL: https://github.com/adrientaudiere/MiscMetabar,
     https://adrientaudiere.github.io/MiscMetabar/
@@ -64,5 +66,6 @@ Remotes:
     github::mikemc/speedyseq,
     github::adrientaudiere/lulu,
     github::david-barnett/microViz
+    github::erocoar/gghalves
 Config/testthat/edition: 3
 VignetteBuilder: knitr
