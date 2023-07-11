@@ -631,7 +631,7 @@ vsearch_search_global <- function(physeq,
 ################################################################################
 
 ################################################################################
-#' Blast some sequence against `refseq` slot of a \code{\link{phyloseq-class}}
+#' Blast fasta sequences against `refseq` slot of a \code{\link{phyloseq-class}}
 #'   object.
 #'
 #' `r lifecycle::badge("maturing")`
@@ -746,7 +746,7 @@ blast_to_phyloseq <- function(physeq,
     if (length(no_output_query) > 0) {
       mat_no_output_query <- matrix(NA,
         ncol = ncol(blast_tab),
-        ncol = length(no_output_query)
+        nrow = length(no_output_query)
       )
       mat_no_output_query[, 1] <- no_output_query
       colnames(mat_no_output_query) <- colnames(blast_tab)
@@ -1043,7 +1043,9 @@ write_pq <- function(physeq,
   if (one_file) {
     if (!is.null(physeq@refseq) && !is.null(physeq@otu_table) && !is.null(physeq@tax_table)) {
       if (!taxa_are_rows(physeq)) {
-        physeq@otu_table <- t(physeq@otu_table)
+        otu_table(physeq) <- otu_table(t(as.matrix(unclass(physeq@otu_table))),
+          taxa_are_rows = TRUE
+        )
       }
       df_physeq_interm <- cbind(
         physeq@otu_table,
@@ -1064,6 +1066,8 @@ write_pq <- function(physeq,
           df_physeq <- dplyr::full_join(df_physeq_interm, sam_data)
           rownames(df_physeq) <- c(rownames(df_physeq_interm), rownames(sam_data))
         }
+      } else {
+        df_physeq <- df_physeq_interm
       }
       utils::write.csv(
         df_physeq,
@@ -1073,7 +1077,9 @@ write_pq <- function(physeq,
       )
     } else if (!is.null(physeq@otu_table) && !is.null(physeq@tax_table)) {
       if (!taxa_are_rows(physeq)) {
-        physeq@otu_table <- t(physeq@otu_table)
+        otu_table(physeq) <- otu_table(t(as.matrix(unclass(physeq@otu_table))),
+          taxa_are_rows = TRUE
+        )
       }
       df_physeq_interm <- cbind(
         physeq@otu_table,

@@ -381,8 +381,10 @@ phyloseq_to_edgeR <- function(physeq, group, method = "RLE", ...) {
   verify_pq(physeq)
   # Enforce orientation.
   if (!taxa_are_rows(physeq)) {
-    physeq <- t(physeq)
-  }
+        otu_table(physeq) <- otu_table(t(as.matrix(unclass(physeq@otu_table))),
+          taxa_are_rows = TRUE
+        )
+      }
   x <- methods::as(otu_table(physeq), "matrix")
   # Add one to protect against overflow, log(0) issues.
   x <- x + 1

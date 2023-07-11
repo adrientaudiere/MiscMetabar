@@ -28,6 +28,7 @@ list_fastq_files(
 }
 \value{
 a list of one (single end) or two (paired end) list of files
+files are sorted by names (default behavior of \code{list.files()})
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
