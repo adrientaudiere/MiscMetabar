@@ -21,9 +21,6 @@ data(data_fungi)
 
 ### Alpha diversity
 
-Voir aussi le [tutoriel](https://microbiome.github.io/tutorials/Alphadiversity.html) du package microbiome. 
-
-
 #### Hill number
 
 Numerous metrics of diversity exist. 
