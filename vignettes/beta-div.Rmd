@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, message=FALSE}
 library(MiscMetabar)
 data(data_fungi)
 ```
@@ -23,7 +23,8 @@ data(data_fungi)
 
 ```{r}
 data_fungi_woNA4height <- subset_samples(data_fungi, !is.na(data_fungi@sam_data$Height))
-adonis_pq(data_fungi_woNA4height, "Tree_name+Height")
+res_ado <- adonis_pq(data_fungi_woNA4height, "Tree_name+Height")
+knitr::kable(res_ado)
 ```
 
 
@@ -60,6 +61,7 @@ biplot_pq(data_fungi_low_high, fact = "Height", merge_sample_by = "Height")
 ## Venn diagramm
 
 ```{r}
+library("grid")
 venn_pq(data_fungi, fact = "Height")
 ```
 

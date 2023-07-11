@@ -47,7 +47,7 @@ Suggests:
     testthat (>= 3.0.0),
     vegan,
     venneuler,
-    viridis,
+    viridis
 RoxygenNote: 7.2.3
 URL: https://github.com/adrientaudiere/MiscMetabar,
     https://adrientaudiere.github.io/MiscMetabar/
@@ -65,7 +65,7 @@ Imports:
 Remotes: 
     github::mikemc/speedyseq,
     github::adrientaudiere/lulu,
-    github::david-barnett/microViz
+    github::david-barnett/microViz,
     github::erocoar/gghalves
 Config/testthat/edition: 3
 VignetteBuilder: knitr
