@@ -2,8 +2,7 @@
 % Please edit documentation in R/plot_functions.R
 \name{plot_tax_pq}
 \alias{plot_tax_pq}
-\title{Plot taxonomic distribution in function of a factor
-Extend the power of \code{plot_bar()} function}
+\title{Plot taxonomic distribution in function of a factor.}
 \usage{
 plot_tax_pq(
   physeq,
@@ -51,9 +50,13 @@ A ggplot2 graphic
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
+An alternative to \code{phyloseq::plot_bar()} function.
 }
 \examples{
 data(data_fungi_sp_known)
-plot_tax_pq(data_fungi_sp_known, "Time", merge_sample_by = "Time",
-  taxa_fill = "Class")
+plot_tax_pq(data_fungi_sp_known, "Time",
+  merge_sample_by = "Time",
+  taxa_fill = "Class"
+)
 }

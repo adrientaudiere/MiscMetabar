@@ -1,7 +1,18 @@
-# MiscMetabar 0.33 (in development)
+# MiscMetabar 0.34 (in development)
+
+# MiscMetabar 0.33
 
 * Add function `plot_tax_pq()` to plot taxonomic distribution (nb of sequences or nb of ASV) across factor.
 * Add option `add_points` and make better axis of `hill_pq()` function
+* Add function `blast_to_derep()` in order to facilitate searching some fasta sequences in dereplicated sequences (obtained by `dada2::derepFastq`) 
+
+|                       | Database (makeblastdb)                         | Sequences to blast (blastn)       |
+|-----------------------|------------------------------------------------|-----------------------------------|
+| `blast_to_phyloseq()` | Built from `ref_seq` slot(physeq-class)        | Custom fasta file                 |
+| `blast_to_derep()`    | Built from dereplicate sequences (derep-class) | Custom fasta file                 |
+| `blast_pq()`          | Custom database or custom fasta file           | `ref_seq` slot of a physeq object |
+
+* Add functions `tsne_pq()` and `plot_tsne_pq()` to quickly visualize results of the t-SNE multidimensional analysis based on the `Rtsne::Rtsne()` function.
 
 
 # MiscMetabar 0.32
@@ -20,7 +31,7 @@
 * Add a `filter_asv_blast()` function to filter ASV in phyloseq dataset using blast against a custom database
 * Add a `subset_taxa_pq()` function to filter ASV based on a named conditional vector. Used in `filter_asv_blast()`.
 * Add parameter `force_taxa_as_columns` (default FALSE) and `force_taxa_as_rows` (default FALSE) to `clean_pq()`.
-* Add a first version of the function `count_fastq_seq()`  to count sequences from fastq.gz files directly from R.
+* Add a first version of the function `count_fastq_seq()` to count sequences from fastq.gz files directly from R.
 * Add taxonomic info to `track_wkflow()` function (parameter `taxonomy_rank`)
 
 # MiscMetabar 0.3 
