@@ -1,6 +1,8 @@
 # MiscMetabar 0.34 (in development)
 
 * Add option `add_nb_samples` to `ggvenn_pq()` which add the number of samples to level name in the plot. Useful to see disequilibrium in the number of samples among the factor's levels.
+* Add option `args_makedb` and `args_blastn` to funtions `blast_pq()`, `blast_to_phyloseq()`, `blast_to_derep()` and `filter_asv_blast()`. 
+
 
 # MiscMetabar 0.33
 

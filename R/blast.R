@@ -17,7 +17,9 @@
 #'   FALSE, `id_cut`,`bit_score_cut` and `min_cover_cut` are ignored
 #' @param list_no_output_query (logical) does the result table include
 #'   query sequences for which `blastn` does not find any correspondence?
-#'
+#' @param args_makedb Additional parameters parse to makeblastdb command
+#' @param args_blastn Additional parameters parse to blastn command
+
 #' @seealso  [MiscMetabar::blast_pq()] to use `refseq` slot as query sequences
 #'   against un custom database.
 #'
@@ -40,13 +42,16 @@ blast_to_phyloseq <- function(physeq,
                               bit_score_cut = 50,
                               unique_per_seq = FALSE,
                               score_filter = TRUE,
-                              list_no_output_query = FALSE) {
+                              list_no_output_query = FALSE,
+                              args_makedb = NULL,
+                              args_blastn = NULL) {
   verify_pq(physeq)
   dna <- Biostrings::DNAStringSet(physeq@refseq)
   Biostrings::writeXStringSet(dna, "db.fasta")
 
   system(paste(blastpath,
     "makeblastdb -dbtype nucl -in db.fasta -out dbase",
+    " ", args_makedb,
     sep = ""
   ))
 
@@ -145,6 +150,8 @@ blast_to_phyloseq <- function(physeq,
 #'   each sequence in seq2search
 #' @param score_filter (logical) does results are filter by score? If
 #'   FALSE, `id_cut`,`bit_score_cut` and `min_cover_cut` are ignored
+#'  @param args_makedb Additional parameters parse to makeblastdb command
+#'  @param args_blastn Additional parameters parse to blastn command
 #'
 #' @param nproc (default: 1)
 #'   Set to number of cpus/processors to use for blast (args -num_threads
@@ -164,7 +171,9 @@ blast_pq <- function(physeq,
                      min_cover_cut = 50,
                      unique_per_seq = FALSE,
                      score_filter = TRUE,
-                     nproc = 1) {
+                     nproc = 1,
+                     args_makedb = NULL,
+                     args_blastn = NULL) {
   verify_pq(physeq)
   dna <- Biostrings::DNAStringSet(physeq@refseq)
   Biostrings::writeXStringSet(dna, "physeq_refseq.fasta")
@@ -179,6 +188,7 @@ blast_pq <- function(physeq,
     message("Build the database from fasta_for_db")
     system(paste(blastpath,
       "makeblastdb -dbtype nucl -in ", fasta_for_db, " -out dbase",
+      " ", args_makedb,
       sep = ""
     ))
     message("Blast refseq from physeq object against the database")
@@ -280,9 +290,8 @@ blast_pq <- function(physeq,
 #'   "% id. match", "Query cover", "e-value") for higher e-value hit.
 #'   for each ASV is add to taxtable. Note that query name may be different from
 #'   final taxa names as some function proposed to change the ASV names.
-#' @param nproc (default: 1)
-#'   Set to number of cpus/processors to use for blast (args -num_threads
-#'   for blastn command)
+#' @param ... Others options for the `balst_pq()` function. See `?blast_pq`.
+#'   Note that params `unique_per_seq` and `score_filter` must be set to TRUE.
 #' @export
 #' @return A new \code{\link{phyloseq-class}} object.
 
@@ -296,17 +305,18 @@ filter_asv_blast <- function(physeq,
                              bit_score_cut = 150,
                              min_cover_cut = 50,
                              add_info_to_taxtable = TRUE,
-                             nproc = 1) {
+                             ...) {
   blast_tab <- blast_pq(
     physeq = physeq,
     fasta_for_db = fasta_for_db,
     database = database,
+    blastpath = blastpath,
     id_cut = id_cut,
     bit_score_cut = bit_score_cut,
     min_cover_cut = min_cover_cut,
     unique_per_seq = TRUE,
     score_filter = TRUE,
-    nproc = nproc
+    ...
   )
 
   condition <- blast_tab[, "Query cover"] > min_cover_cut & blast_tab[, "bit score"] > bit_score_cut & blast_tab[, "% id. match"] > id_cut
@@ -360,6 +370,8 @@ filter_asv_blast <- function(physeq,
 #' @param min_length_seq (default: 200) Removed sequences with less than
 #'   `min_length_seq` from derep before blast. Set to 0 to discard filtering
 #'    sequences by length.
+#' @param args_makedb Additional parameters parse to makeblastdb command
+#' @param args_blastn Additional parameters parse to blastn command
 #'
 #' @return A blast table
 #'
@@ -377,7 +389,9 @@ blast_to_derep <- function(derep,
                            unique_per_seq = FALSE,
                            score_filter = FALSE,
                            list_no_output_query = FALSE,
-                           min_length_seq = 200) {
+                           min_length_seq = 200,
+                           args_makedb = NULL,
+                           args_blastn = NULL) {
   if (!inherits(derep[[1]], "derep")) {
     stop("derep must be an object of class derep-class")
   }
@@ -402,6 +416,7 @@ blast_to_derep <- function(derep,
   system(paste(
     blastpath,
     "makeblastdb -dbtype nucl -in db.fasta -out dbase",
+    " ", args_makedb,
     sep = ""
   ))
 
