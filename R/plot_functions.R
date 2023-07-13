@@ -920,6 +920,8 @@ venn_pq <-
 #'   of the physeq object.
 #'  @param add_nb_samples (logical, default TRUE) Add the number of samples to
 #'    levels names
+#'  @param rarefy_nb_seqs Rarefy each sample (before merging if merge_sample_by is set)
+#'    using `phyloseq::rarefy_even_depth()`
 #' @param ... other arguments for the `ggVennDiagram::ggVennDiagram` function
 #'   for ex. `category.names`.
 #' @return A \code{\link{ggplot}}2 plot representing Venn diagramm of
@@ -948,15 +950,23 @@ ggvenn_pq <- function(physeq = NULL,
                       taxonomic_rank = NULL,
                       split_by = NULL,
                       add_nb_samples = TRUE,
+                      rarefy_nb_seqs = FALSE,
                       ...) {
   if (!is.factor(physeq@sam_data[[fact]])) {
     physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
+  }
+
+
+  if (rarefy_nb_seqs) {
+    physeq <- rarefy_even_depth(physeq)
+    physeq <- clean_pq(physeq)
   }
 
   if (!is.null(merge_sample_by)) {
     physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
     physeq <- clean_pq(physeq)
   }
+
 
   res <- list()
   nb_samples <- c()
