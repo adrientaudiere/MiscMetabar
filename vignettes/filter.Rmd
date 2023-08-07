@@ -1,0 +1,24 @@
+---
+title: "Filter"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Filter}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, message=FALSE}
+library(MiscMetabar)
+```
+
+```{r}
+# filter_asv_blast()
+```
+
