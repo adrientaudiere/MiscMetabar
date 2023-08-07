@@ -68,6 +68,15 @@ Some packages propose a shiny interface (such as [animalcules](https://github.co
 
 # Features
 
+## ASV (or ESV) to MOTU 
+
+ASV is ...
+MOTU is ...
+
+Recent articles ([@forster2019],[@antich2021]) proposed to used both depending on the question. They recommend (i) using of ASV to denoise the dataset and (ii) for some questions, clustering the ASV sequences into OTUs. The function `asv2otu` does this job. 
+
+
+
 # Finding fungus in a needle stack showcase
 
 

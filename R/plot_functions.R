@@ -1264,7 +1264,7 @@ hill_pq <-
 #' @param min_seq_samples (int): Used only when add_info is set
 #'   to true to print the number of samples with less sequences than
 #'   this number.
-#' @param clean_phyloseq (logical): Does the phyloseq
+#' @param clean_pq (logical): Does the phyloseq
 #'   object is cleaned using the [clean_pq()] function?
 #' @examples
 #' data(data_fungi)
@@ -1274,9 +1274,9 @@ hill_pq <-
 summary_plot_pq <- function(physeq,
                             add_info = TRUE,
                             min_seq_samples = 500,
-                            clean_phyloseq = TRUE) {
-  if (clean_phyloseq) {
-    clean_pq(physeq)
+                            clean_pq = TRUE) {
+  if (clean_pq) {
+    physeq <- clean_pq(physeq)
   }
   if (physeq@otu_table@taxa_are_rows) {
     otu_tab <- t(physeq@otu_table)
@@ -2013,4 +2013,41 @@ plot_tsne_pq <- function(physeq,
   }
 
   return(g)
+}
+
+
+
+################################################################################
+#' Scaling with ranked subsampling (SRS) curve of phyloseq object
+#' @description
+#' `r lifecycle::badge("experimental")`
+#' @inheritParams clean_pq
+#' @param clean_pq (logical): Does the phyloseq
+#'   object is cleaned using the [clean_pq()] function?
+#' @param ... Other arguments passed to `SRS::SRScurve()`
+#' @return A plot
+#' @export
+#' 
+#' 
+
+SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...){
+
+  if (clean_pq) {
+    physeq <- clean_pq(physeq)
+  }
+
+  physeq <- clean_pq(
+      physeq,
+      force_taxa_as_rows = TRUE,
+      remove_empty_samples = FALSE,
+      remove_empty_taxa = FALSE,
+      clean_samples_names = FALSE
+    )
+
+  df <- data.frame(physeq@otu_table)
+
+  SRS::SRScurve(df, ...)
+
+
+
 }
