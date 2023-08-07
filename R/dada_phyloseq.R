@@ -630,7 +630,6 @@ vsearch_search_global <- function(physeq,
 }
 ################################################################################
 
-
 ################################################################################
 #' Blast fasta sequences against `refseq` slot of a \code{\link{phyloseq-class}}
 #'   object.
@@ -969,7 +968,6 @@ filter_asv_blast <- function(physeq,
 
   return(new_physeq)
 }
-
 
 ################################################################################
 #' Save phyloseq object in the form of multiple csv tables.
