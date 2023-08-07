@@ -4,7 +4,7 @@
 \alias{hill_pq}
 \title{Graphical representation of hill number 0, 1 and 2 across a factor}
 \usage{
-hill_pq(physeq, variable, color_fac = NA, letters = FALSE)
+hill_pq(physeq, variable, color_fac = NA, letters = FALSE, add_points = FALSE)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
@@ -17,7 +17,9 @@ using the \code{phyloseq} package.}
 \item{letters}{(optional, default=FALSE): If set to TRUE, the plot
 show letters based on p-values for comparison. Use the
 \code{\link[multcompView]{multcompLetters}} function from the package
-multcompLetters.}
+multcompLetters. BROKEN for the moment.}
+
+\item{add_points}{(logical): add jitter point on boxplot}
 }
 \value{
 A list of 4 ggplot2 plot.
@@ -32,5 +34,19 @@ against the variable
 }
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+}
+\examples{
+data(data_fungi)
+p <- hill_pq(data_fungi, "Height")
+p_h1 <- p[[1]] + theme(legend.position = "none")
+p_h2 <- p[[2]] + theme(legend.position = "none")
+p_h3 <- p[[3]] + theme(legend.position = "none")
+multiplot(plotlist = list(p_h1, p_h2, p_h3, p[[4]]), cols = 4)
+
+# Artificially modify data_fungi to force alpha-diversity effect
+data_fungi_modif <- clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height)))
+data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <- data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] + sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
+p2 <- hill_pq(data_fungi_modif, "Height", letters = TRUE)
+
 }

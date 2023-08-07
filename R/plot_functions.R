@@ -905,7 +905,7 @@ venn_pq <-
 #' @param fact (required): Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}.
 #' @param merge_sample_by if not `NULL` samples of
-#'   physeq are mereged using the vector set by `merge_sample_by`. This
+#'   physeq are merged using the vector set by `merge_sample_by`. This
 #'   merging used the [speedyseq::merge_samples2()].
 #'   If `merge_sample_by` is equal to `fact` args
 #'   it give the same result as if `merge_sample_by` is NULL.
@@ -916,8 +916,12 @@ venn_pq <-
 #' @param taxonomic_rank Name (or number) of a taxonomic rank
 #'   to count. If set to Null (the default) the number of OTUs is counted.
 #' @param  split_by Split into multiple plot using variable split_by.
-#'   The name of a variable present in `sam_data` slot
+#'   The name of a variable must be present in `sam_data` slot
 #'   of the physeq object.
+#'  @param add_nb_samples (logical, default TRUE) Add the number of samples to
+#'    levels names
+#'  @param rarefy_nb_seqs Rarefy each sample (before merging if merge_sample_by is set)
+#'    using `phyloseq::rarefy_even_depth()`
 #' @param ... other arguments for the `ggVennDiagram::ggVennDiagram` function
 #'   for ex. `category.names`.
 #' @return A \code{\link{ggplot}}2 plot representing Venn diagramm of
@@ -945,9 +949,17 @@ ggvenn_pq <- function(physeq = NULL,
                       min_nb_seq = 0,
                       taxonomic_rank = NULL,
                       split_by = NULL,
+                      add_nb_samples = TRUE,
+                      rarefy_nb_seqs = FALSE,
                       ...) {
   if (!is.factor(physeq@sam_data[[fact]])) {
     physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
+  }
+
+
+  if (rarefy_nb_seqs) {
+    physeq <- rarefy_even_depth(physeq)
+    physeq <- clean_pq(physeq)
   }
 
   if (!is.null(merge_sample_by)) {
@@ -955,7 +967,9 @@ ggvenn_pq <- function(physeq = NULL,
     physeq <- clean_pq(physeq)
   }
 
+
   res <- list()
+  nb_samples <- c()
 
   for (f in levels(physeq@sam_data[[fact]])) {
     newphyseq <- physeq
@@ -965,10 +979,17 @@ ggvenn_pq <- function(physeq = NULL,
       res[[f]] <- colnames(newphyseq@otu_table[,
                                                colSums(newphyseq@otu_table) > min_nb_seq])
     } else {
-      res[[f]] <- as.character(na.exclude(unique(newphyseq@tax_table[colSums(newphyseq@otu_table) > min_nb_seq,
-                                                                     taxonomic_rank])))
+      res[[f]] <-
+        as.character(na.exclude(unique(newphyseq@tax_table[colSums(newphyseq@otu_table) > min_nb_seq,
+                                                           taxonomic_rank])))
     }
+    nb_samples <- c(nb_samples, sum(physeq@sam_data[[fact]] == f, na.rm = T))
   }
+
+  if(add_nb_samples){
+    names(res) <- paste0(names(res), "\n (", nb_samples, ")")
+  }
+
   if (is.null(split_by)) {
     p <- ggVennDiagram::ggVennDiagram(res, ...)
   } else {
@@ -1071,7 +1092,7 @@ multiplot <-
 #'  \code{\link[multcompView]{multcompLetters}} function from the package
 #'  multcompLetters. BROKEN for the moment.
 #' @param add_points (logical): add jitter point on boxplot
-#' 
+#'
 #' @return A list of 4 ggplot2 plot.
 #' - plot_Hill_0 : the boxplot of Hill number 0 (= species richness)
 #'     against the variable
@@ -1082,14 +1103,19 @@ multiplot <-
 #' - plot_tuckey : plot the result of the Tuckey HSD test
 #'
 #' @export
-#' @example 
+#' @examples
 #' data(data_fungi)
 #' p <- hill_pq(data_fungi, "Height")
-#' p_h1 <- p[[1]] + theme(legend.position = "none") 
-#' p_h2 <- p[[2]] + theme(legend.position = "none") 
-#' p_h3 <- p[[3]] + theme(legend.position = "none") 
+#' p_h1 <- p[[1]] + theme(legend.position = "none")
+#' p_h2 <- p[[2]] + theme(legend.position = "none")
+#' p_h3 <- p[[3]] + theme(legend.position = "none")
 #' multiplot(plotlist = list(p_h1, p_h2, p_h3, p[[4]]), cols = 4)
-
+#'
+#' # Artificially modify data_fungi to force alpha-diversity effect
+#' data_fungi_modif <- clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height)))
+#' data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <- data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] + sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
+#' p2 <- hill_pq(data_fungi_modif, "Height", letters = TRUE)
+#'
 hill_pq <-
   function(physeq,
            variable,
@@ -1120,11 +1146,10 @@ hill_pq <-
     df_hill <- data.frame(otu_hill, physeq@sam_data)
     df_hill[, c(1:3)] <- apply(df_hill[, c(1:3)], 2, as.numeric)
 
-
     p_var <- hill_tuckey_pq(physeq, variable)
 
     p_0 <- ggplot(df_hill, aes(group = !!var, Hill_0)) +
-      geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac), y = !!var)) + 
+      geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac), y = !!var)) +
       labs(x = "Richness (Hill 0)")
     p_1 <- ggplot(df_hill, aes(group = !!var, Hill_1)) +
       geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac), y = !!var)) +
@@ -1134,29 +1159,33 @@ hill_pq <-
       labs(x = "Simpson (Hill 2)")
 
     if (add_points) {
-      p_0 <- p_0 + geom_jitter(aes(y = !!var, colour = as.factor(!!color_fac)), alpha = 0.5)
-      p_1 <- p_1 + geom_jitter(aes(y = !!var, colour = as.factor(!!color_fac)), alpha = 0.5)
-      p_2 <- p_2 + geom_jitter(aes(y = !!var, colour = as.factor(!!color_fac)), alpha = 0.5)
+      p_0 <-
+        p_0 + geom_jitter(aes(y = !!var, colour = as.factor(!!color_fac)), alpha = 0.5)
+      p_1 <-
+        p_1 + geom_jitter(aes(y = !!var, colour = as.factor(!!color_fac)), alpha = 0.5)
+      p_2 <-
+        p_2 + geom_jitter(aes(y = !!var, colour = as.factor(!!color_fac)), alpha = 0.5)
     }
 
     if (letters) {
       ### HILL 0
       data_h0 <-
-        p_var$data[grep("Hill 0", p_var$data[, 5]),]
+        p_var$data[grep("Hill Number 0", p_var$data[, 5]),]
       data_h0_pval <- data_h0$p.adj
       names(data_h0_pval) <- data_h0$modality
       letters <-
         multcompView::multcompLetters(data_h0_pval, reversed = TRUE)$Letters
 
+      data_letters <- p_0$data %>%
+        group_by(!!var) %>%
+        summarize(max_Hill = max(Hill_0)) %>%
+        inner_join(data.frame("Height" = names(letters), letters = letters))
+
       p_0 <- p_0 +
         geom_label(
-          data = p_0$data %>%
-            group_by(!!var) %>%
-            summarize(max_Hill = max(Hill_0)),
-          aes(x = max_Hill + 1),
-          label = letters[match(names(letters), levels(factor(as.matrix(
-            physeq@sam_data[, variable]
-          ))))],
+          data = data_letters,
+          aes(x = max_Hill + 1,
+              label = letters),
           y = ggplot_build(p_0)$data[[1]]$y,
           size = 4,
           stat = "unique",
@@ -1166,22 +1195,23 @@ hill_pq <-
       ### HILL 1
 
       data_h1 <-
-        p_var$data[grep("Hill 1", p_var$data[, 5]),]
+        p_var$data[grep("Hill Number 1", p_var$data[, 5]),]
       data_h1_pval <- data_h1$p.adj
       names(data_h1_pval) <- data_h1$modality
       letters <-
         multcompView::multcompLetters(data_h1_pval, reversed = TRUE)$Letters
 
+      data_letters <- p_1$data %>%
+        group_by(!!var) %>%
+        summarize(max_Hill = max(Hill_1)) %>%
+        inner_join(data.frame("Height" = names(letters), letters = letters))
+
       p_1 <- p_1 +
         geom_label(
-          data = p_1$data %>%
-            group_by(!!var) %>%
-            summarize(max_Hill = max(Hill_1)),
-          aes(x = max_Hill + 1),
-          label = letters[match(names(letters), levels(factor(as.matrix(
-            physeq@sam_data[, variable]
-          ))))],
-          y = ggplot_build(p_1)$data[[1]]$y,
+          data = data_letters,
+          aes(x = max_Hill + 1,
+              label = letters),
+          y = ggplot_build(p_0)$data[[1]]$y,
           size = 4,
           stat = "unique",
           parse = TRUE
@@ -1190,22 +1220,23 @@ hill_pq <-
       ### HILL 2
 
       data_h2 <-
-        p_var$data[grep("Hill 2", p_var$data[, 5]),]
+        p_var$data[grep("Hill Number 2", p_var$data[, 5]),]
       data_h2_pval <- data_h2$p.adj
       names(data_h2_pval) <- data_h2$modality
       letters <-
         multcompView::multcompLetters(data_h2_pval, reversed = TRUE)$Letters
 
+      data_letters <- p_2$data %>%
+        group_by(!!var) %>%
+        summarize(max_Hill = max(Hill_2)) %>%
+        inner_join(data.frame("Height" = names(letters), letters = letters))
+
       p_2 <- p_2 +
         geom_label(
-          data = p_2$data %>%
-            group_by(!!var) %>%
-            summarize(max_Hill = max(Hill_2)),
-          aes(x = max_Hill + 0.5),
-          label = letters[match(names(letters), levels(factor(as.matrix(
-            physeq@sam_data[, variable]
-          ))))],
-          y = ggplot_build(p_1)$data[[1]]$y,
+          data = data_letters,
+          aes(x = max_Hill + 1,
+              label = letters),
+          y = ggplot_build(p_0)$data[[1]]$y,
           size = 4,
           stat = "unique",
           parse = TRUE
@@ -1743,9 +1774,9 @@ biplot_pq <- function(physeq,
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
-#' 
+#'
 #'   An alternative to `phyloseq::plot_bar()` function.
-#' 
+#'
 #' @inheritParams clean_pq
 #' @param fact :
 #' @param merge_sample_by a vector to determine
@@ -1768,10 +1799,10 @@ biplot_pq <- function(physeq,
 #'
 #' @examples
 #' data(data_fungi_sp_known)
-#' plot_tax_pq(data_fungi_sp_known, "Time", merge_sample_by = "Time",
-#'   taxa_fill = "Class")
-
-
+#' plot_tax_pq(data_fungi_sp_known, "Time",
+#'   merge_sample_by = "Time",
+#'   taxa_fill = "Class"
+#' )
 plot_tax_pq <-
   function(physeq,
            fact = NULL,
@@ -1783,7 +1814,6 @@ plot_tax_pq <-
            linewidth = 0.1,
            prop_print_value = 0.01,
            nb_print_value = NULL) {
-
     physeq <-
       clean_pq(subset_samples_pq(physeq,!is.na(physeq@sam_data[[fact]])))
 
@@ -1792,8 +1822,9 @@ plot_tax_pq <-
       physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
     }
 
-    if(!is.null(nb_print_value)){
-      prop_print_value <- taxa_sums(physeq)[nb_print_value]/sum(physeq@otu_table)
+    if (!is.null(nb_print_value)) {
+      prop_print_value <-
+        taxa_sums(physeq)[nb_print_value] / sum(physeq@otu_table)
     }
 
     if (type %in% c("nb_seq", "both")) {
@@ -1801,7 +1832,7 @@ plot_tax_pq <-
       mdf <- mdf %>% mutate(percent = Abundance / sum(Abundance))
 
       p_seq <-
-        ggplot(mdf, aes_string(x = fact, y = "Abundance", fill = taxa_fill))   +
+        ggplot(mdf, aes_string(x = fact, y = "Abundance", fill = taxa_fill)) +
         geom_bar(
           aes(fill = .data[[taxa_fill]]),
           stat = "identity",
@@ -1825,11 +1856,12 @@ plot_tax_pq <-
       }
     }
     if (type %in% c("nb_asv", "both")) {
-      mdf <- speedyseq::psmelt(as_binary_otu_table(physeq), as = "data.frame")
+      mdf <-
+        speedyseq::psmelt(as_binary_otu_table(physeq), as = "data.frame")
       mdf <- mdf %>% mutate(percent = Abundance / sum(Abundance))
 
-      p_asv   <-
-        ggplot(mdf, aes_string(x = fact, y = "Abundance", fill = taxa_fill))   +
+      p_asv <-
+        ggplot(mdf, aes_string(x = fact, y = "Abundance", fill = taxa_fill)) +
         geom_bar(
           aes(fill = .data[[taxa_fill]]),
           stat = "identity",
@@ -1848,5 +1880,137 @@ plot_tax_pq <-
     } else if (type == "both") {
       return(list(p_seq, p_asv))
     }
-
   }
+
+#' Compute tSNE position of samples from a phyloseq object
+#'
+#' @inheritParams clean_pq
+#' @param method A method to calculate distance using `vegan::vegdist()` function
+#' @param dims (Int) Output dimensionality (default: 2)
+#' @param theta (Numeric) Speed/accuracy trade-off (increase for less accuracy), set to 0.0 for exact TSNE (default: 0.0 see details in the man page of `Rtsne::Rtsne`).
+#' @param perplexity (Numeric) Perplexity parameter (should not be bigger than 3 * perplexity < nrow(X) - 1, see details in the man page of `Rtsne::Rtsne`)
+#' @param ... : other arguments passed to `Rtsne::Rtsne()`
+#'
+#' @return A list of element including the matrix Y containing the new representations for the objects.
+#'   See ?Rtsne::Rtsne() for more information
+#' @export
+#'
+#' @examples
+#' data(data_fungi)
+#' res_tsne <- tsne_pq(data_fungi)
+tsne_pq <-
+  function(physeq,
+           method = "bray",
+           dims = 2,
+           theta = 0.0,
+           perplexity = 30,
+           ...) {
+    if (!require("Rtsne")) {
+      install.packages("Rtsne")
+    }
+
+    physeq <- clean_pq(
+      physeq,
+      force_taxa_as_rows = TRUE,
+      remove_empty_samples = TRUE,
+      remove_empty_taxa = FALSE,
+      clean_samples_names = FALSE,
+      silent = TRUE
+    )
+
+    res_tsne <-
+      Rtsne::Rtsne(
+        vegan::vegdist(t(physeq@otu_table), method = method),
+        dims = dims,
+        theta = theta,
+        perplexity = perplexity,
+        is_distance = TRUE,
+        ...
+      )
+  }
+
+#' Plot a tsne low dimensional representation of a phyloseq object
+#'
+#' `r lifecycle::badge("experimental")`
+#'
+#' Partially inspired by `phylosmith::tsne_phyloseq()` function developed by Schuyler D. Smith.
+#'
+#' @inheritParams clean_pq
+#' @param method A method to calculate distance using `vegan::vegdist()` function (default: "bray")
+#' @param dims (Int) Output dimensionality (default: 2)
+#' @param theta (Numeric) Speed/accuracy trade-off (increase for less accuracy), set to 0.0 for exact TSNE (default: 0.0 see details in the man page of `Rtsne::Rtsne`).
+#' @param perplexity (Numeric) Perplexity parameter (should not be bigger than 3 * perplexity < nrow(X) - 1, see details in the man page of `Rtsne::Rtsne`)
+#' @param fact Name of the column in `physeq@sam_data` used to color points and compute ellipses.
+#' @param ellipse_level The level used in stat_ellipse. Set to NULL to discard ellipse (default = 0.95)
+#' @param plot_dims A vector of 2 values defining the rank of dimension to plot (default: c(1,2))
+#' @param filter_na_fact (logical) Does the samples with NA values in fact are removed? (default: true)
+#' @param force_factor Force the fact column to be a factor.
+#' @param ... : other arguments passed to `Rtsne::Rtsne()`
+#'
+#' @return
+#' A ggplot object
+#'
+#' @export
+#' @author Adrien Taudière
+#'
+#' @examples
+#' plot_tsne_pq(data_fungi, fact = "Height", perplexity = 15)
+#' plot_tsne_pq(data_fungi, fact = "Time") + geom_label(aes(label = Sample_id, fill = Time))
+#' plot_tsne_pq(data_fungi, fact = "Time", filter_na_fact = FALSE, force_factor = FALSE)
+plot_tsne_pq <- function(physeq,
+                         method = "bray",
+                         dims = 2,
+                         theta = 0.0,
+                         perplexity = 30,
+                         fact = NA,
+                         ellipse_level = 0.95,
+                         plot_dims = c(1, 2),
+                         filter_na_fact = TRUE,
+                         force_factor = TRUE,
+                         ...) {
+  if (!is.factor(physeq@sam_data[[fact]]) &&
+      !is.na(fact) && force_factor) {
+    physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
+  }
+
+  if (filter_na_fact && !is.na(fact)) {
+    physeq <- subset_samples_pq(physeq,!is.na(physeq@sam_data[[fact]]))
+  }
+
+  tsne <- tsne_pq(
+    physeq = physeq,
+    method = method,
+    dims = dims,
+    theta = theta,
+    perplexity = perplexity,
+    ...
+  )
+
+  res_tSNE_A <- tsne$Y[, plot_dims[1]] / 100
+  res_tSNE_B <- tsne$Y[, plot_dims[2]] / 100
+
+  df <- data.table::data.table(res_tSNE_A,
+                               res_tSNE_B,
+                               as(physeq@sam_data, "data.frame"))
+
+
+  g <-
+    ggplot(data = df, aes_string("res_tSNE_A", "res_tSNE_B", group = fact)) +
+    xlab(paste0("Dimension ", plot_dims[1], " of tSNE analysis")) +
+    ylab(paste0("Dimension ", plot_dims[2], " of tSNE analysis"))
+
+  g <- g + geom_point(
+    aes_string(fill = fact),
+    shape = 21,
+    color = "black",
+    size = 3,
+    alpha = 1.0
+  )
+
+  if (!is.null(ellipse_level) & !is.na(fact)) {
+    g <-
+      g + stat_ellipse(aes_string(color = fact), level = ellipse_level)
+  }
+
+  return(g)
+}

@@ -1,7 +1,7 @@
 Package: MiscMetabar
 Type: Package
 Title: Miscellaneous functions for metabarcoding analysis
-Version: 0.32
+Version: 0.33
 Author: Adrien Taudière <adrien.taudiere@zaclys.net>
 Maintainer: Adrien Taudière <adrien.taudiere@zaclys.net>
 Description: Functions to help analyze and visualize metabarcoding data. Mainly build on the top of phyloseq, dada2 and targets R packages.
@@ -16,34 +16,38 @@ Depends:
     magrittr,
     dplyr
 Suggests: 
-    lulu,
-    metacoder,
-    grid,
-    vegan,
-    mixtools,
     Biostrings,
+    circlize,
     DECIPHER,
     DESeq2,
     DT,
-    circlize,
     edgeR,
+    gghalves,
+    ggVennDiagram,
+    grid,
     gridExtra,
     here,
-    ggVennDiagram,
+    knitr,
+    lulu,
+    metacoder,
     methods,
+    MicrobiotaProcess,
+    microViz,
+    mixtools,
     multcompView,
     networkD3,
     pbapply,
     plotly,
     plyr,
     reshape2,
+    rmarkdown,
     rotl,
+    Rtsne,
     seqinr,
-    venneuler,
-    viridis,
     testthat (>= 3.0.0),
-    knitr,
-    rmarkdown
+    vegan,
+    venneuler,
+    viridis
 RoxygenNote: 7.2.3
 URL: https://github.com/adrientaudiere/MiscMetabar,
     https://adrientaudiere.github.io/MiscMetabar/
@@ -61,6 +65,7 @@ Imports:
 Remotes: 
     github::mikemc/speedyseq,
     github::adrientaudiere/lulu,
-    github::david-barnett/microViz
+    github::david-barnett/microViz,
+    github::erocoar/gghalves
 Config/testthat/edition: 3
 VignetteBuilder: knitr

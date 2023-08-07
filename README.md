@@ -25,12 +25,12 @@ install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar")
 #> 
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/RtmpjhfZ5T/remotes2ea4f6396e429/adrientaudiere-MiscMetabar-939338b/DESCRIPTION’ ... OK
+#> * checking for file ‘/tmp/RtmpRNyoC7/remotesd5b61959fdcd/adrientaudiere-MiscMetabar-98cff94/DESCRIPTION’ ... OK
 #> * preparing ‘MiscMetabar’:
 #> * checking DESCRIPTION meta-information ... OK
 #> * checking for LF line-endings in source and make files and shell scripts
 #> * checking for empty or unneeded directories
-#> * building ‘MiscMetabar_0.3.tar.gz’
+#> * building ‘MiscMetabar_0.32.tar.gz’
 ```
 
 You can install the developement version from
@@ -41,12 +41,12 @@ install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar", ref = "dev")
 #> 
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/RtmpjhfZ5T/remotes2ea4f14bdf9d/adrientaudiere-MiscMetabar-9944b43/DESCRIPTION’ ... OK
+#> * checking for file ‘/tmp/RtmpRNyoC7/remotesd5b65df4641e/adrientaudiere-MiscMetabar-30134e9/DESCRIPTION’ ... OK
 #> * preparing ‘MiscMetabar’:
 #> * checking DESCRIPTION meta-information ... OK
 #> * checking for LF line-endings in source and make files and shell scripts
 #> * checking for empty or unneeded directories
-#> * building ‘MiscMetabar_0.31.tar.gz’
+#> * building ‘MiscMetabar_0.32.tar.gz’
 ```
 
 ## Some use of MiscMetabar

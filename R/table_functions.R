@@ -94,10 +94,14 @@ tax_datatable <- function(physeq,
 #' `r lifecycle::badge("experimental")` #'   For the moment refseq slot need to be not Null.
 #'
 #' @inheritParams clean_pq
-#' @param modality the name of the column in the `sam_data`
-#'   slot of the physeq object to split samples by pairs
 #' @param bifactor (required) a factor (present in the `sam_data` slot of
 #'   the physeq object) presenting the pair names
+#' @param modality the name of the column in the `sam_data`
+#'   slot of the physeq object to split samples by pairs
+#' @param merge_sample_by a vector to determine
+#'   which samples to merge using the
+#'   \code{\link[speedyseq]{merge_samples2}} function.
+#'   Need to be in \code{physeq@sam_data}
 #' @param nb_min_seq minimum number of sequences per sample
 #'   to count the ASV/OTU
 #' @param vegIndex (default: "shannon") index for the `vegan::diversity` function
@@ -105,10 +109,23 @@ tax_datatable <- function(physeq,
 #' @importFrom rlang .data
 #' @export
 compare_pairs_pq <- function(physeq = NULL,
-                             modality = NULL,
                              bifactor = NULL,
+                             modality = NULL,
+                             merge_sample_by = NULL,
                              nb_min_seq = 0,
                              vegIndex = "shannon") {
+
+  physeq <- clean_pq(physeq,
+                     clean_samples_names = FALSE,
+                     force_taxa_as_columns = TRUE,
+                     silent = T
+                     )
+
+  if (!is.null(merge_sample_by)) {
+    physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
+    physeq <- clean_pq(physeq)
+  }
+
   if (!is.factor(physeq@sam_data[[bifactor]])) {
     physeq@sam_data[[bifactor]] <- as.factor(physeq@sam_data[[bifactor]])
   }
@@ -121,11 +138,15 @@ compare_pairs_pq <- function(physeq = NULL,
   res <- list()
   if (!is.null(modality)) {
     physeq@sam_data[[modality]] <- as.factor(physeq@sam_data[[modality]])
+    nmodality <- levels(physeq@sam_data[[modality]])
   } else {
-    physeq@sam_data[[modality]] <- rep("mod", nsamples(physeq))
-  }
+    nmodality <- 1
+   }
+  # else {
+  #   physeq@sam_data[[modality]] <- rep("mod", nsamples(physeq))
+  # }
 
-  for (i in levels(physeq@sam_data[[modality]])) {
+  for (i in nmodality) {
     newphyseq <- physeq
     if (!is.null(modality)) {
       newDF <- newphyseq@sam_data[newphyseq@sam_data[[modality]] == i, ]

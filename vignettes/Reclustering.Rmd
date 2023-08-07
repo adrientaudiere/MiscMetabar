@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, message=FALSE}
 library(MiscMetabar)
 ```
 
@@ -37,7 +37,7 @@ summary_plot_pq(data_fungi_sp_known)
 summary_plot_pq(otu)
 ```
 
-## Using lulu algorithm (https://www.nature.com/articles/s41467-017-01312-x)
+## Using lulu algorithm [link to LULU article](https://www.nature.com/articles/s41467-017-01312-x)
 
 ```{r, message=FALSE, results="hide", eval = FALSE}
 library(devtools)

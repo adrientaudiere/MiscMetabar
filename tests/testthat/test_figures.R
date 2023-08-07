@@ -1,7 +1,9 @@
 data("data_fungi")
 data("data_fungi_sp_known")
+data("GlobalPatterns")
 
 data_fungi_2trees <- subset_samples(data_fungi, data_fungi@sam_data$Tree_name %in% c("A10-005", "AD30-abm-X"))
+GP_archae <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 
 test_that("biplot_pq works", {
   expect_message(biplot_pq(data_fungi_2trees, merge_sample_by = "Tree_name"))
@@ -25,3 +27,11 @@ test_that("graph_test_pq works", {
   expect_message(graph_test_pq(subset_samples(data_fungi, !is.na(data_fungi@sam_data$Time)), fact = "Time", merge_sample_by = "Tree_name"))
   expect_error(graph_test_pq(data_fungi, fact = "Height"))
 })
+
+test_that("accu_plot works", {
+  expect_silent(accu_plot(GP_archae, fact = "X.SampleID", by.fact = T))
+  expect_silent(accu_plot(GP_archae, "SampleType", add_nb_seq = TRUE, by.fact = TRUE))
+  expect_warning(accu_plot(GP_archae, "SampleType", add_nb_seq = FALSE, by.fact = TRUE))
+  expect_error(accu_plot(GP_archae))
+})
+
