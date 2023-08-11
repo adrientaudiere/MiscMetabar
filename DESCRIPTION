@@ -44,6 +44,7 @@ Suggests:
     rotl,
     Rtsne,
     seqinr,
+    SRS,
     testthat (>= 3.0.0),
     vegan,
     venneuler,

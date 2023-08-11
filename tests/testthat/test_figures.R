@@ -34,4 +34,3 @@ test_that("accu_plot works", {
   expect_warning(accu_plot(GP_archae, "SampleType", add_nb_seq = FALSE, by.fact = TRUE))
   expect_error(accu_plot(GP_archae))
 })
-

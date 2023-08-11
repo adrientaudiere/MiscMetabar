@@ -114,12 +114,11 @@ compare_pairs_pq <- function(physeq = NULL,
                              merge_sample_by = NULL,
                              nb_min_seq = 0,
                              vegIndex = "shannon") {
-
   physeq <- clean_pq(physeq,
-                     clean_samples_names = FALSE,
-                     force_taxa_as_columns = TRUE,
-                     silent = T
-                     )
+    clean_samples_names = FALSE,
+    force_taxa_as_columns = TRUE,
+    silent = T
+  )
 
   if (!is.null(merge_sample_by)) {
     physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
@@ -141,7 +140,7 @@ compare_pairs_pq <- function(physeq = NULL,
     nmodality <- levels(physeq@sam_data[[modality]])
   } else {
     nmodality <- 1
-   }
+  }
   # else {
   #   physeq@sam_data[[modality]] <- rep("mod", nsamples(physeq))
   # }

@@ -48,14 +48,14 @@ circle_pq(data_fungi_woNA4height, "Height")
 
 ```{r}
 data_fungi_low_high <- subset_samples(data_fungi, data_fungi@sam_data$Height %in% c("Low", "High"))
-data_fungi_low_high <- subset_taxa_pq(data_fungi_low_high, taxa_sums(data_fungi_low_high)>5000)
+data_fungi_low_high <- subset_taxa_pq(data_fungi_low_high, taxa_sums(data_fungi_low_high) > 5000)
 biplot_pq(data_fungi_low_high, fact = "Height", merge_sample_by = "Height")
 ```
 
 ### Compare two (group of) samples with a table
 
 ```{r}
-#compare_pairs_pq(data_fungi_low_high, bifactor = "Height", merge_sample_by = "Height")
+# compare_pairs_pq(data_fungi_low_high, bifactor = "Height", merge_sample_by = "Height")
 ```
 
 ## Venn diagramm
@@ -67,7 +67,7 @@ venn_pq(data_fungi, fact = "Height")
 
 ```{r}
 ggvenn_pq(data_fungi, fact = "Height") +
-  ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1) + 
+  ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1) +
   labs(title = "Share number of ASV among Height in tree")
 ```
 
