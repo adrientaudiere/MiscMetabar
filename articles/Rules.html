@@ -100,11 +100,14 @@
 <li>Always indicate required params <code>(required)</code>
 </li>
 <li>Indicate default values only when (i) a set of values is possible
-[e.g bray method in vegdist] or (ii) when this value is well thought out
-and a good default value for most users [e.g. the number of permutation
-or processors, or the level of identity to cluster at 97%].</li>
-<li>Indicate the type for logical and integer params.</li>
-<li>Try to homogenize the params names across function.</li>
+[e.g <code>"bray"</code> for the parameter <code>method</code> in
+<code><a href="https://rdrr.io/pkg/vegan/man/vegdist.html" class="external-link">vegan::vegdist()</a></code>] or (ii) when this value is well thought
+out and a good default value for most users [e.g. the number of
+permutation or processors, or the level of identity to cluster at
+97%].</li>
+<li>Indicate the type for <em>logical</em> and <em>integer</em>
+params.</li>
+<li>Homogenize the params names across function.</li>
 <li>Prefer ASVs to OTUs denomination, even thought both are almost
 interchangeable in the MiscMetabar package.</li>
 </ul>
