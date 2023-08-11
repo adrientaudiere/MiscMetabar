@@ -23,13 +23,14 @@ TODO
 
 # Summary
 
-Metabarcoding is
+# Statement of need
+
+Biological studies, especially in Ecology, Health sciences and Taxonomy needs to describe the biological composition of samples. During the last twenty years, (i) development of DNA sequencing, (ii) references database, (iii) High-Throughput sequencing (HTS) and (iv) bioinformatic ressources allow to describe the communities of living being through metabarcoding. Metabarcoding involves the sequencing of millions (*meta*-) of short zone of specific DNA (*-barcoding*, [@valentini2009]) often from environmental samples (eDNA, [@taberlet2012]) such as human stomach content, lake water, soil and air.
+
+The analysis of metabarcoding studies is difficult due to the complexity of the datasets (millions of sequences with variable quality, including chimera and sequencing error) often couple to tricky sample scheme and a large diversity of questions. Several plateforms (see table 1 in [@tedersoo2022] for a list) such as QIIME2 ([@bolyen2019]), mothur ([@schloss2020]) and Galaxy ([@jalili2020]) allow complete analysis from raw fastq sequences to statistical analysis and visualisation. However, the R ecosystem ([@XXX]), especially through the bioconductor project ([@XXX]) is very riche (See section "States of the field in R") and more flexible than this plateforms.
 
 MiscMetabar aims at facilitate the *description*, the *transformation*, the *exploration* and the *reproductibility* of metabarcoding analysis using R.
 
-# Statement of need
-
-Metabarcoding is
 
 # States of the field in R
 
@@ -61,12 +62,10 @@ The choice between ASV and OTU is important because they lead to different resul
 
 Recent articles ([@forster2019],[@antich2021]) proposed to used both jointly. They recommend (i) using of ASV to denoise the dataset and (ii) for some questions, clustering the ASV sequences into OTUs. This is the aim of the function `asv2otu()`.
 
-# Finding fungus in a needle stack showcase
+# Finding fungus in a needle stack showcase ??
 
 # Already cited package
 
 MiscMetabar is already used by scientific communities in different teams ([@Pleic2022], [@Vieira2021], [@McCauley2022]).
 
 # Acknowledgements
-
-For a quick reference, the following citation commands can be used: - `@author:2001` -\> "Author et al. (2001)" - `[@author:2001]` -\> "(Author et al., 2001)" - `[@author1:2001; @author2:2001]` -\> "(Author1 et al., 2001; Author2 et al., 2002)"
