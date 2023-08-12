@@ -4,6 +4,7 @@
 * Add option `args_makedb` and `args_blastn` to funtions `blast_pq()`, `blast_to_phyloseq()`, `blast_to_derep()` and `filter_asv_blast()`. 
 * Add option `rarefy_nb_seqs` to `ggven_pq()` in order to rarefy samples before plotting. 
 * Add function `SRS_curve_pq()` to plot scaling with ranked subsampling (SRS) curves using the `SRS::SRS_curve()` function (see citation("SRS") for reference).
+* Add option `nb_samples_info` to `biplot_pq()` in order to add the number of samples merged by level of factors.
 
 
 # MiscMetabar 0.33

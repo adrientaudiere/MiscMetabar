@@ -1628,11 +1628,18 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #'   computed using the maximum abundances values.
 #' @param ylim_modif vector of two values. Modificator (by a multiplication)
 #'   of ylim. If one value is set, this value is used for both limits.
+#' @param nb_samples_info (default: TRUE, logical) if TRUE and merge_sample_by is set, 
+#'   add the number of samples merged for both levels.
 #' @param plotly_version If TRUE, use [plotly::ggplotly()] to return
 #'   a interactive ggplot.
 #' @param ... other arguments for the ggplot function
 #' @importFrom stats reorder
 #' @return A plot
+#' 
+#' @examples 
+#' data(data_fungi)
+#' data_fungi_2Height <- subset_samples(data_fungi, Height %in% c("Low", "High"))
+#' biplot_pq(data_fungi_2Height, "Height", merge_sample_by="Height")
 #' @export
 #' @author Adrien Taudière
 #'
@@ -1655,9 +1662,15 @@ biplot_pq <- function(physeq,
                       size_names = 5,
                       y_names = NA,
                       ylim_modif = c(1, 1),
+                      nb_samples_info = TRUE,
                       plotly_version = FALSE,
                       ...) {
   if (!is.null(merge_sample_by)) {
+
+    if(nb_samples_info) {
+      modality_1_nb <- table(physeq@sam_data[,merge_sample_by])[1]
+      modality_2_nb <- table(physeq@sam_data[,merge_sample_by])[2]
+    }
     physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
     physeq <- clean_pq(physeq)
   }
@@ -1693,6 +1706,11 @@ biplot_pq <- function(physeq,
   }
   if (is.null(right_name)) {
     right_name <- levels(modality)[2]
+  }
+
+  if(!is.null(merge_sample_by) && nb_samples_info) {
+    left_name <- paste0(left_name, " (" ,modality_1_nb, " samples)")
+    right_name <- paste0(right_name, " (" ,modality_2_nb, " samples)")
   }
 
   physeq@sam_data$modality <- modality
