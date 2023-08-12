@@ -25,7 +25,7 @@ a new phyloseq object
 Subset taxa using a conditional named boolean vector.
 }
 \details{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\verb{r lifecycle::badge("experimental")}
 
 The main objective of this function is to complete the \code{\link[phyloseq:subset_taxa-methods]{phyloseq::subset_taxa()}}
 function by propose a more easy way of subset_taxa using a named boolean vector.

@@ -49,7 +49,7 @@ return a list of two plots, one for nbSeq and one for ASV.}
 A ggplot2 graphic
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\verb{r lifecycle::badge("experimental")}
 
 An alternative to \code{phyloseq::plot_bar()} function.
 }

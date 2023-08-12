@@ -16,7 +16,7 @@ track_wkflow_samples(list_pq_obj, ...)
 A list of dataframe. cf \code{\link[=track_wkflow]{track_wkflow()}} for more information
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\verb{r lifecycle::badge("experimental")}
 
 More information are available in the manual of the function \code{\link[=track_wkflow]{track_wkflow()}}
 }

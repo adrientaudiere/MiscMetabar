@@ -19,7 +19,7 @@ plot_mt(mt = NULL, alpha = 0.05, color_tax = "Class", taxa = "Species")
 a \code{\link{ggplot}}2 plot of result of a mt test
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\verb{r lifecycle::badge("maturing")}
 }
 \examples{
 data(data_fungi)

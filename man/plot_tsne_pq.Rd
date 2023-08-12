@@ -46,7 +46,7 @@ using the \code{phyloseq} package.}
 A ggplot object
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\verb{r lifecycle::badge("experimental")}
 }
 \details{
 Partially inspired by \code{phylosmith::tsne_phyloseq()} function developed by Schuyler D. Smith.

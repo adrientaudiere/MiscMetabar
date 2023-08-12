@@ -22,7 +22,7 @@ One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 and if present a phy_tree in Newick format. At least the otu_table.csv need to be present.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\verb{r lifecycle::badge("maturing")}
 }
 \examples{
 \dontrun{

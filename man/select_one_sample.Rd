@@ -18,7 +18,7 @@ using the \code{phyloseq} package.}
 a physeq object with one sample
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\verb{r lifecycle::badge("experimental")}
 
 Mostly for internal used, for example in function \code{\link[=track_wkflow_samples]{track_wkflow_samples()}}.
 }

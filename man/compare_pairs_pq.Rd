@@ -7,8 +7,9 @@ shared ASV.}
 \usage{
 compare_pairs_pq(
   physeq = NULL,
-  modality = NULL,
   bifactor = NULL,
+  modality = NULL,
+  merge_sample_by = NULL,
   nb_min_seq = 0,
   vegIndex = "shannon"
 )
@@ -17,11 +18,16 @@ compare_pairs_pq(
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
+\item{bifactor}{(required) a factor (present in the \code{sam_data} slot of
+the physeq object) presenting the pair names}
+
 \item{modality}{the name of the column in the \code{sam_data}
 slot of the physeq object to split samples by pairs}
 
-\item{bifactor}{(required) a factor (present in the \code{sam_data} slot of
-the physeq object) presenting the pair names}
+\item{merge_sample_by}{a vector to determine
+which samples to merge using the
+\code{\link[speedyseq]{merge_samples2}} function.
+Need to be in \code{physeq@sam_data}}
 
 \item{nb_min_seq}{minimum number of sequences per sample
 to count the ASV/OTU}
@@ -32,5 +38,5 @@ to count the ASV/OTU}
 A tibble
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} #'   For the moment refseq slot need to be not Null.
+\verb{r lifecycle::badge("experimental")} #'   For the moment refseq slot need to be not Null.
 }

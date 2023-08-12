@@ -17,5 +17,5 @@ multiplot(..., plotlist = NULL, cols = 1, layout = NULL)
 If present, 'cols' is ignored.}
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+\verb{r lifecycle::badge("stable")}
 }

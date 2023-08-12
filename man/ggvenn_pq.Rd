@@ -12,6 +12,8 @@ ggvenn_pq(
   min_nb_seq = 0,
   taxonomic_rank = NULL,
   split_by = NULL,
+  add_nb_samples = TRUE,
+  rarefy_nb_seqs = FALSE,
   ...
 )
 }
@@ -23,7 +25,7 @@ using the \code{phyloseq} package.}
 Need to be in \code{physeq@sam_data}.}
 
 \item{merge_sample_by}{if not \code{NULL} samples of
-physeq are mereged using the vector set by \code{merge_sample_by}. This
+physeq are merged using the vector set by \code{merge_sample_by}. This
 merging used the \code{\link[speedyseq:merge_samples2]{speedyseq::merge_samples2()}}.
 If \code{merge_sample_by} is equal to \code{fact} args
 it give the same result as if \code{merge_sample_by} is NULL.}
@@ -37,8 +39,12 @@ will not count in the venn diagramm}
 to count. If set to Null (the default) the number of OTUs is counted.}
 
 \item{split_by}{Split into multiple plot using variable split_by.
-The name of a variable present in \code{sam_data} slot
-of the physeq object.}
+The name of a variable must be present in \code{sam_data} slot
+of the physeq object.
+@param add_nb_samples (logical, default TRUE) Add the number of samples to
+levels names
+@param rarefy_nb_seqs Rarefy each sample (before merging if merge_sample_by is set)
+using \code{phyloseq::rarefy_even_depth()}}
 
 \item{...}{other arguments for the \code{ggVennDiagram::ggVennDiagram} function
 for ex. \code{category.names}.}
@@ -49,7 +55,7 @@ modalities of the argument \code{factor} or if split_by is set a list
 of plots.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\verb{r lifecycle::badge("maturing")}
 
 Note that you can use ggplot2 function to customize the plot
 for ex. \code{+ scale_fill_distiller(palette = "BuPu", direction = 1)}
@@ -65,6 +71,10 @@ for (i in 1:length(pl)) {
     theme(plot.title = element_text(hjust = 0.5, size = 22))
   print(p)
 }
+
+data_fungi2 <- subset_samples(data_fungi, data_fungi@sam_data$Tree_name == "A10-005" |
+  data_fungi@sam_data$Height \%in\% c("Low", "High"))
+ggvenn_pq(data_fungi2, fact = "Height")
 }
 \author{
 Adrien Taudière

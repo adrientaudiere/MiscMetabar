@@ -38,7 +38,7 @@ Required if method is \code{cutoff_diff}, \code{min}, \code{max} or \code{min}}
 A new \code{\link{phyloseq-class}} object.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\verb{r lifecycle::badge("experimental")}
 }
 \author{
 Adrien Taudière

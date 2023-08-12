@@ -20,7 +20,7 @@ their column numbers (e.g. taxonomic_level = c(1:7))}
 A plot
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\verb{r lifecycle::badge("maturing")}
 }
 \examples{
 \dontrun{

@@ -38,7 +38,7 @@ A \code{\link{ggplot}}2 plot representing Venn diagramm of
 modalities of the argument \code{factor}
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\verb{r lifecycle::badge("maturing")}
 }
 \seealso{
 \code{\link[venneuler]{venneuler}}

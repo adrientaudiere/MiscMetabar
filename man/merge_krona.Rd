@@ -15,7 +15,7 @@ merge_krona(files = NULL, output = "mergeKrona.html")
 A html file
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\verb{r lifecycle::badge("maturing")}
 
 Need the installation of kronatools on the computer (\href{https://github.com/marbl/Krona/wiki/Installing}{installation instruction}).
 Function merge_krona allows merging multiple html files in one interactive krona file

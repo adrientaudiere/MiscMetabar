@@ -17,7 +17,7 @@
 #' @param return_plot (logical) Do we return only the result
 #'   of the test or do we plot the result?
 #' @param title The title of the Graph.
-#' @param na_remove (logical, default FALSE) If set to TRUE, remove samples with 
+#' @param na_remove (logical, default FALSE) If set to TRUE, remove samples with
 #'   NA in the variables set in formula.
 #' @param ... other params for be passed on
 #'   [phyloseqGraphTest::graph_perm_test()] function
@@ -48,11 +48,13 @@ graph_test_pq <- function(physeq,
     physeq <- clean_pq(physeq)
   }
 
-  if (na_remove){
+  if (na_remove) {
     new_physeq <- subset_samples_pq(physeq, !is.na(physeq@sam_data[[fact]]))
-    if(nsamples(physeq)-nsamples(new_physeq) > 0){
-      message(paste0(nsamples(physeq)-nsamples(new_physeq), 
-                   " were discarded due to NA in variables present in formula."))
+    if (nsamples(physeq) - nsamples(new_physeq) > 0) {
+      message(paste0(
+        nsamples(physeq) - nsamples(new_physeq),
+        " were discarded due to NA in variables present in formula."
+      ))
     }
     physeq <- new_physeq
   }
@@ -86,20 +88,20 @@ graph_test_pq <- function(physeq,
 #' @inheritParams clean_pq
 #' @param formula (required) the right part of a formula for [vegan::adonis2()].
 #'   Variables must be present in the `physeq@sam_data` slot.
-#' @param dist_method (default "bray") the distance used. See 
+#' @param dist_method (default "bray") the distance used. See
 #'   [phyloseq:::distance()] for all available distances or run
 #'   `phyloseq::distanceMethodList()`.
-#'   For aitchison and robust.aitchison distance, [vegan::vegdist()] 
+#'   For aitchison and robust.aitchison distance, [vegan::vegdist()]
 #'   function is directly used.
 #' @param merge_sample_by a vector to determine
 #'   which samples to merge using the [speedyseq::merge_samples2()]
 #'   function. Need to be in `physeq@sam_data`
-#' @param na_remove (logical, default FALSE) If set to TRUE, remove samples with 
+#' @param na_remove (logical, default FALSE) If set to TRUE, remove samples with
 #'   NA in the variables set in formula.
-#' @param correction_for_sample_size (logical, default FALSE) If set to TRUE, the 
-#'   sample size (number of sequences by samples) is add to formula in the form 
-#'   `y~Library_Size + Biological_Effect` following recommendation of 
-#'   [Weiss et al. 2017](https://doi.org/10.1186/s40168-017-0237-y). 
+#' @param correction_for_sample_size (logical, default FALSE) If set to TRUE, the
+#'   sample size (number of sequences by samples) is add to formula in the form
+#'   `y~Library_Size + Biological_Effect` following recommendation of
+#'   [Weiss et al. 2017](https://doi.org/10.1186/s40168-017-0237-y).
 #'   `correction_for_sample_size` overcome `rarefy_nb_seqs` if both are TRUE.
 #' @param rarefy_nb_seqs (logical, default FALSE) Rarefy each sample
 #'   (before merging if merge_sample_by is set) using `phyloseq::rarefy_even_depth()`.
@@ -117,43 +119,45 @@ graph_test_pq <- function(physeq,
 #' @importFrom stats reformulate
 #' @author Adrien Taudière
 
-adonis_pq <- function(physeq,
-  formula,
-  dist_method = "bray",
-  merge_sample_by = NULL,
-  na_remove = FALSE,
-  correction_for_sample_size = FALSE,
-  rarefy_nb_seqs = FALSE) {
-
+adonis_pq <- function(
+    physeq,
+    formula,
+    dist_method = "bray",
+    merge_sample_by = NULL,
+    na_remove = FALSE,
+    correction_for_sample_size = FALSE,
+    rarefy_nb_seqs = FALSE) {
   physeq <- clean_pq(
-      physeq,
-      force_taxa_as_columns = TRUE,
-      remove_empty_samples = TRUE,
-      remove_empty_taxa = FALSE,
-      clean_samples_names = FALSE,
-      silent = TRUE
-    )
+    physeq,
+    force_taxa_as_columns = TRUE,
+    remove_empty_samples = TRUE,
+    remove_empty_taxa = FALSE,
+    clean_samples_names = FALSE,
+    silent = TRUE
+  )
 
-  if(dist_method %in% c("aitchison", "robust.aitchison")){
+  if (dist_method %in% c("aitchison", "robust.aitchison")) {
     phy_dist <- paste0('vegan::vegdist(as.matrix(physeq@otu_table), method="', dist_method, '")')
   } else {
     phy_dist <- paste0('phyloseq:::distance(physeq, method="', dist_method, '")')
   }
-  
+
   .formula <- reformulate(formula, response = phy_dist)
   termf <- terms(.formula)
   term_lab <- attr(termf, "term.labels")[attr(termf, "order") == 1]
 
   verify_pq(physeq)
 
-  if(na_remove){
+  if (na_remove) {
     new_physeq <- physeq
-    for(tl in term_lab) {
+    for (tl in term_lab) {
       new_physeq <- subset_samples(new_physeq, !is.na(physeq@sam_data[[tl]]))
     }
-    if(nsamples(physeq)-nsamples(new_physeq) > 0){
-      message(paste0(nsamples(physeq)-nsamples(new_physeq), 
-                   " were discarded due to NA in variables present in formula."))
+    if (nsamples(physeq) - nsamples(new_physeq) > 0) {
+      message(paste0(
+        nsamples(physeq) - nsamples(new_physeq),
+        " were discarded due to NA in variables present in formula."
+      ))
     }
     physeq <- new_physeq
   }
@@ -161,7 +165,7 @@ adonis_pq <- function(physeq,
   if (!is.null(merge_sample_by)) {
     physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
     physeq <- clean_pq(physeq)
-  }    
+  }
 
   if (correction_for_sample_size) {
     formula <- paste0("sample_size+", formula)
@@ -173,7 +177,7 @@ adonis_pq <- function(physeq,
 
   verify_pq(physeq)
   metadata <- as(sample_data(physeq), "data.frame")
-  if (correction_for_sample_size) { 
+  if (correction_for_sample_size) {
     metadata$sample_size <- sample_sums(physeq)
   }
 

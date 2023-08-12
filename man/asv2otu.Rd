@@ -49,7 +49,7 @@ A new object of class \code{physeq} or a list of cluster if seq_names
 args was used.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\verb{r lifecycle::badge("maturing")}
 }
 \details{
 This function use the \code{speedyseq::merge_taxa_vec} function to

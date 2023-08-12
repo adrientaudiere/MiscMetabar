@@ -8,7 +8,7 @@ summary_plot_pq(
   physeq,
   add_info = TRUE,
   min_seq_samples = 500,
-  clean_phyloseq = TRUE
+  clean_pq = TRUE
 )
 }
 \arguments{
@@ -22,14 +22,14 @@ extra informations?}
 to true to print the number of samples with less sequences than
 this number.}
 
-\item{clean_phyloseq}{(logical): Does the phyloseq
+\item{clean_pq}{(logical): Does the phyloseq
 object is cleaned using the \code{\link[=clean_pq]{clean_pq()}} function?}
 }
 \value{
 A ggplot2 object
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\verb{r lifecycle::badge("maturing")}
 }
 \examples{
 data(data_fungi)

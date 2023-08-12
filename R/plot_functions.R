@@ -978,9 +978,9 @@ venn_pq <-
 #'     theme(plot.title = element_text(hjust = 0.5, size = 22))
 #'   print(p)
 #' }
-#' 
+#'
 #' data_fungi2 <- subset_samples(data_fungi, data_fungi@sam_data$Tree_name == "A10-005" |
-#'                               data_fungi@sam_data$Height %in% c("Low", "High"))
+#'   data_fungi@sam_data$Height %in% c("Low", "High"))
 #' ggvenn_pq(data_fungi2, fact = "Height")
 #' @export
 #' @author Adrien Taudière
@@ -1031,18 +1031,18 @@ ggvenn_pq <- function(physeq = NULL,
         ])))
     }
     nb_samples <- c(nb_samples, sum(physeq@sam_data[[fact]] == f, na.rm = T))
-    nb_seq <- c(nb_seq, sum(physeq@otu_table[physeq@sam_data[[fact]] == f,], na.rm = TRUE))
+    nb_seq <- c(nb_seq, sum(physeq@otu_table[physeq@sam_data[[fact]] == f, ], na.rm = TRUE))
   }
 
-  if(max(nb_seq)/min(nb_seq) > 2) {
-    message(paste0("Two modalities differ greatly (more than x2) in their number of sequences (", 
-                    max(nb_seq),
-                    " vs ", 
-                    min(nb_seq),
-                    ")"
-            )
-    )
-  } 
+  if (max(nb_seq) / min(nb_seq) > 2) {
+    message(paste0(
+      "Two modalities differ greatly (more than x2) in their number of sequences (",
+      max(nb_seq),
+      " vs ",
+      min(nb_seq),
+      ")"
+    ))
+  }
 
   if (add_nb_samples) {
     names(res) <- paste0(names(res), "\n (", nb_samples, ")")
@@ -1643,18 +1643,18 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #'   computed using the maximum abundances values.
 #' @param ylim_modif vector of two values. Modificator (by a multiplication)
 #'   of ylim. If one value is set, this value is used for both limits.
-#' @param nb_samples_info (default: TRUE, logical) if TRUE and merge_sample_by is set, 
+#' @param nb_samples_info (default: TRUE, logical) if TRUE and merge_sample_by is set,
 #'   add the number of samples merged for both levels.
 #' @param plotly_version If TRUE, use [plotly::ggplotly()] to return
 #'   a interactive ggplot.
 #' @param ... other arguments for the ggplot function
 #' @importFrom stats reorder
 #' @return A plot
-#' 
-#' @examples 
+#'
+#' @examples
 #' data(data_fungi)
 #' data_fungi_2Height <- subset_samples(data_fungi, Height %in% c("Low", "High"))
-#' biplot_pq(data_fungi_2Height, "Height", merge_sample_by="Height")
+#' biplot_pq(data_fungi_2Height, "Height", merge_sample_by = "Height")
 #' @export
 #' @author Adrien Taudière
 #'
@@ -1681,10 +1681,9 @@ biplot_pq <- function(physeq,
                       plotly_version = FALSE,
                       ...) {
   if (!is.null(merge_sample_by)) {
-
-    if(nb_samples_info) {
-      modality_1_nb <- table(physeq@sam_data[,merge_sample_by])[1]
-      modality_2_nb <- table(physeq@sam_data[,merge_sample_by])[2]
+    if (nb_samples_info) {
+      modality_1_nb <- table(physeq@sam_data[, merge_sample_by])[1]
+      modality_2_nb <- table(physeq@sam_data[, merge_sample_by])[2]
     }
     physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
     physeq <- clean_pq(physeq)
@@ -1697,15 +1696,15 @@ biplot_pq <- function(physeq,
     )
   }
 
-  if(sample_sums(physeq)[1]/sample_sums(physeq)[2] > 2 ||
-     sample_sums(physeq)[2]/sample_sums(physeq)[1] > 2) {
-    message(paste0("The two modalities differ greatly (more than x2) in their number of sequences (", 
-                    sample_sums(physeq)[1],
-                    " vs ", 
-                    sample_sums(physeq)[2],
-                    ")"
-                  )
-           )
+  if (sample_sums(physeq)[1] / sample_sums(physeq)[2] > 2 ||
+    sample_sums(physeq)[2] / sample_sums(physeq)[1] > 2) {
+    message(paste0(
+      "The two modalities differ greatly (more than x2) in their number of sequences (",
+      sample_sums(physeq)[1],
+      " vs ",
+      sample_sums(physeq)[2],
+      ")"
+    ))
   }
 
   if (is.null(fact)) {
@@ -1734,9 +1733,9 @@ biplot_pq <- function(physeq,
     right_name <- levels(modality)[2]
   }
 
-  if(!is.null(merge_sample_by) && nb_samples_info) {
-    left_name <- paste0(left_name, " (" ,modality_1_nb, " samples)")
-    right_name <- paste0(right_name, " (" ,modality_2_nb, " samples)")
+  if (!is.null(merge_sample_by) && nb_samples_info) {
+    left_name <- paste0(left_name, " (", modality_1_nb, " samples)")
+    right_name <- paste0(right_name, " (", modality_2_nb, " samples)")
   }
 
   physeq@sam_data$modality <- modality

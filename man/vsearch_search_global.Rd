@@ -29,7 +29,7 @@ using the \code{phyloseq} package.}
 A dataframe with uc results (invisible)
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\verb{r lifecycle::badge("maturing")}
 }
 \examples{
 \dontrun{

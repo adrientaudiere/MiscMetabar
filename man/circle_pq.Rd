@@ -74,7 +74,7 @@ distribution of OTUs or sequences in the different modalities of the factor
 fact
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\verb{r lifecycle::badge("maturing")}
 }
 \examples{
 data("GlobalPatterns")

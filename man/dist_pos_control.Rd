@@ -24,7 +24,7 @@ A list of two data-frames with
 (ii) the distance among all samples
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\verb{r lifecycle::badge("maturing")}
 }
 \details{
 Compute distance among positive controls,

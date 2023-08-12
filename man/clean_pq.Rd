@@ -55,7 +55,7 @@ A new \code{\link{phyloseq-class}} object
 Clean phyloseq object by removing empty samples and taxa
 }
 \details{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\verb{r lifecycle::badge("experimental")}
 
 In addition, this function check for discrepancy (and rename) between
 (i) taxa names in refseq, taxonomy table and otu_table and between

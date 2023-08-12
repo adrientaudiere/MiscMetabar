@@ -19,7 +19,7 @@ the matrix with new colnames
 (or rownames if \code{taxa_are_rows} is true)
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\verb{r lifecycle::badge("experimental")}
 }
 \examples{
 data(data_fungi)
