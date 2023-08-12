@@ -6,9 +6,9 @@
 * Add function `SRS_curve_pq()` to plot scaling with ranked subsampling (SRS) curves using the `SRS::SRS_curve()` function (see citation("SRS") for reference).
 * Add option `nb_samples_info` to `biplot_pq()` in order to add the number of samples merged by level of factors.
 * Add a message when two modalities differ greatly (more than x2) in their number of sequences in `biplot_pq()` and `ggvenn_pq()`
+* Add option `na_remove`, `dist_method` (including Aitchinson and robust-Aitchinson distance), `correction_for_sample_size` and `rarefy_nb_seqs` options to `adonis_pq`
 
-
-# MiscMetabar 0.33
+F# MiscMetabar 0.33
 
 * Add function `plot_tax_pq()` to plot taxonomic distribution (nb of sequences or nb of ASV) across factor.
 * Add option `add_points` and make better axis of `hill_pq()` function
