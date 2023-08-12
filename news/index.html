@@ -60,11 +60,19 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.34" id="miscmetabar-034-in-development">MiscMetabar 0.34 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-034-in-development"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.35" id="miscmetabar-035-in-development">MiscMetabar 0.35 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-035-in-development"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.34" id="miscmetabar-034">MiscMetabar 0.34<a class="anchor" aria-label="anchor" href="#miscmetabar-034"></a></h2>
 <ul><li>Add option <code>add_nb_samples</code> to <code><a href="../reference/ggvenn_pq.html">ggvenn_pq()</a></code> which add the number of samples to level name in the plot. Useful to see disequilibrium in the number of samples among the factor’s levels.</li>
 <li>Add option <code>args_makedb</code> and <code>args_blastn</code> to funtions <code><a href="../reference/blast_pq.html">blast_pq()</a></code>, <code><a href="../reference/blast_to_phyloseq.html">blast_to_phyloseq()</a></code>, <code><a href="../reference/blast_to_derep.html">blast_to_derep()</a></code> and <code><a href="../reference/filter_asv_blast.html">filter_asv_blast()</a></code>.</li>
 <li>Add option <code>rarefy_nb_seqs</code> to <code>ggven_pq()</code> in order to rarefy samples before plotting.</li>
 <li>Add function <code>SRS_curve_pq()</code> to plot scaling with ranked subsampling (SRS) curves using the <code>SRS::SRS_curve()</code> function (see citation(“SRS”) for reference).</li>
+<li>Add option <code>nb_samples_info</code> to <code><a href="../reference/biplot_pq.html">biplot_pq()</a></code> in order to add the number of samples merged by level of factors.</li>
+<li>Add a message when two modalities differ greatly (more than x2) in their number of sequences in <code><a href="../reference/biplot_pq.html">biplot_pq()</a></code> and <code><a href="../reference/ggvenn_pq.html">ggvenn_pq()</a></code>
+</li>
+<li>Add options <code>na_remove</code>, <code>dist_method</code> (including Aitchinson and robust-Aitchinson distance), <code>correction_for_sample_size</code> and <code>rarefy_nb_seqs</code> options to <code>adonis_pq</code> function.</li>
+<li>Add option <code>na_remove</code> to <code><a href="../reference/graph_test_pq.html">graph_test_pq()</a></code> function.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.33" id="miscmetabar-033">MiscMetabar 0.33<a class="anchor" aria-label="anchor" href="#miscmetabar-033"></a></h2>
