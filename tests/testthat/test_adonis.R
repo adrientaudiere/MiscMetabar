@@ -1,4 +1,5 @@
 data(data_fungi)
+data(enterotype, package = "phyloseq")
 
 test_that("adonis function works fine", {
   expect_s3_class(adonis_pq(data_fungi, "Tree_name"), "anova")

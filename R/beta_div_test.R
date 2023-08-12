@@ -17,18 +17,15 @@
 #' @param return_plot (logical) Do we return only the result
 #'   of the test or do we plot the result?
 #' @param title The title of the Graph.
+#' @param na_remove (logical, default FALSE) If set to TRUE, remove samples with 
+#'   NA in the variables set in formula.
 #' @param ... other params for be passed on
 #'   [phyloseqGraphTest::graph_perm_test()] function
 #'
 #' @examples
 #' data(enterotype)
 #' graph_test_pq(enterotype, fact = "SeqTech")
-#'
-#' clean_enterotype <- subset_samples(
-#'   enterotype,
-#'   !is.na(enterotype@sam_data$Enterotype)
-#' )
-#' graph_test_pq(clean_enterotype, fact = "Enterotype")
+#' graph_test_pq(enterotype, fact = "Enterotype", na_remove = T)
 #' @author Adrien Taudière
 #'
 #' @return a ggplot with a subtitle indicating the pvalue
@@ -42,6 +39,7 @@ graph_test_pq <- function(physeq,
                           nperm = 999,
                           return_plot = TRUE,
                           title = "Graph Test",
+                          na_remove = FALSE,
                           ...) {
   verify_pq(physeq)
 
@@ -49,6 +47,16 @@ graph_test_pq <- function(physeq,
     physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
     physeq <- clean_pq(physeq)
   }
+
+  if (na_remove){
+    new_physeq <- subset_samples_pq(physeq, !is.na(physeq@sam_data[[fact]]))
+    if(nsamples(physeq)-nsamples(new_physeq) > 0){
+      message(paste0(nsamples(physeq)-nsamples(new_physeq), 
+                   " were discarded due to NA in variables present in formula."))
+    }
+    physeq <- new_physeq
+  }
+
   res_graph_test <- phyloseqGraphTest::graph_perm_test(physeq,
     sampletype = fact,
     nperm = nperm,

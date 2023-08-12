@@ -1,6 +1,7 @@
 data("data_fungi")
 data("data_fungi_sp_known")
-data("GlobalPatterns")
+data("GlobalPatterns", package = "phyloseq")
+data("enterotype", package = "phyloseq")
 
 data_fungi_2trees <- subset_samples(data_fungi, data_fungi@sam_data$Tree_name %in% c("A10-005", "AD30-abm-X"))
 GP_archae <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
@@ -26,6 +27,7 @@ test_that("graph_test_pq works", {
   expect_silent(graph_test_pq(data_fungi, fact = "Tree_name", return_plot = FALSE))
   expect_message(graph_test_pq(subset_samples(data_fungi, !is.na(data_fungi@sam_data$Time)), fact = "Time", merge_sample_by = "Tree_name"))
   expect_error(graph_test_pq(data_fungi, fact = "Height"))
+  expect_error(graph_test_pq(enterotype, fact = "Enterotype"))
 })
 
 test_that("accu_plot works", {
