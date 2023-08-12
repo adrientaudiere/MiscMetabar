@@ -978,6 +978,10 @@ venn_pq <-
 #'     theme(plot.title = element_text(hjust = 0.5, size = 22))
 #'   print(p)
 #' }
+#' 
+#' data_fungi2 <- subset_samples(data_fungi, data_fungi@sam_data$Tree_name == "A10-005" |
+#'                               data_fungi@sam_data$Height %in% c("Low", "High"))
+#' ggvenn_pq(data_fungi2, fact = "Height")
 #' @export
 #' @author Adrien Taudière
 
@@ -1006,9 +1010,9 @@ ggvenn_pq <- function(physeq = NULL,
     physeq <- clean_pq(physeq)
   }
 
-
   res <- list()
   nb_samples <- c()
+  nb_seq <- c()
 
   for (f in levels(physeq@sam_data[[fact]])) {
     newphyseq <- physeq
@@ -1027,7 +1031,18 @@ ggvenn_pq <- function(physeq = NULL,
         ])))
     }
     nb_samples <- c(nb_samples, sum(physeq@sam_data[[fact]] == f, na.rm = T))
+    nb_seq <- c(nb_seq, sum(physeq@otu_table[physeq@sam_data[[fact]] == f,], na.rm = TRUE))
   }
+
+  if(max(nb_seq)/min(nb_seq) > 2) {
+    message(paste0("Two modalities differ greatly (more than x2) in their number of sequences (", 
+                    max(nb_seq),
+                    " vs ", 
+                    min(nb_seq),
+                    ")"
+            )
+    )
+  } 
 
   if (add_nb_samples) {
     names(res) <- paste0(names(res), "\n (", nb_samples, ")")
@@ -1680,6 +1695,17 @@ biplot_pq <- function(physeq,
       "biplot_pq needs only two samples in the
     physeq object or a valid merge_sample_by parameter"
     )
+  }
+
+  if(sample_sums(physeq)[1]/sample_sums(physeq)[2] > 2 ||
+     sample_sums(physeq)[2]/sample_sums(physeq)[1] > 2) {
+    message(paste0("The two modalities differ greatly (more than x2) in their number of sequences (", 
+                    sample_sums(physeq)[1],
+                    " vs ", 
+                    sample_sums(physeq)[2],
+                    ")"
+                  )
+           )
   }
 
   if (is.null(fact)) {
