@@ -991,12 +991,13 @@ filter_asv_blast <- function(physeq,
 #' @param rename_asv reorder_asv (logical) if TRUE, ASV are renamed by their position
 #'   in the OTU_table (asv_1, asv_2, ...). Default to FALSE. Only possible if clean_pq
 #'   is set to TRUE.
-#' @param quote : a logical value (default FALSE) or a numeric vector.
+#' @param quote a logical value (default FALSE) or a numeric vector.
 #'   If TRUE, any character or factor columns will be surrounded by
 #'   double quotes.  If a numeric vector, its elements are taken
 #'   as the indices of columns to quote.  In both cases, row and
 #'   column names are quoted if they are written. If FALSE nothing is quoted.
-#' @param ... Other arguments passed on to [utils::write.csv()] function.
+#' @param sep_csv (default tabulation (\t)) separator for column
+#' @param ... Other arguments passed on to [utils::write.table()] function.
 #' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 #'   and if present a phy_tree in Newick format
 #' @export
@@ -1022,6 +1023,7 @@ write_pq <- function(physeq,
                      silent = FALSE,
                      verbose = FALSE,
                      quote = FALSE,
+                     sep_csv = "\t",
                      ...) {
   verify_pq(physeq)
 
@@ -1067,9 +1069,9 @@ write_pq <- function(physeq,
       } else {
         df_physeq <- df_physeq_interm
       }
-      utils::write.csv(
+      utils::write.table(
         df_physeq,
-        paste(path, "/ASV_table_allInOne.csv", sep = ""),
+        paste0(path, "/ASV_table_allInOne.csv"),
         quote = quote,
         ...
       )
@@ -1098,39 +1100,50 @@ write_pq <- function(physeq,
           rownames(df_physeq) <- c(rownames(df_physeq_interm), rownames(sam_data))
         }
       }
-      utils::write.csv(
+      utils::write.table(
         df_physeq,
-        paste(path, "/ASV_table_allInOne.csv", sep = ""),
+        paste0(path, "/ASV_table_allInOne.csv"),
         quote = quote,
+        sep = sep_csv,
         ...
       )
     }
   } else {
     if (!is.null(physeq@otu_table)) {
-      utils::write.csv(
-        physeq@otu_table, paste(path, "/otu_table.csv", sep = ""),
+      utils::write.table(
+        physeq@otu_table, 
+        paste0(path, "/otu_table.csv"),
         quote = quote,
+        sep = sep_csv,
         ...
       )
     }
     if (!is.null(physeq@refseq)) {
-      utils::write.csv(
-        physeq@refseq, paste(path, "/refseq.csv", sep = ""),
+      utils::write.table(
+        physeq@refseq,
+        paste0(path, "/refseq.csv"),
         quote = quote,
+        sep = sep_csv,
         ...
       )
     }
     if (!is.null(physeq@tax_table)) {
-      utils::write.csv(
-        physeq@tax_table, paste(path, "/tax_table.csv", sep = ""),
+      utils::write.table(
+        physeq@tax_table, 
+        paste0(path, "/tax_table.csv"),
         quote = quote,
+        sep = sep_csv,
+        col.names = NA,
         ...
       )
     }
     if (!is.null(physeq@sam_data)) {
-      utils::write.csv(
-        as.matrix(physeq@sam_data), paste(path, "/sam_data.csv", sep = ""),
+      utils::write.table(
+        as.matrix(physeq@sam_data), 
+        paste0(path, "/sam_data.csv"),
         quote = quote,
+        sep = sep_csv,
+        col.names = NA,
         ...
       )
     }
@@ -1156,7 +1169,8 @@ write_pq <- function(physeq,
 #'   samples. Note that if you use [write_phyloseq()] function to save your
 #'   physeq object, you may use sam_names = "X" to rename the samples names
 #'   as before.
-#'
+#' @param sep_csv (default tabulation (\t)) separator for column
+#' @param ... Other arguments passed on to [utils::write.table()] function.
 #' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 #' and if present a phy_tree in Newick format. At least the otu_table.csv need to be present.
 #' @export
@@ -1166,37 +1180,49 @@ write_pq <- function(physeq,
 #' read_pq(path = "phyloseq_data")
 #' }
 #'
-read_pq <- function(path = NULL, taxa_are_rows = FALSE, sam_names = NULL) {
-  if (file.exists(paste(path, "/otu_table.csv", sep = ""))) {
-    otu_table_csv <- as.matrix(utils::read.csv(paste(path, "/otu_table.csv", sep = "")))
-    rownames(otu_table_csv) <- otu_table_csv[, 1]
-    otu_table_csv <- otu_table_csv[, -1]
+read_pq <- function(path = NULL, taxa_are_rows = FALSE, sam_names = NULL, sep_csv = "\t", ...) {
+  
+if (file.exists(paste0(path, "/otu_table.csv"))) {
+   if (taxa_are_rows) {
+    otu_table_csv <- as.matrix(utils::read.table(paste0(path, "/otu_table.csv"), sep = sep_csv))
+    samp_names <- colnames(otu_table_csv)
     otu_table_csv <- apply(otu_table_csv, 2, as.numeric)
-    physeq <- phyloseq(otu_table(otu_table_csv, taxa_are_rows = taxa_are_rows))
+    table_otu <- otu_table(otu_table_csv, taxa_are_rows = TRUE)
+    sample_names(table_otu) <- samp_names
+    physeq <- phyloseq(table_otu)
+  } else {
+    otu_table_csv <- as.matrix(utils::read.table(paste0(path, "/otu_table.csv"), sep = sep_csv))
+    samp_names <- rownames(otu_table_csv)
+    otu_table_csv <- apply(otu_table_csv, 2, as.numeric)
+    rownames(otu_table_csv) <-  samp_names
+    physeq <- phyloseq(otu_table(otu_table_csv, taxa_are_rows = FALSE))
   }
-  if (file.exists(paste(path, "/refseq.csv", sep = ""))) {
-    dna <- Biostrings::DNAStringSet(utils::read.csv2(paste(path, "/refseq.csv", sep = ""), sep = ",")[, 2])
-    names(dna) <- utils::read.csv2(paste(path, "/refseq.csv", sep = ""), sep = ",")[, 1]
-    physeq <- phyloseq::merge_phyloseq(physeq, refseq(dna))
-  }
-  if (file.exists(paste(path, "/tax_table.csv", sep = ""))) {
-    tax_table_csv <- utils::read.csv(paste(path, "/tax_table.csv", sep = ""))
-    rownames(tax_table_csv) <- tax_table_csv[, 1]
-    tax_table_csv <- as.matrix(tax_table_csv[, -1])
-    physeq <- phyloseq::merge_phyloseq(physeq, tax_table(tax_table_csv))
-  }
-  if (file.exists(paste(path, "/sam_data.csv", sep = ""))) {
-    sam_data_csv <- utils::read.csv(paste(path, "/sam_data.csv", sep = ""))
-    physeq <- phyloseq::merge_phyloseq(physeq, sample_data(sam_data_csv))
-  }
+}
+if (file.exists(paste0(path, "/refseq.csv"))) {
+  dna <- Biostrings::DNAStringSet(utils::read.table(paste0(path, "/refseq.csv"),  sep = sep_csv, row.names = NULL)[, 2])
+  names(dna) <- utils::read.table(paste0(path, "/refseq.csv"), sep = sep_csv, row.names = NULL)[, 1]
+  physeq <- phyloseq::merge_phyloseq(physeq, refseq(dna))
+}
+if (file.exists(paste0(path, "/tax_table.csv"))) {
+  tax_table_csv <- utils::read.table(paste0(path, "/tax_table.csv"), sep = sep_csv)
+  rownames(tax_table_csv) <- tax_table_csv[, 1]
+  tax_table_csv <- as.matrix(tax_table_csv[, -1])
+  physeq <- phyloseq::merge_phyloseq(physeq, tax_table(tax_table_csv))
+}
+if (file.exists(paste0(path, "/sam_data.csv"))) {
+  sam_data_csv <- utils::read.table(paste0(path, "/sam_data.csv"), sep = sep_csv)
+  rownames(sam_data_csv) <- sam_data_csv[,1]
+  physeq <- phyloseq::merge_phyloseq(physeq, sample_data(sam_data_csv))
+}
 
-  if (!is.null(physeq@phy_tree)) {
-    tree <- ape::read.tree(paste(path, "/phy_tree.txt", sep = ""))
-    physeq <- phyloseq::merge_phyloseq(physeq, phy_tree(tree))
-  }
-  if (!is.null(sam_names)) {
-    sample_names(physeq) <- unclass(physeq@sam_data[, sam_names])[[1]]
-  }
+if (!is.null(physeq@phy_tree)) {
+  tree <- ape::read.tree(paste0(path, "/phy_tree.txt"))
+  physeq <- phyloseq::merge_phyloseq(physeq, phy_tree(tree))
+}
+if (!is.null(sam_names)) {
+  sample_names(physeq) <- unclass(physeq@sam_data[, sam_names])[[1]]
+}
+
 
   return(physeq)
 }

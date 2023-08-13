@@ -70,7 +70,7 @@ double quotes.  If a numeric vector, its elements are taken
 as the indices of columns to quote.  In both cases, row and
 column names are quoted if they are written. If FALSE nothing is quoted.}
 
-\item{...}{Other arguments passed on to \code{\link[utils:write.table]{utils::write.csv()}} function.}
+\item{...}{Other arguments passed on to \code{\link[utils:write.table]{utils::write.table()}} function.}
 }
 \value{
 One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
