@@ -16,3 +16,9 @@ test_that("clean_pq clean empty taxa and samples", {
   expect_equal(ncol(data_fungi_test@otu_table) -
     ncol(clean_pq(data_fungi_test)@otu_table), 2)
 })
+
+
+test_that("clean_pq force taxa in column", {
+  expect_true(taxa_are_rows(clean_pq(data_fungi, force_taxa_as_rows = TRUE)))
+  expect_false(taxa_are_rows(clean_pq(data_fungi, force_taxa_as_columns = TRUE)))
+})

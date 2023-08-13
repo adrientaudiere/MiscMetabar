@@ -38,7 +38,7 @@ of the test or do we plot the result?}
 \item{na_remove}{(logical, default FALSE) If set to TRUE, remove samples with
 NA in the variables set in formula.}
 
-\item{...}{other params for be passed on
+\item{...}{other params for be passed on to
 \code{\link[phyloseqGraphTest:graph_perm_test]{phyloseqGraphTest::graph_perm_test()}} function}
 }
 \value{

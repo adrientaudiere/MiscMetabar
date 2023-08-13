@@ -13,7 +13,7 @@ using the \code{phyloseq} package.}
 \item{clean_pq}{(logical): Does the phyloseq
 object is cleaned using the \code{\link[=clean_pq]{clean_pq()}} function?}
 
-\item{...}{Other arguments passed to \code{SRS::SRScurve()}}
+\item{...}{Other arguments passed on to \code{SRS::SRScurve()}}
 }
 \value{
 A plot

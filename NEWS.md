@@ -1,5 +1,8 @@
 # MiscMetabar 0.35  (in development)
 
+* Add function `multi_biplot_pq()` to visualize a collection of couples of samples for comparison through a list of `biplot_pq()`
+* Add options `add_info`, `na_remove`, and `clean_pq` to `plot_tax_pq()` function
+
 # MiscMetabar 0.34
 
 * Add option `add_nb_samples` to `ggvenn_pq()` which add the number of samples to level name in the plot. Useful to see disequilibrium in the number of samples among the factor's levels.
@@ -8,7 +11,7 @@
 * Add function `SRS_curve_pq()` to plot scaling with ranked subsampling (SRS) curves using the `SRS::SRS_curve()` function (see citation("SRS") for reference).
 * Add option `nb_samples_info` to `biplot_pq()` in order to add the number of samples merged by level of factors.
 * Add a message when two modalities differ greatly (more than x2) in their number of sequences in `biplot_pq()` and `ggvenn_pq()`
-* Add options `na_remove`, `dist_method` (including Aitchinson and robust-Aitchinson distance), `correction_for_sample_size` and `rarefy_nb_seqs` options to `adonis_pq` function.
+* Add options `na_remove`, `dist_method` (including Aitchinson and robust-Aitchinson distance), `correction_for_sample_size` and `rarefy_nb_seqs` options to `adonis_pq()` function.
 * Add option `na_remove` to `graph_test_pq()` function.
 
 # MiscMetabar 0.33

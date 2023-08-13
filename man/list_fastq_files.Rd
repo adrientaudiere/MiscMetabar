@@ -18,7 +18,7 @@ list_fastq_files(
 
 \item{paired_end}{do you have paired_end files? (default TRUE)}
 
-\item{pattern}{a pattern to filter files (passed to list.files function).}
+\item{pattern}{a pattern to filter files (passed on to list.files function).}
 
 \item{nb_files}{the number of fastq files to list (default FALSE)}
 

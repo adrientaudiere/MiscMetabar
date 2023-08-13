@@ -40,7 +40,7 @@ MM_idtaxa <- function(test, trainingSet, column_names = c("Kingdom_idtaxa", "Phy
 #'
 #' @param path path to files (required)
 #' @param paired_end do you have paired_end files? (default TRUE)
-#' @param pattern a pattern to filter files (passed to list.files function).
+#' @param pattern a pattern to filter files (passed on to list.files function).
 #' @param pattern_R1 a pattern to filter R1 files (default "_R1_")
 #' @param pattern_R2 a pattern to filter R2 files (default "_R2_")
 #' @param nb_files the number of fastq files to list (default FALSE)

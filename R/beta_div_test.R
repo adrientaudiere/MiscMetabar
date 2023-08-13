@@ -19,7 +19,7 @@
 #' @param title The title of the Graph.
 #' @param na_remove (logical, default FALSE) If set to TRUE, remove samples with
 #'   NA in the variables set in formula.
-#' @param ... other params for be passed on
+#' @param ... other params for be passed on to
 #'   [phyloseqGraphTest::graph_perm_test()] function
 #'
 #' @examples

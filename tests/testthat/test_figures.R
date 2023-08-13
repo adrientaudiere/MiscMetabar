@@ -28,6 +28,7 @@ test_that("graph_test_pq works", {
   expect_message(graph_test_pq(subset_samples(data_fungi, !is.na(data_fungi@sam_data$Time)), fact = "Time", merge_sample_by = "Tree_name"))
   expect_error(graph_test_pq(data_fungi, fact = "Height"))
   expect_error(graph_test_pq(enterotype, fact = "Enterotype"))
+  expect_error(graph_test_pq(data_fungi, fact = "tRREE_name"))
 })
 
 test_that("accu_plot works", {

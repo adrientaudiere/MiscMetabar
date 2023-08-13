@@ -190,7 +190,7 @@ clean_pq <- function(physeq,
 #' @param taxonomy_rank A vector of int. Define the column number of
 #'   taxonomic rank `in physeq@tax_table` to compute the number of unique value.
 #'   Default is NULL and do not compute values for any taxonomic rank
-#' @param ... Other arguments passed to [clean_pq()] function.
+#' @param ... Other arguments passed on to [clean_pq()] function.
 #'
 #' @return The number of sequences, clusters (e.g. OTUs, ASVs) and samples for
 #'   each object.
@@ -374,8 +374,8 @@ track_wkflow <- function(
 #'
 #' More information are available in the manual of the function [track_wkflow()]
 #'
-#' @param list_pq_obj (required): a list of object passed to [track_wkflow()]
-#' @param ... : other args passed to [track_wkflow()]
+#' @param list_pq_obj (required): a list of object passed on to [track_wkflow()]
+#' @param ... : other args passed on to [track_wkflow()]
 #'
 #' @return A list of dataframe. cf [track_wkflow()] for more information
 #'
@@ -996,7 +996,7 @@ filter_asv_blast <- function(physeq,
 #'   double quotes.  If a numeric vector, its elements are taken
 #'   as the indices of columns to quote.  In both cases, row and
 #'   column names are quoted if they are written. If FALSE nothing is quoted.
-#' @param ... Other arguments passed to [utils::write.csv()] function.
+#' @param ... Other arguments passed on to [utils::write.csv()] function.
 #' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 #'   and if present a phy_tree in Newick format
 #' @export
