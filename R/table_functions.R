@@ -108,6 +108,10 @@ tax_datatable <- function(physeq,
 #' @return A tibble
 #' @importFrom rlang .data
 #' @export
+#' @examples
+#' data(data_fungi)
+#' data_fungi_low_high <- subset_samples(data_fungi, "Height" %in% c("Low", "High"))
+#' compare_pairs_pq(data_fungi_low_high, bifactor = "Height", merge_sample_by = "Height")
 compare_pairs_pq <- function(physeq = NULL,
                              bifactor = NULL,
                              modality = NULL,

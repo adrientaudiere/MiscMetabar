@@ -423,6 +423,10 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #' @param id (default: 0.97) level of identity to cluster
 #' @param tax_adjust See the man page
 #'   of [speedyseq::merge_taxa_vec()] for more details.
+#' @param vsearch_cluster_method (default: "--cluster_fast") See other possible 
+#'   methode in the [vsearch pdf manual](https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf) (e.g. `--cluster_size` or `--cluster_smallmem`)
+#' @param vsearch_args (default : "--strand both") a one length character element defining other parameters to 
+#'   passed on to vsearch.
 #' @param ... Others arguments path to [DECIPHER::Clusterize()]
 #' @details This function use the `speedyseq::merge_taxa_vec` function to
 #'   merge taxa into clusters. By default tax_adjust = 1L. See the man page
@@ -446,6 +450,8 @@ asv2otu <- function(physeq = NULL,
                     id = 0.97,
                     vsearchpath = "vsearch",
                     tax_adjust = 1,
+                    vsearch_cluster_method = "--cluster_fast",
+                    vsearch_args = "--strand both",
                     ...) {
   if (inherits(physeq, "phyloseq")) {
     verify_pq(physeq)
@@ -491,13 +497,12 @@ asv2otu <- function(physeq = NULL,
 
     system2(
       vsearchpath,
-      paste(
-        " -cluster_fast temp.fasta -strand both",
+      paste0(
+        paste(" ", vsearch_cluster_method, " temp.fasta ", vsearch_args),
         " -id ",
         id,
         " --centroids cluster.fasta",
-        " --uc temp.uc",
-        sep = ""
+        " --uc temp.uc"
       ),
       stdout = TRUE,
       stderr = TRUE

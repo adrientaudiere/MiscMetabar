@@ -5,6 +5,7 @@
 #' @aliases hill_tuckey_pq
 #' @inheritParams clean_pq
 #' @param modality (required) the variable to test
+#' @param silent (logical) If true, no message are printing.
 #' @return A ggplot2 object
 #'
 #' @export
@@ -15,7 +16,7 @@
 #' GlobalPatterns@sam_data[, "Soil_logical"] <-
 #'   ifelse(GlobalPatterns@sam_data[, "SampleType"] == "Soil", "Soil", "Not Soil")
 #' hill_tuckey_pq(GlobalPatterns, "Soil_logical")
-hill_tuckey_pq <- function(physeq, modality) {
+hill_tuckey_pq <- function(physeq, modality,  silent = TRUE) {
   modality_vector <-
     as.factor(as.vector(unlist(unclass(physeq@sam_data[, modality]))))
 
@@ -28,12 +29,13 @@ hill_tuckey_pq <- function(physeq, modality) {
     force_taxa_as_rows = TRUE,
     remove_empty_samples = FALSE,
     remove_empty_taxa = FALSE,
-    clean_samples_names = FALSE
+    clean_samples_names = FALSE,
+    silent = silent
   )
   otu_hill <-
     vegan::renyi(t(physeq@otu_table),
       scale = c(0, 1, 2),
-      hill = T
+      hill = TRUE
     )
 
   hill_1 <- otu_hill$"0"
