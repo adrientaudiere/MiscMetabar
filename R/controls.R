@@ -2,7 +2,7 @@
 #' Calculate ecological distance among positive controls vs
 #'   distance for all samples
 #'
-#' `r lifecycle::badge("maturing")`
+#' `r lifecycle::badge("experimental")`
 #'
 #' @aliases dist_pos_control
 #' @details Compute distance among positive controls,
@@ -22,6 +22,10 @@
 #'   (ii) the distance among all samples
 #' @export
 #'
+#' @examples 
+#' data("enterotype")
+#' 
+#' 
 #' @author Adrien Taudière
 
 dist_pos_control <- function(physeq, samples_names, method = "bray") {
@@ -53,7 +57,7 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
   }
 
   res[[1]] <-
-    data.frame("distAllSamples" = as.vector(vegdist(
+    data.frame("distAllSamples" = as.vector(vegan::vegdist(
       matdist_interm,
       diag = FALSE, upper = TRUE
     )))

@@ -424,7 +424,7 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #' @param tax_adjust See the man page
 #'   of [speedyseq::merge_taxa_vec()] for more details.
 #' @param vsearch_cluster_method (default: "--cluster_fast") See other possible 
-#'   methode in the [vsearch pdf manual](https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf) (e.g. `--cluster_size` or `--cluster_smallmem`)
+#'   methods in the [vsearch pdf manual](https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf) (e.g. `--cluster_size` or `--cluster_smallmem`)
 #' @param vsearch_args (default : "--strand both") a one length character element defining other parameters to 
 #'   passed on to vsearch.
 #' @param ... Others arguments path to [DECIPHER::Clusterize()]

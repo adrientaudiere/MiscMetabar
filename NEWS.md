@@ -3,7 +3,7 @@
 * Add function `multi_biplot_pq()` to visualize a collection of couples of samples for comparison through a list of `biplot_pq()`
 * Add options `add_info`, `na_remove`, and `clean_pq` to `plot_tax_pq()` function
 * Add options `vsearch_cluster_method` and `vsearch_args` to `otu2asv()` for more detailed control of the vsearch software
-
+* Suppression of buggy function `MM_idtaxa()`
 # MiscMetabar 0.34
 
 * Add option `add_nb_samples` to `ggvenn_pq()` which add the number of samples to level name in the plot. Useful to see disequilibrium in the number of samples among the factor's levels.
