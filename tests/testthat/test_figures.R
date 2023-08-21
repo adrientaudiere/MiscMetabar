@@ -37,3 +37,13 @@ test_that("accu_plot works", {
   expect_warning(accu_plot(GP_archae, "SampleType", add_nb_seq = FALSE, by.fact = TRUE))
   expect_error(accu_plot(GP_archae))
 })
+
+
+data_fungi <- subset_samples(data_fungi, !is.na(Time))
+res_mt <- mt(data_fungi, "Time", method = "fdr", test = "f", B = 300)
+test_that("plot_mt works", {
+  expect_s3_class(res_mt, "data.frame")
+  expect_s3_class(suppressWarnings(plot_mt(res_mt)), "ggplot")
+  expect_s3_class(suppressWarnings(plot_mt(res_mt, taxa = "Genus", color_tax = "Order")), "ggplot")
+})
+
