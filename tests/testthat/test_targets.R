@@ -35,3 +35,5 @@ test_that("track_wkflow function works fine", {
     expect_type(track_wkflow_samples(tree_A10_005), "list")
     expect_s3_class(track_wkflow_samples(tree_A10_005)[[1]], "data.frame")
 })
+
+# select_one_sample

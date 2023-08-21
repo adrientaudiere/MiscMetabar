@@ -22,3 +22,6 @@ test_that("as_binary_otu_table works fine", {
   expect_s4_class(as_binary_otu_table(data_fungi_sp_known), "phyloseq")
   expect_s4_class(as_binary_otu_table(enterotype), "phyloseq")
  })
+
+
+# vsearch_search_global
