@@ -24,8 +24,10 @@
 #'
 #' @examples 
 #' data("enterotype")
-#' 
-#' 
+#' sam_name_factice <- gsub("TS1_V2", "TS10_V2", sample_names(enterotype))
+#' res_dist_cont <- dist_pos_control(enterotype, sam_name_factice)
+#' hist(unlist(res_dist_cont$distAllSamples))
+#' abline(v=mean(unlist(res_dist_cont$dist_controlontrolSamples), na.rm=T), col = "red", lwd=3)
 #' @author Adrien Taudière
 
 dist_pos_control <- function(physeq, samples_names, method = "bray") {
@@ -34,7 +36,7 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
   res <- list()
   dist_control <- vector()
 
-  for (i in levels(samples_names)) {
+  for (i in levels(as.factor(samples_names))) {
     interm <- physeq@otu_table[samples_names == i, ]
     if (dim(interm)[1] > 1) {
       dist_control <-
@@ -43,7 +45,7 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
       dist_control <- c(dist_control, NA)
     }
   }
-  names(dist_control) <- levels(samples_names)
+  names(dist_control) <- levels(as.factor(samples_names))
   res$dist_control_samples <- data.frame(
     "dist_control" =
       stats::na.omit(dist_control)
@@ -63,8 +65,7 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
     )))
   res[[2]] <-
     data.frame("dist_control_samples" = as.vector(stats::na.omit(dist_control)))
-  names(res) <- c("distAllSamples", "dist_controlontrolSamp
-les")
+  names(res) <- c("distAllSamples", "dist_controlontrolSamples")
 
   return(res)
 }
@@ -92,16 +93,21 @@ les")
 #'   5. `max`: the maximum of the three firsts methods
 #'   6. `mean`: the mean of the three firsts methods
 #' @param min_diff_for_cutoff (int) argument for method `cutoff_diff`.
-#'   Required if method is `cutoff_diff`, `min`, `max` or `min`
+#'   Required if method is `cutoff_diff`, `min`, `max` or `mean`
 #' @return A new \code{\link{phyloseq-class}} object.
 #' @export
 #'
+#' @examples 
+#' data(data_fungi)
+#' 
+#' subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[,300]))
+#' 
 #' @author Adrien Taudière
 subset_taxa_tax_control <-
   function(physeq,
            taxa_distri,
            method = "mean",
-           min_diff_for_cutoff) {
+           min_diff_for_cutoff = NULL) {
     verify_pq(physeq)
 
     cutoff_seq <- vector(mode = "numeric", length = nsamples(physeq))
@@ -111,6 +117,13 @@ subset_taxa_tax_control <-
       vector(mode = "numeric", length = nsamples(physeq))
     cutoffs <- vector(mode = "numeric", length = nsamples(physeq))
 
+    if (method %in% c("min", "max", "mean", "cutoff_diff")) {
+        if (is.null(min_diff_for_cutoff)) {
+          stop("You need to set the `min_diff_for_cutoff` values
+          when using one of the following methods : min, max, mean and
+          cutoff_diff.")
+        }
+    }
 
     for (i in 1:nsamples(physeq)) {
       # for each samples
@@ -160,11 +173,6 @@ subset_taxa_tax_control <-
       }
 
       if (method %in% c("min", "max", "mean", "cutoff_diff")) {
-        if (missing(cutoff_diff)) {
-          stop("You need to set the `min_diff_for_cutoff` values
-          when using one of the following methods : min, max, mean and
-          cutoff_diff.")
-        }
         physeq_diff <- sort(as.vector(as.vector(physeq@otu_table[i, ])))
         cond <- diff(physeq_diff) > min_diff_for_cutoff
         cutoff_diff[i] <- min(physeq_diff[cond])

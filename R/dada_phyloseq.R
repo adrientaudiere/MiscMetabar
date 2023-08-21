@@ -1558,3 +1558,40 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
   return(cl_sam)
 }
 ################################################################################
+
+
+
+################################################################################
+#' Add information from [blast_pq()] to the `tax_table` slot of a *phyloseq* object
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' Basically a wraper of [blast_pq()] with option `unique_per_seq = TRUE` and `score_filter = FALSE`.
+#' Add the information to the taxtable
+#'
+#' @inheritParams clean_pq
+#' @param silent (logical) If true, no message are printing.
+#' @return a physeq object with more information in tax_table based on a 
+#'   blast on a given database
+#'
+#' @export
+#'
+#' @author Adrien Taudière
+
+add_blast_info <- function(physeq, silent = FALSE, ... ){
+  verify_pq(physeq)
+  res_blast <- blast_pq(physeq, unique_per_seq = TRUE, score_filter = FALSE, ...)
+  new_physeq <- physeq
+  
+  new_physeq@tax_table <- tax_table(cbind(new_physeq@tax_table, 
+                                          as.matrix(res_blast[match(taxa_names(new_physeq), res_blast$`Query name`),])))
+  
+  verify_pq(new_physeq)
+  if(!silent) {
+    message(paste0("Add ", ncol(new_physeq@tax_table) - ncol(physeq@tax_table), 
+                   " columns to taxonomic table"))
+  }
+  return(new_physeq)
+}
+################################################################################
