@@ -4,6 +4,10 @@
 * Add options `add_info`, `na_remove`, and `clean_pq` to `plot_tax_pq()` function
 * Add options `vsearch_cluster_method` and `vsearch_args` to `otu2asv()` for more detailed control of the vsearch software
 * Suppression of buggy function `MM_idtaxa()`
+* Add a wrapper of `write_pq()` called `save_pq()` to save a phyloseq object in the three possible formats () at the same time
+  * 4 separate tables
+  * 1 table version 
+  * 1 RData file
 # MiscMetabar 0.34
 
 * Add option `add_nb_samples` to `ggvenn_pq()` which add the number of samples to level name in the plot. Useful to see disequilibrium in the number of samples among the factor's levels.

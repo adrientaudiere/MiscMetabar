@@ -1003,16 +1003,18 @@ filter_asv_blast <- function(physeq,
 #'   column names are quoted if they are written. If FALSE nothing is quoted.
 #' @param sep_csv (default tabulation (\t)) separator for column
 #' @param ... Other arguments passed on to [utils::write.table()] function.
-#' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
-#'   and if present a phy_tree in Newick format
+#' @return Build a folder (path) containing one to four csv tables 
+#'   (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
+#'   and if present a phy_tree in Newick formatk
 #' @export
-#'
+#' @author Adrien Taudière
 #' @examples
 #' \dontrun{
 #' write_pq(data_fungi, path = "phyloseq")
 #' write_pq(data_fungi, path = "phyloseq", one_file = TRUE)
 #' }
-#'
+#' @seealso [MiscMetabar::save_pq()]
+
 write_pq <- function(physeq,
                      path = NULL,
                      rdata = FALSE,
@@ -1161,6 +1163,33 @@ write_pq <- function(physeq,
   }
 }
 ################################################################################
+
+
+################################################################################
+#' A wrapper of write_pq to save in all three format :
+#' - 4 separate tables
+#' - 1 table version 
+#' - 1 RData file
+#'
+#' `r lifecycle::badge("maturing")`
+#'
+#' @inheritParams clean_pq
+#' @param path a path to the folder to save the phyloseq object
+#' @param ... Other arguments passed on to [write_pq()] or [utils::write.table()] function.
+#' @return Build a folder (in path) with four csv tables (`refseq.csv`, `otu_table.csv`, `tax_table.csv`, `sam_data.csv`) + one 
+#'   table with all tables together + a rdata file (`physeq.RData`) that can be loaded using 
+#'   [base::load()] function + if present a phylogenetic tree in Newick format (`phy_tree.txt`)
+#' @export
+#' @author Adrien Taudière
+#' @examples
+#' \dontrun{
+#'   save_pq(data_fungi, path = "phyloseq")
+#' }
+#' @seealso [MiscMetabar::write_pq()]
+save_pq <- function(physeq, path = NULL, ...) {
+  write_pq(physeq, path = path, rdata = TRUE, one_file = TRUE, ...)
+  write_pq(physeq, path = path, rdata = FALSE, one_file = FALSE, ...)                     
+}
 
 ################################################################################
 #' Read phyloseq object from multiple csv tables and a phylogenetic tree
