@@ -9,6 +9,8 @@
   * 1 table version 
   * 1 RData file
 * Add a function `add_blast_info()` to add information from `blast_pq()` to the `tax_table` slot of a *phyloseq* object
+* Add option `keep_temporary_files` in `asv2otu()` function
+* Improve the documentation of `asv2otu()` and fix a little bug in the name of the conserved ASV after `asv2otu()`
 
 # MiscMetabar 0.34
 

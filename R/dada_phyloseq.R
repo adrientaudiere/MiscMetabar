@@ -422,11 +422,20 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #' @param vsearchpath path to vsearch
 #' @param id (default: 0.97) level of identity to cluster
 #' @param tax_adjust See the man page
-#'   of [speedyseq::merge_taxa_vec()] for more details.
+#'   of [speedyseq::merge_taxa_vec()] for more details. 
+#'   To conserved the taxonomic rank of the most abundant ASV, 
+#'   set tax_adjust to 0
 #' @param vsearch_cluster_method (default: "--cluster_fast") See other possible 
 #'   methods in the [vsearch pdf manual](https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf) (e.g. `--cluster_size` or `--cluster_smallmem`)
+#'   - `--cluster_fast` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.
+#'   - `--cluster_size` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence abundance beforehand.
+#'   - `--cluster_smallmem` : Clusterize the fasta sequences in filename without automatically modifying their order beforehand. Sequence are expected to be sorted by decreasing sequence length, unless *--usersort* is used
 #' @param vsearch_args (default : "--strand both") a one length character element defining other parameters to 
 #'   passed on to vsearch.
+#' @param  keep_temporary_files (logical, default: FALSE) Do we keep temporary files 
+#'   - temp.fasta (refseq in fasta) 
+#'   - cluster.fasta (centroid if method = "vsearch")
+#'   - temp.uc (clusters if method = "vsearch")
 #' @param ... Others arguments path to [DECIPHER::Clusterize()]
 #' @details This function use the `speedyseq::merge_taxa_vec` function to
 #'   merge taxa into clusters. By default tax_adjust = 1L. See the man page
@@ -452,6 +461,7 @@ asv2otu <- function(physeq = NULL,
                     tax_adjust = 1,
                     vsearch_cluster_method = "--cluster_fast",
                     vsearch_args = "--strand both",
+                    keep_temporary_files = FALSE,
                     ...) {
   if (inherits(physeq, "phyloseq")) {
     verify_pq(physeq)
@@ -523,34 +533,28 @@ asv2otu <- function(physeq = NULL,
         "target"
       )
 
-    clusters <- pack_clusts$cluster
-    clusters <-
-      tapply(
-        clusters, paste(pack_clusts$cluster, pack_clusts$query),
-        function(x) {
-          x[1]
-        }
-      )
-
+     clusters <- pack_clusts$cluster[pack_clusts$type != "C"]
+    names(clusters) <- pack_clusts$query[pack_clusts$type != "C"]
+    
     if (inherits(physeq, "phyloseq")) {
       new_obj <-
         speedyseq::merge_taxa_vec(physeq,
-          clusters,
-          tax_adjust = tax_adjust
+                                  clusters,
+                                  tax_adjust = tax_adjust
         )
     } else if (inherits(seq_names, "character")) {
       new_obj <- pack_clusts
     } else {
       stop("You must set the args physeq (object of class phyloseq) or seq_names (character vector).")
     }
-
-    if (file.exists("temp.fasta")) {
+    
+    if (file.exists("temp.fasta") && !keep_temporary_files) {
       file.remove("temp.fasta")
     }
-    if (file.exists("cluster.fasta")) {
+    if (file.exists("cluster.fasta") && !keep_temporary_files) {
       file.remove("cluster.fasta")
     }
-    if (file.exists("temp.uc")) {
+    if (file.exists("temp.uc") && !keep_temporary_files) {
       file.remove("temp.uc")
     }
   }
@@ -1595,3 +1599,5 @@ add_blast_info <- function(physeq, silent = FALSE, ... ){
   return(new_physeq)
 }
 ################################################################################
+
+
