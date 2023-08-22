@@ -8,7 +8,7 @@ subset_taxa_tax_control(
   physeq,
   taxa_distri,
   method = "mean",
-  min_diff_for_cutoff
+  min_diff_for_cutoff = NULL
 )
 }
 \arguments{
@@ -32,13 +32,19 @@ than taxa control,
 }}
 
 \item{min_diff_for_cutoff}{(int) argument for method \code{cutoff_diff}.
-Required if method is \code{cutoff_diff}, \code{min}, \code{max} or \code{min}}
+Required if method is \code{cutoff_diff}, \code{min}, \code{max} or \code{mean}}
 }
 \value{
 A new \code{\link{phyloseq-class}} object.
 }
 \description{
-\verb{r lifecycle::badge("experimental")}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+}
+\examples{
+data(data_fungi)
+
+subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[,300]))
+
 }
 \author{
 Adrien Taudière

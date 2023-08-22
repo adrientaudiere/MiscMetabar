@@ -20,6 +20,7 @@ write_pq(
   silent = FALSE,
   verbose = FALSE,
   quote = FALSE,
+  sep_csv = "\\t",
   ...
 )
 }
@@ -64,25 +65,33 @@ without sequences (this is done before removing empty samples)}
 \item{verbose}{(logical) Additional informations in the message
 the verbose parameter overwrite the silent parameter.}
 
-\item{quote}{: a logical value (default FALSE) or a numeric vector.
+\item{quote}{a logical value (default FALSE) or a numeric vector.
 If TRUE, any character or factor columns will be surrounded by
 double quotes.  If a numeric vector, its elements are taken
 as the indices of columns to quote.  In both cases, row and
 column names are quoted if they are written. If FALSE nothing is quoted.}
 
+\item{sep_csv}{(default tabulation (\t)) separator for column}
+
 \item{...}{Other arguments passed on to \code{\link[utils:write.table]{utils::write.table()}} function.}
 }
 \value{
-One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
-and if present a phy_tree in Newick format
+Build a folder (path) containing one to four csv tables
+(refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
+and if present a phy_tree in Newick formatk
 }
 \description{
-\verb{r lifecycle::badge("maturing")}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
 \dontrun{
 write_pq(data_fungi, path = "phyloseq")
 write_pq(data_fungi, path = "phyloseq", one_file = TRUE)
 }
-
+}
+\seealso{
+\code{\link[=save_pq]{save_pq()}}
+}
+\author{
+Adrien Taudière
 }

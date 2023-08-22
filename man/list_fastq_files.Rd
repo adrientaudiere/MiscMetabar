@@ -31,7 +31,12 @@ a list of one (single end) or two (paired end) list of files
 files are sorted by names (default behavior of \code{list.files()})
 }
 \description{
-\verb{r lifecycle::badge("maturing")}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+}
+\examples{
+list_fastq_files("inst/extdata")
+list_fastq_files("inst/extdata", paired_end =F, pattern_r1="")
+
 }
 \author{
 Adrien Taudière

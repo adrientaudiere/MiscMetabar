@@ -55,7 +55,7 @@ modalities of the argument \code{factor} or if split_by is set a list
 of plots.
 }
 \description{
-\verb{r lifecycle::badge("maturing")}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 
 Note that you can use ggplot2 function to customize the plot
 for ex. \code{+ scale_fill_distiller(palette = "BuPu", direction = 1)}

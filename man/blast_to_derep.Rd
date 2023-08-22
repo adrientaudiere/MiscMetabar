@@ -55,7 +55,7 @@ sequences by length.}
 A blast table
 }
 \description{
-\verb{r lifecycle::badge("experimental")}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \seealso{
 \code{\link[=blast_pq]{blast_pq()}} to use \code{refseq} slot as query sequences

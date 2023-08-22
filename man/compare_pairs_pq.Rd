@@ -38,5 +38,10 @@ to count the ASV/OTU}
 A tibble
 }
 \description{
-\verb{r lifecycle::badge("experimental")} #'   For the moment refseq slot need to be not Null.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} #'   For the moment refseq slot need to be not Null.
+}
+\examples{
+data(data_fungi)
+data_fungi_low_high <- subset_samples(data_fungi, "Height" \%in\% c("Low", "High"))
+compare_pairs_pq(data_fungi_low_high, bifactor = "Height", merge_sample_by = "Height")
 }

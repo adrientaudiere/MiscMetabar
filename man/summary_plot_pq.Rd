@@ -29,7 +29,7 @@ object is cleaned using the \code{\link[=clean_pq]{clean_pq()}} function?}
 A ggplot2 object
 }
 \description{
-\verb{r lifecycle::badge("maturing")}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
 data(data_fungi)

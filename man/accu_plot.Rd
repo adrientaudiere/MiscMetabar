@@ -62,7 +62,7 @@ accumulation plot if add_nb_seq = TRUE, else, if add_nb_seq = FALSE
 return a base plot.
 }
 \description{
-\verb{r lifecycle::badge("maturing")}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
 data("GlobalPatterns")

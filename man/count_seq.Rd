@@ -17,7 +17,7 @@ count_seq(file_path = NULL, folder_path = NULL, pattern = NULL)
 the number of sequences
 }
 \description{
-\verb{r lifecycle::badge("experimental")}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 Use grep to count the number of line with only one '+' (fastq, fastq.gz)
 or lines starting with a '>' (fasta) to count sequences.
 }

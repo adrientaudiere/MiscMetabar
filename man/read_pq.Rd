@@ -5,7 +5,13 @@
 \title{Read phyloseq object from multiple csv tables and a phylogenetic tree
 in Newick format.}
 \usage{
-read_pq(path = NULL, taxa_are_rows = FALSE, sam_names = NULL)
+read_pq(
+  path = NULL,
+  taxa_are_rows = FALSE,
+  sam_names = NULL,
+  sep_csv = "\\t",
+  ...
+)
 }
 \arguments{
 \item{path}{(required) a path to the folder to read the phyloseq object}
@@ -16,13 +22,17 @@ read_pq(path = NULL, taxa_are_rows = FALSE, sam_names = NULL)
 samples. Note that if you use \code{\link[=write_phyloseq]{write_phyloseq()}} function to save your
 physeq object, you may use sam_names = "X" to rename the samples names
 as before.}
+
+\item{sep_csv}{(default tabulation (\t)) separator for column}
+
+\item{...}{Other arguments passed on to \code{\link[utils:write.table]{utils::write.table()}} function.}
 }
 \value{
 One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 and if present a phy_tree in Newick format. At least the otu_table.csv need to be present.
 }
 \description{
-\verb{r lifecycle::badge("maturing")}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
 \dontrun{

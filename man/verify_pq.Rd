@@ -17,7 +17,7 @@ Nothing if the phyloseq object is valid. An error in the other case.
 Verify the validity of a phyloseq object
 }
 \details{
-\verb{r lifecycle::badge("maturing")}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 
 Mostly for internal use in MiscMetabar functions.
 }

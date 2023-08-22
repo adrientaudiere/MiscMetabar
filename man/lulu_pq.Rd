@@ -47,7 +47,7 @@ value. NA value are not counted as discrepancy.
 Lulu reclustering of class \code{physeq}
 }
 \details{
-\verb{r lifecycle::badge("experimental")}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
 See https://www.nature.com/articles/s41467-017-01312-x for more information
 on the method.

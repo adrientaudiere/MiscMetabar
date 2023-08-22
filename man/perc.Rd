@@ -20,7 +20,7 @@ The percentage value (number or character if add_symbol
 is set to TRUE)
 }
 \description{
-\verb{r lifecycle::badge("maturing")}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \author{
 Adrien Taudière

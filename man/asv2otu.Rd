@@ -13,6 +13,8 @@ asv2otu(
   id = 0.97,
   vsearchpath = "vsearch",
   tax_adjust = 1,
+  vsearch_cluster_method = "--cluster_fast",
+  vsearch_args = "--strand both",
   ...
 )
 }
@@ -42,6 +44,12 @@ with arguments \code{-cluster_fast} and \verb{-strand both}
 \item{tax_adjust}{See the man page
 of \code{\link[speedyseq:merge_taxa_vec]{speedyseq::merge_taxa_vec()}} for more details.}
 
+\item{vsearch_cluster_method}{(default: "--cluster_fast") See other possible
+methods in the \href{https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf}{vsearch pdf manual} (e.g. \code{--cluster_size} or \code{--cluster_smallmem})}
+
+\item{vsearch_args}{(default : "--strand both") a one length character element defining other parameters to
+passed on to vsearch.}
+
 \item{...}{Others arguments path to \code{\link[DECIPHER:Clusterize]{DECIPHER::Clusterize()}}}
 }
 \value{
@@ -49,7 +57,7 @@ A new object of class \code{physeq} or a list of cluster if seq_names
 args was used.
 }
 \description{
-\verb{r lifecycle::badge("maturing")}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \details{
 This function use the \code{speedyseq::merge_taxa_vec} function to

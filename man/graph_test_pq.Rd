@@ -46,7 +46,7 @@ a ggplot with a subtitle indicating the pvalue
 and the number of permutations
 }
 \description{
-\verb{r lifecycle::badge("maturing")}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 
 A wrapper of \code{\link[phyloseqGraphTest:graph_perm_test]{phyloseqGraphTest::graph_perm_test()}} for quick plot with
 important statistics

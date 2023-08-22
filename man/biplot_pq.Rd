@@ -33,11 +33,11 @@ biplot_pq(
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{fact, }{Name of the factor in \code{physeq@sam_data}.
+\item{fact}{(default: NULL) Name of the factor in \code{physeq@sam_data}.
 If left to NULL use the \code{left_name} and \code{right_name} parameter as modality.}
 
-\item{merge_sample_by}{(default: NULL): if not \code{NULL} samples of
-physeq are mereged using the vector set by \code{merge_sample_by}. This
+\item{merge_sample_by}{(default: NULL) if not \code{NULL} samples of
+physeq are merged using the vector set by \code{merge_sample_by}. This
 merging used the \code{\link[speedyseq:merge_samples2]{speedyseq::merge_samples2()}}. In the case of
 \code{\link[=biplot_pq]{biplot_pq()}} this must be a factor with two levels only.}
 
@@ -91,7 +91,7 @@ a interactive ggplot.}
 A plot
 }
 \description{
-\verb{r lifecycle::badge("maturing")}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
 data(data_fungi)

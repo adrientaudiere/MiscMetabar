@@ -37,7 +37,7 @@ your krona result files before merging using \code{\link[=merge_krona]{merge_kro
 A html file
 }
 \description{
-\verb{r lifecycle::badge("maturing")}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 
 Need the installation of kronatools on the computer (\href{https://github.com/marbl/Krona/wiki/Installing}{installation instruction}).
 }

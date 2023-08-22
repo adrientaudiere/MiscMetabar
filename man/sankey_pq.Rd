@@ -51,7 +51,7 @@ represent the distribution of the last taxonomic level in the modalities
 of \code{fact}
 }
 \description{
-\verb{r lifecycle::badge("maturing")}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
 data("GlobalPatterns")

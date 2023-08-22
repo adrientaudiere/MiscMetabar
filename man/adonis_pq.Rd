@@ -49,7 +49,7 @@ The function returns an anova.cca result object with a
 new column for partial R^2. See help of \code{\link[vegan:adonis]{vegan::adonis2()}} for more information.
 }
 \description{
-\verb{r lifecycle::badge("experimental")}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
 A wrapper for the \code{\link[vegan:adonis]{vegan::adonis2()}} function in the case of \code{physeq} object.
 }
