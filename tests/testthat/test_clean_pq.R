@@ -27,5 +27,5 @@ data_fungi_test2 <- data_fungi_test
 taxa_names(data_fungi_test2) <- paste0("ASV", 1:ntaxa(data_fungi_test2))
 test_that("clean_pq works fine with bad taxa_names", {
   expect_s4_class(clean_pq(data_fungi_test2), "phyloseq")
-    expect_message(clean_pq(data_fungi_test2), "Cleaning suppress 2 taxa and 1 samples")
+  expect_message(clean_pq(data_fungi_test2), "Cleaning suppress 2 taxa and 1 samples")
 })

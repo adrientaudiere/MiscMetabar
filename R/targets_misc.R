@@ -12,11 +12,11 @@
 #' @return a list of one (single end) or two (paired end) list of files
 #'   files are sorted by names (default behavior of `list.files()`)
 #' @export
-#' 
-#' @examples 
+#'
+#' @examples
 #' list_fastq_files("inst/extdata")
-#' list_fastq_files("inst/extdata", paired_end =F, pattern_r1="")
-#' 
+#' list_fastq_files("inst/extdata", paired_end = F, pattern_r1 = "")
+#'
 #' @author Adrien Taudière
 
 list_fastq_files <-

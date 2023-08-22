@@ -15,6 +15,7 @@ asv2otu(
   tax_adjust = 1,
   vsearch_cluster_method = "--cluster_fast",
   vsearch_args = "--strand both",
+  keep_temporary_files = FALSE,
   ...
 )
 }
@@ -42,13 +43,27 @@ with arguments \code{-cluster_fast} and \verb{-strand both}
 \item{vsearchpath}{path to vsearch}
 
 \item{tax_adjust}{See the man page
-of \code{\link[speedyseq:merge_taxa_vec]{speedyseq::merge_taxa_vec()}} for more details.}
+of \code{\link[speedyseq:merge_taxa_vec]{speedyseq::merge_taxa_vec()}} for more details.
+To conserved the taxonomic rank of the most abundant ASV,
+set tax_adjust to 0}
 
 \item{vsearch_cluster_method}{(default: "--cluster_fast") See other possible
-methods in the \href{https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf}{vsearch pdf manual} (e.g. \code{--cluster_size} or \code{--cluster_smallmem})}
+methods in the \href{https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf}{vsearch pdf manual} (e.g. \code{--cluster_size} or \code{--cluster_smallmem})
+\itemize{
+\item \code{--cluster_fast} : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.
+\item \code{--cluster_size} : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence abundance beforehand.
+\item \code{--cluster_smallmem} : Clusterize the fasta sequences in filename without automatically modifying their order beforehand. Sequence are expected to be sorted by decreasing sequence length, unless \emph{--usersort} is used
+}}
 
 \item{vsearch_args}{(default : "--strand both") a one length character element defining other parameters to
 passed on to vsearch.}
+
+\item{keep_temporary_files}{(logical, default: FALSE) Do we keep temporary files
+\itemize{
+\item temp.fasta (refseq in fasta)
+\item cluster.fasta (centroid if method = "vsearch")
+\item temp.uc (clusters if method = "vsearch")
+}}
 
 \item{...}{Others arguments path to \code{\link[DECIPHER:Clusterize]{DECIPHER::Clusterize()}}}
 }

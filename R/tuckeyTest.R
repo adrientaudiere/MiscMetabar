@@ -16,7 +16,7 @@
 #' GlobalPatterns@sam_data[, "Soil_logical"] <-
 #'   ifelse(GlobalPatterns@sam_data[, "SampleType"] == "Soil", "Soil", "Not Soil")
 #' hill_tuckey_pq(GlobalPatterns, "Soil_logical")
-hill_tuckey_pq <- function(physeq, modality,  silent = TRUE) {
+hill_tuckey_pq <- function(physeq, modality, silent = TRUE) {
   modality_vector <-
     as.factor(as.vector(unlist(unclass(physeq@sam_data[, modality]))))
 

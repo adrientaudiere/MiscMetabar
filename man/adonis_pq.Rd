@@ -22,8 +22,8 @@ using the \code{phyloseq} package.}
 Variables must be present in the \code{physeq@sam_data} slot.}
 
 \item{dist_method}{(default "bray") the distance used. See
-\code{\link[phyloseq:::distance]{phyloseq::::distance()}} for all available distances or run
-\code{phyloseq::distanceMethodList()}.
+\code{\link[phyloseq:distance]{phyloseq::distance()}} for all available distances or run
+\code{\link[phyloseq:distanceMethodList]{phyloseq::distanceMethodList()}}.
 For aitchison and robust.aitchison distance, \code{\link[vegan:vegdist]{vegan::vegdist()}}
 function is directly used.}
 

@@ -25,7 +25,7 @@ install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar")
 #> 
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/RtmpO6McQ8/remotes2d79248ea0658/adrientaudiere-MiscMetabar-1677ab1/DESCRIPTION’ ... OK
+#> * checking for file ‘/tmp/RtmpW0Kh7Q/remotes452a26b70ad56/adrientaudiere-MiscMetabar-1677ab1/DESCRIPTION’ ... OK
 #> * preparing ‘MiscMetabar’:
 #> * checking DESCRIPTION meta-information ... OK
 #> * checking for LF line-endings in source and make files and shell scripts
@@ -41,12 +41,14 @@ install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar", ref = "dev")
 #> 
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/RtmpO6McQ8/remotes2d792796cbf72/adrientaudiere-MiscMetabar-2c1621f/DESCRIPTION’ ... OK
+#> * checking for file ‘/tmp/RtmpW0Kh7Q/remotes452a24e82e4b4/adrientaudiere-MiscMetabar-b06d38f/DESCRIPTION’ ... OK
 #> * preparing ‘MiscMetabar’:
 #> * checking DESCRIPTION meta-information ... OK
+#> Avis : read_pq.Rd:26: unknown macro '\t'
+#> Avis : write_pq.Rd:74: unknown macro '\t'
 #> * checking for LF line-endings in source and make files and shell scripts
 #> * checking for empty or unneeded directories
-#> * building ‘MiscMetabar_0.33.tar.gz’
+#> * building ‘MiscMetabar_0.34.tar.gz’
 ```
 
 ## Some use of MiscMetabar

@@ -23,7 +23,7 @@ samples. Note that if you use \code{\link[=write_phyloseq]{write_phyloseq()}} fu
 physeq object, you may use sam_names = "X" to rename the samples names
 as before.}
 
-\item{sep_csv}{(default tabulation (\t)) separator for column}
+\item{sep_csv}{(default tabulation ('\t')) separator for column}
 
 \item{...}{Other arguments passed on to \code{\link[utils:write.table]{utils::write.table()}} function.}
 }

@@ -46,4 +46,3 @@ test_that("plot_mt works", {
   expect_s3_class(suppressWarnings(plot_mt(res_mt)), "ggplot")
   expect_s3_class(suppressWarnings(plot_mt(res_mt, taxa = "Genus", color_tax = "Order")), "ggplot")
 })
-

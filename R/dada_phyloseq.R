@@ -422,18 +422,18 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #' @param vsearchpath path to vsearch
 #' @param id (default: 0.97) level of identity to cluster
 #' @param tax_adjust See the man page
-#'   of [speedyseq::merge_taxa_vec()] for more details. 
-#'   To conserved the taxonomic rank of the most abundant ASV, 
+#'   of [speedyseq::merge_taxa_vec()] for more details.
+#'   To conserved the taxonomic rank of the most abundant ASV,
 #'   set tax_adjust to 0
-#' @param vsearch_cluster_method (default: "--cluster_fast") See other possible 
+#' @param vsearch_cluster_method (default: "--cluster_fast") See other possible
 #'   methods in the [vsearch pdf manual](https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf) (e.g. `--cluster_size` or `--cluster_smallmem`)
 #'   - `--cluster_fast` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.
 #'   - `--cluster_size` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence abundance beforehand.
 #'   - `--cluster_smallmem` : Clusterize the fasta sequences in filename without automatically modifying their order beforehand. Sequence are expected to be sorted by decreasing sequence length, unless *--usersort* is used
-#' @param vsearch_args (default : "--strand both") a one length character element defining other parameters to 
+#' @param vsearch_args (default : "--strand both") a one length character element defining other parameters to
 #'   passed on to vsearch.
-#' @param  keep_temporary_files (logical, default: FALSE) Do we keep temporary files 
-#'   - temp.fasta (refseq in fasta) 
+#' @param  keep_temporary_files (logical, default: FALSE) Do we keep temporary files
+#'   - temp.fasta (refseq in fasta)
 #'   - cluster.fasta (centroid if method = "vsearch")
 #'   - temp.uc (clusters if method = "vsearch")
 #' @param ... Others arguments path to [DECIPHER::Clusterize()]
@@ -533,21 +533,21 @@ asv2otu <- function(physeq = NULL,
         "target"
       )
 
-     clusters <- pack_clusts$cluster[pack_clusts$type != "C"]
+    clusters <- pack_clusts$cluster[pack_clusts$type != "C"]
     names(clusters) <- pack_clusts$query[pack_clusts$type != "C"]
-    
+
     if (inherits(physeq, "phyloseq")) {
       new_obj <-
         speedyseq::merge_taxa_vec(physeq,
-                                  clusters,
-                                  tax_adjust = tax_adjust
+          clusters,
+          tax_adjust = tax_adjust
         )
     } else if (inherits(seq_names, "character")) {
       new_obj <- pack_clusts
     } else {
       stop("You must set the args physeq (object of class phyloseq) or seq_names (character vector).")
     }
-    
+
     if (file.exists("temp.fasta") && !keep_temporary_files) {
       file.remove("temp.fasta")
     }
@@ -1005,9 +1005,9 @@ filter_asv_blast <- function(physeq,
 #'   double quotes.  If a numeric vector, its elements are taken
 #'   as the indices of columns to quote.  In both cases, row and
 #'   column names are quoted if they are written. If FALSE nothing is quoted.
-#' @param sep_csv (default tabulation (\t)) separator for column
+#' @param sep_csv (default tabulation ('\t')) separator for column
 #' @param ... Other arguments passed on to [utils::write.table()] function.
-#' @return Build a folder (path) containing one to four csv tables 
+#' @return Build a folder (path) containing one to four csv tables
 #'   (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 #'   and if present a phy_tree in Newick formatk
 #' @export
@@ -1122,7 +1122,7 @@ write_pq <- function(physeq,
   } else {
     if (!is.null(physeq@otu_table)) {
       utils::write.table(
-        physeq@otu_table, 
+        physeq@otu_table,
         paste0(path, "/otu_table.csv"),
         quote = quote,
         sep = sep_csv,
@@ -1140,7 +1140,7 @@ write_pq <- function(physeq,
     }
     if (!is.null(physeq@tax_table)) {
       utils::write.table(
-        physeq@tax_table, 
+        physeq@tax_table,
         paste0(path, "/tax_table.csv"),
         quote = quote,
         sep = sep_csv,
@@ -1150,7 +1150,7 @@ write_pq <- function(physeq,
     }
     if (!is.null(physeq@sam_data)) {
       utils::write.table(
-        as.matrix(physeq@sam_data), 
+        as.matrix(physeq@sam_data),
         paste0(path, "/sam_data.csv"),
         quote = quote,
         sep = sep_csv,
@@ -1172,7 +1172,7 @@ write_pq <- function(physeq,
 ################################################################################
 #' A wrapper of write_pq to save in all three format :
 #' - 4 separate tables
-#' - 1 table version 
+#' - 1 table version
 #' - 1 RData file
 #'
 #' `r lifecycle::badge("maturing")`
@@ -1180,19 +1180,19 @@ write_pq <- function(physeq,
 #' @inheritParams clean_pq
 #' @param path a path to the folder to save the phyloseq object
 #' @param ... Other arguments passed on to [write_pq()] or [utils::write.table()] function.
-#' @return Build a folder (in path) with four csv tables (`refseq.csv`, `otu_table.csv`, `tax_table.csv`, `sam_data.csv`) + one 
-#'   table with all tables together + a rdata file (`physeq.RData`) that can be loaded using 
+#' @return Build a folder (in path) with four csv tables (`refseq.csv`, `otu_table.csv`, `tax_table.csv`, `sam_data.csv`) + one
+#'   table with all tables together + a rdata file (`physeq.RData`) that can be loaded using
 #'   [base::load()] function + if present a phylogenetic tree in Newick format (`phy_tree.txt`)
 #' @export
 #' @author Adrien Taudière
 #' @examples
 #' \dontrun{
-#'   save_pq(data_fungi, path = "phyloseq")
+#' save_pq(data_fungi, path = "phyloseq")
 #' }
 #' @seealso [MiscMetabar::write_pq()]
 save_pq <- function(physeq, path = NULL, ...) {
   write_pq(physeq, path = path, rdata = TRUE, one_file = TRUE, ...)
-  write_pq(physeq, path = path, rdata = FALSE, one_file = FALSE, ...)                     
+  write_pq(physeq, path = path, rdata = FALSE, one_file = FALSE, ...)
 }
 
 ################################################################################
@@ -1207,7 +1207,7 @@ save_pq <- function(physeq, path = NULL, ...) {
 #'   samples. Note that if you use [write_phyloseq()] function to save your
 #'   physeq object, you may use sam_names = "X" to rename the samples names
 #'   as before.
-#' @param sep_csv (default tabulation (\t)) separator for column
+#' @param sep_csv (default tabulation ('\t')) separator for column
 #' @param ... Other arguments passed on to [utils::write.table()] function.
 #' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 #' and if present a phy_tree in Newick format. At least the otu_table.csv need to be present.
@@ -1219,47 +1219,46 @@ save_pq <- function(physeq, path = NULL, ...) {
 #' }
 #'
 read_pq <- function(path = NULL, taxa_are_rows = FALSE, sam_names = NULL, sep_csv = "\t", ...) {
-  
-if (file.exists(paste0(path, "/otu_table.csv"))) {
-   if (taxa_are_rows) {
-    otu_table_csv <- as.matrix(utils::read.table(paste0(path, "/otu_table.csv"), sep = sep_csv))
-    samp_names <- colnames(otu_table_csv)
-    otu_table_csv <- apply(otu_table_csv, 2, as.numeric)
-    table_otu <- otu_table(otu_table_csv, taxa_are_rows = TRUE)
-    sample_names(table_otu) <- samp_names
-    physeq <- phyloseq(table_otu)
-  } else {
-    otu_table_csv <- as.matrix(utils::read.table(paste0(path, "/otu_table.csv"), sep = sep_csv))
-    samp_names <- rownames(otu_table_csv)
-    otu_table_csv <- apply(otu_table_csv, 2, as.numeric)
-    rownames(otu_table_csv) <-  samp_names
-    physeq <- phyloseq(otu_table(otu_table_csv, taxa_are_rows = FALSE))
+  if (file.exists(paste0(path, "/otu_table.csv"))) {
+    if (taxa_are_rows) {
+      otu_table_csv <- as.matrix(utils::read.table(paste0(path, "/otu_table.csv"), sep = sep_csv))
+      samp_names <- colnames(otu_table_csv)
+      otu_table_csv <- apply(otu_table_csv, 2, as.numeric)
+      table_otu <- otu_table(otu_table_csv, taxa_are_rows = TRUE)
+      sample_names(table_otu) <- samp_names
+      physeq <- phyloseq(table_otu)
+    } else {
+      otu_table_csv <- as.matrix(utils::read.table(paste0(path, "/otu_table.csv"), sep = sep_csv))
+      samp_names <- rownames(otu_table_csv)
+      otu_table_csv <- apply(otu_table_csv, 2, as.numeric)
+      rownames(otu_table_csv) <- samp_names
+      physeq <- phyloseq(otu_table(otu_table_csv, taxa_are_rows = FALSE))
+    }
   }
-}
-if (file.exists(paste0(path, "/refseq.csv"))) {
-  dna <- Biostrings::DNAStringSet(utils::read.table(paste0(path, "/refseq.csv"),  sep = sep_csv, row.names = NULL)[, 2])
-  names(dna) <- utils::read.table(paste0(path, "/refseq.csv"), sep = sep_csv, row.names = NULL)[, 1]
-  physeq <- phyloseq::merge_phyloseq(physeq, refseq(dna))
-}
-if (file.exists(paste0(path, "/tax_table.csv"))) {
-  tax_table_csv <- utils::read.table(paste0(path, "/tax_table.csv"), sep = sep_csv)
-  rownames(tax_table_csv) <- tax_table_csv[, 1]
-  tax_table_csv <- as.matrix(tax_table_csv[, -1])
-  physeq <- phyloseq::merge_phyloseq(physeq, tax_table(tax_table_csv))
-}
-if (file.exists(paste0(path, "/sam_data.csv"))) {
-  sam_data_csv <- utils::read.table(paste0(path, "/sam_data.csv"), sep = sep_csv)
-  rownames(sam_data_csv) <- sam_data_csv[,1]
-  physeq <- phyloseq::merge_phyloseq(physeq, sample_data(sam_data_csv))
-}
+  if (file.exists(paste0(path, "/refseq.csv"))) {
+    dna <- Biostrings::DNAStringSet(utils::read.table(paste0(path, "/refseq.csv"), sep = sep_csv, row.names = NULL)[, 2])
+    names(dna) <- utils::read.table(paste0(path, "/refseq.csv"), sep = sep_csv, row.names = NULL)[, 1]
+    physeq <- phyloseq::merge_phyloseq(physeq, refseq(dna))
+  }
+  if (file.exists(paste0(path, "/tax_table.csv"))) {
+    tax_table_csv <- utils::read.table(paste0(path, "/tax_table.csv"), sep = sep_csv)
+    rownames(tax_table_csv) <- tax_table_csv[, 1]
+    tax_table_csv <- as.matrix(tax_table_csv[, -1])
+    physeq <- phyloseq::merge_phyloseq(physeq, tax_table(tax_table_csv))
+  }
+  if (file.exists(paste0(path, "/sam_data.csv"))) {
+    sam_data_csv <- utils::read.table(paste0(path, "/sam_data.csv"), sep = sep_csv)
+    rownames(sam_data_csv) <- sam_data_csv[, 1]
+    physeq <- phyloseq::merge_phyloseq(physeq, sample_data(sam_data_csv))
+  }
 
-if (!is.null(physeq@phy_tree)) {
-  tree <- ape::read.tree(paste0(path, "/phy_tree.txt"))
-  physeq <- phyloseq::merge_phyloseq(physeq, phy_tree(tree))
-}
-if (!is.null(sam_names)) {
-  sample_names(physeq) <- unclass(physeq@sam_data[, sam_names])[[1]]
-}
+  if (!is.null(physeq@phy_tree)) {
+    tree <- ape::read.tree(paste0(path, "/phy_tree.txt"))
+    physeq <- phyloseq::merge_phyloseq(physeq, phy_tree(tree))
+  }
+  if (!is.null(sam_names)) {
+    sample_names(physeq) <- unclass(physeq@sam_data[, sam_names])[[1]]
+  }
 
 
   return(physeq)
@@ -1576,28 +1575,30 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #'
 #' @inheritParams clean_pq
 #' @param silent (logical) If true, no message are printing.
-#' @return a physeq object with more information in tax_table based on a 
+#' @return a physeq object with more information in tax_table based on a
 #'   blast on a given database
 #'
 #' @export
 #'
 #' @author Adrien Taudière
 
-add_blast_info <- function(physeq, silent = FALSE, ... ){
+add_blast_info <- function(physeq, silent = FALSE, ...) {
   verify_pq(physeq)
   res_blast <- blast_pq(physeq, unique_per_seq = TRUE, score_filter = FALSE, ...)
   new_physeq <- physeq
-  
-  new_physeq@tax_table <- tax_table(cbind(new_physeq@tax_table, 
-                                          as.matrix(res_blast[match(taxa_names(new_physeq), res_blast$`Query name`),])))
-  
+
+  new_physeq@tax_table <- tax_table(cbind(
+    new_physeq@tax_table,
+    as.matrix(res_blast[match(taxa_names(new_physeq), res_blast$`Query name`), ])
+  ))
+
   verify_pq(new_physeq)
-  if(!silent) {
-    message(paste0("Add ", ncol(new_physeq@tax_table) - ncol(physeq@tax_table), 
-                   " columns to taxonomic table"))
+  if (!silent) {
+    message(paste0(
+      "Add ", ncol(new_physeq@tax_table) - ncol(physeq@tax_table),
+      " columns to taxonomic table"
+    ))
   }
   return(new_physeq)
 }
 ################################################################################
-
-

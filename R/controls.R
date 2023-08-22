@@ -22,12 +22,12 @@
 #'   (ii) the distance among all samples
 #' @export
 #'
-#' @examples 
+#' @examples
 #' data("enterotype")
 #' sam_name_factice <- gsub("TS1_V2", "TS10_V2", sample_names(enterotype))
 #' res_dist_cont <- dist_pos_control(enterotype, sam_name_factice)
 #' hist(unlist(res_dist_cont$distAllSamples))
-#' abline(v=mean(unlist(res_dist_cont$dist_controlontrolSamples), na.rm=T), col = "red", lwd=3)
+#' abline(v = mean(unlist(res_dist_cont$dist_controlontrolSamples), na.rm = T), col = "red", lwd = 3)
 #' @author Adrien Taudière
 
 dist_pos_control <- function(physeq, samples_names, method = "bray") {
@@ -97,11 +97,11 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
 #' @return A new \code{\link{phyloseq-class}} object.
 #' @export
 #'
-#' @examples 
+#' @examples
 #' data(data_fungi)
-#' 
-#' subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[,300]))
-#' 
+#'
+#' subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 300]))
+#'
 #' @author Adrien Taudière
 subset_taxa_tax_control <-
   function(physeq,
@@ -118,11 +118,11 @@ subset_taxa_tax_control <-
     cutoffs <- vector(mode = "numeric", length = nsamples(physeq))
 
     if (method %in% c("min", "max", "mean", "cutoff_diff")) {
-        if (is.null(min_diff_for_cutoff)) {
-          stop("You need to set the `min_diff_for_cutoff` values
+      if (is.null(min_diff_for_cutoff)) {
+        stop("You need to set the `min_diff_for_cutoff` values
           when using one of the following methods : min, max, mean and
           cutoff_diff.")
-        }
+      }
     }
 
     for (i in 1:nsamples(physeq)) {

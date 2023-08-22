@@ -89,8 +89,8 @@ graph_test_pq <- function(physeq,
 #' @param formula (required) the right part of a formula for [vegan::adonis2()].
 #'   Variables must be present in the `physeq@sam_data` slot.
 #' @param dist_method (default "bray") the distance used. See
-#'   [phyloseq:::distance()] for all available distances or run
-#'   `phyloseq::distanceMethodList()`.
+#'   [phyloseq::distance()] for all available distances or run
+#'   [phyloseq::distanceMethodList()].
 #'   For aitchison and robust.aitchison distance, [vegan::vegdist()]
 #'   function is directly used.
 #' @param merge_sample_by a vector to determine

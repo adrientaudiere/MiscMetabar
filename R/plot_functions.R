@@ -1896,7 +1896,7 @@ biplot_pq <- function(physeq,
 #'
 #' @examples
 #' data(data_fungi)
-#' data_fungi_abun <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi)>10000)
+#' data_fungi_abun <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
 #' p <- multi_biplot_pq(data_fungi_abun, "Height")
 #' lapply(p, print)
 #'
@@ -1905,8 +1905,7 @@ multi_biplot_pq <- function(physeq,
                             split_by = NULL,
                             na_remove = TRUE,
                             ...) {
-
-  if(is.null(split_by) | is.null(physeq@sam_data[[split_by]])) {
+  if (is.null(split_by) | is.null(physeq@sam_data[[split_by]])) {
     stop("split_by must be set and must be a variable in physeq@sam_data")
   }
   if (na_remove) {
@@ -1927,10 +1926,11 @@ multi_biplot_pq <- function(physeq,
   for (c in 1:ncol(couples)) {
     names_p <- paste0(couples[1, c], " - ", couples[2, c])
     new_physeq <- subset_samples_pq(physeq, physeq@sam_data[[split_by]] %in%
-                                      c(couples[1, c], couples[2, c]))
+      c(couples[1, c], couples[2, c]))
     p[[names_p]] <- biplot_pq(new_physeq,
-                         fact = split_by,
-                      merge_sample_by = split_by,)
+      fact = split_by,
+      merge_sample_by = split_by,
+    )
   }
 
   return(p)
@@ -2008,7 +2008,6 @@ plot_tax_pq <-
            add_info = TRUE,
            na_remove = TRUE,
            clean_pq = TRUE) {
-
     if (na_remove) {
       new_physeq <- subset_samples_pq(physeq, !is.na(physeq@sam_data[[fact]]))
       if (nsamples(physeq) - nsamples(new_physeq) > 0) {
@@ -2082,13 +2081,18 @@ plot_tax_pq <-
         ylab("Nb_ASV")
     }
 
-    if(add_info){
+    if (add_info) {
       p_seq <- p_seq +
-        labs(title = paste("Total nb of sequences: ", sum(physeq_old@otu_table)),
-             subtitle = paste0("Nb of samples: '",
-                              paste0(names(table(physeq_old@sam_data[[fact]])),
-                              sep= "' : ",
-                              table(physeq_old@sam_data[[fact]]), collapse = " - '" )))
+        labs(
+          title = paste("Total nb of sequences: ", sum(physeq_old@otu_table)),
+          subtitle = paste0(
+            "Nb of samples: '",
+            paste0(names(table(physeq_old@sam_data[[fact]])),
+              sep = "' : ",
+              table(physeq_old@sam_data[[fact]]), collapse = " - '"
+            )
+          )
+        )
     }
 
     if (type == "nb_seq") {
