@@ -12,7 +12,7 @@ object. — blast_to_derep"><meta property="og:description" content=""><!-- math
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.33</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.34</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,7 +79,9 @@ object.</h1>
 <span>  unique_per_seq <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  score_filter <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  list_no_output_query <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  min_length_seq <span class="op">=</span> <span class="fl">200</span></span>
+<span>  min_length_seq <span class="op">=</span> <span class="fl">200</span>,</span>
+<span>  args_makedb <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  args_blastn <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -129,6 +131,14 @@ query sequences for which <code>blastn</code> does not find any correspondence?<
 <dd><p>(default: 200) Removed sequences with less than
 <code>min_length_seq</code> from derep before blast. Set to 0 to discard filtering
 sequences by length.</p></dd>
+
+
+<dt>args_makedb</dt>
+<dd><p>Additional parameters parse to makeblastdb command</p></dd>
+
+
+<dt>args_blastn</dt>
+<dd><p>Additional parameters parse to blastn command</p></dd>
 
 </dl></div>
     <div class="section level2">

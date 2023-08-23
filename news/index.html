@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.33</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.34</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,17 +61,32 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.35" id="miscmetabar-035-in-development">MiscMetabar 0.35 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-035-in-development"></a></h2>
-</div>
+<ul><li>Add function <code><a href="../reference/multi_biplot_pq.html">multi_biplot_pq()</a></code> to visualize a collection of couples of samples for comparison through a list of <code><a href="../reference/biplot_pq.html">biplot_pq()</a></code>
+</li>
+<li>Add options <code>add_info</code>, <code>na_remove</code>, and <code>clean_pq</code> to <code><a href="../reference/plot_tax_pq.html">plot_tax_pq()</a></code> function</li>
+<li>Add options <code>vsearch_cluster_method</code> and <code>vsearch_args</code> to <code>otu2asv()</code> for more detailed control of the vsearch software</li>
+<li>Suppression of buggy function <code>MM_idtaxa()</code>
+</li>
+<li>Add a wrapper of <code><a href="../reference/write_pq.html">write_pq()</a></code> called <code><a href="../reference/save_pq.html">save_pq()</a></code> to save a <em>phyloseq</em> object in the three possible formats () at the same time
+<ul><li>4 separate tables</li>
+<li>1 table version</li>
+<li>1 RData file</li>
+</ul></li>
+<li>Add a function <code><a href="../reference/add_blast_info.html">add_blast_info()</a></code> to add information from <code><a href="../reference/blast_pq.html">blast_pq()</a></code> to the <code>tax_table</code> slot of a <em>phyloseq</em> object</li>
+<li>Add option <code>keep_temporary_files</code> in <code><a href="../reference/asv2otu.html">asv2otu()</a></code> function</li>
+<li>Improve the documentation of <code><a href="../reference/asv2otu.html">asv2otu()</a></code> and fix a little bug in the name of the conserved ASV after <code><a href="../reference/asv2otu.html">asv2otu()</a></code>
+</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.34" id="miscmetabar-034">MiscMetabar 0.34<a class="anchor" aria-label="anchor" href="#miscmetabar-034"></a></h2>
 <ul><li>Add option <code>add_nb_samples</code> to <code><a href="../reference/ggvenn_pq.html">ggvenn_pq()</a></code> which add the number of samples to level name in the plot. Useful to see disequilibrium in the number of samples among the factor’s levels.</li>
 <li>Add option <code>args_makedb</code> and <code>args_blastn</code> to funtions <code><a href="../reference/blast_pq.html">blast_pq()</a></code>, <code><a href="../reference/blast_to_phyloseq.html">blast_to_phyloseq()</a></code>, <code><a href="../reference/blast_to_derep.html">blast_to_derep()</a></code> and <code><a href="../reference/filter_asv_blast.html">filter_asv_blast()</a></code>.</li>
 <li>Add option <code>rarefy_nb_seqs</code> to <code>ggven_pq()</code> in order to rarefy samples before plotting.</li>
-<li>Add function <code>SRS_curve_pq()</code> to plot scaling with ranked subsampling (SRS) curves using the <code>SRS::SRS_curve()</code> function (see citation(“SRS”) for reference).</li>
+<li>Add function <code><a href="../reference/SRS_curve_pq.html">SRS_curve_pq()</a></code> to plot scaling with ranked subsampling (SRS) curves using the <code>SRS::SRS_curve()</code> function (see citation(“SRS”) for reference).</li>
 <li>Add option <code>nb_samples_info</code> to <code><a href="../reference/biplot_pq.html">biplot_pq()</a></code> in order to add the number of samples merged by level of factors.</li>
 <li>Add a message when two modalities differ greatly (more than x2) in their number of sequences in <code><a href="../reference/biplot_pq.html">biplot_pq()</a></code> and <code><a href="../reference/ggvenn_pq.html">ggvenn_pq()</a></code>
 </li>
-<li>Add options <code>na_remove</code>, <code>dist_method</code> (including Aitchinson and robust-Aitchinson distance), <code>correction_for_sample_size</code> and <code>rarefy_nb_seqs</code> options to <code>adonis_pq</code> function.</li>
+<li>Add options <code>na_remove</code>, <code>dist_method</code> (including Aitchinson and robust-Aitchinson distance), <code>correction_for_sample_size</code> and <code>rarefy_nb_seqs</code> options to <code><a href="../reference/adonis_pq.html">adonis_pq()</a></code> function.</li>
 <li>Add option <code>na_remove</code> to <code><a href="../reference/graph_test_pq.html">graph_test_pq()</a></code> function.</li>
 </ul></div>
     <div class="section level2">
@@ -111,7 +126,7 @@
 <ul><li>Argument <code>split_by</code> to make multiple plot given a variable in <code>sam_data</code> slot (function <code><a href="../reference/ggvenn_pq.html">ggvenn_pq()</a></code>)<br></li>
 <li>Argument <code>seq_names</code> in <code><a href="../reference/asv2otu.html">asv2otu()</a></code> function allow to clusterize sequences from a character vector of DNA.</li>
 <li>Add a <code><a href="../reference/blast_pq.html">blast_pq()</a></code> function to blast the sequences of the <code>@ref_seq</code> slot against a custom database</li>
-<li>Add a <code><a href="../reference/filter_asv_blast.html">filter_asv_blast()</a></code> function to filter ASV in phyloseq dataset using blast against a custom database</li>
+<li>Add a <code><a href="../reference/filter_asv_blast.html">filter_asv_blast()</a></code> function to filter ASV in <em>phyloseq</em> dataset using blast against a custom database</li>
 <li>Add a <code><a href="../reference/subset_taxa_pq.html">subset_taxa_pq()</a></code> function to filter ASV based on a named conditional vector. Used in <code><a href="../reference/filter_asv_blast.html">filter_asv_blast()</a></code>.</li>
 <li>Add parameter <code>force_taxa_as_columns</code> (default FALSE) and <code>force_taxa_as_rows</code> (default FALSE) to <code><a href="../reference/clean_pq.html">clean_pq()</a></code>.</li>
 <li>Add a first version of the function <code>count_fastq_seq()</code> to count sequences from fastq.gz files directly from R.</li>

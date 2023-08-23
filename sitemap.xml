@@ -40,16 +40,19 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/news/index.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/MM_idtaxa.html</loc>
-  </url>
-  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/MiscMetabar-deprecated.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/MiscMetabar-package.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/SRS_curve_pq.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/accu_plot.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/add_blast_info.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/add_dna_to_phyloseq.html</loc>
@@ -139,6 +142,9 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/merge_krona.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/multi_biplot_pq.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/multiplot.html</loc>
   </url>
   <url>
@@ -173,6 +179,9 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/sankey_pq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/save_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/select_one_sample.html</loc>

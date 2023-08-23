@@ -12,7 +12,7 @@ shared ASV. — compare_pairs_pq"><meta property="og:description" content=" #'  
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.33</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.34</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,8 +71,9 @@ shared ASV.</h1>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">compare_pairs_pq</span><span class="op">(</span></span>
 <span>  physeq <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  modality <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bifactor <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  modality <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  merge_sample_by <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  nb_min_seq <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  vegIndex <span class="op">=</span> <span class="st">"shannon"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -85,14 +86,21 @@ shared ASV.</h1>
 using the <code>phyloseq</code> package.</p></dd>
 
 
+<dt>bifactor</dt>
+<dd><p>(required) a factor (present in the <code>sam_data</code> slot of
+the physeq object) presenting the pair names</p></dd>
+
+
 <dt>modality</dt>
 <dd><p>the name of the column in the <code>sam_data</code>
 slot of the physeq object to split samples by pairs</p></dd>
 
 
-<dt>bifactor</dt>
-<dd><p>(required) a factor (present in the <code>sam_data</code> slot of
-the physeq object) presenting the pair names</p></dd>
+<dt>merge_sample_by</dt>
+<dd><p>a vector to determine
+which samples to merge using the
+<code><a href="https://mikemc.github.io/speedyseq/reference/merge_samples2.html" class="external-link">merge_samples2</a></code> function.
+Need to be in <code>physeq@sam_data</code></p></dd>
 
 
 <dt>nb_min_seq</dt>
@@ -111,6 +119,15 @@ to count the ASV/OTU</p></dd>
 <p>A tibble</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">data_fungi_low_high</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html" class="external-link">subset_samples</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Height"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Low"</span>, <span class="st">"High"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in validObject(.Object):</span> invalid class “sample_data” object: Sample Data must have non-zero dimensions.</span>
+<span class="r-in"><span><span class="fu">compare_pairs_pq</span><span class="op">(</span><span class="va">data_fungi_low_high</span>, bifactor <span class="op">=</span> <span class="st">"Height"</span>, merge_sample_by <span class="op">=</span> <span class="st">"Height"</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'data_fungi_low_high' not found</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

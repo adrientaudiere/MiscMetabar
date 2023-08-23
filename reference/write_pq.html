@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.33</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.34</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,6 +82,7 @@
 <span>  silent <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  quote <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  sep_csv <span class="op">=</span> <span class="st">"\t"</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -157,23 +158,36 @@ the verbose parameter overwrite the silent parameter.</p></dd>
 
 
 <dt>quote</dt>
-<dd><p>: a logical value (default FALSE) or a numeric vector.
+<dd><p>a logical value (default FALSE) or a numeric vector.
 If TRUE, any character or factor columns will be surrounded by
 double quotes.  If a numeric vector, its elements are taken
 as the indices of columns to quote.  In both cases, row and
 column names are quoted if they are written. If FALSE nothing is quoted.</p></dd>
 
 
+<dt>sep_csv</dt>
+<dd><p>(default tabulation ('')) separator for column</p></dd>
+
+
 <dt>...</dt>
-<dd><p>Other arguments passed to <code><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">utils::write.csv()</a></code> function.</p></dd>
+<dd><p>Other arguments passed on to <code><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">utils::write.table()</a></code> function.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
-and if present a phy_tree in Newick format</p>
+<p>Build a folder (path) containing one to four csv tables
+(refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
+and if present a phy_tree in Newick formatk</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code><a href="save_pq.html">save_pq()</a></code></p></div>
+    </div>
+    <div class="section level2">
+    <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
+    <p>Adrien Taudière</p>
     </div>
 
     <div class="section level2">
@@ -182,7 +196,6 @@ and if present a phy_tree in Newick format</p>
 <span class="r-in"><span><span class="fu">write_pq</span><span class="op">(</span><span class="va">data_fungi</span>, path <span class="op">=</span> <span class="st">"phyloseq"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">write_pq</span><span class="op">(</span><span class="va">data_fungi</span>, path <span class="op">=</span> <span class="st">"phyloseq"</span>, one_file <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

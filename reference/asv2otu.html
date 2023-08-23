@@ -12,7 +12,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.33</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.34</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,6 +77,9 @@
 <span>  id <span class="op">=</span> <span class="fl">0.97</span>,</span>
 <span>  vsearchpath <span class="op">=</span> <span class="st">"vsearch"</span>,</span>
 <span>  tax_adjust <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  vsearch_cluster_method <span class="op">=</span> <span class="st">"--cluster_fast"</span>,</span>
+<span>  vsearch_args <span class="op">=</span> <span class="st">"--strand both"</span>,</span>
+<span>  keep_temporary_files <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -117,7 +120,29 @@ with arguments <code>-cluster_fast</code> and <code>-strand both</code></p></li>
 
 <dt>tax_adjust</dt>
 <dd><p>See the man page
-of <code><a href="https://mikemc.github.io/speedyseq/reference/merge_taxa_vec.html" class="external-link">speedyseq::merge_taxa_vec()</a></code> for more details.</p></dd>
+of <code><a href="https://mikemc.github.io/speedyseq/reference/merge_taxa_vec.html" class="external-link">speedyseq::merge_taxa_vec()</a></code> for more details.
+To conserved the taxonomic rank of the most abundant ASV,
+set tax_adjust to 0</p></dd>
+
+
+<dt>vsearch_cluster_method</dt>
+<dd><p>(default: "--cluster_fast") See other possible
+methods in the <a href="https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf" class="external-link">vsearch pdf manual</a> (e.g. <code>--cluster_size</code> or <code>--cluster_smallmem</code>)</p><ul><li><p><code>--cluster_fast</code> : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.</p></li>
+<li><p><code>--cluster_size</code> : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence abundance beforehand.</p></li>
+<li><p><code>--cluster_smallmem</code> : Clusterize the fasta sequences in filename without automatically modifying their order beforehand. Sequence are expected to be sorted by decreasing sequence length, unless <em>--usersort</em> is used</p></li>
+</ul></dd>
+
+
+<dt>vsearch_args</dt>
+<dd><p>(default : "--strand both") a one length character element defining other parameters to
+passed on to vsearch.</p></dd>
+
+
+<dt>keep_temporary_files</dt>
+<dd><p>(logical, default: FALSE) Do we keep temporary files</p><ul><li><p>temp.fasta (refseq in fasta)</p></li>
+<li><p>cluster.fasta (centroid if method = "vsearch")</p></li>
+<li><p>temp.uc (clusters if method = "vsearch")</p></li>
+</ul></dd>
 
 
 <dt>...</dt>

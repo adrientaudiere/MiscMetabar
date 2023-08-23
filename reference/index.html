@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.33</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.34</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,19 +71,24 @@
 
       <dl><dt>
           
-          <code><a href="MM_idtaxa.html">MM_idtaxa()</a></code> 
-        </dt>
-        <dd>A wrapper of <code><a href="https://rdrr.io/pkg/DECIPHER/man/IdTaxa.html" class="external-link">DECIPHER::IdTaxa()</a></code></dd>
-      </dl><dl><dt>
-          
           <code><a href="MiscMetabar-deprecated.html">physeq_graph_test()</a></code> 
         </dt>
         <dd>Deprecated function(s) in the MiscMetabar package</dd>
       </dl><dl><dt>
           
+          <code><a href="SRS_curve_pq.html">SRS_curve_pq()</a></code> 
+        </dt>
+        <dd>Scaling with ranked subsampling (SRS) curve of phyloseq object</dd>
+      </dl><dl><dt>
+          
           <code><a href="accu_plot.html">accu_plot()</a></code> 
         </dt>
         <dd>Plot accumulation curves for <code>phyloseq-class</code> object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="add_blast_info.html">add_blast_info()</a></code> 
+        </dt>
+        <dd>Add information from <code><a href="../reference/blast_pq.html">blast_pq()</a></code> to the <code>tax_table</code> slot of a <em>phyloseq</em> object</dd>
       </dl><dl><dt>
           
           <code><a href="add_dna_to_phyloseq.html">add_dna_to_phyloseq()</a></code> 
@@ -119,7 +124,7 @@ using ASV_1, ASV_2, …</dd>
         <dd>Visualization of two samples for comparison</dd>
       </dl><dl><dt>
           
-          <code><a href="blast_pq.html">blast_pq()</a></code> 
+          <code><a href="blast_pq.html">blast_pq()</a></code> <code><a href="blast_pq.html">blast_pq()</a></code> 
         </dt>
         <dd>Blast all sequence of <code>refseq</code> slot of a <code>phyloseq-class</code>
 object against a custom database.</dd>
@@ -131,7 +136,7 @@ object against a custom database.</dd>
 object.</dd>
       </dl><dl><dt>
           
-          <code><a href="blast_to_phyloseq.html">blast_to_phyloseq()</a></code> 
+          <code><a href="blast_to_phyloseq.html">blast_to_phyloseq()</a></code> <code><a href="blast_to_phyloseq.html">blast_to_phyloseq()</a></code> 
         </dt>
         <dd>Blast some sequence against <code>refseq</code> slot of a <code>phyloseq-class</code>
 object.</dd>
@@ -179,7 +184,7 @@ shared ASV.</dd>
 distance for all samples</dd>
       </dl><dl><dt>
           
-          <code><a href="filter_asv_blast.html">filter_asv_blast()</a></code> 
+          <code><a href="filter_asv_blast.html">filter_asv_blast()</a></code> <code><a href="filter_asv_blast.html">filter_asv_blast()</a></code> 
         </dt>
         <dd>Filter indesirable taxa using blast against a against a custom database.</dd>
       </dl><dl><dt>
@@ -233,6 +238,11 @@ distance for all samples</dd>
           <code><a href="merge_krona.html">merge_krona()</a></code> 
         </dt>
         <dd>Merge Krona files using <a href="https://github.com/marbl/Krona/wiki" class="external-link">KronaTools</a>.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="multi_biplot_pq.html">multi_biplot_pq()</a></code> 
+        </dt>
+        <dd>Visualization of a collection of couples of samples for comparison</dd>
       </dl><dl><dt>
           
           <code><a href="multiplot.html">multiplot()</a></code> 
@@ -294,6 +304,15 @@ in Newick format.</dd>
           <code><a href="sankey_pq.html">sankey_pq()</a></code> 
         </dt>
         <dd>Sankey plot of <code>phyloseq-class</code> object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="save_pq.html">save_pq()</a></code> 
+        </dt>
+        <dd>A wrapper of write_pq to save in all three format :
+<ul><li><p>4 separate tables</p></li>
+<li><p>1 table version</p></li>
+<li><p>1 RData file</p></li>
+</ul></dd>
       </dl><dl><dt>
           
           <code><a href="select_one_sample.html">select_one_sample()</a></code> 
