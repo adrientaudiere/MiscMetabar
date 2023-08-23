@@ -535,7 +535,8 @@ asv2otu <- function(physeq = NULL,
 
     clusters <- pack_clusts$cluster[pack_clusts$type != "C"]
     names(clusters) <- pack_clusts$query[pack_clusts$type != "C"]
-
+    clusters <- clusters[match(taxa_names(physeq), names(clusters))]
+    
     if (inherits(physeq, "phyloseq")) {
       new_obj <-
         speedyseq::merge_taxa_vec(physeq,
