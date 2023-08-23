@@ -46,9 +46,9 @@ krona <-
 
     if (is.null(name)) {
       if (nb_seq) {
-        name <- "Number.of.sequences"
+        name <- "Number.of.sequences_temp"
       } else {
-        name <- "Number.of.ASVs"
+        name <- "Number.of.ASVs_temp"
       }
     }
 

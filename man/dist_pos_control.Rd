@@ -24,7 +24,7 @@ A list of two data-frames with
 (ii) the distance among all samples
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \details{
 Compute distance among positive controls,
@@ -33,6 +33,13 @@ to test for variation, for example in
 (i) a step in the sampling,
 (ii) a step in the extraction,
 (iii) a step in the sequencing.
+}
+\examples{
+data("enterotype")
+sam_name_factice <- gsub("TS1_V2", "TS10_V2", sample_names(enterotype))
+res_dist_cont <- dist_pos_control(enterotype, sam_name_factice)
+hist(unlist(res_dist_cont$distAllSamples))
+abline(v = mean(unlist(res_dist_cont$dist_controlontrolSamples), na.rm = T), col = "red", lwd = 3)
 }
 \author{
 Adrien Taudière

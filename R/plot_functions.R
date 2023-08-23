@@ -978,9 +978,9 @@ venn_pq <-
 #'     theme(plot.title = element_text(hjust = 0.5, size = 22))
 #'   print(p)
 #' }
-#' 
+#'
 #' data_fungi2 <- subset_samples(data_fungi, data_fungi@sam_data$Tree_name == "A10-005" |
-#'                               data_fungi@sam_data$Height %in% c("Low", "High"))
+#'   data_fungi@sam_data$Height %in% c("Low", "High"))
 #' ggvenn_pq(data_fungi2, fact = "Height")
 #' @export
 #' @author Adrien Taudière
@@ -1031,18 +1031,18 @@ ggvenn_pq <- function(physeq = NULL,
         ])))
     }
     nb_samples <- c(nb_samples, sum(physeq@sam_data[[fact]] == f, na.rm = T))
-    nb_seq <- c(nb_seq, sum(physeq@otu_table[physeq@sam_data[[fact]] == f,], na.rm = TRUE))
+    nb_seq <- c(nb_seq, sum(physeq@otu_table[physeq@sam_data[[fact]] == f, ], na.rm = TRUE))
   }
 
-  if(max(nb_seq)/min(nb_seq) > 2) {
-    message(paste0("Two modalities differ greatly (more than x2) in their number of sequences (", 
-                    max(nb_seq),
-                    " vs ", 
-                    min(nb_seq),
-                    ")"
-            )
-    )
-  } 
+  if (max(nb_seq) / min(nb_seq) > 2) {
+    message(paste0(
+      "Two modalities differ greatly (more than x2) in their number of sequences (",
+      max(nb_seq),
+      " vs ",
+      min(nb_seq),
+      ")"
+    ))
+  }
 
   if (add_nb_samples) {
     names(res) <- paste0(names(res), "\n (", nb_samples, ")")
@@ -1567,7 +1567,7 @@ rotl_pq <- function(physeq,
 #' @param taxonomic_level (default: NULL): a vector of selected
 #' taxonomic level using
 #'   their column numbers (e.g. taxonomic_level = c(1:7))
-#' @param ... Arguments passed to \code{\link[metacoder]{heat_tree}}
+#' @param ... Arguments passed on to \code{\link[metacoder]{heat_tree}}
 #'
 #' @return A plot
 #' @export
@@ -1615,10 +1615,10 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #' @description
 #' `r lifecycle::badge("maturing")`
 #' @inheritParams clean_pq
-#' @param fact, Name of the factor in `physeq@sam_data`.
+#' @param fact (default: NULL) Name of the factor in `physeq@sam_data`.
 #'   If left to NULL use the `left_name` and `right_name` parameter as modality.
-#' @param merge_sample_by (default: NULL): if not `NULL` samples of
-#'   physeq are mereged using the vector set by `merge_sample_by`. This
+#' @param merge_sample_by (default: NULL) if not `NULL` samples of
+#'   physeq are merged using the vector set by `merge_sample_by`. This
 #'   merging used the [speedyseq::merge_samples2()]. In the case of
 #'   [biplot_pq()] this must be a factor with two levels only.
 #' @param inverse_side Inverse the side (put the right modality in the left side).
@@ -1643,18 +1643,18 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #'   computed using the maximum abundances values.
 #' @param ylim_modif vector of two values. Modificator (by a multiplication)
 #'   of ylim. If one value is set, this value is used for both limits.
-#' @param nb_samples_info (default: TRUE, logical) if TRUE and merge_sample_by is set, 
+#' @param nb_samples_info (default: TRUE, logical) if TRUE and merge_sample_by is set,
 #'   add the number of samples merged for both levels.
 #' @param plotly_version If TRUE, use [plotly::ggplotly()] to return
 #'   a interactive ggplot.
 #' @param ... other arguments for the ggplot function
 #' @importFrom stats reorder
 #' @return A plot
-#' 
-#' @examples 
+#'
+#' @examples
 #' data(data_fungi)
 #' data_fungi_2Height <- subset_samples(data_fungi, Height %in% c("Low", "High"))
-#' biplot_pq(data_fungi_2Height, "Height", merge_sample_by="Height")
+#' biplot_pq(data_fungi_2Height, "Height", merge_sample_by = "Height")
 #' @export
 #' @author Adrien Taudière
 #'
@@ -1681,10 +1681,9 @@ biplot_pq <- function(physeq,
                       plotly_version = FALSE,
                       ...) {
   if (!is.null(merge_sample_by)) {
-
-    if(nb_samples_info) {
-      modality_1_nb <- table(physeq@sam_data[,merge_sample_by])[1]
-      modality_2_nb <- table(physeq@sam_data[,merge_sample_by])[2]
+    if (nb_samples_info) {
+      modality_1_nb <- table(physeq@sam_data[, merge_sample_by])[1]
+      modality_2_nb <- table(physeq@sam_data[, merge_sample_by])[2]
     }
     physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
     physeq <- clean_pq(physeq)
@@ -1697,15 +1696,15 @@ biplot_pq <- function(physeq,
     )
   }
 
-  if(sample_sums(physeq)[1]/sample_sums(physeq)[2] > 2 ||
-     sample_sums(physeq)[2]/sample_sums(physeq)[1] > 2) {
-    message(paste0("The two modalities differ greatly (more than x2) in their number of sequences (", 
-                    sample_sums(physeq)[1],
-                    " vs ", 
-                    sample_sums(physeq)[2],
-                    ")"
-                  )
-           )
+  if (sample_sums(physeq)[1] / sample_sums(physeq)[2] > 2 ||
+    sample_sums(physeq)[2] / sample_sums(physeq)[1] > 2) {
+    message(paste0(
+      "The two modalities differ greatly (more than x2) in their number of sequences (",
+      sample_sums(physeq)[1],
+      " vs ",
+      sample_sums(physeq)[2],
+      ")"
+    ))
   }
 
   if (is.null(fact)) {
@@ -1734,9 +1733,9 @@ biplot_pq <- function(physeq,
     right_name <- levels(modality)[2]
   }
 
-  if(!is.null(merge_sample_by) && nb_samples_info) {
-    left_name <- paste0(left_name, " (" ,modality_1_nb, " samples)")
-    right_name <- paste0(right_name, " (" ,modality_2_nb, " samples)")
+  if (!is.null(merge_sample_by) && nb_samples_info) {
+    left_name <- paste0(left_name, " (", modality_1_nb, " samples)")
+    right_name <- paste0(right_name, " (", modality_2_nb, " samples)")
   }
 
   physeq@sam_data$modality <- modality
@@ -1877,8 +1876,70 @@ biplot_pq <- function(physeq,
 }
 
 
-#' Plot taxonomic distribution in function of a factor.
 
+#' Visualization of a collection of couples of samples for comparison
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' This allow to plot all the possible [biplot_pq()] combination
+#' using one factor.
+#'
+#' @inheritParams clean_pq
+#' @param split_by (required) the name of the factor to make all combination
+#'   of couples of values
+#' @param na_remove (logical, default TRUE) if TRUE remove all the samples
+#'   with NA in the `split_by` variable of the `physeq@sam_data` slot
+#' @param ... all other parameters passed on to [biplot_pq()]
+#'
+#' @return a list of ggplot object
+#' @export
+#'
+#' @examples
+#' data(data_fungi)
+#' data_fungi_abun <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
+#' p <- multi_biplot_pq(data_fungi_abun, "Height")
+#' lapply(p, print)
+#'
+#' @author Adrien Taudière
+multi_biplot_pq <- function(physeq,
+                            split_by = NULL,
+                            na_remove = TRUE,
+                            ...) {
+  if (is.null(split_by) | is.null(physeq@sam_data[[split_by]])) {
+    stop("split_by must be set and must be a variable in physeq@sam_data")
+  }
+  if (na_remove) {
+    new_physeq <- subset_samples_pq(physeq, !is.na(physeq@sam_data[[split_by]]))
+    if (nsamples(physeq) - nsamples(new_physeq) > 0) {
+      message(paste0(
+        nsamples(physeq) - nsamples(new_physeq),
+        " were discarded due to NA in variables present in formula."
+      ))
+    }
+    physeq <- new_physeq
+  }
+
+  names_split_by <- names(table(physeq@sam_data[[split_by]]))
+  couples <- combn(n, 2)
+
+  p <- list()
+  for (c in 1:ncol(couples)) {
+    names_p <- paste0(couples[1, c], " - ", couples[2, c])
+    new_physeq <- subset_samples_pq(physeq, physeq@sam_data[[split_by]] %in%
+      c(couples[1, c], couples[2, c]))
+    p[[names_p]] <- biplot_pq(new_physeq,
+      fact = split_by,
+      merge_sample_by = split_by,
+    )
+  }
+
+  return(p)
+}
+
+
+
+
+#' Plot taxonomic distribution in function of a factor.
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -1895,21 +1956,43 @@ biplot_pq <- function(physeq,
 #'   used in plot. If "nb_asv", the number of ASV is plotted. If both,
 #'   return a list of two plots, one for nbSeq and one for ASV.
 #' @param taxa_fill (default: 'Order'): Name of the taxonomic rank of interest
-#' @param print_values (logical): Do we print some values on plot?
+#' @param print_values (logical, default TRUE): Do we print some values on plot?
 #' @param color_border color for the border
 #' @param linewidth The line width of geom_bar
 #' @param prop_print_value minimal proportion to print value (default 0.01)
 #' @param nb_print_value number of higher values to print
 #'    (replace prop_print_value if both are set).
-#'
+#' @param add_info (logical, default TRUE) Do we add title and subtitle with
+#'   information about the total number of sequences and the number of samples
+#'   per modality.
+#' @param na_remove (logical, default TRUE) if TRUE remove all the samples
+#'   with NA in the `split_by` variable of the `physeq@sam_data` slot
+#' @param clean_pq (logical)
+#'   If set to TRUE, empty samples are discarded after subsetting ASV
 #' @return A ggplot2 graphic
 #' @export
 #'
 #' @examples
 #' data(data_fungi_sp_known)
-#' plot_tax_pq(data_fungi_sp_known, "Time",
+#' plot_tax_pq(data_fungi_sp_known,
+#'   "Time",
 #'   merge_sample_by = "Time",
 #'   taxa_fill = "Class"
+#' )
+#'
+#' plot_tax_pq(data_fungi_sp_known,
+#'   "Height",
+#'   merge_sample_by = "Height",
+#'   taxa_fill = "Class",
+#'   na_remove = TRUE
+#' )
+#'
+#' plot_tax_pq(data_fungi_sp_known,
+#'   "Height",
+#'   merge_sample_by = "Height",
+#'   taxa_fill = "Class",
+#'   na_remove = FALSE,
+#'   clean_pq = FALSE
 #' )
 plot_tax_pq <-
   function(physeq,
@@ -1921,10 +2004,27 @@ plot_tax_pq <-
            color_border = "lightgrey",
            linewidth = 0.1,
            prop_print_value = 0.01,
-           nb_print_value = NULL) {
-    physeq <-
-      clean_pq(subset_samples_pq(physeq, !is.na(physeq@sam_data[[fact]])))
+           nb_print_value = NULL,
+           add_info = TRUE,
+           na_remove = TRUE,
+           clean_pq = TRUE) {
+    if (na_remove) {
+      new_physeq <- subset_samples_pq(physeq, !is.na(physeq@sam_data[[fact]]))
+      if (nsamples(physeq) - nsamples(new_physeq) > 0) {
+        message(paste0(
+          nsamples(physeq) - nsamples(new_physeq),
+          " were discarded due to NA in variables present in formula."
+        ))
+      }
+      physeq <- new_physeq
+    }
 
+    if (clean_pq) {
+      physeq <- clean_pq(physeq)
+    }
+
+
+    physeq_old <- physeq
 
     if (!is.null(merge_sample_by)) {
       physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
@@ -1981,6 +2081,20 @@ plot_tax_pq <-
         ylab("Nb_ASV")
     }
 
+    if (add_info) {
+      p_seq <- p_seq +
+        labs(
+          title = paste("Total nb of sequences: ", sum(physeq_old@otu_table)),
+          subtitle = paste0(
+            "Nb of samples: '",
+            paste0(names(table(physeq_old@sam_data[[fact]])),
+              sep = "' : ",
+              table(physeq_old@sam_data[[fact]]), collapse = " - '"
+            )
+          )
+        )
+    }
+
     if (type == "nb_seq") {
       return(p_seq)
     } else if (type == "nb_asv") {
@@ -1997,7 +2111,7 @@ plot_tax_pq <-
 #' @param dims (Int) Output dimensionality (default: 2)
 #' @param theta (Numeric) Speed/accuracy trade-off (increase for less accuracy), set to 0.0 for exact TSNE (default: 0.0 see details in the man page of `Rtsne::Rtsne`).
 #' @param perplexity (Numeric) Perplexity parameter (should not be bigger than 3 * perplexity < nrow(X) - 1, see details in the man page of `Rtsne::Rtsne`)
-#' @param ... : other arguments passed to `Rtsne::Rtsne()`
+#' @param ... : other arguments passed on to `Rtsne::Rtsne()`
 #'
 #' @return A list of element including the matrix Y containing the new representations for the objects.
 #'   See ?Rtsne::Rtsne() for more information
@@ -2055,7 +2169,7 @@ tsne_pq <-
 #' @param plot_dims A vector of 2 values defining the rank of dimension to plot (default: c(1,2))
 #' @param filter_na_fact (logical) Does the samples with NA values in fact are removed? (default: true)
 #' @param force_factor Force the fact column to be a factor.
-#' @param ... : other arguments passed to `Rtsne::Rtsne()`
+#' @param ... : other arguments passed on to `Rtsne::Rtsne()`
 #'
 #' @return
 #' A ggplot object
@@ -2136,7 +2250,7 @@ plot_tsne_pq <- function(physeq,
 #' @inheritParams clean_pq
 #' @param clean_pq (logical): Does the phyloseq
 #'   object is cleaned using the [clean_pq()] function?
-#' @param ... Other arguments passed to `SRS::SRScurve()`
+#' @param ... Other arguments passed on to `SRS::SRScurve()`
 #' @return A plot
 #' @export
 #'

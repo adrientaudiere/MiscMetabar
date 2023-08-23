@@ -11,6 +11,7 @@ graph_test_pq(
   nperm = 999,
   return_plot = TRUE,
   title = "Graph Test",
+  na_remove = FALSE,
   ...
 )
 }
@@ -34,7 +35,10 @@ of the test or do we plot the result?}
 
 \item{title}{The title of the Graph.}
 
-\item{...}{other params for be passed on
+\item{na_remove}{(logical, default FALSE) If set to TRUE, remove samples with
+NA in the variables set in formula.}
+
+\item{...}{other params for be passed on to
 \code{\link[phyloseqGraphTest:graph_perm_test]{phyloseqGraphTest::graph_perm_test()}} function}
 }
 \value{
@@ -50,12 +54,7 @@ important statistics
 \examples{
 data(enterotype)
 graph_test_pq(enterotype, fact = "SeqTech")
-
-clean_enterotype <- subset_samples(
-  enterotype,
-  !is.na(enterotype@sam_data$Enterotype)
-)
-graph_test_pq(clean_enterotype, fact = "Enterotype")
+graph_test_pq(enterotype, fact = "Enterotype", na_remove = T)
 }
 \author{
 Adrien Taudière

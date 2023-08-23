@@ -25,7 +25,7 @@
 physeq_graph_test(...)
 }
 \arguments{
-\item{...}{Parameters to be passed to the modern version of the function}
+\item{...}{Parameters to be passed on to the modern version of the function}
 }
 \description{
 These functions are provided for compatibility with older version of

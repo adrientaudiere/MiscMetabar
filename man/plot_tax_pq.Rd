@@ -14,7 +14,10 @@ plot_tax_pq(
   color_border = "lightgrey",
   linewidth = 0.1,
   prop_print_value = 0.01,
-  nb_print_value = NULL
+  nb_print_value = NULL,
+  add_info = TRUE,
+  na_remove = TRUE,
+  clean_pq = TRUE
 )
 }
 \arguments{
@@ -34,7 +37,7 @@ return a list of two plots, one for nbSeq and one for ASV.}
 
 \item{taxa_fill}{(default: 'Order'): Name of the taxonomic rank of interest}
 
-\item{print_values}{(logical): Do we print some values on plot?}
+\item{print_values}{(logical, default TRUE): Do we print some values on plot?}
 
 \item{color_border}{color for the border}
 
@@ -44,6 +47,16 @@ return a list of two plots, one for nbSeq and one for ASV.}
 
 \item{nb_print_value}{number of higher values to print
 (replace prop_print_value if both are set).}
+
+\item{add_info}{(logical, default TRUE) Do we add title and subtitle with
+information about the total number of sequences and the number of samples
+per modality.}
+
+\item{na_remove}{(logical, default TRUE) if TRUE remove all the samples
+with NA in the \code{split_by} variable of the \code{physeq@sam_data} slot}
+
+\item{clean_pq}{(logical)
+If set to TRUE, empty samples are discarded after subsetting ASV}
 }
 \value{
 A ggplot2 graphic
@@ -55,8 +68,24 @@ An alternative to \code{phyloseq::plot_bar()} function.
 }
 \examples{
 data(data_fungi_sp_known)
-plot_tax_pq(data_fungi_sp_known, "Time",
+plot_tax_pq(data_fungi_sp_known,
+  "Time",
   merge_sample_by = "Time",
   taxa_fill = "Class"
+)
+
+plot_tax_pq(data_fungi_sp_known,
+  "Height",
+  merge_sample_by = "Height",
+  taxa_fill = "Class",
+  na_remove = TRUE
+)
+
+plot_tax_pq(data_fungi_sp_known,
+  "Height",
+  merge_sample_by = "Height",
+  taxa_fill = "Class",
+  na_remove = FALSE,
+  clean_pq = FALSE
 )
 }

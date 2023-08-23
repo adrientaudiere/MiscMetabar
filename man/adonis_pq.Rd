@@ -4,22 +4,49 @@
 \alias{adonis_pq}
 \title{Permanova on a phyloseq object}
 \usage{
-adonis_pq(physeq, formula, merge_sample_by = NULL)
+adonis_pq(
+  physeq,
+  formula,
+  dist_method = "bray",
+  merge_sample_by = NULL,
+  na_remove = FALSE,
+  correction_for_sample_size = FALSE,
+  rarefy_nb_seqs = FALSE
+)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{formula}{(required) todo}
+\item{formula}{(required) the right part of a formula for \code{\link[vegan:adonis]{vegan::adonis2()}}.
+Variables must be present in the \code{physeq@sam_data} slot.}
+
+\item{dist_method}{(default "bray") the distance used. See
+\code{\link[phyloseq:distance]{phyloseq::distance()}} for all available distances or run
+\code{\link[phyloseq:distanceMethodList]{phyloseq::distanceMethodList()}}.
+For aitchison and robust.aitchison distance, \code{\link[vegan:vegdist]{vegan::vegdist()}}
+function is directly used.}
 
 \item{merge_sample_by}{a vector to determine
 which samples to merge using the \code{\link[speedyseq:merge_samples2]{speedyseq::merge_samples2()}}
 function. Need to be in \code{physeq@sam_data}}
+
+\item{na_remove}{(logical, default FALSE) If set to TRUE, remove samples with
+NA in the variables set in formula.}
+
+\item{correction_for_sample_size}{(logical, default FALSE) If set to TRUE, the
+sample size (number of sequences by samples) is add to formula in the form
+\code{y~Library_Size + Biological_Effect} following recommendation of
+\href{https://doi.org/10.1186/s40168-017-0237-y}{Weiss et al. 2017}.
+\code{correction_for_sample_size} overcome \code{rarefy_nb_seqs} if both are TRUE.}
+
+\item{rarefy_nb_seqs}{(logical, default FALSE) Rarefy each sample
+(before merging if merge_sample_by is set) using \code{phyloseq::rarefy_even_depth()}.
+if \code{correction_for_sample_size} is TRUE, rarefy_nb_seqs will have no effect.}
 }
 \value{
 The function returns an anova.cca result object with a
-new column for partial R^2.
-See ?adonis2 for more information.
+new column for partial R^2. See help of \code{\link[vegan:adonis]{vegan::adonis2()}} for more information.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
@@ -28,11 +55,10 @@ A wrapper for the \code{\link[vegan:adonis]{vegan::adonis2()}} function in the c
 }
 \examples{
 data(enterotype)
-clean_enterotype <- subset_samples(
-  enterotype,
-  !is.na(enterotype@sam_data$Enterotype)
-)
-adonis_pq(clean_enterotype, "SeqTech*Enterotype")
+adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE)
+adonis_pq(enterotype, "SeqTech")
+adonis_pq(enterotype, "SeqTech", dist_method = "jaccard")
+adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison")
 }
 \author{
 Adrien Taudière

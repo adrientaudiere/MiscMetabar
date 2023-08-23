@@ -4,13 +4,15 @@
 \alias{hill_tuckey_pq}
 \title{Calculate hill number and compute Tuckey post-hoc test}
 \usage{
-hill_tuckey_pq(physeq, modality)
+hill_tuckey_pq(physeq, modality, silent = TRUE)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{modality}{(required) the variable to test}
+
+\item{silent}{(logical) If true, no message are printing.}
 }
 \value{
 A ggplot2 object

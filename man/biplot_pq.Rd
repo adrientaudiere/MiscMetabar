@@ -24,6 +24,7 @@ biplot_pq(
   size_names = 5,
   y_names = NA,
   ylim_modif = c(1, 1),
+  nb_samples_info = TRUE,
   plotly_version = FALSE,
   ...
 )
@@ -32,11 +33,11 @@ biplot_pq(
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{fact, }{Name of the factor in \code{physeq@sam_data}.
+\item{fact}{(default: NULL) Name of the factor in \code{physeq@sam_data}.
 If left to NULL use the \code{left_name} and \code{right_name} parameter as modality.}
 
-\item{merge_sample_by}{(default: NULL): if not \code{NULL} samples of
-physeq are mereged using the vector set by \code{merge_sample_by}. This
+\item{merge_sample_by}{(default: NULL) if not \code{NULL} samples of
+physeq are merged using the vector set by \code{merge_sample_by}. This
 merging used the \code{\link[speedyseq:merge_samples2]{speedyseq::merge_samples2()}}. In the case of
 \code{\link[=biplot_pq]{biplot_pq()}} this must be a factor with two levels only.}
 
@@ -78,6 +79,9 @@ computed using the maximum abundances values.}
 \item{ylim_modif}{vector of two values. Modificator (by a multiplication)
 of ylim. If one value is set, this value is used for both limits.}
 
+\item{nb_samples_info}{(default: TRUE, logical) if TRUE and merge_sample_by is set,
+add the number of samples merged for both levels.}
+
 \item{plotly_version}{If TRUE, use \code{\link[plotly:ggplotly]{plotly::ggplotly()}} to return
 a interactive ggplot.}
 
@@ -88,6 +92,11 @@ A plot
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+}
+\examples{
+data(data_fungi)
+data_fungi_2Height <- subset_samples(data_fungi, Height \%in\% c("Low", "High"))
+biplot_pq(data_fungi_2Height, "Height", merge_sample_by = "Height")
 }
 \author{
 Adrien Taudière

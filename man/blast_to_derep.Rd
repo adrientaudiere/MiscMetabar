@@ -15,7 +15,9 @@ blast_to_derep(
   unique_per_seq = FALSE,
   score_filter = FALSE,
   list_no_output_query = FALSE,
-  min_length_seq = 200
+  min_length_seq = 200,
+  args_makedb = NULL,
+  args_blastn = NULL
 )
 }
 \arguments{
@@ -44,6 +46,10 @@ query sequences for which \code{blastn} does not find any correspondence?}
 \item{min_length_seq}{(default: 200) Removed sequences with less than
 \code{min_length_seq} from derep before blast. Set to 0 to discard filtering
 sequences by length.}
+
+\item{args_makedb}{Additional parameters parse to makeblastdb command}
+
+\item{args_blastn}{Additional parameters parse to blastn command}
 }
 \value{
 A blast table

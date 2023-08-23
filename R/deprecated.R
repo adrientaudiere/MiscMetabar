@@ -5,7 +5,7 @@
 #' removed.
 #' @rdname MiscMetabar-deprecated
 #' @name MiscMetabar-deprecated
-#' @param ... Parameters to be passed to the modern version of the function
+#' @param ... Parameters to be passed on to the modern version of the function
 #' @docType package
 #' @export  physeq_graph_test adonis_phyloseq clean_physeq lulu_phyloseq otu_circle biplot_physeq read_phyloseq write_phyloseq sankey_phyloseq summary_plot_phyloseq plot_deseq2_phyloseq plot_edgeR_phyloseq venn_phyloseq ggVenn_phyloseq hill_tuckey_phyloseq hill_phyloseq physeq_heat_tree
 #' @aliases physeq_graph_test adonis_phyloseq clean_physeq lulu_phyloseq otu_circle biplot_physeq read_phyloseq write_phyloseq sankey_phyloseq summary_plot_phyloseq plot_deseq2_phyloseq plot_edgeR_phyloseq venn_phyloseq ggVenn_phyloseq hill_tuckey_phyloseq hill_phyloseq physeq_heat_tree

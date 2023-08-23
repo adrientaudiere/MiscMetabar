@@ -40,7 +40,7 @@ using the \code{phyloseq} package.}
 
 \item{force_factor}{Force the fact column to be a factor.}
 
-\item{...}{: other arguments passed to \code{Rtsne::Rtsne()}}
+\item{...}{: other arguments passed on to \code{Rtsne::Rtsne()}}
 }
 \value{
 A ggplot object

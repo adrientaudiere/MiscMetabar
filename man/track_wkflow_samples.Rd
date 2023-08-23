@@ -8,9 +8,9 @@ for each samples}
 track_wkflow_samples(list_pq_obj, ...)
 }
 \arguments{
-\item{list_pq_obj}{(required): a list of object passed to \code{\link[=track_wkflow]{track_wkflow()}}}
+\item{list_pq_obj}{(required): a list of object passed on to \code{\link[=track_wkflow]{track_wkflow()}}}
 
-\item{...}{: other args passed to \code{\link[=track_wkflow]{track_wkflow()}}}
+\item{...}{: other args passed on to \code{\link[=track_wkflow]{track_wkflow()}}}
 }
 \value{
 A list of dataframe. cf \code{\link[=track_wkflow]{track_wkflow()}} for more information

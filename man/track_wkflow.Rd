@@ -26,7 +26,7 @@ before clustering.}
 taxonomic rank \verb{in physeq@tax_table} to compute the number of unique value.
 Default is NULL and do not compute values for any taxonomic rank}
 
-\item{...}{Other arguments passed to \code{\link[=clean_pq]{clean_pq()}} function.}
+\item{...}{Other arguments passed on to \code{\link[=clean_pq]{clean_pq()}} function.}
 }
 \value{
 The number of sequences, clusters (e.g. OTUs, ASVs) and samples for

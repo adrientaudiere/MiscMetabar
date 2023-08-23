@@ -1,5 +1,17 @@
 # MiscMetabar 0.35  (in development)
 
+* Add function `multi_biplot_pq()` to visualize a collection of couples of samples for comparison through a list of `biplot_pq()`
+* Add options `add_info`, `na_remove`, and `clean_pq` to `plot_tax_pq()` function
+* Add options `vsearch_cluster_method` and `vsearch_args` to `otu2asv()` for more detailed control of the vsearch software
+* Suppression of buggy function `MM_idtaxa()`
+* Add a wrapper of `write_pq()` called `save_pq()` to save a *phyloseq* object in the three possible formats () at the same time
+  * 4 separate tables
+  * 1 table version 
+  * 1 RData file
+* Add a function `add_blast_info()` to add information from `blast_pq()` to the `tax_table` slot of a *phyloseq* object
+* Add option `keep_temporary_files` in `asv2otu()` function
+* Improve the documentation of `asv2otu()` and fix a little bug in the name of the conserved ASV after `asv2otu()`
+
 # MiscMetabar 0.34
 
 * Add option `add_nb_samples` to `ggvenn_pq()` which add the number of samples to level name in the plot. Useful to see disequilibrium in the number of samples among the factor's levels.
@@ -8,7 +20,7 @@
 * Add function `SRS_curve_pq()` to plot scaling with ranked subsampling (SRS) curves using the `SRS::SRS_curve()` function (see citation("SRS") for reference).
 * Add option `nb_samples_info` to `biplot_pq()` in order to add the number of samples merged by level of factors.
 * Add a message when two modalities differ greatly (more than x2) in their number of sequences in `biplot_pq()` and `ggvenn_pq()`
-* Add options `na_remove`, `dist_method` (including Aitchinson and robust-Aitchinson distance), `correction_for_sample_size` and `rarefy_nb_seqs` options to `adonis_pq` function.
+* Add options `na_remove`, `dist_method` (including Aitchinson and robust-Aitchinson distance), `correction_for_sample_size` and `rarefy_nb_seqs` options to `adonis_pq()` function.
 * Add option `na_remove` to `graph_test_pq()` function.
 
 # MiscMetabar 0.33
@@ -39,7 +51,7 @@
 * Argument `split_by` to make multiple plot given a variable in `sam_data` slot (function `ggvenn_pq()`)  
 * Argument `seq_names` in `asv2otu()` function allow to clusterize sequences from a character vector of DNA.
 * Add a `blast_pq()` function to blast the sequences of the `@ref_seq` slot against a custom database
-* Add a `filter_asv_blast()` function to filter ASV in phyloseq dataset using blast against a custom database
+* Add a `filter_asv_blast()` function to filter ASV in *phyloseq* dataset using blast against a custom database
 * Add a `subset_taxa_pq()` function to filter ASV based on a named conditional vector. Used in `filter_asv_blast()`.
 * Add parameter `force_taxa_as_columns` (default FALSE) and `force_taxa_as_rows` (default FALSE) to `clean_pq()`.
 * Add a first version of the function `count_fastq_seq()` to count sequences from fastq.gz files directly from R.

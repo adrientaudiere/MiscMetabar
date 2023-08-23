@@ -1,46 +1,10 @@
-################################################################################
-#' A wrapper of [DECIPHER::IdTaxa()]
-#' @description
-#' `r lifecycle::badge("experimental")`
-#' @param test (required)
-#' @param trainingSet (required)
-#' @param column_names (optional but often needed): names for the
-#' column of the resulted tibble
-#' @param ... Additional arguments passed on to \code{\link[DECIPHER]{IdTaxa}}
-#'
-#' @author Adrien Taudière
-#'
-#' @return a tibble that can be used for tax_table
-#'
-#' @export
-
-MM_idtaxa <- function(test, trainingSet, column_names = c("Kingdom_idtaxa", "Phyla_idtaxa", "Class_idtaxa", "Order_idtaxa", "Family_idtaxa", "Genus_idtaxa", "Species_idtaxa", "VT_idtaxa"), ...) {
-  idtaxa <- DECIPHER::IdTaxa(test = test, trainingSet = trainingSet, ...)
-  col2add <- 8 - lengths(regmatches(idtaxa, gregexpr(";", idtaxa)))
-  for (i in seq_along(idtaxa)) {
-    idtaxa[i] <-
-      paste(
-        idtaxa[i],
-        paste(as.character(rep(";", each = col2add[i])),
-          collapse = ""
-        )
-      )
-  }
-  t_idtaxa <- tibble::tibble(data.frame(
-    stringr::str_split_fixed(idtaxa, ";", 9)
-  ))
-  colnames(t_idtaxa) <- column_names
-  return(t_idtaxa)
-}
-
-
 #' List fastq files
 #' @description
 #' `r lifecycle::badge("maturing")`
 #'
 #' @param path path to files (required)
 #' @param paired_end do you have paired_end files? (default TRUE)
-#' @param pattern a pattern to filter files (passed to list.files function).
+#' @param pattern a pattern to filter files (passed on to list.files function).
 #' @param pattern_R1 a pattern to filter R1 files (default "_R1_")
 #' @param pattern_R2 a pattern to filter R2 files (default "_R2_")
 #' @param nb_files the number of fastq files to list (default FALSE)
@@ -48,6 +12,11 @@ MM_idtaxa <- function(test, trainingSet, column_names = c("Kingdom_idtaxa", "Phy
 #' @return a list of one (single end) or two (paired end) list of files
 #'   files are sorted by names (default behavior of `list.files()`)
 #' @export
+#'
+#' @examples
+#' list_fastq_files("inst/extdata")
+#' list_fastq_files("inst/extdata", paired_end = F, pattern_r1 = "")
+#'
 #' @author Adrien Taudière
 
 list_fastq_files <-

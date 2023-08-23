@@ -18,7 +18,7 @@ list_fastq_files(
 
 \item{paired_end}{do you have paired_end files? (default TRUE)}
 
-\item{pattern}{a pattern to filter files (passed to list.files function).}
+\item{pattern}{a pattern to filter files (passed on to list.files function).}
 
 \item{nb_files}{the number of fastq files to list (default FALSE)}
 
@@ -32,6 +32,11 @@ files are sorted by names (default behavior of \code{list.files()})
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+}
+\examples{
+list_fastq_files("inst/extdata")
+list_fastq_files("inst/extdata", paired_end = F, pattern_r1 = "")
+
 }
 \author{
 Adrien Taudière
