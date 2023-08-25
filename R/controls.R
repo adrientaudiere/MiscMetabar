@@ -46,11 +46,7 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
     }
   }
   names(dist_control) <- levels(as.factor(samples_names))
-  res$dist_control_samples <- data.frame(
-    "dist_control" =
-      stats::na.omit(dist_control)
-  )
-
+  
   # Compute distance among all samples
   if (taxa_are_rows(physeq)) {
     matdist_interm <- t(physeq@otu_table)

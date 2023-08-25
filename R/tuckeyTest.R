@@ -78,7 +78,7 @@ hill_tuckey_pq <- function(physeq, modality, silent = TRUE) {
     )
 
   p <- ggplot(data = df) +
-    geom_linerange(aes(ymax = upr, ymin = lwr, x = x), size = 2) +
+    geom_linerange(aes(ymax = upr, ymin = lwr, x = x), linewidth = 2) +
     geom_point(aes(x = x, y = diff),
       size = 4,
       shape = 21,

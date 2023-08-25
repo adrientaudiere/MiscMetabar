@@ -52,13 +52,10 @@ list_fastq_files <-
 #' @description
 #' `r lifecycle::badge("experimental")`
 #'
-#' @param otu_tab (required) The matrix or otu_table
+#' @inheritParams clean_pq
 #' @param names_of_samples (required) The new names of the samples
-#' @param taxa_are_rows (default: FALSE) Does the taxa are rows or
-#'   columns.
 #'
-#' @return the matrix with new colnames
-#'   (or rownames if `taxa_are_rows` is true)
+#' @return the matrix with new colnames (or rownames if `taxa_are_rows` is true)
 #'
 #' @export
 #' @md
@@ -67,24 +64,27 @@ list_fastq_files <-
 #'
 #' @examples
 #' data(data_fungi)
-#' rename_samples_otu_table(data_fungi@otu_table, as.character(1:185),
+#' rename_samples_otu_table(data_fungi, as.character(1:nsamples(data_fungi)),
 #'   taxa_are_rows = T
 #' )
-rename_samples_otu_table <- function(otu_tab, names_of_samples,
-                                     taxa_are_rows = FALSE) {
-  if (taxa_are_rows) {
-    if (length(names_of_samples) == dim(otu_tab)[1]) {
-      rownames(otu_tab) <- names_of_samples
-      return(otu_tab)
-    } else {
-      stop("names_of_samples must have a length equal to the number of samples")
-    }
-  } else {
+rename_samples_otu_table <- function(physeq, names_of_samples) {
+  otu_tab <- physeq@otu_table
+  tax_in_row <- taxa_are_rows(physeq)
+  if (tax_in_row) {
     if (length(names_of_samples) == dim(otu_tab)[2]) {
       colnames(otu_tab) <- names_of_samples
       return(otu_tab)
     } else {
       stop("names_of_samples must have a length equal to the number of samples")
     }
+  } else {
+    if (length(names_of_samples) == dim(otu_tab)[1]) {
+      rownames(otu_tab) <- names_of_samples
+      return(otu_tab)
+    } else {
+      stop("names_of_samples must have a length equal to the number of samples")
+    }
   }
 }
+
+

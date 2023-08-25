@@ -24,6 +24,7 @@ test_that("circle_pq works", {
 
 test_that("graph_test_pq works", {
   expect_silent(graph_test_pq(data_fungi, fact = "Tree_name"))
+  expect_silent(graph_test_pq(data_fungi, fact = "Tree_name", na_remove = TRUE))
   expect_silent(graph_test_pq(data_fungi, fact = "Tree_name", return_plot = FALSE))
   expect_message(graph_test_pq(subset_samples(data_fungi, !is.na(data_fungi@sam_data$Time)), fact = "Time", merge_sample_by = "Tree_name"))
   expect_error(graph_test_pq(data_fungi, fact = "Height"))
@@ -31,12 +32,22 @@ test_that("graph_test_pq works", {
   expect_error(graph_test_pq(data_fungi, fact = "tRREE_name"))
 })
 
-test_that("accu_plot works", {
-  expect_silent(accu_plot(GP_archae, fact = "X.SampleID", by.fact = T))
+test_that("accu_plot works with GlobalPatterns dataset", {
+  expect_silent(accu_plot(GP_archae, fact = "X.SampleID", by.fact = TRUE))
+  expect_silent(accu_plot(GP_archae, fact = "X.SampleID", by.fact = TRUE, print_sam_names = TRUE))
   expect_silent(accu_plot(GP_archae, "SampleType", add_nb_seq = TRUE, by.fact = TRUE))
   expect_warning(accu_plot(GP_archae, "SampleType", add_nb_seq = FALSE, by.fact = TRUE))
   expect_error(accu_plot(GP_archae))
 })
+
+# test_that("accu_plot works with data_fungi dataset", {
+#   expect_silent(accu_plot(data_fungi, fact = "Height", by.fact = TRUE))
+#   expect_silent(accu_plot(data_fungi, fact = "Height", by.fact = FALSE))
+#   expect_silent(accu_plot(data_fungi, fact = "Height", by.fact = TRUE, print_sam_names = TRUE))
+#   expect_silent(accu_plot(data_fungi, "Height", add_nb_seq = TRUE, by.fact = TRUE))
+#   expect_warning(accu_plot(data_fungi, "Height", add_nb_seq = FALSE, by.fact = TRUE))
+#   expect_error(accu_plot(data_fungi))
+# })
 
 
 data_fungi <- subset_samples(data_fungi, !is.na(Time))
@@ -46,3 +57,6 @@ test_that("plot_mt works", {
   expect_s3_class(suppressWarnings(plot_mt(res_mt)), "ggplot")
   expect_s3_class(suppressWarnings(plot_mt(res_mt, taxa = "Genus", color_tax = "Order")), "ggplot")
 })
+
+
+# sankey_pq

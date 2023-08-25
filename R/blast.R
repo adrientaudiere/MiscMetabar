@@ -4,13 +4,22 @@
 #'
 #' `r lifecycle::badge("maturing")`
 #'
-#' @inheritParams clean_pq
+#' @param physeq (required): a \code{\link{phyloseq-class}} object obtained
+#'   using the `phyloseq` package.
 #' @param seq2search (required) path to a fasta file defining the sequences
 #'   you want to blast against the ASV sequences from the physeq object.
 #' @param blastpath path to blast program
 #' @param id_cut (default: 90) cut of in identity percent to keep result
 #' @param bit_score_cut (default: 50) cut of in bit score to keep result
+#'   The higher the bit-score, the better the sequence similarity.
+#'   The bit-score is the requires size of a sequence database in which the current 
+#'   match could be found just by chance. The bit-score is a log2 scaled and 
+#'   normalized raw-score. Each increase by one doubles the required database size 
+#'   (2bit-score).
 #' @param min_cover_cut (default: 50) cut of in query cover (%) to keep result
+#' @param e_value_cut (default: 1e-30)  cut of in e-value (%) to keep result
+#'   The BLAST E-value is the number of expected hits of similar quality (score)
+#'   that could be found just by chance.
 #' @param unique_per_seq (logical) if TRUE only return the first match for
 #'   each sequence in seq2search
 #' @param score_filter (logical) does results are filter by score? If
@@ -40,6 +49,8 @@ blast_to_phyloseq <- function(physeq,
                               blastpath = NULL,
                               id_cut = 90,
                               bit_score_cut = 50,
+                              min_cover_cut = 50,
+                              e_value_cut = 1e-30,
                               unique_per_seq = FALSE,
                               score_filter = TRUE,
                               list_no_output_query = FALSE,
@@ -108,6 +119,7 @@ blast_to_phyloseq <- function(physeq,
     blast_tab <- blast_tab[blast_tab[, "bit score"] > bit_score_cut, ]
     blast_tab <- blast_tab[blast_tab[, "% id. match"] > id_cut, ]
     blast_tab <- blast_tab[blast_tab[, "Query cover"] > min_cover_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "e-value"] < e_value_cut, ]
   } else {
     blast_tab <- blast_tab
   }
@@ -140,18 +152,9 @@ blast_to_phyloseq <- function(physeq,
 #'
 #' `r lifecycle::badge("experimental")`
 #'
-#' @inheritParams clean_pq
+#' @inheritParams blast_to_phyloseq
 #' @param fasta_for_db path to a fasta file to make the blast database
 #' @param database path to a blast database
-#' @param id_cut (default: 90) cut of in identity percent to keep result
-#' @param bit_score_cut (default: 50) cut of in bit score to keep result
-#' @param min_cover_cut (default: 50) cut of in query cover (%) to keep result
-#' @param unique_per_seq (logical) if TRUE only return the first match for
-#'   each sequence in seq2search
-#' @param score_filter (logical) does results are filter by score? If
-#'   FALSE, `id_cut`,`bit_score_cut` and `min_cover_cut` are ignored
-#'  @param args_makedb Additional parameters parse to makeblastdb command
-#'  @param args_blastn Additional parameters parse to blastn command
 #'
 #' @param nproc (default: 1)
 #'   Set to number of cpus/processors to use for blast (args -num_threads
@@ -261,6 +264,7 @@ blast_pq <- function(physeq,
     blast_tab <- blast_tab[blast_tab[, "bit score"] > bit_score_cut, ]
     blast_tab <- blast_tab[blast_tab[, "% id. match"] > id_cut, ]
     blast_tab <- blast_tab[blast_tab[, "Query cover"] > min_cover_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "e-value"] < e_value_cut, ]
   } else {
     blast_tab <- blast_tab
   }
@@ -474,8 +478,8 @@ blast_to_derep <- function(derep,
   if (score_filter) {
     blast_tab <- blast_tab[blast_tab[, "bit score"] > bit_score_cut, ]
     blast_tab <- blast_tab[blast_tab[, "% id. match"] > id_cut, ]
-    blast_tab <-
-      blast_tab[blast_tab[, "Query cover"] > min_cover_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "Query cover"] > min_cover_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "e-value"] < e_value_cut, ]
   } else {
     blast_tab <- blast_tab
   }

@@ -69,7 +69,6 @@ clean_pq <- function(physeq,
                      force_taxa_as_rows = FALSE,
                      reorder_asv = FALSE,
                      rename_asv = FALSE) {
-  verify_pq(physeq)
   if (clean_samples_names) {
     if (!is.null(physeq@refseq)) {
       if (sum(!names(physeq@refseq) %in% taxa_names(physeq)) > 0) {
@@ -97,6 +96,8 @@ clean_pq <- function(physeq,
       }
     }
   }
+
+  verify_pq(physeq)
 
   if (reorder_asv) {
     physeq <- microViz::tax_sort(physeq, sum)
@@ -157,7 +158,8 @@ clean_pq <- function(physeq,
       "samples."
     ))
   }
-
+  
+  verify_pq(new_physeq)
   return(new_physeq)
 }
 
@@ -465,6 +467,9 @@ asv2otu <- function(physeq = NULL,
                     ...) {
   if (inherits(physeq, "phyloseq")) {
     verify_pq(physeq)
+    if(is.null(physeq@refseq)){
+      stop("The phyloseq object do not contain a @refseq slot")
+    }
     dna <- Biostrings::DNAStringSet(physeq@refseq)
     if (!is.null(seq_names)) {
       stop("You must use either physeq or seq_names args but not both")
@@ -536,7 +541,7 @@ asv2otu <- function(physeq = NULL,
     clusters <- pack_clusts$cluster[pack_clusts$type != "C"]
     names(clusters) <- pack_clusts$query[pack_clusts$type != "C"]
     clusters <- clusters[match(taxa_names(physeq), names(clusters))]
-    
+
     if (inherits(physeq, "phyloseq")) {
       new_obj <-
         speedyseq::merge_taxa_vec(physeq,
@@ -1085,6 +1090,7 @@ write_pq <- function(physeq,
         df_physeq,
         paste0(path, "/ASV_table_allInOne.csv"),
         quote = quote,
+        sep = sep_csv,
         ...
       )
     } else if (!is.null(physeq@otu_table) && !is.null(physeq@tax_table)) {
@@ -1095,7 +1101,7 @@ write_pq <- function(physeq,
       }
       df_physeq_interm <- cbind(
         physeq@otu_table,
-        physeq@tax_table
+        physeq@tax_table,
       )
       colnames(df_physeq_interm) <- c(sample_names(physeq), colnames(physeq@tax_table), "Reference Sequences")
 
@@ -1322,6 +1328,9 @@ lulu_pq <- function(physeq,
                     verbose = FALSE,
                     clean_pq = FALSE) {
   verify_pq(physeq)
+  if(is.null(physeq@refseq)){
+      stop("The phyloseq object do not contain a @refseq slot")
+    }
   if (clean_pq) {
     physeq <- clean_pq(physeq)
   }
