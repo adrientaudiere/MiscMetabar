@@ -751,7 +751,7 @@ sankey_pq <-
 #' Please use print_values = FALSE if you want to add ggplot function
 #' (cf example).
 #'
-#'
+#' @examples 
 #' data("enterotype")
 #' venn_pq(enterotype, fact = 'SeqTech')
 #' venn_pq(enterotype, fact = 'ClinicalStatus')
@@ -775,6 +775,10 @@ venn_pq <-
            print_values = TRUE) {
     if (!inherits(physeq, "phyloseq")) {
       stop("physeq must be an object of class 'phyloseq'")
+    }
+
+    if(require(grid)){
+      library(grid)
     }
 
     moda <-
@@ -897,33 +901,33 @@ venn_pq <-
 
 
       grid::grid.newpage()
-      vp1 <- viewport(
+      vp1 <- grid::viewport(
         width = 0.75,
         height = 1,
         x = 0.375,
         y = .5
       )
       vpleg <-
-        viewport(
+        grid::viewport(
           width = 0.25,
           height = 0.5,
           x = 0.85,
           y = 0.75
         )
-      subvp <- viewport(
+      subvp <- grid::viewport(
         width = 0.3,
         height = 0.3,
         x = 0.85,
         y = 0.25
       )
       print(p + theme(legend.position = "none"), vp = vp1)
-      upViewport(0)
-      pushViewport(vpleg)
-      grid.draw(legend)
+      grid::upViewport(0)
+      grid::pushViewport(vpleg)
+      grid::grid.draw(legend)
       # Make the new viewport active and draw
-      upViewport(0)
-      pushViewport(subvp)
-      grid.draw(gridExtra::tableGrob(table_value[, c(1, 2)], rows = NULL))
+      grid::upViewport(0)
+      grid::pushViewport(subvp)
+      grid::grid.draw(gridExtra::tableGrob(table_value[, c(1, 2)], rows = NULL))
     } else {
       return(p)
     }
@@ -943,11 +947,6 @@ venn_pq <-
 #' @inheritParams clean_pq
 #' @param fact (required): Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}.
-#' @param merge_sample_by if not `NULL` samples of
-#'   physeq are merged using the vector set by `merge_sample_by`. This
-#'   merging used the [speedyseq::merge_samples2()].
-#'   If `merge_sample_by` is equal to `fact` args
-#'   it give the same result as if `merge_sample_by` is NULL.
 #' @param min_nb_seq minimum number of sequences by OTUs by
 #'   samples to take into count this OTUs in this sample. For example,
 #'   if min_nb_seq=2,each value of 2 or less in the OTU table
@@ -988,7 +987,6 @@ venn_pq <-
 
 ggvenn_pq <- function(physeq = NULL,
                       fact = NULL,
-                      merge_sample_by = NULL,
                       min_nb_seq = 0,
                       taxonomic_rank = NULL,
                       split_by = NULL,
@@ -999,14 +997,8 @@ ggvenn_pq <- function(physeq = NULL,
     physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
   }
 
-
   if (rarefy_nb_seqs) {
     physeq <- rarefy_even_depth(physeq)
-    physeq <- clean_pq(physeq)
-  }
-
-  if (!is.null(merge_sample_by)) {
-    physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
     physeq <- clean_pq(physeq)
   }
 
@@ -1062,7 +1054,6 @@ ggvenn_pq <- function(physeq = NULL,
       p[[moda]] <- ggvenn_pq(
         physeq_interm,
         fact = fact,
-        merge_sample_by = NULL,
         min_nb_seq = 0,
         taxonomic_rank = NULL
       ) +
@@ -1339,6 +1330,7 @@ hill_pq <-
 #' @examples
 #' data(data_fungi)
 #' summary_plot_pq(data_fungi)
+#' summary_plot_pq(data_fungi, add_info = FALSE) + scale_fill_viridis_d()
 #' @return A ggplot2 object
 #' @export
 summary_plot_pq <- function(physeq,
@@ -1377,9 +1369,14 @@ summary_plot_pq <- function(physeq,
       ),
       paste(
         "Sequences length:\n",
-        round(mean(Biostrings::width(physeq@refseq)), 2),
-        "+/-",
-        round(stats::sd(Biostrings::width(physeq@refseq)), 2)
+        ifelse(is.null(physeq@refseq),
+          "No refseq slot",
+          paste(
+            round(mean(Biostrings::width(physeq@refseq)), 2),
+            "+/-",
+            round(stats::sd(Biostrings::width(physeq@refseq)), 2)
+          )
+        )
       )
     )
   )
@@ -1476,7 +1473,10 @@ summary_plot_pq <- function(physeq,
             " ASV)",
             "\n",
             "Min seq length: ",
-            min(Biostrings::width(physeq@refseq)),
+            ifelse(is.null(physeq@refseq),
+              "No refseq slot",
+              min(Biostrings::width(physeq@refseq))
+            ),
             "\n",
             "Max nb seq 1 taxa in 1 sample: ",
             max(otu_tab),
@@ -1920,7 +1920,7 @@ multi_biplot_pq <- function(physeq,
   }
 
   names_split_by <- names(table(physeq@sam_data[[split_by]]))
-  couples <- combn(n, 2)
+  couples <- combn(names_split_by, 2)
 
   p <- list()
   for (c in 1:ncol(couples)) {
@@ -2082,6 +2082,7 @@ plot_tax_pq <-
     }
 
     if (add_info) {
+      if(type %in% c("nb_seq", "both")){
       p_seq <- p_seq +
         labs(
           title = paste("Total nb of sequences: ", sum(physeq_old@otu_table)),
@@ -2093,6 +2094,20 @@ plot_tax_pq <-
             )
           )
         )
+      } 
+      if(type %in% c("nb_asv", "both")){
+         p_asv <- p_asv +
+        labs(
+          title = paste("Total nb of sequences: ", sum(physeq_old@otu_table)),
+          subtitle = paste0(
+            "Nb of samples: '",
+            paste0(names(table(physeq_old@sam_data[[fact]])),
+              sep = "' : ",
+              table(physeq_old@sam_data[[fact]]), collapse = " - '"
+            )
+          )
+        )
+      }
     }
 
     if (type == "nb_seq") {
