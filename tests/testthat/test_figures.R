@@ -44,8 +44,8 @@ test_that("graph_test_pq works", {
   expect_error(graph_test_pq(data_fungi, fact = "tRREE_name"))
 })
 
-data_fungi <- subset_samples(data_fungi, !is.na(Time))
-res_mt <- mt(data_fungi, "Time", method = "fdr", test = "f", B = 300)
+data_fungi_woNA4time <- subset_samples(data_fungi, !is.na(Time))
+res_mt <- mt(data_fungi_woNA4time, "Time", method = "fdr", test = "f", B = 300)
 test_that("plot_mt works", {
   expect_s3_class(res_mt, "data.frame")
   expect_s3_class(suppressWarnings(plot_mt(res_mt)), "ggplot")
@@ -228,10 +228,10 @@ test_that("accu_plot works with GlobalPatterns dataset", {
 })
 
 test_that("accu_plot works with data_fungi dataset", {
-  expect_silent(accu_plot(data_fungi, fact = "Height", by.fact = TRUE))
-  expect_error(accu_plot(data_fungi, fact = "Height", by.fact = FALSE))
-  expect_silent(accu_plot(data_fungi, fact = "Height", by.fact = TRUE, print_sam_names = TRUE))
-  expect_silent(accu_plot(data_fungi, "Height", add_nb_seq = TRUE, by.fact = TRUE))
-  expect_silent(accu_plot(data_fungi, "Height", add_nb_seq = FALSE, by.fact = TRUE))
-  expect_error(accu_plot(data_fungi))
+  expect_silent(accu_plot(data_basidio, fact = "Height", by.fact = TRUE))
+  expect_error(accu_plot(data_basidio, fact = "Height", by.fact = FALSE))
+  expect_silent(accu_plot(data_basidio, fact = "Height", by.fact = TRUE, print_sam_names = TRUE))
+  expect_silent(accu_plot(data_basidio, "Height", add_nb_seq = TRUE, by.fact = TRUE))
+  expect_silent(accu_plot(data_basidio, "Height", add_nb_seq = FALSE, by.fact = TRUE))
+  expect_error(accu_plot(data_basidio))
 })

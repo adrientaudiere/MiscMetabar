@@ -34,4 +34,5 @@ A ggplot2 object
 \examples{
 data(data_fungi)
 summary_plot_pq(data_fungi)
+summary_plot_pq(data_fungi, add_info = FALSE) + scale_fill_viridis_d()
 }

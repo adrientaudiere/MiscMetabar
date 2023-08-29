@@ -4,26 +4,23 @@
 \alias{rename_samples_otu_table}
 \title{Rename samples of an otu_table}
 \usage{
-rename_samples_otu_table(otu_tab, names_of_samples, taxa_are_rows = FALSE)
+rename_samples_otu_table(physeq, names_of_samples)
 }
 \arguments{
-\item{otu_tab}{(required) The matrix or otu_table}
+\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+using the \code{phyloseq} package.}
 
 \item{names_of_samples}{(required) The new names of the samples}
-
-\item{taxa_are_rows}{(default: FALSE) Does the taxa are rows or
-columns.}
 }
 \value{
-the matrix with new colnames
-(or rownames if \code{taxa_are_rows} is true)
+the matrix with new colnames (or rownames if \code{taxa_are_rows} is true)
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
 data(data_fungi)
-rename_samples_otu_table(data_fungi@otu_table, as.character(1:185),
+rename_samples_otu_table(data_fungi, as.character(1:nsamples(data_fungi)),
   taxa_are_rows = T
 )
 }

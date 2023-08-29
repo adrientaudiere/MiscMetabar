@@ -22,16 +22,7 @@ will be change into 0 for the analysis}
 for each combination.
 If print_values is TRUE the object is not a ggplot object.
 Please use print_values = FALSE if you want to add ggplot function
-(cf example).
-
-data("enterotype")
-venn_pq(enterotype, fact = 'SeqTech')
-venn_pq(enterotype, fact = 'ClinicalStatus')
-venn_pq(enterotype, fact = 'Nationality', print_values = F)
-venn_pq(enterotype, fact = 'ClinicalStatus', print_values = F) +
-scale_fill_hue()
-venn_pq(enterotype, fact = 'ClinicalStatus', print_values = F) +
-scale_fill_hue()}
+(cf example).}
 }
 \value{
 A \code{\link{ggplot}}2 plot representing Venn diagramm of
@@ -39,6 +30,17 @@ modalities of the argument \code{factor}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+}
+\examples{
+data("enterotype")
+venn_pq(enterotype, fact = "SeqTech")
+venn_pq(enterotype, fact = "ClinicalStatus")
+venn_pq(enterotype, fact = "Nationality", print_values = F)
+venn_pq(enterotype, fact = "ClinicalStatus", print_values = F) +
+  scale_fill_hue()
+venn_pq(enterotype, fact = "ClinicalStatus", print_values = F) +
+  scale_fill_hue()
+
 }
 \seealso{
 \code{\link[venneuler]{venneuler}}

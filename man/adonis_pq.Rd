@@ -11,7 +11,8 @@ adonis_pq(
   merge_sample_by = NULL,
   na_remove = FALSE,
   correction_for_sample_size = FALSE,
-  rarefy_nb_seqs = FALSE
+  rarefy_nb_seqs = FALSE,
+  ...
 )
 }
 \arguments{
@@ -43,6 +44,8 @@ sample size (number of sequences by samples) is add to formula in the form
 \item{rarefy_nb_seqs}{(logical, default FALSE) Rarefy each sample
 (before merging if merge_sample_by is set) using \code{phyloseq::rarefy_even_depth()}.
 if \code{correction_for_sample_size} is TRUE, rarefy_nb_seqs will have no effect.}
+
+\item{...}{Other arguments passed on to \code{\link[vegan:adonis]{vegan::adonis2()}} function.}
 }
 \value{
 The function returns an anova.cca result object with a

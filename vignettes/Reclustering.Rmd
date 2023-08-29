@@ -27,7 +27,7 @@ otu <- asv2otu(data_fungi_sp_known, method = "clusterize")
 ```
 
 ```{r, eval = FALSE}
-otu_vs <- asv2otu(data_fungi_sp_known, method = "vsearch")
+otu_vs <- asv2otu(data_fungi_sp_known, method = "vsearch", vsearch_cluster_method = "")
 ```
 
 The vsearch method requires the installation of [Vsearch](https://github.com/torognes/vsearch).

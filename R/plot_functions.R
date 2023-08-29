@@ -1008,8 +1008,8 @@ ggvenn_pq <- function(physeq = NULL,
 
   for (f in levels(physeq@sam_data[[fact]])) {
     newphyseq <- physeq
-    newDF <- newphyseq@sam_data[newphyseq@sam_data[[fact]] == f, ]
-    sample_data(newphyseq) <- sample_data(newDF)
+    new_DF <- newphyseq@sam_data[newphyseq@sam_data[[fact]] == f, ]
+    sample_data(newphyseq) <- sample_data(new_DF)
     if (is.null(taxonomic_rank)) {
       res[[f]] <- colnames(newphyseq@otu_table[
         ,
@@ -1022,7 +1022,7 @@ ggvenn_pq <- function(physeq = NULL,
           taxonomic_rank
         ])))
     }
-    nb_samples <- c(nb_samples, sum(physeq@sam_data[[fact]] == f, na.rm = T))
+    nb_samples <- c(nb_samples, sum(physeq@sam_data[[fact]] == f, na.rm = TRUE))
     nb_seq <- c(nb_seq, sum(physeq@otu_table[physeq@sam_data[[fact]] == f, ], na.rm = TRUE))
   }
 
@@ -1641,7 +1641,7 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #'   If a vector of two values are set. The first value is for the left side.
 #'   and the second value for the right one. If one value is set,
 #'   this value is used for both side.
-#' @param geomLabel (default: FALSE, logical) if TRUE use the [ggplot2::geom_label()] function
+#' @param geom_label (default: FALSE, logical) if TRUE use the [ggplot2::geom_label()] function
 #'   instead of [ggplot2::geom_text()] to indicate the numbers of sequences.
 #' @param text_size size for the number of sequences
 #' @param size_names size for the names of the 2 samples
@@ -1678,7 +1678,7 @@ biplot_pq <- function(physeq,
                       right_col = "#1d2949",
                       log_10 = TRUE,
                       nudge_y = c(0.3, 0.3),
-                      geomLabel = FALSE,
+                      geom_label = FALSE,
                       text_size = 3,
                       size_names = 5,
                       y_names = NA,
@@ -1828,7 +1828,7 @@ biplot_pq <- function(physeq,
     ylim(min(mdf$Ab), max(mdf$Ab) * 1.1)
 
 
-  if (geomLabel) {
+  if (geom_label) {
     p <- p +
       geom_label(
         aes(
@@ -1911,7 +1911,7 @@ multi_biplot_pq <- function(physeq,
                             split_by = NULL,
                             na_remove = TRUE,
                             ...) {
-  if (is.null(split_by) | is.null(physeq@sam_data[[split_by]])) {
+  if (is.null(split_by) || is.null(physeq@sam_data[[split_by]])) {
     stop("split_by must be set and must be a variable in physeq@sam_data")
   }
   if (na_remove) {
@@ -1929,7 +1929,7 @@ multi_biplot_pq <- function(physeq,
   couples <- combn(names_split_by, 2)
 
   p <- list()
-  for (c in 1:ncol(couples)) {
+  for (c in seq_along(ncol(couples))) {
     names_p <- paste0(couples[1, c], " - ", couples[2, c])
     new_physeq <- subset_samples_pq(physeq, physeq@sam_data[[split_by]] %in%
       c(couples[1, c], couples[2, c]))
@@ -2046,7 +2046,7 @@ plot_tax_pq <-
       mdf <- mdf %>% mutate(percent = Abundance / sum(Abundance))
 
       p_seq <-
-        ggplot(mdf, aes_string(x = fact, y = "Abundance", fill = taxa_fill)) +
+        ggplot(mdf, aes(x = .data[[fact]], y = .data[["Abundance"]], fill = .data[[taxa_fill]])) +
         geom_bar(
           aes(fill = .data[[taxa_fill]]),
           stat = "identity",
@@ -2075,7 +2075,7 @@ plot_tax_pq <-
       mdf <- mdf %>% mutate(percent = Abundance / sum(Abundance))
 
       p_asv <-
-        ggplot(mdf, aes_string(x = fact, y = "Abundance", fill = taxa_fill)) +
+        ggplot(mdf, aes(x = .data[[fact]], y = .data[["Abundance"]], fill = .data[[taxa_fill]])) +
         geom_bar(
           aes(fill = .data[[taxa_fill]]),
           stat = "identity",
@@ -2188,8 +2188,8 @@ tsne_pq <-
 #' @param fact Name of the column in `physeq@sam_data` used to color points and compute ellipses.
 #' @param ellipse_level The level used in stat_ellipse. Set to NULL to discard ellipse (default = 0.95)
 #' @param plot_dims A vector of 2 values defining the rank of dimension to plot (default: c(1,2))
-#' @param filter_na_fact (logical) Does the samples with NA values in fact are removed? (default: true)
-#' @param force_factor Force the fact column to be a factor.
+#' @param na_remove (logical, default TRUE) Does the samples with NA values in fact are removed? (default: true)
+#' @param force_factor (logical, default TRUE) Force the fact column to be a factor.
 #' @param ... : other arguments passed on to `Rtsne::Rtsne()`
 #'
 #' @return
@@ -2201,7 +2201,7 @@ tsne_pq <-
 #' @examples
 #' plot_tsne_pq(data_fungi, fact = "Height", perplexity = 15)
 #' plot_tsne_pq(data_fungi, fact = "Time") + geom_label(aes(label = Sample_id, fill = Time))
-#' plot_tsne_pq(data_fungi, fact = "Time", filter_na_fact = FALSE, force_factor = FALSE)
+#' plot_tsne_pq(data_fungi, fact = "Time", na_remove = FALSE, force_factor = FALSE)
 plot_tsne_pq <- function(physeq,
                          method = "bray",
                          dims = 2,
@@ -2210,7 +2210,7 @@ plot_tsne_pq <- function(physeq,
                          fact = NA,
                          ellipse_level = 0.95,
                          plot_dims = c(1, 2),
-                         filter_na_fact = TRUE,
+                         na_remove = TRUE,
                          force_factor = TRUE,
                          ...) {
   if (!is.factor(physeq@sam_data[[fact]]) &&
@@ -2218,7 +2218,7 @@ plot_tsne_pq <- function(physeq,
     physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
   }
 
-  if (filter_na_fact && !is.na(fact)) {
+  if (na_remove && !is.na(fact)) {
     physeq <- subset_samples_pq(physeq, !is.na(physeq@sam_data[[fact]]))
   }
 
@@ -2242,12 +2242,12 @@ plot_tsne_pq <- function(physeq,
 
 
   g <-
-    ggplot(data = df, aes_string("res_tSNE_A", "res_tSNE_B", group = fact)) +
+    ggplot(data = df, aes(.data[["res_tSNE_A"]], .data[["res_tSNE_B"]], group = .data[[fact]])) +
     xlab(paste0("Dimension ", plot_dims[1], " of tSNE analysis")) +
     ylab(paste0("Dimension ", plot_dims[2], " of tSNE analysis"))
 
   g <- g + geom_point(
-    aes_string(fill = fact),
+    aes(fill = .data[[fact]]),
     shape = 21,
     color = "black",
     size = 3,
@@ -2256,7 +2256,7 @@ plot_tsne_pq <- function(physeq,
 
   if (!is.null(ellipse_level) && !is.na(fact)) {
     g <-
-      g + stat_ellipse(aes_string(color = fact), level = ellipse_level)
+      g + stat_ellipse(aes(color = .data[[fact]]), level = ellipse_level)
   }
 
   return(g)

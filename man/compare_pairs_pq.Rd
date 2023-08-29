@@ -11,7 +11,8 @@ compare_pairs_pq(
   modality = NULL,
   merge_sample_by = NULL,
   nb_min_seq = 0,
-  vegIndex = "shannon"
+  vegIndex = "shannon",
+  na_remove = TRUE
 )
 }
 \arguments{
@@ -33,6 +34,11 @@ Need to be in \code{physeq@sam_data}}
 to count the ASV/OTU}
 
 \item{vegIndex}{(default: "shannon") index for the \code{vegan::diversity} function}
+
+\item{na_remove}{(logical, default TRUE) If set to TRUE, remove samples with
+NA in the variables set in bifactor, modality and merge_sample_by.
+NA in variables are well managed even if na_remove = FALSE, so na_remove may
+be useless.}
 }
 \value{
 A tibble
@@ -42,6 +48,7 @@ A tibble
 }
 \examples{
 data(data_fungi)
-data_fungi_low_high <- subset_samples(data_fungi, "Height" \%in\% c("Low", "High"))
+data_fungi_low_high <- subset_samples(data_fungi, Height \%in\% c("Low", "High"))
 compare_pairs_pq(data_fungi_low_high, bifactor = "Height", merge_sample_by = "Height")
+compare_pairs_pq(data_fungi_low_high_withNA, bifactor = "Height", merge_sample_by = "Height", modality = "Time")
 }

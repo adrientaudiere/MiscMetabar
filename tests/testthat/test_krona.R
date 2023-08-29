@@ -12,13 +12,13 @@ if (class(krona_error_or_not) == "try-error") {
 } else {
   test_that("krona function works fine with GlobalPatterns dataset", {
     testFolder <- tempdir()
-    suppressWarnings(unlink(list.files(testFolder, full.names = TRUE), recursive = T))
+    suppressWarnings(unlink(list.files(testFolder, full.names = TRUE), recursive = TRUE))
     expect_silent(krona(GA, file = paste0(testFolder, "/Number.of.sequences.html")))
     expect_silent(krona(GA, file = paste0(testFolder, "/Number.of.ASVs.html"), nb_seq = FALSE))
     expect_silent(merge_krona(c(
       paste0(testFolder, "/Number.of.sequences.html"),
       paste0(testFolder, "/Number.of.ASVs.html")
     )))
-    unlink(list.files(testFolder, full.names = TRUE), recursive = T)
+    unlink(list.files(testFolder, full.names = TRUE), recursive = TRUE)
   })
 }

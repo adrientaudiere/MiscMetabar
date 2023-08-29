@@ -55,7 +55,7 @@ biplot_pq(data_fungi_low_high, fact = "Height", merge_sample_by = "Height")
 ### Compare two (group of) samples with a table
 
 ```{r}
-# compare_pairs_pq(data_fungi_low_high, bifactor = "Height", merge_sample_by = "Height")
+compare_pairs_pq(data_fungi_low_high, bifactor = "Height", merge_sample_by = "Height", modality = "Time")
 ```
 
 ## Venn diagramm

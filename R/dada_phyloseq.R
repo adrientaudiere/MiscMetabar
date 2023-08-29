@@ -242,6 +242,10 @@ track_wkflow <- function(
         } else {
           stop("Files must be either gzfile or .fastq")
         }
+      } else if (inherits(object, "derep")) { 
+        sum(object$uniques)
+      } else if (inherits(object, "dada")) { 
+        sum(dada2::getUniques(object))
       } else {
         pbapply::pbsapply(object, function(x) {
           sum(dada2::getUniques(x, silence = TRUE))
@@ -259,11 +263,15 @@ track_wkflow <- function(
         ntaxa(object)
       } else if (inherits(object, "matrix")) {
         ncol(object)
+      } else if (inherits(object, "dada")) {
+        length(object$sequence)
       } else if (inherits(object[[1]], "dada")) {
         dim(suppressMessages(dada2::makeSequenceTable(object)))[2]
       } else if (is.data.frame(object[[1]]) &&
         all(c("sequence", "abundance") %in% colnames(object[[1]]))) {
         dim(suppressMessages(dada2::makeSequenceTable(object)))[2]
+      } else if (inherits(object, "derep")) {
+        length(unique(names(object$uniques)))
       } else if (inherits(object[[1]], "derep")) {
         length(unique(unlist(lapply(object, function(x) {
           names(x$uniques)
@@ -281,11 +289,15 @@ track_wkflow <- function(
         nsamples(object)
       } else if (inherits(object, "matrix")) {
         nrow(object)
+      } else if (inherits(object, "dada")) {
+        1
       } else if (inherits(object[[1]], "dada")) {
         dim(suppressMessages(dada2::makeSequenceTable(object)))[1]
       } else if (is.data.frame(object[[1]]) &&
         all(c("sequence", "abundance") %in% colnames(object[[1]]))) {
         dim(suppressMessages(dada2::makeSequenceTable(object)))[1]
+      } else if (inherits(object, "derep")) {
+        1
       } else if (inherits(object[[1]], "derep")) {
         length(object)
       } else if (is.character(object[1]) &&
@@ -427,7 +439,7 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #'   of [speedyseq::merge_taxa_vec()] for more details.
 #'   To conserved the taxonomic rank of the most abundant ASV,
 #'   set tax_adjust to 0
-#' @param vsearch_cluster_method (default: "--cluster_fast") See other possible
+#' @param vsearch_cluster_method (default: "--cluster_size) See other possible
 #'   methods in the [vsearch pdf manual](https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf) (e.g. `--cluster_size` or `--cluster_smallmem`)
 #'   - `--cluster_fast` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.
 #'   - `--cluster_size` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence abundance beforehand.
@@ -460,8 +472,8 @@ asv2otu <- function(physeq = NULL,
                     method = "clusterize",
                     id = 0.97,
                     vsearchpath = "vsearch",
-                    tax_adjust = 1,
-                    vsearch_cluster_method = "--cluster_fast",
+                    tax_adjust = 0,
+                    vsearch_cluster_method = "--cluster_size",
                     vsearch_args = "--strand both",
                     keep_temporary_files = FALSE,
                     ...) {
@@ -674,7 +686,7 @@ vsearch_search_global <- function(physeq,
 #'   double quotes.  If a numeric vector, its elements are taken
 #'   as the indices of columns to quote.  In both cases, row and
 #'   column names are quoted if they are written. If FALSE nothing is quoted.
-#' @param sep_csv (default tabulation ('\t')) separator for column
+#' @param sep_csv (default tabulation) separator for column
 #' @param ... Other arguments passed on to [utils::write.table()] function.
 #' @return Build a folder (path) containing one to four csv tables
 #'   (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
@@ -877,7 +889,7 @@ save_pq <- function(physeq, path = NULL, ...) {
 #'   samples. Note that if you use [write_phyloseq()] function to save your
 #'   physeq object, you may use sam_names = "X" to rename the samples names
 #'   as before.
-#' @param sep_csv (default tabulation ('\t')) separator for column
+#' @param sep_csv (default tabulation) separator for column
 #' @param ... Other arguments passed on to [utils::write.table()] function.
 #' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 #' and if present a phy_tree in Newick format. At least the otu_table.csv need to be present.
@@ -1128,12 +1140,12 @@ subset_samples_pq <- function(physeq, condition) {
     cat("Nothing subset. No sample_data in physeq.\n")
     return(physeq)
   } else {
-    oldDF <- as(sample_data(physeq), "data.frame")
-    newDF <- oldDF[condition, ]
+    old_DF <- as(sample_data(physeq), "data.frame")
+    new_DF <- old_DF[condition, ]
     if (class(physeq) == "sample_data") {
-      return(sample_data(newDF))
+      return(sample_data(new_DF))
     } else {
-      sample_data(physeq) <- sample_data(newDF)
+      sample_data(physeq) <- sample_data(new_DF)
       return(physeq)
     }
   }
@@ -1193,15 +1205,15 @@ subset_taxa_pq <- function(physeq, condition, verbose = TRUE, clean_pq = TRUE) {
   cond <- condition[match(taxa_names(new_physeq), names(condition))]
   cond[is.na(cond)] <- FALSE
 
-  oldMA <- as(otu_table(new_physeq), "matrix")
-  newMA <- oldMA[cond, ]
+  old_MA <- as(otu_table(new_physeq), "matrix")
+  new_MA <- old_MA[cond, ]
 
-  if (!is.matrix(newMA)) {
-    newMA <- as.matrix(newMA)
-    new_otu_table <- otu_table(newMA, taxa_are_rows = TRUE)
+  if (!is.matrix(new_MA)) {
+    new_MA <- as.matrix(new_MA)
+    new_otu_table <- otu_table(new_MA, taxa_are_rows = TRUE)
     sample_names(new_otu_table) <- sample_names(new_physeq)
   } else {
-    new_otu_table <- otu_table(newMA, taxa_are_rows = TRUE)
+    new_otu_table <- otu_table(new_MA, taxa_are_rows = TRUE)
   }
 
   otu_table(new_physeq) <- new_otu_table

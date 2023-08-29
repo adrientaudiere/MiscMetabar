@@ -2,9 +2,9 @@ data(enterotype)
 data(data_fungi)
 
 test_that("list_fastq_files function works fine", {
-  expect_type(list_fastq_files("inst/extdata", paired_end = F, pattern_r1 = ""), "list")
-  expect_equal(length(unlist(list_fastq_files("inst/extdata", paired_end = F, pattern_r1 = ""))), 3)
-  expect_equal(length(unlist(list_fastq_files("inst/extdata", paired_end = F, pattern_r1 = "", nb_files = 2))), 2)
+  expect_type(list_fastq_files("inst/extdata", paired_end = FALSE, pattern_r1 = ""), "list")
+  expect_equal(length(unlist(list_fastq_files("inst/extdata", paired_end = FALSE, pattern_r1 = ""))), 3)
+  expect_equal(length(unlist(list_fastq_files("inst/extdata", paired_end = FALSE, pattern_r1 = "", nb_files = 2))), 2)
   expect_type(list_fastq_files("inst/extdata/"), "list")
   expect_equal(length(list_fastq_files("inst/extdata/")), 2)
 })
@@ -52,12 +52,11 @@ test_that("track_wkflow_samples function works fine", {
 
 
 derep_R1_001 <- dada2::derepFastq("inst/extdata/ex_R1_001.fastq.gz")
-dada_R1_001 <- dada(derep_R1_001, selfConsist = TRUE)
-test_that("track_wkflow_samples function works fine with object of class matrix, dada, data.frame and derep", {
-  expect_s3_class(track_wkflow(list(data_fungi@otu_table, as.data.frame(enterotype@otu_table), derep_R1_001, "inst/extdata/ex_R1_001.fastq.gz", dada_R1_001)), "data.frame")
+dada_R1_001 <- dada(derep_R1_001, selfConsist = TRUE, multithread = TRUE)
+derep_R_001 <- dada2::derepFastq(c("inst/extdata/ex_R1_001.fastq.gz", "inst/extdata/ex_R2_001.fastq.gz"))
+test_that("track_wkflow_samples function works fine with object of class matrix, dada and derep", {
+  expect_s3_class(track_wkflow(list(data_fungi@otu_table, derep_R1_001, derep_R_001, "inst/extdata/ex_R1_001.fastq.gz", dada_R1_001)), "data.frame")
 })
-
-
 
 test_that("select_one_sample function works fine", {
   expect_message(A8_005 <- select_one_sample(data_fungi, "A8-005_S4_MERGED.fastq.gz"))

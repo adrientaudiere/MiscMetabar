@@ -8,7 +8,6 @@
 ggvenn_pq(
   physeq = NULL,
   fact = NULL,
-  merge_sample_by = NULL,
   min_nb_seq = 0,
   taxonomic_rank = NULL,
   split_by = NULL,
@@ -23,12 +22,6 @@ using the \code{phyloseq} package.}
 
 \item{fact}{(required): Name of the factor to cluster samples by modalities.
 Need to be in \code{physeq@sam_data}.}
-
-\item{merge_sample_by}{if not \code{NULL} samples of
-physeq are merged using the vector set by \code{merge_sample_by}. This
-merging used the \code{\link[speedyseq:merge_samples2]{speedyseq::merge_samples2()}}.
-If \code{merge_sample_by} is equal to \code{fact} args
-it give the same result as if \code{merge_sample_by} is NULL.}
 
 \item{min_nb_seq}{minimum number of sequences by OTUs by
 samples to take into count this OTUs in this sample. For example,

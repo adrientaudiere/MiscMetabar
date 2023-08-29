@@ -12,12 +12,14 @@ blast_to_derep(
   id_cut = 90,
   bit_score_cut = 50,
   min_cover_cut = 50,
+  e_value_cut = 1e-30,
   unique_per_seq = FALSE,
   score_filter = FALSE,
   list_no_output_query = FALSE,
   min_length_seq = 200,
   args_makedb = NULL,
-  args_blastn = NULL
+  args_blastn = NULL,
+  nproc = 1
 )
 }
 \arguments{
@@ -30,15 +32,24 @@ you want to blast against the ASV sequences from the physeq object.}
 
 \item{id_cut}{(default: 90) cut of in identity percent to keep result}
 
-\item{bit_score_cut}{(default: 50) cut of in bit score to keep result}
+\item{bit_score_cut}{(default: 50) cut of in bit score to keep result
+The higher the bit-score, the better the sequence similarity.
+The bit-score is the requires size of a sequence database in which the current
+match could be found just by chance. The bit-score is a log2 scaled and
+normalized raw-score. Each increase by one doubles the required database size
+(2bit-score).}
 
 \item{min_cover_cut}{(default: 50) cut of in query cover (\%) to keep result}
+
+\item{e_value_cut}{(default: 1e-30)  cut of in e-value (\%) to keep result
+The BLAST E-value is the number of expected hits of similar quality (score)
+that could be found just by chance.}
 
 \item{unique_per_seq}{(logical) if TRUE only return the first match for
 each sequence in seq2search}
 
-\item{score_filter}{(logical; default FALSE) does results are filter by score? If
-FALSE, \code{id_cut},\code{bit_score_cut} and \code{min_cover_cut} are ignored.}
+\item{score_filter}{(logical) does results are filter by score? If
+FALSE, \code{id_cut},\code{bit_score_cut} and \code{min_cover_cut} are ignored}
 
 \item{list_no_output_query}{(logical) does the result table include
 query sequences for which \code{blastn} does not find any correspondence?}
@@ -50,6 +61,10 @@ sequences by length.}
 \item{args_makedb}{Additional parameters parse to makeblastdb command}
 
 \item{args_blastn}{Additional parameters parse to blastn command}
+
+\item{nproc}{(default: 1)
+Set to number of cpus/processors to use for blast (args -num_threads
+for blastn command)}
 }
 \value{
 A blast table

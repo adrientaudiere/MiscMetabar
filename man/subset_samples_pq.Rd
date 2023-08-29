@@ -30,4 +30,15 @@ in the sam_data by a boolean vector.
 Warnings: you must verify the result of this function as the
 boolean condition must match the order of samples in the \code{sam_data}
 slot.
+
+This function is robust when you use the sam_data slot of the phyloseq object
+used in physeq (see exemples)
+}
+\examples{
+data(data_fungi)
+cond_samp <- grepl("A1", data_fungi@sam_data[["Sample_names"]])
+subset_samples_pq(data_fungi, cond_samp)
+
+subset_samples_pq(data_fungi, data_fungi@sam_data[["Height"]] == "Low")
+
 }

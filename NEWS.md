@@ -11,6 +11,13 @@
 * Add a function `add_blast_info()` to add information from `blast_pq()` to the `tax_table` slot of a *phyloseq* object
 * Add option `keep_temporary_files` in `asv2otu()` function
 * Improve the documentation of `asv2otu()` and fix a little bug in the name of the conserved ASV after `asv2otu()`
+* Test coverage largely improved leading to numerous minor bug fixes.
+
+## BREAKING CHANGES
+* `asv2otu()` with `method="vsearch"` change two default values (to repeat the precedent behavior, use `asv2otu(..., vsearch_cluster_method = "--cluster_fast", tax_adjust = 1)`): 
+  * vsearch_cluster_method = "--cluster_size"
+  * tax_adjust = 0
+
 
 # MiscMetabar 0.34
 

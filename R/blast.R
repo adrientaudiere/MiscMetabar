@@ -31,7 +31,7 @@
 #' @param nproc (default: 1)
 #'   Set to number of cpus/processors to use for blast (args -num_threads
 #'   for blastn command)
-#' 
+#'
 #' @seealso  [MiscMetabar::blast_pq()] to use `refseq` slot as query sequences
 #'   against un custom database.
 #'
@@ -129,8 +129,8 @@ blast_to_phyloseq <- function(physeq,
   }
 
   if (list_no_output_query) {
-    fastaFile <- Biostrings::readDNAStringSet(seq2search)
-    seq_name <- names(fastaFile)
+    fasta_file <- Biostrings::readDNAStringSet(seq2search)
+    seq_name <- names(fasta_file)
     no_output_query <- seq_name[!seq_name %in% blast_tab[1, ]]
     if (length(no_output_query) > 0) {
       mat_no_output_query <- matrix(NA,
@@ -231,7 +231,7 @@ blast_pq <- function(physeq,
       paste0(
         blastpath,
         "blastn -query ",
-        seq2search,
+        "physeq_refseq.fasta",
         " -db dbase",
         " -out blast_result.txt",
         " -outfmt \"6 qseqid qlen sseqid slen",
@@ -395,14 +395,14 @@ blast_to_derep <- function(derep,
 
   derep_list <- lapply(derep, function(l) {
     res <- names(l$uniques)
-    res <- res[tapply(res, 1:length(res), nchar) > min_length_seq]
+    res <- res[tapply(res, seq_along(res), nchar) > min_length_seq]
     return(res)
   })
 
   derep_occurence <- lapply(derep, function(l) {
     res <- names(l$uniques)
     res_occur <- as.vector(l$uniques)
-    res <- res_occur[tapply(res, 1:length(res), nchar) > min_length_seq]
+    res <- res_occur[tapply(res, seq_along(res), nchar) > min_length_seq]
     return(res)
   })
 
@@ -461,7 +461,7 @@ blast_to_derep <- function(derep,
     "Query cover"
   )
 
-  blast_tab$occurence <- sub("seqs\\)", "", sub(".*\\(", "", blast_tab$`Sample name`, perl = T), perl = T)
+  blast_tab$occurence <- sub("seqs\\)", "", sub(".*\\(", "", blast_tab$`Sample name`, perl = TRUE), perl = TRUE)
 
   blast_tab <-
     blast_tab[order(blast_tab[, "e-value"], decreasing = FALSE), ]
@@ -480,8 +480,8 @@ blast_to_derep <- function(derep,
   }
 
   if (list_no_output_query) {
-    fastaFile <- Biostrings::readDNAStringSet(seq2search)
-    seq_name <- names(fastaFile)
+    fasta_file <- Biostrings::readDNAStringSet(seq2search)
+    seq_name <- names(fasta_file)
     no_output_query <- seq_name[!seq_name %in% blast_tab[1, ]]
     if (length(no_output_query) > 0) {
       mat_no_output_query <- matrix(NA,
@@ -508,7 +508,7 @@ blast_to_derep <- function(derep,
 #'
 #' Basically a wraper of [blast_pq()] with option `unique_per_seq = TRUE` and
 #'  `score_filter = FALSE`.
-#' 
+#'
 #' Add the information to the taxtable
 #'
 #' @inheritParams clean_pq
