@@ -86,5 +86,3 @@ rename_samples_otu_table <- function(physeq, names_of_samples) {
     }
   }
 }
-
-

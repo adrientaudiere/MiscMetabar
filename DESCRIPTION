@@ -69,4 +69,5 @@ Remotes:
     github::david-barnett/microViz,
     github::erocoar/gghalves
 Config/testthat/edition: 3
+Config/testthat/parallel: true
 VignetteBuilder: knitr

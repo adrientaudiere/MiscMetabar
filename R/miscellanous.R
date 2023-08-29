@@ -81,7 +81,6 @@ dist_bycol <- function(x,
       res$null[[n]][i] <-
         vegan::vegdist(rbind(x[, i], y_null[, i]), method = method, ...)
     }
-    message(n)
   }
 
   names(res$obs) <- colnames(x)

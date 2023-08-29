@@ -107,7 +107,7 @@ clean_pq <- function(physeq,
     taxa_names(physeq) <- paste0("ASV_", seq(1, ntaxa(physeq)))
   }
 
-  if (sum(grepl("^0", "", sample_names(physeq)) > 0) && !silent) {
+  if (sum(grepl("^0", sample_names(physeq)) > 0) && !silent) {
     message("At least one sample name start with a zero.
     That can be a problem for some phyloseq functions such as
     plot_bar and psmelt.")
@@ -158,7 +158,7 @@ clean_pq <- function(physeq,
       "samples."
     ))
   }
-  
+
   verify_pq(new_physeq)
   return(new_physeq)
 }
@@ -467,7 +467,7 @@ asv2otu <- function(physeq = NULL,
                     ...) {
   if (inherits(physeq, "phyloseq")) {
     verify_pq(physeq)
-    if(is.null(physeq@refseq)){
+    if (is.null(physeq@refseq)) {
       stop("The phyloseq object do not contain a @refseq slot")
     }
     dna <- Biostrings::DNAStringSet(physeq@refseq)
@@ -645,344 +645,7 @@ vsearch_search_global <- function(physeq,
 }
 ################################################################################
 
-################################################################################
-#' Blast fasta sequences against `refseq` slot of a \code{\link{phyloseq-class}}
-#'   object.
-#'
-#' `r lifecycle::badge("maturing")`
-#'
-#' @inheritParams clean_pq
-#' @param seq2search (required) path to a fasta file defining the sequences
-#'   you want to blast against the ASV sequences from the physeq object.
-#' @param blastpath path to blast program
-#' @param id_cut (default: 90) cut of in identity percent to keep result
-#' @param bit_score_cut (default: 50) cut of in bit score to keep result
-#' @param min_cover_cut (default: 50) cut of in query cover (%) to keep result
-#' @param unique_per_seq (logical) if TRUE only return the first match for
-#'   each sequence in seq2search
-#' @param score_filter (logical) does results are filter by score? If
-#'   FALSE, `id_cut`,`bit_score_cut` and `min_cover_cut` are ignored
-#' @param list_no_output_query (logical) does the result table include
-#'   query sequences for which `blastn` does not find any correspondence?
-#'
-#' @seealso  [MiscMetabar::blast_pq()] to use `refseq` slot as query sequences
-#'   against un custom database.
-#'
-#' @return  the blast table
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' data(data_fungi)
-#' blastpath <- "...YOUR_PATH_TO_BLAST..."
-#' blast_to_phyloseq(data_fungi,
-#'   seq2search = "inst/extdata/ex.fasta",
-#'   blastpath = blastpath
-#' )
-#' }
-blast_to_phyloseq <- function(physeq,
-                              seq2search,
-                              blastpath = NULL,
-                              id_cut = 90,
-                              bit_score_cut = 50,
-                              unique_per_seq = FALSE,
-                              score_filter = TRUE,
-                              list_no_output_query = FALSE) {
-  verify_pq(physeq)
-  dna <- Biostrings::DNAStringSet(physeq@refseq)
-  Biostrings::writeXStringSet(dna, "db.fasta")
 
-  system(paste(blastpath,
-    "makeblastdb -dbtype nucl -in db.fasta -out dbase",
-    sep = ""
-  ))
-
-  system(
-    paste(
-      blastpath,
-      "blastn -query ",
-      seq2search,
-      " -db dbase",
-      " -out blast_result.txt",
-      " -outfmt \"6 qseqid qlen sseqid slen",
-      " length pident evalue bitscore qcovs\"",
-      sep = ""
-    )
-  )
-
-  if (file.info("blast_result.txt")$size > 0) {
-    blast_tab <- utils::read.table(
-      "blast_result.txt",
-      sep = "\t",
-      header = FALSE,
-      stringsAsFactors = FALSE
-    )
-    file.remove("blast_result.txt")
-    file.remove(list.files(pattern = "dbase"))
-    file.remove("db.fasta")
-  } else {
-    file.remove("blast_result.txt")
-    file.remove(list.files(pattern = "dbase"))
-    file.remove("db.fasta")
-    stop("None query sequences matched your phyloseq references sequences.")
-  }
-
-
-  names(blast_tab) <- c(
-    "Query name",
-    "Query seq. length",
-    "Taxa name",
-    "Taxa seq. length",
-    "Alignment length",
-    "% id. match",
-    "e-value",
-    "bit score",
-    "Query cover"
-  )
-
-  blast_tab <- blast_tab[order(blast_tab[, "bit score"], decreasing = FALSE), ]
-
-  if (unique_per_seq) {
-    blast_tab <- blast_tab[which(!duplicated(blast_tab[, 1])), ]
-  }
-
-  if (score_filter) {
-    blast_tab <- blast_tab[blast_tab[, "bit score"] > bit_score_cut, ]
-    blast_tab <- blast_tab[blast_tab[, "% id. match"] > id_cut, ]
-    blast_tab <- blast_tab[blast_tab[, "Query cover"] > min_cover_cut, ]
-  } else {
-    blast_tab <- blast_tab
-  }
-
-  if (list_no_output_query) {
-    fastaFile <- Biostrings::readDNAStringSet(seq2search)
-    seq_name <- names(fastaFile)
-    no_output_query <- seq_name[!seq_name %in% blast_tab[1, ]]
-    if (length(no_output_query) > 0) {
-      mat_no_output_query <- matrix(NA,
-        ncol = ncol(blast_tab),
-        nrow = length(no_output_query)
-      )
-      mat_no_output_query[, 1] <- no_output_query
-      colnames(mat_no_output_query) <- colnames(blast_tab)
-      blast_tab <- rbind(blast_tab, mat_no_output_query)
-    }
-  } else {
-    blast_tab <- blast_tab
-  }
-
-  return(blast_tab)
-}
-################################################################################
-
-
-################################################################################
-#' Blast all sequence of `refseq` slot of a \code{\link{phyloseq-class}}
-#'   object against a custom database.
-#'
-#' `r lifecycle::badge("experimental")`
-#'
-#' @inheritParams clean_pq
-#' @param fasta_for_db path to a fasta file to make the blast database
-#' @param database path to a blast database
-#' @param id_cut (default: 90) cut of in identity percent to keep result
-#' @param bit_score_cut (default: 50) cut of in bit score to keep result
-#' @param min_cover_cut (default: 50) cut of in query cover (%) to keep result
-#' @param unique_per_seq (logical) if TRUE only return the first match for
-#'   each sequence in seq2search
-#' @param score_filter (logical) does results are filter by score? If
-#'   FALSE, `id_cut`,`bit_score_cut` and `min_cover_cut` are ignored
-#'
-#' @param nproc (default: 1)
-#'   Set to number of cpus/processors to use for blast (args -num_threads
-#'   for blastn command)
-#'
-#' @seealso  [MiscMetabar::blast_to_phyloseq()] to use `refseq`
-#'   slot as a database
-#' @return  a blast table
-#' @export
-#'
-blast_pq <- function(physeq,
-                     fasta_for_db = NULL,
-                     database = NULL,
-                     blastpath = NULL,
-                     id_cut = 90,
-                     bit_score_cut = 50,
-                     min_cover_cut = 50,
-                     unique_per_seq = FALSE,
-                     score_filter = TRUE,
-                     nproc = 1) {
-  verify_pq(physeq)
-  dna <- Biostrings::DNAStringSet(physeq@refseq)
-  Biostrings::writeXStringSet(dna, "physeq_refseq.fasta")
-
-  if (is.null(fasta_for_db) && is.null(database)) {
-    stop("The function required a value for the parameters
-         `fasta_for_db` or `database` to run.")
-  } else if (!is.null(fasta_for_db) && !is.null(database)) {
-    stop("You assign value for both `fasta_for_db` and
-         `database` args. Please use only one.")
-  } else if (!is.null(fasta_for_db) && is.null(database)) {
-    message("Build the database from fasta_for_db")
-    system(paste(blastpath,
-      "makeblastdb -dbtype nucl -in ", fasta_for_db, " -out dbase",
-      sep = ""
-    ))
-    message("Blast refseq from physeq object against the database")
-    system(
-      paste(
-        blastpath,
-        "blastn -query ",
-        "physeq_refseq.fasta",
-        " -db dbase",
-        " -out blast_result.txt",
-        " -num_threads ", nproc,
-        " -outfmt \"6 qseqid qlen sseqid slen",
-        " length pident evalue bitscore qcovs\"",
-        sep = ""
-      )
-    )
-    if (file.info("blast_result.txt")$size > 0) {
-      blast_tab <- utils::read.table(
-        "blast_result.txt",
-        sep = "\t",
-        header = FALSE,
-        stringsAsFactors = FALSE,
-        comment.char = ""
-      )
-      file.remove("blast_result.txt")
-      file.remove(list.files(pattern = "dbase"))
-    } else {
-      file.remove("blast_result.txt")
-      file.remove(list.files(pattern = "dbase"))
-      stop("None query sequences matched your phyloseq references sequences.")
-    }
-  } else if (is.null(fasta_for_db) && !is.null(database)) {
-    message("Blast refseq from physeq object against the database")
-    system(
-      paste(
-        blastpath,
-        "blastn -query ",
-        "physeq_refseq.fasta",
-        " -db ", database,
-        " -out blast_result.txt",
-        " -num_threads ", nproc,
-        " -outfmt \"6 qseqid qlen sseqid slen",
-        " length pident evalue bitscore qcovs\"",
-        sep = ""
-      )
-    )
-  }
-
-  names(blast_tab) <- c(
-    "Query name",
-    "Query seq. length",
-    "Taxa name",
-    "Taxa seq. length",
-    "Alignment length",
-    "% id. match",
-    "e-value",
-    "bit score",
-    "Query cover"
-  )
-
-  blast_tab <- blast_tab[order(blast_tab[, "% id. match"],
-    decreasing = FALSE
-  ), ]
-
-  if (unique_per_seq) {
-    blast_tab <- blast_tab[which(!duplicated(blast_tab[, 1])), ]
-  }
-
-  if (score_filter) {
-    blast_tab <- blast_tab[blast_tab[, "bit score"] > bit_score_cut, ]
-    blast_tab <- blast_tab[blast_tab[, "% id. match"] > id_cut, ]
-    blast_tab <- blast_tab[blast_tab[, "Query cover"] > min_cover_cut, ]
-  } else {
-    blast_tab <- blast_tab
-  }
-
-  return(blast_tab)
-}
-
-
-################################################################################
-#' Filter indesirable taxa using blast against a against a custom database.
-#'
-#' `r lifecycle::badge("experimental")`
-#'
-#' @inheritParams clean_pq
-#' @param fasta_for_db path to a fasta file to make the blast database
-#' @param database path to a blast database
-#' @param clean_pq (logical)
-#'   If set to TRUE, empty samples and empty ASV are discarded
-#'   after filtering.
-#' @param blastpath path to blast program
-#' @param id_cut (default: 80) cut of in identity percent to keep ASV
-#' @param bit_score_cut (default: 150) cut of in bit score to keep result
-#' @param min_cover_cut (default: 50) cut of in query cover (%) to keep result
-#' @param add_info_to_taxtable: add some info from blast query to taxtable of the
-#'   new physeq object. Only the information ("Query name", "Taxa name", "bit score",
-#'   "% id. match", "Query cover", "e-value") for higher e-value hit.
-#'   for each ASV is add to taxtable. Note that query name may be different from
-#'   final taxa names as some function proposed to change the ASV names.
-#' @param nproc (default: 1)
-#'   Set to number of cpus/processors to use for blast (args -num_threads
-#'   for blastn command)
-#' @export
-#' @return A new \code{\link{phyloseq-class}} object.
-
-
-filter_asv_blast <- function(physeq,
-                             fasta_for_db = NULL,
-                             database = NULL,
-                             clean_pq = TRUE,
-                             blastpath = NULL,
-                             id_cut = 80,
-                             bit_score_cut = 150,
-                             min_cover_cut = 50,
-                             add_info_to_taxtable = TRUE,
-                             nproc = 1) {
-  blast_tab <- blast_pq(
-    physeq = physeq,
-    fasta_for_db = fasta_for_db,
-    database = database,
-    id_cut = id_cut,
-    bit_score_cut = bit_score_cut,
-    min_cover_cut = min_cover_cut,
-    unique_per_seq = TRUE,
-    score_filter = TRUE,
-    nproc = nproc
-  )
-
-  condition <- blast_tab[, "Query cover"] > min_cover_cut & blast_tab[, "bit score"] > bit_score_cut & blast_tab[, "% id. match"] > id_cut
-  names(condition) <- blast_tab[, "Query name"]
-
-  new_physeq <- subset_taxa_pq(physeq, condition, clean_pq = FALSE)
-
-  if (clean_pq) {
-    new_physeq <- clean_pq(new_physeq)
-  }
-
-  if (add_info_to_taxtable) {
-    info_to_taxtable <- blast_tab %>%
-      group_by(`Query name`) %>%
-      slice(which.min(`e-value`)) %>%
-      ungroup()
-    new_physeq@tax_table <- tax_table(as.matrix(cbind(
-      new_physeq@tax_table,
-      info_to_taxtable[
-        match(
-          taxa_names(new_physeq),
-          info_to_taxtable[, "Query name"]$`Query name`
-        ),
-        c("Query name", "Taxa name", "bit score", "% id. match", "Query cover", "e-value")
-      ]
-    )))
-  }
-
-  return(new_physeq)
-}
 
 ################################################################################
 #' Save phyloseq object in the form of multiple csv tables.
@@ -1328,9 +991,9 @@ lulu_pq <- function(physeq,
                     verbose = FALSE,
                     clean_pq = FALSE) {
   verify_pq(physeq)
-  if(is.null(physeq@refseq)){
-      stop("The phyloseq object do not contain a @refseq slot")
-    }
+  if (is.null(physeq@refseq)) {
+    stop("The phyloseq object do not contain a @refseq slot")
+  }
   if (clean_pq) {
     physeq <- clean_pq(physeq)
   }
@@ -1440,9 +1103,19 @@ verify_pq <- function(physeq) {
 #' boolean condition must match the order of samples in the `sam_data`
 #' slot.
 #'
+#' This function is robust when you use the sam_data slot of the phyloseq object
+#' used in physeq (see exemples)
+#'
 #' @inheritParams clean_pq
 #' @param condition A boolean vector to subset samples. Length must fit
 #'   the number of samples
+#'
+#' @examples
+#' data(data_fungi)
+#' cond_samp <- grepl("A1", data_fungi@sam_data[["Sample_names"]])
+#' subset_samples_pq(data_fungi, cond_samp)
+#'
+#' subset_samples_pq(data_fungi, data_fungi@sam_data[["Height"]] == "Low")
 #'
 #' @return a new phyloseq object
 #' @export
@@ -1480,15 +1153,29 @@ subset_samples_pq <- function(physeq, condition) {
 #'
 #' @inheritParams clean_pq
 #' @param condition A named boolean vector to subset taxa. Length must fit
-#'   the number of taxa and names must match taxa_names
+#'   the number of taxa and names must match taxa_names. Can also be a
+#'   condition using a column of the tax_table slot (see exemples).
 #' @param clean_pq (logical)
 #'   If set to TRUE, empty samples are discarded after subsetting ASV
 #' @param verbose (logical) Informations are printed
-
+#' @examples
+#' data(data_fungi)
+#' subset_taxa_pq(data_fungi, data_fungi@tax_table[, "Phylum"] == "Ascomycota")
+#'
+#' cond_taxa <- grepl("Endophyte", data_fungi@tax_table[, "Guild"])
+#' names(cond_taxa) <- taxa_names(data_fungi)
+#' subset_taxa_pq(data_fungi, cond_taxa)
+#'
 #' @return a new phyloseq object
 #' @export
 #'
 subset_taxa_pq <- function(physeq, condition, verbose = TRUE, clean_pq = TRUE) {
+  if (inherits(condition, "taxonomyTable")) {
+    condition_temp <- as.vector(condition)
+    names(condition_temp) <- rownames(condition)
+    condition <- condition_temp
+  }
+
   if (!sum(names(condition) %in% taxa_names(physeq)) == length(condition)) {
     stop(paste(
       "Some names in condition do not fit taxa_names of physeq : ",
@@ -1569,46 +1256,5 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
   }
 
   return(cl_sam)
-}
-################################################################################
-
-
-
-################################################################################
-#' Add information from [blast_pq()] to the `tax_table` slot of a *phyloseq* object
-#'
-#' @description
-#' `r lifecycle::badge("experimental")`
-#'
-#' Basically a wraper of [blast_pq()] with option `unique_per_seq = TRUE` and `score_filter = FALSE`.
-#' Add the information to the taxtable
-#'
-#' @inheritParams clean_pq
-#' @param silent (logical) If true, no message are printing.
-#' @return a physeq object with more information in tax_table based on a
-#'   blast on a given database
-#'
-#' @export
-#'
-#' @author Adrien Taudière
-
-add_blast_info <- function(physeq, silent = FALSE, ...) {
-  verify_pq(physeq)
-  res_blast <- blast_pq(physeq, unique_per_seq = TRUE, score_filter = FALSE, ...)
-  new_physeq <- physeq
-
-  new_physeq@tax_table <- tax_table(cbind(
-    new_physeq@tax_table,
-    as.matrix(res_blast[match(taxa_names(new_physeq), res_blast$`Query name`), ])
-  ))
-
-  verify_pq(new_physeq)
-  if (!silent) {
-    message(paste0(
-      "Add ", ncol(new_physeq@tax_table) - ncol(physeq@tax_table),
-      " columns to taxonomic table"
-    ))
-  }
-  return(new_physeq)
 }
 ################################################################################

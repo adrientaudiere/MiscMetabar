@@ -37,8 +37,8 @@ test_that("track_wkflow function works fine", {
 })
 
 test_that("track_wkflow function works fine with taxonomy_rank", {
-  expect_error(track_wkflow(list(unlist(list_fastq_files("inst/extdata/")), data_fungi, enterotype), taxonomy_rank = c(3,5)), "data.frame")
-  expect_s3_class(track_wkflow(list(data_fungi, enterotype), taxonomy_rank = c(3,5)), "data.frame")
+  expect_error(track_wkflow(list(unlist(list_fastq_files("inst/extdata/")), data_fungi, enterotype), taxonomy_rank = c(3, 5)))
+  expect_s3_class(track_wkflow(list(data_fungi, enterotype), taxonomy_rank = c(3, 5)), "data.frame")
 })
 
 tree_A10_005 <- subset_samples(data_fungi, Tree_name == "A10-005")
@@ -50,4 +50,17 @@ test_that("track_wkflow_samples function works fine", {
   expect_s3_class(track_wkflow_samples(tree_A10_005)[[1]], "data.frame")
 })
 
-# select_one_sample
+
+derep_R1_001 <- dada2::derepFastq("inst/extdata/ex_R1_001.fastq.gz")
+dada_R1_001 <- dada(derep_R1_001, selfConsist = TRUE)
+test_that("track_wkflow_samples function works fine with object of class matrix, dada, data.frame and derep", {
+  expect_s3_class(track_wkflow(list(data_fungi@otu_table, as.data.frame(enterotype@otu_table), derep_R1_001, "inst/extdata/ex_R1_001.fastq.gz", dada_R1_001)), "data.frame")
+})
+
+
+
+test_that("select_one_sample function works fine", {
+  expect_message(A8_005 <- select_one_sample(data_fungi, "A8-005_S4_MERGED.fastq.gz"))
+  expect_s4_class(A8_005, "phyloseq")
+  expect_error(select_one_sample(data_fungi, "A8-005_S.fastq.gz"))
+})

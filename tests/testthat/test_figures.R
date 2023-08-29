@@ -3,6 +3,7 @@ data("data_fungi_sp_known")
 data("GlobalPatterns", package = "phyloseq")
 data("enterotype", package = "phyloseq")
 
+GP <- GlobalPatterns
 data_fungi_2trees <- subset_samples(data_fungi, data_fungi@sam_data$Tree_name %in% c("A10-005", "AD30-abm-X"))
 GP_archae <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 
@@ -16,7 +17,7 @@ test_that("biplot_pq works", {
 
 data_fungi_abun <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
 test_that("multi_biplot_pq works with data_fungi dataset", {
-  p1 <- multi_biplot_pq(data_fungi_abun, split_by="Time", na_remove = FALSE)
+  p1 <- multi_biplot_pq(data_fungi_abun, split_by = "Time", na_remove = FALSE)
   p2 <- multi_biplot_pq(data_fungi_abun, "Height")
   expect_s3_class(p1[[1]], "ggplot")
   expect_type(p1, "list")
@@ -108,20 +109,20 @@ test_that("multiplot works fine", {
 
 test_that("hill_pq works with data_fungi dataset", {
   expect_message(expect_message(hill_pq(data_fungi, "Height")))
-  expect_message(expect_message(hill_pq(data_fungi, "Height",  add_points = TRUE)))
-  expect_silent(suppressMessages(hill_pq(clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height))), "Height",  letters = TRUE)))
-  expect_silent(suppressMessages(hill_pq(data_fungi, "Height",  add_points = TRUE, color_fac = "Time")))
-  expect_equal(length(hill_pq(data_fungi, "Height",  add_points = TRUE)), 4)
-  expect_s3_class(hill_pq(data_fungi, "Height",  add_points = TRUE)[[1]], "ggplot")
+  expect_message(expect_message(hill_pq(data_fungi, "Height", add_points = TRUE)))
+  expect_silent(suppressMessages(hill_pq(clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height))), "Height", letters = TRUE)))
+  expect_silent(suppressMessages(hill_pq(data_fungi, "Height", add_points = TRUE, color_fac = "Time")))
+  expect_equal(length(hill_pq(data_fungi, "Height", add_points = TRUE)), 4)
+  expect_s3_class(hill_pq(data_fungi, "Height", add_points = TRUE)[[1]], "ggplot")
 })
 
 test_that("hill_pq works with GP dataset", {
   expect_message(hill_pq(GP, "SampleType"))
-  expect_message(hill_pq(GP, "SampleType",  add_points = TRUE))
-  ##### TODO expect_silent(suppressMessages(hill_pq(GP, "SampleType", letters=TRUE)))
-  expect_silent(suppressMessages(hill_pq(GP, "SampleType",  add_points = TRUE)))
-  expect_equal(length(hill_pq(GP, "SampleType",  add_points = TRUE)), 4)
-  expect_s3_class(hill_pq(GP, "SampleType",  add_points = TRUE)[[1]], "ggplot")
+  expect_message(hill_pq(GP, "SampleType", add_points = TRUE))
+  expect_silent(suppressMessages(hill_pq(GP, "SampleType", letters = TRUE)))
+  expect_silent(suppressMessages(hill_pq(GP, "SampleType", add_points = TRUE)))
+  expect_equal(length(hill_pq(GP, "SampleType", add_points = TRUE)), 4)
+  expect_s3_class(hill_pq(GP, "SampleType", add_points = TRUE)[[1]], "ggplot")
 })
 
 
@@ -170,9 +171,9 @@ GPsubset <- subset_taxa(
   GlobalPatterns,
   GlobalPatterns@tax_table[, 1] == "Bacteria"
 )
-test_that("heat_tree_pq works with GP dataset", {
+test_that("heat_tree_pq works with GlobalPatterns dataset", {
   expect_silent(suppressMessages(ht <- heat_tree_pq(GPsubset)))
-  expect_silent(suppressMessages(ht <- heat_tree_pq(GPsubset, node_size = n_obs, node_color = n_obs, node_label = taxon_names,tree_label = taxon_names, node_size_trans = "log10 area")))
+  expect_silent(suppressMessages(ht <- heat_tree_pq(GPsubset, node_size = n_obs, node_color = n_obs, node_label = taxon_names, tree_label = taxon_names, node_size_trans = "log10 area")))
   expect_s3_class(ht, "ggplot")
 })
 
@@ -181,13 +182,13 @@ test_that("plot_tax_pq works with data_fungi dataset", {
   expect_silent(suppressMessages(pt <- plot_tax_pq(data_fungi_sp_known, "Time", merge_sample_by = "Time", taxa_fill = "Class", add_info = FALSE)))
   expect_silent(suppressMessages(pt <- plot_tax_pq(data_fungi_sp_known, "Time", merge_sample_by = "Time", taxa_fill = "Class")))
   expect_s3_class(pt, "ggplot")
-  expect_silent(suppressMessages(pt <- plot_tax_pq(data_fungi_sp_known, "Time", taxa_fill = "Class" )))
+  expect_silent(suppressMessages(pt <- plot_tax_pq(data_fungi_sp_known, "Time", taxa_fill = "Class")))
   expect_s3_class(pt, "ggplot")
-  expect_silent(suppressMessages(pt <- plot_tax_pq(data_fungi_sp_known, "Time", merge_sample_by = "Time", taxa_fill = "Class", type="nb_asv", add_info = FALSE)))
-  expect_silent(suppressMessages(pt <- plot_tax_pq(data_fungi_sp_known, "Time", merge_sample_by = "Time", taxa_fill = "Class", type="nb_asv")))
+  expect_silent(suppressMessages(pt <- plot_tax_pq(data_fungi_sp_known, "Time", merge_sample_by = "Time", taxa_fill = "Class", type = "nb_asv", add_info = FALSE)))
+  expect_silent(suppressMessages(pt <- plot_tax_pq(data_fungi_sp_known, "Time", merge_sample_by = "Time", taxa_fill = "Class", type = "nb_asv")))
   expect_s3_class(pt, "ggplot")
-  expect_silent(suppressMessages(pt <- plot_tax_pq(data_fungi_sp_known, "Time", merge_sample_by = "Time", taxa_fill = "Class", type="both", add_info = FALSE)))
-  expect_silent(suppressMessages(pt <- plot_tax_pq(data_fungi_sp_known, "Time", merge_sample_by = "Time", taxa_fill = "Class", type="both")))
+  expect_silent(suppressMessages(pt <- plot_tax_pq(data_fungi_sp_known, "Time", merge_sample_by = "Time", taxa_fill = "Class", type = "both", add_info = FALSE)))
+  expect_silent(suppressMessages(pt <- plot_tax_pq(data_fungi_sp_known, "Time", merge_sample_by = "Time", taxa_fill = "Class", type = "both")))
   expect_s3_class(pt[[1]], "ggplot")
   expect_silent(suppressMessages(plot_tax_pq(data_fungi_sp_known, "Time", merge_sample_by = "Time", taxa_fill = "Class", na_remove = TRUE)))
   expect_silent(suppressMessages(plot_tax_pq(data_fungi_sp_known, "Time", merge_sample_by = "Time", taxa_fill = "Order", clean_pq = FALSE)))
@@ -199,7 +200,7 @@ test_that("tsne_pq works with data_fungi dataset", {
   expect_silent(suppressMessages(res_tsne <- tsne_pq(data_fungi)))
   expect_s3_class(res_tsne, "Rtsne")
   expect_silent(suppressMessages(res_tsne <- tsne_pq(data_fungi, dims = 3, perplexity = 25)))
-}
+})
 
 test_that("plot_tsne_pq works with data_fungi dataset", {
   expect_silent(suppressMessages(pt <- plot_tsne_pq(data_fungi, fact = "Height", perplexity = 15)))
@@ -214,27 +215,23 @@ test_that("SRS_curve_pq works with data_fungi dataset", {
   expect_silent(suppressMessages(sc <- SRS_curve_pq(data_basidio, clean_pq = TRUE)))
   expect_s3_class(sc, "recordedplot")
   expect_silent(suppressMessages(sc <- SRS_curve_pq(data_basidio, metric = "shannon")))
-  expect_silent(suppressMessages(sc <- SRS_curve_pq(data_basidio, step=20, rarefy.repeats=15)))
+  expect_silent(suppressMessages(sc <- SRS_curve_pq(data_basidio, step = 20, rarefy.repeats = 15)))
 })
-
-
-
 
 
 test_that("accu_plot works with GlobalPatterns dataset", {
   expect_silent(accu_plot(GP_archae, fact = "X.SampleID", by.fact = TRUE))
   expect_silent(accu_plot(GP_archae, fact = "X.SampleID", by.fact = TRUE, print_sam_names = TRUE))
   expect_silent(accu_plot(GP_archae, "SampleType", add_nb_seq = TRUE, by.fact = TRUE))
-  expect_warning(accu_plot(GP_archae, "SampleType", add_nb_seq = FALSE, by.fact = TRUE))
+  expect_silent(suppressWarnings(accu_plot(GP_archae, "SampleType", add_nb_seq = FALSE, by.fact = TRUE)))
   expect_error(accu_plot(GP_archae))
 })
 
-# TODO
-# test_that("accu_plot works with data_fungi dataset", {
-#   expect_silent(accu_plot(data_fungi, fact = "Height", by.fact = TRUE))
-#   expect_silent(accu_plot(data_fungi, fact = "Height", by.fact = FALSE))
-#   expect_silent(accu_plot(data_fungi, fact = "Height", by.fact = TRUE, print_sam_names = TRUE))
-#   expect_silent(accu_plot(data_fungi, "Height", add_nb_seq = TRUE, by.fact = TRUE))
-#   expect_warning(accu_plot(data_fungi, "Height", add_nb_seq = FALSE, by.fact = TRUE))
-#   expect_error(accu_plot(data_fungi))
-# })
+test_that("accu_plot works with data_fungi dataset", {
+  expect_silent(accu_plot(data_fungi, fact = "Height", by.fact = TRUE))
+  expect_error(accu_plot(data_fungi, fact = "Height", by.fact = FALSE))
+  expect_silent(accu_plot(data_fungi, fact = "Height", by.fact = TRUE, print_sam_names = TRUE))
+  expect_silent(accu_plot(data_fungi, "Height", add_nb_seq = TRUE, by.fact = TRUE))
+  expect_silent(accu_plot(data_fungi, "Height", add_nb_seq = FALSE, by.fact = TRUE))
+  expect_error(accu_plot(data_fungi))
+})

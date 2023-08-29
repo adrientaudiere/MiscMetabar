@@ -106,9 +106,9 @@ graph_test_pq <- function(physeq,
 #' @param rarefy_nb_seqs (logical, default FALSE) Rarefy each sample
 #'   (before merging if merge_sample_by is set) using `phyloseq::rarefy_even_depth()`.
 #'   if `correction_for_sample_size` is TRUE, rarefy_nb_seqs will have no effect.
+#' @param ... Other arguments passed on to [vegan::adonis2()] function.
 #' @return The function returns an anova.cca result object with a
 #'   new column for partial R^2. See help of [vegan::adonis2()] for more information.
-#'
 #' @examples
 #' data(enterotype)
 #' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE)
@@ -126,7 +126,8 @@ adonis_pq <- function(
     merge_sample_by = NULL,
     na_remove = FALSE,
     correction_for_sample_size = FALSE,
-    rarefy_nb_seqs = FALSE) {
+    rarefy_nb_seqs = FALSE,
+    ...) {
   physeq <- clean_pq(
     physeq,
     force_taxa_as_columns = TRUE,
@@ -146,12 +147,13 @@ adonis_pq <- function(
   termf <- terms(.formula)
   term_lab <- attr(termf, "term.labels")[attr(termf, "order") == 1]
 
-  verify_pq(physeq)
+  verify_pq(physeq, ...)
 
   if (na_remove) {
     new_physeq <- physeq
     for (tl in term_lab) {
-      new_physeq <- subset_samples(new_physeq, !is.na(physeq@sam_data[[tl]]))
+      print(tl)
+      new_physeq <- subset_samples_pq(new_physeq, !is.na(physeq@sam_data[[tl]]))
     }
     if (nsamples(physeq) - nsamples(new_physeq) > 0) {
       message(paste0(
@@ -181,6 +183,6 @@ adonis_pq <- function(
     metadata$sample_size <- sample_sums(physeq)
   }
 
-  res_ado <- vegan::adonis2(.formula, data = metadata)
+  res_ado <- vegan::adonis2(.formula, data = metadata, ...)
   return(res_ado)
 }

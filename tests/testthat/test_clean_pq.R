@@ -10,7 +10,7 @@ test_that("clean_pq return a phyloseq object after cleaning empty taxa and sampl
   expect_s4_class(clean_pq(data_fungi_test, verbose = TRUE), "phyloseq")
   expect_s4_class(clean_pq(data_fungi_test, reorder_asv = TRUE), "phyloseq")
   expect_s4_class(clean_pq(data_fungi_test, rename_asv = TRUE), "phyloseq")
-  expect_error(clean_pq(data_fungi_test, force_taxa_as_columns && force_taxa_as_rows))
+  expect_error(clean_pq(data_fungi_test, force_taxa_as_columns = TRUE, force_taxa_as_rows = TRUE))
 })
 
 test_that("clean_pq clean empty taxa and samples", {
@@ -59,5 +59,5 @@ data_fungi_test6 <- data_fungi_test
 sample_names(data_fungi_test6)[1] <- paste0("0", sample_names(data_fungi_test6)[1])
 test_that("clean_pq works fine with one sample with a 0 at the start of the name", {
   expect_s4_class(clean_pq(data_fungi_test6), "phyloseq")
-  expect_message(clean_pq(data_fungi_test6), "Cleaning suppress 2 taxa and 1 samples")
+  expect_message(expect_message(clean_pq(data_fungi_test6), "Cleaning suppress 2 taxa and 1 samples"))
 })

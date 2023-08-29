@@ -164,11 +164,11 @@ accu_plot <-
 
       plot(
         accu_all,
-        ci_type = "poly",
-        ci_col = ci_col[1],
+        # ci_type = "poly",
+        # ci_col = ci_col[1],
         col = col[1],
         lwd = lwd,
-        ci_lty = 0,
+        # ci_lty = 0,
         xlab = "Sample",
         ...
       )
@@ -176,11 +176,11 @@ accu_plot <-
       for (i in 1:nlevels(factor_interm)) {
         graphics::lines(
           accu[[i]],
-          ci_type = "poly",
-          ci_col = ci_col[i + 1],
+          # ci_type = "poly",
+          # ci_col = ci_col[i + 1],
           col = col[i + 1],
-          lwd = lwd,
-          ci_lty = 0
+          lwd = lwd # ,
+          # ci_lty = 0
         )
       }
       if (leg) {
@@ -751,15 +751,15 @@ sankey_pq <-
 #' Please use print_values = FALSE if you want to add ggplot function
 #' (cf example).
 #'
-#' @examples 
+#' @examples
 #' data("enterotype")
-#' venn_pq(enterotype, fact = 'SeqTech')
-#' venn_pq(enterotype, fact = 'ClinicalStatus')
-#' venn_pq(enterotype, fact = 'Nationality', print_values = F)
-#' venn_pq(enterotype, fact = 'ClinicalStatus', print_values = F) +
-#' scale_fill_hue()
-#' venn_pq(enterotype, fact = 'ClinicalStatus', print_values = F) +
-#' scale_fill_hue()
+#' venn_pq(enterotype, fact = "SeqTech")
+#' venn_pq(enterotype, fact = "ClinicalStatus")
+#' venn_pq(enterotype, fact = "Nationality", print_values = F)
+#' venn_pq(enterotype, fact = "ClinicalStatus", print_values = F) +
+#'   scale_fill_hue()
+#' venn_pq(enterotype, fact = "ClinicalStatus", print_values = F) +
+#'   scale_fill_hue()
 #'
 #' @return A \code{\link{ggplot}}2 plot representing Venn diagramm of
 #' modalities of the argument \code{factor}
@@ -777,7 +777,7 @@ venn_pq <-
       stop("physeq must be an object of class 'phyloseq'")
     }
 
-    if(require(grid)){
+    if (require(grid)) {
       library(grid)
     }
 
@@ -1231,10 +1231,12 @@ hill_pq <-
       letters <-
         multcompView::multcompLetters(data_h0_pval, reversed = TRUE)$Letters
 
+      dt <- data.frame(variab = names(letters), letters = letters)
+      names(dt) <- c(var, "letters")
       data_letters <- p_0$data %>%
         group_by(!!var) %>%
         summarize(max_Hill = max(Hill_0)) %>%
-        inner_join(data.frame("Height" = names(letters), letters = letters))
+        inner_join(dt)
 
       p_0 <- p_0 +
         geom_label(
@@ -1258,10 +1260,12 @@ hill_pq <-
       letters <-
         multcompView::multcompLetters(data_h1_pval, reversed = TRUE)$Letters
 
+      dt <- data.frame(variab = names(letters), letters = letters)
+      names(dt) <- c(var, "letters")
       data_letters <- p_1$data %>%
         group_by(!!var) %>%
         summarize(max_Hill = max(Hill_1)) %>%
-        inner_join(data.frame("Height" = names(letters), letters = letters))
+        inner_join(dt)
 
       p_1 <- p_1 +
         geom_label(
@@ -1285,10 +1289,12 @@ hill_pq <-
       letters <-
         multcompView::multcompLetters(data_h2_pval, reversed = TRUE)$Letters
 
+      dt <- data.frame(variab = names(letters), letters = letters)
+      names(dt) <- c(var, "letters")
       data_letters <- p_2$data %>%
         group_by(!!var) %>%
         summarize(max_Hill = max(Hill_2)) %>%
-        inner_join(data.frame("Height" = names(letters), letters = letters))
+        inner_join(dt)
 
       p_2 <- p_2 +
         geom_label(
@@ -2082,31 +2088,31 @@ plot_tax_pq <-
     }
 
     if (add_info) {
-      if(type %in% c("nb_seq", "both")){
-      p_seq <- p_seq +
-        labs(
-          title = paste("Total nb of sequences: ", sum(physeq_old@otu_table)),
-          subtitle = paste0(
-            "Nb of samples: '",
-            paste0(names(table(physeq_old@sam_data[[fact]])),
-              sep = "' : ",
-              table(physeq_old@sam_data[[fact]]), collapse = " - '"
+      if (type %in% c("nb_seq", "both")) {
+        p_seq <- p_seq +
+          labs(
+            title = paste("Total nb of sequences: ", sum(physeq_old@otu_table)),
+            subtitle = paste0(
+              "Nb of samples: '",
+              paste0(names(table(physeq_old@sam_data[[fact]])),
+                sep = "' : ",
+                table(physeq_old@sam_data[[fact]]), collapse = " - '"
+              )
             )
           )
-        )
-      } 
-      if(type %in% c("nb_asv", "both")){
-         p_asv <- p_asv +
-        labs(
-          title = paste("Total nb of sequences: ", sum(physeq_old@otu_table)),
-          subtitle = paste0(
-            "Nb of samples: '",
-            paste0(names(table(physeq_old@sam_data[[fact]])),
-              sep = "' : ",
-              table(physeq_old@sam_data[[fact]]), collapse = " - '"
+      }
+      if (type %in% c("nb_asv", "both")) {
+        p_asv <- p_asv +
+          labs(
+            title = paste("Total nb of sequences: ", sum(physeq_old@otu_table)),
+            subtitle = paste0(
+              "Nb of samples: '",
+              paste0(names(table(physeq_old@sam_data[[fact]])),
+                sep = "' : ",
+                table(physeq_old@sam_data[[fact]]), collapse = " - '"
+              )
             )
           )
-        )
       }
     }
 
