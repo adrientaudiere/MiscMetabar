@@ -1,3 +1,46 @@
+
+
+
+
+################################################################################
+#' Search for exact matching of sequences using complement, reverse and reverse-complement
+#'
+#' `r lifecycle::badge("experimental")`
+#'
+#' @inheritParams clean_pq
+#' @return A list of data-frames for each input sequences with the name, the sequences and the 
+#'   number of occurences of the original sequence, the complement sequence, 
+#'   the reverse sequence and the reverse-complement sequence.
+#' @export
+#'
+#' @examples
+#' data("data_fungi")
+# search_primers <- search_seq_pq(data_fungi, sequences = DNAStringSet(c("TTGAACGCACATTGCGCC","ATCCCTACCTGATCCGAG")))
+#' @author Adrien Taudière
+
+search_exact_seq_pq <- function(physeq, sequences) {
+  res <- list()
+  for (i in seq_along(sequences)) {
+    original <- sequences[[i]]
+    rev <- reverse(sequences[[i]])
+    rev_comp <- reverseComplement(sequences[[i]])
+    comp <- complement(sequences[[i]])
+
+    original_count <- sum(grepl(original, physeq@refseq))
+    rev_count <- sum(grepl(rev, physeq@refseq))
+    rev_comp_count <- sum(grepl(rev_comp, physeq@refseq))
+    comp_count <- sum(grepl(comp, physeq@refseq))
+    res[[i]] <- data.frame(c("original", as.character(original), original_count),
+                           c("rev", as.character(rev), rev_count),
+                           c("rev_comp", as.character(rev_comp), rev_comp_count),
+                           c("comp", as.character(comp), comp_count))
+    colnames(res[[i]]) <- c("Names", "Sequences", "Number of occurences")
+  }
+  return(res)
+}
+
+
+
 ################################################################################
 #' Calculate ecological distance among positive controls vs
 #'   distance for all samples

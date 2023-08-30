@@ -1270,3 +1270,39 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
   return(cl_sam)
 }
 ################################################################################
+
+
+################################################################################
+#' Add new taxonomic rank to a phyloseq object.
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#' 
+#' One of main use of this function is to add taxonomic assignment from a new database.
+#'
+#' @inheritParams clean_pq
+#' @param refFasta (required) A link to a database. 
+#'   Pass on to `dada2::assignTaxonomy`.
+#' @param suffix (character) The suffix to name the new columns.
+#'   If set to NULL (the default), the basename of the file reFasta
+#'   is used.
+#' @param ... Others arguments pass on to `dada2::assignTaxonomy`.
+#' @return a physeq object with a larger slot tax_table
+#'
+#' @export
+#' @md
+#'
+#' @author Adrien Taudière
+#'
+add_new_taxonomy_pq <- function(physeq, refFasta, suffix=NULL, ...){
+  if (is.null(suffix)) {
+    suffix <- basename(refFasta)
+  }
+  tax_tab <- dada2::assignTaxonomy(physeq@refseq, refFasta = refFasta, ...)
+  colnames(tax_tab) <- paste0(colnames(tax_tab), "_", suffix)
+  new_tax_tab <- tax_table(cbind(physeq@tax_table, tax_tab))
+  new_physeq <- physeq
+  tax_table(new_physeq) <- new_tax_tab
+  return(new_physeq)
+}
+################################################################################

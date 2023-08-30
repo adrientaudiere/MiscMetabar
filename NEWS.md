@@ -12,6 +12,8 @@
 * Add option `keep_temporary_files` in `asv2otu()` function
 * Improve the documentation of `asv2otu()` and fix a little bug in the name of the conserved ASV after `asv2otu()`
 * Test coverage largely improved leading to numerous minor bug fixes.
+* Add function `search_exact_seq_pq()` to search for exact matching of sequences using complement, reverse and reverse-complement against a phyloseq object.
+* Add function `add_new_taxonomy_pq()` to add new taxonomic rank to a phyloseq object. For exemple to add taxonomic assignment from a new database.
 
 ## BREAKING CHANGES
 * `asv2otu()` with `method="vsearch"` change two default values (to repeat the precedent behavior, use `asv2otu(..., vsearch_cluster_method = "--cluster_fast", tax_adjust = 1)`): 
