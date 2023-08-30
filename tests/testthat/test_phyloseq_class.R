@@ -37,7 +37,7 @@ taxa_names(data_fungi_taxaSeq) <- as.character(data_fungi_taxaSeq@refseq)
 data_fungi_taxaSeq@refseq <- NULL
 test_that("add_dna_to_phyloseq works fine", {
   expect_silent(data_fungi_taxaSeq <- add_dna_to_phyloseq(data_fungi_taxaSeq))
-  expect_equal(taxa_names(data_fungi_taxaSeq), paste0("ASV_", seq_along(length(taxa_names(data_fungi_taxaSeq)))))
+  expect_equal(taxa_names(data_fungi_taxaSeq), paste0("ASV_", seq_len(length(taxa_names(data_fungi_taxaSeq)))))
 })
 
 

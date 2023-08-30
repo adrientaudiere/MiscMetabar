@@ -1929,7 +1929,7 @@ multi_biplot_pq <- function(physeq,
   couples <- combn(names_split_by, 2)
 
   p <- list()
-  for (c in seq_along(ncol(couples))) {
+  for (c in 1:ncol(couples)) {
     names_p <- paste0(couples[1, c], " - ", couples[2, c])
     new_physeq <- subset_samples_pq(physeq, physeq@sam_data[[split_by]] %in%
       c(couples[1, c], couples[2, c]))

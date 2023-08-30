@@ -113,7 +113,7 @@ blast_to_phyloseq <- function(physeq,
     "Query cover"
   )
 
-  blast_tab <- blast_tab[order(blast_tab[, "bit score"], decreasing = FALSE), ]
+  blast_tab <- blast_tab[order(blast_tab[, "% id. match"], decreasing = TRUE),]
 
   if (unique_per_seq) {
     blast_tab <- blast_tab[which(!duplicated(blast_tab[, 1])), ]
@@ -145,6 +145,9 @@ blast_to_phyloseq <- function(physeq,
     blast_tab <- blast_tab
   }
 
+  if(nrow(blast_tab)==0) { 
+    stop("No blast query match the score filters")
+  }
   return(blast_tab)
 }
 ################################################################################
@@ -190,10 +193,9 @@ blast_pq <- function(physeq,
          `database` args. Please use only one.")
   } else if (!is.null(fasta_for_db) && is.null(database)) {
     message("Build the database from fasta_for_db")
-    system(paste(blastpath,
-      "makeblastdb -dbtype nucl -in ", fasta_for_db, " -out dbase",
-      " ", args_makedb,
-      sep = ""
+    system(paste0(blastpath,
+                 "makeblastdb -dbtype nucl -in ", fasta_for_db, " -out dbase",
+                 " ", args_makedb
     ))
     message("Blast refseq from physeq object against the database")
     system(
@@ -210,21 +212,6 @@ blast_pq <- function(physeq,
         args_blastn
       )
     )
-    if (file.info("blast_result.txt")$size > 0) {
-      blast_tab <- utils::read.table(
-        "blast_result.txt",
-        sep = "\t",
-        header = FALSE,
-        stringsAsFactors = FALSE,
-        comment.char = ""
-      )
-      file.remove("blast_result.txt")
-      file.remove(list.files(pattern = "dbase"))
-    } else {
-      file.remove("blast_result.txt")
-      file.remove(list.files(pattern = "dbase"))
-      stop("None query sequences matched your phyloseq references sequences.")
-    }
   } else if (is.null(fasta_for_db) && !is.null(database)) {
     message("Blast refseq from physeq object against the database")
     system(
@@ -243,6 +230,22 @@ blast_pq <- function(physeq,
     )
   }
 
+  if (file.info("blast_result.txt")$size > 0) {
+    blast_tab <- utils::read.table(
+      "blast_result.txt",
+      sep = "\t",
+      header = FALSE,
+      stringsAsFactors = FALSE,
+      comment.char = ""
+    )
+    file.remove("blast_result.txt")
+    file.remove(list.files(pattern = "dbase"))
+  } else {
+    file.remove("blast_result.txt")
+    file.remove(list.files(pattern = "dbase"))
+    stop("None query sequences matched your phyloseq references sequences.")
+  }
+
   names(blast_tab) <- c(
     "Query name",
     "Query seq. length",
@@ -255,9 +258,7 @@ blast_pq <- function(physeq,
     "Query cover"
   )
 
-  blast_tab <- blast_tab[order(blast_tab[, "% id. match"],
-    decreasing = FALSE
-  ), ]
+  blast_tab <- blast_tab[order(blast_tab[, "% id. match"], decreasing = TRUE),]
 
   if (unique_per_seq) {
     blast_tab <- blast_tab[which(!duplicated(blast_tab[, 1])), ]
@@ -271,7 +272,10 @@ blast_pq <- function(physeq,
   } else {
     blast_tab <- blast_tab
   }
-
+  
+  if(nrow(blast_tab)==0) { 
+    stop("No blast query match the score filters")
+  }
   return(blast_tab)
 }
 
@@ -298,33 +302,25 @@ filter_asv_blast <- function(physeq,
                              fasta_for_db = NULL,
                              database = NULL,
                              clean_pq = TRUE,
-                             blastpath = NULL,
-                             id_cut = 80,
-                             bit_score_cut = 150,
-                             min_cover_cut = 50,
-                             e_value_cut = 1e-30,
                              add_info_to_taxtable = TRUE,
-                             nproc = nproc,
+                             id_filter = 90,
+                             bit_score_filter = 50,
+                             min_cover_filter = 50,
+                             e_value_filter = 1e-30,
                              ...) {
   blast_tab <- blast_pq(
     physeq = physeq,
     fasta_for_db = fasta_for_db,
     database = database,
-    blastpath = blastpath,
-    id_cut = id_cut,
-    bit_score_cut = bit_score_cut,
-    min_cover_cut = min_cover_cut,
-    e_value_cut = e_value_cut,
     unique_per_seq = TRUE,
-    score_filter = TRUE,
-    nproc = nproc,
+    score_filter = FALSE,
     ...
   )
 
-  condition <- blast_tab[, "Query cover"] > min_cover_cut &
-    blast_tab[, "bit score"] > bit_score_cut &
-    blast_tab[, "% id. match"] > id_cut &
-    blast_tab[, "e-value"] < e_value_cut
+  condition <- blast_tab[, "Query cover"] > min_cover_filter &
+    blast_tab[, "bit score"] > bit_score_filter &
+    blast_tab[, "% id. match"] > id_filter &
+    blast_tab[, "e-value"] < e_value_filter
 
   names(condition) <- blast_tab[, "Query name"]
 
@@ -463,8 +459,7 @@ blast_to_derep <- function(derep,
 
   blast_tab$occurence <- sub("seqs\\)", "", sub(".*\\(", "", blast_tab$`Sample name`, perl = TRUE), perl = TRUE)
 
-  blast_tab <-
-    blast_tab[order(blast_tab[, "e-value"], decreasing = FALSE), ]
+  blast_tab <- blast_tab[order(blast_tab[, "% id. match"], decreasing = TRUE),]
 
   if (unique_per_seq) {
     blast_tab <- blast_tab[which(!duplicated(blast_tab[, 1])), ]
@@ -496,6 +491,9 @@ blast_to_derep <- function(derep,
     blast_tab <- blast_tab
   }
 
+  if(nrow(blast_tab)==0) { 
+    stop("No blast query match the score filters")
+  }
   return(blast_tab)
 }
 

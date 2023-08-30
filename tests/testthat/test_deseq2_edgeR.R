@@ -16,6 +16,7 @@ res <- DESeq2::DESeq(phyloseq_to_deseq2(GP, ~SampleType), test = "Wald", fitType
 test_that("plot_deseq2_pq works", {
   expect_message(DESeq2::DESeq(phyloseq_to_deseq2(GP, ~SampleType), test = "Wald", fitType = "local"), "fitting model and testing")
   expect_silent(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table, color_tax = "Kingdom"))
+  ## TODO expect_silent(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), color_tax = "Kingdom", verbose = TRUE))
   expect_silent(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table, color_tax = "Kingdom"))
   expect_silent(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table, color_tax = "Kingdom", taxolev = "Class"))
   expect_silent(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table, color_tax = "Class"))

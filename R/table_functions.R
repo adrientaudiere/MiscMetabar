@@ -216,8 +216,11 @@ compare_pairs_pq <- function(physeq = NULL,
       res[[i]] <- c(nb_first, nb_second, nb_shared, div_first, div_second)
     }
   }
-
-  res_df <- data.frame(t(res))
+  
+  res_df_t <- t(as_tibble(res, .name_repair = "minimal"))
+  colnames(res_df_t) <- paste0("V", 1:ncol(res_df_t))
+  res_df <- as_tibble(res_df_t)
+  #res_df <- as_tibble(t(as_tibble(res, .name_repair = "universal")), .name_repair = "universal")
 
   res_df <- res_df %>%
     mutate(percent_shared_lv1 = round(100 * .data$V3 /
@@ -232,7 +235,7 @@ compare_pairs_pq <- function(physeq = NULL,
   colnames(res_df) <- c(
     paste0("nb_", lev1),
     paste0("nb_", lev2),
-    "shared",
+    "nb_shared",
     paste0("div_", lev1),
     paste0("div_", lev2),
     paste0("percent_shared_", lev1),
@@ -246,6 +249,5 @@ compare_pairs_pq <- function(physeq = NULL,
     dplyr::filter(!is.na(nb_shared)) %>%
     relocate(modality)
 
-  res_df <- tibble::as_tibble(res_df)
   return(res_df)
 }
