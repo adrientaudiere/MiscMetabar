@@ -98,7 +98,8 @@ blast_to_phyloseq <- function(physeq,
     file.remove("blast_result.txt")
     file.remove(list.files(pattern = "dbase"))
     file.remove("db.fasta")
-    stop("None query sequences matched your phyloseq references sequences.")
+    message("None query sequences matched your phyloseq references sequences.")
+    return(NULL)
   }
 
   names(blast_tab) <- c(
@@ -243,7 +244,8 @@ blast_pq <- function(physeq,
   } else {
     file.remove("blast_result.txt")
     file.remove(list.files(pattern = "dbase"))
-    stop("None query sequences matched your phyloseq references sequences.")
+    message("None query sequences matched your phyloseq references sequences.")
+    return(NULL)
   }
 
   names(blast_tab) <- c(
@@ -442,7 +444,8 @@ blast_to_derep <- function(derep,
     file.remove("blast_result.txt")
     file.remove(list.files(pattern = "dbase"))
     file.remove("db.fasta")
-    stop("None query sequences matched your phyloseq references sequences.")
+    message("None query sequences matched your phyloseq references sequences.")
+    return(NULL)
   }
 
   names(blast_tab) <- c(
