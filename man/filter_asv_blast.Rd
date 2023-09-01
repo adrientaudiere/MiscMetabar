@@ -9,13 +9,11 @@ filter_asv_blast(
   fasta_for_db = NULL,
   database = NULL,
   clean_pq = TRUE,
-  blastpath = NULL,
-  id_cut = 80,
-  bit_score_cut = 150,
-  min_cover_cut = 50,
-  e_value_cut = 1e-30,
   add_info_to_taxtable = TRUE,
-  nproc = nproc,
+  id_filter = 90,
+  bit_score_filter = 50,
+  min_cover_filter = 50,
+  e_value_filter = 1e-30,
   ...
 )
 }
@@ -31,29 +29,24 @@ using the \code{phyloseq} package.}
 If set to TRUE, empty samples and empty ASV are discarded
 after filtering.}
 
-\item{blastpath}{path to blast program}
+\item{id_filter}{(default: 90) cut of in identity percent to keep result}
 
-\item{id_cut}{(default: 90) cut of in identity percent to keep result}
-
-\item{bit_score_cut}{(default: 50) cut of in bit score to keep result
+\item{bit_score_filter}{(default: 50) cut of in bit score to keep result
 The higher the bit-score, the better the sequence similarity.
 The bit-score is the requires size of a sequence database in which the current
 match could be found just by chance. The bit-score is a log2 scaled and
 normalized raw-score. Each increase by one doubles the required database size
 (2bit-score).}
 
-\item{min_cover_cut}{(default: 50) cut of in query cover (\%) to keep result}
+\item{min_cover_filter}{(default: 50) cut of in query cover (\%) to keep result}
 
-\item{e_value_cut}{(default: 1e-30)  cut of in e-value (\%) to keep result
+\item{e_value_filter}{(default: 1e-30)  cut of in e-value (\%) to keep result
 The BLAST E-value is the number of expected hits of similar quality (score)
 that could be found just by chance.}
 
-\item{nproc}{(default: 1)
-Set to number of cpus/processors to use for blast (args -num_threads
-for blastn command)}
-
 \item{...}{Others options for the \code{blast_pq()} function. See \code{?blast_pq}.
-Note that params \code{unique_per_seq} and \code{score_filter} must be set to TRUE.}
+Note that params \code{unique_per_seq} must be lft to TRUE and \code{score_filter}
+must be left to FALSE.}
 }
 \value{
 A new \code{\link{phyloseq-class}} object.

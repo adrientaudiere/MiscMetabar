@@ -25,12 +25,14 @@ install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar")
 #> 
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/RtmpW0Kh7Q/remotes452a26b70ad56/adrientaudiere-MiscMetabar-1677ab1/DESCRIPTION’ ... OK
+#> * checking for file ‘/tmp/RtmplY0z0y/remotes614c75f442f0e/adrientaudiere-MiscMetabar-2cb7839/DESCRIPTION’ ... OK
 #> * preparing ‘MiscMetabar’:
 #> * checking DESCRIPTION meta-information ... OK
+#> Avis : read_pq.Rd:26: unknown macro '\t'
+#> Avis : write_pq.Rd:74: unknown macro '\t'
 #> * checking for LF line-endings in source and make files and shell scripts
 #> * checking for empty or unneeded directories
-#> * building ‘MiscMetabar_0.33.tar.gz’
+#> * building ‘MiscMetabar_0.34.tar.gz’
 ```
 
 You can install the developement version from
@@ -41,7 +43,7 @@ install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar", ref = "dev")
 #> 
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/RtmpW0Kh7Q/remotes452a24e82e4b4/adrientaudiere-MiscMetabar-b06d38f/DESCRIPTION’ ... OK
+#> * checking for file ‘/tmp/RtmplY0z0y/remotes614c77aa69ded/adrientaudiere-MiscMetabar-05f17b7/DESCRIPTION’ ... OK
 #> * preparing ‘MiscMetabar’:
 #> * checking DESCRIPTION meta-information ... OK
 #> Avis : read_pq.Rd:26: unknown macro '\t'

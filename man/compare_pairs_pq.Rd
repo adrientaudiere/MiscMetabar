@@ -11,7 +11,7 @@ compare_pairs_pq(
   modality = NULL,
   merge_sample_by = NULL,
   nb_min_seq = 0,
-  vegIndex = "shannon",
+  veg_index = "shannon",
   na_remove = TRUE
 )
 }
@@ -33,7 +33,7 @@ Need to be in \code{physeq@sam_data}}
 \item{nb_min_seq}{minimum number of sequences per sample
 to count the ASV/OTU}
 
-\item{vegIndex}{(default: "shannon") index for the \code{vegan::diversity} function}
+\item{veg_index}{(default: "shannon") index for the \code{vegan::diversity} function}
 
 \item{na_remove}{(logical, default TRUE) If set to TRUE, remove samples with
 NA in the variables set in bifactor, modality and merge_sample_by.

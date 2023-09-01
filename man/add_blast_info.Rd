@@ -4,11 +4,13 @@
 \alias{add_blast_info}
 \title{Add information from \code{\link[=blast_pq]{blast_pq()}} to the \code{tax_table} slot of a \emph{phyloseq} object}
 \usage{
-add_blast_info(physeq, silent = FALSE, ...)
+add_blast_info(physeq, fasta_for_db, silent = FALSE, ...)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
+
+\item{fasta_for_db}{path to a fasta file to make the blast database}
 
 \item{silent}{(logical) If true, no message are printing.}
 

@@ -12,8 +12,8 @@ asv2otu(
   method = "clusterize",
   id = 0.97,
   vsearchpath = "vsearch",
-  tax_adjust = 1,
-  vsearch_cluster_method = "--cluster_fast",
+  tax_adjust = 0,
+  vsearch_cluster_method = "--cluster_size",
   vsearch_args = "--strand both",
   keep_temporary_files = FALSE,
   ...
@@ -47,7 +47,7 @@ of \code{\link[speedyseq:merge_taxa_vec]{speedyseq::merge_taxa_vec()}} for more 
 To conserved the taxonomic rank of the most abundant ASV,
 set tax_adjust to 0}
 
-\item{vsearch_cluster_method}{(default: "--cluster_fast") See other possible
+\item{vsearch_cluster_method}{(default: "--cluster_size) See other possible
 methods in the \href{https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf}{vsearch pdf manual} (e.g. \code{--cluster_size} or \code{--cluster_smallmem})
 \itemize{
 \item \code{--cluster_fast} : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.

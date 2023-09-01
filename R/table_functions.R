@@ -216,11 +216,11 @@ compare_pairs_pq <- function(physeq = NULL,
       res[[i]] <- c(nb_first, nb_second, nb_shared, div_first, div_second)
     }
   }
-  
+
   res_df_t <- t(as_tibble(res, .name_repair = "minimal"))
   colnames(res_df_t) <- paste0("V", 1:ncol(res_df_t))
   res_df <- as_tibble(res_df_t)
-  #res_df <- as_tibble(t(as_tibble(res, .name_repair = "universal")), .name_repair = "universal")
+  # res_df <- as_tibble(t(as_tibble(res, .name_repair = "universal")), .name_repair = "universal")
 
   res_df <- res_df %>%
     mutate(percent_shared_lv1 = round(100 * .data$V3 /

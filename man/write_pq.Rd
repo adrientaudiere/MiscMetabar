@@ -71,7 +71,7 @@ double quotes.  If a numeric vector, its elements are taken
 as the indices of columns to quote.  In both cases, row and
 column names are quoted if they are written. If FALSE nothing is quoted.}
 
-\item{sep_csv}{(default tabulation ('\t')) separator for column}
+\item{sep_csv}{(default tabulation) separator for column}
 
 \item{...}{Other arguments passed on to \code{\link[utils:write.table]{utils::write.table()}} function.}
 }

@@ -129,24 +129,6 @@ accu_plot <-
             levels(factor_interm)[i], ])
       }
 
-      funky_color <-
-        grDevices::colorRampPalette(
-          c(
-            "#A6CEE3",
-            "#1F78B4",
-            "#B2DF8A",
-            "#33A02C",
-            "#FB9A99",
-            "#E31A1C",
-            "#FDBF6F",
-            "#FF7F00",
-            "#CAB2D6",
-            "#6A3D9A",
-            "#FFFF99",
-            "#B15928"
-          )
-        )
-
       if (is.null(col)) {
         col <- funky_color(nlevels(factor_interm) + 1)
       }
@@ -481,24 +463,6 @@ circle_pq <-
     if (is.null(start_degree)) {
       start_degree <- 170
     }
-
-    funky_color <-
-      grDevices::colorRampPalette(
-        c(
-          "#A6CEE3",
-          "#1F78B4",
-          "#B2DF8A",
-          "#33A02C",
-          "#FB9A99",
-          "#E31A1C",
-          "#FDBF6F",
-          "#FF7F00",
-          "#CAB2D6",
-          "#6A3D9A",
-          "#FFFF99",
-          "#B15928"
-        )
-      )
 
     if (is.null(grid_col)) {
       grid_col <-

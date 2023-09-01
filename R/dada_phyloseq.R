@@ -242,9 +242,9 @@ track_wkflow <- function(
         } else {
           stop("Files must be either gzfile or .fastq")
         }
-      } else if (inherits(object, "derep")) { 
+      } else if (inherits(object, "derep")) {
         sum(object$uniques)
-      } else if (inherits(object, "dada")) { 
+      } else if (inherits(object, "dada")) {
         sum(dada2::getUniques(object))
       } else {
         pbapply::pbsapply(object, function(x) {
@@ -587,8 +587,11 @@ asv2otu <- function(physeq = NULL,
 #' `r lifecycle::badge("maturing")`
 #'
 #' @inheritParams clean_pq
-#' @param seq2search (required) path to fasta file
-#' @param vsearchpath path to vsearch
+#' @param seq2search (required if path_to_fasta is NULL) Either (i) a DNAstringSet object  
+#'   or (ii) a character vector that will be convert to DNAstringSet using 
+#'   [Biostrings::DNAStringSet()]
+#' @param path_to_fasta (required if seq2search is NULL) a path to fasta file if seq2search is est to NULL.
+#' @param vsearchpath (default: vsearch) path to vsearch
 #' @param id (default: 0.8) id for the option `--usearch_global` of the vsearch software
 #' @param iddef (default: 0) iddef for the option `--usearch_global` of the vsearch software
 #' @examples
@@ -596,7 +599,7 @@ asv2otu <- function(physeq = NULL,
 #' file_dna <- tempfile("dna.fa")
 #' seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCA
 #'   ACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG",
-#'   file = file_dna, name = "seq1"
+#'   file = file_dna, names = "seq1"
 #' )
 #' res <- vsearch_search_global(data_fungi, file_dna)
 #' unlink(file_dna)
@@ -609,14 +612,31 @@ asv2otu <- function(physeq = NULL,
 #' @export
 
 vsearch_search_global <- function(physeq,
-                                  seq2search,
+                                  seq2search = NULL,
+                                  path_to_fasta = NULL,
                                   vsearchpath = "vsearch",
                                   id = 0.8,
                                   iddef = 0) {
+
   verify_pq(physeq)
   dna <- Biostrings::DNAStringSet(physeq@refseq)
-
   Biostrings::writeXStringSet(dna, "temp.fasta")
+  if(is.null(seq2search) && is.null(path_to_fasta)){
+    stop("You must fill either seq2search or path_to_fasta argument." )
+  }
+
+  if(!is.null(seq2search) && !is.null(path_to_fasta)){
+    stop("You must set either seq2search or path_to_fasta but not both." )
+  }
+  if(!is.null(seq2search)){
+    if(inherits(seq2search, "character")){
+      seq2search <-  Biostrings::DNAStringSet(seq2search)
+    } 
+    Biostrings::writeXStringSet(seq2search, "seq2search.fasta")
+    seq2search <- "seq2search.fasta"   
+  } else if (!is.null(path_to_fasta)){
+    seq2search <- path_to_fasta
+  }
 
   system2(
     vsearchpath,
@@ -652,6 +672,10 @@ vsearch_search_global <- function(physeq,
   )
   unlink("temp.fasta")
   unlink("temp.uc")
+
+  if(inherits(seq2search, "DNAStringSet")) {
+    unlink("seq2search.fasta")
+  }
 
   return(invisible(pack_clusts))
 }
@@ -1277,11 +1301,11 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
-#' 
+#'
 #' One of main use of this function is to add taxonomic assignment from a new database.
 #'
 #' @inheritParams clean_pq
-#' @param refFasta (required) A link to a database. 
+#' @param refFasta (required) A link to a database.
 #'   Pass on to `dada2::assignTaxonomy`.
 #' @param suffix (character) The suffix to name the new columns.
 #'   If set to NULL (the default), the basename of the file reFasta
@@ -1294,7 +1318,7 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #'
 #' @author Adrien Taudière
 #'
-add_new_taxonomy_pq <- function(physeq, refFasta, suffix=NULL, ...){
+add_new_taxonomy_pq <- function(physeq, refFasta, suffix = NULL, ...) {
   if (is.null(suffix)) {
     suffix <- basename(refFasta)
   }

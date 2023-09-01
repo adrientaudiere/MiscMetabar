@@ -14,6 +14,7 @@ test_that("rename_samples_otu_table function works fine when taxa_are_rows", {
   expect_equal(nrow(rename_samples_otu_table(data_fungi, as.character(1:nsamples(data_fungi)))), nsamples(data_fungi))
   expect_equal(ncol(rename_samples_otu_table(data_fungi, as.character(1:nsamples(data_fungi)))), ntaxa(data_fungi))
   expect_equal(sample_names(rename_samples_otu_table(data_fungi, as.character(1:nsamples(data_fungi)))), as.character(1:nsamples(data_fungi)))
+  expect_error(rename_samples_otu_table(data_fungi, as.character(2:nsamples(data_fungi))))
 })
 
 data_fungi_row <- clean_pq(data_fungi, force_taxa_as_rows = TRUE)
@@ -23,6 +24,7 @@ test_that("rename_samples_otu_table function works fine when taxa_are_columns", 
   expect_equal(ncol(rename_samples_otu_table(data_fungi_row, as.character(1:nsamples(data_fungi_row)))), nsamples(data_fungi_row))
   expect_equal(nrow(rename_samples_otu_table(data_fungi_row, as.character(1:nsamples(data_fungi_row)))), ntaxa(data_fungi_row))
   expect_equal(sample_names(rename_samples_otu_table(data_fungi_row, as.character(1:nsamples(data_fungi_row)))), as.character(1:nsamples(data_fungi)))
+  expect_error(rename_samples_otu_table(data_fungi_row, as.character(2:nsamples(data_fungi_row))))
 })
 
 data_fungi_test <- data_fungi

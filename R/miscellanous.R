@@ -223,3 +223,28 @@ count_seq <- function(file_path = NULL, folder_path = NULL, pattern = NULL) {
   }
   return(as.numeric(seq_nb))
 }
+
+
+
+#' Count sequences in fasta or fastq file
+#' @return a color palette
+#' @author Thibaut Jombart
+#' @export
+#'
+funky_color <-
+  grDevices::colorRampPalette(
+    c(
+      "#A6CEE3",
+      "#1F78B4",
+      "#B2DF8A",
+      "#33A02C",
+      "#FB9A99",
+      "#E31A1C",
+      "#FDBF6F",
+      "#FF7F00",
+      "#CAB2D6",
+      "#6A3D9A",
+      "#FFFF99",
+      "#B15928"
+    )
+  )

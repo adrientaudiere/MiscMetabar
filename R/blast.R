@@ -114,7 +114,7 @@ blast_to_phyloseq <- function(physeq,
     "Query cover"
   )
 
-  blast_tab <- blast_tab[order(blast_tab[, "% id. match"], decreasing = TRUE),]
+  blast_tab <- blast_tab[order(blast_tab[, "% id. match"], decreasing = TRUE), ]
 
   if (unique_per_seq) {
     blast_tab <- blast_tab[which(!duplicated(blast_tab[, 1])), ]
@@ -146,7 +146,7 @@ blast_to_phyloseq <- function(physeq,
     blast_tab <- blast_tab
   }
 
-  if(nrow(blast_tab)==0) { 
+  if (nrow(blast_tab) == 0) {
     stop("No blast query match the score filters")
   }
   return(blast_tab)
@@ -194,9 +194,10 @@ blast_pq <- function(physeq,
          `database` args. Please use only one.")
   } else if (!is.null(fasta_for_db) && is.null(database)) {
     message("Build the database from fasta_for_db")
-    system(paste0(blastpath,
-                 "makeblastdb -dbtype nucl -in ", fasta_for_db, " -out dbase",
-                 " ", args_makedb
+    system(paste0(
+      blastpath,
+      "makeblastdb -dbtype nucl -in ", fasta_for_db, " -out dbase",
+      " ", args_makedb
     ))
     message("Blast refseq from physeq object against the database")
     system(
@@ -260,7 +261,7 @@ blast_pq <- function(physeq,
     "Query cover"
   )
 
-  blast_tab <- blast_tab[order(blast_tab[, "% id. match"], decreasing = TRUE),]
+  blast_tab <- blast_tab[order(blast_tab[, "% id. match"], decreasing = TRUE), ]
 
   if (unique_per_seq) {
     blast_tab <- blast_tab[which(!duplicated(blast_tab[, 1])), ]
@@ -274,8 +275,8 @@ blast_pq <- function(physeq,
   } else {
     blast_tab <- blast_tab
   }
-  
-  if(nrow(blast_tab)==0) { 
+
+  if (nrow(blast_tab) == 0) {
     stop("No blast query match the score filters")
   }
   return(blast_tab)
@@ -294,8 +295,20 @@ blast_pq <- function(physeq,
 #' @param clean_pq (logical)
 #'   If set to TRUE, empty samples and empty ASV are discarded
 #'   after filtering.
+#' @param id_filter (default: 90) cut of in identity percent to keep result
+#' @param bit_score_filter (default: 50) cut of in bit score to keep result
+#'   The higher the bit-score, the better the sequence similarity.
+#'   The bit-score is the requires size of a sequence database in which the current
+#'   match could be found just by chance. The bit-score is a log2 scaled and
+#'   normalized raw-score. Each increase by one doubles the required database size
+#'   (2bit-score).
+#' @param min_cover_filter (default: 50) cut of in query cover (%) to keep result
+#' @param e_value_filter (default: 1e-30)  cut of in e-value (%) to keep result
+#'   The BLAST E-value is the number of expected hits of similar quality (score)
+#'   that could be found just by chance.
 #' @param ... Others options for the `blast_pq()` function. See `?blast_pq`.
-#'   Note that params `unique_per_seq` and `score_filter` must be set to TRUE.
+#'   Note that params `unique_per_seq` must be lft to TRUE and `score_filter`
+#'   must be left to FALSE.
 #' @export
 #' @return A new \code{\link{phyloseq-class}} object.
 
@@ -462,7 +475,7 @@ blast_to_derep <- function(derep,
 
   blast_tab$occurence <- sub("seqs\\)", "", sub(".*\\(", "", blast_tab$`Sample name`, perl = TRUE), perl = TRUE)
 
-  blast_tab <- blast_tab[order(blast_tab[, "% id. match"], decreasing = TRUE),]
+  blast_tab <- blast_tab[order(blast_tab[, "% id. match"], decreasing = TRUE), ]
 
   if (unique_per_seq) {
     blast_tab <- blast_tab[which(!duplicated(blast_tab[, 1])), ]
@@ -494,7 +507,7 @@ blast_to_derep <- function(derep,
     blast_tab <- blast_tab
   }
 
-  if(nrow(blast_tab)==0) { 
+  if (nrow(blast_tab) == 0) {
     stop("No blast query match the score filters")
   }
   return(blast_tab)
@@ -513,6 +526,7 @@ blast_to_derep <- function(derep,
 #' Add the information to the taxtable
 #'
 #' @inheritParams clean_pq
+#' @param fasta_for_db path to a fasta file to make the blast database
 #' @param silent (logical) If true, no message are printing.
 #' @param ... Other arguments passed on to [blast_pq()] function.
 #' @return a physeq object with more information in tax_table based on a
@@ -522,9 +536,9 @@ blast_to_derep <- function(derep,
 #'
 #' @author Adrien Taudière
 
-add_blast_info <- function(physeq, silent = FALSE, ...) {
+add_blast_info <- function(physeq, fasta_for_db, silent = FALSE, ...) {
   verify_pq(physeq)
-  res_blast <- blast_pq(physeq, unique_per_seq = TRUE, score_filter = FALSE, ...)
+  res_blast <- blast_pq(physeq, fasta_for_db = fasta_for_db, unique_per_seq = TRUE, score_filter = FALSE, ...)
   new_physeq <- physeq
 
   new_physeq@tax_table <- tax_table(cbind(

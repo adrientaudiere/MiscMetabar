@@ -11,20 +11,36 @@ test_that("plot_edgeR_pq works", {
 
 GP <- subset_samples(GlobalPatterns, GlobalPatterns@sam_data$SampleType %in% c("Soil", "Skin"))
 
-res <- DESeq2::DESeq(phyloseq_to_deseq2(GP, ~SampleType), test = "Wald", fitType = "local")
-
-test_that("plot_deseq2_pq works", {
-  expect_message(DESeq2::DESeq(phyloseq_to_deseq2(GP, ~SampleType), test = "Wald", fitType = "local"), "fitting model and testing")
+test_that("plot_deseq2_pq works with results", {
+  expect_message(res <- DESeq2::DESeq(phyloseq_to_deseq2(GP, ~SampleType), test = "Wald", fitType = "local"), "fitting model and testing")
   expect_silent(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table, color_tax = "Kingdom"))
-  ## TODO expect_silent(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), color_tax = "Kingdom", verbose = TRUE))
+  expect_silent(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table, tax_depth = "Family"))
+  expect_silent(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
+    tax_table = GP@tax_table, tax_depth = "Family",
+    color_tax = adegenet::fac2col(as.vector(GP@tax_table[, "Order"]))
+  ))
+  expect_silent(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),  tax_table = GP@tax_table, color_tax = "Kingdom", verbose = TRUE))
   expect_silent(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table, color_tax = "Kingdom"))
   expect_silent(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table, color_tax = "Kingdom", taxolev = "Class"))
   expect_silent(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table, color_tax = "Class"))
   expect_silent(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table, color_tax = "Class", alpha = 0.7))
   expect_error(plot_deseq2_pq(res, c("SampleType", "Soil", "Skyp"), tax_table = GP@tax_table, color_tax = "Kingdom"))
   expect_error(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), color_tax = "Class"))
+  expect_message(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table, color_tax = "Class", select_taxa = "522457"))
+  expect_message(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table, color_tax = "Class", select_taxa = c("522457","271582")))
+  expect_silent(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table, select_taxa = c("522457","200359")))
 })
+
+test_that("plot_deseq2_pq works with phyloseq object", {
+  expect_silent(suppressMessages(plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"))))
+  expect_silent(suppressMessages(plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), color_tax = "Class", select_taxa = c("522457", "271582", "200359"))))
+  expect_silent(suppressMessages(plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), taxolev = "Class", verbose = TRUE)))
+  expect_silent(suppressMessages(plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), alpha = 0.1)))
+})
+
+GlobalPatterns_row <- clean_pq(GP, force_taxa_as_columns = T)
 
 test_that("phyloseq_to_edgeR gives the good class", {
   expect_s4_class(phyloseq_to_edgeR(GlobalPatterns, "SampleType"), "DGEList")
+  expect_s4_class(phyloseq_to_edgeR(GlobalPatterns_row, "SampleType"), "DGEList")
 })
