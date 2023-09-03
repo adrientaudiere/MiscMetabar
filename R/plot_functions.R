@@ -741,10 +741,6 @@ venn_pq <-
       stop("physeq must be an object of class 'phyloseq'")
     }
 
-    if (require(grid)) {
-      library(grid)
-    }
-
     moda <-
       as.factor(unlist(unclass(physeq@sam_data[, fact])[fact]))
     if (length(moda) != dim(physeq@otu_table)[1]) {
@@ -888,7 +884,6 @@ venn_pq <-
       grid::upViewport(0)
       grid::pushViewport(vpleg)
       grid::grid.draw(legend)
-      # Make the new viewport active and draw
       grid::upViewport(0)
       grid::pushViewport(subvp)
       grid::grid.draw(gridExtra::tableGrob(table_value[, c(1, 2)], rows = NULL))
@@ -920,9 +915,9 @@ venn_pq <-
 #' @param  split_by Split into multiple plot using variable split_by.
 #'   The name of a variable must be present in `sam_data` slot
 #'   of the physeq object.
-#'  @param add_nb_samples (logical, default TRUE) Add the number of samples to
+#' @param add_nb_samples (logical, default TRUE) Add the number of samples to
 #'    levels names
-#'  @param rarefy_nb_seqs Rarefy each sample (before merging if merge_sample_by is set)
+#' @param rarefy_nb_seqs Rarefy each sample (before merging if merge_sample_by is set)
 #'    using `phyloseq::rarefy_even_depth()`
 #' @param ... other arguments for the `ggVennDiagram::ggVennDiagram` function
 #'   for ex. `category.names`.
@@ -933,7 +928,8 @@ venn_pq <-
 #' @examples
 #' data(data_fungi)
 #' ggvenn_pq(data_fungi, fact = "Height")
-#' ggvenn_pq(data_fungi, fact = "Height") + ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
+#' ggvenn_pq(data_fungi, fact = "Height") + 
+#'   ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
 #' pl <- ggvenn_pq(data_fungi, fact = "Height", split_by = "Time")
 #' for (i in 1:length(pl)) {
 #'   p <- pl[[i]] +
@@ -981,7 +977,7 @@ ggvenn_pq <- function(physeq = NULL,
       ])
     } else {
       res[[f]] <-
-        as.character(na.exclude(unique(newphyseq@tax_table[
+        as.character(stats::na.exclude(unique(newphyseq@tax_table[
           colSums(newphyseq@otu_table) > min_nb_seq,
           taxonomic_rank
         ])))
@@ -1076,7 +1072,7 @@ multiplot <-
     } else {
       # Set up the page
       grid::grid.newpage()
-      grid::pushViewport(viewport(layout = grid.layout(
+      grid::pushViewport(grid::viewport(layout = grid::grid.layout(
         nrow(layout),
         ncol(layout)
       )))
@@ -1088,7 +1084,7 @@ multiplot <-
           as.data.frame(which(layout == i, arr.ind = TRUE))
 
         print(plots[[i]],
-          vp = viewport(
+          vp = grid::viewport(
             layout.pos.row = matchidx$row,
             layout.pos.col = matchidx$col
           )
@@ -1131,7 +1127,9 @@ multiplot <-
 #'
 #' # Artificially modify data_fungi to force alpha-diversity effect
 #' data_fungi_modif <- clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height)))
-#' data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <- data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] + sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
+#' data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <- 
+#'   data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] + 
+#'   sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
 #' p2 <- hill_pq(data_fungi_modif, "Height", letters = TRUE)
 #'
 hill_pq <-
@@ -1545,6 +1543,7 @@ rotl_pq <- function(physeq,
 #'
 #' @examples
 #' \dontrun{
+#' library("metacoder")
 #' data("GlobalPatterns")
 #' GPsubset <- subset_taxa(
 #'   GlobalPatterns,
@@ -1569,13 +1568,9 @@ rotl_pq <- function(physeq,
 #' }
 #'
 heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
-  if (require(metacoder)) {
-    pak::pkg_install("metacoder")
-  }
   if (!is.null(taxonomic_level)) {
     physeq@tax_table <- physeq@tax_table[, taxonomic_level]
   }
-
   data_metacoder <- metacoder::parse_phyloseq(physeq)
   metacoder::heat_tree(data_metacoder, ...)
 }
@@ -1618,7 +1613,6 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #' @param plotly_version If TRUE, use [plotly::ggplotly()] to return
 #'   a interactive ggplot.
 #' @param ... other arguments for the ggplot function
-#' @importFrom stats reorder
 #' @return A plot
 #'
 #' @examples
@@ -1743,7 +1737,7 @@ biplot_pq <- function(physeq,
   p <- mdf %>%
     ggplot(
       aes(
-        x = reorder(OTU, Abundance),
+        x = stats::reorder(OTU, Abundance),
         y = Ab,
         fill = modality,
         names = OTU,
@@ -2112,9 +2106,6 @@ tsne_pq <-
            theta = 0.0,
            perplexity = 30,
            ...) {
-    if (!require("Rtsne")) {
-      install.packages("Rtsne")
-    }
 
     physeq <- clean_pq(
       physeq,

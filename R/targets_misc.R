@@ -15,7 +15,7 @@
 #'
 #' @examples
 #' list_fastq_files("inst/extdata")
-#' list_fastq_files("inst/extdata", paired_end = F, pattern_r1 = "")
+#' list_fastq_files("inst/extdata", paired_end = F, pattern_R1 = "")
 #'
 #' @author Adrien Taudière
 
@@ -23,21 +23,21 @@ list_fastq_files <-
   function(path,
            paired_end = TRUE,
            pattern = "fastq",
-           pattern_r1 = "_R1_",
-           pattern_r2 = "_R2_",
+           pattern_R1 = "_R1_",
+           pattern_R2 = "_R2_",
            nb_files = Inf) {
     list_files <- list.files(path, pattern = pattern, full.names = TRUE)
     if (paired_end) {
-      fnfs <- sort(list_files[grepl(list_files, pattern = pattern_r1)])
+      fnfs <- sort(list_files[grepl(list_files, pattern = pattern_R1)])
       fnrs <-
-        sort(list_files[grepl(list_files, pattern = pattern_r2)])
+        sort(list_files[grepl(list_files, pattern = pattern_R2)])
       if (is.finite(nb_files)) {
         fnfs <- fnfs[1:nb_files]
         fnrs <- fnrs[1:nb_files]
       }
       return(list("fnfs" = fnfs, "fnrs" = fnrs))
     } else {
-      fnfs <- sort(list_files[grepl(list_files, pattern = pattern_r1)])
+      fnfs <- sort(list_files[grepl(list_files, pattern = pattern_R1)])
       if (is.finite(nb_files)) {
         fnfs <- fnfs[1:nb_files]
       }

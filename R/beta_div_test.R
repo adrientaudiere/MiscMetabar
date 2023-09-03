@@ -25,7 +25,7 @@
 #' @examples
 #' data(enterotype)
 #' graph_test_pq(enterotype, fact = "SeqTech")
-#' graph_test_pq(enterotype, fact = "Enterotype", na_remove = T)
+#' graph_test_pq(enterotype, fact = "Enterotype", na_remove = TRUE)
 #' @author Adrien Taudière
 #'
 #' @return a ggplot with a subtitle indicating the pvalue
@@ -116,7 +116,6 @@ graph_test_pq <- function(physeq,
 #' adonis_pq(enterotype, "SeqTech", dist_method = "jaccard")
 #' adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison")
 #' @export
-#' @importFrom stats reformulate
 #' @author Adrien Taudière
 
 adonis_pq <- function(
@@ -143,8 +142,8 @@ adonis_pq <- function(
     phy_dist <- paste0('phyloseq:::distance(physeq, method="', dist_method, '")')
   }
 
-  .formula <- reformulate(formula, response = phy_dist)
-  termf <- terms(.formula)
+  .formula <- stats::reformulate(formula, response = phy_dist)
+  termf <- stats::terms(.formula)
   term_lab <- attr(termf, "term.labels")[attr(termf, "order") == 1]
 
   verify_pq(physeq, ...)
@@ -171,7 +170,7 @@ adonis_pq <- function(
 
   if (correction_for_sample_size) {
     formula <- paste0("sample_size+", formula)
-    .formula <- reformulate(formula, response = phy_dist)
+    .formula <- stats::reformulate(formula, response = phy_dist)
   } else if (rarefy_nb_seqs) {
     physeq <- rarefy_even_depth(physeq)
     physeq <- clean_pq(physeq)

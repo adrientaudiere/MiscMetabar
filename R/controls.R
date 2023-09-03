@@ -4,6 +4,7 @@
 #' `r lifecycle::badge("experimental")`
 #'
 #' @inheritParams clean_pq
+#' @param sequences A DNAStringSet object of sequences to search for.
 #' @return A list of data-frames for each input sequences with the name, the sequences and the
 #'   number of occurences of the original sequence, the complement sequence,
 #'   the reverse sequence and the reverse-complement sequence.
@@ -68,7 +69,8 @@ search_exact_seq_pq <- function(physeq, sequences) {
 #' sam_name_factice <- gsub("TS1_V2", "TS10_V2", sample_names(enterotype))
 #' res_dist_cont <- dist_pos_control(enterotype, sam_name_factice)
 #' hist(unlist(res_dist_cont$distAllSamples))
-#' abline(v = mean(unlist(res_dist_cont$dist_controlontrolSamples), na.rm = T), col = "red", lwd = 3)
+#' abline(v = mean(unlist(res_dist_cont$dist_controlontrolSamples), na.rm = TRUE), 
+#'   col = "red", lwd = 3)
 #' @author Adrien Taudière
 
 dist_pos_control <- function(physeq, samples_names, method = "bray") {

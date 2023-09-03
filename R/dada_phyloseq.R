@@ -317,11 +317,11 @@ track_wkflow <- function(
         if (inherits(object, "phyloseq")) {
           if (taxa_are_rows(object)) {
             apply(object@tax_table[taxonomy_rank, ], 1, function(x) {
-              length(unique(na.omit(x)))
+              length(unique(stats::na.omit(x)))
             })
           } else {
             apply(object@tax_table[, taxonomy_rank], 2, function(x) {
-              length(unique(na.omit(x)))
+              length(unique(stats::na.omit(x)))
             })
           }
         } else {
@@ -520,7 +520,7 @@ asv2otu <- function(physeq = NULL,
     seq_names (character vector).")
     }
   } else if (method == "vsearch") {
-    Biostrings::writeXStringSet(dna, "temp.fasta")
+    Biostrings::writeXStringSet(dna, here::here("temp.fasta"))
 
     system2(
       vsearchpath,
@@ -535,7 +535,7 @@ asv2otu <- function(physeq = NULL,
       stderr = TRUE
     )
 
-    pack_clusts <- utils::read.table("temp.uc", sep = "\t")
+    pack_clusts <- utils::read.table(here::here("temp.uc"), sep = "\t")
     colnames(pack_clusts) <-
       c(
         "type",
@@ -566,14 +566,14 @@ asv2otu <- function(physeq = NULL,
       stop("You must set the args physeq (object of class phyloseq) or seq_names (character vector).")
     }
 
-    if (file.exists("temp.fasta") && !keep_temporary_files) {
-      file.remove("temp.fasta")
+    if (file.exists(here::here("temp.fasta")) && !keep_temporary_files) {
+      file.remove(here::here("temp.fasta"))
     }
-    if (file.exists("cluster.fasta") && !keep_temporary_files) {
-      file.remove("cluster.fasta")
+    if (file.exists(here::here("cluster.fasta")) && !keep_temporary_files) {
+      file.remove(here::here("cluster.fasta"))
     }
-    if (file.exists("temp.uc") && !keep_temporary_files) {
-      file.remove("temp.uc")
+    if (file.exists(here::here("temp.uc")) && !keep_temporary_files) {
+      file.remove(here::here("temp.uc"))
     }
   }
   return(new_obj)
@@ -587,13 +587,17 @@ asv2otu <- function(physeq = NULL,
 #' `r lifecycle::badge("maturing")`
 #'
 #' @inheritParams clean_pq
-#' @param seq2search (required if path_to_fasta is NULL) Either (i) a DNAstringSet object  
-#'   or (ii) a character vector that will be convert to DNAstringSet using 
+#' @param seq2search (required if path_to_fasta is NULL) Either (i) a DNAstringSet object
+#'   or (ii) a character vector that will be convert to DNAstringSet using
 #'   [Biostrings::DNAStringSet()]
 #' @param path_to_fasta (required if seq2search is NULL) a path to fasta file if seq2search is est to NULL.
 #' @param vsearchpath (default: vsearch) path to vsearch
 #' @param id (default: 0.8) id for the option `--usearch_global` of the vsearch software
 #' @param iddef (default: 0) iddef for the option `--usearch_global` of the vsearch software
+#' @param  keep_temporary_files (logical, default: FALSE) Do we keep temporary files
+#'   - temp.fasta (refseq in fasta)
+#'   - cluster.fasta (centroid)
+#'   - temp.uc (clusters)
 #' @examples
 #' \dontrun{
 #' file_dna <- tempfile("dna.fa")
@@ -601,7 +605,7 @@ asv2otu <- function(physeq = NULL,
 #'   ACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG",
 #'   file = file_dna, names = "seq1"
 #' )
-#' res <- vsearch_search_global(data_fungi, file_dna)
+#' res <- vs_search_global(data_fungi, file_dna)
 #' unlink(file_dna)
 #'
 #' res[res$identity != "*", ]
@@ -611,30 +615,30 @@ asv2otu <- function(physeq = NULL,
 #' @return A dataframe with uc results (invisible)
 #' @export
 
-vsearch_search_global <- function(physeq,
+vs_search_global <- function(physeq,
                                   seq2search = NULL,
                                   path_to_fasta = NULL,
                                   vsearchpath = "vsearch",
                                   id = 0.8,
-                                  iddef = 0) {
-
+                                  iddef = 0,
+                                  keep_temporary_files = FALSE) {
   verify_pq(physeq)
   dna <- Biostrings::DNAStringSet(physeq@refseq)
-  Biostrings::writeXStringSet(dna, "temp.fasta")
-  if(is.null(seq2search) && is.null(path_to_fasta)){
-    stop("You must fill either seq2search or path_to_fasta argument." )
+  Biostrings::writeXStringSet(dna, here::here("temp.fasta"))
+  if (is.null(seq2search) && is.null(path_to_fasta)) {
+    stop("You must fill either seq2search or path_to_fasta argument.")
   }
 
-  if(!is.null(seq2search) && !is.null(path_to_fasta)){
-    stop("You must set either seq2search or path_to_fasta but not both." )
+  if (!is.null(seq2search) && !is.null(path_to_fasta)) {
+    stop("You must set either seq2search or path_to_fasta but not both.")
   }
-  if(!is.null(seq2search)){
-    if(inherits(seq2search, "character")){
-      seq2search <-  Biostrings::DNAStringSet(seq2search)
-    } 
-    Biostrings::writeXStringSet(seq2search, "seq2search.fasta")
-    seq2search <- "seq2search.fasta"   
-  } else if (!is.null(path_to_fasta)){
+  if (!is.null(seq2search)) {
+    if (inherits(seq2search, "character")) {
+      seq2search <- Biostrings::DNAStringSet(seq2search)
+    }
+    Biostrings::writeXStringSet(seq2search, here::here("seq2search.fasta"))
+    seq2search <- here::here("seq2search.fasta")
+  } else if (!is.null(path_to_fasta)) {
     seq2search <- path_to_fasta
   }
 
@@ -657,7 +661,7 @@ vsearch_search_global <- function(physeq,
     )
   )
 
-  pack_clusts <- utils::read.table("temp.uc", sep = "\t")
+  pack_clusts <- utils::read.table(here::here("temp.uc"), sep = "\t")
   colnames(pack_clusts) <- c(
     "type",
     "cluster",
@@ -670,12 +674,15 @@ vsearch_search_global <- function(physeq,
     "query",
     "target"
   )
-  unlink("temp.fasta")
-  unlink("temp.uc")
 
-  if(inherits(seq2search, "DNAStringSet")) {
-    unlink("seq2search.fasta")
-  }
+  if(!keep_temporary_files){
+    unlink(here::here("temp.fasta"))
+    unlink(here::here("temp.uc"))
+
+    if (inherits(seq2search, "DNAStringSet")) {
+      unlink(here::here("seq2search.fasta"))
+    }
+  }  
 
   return(invisible(pack_clusts))
 }
@@ -990,7 +997,7 @@ read_pq <- function(path = NULL, taxa_are_rows = FALSE, sam_names = NULL, sep_cs
 #' @param verbose (logical) if true, print some additional messages.
 #' @param clean_pq (logical) if true, empty samples and empty ASV are discarded
 #'   before clustering.
-#'
+#' @param  keep_temporary_files (logical, default: FALSE) Do we keep temporary files
 #' @return a list of for object
 #' - "new_physeq": The new phyloseq object (class physeq)
 #' - "discrepancy_vector": A vector of discrepancy showing for each taxonomic
@@ -1002,7 +1009,6 @@ read_pq <- function(path = NULL, taxa_are_rows = FALSE, sam_names = NULL, sep_cs
 #' - "res_lulu": A list of the result from the lulu function
 #' - "merged_ASV": the data.frame used to merged ASV
 #'
-#' @importFrom stats na.exclude
 #' @export
 #' @examples
 #' \dontrun{
@@ -1025,7 +1031,8 @@ lulu_pq <- function(physeq,
                     id = 0.84,
                     vsearchpath = "vsearch",
                     verbose = FALSE,
-                    clean_pq = FALSE) {
+                    clean_pq = FALSE,
+                    keep_temporary_files = FALSE) {
   verify_pq(physeq)
   if (is.null(physeq@refseq)) {
     stop("The phyloseq object do not contain a @refseq slot")
@@ -1062,6 +1069,7 @@ lulu_pq <- function(physeq,
   res_lulu <-
     lulu::lulu(data.frame(t(physeq@otu_table)), match_list)
 
+  if(!keep_temporary_files){
   if (file.exists("temp.fasta")) {
     file.remove("temp.fasta")
   }
@@ -1074,7 +1082,7 @@ lulu_pq <- function(physeq,
   if (file.exists("match_list.txt")) {
     file.remove("match_list.txt")
   }
-
+  }
   merged <- res_lulu$otu_map[res_lulu$otu_map$curated == "merged", ]
   merged <- merged[rownames(merged) != merged$parent_id, ]
 
@@ -1166,7 +1174,7 @@ subset_samples_pq <- function(physeq, condition) {
   } else {
     old_DF <- as(sample_data(physeq), "data.frame")
     new_DF <- old_DF[condition, ]
-    if (class(physeq) == "sample_data") {
+    if (inherits(physeq, "sample_data")) {
       return(sample_data(new_DF))
     } else {
       sample_data(physeq) <- sample_data(new_DF)
@@ -1305,7 +1313,7 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #' One of main use of this function is to add taxonomic assignment from a new database.
 #'
 #' @inheritParams clean_pq
-#' @param refFasta (required) A link to a database.
+#' @param ref_fasta (required) A link to a database.
 #'   Pass on to `dada2::assignTaxonomy`.
 #' @param suffix (character) The suffix to name the new columns.
 #'   If set to NULL (the default), the basename of the file reFasta
@@ -1318,11 +1326,11 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #'
 #' @author Adrien Taudière
 #'
-add_new_taxonomy_pq <- function(physeq, refFasta, suffix = NULL, ...) {
+add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, ...) {
   if (is.null(suffix)) {
-    suffix <- basename(refFasta)
+    suffix <- basename(ref_fasta)
   }
-  tax_tab <- dada2::assignTaxonomy(physeq@refseq, refFasta = refFasta, ...)
+  tax_tab <- dada2::assignTaxonomy(physeq@refseq, refFasta = ref_fasta, ...)
   colnames(tax_tab) <- paste0(colnames(tax_tab), "_", suffix)
   new_tax_tab <- tax_table(cbind(physeq@tax_table, tax_tab))
   new_physeq <- physeq

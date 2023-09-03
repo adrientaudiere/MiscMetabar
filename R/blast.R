@@ -306,6 +306,8 @@ blast_pq <- function(physeq,
 #' @param e_value_filter (default: 1e-30)  cut of in e-value (%) to keep result
 #'   The BLAST E-value is the number of expected hits of similar quality (score)
 #'   that could be found just by chance.
+#' @param add_info_to_taxtable (logical, default TRUE) Does the blast information 
+#'   are added to the taxtable ?
 #' @param ... Others options for the `blast_pq()` function. See `?blast_pq`.
 #'   Note that params `unique_per_seq` must be lft to TRUE and `score_filter`
 #'   must be left to FALSE.

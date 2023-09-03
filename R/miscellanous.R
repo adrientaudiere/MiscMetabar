@@ -147,8 +147,8 @@ get_file_extension <- function(file) {
 #'
 #' @param x (required): value
 #' @param y if y is set, compute the division of x by y
-#' @param accuracy: number of digits (number of digits after zero)
-#' @param add_symbol: if set to TRUE add the % symbol to the value
+#' @param accuracy number of digits (number of digits after zero)
+#' @param add_symbol if set to TRUE add the % symbol to the value
 #' @description
 #' `r lifecycle::badge("maturing")`
 #'
@@ -228,6 +228,7 @@ count_seq <- function(file_path = NULL, folder_path = NULL, pattern = NULL) {
 
 #' Count sequences in fasta or fastq file
 #' @return a color palette
+#' @param n a number of colors
 #' @author Thibaut Jombart
 #' @export
 #'

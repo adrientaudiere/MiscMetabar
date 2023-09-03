@@ -134,7 +134,7 @@ plot_edgeR_pq <-
 #'   the independent filtering. If the adjusted p-value cutoff (FDR) will be a
 #'   value other than 0.1, alpha should be set to that value.
 #' @param taxolev taxonomic level of interest
-#' @param select_taxa Either the name of the taxa (in the form of [DESeq2::results()]) 
+#' @param select_taxa Either the name of the taxa (in the form of [DESeq2::results()])
 #'   or a logical vector (length of the results from [DESeq2::results()]) to select taxa
 #'   to plot.
 #' @param color_tax taxonomic level used for color or a
@@ -165,9 +165,9 @@ plot_edgeR_pq <-
 #'   tax_table = GP@tax_table, color_tax = "Kingdom",
 #'   alpha = 0.7
 #' )
-#' plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), 
-#'   tax_table = GP@tax_table, color_tax = "Class", 
-#'   select_taxa = c("522457","271582")
+#' plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
+#'   tax_table = GP@tax_table, color_tax = "Class",
+#'   select_taxa = c("522457", "271582")
 #' )
 #' @author Adrien Taudière
 #'
