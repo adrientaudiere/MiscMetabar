@@ -2,9 +2,9 @@ data(enterotype)
 data(data_fungi)
 
 test_that("list_fastq_files function works fine", {
-  expect_type(list_fastq_files("inst/extdata", paired_end = FALSE, pattern_r1 = ""), "list")
-  expect_equal(length(unlist(list_fastq_files("inst/extdata", paired_end = FALSE, pattern_r1 = ""))), 3)
-  expect_equal(length(unlist(list_fastq_files("inst/extdata", paired_end = FALSE, pattern_r1 = "", nb_files = 2))), 2)
+  expect_type(list_fastq_files("inst/extdata", paired_end = FALSE, pattern_R1 = ""), "list")
+  expect_equal(length(unlist(list_fastq_files("inst/extdata", paired_end = FALSE, pattern_R1 = ""))), 3)
+  expect_equal(length(unlist(list_fastq_files("inst/extdata", paired_end = FALSE, pattern_R1 = "", nb_files = 2))), 2)
   expect_type(list_fastq_files("inst/extdata/"), "list")
   expect_equal(length(list_fastq_files("inst/extdata/")), 2)
 })

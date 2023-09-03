@@ -16,7 +16,7 @@ test_that("Test one case for each deprecated functions", {
   expect_s3_class(suppressWarnings(adonis_phyloseq(data_fungi, "Tree_name")), "anova")
   expect_s4_class(suppressWarnings(clean_pq(data_fungi)), "phyloseq")
   expect_s4_class(suppressWarnings(lulu_phyloseq(data_fungi_sp_known)$new_physeq), "phyloseq")
-  expect_message(expect_warning(otu_circle(data_fungi_2trees, fact = "Tree_name", nproc = 4, add_nb_seq = FALSE), "deprecated"))
+  expect_message(expect_warning(otu_circle(data_fungi_2trees, fact = "Tree_name", nproc = 1, add_nb_seq = FALSE), "deprecated"))
   expect_message(expect_warning(biplot_physeq(data_fungi_2trees, merge_sample_by = "Tree_name"), "deprecated"))
 
   testFolder <- tempdir()
@@ -32,6 +32,8 @@ test_that("Test one case for each deprecated functions", {
   expect_warning(ggVenn_phyloseq(data_fungi, "Height"), "deprecated")
   expect_warning(hill_tuckey_phyloseq(GlobalPatterns, "Soil_logical"), "deprecated")
   expect_message(expect_warning(hill_phyloseq(GP, "SampleType"), "deprecated"))
+  
+  library(metacoder)
   expect_warning(suppressMessages(ht <- physeq_heat_tree(data_basidio)), "deprecated")
   expect_s3_class(suppressWarnings(multiple_share_bisamples(data_fungi_low_high, bifactor = "Height", merge_sample_by = "Height")), "tbl_df")
 })

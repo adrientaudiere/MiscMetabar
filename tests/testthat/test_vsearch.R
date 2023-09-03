@@ -12,10 +12,8 @@ path_db <- "inst/extdata/1000_sp_UNITE_sh_general_release_dynamic.fasta"
 suppressWarnings(vsearch_error_or_not <- try(system("vsearch 2>&1", intern = TRUE), silent = TRUE))
 
 if (class(vsearch_error_or_not) == "try-error") {
-  test_that("vsearch_search_global() and asv2otu(..., method=vsearch) send an error when vsearch is not installed", {
-    file_dna <- tempfile("dna.fa")
-    seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCAACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG", file = file_dna, names = "seq1")
-    expect_error(res <- vsearch_search_global(data_fungi, file_dna), "data.frame")
+  test_that("vs_search_global() and asv2otu(..., method=vsearch) send an error when vsearch is not installed", {
+    expect_error(res <- vs_search_global(data_fungi, "inst/extdata/ex_little.fasta"), "data.frame")
   })
 } else {
   test_that("asv2otu works fine with vsearch method", {
@@ -23,12 +21,10 @@ if (class(vsearch_error_or_not) == "try-error") {
     expect_s3_class(asv2otu(seq_names = sequences_ex, method = "vsearch"), "data.frame")
   })
 
-  test_that("vsearch_search_global works fine with vsearch method", {
-    file_dna <- tempfile("dna.fa")
-    seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCAACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG", file = file_dna, names = "seq1")
-    expect_s3_class(res <- vsearch_search_global(data_fungi, path_to_fasta=file_dna), "data.frame")
+  test_that("vs_search_global works fine with vsearch method", {
+    expect_s3_class(res <- vs_search_global(data_fungi, path_to_fasta = "inst/extdata/ex_little.fasta"), "data.frame")
     expect_equal(dim(res), c(1420, 10))
-    expect_s3_class(res <- vsearch_search_global(data_fungi, sequences_ex), "data.frame")
-    expect_s3_class(res <- vsearch_search_global(data_fungi, Biostrings::DNAStringSet(sequences_ex)), "data.frame")
+    expect_s3_class(res <- vs_search_global(data_fungi, sequences_ex), "data.frame")
+    expect_s3_class(res <- vs_search_global(data_fungi, Biostrings::DNAStringSet(sequences_ex)), "data.frame")
   })
 }

@@ -48,5 +48,4 @@ if (class(blast_error_or_not) == "try-error") {
   })
 }
 
-
-# blast_to_phyloseq
+file.remove(list.files("tests/testthat", pattern = "dbase"))
