@@ -393,7 +393,7 @@
          y="31.198794"
          id="tspan28595"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28593">vsearch_search_global()</tspan></tspan></text>
+           id="tspan28593">vs_search_global()</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,26.10327,98.771781)"
