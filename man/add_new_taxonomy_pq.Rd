@@ -4,13 +4,13 @@
 \alias{add_new_taxonomy_pq}
 \title{Add new taxonomic rank to a phyloseq object.}
 \usage{
-add_new_taxonomy_pq(physeq, refFasta, suffix = NULL, ...)
+add_new_taxonomy_pq(physeq, ref_fasta, suffix = NULL, ...)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{refFasta}{(required) A link to a database.
+\item{ref_fasta}{(required) A link to a database.
 Pass on to \code{dada2::assignTaxonomy}.}
 
 \item{suffix}{(character) The suffix to name the new columns.

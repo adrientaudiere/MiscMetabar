@@ -9,6 +9,8 @@ search_exact_seq_pq(physeq, sequences)
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
+
+\item{sequences}{A DNAStringSet object of sequences to search for.}
 }
 \value{
 A list of data-frames for each input sequences with the name, the sequences and the

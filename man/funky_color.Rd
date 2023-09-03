@@ -6,6 +6,9 @@
 \usage{
 funky_color(n)
 }
+\arguments{
+\item{n}{a number of colors}
+}
 \value{
 a color palette
 }

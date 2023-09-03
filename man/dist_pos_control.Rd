@@ -39,7 +39,8 @@ data("enterotype")
 sam_name_factice <- gsub("TS1_V2", "TS10_V2", sample_names(enterotype))
 res_dist_cont <- dist_pos_control(enterotype, sam_name_factice)
 hist(unlist(res_dist_cont$distAllSamples))
-abline(v = mean(unlist(res_dist_cont$dist_controlontrolSamples), na.rm = T), col = "red", lwd = 3)
+abline(v = mean(unlist(res_dist_cont$dist_controlontrolSamples), na.rm = TRUE), 
+  col = "red", lwd = 3)
 }
 \author{
 Adrien Taudière

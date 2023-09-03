@@ -33,10 +33,12 @@ to count. If set to Null (the default) the number of OTUs is counted.}
 
 \item{split_by}{Split into multiple plot using variable split_by.
 The name of a variable must be present in \code{sam_data} slot
-of the physeq object.
-@param add_nb_samples (logical, default TRUE) Add the number of samples to
-levels names
-@param rarefy_nb_seqs Rarefy each sample (before merging if merge_sample_by is set)
+of the physeq object.}
+
+\item{add_nb_samples}{(logical, default TRUE) Add the number of samples to
+levels names}
+
+\item{rarefy_nb_seqs}{Rarefy each sample (before merging if merge_sample_by is set)
 using \code{phyloseq::rarefy_even_depth()}}
 
 \item{...}{other arguments for the \code{ggVennDiagram::ggVennDiagram} function
@@ -56,7 +58,8 @@ for ex. \code{+ scale_fill_distiller(palette = "BuPu", direction = 1)}
 \examples{
 data(data_fungi)
 ggvenn_pq(data_fungi, fact = "Height")
-ggvenn_pq(data_fungi, fact = "Height") + ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
+ggvenn_pq(data_fungi, fact = "Height") + 
+  ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
 pl <- ggvenn_pq(data_fungi, fact = "Height", split_by = "Time")
 for (i in 1:length(pl)) {
   p <- pl[[i]] +

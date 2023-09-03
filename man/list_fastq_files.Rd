@@ -8,8 +8,8 @@ list_fastq_files(
   path,
   paired_end = TRUE,
   pattern = "fastq",
-  pattern_r1 = "_R1_",
-  pattern_r2 = "_R2_",
+  pattern_R1 = "_R1_",
+  pattern_R2 = "_R2_",
   nb_files = Inf
 )
 }
@@ -20,11 +20,11 @@ list_fastq_files(
 
 \item{pattern}{a pattern to filter files (passed on to list.files function).}
 
-\item{nb_files}{the number of fastq files to list (default FALSE)}
-
 \item{pattern_R1}{a pattern to filter R1 files (default "\emph{R1}")}
 
 \item{pattern_R2}{a pattern to filter R2 files (default "\emph{R2}")}
+
+\item{nb_files}{the number of fastq files to list (default FALSE)}
 }
 \value{
 a list of one (single end) or two (paired end) list of files
@@ -35,7 +35,7 @@ files are sorted by names (default behavior of \code{list.files()})
 }
 \examples{
 list_fastq_files("inst/extdata")
-list_fastq_files("inst/extdata", paired_end = F, pattern_r1 = "")
+list_fastq_files("inst/extdata", paired_end = F, pattern_R1 = "")
 
 }
 \author{

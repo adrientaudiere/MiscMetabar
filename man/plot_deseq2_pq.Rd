@@ -38,7 +38,9 @@ value other than 0.1, alpha should be set to that value.}
 
 \item{taxolev}{taxonomic level of interest}
 
-\item{select_taxa}{logical vector to select taxa to plot.}
+\item{select_taxa}{Either the name of the taxa (in the form of \code{\link[DESeq2:results]{DESeq2::results()}})
+or a logical vector (length of the results from \code{\link[DESeq2:results]{DESeq2::results()}}) to select taxa
+to plot.}
 
 \item{color_tax}{taxonomic level used for color or a
 color vector.}
@@ -75,6 +77,10 @@ plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
 plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
   tax_table = GP@tax_table, color_tax = "Kingdom",
   alpha = 0.7
+)
+plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
+  tax_table = GP@tax_table, color_tax = "Class",
+  select_taxa = c("522457", "271582")
 )
 }
 \seealso{

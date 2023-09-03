@@ -29,6 +29,9 @@ using the \code{phyloseq} package.}
 If set to TRUE, empty samples and empty ASV are discarded
 after filtering.}
 
+\item{add_info_to_taxtable}{(logical, default TRUE) Does the blast information
+are added to the taxtable ?}
+
 \item{id_filter}{(default: 90) cut of in identity percent to keep result}
 
 \item{bit_score_filter}{(default: 50) cut of in bit score to keep result
