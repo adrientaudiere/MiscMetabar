@@ -532,7 +532,6 @@ asv2otu <- function(physeq = NULL,
         paste0(tempdir(), "/", "cluster.fasta"),
         " --uc ",
         paste0(tempdir(), "/", "temp.uc")
-
       ),
       stdout = TRUE,
       stderr = TRUE

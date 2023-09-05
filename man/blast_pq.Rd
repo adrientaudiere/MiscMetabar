@@ -18,7 +18,8 @@ blast_pq(
   score_filter = TRUE,
   nproc = 1,
   args_makedb = NULL,
-  args_blastn = NULL
+  args_blastn = NULL,
+  keep_temporary_files = FALSE
 )
 }
 \arguments{
@@ -59,6 +60,14 @@ for blastn command)}
 \item{args_makedb}{Additional parameters parse to makeblastdb command}
 
 \item{args_blastn}{Additional parameters parse to blastn command}
+
+\item{keep_temporary_files}{(logical, default: FALSE) Do we keep temporary files
+\itemize{
+\item db.fasta (refseq transformed into a database)
+\item dbase list of files (output of blastn)
+\item blast_result.txt the summary result of blastn using
+\verb{-outfmt "6 qseqid qlen sseqid slen length pident evalue bitscore qcovs"}
+}}
 }
 \value{
 a blast table

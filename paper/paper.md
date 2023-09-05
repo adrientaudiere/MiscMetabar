@@ -52,6 +52,11 @@ We do not try to reinvent the wheel and prefer to rely on existing packages and 
 
 Some packages propose a shiny interface (such as [animalcules](https://github.com/compbiomed/animalcules) ([@zhao2021]) and [`microViz`](https://david-barnett.github.io/microViz/) ([@Barnett2021])) or web-based plateform ([MicrobiomeAnalystR](https://www.microbiomeanalyst.ca) [@lu2023]) useful for fast exploration and for code-beginner biologists.
 
+
+![Table 1](figures_svg/table_1.svg)
+
+
+
 # Features
 
 ## Description

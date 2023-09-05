@@ -18,7 +18,8 @@ blast_to_phyloseq(
   list_no_output_query = FALSE,
   args_makedb = NULL,
   args_blastn = NULL,
-  nproc = 1
+  nproc = 1,
+  keep_temporary_files = FALSE
 )
 }
 \arguments{
@@ -61,6 +62,14 @@ query sequences for which \code{blastn} does not find any correspondence?}
 \item{nproc}{(default: 1)
 Set to number of cpus/processors to use for blast (args -num_threads
 for blastn command)}
+
+\item{keep_temporary_files}{(logical, default: FALSE) Do we keep temporary files
+\itemize{
+\item db.fasta (refseq transformed into a database)
+\item dbase list of files (output of blastn)
+\item blast_result.txt the summary result of blastn using
+\verb{-outfmt "6 qseqid qlen sseqid slen length pident evalue bitscore qcovs"}
+}}
 }
 \value{
 the blast table
