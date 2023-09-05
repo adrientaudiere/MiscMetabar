@@ -81,7 +81,6 @@ dist_bycol <- function(x,
       res$null[[n]][i] <-
         vegan::vegdist(rbind(x[, i], y_null[, i]), method = method, ...)
     }
-    message(n)
   }
 
   names(res$obs) <- colnames(x)
@@ -148,8 +147,8 @@ get_file_extension <- function(file) {
 #'
 #' @param x (required): value
 #' @param y if y is set, compute the division of x by y
-#' @param accuracy: number of digits (number of digits after zero)
-#' @param add_symbol: if set to TRUE add the % symbol to the value
+#' @param accuracy number of digits (number of digits after zero)
+#' @param add_symbol if set to TRUE add the % symbol to the value
 #' @description
 #' `r lifecycle::badge("maturing")`
 #'
@@ -224,3 +223,29 @@ count_seq <- function(file_path = NULL, folder_path = NULL, pattern = NULL) {
   }
   return(as.numeric(seq_nb))
 }
+
+
+
+#' Count sequences in fasta or fastq file
+#' @return a color palette
+#' @param n a number of colors
+#' @author Thibaut Jombart
+#' @export
+#'
+funky_color <-
+  grDevices::colorRampPalette(
+    c(
+      "#A6CEE3",
+      "#1F78B4",
+      "#B2DF8A",
+      "#33A02C",
+      "#FB9A99",
+      "#E31A1C",
+      "#FDBF6F",
+      "#FF7F00",
+      "#CAB2D6",
+      "#6A3D9A",
+      "#FFFF99",
+      "#B15928"
+    )
+  )

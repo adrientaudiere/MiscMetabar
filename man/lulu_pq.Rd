@@ -10,7 +10,8 @@ lulu_pq(
   id = 0.84,
   vsearchpath = "vsearch",
   verbose = FALSE,
-  clean_pq = FALSE
+  clean_pq = FALSE,
+  keep_temporary_files = FALSE
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ Set to number of cpus/processors to use for the clustering}
 
 \item{clean_pq}{(logical) if true, empty samples and empty ASV are discarded
 before clustering.}
+
+\item{keep_temporary_files}{(logical, default: FALSE) Do we keep temporary files}
 }
 \value{
 a list of for object

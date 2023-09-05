@@ -129,24 +129,6 @@ accu_plot <-
             levels(factor_interm)[i], ])
       }
 
-      funky_color <-
-        grDevices::colorRampPalette(
-          c(
-            "#A6CEE3",
-            "#1F78B4",
-            "#B2DF8A",
-            "#33A02C",
-            "#FB9A99",
-            "#E31A1C",
-            "#FDBF6F",
-            "#FF7F00",
-            "#CAB2D6",
-            "#6A3D9A",
-            "#FFFF99",
-            "#B15928"
-          )
-        )
-
       if (is.null(col)) {
         col <- funky_color(nlevels(factor_interm) + 1)
       }
@@ -164,11 +146,11 @@ accu_plot <-
 
       plot(
         accu_all,
-        ci_type = "poly",
-        ci_col = ci_col[1],
+        # ci_type = "poly",
+        # ci_col = ci_col[1],
         col = col[1],
         lwd = lwd,
-        ci_lty = 0,
+        # ci_lty = 0,
         xlab = "Sample",
         ...
       )
@@ -176,11 +158,11 @@ accu_plot <-
       for (i in 1:nlevels(factor_interm)) {
         graphics::lines(
           accu[[i]],
-          ci_type = "poly",
-          ci_col = ci_col[i + 1],
+          # ci_type = "poly",
+          # ci_col = ci_col[i + 1],
           col = col[i + 1],
-          lwd = lwd,
-          ci_lty = 0
+          lwd = lwd # ,
+          # ci_lty = 0
         )
       }
       if (leg) {
@@ -482,24 +464,6 @@ circle_pq <-
       start_degree <- 170
     }
 
-    funky_color <-
-      grDevices::colorRampPalette(
-        c(
-          "#A6CEE3",
-          "#1F78B4",
-          "#B2DF8A",
-          "#33A02C",
-          "#FB9A99",
-          "#E31A1C",
-          "#FDBF6F",
-          "#FF7F00",
-          "#CAB2D6",
-          "#6A3D9A",
-          "#FFFF99",
-          "#B15928"
-        )
-      )
-
     if (is.null(grid_col)) {
       grid_col <-
         c(funky_color(nrow(otu_table_ech)), rep("grey", ncol(otu_table_ech)))
@@ -751,15 +715,15 @@ sankey_pq <-
 #' Please use print_values = FALSE if you want to add ggplot function
 #' (cf example).
 #'
-#'
+#' @examples
 #' data("enterotype")
-#' venn_pq(enterotype, fact = 'SeqTech')
-#' venn_pq(enterotype, fact = 'ClinicalStatus')
-#' venn_pq(enterotype, fact = 'Nationality', print_values = F)
-#' venn_pq(enterotype, fact = 'ClinicalStatus', print_values = F) +
-#' scale_fill_hue()
-#' venn_pq(enterotype, fact = 'ClinicalStatus', print_values = F) +
-#' scale_fill_hue()
+#' venn_pq(enterotype, fact = "SeqTech")
+#' venn_pq(enterotype, fact = "ClinicalStatus")
+#' venn_pq(enterotype, fact = "Nationality", print_values = F)
+#' venn_pq(enterotype, fact = "ClinicalStatus", print_values = F) +
+#'   scale_fill_hue()
+#' venn_pq(enterotype, fact = "ClinicalStatus", print_values = F) +
+#'   scale_fill_hue()
 #'
 #' @return A \code{\link{ggplot}}2 plot representing Venn diagramm of
 #' modalities of the argument \code{factor}
@@ -897,33 +861,32 @@ venn_pq <-
 
 
       grid::grid.newpage()
-      vp1 <- viewport(
+      vp1 <- grid::viewport(
         width = 0.75,
         height = 1,
         x = 0.375,
         y = .5
       )
       vpleg <-
-        viewport(
+        grid::viewport(
           width = 0.25,
           height = 0.5,
           x = 0.85,
           y = 0.75
         )
-      subvp <- viewport(
+      subvp <- grid::viewport(
         width = 0.3,
         height = 0.3,
         x = 0.85,
         y = 0.25
       )
       print(p + theme(legend.position = "none"), vp = vp1)
-      upViewport(0)
-      pushViewport(vpleg)
-      grid.draw(legend)
-      # Make the new viewport active and draw
-      upViewport(0)
-      pushViewport(subvp)
-      grid.draw(gridExtra::tableGrob(table_value[, c(1, 2)], rows = NULL))
+      grid::upViewport(0)
+      grid::pushViewport(vpleg)
+      grid::grid.draw(legend)
+      grid::upViewport(0)
+      grid::pushViewport(subvp)
+      grid::grid.draw(gridExtra::tableGrob(table_value[, c(1, 2)], rows = NULL))
     } else {
       return(p)
     }
@@ -943,11 +906,6 @@ venn_pq <-
 #' @inheritParams clean_pq
 #' @param fact (required): Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}.
-#' @param merge_sample_by if not `NULL` samples of
-#'   physeq are merged using the vector set by `merge_sample_by`. This
-#'   merging used the [speedyseq::merge_samples2()].
-#'   If `merge_sample_by` is equal to `fact` args
-#'   it give the same result as if `merge_sample_by` is NULL.
 #' @param min_nb_seq minimum number of sequences by OTUs by
 #'   samples to take into count this OTUs in this sample. For example,
 #'   if min_nb_seq=2,each value of 2 or less in the OTU table
@@ -957,9 +915,9 @@ venn_pq <-
 #' @param  split_by Split into multiple plot using variable split_by.
 #'   The name of a variable must be present in `sam_data` slot
 #'   of the physeq object.
-#'  @param add_nb_samples (logical, default TRUE) Add the number of samples to
+#' @param add_nb_samples (logical, default TRUE) Add the number of samples to
 #'    levels names
-#'  @param rarefy_nb_seqs Rarefy each sample (before merging if merge_sample_by is set)
+#' @param rarefy_nb_seqs Rarefy each sample (before merging if merge_sample_by is set)
 #'    using `phyloseq::rarefy_even_depth()`
 #' @param ... other arguments for the `ggVennDiagram::ggVennDiagram` function
 #'   for ex. `category.names`.
@@ -970,7 +928,8 @@ venn_pq <-
 #' @examples
 #' data(data_fungi)
 #' ggvenn_pq(data_fungi, fact = "Height")
-#' ggvenn_pq(data_fungi, fact = "Height") + ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
+#' ggvenn_pq(data_fungi, fact = "Height") +
+#'   ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
 #' pl <- ggvenn_pq(data_fungi, fact = "Height", split_by = "Time")
 #' for (i in 1:length(pl)) {
 #'   p <- pl[[i]] +
@@ -988,7 +947,6 @@ venn_pq <-
 
 ggvenn_pq <- function(physeq = NULL,
                       fact = NULL,
-                      merge_sample_by = NULL,
                       min_nb_seq = 0,
                       taxonomic_rank = NULL,
                       split_by = NULL,
@@ -999,14 +957,8 @@ ggvenn_pq <- function(physeq = NULL,
     physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
   }
 
-
   if (rarefy_nb_seqs) {
     physeq <- rarefy_even_depth(physeq)
-    physeq <- clean_pq(physeq)
-  }
-
-  if (!is.null(merge_sample_by)) {
-    physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
     physeq <- clean_pq(physeq)
   }
 
@@ -1016,8 +968,8 @@ ggvenn_pq <- function(physeq = NULL,
 
   for (f in levels(physeq@sam_data[[fact]])) {
     newphyseq <- physeq
-    newDF <- newphyseq@sam_data[newphyseq@sam_data[[fact]] == f, ]
-    sample_data(newphyseq) <- sample_data(newDF)
+    new_DF <- newphyseq@sam_data[newphyseq@sam_data[[fact]] == f, ]
+    sample_data(newphyseq) <- sample_data(new_DF)
     if (is.null(taxonomic_rank)) {
       res[[f]] <- colnames(newphyseq@otu_table[
         ,
@@ -1025,12 +977,12 @@ ggvenn_pq <- function(physeq = NULL,
       ])
     } else {
       res[[f]] <-
-        as.character(na.exclude(unique(newphyseq@tax_table[
+        as.character(stats::na.exclude(unique(newphyseq@tax_table[
           colSums(newphyseq@otu_table) > min_nb_seq,
           taxonomic_rank
         ])))
     }
-    nb_samples <- c(nb_samples, sum(physeq@sam_data[[fact]] == f, na.rm = T))
+    nb_samples <- c(nb_samples, sum(physeq@sam_data[[fact]] == f, na.rm = TRUE))
     nb_seq <- c(nb_seq, sum(physeq@otu_table[physeq@sam_data[[fact]] == f, ], na.rm = TRUE))
   }
 
@@ -1062,7 +1014,6 @@ ggvenn_pq <- function(physeq = NULL,
       p[[moda]] <- ggvenn_pq(
         physeq_interm,
         fact = fact,
-        merge_sample_by = NULL,
         min_nb_seq = 0,
         taxonomic_rank = NULL
       ) +
@@ -1121,7 +1072,7 @@ multiplot <-
     } else {
       # Set up the page
       grid::grid.newpage()
-      grid::pushViewport(viewport(layout = grid.layout(
+      grid::pushViewport(grid::viewport(layout = grid::grid.layout(
         nrow(layout),
         ncol(layout)
       )))
@@ -1133,7 +1084,7 @@ multiplot <-
           as.data.frame(which(layout == i, arr.ind = TRUE))
 
         print(plots[[i]],
-          vp = viewport(
+          vp = grid::viewport(
             layout.pos.row = matchidx$row,
             layout.pos.col = matchidx$col
           )
@@ -1176,7 +1127,9 @@ multiplot <-
 #'
 #' # Artificially modify data_fungi to force alpha-diversity effect
 #' data_fungi_modif <- clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height)))
-#' data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <- data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] + sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
+#' data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <-
+#'   data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] +
+#'   sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
 #' p2 <- hill_pq(data_fungi_modif, "Height", letters = TRUE)
 #'
 hill_pq <-
@@ -1240,10 +1193,12 @@ hill_pq <-
       letters <-
         multcompView::multcompLetters(data_h0_pval, reversed = TRUE)$Letters
 
+      dt <- data.frame(variab = names(letters), letters = letters)
+      names(dt) <- c(var, "letters")
       data_letters <- p_0$data %>%
         group_by(!!var) %>%
         summarize(max_Hill = max(Hill_0)) %>%
-        inner_join(data.frame("Height" = names(letters), letters = letters))
+        inner_join(dt)
 
       p_0 <- p_0 +
         geom_label(
@@ -1267,10 +1222,12 @@ hill_pq <-
       letters <-
         multcompView::multcompLetters(data_h1_pval, reversed = TRUE)$Letters
 
+      dt <- data.frame(variab = names(letters), letters = letters)
+      names(dt) <- c(var, "letters")
       data_letters <- p_1$data %>%
         group_by(!!var) %>%
         summarize(max_Hill = max(Hill_1)) %>%
-        inner_join(data.frame("Height" = names(letters), letters = letters))
+        inner_join(dt)
 
       p_1 <- p_1 +
         geom_label(
@@ -1294,10 +1251,12 @@ hill_pq <-
       letters <-
         multcompView::multcompLetters(data_h2_pval, reversed = TRUE)$Letters
 
+      dt <- data.frame(variab = names(letters), letters = letters)
+      names(dt) <- c(var, "letters")
       data_letters <- p_2$data %>%
         group_by(!!var) %>%
         summarize(max_Hill = max(Hill_2)) %>%
-        inner_join(data.frame("Height" = names(letters), letters = letters))
+        inner_join(dt)
 
       p_2 <- p_2 +
         geom_label(
@@ -1339,6 +1298,7 @@ hill_pq <-
 #' @examples
 #' data(data_fungi)
 #' summary_plot_pq(data_fungi)
+#' summary_plot_pq(data_fungi, add_info = FALSE) + scale_fill_viridis_d()
 #' @return A ggplot2 object
 #' @export
 summary_plot_pq <- function(physeq,
@@ -1377,9 +1337,14 @@ summary_plot_pq <- function(physeq,
       ),
       paste(
         "Sequences length:\n",
-        round(mean(Biostrings::width(physeq@refseq)), 2),
-        "+/-",
-        round(stats::sd(Biostrings::width(physeq@refseq)), 2)
+        ifelse(is.null(physeq@refseq),
+          "No refseq slot",
+          paste(
+            round(mean(Biostrings::width(physeq@refseq)), 2),
+            "+/-",
+            round(stats::sd(Biostrings::width(physeq@refseq)), 2)
+          )
+        )
       )
     )
   )
@@ -1476,7 +1441,10 @@ summary_plot_pq <- function(physeq,
             " ASV)",
             "\n",
             "Min seq length: ",
-            min(Biostrings::width(physeq@refseq)),
+            ifelse(is.null(physeq@refseq),
+              "No refseq slot",
+              min(Biostrings::width(physeq@refseq))
+            ),
             "\n",
             "Max nb seq 1 taxa in 1 sample: ",
             max(otu_tab),
@@ -1575,6 +1543,7 @@ rotl_pq <- function(physeq,
 #'
 #' @examples
 #' \dontrun{
+#' library("metacoder")
 #' data("GlobalPatterns")
 #' GPsubset <- subset_taxa(
 #'   GlobalPatterns,
@@ -1599,13 +1568,9 @@ rotl_pq <- function(physeq,
 #' }
 #'
 heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
-  if (require(metacoder)) {
-    pak::pkg_install("metacoder")
-  }
   if (!is.null(taxonomic_level)) {
     physeq@tax_table <- physeq@tax_table[, taxonomic_level]
   }
-
   data_metacoder <- metacoder::parse_phyloseq(physeq)
   metacoder::heat_tree(data_metacoder, ...)
 }
@@ -1635,7 +1600,7 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #'   If a vector of two values are set. The first value is for the left side.
 #'   and the second value for the right one. If one value is set,
 #'   this value is used for both side.
-#' @param geomLabel (default: FALSE, logical) if TRUE use the [ggplot2::geom_label()] function
+#' @param geom_label (default: FALSE, logical) if TRUE use the [ggplot2::geom_label()] function
 #'   instead of [ggplot2::geom_text()] to indicate the numbers of sequences.
 #' @param text_size size for the number of sequences
 #' @param size_names size for the names of the 2 samples
@@ -1648,7 +1613,6 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #' @param plotly_version If TRUE, use [plotly::ggplotly()] to return
 #'   a interactive ggplot.
 #' @param ... other arguments for the ggplot function
-#' @importFrom stats reorder
 #' @return A plot
 #'
 #' @examples
@@ -1672,7 +1636,7 @@ biplot_pq <- function(physeq,
                       right_col = "#1d2949",
                       log_10 = TRUE,
                       nudge_y = c(0.3, 0.3),
-                      geomLabel = FALSE,
+                      geom_label = FALSE,
                       text_size = 3,
                       size_names = 5,
                       y_names = NA,
@@ -1773,7 +1737,7 @@ biplot_pq <- function(physeq,
   p <- mdf %>%
     ggplot(
       aes(
-        x = reorder(OTU, Abundance),
+        x = stats::reorder(OTU, Abundance),
         y = Ab,
         fill = modality,
         names = OTU,
@@ -1822,7 +1786,7 @@ biplot_pq <- function(physeq,
     ylim(min(mdf$Ab), max(mdf$Ab) * 1.1)
 
 
-  if (geomLabel) {
+  if (geom_label) {
     p <- p +
       geom_label(
         aes(
@@ -1905,7 +1869,7 @@ multi_biplot_pq <- function(physeq,
                             split_by = NULL,
                             na_remove = TRUE,
                             ...) {
-  if (is.null(split_by) | is.null(physeq@sam_data[[split_by]])) {
+  if (is.null(split_by) || is.null(physeq@sam_data[[split_by]])) {
     stop("split_by must be set and must be a variable in physeq@sam_data")
   }
   if (na_remove) {
@@ -1920,7 +1884,7 @@ multi_biplot_pq <- function(physeq,
   }
 
   names_split_by <- names(table(physeq@sam_data[[split_by]]))
-  couples <- combn(n, 2)
+  couples <- combn(names_split_by, 2)
 
   p <- list()
   for (c in 1:ncol(couples)) {
@@ -2040,7 +2004,7 @@ plot_tax_pq <-
       mdf <- mdf %>% mutate(percent = Abundance / sum(Abundance))
 
       p_seq <-
-        ggplot(mdf, aes_string(x = fact, y = "Abundance", fill = taxa_fill)) +
+        ggplot(mdf, aes(x = .data[[fact]], y = .data[["Abundance"]], fill = .data[[taxa_fill]])) +
         geom_bar(
           aes(fill = .data[[taxa_fill]]),
           stat = "identity",
@@ -2069,7 +2033,7 @@ plot_tax_pq <-
       mdf <- mdf %>% mutate(percent = Abundance / sum(Abundance))
 
       p_asv <-
-        ggplot(mdf, aes_string(x = fact, y = "Abundance", fill = taxa_fill)) +
+        ggplot(mdf, aes(x = .data[[fact]], y = .data[["Abundance"]], fill = .data[[taxa_fill]])) +
         geom_bar(
           aes(fill = .data[[taxa_fill]]),
           stat = "identity",
@@ -2082,17 +2046,32 @@ plot_tax_pq <-
     }
 
     if (add_info) {
-      p_seq <- p_seq +
-        labs(
-          title = paste("Total nb of sequences: ", sum(physeq_old@otu_table)),
-          subtitle = paste0(
-            "Nb of samples: '",
-            paste0(names(table(physeq_old@sam_data[[fact]])),
-              sep = "' : ",
-              table(physeq_old@sam_data[[fact]]), collapse = " - '"
+      if (type %in% c("nb_seq", "both")) {
+        p_seq <- p_seq +
+          labs(
+            title = paste("Total nb of sequences: ", sum(physeq_old@otu_table)),
+            subtitle = paste0(
+              "Nb of samples: '",
+              paste0(names(table(physeq_old@sam_data[[fact]])),
+                sep = "' : ",
+                table(physeq_old@sam_data[[fact]]), collapse = " - '"
+              )
             )
           )
-        )
+      }
+      if (type %in% c("nb_asv", "both")) {
+        p_asv <- p_asv +
+          labs(
+            title = paste("Total nb of sequences: ", sum(physeq_old@otu_table)),
+            subtitle = paste0(
+              "Nb of samples: '",
+              paste0(names(table(physeq_old@sam_data[[fact]])),
+                sep = "' : ",
+                table(physeq_old@sam_data[[fact]]), collapse = " - '"
+              )
+            )
+          )
+      }
     }
 
     if (type == "nb_seq") {
@@ -2127,10 +2106,6 @@ tsne_pq <-
            theta = 0.0,
            perplexity = 30,
            ...) {
-    if (!require("Rtsne")) {
-      install.packages("Rtsne")
-    }
-
     physeq <- clean_pq(
       physeq,
       force_taxa_as_rows = TRUE,
@@ -2167,8 +2142,8 @@ tsne_pq <-
 #' @param fact Name of the column in `physeq@sam_data` used to color points and compute ellipses.
 #' @param ellipse_level The level used in stat_ellipse. Set to NULL to discard ellipse (default = 0.95)
 #' @param plot_dims A vector of 2 values defining the rank of dimension to plot (default: c(1,2))
-#' @param filter_na_fact (logical) Does the samples with NA values in fact are removed? (default: true)
-#' @param force_factor Force the fact column to be a factor.
+#' @param na_remove (logical, default TRUE) Does the samples with NA values in fact are removed? (default: true)
+#' @param force_factor (logical, default TRUE) Force the fact column to be a factor.
 #' @param ... : other arguments passed on to `Rtsne::Rtsne()`
 #'
 #' @return
@@ -2180,7 +2155,7 @@ tsne_pq <-
 #' @examples
 #' plot_tsne_pq(data_fungi, fact = "Height", perplexity = 15)
 #' plot_tsne_pq(data_fungi, fact = "Time") + geom_label(aes(label = Sample_id, fill = Time))
-#' plot_tsne_pq(data_fungi, fact = "Time", filter_na_fact = FALSE, force_factor = FALSE)
+#' plot_tsne_pq(data_fungi, fact = "Time", na_remove = FALSE, force_factor = FALSE)
 plot_tsne_pq <- function(physeq,
                          method = "bray",
                          dims = 2,
@@ -2189,7 +2164,7 @@ plot_tsne_pq <- function(physeq,
                          fact = NA,
                          ellipse_level = 0.95,
                          plot_dims = c(1, 2),
-                         filter_na_fact = TRUE,
+                         na_remove = TRUE,
                          force_factor = TRUE,
                          ...) {
   if (!is.factor(physeq@sam_data[[fact]]) &&
@@ -2197,7 +2172,7 @@ plot_tsne_pq <- function(physeq,
     physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
   }
 
-  if (filter_na_fact && !is.na(fact)) {
+  if (na_remove && !is.na(fact)) {
     physeq <- subset_samples_pq(physeq, !is.na(physeq@sam_data[[fact]]))
   }
 
@@ -2221,12 +2196,12 @@ plot_tsne_pq <- function(physeq,
 
 
   g <-
-    ggplot(data = df, aes_string("res_tSNE_A", "res_tSNE_B", group = fact)) +
+    ggplot(data = df, aes(.data[["res_tSNE_A"]], .data[["res_tSNE_B"]], group = .data[[fact]])) +
     xlab(paste0("Dimension ", plot_dims[1], " of tSNE analysis")) +
     ylab(paste0("Dimension ", plot_dims[2], " of tSNE analysis"))
 
   g <- g + geom_point(
-    aes_string(fill = fact),
+    aes(fill = .data[[fact]]),
     shape = 21,
     color = "black",
     size = 3,
@@ -2235,7 +2210,7 @@ plot_tsne_pq <- function(physeq,
 
   if (!is.null(ellipse_level) && !is.na(fact)) {
     g <-
-      g + stat_ellipse(aes_string(color = fact), level = ellipse_level)
+      g + stat_ellipse(aes(color = .data[[fact]]), level = ellipse_level)
   }
 
   return(g)
@@ -2273,3 +2248,39 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 
   SRS::SRScurve(df, ...)
 }
+
+
+#' Visualization of two samples for comparison
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' @inheritParams clean_pq
+#' @param merge_sample_by (default: NULL) if not `NULL` samples of
+#'   physeq are merged using the vector set by `merge_sample_by`. This
+#'   merging used the [speedyseq::merge_samples2()]. In the case of
+#'   [biplot_pq()] this must be a factor with two levels only.
+#' @param ... other arguments for the ggplot function
+#' @return A object of class XXX
+#' @export
+#'
+#' @examples
+#' library("iNEXT")
+#' iNEXT_pq(data_fungi, merge_sample_by="Height", q=1, datatype="abundance", nboot=5)
+#' ggiNEXT(res_iNEXT)
+#' ggiNEXT(res_iNEXT, type = 2)
+#' ggiNEXT(res_iNEXT, type = 3)
+#' 
+#' @author Adrien Taudière
+#'
+#'
+iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...){
+  if (!is.null(merge_sample_by)) {
+    physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
+    physeq <- clean_pq(physeq, force_taxa_as_columns = TRUE)
+  }
+
+  df <- data.frame(t(as.matrix(unclass(physeq@otu_table))))
+  res_iNEXT <- iNEXT::iNEXT(df, ...)
+}
+
+

@@ -11,7 +11,8 @@ subset_taxa_pq(physeq, condition, verbose = TRUE, clean_pq = TRUE)
 using the \code{phyloseq} package.}
 
 \item{condition}{A named boolean vector to subset taxa. Length must fit
-the number of taxa and names must match taxa_names}
+the number of taxa and names must match taxa_names. Can also be a
+condition using a column of the tax_table slot (see exemples).}
 
 \item{verbose}{(logical) Informations are printed}
 
@@ -30,4 +31,13 @@ Subset taxa using a conditional named boolean vector.
 The main objective of this function is to complete the \code{\link[phyloseq:subset_taxa-methods]{phyloseq::subset_taxa()}}
 function by propose a more easy way of subset_taxa using a named boolean vector.
 Names must match taxa_names.
+}
+\examples{
+data(data_fungi)
+subset_taxa_pq(data_fungi, data_fungi@tax_table[, "Phylum"] == "Ascomycota")
+
+cond_taxa <- grepl("Endophyte", data_fungi@tax_table[, "Guild"])
+names(cond_taxa) <- taxa_names(data_fungi)
+subset_taxa_pq(data_fungi, cond_taxa)
+
 }

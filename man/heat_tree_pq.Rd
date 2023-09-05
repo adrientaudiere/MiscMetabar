@@ -24,6 +24,7 @@ A plot
 }
 \examples{
 \dontrun{
+library("metacoder")
 data("GlobalPatterns")
 GPsubset <- subset_taxa(
   GlobalPatterns,

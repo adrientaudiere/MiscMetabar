@@ -8,7 +8,6 @@
 ggvenn_pq(
   physeq = NULL,
   fact = NULL,
-  merge_sample_by = NULL,
   min_nb_seq = 0,
   taxonomic_rank = NULL,
   split_by = NULL,
@@ -24,12 +23,6 @@ using the \code{phyloseq} package.}
 \item{fact}{(required): Name of the factor to cluster samples by modalities.
 Need to be in \code{physeq@sam_data}.}
 
-\item{merge_sample_by}{if not \code{NULL} samples of
-physeq are merged using the vector set by \code{merge_sample_by}. This
-merging used the \code{\link[speedyseq:merge_samples2]{speedyseq::merge_samples2()}}.
-If \code{merge_sample_by} is equal to \code{fact} args
-it give the same result as if \code{merge_sample_by} is NULL.}
-
 \item{min_nb_seq}{minimum number of sequences by OTUs by
 samples to take into count this OTUs in this sample. For example,
 if min_nb_seq=2,each value of 2 or less in the OTU table
@@ -40,10 +33,12 @@ to count. If set to Null (the default) the number of OTUs is counted.}
 
 \item{split_by}{Split into multiple plot using variable split_by.
 The name of a variable must be present in \code{sam_data} slot
-of the physeq object.
-@param add_nb_samples (logical, default TRUE) Add the number of samples to
-levels names
-@param rarefy_nb_seqs Rarefy each sample (before merging if merge_sample_by is set)
+of the physeq object.}
+
+\item{add_nb_samples}{(logical, default TRUE) Add the number of samples to
+levels names}
+
+\item{rarefy_nb_seqs}{Rarefy each sample (before merging if merge_sample_by is set)
 using \code{phyloseq::rarefy_even_depth()}}
 
 \item{...}{other arguments for the \code{ggVennDiagram::ggVennDiagram} function
@@ -63,7 +58,8 @@ for ex. \code{+ scale_fill_distiller(palette = "BuPu", direction = 1)}
 \examples{
 data(data_fungi)
 ggvenn_pq(data_fungi, fact = "Height")
-ggvenn_pq(data_fungi, fact = "Height") + ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
+ggvenn_pq(data_fungi, fact = "Height") +
+  ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
 pl <- ggvenn_pq(data_fungi, fact = "Height", split_by = "Time")
 for (i in 1:length(pl)) {
   p <- pl[[i]] +

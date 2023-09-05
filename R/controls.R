@@ -1,4 +1,46 @@
 ################################################################################
+#' Search for exact matching of sequences using complement, reverse and reverse-complement
+#'
+#' `r lifecycle::badge("experimental")`
+#'
+#' @inheritParams clean_pq
+#' @param sequences A DNAStringSet object of sequences to search for.
+#' @return A list of data-frames for each input sequences with the name, the sequences and the
+#'   number of occurences of the original sequence, the complement sequence,
+#'   the reverse sequence and the reverse-complement sequence.
+#' @export
+#'
+#' @examples
+#' data("data_fungi")
+# search_primers <- search_seq_pq(data_fungi, sequences = DNAStringSet(c("TTGAACGCACATTGCGCC","ATCCCTACCTGATCCGAG")))
+#' @author Adrien Taudière
+
+search_exact_seq_pq <- function(physeq, sequences) {
+  res <- list()
+  for (i in seq_along(sequences)) {
+    original <- sequences[[i]]
+    rev <- reverse(sequences[[i]])
+    rev_comp <- reverseComplement(sequences[[i]])
+    comp <- complement(sequences[[i]])
+
+    original_count <- sum(grepl(original, physeq@refseq))
+    rev_count <- sum(grepl(rev, physeq@refseq))
+    rev_comp_count <- sum(grepl(rev_comp, physeq@refseq))
+    comp_count <- sum(grepl(comp, physeq@refseq))
+    res[[i]] <- data.frame(
+      c("original", as.character(original), original_count),
+      c("rev", as.character(rev), rev_count),
+      c("rev_comp", as.character(rev_comp), rev_comp_count),
+      c("comp", as.character(comp), comp_count)
+    )
+    colnames(res[[i]]) <- c("Names", "Sequences", "Number of occurences")
+  }
+  return(res)
+}
+
+
+
+################################################################################
 #' Calculate ecological distance among positive controls vs
 #'   distance for all samples
 #'
@@ -27,7 +69,10 @@
 #' sam_name_factice <- gsub("TS1_V2", "TS10_V2", sample_names(enterotype))
 #' res_dist_cont <- dist_pos_control(enterotype, sam_name_factice)
 #' hist(unlist(res_dist_cont$distAllSamples))
-#' abline(v = mean(unlist(res_dist_cont$dist_controlontrolSamples), na.rm = T), col = "red", lwd = 3)
+#' abline(
+#'   v = mean(unlist(res_dist_cont$dist_controlontrolSamples), na.rm = TRUE),
+#'   col = "red", lwd = 3
+#' )
 #' @author Adrien Taudière
 
 dist_pos_control <- function(physeq, samples_names, method = "bray") {
@@ -46,10 +91,6 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
     }
   }
   names(dist_control) <- levels(as.factor(samples_names))
-  res$dist_control_samples <- data.frame(
-    "dist_control" =
-      stats::na.omit(dist_control)
-  )
 
   # Compute distance among all samples
   if (taxa_are_rows(physeq)) {

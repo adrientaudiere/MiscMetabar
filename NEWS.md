@@ -1,4 +1,8 @@
-# MiscMetabar 0.35  (in development)
+# MiscMetabar 0.41  (in development)
+
+- Add function `iNEXT_pq()` to calculate hill diversity using the [iNEXT](https://github.com/AnneChao/iNEXT) package.
+
+# MiscMetabar 0.40  
 
 * Add function `multi_biplot_pq()` to visualize a collection of couples of samples for comparison through a list of `biplot_pq()`
 * Add options `add_info`, `na_remove`, and `clean_pq` to `plot_tax_pq()` function
@@ -11,6 +15,16 @@
 * Add a function `add_blast_info()` to add information from `blast_pq()` to the `tax_table` slot of a *phyloseq* object
 * Add option `keep_temporary_files` in `asv2otu()` function
 * Improve the documentation of `asv2otu()` and fix a little bug in the name of the conserved ASV after `asv2otu()`
+* Test coverage largely improved leading to numerous minor bug fixes.
+* Add function `search_exact_seq_pq()` to search for exact matching of sequences using complement, reverse and reverse-complement against a phyloseq object.
+* Add function `add_new_taxonomy_pq()` to add new taxonomic rank to a phyloseq object. For exemple to add taxonomic assignment from a new database.
+* Add a battery of test using `test_that` package and improve code compatibility with cran recommendations.
+
+## BREAKING CHANGES
+* `asv2otu()` with `method="vsearch"` change two default values (to repeat the precedent behavior, use `asv2otu(..., vsearch_cluster_method = "--cluster_fast", tax_adjust = 1)`): 
+  * vsearch_cluster_method = "--cluster_size"
+  * tax_adjust = 0
+
 
 # MiscMetabar 0.34
 

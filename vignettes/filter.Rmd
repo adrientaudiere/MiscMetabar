@@ -18,7 +18,113 @@ knitr::opts_chunk$set(
 library(MiscMetabar)
 ```
 
+## Filter samples
+
+[Phyloseq](https://joey711.github.io/phyloseq/) package already propose a function to select samples (`subset_samples()`), but in some case, the subset internal function is painful. `MiscMetabar` propose a complementary function ([subset_samples_pq()]) which is more versatile but need to be used with caution because the order of the condition must match the orders of the samples.
+
 ```{r}
-# filter_asv_blast()
+data(data_fungi)
+cond_samp <- grepl("A1", data_fungi@sam_data[["Sample_names"]])
+subset_samples_pq(data_fungi, cond_samp)
 ```
 
+## Filter Taxa
+
+### Filter taxa using condition(s)
+
+[Phyloseq](https://joey711.github.io/phyloseq/) package already propose a function to select samples (`subset_taxa()`), but in some case, the subset internal function is painful. `MiscMetabar` propose a complementary function ([subset_taxa_pq()]) which is more versatile and is based on the names of the taxa to match the condition and the taxa in the phyloseq object. In the example code above, we filter fungi from the Phylum "Basidiomycota" using `phyloseq::subset_taxa` and then select only taxa with more than 1000 nb_sequences using [subset_taxa_pq()]
+
+```{r}
+df_basidio <- subset_taxa(data_fungi, Phylum == "Basidiomycota")
+df_basidio_abundant <- subset_taxa_pq(df_basidio, colSums(df_basidio@otu_table) > 1000)
+```
+
+### Filter taxa using blast score against a database
+
+In some cases, we want to select only a given clade of taxon. One solution is to select only taxa with information given by taxonomic assigment (e.g. using the function `dada2::assignTaxonomy()`). However, in some cases, this information lead to false positive and false negative selection. `MiscMetabar` implement an other method relying on [blast](https://blast.ncbi.nlm.nih.gov/) software (Altschul *et al.* 1990 & 1997) and database. The idea is to set a cutoff in four parameters to select only taxa which are close enough to sequences in the database : 
+
+- **id_filter** (default: 90) cut of in identity percent to keep result.
+- **bit_score_filter** (default: 50) cut of in bit score to keep result. The higher the bit-score, the better the sequence similarity. The bit-score is the requires size of a sequence database in which the current match could be found just by chance. The bit-score is a log2 scaled and normalized raw-score. Each increase by one doubles the required database size (2bit-score).
+- **min_cover_filter** (default: 50) cut of in query cover (%) to keep result.
+- **e_value_filter** (default: 1e-30)  cut of in e-value (%) to keep result. The BLAST E-value is the number of expected hits of similar quality (score) that could be found just by chance.
+
+```{r}
+path_db <- system.file("extdata", "1000_sp_UNITE_sh_general_release_dynamic.fasta", package = "MiscMetabar", mustWork = TRUE)
+
+suppressWarnings(blast_error_or_not <- try(system("blastn 2>&1", intern = TRUE), silent = TRUE))
+
+if (class(blast_error_or_not) != "try-error") {
+  
+df_blast_80 <- filter_asv_blast(df_basidio, fasta_for_db = path_db)
+df_blast_50 <- filter_asv_blast(df_basidio, fasta_for_db = path_db, id_filter = 50, e_value_filter = 10, bit_score_filter = 20, min_cover_filter = 20)
+
+track_formattable <-
+  track_wkflow(
+    list(
+      "raw data" = df_basidio,
+      "id_filter = 80" = df_blast_80,
+      "id_filter = 50" = df_blast_50
+    )
+)
+}
+```
+
+```{r}
+if (class(blast_error_or_not) != "try-error") {
+library(formattable)
+formattable(track_formattable, 
+            list(
+              area(col = nb_sequences) ~ color_bar("cyan",  na.rm = T),
+              area(col = nb_clusters) ~ normalize_bar("yellowgreen", na.rm = TRUE, min = 0.3),
+              area(col = nb_samples) ~ normalize_bar("lightpink", na.rm = TRUE, min = 0.3)
+            )
+)
+}
+```
+
+### Filter taxa using a known taxa for control 
+
+To filter out contamination, one solution is to add a proportion of a known taxa which is not present in the environment of the study. In that case we can define some threshold for each sample to discard taxon based on pseudo-abundance. In the example code above, we select taxon using the ASV_50 as control through 6 differents algorithm.
+
+```{r, results='hide'}
+data(data_fungi)
+
+res_seq <- suppressWarnings(subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 50]),
+  method = "cutoff_seq"
+))
+res_mixt <- suppressWarnings(subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 50]),
+  method = "cutoff_mixt"
+))
+res_diff <- suppressWarnings(subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 50]),
+  method = "cutoff_diff", min_diff_for_cutoff = 2
+))
+res_min <- suppressWarnings(subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 50]),
+  method = "min", min_diff_for_cutoff = 2
+))
+res_max <- suppressWarnings(subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 50]),
+  method = "max", min_diff_for_cutoff = 2
+))
+res_mean <- suppressWarnings(subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 50]),
+  method = "mean", min_diff_for_cutoff = 2
+))
+```
+
+```{r}
+track_formattable <- track_wkflow(list("raw data" = data_fungi, 
+                  "cutoff_seq" = res_seq, 
+                  "cutoff_mixt" = res_mixt,
+                  "cutoff_diff" = res_diff,
+                  "min" = res_min,
+                  "max" = res_max,
+                  "mean" = res_mean
+                  )
+                )
+
+formattable(track_formattable, 
+            list(
+              area(col = nb_sequences) ~ color_bar("cyan"),
+              area(col = nb_clusters) ~ normalize_bar("yellowgreen", na.rm = TRUE, min = 0.3),
+              area(col = nb_samples) ~ normalize_bar("lightpink", na.rm = TRUE)
+            )
+)
+```

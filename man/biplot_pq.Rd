@@ -19,7 +19,7 @@ biplot_pq(
   right_col = "#1d2949",
   log_10 = TRUE,
   nudge_y = c(0.3, 0.3),
-  geomLabel = FALSE,
+  geom_label = FALSE,
   text_size = 3,
   size_names = 5,
   y_names = NA,
@@ -66,7 +66,7 @@ If a vector of two values are set. The first value is for the left side.
 and the second value for the right one. If one value is set,
 this value is used for both side.}
 
-\item{geomLabel}{(default: FALSE, logical) if TRUE use the \code{\link[ggplot2:geom_text]{ggplot2::geom_label()}} function
+\item{geom_label}{(default: FALSE, logical) if TRUE use the \code{\link[ggplot2:geom_text]{ggplot2::geom_label()}} function
 instead of \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}} to indicate the numbers of sequences.}
 
 \item{text_size}{size for the number of sequences}

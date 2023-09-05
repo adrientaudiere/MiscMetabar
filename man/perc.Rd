@@ -11,9 +11,9 @@ perc(x, y = NULL, accuracy = 0, add_symbol = FALSE)
 
 \item{y}{if y is set, compute the division of x by y}
 
-\item{accuracy:}{number of digits (number of digits after zero)}
+\item{accuracy}{number of digits (number of digits after zero)}
 
-\item{add_symbol:}{if set to TRUE add the \% symbol to the value}
+\item{add_symbol}{if set to TRUE add the \% symbol to the value}
 }
 \value{
 The percentage value (number or character if add_symbol

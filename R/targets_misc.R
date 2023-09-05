@@ -15,7 +15,7 @@
 #'
 #' @examples
 #' list_fastq_files("inst/extdata")
-#' list_fastq_files("inst/extdata", paired_end = F, pattern_r1 = "")
+#' list_fastq_files("inst/extdata", paired_end = FALSE, pattern_R1 = "")
 #'
 #' @author Adrien Taudière
 
@@ -23,21 +23,21 @@ list_fastq_files <-
   function(path,
            paired_end = TRUE,
            pattern = "fastq",
-           pattern_r1 = "_R1_",
-           pattern_r2 = "_R2_",
+           pattern_R1 = "_R1_",
+           pattern_R2 = "_R2_",
            nb_files = Inf) {
     list_files <- list.files(path, pattern = pattern, full.names = TRUE)
     if (paired_end) {
-      fnfs <- sort(list_files[grepl(list_files, pattern = pattern_r1)])
+      fnfs <- sort(list_files[grepl(list_files, pattern = pattern_R1)])
       fnrs <-
-        sort(list_files[grepl(list_files, pattern = pattern_r2)])
+        sort(list_files[grepl(list_files, pattern = pattern_R2)])
       if (is.finite(nb_files)) {
         fnfs <- fnfs[1:nb_files]
         fnrs <- fnrs[1:nb_files]
       }
       return(list("fnfs" = fnfs, "fnrs" = fnrs))
     } else {
-      fnfs <- sort(list_files[grepl(list_files, pattern = pattern_r1)])
+      fnfs <- sort(list_files[grepl(list_files, pattern = pattern_R1)])
       if (is.finite(nb_files)) {
         fnfs <- fnfs[1:nb_files]
       }
@@ -52,13 +52,10 @@ list_fastq_files <-
 #' @description
 #' `r lifecycle::badge("experimental")`
 #'
-#' @param otu_tab (required) The matrix or otu_table
+#' @inheritParams clean_pq
 #' @param names_of_samples (required) The new names of the samples
-#' @param taxa_are_rows (default: FALSE) Does the taxa are rows or
-#'   columns.
 #'
-#' @return the matrix with new colnames
-#'   (or rownames if `taxa_are_rows` is true)
+#' @return the matrix with new colnames (or rownames if `taxa_are_rows` is true)
 #'
 #' @export
 #' @md
@@ -67,21 +64,22 @@ list_fastq_files <-
 #'
 #' @examples
 #' data(data_fungi)
-#' rename_samples_otu_table(data_fungi@otu_table, as.character(1:185),
+#' rename_samples_otu_table(data_fungi, as.character(1:nsamples(data_fungi)),
 #'   taxa_are_rows = T
 #' )
-rename_samples_otu_table <- function(otu_tab, names_of_samples,
-                                     taxa_are_rows = FALSE) {
-  if (taxa_are_rows) {
-    if (length(names_of_samples) == dim(otu_tab)[1]) {
-      rownames(otu_tab) <- names_of_samples
+rename_samples_otu_table <- function(physeq, names_of_samples) {
+  otu_tab <- physeq@otu_table
+  tax_in_row <- taxa_are_rows(physeq)
+  if (tax_in_row) {
+    if (length(names_of_samples) == dim(otu_tab)[2]) {
+      colnames(otu_tab) <- names_of_samples
       return(otu_tab)
     } else {
       stop("names_of_samples must have a length equal to the number of samples")
     }
   } else {
-    if (length(names_of_samples) == dim(otu_tab)[2]) {
-      colnames(otu_tab) <- names_of_samples
+    if (length(names_of_samples) == dim(otu_tab)[1]) {
+      rownames(otu_tab) <- names_of_samples
       return(otu_tab)
     } else {
       stop("names_of_samples must have a length equal to the number of samples")

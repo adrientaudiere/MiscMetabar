@@ -13,7 +13,7 @@ plot_tsne_pq(
   fact = NA,
   ellipse_level = 0.95,
   plot_dims = c(1, 2),
-  filter_na_fact = TRUE,
+  na_remove = TRUE,
   force_factor = TRUE,
   ...
 )
@@ -36,9 +36,9 @@ using the \code{phyloseq} package.}
 
 \item{plot_dims}{A vector of 2 values defining the rank of dimension to plot (default: c(1,2))}
 
-\item{filter_na_fact}{(logical) Does the samples with NA values in fact are removed? (default: true)}
+\item{na_remove}{(logical, default TRUE) Does the samples with NA values in fact are removed? (default: true)}
 
-\item{force_factor}{Force the fact column to be a factor.}
+\item{force_factor}{(logical, default TRUE) Force the fact column to be a factor.}
 
 \item{...}{: other arguments passed on to \code{Rtsne::Rtsne()}}
 }
@@ -54,7 +54,7 @@ Partially inspired by \code{phylosmith::tsne_phyloseq()} function developed by S
 \examples{
 plot_tsne_pq(data_fungi, fact = "Height", perplexity = 15)
 plot_tsne_pq(data_fungi, fact = "Time") + geom_label(aes(label = Sample_id, fill = Time))
-plot_tsne_pq(data_fungi, fact = "Time", filter_na_fact = FALSE, force_factor = FALSE)
+plot_tsne_pq(data_fungi, fact = "Time", na_remove = FALSE, force_factor = FALSE)
 }
 \author{
 Adrien Taudière

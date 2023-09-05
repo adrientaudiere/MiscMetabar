@@ -104,28 +104,74 @@ tax_datatable <- function(physeq,
 #'   Need to be in \code{physeq@sam_data}
 #' @param nb_min_seq minimum number of sequences per sample
 #'   to count the ASV/OTU
-#' @param vegIndex (default: "shannon") index for the `vegan::diversity` function
+#' @param veg_index (default: "shannon") index for the `vegan::diversity` function
+#' @param na_remove (logical, default TRUE) If set to TRUE, remove samples with
+#'   NA in the variables set in bifactor, modality and merge_sample_by.
+#'   NA in variables are well managed even if na_remove = FALSE, so na_remove may
+#'   be useless.
 #' @return A tibble
 #' @importFrom rlang .data
 #' @export
 #' @examples
 #' data(data_fungi)
-#' data_fungi_low_high <- subset_samples(data_fungi, "Height" %in% c("Low", "High"))
+#' data_fungi_low_high <- subset_samples(data_fungi, Height %in% c("Low", "High"))
 #' compare_pairs_pq(data_fungi_low_high, bifactor = "Height", merge_sample_by = "Height")
+#' compare_pairs_pq(data_fungi_low_high,
+#'   bifactor = "Height",
+#'   merge_sample_by = "Height", modality = "Time"
+#' )
 compare_pairs_pq <- function(physeq = NULL,
                              bifactor = NULL,
                              modality = NULL,
                              merge_sample_by = NULL,
                              nb_min_seq = 0,
-                             vegIndex = "shannon") {
+                             veg_index = "shannon",
+                             na_remove = TRUE) {
   physeq <- clean_pq(physeq,
     clean_samples_names = FALSE,
     force_taxa_as_columns = TRUE,
-    silent = T
+    silent = TRUE
   )
 
+  if (na_remove) {
+    new_physeq <- subset_samples_pq(physeq, !is.na(physeq@sam_data[[bifactor]]))
+    if (nsamples(physeq) - nsamples(new_physeq) > 0) {
+      message(paste0(
+        nsamples(physeq) - nsamples(new_physeq),
+        " were discarded due to NA in variable bifactor."
+      ))
+    }
+    physeq <- new_physeq
+    if (!is.null(merge_sample_by)) {
+      new_physeq <- subset_samples_pq(physeq, !is.na(physeq@sam_data[[merge_sample_by]]))
+      if (nsamples(physeq) - nsamples(new_physeq) > 0) {
+        message(paste0(
+          nsamples(physeq) - nsamples(new_physeq),
+          " were discarded due to NA in variable merge_sample_by."
+        ))
+      }
+      physeq <- new_physeq
+    }
+
+    if (!is.null(modality)) {
+      new_physeq <- subset_samples_pq(physeq, !is.na(physeq@sam_data[[modality]]))
+      if (nsamples(physeq) - nsamples(new_physeq) > 0) {
+        message(paste0(
+          nsamples(physeq) - nsamples(new_physeq),
+          " were discarded due to NA in variable modality."
+        ))
+      }
+      physeq <- new_physeq
+    }
+  }
+
   if (!is.null(merge_sample_by)) {
-    physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
+    if (is.null(modality)) {
+      physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
+    } else {
+      physeq@sam_data[["merge_sample_by___modality"]] <- paste0(physeq@sam_data[[merge_sample_by]], " - ", physeq@sam_data[[modality]])
+      physeq <- speedyseq::merge_samples2(physeq, "merge_sample_by___modality")
+    }
     physeq <- clean_pq(physeq)
   }
 
@@ -143,17 +189,14 @@ compare_pairs_pq <- function(physeq = NULL,
     physeq@sam_data[[modality]] <- as.factor(physeq@sam_data[[modality]])
     nmodality <- levels(physeq@sam_data[[modality]])
   } else {
-    nmodality <- 1
+    nmodality <- bifactor
   }
-  # else {
-  #   physeq@sam_data[[modality]] <- rep("mod", nsamples(physeq))
-  # }
 
   for (i in nmodality) {
     newphyseq <- physeq
     if (!is.null(modality)) {
-      newDF <- newphyseq@sam_data[newphyseq@sam_data[[modality]] == i, ]
-      sample_data(newphyseq) <- sample_data(newDF)
+      new_DF <- newphyseq@sam_data[newphyseq@sam_data[[modality]] == i, ]
+      sample_data(newphyseq) <- sample_data(new_DF)
     }
     if (nsamples(newphyseq) != 2) {
       res[[i]] <- c(NA, NA, NA, NA, NA)
@@ -167,19 +210,21 @@ compare_pairs_pq <- function(physeq = NULL,
         newphyseq@otu_table[cond2, ] > nb_min_seq)
 
       div_first <- round(vegan::diversity(newphyseq@otu_table,
-        index = vegIndex
+        index = veg_index
       )[cond1], 2)
       div_second <- round(vegan::diversity(newphyseq@otu_table,
-        index = vegIndex
+        index = veg_index
       )[cond2], 2)
 
       res[[i]] <- c(nb_first, nb_second, nb_shared, div_first, div_second)
     }
   }
 
-  res_df <- t(data.frame(res))
+  res_df_t <- t(as_tibble(res, .name_repair = "minimal"))
+  colnames(res_df_t) <- paste0("V", 1:ncol(res_df_t))
+  res_df <- as_tibble(res_df_t)
+  # res_df <- as_tibble(t(as_tibble(res, .name_repair = "universal")), .name_repair = "universal")
 
-  res_df <- tibble::as_tibble(res_df)
   res_df <- res_df %>%
     mutate(percent_shared_lv1 = round(100 * .data$V3 /
       .data$V1, 2)) %>%
@@ -193,7 +238,7 @@ compare_pairs_pq <- function(physeq = NULL,
   colnames(res_df) <- c(
     paste0("nb_", lev1),
     paste0("nb_", lev2),
-    "shared",
+    "nb_shared",
     paste0("div_", lev1),
     paste0("div_", lev2),
     paste0("percent_shared_", lev1),
@@ -202,10 +247,10 @@ compare_pairs_pq <- function(physeq = NULL,
     paste0("ratio_div_", lev1, "_", lev2)
   )
 
-  res_df[[modality]] <- names(res)
+  res_df$modality <- names(res)
   res_df <- res_df %>%
     dplyr::filter(!is.na(nb_shared)) %>%
-    relocate(all_of(modality))
+    relocate(modality)
 
   return(res_df)
 }

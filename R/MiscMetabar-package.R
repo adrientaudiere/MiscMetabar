@@ -9,25 +9,15 @@ NULL
 
 if (getRversion() >= "2.15.1") {
   utils::globalVariables(c(
-    "%>%", ".id", "Ab", "Abundance", "Hill_0", "Hill_1",
-    "Hill_2", "X1", "Family", "Genus", "OTU", "Proportion", "Species",
-    "col_tax", "devtools", "grid.draw", "grid.layout",
-    "group_by", "install_github", "log2FoldChange",
-    "logFC", "lwr", "max_Hill", "modality",
-    "multcompLetters", "nb_values", "pushViewport",
-    "rarefy", "rrarefy", "summarise", "tax",
-    "tax_col", "teststat", "upViewport", "upr",
-    "vegdist", "viewport", "x", "x1", "x2", "y",
-    "y1", "y2", "ymax", "ymin"
+    ".id", "%>%", "Ab", "Abundance", "col_tax", "combn", "complement", "devtools", "e-value", "Family", "Genus", "grid.draw", "grid.layout", "group_by", "Hill_0", "Hill_1", "Hill_2", "install_github", "log2FoldChange", "logFC", "lwr", "max_Hill", "modality", "multcompLetters", "nb_values", "ott_id", "OTU", "Proportion", "pushViewport", "Query name", "rarefy", "reverse", "rgb", "reverseComplement", "rrarefy", "Species", "summarise", "tax", "tax_col", "teststat", "tnrs_match_names", "tol_induced_subtree", "upr", "upViewport", "vegdist", "viewport", "x", "x1", "X1", "x2", "y", "y1", "y2", "ymax", "ymin"
   ))
 }
-
-
 
 #' @keywords internal
 "_PACKAGE"
 
 ## usethis namespace: start
+#' @importFrom stats na.exclude na.omit reformulate reorder terms
 #' @importFrom lifecycle deprecated
 ## usethis namespace: end
 NULL
