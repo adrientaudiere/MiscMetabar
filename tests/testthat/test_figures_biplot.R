@@ -1,5 +1,7 @@
 data("data_fungi")
+data("GlobalPatterns")
 GP <- GlobalPatterns
+
 data_fungi_2trees <- subset_samples(data_fungi, data_fungi@sam_data$Tree_name %in% c("A10-005", "AD30-abm-X"))
 data_fungi_abun <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
 

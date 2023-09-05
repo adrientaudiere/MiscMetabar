@@ -75,4 +75,6 @@ test_that("count_seq works fine", {
   expect_error(count_seq("tests/testthat.R"), "The file extension R is not supported.")
 })
 
-# add_new_taxonomy_pq
+# test_that("add_new_taxonomy_pq works fine", {
+#   expect_s4_class(add_new_taxonomy_pq(data_fungi, "inst/extdata/1000_sp_UNITE_sh_general_release_dynamic.fasta"), "phyloseq")
+# })

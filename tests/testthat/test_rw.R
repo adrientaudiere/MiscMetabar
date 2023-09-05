@@ -6,7 +6,7 @@ test_that("write_pq function works fine with enterotype dataset", {
   unlink(list.files(testFolder, full.names = TRUE), recursive = TRUE)
   expect_silent(write_pq(enterotype, path = testFolder, silent = TRUE))
   expect_silent(write_pq(enterotype, path = testFolder, silent = TRUE, sam_data_first = TRUE))
-  expect_silent(write_pq(enterotype, path = testFolder, silent = TRUE, write_sam_data = FALSE))
+  expect_silent(write_pq(enterotype, path = testFolder, silent = TRUE, write_sam_data = TRUE))
   expect_message(write_pq(enterotype, path = testFolder))
   expect_error(write_pq(enterotype, one_file = TRUE, path = testFolder))
   expect_s4_class(read_pq(testFolder, taxa_are_rows = TRUE), "phyloseq")

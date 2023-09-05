@@ -28,7 +28,7 @@ test_that("plot_edgeR_pq works", {
 test_that("plot_deseq2_pq works with results", {
   expect_message(res <- DESeq2::DESeq(phyloseq_to_deseq2(GP, ~SampleType), test = "Wald", fitType = "local"), "fitting model and testing")
   expect_silent(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table, color_tax = "Kingdom"))
-  expect_silent(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table, tax_depth = "Family"))
+  expect_silent(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table, tax_depth = "Genus"))
   expect_silent(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
     tax_table = GP@tax_table, tax_depth = "Family",
     color_tax = fac2col(as.vector(GP@tax_table[, "Order"]))

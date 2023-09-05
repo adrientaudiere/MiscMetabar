@@ -95,7 +95,7 @@ blast_to_phyloseq <- function(physeq,
       args_blastn
     )
   )
-  if (file.info(paste0(tempdir(), "/", "blast_result.txt"),)$size > 0) {
+  if (file.info(paste0(tempdir(), "/", "blast_result.txt"))$size > 0) {
     blast_tab <- utils::read.table(
       paste0(tempdir(), "/", "blast_result.txt"),,
       sep = "\t",
@@ -108,9 +108,9 @@ blast_to_phyloseq <- function(physeq,
   }
 
   if (!keep_temporary_files) {
-    file.remove(paste0(tempdir(), "/", "blast_result.txt"),)
-    file.remove(list.files(tempdir(), pattern = "dbase"))
-    file.remove(paste0(tempdir(), "/", "db.fasta"))
+    unlink(paste0(tempdir(), "/", "blast_result.txt"))
+    unlink(list.files(tempdir(), pattern = "dbase"))
+    unlink(paste0(tempdir(), "/", "db.fasta"))
   } else {
     message(paste0("Temporary files are located at ", tempdir()))
   }
@@ -264,7 +264,7 @@ blast_pq <- function(physeq,
     )
   }
 
- if (file.info(paste0(tempdir(), "/", "blast_result.txt"),)$size > 0) {
+ if (file.info(paste0(tempdir(), "/", "blast_result.txt"))$size > 0) {
     blast_tab <- utils::read.table(
       paste0(tempdir(), "/", "blast_result.txt"),,
       sep = "\t",
@@ -277,9 +277,9 @@ blast_pq <- function(physeq,
   }
 
   if (!keep_temporary_files) {
-    file.remove(paste0(tempdir(), "/", "blast_result.txt"),)
-    file.remove(list.files(tempdir(), pattern = "dbase"))
-    file.remove(paste0(tempdir(), "/", "db.fasta"))
+    unlink(paste0(tempdir(), "/", "blast_result.txt"))
+    unlink(list.files(tempdir(), pattern = "dbase"))
+    unlink(paste0(tempdir(), "/", "db.fasta"))
   } else {
     message(paste0("Temporary files are located at ", tempdir()))
   }
@@ -494,7 +494,7 @@ blast_to_derep <- function(derep,
   )
 
 
- if (file.info(paste0(tempdir(), "/", "blast_result.txt"),)$size > 0) {
+ if (file.info(paste0(tempdir(), "/", "blast_result.txt"))$size > 0) {
     blast_tab <- utils::read.table(
       paste0(tempdir(), "/", "blast_result.txt"),,
       sep = "\t",
@@ -507,9 +507,9 @@ blast_to_derep <- function(derep,
   }
 
   if (!keep_temporary_files) {
-    file.remove(paste0(tempdir(), "/", "blast_result.txt"),)
-    file.remove(list.files(tempdir(), pattern = "dbase"))
-    file.remove(paste0(tempdir(), "/", "db.fasta"))
+    unlink(paste0(tempdir(), "/", "blast_result.txt"))
+    unlink(list.files(tempdir(), pattern = "dbase"))
+    unlink(paste0(tempdir(), "/", "db.fasta"))
   } else {
     message(paste0("Temporary files are located at ", tempdir()))
   }

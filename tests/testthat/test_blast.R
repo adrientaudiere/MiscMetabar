@@ -24,6 +24,9 @@ if (class(blast_error_or_not) == "try-error") {
     expect_s3_class(blast_df <- blast_pq(df_basidio, path_db, unique_per_seq = TRUE), "data.frame")
     expect_s3_class(blast_df <- blast_pq(df_basidio, path_db, score_filter = FALSE), "data.frame")
     expect_s3_class(blast_df <- blast_pq(df_basidio, path_db, unique_per_seq = FALSE, score_filter = FALSE), "data.frame")
+    expect_s3_class(blast_df <- blast_pq(df_basidio, database="inst/extdata/dbase"), "data.frame")
+    expect_error(blast_df <- blast_pq(df_basidio, fasta_for_db = path_db, database="inst/extdata/dbase"))
+    expect_error(blast_df <- blast_pq(df_basidio))
   })
 
   test_that("filter_asv_blast works fine", {
@@ -41,6 +44,7 @@ if (class(blast_error_or_not) == "try-error") {
   derep_data <- derepFastq(unlist(list_fastq_files("inst/extdata/")))
   test_that("blast_to_derep works fine", {
     expect_s3_class(derep_blast <- blast_to_derep(derep_data, path_db), "data.frame")
+    expect_s3_class(derep_blast <- blast_to_derep(derep_data, path_db, score_filter = TRUE), "data.frame")
     expect_s3_class(derep_blast2 <- blast_to_derep(derep_data, "inst/extdata/ex_little.fasta"), "data.frame")
     expect_s3_class(derep_blast2 <- blast_to_derep(derep_data, "inst/extdata/ex_little.fasta", unique_per_seq = TRUE, score_filter = FALSE), "data.frame")
     expect_s3_class(derep_blast2 <- blast_to_derep(derep_data, "inst/extdata/ex_little.fasta", list_no_output_query = TRUE), "data.frame")
