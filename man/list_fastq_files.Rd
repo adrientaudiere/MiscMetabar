@@ -35,7 +35,7 @@ files are sorted by names (default behavior of \code{list.files()})
 }
 \examples{
 list_fastq_files("inst/extdata")
-list_fastq_files("inst/extdata", paired_end = F, pattern_R1 = "")
+list_fastq_files("inst/extdata", paired_end = FALSE, pattern_R1 = "")
 
 }
 \author{

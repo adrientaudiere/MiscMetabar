@@ -31,7 +31,12 @@
 #' @param nproc (default: 1)
 #'   Set to number of cpus/processors to use for blast (args -num_threads
 #'   for blastn command)
-#'
+#' @param  keep_temporary_files (logical, default: FALSE) Do we keep temporary files
+#'   - db.fasta (refseq transformed into a database)
+#'   - dbase list of files (output of blastn)
+#'   - blast_result.txt the summary result of blastn using 
+#'     `-outfmt "6 qseqid qlen sseqid slen length pident evalue bitscore qcovs"`
+#' 
 #' @seealso  [MiscMetabar::blast_pq()] to use `refseq` slot as query sequences
 #'   against un custom database.
 #'
@@ -59,15 +64,19 @@ blast_to_phyloseq <- function(physeq,
                               list_no_output_query = FALSE,
                               args_makedb = NULL,
                               args_blastn = NULL,
-                              nproc = 1) {
+                              nproc = 1,
+                              keep_temporary_files = FALSE) {
   verify_pq(physeq)
   dna <- Biostrings::DNAStringSet(physeq@refseq)
-  Biostrings::writeXStringSet(dna, "db.fasta")
+  Biostrings::writeXStringSet(dna, paste0(tempdir(), "/", "db.fasta"))
 
-  system(paste(blastpath,
-    "makeblastdb -dbtype nucl -in db.fasta -out dbase",
-    " ", args_makedb,
-    sep = ""
+  system(paste0(blastpath,
+    "makeblastdb -dbtype nucl -in ",
+    paste0(tempdir(), "/", "db.fasta"), 
+    " -out ",
+    paste0(tempdir(), "/", "dbase"),
+    " ", 
+    args_makedb
   ))
 
   system(
@@ -75,8 +84,10 @@ blast_to_phyloseq <- function(physeq,
       blastpath,
       "blastn -query ",
       seq2search,
-      " -db dbase",
-      " -out blast_result.txt",
+      " -db ",
+      paste0(tempdir(), "/", "dbase"),
+      " -out ",
+      paste0(tempdir(), "/", "blast_result.txt"),
       " -outfmt \"6 qseqid qlen sseqid slen",
       " length pident evalue bitscore qcovs\"",
       " -num_threads ", nproc,
@@ -84,20 +95,27 @@ blast_to_phyloseq <- function(physeq,
       args_blastn
     )
   )
-  if (file.info("blast_result.txt")$size > 0) {
+  if (file.info(paste0(tempdir(), "/", "blast_result.txt"),)$size > 0) {
     blast_tab <- utils::read.table(
-      "blast_result.txt",
+      paste0(tempdir(), "/", "blast_result.txt"),,
       sep = "\t",
       header = FALSE,
       stringsAsFactors = FALSE
     )
-    file.remove("blast_result.txt")
-    file.remove(list.files(pattern = "dbase"))
-    file.remove("db.fasta")
+    blast_tab_OK <- TRUE
   } else {
-    file.remove("blast_result.txt")
-    file.remove(list.files(pattern = "dbase"))
-    file.remove("db.fasta")
+    blast_tab_OK <- FALSE
+  }
+
+  if (!keep_temporary_files) {
+    file.remove(paste0(tempdir(), "/", "blast_result.txt"),)
+    file.remove(list.files(tempdir(), pattern = "dbase"))
+    file.remove(paste0(tempdir(), "/", "db.fasta"))
+  } else {
+    message(paste0("Temporary files are located at ", tempdir()))
+  }
+
+  if(!blast_tab_OK){
     message("None query sequences matched your phyloseq references sequences.")
     return(NULL)
   }
@@ -163,7 +181,12 @@ blast_to_phyloseq <- function(physeq,
 #' @inheritParams blast_to_phyloseq
 #' @param fasta_for_db path to a fasta file to make the blast database
 #' @param database path to a blast database
-#'
+#' @param  keep_temporary_files (logical, default: FALSE) Do we keep temporary files
+#'   - db.fasta (refseq transformed into a database)
+#'   - dbase list of files (output of blastn)
+#'   - blast_result.txt the summary result of blastn using 
+#'     `-outfmt "6 qseqid qlen sseqid slen length pident evalue bitscore qcovs"`
+#' 
 #' @seealso  [MiscMetabar::blast_to_phyloseq()] to use `refseq`
 #'   slot as a database
 #' @return  a blast table
@@ -181,32 +204,39 @@ blast_pq <- function(physeq,
                      score_filter = TRUE,
                      nproc = 1,
                      args_makedb = NULL,
-                     args_blastn = NULL) {
+                     args_blastn = NULL,
+                     keep_temporary_files = FALSE) {
   verify_pq(physeq)
   dna <- Biostrings::DNAStringSet(physeq@refseq)
-  Biostrings::writeXStringSet(dna, "physeq_refseq.fasta")
+  Biostrings::writeXStringSet(dna, paste0(tempdir(), "/", "physeq_refseq.fasta"))
 
   if (is.null(fasta_for_db) && is.null(database)) {
     stop("The function required a value for the parameters
          `fasta_for_db` or `database` to run.")
   } else if (!is.null(fasta_for_db) && !is.null(database)) {
-    stop("You assign value for both `fasta_for_db` and
+    stop("You assign values for both `fasta_for_db` and
          `database` args. Please use only one.")
   } else if (!is.null(fasta_for_db) && is.null(database)) {
     message("Build the database from fasta_for_db")
     system(paste0(
       blastpath,
-      "makeblastdb -dbtype nucl -in ", fasta_for_db, " -out dbase",
-      " ", args_makedb
+      "makeblastdb -dbtype nucl -in ",
+      fasta_for_db,
+      " -out ",
+      paste0(tempdir(), "/", "dbase"),
+      " ",
+      args_makedb
     ))
     message("Blast refseq from physeq object against the database")
     system(
       paste0(
         blastpath,
         "blastn -query ",
-        "physeq_refseq.fasta",
-        " -db dbase",
-        " -out blast_result.txt",
+        paste0(tempdir(), "/", "physeq_refseq.fasta"),
+        " -db ",
+        paste0(tempdir(), "/", "dbase"),
+        " -out ",
+        paste0(tempdir(), "/", "blast_result.txt"),
         " -num_threads ", nproc,
         " -outfmt \"6 qseqid qlen sseqid slen",
         " length pident evalue bitscore qcovs\"",
@@ -220,9 +250,11 @@ blast_pq <- function(physeq,
       paste0(
         blastpath,
         "blastn -query ",
-        "physeq_refseq.fasta",
-        " -db dbase",
-        " -out blast_result.txt",
+        paste0(tempdir(), "/", "physeq_refseq.fasta"),
+        " -db ",
+        database,
+        " -out ",
+         paste0(tempdir(), "/", "blast_result.txt"),
         " -outfmt \"6 qseqid qlen sseqid slen",
         " length pident evalue bitscore qcovs\"",
         " -num_threads ", nproc,
@@ -232,19 +264,27 @@ blast_pq <- function(physeq,
     )
   }
 
-  if (file.info("blast_result.txt")$size > 0) {
+ if (file.info(paste0(tempdir(), "/", "blast_result.txt"),)$size > 0) {
     blast_tab <- utils::read.table(
-      "blast_result.txt",
+      paste0(tempdir(), "/", "blast_result.txt"),,
       sep = "\t",
       header = FALSE,
-      stringsAsFactors = FALSE,
-      comment.char = ""
+      stringsAsFactors = FALSE
     )
-    file.remove("blast_result.txt")
-    file.remove(list.files(pattern = "dbase"))
+    blast_tab_OK <- TRUE
   } else {
-    file.remove("blast_result.txt")
-    file.remove(list.files(pattern = "dbase"))
+    blast_tab_OK <- FALSE
+  }
+
+  if (!keep_temporary_files) {
+    file.remove(paste0(tempdir(), "/", "blast_result.txt"),)
+    file.remove(list.files(tempdir(), pattern = "dbase"))
+    file.remove(paste0(tempdir(), "/", "db.fasta"))
+  } else {
+    message(paste0("Temporary files are located at ", tempdir()))
+  }
+
+  if(!blast_tab_OK){
     message("None query sequences matched your phyloseq references sequences.")
     return(NULL)
   }
@@ -306,7 +346,7 @@ blast_pq <- function(physeq,
 #' @param e_value_filter (default: 1e-30)  cut of in e-value (%) to keep result
 #'   The BLAST E-value is the number of expected hits of similar quality (score)
 #'   that could be found just by chance.
-#' @param add_info_to_taxtable (logical, default TRUE) Does the blast information 
+#' @param add_info_to_taxtable (logical, default TRUE) Does the blast information
 #'   are added to the taxtable ?
 #' @param ... Others options for the `blast_pq()` function. See `?blast_pq`.
 #'   Note that params `unique_per_seq` must be lft to TRUE and `score_filter`
@@ -380,7 +420,11 @@ filter_asv_blast <- function(physeq,
 #' @param min_length_seq (default: 200) Removed sequences with less than
 #'   `min_length_seq` from derep before blast. Set to 0 to discard filtering
 #'    sequences by length.
-#'
+#' @param  keep_temporary_files (logical, default: FALSE) Do we keep temporary files
+#'   - db.fasta (refseq transformed into a database)
+#'   - dbase list of files (output of blastn)
+#'   - blast_result.txt the summary result of blastn using 
+#'     `-outfmt "6 qseqid qlen sseqid slen length pident evalue bitscore qcovs"`
 #' @return A blast table
 #'
 #' @export
@@ -401,7 +445,8 @@ blast_to_derep <- function(derep,
                            min_length_seq = 200,
                            args_makedb = NULL,
                            args_blastn = NULL,
-                           nproc = 1) {
+                           nproc = 1,
+                           keep_temporary_files = FALSE) {
   if (!inherits(derep[[1]], "derep")) {
     stop("derep must be an object of class derep-class")
   }
@@ -421,13 +466,14 @@ blast_to_derep <- function(derep,
 
   dna <- unlist(Biostrings::DNAStringSetList(derep_list))
   names(dna) <- paste0(names(dna), "(", unlist(derep_occurence), "seqs)")
-  Biostrings::writeXStringSet(dna, "db.fasta")
+  Biostrings::writeXStringSet(dna, paste0(tempdir(), "/", "db.fasta"))
 
-  system(paste(
-    blastpath,
-    "makeblastdb -dbtype nucl -in db.fasta -out dbase",
-    " ", args_makedb,
-    sep = ""
+  system(paste0(blastpath,
+    "makeblastdb -dbtype nucl -in ",
+    paste0(tempdir(), "/", "db.fasta"),
+    " -out ",
+    paste0(tempdir(), "/", "dbase"),
+    " ", args_makedb
   ))
 
   system(
@@ -435,8 +481,10 @@ blast_to_derep <- function(derep,
       blastpath,
       "blastn -query ",
       seq2search,
-      " -db dbase",
-      " -out blast_result.txt",
+      " -db ",
+      paste0(tempdir(), "/", "dbase"),
+      " -out ",
+      paste0(tempdir(), "/", "blast_result.txt"),
       " -outfmt \"6 qseqid qlen sseqid slen",
       " length pident evalue bitscore qcovs\"",
       " -num_threads ", nproc,
@@ -445,20 +493,28 @@ blast_to_derep <- function(derep,
     )
   )
 
-  if (file.info("blast_result.txt")$size > 0) {
+
+ if (file.info(paste0(tempdir(), "/", "blast_result.txt"),)$size > 0) {
     blast_tab <- utils::read.table(
-      "blast_result.txt",
+      paste0(tempdir(), "/", "blast_result.txt"),,
       sep = "\t",
       header = FALSE,
       stringsAsFactors = FALSE
     )
-    file.remove("blast_result.txt")
-    file.remove(list.files(pattern = "dbase"))
-    file.remove("db.fasta")
+    blast_tab_OK <- TRUE
   } else {
-    file.remove("blast_result.txt")
-    file.remove(list.files(pattern = "dbase"))
-    file.remove("db.fasta")
+    blast_tab_OK <- FALSE
+  }
+
+  if (!keep_temporary_files) {
+    file.remove(paste0(tempdir(), "/", "blast_result.txt"),)
+    file.remove(list.files(tempdir(), pattern = "dbase"))
+    file.remove(paste0(tempdir(), "/", "db.fasta"))
+  } else {
+    message(paste0("Temporary files are located at ", tempdir()))
+  }
+
+  if(!blast_tab_OK){
     message("None query sequences matched your phyloseq references sequences.")
     return(NULL)
   }

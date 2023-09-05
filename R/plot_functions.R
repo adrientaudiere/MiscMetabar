@@ -928,7 +928,7 @@ venn_pq <-
 #' @examples
 #' data(data_fungi)
 #' ggvenn_pq(data_fungi, fact = "Height")
-#' ggvenn_pq(data_fungi, fact = "Height") + 
+#' ggvenn_pq(data_fungi, fact = "Height") +
 #'   ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
 #' pl <- ggvenn_pq(data_fungi, fact = "Height", split_by = "Time")
 #' for (i in 1:length(pl)) {
@@ -1127,8 +1127,8 @@ multiplot <-
 #'
 #' # Artificially modify data_fungi to force alpha-diversity effect
 #' data_fungi_modif <- clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height)))
-#' data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <- 
-#'   data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] + 
+#' data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <-
+#'   data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] +
 #'   sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
 #' p2 <- hill_pq(data_fungi_modif, "Height", letters = TRUE)
 #'
@@ -2106,7 +2106,6 @@ tsne_pq <-
            theta = 0.0,
            perplexity = 30,
            ...) {
-
     physeq <- clean_pq(
       physeq,
       force_taxa_as_rows = TRUE,

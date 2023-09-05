@@ -58,7 +58,7 @@ for ex. \code{+ scale_fill_distiller(palette = "BuPu", direction = 1)}
 \examples{
 data(data_fungi)
 ggvenn_pq(data_fungi, fact = "Height")
-ggvenn_pq(data_fungi, fact = "Height") + 
+ggvenn_pq(data_fungi, fact = "Height") +
   ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
 pl <- ggvenn_pq(data_fungi, fact = "Height", split_by = "Time")
 for (i in 1:length(pl)) {

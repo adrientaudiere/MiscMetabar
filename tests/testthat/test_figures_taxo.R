@@ -49,4 +49,3 @@ test_that("plot_tax_pq works with data_fungi dataset", {
   expect_silent(suppressMessages(plot_tax_pq(data_fungi_sp_known, "Time", merge_sample_by = "Time", taxa_fill = "Order", clean_pq = FALSE)))
   expect_silent(suppressMessages(plot_tax_pq(data_fungi_sp_known, "Height", merge_sample_by = "Height", taxa_fill = "Order")))
 })
-

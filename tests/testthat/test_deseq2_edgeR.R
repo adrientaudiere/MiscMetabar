@@ -1,22 +1,21 @@
 data(GlobalPatterns)
 GP <- subset_samples(GlobalPatterns, GlobalPatterns@sam_data$SampleType %in% c("Soil", "Skin"))
 
-fac2col <- function (x, col.pal = funky_color, na.col = "transparent", seed = NULL) {
-    x <- factor(x)
-    lev <- levels(x)
-    nlev <- length(lev)
-    if (!is.null(seed)) {
-        set.seed(seed)
-        newseed <- round(runif(1, 1, 1e+09))
-        on.exit(set.seed(newseed))
-        col <- sample(col.pal(nlev))
-    }
-    else {
-        col <- col.pal(nlev)
-    }
-    res <- rep(na.col, length(x))
-    res[!is.na(x)] <- col[as.integer(x[!is.na(x)])]
-    return(res)
+fac2col <- function(x, col.pal = funky_color, na.col = "transparent", seed = NULL) {
+  x <- factor(x)
+  lev <- levels(x)
+  nlev <- length(lev)
+  if (!is.null(seed)) {
+    set.seed(seed)
+    newseed <- round(runif(1, 1, 1e+09))
+    on.exit(set.seed(newseed))
+    col <- sample(col.pal(nlev))
+  } else {
+    col <- col.pal(nlev)
+  }
+  res <- rep(na.col, length(x))
+  res[!is.na(x)] <- col[as.integer(x[!is.na(x)])]
+  return(res)
 }
 
 test_that("plot_edgeR_pq works", {

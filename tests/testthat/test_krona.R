@@ -15,9 +15,11 @@ if (class(krona_error_or_not) == "try-error") {
     suppressWarnings(unlink(list.files(testFolder, full.names = TRUE), recursive = TRUE))
     expect_silent(krona(GA, file = paste0(testFolder, "/Number.of.sequences.html")))
     expect_silent(krona(GA, file = paste0(testFolder, "/Number.of.ASVs.html"), nb_seq = FALSE))
-    expect_silent(merge_krona(c(
-      paste0(testFolder, "/Number.of.sequences.html"),
-      paste0(testFolder, "/Number.of.ASVs.html")),
+    expect_silent(merge_krona(
+      c(
+        paste0(testFolder, "/Number.of.sequences.html"),
+        paste0(testFolder, "/Number.of.ASVs.html")
+      ),
       output = paste0(testFolder, "mergeKrona.html")
     ))
     unlink(list.files(testFolder, full.names = TRUE), recursive = TRUE)

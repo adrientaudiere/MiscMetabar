@@ -54,7 +54,7 @@ important statistics
 \examples{
 data(enterotype)
 graph_test_pq(enterotype, fact = "SeqTech")
-graph_test_pq(enterotype, fact = "Enterotype", na_remove = T)
+graph_test_pq(enterotype, fact = "Enterotype", na_remove = TRUE)
 }
 \author{
 Adrien Taudière

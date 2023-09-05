@@ -32,7 +32,7 @@ test_that("Test one case for each deprecated functions", {
   expect_warning(ggVenn_phyloseq(data_fungi, "Height"), "deprecated")
   expect_warning(hill_tuckey_phyloseq(GlobalPatterns, "Soil_logical"), "deprecated")
   expect_message(expect_warning(hill_phyloseq(GP, "SampleType"), "deprecated"))
-  
+
   library(metacoder)
   expect_warning(suppressMessages(ht <- physeq_heat_tree(data_basidio)), "deprecated")
   expect_s3_class(suppressWarnings(multiple_share_bisamples(data_fungi_low_high, bifactor = "Height", merge_sample_by = "Height")), "tbl_df")

@@ -520,22 +520,25 @@ asv2otu <- function(physeq = NULL,
     seq_names (character vector).")
     }
   } else if (method == "vsearch") {
-    Biostrings::writeXStringSet(dna, here::here("temp.fasta"))
+    Biostrings::writeXStringSet(dna, paste0(tempdir(), "/", "temp.fasta"))
 
     system2(
       vsearchpath,
       paste0(
-        paste(" ", vsearch_cluster_method, " temp.fasta ", vsearch_args),
+        paste0(" ", vsearch_cluster_method, " ", paste0(tempdir(), "/", "temp.fasta"), " ", vsearch_args),
         " -id ",
         id,
-        " --centroids cluster.fasta",
-        " --uc temp.uc"
+        " --centroids ",
+        paste0(tempdir(), "/", "cluster.fasta")
+        " --uc ",
+        paste0(tempdir(), "/", "temp.uc")
+
       ),
       stdout = TRUE,
       stderr = TRUE
     )
 
-    pack_clusts <- utils::read.table(here::here("temp.uc"), sep = "\t")
+    pack_clusts <- utils::read.table(paste0(tempdir(), "/", "temp.uc")), sep = "\t")
     colnames(pack_clusts) <-
       c(
         "type",
@@ -566,14 +569,14 @@ asv2otu <- function(physeq = NULL,
       stop("You must set the args physeq (object of class phyloseq) or seq_names (character vector).")
     }
 
-    if (file.exists(here::here("temp.fasta")) && !keep_temporary_files) {
-      file.remove(here::here("temp.fasta"))
+    if (file.exists(paste0(tempdir(), "/", "temp.fasta")) && !keep_temporary_files) {
+      file.remove(paste0(tempdir(), "/", "temp.fasta"))
     }
-    if (file.exists(here::here("cluster.fasta")) && !keep_temporary_files) {
-      file.remove(here::here("cluster.fasta"))
+    if (file.exists(paste0(tempdir(), "/", "cluster.fasta")) && !keep_temporary_files) {
+      file.remove(paste0(tempdir(), "/", "cluster.fasta"))
     }
-    if (file.exists(here::here("temp.uc")) && !keep_temporary_files) {
-      file.remove(here::here("temp.uc"))
+    if (file.exists(paste0(tempdir(), "/", "temp.uc")) && !keep_temporary_files) {
+      file.remove(paste0(tempdir(), "/", "temp.uc"))
     }
   }
   return(new_obj)
@@ -616,15 +619,15 @@ asv2otu <- function(physeq = NULL,
 #' @export
 
 vs_search_global <- function(physeq,
-                                  seq2search = NULL,
-                                  path_to_fasta = NULL,
-                                  vsearchpath = "vsearch",
-                                  id = 0.8,
-                                  iddef = 0,
-                                  keep_temporary_files = FALSE) {
+                             seq2search = NULL,
+                             path_to_fasta = NULL,
+                             vsearchpath = "vsearch",
+                             id = 0.8,
+                             iddef = 0,
+                             keep_temporary_files = FALSE) {
   verify_pq(physeq)
   dna <- Biostrings::DNAStringSet(physeq@refseq)
-  Biostrings::writeXStringSet(dna, here::here("temp.fasta"))
+  Biostrings::writeXStringSet(dna, paste0(tempdir(), "temp.fasta"))
   if (is.null(seq2search) && is.null(path_to_fasta)) {
     stop("You must fill either seq2search or path_to_fasta argument.")
   }
@@ -636,8 +639,8 @@ vs_search_global <- function(physeq,
     if (inherits(seq2search, "character")) {
       seq2search <- Biostrings::DNAStringSet(seq2search)
     }
-    Biostrings::writeXStringSet(seq2search, here::here("seq2search.fasta"))
-    seq2search <- here::here("seq2search.fasta")
+    Biostrings::writeXStringSet(seq2search,  paste0(tempdir(), "seq2search.fasta"))
+    seq2search <- paste0(tempdir(), "seq2search.fasta")
   } else if (!is.null(path_to_fasta)) {
     seq2search <- path_to_fasta
   }
@@ -646,11 +649,11 @@ vs_search_global <- function(physeq,
     vsearchpath,
     paste(
       " --usearch_global ",
-      here::here("temp.fasta"),
+      paste0(tempdir(), "/", "temp.fasta"),
       " --db ",
-      here::here(seq2search),
-      " --uc",
-      " temp.uc",
+      paste0(tempdir(), seq2search),
+      " --uc ",
+      paste0(tempdir(), "/", "temp.uc"),
       " --id ",
       id,
       " --uc_allhits",
@@ -661,7 +664,7 @@ vs_search_global <- function(physeq,
     )
   )
 
-  pack_clusts <- utils::read.table(here::here("temp.uc"), sep = "\t")
+  pack_clusts <- utils::read.table(paste0(tempdir(), "/", "temp.uc")), sep = "\t")
   colnames(pack_clusts) <- c(
     "type",
     "cluster",
@@ -675,14 +678,16 @@ vs_search_global <- function(physeq,
     "target"
   )
 
-  if(!keep_temporary_files){
-    unlink(here::here("temp.fasta"))
-    unlink(here::here("temp.uc"))
+  if (!keep_temporary_files) {
+    unlink(paste0(tempdir(), "temp.fasta"))
+    unlink(paste0(tempdir(), "temp.uc"))
 
     if (inherits(seq2search, "DNAStringSet")) {
-      unlink(here::here("seq2search.fasta"))
+      unlink(paste0(tempdir(), "seq2search.fasta"))
     }
-  }  
+  } else {
+    message(paste0("Temporary files are located at ", tempdir()))
+  }
 
   return(invisible(pack_clusts))
 }
@@ -1069,19 +1074,19 @@ lulu_pq <- function(physeq,
   res_lulu <-
     lulu::lulu(data.frame(t(physeq@otu_table)), match_list)
 
-  if(!keep_temporary_files){
-  if (file.exists("temp.fasta")) {
-    file.remove("temp.fasta")
-  }
-  if (file.exists("cluster.fasta")) {
-    file.remove("cluster.fasta")
-  }
-  if (file.exists("temp.uc")) {
-    file.remove("temp.uc")
-  }
-  if (file.exists("match_list.txt")) {
-    file.remove("match_list.txt")
-  }
+  if (!keep_temporary_files) {
+    if (file.exists("temp.fasta")) {
+      file.remove("temp.fasta")
+    }
+    if (file.exists("cluster.fasta")) {
+      file.remove("cluster.fasta")
+    }
+    if (file.exists("temp.uc")) {
+      file.remove("temp.uc")
+    }
+    if (file.exists("match_list.txt")) {
+      file.remove("match_list.txt")
+    }
   }
   merged <- res_lulu$otu_map[res_lulu$otu_map$curated == "merged", ]
   merged <- merged[rownames(merged) != merged$parent_id, ]
