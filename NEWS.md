@@ -1,5 +1,7 @@
 # MiscMetabar 0.41  (in development)
 
+- Add function `iNEXT_pq()` to calculate hill diversity using the [iNEXT](https://github.com/AnneChao/iNEXT) package.
+
 # MiscMetabar 0.40  
 
 * Add function `multi_biplot_pq()` to visualize a collection of couples of samples for comparison through a list of `biplot_pq()`

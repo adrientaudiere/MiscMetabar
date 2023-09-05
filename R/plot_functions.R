@@ -2248,3 +2248,39 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 
   SRS::SRScurve(df, ...)
 }
+
+
+#' Visualization of two samples for comparison
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' @inheritParams clean_pq
+#' @param merge_sample_by (default: NULL) if not `NULL` samples of
+#'   physeq are merged using the vector set by `merge_sample_by`. This
+#'   merging used the [speedyseq::merge_samples2()]. In the case of
+#'   [biplot_pq()] this must be a factor with two levels only.
+#' @param ... other arguments for the ggplot function
+#' @return A object of class XXX
+#' @export
+#'
+#' @examples
+#' library("iNEXT")
+#' iNEXT_pq(data_fungi, merge_sample_by="Height", q=1, datatype="abundance", nboot=5)
+#' ggiNEXT(res_iNEXT)
+#' ggiNEXT(res_iNEXT, type = 2)
+#' ggiNEXT(res_iNEXT, type = 3)
+#' 
+#' @author Adrien Taudière
+#'
+#'
+iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...){
+  if (!is.null(merge_sample_by)) {
+    physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
+    physeq <- clean_pq(physeq, force_taxa_as_columns = TRUE)
+  }
+
+  df <- data.frame(t(as.matrix(unclass(physeq@otu_table))))
+  res_iNEXT <- iNEXT::iNEXT(df, ...)
+}
+
+

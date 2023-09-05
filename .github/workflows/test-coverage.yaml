@@ -27,10 +27,10 @@ jobs:
           needs: coverage
 
       - name: Install vsearch
-        run: |
-          ## --------------------------------------------------------------------
-          sudo apt-get install vsearch
-        shell: bash
+        run: sudo apt-get install vsearch
+
+      - name: Install blastn
+        run: sudo apt-get install ncbi-blast+
 
       - name: Test coverage
         run: |

@@ -51,6 +51,10 @@ In some cases, we want to select only a given clade of taxon. One solution is to
 ```{r}
 path_db <- system.file("extdata", "1000_sp_UNITE_sh_general_release_dynamic.fasta", package = "MiscMetabar", mustWork = TRUE)
 
+suppressWarnings(blast_error_or_not <- try(system("blastn 2>&1", intern = TRUE), silent = TRUE))
+
+if (class(blast_error_or_not) != "try-error") {
+  
 df_blast_80 <- filter_asv_blast(df_basidio, fasta_for_db = path_db)
 df_blast_50 <- filter_asv_blast(df_basidio, fasta_for_db = path_db, id_filter = 50, e_value_filter = 10, bit_score_filter = 20, min_cover_filter = 20)
 
@@ -62,9 +66,11 @@ track_formattable <-
       "id_filter = 50" = df_blast_50
     )
 )
+}
 ```
 
 ```{r}
+if (class(blast_error_or_not) != "try-error") {
 library(formattable)
 formattable(track_formattable, 
             list(
@@ -73,6 +79,7 @@ formattable(track_formattable,
               area(col = nb_samples) ~ normalize_bar("lightpink", na.rm = TRUE, min = 0.3)
             )
 )
+}
 ```
 
 ### Filter taxa using a known taxa for control 

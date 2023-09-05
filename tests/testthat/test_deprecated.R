@@ -38,7 +38,7 @@ test_that("Test one case for each deprecated functions", {
 })
 
 
-
+suppressWarnings(vsearch_error_or_not <- try(system("vsearch 2>&1", intern = TRUE), silent = TRUE))
 if (class(vsearch_error_or_not) == "try-error") {
   message("lulu_phyloseq() can't be tested when vsearch is not installed")
 } else {
