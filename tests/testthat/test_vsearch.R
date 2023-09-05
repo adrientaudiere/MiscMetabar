@@ -12,9 +12,7 @@ path_db <- "inst/extdata/1000_sp_UNITE_sh_general_release_dynamic.fasta"
 suppressWarnings(vsearch_error_or_not <- try(system("vsearch 2>&1", intern = TRUE), silent = TRUE))
 
 if (class(vsearch_error_or_not) == "try-error") {
-  test_that("vs_search_global() and asv2otu(..., method=vsearch) send an error when vsearch is not installed", {
-    expect_error(res <- vs_search_global(data_fungi, "inst/extdata/ex_little.fasta"), "data.frame")
-  })
+    message("vs_search_global() and asv2otu(..., method=vsearch) can't be tested when vsearch is not installed")
 } else {
   test_that("asv2otu works fine with vsearch method", {
     expect_s4_class(asv2otu(data_fungi_sp_known, method = "vsearch"), "phyloseq")

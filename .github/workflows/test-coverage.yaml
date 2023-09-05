@@ -26,6 +26,12 @@ jobs:
           extra-packages: any::covr
           needs: coverage
 
+      - name: Install vsearch
+        run: |
+          ## --------------------------------------------------------------------
+          sudo apt-get install vsearch
+        shell: bash
+
       - name: Test coverage
         run: |
           covr::codecov(

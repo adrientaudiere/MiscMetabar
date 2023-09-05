@@ -6,9 +6,7 @@ path_db <- "inst/extdata/1000_sp_UNITE_sh_general_release_dynamic.fasta"
 suppressWarnings(blast_error_or_not <- try(system("blastn 2>&1", intern = TRUE), silent = TRUE))
 
 if (class(blast_error_or_not) == "try-error") {
-  test_that("blast_pq send an error when Blast is not installed", {
-    # expect_error()
-  })
+  message("blast_to_phyloseq(), filter_asv_blast(), blast_to_derep(), add_blast_info, and blast_pq() can't be tested when vsearch is not installed")
 } else {
   test_that("blast_to_phyloseq works fine", {
     expect_s3_class(blast_on_df <- blast_to_phyloseq(df_basidio, path_db), "data.frame")

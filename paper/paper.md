@@ -84,6 +84,6 @@ Recent articles ([@forster2019],[@antich2021]) proposed to used both jointly. Th
 
 # Already cited package
 
-MiscMetabar is already used by scientific communities in different teams ([@Pleic2022], [@Vieira2021], [@McCauley2022]).
+MiscMetabar is already used by scientific communities in different teams ([@Pleic2022], [@Vieira2021], [@McCauley2022], [@McCauley2023]).
 
 # Acknowledgements

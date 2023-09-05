@@ -20,11 +20,19 @@ test_that("asv2otu works fine with Clusterize method", {
 
 
 
-test_that("lulu_pq works fine", {
-  expect_s4_class(lulu_pq(data_fungi_sp_known)$new_physeq, "phyloseq")
-  expect_error(lulu_pq(enterotype)$new_physeq, "phyloseq")
-  expect_s4_class(lulu_pq(data_fungi_sp_known, clean_pq = TRUE, verbose = TRUE)$new_physeq, "phyloseq")
-})
+
+suppressWarnings(vsearch_error_or_not <- try(system("vsearch 2>&1", intern = TRUE), silent = TRUE))
+
+if (class(vsearch_error_or_not) == "try-error") {
+  message("lulu_phyloseq() can't be tested when vsearch is not installed")
+} else {
+  test_that("lulu_pq works fine", {
+    expect_s4_class(lulu_pq(data_fungi_sp_known)$new_physeq, "phyloseq")
+    expect_error(lulu_pq(enterotype)$new_physeq, "phyloseq")
+    expect_s4_class(lulu_pq(data_fungi_sp_known, clean_pq = TRUE, verbose = TRUE)$new_physeq, "phyloseq")
+  })
+}
+
 
 test_that("as_binary_otu_table works fine", {
   expect_s4_class(as_binary_otu_table(data_fungi_sp_known), "phyloseq")

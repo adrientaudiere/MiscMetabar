@@ -16,7 +16,6 @@ knitr::opts_chunk$set(
 
 ```{r setup, message=FALSE}
 library(MiscMetabar)
-devtools::load_all()
 ```
 
 ## Filter samples
