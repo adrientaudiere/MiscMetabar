@@ -15,8 +15,11 @@ if (class(vsearch_error_or_not) == "try-error") {
     message("vs_search_global() and asv2otu(..., method=vsearch) can't be tested when vsearch is not installed")
 } else {
   test_that("asv2otu works fine with vsearch method", {
-    expect_s4_class(asv2otu(data_fungi_sp_known, method = "vsearch"), "phyloseq")
+    expect_s4_class(d_vs <- asv2otu(data_fungi_sp_known, method = "vsearch"), "phyloseq")
+    expect_s4_class(d_fast <- asv2otu(data_fungi_sp_known, method = "vsearch", vsearch_cluster_method = "--cluster_fast"), "phyloseq")
     expect_s3_class(asv2otu(seq_names = sequences_ex, method = "vsearch"), "data.frame")
+    expect_true(sum(!d_fast@refseq == d_vs@refseq) > 0)
+    expect_true(dim(d_fast@otu_table) == dim(d_fast@otu_table))
   })
 
   test_that("vs_search_global works fine with vsearch method", {

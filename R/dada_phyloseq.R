@@ -432,7 +432,8 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #'   Set the clustering method.
 #'   - `clusterize` use the [DECIPHER::Clusterize()] fonction,
 #'   - `vsearch` use the vsearch software (https://github.com/torognes/vsearch/)
-#'     with arguments `-cluster_fast` and `-strand both`
+#'     with arguments `--cluster_size` by default (see args `vsearch_cluster_method`)
+#'     and `-strand both` (see args `vsearch_args`)
 #' @param vsearchpath path to vsearch
 #' @param id (default: 0.97) level of identity to cluster
 #' @param tax_adjust See the man page
