@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 
 ```{r setup, message=FALSE}
 library(MiscMetabar)
+library(formattable)
 ```
 
 ## Filter samples
@@ -71,7 +72,6 @@ track_formattable <-
 
 ```{r}
 if (class(blast_error_or_not) != "try-error") {
-library(formattable)
 formattable(track_formattable, 
             list(
               area(col = nb_sequences) ~ color_bar("cyan",  na.rm = T),
