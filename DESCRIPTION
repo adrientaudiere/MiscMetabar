@@ -23,6 +23,7 @@ Suggests:
     DESeq2,
     DT,
     edgeR,
+    formattable,
     gghalves,
     ggVennDiagram,
     grDevices,
