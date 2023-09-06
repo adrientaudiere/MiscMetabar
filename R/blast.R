@@ -20,10 +20,10 @@
 #' @param e_value_cut (default: 1e-30)  cut of in e-value (%) to keep result
 #'   The BLAST E-value is the number of expected hits of similar quality (score)
 #'   that could be found just by chance.
-#' @param unique_per_seq (logical) if TRUE only return the first match for
-#'   each sequence in seq2search
-#' @param score_filter (logical) does results are filter by score? If
-#'   FALSE, `id_cut`,`bit_score_cut` and `min_cover_cut` are ignored
+#' @param unique_per_seq (logical, default FALSE) if TRUE only return the better match 
+#'  (higher **bit score**) for each sequence
+#' @param score_filter (logical, default TRUE) does results are filter by score? If
+#'   FALSE, `id_cut`,`bit_score_cut`, `e_value_cut` and `min_cover_cut` are ignored
 #' @param list_no_output_query (logical) does the result table include
 #'   query sequences for which `blastn` does not find any correspondence?
 #' @param args_makedb Additional parameters parse to makeblastdb command
@@ -132,7 +132,7 @@ blast_to_phyloseq <- function(physeq,
     "Query cover"
   )
 
-  blast_tab <- blast_tab[order(blast_tab[, "% id. match"], decreasing = TRUE), ]
+  blast_tab <- blast_tab[order(blast_tab[, "bit score"], decreasing = TRUE), ]
 
   if (unique_per_seq) {
     blast_tab <- blast_tab[which(!duplicated(blast_tab[, 1])), ]
@@ -301,7 +301,7 @@ blast_pq <- function(physeq,
     "Query cover"
   )
 
-  blast_tab <- blast_tab[order(blast_tab[, "% id. match"], decreasing = TRUE), ]
+  blast_tab <- blast_tab[order(blast_tab[, "bit score"], decreasing = TRUE), ]
 
   if (unique_per_seq) {
     blast_tab <- blast_tab[which(!duplicated(blast_tab[, 1])), ]
@@ -533,7 +533,7 @@ blast_to_derep <- function(derep,
 
   blast_tab$occurence <- sub("seqs\\)", "", sub(".*\\(", "", blast_tab$`Sample name`, perl = TRUE), perl = TRUE)
 
-  blast_tab <- blast_tab[order(blast_tab[, "% id. match"], decreasing = TRUE), ]
+  blast_tab <- blast_tab[order(blast_tab[, "bit score"], decreasing = TRUE), ]
 
   if (unique_per_seq) {
     blast_tab <- blast_tab[which(!duplicated(blast_tab[, 1])), ]
