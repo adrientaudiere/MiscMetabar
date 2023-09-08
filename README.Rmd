@@ -57,3 +57,24 @@ summary_plot_pq(data_fungi)
 ```{r}
 circle_pq(data_fungi, "Height", taxa = "Class", add_nb_seq = F)
 ```
+
+
+### Installation of other softwares for debian Linux distributions
+
+#### blastn
+
+```sh
+sudo apt-get install ncbi-blast+
+```
+
+#### vsearch
+
+```sh
+sudo apt-get install vsearch
+```
+
+#### Package benchdamic
+
+```sh
+sudo apt-get install libgsl-dev libmpfr-dev
+```

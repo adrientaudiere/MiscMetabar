@@ -1849,8 +1849,11 @@ biplot_pq <- function(physeq,
 #' using one factor.
 #'
 #' @inheritParams clean_pq
-#' @param split_by (required) the name of the factor to make all combination
+#' @param split_by (required if paires is NULL) the name of the factor to make all combination
 #'   of couples of values
+#' @param paires (required if paires is NULL) the name of the factor in physeq@sam_data` slot
+#'   to make plot by paires of samples. Each level must be present only two times.
+#'   Note that if you set paires, you also must set fact arguments to pass on to [bi_plot_pq()].
 #' @param na_remove (logical, default TRUE) if TRUE remove all the samples
 #'   with NA in the `split_by` variable of the `physeq@sam_data` slot
 #' @param ... all other parameters passed on to [biplot_pq()]
@@ -1867,12 +1870,20 @@ biplot_pq <- function(physeq,
 #' @author Adrien Taudière
 multi_biplot_pq <- function(physeq,
                             split_by = NULL,
-                            na_remove = TRUE,
+                            paires = NULL,
+                            na_remove = TRUE,                            
                             ...) {
-  if (is.null(split_by) || is.null(physeq@sam_data[[split_by]])) {
+  if (is.null(paires) && is.null(split_by)) {
+    stop("You must set one of split_by or paires.")
+  } else if (!is.null(paires) && !is.null(split_by)) {
+    stop("You must set either split_by or paires, not both.")
+  } else if (!is.null(split_by) && is.null(physeq@sam_data[[split_by]])) {
     stop("split_by must be set and must be a variable in physeq@sam_data")
+  } else if (!is.null(paires) && is.null(physeq@sam_data[[paires]])) {
+    stop("paires must be set and must be a variable in physeq@sam_data")
   }
-  if (na_remove) {
+
+  if (na_remove && !is.null(split_by)) {
     new_physeq <- subset_samples_pq(physeq, !is.na(physeq@sam_data[[split_by]]))
     if (nsamples(physeq) - nsamples(new_physeq) > 0) {
       message(paste0(
@@ -1883,10 +1894,19 @@ multi_biplot_pq <- function(physeq,
     physeq <- new_physeq
   }
 
-  names_split_by <- names(table(physeq@sam_data[[split_by]]))
-  couples <- combn(names_split_by, 2)
+  if(!is.null(paires)){
+   
+p <- list()
+for (c in levels(as.factor(physeq@sam_data[[paires]]))) {
+  new_physeq <- subset_samples_pq(physeq, physeq@sam_data[[paires]] %in% c )
+  p[[c]] <- biplot_pq(new_physeq, ...) + ggtitle(c)
+}
 
-  p <- list()
+  } else {
+    names_split_by <- names(table(physeq@sam_data[[split_by]]))
+    couples <- combn(names_split_by, 2)
+
+    p <- list()
   for (c in 1:ncol(couples)) {
     names_p <- paste0(couples[1, c], " - ", couples[2, c])
     new_physeq <- subset_samples_pq(physeq, physeq@sam_data[[split_by]] %in%
@@ -1894,9 +1914,11 @@ multi_biplot_pq <- function(physeq,
     p[[names_p]] <- biplot_pq(new_physeq,
       fact = split_by,
       merge_sample_by = split_by,
+      ...
     )
   }
 
+  } 
   return(p)
 }
 

@@ -16,6 +16,7 @@ Depends:
     magrittr,
     phyloseq
 Suggests: 
+    benchdamic,
     Biostrings,
     circlize,
     data.table,
