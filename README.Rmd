@@ -72,9 +72,3 @@ sudo apt-get install ncbi-blast+
 ```sh
 sudo apt-get install vsearch
 ```
-
-#### Package benchdamic
-
-```sh
-sudo apt-get install libgsl-dev libmpfr-dev
-```

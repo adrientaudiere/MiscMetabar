@@ -86,6 +86,16 @@ ggvenn_pq(data_fungi, fact = "Height", taxonomic_rank = "Genus", min_nb_seq = 10
 
 ## Change in abundance across a factor 
 
+### Benchdamic
+
+There is a lot of available methods. Please refer to R package [benchdamic](https://github.com/mcalgaro93/benchdamic) for a list of method and a implementation of a benchmark for your data. 
+
+### Library requirement for Debian Linux OS
+
+```sh
+sudo apt-get install libgsl-dev libmpfr-dev
+```
+
 ### Using Deseq2 package
 
 ```{r}

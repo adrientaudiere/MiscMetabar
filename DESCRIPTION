@@ -16,9 +16,9 @@ Depends:
     magrittr,
     phyloseq
 Suggests: 
-    benchdamic,
     Biostrings,
     circlize,
+    ComplexUpset
     data.table,
     DECIPHER,
     DESeq2,

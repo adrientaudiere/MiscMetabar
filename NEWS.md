@@ -3,6 +3,7 @@
 - Add function `iNEXT_pq()` to calculate hill diversity using the [iNEXT](https://github.com/AnneChao/iNEXT) package.
 - Add argument `paires` to `multi_biplot_pq()` in order to indicate all paires of samples we want to print.
 - Improve `compare_pairs_pq()` with information about the number of shared sequences among paires
+- Add function `upset_pq()` to plot upset of phyloseq object using the [ComplexUpset](https://krassowski.github.io/complex-upset/) package
 
 
 # MiscMetabar 0.40  
