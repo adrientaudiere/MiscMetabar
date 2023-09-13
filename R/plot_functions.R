@@ -2472,7 +2472,7 @@ upset_pq <-
 diff_fct_diff_class <-
   function(x,
            numeric_fonction = mean,
-           logical_method = "true_if_one",
+           logical_method = "TRUE_if_one",
            character_method = "unique_or_na",
            ...) {
     if (is.character(x) || is.factor(x)) {
@@ -2517,7 +2517,7 @@ diff_fct_diff_class <-
           return(FALSE)
         }
       } else {
-        stop(paste0(character_method, " is not a valid method for character_method params."))
+        stop(paste0(logical_method, " is not a valid method for character_method params."))
       }
     } else {
       stop("At least one column is neither numeric nor character or logical")
