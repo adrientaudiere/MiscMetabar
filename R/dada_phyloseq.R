@@ -381,14 +381,16 @@ track_wkflow <- function(
 
 ################################################################################
 #' Track the number of reads (= sequences), samples and cluster (e.g. ASV)
-#' for each samples
-#'
-#' @description
+#' for each samples. 
+#' 
+#'  @description
 #' `r lifecycle::badge("experimental")`
 #'
+#' Contrary to [track_wkflow()], only phyloseq object are possible.
 #' More information are available in the manual of the function [track_wkflow()]
 #'
 #' @param list_pq_obj (required): a list of object passed on to [track_wkflow()]
+#'   Only phyloseq object will return value because information of sample is needed
 #' @param ... : other args passed on to [track_wkflow()]
 #'
 #' @return A list of dataframe. cf [track_wkflow()] for more information
@@ -408,8 +410,13 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
   }
   res <- list()
   for (s in sample_names(list_pq_obj[[1]])) {
-    list_pq_obj_samples <- lapply(list_pq_obj, select_one_sample, sam_name = s)
-    res[[s]] <- track_wkflow(list_pq_obj_samples, ...)
+    if(inherits(list_pq_obj[[1]]), "phyloseq") {
+      list_pq_obj_samples <- lapply(list_pq_obj, select_one_sample, sam_name = s)
+      res[[s]] <- track_wkflow(list_pq_obj_samples, ...)
+    } else {
+      message(paste0(names(list_pq_obj[[1]])), " is not a phyloseq obj. Sample information can't be computed. ")
+      res[[s]] <- NULL
+    }
   }
   return(res)
 }
