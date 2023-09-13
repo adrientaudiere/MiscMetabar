@@ -30,7 +30,6 @@ One of main use of this function is to add taxonomic assignment from a new datab
 \examples{
 # example code
 
-
 }
 \author{
 Adrien Taudière

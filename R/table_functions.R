@@ -109,7 +109,7 @@ tax_datatable <- function(physeq,
 #'   NA in the variables set in bifactor, modality and merge_sample_by.
 #'   NA in variables are well managed even if na_remove = FALSE, so na_remove may
 #'   be useless.
-#' @return A tibble with information about the number of shared ASV, shared number of sequences 
+#' @return A tibble with information about the number of shared ASV, shared number of sequences
 #'   and diversity
 #' @importFrom rlang .data
 #' @export
@@ -216,13 +216,13 @@ compare_pairs_pq <- function(physeq = NULL,
       div_second <- round(vegan::diversity(newphyseq@otu_table,
         index = veg_index
       )[cond2], 2)
-      
-      nb_shared_seq <- sum(newphyseq@otu_table[,newphyseq@otu_table[cond1, ] > nb_min_seq &
+
+      nb_shared_seq <- sum(newphyseq@otu_table[, newphyseq@otu_table[cond1, ] > nb_min_seq &
         newphyseq@otu_table[cond2, ] > nb_min_seq])
 
-      perc_seq_shared_lv1 <- round(100 * nb_shared_seq / sum(newphyseq@otu_table[,newphyseq@otu_table[cond1, ] > nb_min_seq]), 2)
+      perc_seq_shared_lv1 <- round(100 * nb_shared_seq / sum(newphyseq@otu_table[, newphyseq@otu_table[cond1, ] > nb_min_seq]), 2)
 
-      perc_seq_shared_lv2 <- round(100 * nb_shared_seq / sum(newphyseq@otu_table[,newphyseq@otu_table[cond2, ] > nb_min_seq]), 2)
+      perc_seq_shared_lv2 <- round(100 * nb_shared_seq / sum(newphyseq@otu_table[, newphyseq@otu_table[cond2, ] > nb_min_seq]), 2)
 
       res[[i]] <- c(nb_first, nb_second, nb_shared, div_first, div_second, nb_shared_seq, perc_seq_shared_lv1, perc_seq_shared_lv2)
     }

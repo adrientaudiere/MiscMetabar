@@ -35,7 +35,8 @@ Set the clustering method.
 \itemize{
 \item \code{clusterize} use the \code{\link[DECIPHER:Clusterize]{DECIPHER::Clusterize()}} fonction,
 \item \code{vsearch} use the vsearch software (https://github.com/torognes/vsearch/)
-with arguments \code{-cluster_fast} and \verb{-strand both}
+with arguments \code{--cluster_size} by default (see args \code{vsearch_cluster_method})
+and \verb{-strand both} (see args \code{vsearch_args})
 }}
 
 \item{id}{(default: 0.97) level of identity to cluster}

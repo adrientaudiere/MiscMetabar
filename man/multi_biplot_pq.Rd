@@ -4,14 +4,18 @@
 \alias{multi_biplot_pq}
 \title{Visualization of a collection of couples of samples for comparison}
 \usage{
-multi_biplot_pq(physeq, split_by = NULL, na_remove = TRUE, ...)
+multi_biplot_pq(physeq, split_by = NULL, paires = NULL, na_remove = TRUE, ...)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{split_by}{(required) the name of the factor to make all combination
+\item{split_by}{(required if paires is NULL) the name of the factor to make all combination
 of couples of values}
+
+\item{paires}{(required if paires is NULL) the name of the factor in physeq@sam_data` slot
+to make plot by paires of samples. Each level must be present only two times.
+Note that if you set paires, you also must set fact arguments to pass on to \code{\link[=biplot_pq]{biplot_pq()}}.}
 
 \item{na_remove}{(logical, default TRUE) if TRUE remove all the samples
 with NA in the \code{split_by} variable of the \code{physeq@sam_data} slot}

@@ -18,7 +18,7 @@ Depends:
 Suggests: 
     Biostrings,
     circlize,
-    ComplexUpset
+    ComplexUpset,
     data.table,
     DECIPHER,
     DESeq2,
@@ -31,6 +31,7 @@ Suggests:
     grid,
     gridExtra,
     here,
+    iNEXT,
     knitr,
     lulu,
     metacoder,
@@ -53,6 +54,7 @@ Suggests:
     stringr,
     testthat (>= 3.0.0),
     tibble,
+    tidyr,
     vegan,
     venneuler,
     viridis

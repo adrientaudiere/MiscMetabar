@@ -55,30 +55,30 @@ path_db <- system.file("extdata", "1000_sp_UNITE_sh_general_release_dynamic.fast
 suppressWarnings(blast_error_or_not <- try(system("blastn 2>&1", intern = TRUE), silent = TRUE))
 
 if (class(blast_error_or_not) != "try-error") {
-  
-df_blast_80 <- filter_asv_blast(df_basidio, fasta_for_db = path_db)
-df_blast_50 <- filter_asv_blast(df_basidio, fasta_for_db = path_db, id_filter = 50, e_value_filter = 10, bit_score_filter = 20, min_cover_filter = 20)
+  df_blast_80 <- filter_asv_blast(df_basidio, fasta_for_db = path_db)
+  df_blast_50 <- filter_asv_blast(df_basidio, fasta_for_db = path_db, id_filter = 50, e_value_filter = 10, bit_score_filter = 20, min_cover_filter = 20)
 
-track_formattable <-
-  track_wkflow(
-    list(
-      "raw data" = df_basidio,
-      "id_filter = 80" = df_blast_80,
-      "id_filter = 50" = df_blast_50
+  track_formattable <-
+    track_wkflow(
+      list(
+        "raw data" = df_basidio,
+        "id_filter = 80" = df_blast_80,
+        "id_filter = 50" = df_blast_50
+      )
     )
-)
 }
 ```
 
 ```{r}
 if (class(blast_error_or_not) != "try-error") {
-formattable(track_formattable, 
-            list(
-              area(col = nb_sequences) ~ color_bar("cyan",  na.rm = T),
-              area(col = nb_clusters) ~ normalize_bar("yellowgreen", na.rm = TRUE, min = 0.3),
-              area(col = nb_samples) ~ normalize_bar("lightpink", na.rm = TRUE, min = 0.3)
-            )
-)
+  formattable(
+    track_formattable,
+    list(
+      area(col = nb_sequences) ~ color_bar("cyan", na.rm = T),
+      area(col = nb_clusters) ~ normalize_bar("yellowgreen", na.rm = TRUE, min = 0.3),
+      area(col = nb_samples) ~ normalize_bar("lightpink", na.rm = TRUE, min = 0.3)
+    )
+  )
 }
 ```
 
@@ -110,21 +110,22 @@ res_mean <- suppressWarnings(subset_taxa_tax_control(data_fungi, as.numeric(data
 ```
 
 ```{r}
-track_formattable <- track_wkflow(list("raw data" = data_fungi, 
-                  "cutoff_seq" = res_seq, 
-                  "cutoff_mixt" = res_mixt,
-                  "cutoff_diff" = res_diff,
-                  "min" = res_min,
-                  "max" = res_max,
-                  "mean" = res_mean
-                  )
-                )
+track_formattable <- track_wkflow(list(
+  "raw data" = data_fungi,
+  "cutoff_seq" = res_seq,
+  "cutoff_mixt" = res_mixt,
+  "cutoff_diff" = res_diff,
+  "min" = res_min,
+  "max" = res_max,
+  "mean" = res_mean
+))
 
-formattable(track_formattable, 
-            list(
-              area(col = nb_sequences) ~ color_bar("cyan"),
-              area(col = nb_clusters) ~ normalize_bar("yellowgreen", na.rm = TRUE, min = 0.3),
-              area(col = nb_samples) ~ normalize_bar("lightpink", na.rm = TRUE)
-            )
+formattable(
+  track_formattable,
+  list(
+    area(col = nb_sequences) ~ color_bar("cyan"),
+    area(col = nb_clusters) ~ normalize_bar("yellowgreen", na.rm = TRUE, min = 0.3),
+    area(col = nb_samples) ~ normalize_bar("lightpink", na.rm = TRUE)
+  )
 )
 ```

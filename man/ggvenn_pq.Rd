@@ -72,6 +72,9 @@ data_fungi2 <- subset_samples(data_fungi, data_fungi@sam_data$Tree_name == "A10-
   data_fungi@sam_data$Height \%in\% c("Low", "High"))
 ggvenn_pq(data_fungi2, fact = "Height")
 }
+\seealso{
+\code{\link[=upset_pq]{upset_pq()}}
+}
 \author{
 Adrien Taudière
 }

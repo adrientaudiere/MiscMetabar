@@ -924,7 +924,7 @@ venn_pq <-
 #' @return A \code{\link{ggplot}}2 plot representing Venn diagramm of
 #'   modalities of the argument \code{factor} or if split_by is set a list
 #'   of plots.
-#' @seealso [upset_pq()] 
+#' @seealso [upset_pq()]
 #' @examples
 #' data(data_fungi)
 #' ggvenn_pq(data_fungi, fact = "Height")
@@ -1853,7 +1853,7 @@ biplot_pq <- function(physeq,
 #'   of couples of values
 #' @param paires (required if paires is NULL) the name of the factor in physeq@sam_data` slot
 #'   to make plot by paires of samples. Each level must be present only two times.
-#'   Note that if you set paires, you also must set fact arguments to pass on to [bi_plot_pq()].
+#'   Note that if you set paires, you also must set fact arguments to pass on to [biplot_pq()].
 #' @param na_remove (logical, default TRUE) if TRUE remove all the samples
 #'   with NA in the `split_by` variable of the `physeq@sam_data` slot
 #' @param ... all other parameters passed on to [biplot_pq()]
@@ -1871,7 +1871,7 @@ biplot_pq <- function(physeq,
 multi_biplot_pq <- function(physeq,
                             split_by = NULL,
                             paires = NULL,
-                            na_remove = TRUE,                            
+                            na_remove = TRUE,
                             ...) {
   if (is.null(paires) && is.null(split_by)) {
     stop("You must set one of split_by or paires.")
@@ -1894,31 +1894,28 @@ multi_biplot_pq <- function(physeq,
     physeq <- new_physeq
   }
 
-  if(!is.null(paires)){
-   
-p <- list()
-for (c in levels(as.factor(physeq@sam_data[[paires]]))) {
-  new_physeq <- subset_samples_pq(physeq, physeq@sam_data[[paires]] %in% c )
-  p[[c]] <- biplot_pq(new_physeq, ...) + ggtitle(c)
-}
-
+  if (!is.null(paires)) {
+    p <- list()
+    for (c in levels(as.factor(physeq@sam_data[[paires]]))) {
+      new_physeq <- subset_samples_pq(physeq, physeq@sam_data[[paires]] %in% c)
+      p[[c]] <- biplot_pq(new_physeq, ...) + ggtitle(c)
+    }
   } else {
     names_split_by <- names(table(physeq@sam_data[[split_by]]))
     couples <- combn(names_split_by, 2)
 
     p <- list()
-  for (c in 1:ncol(couples)) {
-    names_p <- paste0(couples[1, c], " - ", couples[2, c])
-    new_physeq <- subset_samples_pq(physeq, physeq@sam_data[[split_by]] %in%
-      c(couples[1, c], couples[2, c]))
-    p[[names_p]] <- biplot_pq(new_physeq,
-      fact = split_by,
-      merge_sample_by = split_by,
-      ...
-    )
+    for (c in 1:ncol(couples)) {
+      names_p <- paste0(couples[1, c], " - ", couples[2, c])
+      new_physeq <- subset_samples_pq(physeq, physeq@sam_data[[split_by]] %in%
+        c(couples[1, c], couples[2, c]))
+      p[[names_p]] <- biplot_pq(new_physeq,
+        fact = split_by,
+        merge_sample_by = split_by,
+        ...
+      )
+    }
   }
-
-  } 
   return(p)
 }
 
@@ -2287,15 +2284,16 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 #'
 #' @examples
 #' library("iNEXT")
-#' res_iNEXT <- iNEXT_pq(data_fungi, merge_sample_by="Height", q=1, datatype="abundance", nboot=5)
+#' res_iNEXT <- iNEXT_pq(data_fungi, merge_sample_by = "Height",
+#'        q = 1, datatype = "abundance", nboot = 5)
 #' ggiNEXT(res_iNEXT)
 #' ggiNEXT(res_iNEXT, type = 2)
 #' ggiNEXT(res_iNEXT, type = 3)
-#' 
+#'
 #' @author Adrien Taudière
 #'
 #'
-iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...){
+iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
   if (!is.null(merge_sample_by)) {
     physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
     physeq <- clean_pq(physeq, force_taxa_as_columns = TRUE)
@@ -2311,9 +2309,9 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...){
 #' Make upset plot for phyloseq object.
 #' @description
 #' `r lifecycle::badge("experimental")`
-#' 
+#'
 #' Alternative to venn plot.
-#' 
+#'
 #' @inheritParams clean_pq
 #' @param fact (required): Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}.
@@ -2322,71 +2320,83 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...){
 #'   if min_nb_seq=2,each value of 2 or less in the OTU table
 #'   will not count in the venn diagramm
 #' @param na_remove : if TRUE (the default), NA values in fact are removed
-#'   if FALSE, NA values are set to "NA" 
+#'   if FALSE, NA values are set to "NA"
 #' @param numeric_fonction (default : sum) the function for numeric vector
 #' @param ... other arguments passed on to the [ComplexUpset::upset()]
 #'
-#' @return A \code{\link{ggplot}}2 plot 
+#' @return A \code{\link{ggplot}}2 plot
 #' @export
 #' @author Adrien Taudière
 #'
 #' @seealso [ggvenn_pq()]
-#' @examples 
+#' @examples
 #' upset_pq(data_fungi, modality = "Height", width_ratio = 0.2)
 #' upset_pq(data_fungi, modality = "Height", min_nb_seq = 1000)
 #' upset_pq(data_fungi, modality = "Height", na_remove = FALSE)
 #' upset_pq(data_fungi, modality = "Time", width_ratio = 0.2)
-#' 
+#'
 #' upset_pq(
 #'   data_fungi,
 #'   modality = "Time",
 #'   width_ratio = 0.2,
 #'   annotations = list(
-#'     'Sequences per ASV \n (log10)' = (
+#'     "Sequences per ASV \n (log10)" = (
 #'       ggplot(mapping = aes(y = log10(Abundance)))
-#'       + geom_jitter(aes(color =
-#'                           Abundance), na.rm = TRUE)
-#'       + geom_violin(alpha = 0.5, na.rm = TRUE) +
+#'       +
+#'         geom_jitter(aes(
+#'           color =
+#'             Abundance
+#'         ), na.rm = TRUE)
+#'         +
+#'         geom_violin(alpha = 0.5, na.rm = TRUE) +
 #'         theme(legend.key.size = unit(0.2, "cm")) +
-#'         theme(axis.text=element_text(size=12))
+#'         theme(axis.text = element_text(size = 12))
 #'     ),
-#'     'ASV per phylum' = (
+#'     "ASV per phylum" = (
 #'       ggplot(mapping = aes(fill = Phylum))
-#'       + geom_bar() + ylab("ASV per phylum") +
-#'         theme(legend.key.size = unit(0.2, "cm"))+
-#'         theme(axis.text=element_text(size=12))
+#'       +
+#'         geom_bar() +
+#'         ylab("ASV per phylum") +
+#'         theme(legend.key.size = unit(0.2, "cm")) +
+#'         theme(axis.text = element_text(size = 12))
 #'     )
 #'   )
 #' )
-#' 
-#' 
+#'
+#'
 #' upset_pq(
 #'   subset_taxa(data_fungi, Phylum == "Basidiomycota"),
 #'   modality = "Time",
 #'   width_ratio = 0.2,
-#'   base_annotations=list(),
+#'   base_annotations = list(),
 #'   annotations = list(
-#'     'Sequences per ASV \n (log10)' = (
+#'     "Sequences per ASV \n (log10)" = (
 #'       ggplot(mapping = aes(y = log10(Abundance)))
-#'       + geom_jitter(aes(color =
-#'                           Abundance), na.rm = TRUE)
-#'       + geom_violin(alpha = 0.5, na.rm = TRUE) +
+#'       +
+#'         geom_jitter(aes(
+#'           color =
+#'             Abundance
+#'         ), na.rm = TRUE)
+#'         +
+#'         geom_violin(alpha = 0.5, na.rm = TRUE) +
 #'         theme(legend.key.size = unit(0.2, "cm")) +
-#'         theme(axis.text=element_text(size=12))
+#'         theme(axis.text = element_text(size = 12))
 #'     ),
-#'     'ASV per phylum' = (
+#'     "ASV per phylum" = (
 #'       ggplot(mapping = aes(fill = Class))
-#'       + geom_bar() + ylab("ASV per Class") +
-#'         theme(legend.key.size = unit(0.2, "cm"))+
-#'         theme(axis.text=element_text(size=12))
+#'       +
+#'         geom_bar() +
+#'         ylab("ASV per Class") +
+#'         theme(legend.key.size = unit(0.2, "cm")) +
+#'         theme(axis.text = element_text(size = 12))
 #'     )
 #'   )
 #' )
-#' 
+#'
 #' data_fungi2 <- data_fungi
 #' data_fungi2@sam_data[["Time_0"]] <- data_fungi2@sam_data$Time == 0
 #' data_fungi2@sam_data[["Height__Time_0"]] <-
-#'   paste0(data_fungi2@sam_data[["Height"]] , "__", data_fungi2@sam_data[["Time_0"]])
+#'   paste0(data_fungi2@sam_data[["Height"]], "__", data_fungi2@sam_data[["Time_0"]])
 #' data_fungi2@sam_data[["Height__Time_0"]][grepl("NA", data_fungi2@sam_data[["Height__Time_0"]])] <-
 #'   NA
 #' upset_pq(data_fungi2, modality = "Height__Time_0", width_ratio = 0.2)
@@ -2403,7 +2413,7 @@ upset_pq <-
 
     if (na_remove) {
       physeq <-
-        subset_samples_pq(physeq,!is.na(physeq@sam_data[[fact]]))
+        subset_samples_pq(physeq, !is.na(physeq@sam_data[[fact]]))
     } else {
       physeq@sam_data[[fact]][is.na(physeq@sam_data[[fact]])] <-
         "NA"
@@ -2414,7 +2424,9 @@ upset_pq <-
     psm <- psmelt(physeq)
     samp_names <- unique(psm$Sample)
     psm <-
-      psm %>% mutate(val = TRUE) %>% pivot_wider(names_from = Sample, values_from = val)
+      psm %>%
+      mutate(val = TRUE) %>%
+      tidyr::pivot_wider(names_from = Sample, values_from = val)
     psm[samp_names][is.na(psm[samp_names])] <- FALSE
 
     psm <- psm %>% filter(Abundance != 0)
@@ -2436,43 +2448,42 @@ upset_pq <-
 
 
 #' Compute different functions for different class of vector.
-#' 
+#'
 #' @description
 #' `r lifecycle::badge("experimental")`
 #' Mainly an internal function useful in "lapply(..., tapply)" methods
 #'
-#' 
+#'
 #' @param x : a vector
 #' @param numeric_fonction : a function for numeric vector. For ex. `sum` or `mean`
 #' @param logical_method : A method for logical vector. One of :
-#'   - TRUE_if_one
+#'   - TRUE_if_one (default)
 #'   - NA_if_not_all_TRUE
 #'   - FALSE_if_not_all_TRUE
 #' @param character_method : A method for character vector (and factor). One of :
-#'   - unique_or_na
+#'   - unique_or_na (default)
 #'   - more frequent
 #'   - more_frequent_without_equality
 #' @param ... other arguments passed on to the numeric function (ex. na.rm=TRUE)
 #' @return a single value
 #' @export
-#' 
+#'
 #' @author Adrien Taudière
 diff_fct_diff_class <-
   function(x,
            numeric_fonction = mean,
-           na.rm = TRUE,
            logical_method = "true_if_one",
+           character_method = "unique_or_na",
            ...) {
     if (is.character(x) || is.factor(x)) {
       if (length(unique(x)) == 1) {
         return(unique(x))
-      }
-      else if(character_method == "unique_or_na") {
+      } else if (character_method == "unique_or_na") {
         return(NA)
-      } else if(character_method == "more_frequent") {
+      } else if (character_method == "more_frequent") {
         return(names(sort(table(x), decreasing = TRUE)[1]))
-      } else if(character_method == "more_frequent_without_equality") {
-        if(names(sort(table(x), decreasing = TRUE)[1]) == names(sort(table(x), decreasing = TRUE)[2])) { 
+      } else if (character_method == "more_frequent_without_equality") {
+        if (names(sort(table(x), decreasing = TRUE)[1]) == names(sort(table(x), decreasing = TRUE)[2])) {
           return(NA)
         } else {
           return(names(sort(table(x), decreasing = TRUE)[1]))
@@ -2484,34 +2495,31 @@ diff_fct_diff_class <-
       return(numeric_fonction(x, ...))
     } else if (is.logical(x)) {
       if (logical_method == "TRUE_if_one") {
-        if (sum(x, na.rm = na.rm) > 0) {
+        if (sum(x, na.rm = TRUE) > 0) {
           return(TRUE)
         } else {
           return(FALSE)
         }
       }
       if (logical_method == "NA_if_not_all_TRUE") {
-        if (sum(x, na.rm = na.rm) > 0 && sum(!x, na.rm = na.rm) == 0) {
+        if (sum(x, na.rm = TRUE) > 0 && sum(!x, na.rm = TRUE) == 0) {
           return(TRUE)
-        }
-        else if (sum(!x, na.rm = na.rm) > 0 && sum(x, na.rm = na.rm) > 0) {
+        } else if (sum(!x, na.rm = TRUE) > 0 && sum(x, na.rm = TRUE) > 0) {
           return(NA)
-        } else if (sum(!x, na.rm = na.rm) > 0 && sum(x, na.rm = na.rm) == 0) {
+        } else if (sum(!x, na.rm = TRUE) > 0 && sum(x, na.rm = TRUE) == 0) {
           return(FALSE)
         }
       }
       if (logical_method == "FALSE_if_not_all_TRUE") {
-        if (sum(x, na.rm = na.rm) > 0 && sum(!x, na.rm = na.rm) == 0) {
+        if (sum(x, na.rm = TRUE) > 0 && sum(!x, na.rm = TRUE) == 0) {
           return(TRUE)
-        }
-        else  {
+        } else {
           return(FALSE)
         }
       } else {
         stop(paste0(character_method, " is not a valid method for character_method params."))
       }
-    }
-    else {
+    } else {
       stop("At least one column is neither numeric nor character or logical")
     }
   }

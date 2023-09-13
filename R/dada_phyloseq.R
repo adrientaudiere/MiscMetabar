@@ -640,11 +640,11 @@ vs_search_global <- function(physeq,
     if (inherits(seq2search, "character")) {
       seq2search <- Biostrings::DNAStringSet(seq2search)
     }
-    Biostrings::writeXStringSet(seq2search,  paste0(tempdir(), "seq2search.fasta"))
+    Biostrings::writeXStringSet(seq2search, paste0(tempdir(), "seq2search.fasta"))
     seq2search <- paste0(tempdir(), "seq2search.fasta")
   } else if (!is.null(path_to_fasta)) {
     dna <- Biostrings::readDNAStringSet(path_to_fasta)
-    Biostrings::writeXStringSet(dna,  paste0(tempdir(), "seq2search.fasta"))
+    Biostrings::writeXStringSet(dna, paste0(tempdir(), "seq2search.fasta"))
     seq2search <- paste0(tempdir(), "seq2search.fasta")
   }
 
@@ -1334,7 +1334,6 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #'
 #' @examples
 #' # example code
-#'
 #'
 #' @author Adrien Taudière
 #'

@@ -41,7 +41,8 @@ NA in variables are well managed even if na_remove = FALSE, so na_remove may
 be useless.}
 }
 \value{
-A tibble
+A tibble with information about the number of shared ASV, shared number of sequences
+and diversity
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}} #'   For the moment refseq slot need to be not Null.

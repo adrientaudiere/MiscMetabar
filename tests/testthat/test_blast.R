@@ -22,8 +22,8 @@ if (class(blast_error_or_not) == "try-error") {
     expect_s3_class(blast_df <- blast_pq(df_basidio, path_db, unique_per_seq = TRUE), "data.frame")
     expect_s3_class(blast_df <- blast_pq(df_basidio, path_db, score_filter = FALSE), "data.frame")
     expect_s3_class(blast_df <- blast_pq(df_basidio, path_db, unique_per_seq = FALSE, score_filter = FALSE), "data.frame")
-    expect_s3_class(blast_df <- blast_pq(df_basidio, database="inst/extdata/dbase"), "data.frame")
-    expect_error(blast_df <- blast_pq(df_basidio, fasta_for_db = path_db, database="inst/extdata/dbase"))
+    expect_s3_class(blast_df <- blast_pq(df_basidio, database = "inst/extdata/dbase"), "data.frame")
+    expect_error(blast_df <- blast_pq(df_basidio, fasta_for_db = path_db, database = "inst/extdata/dbase"))
     expect_error(blast_df <- blast_pq(df_basidio))
   })
 
