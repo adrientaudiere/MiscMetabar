@@ -23,9 +23,6 @@ If set to TRUE, empty samples are discarded after subsetting ASV}
 a new phyloseq object
 }
 \description{
-Subset taxa using a conditional named boolean vector.
-}
-\details{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
 The main objective of this function is to complete the \code{\link[phyloseq:subset_taxa-methods]{phyloseq::subset_taxa()}}

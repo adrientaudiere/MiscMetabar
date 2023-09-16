@@ -83,6 +83,48 @@ ggvenn_pq(data_fungi, fact = "Height", taxonomic_rank = "Genus", min_nb_seq = 10
   labs(title = "Share number of Genus represented by at least one ASV with more than 100 seqs")
 ```
 
+## Upset plot
+
+Venn diagramm can quickly become complex to read when the number of modality increase. One graphical solution is upset plot. MiscMetabar propose a solution based on the package [ComplexUpset](https://krassowski.github.io/complex-upset/).
+```{r}
+upset_pq(data_fungi, fact = "Height")
+```
+
+```{r}
+upset_pq(data_fungi, fact = "Time")
+```
+
+`ComplexUpset` package allow powerfull configuration of you plot as you can see in the following figure.
+
+```{r}
+upset_pq(
+  data_fungi,
+  fact = "Time",
+  width_ratio = 0.2,
+  annotations = list(
+    "Sequences per ASV \n (log10)" = (
+      ggplot(mapping = aes(y = log10(Abundance)))
+      +
+        geom_jitter(aes(
+          color =
+            Abundance
+        ), na.rm = TRUE)
+        +
+        geom_violin(alpha = 0.5, na.rm = TRUE) +
+        theme(legend.key.size = unit(0.2, "cm")) +
+        theme(axis.text = element_text(size = 12))
+    ),
+    "ASV per phylum" = (
+      ggplot(mapping = aes(fill = Phylum))
+      +
+        geom_bar() +
+        ylab("ASV per phylum") +
+        theme(legend.key.size = unit(0.2, "cm")) +
+        theme(axis.text = element_text(size = 12))
+    )
+  )
+)
+```
 
 ## Change in abundance across a factor 
 

@@ -33,10 +33,6 @@ The number of sequences, clusters (e.g. OTUs, ASVs) and samples for
 each object.
 }
 \description{
-Track the number of reads (= sequences), samples and cluster (e.g. ASV)
-from various objects including dada-class and derep-class.
-}
-\details{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 \itemize{
 \item List of fastq and fastg.gz files -> nb of reads and samples

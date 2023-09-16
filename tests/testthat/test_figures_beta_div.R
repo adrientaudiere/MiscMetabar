@@ -83,3 +83,14 @@ test_that("ggvenn_pq works with data_fungi dataset", {
   expect_error(ggvenn_pq(data_fungi))
   expect_s3_class(ggvenn_pq(data_fungi, "Height"), "ggplot")
 })
+
+
+test_that("upset_pq works with data_fungi dataset", {
+  expect_silent(suppressMessages(upset_pq(data_fungi, "Height")))
+  expect_s3_class(upset_pq(data_fungi, "Height"), "ggplot")
+  expect_s3_class(upset_pq(data_fungi, "Time"), "ggplot")
+  expect_s3_class(upset_pq(data_fungi, "Time", min_nb_seq = 10), "ggplot")
+  expect_s3_class(upset_pq(data_fungi, "Time", numeric_fonction = mean), "ggplot")
+  expect_error(upset_pq(data_fungi))
+})
+

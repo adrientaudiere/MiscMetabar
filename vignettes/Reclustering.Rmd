@@ -26,8 +26,8 @@ data(data_fungi_sp_known)
 otu <- asv2otu(data_fungi_sp_known, method = "clusterize")
 ```
 
-```{r, eval = FALSE}
-otu_vs <- asv2otu(data_fungi_sp_known, method = "vsearch", vsearch_cluster_method = "")
+```{r}
+otu_vs <- asv2otu(data_fungi_sp_known, method = "vsearch")
 ```
 
 The vsearch method requires the installation of [Vsearch](https://github.com/torognes/vsearch).
@@ -39,15 +39,23 @@ summary_plot_pq(otu)
 
 ## Using lulu algorithm ([link to LULU article](https://www.nature.com/articles/s41467-017-01312-x))
 
-```{r, message=FALSE, results="hide", eval = FALSE}
-library(devtools)
-install_github("adrientaudiere/lulu")
+```{r, message=FALSE, results="hide"}
 library("lulu")
 data(data_fungi_sp_known)
 lulu_res <- lulu_pq(data_fungi_sp_known)
 ```
 
-```{r, eval = FALSE}
+```{r}
 summary_plot_pq(data_fungi_sp_known)
 summary_plot_pq(lulu_res$new_physeq)
+```
+
+## Tracking number of samples, sequences and clusters
+
+```{r}
+track_wkflow(list("Raw data" = data_fungi_sp_known,
+                  "OTU" = otu,
+                  "OTU_vsearch" = otu_vs,
+                  "LULU" = lulu_res[[1]])
+            )
 ```

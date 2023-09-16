@@ -52,9 +52,6 @@ the ASV names in verbose information can be misleading.}
 A new \code{\link{phyloseq-class}} object
 }
 \description{
-Clean phyloseq object by removing empty samples and taxa
-}
-\details{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
 In addition, this function check for discrepancy (and rename) between

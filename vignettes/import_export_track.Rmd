@@ -1,8 +1,8 @@
 ---
-title: "Import-export-track"
+title: "import_export_track"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Import-export-track}
+  %\VignetteIndexEntry{import_export_track}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

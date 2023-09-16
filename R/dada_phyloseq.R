@@ -30,7 +30,7 @@ add_dna_to_phyloseq <- function(physeq) {
 ################################################################################
 #'  Clean phyloseq object by removing empty samples and taxa
 #'
-#' @details `r lifecycle::badge("experimental")`
+#' @description `r lifecycle::badge("experimental")`
 #'
 #'  In addition, this function check for discrepancy (and rename) between
 #' (i) taxa names in refseq, taxonomy table and otu_table and between
@@ -172,7 +172,7 @@ clean_pq <- function(physeq,
 #' Track the number of reads (= sequences), samples and cluster (e.g. ASV)
 #' from various objects including dada-class and derep-class.
 #'
-#' @details
+#' @description
 #' `r lifecycle::badge("maturing")`
 #'
 #'  * List of fastq and fastg.gz files -> nb of reads and samples
@@ -381,9 +381,9 @@ track_wkflow <- function(
 
 ################################################################################
 #' Track the number of reads (= sequences), samples and cluster (e.g. ASV)
-#' for each samples. 
-#' 
-#'  @description
+#' for each samples.
+#'
+#' @description
 #' `r lifecycle::badge("experimental")`
 #'
 #' Contrary to [track_wkflow()], only phyloseq object are possible.
@@ -410,7 +410,7 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
   }
   res <- list()
   for (s in sample_names(list_pq_obj[[1]])) {
-    if(inherits(list_pq_obj[[1]]), "phyloseq") {
+    if (inherits(list_pq_obj[[1]], "phyloseq")) {
       list_pq_obj_samples <- lapply(list_pq_obj, select_one_sample, sam_name = s)
       res[[s]] <- track_wkflow(list_pq_obj_samples, ...)
     } else {
@@ -427,6 +427,7 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #' Recluster sequences of an object of class `physeq`
 #' (e.g. OTUs or ASV from dada)
 #'
+#' @description 
 #' `r lifecycle::badge("maturing")`
 #'
 #' @inheritParams clean_pq
@@ -997,7 +998,7 @@ read_pq <- function(path = NULL, taxa_are_rows = FALSE, sam_names = NULL, sep_cs
 ################################################################################
 #' Lulu reclustering of class `physeq`
 #'
-#' @details
+#' @description
 #' `r lifecycle::badge("experimental")`
 #'
 #' See https://www.nature.com/articles/s41467-017-01312-x for more information
@@ -1129,7 +1130,7 @@ lulu_pq <- function(physeq,
 ################################################################################
 #' Verify the validity of a phyloseq object
 #'
-#' @details
+#' @description
 #' `r lifecycle::badge("maturing")`
 #'
 #' Mostly for internal use in MiscMetabar functions.
@@ -1150,7 +1151,7 @@ verify_pq <- function(physeq) {
 ################################################################################
 #' Subset samples using a conditional boolean vector.
 #'
-#' @details
+#' @description
 #' `r lifecycle::badge("experimental")`
 #'
 #' The main objective of this function is to complete the [phyloseq::subset_samples()]
@@ -1202,7 +1203,7 @@ subset_samples_pq <- function(physeq, condition) {
 ################################################################################
 #' Subset taxa using a conditional named boolean vector.
 #'
-#' @details
+#' @description
 #' `r lifecycle::badge("experimental")`
 #'
 #' The main objective of this function is to complete the [phyloseq::subset_taxa()]

@@ -43,16 +43,17 @@ search_exact_seq_pq <- function(physeq, sequences) {
 ################################################################################
 #' Calculate ecological distance among positive controls vs
 #'   distance for all samples
-#'
+
+#' @description
 #' `r lifecycle::badge("experimental")`
-#'
-#' @aliases dist_pos_control
-#' @details Compute distance among positive controls,
+#'  
+#' Compute distance among positive controls,
 #'   i.e. samples which are duplicated
 #'   to test for variation, for example in
 #'    (i) a step in the sampling,
 #'    (ii) a step in the extraction,
 #'    (iii) a step in the sequencing.
+#' @aliases dist_pos_control
 #' @inheritParams clean_pq
 #' @param samples_names (required) a vector of names for samples with
 #'   positives controls of the same samples having the same name
@@ -141,7 +142,9 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
 #' @examples
 #' data(data_fungi)
 #'
-#' subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 300]))
+#' subset_taxa_tax_control(data_fungi,
+#'   as.numeric(data_fungi@otu_table[, 300]), 
+#'   min_diff_for_cutoff = 2)
 #'
 #' @author Adrien Taudière
 subset_taxa_tax_control <-

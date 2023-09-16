@@ -23,16 +23,6 @@ with:
 ``` r
 install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar")
-#> dplyr (1.1.2 -> 1.1.3) [CRAN]
-#> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/RtmpluOtzG/remotes62e682f7ffc53/adrientaudiere-MiscMetabar-2cb7839/DESCRIPTION’ ... OK
-#> * preparing ‘MiscMetabar’:
-#> * checking DESCRIPTION meta-information ... OK
-#> Avis : read_pq.Rd:26: unknown macro '\t'
-#> Avis : write_pq.Rd:74: unknown macro '\t'
-#> * checking for LF line-endings in source and make files and shell scripts
-#> * checking for empty or unneeded directories
-#> * building ‘MiscMetabar_0.34.tar.gz’
 ```
 
 You can install the developement version from
@@ -41,20 +31,13 @@ You can install the developement version from
 ``` r
 install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar", ref = "dev")
-#> 
-#> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/RtmpluOtzG/remotes62e682b7bdb84/adrientaudiere-MiscMetabar-1dc2e0c/DESCRIPTION’ ... OK
-#> * preparing ‘MiscMetabar’:
-#> * checking DESCRIPTION meta-information ... OK
-#> * checking for LF line-endings in source and make files and shell scripts
-#> * checking for empty or unneeded directories
-#> * building ‘MiscMetabar_0.40.tar.gz’
-#> Warning in i.p(...): l'installation du package
-#> '/tmp/RtmpluOtzG/file62e683fb2fa28/MiscMetabar_0.40.tar.gz' a eu un statut de
-#> sortie non nul
 ```
 
 ## Some use of MiscMetabar
+
+See vignettes in the
+[MiscMetabar](https://adrientaudiere.github.io/MiscMetabar/) website for
+more examples.
 
 ### Summarize a physeq object
 
@@ -68,11 +51,57 @@ summary_plot_pq(data_fungi)
 
 <img src="man/figures/README-example-1.png" width="100%" />
 
-### Circle for visualize distribution of taxa in function of samples variables
+### Alpha-diversity analysis
 
 ``` r
-circle_pq(data_fungi, "Height", taxa = "Class", add_nb_seq = F)
-#> Only 10 taxa are plot (41.67%). Use 'min_prop_tax' to plot more taxa
+p <- MiscMetabar::hill_pq(data_fungi, variable = "Height")
+#> Taxa are now in rows.
+#> Cleaning suppress 0 taxa and 0 samples.
+p$plot_Hill_0
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<div class="figure">
+
+<img src="man/figures/README-unnamed-chunk-4-1.png" alt="Hill number 1" width="100%" />
+<p class="caption">
+Hill number 1
+</p>
+
+</div>
+
+``` r
+p$plot_tuckey
+```
+
+<div class="figure">
+
+<img src="man/figures/README-unnamed-chunk-5-1.png" alt="Result of the Tuckey post-hoc test" width="100%" />
+<p class="caption">
+Result of the Tuckey post-hoc test
+</p>
+
+</div>
+
+### Beta-diversity analysis
+
+``` r
+ggvenn_pq(data_fungi, fact = "Height") +
+  ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1) +
+  labs(title = "Share number of ASV among Height in tree")
+```
+
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+
+### Installation of other softwares for debian Linux distributions
+
+#### blastn
+
+``` sh
+sudo apt-get install ncbi-blast+
+```
+
+#### vsearch
+
+``` sh
+sudo apt-get install vsearch
+```

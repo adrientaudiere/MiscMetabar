@@ -25,8 +25,10 @@ see \code{\link[iNEXT:iNEXT]{iNEXT::iNEXT()}} documentation
 }
 \examples{
 library("iNEXT")
-res_iNEXT <- iNEXT_pq(data_fungi, merge_sample_by = "Height",
-       q = 1, datatype = "abundance", nboot = 5)
+res_iNEXT <- iNEXT_pq(data_fungi,
+  merge_sample_by = "Height",
+  q = 1, datatype = "abundance", nboot = 5
+)
 ggiNEXT(res_iNEXT)
 ggiNEXT(res_iNEXT, type = 2)
 ggiNEXT(res_iNEXT, type = 3)

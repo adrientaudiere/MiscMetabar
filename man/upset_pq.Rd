@@ -28,7 +28,8 @@ will not count in the venn diagramm}
 \item{na_remove}{: if TRUE (the default), NA values in fact are removed
 if FALSE, NA values are set to "NA"}
 
-\item{numeric_fonction}{(default : sum) the function for numeric vector}
+\item{numeric_fonction}{(default : sum) the function for numeric vector
+usefull only for complex plot (see examples)}
 
 \item{...}{other arguments passed on to the \code{\link[ComplexUpset:upset]{ComplexUpset::upset()}}}
 }
@@ -41,14 +42,14 @@ A \code{\link{ggplot}}2 plot
 Alternative to venn plot.
 }
 \examples{
-upset_pq(data_fungi, modality = "Height", width_ratio = 0.2)
-upset_pq(data_fungi, modality = "Height", min_nb_seq = 1000)
-upset_pq(data_fungi, modality = "Height", na_remove = FALSE)
-upset_pq(data_fungi, modality = "Time", width_ratio = 0.2)
+upset_pq(data_fungi, fact = "Height", width_ratio = 0.2)
+upset_pq(data_fungi, fact = "Height", min_nb_seq = 1000)
+upset_pq(data_fungi, fact = "Height", na_remove = FALSE)
+upset_pq(data_fungi, fact = "Time", width_ratio = 0.2)
 
 upset_pq(
   data_fungi,
-  modality = "Time",
+  fact = "Time",
   width_ratio = 0.2,
   annotations = list(
     "Sequences per ASV \n (log10)" = (
@@ -76,8 +77,38 @@ upset_pq(
 
 
 upset_pq(
+  data_fungi,
+  fact = "Time",
+  width_ratio = 0.2,
+   numeric_fonction = mean,
+  annotations = list(
+    "Sequences per ASV \n (log10)" = (
+      ggplot(mapping = aes(y = log10(Abundance)))
+      +
+        geom_jitter(aes(
+          color =
+            Abundance
+        ), na.rm = TRUE)
+        +
+        geom_violin(alpha = 0.5, na.rm = TRUE) +
+        theme(legend.key.size = unit(0.2, "cm")) +
+        theme(axis.text = element_text(size = 12))
+    ),
+    "ASV per phylum" = (
+      ggplot(mapping = aes(fill = Phylum))
+      +
+        geom_bar() +
+        ylab("ASV per phylum") +
+        theme(legend.key.size = unit(0.2, "cm")) +
+        theme(axis.text = element_text(size = 12))
+    )
+  )
+)
+
+
+upset_pq(
   subset_taxa(data_fungi, Phylum == "Basidiomycota"),
-  modality = "Time",
+  fact = "Time",
   width_ratio = 0.2,
   base_annotations = list(),
   annotations = list(
@@ -110,7 +141,7 @@ data_fungi2@sam_data[["Height__Time_0"]] <-
   paste0(data_fungi2@sam_data[["Height"]], "__", data_fungi2@sam_data[["Time_0"]])
 data_fungi2@sam_data[["Height__Time_0"]][grepl("NA", data_fungi2@sam_data[["Height__Time_0"]])] <-
   NA
-upset_pq(data_fungi2, modality = "Height__Time_0", width_ratio = 0.2)
+upset_pq(data_fungi2, fact = "Height__Time_0", width_ratio = 0.2)
 }
 \seealso{
 \code{\link[=ggvenn_pq]{ggvenn_pq()}}

@@ -7,8 +7,7 @@
 diff_fct_diff_class(
   x,
   numeric_fonction = mean,
-  na.rm = TRUE,
-  logical_method = "true_if_one",
+  logical_method = "TRUE_if_one",
   character_method = "unique_or_na",
   ...
 )

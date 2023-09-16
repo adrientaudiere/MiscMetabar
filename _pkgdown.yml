@@ -20,7 +20,7 @@ navbar:
     - text: Beta-diversity
       href: articles/beta-div.html
     - text: Import/export and track 
-      href: articles/Import-export-track.html
+      href: articles/import_export_track.html
     - text: Filter taxa and samples
       href: articles/filter.html
     - text: -------

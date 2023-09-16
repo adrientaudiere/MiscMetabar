@@ -1106,7 +1106,9 @@ multiplot <-
 #'  \code{\link[multcompView]{multcompLetters}} function from the package
 #'  multcompLetters. BROKEN for the moment.
 #' @param add_points (logical): add jitter point on boxplot
-#'
+#' @param add_info (logical, default TRUE) Do we add a subtitle with
+#'   information about the number of samples per modality.
+#' 
 #' @return A list of 4 ggplot2 plot.
 #' - plot_Hill_0 : the boxplot of Hill number 0 (= species richness)
 #'     against the variable
@@ -1137,7 +1139,8 @@ hill_pq <-
            variable,
            color_fac = NA,
            letters = FALSE,
-           add_points = FALSE) {
+           add_points = FALSE,
+           add_info = TRUE) {
     var <- sym(variable)
     if (is.na(color_fac)) {
       color_fac <- sym(variable)
@@ -1183,6 +1186,21 @@ hill_pq <-
       p_2 <-
         p_2 + geom_jitter(aes(y = !!var, colour = as.factor(!!color_fac)), alpha = 0.5)
     }
+
+    if (add_info) {
+      subtitle_plot <- paste0(
+              "Nb of samples: '",
+              paste0(names(table(physeq@sam_data[[variable]])),
+                sep = "' : ",
+                table(physeq@sam_data[[variable]]), collapse = " - '"
+              )
+            )
+      
+      p_0 <- p_0 + labs(subtitle = subtitle_plot)
+      p_1 <- p_1 + labs(subtitle = subtitle_plot)
+      p_2 <- p_2 + labs(subtitle = subtitle_plot)
+      
+      }
 
     if (letters) {
       ### HILL 0
@@ -2284,8 +2302,10 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 #'
 #' @examples
 #' library("iNEXT")
-#' res_iNEXT <- iNEXT_pq(data_fungi, merge_sample_by = "Height",
-#'        q = 1, datatype = "abundance", nboot = 5)
+#' res_iNEXT <- iNEXT_pq(data_fungi,
+#'   merge_sample_by = "Height",
+#'   q = 1, datatype = "abundance", nboot = 5
+#' )
 #' ggiNEXT(res_iNEXT)
 #' ggiNEXT(res_iNEXT, type = 2)
 #' ggiNEXT(res_iNEXT, type = 3)
@@ -2322,6 +2342,7 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
 #' @param na_remove : if TRUE (the default), NA values in fact are removed
 #'   if FALSE, NA values are set to "NA"
 #' @param numeric_fonction (default : sum) the function for numeric vector
+#'   usefull only for complex plot (see examples)
 #' @param ... other arguments passed on to the [ComplexUpset::upset()]
 #'
 #' @return A \code{\link{ggplot}}2 plot
@@ -2330,15 +2351,45 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
 #'
 #' @seealso [ggvenn_pq()]
 #' @examples
-#' upset_pq(data_fungi, modality = "Height", width_ratio = 0.2)
-#' upset_pq(data_fungi, modality = "Height", min_nb_seq = 1000)
-#' upset_pq(data_fungi, modality = "Height", na_remove = FALSE)
-#' upset_pq(data_fungi, modality = "Time", width_ratio = 0.2)
+#' upset_pq(data_fungi, fact = "Height", width_ratio = 0.2)
+#' upset_pq(data_fungi, fact = "Height", min_nb_seq = 1000)
+#' upset_pq(data_fungi, fact = "Height", na_remove = FALSE)
+#' upset_pq(data_fungi, fact = "Time", width_ratio = 0.2)
 #'
 #' upset_pq(
 #'   data_fungi,
-#'   modality = "Time",
+#'   fact = "Time",
 #'   width_ratio = 0.2,
+#'   annotations = list(
+#'     "Sequences per ASV \n (log10)" = (
+#'       ggplot(mapping = aes(y = log10(Abundance)))
+#'       +
+#'         geom_jitter(aes(
+#'           color =
+#'             Abundance
+#'         ), na.rm = TRUE)
+#'         +
+#'         geom_violin(alpha = 0.5, na.rm = TRUE) +
+#'         theme(legend.key.size = unit(0.2, "cm")) +
+#'         theme(axis.text = element_text(size = 12))
+#'     ),
+#'     "ASV per phylum" = (
+#'       ggplot(mapping = aes(fill = Phylum))
+#'       +
+#'         geom_bar() +
+#'         ylab("ASV per phylum") +
+#'         theme(legend.key.size = unit(0.2, "cm")) +
+#'         theme(axis.text = element_text(size = 12))
+#'     )
+#'   )
+#' )
+#'
+#' 
+#' upset_pq(
+#'   data_fungi,
+#'   fact = "Time",
+#'   width_ratio = 0.2,
+#'    numeric_fonction = mean,
 #'   annotations = list(
 #'     "Sequences per ASV \n (log10)" = (
 #'       ggplot(mapping = aes(y = log10(Abundance)))
@@ -2366,7 +2417,7 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
 #'
 #' upset_pq(
 #'   subset_taxa(data_fungi, Phylum == "Basidiomycota"),
-#'   modality = "Time",
+#'   fact = "Time",
 #'   width_ratio = 0.2,
 #'   base_annotations = list(),
 #'   annotations = list(
@@ -2399,7 +2450,7 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
 #'   paste0(data_fungi2@sam_data[["Height"]], "__", data_fungi2@sam_data[["Time_0"]])
 #' data_fungi2@sam_data[["Height__Time_0"]][grepl("NA", data_fungi2@sam_data[["Height__Time_0"]])] <-
 #'   NA
-#' upset_pq(data_fungi2, modality = "Height__Time_0", width_ratio = 0.2)
+#' upset_pq(data_fungi2, fact = "Height__Time_0", width_ratio = 0.2)
 upset_pq <-
   function(physeq,
            fact,
@@ -2431,7 +2482,6 @@ upset_pq <-
 
     psm <- psm %>% filter(Abundance != 0)
     psm[[fact]] <- as.character(psm[[fact]])
-
 
     psm2 <- data.frame(lapply(psm, function(col) {
       tapply(col, paste0(psm$OTU), function(vec) {
