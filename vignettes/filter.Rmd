@@ -84,7 +84,7 @@ if (class(blast_error_or_not) != "try-error") {
 
 ### Filter taxa using a known taxa for control 
 
-To filter out contamination, one solution is to add a proportion of a known taxa which is not present in the environment of the study. In that case we can define some threshold for each sample to discard taxon based on pseudo-abundance. In the example code above, we select taxon using the ASV_50 as control through 6 differents algorithm.
+To filter out contamination, one solution is to add a proportion of a known taxa which is not present in the environment of the study. In that case we can define some threshold for each sample to discard taxon based on pseudo-abundance. In the example code above, we select taxon using the ASV_50 as control through 6 differents algorithms.
 
 ```{r, results='hide'}
 data(data_fungi)
