@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.34</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.40</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,6 +31,8 @@
     <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
     <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
     <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a>
+    <a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>For developpers</h6>
     <a class="dropdown-item" href="../articles/Rules.html">Rules of code</a>
@@ -100,6 +102,7 @@ their column numbers (e.g. taxonomic_level = c(1:7))</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://grunwaldlab.github.io/metacoder_documentation/" class="external-link">"metacoder"</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GlobalPatterns"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">GPsubset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html" class="external-link">subset_taxa</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">GlobalPatterns</span>,</span></span>

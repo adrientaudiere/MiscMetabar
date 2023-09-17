@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.34</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.40</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,6 +31,8 @@
     <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
     <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
     <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a>
+    <a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>For developpers</h6>
     <a class="dropdown-item" href="../articles/Rules.html">Rules of code</a>
@@ -97,6 +99,11 @@
 using ASV_1, ASV_2, …</dd>
       </dl><dl><dt>
           
+          <code><a href="add_new_taxonomy_pq.html">add_new_taxonomy_pq()</a></code> 
+        </dt>
+        <dd>Add new taxonomic rank to a phyloseq object.</dd>
+      </dl><dl><dt>
+          
           <code><a href="adonis_pq.html">adonis_pq()</a></code> 
         </dt>
         <dd>Permanova on a phyloseq object</dd>
@@ -124,7 +131,7 @@ using ASV_1, ASV_2, …</dd>
         <dd>Visualization of two samples for comparison</dd>
       </dl><dl><dt>
           
-          <code><a href="blast_pq.html">blast_pq()</a></code> <code><a href="blast_pq.html">blast_pq()</a></code> 
+          <code><a href="blast_pq.html">blast_pq()</a></code> 
         </dt>
         <dd>Blast all sequence of <code>refseq</code> slot of a <code>phyloseq-class</code>
 object against a custom database.</dd>
@@ -136,7 +143,7 @@ object against a custom database.</dd>
 object.</dd>
       </dl><dl><dt>
           
-          <code><a href="blast_to_phyloseq.html">blast_to_phyloseq()</a></code> <code><a href="blast_to_phyloseq.html">blast_to_phyloseq()</a></code> 
+          <code><a href="blast_to_phyloseq.html">blast_to_phyloseq()</a></code> 
         </dt>
         <dd>Blast some sequence against <code>refseq</code> slot of a <code>phyloseq-class</code>
 object.</dd>
@@ -173,6 +180,11 @@ shared ASV.</dd>
         <dd>Some fungal OTU in phyloseq format with known species name</dd>
       </dl><dl><dt>
           
+          <code><a href="diff_fct_diff_class.html">diff_fct_diff_class()</a></code> 
+        </dt>
+        <dd>Compute different functions for different class of vector.</dd>
+      </dl><dl><dt>
+          
           <code><a href="dist_bycol.html">dist_bycol()</a></code> 
         </dt>
         <dd>Compute paired distances among matrix (e.g. otu_table)</dd>
@@ -184,9 +196,14 @@ shared ASV.</dd>
 distance for all samples</dd>
       </dl><dl><dt>
           
-          <code><a href="filter_asv_blast.html">filter_asv_blast()</a></code> <code><a href="filter_asv_blast.html">filter_asv_blast()</a></code> 
+          <code><a href="filter_asv_blast.html">filter_asv_blast()</a></code> 
         </dt>
-        <dd>Filter indesirable taxa using blast against a against a custom database.</dd>
+        <dd>Filter undesirable taxa using blast against a against a custom database.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="funky_color.html">funky_color()</a></code> 
+        </dt>
+        <dd>Count sequences in fasta or fastq file</dd>
       </dl><dl><dt>
           
           <code><a href="get_file_extension.html">get_file_extension()</a></code> 
@@ -218,6 +235,11 @@ distance for all samples</dd>
           <code><a href="hill_tuckey_pq.html">hill_tuckey_pq()</a></code> 
         </dt>
         <dd>Calculate hill number and compute Tuckey post-hoc test</dd>
+      </dl><dl><dt>
+          
+          <code><a href="iNEXT_pq.html">iNEXT_pq()</a></code> 
+        </dt>
+        <dd>iNterpolation and EXTrapolation of Hill numbers (with iNEXT)</dd>
       </dl><dl><dt>
           
           <code><a href="krona.html">krona()</a></code> 
@@ -315,6 +337,11 @@ in Newick format.</dd>
 </ul></dd>
       </dl><dl><dt>
           
+          <code><a href="search_exact_seq_pq.html">search_exact_seq_pq()</a></code> 
+        </dt>
+        <dd>Search for exact matching of sequences using complement, reverse and reverse-complement</dd>
+      </dl><dl><dt>
+          
           <code><a href="select_one_sample.html">select_one_sample()</a></code> 
         </dt>
         <dd>Select one sample from a physeq object</dd>
@@ -359,12 +386,17 @@ from various objects including dada-class and derep-class.</dd>
           <code><a href="track_wkflow_samples.html">track_wkflow_samples()</a></code> 
         </dt>
         <dd>Track the number of reads (= sequences), samples and cluster (e.g. ASV)
-for each samples</dd>
+for each samples.</dd>
       </dl><dl><dt>
           
           <code><a href="tsne_pq.html">tsne_pq()</a></code> 
         </dt>
         <dd>Compute tSNE position of samples from a phyloseq object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="upset_pq.html">upset_pq()</a></code> 
+        </dt>
+        <dd>Make upset plot for phyloseq object.</dd>
       </dl><dl><dt>
           
           <code><a href="venn_pq.html">venn_pq()</a></code> 
@@ -377,7 +409,7 @@ for each samples</dd>
         <dd>Verify the validity of a phyloseq object</dd>
       </dl><dl><dt>
           
-          <code><a href="vsearch_search_global.html">vsearch_search_global()</a></code> 
+          <code><a href="vs_search_global.html">vs_search_global()</a></code> 
         </dt>
         <dd>Search for a list of sequence in a fasta file against physeq reference
 sequences using <a href="https://github.com/torognes/vsearch" class="external-link">vsearch</a></dd>

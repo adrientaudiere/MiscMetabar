@@ -28,6 +28,9 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/articles/filter.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/articles/import_export_track.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/articles/index.html</loc>
   </url>
   <url>
@@ -56,6 +59,9 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/add_dna_to_phyloseq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/add_new_taxonomy_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/adonis_pq.html</loc>
@@ -100,6 +106,9 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/data_fungi_sp_known.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/diff_fct_diff_class.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/dist_bycol.html</loc>
   </url>
   <url>
@@ -107,6 +116,9 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/filter_asv_blast.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/funky_color.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/get_file_extension.html</loc>
@@ -125,6 +137,9 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/hill_tuckey_pq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/iNEXT_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/index.html</loc>
@@ -184,6 +199,9 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/save_pq.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/search_exact_seq_pq.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/select_one_sample.html</loc>
   </url>
   <url>
@@ -214,13 +232,16 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/tsne_pq.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/upset_pq.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/venn_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/verify_pq.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/vsearch_search_global.html</loc>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/vs_search_global.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/write_pq.html</loc>

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.34</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.40</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,6 +31,8 @@
     <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
     <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
     <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a>
+    <a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>For developpers</h6>
     <a class="dropdown-item" href="../articles/Rules.html">Rules of code</a>
@@ -60,7 +62,15 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.35" id="miscmetabar-035-in-development">MiscMetabar 0.35 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-035-in-development"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.41" id="miscmetabar-041-in-development">MiscMetabar 0.41 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-041-in-development"></a></h2>
+<ul><li>Add function <code><a href="../reference/iNEXT_pq.html">iNEXT_pq()</a></code> to calculate hill diversity using the <a href="https://github.com/AnneChao/iNEXT" class="external-link">iNEXT</a> package.</li>
+<li>Add argument <code>paires</code> to <code><a href="../reference/multi_biplot_pq.html">multi_biplot_pq()</a></code> in order to indicate all paires of samples we want to print.</li>
+<li>Improve <code><a href="../reference/compare_pairs_pq.html">compare_pairs_pq()</a></code> with information about the number of shared sequences among paires</li>
+<li>Add function <code><a href="../reference/upset_pq.html">upset_pq()</a></code> to plot upset of phyloseq object using the <a href="https://krassowski.github.io/complex-upset/" class="external-link">ComplexUpset</a> package</li>
+<li>Add info (param <code>add_info</code>) in subtitle of the <code><a href="../reference/hill_pq.html">hill_pq()</a></code> function</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.40" id="miscmetabar-040">MiscMetabar 0.40<a class="anchor" aria-label="anchor" href="#miscmetabar-040"></a></h2>
 <ul><li>Add function <code><a href="../reference/multi_biplot_pq.html">multi_biplot_pq()</a></code> to visualize a collection of couples of samples for comparison through a list of <code><a href="../reference/biplot_pq.html">biplot_pq()</a></code>
 </li>
 <li>Add options <code>add_info</code>, <code>na_remove</code>, and <code>clean_pq</code> to <code><a href="../reference/plot_tax_pq.html">plot_tax_pq()</a></code> function</li>
@@ -76,7 +86,19 @@
 <li>Add option <code>keep_temporary_files</code> in <code><a href="../reference/asv2otu.html">asv2otu()</a></code> function</li>
 <li>Improve the documentation of <code><a href="../reference/asv2otu.html">asv2otu()</a></code> and fix a little bug in the name of the conserved ASV after <code><a href="../reference/asv2otu.html">asv2otu()</a></code>
 </li>
+<li>Test coverage largely improved leading to numerous minor bug fixes.</li>
+<li>Add function <code><a href="../reference/search_exact_seq_pq.html">search_exact_seq_pq()</a></code> to search for exact matching of sequences using complement, reverse and reverse-complement against a phyloseq object.</li>
+<li>Add function <code><a href="../reference/add_new_taxonomy_pq.html">add_new_taxonomy_pq()</a></code> to add new taxonomic rank to a phyloseq object. For exemple to add taxonomic assignment from a new database.</li>
+<li>Add a battery of test using <code>test_that</code> package and improve code compatibility with cran recommendations.</li>
+</ul><div class="section level3">
+<h3 id="breaking-changes-0-40">BREAKING CHANGES<a class="anchor" aria-label="anchor" href="#breaking-changes-0-40"></a></h3>
+<ul><li>
+<code><a href="../reference/asv2otu.html">asv2otu()</a></code> with <code>method="vsearch"</code> change two default values (to repeat the precedent behavior, use <code>asv2otu(..., vsearch_cluster_method = "--cluster_fast", tax_adjust = 1)</code>):
+<ul><li>vsearch_cluster_method = “–cluster_size”</li>
+<li>tax_adjust = 0</li>
+</ul></li>
 </ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.34" id="miscmetabar-034">MiscMetabar 0.34<a class="anchor" aria-label="anchor" href="#miscmetabar-034"></a></h2>
 <ul><li>Add option <code>add_nb_samples</code> to <code><a href="../reference/ggvenn_pq.html">ggvenn_pq()</a></code> which add the number of samples to level name in the plot. Useful to see disequilibrium in the number of samples among the factor’s levels.</li>

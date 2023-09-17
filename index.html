@@ -27,7 +27,7 @@
     
     <a class="navbar-brand me-2" href="index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.34</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.40</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,6 +49,8 @@
     <a class="dropdown-item" href="articles/Reclustering.html">Reclustering</a>
     <a class="dropdown-item" href="articles/alpha-div.html">Alpha-diversity</a>
     <a class="dropdown-item" href="articles/beta-div.html">Beta-diversity</a>
+    <a class="dropdown-item" href="articles/import_export_track.html">Import/export and track</a>
+    <a class="dropdown-item" href="articles/filter.html">Filter taxa and samples</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>For developpers</h6>
     <a class="dropdown-item" href="articles/Rules.html">Rules of code</a>
@@ -90,33 +92,16 @@
 <p>You can install the stable version from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"adrientaudiere/MiscMetabar"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ── R CMD build ─────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt; * checking for file ‘/tmp/RtmpW0Kh7Q/remotes452a26b70ad56/adrientaudiere-MiscMetabar-1677ab1/DESCRIPTION’ ... OK</span></span>
-<span><span class="co">#&gt; * preparing ‘MiscMetabar’:</span></span>
-<span><span class="co">#&gt; * checking DESCRIPTION meta-information ... OK</span></span>
-<span><span class="co">#&gt; * checking for LF line-endings in source and make files and shell scripts</span></span>
-<span><span class="co">#&gt; * checking for empty or unneeded directories</span></span>
-<span><span class="co">#&gt; * building ‘MiscMetabar_0.33.tar.gz’</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"adrientaudiere/MiscMetabar"</span><span class="op">)</span></span></code></pre></div>
 <p>You can install the developement version from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"adrientaudiere/MiscMetabar"</span>, ref <span class="op">=</span> <span class="st">"dev"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ── R CMD build ─────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt; * checking for file ‘/tmp/RtmpW0Kh7Q/remotes452a24e82e4b4/adrientaudiere-MiscMetabar-b06d38f/DESCRIPTION’ ... OK</span></span>
-<span><span class="co">#&gt; * preparing ‘MiscMetabar’:</span></span>
-<span><span class="co">#&gt; * checking DESCRIPTION meta-information ... OK</span></span>
-<span><span class="co">#&gt; Avis : read_pq.Rd:26: unknown macro '\t'</span></span>
-<span><span class="co">#&gt; Avis : write_pq.Rd:74: unknown macro '\t'</span></span>
-<span><span class="co">#&gt; * checking for LF line-endings in source and make files and shell scripts</span></span>
-<span><span class="co">#&gt; * checking for empty or unneeded directories</span></span>
-<span><span class="co">#&gt; * building ‘MiscMetabar_0.34.tar.gz’</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"adrientaudiere/MiscMetabar"</span>, ref <span class="op">=</span> <span class="st">"dev"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="some-use-of-miscmetabar">Some use of MiscMetabar<a class="anchor" aria-label="anchor" href="#some-use-of-miscmetabar"></a>
 </h2>
+<p>See vignettes in the <a href="https://adrientaudiere.github.io/MiscMetabar/">MiscMetabar</a> website for more examples.</p>
 <div class="section level3">
 <h3 id="summarize-a-physeq-object">Summarize a physeq object<a class="anchor" aria-label="anchor" href="#summarize-a-physeq-object"></a>
 </h3>
@@ -129,12 +114,48 @@
 <p><img src="reference/figures/README-example-1.png" width="100%"></p>
 </div>
 <div class="section level3">
-<h3 id="circle-for-visualize-distribution-of-taxa-in-function-of-samples-variables">Circle for visualize distribution of taxa in function of samples variables<a class="anchor" aria-label="anchor" href="#circle-for-visualize-distribution-of-taxa-in-function-of-samples-variables"></a>
+<h3 id="alpha-diversity-analysis">Alpha-diversity analysis<a class="anchor" aria-label="anchor" href="#alpha-diversity-analysis"></a>
 </h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/circle_pq.html">circle_pq</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Height"</span>, taxa <span class="op">=</span> <span class="st">"Class"</span>, add_nb_seq <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Only 10 taxa are plot (41.67%). Use 'min_prop_tax' to plot more taxa</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
+<code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">MiscMetabar</span><span class="fu">::</span><span class="fu"><a href="reference/hill_pq.html">hill_pq</a></span><span class="op">(</span><span class="va">data_fungi</span>, variable <span class="op">=</span> <span class="st">"Height"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Taxa are now in rows.</span></span>
+<span><span class="co">#&gt; Cleaning suppress 0 taxa and 0 samples.</span></span>
+<span><span class="va">p</span><span class="op">$</span><span class="va">plot_Hill_0</span></span></code></pre></div>
+<div class="figure">
+<img src="reference/figures/README-unnamed-chunk-4-1.png" alt="Hill number 1" width="100%"><p class="caption">
+Hill number 1
+</p>
+</div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p</span><span class="op">$</span><span class="va">plot_tuckey</span></span></code></pre></div>
+<div class="figure">
+<img src="reference/figures/README-unnamed-chunk-5-1.png" alt="Result of the Tuckey post-hoc test" width="100%"><p class="caption">
+Result of the Tuckey post-hoc test
+</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="beta-diversity-analysis">Beta-diversity analysis<a class="anchor" aria-label="anchor" href="#beta-diversity-analysis"></a>
+</h3>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/ggvenn_pq.html">ggvenn_pq</a></span><span class="op">(</span><span class="va">data_fungi</span>, fact <span class="op">=</span> <span class="st">"Height"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_distiller</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"BuPu"</span>, direction <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Share number of ASV among Height in tree"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%"></p>
+</div>
+<div class="section level3">
+<h3 id="installation-of-other-softwares-for-debian-linux-distributions">Installation of other softwares for debian Linux distributions<a class="anchor" aria-label="anchor" href="#installation-of-other-softwares-for-debian-linux-distributions"></a>
+</h3>
+<div class="section level4">
+<h4 id="blastn">blastn<a class="anchor" aria-label="anchor" href="#blastn"></a>
+</h4>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install ncbi-blast+</span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="vsearch">vsearch<a class="anchor" aria-label="anchor" href="#vsearch"></a>
+</h4>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install vsearch</span></code></pre></div>
+</div>
 </div>
 </div>
 </div>

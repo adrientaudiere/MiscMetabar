@@ -27,7 +27,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.34</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.40</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,13 +42,15 @@
 <li class="nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li class="nav-item dropdown">
+<li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Tutorials</h6>
     <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
     <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
     <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a>
+    <a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>For developpers</h6>
     <a class="dropdown-item" href="../articles/Rules.html">Rules of code</a>
@@ -91,10 +93,399 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/adrientaudiere/MiscMetabar" class="external-link">MiscMetabar</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/adrientaudiere/MiscMetabar" class="external-link">MiscMetabar</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://renkun-ken.github.io/formattable/" class="external-link">formattable</a></span><span class="op">)</span></span></code></pre></div>
+<div class="section level2">
+<h2 id="filter-samples">Filter samples<a class="anchor" aria-label="anchor" href="#filter-samples"></a>
+</h2>
+<p><a href="https://joey711.github.io/phyloseq/" class="external-link">Phyloseq</a> package
+already propose a function to select samples
+(<code><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html" class="external-link">subset_samples()</a></code>), but in some case, the subset internal
+function is painful. <code>MiscMetabar</code> propose a complementary
+function ([subset_samples_pq()]) which is more versatile but need to be
+used with caution because the order of the condition must match the
+orders of the samples.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># filter_asv_blast()</span></span></code></pre></div>
-  </main>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span>
+<span><span class="va">cond_samp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"A1"</span>, <span class="va">data_fungi</span><span class="op">@</span><span class="va">sam_data</span><span class="op">[[</span><span class="st">"Sample_names"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/subset_samples_pq.html">subset_samples_pq</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="va">cond_samp</span><span class="op">)</span></span>
+<span><span class="co">#&gt; phyloseq-class experiment-level object</span></span>
+<span><span class="co">#&gt; otu_table()   OTU Table:         [ 1420 taxa and 9 samples ]</span></span>
+<span><span class="co">#&gt; sample_data() Sample Data:       [ 9 samples by 7 sample variables ]</span></span>
+<span><span class="co">#&gt; tax_table()   Taxonomy Table:    [ 1420 taxa by 14 taxonomic ranks ]</span></span>
+<span><span class="co">#&gt; refseq()      DNAStringSet:      [ 1420 reference sequences ]</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="filter-taxa">Filter Taxa<a class="anchor" aria-label="anchor" href="#filter-taxa"></a>
+</h2>
+<div class="section level3">
+<h3 id="filter-taxa-using-conditions">Filter taxa using condition(s)<a class="anchor" aria-label="anchor" href="#filter-taxa-using-conditions"></a>
+</h3>
+<p><a href="https://joey711.github.io/phyloseq/" class="external-link">Phyloseq</a> package
+already propose a function to select samples
+(<code><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html" class="external-link">subset_taxa()</a></code>), but in some case, the subset internal
+function is painful. <code>MiscMetabar</code> propose a complementary
+function ([subset_taxa_pq()]) which is more versatile and is based on
+the names of the taxa to match the condition and the taxa in the
+phyloseq object. In the example code above, we filter fungi from the
+Phylum “Basidiomycota” using <code><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html" class="external-link">phyloseq::subset_taxa</a></code> and then
+select only taxa with more than 1000 nb_sequences using
+[subset_taxa_pq()]</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df_basidio</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html" class="external-link">subset_taxa</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="va">Phylum</span> <span class="op">==</span> <span class="st">"Basidiomycota"</span><span class="op">)</span></span>
+<span><span class="va">df_basidio_abundant</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/subset_taxa_pq.html">subset_taxa_pq</a></span><span class="op">(</span><span class="va">df_basidio</span>, <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="va">df_basidio</span><span class="op">@</span><span class="va">otu_table</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1000</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Cleaning suppress 0 taxa (  ) and 39 sample(s) ( A9-012_S5_MERGED.fastq.gz / BE9-006-B_S27_MERGED.fastq.gz / BE9-006-H_S28_MERGED.fastq.gz / BG7-010-B_S30_MERGED.fastq.gz / BG7-010-M_S32_MERGED.fastq.gz / BL7-006-B_S36_MERGED.fastq.gz / BL7-006-M_S38_MERGED.fastq.gz / C21-NV1-H_S63_MERGED.fastq.gz / C21-NV1-M_S64_MERGED.fastq.gz / CA12-024_S66_MERGED.fastq.gz / CA9-027_S67_MERGED.fastq.gz / CC8-003_S74_MERGED.fastq.gz / D18-003-H_S79_MERGED.fastq.gz / D9-027-B_S83_MERGED.fastq.gz / DJ2-008-M_S89_MERGED.fastq.gz / DY5-004-M_S98_MERGED.fastq.gz / E9-009-B_S100_MERGED.fastq.gz / E9-009-M_S102_MERGED.fastq.gz / M22-001_S125_MERGED.fastq.gz / N19X-B_S126_MERGED.fastq.gz / N22-001-B_S129_MERGED.fastq.gz / N23-002-M_S132_MERGED.fastq.gz / O20-X-B_S139_MERGED.fastq.gz / O21-007-B_S142_MERGED.fastq.gz / O21-007-H_S143_MERGED.fastq.gz / O21-007-M_S144_MERGED.fastq.gz / O24-003-H_S146_MERGED.fastq.gz / O24-003-M_S147_MERGED.fastq.gz / O26-004-H_S149_MERGED.fastq.gz / O26-004-M_S150_MERGED.fastq.gz / R28-008-B_S158_MERGED.fastq.gz / R28-008-H_S159_MERGED.fastq.gz / R28-008-M_S160_MERGED.fastq.gz / W26-001-H_S166_MERGED.fastq.gz / W26-001-M_S167_MERGED.fastq.gz / Y28-002-H_S179_MERGED.fastq.gz / Y29-007-B_S181_MERGED.fastq.gz / Y29-007-H_S182_MERGED.fastq.gz / Y29-007-M_S183_MERGED.fastq.gz ).</span></span>
+<span><span class="co">#&gt; Number of non-matching ASV 0</span></span>
+<span><span class="co">#&gt; Number of matching ASV 345</span></span>
+<span><span class="co">#&gt; Number of filtered-out ASV 231</span></span>
+<span><span class="co">#&gt; Number of kept ASV 114</span></span>
+<span><span class="co">#&gt; Number of kept samples 146</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="filter-taxa-using-blast-score-against-a-database">Filter taxa using blast score against a database<a class="anchor" aria-label="anchor" href="#filter-taxa-using-blast-score-against-a-database"></a>
+</h3>
+<p>In some cases, we want to select only a given clade of taxon. One
+solution is to select only taxa with information given by taxonomic
+assigment (e.g. using the function
+<code><a href="https://rdrr.io/pkg/dada2/man/assignTaxonomy.html" class="external-link">dada2::assignTaxonomy()</a></code>). However, in some cases, this
+information lead to false positive and false negative selection.
+<code>MiscMetabar</code> implement an other method relying on <a href="https://blast.ncbi.nlm.nih.gov/" class="external-link">blast</a> software (Altschul
+<em>et al.</em> 1990 &amp; 1997) and database. The idea is to set a
+cutoff in four parameters to select only taxa which are close enough to
+sequences in the database :</p>
+<ul>
+<li>
+<strong>id_filter</strong> (default: 90) cut of in identity percent
+to keep result.</li>
+<li>
+<strong>bit_score_filter</strong> (default: 50) cut of in bit score
+to keep result. The higher the bit-score, the better the sequence
+similarity. The bit-score is the requires size of a sequence database in
+which the current match could be found just by chance. The bit-score is
+a log2 scaled and normalized raw-score. Each increase by one doubles the
+required database size (2bit-score).</li>
+<li>
+<strong>min_cover_filter</strong> (default: 50) cut of in query
+cover (%) to keep result.</li>
+<li>
+<strong>e_value_filter</strong> (default: 1e-30) cut of in e-value
+(%) to keep result. The BLAST E-value is the number of expected hits of
+similar quality (score) that could be found just by chance.</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">path_db</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"1000_sp_UNITE_sh_general_release_dynamic.fasta"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="va">blast_error_or_not</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.html" class="external-link">system</a></span><span class="op">(</span><span class="st">"blastn 2&gt;&amp;1"</span>, intern <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">blast_error_or_not</span><span class="op">)</span> <span class="op">!=</span> <span class="st">"try-error"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">df_blast_80</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_asv_blast.html">filter_asv_blast</a></span><span class="op">(</span><span class="va">df_basidio</span>, fasta_for_db <span class="op">=</span> <span class="va">path_db</span><span class="op">)</span></span>
+<span>  <span class="va">df_blast_50</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_asv_blast.html">filter_asv_blast</a></span><span class="op">(</span><span class="va">df_basidio</span>, fasta_for_db <span class="op">=</span> <span class="va">path_db</span>, id_filter <span class="op">=</span> <span class="fl">50</span>, e_value_filter <span class="op">=</span> <span class="fl">10</span>, bit_score_filter <span class="op">=</span> <span class="fl">20</span>, min_cover_filter <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">track_formattable</span> <span class="op">&lt;-</span></span>
+<span>    <span class="fu"><a href="../reference/track_wkflow.html">track_wkflow</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>        <span class="st">"raw data"</span> <span class="op">=</span> <span class="va">df_basidio</span>,</span>
+<span>        <span class="st">"id_filter = 80"</span> <span class="op">=</span> <span class="va">df_blast_80</span>,</span>
+<span>        <span class="st">"id_filter = 50"</span> <span class="op">=</span> <span class="va">df_blast_50</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">#&gt; Build the database from fasta_for_db</span></span>
+<span><span class="co">#&gt; Blast refseq from physeq object against the database</span></span>
+<span><span class="co">#&gt; Number of non-matching ASV 2</span></span>
+<span><span class="co">#&gt; Number of matching ASV 343</span></span>
+<span><span class="co">#&gt; Number of filtered-out ASV 270</span></span>
+<span><span class="co">#&gt; Number of kept ASV 75</span></span>
+<span><span class="co">#&gt; Number of kept samples 185</span></span>
+<span><span class="co">#&gt; Cleaning suppress 0 taxa and 45 samples.</span></span>
+<span><span class="co">#&gt; Build the database from fasta_for_db</span></span>
+<span><span class="co">#&gt; Blast refseq from physeq object against the database</span></span>
+<span><span class="co">#&gt; Number of non-matching ASV 2</span></span>
+<span><span class="co">#&gt; Number of matching ASV 343</span></span>
+<span><span class="co">#&gt; Number of filtered-out ASV 21</span></span>
+<span><span class="co">#&gt; Number of kept ASV 324</span></span>
+<span><span class="co">#&gt; Number of kept samples 185</span></span>
+<span><span class="co">#&gt; Cleaning suppress 0 taxa and 13 samples.</span></span>
+<span><span class="co">#&gt; Compute the number of sequences</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Compute the number of clusters</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Compute the number of samples</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">blast_error_or_not</span><span class="op">)</span> <span class="op">!=</span> <span class="st">"try-error"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/formattable.html" class="external-link">formattable</a></span><span class="op">(</span></span>
+<span>    <span class="va">track_formattable</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/area.html" class="external-link">area</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">nb_sequences</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/color_bar.html" class="external-link">color_bar</a></span><span class="op">(</span><span class="st">"cyan"</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>,</span>
+<span>      <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/area.html" class="external-link">area</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">nb_clusters</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/normalize_bar.html" class="external-link">normalize_bar</a></span><span class="op">(</span><span class="st">"yellowgreen"</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, min <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span>,</span>
+<span>      <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/area.html" class="external-link">area</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">nb_samples</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/normalize_bar.html" class="external-link">normalize_bar</a></span><span class="op">(</span><span class="st">"lightpink"</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, min <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<table class="table table table-condensed">
+<thead><tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+nb_sequences
+</th>
+<th style="text-align:right;">
+nb_clusters
+</th>
+<th style="text-align:right;">
+nb_samples
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+raw data
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 100.00%">784054</span>
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 100.00%">345</span>
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+id_filter = 80
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 33.39%">261826</span>
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 30.00%">75</span>
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 30.00%">140</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+id_filter = 50
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 99.50%">780103</span>
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 94.56%">324</span>
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 79.78%">172</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="filter-taxa-using-a-known-taxa-for-control">Filter taxa using a known taxa for control<a class="anchor" aria-label="anchor" href="#filter-taxa-using-a-known-taxa-for-control"></a>
+</h3>
+<p>To filter out contamination, one solution is to add a proportion of a
+known taxa which is not present in the environment of the study. In that
+case we can define some threshold for each sample to discard taxon based
+on pseudo-abundance. In the example code above, we select taxon using
+the ASV_50 as control through 6 differents algorithms.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">res_seq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"cutoff_seq"</span></span>
+<span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; The filtering processes discard 18 taxa and 21581 sequences</span></span>
+<span><span class="va">res_mixt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"cutoff_mixt"</span></span>
+<span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; The filtering processes discard 165 taxa and 72569 sequences</span></span>
+<span><span class="va">res_diff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"cutoff_diff"</span>, min_diff_for_cutoff <span class="op">=</span> <span class="fl">2</span></span>
+<span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; The filtering processes discard 42 taxa and 33850 sequences</span></span>
+<span><span class="va">res_min</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"min"</span>, min_diff_for_cutoff <span class="op">=</span> <span class="fl">2</span></span>
+<span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; The filtering processes discard 3 taxa and 3175 sequences</span></span>
+<span><span class="va">res_max</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"max"</span>, min_diff_for_cutoff <span class="op">=</span> <span class="fl">2</span></span>
+<span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; The filtering processes discard 211 taxa and 86486 sequences</span></span>
+<span><span class="va">res_mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"mean"</span>, min_diff_for_cutoff <span class="op">=</span> <span class="fl">2</span></span>
+<span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; The filtering processes discard 96 taxa and 48747 sequences</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">track_formattable</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/track_wkflow.html">track_wkflow</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="st">"raw data"</span> <span class="op">=</span> <span class="va">data_fungi</span>,</span>
+<span>  <span class="st">"cutoff_seq"</span> <span class="op">=</span> <span class="va">res_seq</span>,</span>
+<span>  <span class="st">"cutoff_mixt"</span> <span class="op">=</span> <span class="va">res_mixt</span>,</span>
+<span>  <span class="st">"cutoff_diff"</span> <span class="op">=</span> <span class="va">res_diff</span>,</span>
+<span>  <span class="st">"min"</span> <span class="op">=</span> <span class="va">res_min</span>,</span>
+<span>  <span class="st">"max"</span> <span class="op">=</span> <span class="va">res_max</span>,</span>
+<span>  <span class="st">"mean"</span> <span class="op">=</span> <span class="va">res_mean</span></span>
+<span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Compute the number of sequences</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Compute the number of clusters</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Compute the number of samples</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
+<span></span>
+<span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/formattable.html" class="external-link">formattable</a></span><span class="op">(</span></span>
+<span>  <span class="va">track_formattable</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/area.html" class="external-link">area</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">nb_sequences</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/color_bar.html" class="external-link">color_bar</a></span><span class="op">(</span><span class="st">"cyan"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/area.html" class="external-link">area</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">nb_clusters</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/normalize_bar.html" class="external-link">normalize_bar</a></span><span class="op">(</span><span class="st">"yellowgreen"</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, min <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/area.html" class="external-link">area</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">nb_samples</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/normalize_bar.html" class="external-link">normalize_bar</a></span><span class="op">(</span><span class="st">"lightpink"</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<table class="table table table-condensed">
+<thead><tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+nb_sequences
+</th>
+<th style="text-align:right;">
+nb_clusters
+</th>
+<th style="text-align:right;">
+nb_samples
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+raw data
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 100.00%">1839124</span>
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 100.00%">1420</span>
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+cutoff_seq
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 98.83%">1817543</span>
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 94.03%">1402</span>
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+cutoff_mixt
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 96.05%">1766555</span>
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 45.26%">1255</span>
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+cutoff_diff
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 98.16%">1805274</span>
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 86.07%">1378</span>
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+min
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 99.83%">1835949</span>
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 99.00%">1417</span>
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+max
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 95.30%">1752638</span>
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 30.00%">1209</span>
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mean
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 97.35%">1790377</span>
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 68.15%">1324</span>
+</td>
+<td style="text-align:right;">
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 

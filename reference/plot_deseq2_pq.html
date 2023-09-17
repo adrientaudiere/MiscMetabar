@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.34</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.40</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,6 +31,8 @@
     <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
     <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
     <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a>
+    <a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>For developpers</h6>
     <a class="dropdown-item" href="../articles/Rules.html">Rules of code</a>
@@ -113,7 +115,9 @@ value other than 0.1, alpha should be set to that value.</p></dd>
 
 
 <dt>select_taxa</dt>
-<dd><p>logical vector to select taxa to plot.</p></dd>
+<dd><p>Either the name of the taxa (in the form of <code><a href="https://rdrr.io/pkg/DESeq2/man/results.html" class="external-link">DESeq2::results()</a></code>)
+or a logical vector (length of the results from <code><a href="https://rdrr.io/pkg/DESeq2/man/results.html" class="external-link">DESeq2::results()</a></code>) to select taxa
+to plot.</p></dd>
 
 
 <dt>color_tax</dt>
@@ -182,6 +186,11 @@ or <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="ex
 <span class="r-in"><span><span class="fu">plot_deseq2_pq</span><span class="op">(</span><span class="va">res</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SampleType"</span>, <span class="st">"Soil"</span>, <span class="st">"Skin"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  tax_table <span class="op">=</span> <span class="va">GP</span><span class="op">@</span><span class="va">tax_table</span>, color_tax <span class="op">=</span> <span class="st">"Kingdom"</span>,</span></span>
 <span class="r-in"><span>  alpha <span class="op">=</span> <span class="fl">0.7</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'res' not found</span>
+<span class="r-in"><span><span class="fu">plot_deseq2_pq</span><span class="op">(</span><span class="va">res</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SampleType"</span>, <span class="st">"Soil"</span>, <span class="st">"Skin"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  tax_table <span class="op">=</span> <span class="va">GP</span><span class="op">@</span><span class="va">tax_table</span>, color_tax <span class="op">=</span> <span class="st">"Class"</span>,</span></span>
+<span class="r-in"><span>  select_taxa <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"522457"</span>, <span class="st">"271582"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'res' not found</span>
 </code></pre></div>

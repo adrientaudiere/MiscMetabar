@@ -14,7 +14,7 @@ important statistics"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.34</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.40</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,6 +35,8 @@ important statistics"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/
     <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
     <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
     <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a>
+    <a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>For developpers</h6>
     <a class="dropdown-item" href="../articles/Rules.html">Rules of code</a>
@@ -144,7 +146,7 @@ and the number of permutations</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">enterotype</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">graph_test_pq</span><span class="op">(</span><span class="va">enterotype</span>, fact <span class="op">=</span> <span class="st">"SeqTech"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="graph_test_pq-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">graph_test_pq</span><span class="op">(</span><span class="va">enterotype</span>, fact <span class="op">=</span> <span class="st">"Enterotype"</span>, na_remove <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">graph_test_pq</span><span class="op">(</span><span class="va">enterotype</span>, fact <span class="op">=</span> <span class="st">"Enterotype"</span>, na_remove <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 9 were discarded due to NA in variables present in formula.</span>
 <span class="r-plt img"><img src="graph_test_pq-2.png" alt="" width="700" height="433"></span>
 </code></pre></div>

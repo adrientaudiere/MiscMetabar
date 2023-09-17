@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.34</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.40</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,6 +31,8 @@
     <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
     <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
     <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a>
+    <a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>For developpers</h6>
     <a class="dropdown-item" href="../articles/Rules.html">Rules of code</a>
@@ -81,7 +83,7 @@
 <span>  right_col <span class="op">=</span> <span class="st">"#1d2949"</span>,</span>
 <span>  log_10 <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  nudge_y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">0.3</span><span class="op">)</span>,</span>
-<span>  geomLabel <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  geom_label <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  text_size <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  size_names <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  y_names <span class="op">=</span> <span class="cn">NA</span>,</span>
@@ -158,7 +160,7 @@ and the second value for the right one. If one value is set,
 this value is used for both side.</p></dd>
 
 
-<dt>geomLabel</dt>
+<dt>geom_label</dt>
 <dd><p>(default: FALSE, logical) if TRUE use the <code><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">ggplot2::geom_label()</a></code> function
 instead of <code><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">ggplot2::geom_text()</a></code> to indicate the numbers of sequences.</p></dd>
 

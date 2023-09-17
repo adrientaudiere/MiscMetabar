@@ -16,7 +16,7 @@ for ex. + scale_fill_distiller(palette = "BuPu", direction = 1)'><!-- mathjax --
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.34</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.40</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,6 +37,8 @@ for ex. + scale_fill_distiller(palette = "BuPu", direction = 1)'><!-- mathjax --
     <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
     <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
     <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a>
+    <a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>For developpers</h6>
     <a class="dropdown-item" href="../articles/Rules.html">Rules of code</a>
@@ -78,7 +80,6 @@ for ex. <code>+ scale_fill_distiller(palette = "BuPu", direction = 1)</code></p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ggvenn_pq</span><span class="op">(</span></span>
 <span>  physeq <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fact <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  merge_sample_by <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  min_nb_seq <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  taxonomic_rank <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split_by <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -100,14 +101,6 @@ using the <code>phyloseq</code> package.</p></dd>
 Need to be in <code>physeq@sam_data</code>.</p></dd>
 
 
-<dt>merge_sample_by</dt>
-<dd><p>if not <code>NULL</code> samples of
-physeq are merged using the vector set by <code>merge_sample_by</code>. This
-merging used the <code><a href="https://mikemc.github.io/speedyseq/reference/merge_samples2.html" class="external-link">speedyseq::merge_samples2()</a></code>.
-If <code>merge_sample_by</code> is equal to <code>fact</code> args
-it give the same result as if <code>merge_sample_by</code> is NULL.</p></dd>
-
-
 <dt>min_nb_seq</dt>
 <dd><p>minimum number of sequences by OTUs by
 samples to take into count this OTUs in this sample. For example,
@@ -123,10 +116,16 @@ to count. If set to Null (the default) the number of OTUs is counted.</p></dd>
 <dt>split_by</dt>
 <dd><p>Split into multiple plot using variable split_by.
 The name of a variable must be present in <code>sam_data</code> slot
-of the physeq object.
-@param add_nb_samples (logical, default TRUE) Add the number of samples to
-levels names
-@param rarefy_nb_seqs Rarefy each sample (before merging if merge_sample_by is set)
+of the physeq object.</p></dd>
+
+
+<dt>add_nb_samples</dt>
+<dd><p>(logical, default TRUE) Add the number of samples to
+levels names</p></dd>
+
+
+<dt>rarefy_nb_seqs</dt>
+<dd><p>Rarefy each sample (before merging if merge_sample_by is set)
 using <code><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">phyloseq::rarefy_even_depth()</a></code></p></dd>
 
 
@@ -144,6 +143,10 @@ modalities of the argument <code>factor</code> or if split_by is set a list
 of plots.</p>
     </div>
     <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code><a href="upset_pq.html">upset_pq()</a></code></p></div>
+    </div>
+    <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
     <p>Adrien Taudière</p>
     </div>
@@ -153,7 +156,8 @@ of plots.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">ggvenn_pq</span><span class="op">(</span><span class="va">data_fungi</span>, fact <span class="op">=</span> <span class="st">"Height"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="ggvenn_pq-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">ggvenn_pq</span><span class="op">(</span><span class="va">data_fungi</span>, fact <span class="op">=</span> <span class="st">"Height"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_distiller</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"BuPu"</span>, direction <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ggvenn_pq</span><span class="op">(</span><span class="va">data_fungi</span>, fact <span class="op">=</span> <span class="st">"Height"</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_distiller</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"BuPu"</span>, direction <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="ggvenn_pq-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="va">pl</span> <span class="op">&lt;-</span> <span class="fu">ggvenn_pq</span><span class="op">(</span><span class="va">data_fungi</span>, fact <span class="op">=</span> <span class="st">"Height"</span>, split_by <span class="op">=</span> <span class="st">"Time"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Two modalities differ greatly (more than x2) in their number of sequences (159635 vs 53355)</span>

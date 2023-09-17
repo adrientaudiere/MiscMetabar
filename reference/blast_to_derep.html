@@ -12,7 +12,7 @@ object. — blast_to_derep"><meta property="og:description" content=""><!-- math
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.34</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.40</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,6 +33,8 @@ object. — blast_to_derep"><meta property="og:description" content=""><!-- math
     <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
     <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
     <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a>
+    <a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>For developpers</h6>
     <a class="dropdown-item" href="../articles/Rules.html">Rules of code</a>
@@ -76,12 +78,15 @@ object.</h1>
 <span>  id_cut <span class="op">=</span> <span class="fl">90</span>,</span>
 <span>  bit_score_cut <span class="op">=</span> <span class="fl">50</span>,</span>
 <span>  min_cover_cut <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  e_value_cut <span class="op">=</span> <span class="fl">1e-30</span>,</span>
 <span>  unique_per_seq <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  score_filter <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  list_no_output_query <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  min_length_seq <span class="op">=</span> <span class="fl">200</span>,</span>
 <span>  args_makedb <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  args_blastn <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  args_blastn <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  nproc <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  keep_temporary_files <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -105,21 +110,32 @@ you want to blast against the ASV sequences from the physeq object.</p></dd>
 
 
 <dt>bit_score_cut</dt>
-<dd><p>(default: 50) cut of in bit score to keep result</p></dd>
+<dd><p>(default: 50) cut of in bit score to keep result
+The higher the bit-score, the better the sequence similarity.
+The bit-score is the requires size of a sequence database in which the current
+match could be found just by chance. The bit-score is a log2 scaled and
+normalized raw-score. Each increase by one doubles the required database size
+(2bit-score).</p></dd>
 
 
 <dt>min_cover_cut</dt>
 <dd><p>(default: 50) cut of in query cover (%) to keep result</p></dd>
 
 
+<dt>e_value_cut</dt>
+<dd><p>(default: 1e-30)  cut of in e-value (%) to keep result
+The BLAST E-value is the number of expected hits of similar quality (score)
+that could be found just by chance.</p></dd>
+
+
 <dt>unique_per_seq</dt>
-<dd><p>(logical) if TRUE only return the first match for
-each sequence in seq2search</p></dd>
+<dd><p>(logical, default FALSE) if TRUE only return the better match
+(higher <strong>bit score</strong>) for each sequence</p></dd>
 
 
 <dt>score_filter</dt>
-<dd><p>(logical; default FALSE) does results are filter by score? If
-FALSE, <code>id_cut</code>,<code>bit_score_cut</code> and <code>min_cover_cut</code> are ignored.</p></dd>
+<dd><p>(logical, default TRUE) does results are filter by score? If
+FALSE, <code>id_cut</code>,<code>bit_score_cut</code>, <code>e_value_cut</code> and <code>min_cover_cut</code> are ignored</p></dd>
 
 
 <dt>list_no_output_query</dt>
@@ -139,6 +155,20 @@ sequences by length.</p></dd>
 
 <dt>args_blastn</dt>
 <dd><p>Additional parameters parse to blastn command</p></dd>
+
+
+<dt>nproc</dt>
+<dd><p>(default: 1)
+Set to number of cpus/processors to use for blast (args -num_threads
+for blastn command)</p></dd>
+
+
+<dt>keep_temporary_files</dt>
+<dd><p>(logical, default: FALSE) Do we keep temporary files</p><ul><li><p>db.fasta (refseq transformed into a database)</p></li>
+<li><p>dbase list of files (output of blastn)</p></li>
+<li><p>blast_result.txt the summary result of blastn using
+<code>-outfmt "6 qseqid qlen sseqid slen length pident evalue bitscore qcovs"</code></p></li>
+</ul></dd>
 
 </dl></div>
     <div class="section level2">

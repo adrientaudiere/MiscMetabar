@@ -12,7 +12,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.34</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.40</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,6 +33,8 @@
     <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
     <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
     <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a>
+    <a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>For developpers</h6>
     <a class="dropdown-item" href="../articles/Rules.html">Rules of code</a>
@@ -76,8 +78,8 @@
 <span>  method <span class="op">=</span> <span class="st">"clusterize"</span>,</span>
 <span>  id <span class="op">=</span> <span class="fl">0.97</span>,</span>
 <span>  vsearchpath <span class="op">=</span> <span class="st">"vsearch"</span>,</span>
-<span>  tax_adjust <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  vsearch_cluster_method <span class="op">=</span> <span class="st">"--cluster_fast"</span>,</span>
+<span>  tax_adjust <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  vsearch_cluster_method <span class="op">=</span> <span class="st">"--cluster_size"</span>,</span>
 <span>  vsearch_args <span class="op">=</span> <span class="st">"--strand both"</span>,</span>
 <span>  keep_temporary_files <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -106,7 +108,8 @@ Set to number of cpus/processors to use for the clustering</p></dd>
 <dd><p>(default: clusterize)
 Set the clustering method.</p><ul><li><p><code>clusterize</code> use the <code><a href="https://rdrr.io/pkg/DECIPHER/man/Clusterize.html" class="external-link">DECIPHER::Clusterize()</a></code> fonction,</p></li>
 <li><p><code>vsearch</code> use the vsearch software (https://github.com/torognes/vsearch/)
-with arguments <code>-cluster_fast</code> and <code>-strand both</code></p></li>
+with arguments <code>--cluster_size</code> by default (see args <code>vsearch_cluster_method</code>)
+and <code>-strand both</code> (see args <code>vsearch_args</code>)</p></li>
 </ul></dd>
 
 
@@ -126,7 +129,7 @@ set tax_adjust to 0</p></dd>
 
 
 <dt>vsearch_cluster_method</dt>
-<dd><p>(default: "--cluster_fast") See other possible
+<dd><p>(default: "--cluster_size) See other possible
 methods in the <a href="https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf" class="external-link">vsearch pdf manual</a> (e.g. <code>--cluster_size</code> or <code>--cluster_smallmem</code>)</p><ul><li><p><code>--cluster_fast</code> : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.</p></li>
 <li><p><code>--cluster_size</code> : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence abundance beforehand.</p></li>
 <li><p><code>--cluster_smallmem</code> : Clusterize the fasta sequences in filename without automatically modifying their order beforehand. Sequence are expected to be sorted by decreasing sequence length, unless <em>--usersort</em> is used</p></li>

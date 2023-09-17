@@ -12,7 +12,7 @@ A wrapper for the vegan::adonis2() function in the case of physeq object."><!-- 
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.34</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.40</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,6 +33,8 @@ A wrapper for the vegan::adonis2() function in the case of physeq object."><!-- 
     <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
     <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
     <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a>
+    <a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>For developpers</h6>
     <a class="dropdown-item" href="../articles/Rules.html">Rules of code</a>
@@ -76,7 +78,8 @@ A wrapper for the vegan::adonis2() function in the case of physeq object."><!-- 
 <span>  merge_sample_by <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  na_remove <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  correction_for_sample_size <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  rarefy_nb_seqs <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  rarefy_nb_seqs <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -124,6 +127,10 @@ sample size (number of sequences by samples) is add to formula in the form
 (before merging if merge_sample_by is set) using <code><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">phyloseq::rarefy_even_depth()</a></code>.
 if <code>correction_for_sample_size</code> is TRUE, rarefy_nb_seqs will have no effect.</p></dd>
 
+
+<dt>...</dt>
+<dd><p>Other arguments passed on to <code><a href="https://rdrr.io/pkg/vegan/man/vegan-deprecated.html" class="external-link">vegan::adonis2()</a></code> function.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -142,7 +149,23 @@ new column for partial R^2. See help of <code><a href="https://rdrr.io/pkg/vegan
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">enterotype</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">adonis_pq</span><span class="op">(</span><span class="va">enterotype</span>, <span class="st">"SeqTech*Enterotype"</span>, na_remove <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in h(simpleError(msg, call)):</span> error in evaluating the argument 'i' in selecting a method for function '[[': object 'tl' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "SeqTech"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Enterotype"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 9 were discarded due to NA in variables present in formula.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Permutation test for adonis under reduced model</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Terms added sequentially (first to last)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Permutation: free</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of permutations: 999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> vegan::adonis2(formula = .formula, data = metadata)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     Df SumOfSqs      R2        F Pr(&gt;F)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTech              2   29.175 0.54055 242.2289  0.001 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Enterotype           2    8.651 0.16028  71.8250  0.001 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTech:Enterotype   4    0.368 0.00683   1.5293  0.095 .  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual           262   15.778 0.29234                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total              270   53.972 1.00000                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-in"><span><span class="fu">adonis_pq</span><span class="op">(</span><span class="va">enterotype</span>, <span class="st">"SeqTech"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Permutation test for adonis under reduced model</span>
