@@ -44,9 +44,8 @@ A new \code{\link{phyloseq-class}} object.
 data(data_fungi)
 
 subset_taxa_tax_control(data_fungi,
-  as.numeric(data_fungi@otu_table[, 300], 
+  as.numeric(data_fungi@otu_table[, 300]), 
   min_diff_for_cutoff = 2)
-)
 
 }
 \author{
