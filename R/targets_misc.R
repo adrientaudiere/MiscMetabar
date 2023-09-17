@@ -64,9 +64,8 @@ list_fastq_files <-
 #'
 #' @examples
 #' data(data_fungi)
-#' rename_samples_otu_table(data_fungi, as.character(1:nsamples(data_fungi)),
-#'   taxa_are_rows = T
-#' )
+#' rename_samples_otu_table(data_fungi, as.character(1:nsamples(data_fungi)))
+#'
 rename_samples_otu_table <- function(physeq, names_of_samples) {
   otu_tab <- physeq@otu_table
   tax_in_row <- taxa_are_rows(physeq)

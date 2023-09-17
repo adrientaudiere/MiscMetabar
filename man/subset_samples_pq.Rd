@@ -17,9 +17,6 @@ the number of samples}
 a new phyloseq object
 }
 \description{
-Subset samples using a conditional boolean vector.
-}
-\details{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
 The main objective of this function is to complete the \code{\link[phyloseq:subset_samples-methods]{phyloseq::subset_samples()}}

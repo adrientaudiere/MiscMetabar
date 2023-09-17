@@ -109,7 +109,8 @@ tax_datatable <- function(physeq,
 #'   NA in the variables set in bifactor, modality and merge_sample_by.
 #'   NA in variables are well managed even if na_remove = FALSE, so na_remove may
 #'   be useless.
-#' @return A tibble
+#' @return A tibble with information about the number of shared ASV, shared number of sequences
+#'   and diversity
 #' @importFrom rlang .data
 #' @export
 #' @examples
@@ -199,7 +200,7 @@ compare_pairs_pq <- function(physeq = NULL,
       sample_data(newphyseq) <- sample_data(new_DF)
     }
     if (nsamples(newphyseq) != 2) {
-      res[[i]] <- c(NA, NA, NA, NA, NA)
+      res[[i]] <- rep(NA, 8)
       warning("At least one case do not contain 2 samples, so NA were introduced.")
     } else {
       cond1 <- newphyseq@sam_data[[bifactor]] == lev1
@@ -216,7 +217,14 @@ compare_pairs_pq <- function(physeq = NULL,
         index = veg_index
       )[cond2], 2)
 
-      res[[i]] <- c(nb_first, nb_second, nb_shared, div_first, div_second)
+      nb_shared_seq <- sum(newphyseq@otu_table[, newphyseq@otu_table[cond1, ] > nb_min_seq &
+        newphyseq@otu_table[cond2, ] > nb_min_seq])
+
+      perc_seq_shared_lv1 <- round(100 * nb_shared_seq / sum(newphyseq@otu_table[, newphyseq@otu_table[cond1, ] > nb_min_seq]), 2)
+
+      perc_seq_shared_lv2 <- round(100 * nb_shared_seq / sum(newphyseq@otu_table[, newphyseq@otu_table[cond2, ] > nb_min_seq]), 2)
+
+      res[[i]] <- c(nb_first, nb_second, nb_shared, div_first, div_second, nb_shared_seq, perc_seq_shared_lv1, perc_seq_shared_lv2)
     }
   }
 
@@ -236,13 +244,16 @@ compare_pairs_pq <- function(physeq = NULL,
       .data$V5, 3))
 
   colnames(res_df) <- c(
-    paste0("nb_", lev1),
-    paste0("nb_", lev2),
-    "nb_shared",
+    paste0("nb_ASV_", lev1),
+    paste0("nb_ASV_", lev2),
+    "nb_shared_ASV",
     paste0("div_", lev1),
     paste0("div_", lev2),
-    paste0("percent_shared_", lev1),
-    paste0("percent_shared_", lev2),
+    "nb_shared_seq",
+    paste0("percent_shared_seq_", lev1),
+    paste0("percent_shared_seq_", lev2),
+    paste0("percent_shared_ASV_", lev1),
+    paste0("percent_shared_ASV_", lev2),
     paste0("ratio_nb_", lev1, "_", lev2),
     paste0("ratio_div_", lev1, "_", lev2)
   )

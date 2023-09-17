@@ -30,7 +30,7 @@ add_dna_to_phyloseq <- function(physeq) {
 ################################################################################
 #'  Clean phyloseq object by removing empty samples and taxa
 #'
-#' @details `r lifecycle::badge("experimental")`
+#' @description `r lifecycle::badge("experimental")`
 #'
 #'  In addition, this function check for discrepancy (and rename) between
 #' (i) taxa names in refseq, taxonomy table and otu_table and between
@@ -172,7 +172,7 @@ clean_pq <- function(physeq,
 #' Track the number of reads (= sequences), samples and cluster (e.g. ASV)
 #' from various objects including dada-class and derep-class.
 #'
-#' @details
+#' @description
 #' `r lifecycle::badge("maturing")`
 #'
 #'  * List of fastq and fastg.gz files -> nb of reads and samples
@@ -381,14 +381,16 @@ track_wkflow <- function(
 
 ################################################################################
 #' Track the number of reads (= sequences), samples and cluster (e.g. ASV)
-#' for each samples
+#' for each samples.
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
 #'
+#' Contrary to [track_wkflow()], only phyloseq object are possible.
 #' More information are available in the manual of the function [track_wkflow()]
 #'
 #' @param list_pq_obj (required): a list of object passed on to [track_wkflow()]
+#'   Only phyloseq object will return value because information of sample is needed
 #' @param ... : other args passed on to [track_wkflow()]
 #'
 #' @return A list of dataframe. cf [track_wkflow()] for more information
@@ -408,8 +410,13 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
   }
   res <- list()
   for (s in sample_names(list_pq_obj[[1]])) {
-    list_pq_obj_samples <- lapply(list_pq_obj, select_one_sample, sam_name = s)
-    res[[s]] <- track_wkflow(list_pq_obj_samples, ...)
+    if (inherits(list_pq_obj[[1]], "phyloseq")) {
+      list_pq_obj_samples <- lapply(list_pq_obj, select_one_sample, sam_name = s)
+      res[[s]] <- track_wkflow(list_pq_obj_samples, ...)
+    } else {
+      message(paste0(names(list_pq_obj[[1]])), " is not a phyloseq obj. Sample information can't be computed. ")
+      res[[s]] <- NULL
+    }
   }
   return(res)
 }
@@ -420,6 +427,7 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #' Recluster sequences of an object of class `physeq`
 #' (e.g. OTUs or ASV from dada)
 #'
+#' @description 
 #' `r lifecycle::badge("maturing")`
 #'
 #' @inheritParams clean_pq
@@ -432,7 +440,8 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #'   Set the clustering method.
 #'   - `clusterize` use the [DECIPHER::Clusterize()] fonction,
 #'   - `vsearch` use the vsearch software (https://github.com/torognes/vsearch/)
-#'     with arguments `-cluster_fast` and `-strand both`
+#'     with arguments `--cluster_size` by default (see args `vsearch_cluster_method`)
+#'     and `-strand both` (see args `vsearch_args`)
 #' @param vsearchpath path to vsearch
 #' @param id (default: 0.97) level of identity to cluster
 #' @param tax_adjust See the man page
@@ -639,11 +648,11 @@ vs_search_global <- function(physeq,
     if (inherits(seq2search, "character")) {
       seq2search <- Biostrings::DNAStringSet(seq2search)
     }
-    Biostrings::writeXStringSet(seq2search,  paste0(tempdir(), "seq2search.fasta"))
+    Biostrings::writeXStringSet(seq2search, paste0(tempdir(), "seq2search.fasta"))
     seq2search <- paste0(tempdir(), "seq2search.fasta")
   } else if (!is.null(path_to_fasta)) {
     dna <- Biostrings::readDNAStringSet(path_to_fasta)
-    Biostrings::writeXStringSet(dna,  paste0(tempdir(), "seq2search.fasta"))
+    Biostrings::writeXStringSet(dna, paste0(tempdir(), "seq2search.fasta"))
     seq2search <- paste0(tempdir(), "seq2search.fasta")
   }
 
@@ -989,7 +998,7 @@ read_pq <- function(path = NULL, taxa_are_rows = FALSE, sam_names = NULL, sep_cs
 ################################################################################
 #' Lulu reclustering of class `physeq`
 #'
-#' @details
+#' @description
 #' `r lifecycle::badge("experimental")`
 #'
 #' See https://www.nature.com/articles/s41467-017-01312-x for more information
@@ -1121,7 +1130,7 @@ lulu_pq <- function(physeq,
 ################################################################################
 #' Verify the validity of a phyloseq object
 #'
-#' @details
+#' @description
 #' `r lifecycle::badge("maturing")`
 #'
 #' Mostly for internal use in MiscMetabar functions.
@@ -1142,7 +1151,7 @@ verify_pq <- function(physeq) {
 ################################################################################
 #' Subset samples using a conditional boolean vector.
 #'
-#' @details
+#' @description
 #' `r lifecycle::badge("experimental")`
 #'
 #' The main objective of this function is to complete the [phyloseq::subset_samples()]
@@ -1194,7 +1203,7 @@ subset_samples_pq <- function(physeq, condition) {
 ################################################################################
 #' Subset taxa using a conditional named boolean vector.
 #'
-#' @details
+#' @description
 #' `r lifecycle::badge("experimental")`
 #'
 #' The main objective of this function is to complete the [phyloseq::subset_taxa()]
@@ -1333,7 +1342,6 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #'
 #' @examples
 #' # example code
-#'
 #'
 #' @author Adrien Taudière
 #'

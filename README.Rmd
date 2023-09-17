@@ -28,19 +28,22 @@ There is no CRAN or bioconductor version of MiscMetabar for now (work in progres
 
 You can install the stable version from [GitHub](https://github.com/) with:
 
-```{r, message=FALSE}
+```{r, message=FALSE, eval=FALSE}
 install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar")
 ```
 
 You can install the developement version from [GitHub](https://github.com/) with:
 
-```{r, message=FALSE}
+```{r, message=FALSE, eval=FALSE}
 install.packages("devtools")
 devtools::install_github("adrientaudiere/MiscMetabar", ref = "dev")
 ```
 
 ## Some use of MiscMetabar
+
+See vignettes in the [MiscMetabar](https://adrientaudiere.github.io/MiscMetabar/) website for more examples.
+
 
 ### Summarize a physeq object
 
@@ -52,8 +55,35 @@ data("data_fungi")
 summary_plot_pq(data_fungi)
 ```
 
-### Circle for visualize distribution of taxa in function of samples variables
+### Alpha-diversity analysis
+
+```{r, fig.cap="Hill number 1"}
+p <- MiscMetabar::hill_pq(data_fungi, variable = "Height")
+p$plot_Hill_0
+```
+
+```{r, fig.cap="Result of the Tuckey post-hoc test"}
+p$plot_tuckey
+```
+
+### Beta-diversity analysis
 
 ```{r}
-circle_pq(data_fungi, "Height", taxa = "Class", add_nb_seq = F)
+ggvenn_pq(data_fungi, fact = "Height") +
+  ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1) +
+  labs(title = "Share number of ASV among Height in tree")
+```
+
+### Installation of other softwares for debian Linux distributions
+
+#### blastn
+
+```sh
+sudo apt-get install ncbi-blast+
+```
+
+#### vsearch
+
+```sh
+sudo apt-get install vsearch
 ```

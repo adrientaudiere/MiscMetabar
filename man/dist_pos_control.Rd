@@ -25,8 +25,7 @@ A list of two data-frames with
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-}
-\details{
+
 Compute distance among positive controls,
 i.e. samples which are duplicated
 to test for variation, for example in

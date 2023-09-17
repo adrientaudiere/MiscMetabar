@@ -47,11 +47,11 @@ normalized raw-score. Each increase by one doubles the required database size
 The BLAST E-value is the number of expected hits of similar quality (score)
 that could be found just by chance.}
 
-\item{unique_per_seq}{(logical) if TRUE only return the first match for
-each sequence in seq2search}
+\item{unique_per_seq}{(logical, default FALSE) if TRUE only return the better match
+(higher \strong{bit score}) for each sequence}
 
-\item{score_filter}{(logical) does results are filter by score? If
-FALSE, \code{id_cut},\code{bit_score_cut} and \code{min_cover_cut} are ignored}
+\item{score_filter}{(logical, default TRUE) does results are filter by score? If
+FALSE, \code{id_cut},\code{bit_score_cut}, \code{e_value_cut} and \code{min_cover_cut} are ignored}
 
 \item{nproc}{(default: 1)
 Set to number of cpus/processors to use for blast (args -num_threads

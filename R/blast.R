@@ -20,10 +20,10 @@
 #' @param e_value_cut (default: 1e-30)  cut of in e-value (%) to keep result
 #'   The BLAST E-value is the number of expected hits of similar quality (score)
 #'   that could be found just by chance.
-#' @param unique_per_seq (logical) if TRUE only return the first match for
-#'   each sequence in seq2search
-#' @param score_filter (logical) does results are filter by score? If
-#'   FALSE, `id_cut`,`bit_score_cut` and `min_cover_cut` are ignored
+#' @param unique_per_seq (logical, default FALSE) if TRUE only return the better match
+#'  (higher **bit score**) for each sequence
+#' @param score_filter (logical, default TRUE) does results are filter by score? If
+#'   FALSE, `id_cut`,`bit_score_cut`, `e_value_cut` and `min_cover_cut` are ignored
 #' @param list_no_output_query (logical) does the result table include
 #'   query sequences for which `blastn` does not find any correspondence?
 #' @param args_makedb Additional parameters parse to makeblastdb command
@@ -34,9 +34,9 @@
 #' @param  keep_temporary_files (logical, default: FALSE) Do we keep temporary files
 #'   - db.fasta (refseq transformed into a database)
 #'   - dbase list of files (output of blastn)
-#'   - blast_result.txt the summary result of blastn using 
+#'   - blast_result.txt the summary result of blastn using
 #'     `-outfmt "6 qseqid qlen sseqid slen length pident evalue bitscore qcovs"`
-#' 
+#'
 #' @seealso  [MiscMetabar::blast_pq()] to use `refseq` slot as query sequences
 #'   against un custom database.
 #'
@@ -70,12 +70,13 @@ blast_to_phyloseq <- function(physeq,
   dna <- Biostrings::DNAStringSet(physeq@refseq)
   Biostrings::writeXStringSet(dna, paste0(tempdir(), "/", "db.fasta"))
 
-  system(paste0(blastpath,
+  system(paste0(
+    blastpath,
     "makeblastdb -dbtype nucl -in ",
-    paste0(tempdir(), "/", "db.fasta"), 
+    paste0(tempdir(), "/", "db.fasta"),
     " -out ",
     paste0(tempdir(), "/", "dbase"),
-    " ", 
+    " ",
     args_makedb
   ))
 
@@ -97,7 +98,7 @@ blast_to_phyloseq <- function(physeq,
   )
   if (file.info(paste0(tempdir(), "/", "blast_result.txt"))$size > 0) {
     blast_tab <- utils::read.table(
-      paste0(tempdir(), "/", "blast_result.txt"),,
+      paste0(tempdir(), "/", "blast_result.txt"), ,
       sep = "\t",
       header = FALSE,
       stringsAsFactors = FALSE
@@ -115,7 +116,7 @@ blast_to_phyloseq <- function(physeq,
     message(paste0("Temporary files are located at ", tempdir()))
   }
 
-  if(!blast_tab_OK){
+  if (!blast_tab_OK) {
     message("None query sequences matched your phyloseq references sequences.")
     return(NULL)
   }
@@ -132,7 +133,7 @@ blast_to_phyloseq <- function(physeq,
     "Query cover"
   )
 
-  blast_tab <- blast_tab[order(blast_tab[, "% id. match"], decreasing = TRUE), ]
+  blast_tab <- blast_tab[order(blast_tab[, "bit score"], decreasing = TRUE), ]
 
   if (unique_per_seq) {
     blast_tab <- blast_tab[which(!duplicated(blast_tab[, 1])), ]
@@ -184,9 +185,9 @@ blast_to_phyloseq <- function(physeq,
 #' @param  keep_temporary_files (logical, default: FALSE) Do we keep temporary files
 #'   - db.fasta (refseq transformed into a database)
 #'   - dbase list of files (output of blastn)
-#'   - blast_result.txt the summary result of blastn using 
+#'   - blast_result.txt the summary result of blastn using
 #'     `-outfmt "6 qseqid qlen sseqid slen length pident evalue bitscore qcovs"`
-#' 
+#'
 #' @seealso  [MiscMetabar::blast_to_phyloseq()] to use `refseq`
 #'   slot as a database
 #' @return  a blast table
@@ -254,7 +255,7 @@ blast_pq <- function(physeq,
         " -db ",
         database,
         " -out ",
-         paste0(tempdir(), "/", "blast_result.txt"),
+        paste0(tempdir(), "/", "blast_result.txt"),
         " -outfmt \"6 qseqid qlen sseqid slen",
         " length pident evalue bitscore qcovs\"",
         " -num_threads ", nproc,
@@ -264,9 +265,9 @@ blast_pq <- function(physeq,
     )
   }
 
- if (file.info(paste0(tempdir(), "/", "blast_result.txt"))$size > 0) {
+  if (file.info(paste0(tempdir(), "/", "blast_result.txt"))$size > 0) {
     blast_tab <- utils::read.table(
-      paste0(tempdir(), "/", "blast_result.txt"),,
+      paste0(tempdir(), "/", "blast_result.txt"), ,
       sep = "\t",
       header = FALSE,
       stringsAsFactors = FALSE
@@ -284,7 +285,7 @@ blast_pq <- function(physeq,
     message(paste0("Temporary files are located at ", tempdir()))
   }
 
-  if(!blast_tab_OK){
+  if (!blast_tab_OK) {
     message("None query sequences matched your phyloseq references sequences.")
     return(NULL)
   }
@@ -301,7 +302,7 @@ blast_pq <- function(physeq,
     "Query cover"
   )
 
-  blast_tab <- blast_tab[order(blast_tab[, "% id. match"], decreasing = TRUE), ]
+  blast_tab <- blast_tab[order(blast_tab[, "bit score"], decreasing = TRUE), ]
 
   if (unique_per_seq) {
     blast_tab <- blast_tab[which(!duplicated(blast_tab[, 1])), ]
@@ -423,7 +424,7 @@ filter_asv_blast <- function(physeq,
 #' @param  keep_temporary_files (logical, default: FALSE) Do we keep temporary files
 #'   - db.fasta (refseq transformed into a database)
 #'   - dbase list of files (output of blastn)
-#'   - blast_result.txt the summary result of blastn using 
+#'   - blast_result.txt the summary result of blastn using
 #'     `-outfmt "6 qseqid qlen sseqid slen length pident evalue bitscore qcovs"`
 #' @return A blast table
 #'
@@ -468,7 +469,8 @@ blast_to_derep <- function(derep,
   names(dna) <- paste0(names(dna), "(", unlist(derep_occurence), "seqs)")
   Biostrings::writeXStringSet(dna, paste0(tempdir(), "/", "db.fasta"))
 
-  system(paste0(blastpath,
+  system(paste0(
+    blastpath,
     "makeblastdb -dbtype nucl -in ",
     paste0(tempdir(), "/", "db.fasta"),
     " -out ",
@@ -494,9 +496,9 @@ blast_to_derep <- function(derep,
   )
 
 
- if (file.info(paste0(tempdir(), "/", "blast_result.txt"))$size > 0) {
+  if (file.info(paste0(tempdir(), "/", "blast_result.txt"))$size > 0) {
     blast_tab <- utils::read.table(
-      paste0(tempdir(), "/", "blast_result.txt"),,
+      paste0(tempdir(), "/", "blast_result.txt"), ,
       sep = "\t",
       header = FALSE,
       stringsAsFactors = FALSE
@@ -514,7 +516,7 @@ blast_to_derep <- function(derep,
     message(paste0("Temporary files are located at ", tempdir()))
   }
 
-  if(!blast_tab_OK){
+  if (!blast_tab_OK) {
     message("None query sequences matched your phyloseq references sequences.")
     return(NULL)
   }
@@ -533,7 +535,7 @@ blast_to_derep <- function(derep,
 
   blast_tab$occurence <- sub("seqs\\)", "", sub(".*\\(", "", blast_tab$`Sample name`, perl = TRUE), perl = TRUE)
 
-  blast_tab <- blast_tab[order(blast_tab[, "% id. match"], decreasing = TRUE), ]
+  blast_tab <- blast_tab[order(blast_tab[, "bit score"], decreasing = TRUE), ]
 
   if (unique_per_seq) {
     blast_tab <- blast_tab[which(!duplicated(blast_tab[, 1])), ]

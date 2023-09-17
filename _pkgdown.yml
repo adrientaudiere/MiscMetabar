@@ -19,6 +19,10 @@ navbar:
       href: articles/alpha-div.html
     - text: Beta-diversity
       href: articles/beta-div.html
+    - text: Import/export and track 
+      href: articles/import_export_track.html
+    - text: Filter taxa and samples
+      href: articles/filter.html
     - text: -------
     - text: "For developpers"
     - text: Rules of code

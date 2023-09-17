@@ -2,11 +2,8 @@
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
-  release:
-    types: [published]
+    branches: 
+      - master
   workflow_dispatch:
 
 name: pkgdown
@@ -32,6 +29,12 @@ jobs:
         with:
           extra-packages: any::pkgdown, local::.
           needs: website
+
+      - name: Install vsearch
+        run: sudo apt-get install vsearch
+
+      - name: Install blastn
+        run: sudo apt-get install ncbi-blast+
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)

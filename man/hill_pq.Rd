@@ -4,7 +4,14 @@
 \alias{hill_pq}
 \title{Graphical representation of hill number 0, 1 and 2 across a factor}
 \usage{
-hill_pq(physeq, variable, color_fac = NA, letters = FALSE, add_points = FALSE)
+hill_pq(
+  physeq,
+  variable,
+  color_fac = NA,
+  letters = FALSE,
+  add_points = FALSE,
+  add_info = TRUE
+)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
@@ -20,6 +27,9 @@ show letters based on p-values for comparison. Use the
 multcompLetters. BROKEN for the moment.}
 
 \item{add_points}{(logical): add jitter point on boxplot}
+
+\item{add_info}{(logical, default TRUE) Do we add a subtitle with
+information about the number of samples per modality.}
 }
 \value{
 A list of 4 ggplot2 plot.
