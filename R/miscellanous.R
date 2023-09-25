@@ -1,6 +1,6 @@
 ################################################################################
 #' Transform the otu_table of a \code{\link{phyloseq-class}} object into a
-#'   \code{\link{phyloseq-class}} object with à binary otu_table.
+#'   \code{\link{phyloseq-class}} object with a binary otu_table.
 #' @note  Useful to test if the results are not biaised by sequences bias
 #'   that appended during PCR or NGS pipeline.
 #'

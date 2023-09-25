@@ -2497,8 +2497,6 @@ upset_pq <-
     return(p)
   }
 
-upset_test_pq(data_fungi, "Height", var_to_test = c("OTU", "Class", "Guild"))
-
 #' Test for differences between intersections
 #' @description
 #' `r lifecycle::badge("experimental")`
