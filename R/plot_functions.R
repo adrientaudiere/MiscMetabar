@@ -2493,8 +2493,80 @@ upset_pq <-
 
     p <-
       ComplexUpset::upset(psm2, intersect = samp_names, ...) + xlab(fact)
+
     return(p)
   }
+
+upset_test_pq(data_fungi, "Height", var_to_test = c("OTU", "Class", "Guild"))
+
+#' Test for differences between intersections
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' @inheritParams upset_pq
+#' @param  var_to_test (default c("OTU")) : a vector of column present in 
+#'   the tax_table slot from the physeq object
+#' @param ... other arguments passed on to the [ComplexUpset::upset_test()]
+#'
+#' @return A \code{\link{ggplot}}2 plot
+#' @export
+#' @author Adrien Taudière
+#'
+#' @seealso [upset_pq()]
+#' @examples
+#' upset_test_pq(data_fungi, "Height", var_to_test = c("OTU", "Class", "Guild"))
+#' upset_test_pq(data_fungi, "Time")
+#' 
+upset_test_pq <-
+  function(physeq,
+           fact,
+           var_to_test = "OTU",
+           min_nb_seq = 0,
+           na_remove = TRUE,
+           numeric_fonction = sum,
+           ...) {
+    if (!is.null(min_nb_seq)) {
+      physeq <- subset_taxa_pq(physeq, taxa_sums(physeq) >= min_nb_seq)
+    }
+
+    if (na_remove) {
+      physeq <-
+        subset_samples_pq(physeq, !is.na(physeq@sam_data[[fact]]))
+    } else {
+      physeq@sam_data[[fact]][is.na(physeq@sam_data[[fact]])] <-
+        "NA"
+    }
+
+    physeq <- speedyseq::merge_samples2(physeq, fact)
+
+    psm <- psmelt(physeq)
+    samp_names <- unique(psm$Sample)
+    psm <-
+      psm %>%
+      mutate(val = TRUE) %>%
+      tidyr::pivot_wider(names_from = Sample, values_from = val)
+    psm[samp_names][is.na(psm[samp_names])] <- FALSE
+
+    psm <- psm %>% filter(Abundance != 0)
+    psm[[fact]] <- as.character(psm[[fact]])
+
+    psm2 <- data.frame(lapply(psm, function(col) {
+      tapply(col, paste0(psm$OTU), function(vec) {
+        diff_fct_diff_class(vec, numeric_fonction = numeric_fonction, na.rm = TRUE)
+      })
+    })) %>% arrange(., desc(Abundance))
+
+    colnames(psm2) <- colnames(psm)
+
+    res_test <-
+      ComplexUpset::upset_test(psm2[,c(var_to_test, samp_names)],
+                               intersect = samp_names, ...)
+
+    return(res_test)
+  }
+
+
+
 
 
 #' Compute different functions for different class of vector.

@@ -4,6 +4,7 @@
 - Add argument `paires` to `multi_biplot_pq()` in order to indicate all paires of samples we want to print.
 - Improve `compare_pairs_pq()` with information about the number of shared sequences among paires
 - Add function `upset_pq()` to plot upset of phyloseq object using the [ComplexUpset](https://krassowski.github.io/complex-upset/) package
+- Add function `upset_test_pq` to test for differences between intersections (wrapper of `ComplexUpset::upset_test()` for `phyloseq-object`)
 - Add info (param `add_info`) in subtitle of the `hill_pq()` function
 
 
