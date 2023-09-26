@@ -110,8 +110,9 @@ all_object_size <- function() {
 
 ################################################################################
 #' Simplify taxonomy by removing some unused characters such as "k__"
+#' 
 #' @inheritParams clean_pq
-#'
+#' @param remove_space (logical; default TRUE): do we remove space?
 #' @description
 #' `r lifecycle::badge("maturing")`
 #'
@@ -119,10 +120,14 @@ all_object_size <- function() {
 #'
 #' @return A  \code{\link{phyloseq-class}} object with simplified taxonomy
 #' @export
-simplify_taxo <- function(physeq) {
+simplify_taxo <- function(physeq, remove_space = TRUE) {
   taxo <- physeq@tax_table
   taxo <- gsub(".__", "", taxo, perl = TRUE)
-  physeq@tax_table <- taxo
+  if (remove_space) {
+    taxo <- gsub(" ", "", taxo)
+    taxo <- gsub(" ", "", taxo)
+  }
+  physeq@tax_table <- tax_table(taxo)
   return(physeq)
 }
 

@@ -6,7 +6,8 @@
 - Add function `upset_pq()` to plot upset of phyloseq object using the [ComplexUpset](https://krassowski.github.io/complex-upset/) package
 - Add function `upset_test_pq` to test for differences between intersections (wrapper of `ComplexUpset::upset_test()` for `phyloseq-object`)
 - Add info (param `add_info`) in subtitle of the `hill_pq()` function
-
+- Add argument `remove_space` to `simplify_taxo()` function
+- Add argument `simplify_taxo` to `clean_pq()` function 
 
 # MiscMetabar 0.40  
 

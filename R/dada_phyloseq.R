@@ -57,6 +57,8 @@ add_dna_to_phyloseq <- function(physeq) {
 #' @param rename_asv (logical) if TRUE, ASV are renamed by their position
 #'   in the OTU_table (asv_1, asv_2, ...). Default to FALSE. If rename ASV is true,
 #'   the ASV names in verbose information can be misleading.
+#' @param simplify_taxo (logical) if TRUE, correct the taxonomy_table using the 
+#'   `MiscMetabar::simplify_taxo()` function
 #' @return A new \code{\link{phyloseq-class}} object
 #' @export
 clean_pq <- function(physeq,
@@ -68,7 +70,8 @@ clean_pq <- function(physeq,
                      force_taxa_as_columns = FALSE,
                      force_taxa_as_rows = FALSE,
                      reorder_asv = FALSE,
-                     rename_asv = FALSE) {
+                     rename_asv = FALSE,
+                     simplify_taxo = FALSE) {
   if (clean_samples_names) {
     if (!is.null(physeq@refseq)) {
       if (sum(!names(physeq@refseq) %in% taxa_names(physeq)) > 0) {
@@ -129,6 +132,10 @@ clean_pq <- function(physeq,
       taxa_are_rows = TRUE
     )
     message("Taxa are now in rows.")
+  }
+
+  if (simplify_taxo) {
+    physeq <- simplify_taxo(physeq)
   }
 
   new_physeq <- physeq
