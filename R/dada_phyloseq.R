@@ -1357,7 +1357,7 @@ add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, ...) {
     suffix <- basename(ref_fasta)
   }
   tax_tab <- dada2::assignTaxonomy(physeq@refseq, refFasta = ref_fasta, ...)
-  colnames(tax_tab) <- paste0(colnames(tax_tab), "_", suffix)
+  colnames(tax_tab) <- make.unique(paste0(colnames(tax_tab), "_", suffix))
   new_tax_tab <- tax_table(cbind(physeq@tax_table, tax_tab))
   new_physeq <- physeq
   tax_table(new_physeq) <- new_tax_tab
