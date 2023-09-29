@@ -8,6 +8,8 @@
 - Add info (param `add_info`) in subtitle of the `hill_pq()` function
 - Add argument `remove_space` to `simplify_taxo()` function
 - Add argument `simplify_taxo` to `clean_pq()` function 
+- Change argument `rarefy_nb_seq` by `rarefy_before_merging` and add arguments `rarefy_after_merging` and `add_nb_seq` to `ggvenn_pq()` function
+- Add arguments `rarefy_after_merging` to `biplot_pq()` and `upset_pq()` functions
 
 # MiscMetabar 0.40  
 

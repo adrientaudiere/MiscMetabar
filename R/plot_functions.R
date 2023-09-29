@@ -917,8 +917,12 @@ venn_pq <-
 #'   of the physeq object.
 #' @param add_nb_samples (logical, default TRUE) Add the number of samples to
 #'    levels names
-#' @param rarefy_nb_seqs Rarefy each sample (before merging if merge_sample_by is set)
-#'    using `phyloseq::rarefy_even_depth()`
+#' @param add_nb_sequences (logical, default FALSE) Add the number of sequences to
+#'    levels names
+#' @param rarefy_before_merging Rarefy each sample before merging by the
+#'   modalities of args `fact`. Use `phyloseq::rarefy_even_depth()` function
+#' @param rarefy_after_merging Rarefy each sample after merging by the
+#'   modalities of args `fact`.
 #' @param ... other arguments for the `ggVennDiagram::ggVennDiagram` function
 #'   for ex. `category.names`.
 #' @return A \code{\link{ggplot}}2 plot representing Venn diagramm of
@@ -941,6 +945,11 @@ venn_pq <-
 #' data_fungi2 <- subset_samples(data_fungi, data_fungi@sam_data$Tree_name == "A10-005" |
 #'   data_fungi@sam_data$Height %in% c("Low", "High"))
 #' ggvenn_pq(data_fungi2, fact = "Height")
+#' 
+#' ggvenn_pq(data_fungi, fact = "Height", add_nb_sequences = TRUE, set_size = 4)
+#' ggvenn_pq(data_fungi, fact = "Height", rarefy_before_merging = TRUE)
+#' ggvenn_pq(data_fungi, fact = "Height", rarefy_after_merging = TRUE)
+#' 
 #' @export
 #' @author Adrien Taudière
 
@@ -951,19 +960,26 @@ ggvenn_pq <- function(physeq = NULL,
                       taxonomic_rank = NULL,
                       split_by = NULL,
                       add_nb_samples = TRUE,
-                      rarefy_nb_seqs = FALSE,
+                      add_nb_sequences = FALSE,
+                      rarefy_before_merging = FALSE,
+                      rarefy_after_merging = FALSE,
                       ...) {
   if (!is.factor(physeq@sam_data[[fact]])) {
     physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
   }
 
-  if (rarefy_nb_seqs) {
+  if (rarefy_before_merging) {
+    physeq <- rarefy_even_depth(physeq)
+    physeq <- clean_pq(physeq)
+  }
+
+  if (rarefy_after_merging) {
+    physeq <- speedyseq::merge_samples2(physeq, fact)
     physeq <- rarefy_even_depth(physeq)
     physeq <- clean_pq(physeq)
   }
 
   res <- list()
-  nb_samples <- c()
   nb_seq <- c()
 
   for (f in levels(physeq@sam_data[[fact]])) {
@@ -982,7 +998,6 @@ ggvenn_pq <- function(physeq = NULL,
           taxonomic_rank
         ])))
     }
-    nb_samples <- c(nb_samples, sum(physeq@sam_data[[fact]] == f, na.rm = TRUE))
     nb_seq <- c(nb_seq, sum(physeq@otu_table[physeq@sam_data[[fact]] == f, ], na.rm = TRUE))
   }
 
@@ -997,7 +1012,12 @@ ggvenn_pq <- function(physeq = NULL,
   }
 
   if (add_nb_samples) {
-    names(res) <- paste0(names(res), "\n (", nb_samples, ")")
+    nb_samples <- table(physeq@sam_data[[fact]])
+    names(res) <- paste0(names(res), "\n (", nb_samples, " sam.)")
+  }
+
+  if (add_nb_sequences) {
+    names(res) <- paste0(names(res), "\n (", nb_seq, " seq.)")
   }
 
   if (is.null(split_by)) {
@@ -1441,10 +1461,9 @@ summary_plot_pq <- function(physeq,
         nb_values =
           paste0(
             "Min nb seq per sample (",
-            substring(names(sort(
+            stringr::str_trunc(names(sort(
               sample_sums(otu_tab)
-            ))[1], 1, 15),
-            "...): ",
+            ))[1], 15, "right"),
             min(sample_sums(otu_tab)),
             "\n",
             "Nb samples with less than ",
@@ -1454,7 +1473,7 @@ summary_plot_pq <- function(physeq,
             "\n",
             "Min nb seq per taxa: ",
             min(taxa_sums(otu_tab)),
-            "( ",
+            " (",
             sum(taxa_sums(otu_tab) == min(taxa_sums(otu_tab))),
             " ASV)",
             "\n",
@@ -1494,7 +1513,7 @@ summary_plot_pq <- function(physeq,
 }
 ################################################################################
 
-
+################################################################################
 #' rotl wrapper for phyloseq data
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -1545,7 +1564,9 @@ rotl_pq <- function(physeq,
   tr <- tol_induced_subtree(ott_ids = ott_id(resolved_names2))
   return(tr)
 }
+################################################################################  
 
+################################################################################
 #' Heat tree from `metacoder` package using `tax_table` slot
 #' @description
 #' `r lifecycle::badge("maturing")`
@@ -1592,8 +1613,9 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
   data_metacoder <- metacoder::parse_phyloseq(physeq)
   metacoder::heat_tree(data_metacoder, ...)
 }
+################################################################################
 
-
+################################################################################
 #' Visualization of two samples for comparison
 #' @description
 #' `r lifecycle::badge("maturing")`
@@ -1604,6 +1626,8 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #'   physeq are merged using the vector set by `merge_sample_by`. This
 #'   merging used the [speedyseq::merge_samples2()]. In the case of
 #'   [biplot_pq()] this must be a factor with two levels only.
+#' @param rarefy_after_merging Rarefy each sample after merging by the
+#'   modalities merge_sample_by
 #' @param inverse_side Inverse the side (put the right modality in the left side).
 #' @param left_name Name fo the left sample.
 #' @param left_name_col Color for the left name
@@ -1643,6 +1667,7 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 biplot_pq <- function(physeq,
                       fact = NULL,
                       merge_sample_by = NULL,
+                      rarefy_after_merging = FALSE,
                       inverse_side = FALSE,
                       left_name = NULL,
                       left_name_col = "#4B3E1E",
@@ -1676,6 +1701,10 @@ biplot_pq <- function(physeq,
       "biplot_pq needs only two samples in the
     physeq object or a valid merge_sample_by parameter"
     )
+  } 
+
+  if (rarefy_after_merging) {
+    physeq <- clean_pq(rarefy_even_depth(physeq))
   }
 
   if (sample_sums(physeq)[1] / sample_sums(physeq)[2] > 2 ||
@@ -1685,7 +1714,7 @@ biplot_pq <- function(physeq,
       sample_sums(physeq)[1],
       " vs ",
       sample_sums(physeq)[2],
-      ")"
+      "). You may be interested by the parameter rarefy_after_merging"
     ))
   }
 
@@ -1856,9 +1885,10 @@ biplot_pq <- function(physeq,
   }
   return(p)
 }
+################################################################################
 
 
-
+################################################################################
 #' Visualization of a collection of couples of samples for comparison
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -1936,10 +1966,10 @@ multi_biplot_pq <- function(physeq,
   }
   return(p)
 }
+################################################################################
 
 
-
-
+################################################################################
 #' Plot taxonomic distribution in function of a factor.
 #'
 #' @description
@@ -2119,7 +2149,10 @@ plot_tax_pq <-
       return(list(p_seq, p_asv))
     }
   }
+################################################################################
 
+
+################################################################################
 #' Compute tSNE position of samples from a phyloseq object
 #'
 #' @inheritParams clean_pq
@@ -2164,7 +2197,10 @@ tsne_pq <-
 
     return(res_tsne)
   }
+################################################################################
 
+
+################################################################################
 #' Plot a tsne low dimensional representation of a phyloseq object
 #'
 #' `r lifecycle::badge("experimental")`
@@ -2252,7 +2288,7 @@ plot_tsne_pq <- function(physeq,
 
   return(g)
 }
-
+################################################################################
 
 
 ################################################################################
@@ -2285,8 +2321,10 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 
   SRS::SRScurve(df, ...)
 }
+################################################################################
 
 
+################################################################################
 #' iNterpolation and EXTrapolation of Hill numbers (with iNEXT)
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -2322,10 +2360,10 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
   df <- data.frame(t(as.matrix(unclass(physeq@otu_table))))
   res_iNEXT <- iNEXT::iNEXT(df, ...)
 }
+################################################################################
 
 
-
-
+################################################################################
 #' Make upset plot for phyloseq object.
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -2343,6 +2381,8 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
 #'   if FALSE, NA values are set to "NA"
 #' @param numeric_fonction (default : sum) the function for numeric vector
 #'   usefull only for complex plot (see examples)
+#' @param rarefy_after_merging Rarefy each sample after merging by the
+#'   modalities of `fact` parameter
 #' @param ... other arguments passed on to the [ComplexUpset::upset()]
 #'
 #' @return A \code{\link{ggplot}}2 plot
@@ -2457,6 +2497,7 @@ upset_pq <-
            min_nb_seq = 0,
            na_remove = TRUE,
            numeric_fonction = sum,
+           rarefy_after_merging = FALSE,
            ...) {
     if (!is.null(min_nb_seq)) {
       physeq <- subset_taxa_pq(physeq, taxa_sums(physeq) >= min_nb_seq)
@@ -2471,6 +2512,10 @@ upset_pq <-
     }
 
     physeq <- speedyseq::merge_samples2(physeq, fact)
+   
+    if (rarefy_after_merging) {
+      physeq <- clean_pq(rarefy_even_depth(physeq))
+    }
 
     psm <- psmelt(physeq)
     samp_names <- unique(psm$Sample)
@@ -2496,7 +2541,10 @@ upset_pq <-
 
     return(p)
   }
+################################################################################
 
+
+################################################################################
 #' Test for differences between intersections
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -2562,11 +2610,9 @@ upset_test_pq <-
 
     return(res_test)
   }
+################################################################################
 
-
-
-
-
+################################################################################
 #' Compute different functions for different class of vector.
 #'
 #' @description
@@ -2643,3 +2689,4 @@ diff_fct_diff_class <-
       stop("At least one column is neither numeric nor character or logical")
     }
   }
+################################################################################
