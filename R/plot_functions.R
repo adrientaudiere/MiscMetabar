@@ -973,6 +973,8 @@ ggvenn_pq <- function(physeq = NULL,
     physeq <- clean_pq(physeq)
   }
 
+  nb_samples <- table(physeq@sam_data[[fact]])
+
   if (rarefy_after_merging) {
     physeq <- speedyseq::merge_samples2(physeq, fact)
     physeq <- rarefy_even_depth(physeq)
@@ -1007,12 +1009,11 @@ ggvenn_pq <- function(physeq = NULL,
       max(nb_seq),
       " vs ",
       min(nb_seq),
-      ")"
+      "). You may be interested by the parameter rarefy_after_merging"
     ))
   }
 
   if (add_nb_samples) {
-    nb_samples <- table(physeq@sam_data[[fact]])
     names(res) <- paste0(names(res), "\n (", nb_samples, " sam.)")
   }
 
