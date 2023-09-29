@@ -2378,6 +2378,8 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
 #'   samples to take into count this OTUs in this sample. For example,
 #'   if min_nb_seq=2,each value of 2 or less in the OTU table
 #'   will not count in the venn diagramm
+#' @param taxa_fill (default NULL) fill the ASV upset using a column in 
+#'   `tax_table` slot. 
 #' @param na_remove : if TRUE (the default), NA values in fact are removed
 #'   if FALSE, NA values are set to "NA"
 #' @param numeric_fonction (default : sum) the function for numeric vector
@@ -2393,10 +2395,13 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
 #' @seealso [ggvenn_pq()]
 #' @examples
 #' upset_pq(data_fungi, fact = "Height", width_ratio = 0.2)
+#' upset_pq(data_fungi, fact = "Height", width_ratio = 0.2, 
+#'   taxa_fill = "Class")
 #' upset_pq(data_fungi, fact = "Height", min_nb_seq = 1000)
 #' upset_pq(data_fungi, fact = "Height", na_remove = FALSE)
 #' upset_pq(data_fungi, fact = "Time", width_ratio = 0.2)
-#'
+#' upset_pq(data_fungi, fact = "Time", width_ratio = 0.2, rarefy_after_merging = TRUE)
+#' 
 #' upset_pq(
 #'   data_fungi,
 #'   fact = "Time",
@@ -2492,9 +2497,9 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
 #' data_fungi2@sam_data[["Height__Time_0"]][grepl("NA", data_fungi2@sam_data[["Height__Time_0"]])] <-
 #'   NA
 #' upset_pq(data_fungi2, fact = "Height__Time_0", width_ratio = 0.2)
-upset_pq <-
-  function(physeq,
+upset_pq <-  function(physeq,
            fact,
+           taxa_fill = NULL,
            min_nb_seq = 0,
            na_remove = TRUE,
            numeric_fonction = sum,
@@ -2537,8 +2542,19 @@ upset_pq <-
 
     colnames(psm2) <- colnames(psm)
 
-    p <-
-      ComplexUpset::upset(psm2, intersect = samp_names, ...) + xlab(fact)
+    if (is.null(taxa_fill)){
+      p <- ComplexUpset::upset(psm2, intersect = samp_names, ...) + xlab(fact)
+    } else {
+      p <- ComplexUpset::upset(psm2, intersect = samp_names,
+       base_annotations = list(), annotations = list(
+            "ASV" = (
+              ggplot(mapping = aes(fill = .data[[taxa_fill]]))  +
+              geom_bar() +
+              ylab("ASV per Class") +
+              theme(legend.key.size = unit(0.2, "cm")) +
+              theme(axis.text = element_text(size = 12)))),
+            ...) + xlab(fact)
+    }
 
     return(p)
   }
