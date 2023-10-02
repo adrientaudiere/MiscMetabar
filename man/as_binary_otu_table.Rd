@@ -3,7 +3,7 @@
 \name{as_binary_otu_table}
 \alias{as_binary_otu_table}
 \title{Transform the otu_table of a \code{\link{phyloseq-class}} object into a
-\code{\link{phyloseq-class}} object with à binary otu_table.}
+\code{\link{phyloseq-class}} object with a binary otu_table.}
 \usage{
 as_binary_otu_table(physeq, min_number = 1)
 }

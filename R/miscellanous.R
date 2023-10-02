@@ -110,7 +110,7 @@ all_object_size <- function() {
 
 ################################################################################
 #' Simplify taxonomy by removing some unused characters such as "k__"
-#' 
+#'
 #' @inheritParams clean_pq
 #' @param remove_space (logical; default TRUE): do we remove space?
 #' @description
@@ -130,6 +130,7 @@ simplify_taxo <- function(physeq, remove_space = TRUE) {
   physeq@tax_table <- tax_table(taxo)
   return(physeq)
 }
+################################################################################
 
 ################################################################################
 #' Get the extension of a file
@@ -146,6 +147,8 @@ get_file_extension <- function(file) {
   file_ext <- strsplit(basename(file), ".", fixed = TRUE)[[1]][-1]
   return(file_ext)
 }
+################################################################################
+
 
 ################################################################################
 #' Convert a value (or a fraction x/y) in percentage
@@ -174,7 +177,10 @@ perc <- function(x, y = NULL, accuracy = 0, add_symbol = FALSE) {
   }
   return(res)
 }
+################################################################################
 
+
+################################################################################
 #' Count sequences in fasta or fastq file
 #'
 #' @description
@@ -229,9 +235,11 @@ count_seq <- function(file_path = NULL, folder_path = NULL, pattern = NULL) {
   return(as.numeric(seq_nb))
 }
 
+################################################################################
 
 
-#' Count sequences in fasta or fastq file
+################################################################################
+#' Funky palette color
 #' @return a color palette
 #' @param n a number of colors
 #' @author Thibaut Jombart
@@ -254,3 +262,35 @@ funky_color <-
       "#B15928"
     )
   )
+################################################################################
+
+
+################################################################################
+
+################################################################################
+#' Subsample a fastq file copying the n_seq first sequences in a given folder
+#'
+#' @description
+#'  `r lifecycle::badge("experimental")`
+#'
+#' @param file_path The path to one fastq file or a list of fastq files 
+#'   (see examples)
+#' @param folder_output The path to a folder for output files
+#' @param n_seq (int; default 1000) : Number of sequences kept (every sequence 
+#'   spread across 4 lines)
+#' @return Nothing, create subsampled fastq files in a folder
+#' @author Adrien Taudière
+#' @export
+#' @examples
+#' \dontrun{
+#'   subsample_fastq("inst/extdata/ex_R1_001.fastq.gz", "your_path_to_output")
+#'   subsample_fastq(list_fastq_files("inst/extdata"), "your_path_to_output", n=10)
+#' }
+
+subsample_fastq <- function(fastq_files, folder_output = "subsample", n_seq = 1000){
+  for(f in fastq_files) {
+     writeLines(readLines(f, n = n_seq * 4), con = paste0(folder_output, "/" basename(f)))
+  }
+}
+
+################################################################################

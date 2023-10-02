@@ -4,11 +4,13 @@
 \alias{simplify_taxo}
 \title{Simplify taxonomy by removing some unused characters such as "k__"}
 \usage{
-simplify_taxo(physeq)
+simplify_taxo(physeq, remove_space = TRUE)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
+
+\item{remove_space}{(logical; default TRUE): do we remove space?}
 }
 \value{
 A  \code{\link{phyloseq-class}} object with simplified taxonomy

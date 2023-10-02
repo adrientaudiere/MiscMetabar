@@ -11,6 +11,7 @@
 - Change argument `rarefy_nb_seq` by `rarefy_before_merging` and add arguments `rarefy_after_merging` and `add_nb_seq` to `ggvenn_pq()` function
 - Add arguments `rarefy_after_merging` to `biplot_pq()` and `upset_pq()` functions
 - Add argument `taxa_fill` to `upset_pq()` function in order to fill the bar with taxonomic rank
+- Add a function `subsample_fastq()` to make subset of fastq files in order to test your pipeline with all samples but with a low number of reads.
 
 # MiscMetabar 0.40  
 

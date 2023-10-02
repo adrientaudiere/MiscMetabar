@@ -57,7 +57,7 @@ add_dna_to_phyloseq <- function(physeq) {
 #' @param rename_asv (logical) if TRUE, ASV are renamed by their position
 #'   in the OTU_table (asv_1, asv_2, ...). Default to FALSE. If rename ASV is true,
 #'   the ASV names in verbose information can be misleading.
-#' @param simplify_taxo (logical) if TRUE, correct the taxonomy_table using the 
+#' @param simplify_taxo (logical) if TRUE, correct the taxonomy_table using the
 #'   `MiscMetabar::simplify_taxo()` function
 #' @return A new \code{\link{phyloseq-class}} object
 #' @export
@@ -434,7 +434,7 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #' Recluster sequences of an object of class `physeq`
 #' (e.g. OTUs or ASV from dada)
 #'
-#' @description 
+#' @description
 #' `r lifecycle::badge("maturing")`
 #'
 #' @inheritParams clean_pq

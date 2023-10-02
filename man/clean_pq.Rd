@@ -14,7 +14,8 @@ clean_pq(
   force_taxa_as_columns = FALSE,
   force_taxa_as_rows = FALSE,
   reorder_asv = FALSE,
-  rename_asv = FALSE
+  rename_asv = FALSE,
+  simplify_taxo = FALSE
 )
 }
 \arguments{
@@ -47,6 +48,9 @@ Need the \href{https://github.com/david-barnett/microViz}{microViz} package.}
 \item{rename_asv}{(logical) if TRUE, ASV are renamed by their position
 in the OTU_table (asv_1, asv_2, ...). Default to FALSE. If rename ASV is true,
 the ASV names in verbose information can be misleading.}
+
+\item{simplify_taxo}{(logical) if TRUE, correct the taxonomy_table using the
+\code{MiscMetabar::simplify_taxo()} function}
 }
 \value{
 A new \code{\link{phyloseq-class}} object

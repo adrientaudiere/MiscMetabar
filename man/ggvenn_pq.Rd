@@ -12,7 +12,9 @@ ggvenn_pq(
   taxonomic_rank = NULL,
   split_by = NULL,
   add_nb_samples = TRUE,
-  rarefy_nb_seqs = FALSE,
+  add_nb_sequences = FALSE,
+  rarefy_before_merging = FALSE,
+  rarefy_after_merging = FALSE,
   ...
 )
 }
@@ -38,8 +40,14 @@ of the physeq object.}
 \item{add_nb_samples}{(logical, default TRUE) Add the number of samples to
 levels names}
 
-\item{rarefy_nb_seqs}{Rarefy each sample (before merging if merge_sample_by is set)
-using \code{phyloseq::rarefy_even_depth()}}
+\item{add_nb_sequences}{(logical, default FALSE) Add the number of sequences to
+levels names}
+
+\item{rarefy_before_merging}{Rarefy each sample before merging by the
+modalities of args \code{fact}. Use \code{phyloseq::rarefy_even_depth()} function}
+
+\item{rarefy_after_merging}{Rarefy each sample after merging by the
+modalities of args \code{fact}.}
 
 \item{...}{other arguments for the \code{ggVennDiagram::ggVennDiagram} function
 for ex. \code{category.names}.}
@@ -71,6 +79,11 @@ for (i in 1:length(pl)) {
 data_fungi2 <- subset_samples(data_fungi, data_fungi@sam_data$Tree_name == "A10-005" |
   data_fungi@sam_data$Height \%in\% c("Low", "High"))
 ggvenn_pq(data_fungi2, fact = "Height")
+
+ggvenn_pq(data_fungi, fact = "Height", add_nb_sequences = TRUE, set_size = 4)
+ggvenn_pq(data_fungi, fact = "Height", rarefy_before_merging = TRUE)
+ggvenn_pq(data_fungi, fact = "Height", rarefy_after_merging = TRUE)
+
 }
 \seealso{
 \code{\link[=upset_pq]{upset_pq()}}
