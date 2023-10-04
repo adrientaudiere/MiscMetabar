@@ -288,8 +288,11 @@ funky_color <-
 #' }
 
 subsample_fastq <- function(fastq_files, folder_output = "subsample", n_seq = 1000){
-  for(f in fastq_files) {
-     writeLines(readLines(f, n = n_seq * 4), con = paste0(folder_output, "/" basename(f)))
+  for (f in unlist(fastq_files)) {
+    if (!dir.exists(folder_output)) {
+      dir.create(folder_output)
+    }
+    writeLines(readLines(f, n = n_seq * 4), con = paste0(folder_output, "/", basename(f)))
   }
 }
 
