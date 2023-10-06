@@ -82,8 +82,12 @@ plot_mt <-
 #' @examples
 #' data("GlobalPatterns")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
-#' accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE)
+#' p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10)
 #'
+#' p + theme(legend.position = "none")
+#' 
+#' p + xlim(c(0,400))
+#' 
 #' @return A \code{\link{ggplot}}2 plot representing the richness
 #' accumulation plot if add_nb_seq = TRUE, else, if add_nb_seq = FALSE
 #' return a base plot.
@@ -205,7 +209,7 @@ accu_plot <-
         if (n[length(n)] != tot[i]) {
           n <- c(n, tot[i])
         }
-        res_interm <- vegan::rarefy(x[i, ], n, se = TRUE)
+        res_interm <- vegan::rarefy(as.matrix(unclass(x[i, ])), n, se = TRUE)
         res <-
           cbind(as.matrix(res_interm)[1, ], as.matrix(res_interm)[2, ])
         return(res)
