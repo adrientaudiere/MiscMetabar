@@ -141,12 +141,12 @@ clean_pq <- function(physeq,
   new_physeq <- physeq
 
   if (remove_empty_taxa) {
-    if (sum(taxa_sums(new_physeq) == 0) > 0) {
+    if (sum(taxa_sums(new_physeq) != 0) > 0) {
       new_physeq <- subset_taxa(physeq, taxa_sums(physeq) > 0)
     }
   }
   if (remove_empty_samples) {
-    if (sum(sample_sums(new_physeq) == 0) > 0) {
+    if (sum(sample_sums(new_physeq) != 0) > 0) {
       new_physeq <- subset_samples(new_physeq, sample_sums(physeq) > 0)
     }
   }
