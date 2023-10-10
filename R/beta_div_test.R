@@ -28,7 +28,7 @@
 #' graph_test_pq(enterotype, fact = "Enterotype", na_remove = TRUE)
 #' @author Adrien Taudière
 #'
-#' @return a ggplot with a subtitle indicating the pvalue
+#' @return A \code{\link{ggplot}}2 plot with a subtitle indicating the pvalue
 #' and the number of permutations
 #'
 #' @export

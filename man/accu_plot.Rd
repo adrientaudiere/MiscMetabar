@@ -23,7 +23,7 @@ accu_plot(
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{fact}{(required) Name of the factor in physeq@sam_data used to plot
+\item{fact}{(required) Name of the factor in \code{physeq@sam_data} used to plot
 different lines}
 
 \item{add_nb_seq}{(default: TRUE, logical)
@@ -31,30 +31,30 @@ Either plot accumulation curves using sequences or using samples}
 
 \item{step}{(Integer) distance among points calculated to plot lines. A
 low value give better plot but is more time consuming.
-Only used if add_nb_seq = TRUE.}
+Only used if \code{add_nb_seq} = TRUE.}
 
 \item{by.fact}{(default: FALSE, logical)
 First merge the OTU table by factor to plot only one line by factor}
 
 \item{ci_col}{Color vector for confidence intervall.
-Only use if add_nb_seq = FALSE.
-If add_nb_seq = TRUE, you can use ggplot to modify the plot.}
+Only use if \code{add_nb_seq} = FALSE.
+If \code{add_nb_seq} = TRUE, you can use ggplot to modify the plot.}
 
-\item{col}{Color vector for lines. Only use if add_nb_seq = FALSE.
-If add_nb_seq = TRUE, you can use ggplot to modify the plot.}
+\item{col}{Color vector for lines. Only use if \code{add_nb_seq} = FALSE.
+If \code{add_nb_seq} = TRUE, you can use ggplot to modify the plot.}
 
-\item{lwd}{(default: 3) thickness for lines. Only use if add_nb_seq = FALSE.}
+\item{lwd}{(default: 3) thickness for lines. Only use if \code{add_nb_seq} = FALSE.}
 
-\item{leg}{(default: TRUE, logical) Plot legend or not. Only use if add_nb_seq = FALSE.}
+\item{leg}{(default: TRUE, logical) Plot legend or not. Only use if \code{add_nb_seq} = FALSE.}
 
 \item{print_sam_names}{(default: FALSE, logical) Print samples names or not?
-Only use if add_nb_seq = TRUE.}
+Only use if \code{add_nb_seq} = TRUE.}
 
 \item{ci}{(default: 2, integer) Confidence intervall value used to multiply the
 standard error to plot confidence intervall}
 
 \item{...}{Additional arguments passed on to \code{\link{ggplot}}
-if add_nb_seq = TRUE or to \code{\link{plot}} if add_nb_seq = FALSE}
+if \code{add_nb_seq} = TRUE or to \code{\link{plot}} if \code{add_nb_seq} = FALSE}
 }
 \value{
 A \code{\link{ggplot}}2 plot representing the richness
@@ -67,11 +67,15 @@ return a base plot.
 \examples{
 data("GlobalPatterns")
 GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
-accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE)
+p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10)
+
+p + theme(legend.position = "none")
+
+p + xlim(c(0, 400))
 
 }
 \seealso{
-\code{\link[vegan]{specaccum}}
+\code{\link[vegan]{specaccum}} \code{\link[=accu_samp_threshold]{accu_samp_threshold()}}
 }
 \author{
 Adrien Taudière

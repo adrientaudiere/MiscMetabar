@@ -89,68 +89,69 @@ rename_samples_otu_table <- function(physeq, names_of_samples) {
 }
 ################################################################################
 
-#( pattern = "fastq.gz", pattern_R1 = "_R1", pattern_R2 = "_R2")
+# ( pattern = "fastq.gz", pattern_R1 = "_R1", pattern_R2 = "_R2")
 
 
 
 ################################################################################
-#WORK IN PROGRESS 
-#TODO
+# WORK IN PROGRESS
+# TODO
 #' Remove primers using cutapapt Work In Progress
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
 #'
-#' @return a list of commande but in The future, will 
-#'   run the commandes using system 
+#' @return a list of commande but in The future, will
+#'   run the commandes using system
 #'
 #' @author Adrien Taudière
 #'
 
-cutadapt_remove_primers <- function(path, 
-output_folder = "wo_primers",
-primer_fw = NULL, 
-primer_rev = NULL,
-nproc = 1,
-...) {
+cutadapt_remove_primers <- function(
+    path,
+    output_folder = "wo_primers",
+    primer_fw = NULL,
+    primer_rev = NULL,
+    nproc = 1,
+    ...) {
+  cmd <- list()
 
-cmd <- list()
-
-if(is.null(primer_rev)){
-lff <- list_fastq_files(path, paired_end = FALSE, ...)
-  for (f in lff$fnfs) {
-    cmd[[i]] <- paste0("source ~/miniconda3/etc/profile.d/conda.sh && 
+  if (is.null(primer_rev)) {
+    lff <- list_fastq_files(path, paired_end = FALSE, ...)
+    for (f in lff$fnfs) {
+      cmd[[i]] <- paste0(
+        "source ~/miniconda3/etc/profile.d/conda.sh &&
     conda activate cutadaptenv && ",
-    "cutadapt --cores=",
-   nproc, 
-  " --discard-untrimmed -g '", primer_fw,"' -o ", output_folder,
-  "/", basename(f), " ", f
-  )
-  }
-} else {
-  lff <- list_fastq_files(path, paired_end = TRUE, ...)
+        "cutadapt --cores=",
+        nproc,
+        " --discard-untrimmed -g '", primer_fw, "' -o ", output_folder,
+        "/", basename(f), " ", f
+      )
+    }
+  } else {
+    lff <- list_fastq_files(path, paired_end = TRUE, ...)
 
- primer_fw_RC <- dada2:::rc(primer_fw)
- primer_rev_RC <- dada2:::rc(primer_rev)
-  for (f in lff$fnfs) {
-    cmd[[i]] <- paste0("source ~/miniconda3/etc/profile.d/conda.sh && 
+    primer_fw_RC <- dada2:::rc(primer_fw)
+    primer_rev_RC <- dada2:::rc(primer_rev)
+    for (f in lff$fnfs) {
+      cmd[[i]] <- paste0(
+        "source ~/miniconda3/etc/profile.d/conda.sh &&
     conda activate cutadaptenv && ",
-    "cutadapt -n 2 --cores=",
-   nproc, 
-  " --discard-untrimmed -g '", primer_fw,
-  "' -G '", primer_rev, 
-  "' -a '", primer_rev_RC,
-  "' -A '", primer_fw_RC,
-  "' -o ", output_folder,
-  "/", basename(f), " -p ", output_folder,
-  "/", gsub("R1", "R2", basename(f)), " ", f, " ", 
-  gsub("R1", "R2", f) 
-  )
+        "cutadapt -n 2 --cores=",
+        nproc,
+        " --discard-untrimmed -g '", primer_fw,
+        "' -G '", primer_rev,
+        "' -a '", primer_rev_RC,
+        "' -A '", primer_fw_RC,
+        "' -o ", output_folder,
+        "/", basename(f), " -p ", output_folder,
+        "/", gsub("R1", "R2", basename(f)), " ", f, " ",
+        gsub("R1", "R2", f)
+      )
+    }
   }
- 
+
+  return(cmd)
+  # lapply(cmd, system)
 }
-  
-return(cmd)
-#lapply(cmd, system)
-} 
 ################################################################################

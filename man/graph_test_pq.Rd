@@ -42,7 +42,7 @@ NA in the variables set in formula.}
 \code{\link[phyloseqGraphTest:graph_perm_test]{phyloseqGraphTest::graph_perm_test()}} function}
 }
 \value{
-a ggplot with a subtitle indicating the pvalue
+A \code{\link{ggplot}}2 plot with a subtitle indicating the pvalue
 and the number of permutations
 }
 \description{

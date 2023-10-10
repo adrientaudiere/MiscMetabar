@@ -273,21 +273,20 @@ funky_color <-
 #' @description
 #'  `r lifecycle::badge("experimental")`
 #'
-#' @param file_path The path to one fastq file or a list of fastq files 
+#' @param file_path The path to one fastq file or a list of fastq files
 #'   (see examples)
 #' @param folder_output The path to a folder for output files
-#' @param n_seq (int; default 1000) : Number of sequences kept (every sequence 
+#' @param n_seq (int; default 1000) : Number of sequences kept (every sequence
 #'   spread across 4 lines)
 #' @return Nothing, create subsampled fastq files in a folder
 #' @author Adrien Taudière
 #' @export
 #' @examples
 #' \dontrun{
-#'   subsample_fastq("inst/extdata/ex_R1_001.fastq.gz", "your_path_to_output")
-#'   subsample_fastq(list_fastq_files("inst/extdata"), "your_path_to_output", n=10)
+#' subsample_fastq("inst/extdata/ex_R1_001.fastq.gz", "your_path_to_output")
+#' subsample_fastq(list_fastq_files("inst/extdata"), "your_path_to_output", n = 10)
 #' }
-
-subsample_fastq <- function(fastq_files, folder_output = "subsample", n_seq = 1000){
+subsample_fastq <- function(fastq_files, folder_output = "subsample", n_seq = 1000) {
   for (f in unlist(fastq_files)) {
     if (!dir.exists(folder_output)) {
       dir.create(folder_output)

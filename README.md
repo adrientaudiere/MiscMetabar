@@ -2,7 +2,6 @@
 <a href="https://zenodo.org/badge/latestdoi/268765075"><img src="https://zenodo.org/badge/268765075.svg" alt="DOI"></a>
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
 <!-- devtools::build_readme() -->
 
 # MiscMetabar
@@ -64,11 +63,8 @@ p$plot_Hill_0
 <div class="figure">
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" alt="Hill number 1" width="100%" />
-
 <p class="caption">
-
 Hill number 1
-
 </p>
 
 </div>
@@ -80,11 +76,8 @@ p$plot_tuckey
 <div class="figure">
 
 <img src="man/figures/README-unnamed-chunk-5-1.png" alt="Result of the Tuckey post-hoc test" width="100%" />
-
 <p class="caption">
-
 Result of the Tuckey post-hoc test
-
 </p>
 
 </div>

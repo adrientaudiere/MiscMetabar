@@ -1,32 +1,35 @@
-# MiscMetabar 0.41  (in development)
+# MiscMetabar 0.42  (in development)
+
+# MiscMetabar 0.41
 
 - Add function `iNEXT_pq()` to calculate hill diversity using the [iNEXT](https://github.com/AnneChao/iNEXT) package.
 - Add argument `paires` to `multi_biplot_pq()` in order to indicate all paires of samples we want to print.
-- Improve `compare_pairs_pq()` with information about the number of shared sequences among paires
-- Add function `upset_pq()` to plot upset of phyloseq object using the [ComplexUpset](https://krassowski.github.io/complex-upset/) package
-- Add function `upset_test_pq` to test for differences between intersections (wrapper of `ComplexUpset::upset_test()` for `phyloseq-object`)
-- Add info (param `add_info`) in subtitle of the `hill_pq()` function
-- Add argument `remove_space` to `simplify_taxo()` function
-- Add argument `simplify_taxo` to `clean_pq()` function 
-- Change argument `rarefy_nb_seq` by `rarefy_before_merging` and add arguments `rarefy_after_merging` and `add_nb_seq` to `ggvenn_pq()` function
-- Add arguments `rarefy_after_merging` to `biplot_pq()` and `upset_pq()` functions
-- Add argument `taxa_fill` to `upset_pq()` function in order to fill the bar with taxonomic rank
+- Improve `compare_pairs_pq()` with information about the number of shared sequences among paires.
+- Add function `upset_pq()` to plot upset of phyloseq object using the [ComplexUpset](https://krassowski.github.io/complex-upset/) package.
+- Add function `upset_test_pq` to test for differences between intersections (wrapper of `ComplexUpset::upset_test()` for `phyloseq-object`).
+- Add info (param `add_info`) in subtitle of the `hill_pq()` function.
+- Add argument `remove_space` to `simplify_taxo()` function.
+- Add argument `simplify_taxo` to `clean_pq()` function.
+- Change argument `rarefy_nb_seq` by `rarefy_before_merging` and add arguments `rarefy_after_merging` and `add_nb_seq` to `ggvenn_pq()` function.
+- Add arguments `rarefy_after_merging` to `biplot_pq()` and `upset_pq()` functions.
+- Add argument `taxa_fill` to `upset_pq()` function in order to fill the bar with taxonomic rank.
 - Add a function `subsample_fastq()` to make subset of fastq files in order to test your pipeline with all samples but with a low number of reads.
-- Add a function `accu_samp_threshold()` to compute the number of sequence to obtain a given proportion of ASV in accumulation curves (`accu_plot)
+- Add a function `accu_samp_threshold()` to compute the number of sequence to obtain a given proportion of ASV in accumulation curves (`accu_plot).
+- Add a function `tax_bar_pq()` in order to plot taxonomic distribution across samples.
 
 # MiscMetabar 0.40  
 
-* Add function `multi_biplot_pq()` to visualize a collection of couples of samples for comparison through a list of `biplot_pq()`
-* Add options `add_info`, `na_remove`, and `clean_pq` to `plot_tax_pq()` function
-* Add options `vsearch_cluster_method` and `vsearch_args` to `otu2asv()` for more detailed control of the vsearch software
-* Suppression of buggy function `MM_idtaxa()`
+* Add function `multi_biplot_pq()` to visualize a collection of couples of samples for comparison through a list of `biplot_pq()`.
+* Add options `add_info`, `na_remove`, and `clean_pq` to `plot_tax_pq()` function.
+* Add options `vsearch_cluster_method` and `vsearch_args` to `otu2asv()` for more detailed control of the vsearch software.
+* Suppression of buggy function `MM_idtaxa()`.
 * Add a wrapper of `write_pq()` called `save_pq()` to save a *phyloseq* object in the three possible formats () at the same time
   * 4 separate tables
   * 1 table version 
   * 1 RData file
-* Add a function `add_blast_info()` to add information from `blast_pq()` to the `tax_table` slot of a *phyloseq* object
-* Add option `keep_temporary_files` in `asv2otu()` function
-* Improve the documentation of `asv2otu()` and fix a little bug in the name of the conserved ASV after `asv2otu()`
+* Add a function `add_blast_info()` to add information from `blast_pq()` to the `tax_table` slot of a *phyloseq* object.
+* Add option `keep_temporary_files` in `asv2otu()` function.
+* Improve the documentation of `asv2otu()` and fix a little bug in the name of the conserved ASV after `asv2otu()`.
 * Test coverage largely improved leading to numerous minor bug fixes.
 * Add function `search_exact_seq_pq()` to search for exact matching of sequences using complement, reverse and reverse-complement against a phyloseq object.
 * Add function `add_new_taxonomy_pq()` to add new taxonomic rank to a phyloseq object. For exemple to add taxonomic assignment from a new database.
@@ -41,11 +44,11 @@
 # MiscMetabar 0.34
 
 * Add option `add_nb_samples` to `ggvenn_pq()` which add the number of samples to level name in the plot. Useful to see disequilibrium in the number of samples among the factor's levels.
-* Add option `args_makedb` and `args_blastn` to funtions `blast_pq()`, `blast_to_phyloseq()`, `blast_to_derep()` and `filter_asv_blast()`. 
+* Add option `args_makedb` and `args_blastn` to funtions `blast_pq()`, `blast_to_phyloseq()`, `blast_to_derep()` and `filter_asv_blast()`.
 * Add option `rarefy_nb_seqs` to `ggven_pq()` in order to rarefy samples before plotting. 
 * Add function `SRS_curve_pq()` to plot scaling with ranked subsampling (SRS) curves using the `SRS::SRS_curve()` function (see citation("SRS") for reference).
 * Add option `nb_samples_info` to `biplot_pq()` in order to add the number of samples merged by level of factors.
-* Add a message when two modalities differ greatly (more than x2) in their number of sequences in `biplot_pq()` and `ggvenn_pq()`
+* Add a message when two modalities differ greatly (more than x2) in their number of sequences in `biplot_pq()` and `ggvenn_pq()`.
 * Add options `na_remove`, `dist_method` (including Aitchinson and robust-Aitchinson distance), `correction_for_sample_size` and `rarefy_nb_seqs` options to `adonis_pq()` function.
 * Add option `na_remove` to `graph_test_pq()` function.
 

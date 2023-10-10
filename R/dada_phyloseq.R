@@ -428,9 +428,8 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
         } else {
           matrix(0, nrow = 0, ncol = 0)
         }
-      }
-    )    
-    res[[s]] <- track_wkflow(list_pq_obj_samples) #,...)
+      })
+    res[[s]] <- track_wkflow(list_pq_obj_samples) # ,...)
   }
   return(res)
 }

@@ -85,9 +85,9 @@ plot_mt <-
 #' p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10)
 #'
 #' p + theme(legend.position = "none")
-#' 
-#' p + xlim(c(0,400))
-#' 
+#'
+#' p + xlim(c(0, 400))
+#'
 #' @return A \code{\link{ggplot}}2 plot representing the richness
 #' accumulation plot if add_nb_seq = TRUE, else, if add_nb_seq = FALSE
 #' return a base plot.
@@ -284,22 +284,22 @@ accu_plot <-
 #' `r lifecycle::badge("experimental")`
 #' @param res_accuplot the result of the function accu_plot()
 #' @param threshold the proportion of ASV to obtain in each samples
-#' 
+#'
 #' @return a value for each samples of the number of sequences needed
 #'   to obtain `threshold` proportion of the ASV
-#' 
-#' @examples 
+#'
+#' @examples
 #' data("GlobalPatterns")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #' p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10)
-#' 
+#'
 #' val_threshold <- accu_samp_threshold(p)
-#' 
+#'
 #' summary(val_threshold)
-#' 
-#' # Plot the number of sequences needed to accumulate 0.95% of ASV in 50%, 75% 
+#'
+#' # Plot the number of sequences needed to accumulate 0.95% of ASV in 50%, 75%
 #' # and 100% of samples
-#' p + geom_vline(xintercept=quantile(val_threshold, probs=c(0.50, 0.75, 1)))
+#' p + geom_vline(xintercept = quantile(val_threshold, probs = c(0.50, 0.75, 1)))
 #' @export
 #' @author Adrien Taudière
 #' @seealso [accu_plot()]
@@ -2757,4 +2757,51 @@ diff_fct_diff_class <-
       stop("At least one column is neither numeric nor character or logical")
     }
   }
+################################################################################
+
+
+################################################################################
+#' iNterpolation and EXTrapolation of Hill numbers (with iNEXT)
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' @inheritParams clean_pq
+#' @param fact Name of the factor to cluster samples by modalities.
+#'   Need to be in \code{physeq@sam_data}.
+#' @param taxa (default: 'Order') Name of the taxonomic rank of interest
+#' @param percent_bar (default FALSE) If TRUE, the stacked bar fill all
+#'   the space between 0 and 1. It just set position = "fill" in the
+#'   `ggplot2::geom_bar()` function
+#' @param nb_seq (default TRUE) If set to FALSE, only the number of ASV
+#'   is count. Concretely, physeq otu_table is transformed in a binary
+#'   otu_table (each value different from zero is set to one)
+#' @return A \code{\link{ggplot}}2 plot  with bar representing the number of sequence en each
+#'   taxonomic groups
+#' @export
+#'
+#' @examples
+#' tax_bar_pq(data_fungi) + theme(legend.position = "none")
+#' tax_bar_pq(data_fungi, taxa = "Class")
+#' tax_bar_pq(data_fungi, taxa = "Class", percent_bar = TRUE)
+#' tax_bar_pq(data_fungi, taxa = "Class", fact = "Time")
+#' @author Adrien Taudière
+#'
+#'
+tax_bar_pq <- function(physeq, fact = "Sample", taxa = "Order", percent_bar = FALSE, nb_seq = TRUE) {
+  if (!nb_seq) {
+    physeq <- as_binary_otu_table(physeq)
+  }
+  psm <- psmelt(physeq)
+  if (percent_bar) {
+    ggplot(psm) +
+      geom_bar(aes(x = .data[[fact]], fill = .data[[taxa]], y = Abundance),
+        stat = "identity", position = "fill"
+      )
+  } else {
+    ggplot(psm) +
+      geom_bar(aes(x = .data[[fact]], fill = .data[[taxa]], y = Abundance),
+        stat = "identity"
+      )
+  }
+}
 ################################################################################
