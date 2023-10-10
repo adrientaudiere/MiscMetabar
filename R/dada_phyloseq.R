@@ -415,19 +415,26 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
   if (!inherits(list_pq_obj, "list")) {
     list_pq_obj <- list(list_pq_obj)
   }
+  if (sum(!sapply(list_pq_obj, inherits, "phyloseq"))) {
+    stop("At least one object in your list_pq_obj is not a phyloseq obj.")
+  }
   res <- list()
-  for (s in sample_names(list_pq_obj[[1]])) {
-    if (inherits(list_pq_obj[[1]], "phyloseq")) {
-      list_pq_obj_samples <- lapply(list_pq_obj, select_one_sample, sam_name = s)
-      res[[s]] <- track_wkflow(list_pq_obj_samples, ...)
-    } else {
-      message(paste0(names(list_pq_obj[[1]])), " is not a phyloseq obj. Sample information can't be computed. ")
-      res[[s]] <- NULL
-    }
+  sam_names <- unique(unlist(lapply(list_pq_obj, sample_names)))
+  for (s in sam_names) {
+    list_pq_obj_samples <-
+      lapply(list_pq_obj, function(physeq) {
+        if (sum(sample_names(physeq) %in% s) == 1) {
+          select_one_sample(physeq, sam_name = s)
+        } else {
+          matrix(0, nrow = 0, ncol = 0)
+        }
+      }
+    )    
+    res[[s]] <- track_wkflow(list_pq_obj_samples) #,...)
   }
   return(res)
 }
-################################################################################
+###########################################################################
 
 
 ################################################################################
