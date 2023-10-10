@@ -56,33 +56,37 @@ plot_mt <-
 #' @description
 #' `r lifecycle::badge("maturing")`
 #' @inheritParams clean_pq
-#' @param fact (required) Name of the factor in physeq@sam_data used to plot
+#' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
 #'    different lines
 #' @param add_nb_seq (default: TRUE, logical)
 #' Either plot accumulation curves using sequences or using samples
 #' @param step (Integer) distance among points calculated to plot lines. A
 #'  low value give better plot but is more time consuming.
-#'  Only used if add_nb_seq = TRUE.
+#'  Only used if `add_nb_seq` = TRUE.
 #' @param by.fact (default: FALSE, logical)
 #' First merge the OTU table by factor to plot only one line by factor
 #' @param ci_col Color vector for confidence intervall.
-#'   Only use if add_nb_seq = FALSE.
-#'   If add_nb_seq = TRUE, you can use ggplot to modify the plot.
-#' @param col Color vector for lines. Only use if add_nb_seq = FALSE.
-#'   If add_nb_seq = TRUE, you can use ggplot to modify the plot.
-#' @param lwd  (default: 3) thickness for lines. Only use if add_nb_seq = FALSE.
-#' @param leg (default: TRUE, logical) Plot legend or not. Only use if add_nb_seq = FALSE.
+#'   Only use if `add_nb_seq` = FALSE.
+#'   If `add_nb_seq` = TRUE, you can use ggplot to modify the plot.
+#' @param col Color vector for lines. Only use if `add_nb_seq` = FALSE.
+#'   If `add_nb_seq` = TRUE, you can use ggplot to modify the plot.
+#' @param lwd  (default: 3) thickness for lines. Only use if `add_nb_seq` = FALSE.
+#' @param leg (default: TRUE, logical) Plot legend or not. Only use if `add_nb_seq` = FALSE.
 #' @param print_sam_names (default: FALSE, logical) Print samples names or not?
-#'    Only use if add_nb_seq = TRUE.
+#'    Only use if `add_nb_seq` = TRUE.
 #' @param ci (default: 2, integer) Confidence intervall value used to multiply the
 #'   standard error to plot confidence intervall
 #' @param ... Additional arguments passed on to \code{\link{ggplot}}
-#' if add_nb_seq = TRUE or to \code{\link{plot}} if add_nb_seq = FALSE
+#' if `add_nb_seq` = TRUE or to \code{\link{plot}} if `add_nb_seq` = FALSE
 #'
 #' @examples
 #' data("GlobalPatterns")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
-#' accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE)
+#' p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10)
+#'
+#' p + theme(legend.position = "none")
+#'
+#' p + xlim(c(0, 400))
 #'
 #' @return A \code{\link{ggplot}}2 plot representing the richness
 #' accumulation plot if add_nb_seq = TRUE, else, if add_nb_seq = FALSE
@@ -90,7 +94,7 @@ plot_mt <-
 #'
 #' @export
 #' @author Adrien Taudière
-#' @seealso \code{\link[vegan]{specaccum}}
+#' @seealso \code{\link[vegan]{specaccum}} [accu_samp_threshold()]
 accu_plot <-
   function(physeq,
            fact = NULL,
@@ -205,7 +209,7 @@ accu_plot <-
         if (n[length(n)] != tot[i]) {
           n <- c(n, tot[i])
         }
-        res_interm <- vegan::rarefy(x[i, ], n, se = TRUE)
+        res_interm <- vegan::rarefy(as.matrix(unclass(x[i, ])), n, se = TRUE)
         res <-
           cbind(as.matrix(res_interm)[1, ], as.matrix(res_interm)[2, ])
         return(res)
@@ -271,6 +275,48 @@ accu_plot <-
     }
   }
 ################################################################################
+
+################################################################################
+#' Compute the number of sequence to obtain a given proportion of ASV in
+#'  accumulation curves
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#' @param res_accuplot the result of the function accu_plot()
+#' @param threshold the proportion of ASV to obtain in each samples
+#'
+#' @return a value for each samples of the number of sequences needed
+#'   to obtain `threshold` proportion of the ASV
+#'
+#' @examples
+#' data("GlobalPatterns")
+#' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+#' p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10)
+#'
+#' val_threshold <- accu_samp_threshold(p)
+#'
+#' summary(val_threshold)
+#'
+#' # Plot the number of sequences needed to accumulate 0.95% of ASV in 50%, 75%
+#' # and 100% of samples
+#' p + geom_vline(xintercept = quantile(val_threshold, probs = c(0.50, 0.75, 1)))
+#' @export
+#' @author Adrien Taudière
+#' @seealso [accu_plot()]
+accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
+  res <- list()
+  for (id in unique(res_accuplot$data$.id)) {
+    data <- res_accuplot$data %>% dplyr::filter(.id == id)
+    proportion <- data$X1 / max(data$X1)
+    res[[id]] <- data$x[proportion > threshold][1]
+  }
+  return(unlist(res))
+}
+
+
+################################################################################
+
+
 
 ################################################################################
 #' Plot OTU circle for \code{\link{phyloseq-class}} object
@@ -917,8 +963,12 @@ venn_pq <-
 #'   of the physeq object.
 #' @param add_nb_samples (logical, default TRUE) Add the number of samples to
 #'    levels names
-#' @param rarefy_nb_seqs Rarefy each sample (before merging if merge_sample_by is set)
-#'    using `phyloseq::rarefy_even_depth()`
+#' @param add_nb_sequences (logical, default FALSE) Add the number of sequences to
+#'    levels names
+#' @param rarefy_before_merging Rarefy each sample before merging by the
+#'   modalities of args `fact`. Use `phyloseq::rarefy_even_depth()` function
+#' @param rarefy_after_merging Rarefy each sample after merging by the
+#'   modalities of args `fact`.
 #' @param ... other arguments for the `ggVennDiagram::ggVennDiagram` function
 #'   for ex. `category.names`.
 #' @return A \code{\link{ggplot}}2 plot representing Venn diagramm of
@@ -941,6 +991,11 @@ venn_pq <-
 #' data_fungi2 <- subset_samples(data_fungi, data_fungi@sam_data$Tree_name == "A10-005" |
 #'   data_fungi@sam_data$Height %in% c("Low", "High"))
 #' ggvenn_pq(data_fungi2, fact = "Height")
+#'
+#' ggvenn_pq(data_fungi, fact = "Height", add_nb_sequences = TRUE, set_size = 4)
+#' ggvenn_pq(data_fungi, fact = "Height", rarefy_before_merging = TRUE)
+#' ggvenn_pq(data_fungi, fact = "Height", rarefy_after_merging = TRUE)
+#'
 #' @export
 #' @author Adrien Taudière
 
@@ -951,19 +1006,28 @@ ggvenn_pq <- function(physeq = NULL,
                       taxonomic_rank = NULL,
                       split_by = NULL,
                       add_nb_samples = TRUE,
-                      rarefy_nb_seqs = FALSE,
+                      add_nb_sequences = FALSE,
+                      rarefy_before_merging = FALSE,
+                      rarefy_after_merging = FALSE,
                       ...) {
   if (!is.factor(physeq@sam_data[[fact]])) {
     physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
   }
 
-  if (rarefy_nb_seqs) {
+  if (rarefy_before_merging) {
+    physeq <- rarefy_even_depth(physeq)
+    physeq <- clean_pq(physeq)
+  }
+
+  nb_samples <- table(physeq@sam_data[[fact]])
+
+  if (rarefy_after_merging) {
+    physeq <- speedyseq::merge_samples2(physeq, fact)
     physeq <- rarefy_even_depth(physeq)
     physeq <- clean_pq(physeq)
   }
 
   res <- list()
-  nb_samples <- c()
   nb_seq <- c()
 
   for (f in levels(physeq@sam_data[[fact]])) {
@@ -982,7 +1046,6 @@ ggvenn_pq <- function(physeq = NULL,
           taxonomic_rank
         ])))
     }
-    nb_samples <- c(nb_samples, sum(physeq@sam_data[[fact]] == f, na.rm = TRUE))
     nb_seq <- c(nb_seq, sum(physeq@otu_table[physeq@sam_data[[fact]] == f, ], na.rm = TRUE))
   }
 
@@ -992,12 +1055,16 @@ ggvenn_pq <- function(physeq = NULL,
       max(nb_seq),
       " vs ",
       min(nb_seq),
-      ")"
+      "). You may be interested by the parameter rarefy_after_merging"
     ))
   }
 
   if (add_nb_samples) {
-    names(res) <- paste0(names(res), "\n (", nb_samples, ")")
+    names(res) <- paste0(names(res), "\n (", nb_samples, " sam.)")
+  }
+
+  if (add_nb_sequences) {
+    names(res) <- paste0(names(res), "\n (", nb_seq, " seq.)")
   }
 
   if (is.null(split_by)) {
@@ -1108,7 +1175,7 @@ multiplot <-
 #' @param add_points (logical): add jitter point on boxplot
 #' @param add_info (logical, default TRUE) Do we add a subtitle with
 #'   information about the number of samples per modality.
-#' 
+#'
 #' @return A list of 4 ggplot2 plot.
 #' - plot_Hill_0 : the boxplot of Hill number 0 (= species richness)
 #'     against the variable
@@ -1189,18 +1256,17 @@ hill_pq <-
 
     if (add_info) {
       subtitle_plot <- paste0(
-              "Nb of samples: '",
-              paste0(names(table(physeq@sam_data[[variable]])),
-                sep = "' : ",
-                table(physeq@sam_data[[variable]]), collapse = " - '"
-              )
-            )
-      
+        "Nb of samples: '",
+        paste0(names(table(physeq@sam_data[[variable]])),
+          sep = "' : ",
+          table(physeq@sam_data[[variable]]), collapse = " - '"
+        )
+      )
+
       p_0 <- p_0 + labs(subtitle = subtitle_plot)
       p_1 <- p_1 + labs(subtitle = subtitle_plot)
       p_2 <- p_2 + labs(subtitle = subtitle_plot)
-      
-      }
+    }
 
     if (letters) {
       ### HILL 0
@@ -1441,10 +1507,9 @@ summary_plot_pq <- function(physeq,
         nb_values =
           paste0(
             "Min nb seq per sample (",
-            substring(names(sort(
+            stringr::str_trunc(names(sort(
               sample_sums(otu_tab)
-            ))[1], 1, 15),
-            "...): ",
+            ))[1], 15, "right"),
             min(sample_sums(otu_tab)),
             "\n",
             "Nb samples with less than ",
@@ -1454,7 +1519,7 @@ summary_plot_pq <- function(physeq,
             "\n",
             "Min nb seq per taxa: ",
             min(taxa_sums(otu_tab)),
-            "( ",
+            " (",
             sum(taxa_sums(otu_tab) == min(taxa_sums(otu_tab))),
             " ASV)",
             "\n",
@@ -1494,7 +1559,7 @@ summary_plot_pq <- function(physeq,
 }
 ################################################################################
 
-
+################################################################################
 #' rotl wrapper for phyloseq data
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -1545,7 +1610,9 @@ rotl_pq <- function(physeq,
   tr <- tol_induced_subtree(ott_ids = ott_id(resolved_names2))
   return(tr)
 }
+################################################################################
 
+################################################################################
 #' Heat tree from `metacoder` package using `tax_table` slot
 #' @description
 #' `r lifecycle::badge("maturing")`
@@ -1592,8 +1659,9 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
   data_metacoder <- metacoder::parse_phyloseq(physeq)
   metacoder::heat_tree(data_metacoder, ...)
 }
+################################################################################
 
-
+################################################################################
 #' Visualization of two samples for comparison
 #' @description
 #' `r lifecycle::badge("maturing")`
@@ -1604,6 +1672,8 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #'   physeq are merged using the vector set by `merge_sample_by`. This
 #'   merging used the [speedyseq::merge_samples2()]. In the case of
 #'   [biplot_pq()] this must be a factor with two levels only.
+#' @param rarefy_after_merging Rarefy each sample after merging by the
+#'   modalities merge_sample_by
 #' @param inverse_side Inverse the side (put the right modality in the left side).
 #' @param left_name Name fo the left sample.
 #' @param left_name_col Color for the left name
@@ -1643,6 +1713,7 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 biplot_pq <- function(physeq,
                       fact = NULL,
                       merge_sample_by = NULL,
+                      rarefy_after_merging = FALSE,
                       inverse_side = FALSE,
                       left_name = NULL,
                       left_name_col = "#4B3E1E",
@@ -1678,6 +1749,10 @@ biplot_pq <- function(physeq,
     )
   }
 
+  if (rarefy_after_merging) {
+    physeq <- clean_pq(rarefy_even_depth(physeq))
+  }
+
   if (sample_sums(physeq)[1] / sample_sums(physeq)[2] > 2 ||
     sample_sums(physeq)[2] / sample_sums(physeq)[1] > 2) {
     message(paste0(
@@ -1685,7 +1760,7 @@ biplot_pq <- function(physeq,
       sample_sums(physeq)[1],
       " vs ",
       sample_sums(physeq)[2],
-      ")"
+      "). You may be interested by the parameter rarefy_after_merging"
     ))
   }
 
@@ -1856,9 +1931,10 @@ biplot_pq <- function(physeq,
   }
   return(p)
 }
+################################################################################
 
 
-
+################################################################################
 #' Visualization of a collection of couples of samples for comparison
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -1936,10 +2012,10 @@ multi_biplot_pq <- function(physeq,
   }
   return(p)
 }
+################################################################################
 
 
-
-
+################################################################################
 #' Plot taxonomic distribution in function of a factor.
 #'
 #' @description
@@ -2119,7 +2195,10 @@ plot_tax_pq <-
       return(list(p_seq, p_asv))
     }
   }
+################################################################################
 
+
+################################################################################
 #' Compute tSNE position of samples from a phyloseq object
 #'
 #' @inheritParams clean_pq
@@ -2164,7 +2243,10 @@ tsne_pq <-
 
     return(res_tsne)
   }
+################################################################################
 
+
+################################################################################
 #' Plot a tsne low dimensional representation of a phyloseq object
 #'
 #' `r lifecycle::badge("experimental")`
@@ -2252,7 +2334,7 @@ plot_tsne_pq <- function(physeq,
 
   return(g)
 }
-
+################################################################################
 
 
 ################################################################################
@@ -2285,8 +2367,10 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 
   SRS::SRScurve(df, ...)
 }
+################################################################################
 
 
+################################################################################
 #' iNterpolation and EXTrapolation of Hill numbers (with iNEXT)
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -2322,10 +2406,10 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
   df <- data.frame(t(as.matrix(unclass(physeq@otu_table))))
   res_iNEXT <- iNEXT::iNEXT(df, ...)
 }
+################################################################################
 
 
-
-
+################################################################################
 #' Make upset plot for phyloseq object.
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -2339,10 +2423,14 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
 #'   samples to take into count this OTUs in this sample. For example,
 #'   if min_nb_seq=2,each value of 2 or less in the OTU table
 #'   will not count in the venn diagramm
+#' @param taxa_fill (default NULL) fill the ASV upset using a column in
+#'   `tax_table` slot.
 #' @param na_remove : if TRUE (the default), NA values in fact are removed
 #'   if FALSE, NA values are set to "NA"
 #' @param numeric_fonction (default : sum) the function for numeric vector
 #'   usefull only for complex plot (see examples)
+#' @param rarefy_after_merging Rarefy each sample after merging by the
+#'   modalities of `fact` parameter
 #' @param ... other arguments passed on to the [ComplexUpset::upset()]
 #'
 #' @return A \code{\link{ggplot}}2 plot
@@ -2352,9 +2440,14 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
 #' @seealso [ggvenn_pq()]
 #' @examples
 #' upset_pq(data_fungi, fact = "Height", width_ratio = 0.2)
+#' upset_pq(data_fungi,
+#'   fact = "Height", width_ratio = 0.2,
+#'   taxa_fill = "Class"
+#' )
 #' upset_pq(data_fungi, fact = "Height", min_nb_seq = 1000)
 #' upset_pq(data_fungi, fact = "Height", na_remove = FALSE)
 #' upset_pq(data_fungi, fact = "Time", width_ratio = 0.2)
+#' upset_pq(data_fungi, fact = "Time", width_ratio = 0.2, rarefy_after_merging = TRUE)
 #'
 #' upset_pq(
 #'   data_fungi,
@@ -2384,12 +2477,12 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
 #'   )
 #' )
 #'
-#' 
+#'
 #' upset_pq(
 #'   data_fungi,
 #'   fact = "Time",
 #'   width_ratio = 0.2,
-#'    numeric_fonction = mean,
+#'   numeric_fonction = mean,
 #'   annotations = list(
 #'     "Sequences per ASV \n (log10)" = (
 #'       ggplot(mapping = aes(y = log10(Abundance)))
@@ -2451,9 +2544,96 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
 #' data_fungi2@sam_data[["Height__Time_0"]][grepl("NA", data_fungi2@sam_data[["Height__Time_0"]])] <-
 #'   NA
 #' upset_pq(data_fungi2, fact = "Height__Time_0", width_ratio = 0.2)
-upset_pq <-
+upset_pq <- function(physeq,
+                     fact,
+                     taxa_fill = NULL,
+                     min_nb_seq = 0,
+                     na_remove = TRUE,
+                     numeric_fonction = sum,
+                     rarefy_after_merging = FALSE,
+                     ...) {
+  if (!is.null(min_nb_seq)) {
+    physeq <- subset_taxa_pq(physeq, taxa_sums(physeq) >= min_nb_seq)
+  }
+
+  if (na_remove) {
+    physeq <-
+      subset_samples_pq(physeq, !is.na(physeq@sam_data[[fact]]))
+  } else {
+    physeq@sam_data[[fact]][is.na(physeq@sam_data[[fact]])] <-
+      "NA"
+  }
+
+  physeq <- speedyseq::merge_samples2(physeq, fact)
+
+  if (rarefy_after_merging) {
+    physeq <- clean_pq(rarefy_even_depth(physeq))
+  }
+
+  psm <- psmelt(physeq)
+  samp_names <- unique(psm$Sample)
+  psm <-
+    psm %>%
+    mutate(val = TRUE) %>%
+    tidyr::pivot_wider(names_from = Sample, values_from = val)
+  psm[samp_names][is.na(psm[samp_names])] <- FALSE
+
+  psm <- psm %>% filter(Abundance != 0)
+  psm[[fact]] <- as.character(psm[[fact]])
+
+  psm2 <- data.frame(lapply(psm, function(col) {
+    tapply(col, paste0(psm$OTU), function(vec) {
+      diff_fct_diff_class(vec, numeric_fonction = numeric_fonction, na.rm = TRUE)
+    })
+  })) %>% arrange(., desc(Abundance))
+
+  colnames(psm2) <- colnames(psm)
+
+  if (is.null(taxa_fill)) {
+    p <- ComplexUpset::upset(psm2, intersect = samp_names, ...) + xlab(fact)
+  } else {
+    p <- ComplexUpset::upset(psm2,
+      intersect = samp_names,
+      base_annotations = list(), annotations = list(
+        "ASV" = (
+          ggplot(mapping = aes(fill = .data[[taxa_fill]])) +
+            geom_bar() +
+            ylab("ASV per Class") +
+            theme(legend.key.size = unit(0.2, "cm")) +
+            theme(axis.text = element_text(size = 12)))
+      ),
+      ...
+    ) + xlab(fact)
+  }
+
+  return(p)
+}
+################################################################################
+
+
+################################################################################
+#' Test for differences between intersections
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' @inheritParams upset_pq
+#' @param  var_to_test (default c("OTU")) : a vector of column present in
+#'   the tax_table slot from the physeq object
+#' @param ... other arguments passed on to the [ComplexUpset::upset_test()]
+#'
+#' @return A \code{\link{ggplot}}2 plot
+#' @export
+#' @author Adrien Taudière
+#'
+#' @seealso [upset_pq()]
+#' @examples
+#' upset_test_pq(data_fungi, "Height", var_to_test = c("OTU", "Class", "Guild"))
+#' upset_test_pq(data_fungi, "Time")
+#'
+upset_test_pq <-
   function(physeq,
            fact,
+           var_to_test = "OTU",
            min_nb_seq = 0,
            na_remove = TRUE,
            numeric_fonction = sum,
@@ -2491,12 +2671,16 @@ upset_pq <-
 
     colnames(psm2) <- colnames(psm)
 
-    p <-
-      ComplexUpset::upset(psm2, intersect = samp_names, ...) + xlab(fact)
-    return(p)
+    res_test <-
+      ComplexUpset::upset_test(psm2[, c(var_to_test, samp_names)],
+        intersect = samp_names, ...
+      )
+
+    return(res_test)
   }
+################################################################################
 
-
+################################################################################
 #' Compute different functions for different class of vector.
 #'
 #' @description
@@ -2573,3 +2757,51 @@ diff_fct_diff_class <-
       stop("At least one column is neither numeric nor character or logical")
     }
   }
+################################################################################
+
+
+################################################################################
+#' iNterpolation and EXTrapolation of Hill numbers (with iNEXT)
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' @inheritParams clean_pq
+#' @param fact Name of the factor to cluster samples by modalities.
+#'   Need to be in \code{physeq@sam_data}.
+#' @param taxa (default: 'Order') Name of the taxonomic rank of interest
+#' @param percent_bar (default FALSE) If TRUE, the stacked bar fill all
+#'   the space between 0 and 1. It just set position = "fill" in the
+#'   `ggplot2::geom_bar()` function
+#' @param nb_seq (default TRUE) If set to FALSE, only the number of ASV
+#'   is count. Concretely, physeq otu_table is transformed in a binary
+#'   otu_table (each value different from zero is set to one)
+#' @return A \code{\link{ggplot}}2 plot  with bar representing the number of sequence en each
+#'   taxonomic groups
+#' @export
+#'
+#' @examples
+#' tax_bar_pq(data_fungi) + theme(legend.position = "none")
+#' tax_bar_pq(data_fungi, taxa = "Class")
+#' tax_bar_pq(data_fungi, taxa = "Class", percent_bar = TRUE)
+#' tax_bar_pq(data_fungi, taxa = "Class", fact = "Time")
+#' @author Adrien Taudière
+#'
+#'
+tax_bar_pq <- function(physeq, fact = "Sample", taxa = "Order", percent_bar = FALSE, nb_seq = TRUE) {
+  if (!nb_seq) {
+    physeq <- as_binary_otu_table(physeq)
+  }
+  psm <- psmelt(physeq)
+  if (percent_bar) {
+    ggplot(psm) +
+      geom_bar(aes(x = .data[[fact]], fill = .data[[taxa]], y = Abundance),
+        stat = "identity", position = "fill"
+      )
+  } else {
+    ggplot(psm) +
+      geom_bar(aes(x = .data[[fact]], fill = .data[[taxa]], y = Abundance),
+        stat = "identity"
+      )
+  }
+}
+################################################################################

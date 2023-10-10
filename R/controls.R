@@ -46,7 +46,7 @@ search_exact_seq_pq <- function(physeq, sequences) {
 
 #' @description
 #' `r lifecycle::badge("experimental")`
-#'  
+#'
 #' Compute distance among positive controls,
 #'   i.e. samples which are duplicated
 #'   to test for variation, for example in
@@ -143,8 +143,9 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
 #' data(data_fungi)
 #'
 #' subset_taxa_tax_control(data_fungi,
-#'   as.numeric(data_fungi@otu_table[, 300]), 
-#'   min_diff_for_cutoff = 2)
+#'   as.numeric(data_fungi@otu_table[, 300]),
+#'   min_diff_for_cutoff = 2
+#' )
 #'
 #' @author Adrien Taudière
 subset_taxa_tax_control <-

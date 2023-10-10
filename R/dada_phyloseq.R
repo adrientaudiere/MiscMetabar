@@ -57,6 +57,8 @@ add_dna_to_phyloseq <- function(physeq) {
 #' @param rename_asv (logical) if TRUE, ASV are renamed by their position
 #'   in the OTU_table (asv_1, asv_2, ...). Default to FALSE. If rename ASV is true,
 #'   the ASV names in verbose information can be misleading.
+#' @param simplify_taxo (logical) if TRUE, correct the taxonomy_table using the
+#'   `MiscMetabar::simplify_taxo()` function
 #' @return A new \code{\link{phyloseq-class}} object
 #' @export
 clean_pq <- function(physeq,
@@ -68,7 +70,8 @@ clean_pq <- function(physeq,
                      force_taxa_as_columns = FALSE,
                      force_taxa_as_rows = FALSE,
                      reorder_asv = FALSE,
-                     rename_asv = FALSE) {
+                     rename_asv = FALSE,
+                     simplify_taxo = FALSE) {
   if (clean_samples_names) {
     if (!is.null(physeq@refseq)) {
       if (sum(!names(physeq@refseq) %in% taxa_names(physeq)) > 0) {
@@ -131,15 +134,19 @@ clean_pq <- function(physeq,
     message("Taxa are now in rows.")
   }
 
+  if (simplify_taxo) {
+    physeq <- simplify_taxo(physeq)
+  }
+
   new_physeq <- physeq
 
   if (remove_empty_taxa) {
-    if (sum(taxa_sums(new_physeq) == 0) > 0) {
+    if (sum(taxa_sums(new_physeq) != 0) > 0) {
       new_physeq <- subset_taxa(physeq, taxa_sums(physeq) > 0)
     }
   }
   if (remove_empty_samples) {
-    if (sum(sample_sums(new_physeq) == 0) > 0) {
+    if (sum(sample_sums(new_physeq) != 0) > 0) {
       new_physeq <- subset_samples(new_physeq, sample_sums(physeq) > 0)
     }
   }
@@ -408,26 +415,32 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
   if (!inherits(list_pq_obj, "list")) {
     list_pq_obj <- list(list_pq_obj)
   }
+  if (sum(!sapply(list_pq_obj, inherits, "phyloseq"))) {
+    stop("At least one object in your list_pq_obj is not a phyloseq obj.")
+  }
   res <- list()
-  for (s in sample_names(list_pq_obj[[1]])) {
-    if (inherits(list_pq_obj[[1]], "phyloseq")) {
-      list_pq_obj_samples <- lapply(list_pq_obj, select_one_sample, sam_name = s)
-      res[[s]] <- track_wkflow(list_pq_obj_samples, ...)
-    } else {
-      message(paste0(names(list_pq_obj[[1]])), " is not a phyloseq obj. Sample information can't be computed. ")
-      res[[s]] <- NULL
-    }
+  sam_names <- unique(unlist(lapply(list_pq_obj, sample_names)))
+  for (s in sam_names) {
+    list_pq_obj_samples <-
+      lapply(list_pq_obj, function(physeq) {
+        if (sum(sample_names(physeq) %in% s) == 1) {
+          select_one_sample(physeq, sam_name = s)
+        } else {
+          matrix(0, nrow = 0, ncol = 0)
+        }
+      })
+    res[[s]] <- track_wkflow(list_pq_obj_samples) # ,...)
   }
   return(res)
 }
-################################################################################
+###########################################################################
 
 
 ################################################################################
 #' Recluster sequences of an object of class `physeq`
 #' (e.g. OTUs or ASV from dada)
 #'
-#' @description 
+#' @description
 #' `r lifecycle::badge("maturing")`
 #'
 #' @inheritParams clean_pq
@@ -1350,7 +1363,7 @@ add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, ...) {
     suffix <- basename(ref_fasta)
   }
   tax_tab <- dada2::assignTaxonomy(physeq@refseq, refFasta = ref_fasta, ...)
-  colnames(tax_tab) <- paste0(colnames(tax_tab), "_", suffix)
+  colnames(tax_tab) <- make.unique(paste0(colnames(tax_tab), "_", suffix))
   new_tax_tab <- tax_table(cbind(physeq@tax_table, tax_tab))
   new_physeq <- physeq
   tax_table(new_physeq) <- new_tax_tab

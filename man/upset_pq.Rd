@@ -7,9 +7,11 @@
 upset_pq(
   physeq,
   fact,
+  taxa_fill = NULL,
   min_nb_seq = 0,
   na_remove = TRUE,
   numeric_fonction = sum,
+  rarefy_after_merging = FALSE,
   ...
 )
 }
@@ -19,6 +21,9 @@ using the \code{phyloseq} package.}
 
 \item{fact}{(required): Name of the factor to cluster samples by modalities.
 Need to be in \code{physeq@sam_data}.}
+
+\item{taxa_fill}{(default NULL) fill the ASV upset using a column in
+\code{tax_table} slot.}
 
 \item{min_nb_seq}{minimum number of sequences by OTUs by
 samples to take into count this OTUs in this sample. For example,
@@ -30,6 +35,9 @@ if FALSE, NA values are set to "NA"}
 
 \item{numeric_fonction}{(default : sum) the function for numeric vector
 usefull only for complex plot (see examples)}
+
+\item{rarefy_after_merging}{Rarefy each sample after merging by the
+modalities of \code{fact} parameter}
 
 \item{...}{other arguments passed on to the \code{\link[ComplexUpset:upset]{ComplexUpset::upset()}}}
 }
@@ -43,9 +51,14 @@ Alternative to venn plot.
 }
 \examples{
 upset_pq(data_fungi, fact = "Height", width_ratio = 0.2)
+upset_pq(data_fungi,
+  fact = "Height", width_ratio = 0.2,
+  taxa_fill = "Class"
+)
 upset_pq(data_fungi, fact = "Height", min_nb_seq = 1000)
 upset_pq(data_fungi, fact = "Height", na_remove = FALSE)
 upset_pq(data_fungi, fact = "Time", width_ratio = 0.2)
+upset_pq(data_fungi, fact = "Time", width_ratio = 0.2, rarefy_after_merging = TRUE)
 
 upset_pq(
   data_fungi,
@@ -80,7 +93,7 @@ upset_pq(
   data_fungi,
   fact = "Time",
   width_ratio = 0.2,
-   numeric_fonction = mean,
+  numeric_fonction = mean,
   annotations = list(
     "Sequences per ASV \n (log10)" = (
       ggplot(mapping = aes(y = log10(Abundance)))

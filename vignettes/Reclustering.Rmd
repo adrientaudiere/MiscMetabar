@@ -53,9 +53,10 @@ summary_plot_pq(lulu_res$new_physeq)
 ## Tracking number of samples, sequences and clusters
 
 ```{r}
-track_wkflow(list("Raw data" = data_fungi_sp_known,
-                  "OTU" = otu,
-                  "OTU_vsearch" = otu_vs,
-                  "LULU" = lulu_res[[1]])
-            )
+track_wkflow(list(
+  "Raw data" = data_fungi_sp_known,
+  "OTU" = otu,
+  "OTU_vsearch" = otu_vs,
+  "LULU" = lulu_res[[1]]
+))
 ```

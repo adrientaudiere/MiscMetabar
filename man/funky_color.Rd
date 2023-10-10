@@ -2,7 +2,7 @@
 % Please edit documentation in R/miscellanous.R
 \name{funky_color}
 \alias{funky_color}
-\title{Count sequences in fasta or fastq file}
+\title{Funky palette color}
 \usage{
 funky_color(n)
 }
@@ -13,7 +13,7 @@ funky_color(n)
 a color palette
 }
 \description{
-Count sequences in fasta or fastq file
+Funky palette color
 }
 \author{
 Thibaut Jombart

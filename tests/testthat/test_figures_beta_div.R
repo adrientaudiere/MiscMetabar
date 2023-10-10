@@ -94,3 +94,12 @@ test_that("upset_pq works with data_fungi dataset", {
   expect_error(upset_pq(data_fungi))
 })
 
+test_that("upset_test_pq works with data_fungi dataset", {
+  expect_s3_class(upset_test_pq(data_fungi, "Height"), "data.frame")
+  expect_s3_class(upset_test_pq(data_fungi, "Time"), "data.frame")
+  expect_s3_class(upset_test_pq(data_fungi, "Time", min_nb_seq = 10), "data.frame")
+  expect_s3_class(upset_test_pq(data_fungi, "Time", numeric_fonction = mean), "data.frame")
+  expect_s3_class(upset_test_pq(data_fungi, "Time", numeric_fonction = mean, var_to_test = c("OTU", "Guild", "Genus")), "data.frame")
+  expect_error(upset_test_pq(data_fungi, "Height", var_to_test = c("GUILDDDS")))
+  expect_error(upset_test_pq(data_fungi))
+})
