@@ -12,6 +12,7 @@
 - Add arguments `rarefy_after_merging` to `biplot_pq()` and `upset_pq()` functions
 - Add argument `taxa_fill` to `upset_pq()` function in order to fill the bar with taxonomic rank
 - Add a function `subsample_fastq()` to make subset of fastq files in order to test your pipeline with all samples but with a low number of reads.
+- Add a function `accu_samp_threshold()` to compute the number of sequence to obtain a given proportion of ASV in accumulation curves (`accu_plot)
 
 # MiscMetabar 0.40  
 

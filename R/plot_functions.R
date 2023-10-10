@@ -56,28 +56,28 @@ plot_mt <-
 #' @description
 #' `r lifecycle::badge("maturing")`
 #' @inheritParams clean_pq
-#' @param fact (required) Name of the factor in physeq@sam_data used to plot
+#' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
 #'    different lines
 #' @param add_nb_seq (default: TRUE, logical)
 #' Either plot accumulation curves using sequences or using samples
 #' @param step (Integer) distance among points calculated to plot lines. A
 #'  low value give better plot but is more time consuming.
-#'  Only used if add_nb_seq = TRUE.
+#'  Only used if `add_nb_seq` = TRUE.
 #' @param by.fact (default: FALSE, logical)
 #' First merge the OTU table by factor to plot only one line by factor
 #' @param ci_col Color vector for confidence intervall.
-#'   Only use if add_nb_seq = FALSE.
-#'   If add_nb_seq = TRUE, you can use ggplot to modify the plot.
-#' @param col Color vector for lines. Only use if add_nb_seq = FALSE.
-#'   If add_nb_seq = TRUE, you can use ggplot to modify the plot.
-#' @param lwd  (default: 3) thickness for lines. Only use if add_nb_seq = FALSE.
-#' @param leg (default: TRUE, logical) Plot legend or not. Only use if add_nb_seq = FALSE.
+#'   Only use if `add_nb_seq` = FALSE.
+#'   If `add_nb_seq` = TRUE, you can use ggplot to modify the plot.
+#' @param col Color vector for lines. Only use if `add_nb_seq` = FALSE.
+#'   If `add_nb_seq` = TRUE, you can use ggplot to modify the plot.
+#' @param lwd  (default: 3) thickness for lines. Only use if `add_nb_seq` = FALSE.
+#' @param leg (default: TRUE, logical) Plot legend or not. Only use if `add_nb_seq` = FALSE.
 #' @param print_sam_names (default: FALSE, logical) Print samples names or not?
-#'    Only use if add_nb_seq = TRUE.
+#'    Only use if `add_nb_seq` = TRUE.
 #' @param ci (default: 2, integer) Confidence intervall value used to multiply the
 #'   standard error to plot confidence intervall
 #' @param ... Additional arguments passed on to \code{\link{ggplot}}
-#' if add_nb_seq = TRUE or to \code{\link{plot}} if add_nb_seq = FALSE
+#' if `add_nb_seq` = TRUE or to \code{\link{plot}} if `add_nb_seq` = FALSE
 #'
 #' @examples
 #' data("GlobalPatterns")
@@ -94,7 +94,7 @@ plot_mt <-
 #'
 #' @export
 #' @author Adrien Taudière
-#' @seealso \code{\link[vegan]{specaccum}}
+#' @seealso \code{\link[vegan]{specaccum}} [accu_samp_threshold()]
 accu_plot <-
   function(physeq,
            fact = NULL,
@@ -275,6 +275,48 @@ accu_plot <-
     }
   }
 ################################################################################
+
+################################################################################
+#' Compute the number of sequence to obtain a given proportion of ASV in
+#'  accumulation curves
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#' @param res_accuplot the result of the function accu_plot()
+#' @param threshold the proportion of ASV to obtain in each samples
+#' 
+#' @return a value for each samples of the number of sequences needed
+#'   to obtain `threshold` proportion of the ASV
+#' 
+#' @examples 
+#' data("GlobalPatterns")
+#' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+#' p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10)
+#' 
+#' val_threshold <- accu_samp_threshold(p)
+#' 
+#' summary(val_threshold)
+#' 
+#' # Plot the number of sequences needed to accumulate 0.95% of ASV in 50%, 75% 
+#' # and 100% of samples
+#' p + geom_vline(xintercept=quantile(val_threshold, probs=c(0.50, 0.75, 1)))
+#' @export
+#' @author Adrien Taudière
+#' @seealso [accu_plot()]
+accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
+  res <- list()
+  for (id in unique(res_accuplot$data$.id)) {
+    data <- res_accuplot$data %>% dplyr::filter(.id == id)
+    proportion <- data$X1 / max(data$X1)
+    res[[id]] <- data$x[proportion > threshold][1]
+  }
+  return(unlist(res))
+}
+
+
+################################################################################
+
+
 
 ################################################################################
 #' Plot OTU circle for \code{\link{phyloseq-class}} object
