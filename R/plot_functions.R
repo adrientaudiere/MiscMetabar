@@ -1178,7 +1178,10 @@ multiplot <-
 #' @param add_info (logical, default TRUE) Do we add a subtitle with
 #'   information about the number of samples per modality.
 #' @param one_plot (logical, default=FALSE) If true, return a unique
-#'   plot with the four plot inside using the patchwork package
+#'   plot with the four plot inside using the patchwork package. 
+#'   Note that if letters is TRUE, tuckey HSD results are discarded from
+#'   the unique plot. In that case, use one_plot = FALSE to see the tuckey
+#'   HSD results in the fourth plot of the resulting list.
 #' @param correction_for_sample_size (logical, default TRUE) This function 
 #'   use a sqrt of the read numbers in the linear model in order to 
 #'   correct for uneven sampling depth.
@@ -1283,11 +1286,11 @@ hill_pq <-
         p_var$data[grep("Hill Number 0", p_var$data[, 5]), ]
       data_h0_pval <- data_h0$p.adj
       names(data_h0_pval) <- data_h0$modality
-      letters <-
+      Letters <-
         multcompView::multcompLetters(data_h0_pval, reversed = TRUE)$Letters
 
-      dt <- data.frame(variab = names(letters), letters = letters)
-      names(dt) <- c(var, "letters")
+      dt <- data.frame(variab = names(Letters), Letters = Letters)
+      names(dt) <- c(var, "Letters")
       data_letters <- p_0$data %>%
         group_by(!!var) %>%
         summarize(max_Hill = max(Hill_0)) %>%
@@ -1298,7 +1301,7 @@ hill_pq <-
           data = data_letters,
           aes(
             x = max_Hill + 1,
-            label = letters
+            label = Letters
           ),
           y = ggplot_build(p_0)$data[[1]]$y,
           size = 4,
@@ -1312,11 +1315,11 @@ hill_pq <-
         p_var$data[grep("Hill Number 1", p_var$data[, 5]), ]
       data_h1_pval <- data_h1$p.adj
       names(data_h1_pval) <- data_h1$modality
-      letters <-
+      Letters <-
         multcompView::multcompLetters(data_h1_pval, reversed = TRUE)$Letters
 
-      dt <- data.frame(variab = names(letters), letters = letters)
-      names(dt) <- c(var, "letters")
+      dt <- data.frame(variab = names(Letters), Letters = Letters)
+      names(dt) <- c(var, "Letters")
       data_letters <- p_1$data %>%
         group_by(!!var) %>%
         summarize(max_Hill = max(Hill_1)) %>%
@@ -1327,7 +1330,7 @@ hill_pq <-
           data = data_letters,
           aes(
             x = max_Hill + 1,
-            label = letters
+            label = Letters
           ),
           y = ggplot_build(p_0)$data[[1]]$y,
           size = 4,
@@ -1341,11 +1344,11 @@ hill_pq <-
         p_var$data[grep("Hill Number 2", p_var$data[, 5]), ]
       data_h2_pval <- data_h2$p.adj
       names(data_h2_pval) <- data_h2$modality
-      letters <-
+      Letters <-
         multcompView::multcompLetters(data_h2_pval, reversed = TRUE)$Letters
 
-      dt <- data.frame(variab = names(letters), letters = letters)
-      names(dt) <- c(var, "letters")
+      dt <- data.frame(variab = names(Letters), Letters = Letters)
+      names(dt) <- c(var, "Letters")
       data_letters <- p_2$data %>%
         group_by(!!var) %>%
         summarize(max_Hill = max(Hill_2)) %>%
@@ -1356,7 +1359,7 @@ hill_pq <-
           data = data_letters,
           aes(
             x = max_Hill + 1,
-            label = letters
+            label = Letters
           ),
           y = ggplot_build(p_0)$data[[1]]$y,
           size = 4,
@@ -1373,12 +1376,18 @@ hill_pq <-
     )
 
     if(one_plot) {
-     res <- ((p[[1]] + theme(legend.position = "none")) + labs(subtitle = element_blank()) + 
-    (p[[2]] + theme(legend.position = "none", axis.text.x=element_blank())  + labs(subtitle = element_blank()) + ylab(NULL)) + 
-    (p[[3]] + theme(legend.position = "none", axis.text.x=element_blank())  + labs(subtitle = element_blank()) + ylab(NULL)))   /
-  p[[4]] + ggtitle("Tuckey HSD testing for differences in mean Hill numbers")
+      if(letters){
+      res <- ((p_0 + theme(legend.position = "none")) + labs(subtitle = element_blank()) + 
+    (p_1 + theme(legend.position = "none", axis.text.y=element_blank())  + labs(subtitle = element_blank()) + ylab(NULL)) + 
+    (p_2 + theme(legend.position = "none", axis.text.y=element_blank())  + labs(subtitle = element_blank()) + ylab(NULL)))  
+      } else {
+     res <- ((p_0 + theme(legend.position = "none")) + labs(subtitle = element_blank()) + 
+    (p_1 + theme(legend.position = "none", axis.text.y=element_blank())  + labs(subtitle = element_blank()) + ylab(NULL)) + 
+    (p_2 + theme(legend.position = "none", axis.text.y=element_blank())  + labs(subtitle = element_blank()) + ylab(NULL)))   /
+  p_var + ggtitle("Tuckey HSD testing for differences in mean Hill numbers")
+    } 
     }
-    return(res)
+     return(res)
   }
 ################################################################################
 
@@ -2076,7 +2085,8 @@ multi_biplot_pq <- function(physeq,
 #'   "Height",
 #'   merge_sample_by = "Height",
 #'   taxa_fill = "Class",
-#'   na_remove = TRUE
+#'   na_remove = TRUE,
+#'   color_border = rgb(0,0,0,0)
 #' )
 #'
 #' plot_tax_pq(data_fungi_sp_known,
