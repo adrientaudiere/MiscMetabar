@@ -1,5 +1,9 @@
 # MiscMetabar 0.42  (in development)
 
+- Add argument `one_plot` (default FALSE, same behavior than before) to `hill_pq` function in order to return an unique ggplot2 object with the four plots inside.
+- Add argument `correction_for_sample_size` (default TRUE, same behavior than before) to `hill_pq` and `hill_tuckey_pq` function to allow removeing any correction for uneven sampling depth.
+
+
 # MiscMetabar 0.41
 
 - Add function `iNEXT_pq()` to calculate hill diversity using the [iNEXT](https://github.com/AnneChao/iNEXT) package.

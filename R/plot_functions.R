@@ -1165,6 +1165,8 @@ multiplot <-
 #' Graphical representation of hill number 0, 1 and 2 across a factor
 #' @description
 #' `r lifecycle::badge("experimental")`
+#' Note that this function use a sqrt of the read numbers in the linear
+#'   model in order to correct for uneven sampling depth.
 #' @inheritParams clean_pq
 #' @param variable (required): The variable to test
 #' @param color_fac (optional): The variable to color the barplot
@@ -1175,8 +1177,13 @@ multiplot <-
 #' @param add_points (logical): add jitter point on boxplot
 #' @param add_info (logical, default TRUE) Do we add a subtitle with
 #'   information about the number of samples per modality.
-#'
-#' @return A list of 4 ggplot2 plot.
+#' @param one_plot (logical, default=FALSE) If true, return a unique
+#'   plot with the four plot inside using the patchwork package
+#' @param correction_for_sample_size (logical, default TRUE) This function 
+#'   use a sqrt of the read numbers in the linear model in order to 
+#'   correct for uneven sampling depth.
+#' @return Either an unique ggplot2 object (if one_plot is TRUE) or 
+#'  a list of 4 ggplot2 plot:
 #' - plot_Hill_0 : the boxplot of Hill number 0 (= species richness)
 #'     against the variable
 #' - plot_Hill_1 : the boxplot of Hill number 1 (= Shannon index)
@@ -1207,7 +1214,9 @@ hill_pq <-
            color_fac = NA,
            letters = FALSE,
            add_points = FALSE,
-           add_info = TRUE) {
+           add_info = TRUE,
+           one_plot = FALSE,
+           correction_for_sample_size = TRUE) {
     var <- sym(variable)
     if (is.na(color_fac)) {
       color_fac <- sym(variable)
@@ -1233,7 +1242,7 @@ hill_pq <-
     df_hill <- data.frame(otu_hill, physeq@sam_data)
     df_hill[, c(1:3)] <- apply(df_hill[, c(1:3)], 2, as.numeric)
 
-    p_var <- hill_tuckey_pq(physeq, variable)
+    p_var <- hill_tuckey_pq(physeq, variable, correction_for_sample_size = correction_for_sample_size)
 
     p_0 <- ggplot(df_hill, aes(group = !!var, Hill_0)) +
       geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac), y = !!var)) +
@@ -1363,6 +1372,12 @@ hill_pq <-
       "plot_tuckey" = p_var
     )
 
+    if(one_plot) {
+     res <- ((p[[1]] + theme(legend.position = "none")) + labs(subtitle = element_blank()) + 
+    (p[[2]] + theme(legend.position = "none", axis.text.x=element_blank())  + labs(subtitle = element_blank()) + ylab(NULL)) + 
+    (p[[3]] + theme(legend.position = "none", axis.text.x=element_blank())  + labs(subtitle = element_blank()) + ylab(NULL)))   /
+  p[[4]] + ggtitle("Tuckey HSD testing for differences in mean Hill numbers")
+    }
     return(res)
   }
 ################################################################################
