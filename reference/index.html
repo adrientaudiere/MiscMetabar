@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.40</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.41</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,6 +88,12 @@
         <dd>Plot accumulation curves for <code>phyloseq-class</code> object</dd>
       </dl><dl><dt>
           
+          <code><a href="accu_samp_threshold.html">accu_samp_threshold()</a></code> 
+        </dt>
+        <dd>Compute the number of sequence to obtain a given proportion of ASV in
+accumulation curves</dd>
+      </dl><dl><dt>
+          
           <code><a href="add_blast_info.html">add_blast_info()</a></code> 
         </dt>
         <dd>Add information from <code><a href="../reference/blast_pq.html">blast_pq()</a></code> to the <code>tax_table</code> slot of a <em>phyloseq</em> object</dd>
@@ -117,7 +123,7 @@ using ASV_1, ASV_2, …</dd>
           <code><a href="as_binary_otu_table.html">as_binary_otu_table()</a></code> 
         </dt>
         <dd>Transform the otu_table of a <code>phyloseq-class</code> object into a
-<code>phyloseq-class</code> object with à binary otu_table.</dd>
+<code>phyloseq-class</code> object with a binary otu_table.</dd>
       </dl><dl><dt>
           
           <code><a href="asv2otu.html">asv2otu()</a></code> 
@@ -170,6 +176,11 @@ shared ASV.</dd>
         <dd>Count sequences in fasta or fastq file</dd>
       </dl><dl><dt>
           
+          <code><a href="cutadapt_remove_primers.html">cutadapt_remove_primers()</a></code> 
+        </dt>
+        <dd>Remove primers using cutapapt Work In Progress</dd>
+      </dl><dl><dt>
+          
           <code><a href="data_fungi.html">data_fungi</a></code> 
         </dt>
         <dd>Some fungal OTU in phyloseq format</dd>
@@ -203,7 +214,7 @@ distance for all samples</dd>
           
           <code><a href="funky_color.html">funky_color()</a></code> 
         </dt>
-        <dd>Count sequences in fasta or fastq file</dd>
+        <dd>Funky palette color</dd>
       </dl><dl><dt>
           
           <code><a href="get_file_extension.html">get_file_extension()</a></code> 
@@ -352,6 +363,11 @@ in Newick format.</dd>
         <dd>Simplify taxonomy by removing some unused characters such as "k__"</dd>
       </dl><dl><dt>
           
+          <code><a href="subsample_fastq.html">subsample_fastq()</a></code> 
+        </dt>
+        <dd>Subsample a fastq file copying the n_seq first sequences in a given folder</dd>
+      </dl><dl><dt>
+          
           <code><a href="subset_samples_pq.html">subset_samples_pq()</a></code> 
         </dt>
         <dd>Subset samples using a conditional boolean vector.</dd>
@@ -370,6 +386,11 @@ in Newick format.</dd>
           <code><a href="summary_plot_pq.html">summary_plot_pq()</a></code> 
         </dt>
         <dd>Summarise a <code>phyloseq-class</code> object using a plot.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="tax_bar_pq.html">tax_bar_pq()</a></code> 
+        </dt>
+        <dd>iNterpolation and EXTrapolation of Hill numbers (with iNEXT)</dd>
       </dl><dl><dt>
           
           <code><a href="tax_datatable.html">tax_datatable()</a></code> 
@@ -397,6 +418,11 @@ for each samples.</dd>
           <code><a href="upset_pq.html">upset_pq()</a></code> 
         </dt>
         <dd>Make upset plot for phyloseq object.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="upset_test_pq.html">upset_test_pq()</a></code> 
+        </dt>
+        <dd>Test for differences between intersections</dd>
       </dl><dl><dt>
           
           <code><a href="venn_pq.html">venn_pq()</a></code> 

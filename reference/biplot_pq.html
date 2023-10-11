@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.40</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.41</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,6 +72,7 @@
 <span>  <span class="va">physeq</span>,</span>
 <span>  fact <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  merge_sample_by <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  rarefy_after_merging <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  inverse_side <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  left_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  left_name_col <span class="op">=</span> <span class="st">"#4B3E1E"</span>,</span>
@@ -111,6 +112,11 @@ If left to NULL use the <code>left_name</code> and <code>right_name</code> param
 physeq are merged using the vector set by <code>merge_sample_by</code>. This
 merging used the <code><a href="https://mikemc.github.io/speedyseq/reference/merge_samples2.html" class="external-link">speedyseq::merge_samples2()</a></code>. In the case of
 <code>biplot_pq()</code> this must be a factor with two levels only.</p></dd>
+
+
+<dt>rarefy_after_merging</dt>
+<dd><p>Rarefy each sample after merging by the
+modalities merge_sample_by</p></dd>
 
 
 <dt>inverse_side</dt>

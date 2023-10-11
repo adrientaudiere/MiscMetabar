@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.40</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.41</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,7 +92,7 @@ using the <code>phyloseq</code> package.</p></dd>
 
 
 <dt>fact</dt>
-<dd><p>(required) Name of the factor in physeq@sam_data used to plot
+<dd><p>(required) Name of the factor in <code>physeq@sam_data</code> used to plot
 different lines</p></dd>
 
 
@@ -104,7 +104,7 @@ Either plot accumulation curves using sequences or using samples</p></dd>
 <dt>step</dt>
 <dd><p>(Integer) distance among points calculated to plot lines. A
 low value give better plot but is more time consuming.
-Only used if add_nb_seq = TRUE.</p></dd>
+Only used if <code>add_nb_seq</code> = TRUE.</p></dd>
 
 
 <dt>by.fact</dt>
@@ -114,26 +114,26 @@ First merge the OTU table by factor to plot only one line by factor</p></dd>
 
 <dt>ci_col</dt>
 <dd><p>Color vector for confidence intervall.
-Only use if add_nb_seq = FALSE.
-If add_nb_seq = TRUE, you can use ggplot to modify the plot.</p></dd>
+Only use if <code>add_nb_seq</code> = FALSE.
+If <code>add_nb_seq</code> = TRUE, you can use ggplot to modify the plot.</p></dd>
 
 
 <dt>col</dt>
-<dd><p>Color vector for lines. Only use if add_nb_seq = FALSE.
-If add_nb_seq = TRUE, you can use ggplot to modify the plot.</p></dd>
+<dd><p>Color vector for lines. Only use if <code>add_nb_seq</code> = FALSE.
+If <code>add_nb_seq</code> = TRUE, you can use ggplot to modify the plot.</p></dd>
 
 
 <dt>lwd</dt>
-<dd><p>(default: 3) thickness for lines. Only use if add_nb_seq = FALSE.</p></dd>
+<dd><p>(default: 3) thickness for lines. Only use if <code>add_nb_seq</code> = FALSE.</p></dd>
 
 
 <dt>leg</dt>
-<dd><p>(default: TRUE, logical) Plot legend or not. Only use if add_nb_seq = FALSE.</p></dd>
+<dd><p>(default: TRUE, logical) Plot legend or not. Only use if <code>add_nb_seq</code> = FALSE.</p></dd>
 
 
 <dt>print_sam_names</dt>
 <dd><p>(default: FALSE, logical) Print samples names or not?
-Only use if add_nb_seq = TRUE.</p></dd>
+Only use if <code>add_nb_seq</code> = TRUE.</p></dd>
 
 
 <dt>ci</dt>
@@ -143,7 +143,7 @@ standard error to plot confidence intervall</p></dd>
 
 <dt>...</dt>
 <dd><p>Additional arguments passed on to <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></code>
-if add_nb_seq = TRUE or to <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></code> if add_nb_seq = FALSE</p></dd>
+if <code>add_nb_seq</code> = TRUE or to <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></code> if <code>add_nb_seq</code> = FALSE</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -156,7 +156,7 @@ return a base plot.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="https://rdrr.io/pkg/vegan/man/specaccum.html" class="external-link">specaccum</a></code></p></div>
+    <div class="dont-index"><p><code><a href="https://rdrr.io/pkg/vegan/man/specaccum.html" class="external-link">specaccum</a></code> <code><a href="accu_samp_threshold.html">accu_samp_threshold()</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -167,9 +167,15 @@ return a base plot.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GlobalPatterns"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">GP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html" class="external-link">subset_taxa</a></span><span class="op">(</span><span class="va">GlobalPatterns</span>, <span class="va">GlobalPatterns</span><span class="op">@</span><span class="va">tax_table</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="st">"Archaea"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">accu_plot</span><span class="op">(</span><span class="va">GP</span>, <span class="st">"SampleType"</span>, add_nb_seq <span class="op">=</span> <span class="cn">TRUE</span>, by.fact <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">accu_plot</span><span class="op">(</span><span class="va">GP</span>, <span class="st">"SampleType"</span>, add_nb_seq <span class="op">=</span> <span class="cn">TRUE</span>, by.fact <span class="op">=</span> <span class="cn">TRUE</span>, step <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 1 row containing missing values (`geom_line()`).</span>
 <span class="r-plt img"><img src="accu_plot-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">xlim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">400</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 19249 rows containing missing values (`geom_line()`).</span>
+<span class="r-plt img"><img src="accu_plot-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

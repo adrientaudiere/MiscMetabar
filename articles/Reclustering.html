@@ -27,7 +27,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.40</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.41</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -106,13 +106,13 @@
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>iteration <span class="dv">16</span> of up to <span class="dv">400</span> (<span class="fl">100.0</span>% coverage)</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 0.13 secs</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 0.14 secs</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Sorting by relatedness within 4 groups:</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>iteration <span class="dv">53</span> of up to <span class="dv">324</span> (<span class="fl">100.0</span>% stability) </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>iteration <span class="dv">57</span> of up to <span class="dv">324</span> (<span class="fl">100.0</span>% stability) </span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 2.53 secs</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 2.76 secs</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clustering sequences by 8-mer similarity:</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ================================================================================</span></span>
@@ -155,11 +155,12 @@ article</a>)<a class="anchor" aria-label="anchor" href="#using-lulu-algorithm-li
 <h3 id="tracking-number-of-samples-sequences-and-clusters">Tracking number of samples, sequences and clusters<a class="anchor" aria-label="anchor" href="#tracking-number-of-samples-sequences-and-clusters"></a>
 </h3>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/track_wkflow.html">track_wkflow</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"Raw data"</span> <span class="op">=</span> <span class="va">data_fungi_sp_known</span>,</span>
-<span>                  <span class="st">"OTU"</span> <span class="op">=</span> <span class="va">otu</span>,</span>
-<span>                  <span class="st">"OTU_vsearch"</span> <span class="op">=</span> <span class="va">otu_vs</span>,</span>
-<span>                  <span class="st">"LULU"</span> <span class="op">=</span> <span class="va">lulu_res</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span>            <span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/track_wkflow.html">track_wkflow</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  <span class="st">"Raw data"</span> <span class="op">=</span> <span class="va">data_fungi_sp_known</span>,</span>
+<span>  <span class="st">"OTU"</span> <span class="op">=</span> <span class="va">otu</span>,</span>
+<span>  <span class="st">"OTU_vsearch"</span> <span class="op">=</span> <span class="va">otu_vs</span>,</span>
+<span>  <span class="st">"LULU"</span> <span class="op">=</span> <span class="va">lulu_res</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Compute the number of sequences</span></span>
 <span><span class="co">#&gt; Start object of class: phyloseq</span></span>
 <span><span class="co">#&gt; Start object of class: phyloseq</span></span>
@@ -177,7 +178,7 @@ article</a>)<a class="anchor" aria-label="anchor" href="#using-lulu-algorithm-li
 <span><span class="co">#&gt; Start object of class: phyloseq</span></span>
 <span><span class="co">#&gt;             nb_sequences nb_clusters nb_samples</span></span>
 <span><span class="co">#&gt; Raw data         1106581         651        185</span></span>
-<span><span class="co">#&gt; OTU              1106581         362        185</span></span>
+<span><span class="co">#&gt; OTU              1106581         363        185</span></span>
 <span><span class="co">#&gt; OTU_vsearch      1106581         362        185</span></span>
 <span><span class="co">#&gt; LULU             1106581         549        185</span></span></code></pre></div>
 </div>

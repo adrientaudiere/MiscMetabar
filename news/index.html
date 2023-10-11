@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.40</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.41</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,30 +62,39 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.41" id="miscmetabar-041-in-development">MiscMetabar 0.41 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-041-in-development"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.42" id="miscmetabar-042-in-development">MiscMetabar 0.42 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-042-in-development"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.41" id="miscmetabar-041">MiscMetabar 0.41<a class="anchor" aria-label="anchor" href="#miscmetabar-041"></a></h2>
 <ul><li>Add function <code><a href="../reference/iNEXT_pq.html">iNEXT_pq()</a></code> to calculate hill diversity using the <a href="https://github.com/AnneChao/iNEXT" class="external-link">iNEXT</a> package.</li>
 <li>Add argument <code>paires</code> to <code><a href="../reference/multi_biplot_pq.html">multi_biplot_pq()</a></code> in order to indicate all paires of samples we want to print.</li>
-<li>Improve <code><a href="../reference/compare_pairs_pq.html">compare_pairs_pq()</a></code> with information about the number of shared sequences among paires</li>
-<li>Add function <code><a href="../reference/upset_pq.html">upset_pq()</a></code> to plot upset of phyloseq object using the <a href="https://krassowski.github.io/complex-upset/" class="external-link">ComplexUpset</a> package</li>
-<li>Add info (param <code>add_info</code>) in subtitle of the <code><a href="../reference/hill_pq.html">hill_pq()</a></code> function</li>
+<li>Improve <code><a href="../reference/compare_pairs_pq.html">compare_pairs_pq()</a></code> with information about the number of shared sequences among paires.</li>
+<li>Add function <code><a href="../reference/upset_pq.html">upset_pq()</a></code> to plot upset of phyloseq object using the <a href="https://krassowski.github.io/complex-upset/" class="external-link">ComplexUpset</a> package.</li>
+<li>Add function <code>upset_test_pq</code> to test for differences between intersections (wrapper of <code><a href="https://krassowski.github.io/complex-upset/reference/upset_test.html" class="external-link">ComplexUpset::upset_test()</a></code> for <code>phyloseq-object</code>).</li>
+<li>Add info (param <code>add_info</code>) in subtitle of the <code><a href="../reference/hill_pq.html">hill_pq()</a></code> function.</li>
+<li>Add argument <code>remove_space</code> to <code><a href="../reference/simplify_taxo.html">simplify_taxo()</a></code> function.</li>
+<li>Add argument <code>simplify_taxo</code> to <code><a href="../reference/clean_pq.html">clean_pq()</a></code> function.</li>
+<li>Change argument <code>rarefy_nb_seq</code> by <code>rarefy_before_merging</code> and add arguments <code>rarefy_after_merging</code> and <code>add_nb_seq</code> to <code><a href="../reference/ggvenn_pq.html">ggvenn_pq()</a></code> function.</li>
+<li>Add arguments <code>rarefy_after_merging</code> to <code><a href="../reference/biplot_pq.html">biplot_pq()</a></code> and <code><a href="../reference/upset_pq.html">upset_pq()</a></code> functions.</li>
+<li>Add argument <code>taxa_fill</code> to <code><a href="../reference/upset_pq.html">upset_pq()</a></code> function in order to fill the bar with taxonomic rank.</li>
+<li>Add a function <code><a href="../reference/subsample_fastq.html">subsample_fastq()</a></code> to make subset of fastq files in order to test your pipeline with all samples but with a low number of reads.</li>
+<li>Add a function <code><a href="../reference/accu_samp_threshold.html">accu_samp_threshold()</a></code> to compute the number of sequence to obtain a given proportion of ASV in accumulation curves (`accu_plot).</li>
+<li>Add a function <code><a href="../reference/tax_bar_pq.html">tax_bar_pq()</a></code> in order to plot taxonomic distribution across samples.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.40" id="miscmetabar-040">MiscMetabar 0.40<a class="anchor" aria-label="anchor" href="#miscmetabar-040"></a></h2>
-<ul><li>Add function <code><a href="../reference/multi_biplot_pq.html">multi_biplot_pq()</a></code> to visualize a collection of couples of samples for comparison through a list of <code><a href="../reference/biplot_pq.html">biplot_pq()</a></code>
-</li>
-<li>Add options <code>add_info</code>, <code>na_remove</code>, and <code>clean_pq</code> to <code><a href="../reference/plot_tax_pq.html">plot_tax_pq()</a></code> function</li>
-<li>Add options <code>vsearch_cluster_method</code> and <code>vsearch_args</code> to <code>otu2asv()</code> for more detailed control of the vsearch software</li>
-<li>Suppression of buggy function <code>MM_idtaxa()</code>
-</li>
+<ul><li>Add function <code><a href="../reference/multi_biplot_pq.html">multi_biplot_pq()</a></code> to visualize a collection of couples of samples for comparison through a list of <code><a href="../reference/biplot_pq.html">biplot_pq()</a></code>.</li>
+<li>Add options <code>add_info</code>, <code>na_remove</code>, and <code>clean_pq</code> to <code><a href="../reference/plot_tax_pq.html">plot_tax_pq()</a></code> function.</li>
+<li>Add options <code>vsearch_cluster_method</code> and <code>vsearch_args</code> to <code>otu2asv()</code> for more detailed control of the vsearch software.</li>
+<li>Suppression of buggy function <code>MM_idtaxa()</code>.</li>
 <li>Add a wrapper of <code><a href="../reference/write_pq.html">write_pq()</a></code> called <code><a href="../reference/save_pq.html">save_pq()</a></code> to save a <em>phyloseq</em> object in the three possible formats () at the same time
 <ul><li>4 separate tables</li>
 <li>1 table version</li>
 <li>1 RData file</li>
 </ul></li>
-<li>Add a function <code><a href="../reference/add_blast_info.html">add_blast_info()</a></code> to add information from <code><a href="../reference/blast_pq.html">blast_pq()</a></code> to the <code>tax_table</code> slot of a <em>phyloseq</em> object</li>
-<li>Add option <code>keep_temporary_files</code> in <code><a href="../reference/asv2otu.html">asv2otu()</a></code> function</li>
-<li>Improve the documentation of <code><a href="../reference/asv2otu.html">asv2otu()</a></code> and fix a little bug in the name of the conserved ASV after <code><a href="../reference/asv2otu.html">asv2otu()</a></code>
-</li>
+<li>Add a function <code><a href="../reference/add_blast_info.html">add_blast_info()</a></code> to add information from <code><a href="../reference/blast_pq.html">blast_pq()</a></code> to the <code>tax_table</code> slot of a <em>phyloseq</em> object.</li>
+<li>Add option <code>keep_temporary_files</code> in <code><a href="../reference/asv2otu.html">asv2otu()</a></code> function.</li>
+<li>Improve the documentation of <code><a href="../reference/asv2otu.html">asv2otu()</a></code> and fix a little bug in the name of the conserved ASV after <code><a href="../reference/asv2otu.html">asv2otu()</a></code>.</li>
 <li>Test coverage largely improved leading to numerous minor bug fixes.</li>
 <li>Add function <code><a href="../reference/search_exact_seq_pq.html">search_exact_seq_pq()</a></code> to search for exact matching of sequences using complement, reverse and reverse-complement against a phyloseq object.</li>
 <li>Add function <code><a href="../reference/add_new_taxonomy_pq.html">add_new_taxonomy_pq()</a></code> to add new taxonomic rank to a phyloseq object. For exemple to add taxonomic assignment from a new database.</li>
@@ -106,8 +115,7 @@
 <li>Add option <code>rarefy_nb_seqs</code> to <code>ggven_pq()</code> in order to rarefy samples before plotting.</li>
 <li>Add function <code><a href="../reference/SRS_curve_pq.html">SRS_curve_pq()</a></code> to plot scaling with ranked subsampling (SRS) curves using the <code>SRS::SRS_curve()</code> function (see citation(“SRS”) for reference).</li>
 <li>Add option <code>nb_samples_info</code> to <code><a href="../reference/biplot_pq.html">biplot_pq()</a></code> in order to add the number of samples merged by level of factors.</li>
-<li>Add a message when two modalities differ greatly (more than x2) in their number of sequences in <code><a href="../reference/biplot_pq.html">biplot_pq()</a></code> and <code><a href="../reference/ggvenn_pq.html">ggvenn_pq()</a></code>
-</li>
+<li>Add a message when two modalities differ greatly (more than x2) in their number of sequences in <code><a href="../reference/biplot_pq.html">biplot_pq()</a></code> and <code><a href="../reference/ggvenn_pq.html">ggvenn_pq()</a></code>.</li>
 <li>Add options <code>na_remove</code>, <code>dist_method</code> (including Aitchinson and robust-Aitchinson distance), <code>correction_for_sample_size</code> and <code>rarefy_nb_seqs</code> options to <code><a href="../reference/adonis_pq.html">adonis_pq()</a></code> function.</li>
 <li>Add option <code>na_remove</code> to <code><a href="../reference/graph_test_pq.html">graph_test_pq()</a></code> function.</li>
 </ul></div>
