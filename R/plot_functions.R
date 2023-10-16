@@ -2048,7 +2048,8 @@ multi_biplot_pq <- function(physeq,
 #'   An alternative to `phyloseq::plot_bar()` function.
 #'
 #' @inheritParams clean_pq
-#' @param fact :
+#' @param fact (required) Name of the factor to cluster samples by modalities.
+#'   Need to be in \code{physeq@sam_data}. 
 #' @param merge_sample_by a vector to determine
 #'   which samples to merge using the
 #'   \code{\link[speedyseq]{merge_samples2}} function.
@@ -2072,7 +2073,7 @@ multi_biplot_pq <- function(physeq,
 #'   If set to TRUE, empty samples are discarded after subsetting ASV
 #' @return A ggplot2 graphic
 #' @export
-#'
+#' @author Adrien Taudière
 #' @examples
 #' data(data_fungi_sp_known)
 #' plot_tax_pq(data_fungi_sp_known,
@@ -2220,6 +2221,97 @@ plot_tax_pq <-
       return(list(p_seq, p_asv))
     }
   }
+################################################################################
+
+
+################################################################################
+#' Plot taxonomic distribution across 3 levels
+#' 
+#' @description
+#' `r lifecycle::badge("experimental")`
+#' 
+#' Note that lvl3 needd to be nested in lvl2 which need to be nested 
+#' in lvl1
+#'
+#' @inheritParams clean_pq
+#' @param lvl1 (required) Name of the first (higher) taxonomic rank of interest
+#' @param lvl2 (required) Name of the second (middle) taxonomic rank of interest
+#' @param lvl3 (required) Name of the first (lower) taxonomic rank of interest
+#' @param fact Name of the factor to cluster samples by modalities.
+#'   Need to be in \code{physeq@sam_data}. If not set, the taxonomic 
+#'   distribution is plot for all samples together.
+#' @param nb_seq
+#' @param log10transformed (logical, default TRUE) If TRUE, 
+#'   the number of sequences (or ASV if nb_seq = FALSE) is log10
+#'   transformed.
+#' @return A ggplot2 graphic
+#' @export
+#'
+#' @author Adrien Taudière
+#' @examples
+#' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", "Time")
+multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order")
+multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", nb_seq= FALSE, log10transformed = FALSE)
+multitax_bar_pq <- function(physeq, 
+                            lvl1,
+                            lvl2, 
+                            lvl3, 
+                            fact = NULL,
+                            nb_seq = TRUE, 
+                            log10transformed = TRUE) {
+  if (!nb_seq) {
+    physeq <- as_binary_otu_table(physeq)
+  }
+  psm <- psmelt(physeq) %>% filter(!is.na(.data[[lvl1]]))
+  psm <- psm %>% filter(!is.na(.data[[lvl3]])) %>% filter(!is.na(.data[[lvl3]]))
+  
+  if(is.null(fact)){
+    data_gg <- tibble(
+      "Abundance" = tapply(psm$Abundance, psm[[lvl3]], sum),
+      "LVL1" = tapply(psm[[lvl1]], psm[[lvl3]], unique),
+      "LVL2" = tapply(psm[[lvl2]], psm[[lvl3]], unique),
+      "LVL3" = tapply(psm[[lvl3]], psm[[lvl3]], unique)
+    )
+    
+    if(log10transformed){
+      data_gg$Abundance <- log10(data_gg$Abundance)
+    }
+    
+    p <- ggplot(data_gg, aes(
+      x = log10(Abundance),
+      fill = LVL1,
+      y = LVL3
+    ))  + 
+      geom_bar(stat = "identity") + 
+      ggh4x::facet_nested(LVL1 + LVL2 ~ ., scales = "free", space = "free") +  
+      theme(strip.text.y.right = element_text(angle = 0)) + 
+      theme(legend.position = "none")
+  } else {
+    data_gg <- tibble(
+      "Abundance" = tapply(psm$Abundance, paste(psm[[fact]], psm[[lvl3]]), sum),
+      "FACT" = tapply(psm[[fact]], paste(psm[[fact]], psm[[lvl3]]), unique),
+      "LVL1" = tapply(psm[[lvl1]], paste(psm[[fact]], psm[[lvl3]]), unique),
+      "LVL2" = tapply(psm[[lvl2]], paste(psm[[fact]], psm[[lvl3]]), unique),
+      "LVL3" = tapply(psm[[lvl3]], paste(psm[[fact]], psm[[lvl3]]), unique)
+    )
+    
+    if(log10transformed){
+      data_gg$Abundance <- log10(data_gg$Abundance)
+    }
+    
+    p <- ggplot(data_gg, aes(
+      x = Abundance,
+      fill = LVL1,
+      y = LVL3
+    ))  + 
+      geom_bar(stat = "identity") + 
+      ggh4x::facet_nested(LVL1 + LVL2 ~ FACT, scales = "free", space = "free") +  
+      theme(strip.text.y.right = element_text(angle = 0)) + 
+      theme(legend.position = "none")
+    
+  }
+  return(p)
+}
 ################################################################################
 
 
