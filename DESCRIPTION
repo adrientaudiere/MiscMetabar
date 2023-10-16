@@ -26,6 +26,7 @@ Suggests:
     edgeR,
     formattable,
     gghalves,
+    ggridges,
     ggVennDiagram,
     grDevices,
     grid,
@@ -56,6 +57,7 @@ Suggests:
     testthat (>= 3.0.0),
     tibble,
     tidyr,
+    treemapify,
     vegan,
     venneuler,
     viridis

@@ -4,6 +4,7 @@
 - Add argument `correction_for_sample_size` (default TRUE, same behavior than before) to `hill_pq` and `hill_tuckey_pq` function to allow removeing any correction for uneven sampling depth.
 - Add function `multitax_bar_pq()` to plot 3 levels of taxonomy in function of samples attributes
 - Add function `rigdes_pq()` to plot rigdes of one taxonomic level in function of samples attributes
+- Add function `treemap_pq` to plot treemap of two taxonomic levels
 
 # MiscMetabar 0.41
 

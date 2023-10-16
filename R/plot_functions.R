@@ -2240,7 +2240,9 @@ plot_tax_pq <-
 #' @param fact Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}. If not set, the taxonomic 
 #'   distribution is plot for all samples together.
-#' @param nb_seq
+#' @param nb_seq (default TRUE) If set to FALSE, only the number of ASV
+#'   is count. Concretely, physeq otu_table is transformed in a binary
+#'   otu_table (each value different from zero is set to one)
 #' @param log10transform (logical, default TRUE) If TRUE, 
 #'   the number of sequences (or ASV if nb_seq = FALSE) is log10
 #'   transformed.
@@ -2250,8 +2252,9 @@ plot_tax_pq <-
 #' @author Adrien Taudière
 #' @examples
 #' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", "Time")
-multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order")
-multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", nb_seq= FALSE, log10transform = FALSE)
+#' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order")
+#' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", nb_seq= FALSE, log10transform = FALSE)
+
 multitax_bar_pq <- function(physeq, 
                             lvl1,
                             lvl2, 
@@ -2263,7 +2266,7 @@ multitax_bar_pq <- function(physeq,
     physeq <- as_binary_otu_table(physeq)
   }
   psm <- psmelt(physeq) %>% filter(!is.na(.data[[lvl1]]))
-  psm <- psm %>% filter(!is.na(.data[[lvl3]])) %>% filter(!is.na(.data[[lvl3]]))
+  psm <- psm %>% filter(!is.na(.data[[lvl3]])) %>% filter(!is.na(.data[[lvl2]]))
   
   if(is.null(fact)){
     data_gg <- tibble(
@@ -2946,7 +2949,7 @@ tax_bar_pq <- function(physeq, fact = "Sample", taxa = "Order", percent_bar = FA
 #' @author Adrien Taudière
 #' @examples
 #' 
-#' ridges_pq(data_fungi, "Time", alpha = 0.5, log10transformed = F) + xlim(c(0,1000))
+#' ridges_pq(data_fungi, "Time", alpha = 0.5, log10transform = F) + xlim(c(0,1000))
 #' ridges_pq(data_fungi, "Time", alpha = 0.5)
 #' ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")))
 #' ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")),
@@ -2961,12 +2964,12 @@ ridges_pq <-  function(physeq,
            fact = NULL,
            taxa_filter = NULL,
            nb_seq = TRUE, 
-           log10transformed = TRUE,
+           log10transform = TRUE,
            ...) {
     psm <- psmelt(physeq)
     psm <- psm %>% filter(Abundance > 0)
     
-    if(log10transformed){
+    if(log10transform){
       psm$Abundance <- log10(psm$Abundance)
     }
     if (nb_seq) {
@@ -2987,5 +2990,115 @@ ridges_pq <-  function(physeq,
       ) + xlim(c(0, NA))
     
     return(p)
+}
+################################################################################
+
+################################################################################
+
+################################################################################
+#' Plot treemap of 2 taxonomic levels
+#' 
+#' @description
+#' `r lifecycle::badge("experimental")`
+#' 
+#' Note that lvl2 needd to be nested in lvl1 
+#'
+#' @inheritParams clean_pq
+#' @param lvl1 (required) Name of the first (higher) taxonomic rank of interest
+#' @param lvl2 (required) Name of the second (lower) taxonomic rank of interest
+#' @param fact Name of the factor to cluster samples by modalities.
+#'   Need to be in \code{physeq@sam_data}. If not set, the taxonomic 
+#'   distribution is plot for all samples together.
+#' @param nb_seq (default TRUE) If set to FALSE, only the number of ASV
+#'   is count. Concretely, physeq otu_table is transformed in a binary
+#'   otu_table (each value different from zero is set to one)
+#' @param log10transform (logical, default TRUE) If TRUE, 
+#'   the number of sequences (or ASV if nb_seq = FALSE) is log10
+#'   transformed.
+#' @param plot_legend (logical, default FALSE) If TRUE, plot che 
+#'   legend of color for lvl 1  
+#' @param ... Other arguments passed on to [treemapify::geom_treemap()] function.
+#'
+#' @return A ggplot2 graphic
+#' @export
+#'
+#' @author Adrien Taudière
+#' @examples
+#'treemap_pq(clean_pq(subset_taxa(data_fungi_sp_known, 
+#'                                    Phylum == "Basidiomycota")), 
+#'              "Order", "Class", plot_legend = TRUE)
+#'treemap_pq(clean_pq(subset_taxa(data_fungi_sp_known, 
+#'                                     Phylum == "Basidiomycota")), 
+#'                "Order", "Class", log10transform = FALSE)
+#'treemap_pq(clean_pq(subset_taxa(data_fungi_sp_known, 
+#'                                     Phylum == "Basidiomycota")), 
+#'                "Order", "Class", nb_seq = FALSE, log10transform = FALSE)
+
+treemap_pq <- function(physeq,
+                       lvl1,
+                       lvl2,
+                       nb_seq = TRUE,
+                       log10transform = TRUE,
+                       plot_legend = FALSE,
+                       ...) {
+  if (!nb_seq) {
+    physeq <- as_binary_otu_table(physeq)
+  }
+  
+  psm <- psmelt(physeq) %>%
+    filter(!is.na(.data[[lvl1]])) %>%
+    filter(!is.na(.data[[lvl2]]))
+  
+  psm2 <- psm %>% group_by(.data[[lvl1]]) %>%
+    reframe(Abundance = sum(Abundance),  Class = unique(.data[[lvl2]]))
+  
+  if (log10transform) {
+    psm2$Abundance <- log10(psm2$Abundance)
+  }
+  
+  p <-
+    ggplot(psm2,
+           aes(
+             area = Abundance,
+             fill = .data[[lvl2]],
+             label = .data[[lvl1]],
+             subgroup = .data[[lvl2]]
+           )) +
+    treemapify::geom_treemap(...) +
+    treemapify::geom_treemap_subgroup_border(colour = "white", size = 4) +
+    treemapify::geom_treemap_text(
+      colour = "white",
+      place = "centre",
+      size = 15,
+      grow = TRUE
+    )
+  
+  if (!plot_legend) {
+    p <- p + theme(legend.position = "none")
+  }
+  
+  if (nb_seq) {
+    if (log10transform) {
+      p <-
+        p + ggtitle(paste0(
+          "Nb of sequences (log10 transformed) by ",
+          lvl1,
+          " and ",
+          lvl2
+        ))
+    } else {
+      p <- p + ggtitle(paste0("Nb of sequences by ", lvl1, " and ", lvl2))
+    }
+    
+  } else {
+    if (log10transform) {
+      p <- p + ggtitle(paste0("Nb of ASV (log10 transformed) by ",
+                              lvl1, " and ", lvl2))
+    } else {
+      p <- p + ggtitle(paste0("Nb of ASV by ", lvl1, " and ", lvl2))
+    }
+  }
+  
+  return(p)
 }
 ################################################################################
