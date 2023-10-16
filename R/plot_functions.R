@@ -2241,7 +2241,7 @@ plot_tax_pq <-
 #'   Need to be in \code{physeq@sam_data}. If not set, the taxonomic 
 #'   distribution is plot for all samples together.
 #' @param nb_seq
-#' @param log10transformed (logical, default TRUE) If TRUE, 
+#' @param log10transform (logical, default TRUE) If TRUE, 
 #'   the number of sequences (or ASV if nb_seq = FALSE) is log10
 #'   transformed.
 #' @return A ggplot2 graphic
@@ -2251,14 +2251,14 @@ plot_tax_pq <-
 #' @examples
 #' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", "Time")
 multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order")
-multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", nb_seq= FALSE, log10transformed = FALSE)
+multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", nb_seq= FALSE, log10transform = FALSE)
 multitax_bar_pq <- function(physeq, 
                             lvl1,
                             lvl2, 
                             lvl3, 
                             fact = NULL,
                             nb_seq = TRUE, 
-                            log10transformed = TRUE) {
+                            log10transform = TRUE) {
   if (!nb_seq) {
     physeq <- as_binary_otu_table(physeq)
   }
@@ -2273,7 +2273,7 @@ multitax_bar_pq <- function(physeq,
       "LVL3" = tapply(psm[[lvl3]], psm[[lvl3]], unique)
     )
     
-    if(log10transformed){
+    if(log10transform){
       data_gg$Abundance <- log10(data_gg$Abundance)
     }
     
@@ -2295,7 +2295,7 @@ multitax_bar_pq <- function(physeq,
       "LVL3" = tapply(psm[[lvl3]], paste(psm[[fact]], psm[[lvl3]]), unique)
     )
     
-    if(log10transformed){
+    if(log10transform){
       data_gg$Abundance <- log10(data_gg$Abundance)
     }
     
@@ -2920,5 +2920,72 @@ tax_bar_pq <- function(physeq, fact = "Sample", taxa = "Order", percent_bar = FA
         stat = "identity"
       )
   }
+}
+################################################################################
+
+################################################################################
+################################################################################
+#' Ridge plot of a phyloseq object
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' @inheritParams clean_pq
+#' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
+#'    different lines
+#' @param nb_seq (default TRUE) If set to FALSE, only the number of ASV
+#'   is count. Concretely, physeq `otu_table` is transformed in a binary
+#'   `otu_table` (each value different from zero is set to one)
+#' @param log10transform (logical, default TRUE) If TRUE, 
+#'   the number of sequences (or ASV if nb_seq = FALSE) is log10
+#'   transformed.
+#' @param ... Other params passed on to [ggridges::geom_density_ridges()]
+#' 
+#' @return A \code{\link{ggplot}}2 plot  with bar representing the number of sequence en each
+#'   taxonomic groups
+#' @export
+#' @author Adrien Taudière
+#' @examples
+#' 
+#' ridges_pq(data_fungi, "Time", alpha = 0.5, log10transformed = F) + xlim(c(0,1000))
+#' ridges_pq(data_fungi, "Time", alpha = 0.5)
+#' ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")))
+#' ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")),
+#'           alpha = 0.6, scale = 0.9)
+#'ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")),
+#'          jittered_points = TRUE,
+#'          position = ggridges::position_points_jitter(width = 0.05, height = 0),
+#'          point_shape = '|', point_size = 3, point_alpha = 1, alpha = 0.7, 
+#'          scale = 0.8)
+
+ridges_pq <-  function(physeq,
+           fact = NULL,
+           taxa_filter = NULL,
+           nb_seq = TRUE, 
+           log10transformed = TRUE,
+           ...) {
+    psm <- psmelt(physeq)
+    psm <- psm %>% filter(Abundance > 0)
+    
+    if(log10transformed){
+      psm$Abundance <- log10(psm$Abundance)
+    }
+    if (nb_seq) {
+      p <- ggplot(psm, aes(y = factor(Time), x = Abundance)) +
+        ggridges::geom_density_ridges(aes(fill = Class), ...) +
+        xlim(c(0, NA))
+      
+    } else {
+      
+    }
+    psm_asv <-
+      psm %>% group_by(Time, OTU, Class) %>% summarise("count" = n())
+    
+    ggplot(psm_asv, aes(y = factor(Time), x = count)) +
+      ggridges::geom_density_ridges(
+        aes(fill = Class),
+        ...
+      ) + xlim(c(0, NA))
+    
+    return(p)
 }
 ################################################################################
