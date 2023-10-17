@@ -25,7 +25,7 @@ see \code{\link[iNEXT:iNEXT]{iNEXT::iNEXT()}} documentation
 }
 \examples{
 library("iNEXT")
-res_iNEXT <- iNEXT_pq(data_fungi,
+res_iNEXT <- iNEXT_pq(data_fungi_sp_known,
   merge_sample_by = "Height",
   q = 1, datatype = "abundance", nboot = 5
 )

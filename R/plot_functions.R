@@ -1165,6 +1165,8 @@ multiplot <-
 #' Graphical representation of hill number 0, 1 and 2 across a factor
 #' @description
 #' `r lifecycle::badge("experimental")`
+#' Note that this function use a sqrt of the read numbers in the linear
+#'   model in order to correct for uneven sampling depth.
 #' @inheritParams clean_pq
 #' @param variable (required): The variable to test
 #' @param color_fac (optional): The variable to color the barplot
@@ -1175,8 +1177,16 @@ multiplot <-
 #' @param add_points (logical): add jitter point on boxplot
 #' @param add_info (logical, default TRUE) Do we add a subtitle with
 #'   information about the number of samples per modality.
-#'
-#' @return A list of 4 ggplot2 plot.
+#' @param one_plot (logical, default=FALSE) If true, return a unique
+#'   plot with the four plot inside using the patchwork package.
+#'   Note that if letters is TRUE, tuckey HSD results are discarded from
+#'   the unique plot. In that case, use one_plot = FALSE to see the tuckey
+#'   HSD results in the fourth plot of the resulting list.
+#' @param correction_for_sample_size (logical, default TRUE) This function
+#'   use a sqrt of the read numbers in the linear model in order to
+#'   correct for uneven sampling depth.
+#' @return Either an unique ggplot2 object (if one_plot is TRUE) or
+#'  a list of 4 ggplot2 plot:
 #' - plot_Hill_0 : the boxplot of Hill number 0 (= species richness)
 #'     against the variable
 #' - plot_Hill_1 : the boxplot of Hill number 1 (= Shannon index)
@@ -1207,7 +1217,9 @@ hill_pq <-
            color_fac = NA,
            letters = FALSE,
            add_points = FALSE,
-           add_info = TRUE) {
+           add_info = TRUE,
+           one_plot = FALSE,
+           correction_for_sample_size = TRUE) {
     var <- sym(variable)
     if (is.na(color_fac)) {
       color_fac <- sym(variable)
@@ -1233,7 +1245,7 @@ hill_pq <-
     df_hill <- data.frame(otu_hill, physeq@sam_data)
     df_hill[, c(1:3)] <- apply(df_hill[, c(1:3)], 2, as.numeric)
 
-    p_var <- hill_tuckey_pq(physeq, variable)
+    p_var <- hill_tuckey_pq(physeq, variable, correction_for_sample_size = correction_for_sample_size)
 
     p_0 <- ggplot(df_hill, aes(group = !!var, Hill_0)) +
       geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac), y = !!var)) +
@@ -1274,11 +1286,11 @@ hill_pq <-
         p_var$data[grep("Hill Number 0", p_var$data[, 5]), ]
       data_h0_pval <- data_h0$p.adj
       names(data_h0_pval) <- data_h0$modality
-      letters <-
+      Letters <-
         multcompView::multcompLetters(data_h0_pval, reversed = TRUE)$Letters
 
-      dt <- data.frame(variab = names(letters), letters = letters)
-      names(dt) <- c(var, "letters")
+      dt <- data.frame(variab = names(Letters), Letters = Letters)
+      names(dt) <- c(var, "Letters")
       data_letters <- p_0$data %>%
         group_by(!!var) %>%
         summarize(max_Hill = max(Hill_0)) %>%
@@ -1289,7 +1301,7 @@ hill_pq <-
           data = data_letters,
           aes(
             x = max_Hill + 1,
-            label = letters
+            label = Letters
           ),
           y = ggplot_build(p_0)$data[[1]]$y,
           size = 4,
@@ -1303,11 +1315,11 @@ hill_pq <-
         p_var$data[grep("Hill Number 1", p_var$data[, 5]), ]
       data_h1_pval <- data_h1$p.adj
       names(data_h1_pval) <- data_h1$modality
-      letters <-
+      Letters <-
         multcompView::multcompLetters(data_h1_pval, reversed = TRUE)$Letters
 
-      dt <- data.frame(variab = names(letters), letters = letters)
-      names(dt) <- c(var, "letters")
+      dt <- data.frame(variab = names(Letters), Letters = Letters)
+      names(dt) <- c(var, "Letters")
       data_letters <- p_1$data %>%
         group_by(!!var) %>%
         summarize(max_Hill = max(Hill_1)) %>%
@@ -1318,7 +1330,7 @@ hill_pq <-
           data = data_letters,
           aes(
             x = max_Hill + 1,
-            label = letters
+            label = Letters
           ),
           y = ggplot_build(p_0)$data[[1]]$y,
           size = 4,
@@ -1332,11 +1344,11 @@ hill_pq <-
         p_var$data[grep("Hill Number 2", p_var$data[, 5]), ]
       data_h2_pval <- data_h2$p.adj
       names(data_h2_pval) <- data_h2$modality
-      letters <-
+      Letters <-
         multcompView::multcompLetters(data_h2_pval, reversed = TRUE)$Letters
 
-      dt <- data.frame(variab = names(letters), letters = letters)
-      names(dt) <- c(var, "letters")
+      dt <- data.frame(variab = names(Letters), Letters = Letters)
+      names(dt) <- c(var, "Letters")
       data_letters <- p_2$data %>%
         group_by(!!var) %>%
         summarize(max_Hill = max(Hill_2)) %>%
@@ -1347,7 +1359,7 @@ hill_pq <-
           data = data_letters,
           aes(
             x = max_Hill + 1,
-            label = letters
+            label = Letters
           ),
           y = ggplot_build(p_0)$data[[1]]$y,
           size = 4,
@@ -1363,6 +1375,18 @@ hill_pq <-
       "plot_tuckey" = p_var
     )
 
+    if (one_plot) {
+      if (letters) {
+        res <- ((p_0 + theme(legend.position = "none")) + labs(subtitle = element_blank()) +
+          (p_1 + theme(legend.position = "none", axis.text.y = element_blank()) + labs(subtitle = element_blank()) + ylab(NULL)) +
+          (p_2 + theme(legend.position = "none", axis.text.y = element_blank()) + labs(subtitle = element_blank()) + ylab(NULL)))
+      } else {
+        res <- ((p_0 + theme(legend.position = "none")) + labs(subtitle = element_blank()) +
+          (p_1 + theme(legend.position = "none", axis.text.y = element_blank()) + labs(subtitle = element_blank()) + ylab(NULL)) +
+          (p_2 + theme(legend.position = "none", axis.text.y = element_blank()) + labs(subtitle = element_blank()) + ylab(NULL))) /
+          p_var + ggtitle("Tuckey HSD testing for differences in mean Hill numbers")
+      }
+    }
     return(res)
   }
 ################################################################################
@@ -2024,7 +2048,8 @@ multi_biplot_pq <- function(physeq,
 #'   An alternative to `phyloseq::plot_bar()` function.
 #'
 #' @inheritParams clean_pq
-#' @param fact :
+#' @param fact (required) Name of the factor to cluster samples by modalities.
+#'   Need to be in \code{physeq@sam_data}.
 #' @param merge_sample_by a vector to determine
 #'   which samples to merge using the
 #'   \code{\link[speedyseq]{merge_samples2}} function.
@@ -2048,7 +2073,7 @@ multi_biplot_pq <- function(physeq,
 #'   If set to TRUE, empty samples are discarded after subsetting ASV
 #' @return A ggplot2 graphic
 #' @export
-#'
+#' @author Adrien Taudière
 #' @examples
 #' data(data_fungi_sp_known)
 #' plot_tax_pq(data_fungi_sp_known,
@@ -2061,7 +2086,8 @@ multi_biplot_pq <- function(physeq,
 #'   "Height",
 #'   merge_sample_by = "Height",
 #'   taxa_fill = "Class",
-#'   na_remove = TRUE
+#'   na_remove = TRUE,
+#'   color_border = rgb(0, 0, 0, 0)
 #' )
 #'
 #' plot_tax_pq(data_fungi_sp_known,
@@ -2195,6 +2221,100 @@ plot_tax_pq <-
       return(list(p_seq, p_asv))
     }
   }
+################################################################################
+
+
+################################################################################
+#' Plot taxonomic distribution across 3 levels
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' Note that lvl3 needd to be nested in lvl2 which need to be nested
+#' in lvl1
+#'
+#' @inheritParams clean_pq
+#' @param lvl1 (required) Name of the first (higher) taxonomic rank of interest
+#' @param lvl2 (required) Name of the second (middle) taxonomic rank of interest
+#' @param lvl3 (required) Name of the first (lower) taxonomic rank of interest
+#' @param fact Name of the factor to cluster samples by modalities.
+#'   Need to be in \code{physeq@sam_data}. If not set, the taxonomic
+#'   distribution is plot for all samples together.
+#' @param nb_seq (default TRUE) If set to FALSE, only the number of ASV
+#'   is count. Concretely, physeq otu_table is transformed in a binary
+#'   otu_table (each value different from zero is set to one)
+#' @param log10transform (logical, default TRUE) If TRUE,
+#'   the number of sequences (or ASV if nb_seq = FALSE) is log10
+#'   transformed.
+#' @return A ggplot2 graphic
+#' @export
+#'
+#' @author Adrien Taudière
+#' @examples
+#' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", "Time")
+#' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order")
+#' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", nb_seq = FALSE, log10transform = FALSE)
+multitax_bar_pq <- function(physeq,
+                            lvl1,
+                            lvl2,
+                            lvl3,
+                            fact = NULL,
+                            nb_seq = TRUE,
+                            log10transform = TRUE) {
+  if (!nb_seq) {
+    physeq <- as_binary_otu_table(physeq)
+  }
+  psm <- psmelt(physeq) %>% filter(!is.na(.data[[lvl1]]))
+  psm <- psm %>%
+    filter(!is.na(.data[[lvl3]])) %>%
+    filter(!is.na(.data[[lvl2]]))
+
+  if (is.null(fact)) {
+    data_gg <- tibble(
+      "Abundance" = tapply(psm$Abundance, psm[[lvl3]], sum),
+      "LVL1" = tapply(psm[[lvl1]], psm[[lvl3]], unique),
+      "LVL2" = tapply(psm[[lvl2]], psm[[lvl3]], unique),
+      "LVL3" = tapply(psm[[lvl3]], psm[[lvl3]], unique)
+    )
+
+    if (log10transform) {
+      data_gg$Abundance <- log10(data_gg$Abundance)
+    }
+
+    p <- ggplot(data_gg, aes(
+      x = Abundance,
+      fill = LVL1,
+      y = LVL3
+    )) +
+      geom_bar(stat = "identity") +
+      ggh4x::facet_nested(LVL1 + LVL2 ~ ., scales = "free", space = "free") +
+      theme(strip.text.y.right = element_text(angle = 0)) +
+      theme(legend.position = "none")
+  } else {
+    data_gg <- tibble(
+      "Abundance" = tapply(psm$Abundance, paste(psm[[fact]], psm[[lvl3]]), sum),
+      "FACT" = tapply(psm[[fact]], paste(psm[[fact]], psm[[lvl3]]), unique),
+      "LVL1" = tapply(psm[[lvl1]], paste(psm[[fact]], psm[[lvl3]]), unique),
+      "LVL2" = tapply(psm[[lvl2]], paste(psm[[fact]], psm[[lvl3]]), unique),
+      "LVL3" = tapply(psm[[lvl3]], paste(psm[[fact]], psm[[lvl3]]), unique)
+    )
+
+    if (log10transform) {
+      data_gg$Abundance <- log10(data_gg$Abundance)
+    }
+
+    p <- ggplot(data_gg, aes(
+      x = Abundance,
+      fill = LVL1,
+      y = LVL3
+    )) +
+      geom_bar(stat = "identity") +
+      ggh4x::facet_nested(LVL1 + LVL2 ~ FACT, scales = "free", space = "free") +
+      theme(strip.text.y.right = element_text(angle = 0)) +
+      theme(legend.position = "none")
+  }
+  return(p)
+}
 ################################################################################
 
 
@@ -2386,7 +2506,7 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 #'
 #' @examples
 #' library("iNEXT")
-#' res_iNEXT <- iNEXT_pq(data_fungi,
+#' res_iNEXT <- iNEXT_pq(data_fungi_sp_known,
 #'   merge_sample_by = "Height",
 #'   q = 1, datatype = "abundance", nboot = 5
 #' )
@@ -2803,5 +2923,202 @@ tax_bar_pq <- function(physeq, fact = "Sample", taxa = "Order", percent_bar = FA
         stat = "identity"
       )
   }
+}
+################################################################################
+
+################################################################################
+################################################################################
+#' Ridge plot of a phyloseq object
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' @inheritParams clean_pq
+#' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
+#'    different lines
+#' @param nb_seq (default TRUE) If set to FALSE, only the number of ASV
+#'   is count. Concretely, physeq `otu_table` is transformed in a binary
+#'   `otu_table` (each value different from zero is set to one)
+#' @param log10transform (logical, default TRUE) If TRUE,
+#'   the number of sequences (or ASV if nb_seq = FALSE) is log10
+#'   transformed.
+#' @param ... Other params passed on to [ggridges::geom_density_ridges()]
+#'
+#' @return A \code{\link{ggplot}}2 plot  with bar representing the number of sequence en each
+#'   taxonomic groups
+#' @export
+#' @author Adrien Taudière
+#' @examples
+#'
+#' ridges_pq(data_fungi, "Time", alpha = 0.5, log10transform = FALSE) + xlim(c(0, 1000))
+#' ridges_pq(data_fungi, "Time", alpha = 0.5)
+#' ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")))
+#' ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")),
+#'   alpha = 0.6, scale = 0.9
+#' )
+#' ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")),
+#'   jittered_points = TRUE,
+#'   position = ggridges::position_points_jitter(width = 0.05, height = 0),
+#'   point_shape = "|", point_size = 3, point_alpha = 1, alpha = 0.7,
+#'   scale = 0.8
+#' )
+ridges_pq <- function(physeq,
+                      fact = NULL,
+                      nb_seq = TRUE,
+                      log10transform = TRUE,
+                      ...) {
+  psm <- psmelt(physeq)
+  psm <- psm %>% filter(Abundance > 0)
+
+  if (log10transform) {
+    psm$Abundance <- log10(psm$Abundance)
+  }
+  if (nb_seq) {
+    p <- ggplot(psm, aes(y = factor(Time), x = Abundance)) +
+      ggridges::geom_density_ridges(aes(fill = Class), ...) +
+      xlim(c(0, NA))
+  } else {
+
+  }
+  psm_asv <-
+    psm %>%
+    group_by(Time, OTU, Class) %>%
+    summarise("count" = n())
+
+  ggplot(psm_asv, aes(y = factor(Time), x = count)) +
+    ggridges::geom_density_ridges(
+      aes(fill = Class),
+      ...
+    ) +
+    xlim(c(0, NA))
+
+  return(p)
+}
+################################################################################
+
+################################################################################
+
+################################################################################
+#' Plot treemap of 2 taxonomic levels
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' Note that lvl2 needd to be nested in lvl1
+#'
+#' @inheritParams clean_pq
+#' @param lvl1 (required) Name of the first (higher) taxonomic rank of interest
+#' @param lvl2 (required) Name of the second (lower) taxonomic rank of interest
+#' @param fact Name of the factor to cluster samples by modalities.
+#'   Need to be in \code{physeq@sam_data}. If not set, the taxonomic
+#'   distribution is plot for all samples together.
+#' @param nb_seq (default TRUE) If set to FALSE, only the number of ASV
+#'   is count. Concretely, physeq otu_table is transformed in a binary
+#'   otu_table (each value different from zero is set to one)
+#' @param log10transform (logical, default TRUE) If TRUE,
+#'   the number of sequences (or ASV if nb_seq = FALSE) is log10
+#'   transformed.
+#' @param plot_legend (logical, default FALSE) If TRUE, plot che
+#'   legend of color for lvl 1
+#' @param ... Other arguments passed on to [treemapify::geom_treemap()] function.
+#'
+#' @return A ggplot2 graphic
+#' @export
+#'
+#' @author Adrien Taudière
+#' @examples
+#' treemap_pq(
+#'   clean_pq(subset_taxa(
+#'     data_fungi_sp_known,
+#'     Phylum == "Basidiomycota"
+#'   )),
+#'   "Order", "Class",
+#'   plot_legend = TRUE
+#' )
+#' treemap_pq(
+#'   clean_pq(subset_taxa(
+#'     data_fungi_sp_known,
+#'     Phylum == "Basidiomycota"
+#'   )),
+#'   "Order", "Class",
+#'   log10transform = FALSE
+#' )
+#' treemap_pq(
+#'   clean_pq(subset_taxa(
+#'     data_fungi_sp_known,
+#'     Phylum == "Basidiomycota"
+#'   )),
+#'   "Order", "Class",
+#'   nb_seq = FALSE, log10transform = FALSE
+#' )
+treemap_pq <- function(physeq,
+                       lvl1,
+                       lvl2,
+                       nb_seq = TRUE,
+                       log10transform = TRUE,
+                       plot_legend = FALSE,
+                       ...) {
+  if (!nb_seq) {
+    physeq <- as_binary_otu_table(physeq)
+  }
+
+  psm <- psmelt(physeq) %>%
+    filter(!is.na(.data[[lvl2]])) %>%
+    filter(!is.na(.data[[lvl1]]))
+
+  psm2 <- psm %>%
+    group_by(.data[[lvl2]]) %>%
+    reframe(Abundance = sum(Abundance), LVL1 = unique(.data[[lvl1]]))
+
+  if (log10transform) {
+    psm2$Abundance <- log10(psm2$Abundance)
+  }
+
+  p <-
+    ggplot(
+      psm2,
+      aes(
+        area = Abundance,
+        fill = LVL1,
+        label = .data[[lvl2]],
+        subgroup = LVL1
+      )
+    ) +
+    treemapify::geom_treemap(...) +
+    treemapify::geom_treemap_subgroup_border(colour = "white", size = 4) +
+    treemapify::geom_treemap_text(
+      colour = "white",
+      place = "centre",
+      size = 15,
+      grow = TRUE
+    )
+
+  if (!plot_legend) {
+    p <- p + theme(legend.position = "none")
+  }
+
+  if (nb_seq) {
+    if (log10transform) {
+      p <-
+        p + ggtitle(paste0(
+          "Nb of sequences (log10 transformed) by ",
+          lvl1,
+          " and ",
+          lvl2
+        ))
+    } else {
+      p <- p + ggtitle(paste0("Nb of sequences by ", lvl1, " and ", lvl2))
+    }
+  } else {
+    if (log10transform) {
+      p <- p + ggtitle(paste0(
+        "Nb of ASV (log10 transformed) by ",
+        lvl1, " and ", lvl2
+      ))
+    } else {
+      p <- p + ggtitle(paste0("Nb of ASV by ", lvl1, " and ", lvl2))
+    }
+  }
+
+  return(p)
 }
 ################################################################################
