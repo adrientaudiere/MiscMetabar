@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.41</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.42</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,8 +62,16 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.42" id="miscmetabar-042-in-development">MiscMetabar 0.42 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-042-in-development"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.43" id="miscmetabar-043-in-development">MiscMetabar 0.43 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-043-in-development"></a></h2>
 </div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.42" id="miscmetabar-042">MiscMetabar 0.42<a class="anchor" aria-label="anchor" href="#miscmetabar-042"></a></h2>
+<ul><li>Add argument <code>one_plot</code> (default FALSE, same behavior than before) to <code>hill_pq</code> function in order to return an unique ggplot2 object with the four plots inside.</li>
+<li>Add argument <code>correction_for_sample_size</code> (default TRUE, same behavior than before) to <code>hill_pq</code> and <code>hill_tuckey_pq</code> function to allow removing any correction for uneven sampling depth.</li>
+<li>Add function <code><a href="../reference/multitax_bar_pq.html">multitax_bar_pq()</a></code> to plot 3 levels of taxonomy in function of samples attributes</li>
+<li>Add function <code><a href="../reference/ridges_pq.html">ridges_pq()</a></code> to plot ridges of one taxonomic level in function of samples attributes</li>
+<li>Add function <code>treemap_pq</code> to plot treemap of two taxonomic levels</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.41" id="miscmetabar-041">MiscMetabar 0.41<a class="anchor" aria-label="anchor" href="#miscmetabar-041"></a></h2>
 <ul><li>Add function <code><a href="../reference/iNEXT_pq.html">iNEXT_pq()</a></code> to calculate hill diversity using the <a href="https://github.com/AnneChao/iNEXT" class="external-link">iNEXT</a> package.</li>

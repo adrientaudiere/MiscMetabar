@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.41</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.42</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,12 +103,12 @@ merging used the <code><a href="https://mikemc.github.io/speedyseq/reference/mer
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="http://chao.stat.nthu.edu.tw/wordpress/software_download/" class="external-link">"iNEXT"</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">res_iNEXT</span> <span class="op">&lt;-</span> <span class="fu">iNEXT_pq</span><span class="op">(</span><span class="va">data_fungi</span>,</span></span>
+<span class="r-in"><span><span class="va">res_iNEXT</span> <span class="op">&lt;-</span> <span class="fu">iNEXT_pq</span><span class="op">(</span><span class="va">data_fungi_sp_known</span>,</span></span>
 <span class="r-in"><span>  merge_sample_by <span class="op">=</span> <span class="st">"Height"</span>,</span></span>
 <span class="r-in"><span>  q <span class="op">=</span> <span class="fl">1</span>, datatype <span class="op">=</span> <span class="st">"abundance"</span>, nboot <span class="op">=</span> <span class="fl">5</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`group` has missing values; corresponding samples will be dropped</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 144 taxa and 0 samples.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 52 taxa and 0 samples.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/iNEXT/man/ggiNEXT.html" class="external-link">ggiNEXT</a></span><span class="op">(</span><span class="va">res_iNEXT</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="iNEXT_pq-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/iNEXT/man/ggiNEXT.html" class="external-link">ggiNEXT</a></span><span class="op">(</span><span class="va">res_iNEXT</span>, type <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>

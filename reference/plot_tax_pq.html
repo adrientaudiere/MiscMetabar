@@ -12,7 +12,7 @@ An alternative to phyloseq::plot_bar() function."><!-- mathjax --><script src="h
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.41</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.42</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,7 +96,8 @@ using the <code>phyloseq</code> package.</p></dd>
 
 
 <dt>fact</dt>
-<dd><p>:</p></dd>
+<dd><p>(required) Name of the factor to cluster samples by modalities.
+Need to be in <code>physeq@sam_data</code>.</p></dd>
 
 
 <dt>merge_sample_by</dt>
@@ -159,6 +160,10 @@ If set to TRUE, empty samples are discarded after subsetting ASV</p></dd>
 
 <p>A ggplot2 graphic</p>
     </div>
+    <div class="section level2">
+    <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
+    <p>Adrien Taudière</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
@@ -176,7 +181,8 @@ If set to TRUE, empty samples are discarded after subsetting ASV</p></dd>
 <span class="r-in"><span>  <span class="st">"Height"</span>,</span></span>
 <span class="r-in"><span>  merge_sample_by <span class="op">=</span> <span class="st">"Height"</span>,</span></span>
 <span class="r-in"><span>  taxa_fill <span class="op">=</span> <span class="st">"Class"</span>,</span></span>
-<span class="r-in"><span>  na_remove <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span>  na_remove <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  color_border <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 54 were discarded due to NA in variables present in formula.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 52 taxa and 1 samples.</span>
