@@ -2281,7 +2281,7 @@ multitax_bar_pq <- function(physeq,
     }
     
     p <- ggplot(data_gg, aes(
-      x = log10(Abundance),
+      x = Abundance,
       fill = LVL1,
       y = LVL3
     ))  + 
@@ -3046,11 +3046,11 @@ treemap_pq <- function(physeq,
   }
   
   psm <- psmelt(physeq) %>%
-    filter(!is.na(.data[[lvl1]])) %>%
-    filter(!is.na(.data[[lvl2]]))
+    filter(!is.na(.data[[lvl2]])) %>%
+    filter(!is.na(.data[[lvl1]]))
   
-  psm2 <- psm %>% group_by(.data[[lvl1]]) %>%
-    reframe(Abundance = sum(Abundance),  Class = unique(.data[[lvl2]]))
+  psm2 <- psm %>% group_by(.data[[lvl2]]) %>%
+    reframe(Abundance = sum(Abundance),  LVL1 = unique(.data[[lvl1]]))
   
   if (log10transform) {
     psm2$Abundance <- log10(psm2$Abundance)
@@ -3060,9 +3060,9 @@ treemap_pq <- function(physeq,
     ggplot(psm2,
            aes(
              area = Abundance,
-             fill = .data[[lvl2]],
-             label = .data[[lvl1]],
-             subgroup = .data[[lvl2]]
+             fill = LVL1,
+             label = .data[[lvl2]],
+             subgroup = LVL1
            )) +
     treemapify::geom_treemap(...) +
     treemapify::geom_treemap_subgroup_border(colour = "white", size = 4) +
