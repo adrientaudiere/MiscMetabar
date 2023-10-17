@@ -1376,6 +1376,7 @@ hill_pq <-
     )
 
     if (one_plot) {
+      library("patchwork")
       if (letters) {
         res <- ((p_0 + theme(legend.position = "none")) + labs(subtitle = element_blank()) +
           (p_1 + theme(legend.position = "none", axis.text.y = element_blank()) + labs(subtitle = element_blank()) + ylab(NULL)) +
@@ -1640,6 +1641,10 @@ rotl_pq <- function(physeq,
 #' Heat tree from `metacoder` package using `tax_table` slot
 #' @description
 #' `r lifecycle::badge("maturing")`
+#' 
+#' Note that the number of ASV is store under the name `n_obs` 
+#' and the number of sequences under the name `nb_sequences`
+#' 
 #' @inheritParams clean_pq
 #' @param taxonomic_level (default: NULL): a vector of selected
 #' taxonomic level using
@@ -1675,13 +1680,28 @@ rotl_pq <- function(physeq,
 #'   node_size_trans = "log10 area"
 #' )
 #' }
+#' 
+#' #' heat_tree_pq(GPsubset,
+#'   node_size = n_seq,
+#'   node_color = n_obs,
+#'   node_label = taxon_names,
+#'   tree_label = taxon_names,
+#'   node_size_trans = "log10 area"
+#' )
+#' }
 #'
 heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
   if (!is.null(taxonomic_level)) {
     physeq@tax_table <- physeq@tax_table[, taxonomic_level]
   }
+  
   data_metacoder <- metacoder::parse_phyloseq(physeq)
-  metacoder::heat_tree(data_metacoder, ...)
+  data_metacoder$data$taxon_counts <- calc_taxon_abund(data_metacoder, data = "otu_table")
+  data_metacoder$data$taxon_counts$nb_sequences <- rowSums(data_metacoder$data$taxon_counts[, -1])
+
+  p <- metacoder::heat_tree(data_metacoder,  ...)
+
+  return(p)
 }
 ################################################################################
 
@@ -2240,7 +2260,7 @@ plot_tax_pq <-
 #' @param fact Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}. If not set, the taxonomic
 #'   distribution is plot for all samples together.
-#' @param nb_seq (default TRUE) If set to FALSE, only the number of ASV
+#' @param nb_seq (logical; default TRUE) If set to FALSE, only the number of ASV
 #'   is count. Concretely, physeq otu_table is transformed in a binary
 #'   otu_table (each value different from zero is set to one)
 #' @param log10transform (logical, default TRUE) If TRUE,
@@ -2892,7 +2912,7 @@ diff_fct_diff_class <-
 #' @param percent_bar (default FALSE) If TRUE, the stacked bar fill all
 #'   the space between 0 and 1. It just set position = "fill" in the
 #'   `ggplot2::geom_bar()` function
-#' @param nb_seq (default TRUE) If set to FALSE, only the number of ASV
+#' @param nb_seq (logical; default TRUE) If set to FALSE, only the number of ASV
 #'   is count. Concretely, physeq otu_table is transformed in a binary
 #'   otu_table (each value different from zero is set to one)
 #' @return A \code{\link{ggplot}}2 plot  with bar representing the number of sequence en each
@@ -2935,7 +2955,7 @@ tax_bar_pq <- function(physeq, fact = "Sample", taxa = "Order", percent_bar = FA
 #' @inheritParams clean_pq
 #' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
 #'    different lines
-#' @param nb_seq (default TRUE) If set to FALSE, only the number of ASV
+#' @param nb_seq (logical; default TRUE) If set to FALSE, only the number of ASV
 #'   is count. Concretely, physeq `otu_table` is transformed in a binary
 #'   `otu_table` (each value different from zero is set to one)
 #' @param log10transform (logical, default TRUE) If TRUE,
@@ -2984,7 +3004,7 @@ ridges_pq <- function(physeq,
     group_by(Time, OTU, Class) %>%
     summarise("count" = n())
 
-  ggplot(psm_asv, aes(y = factor(Time), x = count)) +
+  p <- ggplot(psm_asv, aes(y = factor(Time), x = count)) +
     ggridges::geom_density_ridges(
       aes(fill = Class),
       ...
@@ -3011,7 +3031,7 @@ ridges_pq <- function(physeq,
 #' @param fact Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}. If not set, the taxonomic
 #'   distribution is plot for all samples together.
-#' @param nb_seq (default TRUE) If set to FALSE, only the number of ASV
+#' @param nb_seq (logical; default TRUE) If set to FALSE, only the number of ASV
 #'   is count. Concretely, physeq otu_table is transformed in a binary
 #'   otu_table (each value different from zero is set to one)
 #' @param log10transform (logical, default TRUE) If TRUE,
