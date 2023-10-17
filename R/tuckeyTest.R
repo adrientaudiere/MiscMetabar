@@ -1,7 +1,7 @@
 ################################################################################
-#' Calculate hill number and compute Tuckey post-hoc test 
+#' Calculate hill number and compute Tuckey post-hoc test
 #' @description
-#' 
+#'
 #' `r lifecycle::badge("maturing")`
 #' Note that, by default, this function use a sqrt of the read numbers in the linear
 #'   model in order to correct for uneven sampling depth.
@@ -9,8 +9,8 @@
 #' @inheritParams clean_pq
 #' @param modality (required) the variable to test
 #' @param silent (logical) If TRUE, no message are printing.
-#' @param correction_for_sample_size (logical, default TRUE) This function 
-#'   use a sqrt of the read numbers in the linear model in order to 
+#' @param correction_for_sample_size (logical, default TRUE) This function
+#'   use a sqrt of the read numbers in the linear model in order to
 #'   correct for uneven sampling depth.
 #' @return A ggplot2 object
 #'
@@ -22,10 +22,11 @@
 #' GlobalPatterns@sam_data[, "Soil_logical"] <-
 #'   ifelse(GlobalPatterns@sam_data[, "SampleType"] == "Soil", "Soil", "Not Soil")
 #' hill_tuckey_pq(GlobalPatterns, "Soil_logical")
-hill_tuckey_pq <- function(physeq, 
-modality, 
-silent = TRUE, 
-correction_for_sample_size = TRUE) {
+hill_tuckey_pq <- function(
+    physeq,
+    modality,
+    silent = TRUE,
+    correction_for_sample_size = TRUE) {
   modality_vector <-
     as.factor(as.vector(unlist(unclass(physeq@sam_data[, modality]))))
 
@@ -51,21 +52,21 @@ correction_for_sample_size = TRUE) {
   hill_2 <- otu_hill$"1"
   hill_3 <- otu_hill$"2"
 
-if(correction_for_sample_size){
-  tuk1 <-
-    stats::TukeyHSD(stats::aov(lm(hill_1 ~ sqrt(read_numbers))$residuals ~ modality_vector))
-  tuk2 <-
-    stats::TukeyHSD(stats::aov(lm(hill_2 ~ sqrt(read_numbers))$residuals ~ modality_vector))
-  tuk3 <-
-    stats::TukeyHSD(stats::aov(lm(hill_3 ~ sqrt(read_numbers))$residuals ~ modality_vector))
-} else {
-  tuk1 <-
-    stats::TukeyHSD(stats::aov(hill_1 ~ modality_vector))
-  tuk2 <-
-    stats::TukeyHSD(stats::aov(hill_2 ~ modality_vector))
-  tuk3 <-
-    stats::TukeyHSD(stats::aov(hill_3 ~ modality_vector))
-}
+  if (correction_for_sample_size) {
+    tuk1 <-
+      stats::TukeyHSD(stats::aov(lm(hill_1 ~ sqrt(read_numbers))$residuals ~ modality_vector))
+    tuk2 <-
+      stats::TukeyHSD(stats::aov(lm(hill_2 ~ sqrt(read_numbers))$residuals ~ modality_vector))
+    tuk3 <-
+      stats::TukeyHSD(stats::aov(lm(hill_3 ~ sqrt(read_numbers))$residuals ~ modality_vector))
+  } else {
+    tuk1 <-
+      stats::TukeyHSD(stats::aov(hill_1 ~ modality_vector))
+    tuk2 <-
+      stats::TukeyHSD(stats::aov(hill_2 ~ modality_vector))
+    tuk3 <-
+      stats::TukeyHSD(stats::aov(hill_3 ~ modality_vector))
+  }
 
   df <-
     rbind(
@@ -107,7 +108,7 @@ if(correction_for_sample_size){
     geom_hline(yintercept = 0) +
     ylab("Differences in mean levels (value and confidence intervals at 95%)") +
     xlab("") +
-    ggtitle("Results of the Tuckey HSD testing for differences 
+    ggtitle("Results of the Tuckey HSD testing for differences
     in mean Hill numbers")
 
   return(p)

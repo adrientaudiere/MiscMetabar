@@ -1,9 +1,11 @@
-# MiscMetabar 0.42  (in development)
+# MiscMetabar 0.43  (in development)
+
+# MiscMetabar 0.42 
 
 - Add argument `one_plot` (default FALSE, same behavior than before) to `hill_pq` function in order to return an unique ggplot2 object with the four plots inside.
-- Add argument `correction_for_sample_size` (default TRUE, same behavior than before) to `hill_pq` and `hill_tuckey_pq` function to allow removeing any correction for uneven sampling depth.
+- Add argument `correction_for_sample_size` (default TRUE, same behavior than before) to `hill_pq` and `hill_tuckey_pq` function to allow removing any correction for uneven sampling depth.
 - Add function `multitax_bar_pq()` to plot 3 levels of taxonomy in function of samples attributes
-- Add function `rigdes_pq()` to plot rigdes of one taxonomic level in function of samples attributes
+- Add function `ridges_pq()` to plot ridges of one taxonomic level in function of samples attributes
 - Add function `treemap_pq` to plot treemap of two taxonomic levels
 
 # MiscMetabar 0.41

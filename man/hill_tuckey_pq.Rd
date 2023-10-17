@@ -4,7 +4,12 @@
 \alias{hill_tuckey_pq}
 \title{Calculate hill number and compute Tuckey post-hoc test}
 \usage{
-hill_tuckey_pq(physeq, modality, silent = TRUE)
+hill_tuckey_pq(
+  physeq,
+  modality,
+  silent = TRUE,
+  correction_for_sample_size = TRUE
+)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
@@ -12,13 +17,19 @@ using the \code{phyloseq} package.}
 
 \item{modality}{(required) the variable to test}
 
-\item{silent}{(logical) If true, no message are printing.}
+\item{silent}{(logical) If TRUE, no message are printing.}
+
+\item{correction_for_sample_size}{(logical, default TRUE) This function
+use a sqrt of the read numbers in the linear model in order to
+correct for uneven sampling depth.}
 }
 \value{
 A ggplot2 object
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+Note that, by default, this function use a sqrt of the read numbers in the linear
+model in order to correct for uneven sampling depth.
 }
 \examples{
 data("GlobalPatterns")

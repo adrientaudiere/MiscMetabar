@@ -24,7 +24,8 @@ plot_tax_pq(
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{fact}{:}
+\item{fact}{(required) Name of the factor to cluster samples by modalities.
+Need to be in \code{physeq@sam_data}.}
 
 \item{merge_sample_by}{a vector to determine
 which samples to merge using the
@@ -78,7 +79,8 @@ plot_tax_pq(data_fungi_sp_known,
   "Height",
   merge_sample_by = "Height",
   taxa_fill = "Class",
-  na_remove = TRUE
+  na_remove = TRUE,
+  color_border = rgb(0, 0, 0, 0)
 )
 
 plot_tax_pq(data_fungi_sp_known,
@@ -88,4 +90,7 @@ plot_tax_pq(data_fungi_sp_known,
   na_remove = FALSE,
   clean_pq = FALSE
 )
+}
+\author{
+Adrien Taudière
 }

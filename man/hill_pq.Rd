@@ -10,7 +10,9 @@ hill_pq(
   color_fac = NA,
   letters = FALSE,
   add_points = FALSE,
-  add_info = TRUE
+  add_info = TRUE,
+  one_plot = FALSE,
+  correction_for_sample_size = TRUE
 )
 }
 \arguments{
@@ -30,9 +32,20 @@ multcompLetters. BROKEN for the moment.}
 
 \item{add_info}{(logical, default TRUE) Do we add a subtitle with
 information about the number of samples per modality.}
+
+\item{one_plot}{(logical, default=FALSE) If true, return a unique
+plot with the four plot inside using the patchwork package.
+Note that if letters is TRUE, tuckey HSD results are discarded from
+the unique plot. In that case, use one_plot = FALSE to see the tuckey
+HSD results in the fourth plot of the resulting list.}
+
+\item{correction_for_sample_size}{(logical, default TRUE) This function
+use a sqrt of the read numbers in the linear model in order to
+correct for uneven sampling depth.}
 }
 \value{
-A list of 4 ggplot2 plot.
+Either an unique ggplot2 object (if one_plot is TRUE) or
+a list of 4 ggplot2 plot:
 \itemize{
 \item plot_Hill_0 : the boxplot of Hill number 0 (= species richness)
 against the variable
@@ -45,6 +58,8 @@ against the variable
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+Note that this function use a sqrt of the read numbers in the linear
+model in order to correct for uneven sampling depth.
 }
 \examples{
 data(data_fungi)
