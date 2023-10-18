@@ -297,9 +297,27 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
 })
 
 test_that("tax_bar_pq work with data_fungi dataset", {
+  expect_s3_class(tax_bar_pq(data_fungi, taxa = "Class"), "ggplot")
+  expect_s3_class(tax_bar_pq(data_fungi, taxa = "Class", fact = "Time"), "ggplot")
+  expect_s3_class(tax_bar_pq(
+    data_fungi,
+    taxa = "Class",
+    fact = "Time",
+    nb_seq = F
+  ),
+  "ggplot")
   expect_s3_class(
-tax_bar_pq(data_fungi, taxa = "Class",fact = "Time", nb_seq = F), "ggplot")
-  })
+    tax_bar_pq(
+      data_fungi,
+      taxa = "Class",
+      fact = "Time",
+      nb_seq = F,
+      percent_bar = TRUE
+    ),
+    "ggplot"
+  )
+
+})
 
 
 #' tax_bar_pq(data_fungi, taxa = "Class")
