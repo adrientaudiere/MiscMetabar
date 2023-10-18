@@ -29,6 +29,8 @@ test_that("heat_tree_pq works with data_fungi dataset", {
   library(metacoder)
   expect_silent(suppressMessages(ht <- heat_tree_pq(data_basidio)))
   expect_s3_class(ht, "ggplot")
+  expect_s3_class(heat_tree_pq(data_basidio, taxonomic_level = c(1:4)),
+                  "ggplot")
 })
 
 GPsubset <- subset_taxa(GlobalPatterns,
@@ -293,3 +295,13 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
     "ggplot"
   )
 })
+
+test_that("tax_bar_pq work with data_fungi dataset", {
+  expect_s3_class(
+tax_bar_pq(data_fungi, taxa = "Class",fact = "Time", nb_seq = F), "ggplot")
+  })
+
+
+#' tax_bar_pq(data_fungi, taxa = "Class")
+#' tax_bar_pq(data_fungi, taxa = "Class", percent_bar = TRUE)
+#' tax_bar_pq(data_fungi, taxa = "Class", fact = "Time")

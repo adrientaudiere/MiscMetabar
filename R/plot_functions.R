@@ -198,9 +198,6 @@ accu_plot <-
       if (is.null(step)) {
         step <- round(max(tot) / 30, 0)
       }
-      if (is.null(step)) {
-        step <- 1
-      }
 
       n_max <- seq(1, max(tot), by = step)
       out <- lapply(seq_len(nr), function(i) {
@@ -385,7 +382,7 @@ circle_pq <-
            start_degree = NULL,
            row_col = NULL,
            grid_col = NULL,
-           log10trans = FALSE,
+           log10transform = FALSE,
            ...) {
     if (!inherits(physeq, "phyloseq")) {
       stop("physeq must be an object of class 'phyloseq'")
@@ -494,7 +491,7 @@ circle_pq <-
     }
     otu_table_ech <- o_t_e_interm
 
-    if (log10trans) {
+    if (log10transform) {
       otu_table_ech <- apply(otu_table_ech, 2, function(x) {
         log10(1 + x)
       })
@@ -1168,20 +1165,22 @@ multiplot <-
 #' Note that this function use a sqrt of the read numbers in the linear
 #'   model in order to correct for uneven sampling depth.
 #' @inheritParams clean_pq
-#' @param variable (required): The variable to test
+#' @param variable (required): The variable to test. Must be present in
+#'   the `sam_data` slot of the physeq object.
 #' @param color_fac (optional): The variable to color the barplot
 #' @param letters (optional, default=FALSE): If set to TRUE, the plot
-#' show letters based on p-values for comparison. Use the
-#'  \code{\link[multcompView]{multcompLetters}} function from the package
-#'  multcompLetters. BROKEN for the moment.
+#'   show letters based on p-values for comparison. Use the
+#'   \code{\link[multcompView]{multcompLetters}} function from the package
+#'   multcompLetters. BROKEN for the moment. Note that na values in Tthe 
+#'   variable param need to be removed (see examples) to use letters.
 #' @param add_points (logical): add jitter point on boxplot
 #' @param add_info (logical, default TRUE) Do we add a subtitle with
-#'   information about the number of samples per modality.
-#' @param one_plot (logical, default=FALSE) If true, return a unique
+#'   information about the number of samples per modality ?
+#' @param one_plot (logical, default FALSE) If TRUE, return a unique
 #'   plot with the four plot inside using the patchwork package.
-#'   Note that if letters is TRUE, tuckey HSD results are discarded from
-#'   the unique plot. In that case, use one_plot = FALSE to see the tuckey
-#'   HSD results in the fourth plot of the resulting list.
+#'   Note that if letters and one_plot are both TRUE, tuckey HSD results 
+#'   are discarded from the unique plot. In that case, use one_plot = FALSE 
+#'   to see the tuckey HSD results in the fourth plot of the resulting list.
 #' @param correction_for_sample_size (logical, default TRUE) This function
 #'   use a sqrt of the read numbers in the linear model in order to
 #'   correct for uneven sampling depth.
@@ -1310,7 +1309,6 @@ hill_pq <-
         )
 
       ### HILL 1
-
       data_h1 <-
         p_var$data[grep("Hill Number 1", p_var$data[, 5]), ]
       data_h1_pval <- data_h1$p.adj
@@ -1339,7 +1337,6 @@ hill_pq <-
         )
 
       ### HILL 2
-
       data_h2 <-
         p_var$data[grep("Hill Number 2", p_var$data[, 5]), ]
       data_h2_pval <- data_h2$p.adj
@@ -1657,7 +1654,6 @@ rotl_pq <- function(physeq,
 #'
 #' @examples
 #' \dontrun{
-#' library("metacoder")
 #' data("GlobalPatterns")
 #' GPsubset <- subset_taxa(
 #'   GlobalPatterns,
@@ -1691,15 +1687,16 @@ rotl_pq <- function(physeq,
 #' }
 #'
 heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
+  library("metacoder")
   if (!is.null(taxonomic_level)) {
     physeq@tax_table <- physeq@tax_table[, taxonomic_level]
   }
   
-  data_metacoder <- metacoder::parse_phyloseq(physeq)
+  data_metacoder <- parse_phyloseq(physeq)
   data_metacoder$data$taxon_counts <- calc_taxon_abund(data_metacoder, data = "otu_table")
   data_metacoder$data$taxon_counts$nb_sequences <- rowSums(data_metacoder$data$taxon_counts[, -1])
 
-  p <- metacoder::heat_tree(data_metacoder,  ...)
+  p <- heat_tree(data_metacoder,  ...)
 
   return(p)
 }
@@ -1727,7 +1724,7 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #' @param right_name_col Color for the right name
 #' @param right_fill Fill fo the right sample.
 #' @param right_col Color fo the right sample.
-#' @param log_10 (logical) Does abundancy is log10 transformed ?
+#' @param log10trans (logical) Does abundancy is log10 transformed ?
 #' @param nudge_y A parameter to control the y position of abundancy values.
 #'   If a vector of two values are set. The first value is for the left side.
 #'   and the second value for the right one. If one value is set,
@@ -1767,7 +1764,7 @@ biplot_pq <- function(physeq,
                       right_name_col = "#1d2949",
                       right_fill = "#1d2949",
                       right_col = "#1d2949",
-                      log_10 = TRUE,
+                      log10trans = TRUE,
                       nudge_y = c(0.3, 0.3),
                       geom_label = FALSE,
                       text_size = 3,
@@ -1856,7 +1853,7 @@ biplot_pq <- function(physeq,
   if (length(nudge_y) == 1) {
     nudge_y <- c(nudge_y, nudge_y)
   }
-  if (log_10) {
+  if (log10trans) {
     mdf$Ab <- log10(mdf$Abundance + 1)
   } else {
     mdf$Ab <- mdf$Abundance
@@ -2060,7 +2057,7 @@ multi_biplot_pq <- function(physeq,
 
 
 ################################################################################
-#' Plot taxonomic distribution in function of a factor.
+#' Plot taxonomic distribution in function of a factor with stacked bar in %
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -2094,6 +2091,7 @@ multi_biplot_pq <- function(physeq,
 #' @return A ggplot2 graphic
 #' @export
 #' @author Adrien Taudière
+#' @seealso [tax_bar_pq()] and [multitax_bar_pq()]
 #' @examples
 #' data(data_fungi_sp_known)
 #' plot_tax_pq(data_fungi_sp_known,
@@ -2836,12 +2834,51 @@ upset_test_pq <-
 #'   - FALSE_if_not_all_TRUE
 #' @param character_method : A method for character vector (and factor). One of :
 #'   - unique_or_na (default)
-#'   - more frequent
+#'   - more_frequent
 #'   - more_frequent_without_equality
 #' @param ... other arguments passed on to the numeric function (ex. na.rm=TRUE)
 #' @return a single value
 #' @export
 #'
+#' @examples 
+#' diff_fct_diff_class(
+#'   data_fungi@sam_data$Sample_id,
+#'   numeric_fonction = sum,
+#'   na.rm = TRUE
+#' )
+#' diff_fct_diff_class(
+#'   data_fungi@sam_data$Time,
+#'   numeric_fonction = mean,
+#'   na.rm = TRUE
+#' )
+#' diff_fct_diff_class(
+#'   data_fungi@sam_data$Height == "Low",
+#'   logical_method = "TRUE_if_one"
+#' )
+#' diff_fct_diff_class(
+#'   data_fungi@sam_data$Height == "Low",
+#'   logical_method = "NA_if_not_all_TRUE"
+#' )
+#' diff_fct_diff_class(
+#'   data_fungi@sam_data$Height == "Low",
+#'   logical_method = "FALSE_if_not_all_TRUE"
+#' )
+#' diff_fct_diff_class(
+#'   data_fungi@sam_data$Height,
+#'   character_method = "unique_or_na"
+#' )
+#' diff_fct_diff_class(
+#'   c("IE", "IE"),
+#'   character_method = "unique_or_na"
+#' )
+#' diff_fct_diff_class(
+#'   c("IE", "IE", "TE","TE"),
+#'   character_method = "more_frequent"
+#' )
+#' diff_fct_diff_class(
+#'   c("IE", "IE", "TE","TE"),
+#'   character_method = "more_frequent_without_equality"
+#' )
 #' @author Adrien Taudière
 diff_fct_diff_class <-
   function(x,
@@ -2857,7 +2894,7 @@ diff_fct_diff_class <-
       } else if (character_method == "more_frequent") {
         return(names(sort(table(x), decreasing = TRUE)[1]))
       } else if (character_method == "more_frequent_without_equality") {
-        if (names(sort(table(x), decreasing = TRUE)[1]) == names(sort(table(x), decreasing = TRUE)[2])) {
+        if (sort(table(x), decreasing = TRUE)[1] == sort(table(x), decreasing = TRUE)[2]) {
           return(NA)
         } else {
           return(names(sort(table(x), decreasing = TRUE)[1]))
@@ -2901,7 +2938,7 @@ diff_fct_diff_class <-
 
 
 ################################################################################
-#' iNterpolation and EXTrapolation of Hill numbers (with iNEXT)
+#' Plot the distribution of sequences or ASV in one taxonomic levels 
 #' @description
 #' `r lifecycle::badge("experimental")`
 #'
@@ -2925,7 +2962,7 @@ diff_fct_diff_class <-
 #' tax_bar_pq(data_fungi, taxa = "Class", percent_bar = TRUE)
 #' tax_bar_pq(data_fungi, taxa = "Class", fact = "Time")
 #' @author Adrien Taudière
-#'
+#' @seealso [plot_tax_pq()] and [multitax_bar_pq()]
 #'
 tax_bar_pq <- function(physeq, fact = "Sample", taxa = "Order", percent_bar = FALSE, nb_seq = TRUE) {
   if (!nb_seq) {

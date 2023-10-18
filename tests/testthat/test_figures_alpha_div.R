@@ -37,6 +37,19 @@ test_that("hill_pq works with data_fungi dataset", {
       correction_for_sample_size = FALSE
     )
   ))
+  expect_message(expect_message(
+    hill_pq(
+      clean_pq(subset_samples_pq(
+        data_fungi, !is.na(data_fungi@sam_data$Height)
+      )),
+      "Height",
+      add_points = TRUE,
+      color_fac = "Time",
+      one_plot = TRUE,
+      correction_for_sample_size = FALSE,
+      letters = TRUE
+    )
+  ))
   expect_equal(length(hill_pq(data_fungi, "Height", add_points = TRUE)), 4)
   expect_s3_class(hill_pq(data_fungi, "Height", add_points = TRUE)[[1]], "ggplot")
 })
@@ -70,6 +83,7 @@ test_that("iNEXT_pq works with data_fungi dataset", {
 
 test_that("accu_plot works with GlobalPatterns dataset", {
   expect_silent(accu_plot(GP_archae, fact = "X.SampleID", by.fact = TRUE))
+  expect_silent(accu_plot(GP_archae, fact = "X.SampleID", by.fact = FALSE))
   expect_silent(accu_plot(
     GP_archae,
     fact = "X.SampleID",
@@ -115,4 +129,10 @@ test_that("accu_plot works with data_fungi dataset", {
     by.fact = TRUE
   ))
   expect_error(accu_plot(data_basidio))
+})
+
+
+test_that("accu_samp_threshold works with GlobalPatterns dataset", {
+expect_s3_class(p <- accu_plot(GP_archae, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10), "ggplot")
+ expect_equal(length(accu_samp_threshold(p)), 9)
 })

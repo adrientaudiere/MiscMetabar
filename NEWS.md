@@ -1,5 +1,10 @@
-# MiscMetabar 0.43  (in development)
+# MiscMetabar 0.5  (in development)
 
+## BREAKING CHANGES
+
+- Rename param `log_10` in function `biplot_pq()` into `log10trans`
+- Rename param `log10trans` in function `circle_pq()` into `log10trans`
+- 
 # MiscMetabar 0.42 
 
 - Add argument `one_plot` (default FALSE, same behavior than before) to `hill_pq` function in order to return an unique ggplot2 object with the four plots inside.
