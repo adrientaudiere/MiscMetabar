@@ -24,14 +24,14 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="1.1704066"
-     inkscape:cx="302.8862"
-     inkscape:cy="377.64655"
-     inkscape:window-width="1920"
-     inkscape:window-height="1051"
-     inkscape:window-x="0"
+     inkscape:zoom="0.82760244"
+     inkscape:cx="277.91121"
+     inkscape:cy="320.80621"
+     inkscape:window-width="1693"
+     inkscape:window-height="995"
+     inkscape:window-x="1507"
      inkscape:window-y="0"
-     inkscape:window-maximized="1"
+     inkscape:window-maximized="0"
      inkscape:current-layer="layer1" />
   <defs
      id="defs2">
@@ -209,6 +209,48 @@
        width="385.97031"
        height="153.65523"
        id="rect28233" />
+    <rect
+       x="99.784042"
+       y="20.459438"
+       width="385.97031"
+       height="153.65523"
+       id="rect963-3" />
+    <rect
+       x="99.784042"
+       y="20.459438"
+       width="385.97031"
+       height="153.65523"
+       id="rect963-7" />
+    <rect
+       x="99.784042"
+       y="20.459438"
+       width="385.97031"
+       height="153.65523"
+       id="rect588" />
+    <rect
+       x="99.784042"
+       y="20.459438"
+       width="385.97031"
+       height="153.65523"
+       id="rect643" />
+    <rect
+       x="99.784042"
+       y="20.459438"
+       width="385.97031"
+       height="153.65523"
+       id="rect651" />
+    <rect
+       x="99.784042"
+       y="20.459438"
+       width="385.97031"
+       height="153.65523"
+       id="rect659" />
+    <rect
+       x="99.78404"
+       y="20.459439"
+       width="385.97031"
+       height="153.65523"
+       id="rect667" />
   </defs>
   <g
      inkscape:label="Calque 1"
@@ -221,9 +263,9 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect236);display:inline;opacity:0.920349;fill:#1d4246;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="258.65386"
          y="31.198794"
-         id="tspan28527"><tspan
+         id="tspan815"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28525">Describe</tspan></tspan></text>
+           id="tspan813">Describe</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,-33.406805,40.173197)"
@@ -231,39 +273,39 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect957);display:inline;opacity:0.920349;fill:#1d4246;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="250.57985"
          y="31.198794"
-         id="tspan28531"><tspan
+         id="tspan819"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28529">Transform</tspan></tspan></text>
+           id="tspan817">Transform</tspan></tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,-2.628091,13.832439)"
+       transform="matrix(0.26458333,0,0,0.26458333,-3.2674882,17.029424)"
        id="text961"
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect963);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="235.46583"
          y="31.198794"
-         id="tspan28535"><tspan
+         id="tspan823"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28533">tax_datatable()</tspan></tspan></text>
+           id="tspan821">tax_datatable()</tspan></tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,28.428867,13.426809)"
+       transform="matrix(0.26458333,0,0,0.26458333,-11.511524,26.736454)"
        id="text1795"
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect1797);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="264.87254"
          y="31.198794"
-         id="tspan28539"><tspan
+         id="tspan827"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28537">krona()</tspan></tspan></text>
+           id="tspan825">krona()</tspan></tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(0.26458333,0,0,0.26458333,62.331512,13.419663)"
+       transform="matrix(0.26458333,0,0,0.26458333,1.6771343,9.8513329)"
        id="text3979"
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect3981);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="214.18446"
          y="31.198794"
-         id="tspan28543"><tspan
+         id="tspan831"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28541">summary_plot_pq()</tspan></tspan></text>
+           id="tspan829">summary_plot_pq()</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,-2.628091,47.169942)"
@@ -271,9 +313,9 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect4768);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="251.76052"
          y="31.198794"
-         id="tspan28547"><tspan
+         id="tspan835"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28545">clean_pq()</tspan></tspan></text>
+           id="tspan833">clean_pq()</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,-33.406805,77.214866)"
@@ -281,9 +323,9 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect5652);display:inline;opacity:0.920349;fill:#1d4246;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="261.96119"
          y="31.198794"
-         id="tspan28551"><tspan
+         id="tspan839"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28549">Explore</tspan></tspan></text>
+           id="tspan837">Explore</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,15.914255,84.211611)"
@@ -291,9 +333,9 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect5654);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="246.79586"
          y="31.198794"
-         id="tspan28555"><tspan
+         id="tspan843"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28553">adonis_pq()</tspan></tspan></text>
+           id="tspan841">adonis_pq()</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,-33.406805,118.59323)"
@@ -301,9 +343,9 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect5664);display:inline;opacity:0.920349;fill:#1d4246;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="250.26453"
          y="31.198794"
-         id="tspan28559"><tspan
+         id="tspan847"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28557">Reproduce</tspan></tspan></text>
+           id="tspan845">Reproduce</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,-28.430999,125.58998)"
@@ -311,9 +353,9 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect5666);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="252.40587"
          y="31.198794"
-         id="tspan28563"><tspan
+         id="tspan851"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28561">write_pq()</tspan></tspan></text>
+           id="tspan849">write_pq()</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,9.3531446,52.461609)"
@@ -321,9 +363,9 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect7998);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="206.84378"
          y="31.198794"
-         id="tspan28567"><tspan
+         id="tspan855"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28565">as_binary_otu_table()</tspan></tspan></text>
+           id="tspan853">as_binary_otu_table()</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,-2.628091,58.65752)"
@@ -331,9 +373,9 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect8730);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="258.0012"
          y="31.198794"
-         id="tspan28571"><tspan
+         id="tspan859"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28569">asv2otu()</tspan></tspan></text>
+           id="tspan857">asv2otu()</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,-17.531804,84.094034)"
@@ -341,9 +383,9 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect10276);display:inline;opacity:0.920349;fill:#3a8441;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="239.5432"
          y="31.198794"
-         id="tspan28575"><tspan
+         id="tspan863"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28573">beta-diversity</tspan></tspan></text>
+           id="tspan861">beta-diversity</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,-16.47347,98.654204)"
@@ -351,9 +393,9 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect10282);display:inline;opacity:0.920349;fill:#3a8441;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="234.41721"
          y="31.198794"
-         id="tspan28579"><tspan
+         id="tspan867"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28577">alpha-diversity</tspan></tspan></text>
+           id="tspan865">alpha-diversity</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,52.955924,84.211611)"
@@ -361,9 +403,9 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect10288);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="224.81782"
          y="31.198794"
-         id="tspan28583"><tspan
+         id="tspan871"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28581">plot_deseq2_pq()</tspan></tspan></text>
+           id="tspan869">plot_deseq2_pq()</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,-3.1940712,125.51699)"
@@ -371,9 +413,9 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect11746);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="255.13387"
          y="31.198794"
-         id="tspan28587"><tspan
+         id="tspan875"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28585">read_pq()</tspan></tspan></text>
+           id="tspan873">read_pq()</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,-19.864386,105.98042)"
@@ -381,19 +423,19 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect12478);display:inline;opacity:0.920349;fill:#3a8441;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="253.49851"
          y="31.198794"
-         id="tspan28591"><tspan
+         id="tspan879"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28589">taxonomy</tspan></tspan></text>
+           id="tspan877">taxonomy</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,22.712354,106.098)"
        id="text13208"
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect13210);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
-         x="199.11448"
+         x="220.59383"
          y="31.198794"
-         id="tspan28595"><tspan
+         id="tspan883"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28593">vs_search_global()</tspan></tspan></text>
+           id="tspan881">vs_search_global()</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,26.10327,98.771781)"
@@ -401,9 +443,9 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect13942);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="249.34785"
          y="31.198794"
-         id="tspan28599"><tspan
+         id="tspan887"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28597">accu_plot()</tspan></tspan></text>
+           id="tspan885">accu_plot()</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,93.749274,84.19079)"
@@ -411,9 +453,9 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect14674);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="230.98517"
          y="31.198794"
-         id="tspan28603"><tspan
+         id="tspan891"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28601">graph_test_pq()</tspan></tspan></text>
+           id="tspan889">graph_test_pq()</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,57.853272,98.771781)"
@@ -421,9 +463,9 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect15550);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="259.24054"
          y="31.198794"
-         id="tspan28607"><tspan
+         id="tspan895"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28605">hill_pq()</tspan></tspan></text>
+           id="tspan893">hill_pq()</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,22.896879,90.592046)"
@@ -431,9 +473,9 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect16439);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="213.6345"
          y="31.198794"
-         id="tspan28611"><tspan
+         id="tspan899"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28609">compare_pairs_pq()</tspan></tspan></text>
+           id="tspan897">compare_pairs_pq()</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,98.60418,90.592046)"
@@ -441,9 +483,9 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect17171);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="249.38452"
          y="31.198794"
-         id="tspan28615"><tspan
+         id="tspan903"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28613">biplot_pq()</tspan></tspan></text>
+           id="tspan901">biplot_pq()</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,80.920691,106.098)"
@@ -451,9 +493,9 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect21667);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="216.47247"
          y="31.198794"
-         id="tspan28619"><tspan
+         id="tspan907"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28617">blast_to_phyloseq()</tspan></tspan></text>
+           id="tspan905">blast_to_phyloseq()</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,65.230215,90.592046)"
@@ -461,9 +503,9 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect22572);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="248.95921"
          y="31.198794"
-         id="tspan28623"><tspan
+         id="tspan911"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28621"> circle_pq() </tspan></tspan></text>
+           id="tspan909"> circle_pq() </tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,-17.965343,91.201613)"
@@ -471,9 +513,9 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect23484);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="252.95587"
          y="31.198794"
-         id="tspan28627"><tspan
+         id="tspan915"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28625">venn_pq()</tspan></tspan></text>
+           id="tspan913">venn_pq()</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,29.12191,125.58998)"
@@ -481,9 +523,9 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect24403);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="231.55716"
          y="31.198794"
-         id="tspan28631"><tspan
+         id="tspan919"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28629">list_fastq_files()</tspan></tspan></text>
+           id="tspan917">list_fastq_files()</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.26458333,0,0,0.26458333,71.455246,125.58998)"
@@ -491,8 +533,78 @@
        style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect28233);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
          x="234.96719"
          y="31.198794"
-         id="tspan28635"><tspan
+         id="tspan923"><tspan
            style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
-           id="tspan28633">track_wkflow()</tspan></tspan></text>
+           id="tspan921">track_wkflow()</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,19.438365,111.87962)"
+       id="text961-6"
+       style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect963-3);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
+         x="221.04848"
+         y="31.198794"
+         id="tspan927"><tspan
+           style="font-weight:bold"
+           id="tspan925">multitax_bar_pq()</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,125.45059,84.194443)"
+       id="text961-5"
+       style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect963-7);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
+         x="248.80521"
+         y="31.198794"
+         id="tspan931"><tspan
+           style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
+           id="tspan929">ridges_pq()</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,62.937431,112.72329)"
+       id="text586"
+       style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect588);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
+         x="239.90985"
+         y="31.198794"
+         id="tspan935"><tspan
+           style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
+           id="tspan933">treemap_pq()</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,84.795808,98.755356)"
+       id="text641"
+       style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect643);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
+         x="244.90384"
+         y="31.198794"
+         id="tspan939"><tspan
+           style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
+           id="tspan937">iNEXT_pq()</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,125.28451,90.868783)"
+       id="text649"
+       style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect651);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
+         x="251.51119"
+         y="31.198794"
+         id="tspan943"><tspan
+           style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
+           id="tspan941">upset_pq()</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,99.979103,112.72329)"
+       id="text657"
+       style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect659);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
+         x="242.4105"
+         y="31.198794"
+         id="tspan947"><tspan
+           style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
+           id="tspan945">tax_bar_pq()</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,-2.628091,63.949187)"
+       id="text665"
+       style="font-size:14.6667px;line-height:0.9;font-family:'Libre Baskerville';-inkscape-font-specification:'Libre Baskerville';text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-color:#000000;white-space:pre;shape-inside:url(#rect667);display:inline;opacity:0.920349;fill:#bb5900;fill-opacity:1;stroke-width:22.4643;paint-order:stroke fill markers;stop-color:#000000"><tspan
+         x="256.72519"
+         y="31.198794"
+         id="tspan951"><tspan
+           style="font-weight:bold;-inkscape-font-specification:'Libre Baskerville Bold'"
+           id="tspan949">lulu_pq()</tspan></tspan></text>
   </g>
 </svg>
