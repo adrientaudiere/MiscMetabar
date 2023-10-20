@@ -27,7 +27,7 @@ diff_fct_diff_class(
 \item{character_method}{: A method for character vector (and factor). One of :
 \itemize{
 \item unique_or_na (default)
-\item more frequent
+\item more_frequent
 \item more_frequent_without_equality
 }}
 
@@ -39,6 +39,46 @@ a single value
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 Mainly an internal function useful in "lapply(..., tapply)" methods
+}
+\examples{
+diff_fct_diff_class(
+  data_fungi@sam_data$Sample_id,
+  numeric_fonction = sum,
+  na.rm = TRUE
+)
+diff_fct_diff_class(
+  data_fungi@sam_data$Time,
+  numeric_fonction = mean,
+  na.rm = TRUE
+)
+diff_fct_diff_class(
+  data_fungi@sam_data$Height == "Low",
+  logical_method = "TRUE_if_one"
+)
+diff_fct_diff_class(
+  data_fungi@sam_data$Height == "Low",
+  logical_method = "NA_if_not_all_TRUE"
+)
+diff_fct_diff_class(
+  data_fungi@sam_data$Height == "Low",
+  logical_method = "FALSE_if_not_all_TRUE"
+)
+diff_fct_diff_class(
+  data_fungi@sam_data$Height,
+  character_method = "unique_or_na"
+)
+diff_fct_diff_class(
+  c("IE", "IE"),
+  character_method = "unique_or_na"
+)
+diff_fct_diff_class(
+  c("IE", "IE", "TE", "TE"),
+  character_method = "more_frequent"
+)
+diff_fct_diff_class(
+  c("IE", "IE", "TE", "TE"),
+  character_method = "more_frequent_without_equality"
+)
 }
 \author{
 Adrien Taudière

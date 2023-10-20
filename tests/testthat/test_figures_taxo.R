@@ -5,15 +5,17 @@ data("enterotype", package = "phyloseq")
 
 GP <- GlobalPatterns
 data_fungi_2trees <-
-  subset_samples(data_fungi,
-                 data_fungi@sam_data$Tree_name %in% c("A10-005", "AD30-abm-X"))
+  subset_samples(
+    data_fungi,
+    data_fungi@sam_data$Tree_name %in% c("A10-005", "AD30-abm-X")
+  )
 GP_archae <-
   subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 
 test_that("rotl_pq works with data_fungi dataset", {
   library("rotl")
   expect_s3_class(suppressWarnings(tr <-
-                                     rotl_pq(data_fungi, species_colnames = "Genus_species")), "phylo")
+    rotl_pq(data_fungi, species_colnames = "Genus_species")), "phylo")
   expect_s3_class(suppressWarnings(
     rotl_pq(
       data_fungi,
@@ -29,10 +31,16 @@ test_that("heat_tree_pq works with data_fungi dataset", {
   library(metacoder)
   expect_silent(suppressMessages(ht <- heat_tree_pq(data_basidio)))
   expect_s3_class(ht, "ggplot")
+  expect_s3_class(
+    heat_tree_pq(data_basidio, taxonomic_level = c(1:4)),
+    "ggplot"
+  )
 })
 
-GPsubset <- subset_taxa(GlobalPatterns,
-                        GlobalPatterns@tax_table[, 1] == "Bacteria")
+GPsubset <- subset_taxa(
+  GlobalPatterns,
+  GlobalPatterns@tax_table[, 1] == "Bacteria"
+)
 test_that("heat_tree_pq works with GlobalPatterns dataset", {
   library(metacoder)
   expect_silent(suppressMessages(ht <- heat_tree_pq(GPsubset)))
@@ -155,8 +163,10 @@ test_that("multitax_bar_pq works with data_fungi_sp_known dataset", {
     multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", "Time"),
     "ggplot"
   )
-  expect_s3_class(multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order"),
-                  "ggplot")
+  expect_s3_class(
+    multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order"),
+    "ggplot"
+  )
   expect_s3_class(
     multitax_bar_pq(
       data_fungi_sp_known,
@@ -188,10 +198,14 @@ test_that("multitax_bar_pq works with data_fungi_sp_known dataset", {
 
 
 test_that("multitax_bar_pq works with GlobalPatterns dataset", {
-  expect_s3_class(multitax_bar_pq(GP_archae, "Phylum", "Class", "Order", "SampleType"),
-                  "ggplot")
-  expect_s3_class(multitax_bar_pq(GP_archae, "Phylum", "Class", "Order"),
-                  "ggplot")
+  expect_s3_class(
+    multitax_bar_pq(GP_archae, "Phylum", "Class", "Order", "SampleType"),
+    "ggplot"
+  )
+  expect_s3_class(
+    multitax_bar_pq(GP_archae, "Phylum", "Class", "Order"),
+    "ggplot"
+  )
   expect_s3_class(
     multitax_bar_pq(
       GP_archae,
@@ -205,10 +219,11 @@ test_that("multitax_bar_pq works with GlobalPatterns dataset", {
   )
   expect_s3_class(
     multitax_bar_pq(GP_archae,
-                    "Phylum",
-                    "Class",
-                    "Order",
-                    log10transform = FALSE),
+      "Phylum",
+      "Class",
+      "Order",
+      log10transform = FALSE
+    ),
     "ggplot"
   )
   expect_error(print(multitax_bar_pq(GP_archae, "Class", "Genus", "Order")))
@@ -228,23 +243,31 @@ test_that("rigdes_pq work with data_fungi dataset", {
     ) + xlim(c(0, 1000)),
     "ggplot"
   )
-  expect_s3_class(ridges_pq(data_fungi, "Time", alpha = 0.5),
-                  "ggplot")
-  expect_s3_class(ridges_pq(
-    data_fungi,
-    "Time",
-    nb_seq = FALSE,
-    log10transform = FALSE
-  ),
-  "ggplot")
-  expect_s3_class(ridges_pq(clean_pq(
-    subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")
-  )),
-  "ggplot")
-  expect_s3_class(ridges_pq(clean_pq(
-    subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")
-  ), alpha = 0.6, scale = 0.9),
-  "ggplot")
+  expect_s3_class(
+    ridges_pq(data_fungi, "Time", alpha = 0.5),
+    "ggplot"
+  )
+  expect_s3_class(
+    ridges_pq(
+      data_fungi,
+      "Time",
+      nb_seq = FALSE,
+      log10transform = FALSE
+    ),
+    "ggplot"
+  )
+  expect_s3_class(
+    ridges_pq(clean_pq(
+      subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")
+    )),
+    "ggplot"
+  )
+  expect_s3_class(
+    ridges_pq(clean_pq(
+      subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")
+    ), alpha = 0.6, scale = 0.9),
+    "ggplot"
+  )
   expect_s3_class(
     ridges_pq(
       clean_pq(subset_taxa(
@@ -265,20 +288,32 @@ test_that("rigdes_pq work with data_fungi dataset", {
 
 
 test_that("treemap_pq work with data_fungi_sp_known dataset", {
-  expect_s3_class(treemap_pq(clean_pq(
-    subset_taxa(data_fungi_sp_known,
-                Phylum == "Basidiomycota")
-  ),
-  "Order", "Class",
-  plot_legend = TRUE),
-  "ggplot")
-  expect_s3_class(treemap_pq(clean_pq(
-    subset_taxa(data_fungi_sp_known,
-                Phylum == "Basidiomycota")
-  ),
-  "Order", "Class",
-  log10transform = FALSE),
-  "ggplot")
+  expect_s3_class(
+    treemap_pq(
+      clean_pq(
+        subset_taxa(
+          data_fungi_sp_known,
+          Phylum == "Basidiomycota"
+        )
+      ),
+      "Order", "Class",
+      plot_legend = TRUE
+    ),
+    "ggplot"
+  )
+  expect_s3_class(
+    treemap_pq(
+      clean_pq(
+        subset_taxa(
+          data_fungi_sp_known,
+          Phylum == "Basidiomycota"
+        )
+      ),
+      "Order", "Class",
+      log10transform = FALSE
+    ),
+    "ggplot"
+  )
   expect_s3_class(
     treemap_pq(
       clean_pq(subset_taxa(
@@ -293,3 +328,32 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
     "ggplot"
   )
 })
+
+test_that("tax_bar_pq work with data_fungi dataset", {
+  expect_s3_class(tax_bar_pq(data_fungi, taxa = "Class"), "ggplot")
+  expect_s3_class(tax_bar_pq(data_fungi, taxa = "Class", fact = "Time"), "ggplot")
+  expect_s3_class(
+    tax_bar_pq(
+      data_fungi,
+      taxa = "Class",
+      fact = "Time",
+      nb_seq = F
+    ),
+    "ggplot"
+  )
+  expect_s3_class(
+    tax_bar_pq(
+      data_fungi,
+      taxa = "Class",
+      fact = "Time",
+      nb_seq = F,
+      percent_bar = TRUE
+    ),
+    "ggplot"
+  )
+})
+
+
+#' tax_bar_pq(data_fungi, taxa = "Class")
+#' tax_bar_pq(data_fungi, taxa = "Class", percent_bar = TRUE)
+#' tax_bar_pq(data_fungi, taxa = "Class", fact = "Time")

@@ -21,10 +21,12 @@ A plot
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+
+Note that the number of ASV is store under the name \code{n_obs}
+and the number of sequences under the name \code{nb_sequences}
 }
 \examples{
 \dontrun{
-library("metacoder")
 data("GlobalPatterns")
 GPsubset <- subset_taxa(
   GlobalPatterns,
@@ -47,6 +49,14 @@ heat_tree_pq(GPsubset,
   node_size_trans = "log10 area"
 )
 }
+
+heat_tree_pq(GPsubset,
+  node_size = n_seq,
+  node_color = n_obs,
+  node_label = taxon_names,
+  tree_label = taxon_names,
+  node_size_trans = "log10 area"
+)
 
 }
 \author{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_functions.R
 \name{plot_tax_pq}
 \alias{plot_tax_pq}
-\title{Plot taxonomic distribution in function of a factor.}
+\title{Plot taxonomic distribution in function of a factor with stacked bar in \%}
 \usage{
 plot_tax_pq(
   physeq,
@@ -90,6 +90,9 @@ plot_tax_pq(data_fungi_sp_known,
   na_remove = FALSE,
   clean_pq = FALSE
 )
+}
+\seealso{
+\code{\link[=tax_bar_pq]{tax_bar_pq()}} and \code{\link[=multitax_bar_pq]{multitax_bar_pq()}}
 }
 \author{
 Adrien Taudière

@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_functions.R
 \name{tax_bar_pq}
 \alias{tax_bar_pq}
-\title{iNterpolation and EXTrapolation of Hill numbers (with iNEXT)}
+\title{Plot the distribution of sequences or ASV in one taxonomic levels}
 \usage{
 tax_bar_pq(
   physeq,
@@ -25,7 +25,7 @@ Need to be in \code{physeq@sam_data}.}
 the space between 0 and 1. It just set position = "fill" in the
 \code{ggplot2::geom_bar()} function}
 
-\item{nb_seq}{(default TRUE) If set to FALSE, only the number of ASV
+\item{nb_seq}{(logical; default TRUE) If set to FALSE, only the number of ASV
 is count. Concretely, physeq otu_table is transformed in a binary
 otu_table (each value different from zero is set to one)}
 }
@@ -41,6 +41,9 @@ tax_bar_pq(data_fungi) + theme(legend.position = "none")
 tax_bar_pq(data_fungi, taxa = "Class")
 tax_bar_pq(data_fungi, taxa = "Class", percent_bar = TRUE)
 tax_bar_pq(data_fungi, taxa = "Class", fact = "Time")
+}
+\seealso{
+\code{\link[=plot_tax_pq]{plot_tax_pq()}} and \code{\link[=multitax_bar_pq]{multitax_bar_pq()}}
 }
 \author{
 Adrien Taudière
