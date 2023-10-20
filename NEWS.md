@@ -1,10 +1,15 @@
-# MiscMetabar 0.5  (in development)
+# MiscMetabar 0.51 (in development) 
+
+
+# MiscMetabar 0.5
+
+- Phyloseq object are converted in taxa_are_columns in the ggvenn_pq() thanks to issue #31
 
 ## BREAKING CHANGES
 
 - Rename param `log_10` in function `biplot_pq()` into `log10trans`
 - Rename param `log10trans` in function `circle_pq()` into `log10trans`
-- 
+ 
 # MiscMetabar 0.42 
 
 - Add argument `one_plot` (default FALSE, same behavior than before) to `hill_pq` function in order to return an unique ggplot2 object with the four plots inside.

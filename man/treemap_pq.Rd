@@ -22,7 +22,7 @@ using the \code{phyloseq} package.}
 
 \item{lvl2}{(required) Name of the second (lower) taxonomic rank of interest}
 
-\item{nb_seq}{(default TRUE) If set to FALSE, only the number of ASV
+\item{nb_seq}{(logical; default TRUE) If set to FALSE, only the number of ASV
 is count. Concretely, physeq otu_table is transformed in a binary
 otu_table (each value different from zero is set to one)}
 

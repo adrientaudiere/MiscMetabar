@@ -1,7 +1,7 @@
 Package: MiscMetabar
 Type: Package
 Title: Miscellaneous functions for metabarcoding analysis
-Version: 0.42
+Version: 0.5
 Author: Adrien Taudière <adrien.taudiere@zaclys.net>
 Maintainer: Adrien Taudière <adrien.taudiere@zaclys.net>
 Description: Functions to help analyze and visualize metabarcoding data. Mainly build on the top of phyloseq, dada2 and targets R packages.

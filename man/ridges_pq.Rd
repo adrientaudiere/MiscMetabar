@@ -13,7 +13,7 @@ using the \code{phyloseq} package.}
 \item{fact}{(required) Name of the factor in \code{physeq@sam_data} used to plot
 different lines}
 
-\item{nb_seq}{(default TRUE) If set to FALSE, only the number of ASV
+\item{nb_seq}{(logical; default TRUE) If set to FALSE, only the number of ASV
 is count. Concretely, physeq \code{otu_table} is transformed in a binary
 \code{otu_table} (each value different from zero is set to one)}
 

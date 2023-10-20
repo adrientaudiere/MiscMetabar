@@ -10,7 +10,7 @@ data_basidio_2trees <-
 GP_archae <-
   subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 
-data_fungi_woNA4time <- subset_samples(data_fungi,!is.na(Time))
+data_fungi_woNA4time <- subset_samples(data_fungi, !is.na(Time))
 res_mt <-
   mt(
     data_fungi_woNA4time,
@@ -73,7 +73,7 @@ test_that("graph_test_pq works", {
   expect_silent(graph_test_pq(data_fungi, fact = "Tree_name", na_remove = TRUE))
   expect_silent(graph_test_pq(data_fungi, fact = "Tree_name", return_plot = FALSE))
   expect_message(graph_test_pq(
-    subset_samples(data_fungi,!is.na(data_fungi@sam_data$Time)),
+    subset_samples(data_fungi, !is.na(data_fungi@sam_data$Time)),
     fact = "Time",
     merge_sample_by = "Tree_name"
   ))
@@ -87,7 +87,8 @@ test_that("plot_mt works", {
   expect_s3_class(res_mt, "data.frame")
   expect_s3_class(suppressWarnings(plot_mt(res_mt)), "ggplot")
   expect_s3_class(suppressWarnings(plot_mt(
-    res_mt, taxa = "Genus", color_tax = "Order"
+    res_mt,
+    taxa = "Genus", color_tax = "Order"
   )), "ggplot")
 })
 
@@ -109,7 +110,8 @@ test_that("sankey_pq works with GlobalPatterns dataset", {
     add_nb_seq = TRUE
   ))
   expect_silent(suppressWarnings(sankey_pq(
-    GP_archae, fact = "SampleType", add_nb_seq = TRUE
+    GP_archae,
+    fact = "SampleType", add_nb_seq = TRUE
   )))
   expect_silent(
     sankey_pq(
@@ -209,10 +211,14 @@ test_that("venn_pq works with data_fungi dataset", {
   expect_silent(venn_pq(data_fungi, "Height", print_values = TRUE) + scale_fill_hue())
   expect_error(venn_pq(data_fungi))
   expect_error(venn_pq(data_fungi@otu_table, "Height"))
-  expect_type(venn_pq(data_fungi, "Height", print_values = TRUE) + scale_fill_hue(),
-              "NULL")
-  expect_s3_class(venn_pq(data_fungi, "Height", print_values = FALSE) + scale_fill_hue(),
-                  "ggplot")
+  expect_type(
+    venn_pq(data_fungi, "Height", print_values = TRUE) + scale_fill_hue(),
+    "NULL"
+  )
+  expect_s3_class(
+    venn_pq(data_fungi, "Height", print_values = FALSE) + scale_fill_hue(),
+    "ggplot"
+  )
 })
 
 test_that("ggvenn_pq works with data_fungi dataset", {
@@ -246,8 +252,10 @@ test_that("upset_pq works with data_fungi dataset", {
 
   expect_s3_class(upset_pq(data_fungi, "Time"), "ggplot")
   expect_s3_class(upset_pq(data_fungi, "Time", min_nb_seq = 10), "ggplot")
-  expect_s3_class(upset_pq(data_fungi, "Time", numeric_fonction = mean),
-                  "ggplot")
+  expect_s3_class(
+    upset_pq(data_fungi, "Time", numeric_fonction = mean),
+    "ggplot"
+  )
 
   expect_error(upset_pq(data_fungi))
 })
@@ -255,10 +263,14 @@ test_that("upset_pq works with data_fungi dataset", {
 test_that("upset_test_pq works with data_fungi dataset", {
   expect_s3_class(upset_test_pq(data_fungi, "Height"), "data.frame")
   expect_s3_class(upset_test_pq(data_fungi, "Time"), "data.frame")
-  expect_s3_class(upset_test_pq(data_fungi, "Time", min_nb_seq = 10),
-                  "data.frame")
-  expect_s3_class(upset_test_pq(data_fungi, "Time", numeric_fonction = mean),
-                  "data.frame")
+  expect_s3_class(
+    upset_test_pq(data_fungi, "Time", min_nb_seq = 10),
+    "data.frame"
+  )
+  expect_s3_class(
+    upset_test_pq(data_fungi, "Time", numeric_fonction = mean),
+    "data.frame"
+  )
   expect_s3_class(
     upset_test_pq(
       data_fungi,

@@ -3,8 +3,10 @@ data("GlobalPatterns")
 GP <- GlobalPatterns
 
 data_fungi_2trees <-
-  subset_samples(data_fungi,
-                 data_fungi@sam_data$Tree_name %in% c("A10-005", "AD30-abm-X"))
+  subset_samples(
+    data_fungi,
+    data_fungi@sam_data$Tree_name %in% c("A10-005", "AD30-abm-X")
+  )
 data_fungi_abun <-
   subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
 
@@ -37,8 +39,10 @@ test_that("biplot_pq works", {
     biplot_pq(data_fungi, merge_sample_by = "Tree_name"),
     "biplot_pq needs only two samples"
   )
-  expect_error(biplot_pq(data_fungi_2trees, fact = "Tree_name"),
-               "biplot_pq needs only two samples")
+  expect_error(
+    biplot_pq(data_fungi_2trees, fact = "Tree_name"),
+    "biplot_pq needs only two samples"
+  )
   expect_error(biplot_pq(data_fungi_2trees, merge_sample_by = "tRREE_name"))
 
   geom_label

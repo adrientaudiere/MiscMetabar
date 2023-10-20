@@ -107,7 +107,7 @@ rename_samples_otu_table <- function(physeq, names_of_samples) {
 #' @author Adrien Taudière
 #'
 
-#cutadapt_remove_primers <- function(
+# cutadapt_remove_primers <- function(
 #    path,
 #    output_folder = "wo_primers",
 #    primer_fw = NULL,
@@ -153,5 +153,5 @@ rename_samples_otu_table <- function(physeq, names_of_samples) {
 #
 #  return(cmd)
 #  # lapply(cmd, system)
-#}
+# }
 ################################################################################

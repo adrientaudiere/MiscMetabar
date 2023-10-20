@@ -28,7 +28,7 @@ using the \code{phyloseq} package.}
 Need to be in \code{physeq@sam_data}. If not set, the taxonomic
 distribution is plot for all samples together.}
 
-\item{nb_seq}{(default TRUE) If set to FALSE, only the number of ASV
+\item{nb_seq}{(logical; default TRUE) If set to FALSE, only the number of ASV
 is count. Concretely, physeq otu_table is transformed in a binary
 otu_table (each value different from zero is set to one)}
 

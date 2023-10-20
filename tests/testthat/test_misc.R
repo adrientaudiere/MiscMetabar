@@ -31,7 +31,7 @@ test_that("diff_fct_diff_class works fine", {
       data_fungi@sam_data$Time,
       numeric_fonction = mean,
       na.rm = TRUE
-    ),2),
+    ), 2),
     5.80
   )
   expect_equal(
@@ -71,14 +71,14 @@ test_that("diff_fct_diff_class works fine", {
   )
   expect_equal(
     diff_fct_diff_class(
-      c("IE", "IE", "TE","TE"),
+      c("IE", "IE", "TE", "TE"),
       character_method = "more_frequent"
     ),
     "IE"
   )
   expect_equal(
     diff_fct_diff_class(
-      c("IE", "IE", "TE","TE"),
+      c("IE", "IE", "TE", "TE"),
       character_method = "more_frequent_without_equality"
     ),
     NA

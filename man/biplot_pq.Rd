@@ -18,7 +18,7 @@ biplot_pq(
   right_name_col = "#1d2949",
   right_fill = "#1d2949",
   right_col = "#1d2949",
-  log_10 = TRUE,
+  log10trans = TRUE,
   nudge_y = c(0.3, 0.3),
   geom_label = FALSE,
   text_size = 3,
@@ -63,7 +63,7 @@ modalities merge_sample_by}
 
 \item{right_col}{Color fo the right sample.}
 
-\item{log_10}{(logical) Does abundancy is log10 transformed ?}
+\item{log10trans}{(logical) Does abundancy is log10 transformed ?}
 
 \item{nudge_y}{A parameter to control the y position of abundancy values.
 If a vector of two values are set. The first value is for the left side.

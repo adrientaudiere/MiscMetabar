@@ -19,25 +19,27 @@ hill_pq(
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{variable}{(required): The variable to test}
+\item{variable}{(required): The variable to test. Must be present in
+the \code{sam_data} slot of the physeq object.}
 
 \item{color_fac}{(optional): The variable to color the barplot}
 
 \item{letters}{(optional, default=FALSE): If set to TRUE, the plot
 show letters based on p-values for comparison. Use the
 \code{\link[multcompView]{multcompLetters}} function from the package
-multcompLetters. BROKEN for the moment.}
+multcompLetters. BROKEN for the moment. Note that na values in Tthe
+variable param need to be removed (see examples) to use letters.}
 
 \item{add_points}{(logical): add jitter point on boxplot}
 
 \item{add_info}{(logical, default TRUE) Do we add a subtitle with
-information about the number of samples per modality.}
+information about the number of samples per modality ?}
 
-\item{one_plot}{(logical, default=FALSE) If true, return a unique
+\item{one_plot}{(logical, default FALSE) If TRUE, return a unique
 plot with the four plot inside using the patchwork package.
-Note that if letters is TRUE, tuckey HSD results are discarded from
-the unique plot. In that case, use one_plot = FALSE to see the tuckey
-HSD results in the fourth plot of the resulting list.}
+Note that if letters and one_plot are both TRUE, tuckey HSD results
+are discarded from the unique plot. In that case, use one_plot = FALSE
+to see the tuckey HSD results in the fourth plot of the resulting list.}
 
 \item{correction_for_sample_size}{(logical, default TRUE) This function
 use a sqrt of the read numbers in the linear model in order to

@@ -1011,6 +1011,15 @@ ggvenn_pq <- function(physeq = NULL,
     physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
   }
 
+  physeq <- clean_pq(
+    physeq,
+    force_taxa_as_columns = TRUE,
+    remove_empty_samples = FALSE,
+    remove_empty_taxa = FALSE,
+    clean_samples_names = FALSE,
+    silent = TRUE
+  )
+
   if (rarefy_before_merging) {
     physeq <- rarefy_even_depth(physeq)
     physeq <- clean_pq(physeq)
@@ -1171,15 +1180,15 @@ multiplot <-
 #' @param letters (optional, default=FALSE): If set to TRUE, the plot
 #'   show letters based on p-values for comparison. Use the
 #'   \code{\link[multcompView]{multcompLetters}} function from the package
-#'   multcompLetters. BROKEN for the moment. Note that na values in Tthe 
+#'   multcompLetters. BROKEN for the moment. Note that na values in Tthe
 #'   variable param need to be removed (see examples) to use letters.
 #' @param add_points (logical): add jitter point on boxplot
 #' @param add_info (logical, default TRUE) Do we add a subtitle with
 #'   information about the number of samples per modality ?
 #' @param one_plot (logical, default FALSE) If TRUE, return a unique
 #'   plot with the four plot inside using the patchwork package.
-#'   Note that if letters and one_plot are both TRUE, tuckey HSD results 
-#'   are discarded from the unique plot. In that case, use one_plot = FALSE 
+#'   Note that if letters and one_plot are both TRUE, tuckey HSD results
+#'   are discarded from the unique plot. In that case, use one_plot = FALSE
 #'   to see the tuckey HSD results in the fourth plot of the resulting list.
 #' @param correction_for_sample_size (logical, default TRUE) This function
 #'   use a sqrt of the read numbers in the linear model in order to
@@ -1638,10 +1647,10 @@ rotl_pq <- function(physeq,
 #' Heat tree from `metacoder` package using `tax_table` slot
 #' @description
 #' `r lifecycle::badge("maturing")`
-#' 
-#' Note that the number of ASV is store under the name `n_obs` 
+#'
+#' Note that the number of ASV is store under the name `n_obs`
 #' and the number of sequences under the name `nb_sequences`
-#' 
+#'
 #' @inheritParams clean_pq
 #' @param taxonomic_level (default: NULL): a vector of selected
 #' taxonomic level using
@@ -1676,27 +1685,26 @@ rotl_pq <- function(physeq,
 #'   node_size_trans = "log10 area"
 #' )
 #' }
-#' 
-#' #' heat_tree_pq(GPsubset,
+#'
+#' heat_tree_pq(GPsubset,
 #'   node_size = n_seq,
 #'   node_color = n_obs,
 #'   node_label = taxon_names,
 #'   tree_label = taxon_names,
 #'   node_size_trans = "log10 area"
 #' )
-#' }
 #'
 heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
   library("metacoder")
   if (!is.null(taxonomic_level)) {
     physeq@tax_table <- physeq@tax_table[, taxonomic_level]
   }
-  
+
   data_metacoder <- parse_phyloseq(physeq)
   data_metacoder$data$taxon_counts <- calc_taxon_abund(data_metacoder, data = "otu_table")
   data_metacoder$data$taxon_counts$nb_sequences <- rowSums(data_metacoder$data$taxon_counts[, -1])
 
-  p <- heat_tree(data_metacoder,  ...)
+  p <- heat_tree(data_metacoder, ...)
 
   return(p)
 }
@@ -2840,7 +2848,7 @@ upset_test_pq <-
 #' @return a single value
 #' @export
 #'
-#' @examples 
+#' @examples
 #' diff_fct_diff_class(
 #'   data_fungi@sam_data$Sample_id,
 #'   numeric_fonction = sum,
@@ -2872,11 +2880,11 @@ upset_test_pq <-
 #'   character_method = "unique_or_na"
 #' )
 #' diff_fct_diff_class(
-#'   c("IE", "IE", "TE","TE"),
+#'   c("IE", "IE", "TE", "TE"),
 #'   character_method = "more_frequent"
 #' )
 #' diff_fct_diff_class(
-#'   c("IE", "IE", "TE","TE"),
+#'   c("IE", "IE", "TE", "TE"),
 #'   character_method = "more_frequent_without_equality"
 #' )
 #' @author Adrien Taudière
@@ -2938,7 +2946,7 @@ diff_fct_diff_class <-
 
 
 ################################################################################
-#' Plot the distribution of sequences or ASV in one taxonomic levels 
+#' Plot the distribution of sequences or ASV in one taxonomic levels
 #' @description
 #' `r lifecycle::badge("experimental")`
 #'

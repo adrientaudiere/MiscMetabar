@@ -5,8 +5,10 @@ data("enterotype", package = "phyloseq")
 
 GP <- GlobalPatterns
 data_fungi_2trees <-
-  subset_samples(data_fungi,
-                 data_fungi@sam_data$Tree_name %in% c("A10-005", "AD30-abm-X"))
+  subset_samples(
+    data_fungi,
+    data_fungi@sam_data$Tree_name %in% c("A10-005", "AD30-abm-X")
+  )
 GP_archae <-
   subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 data_basidio <- subset_taxa(data_fungi, Phylum == "Basidiomycota")
@@ -17,7 +19,8 @@ test_that("hill_pq works with data_fungi dataset", {
   expect_silent(suppressMessages(hill_pq(
     clean_pq(subset_samples_pq(
       data_fungi, !is.na(data_fungi@sam_data$Height)
-    )), "Height", letters = TRUE
+    )), "Height",
+    letters = TRUE
   )))
   expect_silent(suppressMessages(
     hill_pq(
@@ -133,6 +136,6 @@ test_that("accu_plot works with data_fungi dataset", {
 
 
 test_that("accu_samp_threshold works with GlobalPatterns dataset", {
-expect_s3_class(p <- accu_plot(GP_archae, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10), "ggplot")
- expect_equal(length(accu_samp_threshold(p)), 9)
+  expect_s3_class(p <- accu_plot(GP_archae, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10), "ggplot")
+  expect_equal(length(accu_samp_threshold(p)), 9)
 })
