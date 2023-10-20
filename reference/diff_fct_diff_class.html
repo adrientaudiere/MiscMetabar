@@ -12,7 +12,7 @@ Mainly an internal function useful in "lapply(..., tapply)" methods'><!-- mathja
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.42</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,7 +99,7 @@ Mainly an internal function useful in "lapply(..., tapply)" methods</p>
 
 <dt>character_method</dt>
 <dd><p>: A method for character vector (and factor). One of :</p><ul><li><p>unique_or_na (default)</p></li>
-<li><p>more frequent</p></li>
+<li><p>more_frequent</p></li>
 <li><p>more_frequent_without_equality</p></li>
 </ul></dd>
 
@@ -119,6 +119,57 @@ Mainly an internal function useful in "lapply(..., tapply)" methods</p>
     <p>Adrien Taudière</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">diff_fct_diff_class</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">data_fungi</span><span class="op">@</span><span class="va">sam_data</span><span class="op">$</span><span class="va">Sample_id</span>,</span></span>
+<span class="r-in"><span>  numeric_fonction <span class="op">=</span> <span class="va">sum</span>,</span></span>
+<span class="r-in"><span>  na.rm <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 17852</span>
+<span class="r-in"><span><span class="fu">diff_fct_diff_class</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">data_fungi</span><span class="op">@</span><span class="va">sam_data</span><span class="op">$</span><span class="va">Time</span>,</span></span>
+<span class="r-in"><span>  numeric_fonction <span class="op">=</span> <span class="va">mean</span>,</span></span>
+<span class="r-in"><span>  na.rm <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 5.802469</span>
+<span class="r-in"><span><span class="fu">diff_fct_diff_class</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">data_fungi</span><span class="op">@</span><span class="va">sam_data</span><span class="op">$</span><span class="va">Height</span> <span class="op">==</span> <span class="st">"Low"</span>,</span></span>
+<span class="r-in"><span>  logical_method <span class="op">=</span> <span class="st">"TRUE_if_one"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-in"><span><span class="fu">diff_fct_diff_class</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">data_fungi</span><span class="op">@</span><span class="va">sam_data</span><span class="op">$</span><span class="va">Height</span> <span class="op">==</span> <span class="st">"Low"</span>,</span></span>
+<span class="r-in"><span>  logical_method <span class="op">=</span> <span class="st">"NA_if_not_all_TRUE"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA</span>
+<span class="r-in"><span><span class="fu">diff_fct_diff_class</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">data_fungi</span><span class="op">@</span><span class="va">sam_data</span><span class="op">$</span><span class="va">Height</span> <span class="op">==</span> <span class="st">"Low"</span>,</span></span>
+<span class="r-in"><span>  logical_method <span class="op">=</span> <span class="st">"FALSE_if_not_all_TRUE"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+<span class="r-in"><span><span class="fu">diff_fct_diff_class</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">data_fungi</span><span class="op">@</span><span class="va">sam_data</span><span class="op">$</span><span class="va">Height</span>,</span></span>
+<span class="r-in"><span>  character_method <span class="op">=</span> <span class="st">"unique_or_na"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA</span>
+<span class="r-in"><span><span class="fu">diff_fct_diff_class</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"IE"</span>, <span class="st">"IE"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  character_method <span class="op">=</span> <span class="st">"unique_or_na"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "IE"</span>
+<span class="r-in"><span><span class="fu">diff_fct_diff_class</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"IE"</span>, <span class="st">"IE"</span>, <span class="st">"TE"</span>, <span class="st">"TE"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  character_method <span class="op">=</span> <span class="st">"more_frequent"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "IE"</span>
+<span class="r-in"><span><span class="fu">diff_fct_diff_class</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"IE"</span>, <span class="st">"IE"</span>, <span class="st">"TE"</span>, <span class="st">"TE"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  character_method <span class="op">=</span> <span class="st">"more_frequent_without_equality"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] NA</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

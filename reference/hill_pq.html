@@ -14,7 +14,7 @@ model in order to correct for uneven sampling depth."><!-- mathjax --><script sr
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.42</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,7 +94,8 @@ using the <code>phyloseq</code> package.</p></dd>
 
 
 <dt>variable</dt>
-<dd><p>(required): The variable to test</p></dd>
+<dd><p>(required): The variable to test. Must be present in
+the <code>sam_data</code> slot of the physeq object.</p></dd>
 
 
 <dt>color_fac</dt>
@@ -105,7 +106,8 @@ using the <code>phyloseq</code> package.</p></dd>
 <dd><p>(optional, default=FALSE): If set to TRUE, the plot
 show letters based on p-values for comparison. Use the
 <code><a href="https://rdrr.io/pkg/multcompView/man/multcompLetters.html" class="external-link">multcompLetters</a></code> function from the package
-multcompLetters. BROKEN for the moment.</p></dd>
+multcompLetters. BROKEN for the moment. Note that na values in Tthe
+variable param need to be removed (see examples) to use letters.</p></dd>
 
 
 <dt>add_points</dt>
@@ -114,15 +116,15 @@ multcompLetters. BROKEN for the moment.</p></dd>
 
 <dt>add_info</dt>
 <dd><p>(logical, default TRUE) Do we add a subtitle with
-information about the number of samples per modality.</p></dd>
+information about the number of samples per modality ?</p></dd>
 
 
 <dt>one_plot</dt>
-<dd><p>(logical, default=FALSE) If true, return a unique
+<dd><p>(logical, default FALSE) If TRUE, return a unique
 plot with the four plot inside using the patchwork package.
-Note that if letters is TRUE, tuckey HSD results are discarded from
-the unique plot. In that case, use one_plot = FALSE to see the tuckey
-HSD results in the fourth plot of the resulting list.</p></dd>
+Note that if letters and one_plot are both TRUE, tuckey HSD results
+are discarded from the unique plot. In that case, use one_plot = FALSE
+to see the tuckey HSD results in the fourth plot of the resulting list.</p></dd>
 
 
 <dt>correction_for_sample_size</dt>

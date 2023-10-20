@@ -27,7 +27,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.42</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -307,7 +307,7 @@ the ASV_50 as control through 6 differents algorithms.</p>
 <span><span class="va">res_mixt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"cutoff_mixt"</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; The filtering processes discard 134 taxa and 65914 sequences</span></span>
+<span><span class="co">#&gt; The filtering processes discard 148 taxa and 70011 sequences</span></span>
 <span><span class="va">res_diff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"cutoff_diff"</span>, min_diff_for_cutoff <span class="op">=</span> <span class="fl">2</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
@@ -315,15 +315,15 @@ the ASV_50 as control through 6 differents algorithms.</p>
 <span><span class="va">res_min</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"min"</span>, min_diff_for_cutoff <span class="op">=</span> <span class="fl">2</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; The filtering processes discard 3 taxa and 3175 sequences</span></span>
+<span><span class="co">#&gt; The filtering processes discard 3 taxa and 3086 sequences</span></span>
 <span><span class="va">res_max</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"max"</span>, min_diff_for_cutoff <span class="op">=</span> <span class="fl">2</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; The filtering processes discard 191 taxa and 86931 sequences</span></span>
+<span><span class="co">#&gt; The filtering processes discard 197 taxa and 84748 sequences</span></span>
 <span><span class="va">res_mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"mean"</span>, min_diff_for_cutoff <span class="op">=</span> <span class="fl">2</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; The filtering processes discard 96 taxa and 48461 sequences</span></span></code></pre></div>
+<span><span class="co">#&gt; The filtering processes discard 103 taxa and 49265 sequences</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">track_formattable</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/track_wkflow.html">track_wkflow</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  <span class="st">"raw data"</span> <span class="op">=</span> <span class="va">data_fungi</span>,</span>
@@ -404,7 +404,7 @@ cutoff_seq
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 98.83%">1817543</span>
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 93.40%">1402</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 93.60%">1402</span>
 </td>
 <td style="text-align:right;">
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
@@ -415,10 +415,10 @@ cutoff_seq
 cutoff_mixt
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 96.42%">1773210</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 96.19%">1769113</span>
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 50.89%">1286</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 47.41%">1272</span>
 </td>
 <td style="text-align:right;">
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
@@ -432,7 +432,7 @@ cutoff_diff
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 98.16%">1805274</span>
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 84.61%">1378</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 85.08%">1378</span>
 </td>
 <td style="text-align:right;">
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
@@ -443,10 +443,10 @@ cutoff_diff
 min
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 99.83%">1835949</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 99.83%">1836038</span>
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 98.90%">1417</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 98.93%">1417</span>
 </td>
 <td style="text-align:right;">
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
@@ -457,10 +457,10 @@ min
 max
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 95.27%">1752193</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 95.39%">1754376</span>
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 30.00%">1229</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 30.00%">1223</span>
 </td>
 <td style="text-align:right;">
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
@@ -471,10 +471,10 @@ max
 mean
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 97.36%">1790663</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 97.32%">1789859</span>
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 64.82%">1324</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 63.40%">1317</span>
 </td>
 <td style="text-align:right;">
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
