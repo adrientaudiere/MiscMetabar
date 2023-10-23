@@ -346,7 +346,7 @@ accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
 #'    It's preferred that grid_col is a named vector of which names
 #'    correspond to sectors. If it is not a named vector, the
 #'    order of grid_col corresponds to order of sectors.
-#' @param log10transform (logical) Should sequence be log10 transformed
+#' @param log10trans (logical) Should sequence be log10 transformed
 #'                   (more precisely by log10(1+x))?
 #' @param ... Additional arguments passed on to
 #'   \code{\link[circlize]{chordDiagram}} or \code{\link[circlize]{circos.par}}
@@ -382,7 +382,7 @@ circle_pq <-
            start_degree = NULL,
            row_col = NULL,
            grid_col = NULL,
-           log10transform = FALSE,
+           log10trans = FALSE,
            ...) {
     if (!inherits(physeq, "phyloseq")) {
       stop("physeq must be an object of class 'phyloseq'")
@@ -491,7 +491,7 @@ circle_pq <-
     }
     otu_table_ech <- o_t_e_interm
 
-    if (log10transform) {
+    if (log10trans) {
       otu_table_ech <- apply(otu_table_ech, 2, function(x) {
         log10(1 + x)
       })
@@ -762,10 +762,10 @@ sankey_pq <-
 #' data("enterotype")
 #' venn_pq(enterotype, fact = "SeqTech")
 #' venn_pq(enterotype, fact = "ClinicalStatus")
-#' venn_pq(enterotype, fact = "Nationality", print_values = F)
-#' venn_pq(enterotype, fact = "ClinicalStatus", print_values = F) +
+#' venn_pq(enterotype, fact = "Nationality", print_values = FALSE)
+#' venn_pq(enterotype, fact = "ClinicalStatus", print_values = FALSE) +
 #'   scale_fill_hue()
-#' venn_pq(enterotype, fact = "ClinicalStatus", print_values = F) +
+#' venn_pq(enterotype, fact = "ClinicalStatus", print_values = FALSE) +
 #'   scale_fill_hue()
 #'
 #' @return A \code{\link{ggplot}}2 plot representing Venn diagramm of
@@ -1382,7 +1382,7 @@ hill_pq <-
     )
 
     if (one_plot) {
-      library("patchwork")
+      requireNamespace("patchwork", quietly = TRUE)
       if (letters) {
         res <- ((p_0 + theme(legend.position = "none")) + labs(subtitle = element_blank()) +
           (p_1 + theme(legend.position = "none", axis.text.y = element_blank()) + labs(subtitle = element_blank()) + ylab(NULL)) +
@@ -1695,7 +1695,7 @@ rotl_pq <- function(physeq,
 #'
 #' }
 heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
-  library("metacoder")
+  requireNamespace("metacoder", quietly = TRUE)
   if (!is.null(taxonomic_level)) {
     physeq@tax_table <- physeq@tax_table[, taxonomic_level]
   }
@@ -1772,7 +1772,7 @@ biplot_pq <- function(physeq,
                       right_name_col = "#1d2949",
                       right_fill = "#1d2949",
                       right_col = "#1d2949",
-                      log10transform = TRUE,
+                      log10trans = TRUE,
                       nudge_y = c(0.3, 0.3),
                       geom_label = FALSE,
                       text_size = 3,
@@ -2269,7 +2269,7 @@ plot_tax_pq <-
 #' @param nb_seq (logical; default TRUE) If set to FALSE, only the number of ASV
 #'   is count. Concretely, physeq otu_table is transformed in a binary
 #'   otu_table (each value different from zero is set to one)
-#' @param log10transform (logical, default TRUE) If TRUE,
+#' @param log10trans (logical, default TRUE) If TRUE,
 #'   the number of sequences (or ASV if nb_seq = FALSE) is log10
 #'   transformed.
 #' @return A ggplot2 graphic
@@ -2279,14 +2279,15 @@ plot_tax_pq <-
 #' @examples
 #' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", "Time")
 #' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order")
-#' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", nb_seq = FALSE, log10transform = FALSE)
+#' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", 
+#'                 nb_seq = FALSE, log10trans = FALSE)
 multitax_bar_pq <- function(physeq,
                             lvl1,
                             lvl2,
                             lvl3,
                             fact = NULL,
                             nb_seq = TRUE,
-                            log10transform = TRUE) {
+                            log10trans = TRUE) {
   if (!nb_seq) {
     physeq <- as_binary_otu_table(physeq)
   }
@@ -2303,7 +2304,7 @@ multitax_bar_pq <- function(physeq,
       "LVL3" = tapply(psm[[lvl3]], psm[[lvl3]], unique)
     )
 
-    if (log10transform) {
+    if (log10trans) {
       data_gg$Abundance <- log10(data_gg$Abundance)
     }
 
@@ -2325,7 +2326,7 @@ multitax_bar_pq <- function(physeq,
       "LVL3" = tapply(psm[[lvl3]], paste(psm[[fact]], psm[[lvl3]]), unique)
     )
 
-    if (log10transform) {
+    if (log10trans) {
       data_gg$Abundance <- log10(data_gg$Abundance)
     }
 
@@ -2531,15 +2532,19 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 #' @export
 #'
 #' @examples
-#' library("iNEXT")
-#' res_iNEXT <- iNEXT_pq(data_fungi_sp_known,
-#'   merge_sample_by = "Height",
-#'   q = 1, datatype = "abundance", nboot = 5
-#' )
-#' ggiNEXT(res_iNEXT)
-#' ggiNEXT(res_iNEXT, type = 2)
-#' ggiNEXT(res_iNEXT, type = 3)
-#'
+#' \dontrun{
+#'  library("iNEXT")
+#'  res_iNEXT <- iNEXT_pq(
+#'    data_fungi_sp_known,
+#'    merge_sample_by = "Height",
+#'    q = 1,
+#'    datatype = "abundance", 
+#'    nboot = 2
+#'  )
+#'  ggiNEXT(res_iNEXT)
+#'  ggiNEXT(res_iNEXT, type = 2)
+#'  ggiNEXT(res_iNEXT, type = 3)
+#' }
 #' @author Adrien Taudière
 #'
 #'
@@ -3003,7 +3008,7 @@ tax_bar_pq <- function(physeq, fact = "Sample", taxa = "Order", percent_bar = FA
 #' @param nb_seq (logical; default TRUE) If set to FALSE, only the number of ASV
 #'   is count. Concretely, physeq `otu_table` is transformed in a binary
 #'   `otu_table` (each value different from zero is set to one)
-#' @param log10transform (logical, default TRUE) If TRUE,
+#' @param log10trans (logical, default TRUE) If TRUE,
 #'   the number of sequences (or ASV if nb_seq = FALSE) is log10
 #'   transformed.
 #' @param ... Other params passed on to [ggridges::geom_density_ridges()]
@@ -3014,7 +3019,7 @@ tax_bar_pq <- function(physeq, fact = "Sample", taxa = "Order", percent_bar = FA
 #' @author Adrien Taudière
 #' @examples
 #'
-#' ridges_pq(data_fungi, "Time", alpha = 0.5, log10transform = FALSE) + xlim(c(0, 1000))
+#' ridges_pq(data_fungi, "Time", alpha = 0.5, log10trans = FALSE) + xlim(c(0, 1000))
 #' ridges_pq(data_fungi, "Time", alpha = 0.5)
 #' ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")))
 #' ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")),
@@ -3029,12 +3034,12 @@ tax_bar_pq <- function(physeq, fact = "Sample", taxa = "Order", percent_bar = FA
 ridges_pq <- function(physeq,
                       fact = NULL,
                       nb_seq = TRUE,
-                      log10transform = TRUE,
+                      log10trans = TRUE,
                       ...) {
   psm <- psmelt(physeq)
   psm <- psm %>% filter(Abundance > 0)
 
-  if (log10transform) {
+  if (log10trans) {
     psm$Abundance <- log10(psm$Abundance)
   }
   if (nb_seq) {
@@ -3076,7 +3081,7 @@ ridges_pq <- function(physeq,
 #' @param nb_seq (logical; default TRUE) If set to FALSE, only the number of ASV
 #'   is count. Concretely, physeq otu_table is transformed in a binary
 #'   otu_table (each value different from zero is set to one)
-#' @param log10transform (logical, default TRUE) If TRUE,
+#' @param log10trans (logical, default TRUE) If TRUE,
 #'   the number of sequences (or ASV if nb_seq = FALSE) is log10
 #'   transformed.
 #' @param plot_legend (logical, default FALSE) If TRUE, plot che
@@ -3102,7 +3107,7 @@ ridges_pq <- function(physeq,
 #'     Phylum == "Basidiomycota"
 #'   )),
 #'   "Order", "Class",
-#'   log10transform = FALSE
+#'   log10trans = FALSE
 #' )
 #' treemap_pq(
 #'   clean_pq(subset_taxa(
@@ -3110,13 +3115,13 @@ ridges_pq <- function(physeq,
 #'     Phylum == "Basidiomycota"
 #'   )),
 #'   "Order", "Class",
-#'   nb_seq = FALSE, log10transform = FALSE
+#'   nb_seq = FALSE, log10trans = FALSE
 #' )
 treemap_pq <- function(physeq,
                        lvl1,
                        lvl2,
                        nb_seq = TRUE,
-                       log10transform = TRUE,
+                       log10trans = TRUE,
                        plot_legend = FALSE,
                        ...) {
   if (!nb_seq) {
@@ -3131,7 +3136,7 @@ treemap_pq <- function(physeq,
     group_by(.data[[lvl2]]) %>%
     reframe(Abundance = sum(Abundance), LVL1 = unique(.data[[lvl1]]))
 
-  if (log10transform) {
+  if (log10trans) {
     psm2$Abundance <- log10(psm2$Abundance)
   }
 
@@ -3159,7 +3164,7 @@ treemap_pq <- function(physeq,
   }
 
   if (nb_seq) {
-    if (log10transform) {
+    if (log10trans) {
       p <-
         p + ggtitle(paste0(
           "Nb of sequences (log10 transformed) by ",
@@ -3171,7 +3176,7 @@ treemap_pq <- function(physeq,
       p <- p + ggtitle(paste0("Nb of sequences by ", lvl1, " and ", lvl2))
     }
   } else {
-    if (log10transform) {
+    if (log10trans) {
       p <- p + ggtitle(paste0(
         "Nb of ASV (log10 transformed) by ",
         lvl1, " and ", lvl2

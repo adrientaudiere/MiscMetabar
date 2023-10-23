@@ -9,7 +9,7 @@ NULL
 
 if (getRversion() >= "2.15.1") {
   utils::globalVariables(c(
-    ".id", "%>%", "Ab", "Abundance", "character_method", "col_tax", "combn", "complement", "devtools", "e-value", "Family", "Genus", "grid.draw", "grid.layout", "group_by", "Hill_0", "Hill_1", "Hill_2", "install_github", "log2FoldChange", "logFC", "lwr", "max_Hill", "modality", "multcompLetters", "nb_values", "ott_id", "OTU", "Proportion", "pushViewport", "Query name", "rarefy", "reverse", "rgb", "reverseComplement", "rrarefy", "Sample", "Species", "summarise", "tax", "tax_col", "teststat", "tnrs_match_names", "tol_induced_subtree", "upr", "upViewport", "val", "vegdist", "viewport", "x", "x1", "X1", "x2", "y", "y1", "y2", "ymax", "ymin"
+    ".id", "%>%", "Ab", "Abundance", "character_method", "col_tax", "combn", "complement", "devtools", "e-value", "Family", "Genus", "grid.draw", "grid.layout", "group_by", "Hill_0", "Hill_1", "Hill_2", "install_github", "log2FoldChange", "logFC", "lwr", "max_Hill", "modality", "multcompLetters", "nb_values", "ott_id", "OTU", "Proportion", "pushViewport", "Query name", "rarefy", "reverse", "rgb", "reverseComplement", "rrarefy", "Sample", "Species", "summarise", "tax", "tax_col", "teststat", "tnrs_match_names", "tol_induced_subtree", "upr", "upViewport", "val", "vegdist", "viewport", "x", "x1", "X1", "x2", "y", "y1", "y2", "ymax", "ymin", "Class", "LVL1", "LVL3", "Time",  "calc_taxon_abund", "heat_tree", "parse_phyloseq"
   ))
 }
 

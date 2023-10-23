@@ -9,7 +9,7 @@ treemap_pq(
   lvl1,
   lvl2,
   nb_seq = TRUE,
-  log10transform = TRUE,
+  log10trans = TRUE,
   plot_legend = FALSE,
   ...
 )
@@ -26,7 +26,7 @@ using the \code{phyloseq} package.}
 is count. Concretely, physeq otu_table is transformed in a binary
 otu_table (each value different from zero is set to one)}
 
-\item{log10transform}{(logical, default TRUE) If TRUE,
+\item{log10trans}{(logical, default TRUE) If TRUE,
 the number of sequences (or ASV if nb_seq = FALSE) is log10
 transformed.}
 
@@ -34,10 +34,6 @@ transformed.}
 legend of color for lvl 1}
 
 \item{...}{Other arguments passed on to \code{\link[treemapify:geom_treemap]{treemapify::geom_treemap()}} function.}
-
-\item{fact}{Name of the factor to cluster samples by modalities.
-Need to be in \code{physeq@sam_data}. If not set, the taxonomic
-distribution is plot for all samples together.}
 }
 \value{
 A ggplot2 graphic
@@ -62,7 +58,7 @@ treemap_pq(
     Phylum == "Basidiomycota"
   )),
   "Order", "Class",
-  log10transform = FALSE
+  log10trans = FALSE
 )
 treemap_pq(
   clean_pq(subset_taxa(
@@ -70,7 +66,7 @@ treemap_pq(
     Phylum == "Basidiomycota"
   )),
   "Order", "Class",
-  nb_seq = FALSE, log10transform = FALSE
+  nb_seq = FALSE, log10trans = FALSE
 )
 }
 \author{

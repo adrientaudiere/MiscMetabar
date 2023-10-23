@@ -24,15 +24,19 @@ see \code{\link[iNEXT:iNEXT]{iNEXT::iNEXT()}} documentation
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
-library("iNEXT")
-res_iNEXT <- iNEXT_pq(data_fungi_sp_known,
-  merge_sample_by = "Height",
-  q = 1, datatype = "abundance", nboot = 5
-)
-ggiNEXT(res_iNEXT)
-ggiNEXT(res_iNEXT, type = 2)
-ggiNEXT(res_iNEXT, type = 3)
-
+\dontrun{
+ library("iNEXT")
+ res_iNEXT <- iNEXT_pq(
+   data_fungi_sp_known,
+   merge_sample_by = "Height",
+   q = 1,
+   datatype = "abundance", 
+   nboot = 2
+ )
+ ggiNEXT(res_iNEXT)
+ ggiNEXT(res_iNEXT, type = 2)
+ ggiNEXT(res_iNEXT, type = 3)
+}
 }
 \author{
 Adrien Taudière

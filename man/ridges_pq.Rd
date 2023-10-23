@@ -4,7 +4,7 @@
 \alias{ridges_pq}
 \title{Ridge plot of a phyloseq object}
 \usage{
-ridges_pq(physeq, fact = NULL, nb_seq = TRUE, log10transform = TRUE, ...)
+ridges_pq(physeq, fact = NULL, nb_seq = TRUE, log10trans = TRUE, ...)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
@@ -17,7 +17,7 @@ different lines}
 is count. Concretely, physeq \code{otu_table} is transformed in a binary
 \code{otu_table} (each value different from zero is set to one)}
 
-\item{log10transform}{(logical, default TRUE) If TRUE,
+\item{log10trans}{(logical, default TRUE) If TRUE,
 the number of sequences (or ASV if nb_seq = FALSE) is log10
 transformed.}
 
@@ -32,7 +32,7 @@ taxonomic groups
 }
 \examples{
 
-ridges_pq(data_fungi, "Time", alpha = 0.5, log10transform = FALSE) + xlim(c(0, 1000))
+ridges_pq(data_fungi, "Time", alpha = 0.5, log10trans = FALSE) + xlim(c(0, 1000))
 ridges_pq(data_fungi, "Time", alpha = 0.5)
 ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")))
 ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")),

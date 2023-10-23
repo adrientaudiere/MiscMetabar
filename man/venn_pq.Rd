@@ -35,10 +35,10 @@ modalities of the argument \code{factor}
 data("enterotype")
 venn_pq(enterotype, fact = "SeqTech")
 venn_pq(enterotype, fact = "ClinicalStatus")
-venn_pq(enterotype, fact = "Nationality", print_values = F)
-venn_pq(enterotype, fact = "ClinicalStatus", print_values = F) +
+venn_pq(enterotype, fact = "Nationality", print_values = FALSE)
+venn_pq(enterotype, fact = "ClinicalStatus", print_values = FALSE) +
   scale_fill_hue()
-venn_pq(enterotype, fact = "ClinicalStatus", print_values = F) +
+venn_pq(enterotype, fact = "ClinicalStatus", print_values = FALSE) +
   scale_fill_hue()
 
 }

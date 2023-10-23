@@ -17,7 +17,7 @@ circle_pq(
   start_degree = NULL,
   row_col = NULL,
   grid_col = NULL,
-  log10transform = FALSE,
+  log10trans = FALSE,
   ...
 )
 }
@@ -62,11 +62,11 @@ It's preferred that grid_col is a named vector of which names
 correspond to sectors. If it is not a named vector, the
 order of grid_col corresponds to order of sectors.}
 
-\item{...}{Additional arguments passed on to
-\code{\link[circlize]{chordDiagram}} or \code{\link[circlize]{circos.par}}}
-
 \item{log10trans}{(logical) Should sequence be log10 transformed
 (more precisely by log10(1+x))?}
+
+\item{...}{Additional arguments passed on to
+\code{\link[circlize]{chordDiagram}} or \code{\link[circlize]{circos.par}}}
 }
 \value{
 A \code{\link[circlize]{chordDiagram}} plot representing the

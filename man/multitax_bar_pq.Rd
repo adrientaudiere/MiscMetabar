@@ -11,7 +11,7 @@ multitax_bar_pq(
   lvl3,
   fact = NULL,
   nb_seq = TRUE,
-  log10transform = TRUE
+  log10trans = TRUE
 )
 }
 \arguments{
@@ -32,7 +32,7 @@ distribution is plot for all samples together.}
 is count. Concretely, physeq otu_table is transformed in a binary
 otu_table (each value different from zero is set to one)}
 
-\item{log10transform}{(logical, default TRUE) If TRUE,
+\item{log10trans}{(logical, default TRUE) If TRUE,
 the number of sequences (or ASV if nb_seq = FALSE) is log10
 transformed.}
 }
@@ -48,7 +48,8 @@ in lvl1
 \examples{
 multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", "Time")
 multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order")
-multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", nb_seq = FALSE, log10transform = FALSE)
+multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", 
+                nb_seq = FALSE, log10trans = FALSE)
 }
 \author{
 Adrien Taudière

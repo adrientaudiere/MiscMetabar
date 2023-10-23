@@ -125,7 +125,7 @@ simplify_taxo <- function(physeq, remove_space = TRUE) {
   taxo <- gsub(".__", "", taxo, perl = TRUE)
   if (remove_space) {
     taxo <- gsub(" ", "", taxo)
-    taxo <- gsub(" ", "", taxo)
+    taxo <- gsub("\u00a0", "", taxo)
   }
   physeq@tax_table <- tax_table(taxo)
   return(physeq)

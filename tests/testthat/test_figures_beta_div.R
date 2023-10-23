@@ -36,7 +36,7 @@ test_that("circle_pq works", {
   expect_message(circle_pq(
     data_basidio_2trees,
     fact = "Tree_name",
-    log10transform = TRUE,
+    log10trans = TRUE,
     nproc = 1
   ))
   expect_message(
