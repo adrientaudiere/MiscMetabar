@@ -24,6 +24,10 @@ navbar:
     - text: Filter taxa and samples
       href: articles/filter.html
     - text: -------
+    - text: Tutorials with published dataset
+    - text: Tengeler
+      href: articles/tengeler.html
+    - text: -------
     - text: "For developpers"
     - text: Rules of code
       href: articles/Rules.html

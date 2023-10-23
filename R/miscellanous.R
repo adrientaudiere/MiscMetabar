@@ -273,7 +273,7 @@ funky_color <-
 #' @description
 #'  `r lifecycle::badge("experimental")`
 #'
-#' @param file_path The path to one fastq file or a list of fastq files
+#' @param fastq_files The path to one fastq file or a list of fastq files
 #'   (see examples)
 #' @param folder_output The path to a folder for output files
 #' @param n_seq (int; default 1000) : Number of sequences kept (every sequence

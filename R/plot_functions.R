@@ -346,7 +346,7 @@ accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
 #'    It's preferred that grid_col is a named vector of which names
 #'    correspond to sectors. If it is not a named vector, the
 #'    order of grid_col corresponds to order of sectors.
-#' @param log10trans (logical) Should sequence be log10 transformed
+#' @param log10transform (logical) Should sequence be log10 transformed
 #'                   (more precisely by log10(1+x))?
 #' @param ... Additional arguments passed on to
 #'   \code{\link[circlize]{chordDiagram}} or \code{\link[circlize]{circos.par}}
@@ -1684,7 +1684,6 @@ rotl_pq <- function(physeq,
 #'   tree_label = taxon_names,
 #'   node_size_trans = "log10 area"
 #' )
-#' }
 #'
 #' heat_tree_pq(GPsubset,
 #'   node_size = n_seq,
@@ -1694,6 +1693,7 @@ rotl_pq <- function(physeq,
 #'   node_size_trans = "log10 area"
 #' )
 #'
+#' }
 heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
   library("metacoder")
   if (!is.null(taxonomic_level)) {
@@ -1772,7 +1772,7 @@ biplot_pq <- function(physeq,
                       right_name_col = "#1d2949",
                       right_fill = "#1d2949",
                       right_col = "#1d2949",
-                      log10trans = TRUE,
+                      log10transform = TRUE,
                       nudge_y = c(0.3, 0.3),
                       geom_label = FALSE,
                       text_size = 3,
@@ -3073,9 +3073,6 @@ ridges_pq <- function(physeq,
 #' @inheritParams clean_pq
 #' @param lvl1 (required) Name of the first (higher) taxonomic rank of interest
 #' @param lvl2 (required) Name of the second (lower) taxonomic rank of interest
-#' @param fact Name of the factor to cluster samples by modalities.
-#'   Need to be in \code{physeq@sam_data}. If not set, the taxonomic
-#'   distribution is plot for all samples together.
 #' @param nb_seq (logical; default TRUE) If set to FALSE, only the number of ASV
 #'   is count. Concretely, physeq otu_table is transformed in a binary
 #'   otu_table (each value different from zero is set to one)

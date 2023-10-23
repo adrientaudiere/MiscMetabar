@@ -26,7 +26,7 @@ Describing communities of living organisms increasingly relies on massive DNA se
 
 Biological studies, especially in ecology, health sciences and taxonomy, need to describe the biological composition of samples. During the last twenty years, the development of (i) high-throughput DNA sequencing, (ii) reference databases and (iii) bioinformatics resources have allowed the description of biological communities through metabarcoding. Metabarcoding involves the sequencing of millions (*meta*-) of short regions of specific DNA (*-barcoding*, @valentini2009) often from environmental samples (eDNA, @taberlet2012) such as human stomach contents, lake water, soil and air.
 
-Several plateforms (referenced in @tedersoo2022) such as QIIME2 (@bolyen2019), mothur (@schloss2020), and Galaxy (@jalili2020) allow complete analysis from raw fastq sequences to statistical analysis and visualization. However, the R ecosystem (@rcran), is very rich (see the "State of the field in R" section) and more flexible than these platforms.
+Several plateforms (referenced in @tedersoo2022) such as QIIME2 (@bolyen2019), mothur (@schloss2020), and Galaxy (@jalili2020) allow complete analysis from raw fastq sequences to statistical analysis and visualization. However, the R ecosystem (@rcran), is very rich (Table 1) and more flexible than these platforms.
 
 `MiscMetabar` aims to facilitate the **description**, **transformation**, **exploration** and **reproducibility** of metabarcoding analysis using R. The development of `MiscMetabar` relies heavily on the R packages `dada2`, `phyloseq` and `targets`.
 
@@ -36,7 +36,7 @@ The metabarcoding ecosystem in the R language is mature, well-constructed, and r
 
 R package [`dada2`](http://bioconductor.org/packages/release/bioc/html/dada2.html) [@callahan2016]  provides a highly cited and recommended clustering method [@pauvert2019]. [`phyloseq`](http://bioconductor.org/packages/release/bioc/html/phyloseq.html) [@mcmurdie2013] facilitate metagenomics analysis by providing a way to store data (the `phyloseq` class) and provides graphical and statistical functions. `MiscMetabar` is based on the `phyloseq` class from `phyloseq`, the most cited package in metagenomics [@wen2023]. For a description and comparison of other integrated packages competing with phyloseq, see @wen2023. Some packages already extend the phyloseq packages, in particular [`microbiome`](https://microbiome.github.io/) package collection [@ernst2023], the `speedyseq` package [@mclaren2020] and the package [phylosmith](https://schuyler-smith.github.io/phylosmith/) [@smith2023].
 
-![Table 1 : Important functions of MiscMetabar with their equivalent when available in other R packages.](figures_svg/table_1.svg)
+![Table 1 : Important functions of MiscMetabar with their equivalent when available in other R packages.](figures_svg/table1.svg)
 
 `MiscMetabar` enriches this R ecosystem by providing functions to (i) **describe** your dataset visually, (ii) **transform** your data, (iii) **explore** biological diversity (alpha, beta, and taxonomic diversity), and (iv) simplify **reproducibility**. `MiscMetabar` is already used by the scientific community in several teams [@Vieira2021; @Pleic2022; @McCauley2022; @McCauley2023; @bouilloud2023; @vieira2023].
 
@@ -44,9 +44,7 @@ R package [`dada2`](http://bioconductor.org/packages/release/bioc/html/dada2.htm
 
 ## Description
 
-A quick graphical representation of the phyloseq object is available using the `summary_plot_pq()` function. This plot allows the novice to understand the structure of a phyloseq object and contains useful information  The functions `krona()` and `tax_datatable()` describe the taxonomy of organisms using krona interactive pie chart [@ondov2011] and [datatable](https://datatables.net/) libraries, respectively.
-
-![Figure 1 : Some illustrations from MiscMetabar with the tengeler dataset from mia R package](figures_svg/tengeler_MiscMetabar.svg)
+A quick graphical representation of the phyloseq object is available using the `summary_plot_pq()` function (fig. 1A). This plot allows the novice to understand the structure of a phyloseq object and contains useful information  The functions `krona()` and `tax_datatable()` describe the taxonomy of organisms using krona interactive pie chart [@ondov2011] and [datatable](https://datatables.net/) libraries, respectively.
 
 ## Transformation
 
@@ -66,9 +64,9 @@ Several pipeline use at least two step of clustering. The function `asv2otu()`, 
 
 `MiscMetabar` provides a large number of facilities to explore the biological diversity in a phyloseq object. In most functions, a parameter enables the effect of the number of reads (sampling depth) to be controlled by rarefaction or other statistical methods, depending on the function. For example, the alpha diversity analysis (function `hill_pq()`) uses the HSD-Tuckey test on a linear model that includes the square roots of the number of reads as the first explanatory variable.
 
-The effect of an environmental variable (beta-diversity) on a biological organism can be explored by Venn diagram (`ggvenn_pq()`), upset plot (`pset_pq()`), and circle plot (`circle_pq()`). This effect can be tested with PERMANOVA (`adonis_pq()`) and the network test (`graph_test_pq()`). If only two modalities are compared, `biplot_pq()` is very useful. Differential abundance analysis can be performed directly using the `plot_deseq2_pq()` function. 
+To illustrate the effect of sample variables on the taxonomy, `MiscMetabar` provides the functions `treemap_pq()`, `multitax_bar_pq()` (fig. 1D) and `heat_tree_pq()` (fig. 1E). The effect of an environmental variable (beta-diversity) on a biological organism can be explored by upset plot (`pset_pq()`; fig. 1F), venn diagram (`ggvenn_pq()`; fig. 1G), and circle plot (`circle_pq()`). This effect can be tested with PERMANOVA (`adonis_pq()`) and the network test (`graph_test_pq()`). If only two modalities are compared, `biplot_pq()` is very useful (fig. 1H). Differential abundance analysis can be performed directly using the `plot_deseq2_pq()` function (fig. 1I). 
 
-To illustrate the effect of sample variables on the taxonomy, `MiscMetabar` provides the functions `treemap_pq()`, `multitax_bar_pq()` and `heat_tree_pq()`. 
+![Figure 1 : Some illustrations from MiscMetabar with the tengeler dataset from mia R package](figures_svg/tengeler_MiscMetabar.svg)
 
 ## Reproducibility
 
