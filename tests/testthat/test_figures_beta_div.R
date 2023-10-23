@@ -31,12 +31,12 @@ test_that("circle_pq works", {
     data_basidio,
     fact = "Tree_name",
     nproc = 1,
-    min_prop_mod = 0.1
+    min_prop_mod = 0.001
   ))
   expect_message(circle_pq(
     data_basidio_2trees,
     fact = "Tree_name",
-    log10transform = TRUE,
+    log10trans = TRUE,
     nproc = 1
   ))
   expect_message(

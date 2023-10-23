@@ -174,7 +174,7 @@ test_that("multitax_bar_pq works with data_fungi_sp_known dataset", {
       "Class",
       "Order",
       nb_seq = FALSE,
-      log10transform = FALSE
+      log10trans = FALSE
     ),
     "ggplot"
   )
@@ -184,7 +184,7 @@ test_that("multitax_bar_pq works with data_fungi_sp_known dataset", {
       "Phylum",
       "Class",
       "Order",
-      log10transform = FALSE
+      log10trans = FALSE
     ),
     "ggplot"
   )
@@ -213,7 +213,7 @@ test_that("multitax_bar_pq works with GlobalPatterns dataset", {
       "Class",
       "Order",
       nb_seq = FALSE,
-      log10transform = FALSE
+      log10trans = FALSE
     ),
     "ggplot"
   )
@@ -222,7 +222,7 @@ test_that("multitax_bar_pq works with GlobalPatterns dataset", {
       "Phylum",
       "Class",
       "Order",
-      log10transform = FALSE
+      log10trans = FALSE
     ),
     "ggplot"
   )
@@ -239,7 +239,7 @@ test_that("rigdes_pq work with data_fungi dataset", {
       data_fungi,
       "Time",
       alpha = 0.5,
-      log10transform = FALSE
+      log10trans = FALSE
     ) + xlim(c(0, 1000)),
     "ggplot"
   )
@@ -252,7 +252,7 @@ test_that("rigdes_pq work with data_fungi dataset", {
       data_fungi,
       "Time",
       nb_seq = FALSE,
-      log10transform = FALSE
+      log10trans = FALSE
     ),
     "ggplot"
   )
@@ -310,7 +310,7 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
         )
       ),
       "Order", "Class",
-      log10transform = FALSE
+      log10trans = FALSE
     ),
     "ggplot"
   )
@@ -323,7 +323,7 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
       "Order",
       "Class",
       nb_seq = FALSE,
-      log10transform = FALSE
+      log10trans = FALSE
     ),
     "ggplot"
   )
@@ -337,7 +337,7 @@ test_that("tax_bar_pq work with data_fungi dataset", {
       data_fungi,
       taxa = "Class",
       fact = "Time",
-      nb_seq = F
+      nb_seq = FALSE
     ),
     "ggplot"
   )
@@ -346,7 +346,7 @@ test_that("tax_bar_pq work with data_fungi dataset", {
       data_fungi,
       taxa = "Class",
       fact = "Time",
-      nb_seq = F,
+      nb_seq = FALSE,
       percent_bar = TRUE
     ),
     "ggplot"

@@ -5,6 +5,7 @@ vignette: >
   %\VignetteIndexEntry{Reclustering}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+bibliography: ../paper/paper.bib
 ---
 
 ```{r, include = FALSE}
@@ -19,6 +20,12 @@ library(MiscMetabar)
 ```
 
 # Re-clustering ASVs
+
+**ASV** (stands for *Amplicon Sequence Variant*; also called **ESV** for Exact Amplicon Variant) is a DNA sequence obtained from high-throughput analysis of marker genes. **OTU* are a group of closely related individuals created by clustering sequences based on a threshold of similarity. An ASV is a special case of an OTU with a similarity threshold of 100%.
+
+The choice between ASV and OTU is important because they lead to different results [@joos2020], Box 2 in [@tedersoo2022]). Most articles recommend making a choice depending on the question. For example, ASV may be better than OTU for describing a group of very closely related species. In addition, ASV are comparable across different datasets (obtained using identical marker genes). On the other hand, [@tedersoo2022] report that ASV approaches overestimate the richness of common fungal species (due to haplotype variation), but underestimate the richness of rare species.  They therefore recommend the use of OTUs in metabarcoding analyses of fungal communities. Finally, [@kauserud2023] argues that the ASV term falls within the original OTU term and recommends adopting  only the OTU terms, but with a concise and clear report on how the OTUs were generated.
+
+Recent articles ([@forster2019; @antich2021]) propose to use both approach together. They recommend (i) using ASV to denoise the dataset and (ii) for some questions, clustering the ASV sequences into OTUs. This is the goal of the function `asv2otu()`, using either the `DECIPHER::Clusterize` function from R or the [vsearch](https://github.com/torognes/vsearch) software. 
 
 ## Using decipher or Vsearch algorithm
 ```{r}
@@ -38,6 +45,8 @@ summary_plot_pq(otu)
 ```
 
 ## Using lulu algorithm ([link to LULU article](https://www.nature.com/articles/s41467-017-01312-x))
+
+Another post-clustering transformation method is implemented in `lulu_pq()`, which uses @froslev2017's method for curation of DNA amplicon data. The aim is more to clean non-biological information than to make explicitly less clusters.
 
 ```{r, message=FALSE, results="hide"}
 library("lulu")
@@ -60,3 +69,5 @@ track_wkflow(list(
   "LULU" = lulu_res[[1]]
 ))
 ```
+
+# References

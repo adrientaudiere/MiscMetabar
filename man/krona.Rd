@@ -45,7 +45,7 @@ Need the installation of kronatools on the computer (\href{https://github.com/ma
 data("GlobalPatterns")
 GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
 # krona(GA, "Number.of.sequences.html")
-# krona(GA, "Number.of.ASVs.html", nb_seq = F)
+# krona(GA, "Number.of.ASVs.html", nb_seq = FALSE)
 # merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"))
 }
 \seealso{

@@ -1089,8 +1089,8 @@ lulu_pq <- function(physeq,
 
   match_list <- utils::read.csv(file = "match_list.txt", sep = "\t")
 
-  if (!requireNamespace("lulu")) {
-    requireNamespace(devtools)
+  if (!requireNamespace("lulu", quietly = TRUE)) {
+    requireNamespace(devtools, quietly = TRUE)
     install_github("adrientaudiere/lulu")
   }
 

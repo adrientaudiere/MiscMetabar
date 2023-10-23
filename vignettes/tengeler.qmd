@@ -1,0 +1,174 @@
+---
+title: "tengeler_MiscMetabar"
+author: "Adrien Taudière"
+format: html
+---
+
+This tutorial explore the dataset from Tengeler et al. (2020) available in the `mia` package.
+
+# Load library 
+
+```{r}
+library("MiscMetabar")
+library("mia")
+library("MicrobiotaProcess")
+library("ggplot2")
+library("patchwork")
+library("iNEXT")
+data("Tengeler2020", package = "mia")
+```
+
+
+# Import dataset in phyloseq format
+
+```{r}
+ten <- makePhyloseqFromTreeSE(Tengeler2020)
+```
+
+```{r}
+summary_plot_pq(ten)
+```
+
+# Alpha-diversity analysis
+
+```{r}
+hill_pq(ten, "patient_status", one_plot = TRUE)
+```
+
+```{r}
+res_inext <-
+  iNEXT_pq(ten,
+    datatype = "abundance",
+    merge_sample_by = "patient_status_vs_cohort",
+    nboot = 5
+  )
+ggiNEXT(res_inext)
+```
+
+```{r}
+accu_plot(
+  ten,
+  fact = "sample_name",
+  add_nb_seq = TRUE,
+  by.fact = TRUE,
+  step = 100
+) + theme(legend.position = c(.8, .6))
+```
+
+# Explore taxonomy
+
+```{r}
+heat_tree_pq(ten,
+  node_size = n_obs,
+  node_color = nb_sequences,
+  node_label = taxon_names,
+  tree_label = taxon_names,
+  node_size_trans = "log10 area"
+)
+```
+
+```{r}
+treemap_pq(ten, lvl1 = "Order", lvl2 = "Family")
+```
+
+# Beta-diversity analysis : effect of patient status and cohort
+
+```{r}
+circle_pq(ten, "patient_status")
+```
+
+```{r}
+upset_pq(ten, "patient_status_vs_cohort")
+```
+
+```{r}
+ggvenn_pq(clean_pq(ten, force_taxa_as_columns = TRUE),
+  "cohort",
+  rarefy_before_merging = TRUE
+) +
+  theme(legend.position = "none")
+```
+
+
+```{r}
+ten_control <- clean_pq(subset_samples(ten, patient_status == "Control"))
+p_control <- heat_tree_pq(ten_control,
+  node_size = n_obs,
+  node_color = nb_sequences,
+  node_label = taxon_names,
+  tree_label = taxon_names,
+  node_size_trans = "log10 area"
+)
+
+ten_ADHD <- clean_pq(subset_samples(ten, patient_status == "ADHD"))
+p_ADHD <- heat_tree_pq(ten_ADHD,
+  node_size = n_obs,
+  node_color = nb_sequences,
+  node_label = taxon_names,
+  tree_label = taxon_names,
+  node_size_trans = "log10 area"
+)
+
+p_control + ggtitle("Control") + p_ADHD + ggtitle("ADHD")
+```
+
+
+```{r}
+knitr::kable(track_wkflow(list(
+  "All samples" = ten,
+  "Control samples" = ten_control,
+  "ADHD samples" = ten_ADHD
+)))
+```
+
+```{r}
+adonis_pq(ten, "cohort + patient_status")
+```
+
+
+```{r}
+ten@tax_table <- phyloseq::tax_table(cbind(
+  ten@tax_table,
+  "Species" = taxa_names(ten)
+))
+
+biplot_pq(subset_taxa_pq(ten, taxa_sums(ten) > 3000), merge_sample_by = "patient_status", fact = "patient_status", nudge_y = 0.4)
+```
+
+
+```{r}
+multitax_bar_pq(ten, "Phylum", "Class", "Order", "patient_status")
+```
+
+# Differential abundance analysis
+
+```{r}
+plot_deseq2_pq(ten, contrast = c("patient_status", "ADHD", "Control"), taxolev = "Genus")
+```
+
+```{r}
+LEfSe <- diff_analysis(
+  ten,
+  classgroup = "patient_status",
+  mlfun = "lda",
+  ldascore = 2,
+  p.adjust.methods = "bh"
+)
+library(ggplot2)
+ggeffectsize(LEfSe) +
+  scale_color_manual(values = c(
+    "#00AED7",
+    "#FD9347"
+  )) +
+  theme_bw()
+```
+
+
+
+
+# References
+
+
+Tengeler, A.C., Dam, S.A., Wiesmann, M. et al. Gut microbiota from persons with attention-deficit/hyperactivity disorder affects the brain in mice. Microbiome 8, 44 (2020). https://doi.org/10.1186/s40168-020-00816-x
+
+

@@ -48,7 +48,6 @@ heat_tree_pq(GPsubset,
   tree_label = taxon_names,
   node_size_trans = "log10 area"
 )
-}
 
 heat_tree_pq(GPsubset,
   node_size = n_seq,
@@ -58,6 +57,7 @@ heat_tree_pq(GPsubset,
   node_size_trans = "log10 area"
 )
 
+}
 }
 \author{
 Adrien Taudière

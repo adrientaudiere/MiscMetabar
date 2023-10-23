@@ -52,7 +52,7 @@ test_that("plot_deseq2_pq works with phyloseq object", {
   expect_silent(suppressMessages(plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), alpha = 0.1)))
 })
 
-GlobalPatterns_row <- clean_pq(GP, force_taxa_as_columns = T)
+GlobalPatterns_row <- clean_pq(GP, force_taxa_as_columns = TRUE)
 
 test_that("phyloseq_to_edgeR gives the good class", {
   expect_s4_class(phyloseq_to_edgeR(GlobalPatterns, "SampleType"), "DGEList")

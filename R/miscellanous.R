@@ -125,7 +125,7 @@ simplify_taxo <- function(physeq, remove_space = TRUE) {
   taxo <- gsub(".__", "", taxo, perl = TRUE)
   if (remove_space) {
     taxo <- gsub(" ", "", taxo)
-    taxo <- gsub(" ", "", taxo)
+    taxo <- gsub("\u00a0", "", taxo)
   }
   physeq@tax_table <- tax_table(taxo)
   return(physeq)
@@ -273,7 +273,7 @@ funky_color <-
 #' @description
 #'  `r lifecycle::badge("experimental")`
 #'
-#' @param file_path The path to one fastq file or a list of fastq files
+#' @param fastq_files The path to one fastq file or a list of fastq files
 #'   (see examples)
 #' @param folder_output The path to a folder for output files
 #' @param n_seq (int; default 1000) : Number of sequences kept (every sequence
