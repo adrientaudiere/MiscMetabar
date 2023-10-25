@@ -9,7 +9,8 @@ articles:
   beta-div: beta-div.html
   filter: filter.html
   import_export_track: import_export_track.html
-last_built: 2023-10-25T07:19Z
+  states_of_fields_in_R: states_of_fields_in_R.html
+last_built: 2023-10-25T09:01Z
 urls:
   reference: https://adrientaudiere.github.io/MiscMetabar/reference
   article: https://adrientaudiere.github.io/MiscMetabar/articles
