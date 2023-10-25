@@ -26,7 +26,7 @@ Describing communities of living organisms increasingly relies on massive DNA se
 
 Biological studies, especially in ecology, health sciences and taxonomy, need to describe the biological composition of samples. During the last twenty years, the development of (i) high-throughput DNA sequencing, (ii) reference databases and (iii) bioinformatics resources have allowed the description of biological communities through metabarcoding. Metabarcoding involves the sequencing of millions (*meta*-) of short regions of specific DNA (*-barcoding*, @valentini2009) often from environmental samples (eDNA, @taberlet2012) such as human stomach contents, lake water, soil and air.
 
-Several plateforms (referenced in @tedersoo2022) such as QIIME2 (@bolyen2019), mothur (@schloss2020), and Galaxy (@jalili2020) allow complete analysis from raw fastq sequences to statistical analysis and visualization. However, the R ecosystem (@rcran), is very rich (Table 1) and more flexible than these platforms.
+Several plateforms (referenced in @tedersoo2022) such as QIIME2 [@bolyen2019], mothur [@schloss2020], and Galaxy [@jalili2020] allow complete analysis from raw fastq sequences to statistical analysis and visualization. However, the R ecosystem [@rcran], is very rich (Table 1) and more flexible than these platforms.
 
 `MiscMetabar` aims to facilitate the **description**, **transformation**, **exploration** and **reproducibility** of metabarcoding analysis using R. The development of `MiscMetabar` relies heavily on the R packages `dada2`, `phyloseq` and `targets`.
 
@@ -36,7 +36,7 @@ The metabarcoding ecosystem in the R language is mature, well-constructed, and r
 
 R package [`dada2`](http://bioconductor.org/packages/release/bioc/html/dada2.html) [@callahan2016]  provides a highly cited and recommended clustering method [@pauvert2019]. [`phyloseq`](http://bioconductor.org/packages/release/bioc/html/phyloseq.html) [@mcmurdie2013] facilitate metagenomics analysis by providing a way to store data (the `phyloseq` class) and provides graphical and statistical functions. `MiscMetabar` is based on the `phyloseq` class from `phyloseq`, the most cited package in metagenomics [@wen2023]. For a description and comparison of other integrated packages competing with phyloseq, see @wen2023. Some packages already extend the phyloseq packages, in particular [`microbiome`](https://microbiome.github.io/) package collection [@ernst2023], the `speedyseq` package [@mclaren2020] and the package [phylosmith](https://schuyler-smith.github.io/phylosmith/) [@smith2019].
 
-![Table 1 : Important functions of MiscMetabar with their equivalent when available in other R packages: 1. Mia [@ernst2023]; 2. microViz [@Barnett2021]; 3. MicrobiotaProcess [@xu2023]; 4  Phylosmith [@smith2019].](figures_svg/table1.svg)
+![Table 1 : Important functions of MiscMetabar with their equivalent when available in other R packages: 1. Mia [@ernst2023]; 2. microViz [@Barnett2021]; 3. MicrobiotaProcess [@xu2023]; 4  Phylosmith [@smith2019].](figures_svg/table1.svg){width="100%"}
 
 `MiscMetabar` enriches this R ecosystem by providing functions to (i) **describe** your dataset visually, (ii) **transform** your data, (iii) **explore** biological diversity (alpha, beta, and taxonomic diversity), and (iv) simplify **reproducibility**. `MiscMetabar` is already used by the scientific community in several teams [@Vieira2021; @Pleic2022; @McCauley2022; @McCauley2023; @bouilloud2023; @vieira2023].
 

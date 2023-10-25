@@ -12,11 +12,27 @@ v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/
 
 # MiscMetabar
 
-The goal of MiscMetabar is to complete the great packages
-[dada2](https://benjjneb.github.io/dada2/index.html),
-[phyloseq](https://joey711.github.io/phyloseq/) and
-[targets](https://books.ropensci.org/targets/). See the pkdown site
+See the pkdown site
 [here](https://adrientaudiere.github.io/MiscMetabar/).
+
+Biological studies, especially in ecology, health sciences and taxonomy,
+need to describe the biological composition of samples. During the last
+twenty years, (i) the development of DNA sequencing, (ii) reference
+databases, (iii) high-throughput sequencing (HTS), and (iv)
+bioinformatics resources have allowed the description of biological
+communities through metabarcoding. Metabarcoding involves the sequencing
+of millions (*meta*-) of short regions of specific DNA (*-barcoding*,
+Valentini, Pompanon, and Taberlet (2009)) often from environmental
+samples (eDNA, Taberlet et al. (2012)) such as human stomach contents,
+lake water, soil and air.
+
+`MiscMetabar` aims to facilitate the **description**,
+**transformation**, **exploration** and **reproducibility** of
+metabarcoding analysis using R. The development of `MiscMetabar` relies
+heavily on the R packages
+[`dada2`](https://benjjneb.github.io/dada2/index.html),
+[`phyloseq`](https://joey711.github.io/phyloseq/) and
+[`targets`](https://books.ropensci.org/targets/).
 
 ## Installation
 
@@ -111,3 +127,23 @@ sudo apt-get install ncbi-blast+
 ``` sh
 sudo apt-get install vsearch
 ```
+
+<div id="refs" class="references csl-bib-body hanging-indent">
+
+<div id="ref-taberlet2012" class="csl-entry">
+
+Taberlet, Pierre, Eric Coissac, Mehrdad Hajibabaei, and Loren H
+Rieseberg. 2012. “Environmental Dna.” *Molecular Ecology*. Wiley Online
+Library. <https://doi.org/10.1002/(issn)2637-4943>.
+
+</div>
+
+<div id="ref-valentini2009" class="csl-entry">
+
+Valentini, Alice, François Pompanon, and Pierre Taberlet. 2009. “DNA
+Barcoding for Ecologists.” *Trends in Ecology & Evolution* 24 (2):
+110–17. <https://doi.org/10.1016/j.tree.2008.09.011>.
+
+</div>
+
+</div>

@@ -28,8 +28,14 @@ navbar:
     - text: Tengeler
       href: articles/tengeler.html
     - text: -------
+    - text: "R ecosystem for metabarcoding"
+    - text: "Metabarcoding with R"
+      href: articles/states_of_fields_in_R.html
+    - text: -------
     - text: "For developpers"
     - text: Rules of code
       href: articles/Rules.html
+
+      
 development:
   mode: auto

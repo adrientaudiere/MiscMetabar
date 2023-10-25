@@ -1,6 +1,7 @@
 ---
 output: github_document
 always_allow_html: yes
+bibliography: paper/bibliography.bib
 ---
 
 ![R](https://img.shields.io/badge/r-%23276DC3.svg?style=for-the-badge&logo=r&logoColor=white)
@@ -23,8 +24,12 @@ knitr::opts_chunk$set(
 
 # MiscMetabar
 
-The goal of MiscMetabar is to complete the great packages [dada2](https://benjjneb.github.io/dada2/index.html), [phyloseq](https://joey711.github.io/phyloseq/) and [targets](https://books.ropensci.org/targets/). 
 See the pkdown site [here](https://adrientaudiere.github.io/MiscMetabar/).
+
+Biological studies, especially in ecology, health sciences and taxonomy, need to describe the biological composition of samples. During the last twenty years, (i) the development of DNA sequencing, (ii) reference databases, (iii) high-throughput sequencing (HTS), and (iv) bioinformatics resources have allowed the description of biological communities through metabarcoding. Metabarcoding involves the sequencing of millions (*meta*-) of short regions of specific DNA (*-barcoding*, @valentini2009) often from environmental samples (eDNA, @taberlet2012) such as human stomach contents, lake water, soil and air.
+
+`MiscMetabar` aims to facilitate the **description**, **transformation**, **exploration** and **reproducibility** of metabarcoding analysis using R. The development of `MiscMetabar` relies heavily on the R packages [`dada2`](https://benjjneb.github.io/dada2/index.html), [`phyloseq`](https://joey711.github.io/phyloseq/) and [`targets`](https://books.ropensci.org/targets/). 
+
 
 ## Installation
 
