@@ -136,22 +136,22 @@ the function <code><a href="../reference/asv2otu.html">asv2otu()</a></code>, usi
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>iteration <span class="dv">16</span> of up to <span class="dv">400</span> (<span class="fl">100.0</span>% coverage)</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 1.1 secs</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 1.15 secs</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Sorting by relatedness within 4 groups:</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>iteration <span class="dv">54</span> of up to <span class="dv">324</span> (<span class="fl">100.0</span>% stability) </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>iteration <span class="dv">50</span> of up to <span class="dv">324</span> (<span class="fl">100.0</span>% stability) </span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 3.45 secs</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 2.77 secs</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clustering sequences by 8-mer similarity:</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ================================================================================</span></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clusters via relatedness sorting: 99% (0% exclusively)</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clusters via rare 6-mers: 100% (1% exclusively)</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clusters via relatedness sorting: 98.6% (0% exclusively)</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clusters via rare 6-mers: 100% (1.4% exclusively)</span></span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Estimated clustering effectiveness: 100%</span></span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 1.16 secs</span></span></code></pre></div>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 1.02 secs</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">otu_vs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/asv2otu.html">asv2otu</a></span><span class="op">(</span><span class="va">data_fungi_sp_known</span>, method <span class="op">=</span> <span class="st">"vsearch"</span><span class="op">)</span></span></code></pre></div>
 <p>The vsearch method requires the installation of <a href="https://github.com/torognes/vsearch" class="external-link">Vsearch</a>.</p>
@@ -226,20 +226,21 @@ clusters.</p>
 Antich, Adrià, Creu Palacin, Owen S Wangensteen, and Xavier Turon. 2021.
 <span>“To Denoise or to Cluster, That Is Not the Question: Optimizing
 Pipelines for COI Metabarcoding and Metaphylogeography.”</span> <em>BMC
-Bioinformatics</em> 22: 1–24.
+Bioinformatics</em> 22: 1–24. <a href="https://doi.org/10.1101/2021.01.08.425760" class="external-link">https://doi.org/10.1101/2021.01.08.425760</a>.
 </div>
 <div id="ref-forster2019" class="csl-entry">
 Forster, Dominik, Guillaume Lentendu, Sabine Filker, Elyssa Dubois,
 Thomas A Wilding, and Thorsten Stoeck. 2019. <span>“Improving eDNA-Based
 Protist Diversity Assessments Using Networks of Amplicon Sequence
 Variants.”</span> <em>Environmental Microbiology</em> 21 (11): 4109–24.
+<a href="https://doi.org/10.1111/1462-2920.14764" class="external-link">https://doi.org/10.1111/1462-2920.14764</a>.
 </div>
 <div id="ref-froslev2017" class="csl-entry">
 Frøslev, Tobias Guldberg, Rasmus Kjøller, Hans Henrik Bruun, Rasmus
 Ejrnæs, Ane Kirstine Brunbjerg, Carlotta Pietroni, and Anders Johannes
 Hansen. 2017. <span>“Algorithm for Post-Clustering Curation of DNA
 Amplicon Data Yields Reliable Biodiversity Estimates.”</span> <em>Nature
-Communications</em> 8 (1): 1188.
+Communications</em> 8 (1): 1188. <a href="https://doi.org/10.1038/s41467-017-01312-x" class="external-link">https://doi.org/10.1038/s41467-017-01312-x</a>.
 </div>
 <div id="ref-joos2020" class="csl-entry">
 Joos, Lisa, Stien Beirinckx, Annelies Haegeman, Jane Debode, Bart
@@ -247,17 +248,18 @@ Vandecasteele, Steve Baeyen, Sofie Goormachtig, Lieven Clement, and
 Caroline De Tender. 2020. <span>“Daring to Be Differential:
 Metabarcoding Analysis of Soil and Plant-Related Microbial Communities
 Using Amplicon Sequence Variants and Operational Taxonomical
-Units.”</span> <em>BMC Genomics</em> 21 (1): 1–17.
+Units.”</span> <em>BMC Genomics</em> 21 (1): 1–17. <a href="https://doi.org/10.1186/s12864-020-07126-4" class="external-link">https://doi.org/10.1186/s12864-020-07126-4</a>.
 </div>
 <div id="ref-kauserud2023" class="csl-entry">
 Kauserud, Håvard. 2023. <span>“ITS Alchemy: On the Use of ITS as a DNA
-Marker in Fungal Ecology.”</span> <em>Fungal Ecology</em>, 101274.
+Marker in Fungal Ecology.”</span> <em>Fungal Ecology</em>, 101274. <a href="https://doi.org/10.1016/j.funeco.2023.101274" class="external-link">https://doi.org/10.1016/j.funeco.2023.101274</a>.
 </div>
 <div id="ref-tedersoo2022" class="csl-entry">
 Tedersoo, Leho, Mohammad Bahram, Lucie Zinger, R Henrik Nilsson, Peter G
 Kennedy, Teng Yang, Sten Anslan, and Vladimir Mikryukov. 2022.
 <span>“Best Practices in Metabarcoding of Fungi: From Experimental
 Design to Results.”</span> <em>Molecular Ecology</em> 31 (10): 2769–95.
+<a href="https://doi.org/10.22541/au.163430390.04226544/v1" class="external-link">https://doi.org/10.22541/au.163430390.04226544/v1</a>.
 </div>
 </div>
 </div>
