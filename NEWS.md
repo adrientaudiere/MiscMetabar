@@ -1,9 +1,10 @@
 # MiscMetabar 0.51 (in development) 
 
+- Add function `LCBD_pq()`  and `plot_LCBD_pq()` to compute, test and plot local contributions to beta diversity (LCBD) of samples
 
 # MiscMetabar 0.5
 
-- Phyloseq object are converted in taxa_are_columns in the ggvenn_pq() thanks to issue #31
+- Phyloseq object are converted in taxa_are_columns in the `ggvenn_pq()` thanks to issue #31
 
 ## BREAKING CHANGES
 

@@ -20,4 +20,8 @@ Useful links:
 }
 
 }
+\author{
+\strong{Maintainer}: Adrien Taudière \email{adrien.taudiere@zaclys.net} (\href{https://orcid.org/0000-0003-1088-1182}{ORCID})
+
+}
 \keyword{internal}
