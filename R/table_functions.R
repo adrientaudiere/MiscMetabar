@@ -229,7 +229,7 @@ compare_pairs_pq <- function(physeq = NULL,
   }
 
   res_df_t <- t(as_tibble(res, .name_repair = "minimal"))
-  colnames(res_df_t) <- paste0("V", 1:ncol(res_df_t))
+  colnames(res_df_t) <- paste0("V", seq_along(ncol(res_df_t))
   res_df <- as_tibble(res_df_t)
   # res_df <- as_tibble(t(as_tibble(res, .name_repair = "universal")), .name_repair = "universal")
 

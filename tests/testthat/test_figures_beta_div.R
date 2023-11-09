@@ -99,13 +99,13 @@ test_that("sankey_pq works with GlobalPatterns dataset", {
   expect_silent(suppressWarnings(sankey_pq(GP_archae, fact = "SampleType")))
   expect_silent(sankey_pq(
     GP_archae,
-    taxa = c(1:4),
+    taxa = 1:4,
     min_prop_tax = 0.01,
     units = "sequences"
   ))
   expect_silent(sankey_pq(
     GP_archae,
-    taxa = c(1:4),
+    taxa = 1:4,
     min_prop_tax = 0.01,
     add_nb_seq = TRUE
   ))
@@ -116,7 +116,7 @@ test_that("sankey_pq works with GlobalPatterns dataset", {
   expect_silent(
     sankey_pq(
       GP_archae,
-      taxa = c(1:4),
+      taxa = 1:4,
       min_prop_tax = 0.001,
       add_nb_seq = TRUE,
       tax2remove = "NRP-J"
@@ -125,7 +125,7 @@ test_that("sankey_pq works with GlobalPatterns dataset", {
   expect_silent(
     sankey_pq(
       GP_archae,
-      taxa = c(1:4),
+      taxa = 1:4,
       min_prop_tax = 0.01,
       add_nb_seq = TRUE,
       units = "sequences",
@@ -135,14 +135,14 @@ test_that("sankey_pq works with GlobalPatterns dataset", {
   expect_warning(
     sankey_pq(
       GP_archae,
-      taxa = c(1:4),
+      taxa = 1:4,
       min_prop_tax = 0.01,
       add_nb_seq = TRUE,
       units = "sequences",
       symbol2sub = NA
     )
   )
-  expect_error(sankey_pq(GP_archae, taxa = c(1:9)))
+  expect_error(sankey_pq(GP_archae, taxa = 1:9))
   expect_error(sankey_pq(GP_archae@otu_table))
 })
 
@@ -153,20 +153,20 @@ test_that("sankey_pq works with data_fungi dataset", {
   expect_silent(suppressWarnings(sankey_pq(data_fungi, fact = "Height")))
   expect_silent(sankey_pq(
     data_fungi,
-    taxa = c(3:7),
+    taxa = 3:7,
     min_prop_tax = 0.01,
     units = "sequences"
   ))
   expect_silent(sankey_pq(
     data_fungi,
-    taxa = c(1:4),
+    taxa = 1:4,
     min_prop_tax = 0.01,
     add_nb_seq = TRUE
   ))
   expect_silent(
     sankey_pq(
       data_fungi,
-      taxa = c(1:4),
+      taxa = 1:4,
       min_prop_tax = 0.001,
       add_nb_seq = TRUE,
       tax2remove = "Undefined"
@@ -175,7 +175,7 @@ test_that("sankey_pq works with data_fungi dataset", {
   expect_silent(
     sankey_pq(
       data_fungi,
-      taxa = c(1:4),
+      taxa = 1:4,
       add_nb_seq = TRUE,
       units = "sequences",
       symbol2sub = NULL
@@ -184,7 +184,7 @@ test_that("sankey_pq works with data_fungi dataset", {
   expect_warning(
     sankey_pq(
       data_fungi,
-      taxa = c(1:4),
+      taxa = 1:4,
       min_prop_tax = 0.01,
       add_nb_seq = TRUE,
       units = "sequences",

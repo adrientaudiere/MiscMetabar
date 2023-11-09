@@ -1,5 +1,5 @@
 if (getRversion() >= "2.15.1") {
-  utils::globalVariables(c("."))
+  utils::globalVariables(".")
 }
 
 ################################################################################
@@ -1115,7 +1115,7 @@ lulu_pq <- function(physeq,
   merged <- res_lulu$otu_map[res_lulu$otu_map$curated == "merged", ]
   merged <- merged[rownames(merged) != merged$parent_id, ]
 
-  test_vector <- c()
+  test_vector <- vector(mode = "logical")
   for (tax_rank in colnames(physeq@tax_table)) {
     test <- physeq@tax_table[rownames(merged), tax_rank] == physeq@tax_table[merged$parent_id, tax_rank]
     test_vector <- c(test_vector, sum(test, na.rm = TRUE) / length(stats::na.exclude(test)))

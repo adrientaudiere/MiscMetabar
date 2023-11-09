@@ -22,7 +22,7 @@ test_that("plot_edgeR_pq works", {
   expect_message(plot_edgeR_pq(GlobalPatterns, c("SampleType", "Soil", "Feces"), color_tax = "Kingdom"), "Perform edgeR binary test") # nolint: line_length_linter.
   expect_message(plot_edgeR_pq(GlobalPatterns, c("SampleType", "Soil", "Feces"), color_tax = "Species"), "Perform edgeR binary test")
   expect_message(plot_edgeR_pq(GlobalPatterns, c("SampleType", "Soil", "Feces"), taxolev = "Class", color_tax = "Kingdom"), "Perform edgeR binary test")
-  expect_error(plot_edgeR_pq(GlobalPatterns, c("SampleType"), taxolev = "Class", color_tax = "Kingdom"), "At least one element of given pair is not a group")
+  expect_error(plot_edgeR_pq(GlobalPatterns, "SampleType", taxolev = "Class", color_tax = "Kingdom"), "At least one element of given pair is not a group")
   expect_error(plot_edgeR_pq(GlobalPatterns, c("SampleType", "Soil", "Feces"), color_tax = "Samples"))
 })
 test_that("plot_deseq2_pq works with results", {

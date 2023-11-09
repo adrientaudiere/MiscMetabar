@@ -95,7 +95,6 @@ rename_samples_otu_table <- function(physeq, names_of_samples) {
 
 ################################################################################
 # WORK IN PROGRESS
-# TODO
 #' Remove primers using cutadapt Work In Progress
 #'
 #' @description

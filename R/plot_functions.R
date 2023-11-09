@@ -216,7 +216,7 @@ accu_plot <-
 
       df <- plyr::ldply(out, data.frame)
 
-      cond <- c()
+      cond <- vector(mode = "logical")
       for (i in 1:nlevels(as.factor(df$.id))) {
         cond <- c(cond, 1:table(df$.id)[i])
       }
@@ -555,8 +555,8 @@ circle_pq <-
 #' data("GlobalPatterns")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #' sankey_pq(GP, fact = "SampleType")
-#' sankey_pq(GP, taxa = c(1:4), min_prop_tax = 0.01)
-#' sankey_pq(GP, taxa = c(1:4), min_prop_tax = 0.01, add_nb_seq = TRUE)
+#' sankey_pq(GP, taxa = 1:4, min_prop_tax = 0.01)
+#' sankey_pq(GP, taxa = 1:4, min_prop_tax = 0.01, add_nb_seq = TRUE)
 #' @author Adrien Taudière
 #'
 #' @return A \code{\link[networkD3]{sankeyNetwork}} plot representing the
@@ -570,7 +570,7 @@ circle_pq <-
 sankey_pq <-
   function(physeq = NULL,
            fact = NULL,
-           taxa = c(1:4),
+           taxa = 1:4,
            add_nb_seq = FALSE,
            min_prop_tax = 0,
            tax2remove = NULL,
@@ -719,7 +719,7 @@ sankey_pq <-
       data.frame(tax_sank$links[rowSums(is.na(tax_sank$links)) == 0, ])
     tax_sank$nodes <-
       as.data.frame(as.character(tax_sank$nodes[, 2]))
-    names(tax_sank$nodes) <- c("name")
+    names(tax_sank$nodes) <- "name"
     names(tax_sank$links) <- c("source", "target", "value")
     if (is.null(units)) {
       if (!add_nb_seq) {
@@ -1034,7 +1034,7 @@ ggvenn_pq <- function(physeq = NULL,
   }
 
   res <- list()
-  nb_seq <- c()
+  nb_seq <- vector(mode = "integer")
 
   for (f in levels(physeq@sam_data[[fact]])) {
     newphyseq <- physeq
@@ -2048,7 +2048,7 @@ multi_biplot_pq <- function(physeq,
     couples <- combn(names_split_by, 2)
 
     p <- list()
-    for (c in 1:ncol(couples)) {
+    for (c in seq_along(ncol(couples))) {
       names_p <- paste0(couples[1, c], " - ", couples[2, c])
       new_physeq <- subset_samples_pq(physeq, physeq@sam_data[[split_by]] %in%
         c(couples[1, c], couples[2, c]))
