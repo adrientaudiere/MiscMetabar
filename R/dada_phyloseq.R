@@ -1370,3 +1370,43 @@ add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, ...) {
   return(new_physeq)
 }
 ################################################################################
+
+
+################################################################################
+#' Summarize information from sample data in a table
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' A wrapper for the [tbl_summary::tbl_summary(...)] function in the case of `physeq`
+#'   object.
+#' 
+#' @inheritParams clean_pq
+#' @param remove_col_unique_value (logical, default TRUE) Do we remove informative 
+#'   columns (categorical column with one value per samples), e.g. samples names ?  
+#' @param ... Others arguments pass on to [tbl_summary::tbl_summary()].
+#' @return a physeq object with a larger slot tax_table
+#'
+#' @export
+#' @author Adrien Taudière
+#' @examples
+#' tbl_sum_samdata(data_fungi)
+#' 
+#' tbl_sum_samdata(data_fungi, include = c("Time", "Height"), 
+#'                 type= list(Time ~ "continuous2", Height ~ "categorical"), 
+#'                 statistic = list(Time ~ c("{median} ({p25}, {p75})", "{min}, {max}")))
+#' 
+#' tbl_sum_samdata (enterotype)
+#' tbl_sum_samdata (enterotype, include =  !contains("SampleId"))
+
+tbl_sum_samdata <- function(physeq, remove_col_unique_value = TRUE, ...) {
+  tbl <- tibble(data.frame(physeq@sam_data))
+  if (remove_col_unique_value) {
+    tbl <- tbl[, !apply(tbl, 2, function(x) {
+      length(unique(x)) == nrow(tbl) && is.character(x)
+      })]
+  }
+  tbl_sum <- tbl %>% tbl_summary::tbl_summary(...)
+  return(tbl_sum)
+}
+################################################################################
