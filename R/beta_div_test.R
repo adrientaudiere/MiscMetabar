@@ -355,24 +355,40 @@ plot_LCBD_pq <- function(physeq,
 }
 
 
+#' @title Test and plot multipatt result
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' A wrapper for the [indicspecies::multipatt()] function in the case of `physeq`
+#'   object.
+#' @inheritParams clean_pq
+#' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
+#'    different lines
+#' @param p_adjust_method (chr, default "BH"): the method used to adjust p-value
+#' @param pval (int, default 0.05): the value to determine the significance of
+#'   LCBD
+#' @param control see `?indicspecies::multipatt()`
+#' @param ... Others arguments passed on to [indicspecies::multipatt()] function
+#'
+#' @return A ggplot object
+#' @export
 #' @examples 
 #' multipatt_pq(subset_samples(data_fungi, !is.na(Time)), fact="Time")
 #' multipatt_pq(subset_samples(data_fungi, !is.na(Time)), fact="Time",
 #'    max.order = 1, control = how(nperm=9999))
+#' @author Adrien Taudière
 
 multipatt_pq <- function(physeq,
 fact,
 p_adjust_method =  "BH",
 pval = 0.05,
 control = how(nperm = 999),
-max.order = 3, 
 ...){
 
 res <-
-  multipatt(as.matrix(physeq@otu_table),
+  indicspecies::multipatt(as.matrix(physeq@otu_table),
             physeq@sam_data[[fact]],
             control = control,
-            max.order = max.order,
             ...)
             
 res_df <- res$sign

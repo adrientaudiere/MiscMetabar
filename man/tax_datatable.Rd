@@ -19,7 +19,7 @@ using the \code{phyloseq} package.}
 \item{abundance}{(default: TRUE) Does the number of sequences is print}
 
 \item{taxonomic_level}{(default: NULL) a vector of selected taxonomic
-level using their column numbers (e.g. taxonomic_level = c(1:7))}
+level using their column numbers (e.g. taxonomic_level = 1:7)}
 
 \item{modality}{(default: NULL) A sample modality to split
 OTU abundancy by level of the modality}

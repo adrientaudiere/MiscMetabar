@@ -5,7 +5,7 @@
 #' @inheritParams clean_pq
 #' @param abundance (default: TRUE) Does the number of sequences is print
 #' @param taxonomic_level (default: NULL) a vector of selected taxonomic
-#' level using their column numbers (e.g. taxonomic_level = c(1:7))
+#' level using their column numbers (e.g. taxonomic_level = 1:7)
 #' @param modality (default: NULL) A sample modality to split
 #' OTU abundancy by level of the modality
 #' @param ... Other argument for the datatable function
@@ -229,7 +229,7 @@ compare_pairs_pq <- function(physeq = NULL,
   }
 
   res_df_t <- t(as_tibble(res, .name_repair = "minimal"))
-  colnames(res_df_t) <- paste0("V", seq_along(ncol(res_df_t))
+  colnames(res_df_t) <- paste0("V", seq_along(ncol(res_df_t)))
   res_df <- as_tibble(res_df_t)
   # res_df <- as_tibble(t(as_tibble(res, .name_repair = "universal")), .name_repair = "universal")
 

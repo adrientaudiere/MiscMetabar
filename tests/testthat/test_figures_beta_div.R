@@ -280,6 +280,6 @@ test_that("upset_test_pq works with data_fungi dataset", {
     ),
     "data.frame"
   )
-  expect_error(upset_test_pq(data_fungi, "Height", var_to_test = c("GUILDDDS")))
+  expect_error(upset_test_pq(data_fungi, "Height", var_to_test = "GUILDDDS"))
   expect_error(upset_test_pq(data_fungi))
 })

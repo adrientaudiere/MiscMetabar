@@ -9,6 +9,8 @@
 Functions to help analyze and visualize metabarcoding data. Mainly based on
 the phyloseq and dada2 packages.
 
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Functions to help analyze and visualize metabarcoding data. Mainly build on the top of phyloseq, dada2 and targets R packages.
 }
 \seealso{

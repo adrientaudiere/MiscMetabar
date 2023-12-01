@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# MiscMetabar
+# MiscMetabar <a href="https://adrientaudiere.github.io/MiscMetabar/"><img src="man/figures/logo.png" align="right" height="138" alt="MiscMetabar website" /></a>
 
 See the pkdown site [here](https://adrientaudiere.github.io/MiscMetabar/).
 

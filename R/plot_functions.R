@@ -1251,7 +1251,7 @@ hill_pq <-
     colnames(otu_hill) <- c("Hill_0", "Hill_1", "Hill_2")
 
     df_hill <- data.frame(otu_hill, physeq@sam_data)
-    df_hill[, c(1:3)] <- apply(df_hill[, c(1:3)], 2, as.numeric)
+    df_hill[, 1:3] <- apply(df_hill[, 1:3], 2, as.numeric)
 
     p_var <- hill_tuckey_pq(physeq, variable, correction_for_sample_size = correction_for_sample_size)
 
@@ -1654,7 +1654,7 @@ rotl_pq <- function(physeq,
 #' @inheritParams clean_pq
 #' @param taxonomic_level (default: NULL): a vector of selected
 #' taxonomic level using
-#'   their column numbers (e.g. taxonomic_level = c(1:7))
+#'   their column numbers (e.g. taxonomic_level = 1:7)
 #' @param ... Arguments passed on to \code{\link[metacoder]{heat_tree}}
 #'
 #' @return A plot
