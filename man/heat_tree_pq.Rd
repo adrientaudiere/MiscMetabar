@@ -12,7 +12,7 @@ using the \code{phyloseq} package.}
 
 \item{taxonomic_level}{(default: NULL): a vector of selected
 taxonomic level using
-their column numbers (e.g. taxonomic_level = c(1:7))}
+their column numbers (e.g. taxonomic_level = 1:7)}
 
 \item{...}{Arguments passed on to \code{\link[metacoder]{heat_tree}}}
 }

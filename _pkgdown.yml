@@ -13,23 +13,29 @@ navbar:
     text: Articles
     menu:
     - text: Tutorials
-    - text: Reclustering
-      href: articles/Reclustering.html
     - text: Alpha-diversity
       href: articles/alpha-div.html
     - text: Beta-diversity
       href: articles/beta-div.html
-    - text: Import/export and track 
+    - text: Import/export and track
       href: articles/import_export_track.html
     - text: Filter taxa and samples
       href: articles/filter.html
+    - text: Reclustering
+      href: articles/Reclustering.html
     - text: -------
     - text: Tutorials with published dataset
     - text: Tengeler
       href: articles/tengeler.html
     - text: -------
+    - text: "R ecosystem for metabarcoding"
+    - text: "Metabarcoding with R"
+      href: articles/states_of_fields_in_R.html
+    - text: -------
     - text: "For developpers"
     - text: Rules of code
       href: articles/Rules.html
+
+
 development:
   mode: auto

@@ -32,7 +32,7 @@ test_that("heat_tree_pq works with data_fungi dataset", {
   expect_silent(suppressMessages(ht <- heat_tree_pq(data_basidio)))
   expect_s3_class(ht, "ggplot")
   expect_s3_class(
-    heat_tree_pq(data_basidio, taxonomic_level = c(1:4)),
+    heat_tree_pq(data_basidio, taxonomic_level = 1:4),
     "ggplot"
   )
 })

@@ -2,7 +2,8 @@ Package: MiscMetabar
 Type: Package
 Title: Miscellaneous functions for metabarcoding analysis
 Version: 0.5
-Author: Adrien Taudière <adrien.taudiere@zaclys.net>
+Authors@R: person("Adrien", "Taudière", email = "adrien.taudiere@zaclys.net",
+  role = c("aut", "cre"), comment = c(ORCID = "0000-0003-1088-1182"))
 Maintainer: Adrien Taudière <adrien.taudiere@zaclys.net>
 Description: Functions to help analyze and visualize metabarcoding data. Mainly build on the top of phyloseq, dada2 and targets R packages.
 License: AGPL-3 + file LICENSE
@@ -29,6 +30,7 @@ Suggests:
     ggh4x,
     ggridges,
     ggVennDiagram,
+    gtsummary,
     grDevices,
     grid,
     gridExtra,

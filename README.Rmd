@@ -1,6 +1,7 @@
 ---
 output: github_document
 always_allow_html: yes
+bibliography: paper/bibliography.bib
 ---
 
 ![R](https://img.shields.io/badge/r-%23276DC3.svg?style=for-the-badge&logo=r&logoColor=white)
@@ -8,6 +9,8 @@ always_allow_html: yes
 [![codecov](https://codecov.io/gh/adrientaudiere/MiscMetabar/graph/badge.svg?token=NXFRSIKYC0)](https://codecov.io/gh/adrientaudiere/MiscMetabar)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md) 
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
+[![CodeFactor](https://www.codefactor.io/repository/github/adrientaudiere/miscmetabar/badge/master)](https://www.codefactor.io/repository/github/adrientaudiere/miscmetabar/overview/master)
+[![R-CMD-check](https://github.com/adrientaudiere/MiscMetabar/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/adrientaudiere/MiscMetabar/actions/workflows/R-CMD-check.yaml)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- devtools::build_readme() -->
@@ -21,10 +24,14 @@ knitr::opts_chunk$set(
 )
 ```
 
-# MiscMetabar
+# MiscMetabar <a href="https://adrientaudiere.github.io/MiscMetabar/"><img src="man/figures/logo.png" align="right" height="138" alt="MiscMetabar website" /></a>
 
-The goal of MiscMetabar is to complete the great packages [dada2](https://benjjneb.github.io/dada2/index.html), [phyloseq](https://joey711.github.io/phyloseq/) and [targets](https://books.ropensci.org/targets/). 
 See the pkdown site [here](https://adrientaudiere.github.io/MiscMetabar/).
+
+Biological studies, especially in ecology, health sciences and taxonomy, need to describe the biological composition of samples. During the last twenty years, (i) the development of DNA sequencing, (ii) reference databases, (iii) high-throughput sequencing (HTS), and (iv) bioinformatics resources have allowed the description of biological communities through metabarcoding. Metabarcoding involves the sequencing of millions (*meta*-) of short regions of specific DNA (*-barcoding*, @valentini2009) often from environmental samples (eDNA, @taberlet2012) such as human stomach contents, lake water, soil and air.
+
+`MiscMetabar` aims to facilitate the **description**, **transformation**, **exploration** and **reproducibility** of metabarcoding analysis using R. The development of `MiscMetabar` relies heavily on the R packages [`dada2`](https://benjjneb.github.io/dada2/index.html), [`phyloseq`](https://joey711.github.io/phyloseq/) and [`targets`](https://books.ropensci.org/targets/). 
+
 
 ## Installation
 

@@ -1,0 +1,31 @@
+---
+title: "Metabarcoding with R"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Metabarcoding with R}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: ../paper/bibliography.bib
+---
+
+This is a short introduction to other R packages in the field of metabarcoding analysis.
+
+# State of the Field in R
+
+The metabarcoding ecosystem in the R language is mature, well-constructed, and relies on a very active community in both the [bioconductor](https://www.bioconductor.org/) and [cran](https://cran.r-project.org/) projects. The [bioconductor](https://www.bioconductor.org/) even creates specific task views in [Metagenomics](http://bioconductor.org/packages/release/BiocViews.html#___Metagenomics) and [Microbiome](http://bioconductor.org/packages/release/BiocViews.html#___Microbiome).
+
+R package [`dada2`](http://bioconductor.org/packages/release/bioc/html/dada2.html) [@callahan2016]  provides a highly cited and recommended clustering method [@pauvert2019]. `dada2` also provides tools to complete the metabarcoding analysis pipeline, including chimera detection and taxonomic assignment. `phyloseq` [@mcmurdie2013] (http://bioconductor.org/packages/release/bioc/html/phyloseq.html) facilitate metagenomics analysis by providing a way to store data (the `phyloseq` class) and both graphical and statistical functions.
+
+The phyloseq package introduces the S4 class object (class physeq), which contains (i) an OTU sample matrix, (ii) a taxonomic table, (iii) a sample metadata table, and two optional slots for (iv) a phylogenetic tree and (v) reference sequences.
+
+Some packages already extend the phyloseq packages. For example, the [`microbiome`](https://microbiome.github.io/) package collection [@ernst2023] provides some scripts and functions for manipulating microbiome datasets. The `speedyseq` package [@mclaren2020] provides faster versions of phyloseq's plotting and taxonomic merging functions, some of which are used in `MiscMetabar`. The [phylosmith](https://schuyler-smith.github.io/phylosmith/) [smith2023](https://joss.theoj.org/papers/10.21105/joss.01442) package already provides some functions to extend and simplify the use of the phyloseq packages.
+
+Other packages ([`mia`](https://github.com/microbiome/mia/) forming the [`microbiome`](https://microbiome.github.io/) package collection and [`MicrobiotaProcess`](https://github.com/YuLab-SMU/MicrobiotaProcess) [@xu2023]) extend a new data structure using the comprehensive Bioconductor ecosystem of the `SummarizedExperiment` family.
+
+`MiscMetabar` enriches this R ecosystem by providing functions to (i) **describe** your dataset visually, (ii) **transform** your data, (iii) **explore** biological diversity (alpha, beta, and taxonomic diversity), and (iv) simplify **reproducibility**. `MiscMetabar` is designed to complement and not compete with other R packages mentioned above. For example. The `mia` package is recommended for studies focusing on phylogenetic trees, and `phylosmith` allows easy visualization of co-occurrence networks. Using the `MicrobiotaProcess::as.MPSE` function, most of the utilities in the `MicrobiotaProcess` package are available with functions from the `MiscMetabar`.
+
+I do not try to reinvent the wheel and prefer to rely on existing packages and classes rather than building a new framework. `MiscMetabar` is based on the phyloseq class from phyloseq, the most cited package in metagenomics [@wen2023]. For a description and comparison of these integrated packages competing with phyloseq (e.g. [microeco](https://github.com/ChiLiubio/microeco) by @liu2020, [EasyAmplicon](https://github.com/YongxinLiu/EasyAmplicon) by @liu2023 and [MicrobiomeAnalystR](https://www.microbiomeanalyst.ca) by @lu2023) see @wen2023. Note that some limitations of the phyloseq packages are circumvented thanks to [phylosmith](https://schuyler-smith.github.io/phylosmith/) [@smith2023], [`microViz`](https://david-barnett.github.io/microViz/) ([@Barnett2021]) and [`MiscMetabar`](https://adrientaudiere.github.io/MiscMetabar/).
+
+Some packages provide an interactive interface useful for rapid exploration and for code-beginner biologists. [Animalcules](https://github.com/compbiomed/animalcules) [@zhao2021] and [`microViz`](https://david-barnett.github.io/microViz/) [@Barnett2021] provides shiny interactive interface whereas [MicrobiomeAnalystR](https://www.microbiomeanalyst.ca) [@lu2023] is a web-based platform.
+
+# References

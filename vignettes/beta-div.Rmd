@@ -85,7 +85,7 @@ ggvenn_pq(data_fungi, fact = "Height", taxonomic_rank = "Genus", min_nb_seq = 10
 
 ## Upset plot
 
-Venn diagramm can quickly become complex to read when the number of modality increase. One graphical solution is upset plot. MiscMetabar propose a solution based on the package [ComplexUpset](https://krassowski.github.io/complex-upset/).
+Venn diagram can quickly become complex to read when the number of modalities increase. One graphical solution is upset plot. MiscMetabar propose a solution based on the package [ComplexUpset](https://krassowski.github.io/complex-upset/).
 ```{r}
 upset_pq(data_fungi, fact = "Height")
 ```

@@ -9,6 +9,8 @@
 Functions to help analyze and visualize metabarcoding data. Mainly based on
 the phyloseq and dada2 packages.
 
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Functions to help analyze and visualize metabarcoding data. Mainly build on the top of phyloseq, dada2 and targets R packages.
 }
 \seealso{
@@ -18,6 +20,10 @@ Useful links:
   \item \url{https://adrientaudiere.github.io/MiscMetabar/}
   \item Report bugs at \url{https://github.com/adrientaudiere/MiscMetabar/issues}
 }
+
+}
+\author{
+\strong{Maintainer}: Adrien Taudière \email{adrien.taudiere@zaclys.net} (\href{https://orcid.org/0000-0003-1088-1182}{ORCID})
 
 }
 \keyword{internal}

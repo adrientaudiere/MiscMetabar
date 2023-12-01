@@ -7,7 +7,7 @@
 sankey_pq(
   physeq = NULL,
   fact = NULL,
-  taxa = c(1:4),
+  taxa = 1:4,
   add_nb_seq = FALSE,
   min_prop_tax = 0,
   tax2remove = NULL,
@@ -57,8 +57,8 @@ of \code{fact}
 data("GlobalPatterns")
 GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 sankey_pq(GP, fact = "SampleType")
-sankey_pq(GP, taxa = c(1:4), min_prop_tax = 0.01)
-sankey_pq(GP, taxa = c(1:4), min_prop_tax = 0.01, add_nb_seq = TRUE)
+sankey_pq(GP, taxa = 1:4, min_prop_tax = 0.01)
+sankey_pq(GP, taxa = 1:4, min_prop_tax = 0.01, add_nb_seq = TRUE)
 }
 \seealso{
 \code{\link[networkD3]{sankeyNetwork}}

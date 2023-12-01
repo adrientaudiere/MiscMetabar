@@ -19,7 +19,7 @@ BuildType: Package
 PackageUseDevtools: Yes
 PackageInstallArgs: --no-multiarch --with-keep.source
 PackageBuildArgs: --resave-data
-PackageCheckArgs: --as-cran
+PackageCheckArgs: --as-cran --no-tests
 PackageRoxygenize: rd,collate,namespace
 
 SpellingDictionary: en_US
