@@ -1392,7 +1392,7 @@ mumu_pq <- function(physeq,
     if (file.exists("temp.uc")) {
       unlink("temp.uc")
     }
-  }
+
   if (file.exists("log.txt")) {
     unlink("temp.uc")
   }
@@ -1546,7 +1546,7 @@ subset_taxa_pq <- function(physeq,
   cond <- condition[match(taxa_names(new_physeq), names(condition))]
   cond[is.na(cond)] <- FALSE
 
-  old_MA <- as(otu_table(new_physeq), "matrix")
+  old_MA <- as(otu_table(new_physeq, taxa_are_rows = TRUE), "matrix")
   new_MA <- old_MA[cond,]
 
   if (!is.matrix(new_MA)) {
