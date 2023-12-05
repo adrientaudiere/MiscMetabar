@@ -2,6 +2,7 @@
 
 - Add function `LCBD_pq()` and `plot_LCBD_pq()` to compute, test and plot local contributions to beta diversity (LCBD) of samples
 - Add function `tbl_sum_samdata()` to summarize information from sample data in a table
+- Add function `mumu_pq()` to use [mumu](https://github.com/frederic-mahe/mumu), a fast and robust C++ implementation of lulu.
 
 # MiscMetabar 0.5
 
