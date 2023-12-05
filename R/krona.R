@@ -28,8 +28,10 @@
 #' @export
 #' @seealso \code{\link{merge_krona}}
 #' @author Adrien Taudière
-#'
-
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please cite [Krona](https://github.com/marbl/Krona) if
+#'   you use this function.
 krona <-
   function(physeq,
            file = "krona.html",
@@ -112,7 +114,10 @@ krona <-
 #' @seealso \code{\link{krona}}
 #' @export
 #' @author Adrien Taudière
-#'
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please cite [Krona](https://github.com/marbl/Krona) if
+#'   you use this function.
 merge_krona <- function(files = NULL, output = "mergeKrona.html") {
   cmd <-
     paste("ktImportKrona ",

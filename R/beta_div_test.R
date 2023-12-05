@@ -30,7 +30,9 @@
 #'
 #' @return A \code{\link{ggplot}}2 plot with a subtitle indicating the pvalue
 #' and the number of permutations
-#'
+#' @details
+#' This function is mainly a wrapper of the work of others. 
+#'   Please cite `phyloseqGraphTest` package.
 #' @export
 
 graph_test_pq <- function(physeq,
@@ -122,6 +124,10 @@ graph_test_pq <- function(physeq,
 #' adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison")
 #' @export
 #' @author Adrien Taudière
+#' @details
+#' This function is mainly a wrapper of the work of others. 
+#'   Please make a reference to `vegan::adonis2()` if you 
+#'   use this function.
 
 adonis_pq <- function(physeq,
                       formula,
@@ -217,6 +223,10 @@ adonis_pq <- function(physeq,
 #' @examples
 #' LCBD_pq(data_fungi, nperm=100)
 #' LCBD_pq(data_fungi, nperm=100, method = "jaccard")
+#' @author Adrien Taudière
+#' This function is mainly a wrapper of the work of others. 
+#'   Please make a reference to `despatial::beta.div()` if you 
+#'   use this function.
 LCBD_pq <- function(physeq,
                     p_adjust_method =  "BH",
                     ...) {
@@ -270,6 +280,10 @@ LCBD_pq <- function(physeq,
 #'         legend.text = element_text(size=10),
 #'         axis.title.x = element_text(size=6))
 #' @author Adrien Taudière
+#' @details
+#' This function is mainly a wrapper of the work of others. 
+#'   Please make a reference to `vegan::beta.div()` if you 
+#'   use this function.
 plot_LCBD_pq <- function(physeq,
                          p_adjust_method =  "BH",
                          pval =  0.05,
@@ -377,6 +391,10 @@ plot_LCBD_pq <- function(physeq,
 #' multipatt_pq(subset_samples(data_fungi, !is.na(Time)), fact="Time",
 #'    max.order = 1, control = how(nperm=9999))
 #' @author Adrien Taudière
+#' @details
+#' This function is mainly a wrapper of the work of others. 
+#'   Please make a reference to `indicspecies::multipatt()` if you 
+#'   use this function.
 
 multipatt_pq <- function(physeq,
 fact,

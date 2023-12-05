@@ -1606,7 +1606,10 @@ summary_plot_pq <- function(physeq,
 #' @return A plot
 #' @export
 #' @author Adrien Taudière
-#'
+#' @details
+#' This function is mainly a wrapper of the work of others. 
+#'   Please make a reference to `rotl` package if you 
+#'   use this function.
 #' @examples
 #' library("rotl")
 #' tr <- rotl_pq(data_fungi, species_colnames = "Genus_species")

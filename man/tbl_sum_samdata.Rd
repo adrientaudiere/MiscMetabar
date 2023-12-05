@@ -13,7 +13,7 @@ using the \code{phyloseq} package.}
 \item{remove_col_unique_value}{(logical, default TRUE) Do we remove informative
 columns (categorical column with one value per samples), e.g. samples names ?}
 
-\item{...}{Others arguments pass on to \code{\link[tbl_summary:tbl_summary]{tbl_summary::tbl_summary()}}.}
+\item{...}{Others arguments pass on to \code{\link[gtsummary:tbl_summary]{gtsummary::tbl_summary()}}.}
 }
 \value{
 a physeq object with a larger slot tax_table
@@ -21,7 +21,7 @@ a physeq object with a larger slot tax_table
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-A wrapper for the \link[tbl_summary:tbl_summary(...)]{tbl_summary::tbl_summary(...)} function in the case of \code{physeq}
+A wrapper for the \link[gtsummary:tbl_summary(...)]{gtsummary::tbl_summary(...)} function in the case of \code{physeq}
 object.
 }
 \examples{

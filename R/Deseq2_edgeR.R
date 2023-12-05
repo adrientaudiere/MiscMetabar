@@ -150,7 +150,8 @@ plot_edgeR_pq <-
 #'   or \code{\link[ggplot2]{ggplot}}
 #'
 #' @export
-#'
+#' @details
+#'   Please cite `DESeq2` package if you use chis function.
 #' @examples
 #' data("GlobalPatterns")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
