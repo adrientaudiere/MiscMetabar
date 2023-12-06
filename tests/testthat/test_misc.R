@@ -84,3 +84,14 @@ test_that("diff_fct_diff_class works fine", {
     NA
   )
 })
+
+
+test_that("diff_fct_diff_class works fine", {
+  expect_message(install_pkg_needed("abc", verbose = TRUE))
+  expect_message(install_pkg_needed("MiscMetabar", verbose = TRUE))
+  expect_silent(install_pkg_needed("MiscMetabar"))
+  expect_message(install_pkg_needed("adrientaudiere/lulu"))
+  expect_silent(install_pkg_needed("adrientaudiere/lulu", github_pkg = TRUE, use_pak = FALSE))
+  expect_silent(install_pkg_needed("microbiomeDataSets"))
+  expect_silent(install_pkg_needed("microbiomeDataSets", bioconductor_pkg = TRUE, use_pak = FALSE))
+})

@@ -296,3 +296,60 @@ subsample_fastq <- function(fastq_files, folder_output = "subsample", n_seq = 10
 }
 
 ################################################################################
+
+################################################################################
+#' Install a package if not present
+#'
+#' @description
+#'  `r lifecycle::badge("experimental")`
+#'
+#' @param pkg The name of the package
+#' @param use_pak (logical, default TRUE) Use of `pak::pkg_install()`. If FALSE
+#'   use the base `install.package()` function or the function
+#'   `BiocManager::install()` if bioconductor_pkg is true or the function
+#' @param bioconductor_pkg (logical, default FALSE). If use_pak is TRUE,
+#'   do nothing, else use `BiocManager::install()` to install the package.
+#' @param github_pkg (logical, default FALSE). If use_pak is TRUE,
+#'   do nothing, else use `devtools::install_github` to install the package.
+#' @param verbose (logical, default FALSE) Does the function print message?
+#' @return Nothing
+#' @author Adrien Taudière
+#' @export
+#' @examples
+#' \dontrun{
+#'  install_pkg_needed("ggVennDiagram")
+#' }
+install_pkg_needed <- function(pkg, use_pak = TRUE, bioconductor_pkg = FALSE, github_pkg = FALSE, verbose = FALSE) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    if(verbose){
+      message(paste0("Installation of the package : ", pkg))
+    }
+    if(use_pak){
+      if (!requireNamespace("pak", quietly = TRUE)) {
+        install.packages("pak")
+      }
+      pak::pkg_install(pkg)
+
+    } else {
+      if(bioconductor_pkg){
+        if (!require("BiocManager", quietly = TRUE)){
+          install.packages("BiocManager")
+        }
+        BiocManager::install(pkg)
+      } else if (github_pkg) {
+        if (!requireNamespace("devtools", quietly = TRUE)) {
+          install.packages("devtools", quietly = TRUE)
+        }
+        devtools::install_github(pkg)
+      }
+      else {
+        install.packages(pkg)
+      }
+    }
+  } else {
+    if(verbose){
+      message(paste0(pkg, " is already present."))
+    }
+  }
+
+} 
