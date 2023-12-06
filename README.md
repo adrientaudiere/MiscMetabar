@@ -36,14 +36,24 @@ heavily on the R packages
 
 ## Installation
 
-There is no CRAN or bioconductor version of MiscMetabar for now (work in
-progress).
+There is no CRAN version of MiscMetabar for now (work in
+progress). As MiscMetabar heavily relies on two bioconductor packages
+(dada and phyloseq), we need to first install those 2 packages using
+BiocManager.
 
 You can install the stable version from [GitHub](https://github.com/)
 with:
 
 ``` r
-install.packages("devtools")
+if (!require("BiocManager", quietly = TRUE)){
+  install.packages("BiocManager")
+}
+BiocManager::install("dada2")
+BiocManager::install("phyloseq")
+
+if (!require("devtools", quietly = TRUE)){
+  install.packages("devtools")
+}
 devtools::install_github("adrientaudiere/MiscMetabar")
 ```
 
@@ -51,7 +61,15 @@ You can install the developement version from
 [GitHub](https://github.com/) with:
 
 ``` r
-install.packages("devtools")
+if (!require("BiocManager", quietly = TRUE)) {
+  install.packages("BiocManager")
+}
+BiocManager::install("dada2")
+BiocManager::install("phyloseq")
+
+if (!require("devtools", quietly = TRUE)){
+  install.packages("devtools")
+}
 devtools::install_github("adrientaudiere/MiscMetabar", ref = "dev")
 ```
 
