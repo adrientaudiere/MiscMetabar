@@ -125,6 +125,9 @@ Result of the Tuckey post-hoc test
 ### Beta-diversity analysis
 
 ``` r
+if (!require("ggVennDiagram", quietly = TRUE)){
+  install.packages("ggVennDiagram")
+}
 ggvenn_pq(data_fungi, fact = "Height") +
   ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1) +
   labs(title = "Share number of ASV among Height in tree")
