@@ -25,6 +25,11 @@ A plot
 Make a phylogenetic tree using the ASV names of a physeq object and the
 Open Tree of Life tree.
 }
+\details{
+This function is mainly a wrapper of the work of others.
+Please make a reference to \code{rotl} package if you
+use this function.
+}
 \examples{
 library("rotl")
 tr <- rotl_pq(data_fungi, species_colnames = "Genus_species")

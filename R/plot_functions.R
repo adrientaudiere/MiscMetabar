@@ -1382,7 +1382,8 @@ hill_pq <-
     )
 
     if (one_plot) {
-      requireNamespace("patchwork", quietly = TRUE)
+    install_if_needed("patchwork")
+    requireNamespace("patchwork", quietly = TRUE)
       if (letters) {
         res <- ((p_0 + theme(legend.position = "none")) + labs(subtitle = element_blank()) +
           (p_1 + theme(legend.position = "none", axis.text.y = element_blank()) + labs(subtitle = element_blank()) + ylab(NULL)) +

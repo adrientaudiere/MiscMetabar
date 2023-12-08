@@ -41,6 +41,11 @@ A html file
 
 Need the installation of kronatools on the computer (\href{https://github.com/marbl/Krona/wiki/Installing}{installation instruction}).
 }
+\details{
+This function is mainly a wrapper of the work of others.
+Please cite \href{https://github.com/marbl/Krona}{Krona} if
+you use this function.
+}
 \examples{
 data("GlobalPatterns")
 GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")

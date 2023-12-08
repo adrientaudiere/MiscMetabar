@@ -39,6 +39,11 @@ A ggplot object build with the package patchwork
 A wrapper for the \code{\link[adespatial:beta.div]{adespatial::beta.div()}} function in the case of \code{physeq}
 object.
 }
+\details{
+This function is mainly a wrapper of the work of others.
+Please make a reference to \code{vegan::beta.div()} if you
+use this function.
+}
 \examples{
 plot_LCBD_pq(data_fungi, nperm=100, only_plot_significant = FALSE, pval = 0.2)
 plot_LCBD_pq(data_fungi, nperm=100, only_plot_significant = TRUE, pval = 0.2)

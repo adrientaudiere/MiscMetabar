@@ -31,3 +31,9 @@ LCBD_pq(data_fungi, nperm=100, method = "jaccard")
 \seealso{
 \link{plot_LCBD_pq}, \code{\link[adespatial:beta.div]{adespatial::beta.div()}}
 }
+\author{
+Adrien Taudière
+This function is mainly a wrapper of the work of others.
+Please make a reference to \code{despatial::beta.div()} if you
+use this function.
+}

@@ -28,6 +28,7 @@ Suggests:
     formattable,
     gghalves,
     ggh4x,
+    ggtree,
     ggridges,
     ggVennDiagram,
     gtsummary,
@@ -46,6 +47,7 @@ Suggests:
     multcompView,
     networkD3,
     patchwork,
+    phangorn,
     pbapply,
     plotly,
     plyr,
@@ -81,6 +83,7 @@ Remotes:
     github::adrientaudiere/lulu,
     github::david-barnett/microViz,
     github::erocoar/gghalves
+    github::brendanf/FUNGuildR
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 VignetteBuilder: knitr

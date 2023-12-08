@@ -20,6 +20,11 @@ A html file
 Need the installation of kronatools on the computer (\href{https://github.com/marbl/Krona/wiki/Installing}{installation instruction}).
 Function merge_krona allows merging multiple html files in one interactive krona file
 }
+\details{
+This function is mainly a wrapper of the work of others.
+Please cite \href{https://github.com/marbl/Krona}{Krona} if
+you use this function.
+}
 \examples{
 \dontrun{
 data("GlobalPatterns")

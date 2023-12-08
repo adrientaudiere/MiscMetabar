@@ -56,6 +56,11 @@ new column for partial R^2. See help of \code{\link[vegan:adonis]{vegan::adonis2
 
 A wrapper for the \code{\link[vegan:adonis]{vegan::adonis2()}} function in the case of \code{physeq} object.
 }
+\details{
+This function is mainly a wrapper of the work of others.
+Please make a reference to \code{vegan::adonis2()} if you
+use this function.
+}
 \examples{
 data(enterotype)
 adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE)

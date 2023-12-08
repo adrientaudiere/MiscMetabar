@@ -51,6 +51,10 @@ and the number of permutations
 A wrapper of \code{\link[phyloseqGraphTest:graph_perm_test]{phyloseqGraphTest::graph_perm_test()}} for quick plot with
 important statistics
 }
+\details{
+This function is mainly a wrapper of the work of others.
+Please cite \code{phyloseqGraphTest} package.
+}
 \examples{
 data(enterotype)
 graph_test_pq(enterotype, fact = "SeqTech")

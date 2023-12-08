@@ -35,21 +35,43 @@ Biological studies, especially in ecology, health sciences and taxonomy, need to
 
 ## Installation
 
-There is no CRAN or bioconductor version of MiscMetabar for now (work in progress).
+There is no CRAN version of MiscMetabar for now (work in
+progress). As MiscMetabar heavily relies on two bioconductor packages
+(dada and phyloseq), we need to first install those 2 packages using
+BiocManager.
 
-You can install the stable version from [GitHub](https://github.com/) with:
+You can install the stable version from [GitHub](https://github.com/)
+with:
 
-```{r, message=FALSE, eval=FALSE}
-install.packages("devtools")
+```{r}
+if (!require("BiocManager", quietly = TRUE)){
+  install.packages("BiocManager")
+}
+BiocManager::install("dada2")
+BiocManager::install("phyloseq")
+
+if (!require("devtools", quietly = TRUE)){
+  install.packages("devtools")
+}
 devtools::install_github("adrientaudiere/MiscMetabar")
 ```
 
-You can install the developement version from [GitHub](https://github.com/) with:
+You can install the developement version from
+[GitHub](https://github.com/) with:
 
-```{r, message=FALSE, eval=FALSE}
-install.packages("devtools")
+```{r}
+if (!require("BiocManager", quietly = TRUE)) {
+  install.packages("BiocManager")
+}
+BiocManager::install("dada2")
+BiocManager::install("phyloseq")
+
+if (!require("devtools", quietly = TRUE)){
+  install.packages("devtools")
+}
 devtools::install_github("adrientaudiere/MiscMetabar", ref = "dev")
 ```
+
 
 ## Some use of MiscMetabar
 
@@ -80,6 +102,9 @@ p$plot_tuckey
 ### Beta-diversity analysis
 
 ```{r}
+if (!require("ggVennDiagram", quietly = TRUE)){
+  install.packages("ggVennDiagramà")
+}
 ggvenn_pq(data_fungi, fact = "Height") +
   ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1) +
   labs(title = "Share number of ASV among Height in tree")

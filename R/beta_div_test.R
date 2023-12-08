@@ -31,7 +31,7 @@
 #' @return A \code{\link{ggplot}}2 plot with a subtitle indicating the pvalue
 #' and the number of permutations
 #' @details
-#' This function is mainly a wrapper of the work of others. 
+#' This function is mainly a wrapper of the work of others.
 #'   Please cite `phyloseqGraphTest` package.
 #' @export
 
@@ -52,7 +52,7 @@ graph_test_pq <- function(physeq,
 
   if (na_remove) {
     new_physeq <-
-      subset_samples_pq(physeq,!is.na(physeq@sam_data[[fact]]))
+      subset_samples_pq(physeq, !is.na(physeq@sam_data[[fact]]))
     if (nsamples(physeq) - nsamples(new_physeq) > 0) {
       message(
         paste0(
@@ -125,8 +125,8 @@ graph_test_pq <- function(physeq,
 #' @export
 #' @author Adrien Taudière
 #' @details
-#' This function is mainly a wrapper of the work of others. 
-#'   Please make a reference to `vegan::adonis2()` if you 
+#' This function is mainly a wrapper of the work of others.
+#'   Please make a reference to `vegan::adonis2()` if you
 #'   use this function.
 
 adonis_pq <- function(physeq,
@@ -167,7 +167,7 @@ adonis_pq <- function(physeq,
     for (tl in term_lab) {
       print(tl)
       new_physeq <-
-        subset_samples_pq(new_physeq,!is.na(physeq@sam_data[[tl]]))
+        subset_samples_pq(new_physeq, !is.na(physeq@sam_data[[tl]]))
     }
     if (nsamples(physeq) - nsamples(new_physeq) > 0) {
       message(
@@ -224,8 +224,8 @@ adonis_pq <- function(physeq,
 #' LCBD_pq(data_fungi, nperm=100)
 #' LCBD_pq(data_fungi, nperm=100, method = "jaccard")
 #' @author Adrien Taudière
-#' This function is mainly a wrapper of the work of others. 
-#'   Please make a reference to `despatial::beta.div()` if you 
+#' This function is mainly a wrapper of the work of others.
+#'   Please make a reference to `despatial::beta.div()` if you
 #'   use this function.
 LCBD_pq <- function(physeq,
                     p_adjust_method =  "BH",
@@ -281,8 +281,8 @@ LCBD_pq <- function(physeq,
 #'         axis.title.x = element_text(size=6))
 #' @author Adrien Taudière
 #' @details
-#' This function is mainly a wrapper of the work of others. 
-#'   Please make a reference to `vegan::beta.div()` if you 
+#' This function is mainly a wrapper of the work of others.
+#'   Please make a reference to `vegan::beta.div()` if you
 #'   use this function.
 plot_LCBD_pq <- function(physeq,
                          p_adjust_method =  "BH",
@@ -301,7 +301,7 @@ plot_LCBD_pq <- function(physeq,
   ))) > 0) {
     warning("At least one sample was removed by the beta.div function")
     sam_data <-
-      sam_data[rownames(sam_data) %in% names(resBeta$LCBD), ]
+      sam_data[rownames(sam_data) %in% names(resBeta$LCBD),]
   }
 
   resLCBD <- tibble(
@@ -313,7 +313,7 @@ plot_LCBD_pq <- function(physeq,
 
   if (only_plot_significant) {
     p_LCBD <-
-      ggplot(filter(resLCBD, p.adj < pval), aes(x = LCBD, y = reorder(Sample_names,-LCBD, sum))) +
+      ggplot(filter(resLCBD, p.adj < pval), aes(x = LCBD, y = reorder(Sample_names, -LCBD, sum))) +
       geom_point(size = 4)
     if (is.null(sam_variables)) {
       return(p_LCBD)
@@ -322,13 +322,11 @@ plot_LCBD_pq <- function(physeq,
       for (i in 1:length(sam_variables)) {
         p_heatmap[[i]] <- ggplot(filter(resLCBD, p.adj < pval)) +
           geom_tile(inherit.aes = FALSE, aes(
-            y = reorder(Sample_names,-LCBD, sum),
+            y = reorder(Sample_names, -LCBD, sum),
             x = i,
             fill = .data[[sam_variables[[i]]]]
           )) +
-          theme_void() + theme(
-            axis.title.x = element_text()
-          ) +
+          theme_void() + theme(axis.title.x = element_text()) +
           xlab(sam_variables[[i]])
       }
 
@@ -339,7 +337,7 @@ plot_LCBD_pq <- function(physeq,
     }
   } else {
     p_LCBD <-
-      ggplot(resLCBD, aes(x = LCBD, y = reorder(Sample_names,-LCBD, sum))) +
+      ggplot(resLCBD, aes(x = LCBD, y = reorder(Sample_names, -LCBD, sum))) +
       geom_point(aes(color = p.adj < pval))
     if (is.null(sam_variables)) {
       return(p_LCBD)
@@ -348,13 +346,11 @@ plot_LCBD_pq <- function(physeq,
       for (i in 1:length(sam_variables)) {
         p_heatmap[[i]] <- ggplot(resLCBD) +
           geom_tile(inherit.aes = FALSE, aes(
-            y = reorder(Sample_names,-LCBD, sum),
+            y = reorder(Sample_names, -LCBD, sum),
             x = i,
             fill = .data[[sam_variables[[i]]]]
           )) +
-          theme_void() + theme(
-            axis.title.x = element_text()
-          ) +
+          theme_void() + theme(axis.title.x = element_text()) +
           xlab(sam_variables[[i]])
       }
 
@@ -386,45 +382,48 @@ plot_LCBD_pq <- function(physeq,
 #'
 #' @return A ggplot object
 #' @export
-#' @examples 
+#' @examples
 #' multipatt_pq(subset_samples(data_fungi, !is.na(Time)), fact="Time")
 #' multipatt_pq(subset_samples(data_fungi, !is.na(Time)), fact="Time",
 #'    max.order = 1, control = how(nperm=9999))
 #' @author Adrien Taudière
 #' @details
-#' This function is mainly a wrapper of the work of others. 
-#'   Please make a reference to `indicspecies::multipatt()` if you 
+#' This function is mainly a wrapper of the work of others.
+#'   Please make a reference to `indicspecies::multipatt()` if you
 #'   use this function.
 
 multipatt_pq <- function(physeq,
-fact,
-p_adjust_method =  "BH",
-pval = 0.05,
-control = how(nperm = 999),
-...){
+                         fact,
+                         p_adjust_method =  "BH",
+                         pval = 0.05,
+                         control = permute::how(nperm = 999),
+                         ...) {
+  physeq <- clean_pq(physeq,
+                     clean_samples_names = FALSE,
+                     force_taxa_as_columns = TRUE)
 
-res <-
-  indicspecies::multipatt(as.matrix(physeq@otu_table),
-            physeq@sam_data[[fact]],
-            control = control,
-            ...)
-            
-res_df <- res$sign
-res_df$p.adj <- p.adjust(res_df$p.value, method = p_adjust_method)
-res_df$ASV_names <- rownames(res_df)
-res_df_signif <-
-  res_df %>% filter(p.adj < pval) %>% tidyr::pivot_longer(cols = starts_with("s."))
+  res <-
+    indicspecies::multipatt(as.matrix(physeq@otu_table),
+                            physeq@sam_data[[fact]],
+                            control = control,
+                            ...)
 
-p <- ggplot(res_df_signif,
-       aes(
-         x = ASV_names,
-         y = name,
-         size = 2 * value,
-         color = stat
-       )) + geom_point() + theme(axis.text.x = element_text(
-         angle = 90,
-         vjust = 0.5,
-         hjust = 1
-       ))
-return(p)
+  res_df <- res$sign
+  res_df$p.adj <- p.adjust(res_df$p.value, method = p_adjust_method)
+  res_df$ASV_names <- rownames(res_df)
+  res_df_signif <-
+    res_df %>% filter(p.adj < pval) %>% tidyr::pivot_longer(cols = starts_with("s."))
+
+  p <- ggplot(res_df_signif,
+              aes(
+                x = ASV_names,
+                y = name,
+                size = 2 * value,
+                color = stat
+              )) + geom_point() + theme(axis.text.x = element_text(
+                angle = 90,
+                vjust = 0.5,
+                hjust = 1
+              ))
+  return(p)
 }

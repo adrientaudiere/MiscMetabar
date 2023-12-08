@@ -21,14 +21,19 @@ a physeq object with a larger slot tax_table
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-A wrapper for the \link[gtsummary:tbl_summary(...)]{gtsummary::tbl_summary(...)} function in the case of \code{physeq}
+A wrapper for the \code{\link[gtsummary:tbl_summary]{gtsummary::tbl_summary()}} function in the case of \code{physeq}
 object.
+}
+\details{
+This function is mainly a wrapper of the work of others.
+Please make a reference to \code{gtsummary::tbl_summary()} if you
+use this function.
 }
 \examples{
 tbl_sum_samdata(data_fungi)
 
-tbl_sum_samdata(data_fungi, include = c("Time", "Height"), 
-                type= list(Time ~ "continuous2", Height ~ "categorical"), 
+tbl_sum_samdata(data_fungi, include = c("Time", "Height"),
+                type= list(Time ~ "continuous2", Height ~ "categorical"),
                 statistic = list(Time ~ c("{median} ({p25}, {p75})", "{min}, {max}")))
 
 tbl_sum_samdata (enterotype)

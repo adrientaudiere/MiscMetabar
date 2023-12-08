@@ -422,8 +422,6 @@ track_wkflow <- function(list_of_objects,
 #' @return A list of dataframe. cf [track_wkflow()] for more information
 #'
 #' @export
-#' @md
-#'
 #' @author Adrien Taudière
 #'
 #' @examples
@@ -1393,22 +1391,22 @@ mumu_pq <- function(physeq,
       unlink("temp.uc")
     }
 
-  if (file.exists("log.txt")) {
-    unlink("temp.uc")
+    if (file.exists("log.txt")) {
+      unlink("temp.uc")
+    }
+    if (file.exists("match_list.txt")) {
+      unlink("match_list.txt")
+    }
+    if (file.exists("otu_table.csv")) {
+      unlink("otu_table.csv")
+    }
+    if (file.exists("new_OTU.tablemumu")) {
+      unlink("new_OTU.tablemumu")
+    }
   }
-  if (file.exists("match_list.txt")) {
-    unlink("match_list.txt")
-  }
-  if (file.exists("otu_table.csv")) {
-    unlink("otu_table.csv")
-  }
-  if (file.exists("new_OTU.tablemumu")) {
-    unlink("new_OTU.tablemumu")
-  }
-}
 
-return(list("new_physeq" = new_physeq,
-            "mumu_results" = result_mumu))
+  return(list("new_physeq" = new_physeq,
+              "mumu_results" = result_mumu))
 }
 ################################################################################
 
@@ -1546,7 +1544,8 @@ subset_taxa_pq <- function(physeq,
   cond <- condition[match(taxa_names(new_physeq), names(condition))]
   cond[is.na(cond)] <- FALSE
 
-  old_MA <- as(otu_table(new_physeq, taxa_are_rows = TRUE), "matrix")
+  old_MA <-
+    as(otu_table(new_physeq, taxa_are_rows = TRUE), "matrix")
   new_MA <- old_MA[cond,]
 
   if (!is.matrix(new_MA)) {
@@ -1597,7 +1596,6 @@ subset_taxa_pq <- function(physeq,
 #' @return a physeq object with one sample
 #'
 #' @export
-#' @md
 #'
 #' @author Adrien Taudière
 #'
@@ -1662,8 +1660,6 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #' @return a physeq object with a larger slot tax_table
 #'
 #' @export
-#' @md
-#'
 #' @examples
 #' # example code
 #'
@@ -1727,3 +1723,332 @@ tbl_sum_samdata <- function(physeq, remove_col_unique_value = TRUE, ...) {
   return(tbl_sum)
 }
 ################################################################################
+
+
+#' Add information about Guild for FUNGI using [FUNGuildR::funguild_assign()]
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' @inheritParams clean_pq
+#' @param taxLevels Name of the 7 columns in tax_table required by funguild
+#'
+#' @return A new object of class `physeq` with Guild information added to
+#'   `tax_table` slot
+#' @export
+#' @author Adrien Taudière
+#' @examples
+#' df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi)>5000)
+#' df <- add_funguild_info(df,
+#'   taxLevels = c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species"))
+#' sort(table(df@tax_table[,"guild"]), decreasing = TRUE)
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please make a reference to `FUNGuildR::funguild_assign()` if you
+#'   use this function.
+#' @seealso [plot_guild_pq()]
+
+add_funguild_info <- function(physeq,
+                              taxLevels = c("Kingdom",
+                                            "Phylum",
+                                            "Class",
+                                            "Order",
+                                            "Family",
+                                            "Genus",
+                                            "Species")) {
+  tax_tab <- physeq@tax_table
+  FUNGuild_assign =
+    FUNGuildR::funguild_assign(data.frame("Taxonomy" =
+                                            apply(tax_tab[, taxLevels], 1,
+                                                  paste, collapse = ";")))
+  tax_tab <-
+    as.matrix(cbind(tax_tab,
+                    FUNGuild_assign))
+  physeq@tax_table <- tax_table(tax_tab)
+  return(physeq)
+}
+
+
+
+
+################################################################################
+#' Plot information about Guild from tax_table slot previously
+#' created with [add_funguild_info()]
+#'
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' @inheritParams clean_pq
+#' @param levels_order
+#' @param clean_pq (logical, default TRUE): Does the phyloseq
+#'   object is cleaned using the [clean_pq()] function?
+#' @param ... other params for be passed on to
+#'   [clean_pq()] function
+#' @return A ggplot2 object
+#'
+#' @export
+#' @author Adrien Taudière
+#' @examples
+#' df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi)>5000)
+#' df <- add_funguild_info(df,
+#'   taxLevels = c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species"))
+#' p <- plot_guild_pq(df)
+#' library("patchwork")
+#' (plot_guild_pq(subset_samples(df, Height == "Low"),
+#'   levels_order = p$data$Guild[order(p$data$nb_seq)]) +
+#'    theme(legend.position = "none")) +
+#' (plot_guild_pq(subset_samples(df, Height == "High"),
+#'   levels_order = p$data$Guild[order(p$data$nb_seq)]) +
+#'    ylab("")+ theme(axis.text.y = element_blank()))
+#' @seealso [add_funguild_info()]
+
+plot_guild_pq <-
+  function(physeq,
+           levels_order = NULL,
+           clean_pq = TRUE,
+           ...) {
+    if (clean_pq) {
+      physeq <- clean_pq(physeq, ...)
+    }
+    guilds <-
+      data.frame(sort(table(strsplit(
+        paste(physeq@tax_table[, "guild"][physeq@tax_table[, "confidenceRanking"] %in% c ("Highly Probable", "Probable")],
+              collapse = "-"),
+        split = "-"
+      ))))
+
+    guilds$Var1 <- as.vector(guilds$Var1)
+    guilds <- guilds[guilds$Var1 != "NA", ]
+    guilds <- guilds[guilds$Var1 != "NULL", ]
+    guilds <- guilds[guilds$Var1 != "", ]
+
+    # Number of sequences per guild
+    nb_seq_by_guild <- c()
+    for (i in seq(1, length(guilds$Var1))) {
+      nb_seq_by_guild[i] <-
+        sum(taxa_sums(physeq@otu_table)[grepl(guilds$Var1[i],
+                                              physeq@tax_table[, "guild"])])
+    }
+    names(nb_seq_by_guild) <- guilds$Var1
+    guilds$seq <- nb_seq_by_guild
+
+    names(guilds) <- c("Guild", "nb_asv", "nb_seq")
+    guilds$nb_seq <- as.numeric(guilds$nb_seq)
+    guilds$nb_asv <- as.numeric(guilds$nb_asv)
+
+    guilds$Guild <- factor(as.vector(guilds$Guild),
+                           levels = guilds$Guild[order(guilds$nb_seq)])
+
+
+    COLORS <- rep("Others", nrow(guilds))
+    COLORS[grepl("Sapro", guilds$Guild)] <- "Sapro"
+    COLORS[grepl("Parasite", guilds$Guild)] <- "Parasite/pathogen"
+    COLORS[grepl("Pathog", guilds$Guild)] <- "Parasite/pathogen"
+    COLORS[grepl("ycorrh", guilds$Guild)] <- "Mutualist"
+    COLORS[grepl("Lichen", guilds$Guild)] <- "Mutualist"
+    COLORS[grepl("Endophy", guilds$Guild)] <- "Mutualist"
+
+    guilds$colors <- COLORS
+    guilds <- rbind(
+      guilds,
+      data.frame(
+        "Guild" = "All ASV",
+        "nb_asv" = ntaxa(physeq),
+        "nb_seq" = sum(physeq@otu_table),
+        "colors" = "ALL"
+      )
+    )
+    guilds <- guilds[order(guilds$nb_seq), ]
+    if (!is.null(levels_order)) {
+      guilds$Guild <- factor(guilds$Guild, levels = levels_order)
+    }
+
+    ggplot(guilds,
+           aes(
+             y = Guild,
+             x = log10(nb_seq),
+             fill = colors
+           )) +
+      geom_bar(stat = "identity") +
+      annotation_logticks(sides = "b", alpha = 0.5) +
+      ylab("GUILD by FUNGuild") +
+      scale_fill_manual("Guild",
+                        values = c("gray", "Olivedrab",  "cyan4", "tomato3",
+                                   "lightpink4")) +
+      geom_text(aes(label = nb_asv, x = log10(nb_seq) + 0.2), family = "serif") +
+      geom_text(aes(label = nb_seq, x = log10(nb_seq) / 2),
+                family = "mono",
+                col = "white")
+  }
+
+
+
+
+
+
+
+
+
+#' Build phylogenetic trees from refseq slot of a phyloseq object
+#'
+#' This function build tree phylogenetic tree and if nb_bootstrap is
+#' set, it build also the 3 corresponding bootstrapped tree.
+#'
+#' Default parameters are based on https://doi.org/10.12688/f1000research.8986.2
+#' and phangorn vignette [Estimating phylogenetic trees with phangorn](https://klausvigo.github.io/phangorn/articles/Trees.html). You should understand your data, especially the markers, before
+#' using this function.
+#'
+#' Note that phylogenetic reconstruction with markers used for metabarcoding are
+#' not robust. You must verify the robustness of your phylogenetic tree using
+#' taxonomic classification (see examples) and bootstrap or multi-tree visualization
+#' (e.g. using [ggtree::ggdensitree()]).
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' @inheritParams clean_pq
+#' @param nb_bootstrap (default 0): If a positive number is set,
+#'   the function also build 3 bootstrapped trees using `nb_bootstrap`
+#'   bootstrap samples
+#' @param model allows to choose an amino acid models or nucleotide model,
+#'   see [?optim.pml()] for more details
+#' @param optInv 	Logical value indicating whether topology gets optimized (NNI).
+#'   see [?optim.pml()] for more details
+#' @param optGamma Logical value indicating whether gamma rate parameter gets optimized.
+#'   see [?optim.pml()] for more details
+#' @param rearrangement type of tree tree rearrangements to perform, one of
+#'   "none", "NNI", "stochastic" or "ratchet"
+#'   see [?optim.pml()] for more details
+#' @param control A list of parameters for controlling the fitting process.
+#'   see [?optim.pml()] for more details
+#' @param optNni Logical value indicating whether topology gets optimized (NNI).
+#'   see [?optim.pml()] for more details
+#' @param multicore	(logical) whether models should estimated in parallel.
+#'   see [?bootstrap.pml()] for more details
+#' @param ... other params for be passed on to
+#'   [phangorn::optim.pml()] function
+#'
+#' @return A list of phylogenetic tree
+#' @export
+#' @author Adrien Taudière
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please make a reference to `phangorn` package if you
+#'   use this function.
+#' @examples
+#' library("phangorn")
+#' df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi)>5000)
+#' df_tree <- build_phytree_pq(df, nb_bootstrap = 5)
+#' plot(df_tree$UPGMA)
+#' plotBS(df_tree$UPGMA, df_tree$UPGMA_bs, main = "UPGMA")
+#' plot(df_tree$NJ, "unrooted")
+#' plotBS(treeNJ, treeNJ_bootstrap, main = "NJ")
+#' plot(df_tree$ML)
+#' plotBS(df_tree$ML_bs)
+#' plotBS(df_tree$ML$tree, df_tree$ML_bs, p = 20, frame = "circle")
+#' plotBS(
+#'   df_tree$ML$tree,
+#'   tree_ML_bs,
+#'   p = 20,
+#'   frame = "circle",
+#'   method = "TBE"
+#' )
+#' plot(consensusNet(df_tree$ML_bs))
+#' library("treeio")
+#' ps_tree <- merge_phyloseq(df, df_tree$ML$tree)
+#'
+#' library("ggtree")
+#' ggtree(ps_tree@phy_tree, layout="ellipse")  + geom_tiplab()
+#' ggtree(as.treedata(df_tree$ML), layout="slanted")
+#'
+#' ggdensitree(df_tree$ML_bs, alpha=.3, colour='steelblue') +
+#'   geom_tiplab(size=3) + hexpand(.35)
+#'
+#' ggtree(as.treedata(df_tree$ML)) +
+#'   geom_text(aes(x=branch, label=AA_subs, vjust=-.5), size=1)
+#'
+#' tax_tab <-  as_tibble(ps_tree@tax_table) %>%
+#'   mutate(.otu=as.character(.otu))
+#' p <- ggtree(as.treedata(ps_tree@phy_tree)) %<+% as_tibble(ps_tree@tax_table)
+#' p + geom_tippoint(aes(color=Class, shape=Phylum)) + geom_text(aes(label=Genus), hjust=-0.2,size=2)
+#'
+#' ggtree(as.treedata(ps_tree@phy_tree), branch.length = "none") %<+%
+#'   as_tibble(ps_tree@tax_table) +
+#'   geom_tippoint(aes(color=Class, shape=Phylum), size=2)
+
+build_phytree_pq <- function(physeq,
+                             nb_bootstrap = 0,
+                             model = "GTR",
+                             optInv = TRUE,
+                             optGamma = TRUE,
+                             rearrangement = "stochastic",
+                             control = phangorn::pml.control(trace = 0),
+                             optNni = TRUE,
+                             multicore = FALSE,
+                             ...) {
+  seqs <- physeq@refseq
+  alignment <-
+    DECIPHER::AlignSeqs(Biostrings::DNAStringSet(seqs), anchor = NA)
+
+  phang.align <-
+    phangorn::phyDat(as(alignment, "matrix"), type = "DNA")
+  dm <- phangorn::dist.ml(phang.align)
+  treeNJ <- phangorn::NJ(dm) # Note, tip order != sequence order
+  treeUPGMA <-
+    phangorn::upgma(dm) # Note, tip order != sequence order
+  fit <- phangorn::pml(treeNJ, data = phang.align)
+  ## negative edges length changed to 0!
+  fitGTR <- update(fit, k = 4, inv = 0.2)
+  tree_ML <-
+    phangorn::optim.pml(
+      fitGTR,
+      model = model,
+      optInv = optInv,
+      optGamma = optGamma,
+      rearrangement = rearrangement,
+      control = control,
+      optNni = optNni,
+      ...
+    )
+  if (nb_bootstrap > 0) {
+    treeUPGMA_bs  <- phangorn::bootstrap.phyDat(phang.align,
+                                                function(x) {
+                                                  phangorn::upgma(phangorn::dist.ml(x))
+                                                },
+                                                bs = nb_bootstrap)
+    tree_ML_bs <- phangorn::bootstrap.pml(
+      tree_ML,
+      bs = nb_bootstrap,
+      model = model,
+      optInv = optInv,
+      optGamma = optGamma,
+      rearrangement = rearrangement,
+      control = control,
+      optNni = optNni,
+      multicore = multicore,
+      ...
+    )
+    treeNJ_bs  <- phangorn::bootstrap.phyDat(phang.align,
+                                             function(x) {
+                                               phangorn::NJ(phangorn::dist.ml(x))
+                                             },
+                                             bs = nb_bootstrap)
+    return(
+      list(
+        "UPGMA" = treeUPGMA,
+        "NJ" = treeNJ,
+        "ML" = tree_ML,
+        "UPGMA_bs" = treeUPGMA_bs,
+        "NJ_bs" = treeNJ_bs,
+        "ML_bs" = tree_ML_bs
+      )
+    )
+  } else {
+    return(list(
+      "UPGMA" = treeUPGMA,
+      "NJ" = treeNJ,
+      "ML" = tree_ML
+    ))
+  }
+}
