@@ -80,7 +80,9 @@ Remotes:
     github::mikemc/speedyseq,
     github::adrientaudiere/lulu,
     github::david-barnett/microViz,
-    github::erocoar/gghalves
+    github::erocoar/gghalves,
+    bioc::release/phyloseq,
+    bioc::release/dada2
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 VignetteBuilder: knitr
