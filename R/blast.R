@@ -209,7 +209,10 @@ blast_pq <- function(physeq,
                      keep_temporary_files = FALSE) {
   verify_pq(physeq)
   dna <- Biostrings::DNAStringSet(physeq@refseq)
-  Biostrings::writeXStringSet(dna, paste0(tempdir(), "/", "physeq_refseq.fasta"))
+  Biostrings::writeXStringSet(
+    dna,
+    paste0(tempdir(), "/", "physeq_refseq.fasta")
+  )
 
   if (is.null(fasta_for_db) && is.null(database)) {
     stop("The function required a value for the parameters
@@ -400,7 +403,10 @@ filter_asv_blast <- function(physeq,
           taxa_names(new_physeq),
           info_to_taxtable[, "Query name"]$`Query name`
         ),
-        c("Query name", "Taxa name", "bit score", "% id. match", "Query cover", "e-value")
+        c(
+          "Query name", "Taxa name", "bit score",
+          "% id. match", "Query cover", "e-value"
+        )
       ]
     )))
   }
@@ -415,13 +421,15 @@ filter_asv_blast <- function(physeq,
 #' `r lifecycle::badge("experimental")`
 #'
 #' @inheritParams blast_to_phyloseq
-#' @param derep The result of `dada2::derepFastq()`. A list of `derep-class` object.
+#' @param derep The result of `dada2::derepFastq()`. A list of `derep-class`
+#'   object.
 #' @param seq2search (required) path to a fasta file defining the sequences
 #'   you want to blast against the ASV sequences from the physeq object.
 #' @param min_length_seq (default: 200) Removed sequences with less than
 #'   `min_length_seq` from derep before blast. Set to 0 to discard filtering
 #'    sequences by length.
-#' @param  keep_temporary_files (logical, default: FALSE) Do we keep temporary files
+#' @param  keep_temporary_files (logical, default: FALSE) Do we keep temporary
+#'   files :
 #'   - db.fasta (refseq transformed into a database)
 #'   - dbase list of files (output of blastn)
 #'   - blast_result.txt the summary result of blastn using
@@ -533,7 +541,13 @@ blast_to_derep <- function(derep,
     "Query cover"
   )
 
-  blast_tab$occurence <- sub("seqs\\)", "", sub(".*\\(", "", blast_tab$`Sample name`, perl = TRUE), perl = TRUE)
+  blast_tab$occurence <- sub("seqs\\)", "",
+    sub(".*\\(", "",
+      blast_tab$`Sample name`,
+      perl = TRUE
+    ),
+    perl = TRUE
+  )
 
   blast_tab <- blast_tab[order(blast_tab[, "bit score"], decreasing = TRUE), ]
 
@@ -580,7 +594,7 @@ blast_to_derep <- function(derep,
 #' @description
 #' `r lifecycle::badge("experimental")`
 #'
-#' Basically a wraper of [blast_pq()] with option `unique_per_seq = TRUE` and
+#' Basically a wrapper of [blast_pq()] with option `unique_per_seq = TRUE` and
 #'  `score_filter = FALSE`.
 #'
 #' Add the information to the taxtable
@@ -598,12 +612,18 @@ blast_to_derep <- function(derep,
 
 add_blast_info <- function(physeq, fasta_for_db, silent = FALSE, ...) {
   verify_pq(physeq)
-  res_blast <- blast_pq(physeq, fasta_for_db = fasta_for_db, unique_per_seq = TRUE, score_filter = FALSE, ...)
+  res_blast <- blast_pq(physeq,
+    fasta_for_db = fasta_for_db,
+    unique_per_seq = TRUE, score_filter = FALSE, ...
+  )
   new_physeq <- physeq
 
   new_physeq@tax_table <- tax_table(cbind(
     new_physeq@tax_table,
-    as.matrix(res_blast[match(taxa_names(new_physeq), res_blast$`Query name`), ])
+    as.matrix(res_blast[match(
+      taxa_names(new_physeq),
+      res_blast$`Query name`
+    ), ])
   ))
 
   verify_pq(new_physeq)

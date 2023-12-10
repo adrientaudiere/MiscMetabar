@@ -10,8 +10,9 @@ tbl_sum_samdata(physeq, remove_col_unique_value = TRUE, ...)
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{remove_col_unique_value}{(logical, default TRUE) Do we remove informative
-columns (categorical column with one value per samples), e.g. samples names ?}
+\item{remove_col_unique_value}{(logical, default TRUE) Do we remove
+informative columns (categorical column with one value per samples),
+e.g. samples names ?}
 
 \item{...}{Others arguments pass on to \code{\link[gtsummary:tbl_summary]{gtsummary::tbl_summary()}}.}
 }
@@ -32,12 +33,14 @@ use this function.
 \examples{
 tbl_sum_samdata(data_fungi)
 
-tbl_sum_samdata(data_fungi, include = c("Time", "Height"),
-                type= list(Time ~ "continuous2", Height ~ "categorical"),
-                statistic = list(Time ~ c("{median} ({p25}, {p75})", "{min}, {max}")))
+tbl_sum_samdata(data_fungi,
+  include = c("Time", "Height"),
+  type = list(Time ~ "continuous2", Height ~ "categorical"),
+  statistic = list(Time ~ c("{median} ({p25}, {p75})", "{min}, {max}"))
+)
 
-tbl_sum_samdata (enterotype)
-tbl_sum_samdata (enterotype, include =  !contains("SampleId"))
+tbl_sum_samdata(enterotype)
+tbl_sum_samdata(enterotype, include = !contains("SampleId"))
 }
 \author{
 Adrien Taudière

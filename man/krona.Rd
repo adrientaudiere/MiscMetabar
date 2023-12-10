@@ -47,7 +47,7 @@ Please cite \href{https://github.com/marbl/Krona}{Krona} if
 you use this function.
 }
 \examples{
-data("GlobalPatterns")
+data("GlobalPatterns", package = "phyloseq")
 GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
 # krona(GA, "Number.of.sequences.html")
 # krona(GA, "Number.of.ASVs.html", nb_seq = FALSE)

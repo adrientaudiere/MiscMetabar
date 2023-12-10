@@ -38,7 +38,7 @@ a list of for object
 \item "new_physeq": The new phyloseq object (class physeq)
 \item "discrepancy_vector": A vector of discrepancy showing for each taxonomic
 level the proportion of identic value before and after lulu reclustering.
-A value of 0.6 stands for 60\% of ASV before re-clusering have
+A value of 0.6 stands for 60\% of ASV before re-clustering have
 identical value after re-clustering. In other word, 40\% of ASV are assigned
 to a different taxonomic
 value. NA value are not counted as discrepancy.

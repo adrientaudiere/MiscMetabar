@@ -27,7 +27,7 @@ and the number of sequences under the name \code{nb_sequences}
 }
 \examples{
 \dontrun{
-data("GlobalPatterns")
+data("GlobalPatterns", package = "phyloseq")
 GPsubset <- subset_taxa(
   GlobalPatterns,
   GlobalPatterns@tax_table[, 1] == "Bacteria"
@@ -56,7 +56,6 @@ heat_tree_pq(GPsubset,
   tree_label = taxon_names,
   node_size_trans = "log10 area"
 )
-
 }
 }
 \author{

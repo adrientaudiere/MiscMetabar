@@ -28,7 +28,7 @@ Need to be in \code{physeq@sam_data}.}
 \item{min_nb_seq}{minimum number of sequences by OTUs by
 samples to take into count this OTUs in this sample. For example,
 if min_nb_seq=2,each value of 2 or less in the OTU table
-will not count in the venn diagramm}
+will not count in the venn diagram}
 
 \item{taxonomic_rank}{Name (or number) of a taxonomic rank
 to count. If set to Null (the default) the number of OTUs is counted.}
@@ -53,7 +53,7 @@ modalities of args \code{fact}.}
 for ex. \code{category.names}.}
 }
 \value{
-A \code{\link{ggplot}}2 plot representing Venn diagramm of
+A \code{\link{ggplot}}2 plot representing Venn diagram of
 modalities of the argument \code{factor} or if split_by is set a list
 of plots.
 }

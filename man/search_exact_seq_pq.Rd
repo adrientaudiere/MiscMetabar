@@ -2,7 +2,8 @@
 % Please edit documentation in R/controls.R
 \name{search_exact_seq_pq}
 \alias{search_exact_seq_pq}
-\title{Search for exact matching of sequences using complement, reverse and reverse-complement}
+\title{Search for exact matching of sequences using complement,
+reverse and reverse-complement}
 \usage{
 search_exact_seq_pq(physeq, sequences)
 }
@@ -13,8 +14,9 @@ using the \code{phyloseq} package.}
 \item{sequences}{A DNAStringSet object of sequences to search for.}
 }
 \value{
-A list of data-frames for each input sequences with the name, the sequences and the
-number of occurences of the original sequence, the complement sequence,
+A list of data-frames for each input sequences with the name,
+the sequences and the
+number of occurrences of the original sequence, the complement sequence,
 the reverse sequence and the reverse-complement sequence.
 }
 \description{
@@ -22,6 +24,9 @@ the reverse sequence and the reverse-complement sequence.
 }
 \examples{
 data("data_fungi")
+search_primers <- search_exact_seq_pq(data_fungi,
+  sequences = DNAStringSet(c("TTGAACGCACATTGCGCC", "ATCCCTACCTGATCCGAG"))
+)
 }
 \author{
 Adrien Taudière

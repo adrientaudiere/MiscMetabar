@@ -3,16 +3,24 @@
 \docType{data}
 \name{data_fungi}
 \alias{data_fungi}
-\title{Some fungal OTU in phyloseq format}
+\title{Fungal OTU in phyloseq format}
 \format{
 A physeq object containing 1420 taxa with references sequences
-described by 14 taxonomic ranks
-and 185 samples described by 7 sample variables:
+described by 14 taxonomic ranks and 185 samples described by 7 sample variables:
+\itemize{
+\item \emph{X}: the name of the fastq-file
+\item \emph{Sample_names}: the names of ... the samples
+\item \emph{Treename}: the name of an tree
+\item \emph{Sample_id}: identifier for each sample
+\item \emph{Height}: height of the sample in the tree
+\item \emph{Diameter}: diameter of the trunk
+\item \emph{Time}: time since the dead of the tree
+}
 }
 \usage{
 data_fungi
 }
 \description{
-Some fungal OTU in phyloseq format
+Fungal OTU in phyloseq format
 }
 \keyword{datasets}

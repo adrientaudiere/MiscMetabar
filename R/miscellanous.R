@@ -1,7 +1,7 @@
 ################################################################################
 #' Transform the otu_table of a \code{\link{phyloseq-class}} object into a
 #'   \code{\link{phyloseq-class}} object with a binary otu_table.
-#' @note  Useful to test if the results are not biaised by sequences bias
+#' @note  Useful to test if the results are not biased by sequences bias
 #'   that appended during PCR or NGS pipeline.
 #'
 #' @description
@@ -195,8 +195,8 @@ perc <- function(x, y = NULL, accuracy = 0, add_symbol = FALSE) {
 #' @author Adrien Taudière
 #' @export
 #' @examples
-#' count_seq(file = "inst/extdata/ex.fasta")
-#' count_seq(folder = "inst/extdata/")
+#' count_seq(file_path = "inst/extdata/ex.fasta")
+#' count_seq(folder_path = "inst/extdata/", pattern = "*.fasta")
 count_seq <- function(file_path = NULL, folder_path = NULL, pattern = NULL) {
   if (is.null(file_path) && is.null(folder_path)) {
     stop("You need to specify one of file_path or folder_path param!")
@@ -317,22 +317,21 @@ subsample_fastq <- function(fastq_files, folder_output = "subsample", n_seq = 10
 #' @export
 #' @examples
 #' \dontrun{
-#'  install_pkg_needed("ggVennDiagram")
+#' install_pkg_needed("ggVennDiagram")
 #' }
 install_pkg_needed <- function(pkg, use_pak = TRUE, bioconductor_pkg = FALSE, github_pkg = FALSE, verbose = FALSE) {
   if (!requireNamespace(pkg, quietly = TRUE)) {
-    if(verbose){
+    if (verbose) {
       message(paste0("Installation of the package : ", pkg))
     }
-    if(use_pak){
+    if (use_pak) {
       if (!requireNamespace("pak", quietly = TRUE)) {
         install.packages("pak")
       }
       pak::pkg_install(pkg)
-
     } else {
-      if(bioconductor_pkg){
-        if (!require("BiocManager", quietly = TRUE)){
+      if (bioconductor_pkg) {
+        if (!requireNamespace("BiocManager", quietly = TRUE)) {
           install.packages("BiocManager")
         }
         BiocManager::install(pkg)
@@ -341,15 +340,13 @@ install_pkg_needed <- function(pkg, use_pak = TRUE, bioconductor_pkg = FALSE, gi
           install.packages("devtools", quietly = TRUE)
         }
         devtools::install_github(pkg)
-      }
-      else {
+      } else {
         install.packages(pkg)
       }
     }
   } else {
-    if(verbose){
+    if (verbose) {
       message(paste0(pkg, " is already present."))
     }
   }
-
-} 
+}

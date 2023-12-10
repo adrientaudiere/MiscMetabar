@@ -12,7 +12,7 @@ using the \code{phyloseq} package.}
 
 \item{condition}{A named boolean vector to subset taxa. Length must fit
 the number of taxa and names must match taxa_names. Can also be a
-condition using a column of the tax_table slot (see exemples).}
+condition using a column of the tax_table slot (see examples).}
 
 \item{verbose}{(logical) Informations are printed}
 
@@ -25,9 +25,9 @@ a new phyloseq object
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-The main objective of this function is to complete the \code{\link[phyloseq:subset_taxa-methods]{phyloseq::subset_taxa()}}
-function by propose a more easy way of subset_taxa using a named boolean vector.
-Names must match taxa_names.
+The main objective of this function is to complete the
+\code{\link[phyloseq:subset_taxa-methods]{phyloseq::subset_taxa()}} function by propose a more easy way of
+subset_taxa using a named boolean vector. Names must match taxa_names.
 }
 \examples{
 data(data_fungi)

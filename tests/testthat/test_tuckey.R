@@ -1,4 +1,4 @@
-data("GlobalPatterns")
+data("GlobalPatterns", package = "phyloseq")
 GlobalPatterns@sam_data[, "Soil_logical"] <- ifelse(GlobalPatterns@sam_data[, "SampleType"] == "Soil", "Soil", "Not Soil")
 test_that("hill_tuckey_pq function works fine with GlobalPatterns dataset", {
   expect_silent(hill_tuckey_pq(GlobalPatterns, "Soil_logical"))

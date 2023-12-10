@@ -19,7 +19,6 @@
 #'   or \code{\link[ggplot2]{ggplot}}
 #'
 #' @export
-#'
 #' @examples
 #' \dontrun{
 #' data(GlobalPatterns)
@@ -153,7 +152,7 @@ plot_edgeR_pq <-
 #' @details
 #'   Please cite `DESeq2` package if you use chis function.
 #' @examples
-#' data("GlobalPatterns")
+#' data("GlobalPatterns", package = "phyloseq")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #' GP <- subset_samples(GP, GP@sam_data$SampleType %in% c("Soil", "Skin"))
 #' res <- DESeq2::DESeq(phyloseq_to_deseq2(GP, ~SampleType),
@@ -380,6 +379,8 @@ plot_deseq2_pq <-
 #'  the following options to the \code{method} argument:
 #'
 #'  \code{c("TMM", "RLE", "upperquartile", "none")}.
+#'
+#' @return A DGEList object. See [edgeR::estimateTagwiseDisp()] for more details.
 #'
 #' @param ... Additional arguments passed on to \code{\link[edgeR]{DGEList}}
 #' @export

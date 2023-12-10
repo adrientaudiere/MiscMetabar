@@ -1,6 +1,6 @@
 data("data_fungi")
 data("data_fungi_sp_known")
-data("GlobalPatterns")
+data("GlobalPatterns", package = "phyloseq")
 data("enterotype")
 
 data_fungi_low_high <- subset_samples(data_fungi, Height %in% c("Low", "High"))

@@ -23,6 +23,8 @@ navbar:
       href: articles/filter.html
     - text: Reclustering
       href: articles/Reclustering.html
+    - text: Tree visualization
+      href: articles/tree_visualization.html
     - text: -------
     - text: Tutorials with published dataset
     - text: Tengeler

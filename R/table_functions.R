@@ -16,7 +16,7 @@
 #' @export
 #'
 #' @examples
-#' data("GlobalPatterns")
+#' data("GlobalPatterns", package = "phyloseq")
 #' tax_datatable(subset_taxa(
 #'   GlobalPatterns,
 #'   rowSums(GlobalPatterns@otu_table) > 10000

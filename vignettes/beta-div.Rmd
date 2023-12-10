@@ -47,18 +47,28 @@ circle_pq(data_fungi_woNA4height, "Height")
 
 
 ```{r}
-data_fungi_low_high <- subset_samples(data_fungi, data_fungi@sam_data$Height %in% c("Low", "High"))
-data_fungi_low_high <- subset_taxa_pq(data_fungi_low_high, taxa_sums(data_fungi_low_high) > 5000)
+data_fungi_low_high <- subset_samples(
+  data_fungi,
+  data_fungi@sam_data$Height %in%
+    c("Low", "High")
+)
+data_fungi_low_high <- subset_taxa_pq(
+  data_fungi_low_high,
+  taxa_sums(data_fungi_low_high) > 5000
+)
 biplot_pq(data_fungi_low_high, fact = "Height", merge_sample_by = "Height")
 ```
 
 ### Compare two (group of) samples with a table
 
 ```{r}
-compare_pairs_pq(data_fungi_low_high, bifactor = "Height", merge_sample_by = "Height", modality = "Time")
+compare_pairs_pq(data_fungi_low_high,
+  bifactor = "Height",
+  merge_sample_by = "Height", modality = "Time"
+)
 ```
 
-## Venn diagramm
+## Venn diagram
 
 ```{r}
 library("grid")
@@ -78,7 +88,10 @@ ggvenn_pq(data_fungi, fact = "Height", min_nb_seq = 5000) +
 ```
 
 ```{r}
-ggvenn_pq(data_fungi, fact = "Height", taxonomic_rank = "Genus", min_nb_seq = 100) +
+ggvenn_pq(data_fungi,
+  fact = "Height", taxonomic_rank = "Genus",
+  min_nb_seq = 100
+) +
   ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1) +
   labs(title = "Share number of Genus represented by at least one ASV with more than 100 seqs")
 ```
@@ -94,7 +107,7 @@ upset_pq(data_fungi, fact = "Height")
 upset_pq(data_fungi, fact = "Time")
 ```
 
-`ComplexUpset` package allow powerfull configuration of you plot as you can see in the following figure.
+`ComplexUpset` package allow powerful configuration of you plot as you can see in the following figure.
 
 ```{r}
 upset_pq(
@@ -142,7 +155,10 @@ sudo apt-get install libgsl-dev libmpfr-dev
 
 ```{r}
 data("GlobalPatterns")
-GP <- subset_samples(GlobalPatterns, GlobalPatterns@sam_data$SampleType %in% c("Soil", "Skin"))
+GP <- subset_samples(
+  GlobalPatterns,
+  GlobalPatterns@sam_data$SampleType %in% c("Soil", "Skin")
+)
 
 plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), alpha = 0.001)
 ```

@@ -19,8 +19,9 @@ a new phyloseq object
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-The main objective of this function is to complete the \code{\link[phyloseq:subset_samples-methods]{phyloseq::subset_samples()}}
-function by propose a more easy (but more prone to error) way of subset_samples.
+The main objective of this function is to complete the
+\code{\link[phyloseq:subset_samples-methods]{phyloseq::subset_samples()}} function by propose a more easy
+(but more prone to error) way of subset_samples.
 It replace the subsetting expression which used the name of the variable
 in the sam_data by a boolean vector.
 
@@ -29,7 +30,7 @@ boolean condition must match the order of samples in the \code{sam_data}
 slot.
 
 This function is robust when you use the sam_data slot of the phyloseq object
-used in physeq (see exemples)
+used in physeq (see examples)
 }
 \examples{
 data(data_fungi)

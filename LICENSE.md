@@ -1,6 +1,6 @@
-MiscMetabar is licensed under the GNU AGPLv3. MiscMetabar takes some code and
+MiscMetabar is licensed under the GNU AGPL-3.0. MiscMetabar takes some code and
 documentation from the Speedyseq R package. Speedyseq is also licensed under the
-GNU AGPLv3; its source code is available at https://github.com/mikemc/speedyseq/.
+GNU AGPL-3.0; its source code is available at https://github.com/mikemc/speedyseq/.
 
                     GNU AFFERO GENERAL PUBLIC LICENSE
                        Version 3, 19 November 2007

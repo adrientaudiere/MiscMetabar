@@ -1,12 +1,12 @@
 Package: MiscMetabar
 Type: Package
 Title: Miscellaneous functions for metabarcoding analysis
-Version: 0.5
+Version: 0.51
 Authors@R: person("Adrien", "Taudière", email = "adrien.taudiere@zaclys.net",
   role = c("aut", "cre"), comment = c(ORCID = "0000-0003-1088-1182"))
 Maintainer: Adrien Taudière <adrien.taudiere@zaclys.net>
 Description: Functions to help analyze and visualize metabarcoding data. Mainly build on the top of phyloseq, dada2 and targets R packages.
-License: AGPL-3 + file LICENSE
+License: AGPL-3
 Encoding: UTF-8
 LazyData: true
 Depends:
@@ -17,36 +17,45 @@ Depends:
     magrittr,
     phyloseq
 Suggests: 
+    adespatial,
+    BiocManager,
     Biostrings,
     circlize,
     ComplexUpset,
     data.table,
     DECIPHER,
     DESeq2,
+    devtools,
     DT,
     edgeR,
     formattable,
+    FUNGuildR,
     gghalves,
     ggh4x,
     ggtree,
     ggridges,
     ggVennDiagram,
     gtsummary,
+    graphics, 
     grDevices,
     grid,
     gridExtra,
     here,
     iNEXT,
+    indicspecies,
     knitr,
     lulu,
     metacoder,
     methods,
+    mia,
     MicrobiotaProcess,
     microViz,
     mixtools,
     multcompView,
-    networkD3,
+    networkD3, 
+    pak,
     patchwork,
+    permute,
     phangorn,
     pbapply,
     plotly,
@@ -62,7 +71,9 @@ Suggests:
     testthat (>= 3.0.0),
     tibble,
     tidyr,
+    treeio,
     treemapify,
+    utils, 
     vegan,
     venneuler,
     viridis
@@ -82,7 +93,9 @@ Remotes:
     github::mikemc/speedyseq,
     github::adrientaudiere/lulu,
     github::david-barnett/microViz,
-    github::erocoar/gghalves
+    github::erocoar/gghalves,
+    bioc::release/phyloseq,
+    bioc::release/dada2,
     github::brendanf/FUNGuildR
 Config/testthat/edition: 3
 Config/testthat/parallel: true

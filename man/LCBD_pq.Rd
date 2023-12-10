@@ -2,7 +2,8 @@
 % Please edit documentation in R/beta_div_test.R
 \name{LCBD_pq}
 \alias{LCBD_pq}
-\title{Compute and test local contributions to beta diversity (LCBD) of samples}
+\title{Compute and test local contributions to beta diversity (LCBD) of
+samples}
 \usage{
 LCBD_pq(physeq, p_adjust_method = "BH", ...)
 }
@@ -25,8 +26,8 @@ A wrapper for the \code{\link[adespatial:beta.div]{adespatial::beta.div()}} func
 object.
 }
 \examples{
-LCBD_pq(data_fungi, nperm=100)
-LCBD_pq(data_fungi, nperm=100, method = "jaccard")
+LCBD_pq(data_fungi, nperm = 100)
+LCBD_pq(data_fungi, nperm = 100, method = "jaccard")
 }
 \seealso{
 \link{plot_LCBD_pq}, \code{\link[adespatial:beta.div]{adespatial::beta.div()}}

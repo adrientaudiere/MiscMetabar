@@ -16,7 +16,7 @@ affiliations:
    index: 1
 
 date:  23 October 2023
-bibliography: ../paper/bibliography.bib
+bibliography: paper/bibliography.bib
 ---
 
 # Summary
@@ -86,7 +86,7 @@ To illustrate the effect of sample variables on the taxonomy, `MiscMetabar` prov
 
 ## Reproducibility
 
-The targets R package [@Landau2021] improves the efficiency and reproducibility of the pipeline in R. It orchestrates the stage of the pipeline and stores the objects to skip tasks that are already up to date. Given the complexity, runtime, and parameter sensitivity of bioinformatic analysis, the use of targets is particularly relevant for metabarcoding. I develop functions to list fastq files in a directory (`list_fastq_files()`) and to track the number of sequences, clusters and samples through the pipeline (`track_wkflow()`) for a variety of objects (fastq files, OTU matrix, dada-class, derep-class and phyloseq-class). Function `write_pq()` save an object of class phyloseq and `read_pq()` read a phyloseq object from files. 
+The targets R package [@landau2021] improves the efficiency and reproducibility of the pipeline in R. It orchestrates the stage of the pipeline and stores the objects to skip tasks that are already up to date. Given the complexity, runtime, and parameter sensitivity of bioinformatic analysis, the use of targets is particularly relevant for metabarcoding. I develop functions to list fastq files in a directory (`list_fastq_files()`) and to track the number of sequences, clusters and samples through the pipeline (`track_wkflow()`) for a variety of objects (fastq files, OTU matrix, dada-class, derep-class and phyloseq-class). Function `write_pq()` save an object of class phyloseq and `read_pq()` read a phyloseq object from files. 
 
 # Already cited package
 

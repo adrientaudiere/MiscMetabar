@@ -65,9 +65,10 @@ graph_test_pq <- function(physeq,
   }
 
   res_graph_test <- phyloseqGraphTest::graph_perm_test(physeq,
-                                                       sampletype = fact,
-                                                       nperm = nperm,
-                                                       ...)
+    sampletype = fact,
+    nperm = nperm,
+    ...
+  )
   if (!return_plot) {
     return(res_graph_test)
   } else {
@@ -105,17 +106,20 @@ graph_test_pq <- function(physeq,
 #'   function. Need to be in `physeq@sam_data`
 #' @param na_remove (logical, default FALSE) If set to TRUE, remove samples with
 #'   NA in the variables set in formula.
-#' @param correction_for_sample_size (logical, default FALSE) If set to TRUE, the
-#'   sample size (number of sequences by samples) is add to formula in the form
-#'   `y~Library_Size + Biological_Effect` following recommendation of
+#' @param correction_for_sample_size (logical, default FALSE) If set to TRUE,
+#'   the sample size (number of sequences by samples) is add to formula in
+#'   the form `y~Library_Size + Biological_Effect` following recommendation of
 #'   [Weiss et al. 2017](https://doi.org/10.1186/s40168-017-0237-y).
 #'   `correction_for_sample_size` overcome `rarefy_nb_seqs` if both are TRUE.
 #' @param rarefy_nb_seqs (logical, default FALSE) Rarefy each sample
-#'   (before merging if merge_sample_by is set) using `phyloseq::rarefy_even_depth()`.
-#'   if `correction_for_sample_size` is TRUE, rarefy_nb_seqs will have no effect.
+#'   (before merging if merge_sample_by is set) using
+#'    `phyloseq::rarefy_even_depth()`.
+#'   if `correction_for_sample_size` is TRUE, rarefy_nb_seqs will have no
+#'   effect.
 #' @param ... Other arguments passed on to [vegan::adonis2()] function.
 #' @return The function returns an anova.cca result object with a
-#'   new column for partial R^2. See help of [vegan::adonis2()] for more information.
+#'   new column for partial R^2. See help of [vegan::adonis2()] for
+#'   more information.
 #' @examples
 #' data(enterotype)
 #' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE)
@@ -148,9 +152,11 @@ adonis_pq <- function(physeq,
 
   if (dist_method %in% c("aitchison", "robust.aitchison")) {
     phy_dist <-
-      paste0('vegan::vegdist(as.matrix(physeq@otu_table), method="',
-             dist_method,
-             '")')
+      paste0(
+        'vegan::vegdist(as.matrix(physeq@otu_table), method="',
+        dist_method,
+        '")'
+      )
   } else {
     phy_dist <-
       paste0('phyloseq:::distance(physeq, method="', dist_method, '")')
@@ -205,7 +211,8 @@ adonis_pq <- function(physeq,
 
 
 
-#' @title Compute and test local contributions to beta diversity (LCBD) of samples
+#' @title Compute and test local contributions to beta diversity (LCBD) of
+#'   samples
 #' @description
 #' `r lifecycle::badge("experimental")`
 #'
@@ -221,14 +228,14 @@ adonis_pq <- function(physeq,
 #' @export
 #' @seealso [plot_LCBD_pq], [adespatial::beta.div()]
 #' @examples
-#' LCBD_pq(data_fungi, nperm=100)
-#' LCBD_pq(data_fungi, nperm=100, method = "jaccard")
+#' LCBD_pq(data_fungi, nperm = 100)
+#' LCBD_pq(data_fungi, nperm = 100, method = "jaccard")
 #' @author Adrien Taudière
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `despatial::beta.div()` if you
 #'   use this function.
 LCBD_pq <- function(physeq,
-                    p_adjust_method =  "BH",
+                    p_adjust_method = "BH",
                     ...) {
   physeq <- clean_pq(
     physeq,
@@ -239,8 +246,10 @@ LCBD_pq <- function(physeq,
     silent = TRUE
   )
 
+  install_pkg_needed("adespatial")
+
   mat <- as.matrix(unclass(physeq@otu_table))
-  resBeta <- beta.div(mat, adj = FALSE, ...)
+  resBeta <- adespatial::beta.div(mat, adj = FALSE, ...)
 
   resBeta$p.adj <-
     p.adjust(resBeta$p.LCBD, method = p_adjust_method)
@@ -270,29 +279,43 @@ LCBD_pq <- function(physeq,
 #' @seealso [LCBD_pq], [adespatial::beta.div()]
 #'
 #' @examples
-#' plot_LCBD_pq(data_fungi, nperm=100, only_plot_significant = FALSE, pval = 0.2)
-#' plot_LCBD_pq(data_fungi, nperm=100, only_plot_significant = TRUE, pval = 0.2)
-#' plot_LCBD_pq(data_fungi, nperm=100, only_plot_significant = FALSE,
-#'   sam_variables=c("Time", "Height"))
-#' plot_LCBD_pq(data_fungi, nperm=100,  only_plot_significant = TRUE, pval = 0.2,
-#'   sam_variables=c("Time", "Height", "Tree_name")) &
-#'   theme(legend.key.size = unit(0.4, 'cm'),
-#'         legend.text = element_text(size=10),
-#'         axis.title.x = element_text(size=6))
+#' plot_LCBD_pq(data_fungi,
+#'   nperm = 100, only_plot_significant = FALSE,
+#'   pval = 0.2
+#' )
+#' plot_LCBD_pq(data_fungi,
+#'   nperm = 100, only_plot_significant = TRUE,
+#'   pval = 0.2
+#' )
+#' library("patchwork")
+#' plot_LCBD_pq(data_fungi,
+#'   nperm = 100, only_plot_significant = FALSE,
+#'   sam_variables = c("Time", "Height")
+#' )
+#' plot_LCBD_pq(data_fungi,
+#'   nperm = 100, only_plot_significant = TRUE, pval = 0.2,
+#'   sam_variables = c("Time", "Height", "Tree_name")
+#' ) &
+#'   theme(
+#'     legend.key.size = unit(0.4, "cm"),
+#'     legend.text = element_text(size = 10),
+#'     axis.title.x = element_text(size = 6)
+#'   )
 #' @author Adrien Taudière
 #' @details
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `vegan::beta.div()` if you
 #'   use this function.
 plot_LCBD_pq <- function(physeq,
-                         p_adjust_method =  "BH",
-                         pval =  0.05,
+                         p_adjust_method = "BH",
+                         pval = 0.05,
                          sam_variables = NULL,
                          only_plot_significant = TRUE,
                          ...) {
-  resBeta <-  LCBD_pq(physeq,
-                      p_adjust_method = p_adjust_method,
-                      ...)
+  resBeta <- LCBD_pq(physeq,
+    p_adjust_method = p_adjust_method,
+    ...
+  )
 
   sam_data <- data.frame(physeq@sam_data)
 
@@ -301,7 +324,7 @@ plot_LCBD_pq <- function(physeq,
   ))) > 0) {
     warning("At least one sample was removed by the beta.div function")
     sam_data <-
-      sam_data[rownames(sam_data) %in% names(resBeta$LCBD),]
+      sam_data[rownames(sam_data) %in% names(resBeta$LCBD), ]
   }
 
   resLCBD <- tibble(
@@ -313,26 +336,35 @@ plot_LCBD_pq <- function(physeq,
 
   if (only_plot_significant) {
     p_LCBD <-
-      ggplot(filter(resLCBD, p.adj < pval), aes(x = LCBD, y = reorder(Sample_names, -LCBD, sum))) +
+      ggplot(
+        filter(resLCBD, p.adj < pval),
+        aes(
+          x = LCBD,
+          y = reorder(Sample_names, -LCBD, sum)
+        )
+      ) +
       geom_point(size = 4)
     if (is.null(sam_variables)) {
       return(p_LCBD)
     } else {
       p_heatmap <- list()
-      for (i in 1:length(sam_variables)) {
+      for (i in seq_len(length(sam_variables))) {
         p_heatmap[[i]] <- ggplot(filter(resLCBD, p.adj < pval)) +
           geom_tile(inherit.aes = FALSE, aes(
             y = reorder(Sample_names, -LCBD, sum),
             x = i,
             fill = .data[[sam_variables[[i]]]]
           )) +
-          theme_void() + theme(axis.title.x = element_text()) +
+          theme_void() +
+          theme(axis.title.x = element_text()) +
           xlab(sam_variables[[i]])
       }
 
       p <-
-        p_LCBD + patchwork::wrap_plots(p_heatmap) + plot_layout(widths = c(3, 1) , guides =
-                                                                  "collect")
+        p_LCBD + patchwork::wrap_plots(p_heatmap) + plot_layout(
+          widths = c(3, 1), guides =
+            "collect"
+        )
       return(p)
     }
   } else {
@@ -343,25 +375,26 @@ plot_LCBD_pq <- function(physeq,
       return(p_LCBD)
     } else {
       p_heatmap <- list()
-      for (i in 1:length(sam_variables)) {
+      for (i in seq_len(length(sam_variables))) {
         p_heatmap[[i]] <- ggplot(resLCBD) +
           geom_tile(inherit.aes = FALSE, aes(
             y = reorder(Sample_names, -LCBD, sum),
             x = i,
             fill = .data[[sam_variables[[i]]]]
           )) +
-          theme_void() + theme(axis.title.x = element_text()) +
+          theme_void() +
+          theme(axis.title.x = element_text()) +
           xlab(sam_variables[[i]])
       }
 
       p <-
-        p_LCBD + patchwork::wrap_plots(p_heatmap) + plot_layout(widths = c(3, 1) , guides =
-                                                                  "collect")
+        p_LCBD + patchwork::wrap_plots(p_heatmap) + plot_layout(
+          widths = c(3, 1), guides =
+            "collect"
+        )
       return(p)
     }
   }
-
-
 }
 
 
@@ -369,8 +402,8 @@ plot_LCBD_pq <- function(physeq,
 #' @description
 #' `r lifecycle::badge("experimental")`
 #'
-#' A wrapper for the [indicspecies::multipatt()] function in the case of `physeq`
-#'   object.
+#' A wrapper for the [indicspecies::multipatt()] function in the case of
+#'   `physeq` object.
 #' @inheritParams clean_pq
 #' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
 #'    different lines
@@ -383,9 +416,11 @@ plot_LCBD_pq <- function(physeq,
 #' @return A ggplot object
 #' @export
 #' @examples
-#' multipatt_pq(subset_samples(data_fungi, !is.na(Time)), fact="Time")
-#' multipatt_pq(subset_samples(data_fungi, !is.na(Time)), fact="Time",
-#'    max.order = 1, control = how(nperm=9999))
+#' multipatt_pq(subset_samples(data_fungi, !is.na(Time)), fact = "Time")
+#' multipatt_pq(subset_samples(data_fungi, !is.na(Time)),
+#'   fact = "Time",
+#'   max.order = 1, control = permute::how(nperm = 9999)
+#' )
 #' @author Adrien Taudière
 #' @details
 #' This function is mainly a wrapper of the work of others.
@@ -394,36 +429,44 @@ plot_LCBD_pq <- function(physeq,
 
 multipatt_pq <- function(physeq,
                          fact,
-                         p_adjust_method =  "BH",
+                         p_adjust_method = "BH",
                          pval = 0.05,
                          control = permute::how(nperm = 999),
                          ...) {
   physeq <- clean_pq(physeq,
-                     clean_samples_names = FALSE,
-                     force_taxa_as_columns = TRUE)
+    clean_samples_names = FALSE,
+    force_taxa_as_columns = TRUE
+  )
 
   res <-
     indicspecies::multipatt(as.matrix(physeq@otu_table),
-                            physeq@sam_data[[fact]],
-                            control = control,
-                            ...)
+      physeq@sam_data[[fact]],
+      control = control,
+      ...
+    )
 
   res_df <- res$sign
   res_df$p.adj <- p.adjust(res_df$p.value, method = p_adjust_method)
   res_df$ASV_names <- rownames(res_df)
   res_df_signif <-
-    res_df %>% filter(p.adj < pval) %>% tidyr::pivot_longer(cols = starts_with("s."))
+    res_df %>%
+    filter(p.adj < pval) %>%
+    tidyr::pivot_longer(cols = starts_with("s."))
 
-  p <- ggplot(res_df_signif,
-              aes(
-                x = ASV_names,
-                y = name,
-                size = 2 * value,
-                color = stat
-              )) + geom_point() + theme(axis.text.x = element_text(
-                angle = 90,
-                vjust = 0.5,
-                hjust = 1
-              ))
+  p <- ggplot(
+    res_df_signif,
+    aes(
+      x = ASV_names,
+      y = name,
+      size = 2 * value,
+      color = stat
+    )
+  ) +
+    geom_point() +
+    theme(axis.text.x = element_text(
+      angle = 90,
+      vjust = 0.5,
+      hjust = 1
+    ))
   return(p)
 }

@@ -25,17 +25,17 @@ see \code{\link[iNEXT:iNEXT]{iNEXT::iNEXT()}} documentation
 }
 \examples{
 \dontrun{
- library("iNEXT")
- res_iNEXT <- iNEXT_pq(
-   data_fungi_sp_known,
-   merge_sample_by = "Height",
-   q = 1,
-   datatype = "abundance", 
-   nboot = 2
- )
- ggiNEXT(res_iNEXT)
- ggiNEXT(res_iNEXT, type = 2)
- ggiNEXT(res_iNEXT, type = 3)
+library("iNEXT")
+res_iNEXT <- iNEXT_pq(
+  data_fungi_sp_known,
+  merge_sample_by = "Height",
+  q = 1,
+  datatype = "abundance",
+  nboot = 2
+)
+ggiNEXT(res_iNEXT)
+ggiNEXT(res_iNEXT, type = 2)
+ggiNEXT(res_iNEXT, type = 3)
 }
 }
 \author{

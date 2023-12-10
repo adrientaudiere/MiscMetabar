@@ -27,8 +27,8 @@
 # MiscMetabar 0.41
 
 - Add function `iNEXT_pq()` to calculate hill diversity using the [iNEXT](https://github.com/AnneChao/iNEXT) package.
-- Add argument `paires` to `multi_biplot_pq()` in order to indicate all paires of samples we want to print.
-- Improve `compare_pairs_pq()` with information about the number of shared sequences among paires.
+- Add argument `pairs` to `multi_biplot_pq()` in order to indicate all pairs of samples we want to print.
+- Improve `compare_pairs_pq()` with information about the number of shared sequences among pairs.
 - Add function `upset_pq()` to plot upset of phyloseq object using the [ComplexUpset](https://krassowski.github.io/complex-upset/) package.
 - Add function `upset_test_pq` to test for differences between intersections (wrapper of `ComplexUpset::upset_test()` for `phyloseq-object`).
 - Add info (param `add_info`) in subtitle of the `hill_pq()` function.
@@ -56,7 +56,7 @@
 * Improve the documentation of `asv2otu()` and fix a little bug in the name of the conserved ASV after `asv2otu()`.
 * Test coverage largely improved leading to numerous minor bug fixes.
 * Add function `search_exact_seq_pq()` to search for exact matching of sequences using complement, reverse and reverse-complement against a phyloseq object.
-* Add function `add_new_taxonomy_pq()` to add new taxonomic rank to a phyloseq object. For exemple to add taxonomic assignment from a new database.
+* Add function `add_new_taxonomy_pq()` to add new taxonomic rank to a phyloseq object. For example to add taxonomic assignment from a new database.
 * Add a battery of test using `test_that` package and improve code compatibility with cran recommendations.
 
 ## BREAKING CHANGES
@@ -68,7 +68,7 @@
 # MiscMetabar 0.34
 
 * Add option `add_nb_samples` to `ggvenn_pq()` which add the number of samples to level name in the plot. Useful to see disequilibrium in the number of samples among the factor's levels.
-* Add option `args_makedb` and `args_blastn` to funtions `blast_pq()`, `blast_to_phyloseq()`, `blast_to_derep()` and `filter_asv_blast()`.
+* Add option `args_makedb` and `args_blastn` to functions `blast_pq()`, `blast_to_phyloseq()`, `blast_to_derep()` and `filter_asv_blast()`.
 * Add option `rarefy_nb_seqs` to `ggven_pq()` in order to rarefy samples before plotting. 
 * Add function `SRS_curve_pq()` to plot scaling with ranked subsampling (SRS) curves using the `SRS::SRS_curve()` function (see citation("SRS") for reference).
 * Add option `nb_samples_info` to `biplot_pq()` in order to add the number of samples merged by level of factors.
@@ -162,7 +162,7 @@
 
 * Add a function `multiple_share_bisamples()` to help compare samples by pairs
 
-* Add a new function (`ggVenn_phyloseq()`) for better venn diagramm but without area calculation (use `venn_phyloseq()` in this case).
+* Add a new function (`ggVenn_phyloseq()`) for better venn diagram but without area calculation (use `venn_phyloseq()` in this case).
 
 * Add two functions helpful for beta-diversity analysis (`adonis_phyloseq()` and `physeq_graph_test()`)
 

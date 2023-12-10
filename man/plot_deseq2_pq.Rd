@@ -68,7 +68,7 @@ A \code{\link{ggplot}}2 plot representing DESeq2 results
 Please cite \code{DESeq2} package if you use chis function.
 }
 \examples{
-data("GlobalPatterns")
+data("GlobalPatterns", package = "phyloseq")
 GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 GP <- subset_samples(GP, GP@sam_data$SampleType \%in\% c("Soil", "Skin"))
 res <- DESeq2::DESeq(phyloseq_to_deseq2(GP, ~SampleType),

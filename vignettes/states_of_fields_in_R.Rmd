@@ -5,7 +5,7 @@ vignette: >
   %\VignetteIndexEntry{Metabarcoding with R}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-bibliography: ../paper/bibliography.bib
+bibliography: bibliography.bib
 ---
 
 This is a short introduction to other R packages in the field of metabarcoding analysis.
