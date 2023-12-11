@@ -92,6 +92,6 @@ test_that("install_pkg_needed works fine", {
   expect_silent(install_pkg_needed("MiscMetabar"))
   expect_message(install_pkg_needed("adrientaudiere/lulu"))
   expect_message(install_pkg_needed("adrientaudiere/lulu", github_pkg = TRUE, use_pak = FALSE))
-  expect_silent(install_pkg_needed("microbiomeDataSets"))
-  expect_silent(install_pkg_needed("microbiomeDataSets", bioconductor_pkg = TRUE, use_pak = FALSE))
+  expect_silent(suppressMessages(install_pkg_needed("microbiomeDataSets")))
+  expect_silent(suppressMessages(install_pkg_needed("microbiomeDataSets", bioconductor_pkg = TRUE, use_pak = FALSE)))
 })
