@@ -41,6 +41,9 @@
 #' in the animals behavior. This was investigated by colonizing young, male, 
 #' germ-free C57BL/6JOlaHsd mice with microbiota from individuals with and without ADHD.
 #'
+#' Tengeler, A.C., Dam, S.A., Wiesmann, M. et al. Gut microbiota from persons with 
+#' attention-deficit/hyperactivity disorder affects the brain in mice. Microbiome 8, 44 (2020).
+#' https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-020-00816-x
 #' @format 
 #' A phyloseq object
 #' 
