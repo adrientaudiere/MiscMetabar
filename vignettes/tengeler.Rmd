@@ -9,34 +9,35 @@ vignette: >
 This tutorial explore the dataset from Tengeler et al. (2020) available in the `mia` package.
 
 
+```{r, eval=TRUE}
+ten <- mia::makePhyloseqFromTreeSE(Tengeler2020)
+```
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  message = FALSE
+  message = FALSE,
+  fig.width = 10
 )
 ```
 
 # Load library 
 
 ```{r}
-library("MiscMetabar")
-library("mia")
 library("MicrobiotaProcess")
+library("MiscMetabar")
 library("ggplot2")
 library("patchwork")
 library("iNEXT")
-data("Tengeler2020", package = "mia")
 ```
 
 
 # Import dataset in phyloseq format
 
-```{r}
-ten <- makePhyloseqFromTreeSE(Tengeler2020)
-```
 
 ```{r}
+ten <- Tengeler2020_pq
 summary_plot_pq(ten)
 ```
 
