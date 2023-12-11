@@ -34,8 +34,8 @@ files are sorted by names (default behavior of \code{list.files()})
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
-list_fastq_files("inst/extdata")
-list_fastq_files("inst/extdata", paired_end = FALSE, pattern_R1 = "")
+list_fastq_files("extdata")
+list_fastq_files("extdata", paired_end = FALSE, pattern_R1 = "")
 
 }
 \author{

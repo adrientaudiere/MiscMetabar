@@ -6,12 +6,7 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-This tutorial explore the dataset from Tengeler et al. (2020) available in the `mia` package.
-
-
-```{r, eval=TRUE}
-ten <- mia::makePhyloseqFromTreeSE(Tengeler2020)
-```
+This tutorial explore a phyloseq version of the dataset from Tengeler et al. (2020) available in the `mia` package.
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -30,6 +25,11 @@ library("MiscMetabar")
 library("ggplot2")
 library("patchwork")
 library("iNEXT")
+```
+
+
+```{r, eval=FALSE}
+?Tengeler2020
 ```
 
 

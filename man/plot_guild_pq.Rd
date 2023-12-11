@@ -32,6 +32,7 @@ created with \code{\link[=add_funguild_info]{add_funguild_info()}}
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
+\dontrun{
 df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)
 df <- add_funguild_info(df,
   taxLevels = c(
@@ -49,6 +50,7 @@ library("patchwork")
     levels_order = p$data$Guild[order(p$data$nb_seq)]
   ) +
     ylab("") + theme(axis.text.y = element_blank()))
+}
 }
 \seealso{
 \code{\link[=add_funguild_info]{add_funguild_info()}}

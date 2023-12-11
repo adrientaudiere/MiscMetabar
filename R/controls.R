@@ -25,7 +25,7 @@ search_exact_seq_pq <- function(physeq, sequences) {
     original <- sequences[[i]]
     rev <- reverse(sequences[[i]])
     rev_comp <- Biostrings::reverseComplement(sequences[[i]])
-    comp <- complement(sequences[[i]])
+    comp <- Biostrings::complement(sequences[[i]])
 
     original_count <- sum(grepl(original, physeq@refseq))
     rev_count <- sum(grepl(rev, physeq@refseq))

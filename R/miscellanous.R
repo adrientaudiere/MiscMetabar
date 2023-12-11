@@ -195,8 +195,8 @@ perc <- function(x, y = NULL, accuracy = 0, add_symbol = FALSE) {
 #' @author Adrien Taudière
 #' @export
 #' @examples
-#' count_seq(file_path = "inst/extdata/ex.fasta")
-#' count_seq(folder_path = "inst/extdata/", pattern = "*.fasta")
+#' count_seq(file_path = system.file("extdata", "ex.fasta", package = "MiscMetabar", mustWork = TRUE))
+#' count_seq(folder_path = "extdata/", pattern = "*.fasta")
 count_seq <- function(file_path = NULL, folder_path = NULL, pattern = NULL) {
   if (is.null(file_path) && is.null(folder_path)) {
     stop("You need to specify one of file_path or folder_path param!")
@@ -283,8 +283,8 @@ funky_color <-
 #' @export
 #' @examples
 #' \dontrun{
-#' subsample_fastq("inst/extdata/ex_R1_001.fastq.gz", "your_path_to_output")
-#' subsample_fastq(list_fastq_files("inst/extdata"), "your_path_to_output", n = 10)
+#' subsample_fastq(system.file("extdata", "ex_R1_001.fastq.gz", package = "MiscMetabar", mustWork = TRUE)), "your_path_to_output")
+#' subsample_fastq(list_fastq_files("extdata"), "your_path_to_output", n = 10)
 #' }
 subsample_fastq <- function(fastq_files, folder_output = "subsample", n_seq = 1000) {
   for (f in unlist(fastq_files)) {

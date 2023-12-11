@@ -82,7 +82,7 @@ the blast table
 data(data_fungi)
 blastpath <- "...YOUR_PATH_TO_BLAST..."
 blast_to_phyloseq(data_fungi,
-  seq2search = "inst/extdata/ex.fasta",
+  seq2search = "extdata/ex.fasta",
   blastpath = blastpath
 )
 }

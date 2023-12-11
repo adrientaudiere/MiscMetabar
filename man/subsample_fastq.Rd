@@ -23,8 +23,8 @@ Nothing, create subsampled fastq files in a folder
 }
 \examples{
 \dontrun{
-subsample_fastq("inst/extdata/ex_R1_001.fastq.gz", "your_path_to_output")
-subsample_fastq(list_fastq_files("inst/extdata"), "your_path_to_output", n = 10)
+subsample_fastq("extdata/ex_R1_001.fastq.gz", "your_path_to_output")
+subsample_fastq(list_fastq_files("extdata"), "your_path_to_output", n = 10)
 }
 }
 \author{
