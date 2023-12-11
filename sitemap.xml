@@ -10,9 +10,6 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/CONTRIBUTING.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/LICENSE-text.html</loc>
-  </url>
-  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/LICENSE.html</loc>
   </url>
   <url>
@@ -43,6 +40,12 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/articles/states_of_fields_in_R.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/articles/tengeler.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/articles/tree_visualization.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/authors.html</loc>
   </url>
   <url>
@@ -52,6 +55,9 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/news/index.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/LCBD_pq.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/MiscMetabar-deprecated.html</loc>
   </url>
   <url>
@@ -59,6 +65,9 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/SRS_curve_pq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/Tengeler2020_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/accu_plot.html</loc>
@@ -71,6 +80,9 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/add_dna_to_phyloseq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/add_funguild_info.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/add_new_taxonomy_pq.html</loc>
@@ -98,6 +110,9 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/blast_to_phyloseq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/build_phytree_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/circle_pq.html</loc>
@@ -157,6 +172,9 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/install_pkg_needed.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/krona.html</loc>
   </url>
   <url>
@@ -172,10 +190,16 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/multi_biplot_pq.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/multipatt_pq.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/multiplot.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/multitax_bar_pq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/mumu_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/perc.html</loc>
@@ -184,10 +208,16 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/phyloseq_to_edgeR.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_LCBD_pq.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_deseq2_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_edgeR_pq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_guild_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_mt.html</loc>
@@ -245,6 +275,9 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/tax_datatable.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/tbl_sum_samdata.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/track_wkflow.html</loc>

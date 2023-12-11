@@ -7,13 +7,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="MiscMetabar">
 <title>Filter • MiscMetabar</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="Filter">
 <meta property="og:description" content="MiscMetabar">
+<meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -27,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.51</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,11 +53,12 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Tutorials</h6>
-    <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
     <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
     <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
     <a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a>
     <a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a>
+    <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
+    <a class="dropdown-item" href="../articles/tree_visualization.html">Tree visualization</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Tutorials with published dataset</h6>
     <a class="dropdown-item" href="../articles/tengeler.html">Tengeler</a>
@@ -89,7 +97,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Filter</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Filter</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/vignettes/filter.Rmd" class="external-link"><code>vignettes/filter.Rmd</code></a></small>
@@ -134,25 +142,22 @@ function is painful. <code>MiscMetabar</code> propose a complementary
 function ([subset_taxa_pq()]) which is more versatile and is based on
 the names of the taxa to match the condition and the taxa in the
 phyloseq object. In the example code above, we filter fungi from the
-Phylum “Basidiomycota” using <code><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html" class="external-link">phyloseq::subset_taxa</a></code> and then
-select only taxa with more than 1000 nb_sequences using
-[subset_taxa_pq()]</p>
+Phylum “Basidiomycota” using <code><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html" class="external-link">phyloseq::subset_taxa()</a></code> and
+then select only taxa with more than 1000 nb_sequences using
+<code><a href="../reference/subset_taxa_pq.html">subset_taxa_pq()</a></code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_basidio</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html" class="external-link">subset_taxa</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="va">Phylum</span> <span class="op">==</span> <span class="st">"Basidiomycota"</span><span class="op">)</span></span>
-<span><span class="va">df_basidio_abundant</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/subset_taxa_pq.html">subset_taxa_pq</a></span><span class="op">(</span><span class="va">df_basidio</span>, <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="va">df_basidio</span><span class="op">@</span><span class="va">otu_table</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1000</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Cleaning suppress 0 taxa (  ) and 39 sample(s) ( A9-012_S5_MERGED.fastq.gz / BE9-006-B_S27_MERGED.fastq.gz / BE9-006-H_S28_MERGED.fastq.gz / BG7-010-B_S30_MERGED.fastq.gz / BG7-010-M_S32_MERGED.fastq.gz / BL7-006-B_S36_MERGED.fastq.gz / BL7-006-M_S38_MERGED.fastq.gz / C21-NV1-H_S63_MERGED.fastq.gz / C21-NV1-M_S64_MERGED.fastq.gz / CA12-024_S66_MERGED.fastq.gz / CA9-027_S67_MERGED.fastq.gz / CC8-003_S74_MERGED.fastq.gz / D18-003-H_S79_MERGED.fastq.gz / D9-027-B_S83_MERGED.fastq.gz / DJ2-008-M_S89_MERGED.fastq.gz / DY5-004-M_S98_MERGED.fastq.gz / E9-009-B_S100_MERGED.fastq.gz / E9-009-M_S102_MERGED.fastq.gz / M22-001_S125_MERGED.fastq.gz / N19X-B_S126_MERGED.fastq.gz / N22-001-B_S129_MERGED.fastq.gz / N23-002-M_S132_MERGED.fastq.gz / O20-X-B_S139_MERGED.fastq.gz / O21-007-B_S142_MERGED.fastq.gz / O21-007-H_S143_MERGED.fastq.gz / O21-007-M_S144_MERGED.fastq.gz / O24-003-H_S146_MERGED.fastq.gz / O24-003-M_S147_MERGED.fastq.gz / O26-004-H_S149_MERGED.fastq.gz / O26-004-M_S150_MERGED.fastq.gz / R28-008-B_S158_MERGED.fastq.gz / R28-008-H_S159_MERGED.fastq.gz / R28-008-M_S160_MERGED.fastq.gz / W26-001-H_S166_MERGED.fastq.gz / W26-001-M_S167_MERGED.fastq.gz / Y28-002-H_S179_MERGED.fastq.gz / Y29-007-B_S181_MERGED.fastq.gz / Y29-007-H_S182_MERGED.fastq.gz / Y29-007-M_S183_MERGED.fastq.gz ).</span></span>
-<span><span class="co">#&gt; Number of non-matching ASV 0</span></span>
-<span><span class="co">#&gt; Number of matching ASV 345</span></span>
-<span><span class="co">#&gt; Number of filtered-out ASV 231</span></span>
-<span><span class="co">#&gt; Number of kept ASV 114</span></span>
-<span><span class="co">#&gt; Number of kept samples 146</span></span></code></pre></div>
+<span><span class="va">df_basidio_abundant</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/subset_taxa_pq.html">subset_taxa_pq</a></span><span class="op">(</span></span>
+<span>  <span class="va">df_basidio</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="va">df_basidio</span><span class="op">@</span><span class="va">otu_table</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1000</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="filter-taxa-using-blast-score-against-a-database">Filter taxa using blast score against a database<a class="anchor" aria-label="anchor" href="#filter-taxa-using-blast-score-against-a-database"></a>
 </h3>
 <p>In some cases, we want to select only a given clade of taxon. One
 solution is to select only taxa with information given by taxonomic
-assigment (e.g. using the function
+assignment (e.g. using the function
 <code><a href="https://rdrr.io/pkg/dada2/man/assignTaxonomy.html" class="external-link">dada2::assignTaxonomy()</a></code>). However, in some cases, this
 information lead to false positive and false negative selection.
 <code>MiscMetabar</code> implement an other method relying on <a href="https://blast.ncbi.nlm.nih.gov/" class="external-link">blast</a> software (Altschul
@@ -179,13 +184,21 @@ cover (%) to keep result.</li>
 similar quality (score) that could be found just by chance.</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">path_db</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"1000_sp_UNITE_sh_general_release_dynamic.fasta"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">path_db</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span>
+<span>  <span class="st">"100_sp_UNITE_sh_general_release_dynamic.fasta"</span>,</span>
+<span>  package <span class="op">=</span> <span class="st">"MiscMetabar"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="va">blast_error_or_not</span> <span class="op">&lt;-</span> <span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.html" class="external-link">system</a></span><span class="op">(</span><span class="st">"blastn 2&gt;&amp;1"</span>, intern <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="va">blast_error_or_not</span> <span class="op">&lt;-</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.html" class="external-link">system</a></span><span class="op">(</span><span class="st">"blastn 2&gt;&amp;1"</span>, intern <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">blast_error_or_not</span><span class="op">)</span> <span class="op">!=</span> <span class="st">"try-error"</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">df_blast_80</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_asv_blast.html">filter_asv_blast</a></span><span class="op">(</span><span class="va">df_basidio</span>, fasta_for_db <span class="op">=</span> <span class="va">path_db</span><span class="op">)</span></span>
-<span>  <span class="va">df_blast_50</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_asv_blast.html">filter_asv_blast</a></span><span class="op">(</span><span class="va">df_basidio</span>, fasta_for_db <span class="op">=</span> <span class="va">path_db</span>, id_filter <span class="op">=</span> <span class="fl">50</span>, e_value_filter <span class="op">=</span> <span class="fl">10</span>, bit_score_filter <span class="op">=</span> <span class="fl">20</span>, min_cover_filter <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
+<span>  <span class="va">df_blast_50</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_asv_blast.html">filter_asv_blast</a></span><span class="op">(</span><span class="va">df_basidio</span>,</span>
+<span>    fasta_for_db <span class="op">=</span> <span class="va">path_db</span>,</span>
+<span>    id_filter <span class="op">=</span> <span class="fl">50</span>, e_value_filter <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>    bit_score_filter <span class="op">=</span> <span class="fl">20</span>, min_cover_filter <span class="op">=</span> <span class="fl">20</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
 <span>  <span class="va">track_formattable</span> <span class="op">&lt;-</span></span>
 <span>    <span class="fu"><a href="../reference/track_wkflow.html">track_wkflow</a></span><span class="op">(</span></span>
@@ -195,43 +208,19 @@ similar quality (score) that could be found just by chance.</li>
 <span>        <span class="st">"id_filter = 50"</span> <span class="op">=</span> <span class="va">df_blast_50</span></span>
 <span>      <span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span><span class="co">#&gt; Build the database from fasta_for_db</span></span>
-<span><span class="co">#&gt; Blast refseq from physeq object against the database</span></span>
-<span><span class="co">#&gt; Number of non-matching ASV 2</span></span>
-<span><span class="co">#&gt; Number of matching ASV 343</span></span>
-<span><span class="co">#&gt; Number of filtered-out ASV 270</span></span>
-<span><span class="co">#&gt; Number of kept ASV 75</span></span>
-<span><span class="co">#&gt; Number of kept samples 185</span></span>
-<span><span class="co">#&gt; Cleaning suppress 0 taxa and 45 samples.</span></span>
-<span><span class="co">#&gt; Build the database from fasta_for_db</span></span>
-<span><span class="co">#&gt; Blast refseq from physeq object against the database</span></span>
-<span><span class="co">#&gt; Number of non-matching ASV 2</span></span>
-<span><span class="co">#&gt; Number of matching ASV 343</span></span>
-<span><span class="co">#&gt; Number of filtered-out ASV 21</span></span>
-<span><span class="co">#&gt; Number of kept ASV 324</span></span>
-<span><span class="co">#&gt; Number of kept samples 185</span></span>
-<span><span class="co">#&gt; Cleaning suppress 0 taxa and 13 samples.</span></span>
-<span><span class="co">#&gt; Compute the number of sequences</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Compute the number of clusters</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Compute the number of samples</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span></code></pre></div>
+<span><span class="op">}</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">blast_error_or_not</span><span class="op">)</span> <span class="op">!=</span> <span class="st">"try-error"</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/formattable.html" class="external-link">formattable</a></span><span class="op">(</span></span>
 <span>    <span class="va">track_formattable</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>      <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/area.html" class="external-link">area</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">nb_sequences</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/color_bar.html" class="external-link">color_bar</a></span><span class="op">(</span><span class="st">"cyan"</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>,</span>
-<span>      <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/area.html" class="external-link">area</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">nb_clusters</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/normalize_bar.html" class="external-link">normalize_bar</a></span><span class="op">(</span><span class="st">"yellowgreen"</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, min <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span>,</span>
-<span>      <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/area.html" class="external-link">area</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">nb_samples</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/normalize_bar.html" class="external-link">normalize_bar</a></span><span class="op">(</span><span class="st">"lightpink"</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, min <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span>
+<span>      <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/area.html" class="external-link">area</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">nb_clusters</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/normalize_bar.html" class="external-link">normalize_bar</a></span><span class="op">(</span><span class="st">"yellowgreen"</span>,</span>
+<span>        na.rm <span class="op">=</span> <span class="cn">TRUE</span>, min <span class="op">=</span> <span class="fl">0.3</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>      <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/area.html" class="external-link">area</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">nb_samples</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/normalize_bar.html" class="external-link">normalize_bar</a></span><span class="op">(</span><span class="st">"lightpink"</span>,</span>
+<span>        na.rm <span class="op">=</span> <span class="cn">TRUE</span>, min <span class="op">=</span> <span class="fl">0.3</span></span>
+<span>      <span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
@@ -269,13 +258,13 @@ raw data
 id_filter = 80
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 33.39%">261826</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 31.82%">249494</span>
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 30.00%">75</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 30.00%">45</span>
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 30.00%">140</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 30.00%">127</span>
 </td>
 </tr>
 <tr>
@@ -283,13 +272,13 @@ id_filter = 80
 id_filter = 50
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 99.50%">780103</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 99.51%">780242</span>
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 94.56%">324</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 95.57%">326</span>
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 79.78%">172</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 84.31%">172</span>
 </td>
 </tr>
 </tbody>
@@ -302,34 +291,55 @@ id_filter = 50
 known taxa which is not present in the environment of the study. In that
 case we can define some threshold for each sample to discard taxon based
 on pseudo-abundance. In the example code above, we select taxon using
-the ASV_50 as control through 6 differents algorithms.</p>
+the ASV_50 as control through 6 different algorithms.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">res_seq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"cutoff_seq"</span></span>
-<span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; The filtering processes discard 18 taxa and 21581 sequences</span></span>
-<span><span class="va">res_mixt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"cutoff_mixt"</span></span>
-<span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; The filtering processes discard 131 taxa and 65554 sequences</span></span>
-<span><span class="va">res_diff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"cutoff_diff"</span>, min_diff_for_cutoff <span class="op">=</span> <span class="fl">2</span></span>
-<span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; The filtering processes discard 42 taxa and 33850 sequences</span></span>
-<span><span class="va">res_min</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"min"</span>, min_diff_for_cutoff <span class="op">=</span> <span class="fl">2</span></span>
-<span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; The filtering processes discard 3 taxa and 3175 sequences</span></span>
-<span><span class="va">res_max</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"max"</span>, min_diff_for_cutoff <span class="op">=</span> <span class="fl">2</span></span>
-<span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; The filtering processes discard 192 taxa and 83907 sequences</span></span>
-<span><span class="va">res_mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"mean"</span>, min_diff_for_cutoff <span class="op">=</span> <span class="fl">2</span></span>
-<span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; The filtering processes discard 100 taxa and 49152 sequences</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">res_seq</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>      method <span class="op">=</span> <span class="st">"cutoff_seq"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">res_mixt</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>      method <span class="op">=</span> <span class="st">"cutoff_mixt"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">res_diff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span></span>
+<span>    <span class="va">data_fungi</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>    method <span class="op">=</span> <span class="st">"cutoff_diff"</span>,</span>
+<span>    min_diff_for_cutoff <span class="op">=</span> <span class="fl">2</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">res_min</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span></span>
+<span>      <span class="va">data_fungi</span>,</span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>      method <span class="op">=</span> <span class="st">"min"</span>,</span>
+<span>      min_diff_for_cutoff <span class="op">=</span> <span class="fl">2</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">res_max</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span></span>
+<span>      <span class="va">data_fungi</span>,</span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>      method <span class="op">=</span> <span class="st">"max"</span>,</span>
+<span>      min_diff_for_cutoff <span class="op">=</span> <span class="fl">2</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">res_mean</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control</a></span><span class="op">(</span></span>
+<span>      <span class="va">data_fungi</span>,</span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">50</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>      method <span class="op">=</span> <span class="st">"mean"</span>,</span>
+<span>      min_diff_for_cutoff <span class="op">=</span> <span class="fl">2</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">track_formattable</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/track_wkflow.html">track_wkflow</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  <span class="st">"raw data"</span> <span class="op">=</span> <span class="va">data_fungi</span>,</span>
@@ -340,36 +350,15 @@ the ASV_50 as control through 6 differents algorithms.</p>
 <span>  <span class="st">"max"</span> <span class="op">=</span> <span class="va">res_max</span>,</span>
 <span>  <span class="st">"mean"</span> <span class="op">=</span> <span class="va">res_mean</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Compute the number of sequences</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Compute the number of clusters</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Compute the number of samples</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
-<span><span class="co">#&gt; Start object of class: phyloseq</span></span>
 <span></span>
 <span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/formattable.html" class="external-link">formattable</a></span><span class="op">(</span></span>
 <span>  <span class="va">track_formattable</span>,</span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/area.html" class="external-link">area</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">nb_sequences</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/color_bar.html" class="external-link">color_bar</a></span><span class="op">(</span><span class="st">"cyan"</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/area.html" class="external-link">area</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">nb_clusters</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/normalize_bar.html" class="external-link">normalize_bar</a></span><span class="op">(</span><span class="st">"yellowgreen"</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, min <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/area.html" class="external-link">area</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">nb_clusters</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/normalize_bar.html" class="external-link">normalize_bar</a></span><span class="op">(</span><span class="st">"yellowgreen"</span>,</span>
+<span>      na.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>      min <span class="op">=</span> <span class="fl">0.3</span></span>
+<span>    <span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/area.html" class="external-link">area</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">nb_samples</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/normalize_bar.html" class="external-link">normalize_bar</a></span><span class="op">(</span><span class="st">"lightpink"</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -410,7 +399,7 @@ cutoff_seq
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 98.83%">1817543</span>
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 93.44%">1402</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 93.85%">1402</span>
 </td>
 <td style="text-align:right;">
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
@@ -421,10 +410,10 @@ cutoff_seq
 cutoff_mixt
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 96.44%">1773570</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 96.13%">1767977</span>
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 52.24%">1289</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 50.15%">1274</span>
 </td>
 <td style="text-align:right;">
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
@@ -438,7 +427,7 @@ cutoff_diff
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 98.16%">1805274</span>
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 84.69%">1378</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 85.66%">1378</span>
 </td>
 <td style="text-align:right;">
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
@@ -452,7 +441,7 @@ min
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 99.83%">1835949</span>
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 98.91%">1417</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 98.98%">1417</span>
 </td>
 <td style="text-align:right;">
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
@@ -463,10 +452,10 @@ min
 max
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 95.44%">1755217</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 95.30%">1752708</span>
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 30.00%">1228</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 30.00%">1215</span>
 </td>
 <td style="text-align:right;">
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
@@ -477,10 +466,10 @@ max
 mean
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 97.33%">1789972</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 97.40%">1791379</span>
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 63.54%">1320</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 67.90%">1326</span>
 </td>
 <td style="text-align:right;">
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
