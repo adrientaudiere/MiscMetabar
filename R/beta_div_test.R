@@ -108,8 +108,8 @@ graph_test_pq <- function(physeq,
 #'   NA in the variables set in formula.
 #' @param correction_for_sample_size (logical, default FALSE) If set to TRUE,
 #'   the sample size (number of sequences by samples) is add to formula in
-#'   the form `y~Library_Size + Biological_Effect` following recommendation of
-#'   [Weiss et al. 2017](https://doi.org/10.1186/s40168-017-0237-y).
+#'   the form `y~Library_Size + Biological_Effect` following recommendation of
+#'   [Weiss et al. 2017](https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-017-0237-y).
 #'   `correction_for_sample_size` overcome `rarefy_nb_seqs` if both are TRUE.
 #' @param rarefy_nb_seqs (logical, default FALSE) Rarefy each sample
 #'   (before merging if merge_sample_by is set) using

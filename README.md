@@ -14,7 +14,7 @@ v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/
 
 # MiscMetabar <a href="https://adrientaudiere.github.io/MiscMetabar/"><img src="man/figures/logo.png" align="right" height="138" alt="MiscMetabar website" /></a>
 
-See the pkgdown site
+See the pkgdown documentation site
 [here](https://adrientaudiere.github.io/MiscMetabar/).
 
 Biological studies, especially in ecology, health sciences and taxonomy,
@@ -66,33 +66,33 @@ BiocManager::install("dada2")
 #>   'AnnotationHub', 'aricode', 'basilisk', 'basilisk.utils', 'BayesFactor',
 #>   'beachmat', 'benchdamic', 'bibliometrix', 'BiocBaseUtils', 'BiocFileCache',
 #>   'BiocGenerics', 'BiocNeighbors', 'BiocSingular', 'BiocVersion', 'Biostrings',
-#>   'bluster', 'bslib', 'Cairo', 'checkmate', 'ComplexHeatmap', 'copula', 'covr',
-#>   'crosstalk', 'curl', 'data.table', 'dbplyr', 'dearseq', 'decontam',
-#>   'DelayedMatrixStats', 'deldir', 'densvis', 'DescTools', 'DESeq2',
+#>   'bluster', 'brio', 'bslib', 'Cairo', 'checkmate', 'ComplexHeatmap', 'copula',
+#>   'covr', 'crosstalk', 'curl', 'data.table', 'dbplyr', 'dearseq', 'decontam',
+#>   'DelayedMatrixStats', 'deldir', 'densvis', 'desc', 'DescTools', 'DESeq2',
 #>   'dir.expiry', 'DirichletMultinomial', 'downloadthis', 'dqrng', 'drake', 'DT',
 #>   'e1071', 'ecodist', 'edgeR', 'ExperimentHub', 'expm', 'fBasics', 'foreign',
 #>   'fstcore', 'gaston', 'gdsfmt', 'genefilter', 'GenomeInfoDb', 'GenomicRanges',
-#>   'gert', 'ggthemes', 'ggtree', 'ggtreeExtra', 'git2r', 'gmp', 'graphlayouts',
-#>   'grImport2', 'gtools', 'haven', 'htmlTable', 'htmlwidgets', 'httpuv',
-#>   'insight', 'interactiveDisplayBase', 'interp', 'KEGGREST', 'later', 'lava',
-#>   'LEA', 'leaflet', 'leiden', 'limma', 'link2GI', 'lintr', 'lme4',
-#>   'lpSolveAPI', 'Maaslin2', 'maps', 'markdown', 'MAST', 'Matrix',
-#>   'MatrixModels', 'matrixStats', 'mclust', 'mia', 'microbiome',
-#>   'microbiomeDataSets', 'MicrobiotaProcess', 'MultiAssayExperiment', 'mvtnorm',
-#>   'network', 'nlme', 'NOISeq', 'ordinal', 'osqp', 'pak', 'parameters', 'pcaPP',
-#>   'performance', 'plotrix', 'pls', 'pracma', 'progress', 'PROJ', 'qgraph',
-#>   'qs', 'R.utils', 'rbibutils', 'RcppArmadillo', 'RcppEigen', 'Rdpack',
-#>   'report', 'Rfast', 'rgl', 'rhdf5', 'rhdf5filters', 'rJava', 'Rmpfr',
-#>   'robustbase', 'rpart', 'RSQLite', 'Rtsne', 'S4Vectors', 'sass',
-#>   'ScaledMatrix', 'scales', 'scater', 'scuttle', 'segmented', 'SeqArray',
-#>   'seqinr', 'seriation', 'Seurat', 'SeuratObject', 'shiny', 'shinybusy',
-#>   'SingleCellExperiment', 'sna', 'sp', 'SparseArray', 'sparseMatrixStats',
-#>   'spatstat.data', 'spatstat.explore', 'spatstat.linnet', 'spatstat.model',
-#>   'spatstat.random', 'spatstat.sparse', 'spatstat.utils', 'spdep',
-#>   'stringdist', 'stringfish', 'svglite', 'testthat', 'this.path', 'tinytex',
-#>   'TMB', 'treeio', 'TreeSummarizedExperiment', 'units', 'V8', 'vroom',
-#>   'wesanderson', 'wk', 'Wrench', 'XML', 'xml2', 'zCompositions', 'zinbwave',
-#>   'cluster'
+#>   'gert', 'ggiraph', 'ggside', 'ggthemes', 'ggtree', 'ggtreeExtra', 'git2r',
+#>   'gmp', 'graphlayouts', 'grImport2', 'gtools', 'haven', 'htmlTable',
+#>   'htmlwidgets', 'httpuv', 'insight', 'interactiveDisplayBase', 'interp',
+#>   'KEGGREST', 'later', 'lava', 'LEA', 'leaflet', 'leiden', 'limma', 'link2GI',
+#>   'lintr', 'lme4', 'lpSolve', 'lpSolveAPI', 'Maaslin2', 'maps', 'markdown',
+#>   'MAST', 'Matrix', 'MatrixModels', 'matrixStats', 'mclust', 'mia',
+#>   'microbiome', 'microbiomeDataSets', 'MicrobiotaProcess',
+#>   'MultiAssayExperiment', 'mvtnorm', 'network', 'nlme', 'NOISeq', 'ordinal',
+#>   'osqp', 'pak', 'parameters', 'pcaPP', 'performance', 'plotrix', 'pls',
+#>   'pracma', 'processx', 'progress', 'PROJ', 'qgraph', 'qs', 'R.utils',
+#>   'rbibutils', 'RcppArmadillo', 'RcppEigen', 'Rdpack', 'report', 'Rfast',
+#>   'rgl', 'rhdf5', 'rhdf5filters', 'rJava', 'Rmpfr', 'robustbase', 'rpart',
+#>   'RSQLite', 'Rtsne', 's2', 'S4Vectors', 'sass', 'ScaledMatrix', 'scales',
+#>   'scater', 'scuttle', 'segmented', 'SeqArray', 'seqinr', 'seriation',
+#>   'Seurat', 'SeuratObject', 'shiny', 'shinybusy', 'SingleCellExperiment',
+#>   'sna', 'sp', 'SparseArray', 'sparseMatrixStats', 'spatstat.data',
+#>   'spatstat.explore', 'spatstat.linnet', 'spatstat.model', 'spatstat.random',
+#>   'spatstat.sparse', 'spatstat.utils', 'spdep', 'stringdist', 'stringfish',
+#>   'svglite', 'testthat', 'this.path', 'tinytex', 'TMB', 'treeio',
+#>   'TreeSummarizedExperiment', 'units', 'V8', 'vroom', 'wesanderson', 'wk',
+#>   'Wrench', 'XML', 'xml2', 'zCompositions', 'zinbwave', 'cluster'
 BiocManager::install("phyloseq")
 #> 'getOption("repos")' replaces Bioconductor standard repositories, see
 #> 'help("repositories", package = "BiocManager")' for details.
@@ -109,33 +109,33 @@ BiocManager::install("phyloseq")
 #>   'AnnotationHub', 'aricode', 'basilisk', 'basilisk.utils', 'BayesFactor',
 #>   'beachmat', 'benchdamic', 'bibliometrix', 'BiocBaseUtils', 'BiocFileCache',
 #>   'BiocGenerics', 'BiocNeighbors', 'BiocSingular', 'BiocVersion', 'Biostrings',
-#>   'bluster', 'bslib', 'Cairo', 'checkmate', 'ComplexHeatmap', 'copula', 'covr',
-#>   'crosstalk', 'curl', 'data.table', 'dbplyr', 'dearseq', 'decontam',
-#>   'DelayedMatrixStats', 'deldir', 'densvis', 'DescTools', 'DESeq2',
+#>   'bluster', 'brio', 'bslib', 'Cairo', 'checkmate', 'ComplexHeatmap', 'copula',
+#>   'covr', 'crosstalk', 'curl', 'data.table', 'dbplyr', 'dearseq', 'decontam',
+#>   'DelayedMatrixStats', 'deldir', 'densvis', 'desc', 'DescTools', 'DESeq2',
 #>   'dir.expiry', 'DirichletMultinomial', 'downloadthis', 'dqrng', 'drake', 'DT',
 #>   'e1071', 'ecodist', 'edgeR', 'ExperimentHub', 'expm', 'fBasics', 'foreign',
 #>   'fstcore', 'gaston', 'gdsfmt', 'genefilter', 'GenomeInfoDb', 'GenomicRanges',
-#>   'gert', 'ggthemes', 'ggtree', 'ggtreeExtra', 'git2r', 'gmp', 'graphlayouts',
-#>   'grImport2', 'gtools', 'haven', 'htmlTable', 'htmlwidgets', 'httpuv',
-#>   'insight', 'interactiveDisplayBase', 'interp', 'KEGGREST', 'later', 'lava',
-#>   'LEA', 'leaflet', 'leiden', 'limma', 'link2GI', 'lintr', 'lme4',
-#>   'lpSolveAPI', 'Maaslin2', 'maps', 'markdown', 'MAST', 'Matrix',
-#>   'MatrixModels', 'matrixStats', 'mclust', 'mia', 'microbiome',
-#>   'microbiomeDataSets', 'MicrobiotaProcess', 'MultiAssayExperiment', 'mvtnorm',
-#>   'network', 'nlme', 'NOISeq', 'ordinal', 'osqp', 'pak', 'parameters', 'pcaPP',
-#>   'performance', 'plotrix', 'pls', 'pracma', 'progress', 'PROJ', 'qgraph',
-#>   'qs', 'R.utils', 'rbibutils', 'RcppArmadillo', 'RcppEigen', 'Rdpack',
-#>   'report', 'Rfast', 'rgl', 'rhdf5', 'rhdf5filters', 'rJava', 'Rmpfr',
-#>   'robustbase', 'rpart', 'RSQLite', 'Rtsne', 'S4Vectors', 'sass',
-#>   'ScaledMatrix', 'scales', 'scater', 'scuttle', 'segmented', 'SeqArray',
-#>   'seqinr', 'seriation', 'Seurat', 'SeuratObject', 'shiny', 'shinybusy',
-#>   'SingleCellExperiment', 'sna', 'sp', 'SparseArray', 'sparseMatrixStats',
-#>   'spatstat.data', 'spatstat.explore', 'spatstat.linnet', 'spatstat.model',
-#>   'spatstat.random', 'spatstat.sparse', 'spatstat.utils', 'spdep',
-#>   'stringdist', 'stringfish', 'svglite', 'testthat', 'this.path', 'tinytex',
-#>   'TMB', 'treeio', 'TreeSummarizedExperiment', 'units', 'V8', 'vroom',
-#>   'wesanderson', 'wk', 'Wrench', 'XML', 'xml2', 'zCompositions', 'zinbwave',
-#>   'cluster'
+#>   'gert', 'ggiraph', 'ggside', 'ggthemes', 'ggtree', 'ggtreeExtra', 'git2r',
+#>   'gmp', 'graphlayouts', 'grImport2', 'gtools', 'haven', 'htmlTable',
+#>   'htmlwidgets', 'httpuv', 'insight', 'interactiveDisplayBase', 'interp',
+#>   'KEGGREST', 'later', 'lava', 'LEA', 'leaflet', 'leiden', 'limma', 'link2GI',
+#>   'lintr', 'lme4', 'lpSolve', 'lpSolveAPI', 'Maaslin2', 'maps', 'markdown',
+#>   'MAST', 'Matrix', 'MatrixModels', 'matrixStats', 'mclust', 'mia',
+#>   'microbiome', 'microbiomeDataSets', 'MicrobiotaProcess',
+#>   'MultiAssayExperiment', 'mvtnorm', 'network', 'nlme', 'NOISeq', 'ordinal',
+#>   'osqp', 'pak', 'parameters', 'pcaPP', 'performance', 'plotrix', 'pls',
+#>   'pracma', 'processx', 'progress', 'PROJ', 'qgraph', 'qs', 'R.utils',
+#>   'rbibutils', 'RcppArmadillo', 'RcppEigen', 'Rdpack', 'report', 'Rfast',
+#>   'rgl', 'rhdf5', 'rhdf5filters', 'rJava', 'Rmpfr', 'robustbase', 'rpart',
+#>   'RSQLite', 'Rtsne', 's2', 'S4Vectors', 'sass', 'ScaledMatrix', 'scales',
+#>   'scater', 'scuttle', 'segmented', 'SeqArray', 'seqinr', 'seriation',
+#>   'Seurat', 'SeuratObject', 'shiny', 'shinybusy', 'SingleCellExperiment',
+#>   'sna', 'sp', 'SparseArray', 'sparseMatrixStats', 'spatstat.data',
+#>   'spatstat.explore', 'spatstat.linnet', 'spatstat.model', 'spatstat.random',
+#>   'spatstat.sparse', 'spatstat.utils', 'spdep', 'stringdist', 'stringfish',
+#>   'svglite', 'testthat', 'this.path', 'tinytex', 'TMB', 'treeio',
+#>   'TreeSummarizedExperiment', 'units', 'V8', 'vroom', 'wesanderson', 'wk',
+#>   'Wrench', 'XML', 'xml2', 'zCompositions', 'zinbwave', 'cluster'
 
 if (!require("devtools", quietly = TRUE)) {
   install.packages("devtools")
@@ -151,16 +151,16 @@ devtools::install_github("adrientaudiere/MiscMetabar")
 #> scales  (1.2.1  -> 1.3.0 ) [CRAN]
 #> sna     (2.7-1  -> 2.7-2 ) [CRAN]
 #> Installing 3 packages: network, scales, sna
-#> Installation des packages dans '/tmp/Rtmp6rEJ85/temp_libpath106fd14fe8e2b7'
+#> Installation des packages dans '/tmp/RtmpVdTtbP/temp_libpathd6864a1812db'
 #> (car 'lib' n'est pas spécifié)
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/RtmpjFkWa1/remotes10bea524cdd92c/adrientaudiere-MiscMetabar-d599627/DESCRIPTION’ ... OK
+#> * checking for file ‘/tmp/RtmpOhxQ8G/remotes3c7b64ea9dfd3/adrientaudiere-MiscMetabar-d599627/DESCRIPTION’ ... OK
 #> * preparing ‘MiscMetabar’:
 #> * checking DESCRIPTION meta-information ... OK
 #> * checking for LF line-endings in source and make files and shell scripts
 #> * checking for empty or unneeded directories
 #> * building ‘MiscMetabar_0.5.tar.gz’
-#> Installation du package dans '/tmp/Rtmp6rEJ85/temp_libpath106fd14fe8e2b7'
+#> Installation du package dans '/tmp/RtmpVdTtbP/temp_libpathd6864a1812db'
 #> (car 'lib' n'est pas spécifié)
 ```
 
@@ -187,33 +187,33 @@ BiocManager::install("dada2")
 #>   'AnnotationHub', 'aricode', 'basilisk', 'basilisk.utils', 'BayesFactor',
 #>   'beachmat', 'benchdamic', 'bibliometrix', 'BiocBaseUtils', 'BiocFileCache',
 #>   'BiocGenerics', 'BiocNeighbors', 'BiocSingular', 'BiocVersion', 'Biostrings',
-#>   'bluster', 'bslib', 'Cairo', 'checkmate', 'ComplexHeatmap', 'copula', 'covr',
-#>   'crosstalk', 'curl', 'data.table', 'dbplyr', 'dearseq', 'decontam',
-#>   'DelayedMatrixStats', 'deldir', 'densvis', 'DescTools', 'DESeq2',
+#>   'bluster', 'brio', 'bslib', 'Cairo', 'checkmate', 'ComplexHeatmap', 'copula',
+#>   'covr', 'crosstalk', 'curl', 'data.table', 'dbplyr', 'dearseq', 'decontam',
+#>   'DelayedMatrixStats', 'deldir', 'densvis', 'desc', 'DescTools', 'DESeq2',
 #>   'dir.expiry', 'DirichletMultinomial', 'downloadthis', 'dqrng', 'drake', 'DT',
 #>   'e1071', 'ecodist', 'edgeR', 'ExperimentHub', 'expm', 'fBasics', 'foreign',
 #>   'fstcore', 'gaston', 'gdsfmt', 'genefilter', 'GenomeInfoDb', 'GenomicRanges',
-#>   'gert', 'ggthemes', 'ggtree', 'ggtreeExtra', 'git2r', 'gmp', 'graphlayouts',
-#>   'grImport2', 'gtools', 'haven', 'htmlTable', 'htmlwidgets', 'httpuv',
-#>   'insight', 'interactiveDisplayBase', 'interp', 'KEGGREST', 'later', 'lava',
-#>   'LEA', 'leaflet', 'leiden', 'limma', 'link2GI', 'lintr', 'lme4',
-#>   'lpSolveAPI', 'Maaslin2', 'maps', 'markdown', 'MAST', 'Matrix',
-#>   'MatrixModels', 'matrixStats', 'mclust', 'mia', 'microbiome',
-#>   'microbiomeDataSets', 'MicrobiotaProcess', 'MultiAssayExperiment', 'mvtnorm',
-#>   'network', 'nlme', 'NOISeq', 'ordinal', 'osqp', 'pak', 'parameters', 'pcaPP',
-#>   'performance', 'plotrix', 'pls', 'pracma', 'progress', 'PROJ', 'qgraph',
-#>   'qs', 'R.utils', 'rbibutils', 'RcppArmadillo', 'RcppEigen', 'Rdpack',
-#>   'report', 'Rfast', 'rgl', 'rhdf5', 'rhdf5filters', 'rJava', 'Rmpfr',
-#>   'robustbase', 'rpart', 'RSQLite', 'Rtsne', 'S4Vectors', 'sass',
-#>   'ScaledMatrix', 'scales', 'scater', 'scuttle', 'segmented', 'SeqArray',
-#>   'seqinr', 'seriation', 'Seurat', 'SeuratObject', 'shiny', 'shinybusy',
-#>   'SingleCellExperiment', 'sna', 'sp', 'SparseArray', 'sparseMatrixStats',
-#>   'spatstat.data', 'spatstat.explore', 'spatstat.linnet', 'spatstat.model',
-#>   'spatstat.random', 'spatstat.sparse', 'spatstat.utils', 'spdep',
-#>   'stringdist', 'stringfish', 'svglite', 'testthat', 'this.path', 'tinytex',
-#>   'TMB', 'treeio', 'TreeSummarizedExperiment', 'units', 'V8', 'vroom',
-#>   'wesanderson', 'wk', 'Wrench', 'XML', 'xml2', 'zCompositions', 'zinbwave',
-#>   'cluster'
+#>   'gert', 'ggiraph', 'ggside', 'ggthemes', 'ggtree', 'ggtreeExtra', 'git2r',
+#>   'gmp', 'graphlayouts', 'grImport2', 'gtools', 'haven', 'htmlTable',
+#>   'htmlwidgets', 'httpuv', 'insight', 'interactiveDisplayBase', 'interp',
+#>   'KEGGREST', 'later', 'lava', 'LEA', 'leaflet', 'leiden', 'limma', 'link2GI',
+#>   'lintr', 'lme4', 'lpSolve', 'lpSolveAPI', 'Maaslin2', 'maps', 'markdown',
+#>   'MAST', 'Matrix', 'MatrixModels', 'matrixStats', 'mclust', 'mia',
+#>   'microbiome', 'microbiomeDataSets', 'MicrobiotaProcess',
+#>   'MultiAssayExperiment', 'mvtnorm', 'network', 'nlme', 'NOISeq', 'ordinal',
+#>   'osqp', 'pak', 'parameters', 'pcaPP', 'performance', 'plotrix', 'pls',
+#>   'pracma', 'processx', 'progress', 'PROJ', 'qgraph', 'qs', 'R.utils',
+#>   'rbibutils', 'RcppArmadillo', 'RcppEigen', 'Rdpack', 'report', 'Rfast',
+#>   'rgl', 'rhdf5', 'rhdf5filters', 'rJava', 'Rmpfr', 'robustbase', 'rpart',
+#>   'RSQLite', 'Rtsne', 's2', 'S4Vectors', 'sass', 'ScaledMatrix', 'scales',
+#>   'scater', 'scuttle', 'segmented', 'SeqArray', 'seqinr', 'seriation',
+#>   'Seurat', 'SeuratObject', 'shiny', 'shinybusy', 'SingleCellExperiment',
+#>   'sna', 'sp', 'SparseArray', 'sparseMatrixStats', 'spatstat.data',
+#>   'spatstat.explore', 'spatstat.linnet', 'spatstat.model', 'spatstat.random',
+#>   'spatstat.sparse', 'spatstat.utils', 'spdep', 'stringdist', 'stringfish',
+#>   'svglite', 'testthat', 'this.path', 'tinytex', 'TMB', 'treeio',
+#>   'TreeSummarizedExperiment', 'units', 'V8', 'vroom', 'wesanderson', 'wk',
+#>   'Wrench', 'XML', 'xml2', 'zCompositions', 'zinbwave', 'cluster'
 BiocManager::install("phyloseq")
 #> 'getOption("repos")' replaces Bioconductor standard repositories, see
 #> 'help("repositories", package = "BiocManager")' for details.
@@ -230,33 +230,33 @@ BiocManager::install("phyloseq")
 #>   'AnnotationHub', 'aricode', 'basilisk', 'basilisk.utils', 'BayesFactor',
 #>   'beachmat', 'benchdamic', 'bibliometrix', 'BiocBaseUtils', 'BiocFileCache',
 #>   'BiocGenerics', 'BiocNeighbors', 'BiocSingular', 'BiocVersion', 'Biostrings',
-#>   'bluster', 'bslib', 'Cairo', 'checkmate', 'ComplexHeatmap', 'copula', 'covr',
-#>   'crosstalk', 'curl', 'data.table', 'dbplyr', 'dearseq', 'decontam',
-#>   'DelayedMatrixStats', 'deldir', 'densvis', 'DescTools', 'DESeq2',
+#>   'bluster', 'brio', 'bslib', 'Cairo', 'checkmate', 'ComplexHeatmap', 'copula',
+#>   'covr', 'crosstalk', 'curl', 'data.table', 'dbplyr', 'dearseq', 'decontam',
+#>   'DelayedMatrixStats', 'deldir', 'densvis', 'desc', 'DescTools', 'DESeq2',
 #>   'dir.expiry', 'DirichletMultinomial', 'downloadthis', 'dqrng', 'drake', 'DT',
 #>   'e1071', 'ecodist', 'edgeR', 'ExperimentHub', 'expm', 'fBasics', 'foreign',
 #>   'fstcore', 'gaston', 'gdsfmt', 'genefilter', 'GenomeInfoDb', 'GenomicRanges',
-#>   'gert', 'ggthemes', 'ggtree', 'ggtreeExtra', 'git2r', 'gmp', 'graphlayouts',
-#>   'grImport2', 'gtools', 'haven', 'htmlTable', 'htmlwidgets', 'httpuv',
-#>   'insight', 'interactiveDisplayBase', 'interp', 'KEGGREST', 'later', 'lava',
-#>   'LEA', 'leaflet', 'leiden', 'limma', 'link2GI', 'lintr', 'lme4',
-#>   'lpSolveAPI', 'Maaslin2', 'maps', 'markdown', 'MAST', 'Matrix',
-#>   'MatrixModels', 'matrixStats', 'mclust', 'mia', 'microbiome',
-#>   'microbiomeDataSets', 'MicrobiotaProcess', 'MultiAssayExperiment', 'mvtnorm',
-#>   'network', 'nlme', 'NOISeq', 'ordinal', 'osqp', 'pak', 'parameters', 'pcaPP',
-#>   'performance', 'plotrix', 'pls', 'pracma', 'progress', 'PROJ', 'qgraph',
-#>   'qs', 'R.utils', 'rbibutils', 'RcppArmadillo', 'RcppEigen', 'Rdpack',
-#>   'report', 'Rfast', 'rgl', 'rhdf5', 'rhdf5filters', 'rJava', 'Rmpfr',
-#>   'robustbase', 'rpart', 'RSQLite', 'Rtsne', 'S4Vectors', 'sass',
-#>   'ScaledMatrix', 'scales', 'scater', 'scuttle', 'segmented', 'SeqArray',
-#>   'seqinr', 'seriation', 'Seurat', 'SeuratObject', 'shiny', 'shinybusy',
-#>   'SingleCellExperiment', 'sna', 'sp', 'SparseArray', 'sparseMatrixStats',
-#>   'spatstat.data', 'spatstat.explore', 'spatstat.linnet', 'spatstat.model',
-#>   'spatstat.random', 'spatstat.sparse', 'spatstat.utils', 'spdep',
-#>   'stringdist', 'stringfish', 'svglite', 'testthat', 'this.path', 'tinytex',
-#>   'TMB', 'treeio', 'TreeSummarizedExperiment', 'units', 'V8', 'vroom',
-#>   'wesanderson', 'wk', 'Wrench', 'XML', 'xml2', 'zCompositions', 'zinbwave',
-#>   'cluster'
+#>   'gert', 'ggiraph', 'ggside', 'ggthemes', 'ggtree', 'ggtreeExtra', 'git2r',
+#>   'gmp', 'graphlayouts', 'grImport2', 'gtools', 'haven', 'htmlTable',
+#>   'htmlwidgets', 'httpuv', 'insight', 'interactiveDisplayBase', 'interp',
+#>   'KEGGREST', 'later', 'lava', 'LEA', 'leaflet', 'leiden', 'limma', 'link2GI',
+#>   'lintr', 'lme4', 'lpSolve', 'lpSolveAPI', 'Maaslin2', 'maps', 'markdown',
+#>   'MAST', 'Matrix', 'MatrixModels', 'matrixStats', 'mclust', 'mia',
+#>   'microbiome', 'microbiomeDataSets', 'MicrobiotaProcess',
+#>   'MultiAssayExperiment', 'mvtnorm', 'network', 'nlme', 'NOISeq', 'ordinal',
+#>   'osqp', 'pak', 'parameters', 'pcaPP', 'performance', 'plotrix', 'pls',
+#>   'pracma', 'processx', 'progress', 'PROJ', 'qgraph', 'qs', 'R.utils',
+#>   'rbibutils', 'RcppArmadillo', 'RcppEigen', 'Rdpack', 'report', 'Rfast',
+#>   'rgl', 'rhdf5', 'rhdf5filters', 'rJava', 'Rmpfr', 'robustbase', 'rpart',
+#>   'RSQLite', 'Rtsne', 's2', 'S4Vectors', 'sass', 'ScaledMatrix', 'scales',
+#>   'scater', 'scuttle', 'segmented', 'SeqArray', 'seqinr', 'seriation',
+#>   'Seurat', 'SeuratObject', 'shiny', 'shinybusy', 'SingleCellExperiment',
+#>   'sna', 'sp', 'SparseArray', 'sparseMatrixStats', 'spatstat.data',
+#>   'spatstat.explore', 'spatstat.linnet', 'spatstat.model', 'spatstat.random',
+#>   'spatstat.sparse', 'spatstat.utils', 'spdep', 'stringdist', 'stringfish',
+#>   'svglite', 'testthat', 'this.path', 'tinytex', 'TMB', 'treeio',
+#>   'TreeSummarizedExperiment', 'units', 'V8', 'vroom', 'wesanderson', 'wk',
+#>   'Wrench', 'XML', 'xml2', 'zCompositions', 'zinbwave', 'cluster'
 
 if (!require("devtools", quietly = TRUE)) {
   install.packages("devtools")
@@ -265,13 +265,13 @@ devtools::install_github("adrientaudiere/MiscMetabar", ref = "dev")
 #> Downloading GitHub repo adrientaudiere/MiscMetabar@dev
 #> 
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/RtmpjFkWa1/remotes10bea562b62e3c/adrientaudiere-MiscMetabar-669c68e/DESCRIPTION’ ... OK
+#> * checking for file ‘/tmp/RtmpOhxQ8G/remotes3c7b673226355/adrientaudiere-MiscMetabar-59ef25a/DESCRIPTION’ ... OK
 #> * preparing ‘MiscMetabar’:
 #> * checking DESCRIPTION meta-information ... OK
 #> * checking for LF line-endings in source and make files and shell scripts
 #> * checking for empty or unneeded directories
-#> * building ‘MiscMetabar_0.5.tar.gz’
-#> Installation du package dans '/tmp/Rtmp6rEJ85/temp_libpath106fd14fe8e2b7'
+#> * building ‘MiscMetabar_0.51.tar.gz’
+#> Installation du package dans '/tmp/RtmpVdTtbP/temp_libpathd6864a1812db'
 #> (car 'lib' n'est pas spécifié)
 ```
 
@@ -280,6 +280,31 @@ devtools::install_github("adrientaudiere/MiscMetabar", ref = "dev")
 See vignettes in the
 [MiscMetabar](https://adrientaudiere.github.io/MiscMetabar/) website for
 more examples.
+
+For an introduction to metabarcoding in R, Please visite the [state of
+the
+field](https://adrientaudiere.github.io/MiscMetabar/articles/states_of_fields_in_R.html)
+vignettes. The [import, export and track]() vignette explains how import
+and export
+<https://adrientaudiere.github.io/MiscMetabar/articles/Reclustering.html>.
+Its also show how to summarize useful information (number of sequences,
+samples and clusters) accross bioinformatic pipelines.
+
+If you are interested in ecological metrics, see the vignettes
+describing
+[alpha-diversity](https://adrientaudiere.github.io/MiscMetabar/articles/alpha-div.html)
+and
+[beta-diversity](https://adrientaudiere.github.io/MiscMetabar/articles/beta-div.html)
+analysis. The vignette [filter taxa and
+samples](https://adrientaudiere.github.io/MiscMetabar/articles/filter.html)
+describes some data-filtering processes using MiscMetabar and the
+[reclustering](https://adrientaudiere.github.io/MiscMetabar/articles/Reclustering.html)
+tutorial introduces the different way of clustering already-clustered
+OTU/ASV. The vignette [tengeler]() explore the dataset from Tengeler et
+al. (2020) using some MiscMetabar functions.
+
+For developers, I also have a vignette describing som [rules of
+codes](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html).
 
 ### Summarize a physeq object
 

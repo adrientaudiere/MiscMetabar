@@ -15,7 +15,7 @@
 #' @examples
 #' data("data_fungi")
 #' search_primers <- search_exact_seq_pq(data_fungi,
-#'   sequences = DNAStringSet(c("TTGAACGCACATTGCGCC", "ATCCCTACCTGATCCGAG"))
+#'   sequences = Biostrings::DNAStringSet(c("TTGAACGCACATTGCGCC", "ATCCCTACCTGATCCGAG"))
 #' )
 #' @author Adrien Taudière
 
@@ -24,7 +24,7 @@ search_exact_seq_pq <- function(physeq, sequences) {
   for (i in seq_along(sequences)) {
     original <- sequences[[i]]
     rev <- reverse(sequences[[i]])
-    rev_comp <- reverseComplement(sequences[[i]])
+    rev_comp <-  Biostrings::reverseComplement(sequences[[i]])
     comp <- complement(sequences[[i]])
 
     original_count <- sum(grepl(original, physeq@refseq))

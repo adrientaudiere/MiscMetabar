@@ -84,5 +84,5 @@ of \code{\link[speedyseq:merge_taxa_vec]{speedyseq::merge_taxa_vec()}}.
 VSEARCH can be downloaded from
 \url{https://github.com/torognes/vsearch}.
 More information in the associated publication
-\url{https://www.ncbi.nlm.nih.gov/pubmed/27781170}.
+\url{https://pubmed.ncbi.nlm.nih.gov/27781170}.
 }

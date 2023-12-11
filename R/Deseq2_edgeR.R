@@ -154,7 +154,7 @@ plot_edgeR_pq <-
 #' @examples
 #' data("GlobalPatterns", package = "phyloseq")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
-#' GP <- subset_samples(GP, GP@sam_data$SampleType %in% c("Soil", "Skin"))
+#' GP <- subset_samples(GP, SampleType %in% c("Soil", "Skin"))
 #' res <- DESeq2::DESeq(phyloseq_to_deseq2(GP, ~SampleType),
 #'   test = "Wald", fitType = "local"
 #' )

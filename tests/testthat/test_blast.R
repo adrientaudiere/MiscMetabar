@@ -3,8 +3,9 @@ df_basidio <- subset_taxa(data_fungi, Phylum == "Basidiomycota")
 df_basidio <-
   subset_taxa_pq(df_basidio, colSums(df_basidio@otu_table) > 1000)
 path_db <- system.file("extdata",
-  "100_sp_UNITE_sh_general_release_dynamic.fasta", 
-  package = "MiscMetabar", mustWork = TRUE)
+  "100_sp_UNITE_sh_general_release_dynamic.fasta",
+  package = "MiscMetabar", mustWork = TRUE
+)
 
 suppressWarnings(blast_error_or_not <-
   try(system("blastn 2>&1", intern = TRUE), silent = TRUE))

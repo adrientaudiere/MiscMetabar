@@ -66,8 +66,7 @@ before using this function.
 
 Note that phylogenetic reconstruction with markers used for metabarcoding are
 not robust. You must verify the robustness of your phylogenetic tree using
-taxonomic classification (see vignette \href{https://adrientaudiere.github.io/MiscMetabar/articles/tree_visualization.html}{Tree visualization}) and bootstrap or multi-tree
-visualization (e.g. using \code{\link[ggtree:ggdensitree]{ggtree::ggdensitree()}}).
+taxonomic classification (see vignette \href{https://adrientaudiere.github.io/MiscMetabar/articles/tree_visualization.html}{Tree visualization}) and bootstrap or multi-tree visualization
 
 This function is mainly a wrapper of the work of others.
 Please make a reference to \code{phangorn} package if you

@@ -511,7 +511,7 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #'   VSEARCH can be downloaded from
 #'   \url{https://github.com/torognes/vsearch}.
 #'   More information in the associated publication
-#'   \url{https://www.ncbi.nlm.nih.gov/pubmed/27781170}.
+#'   \url{https://pubmed.ncbi.nlm.nih.gov/27781170}.
 #'
 #' @export
 
@@ -1978,8 +1978,7 @@ plot_guild_pq <-
 #'
 #' Note that phylogenetic reconstruction with markers used for metabarcoding are
 #' not robust. You must verify the robustness of your phylogenetic tree using
-#' taxonomic classification (see vignette [Tree visualization](https://adrientaudiere.github.io/MiscMetabar/articles/tree_visualization.html)) and bootstrap or multi-tree
-#' visualization (e.g. using [ggtree::ggdensitree()]).
+#' taxonomic classification (see vignette [Tree visualization](https://adrientaudiere.github.io/MiscMetabar/articles/tree_visualization.html)) and bootstrap or multi-tree visualization
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`

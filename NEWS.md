@@ -5,7 +5,7 @@
 - Add function `mumu_pq()` to use [mumu](https://github.com/frederic-mahe/mumu), a fast and robust C++ implementation of lulu.
 - Add (a mostly internal) function `install_pkg_needed()` to install pkg (mostly for package list in *Suggest* in DESCRIPTION) if needed by a function.
 - Add function `add_funguild_info()` and `plot_guild_pq()` to add and plot fungal guild information from taxonomy using `FUNGuild` package
-- Add function `build_phytree_pq()` to build 3 phylogenetic tree (NJ, UPGMA and ML) from the `refseq` slot of a `phyloseq` object, possibly with bootstrap values.
+- Add function `build_phytree_pq()` to build 3 phylogenetic trees (NJ, UPGMA and ML using `phangorn` R package) from the `refseq` slot of a `phyloseq` object, possibly with bootstrap values. See the vignettes [Tree visualization](https://adrientaudiere.github.io/MiscMetabar/articles/tree_visualization.html) for an introduction to tree visualization using `ggtree` R package.
 
 # MiscMetabar 0.5
 
@@ -14,7 +14,7 @@
 ## BREAKING CHANGES
 
 - Rename param `log_10` in function `biplot_pq()` into `log10trans`
-- Rename param `log10trans` in function `circle_pq()` into `log10trans`
+- Rename param `log10transform` in function `circle_pq()` into `log10trans`
  
 # MiscMetabar 0.42 
 

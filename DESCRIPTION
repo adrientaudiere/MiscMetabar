@@ -1,6 +1,6 @@
 Package: MiscMetabar
 Type: Package
-Title: Miscellaneous functions for metabarcoding analysis
+Title: Miscellaneous Functions for Metabarcoding Analysis
 Version: 0.51
 Authors@R: person("Adrien", "Taudière", email = "adrien.taudiere@zaclys.net",
   role = c("aut", "cre"), comment = c(ORCID = "0000-0003-1088-1182"))

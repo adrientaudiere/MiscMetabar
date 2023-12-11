@@ -25,7 +25,7 @@ the reverse sequence and the reverse-complement sequence.
 \examples{
 data("data_fungi")
 search_primers <- search_exact_seq_pq(data_fungi,
-  sequences = DNAStringSet(c("TTGAACGCACATTGCGCC", "ATCCCTACCTGATCCGAG"))
+  sequences = Biostrings::DNAStringSet(c("TTGAACGCACATTGCGCC", "ATCCCTACCTGATCCGAG"))
 )
 }
 \author{
