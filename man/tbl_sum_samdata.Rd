@@ -10,10 +10,11 @@ tbl_sum_samdata(physeq, remove_col_unique_value = TRUE, ...)
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{remove_col_unique_value}{(logical, default TRUE) Do we remove informative
-columns (categorical column with one value per samples), e.g. samples names ?}
+\item{remove_col_unique_value}{(logical, default TRUE) Do we remove
+informative columns (categorical column with one value per samples),
+e.g. samples names ?}
 
-\item{...}{Others arguments pass on to \code{\link[tbl_summary:tbl_summary]{tbl_summary::tbl_summary()}}.}
+\item{...}{Others arguments pass on to \code{\link[gtsummary:tbl_summary]{gtsummary::tbl_summary()}}.}
 }
 \value{
 a physeq object with a larger slot tax_table
@@ -21,18 +22,25 @@ a physeq object with a larger slot tax_table
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-A wrapper for the \link[tbl_summary:tbl_summary(...)]{tbl_summary::tbl_summary(...)} function in the case of \code{physeq}
+A wrapper for the \code{\link[gtsummary:tbl_summary]{gtsummary::tbl_summary()}} function in the case of \code{physeq}
 object.
+}
+\details{
+This function is mainly a wrapper of the work of others.
+Please make a reference to \code{gtsummary::tbl_summary()} if you
+use this function.
 }
 \examples{
 tbl_sum_samdata(data_fungi)
 
-tbl_sum_samdata(data_fungi, include = c("Time", "Height"), 
-                type= list(Time ~ "continuous2", Height ~ "categorical"), 
-                statistic = list(Time ~ c("{median} ({p25}, {p75})", "{min}, {max}")))
+tbl_sum_samdata(data_fungi,
+  include = c("Time", "Height"),
+  type = list(Time ~ "continuous2", Height ~ "categorical"),
+  statistic = list(Time ~ c("{median} ({p25}, {p75})", "{min}, {max}"))
+)
 
-tbl_sum_samdata (enterotype)
-tbl_sum_samdata (enterotype, include =  !contains("SampleId"))
+tbl_sum_samdata(enterotype)
+tbl_sum_samdata(enterotype, include = !contains("SampleId"))
 }
 \author{
 Adrien Taudière

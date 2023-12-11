@@ -19,7 +19,7 @@
 #'   your krona result files before merging using [merge_krona()]
 #'
 #' @examples
-#' data("GlobalPatterns")
+#' data("GlobalPatterns", package = "phyloseq")
 #' GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
 #' # krona(GA, "Number.of.sequences.html")
 #' # krona(GA, "Number.of.ASVs.html", nb_seq = FALSE)
@@ -28,8 +28,10 @@
 #' @export
 #' @seealso \code{\link{merge_krona}}
 #' @author Adrien Taudière
-#'
-
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please cite [Krona](https://github.com/marbl/Krona) if
+#'   you use this function.
 krona <-
   function(physeq,
            file = "krona.html",
@@ -102,7 +104,7 @@ krona <-
 #'
 #' @examples
 #' \dontrun{
-#' data("GlobalPatterns")
+#' data("GlobalPatterns", package = "phyloseq")
 #' GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
 #' krona(GA, "Number.of.sequences.html")
 #' krona(GA, "Number.of.ASVs.html", nb_seq = FALSE)
@@ -112,7 +114,10 @@ krona <-
 #' @seealso \code{\link{krona}}
 #' @export
 #' @author Adrien Taudière
-#'
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please cite [Krona](https://github.com/marbl/Krona) if
+#'   you use this function.
 merge_krona <- function(files = NULL, output = "mergeKrona.html") {
   cmd <-
     paste("ktImportKrona ",

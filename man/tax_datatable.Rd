@@ -33,7 +33,7 @@ A datatable
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
-data("GlobalPatterns")
+data("GlobalPatterns", package = "phyloseq")
 tax_datatable(subset_taxa(
   GlobalPatterns,
   rowSums(GlobalPatterns@otu_table) > 10000

@@ -8,11 +8,11 @@ vignette: >
 ---
 
 
-
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  message = FALSE
 )
 ```
 
@@ -23,7 +23,7 @@ library(formattable)
 
 ## Export phyloseq object
 
-You can export a phyloseq object to csv (and txt for phylogenetic tree) files in a folder. It is possible to export each table into one file or to merge all slot (exept phytree) in one file (args `one_file = TRUE`). Finally, if `rdata` is set to TRUE, a `rdata` file containing the phyloseq object is also writed. 
+You can export a phyloseq object to csv (and txt for phylogenetic tree) files in a folder. It is possible to export each table into one file or to merge all slot (except phytree) in one file (args `one_file = TRUE`). Finally, if `rdata` is set to TRUE, a `rdata` file containing the phyloseq object is also writed. 
 
 ```{r, eval = FALSE}
 write_pq(data_fungi, path = "fungi_phyloseq")
@@ -39,7 +39,7 @@ save_pq(data_fungi)
 
 ## Import
 
-To import a Rdata file, juste use `load()` base function. In order to import phyloseq object from a folder create using `write_pq()` or `save_pq()`, please use the function `read_pq()`. 
+To import a Rdata file, just use `load()` base function. In order to import phyloseq object from a folder create using `write_pq()` or `save_pq()`, please use the function `read_pq()`. 
 
 ```{r, eval = FALSE}
 d <- read_pq(path = "fungi_phyloseq")

@@ -42,14 +42,15 @@ A ggplot2 graphic
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-Note that lvl3 needd to be nested in lvl2 which need to be nested
+Note that lvl3need to be nested in lvl2 which need to be nested
 in lvl1
 }
 \examples{
 multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", "Time")
 multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order")
-multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", 
-                nb_seq = FALSE, log10trans = FALSE)
+multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order",
+  nb_seq = FALSE, log10trans = FALSE
+)
 }
 \author{
 Adrien Taudière

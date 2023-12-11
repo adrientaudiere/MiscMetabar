@@ -23,7 +23,7 @@ blast on a given database
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-Basically a wraper of \code{\link[=blast_pq]{blast_pq()}} with option \code{unique_per_seq = TRUE} and
+Basically a wrapper of \code{\link[=blast_pq]{blast_pq()}} with option \code{unique_per_seq = TRUE} and
 \code{score_filter = FALSE}.
 
 Add the information to the taxtable

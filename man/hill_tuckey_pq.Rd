@@ -32,7 +32,7 @@ Note that, by default, this function use a sqrt of the read numbers in the linea
 model in order to correct for uneven sampling depth.
 }
 \examples{
-data("GlobalPatterns")
+data("GlobalPatterns", package = "phyloseq")
 GlobalPatterns@sam_data[, "Soil_logical"] <-
   ifelse(GlobalPatterns@sam_data[, "SampleType"] == "Soil", "Soil", "Not Soil")
 hill_tuckey_pq(GlobalPatterns, "Soil_logical")

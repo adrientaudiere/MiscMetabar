@@ -1,5 +1,5 @@
 ---
-title: 'MiscMetabar : a R packages to facilitate visualization and Reproducibility in metabarcoding analysis'
+title: 'MiscMetabar : an R packages to facilitate visualization and reproducibility in metabarcoding analysis'
 tags:
   - R
   - Bioinformatic
@@ -49,6 +49,11 @@ This plot provides an information-rich structural overview of the phyloseq objec
 
 ## Transformation
 
+### Post-clustering
+
+Several pipelines use at least two step of clustering. The function `asv2otu()`, using either the `DECIPHER::Clusterize()` function from R or the [vsearch](https://github.com/torognes/vsearch) software allow to recluster existing groups such as **ASV** (stands for *Amplicon Sequence Variant*) obtained by the `dada2::dada()` function (see the vignette [reclustering](https://adrientaudiere.github.io/MiscMetabar/articles/Reclustering.html)).  Another transformation method is implemented in `lulu_pq()`, which uses @froslev2017's method for post-clustering curation of DNA amplicon data. Note that a fast and robust C++ re-implementation of lulu called [mumu](https://github.com/frederic-mahe/mumu) [@mahe2023] is also available through the function `mumu_pq()`.
+
+
 ### Cleaning and filtering
 
 The function `clean_pq()` validates a phyloseq object, mainly by removing empty taxa and samples, and checking for discrepancies between taxa and sample names in different slots.  
@@ -71,7 +76,7 @@ To illustrate the effect of sample variables on the taxonomy, `MiscMetabar` prov
 
 ## Reproducibility
 
-The targets R package [@Landau2021] improves the efficiency and reproducibility of the pipeline in R. It orchestrates the stage of the pipeline and stores the objects to skip tasks that are already up to date. Given the complexity, runtime, and parameter sensitivity of bioinformatic analysis, the use of targets is particularly relevant for metabarcoding. I developed functions to list fastq files in a directory (`list_fastq_files()`) and to track the number of sequences, clusters and samples through the pipeline (`track_wkflow()`) for a variety of objects. Function `write_pq()` save an object of class phyloseq and `read_pq()` read a phyloseq object from files. 
+The targets R package [@landau2021] improves the efficiency and reproducibility of the pipeline in R. It orchestrates the stage of the pipeline and stores the objects to skip tasks that are already up to date. Given the complexity, runtime, and parameter sensitivity of bioinformatic analysis, the use of targets is particularly relevant for metabarcoding. I developed functions to list fastq files in a directory (`list_fastq_files()`) and to track the number of sequences, clusters and samples through the pipeline (`track_wkflow()`) for a variety of objects. Function `write_pq()` save an object of class phyloseq and `read_pq()` read a phyloseq object from files. 
 
 # Acknowledgements
 

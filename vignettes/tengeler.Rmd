@@ -1,10 +1,21 @@
 ---
-title: "tengeler_MiscMetabar"
-author: "Adrien Taudière"
-format: html
+title: "tengeler"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{tengeler}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
-
 This tutorial explore the dataset from Tengeler et al. (2020) available in the `mia` package.
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  message = FALSE
+)
+```
 
 # Load library 
 
@@ -58,6 +69,7 @@ accu_plot(
 # Explore taxonomy
 
 ```{r}
+library(metacoder)
 heat_tree_pq(ten,
   node_size = n_obs,
   node_color = nb_sequences,
@@ -132,7 +144,11 @@ ten@tax_table <- phyloseq::tax_table(cbind(
   "Species" = taxa_names(ten)
 ))
 
-biplot_pq(subset_taxa_pq(ten, taxa_sums(ten) > 3000), merge_sample_by = "patient_status", fact = "patient_status", nudge_y = 0.4)
+biplot_pq(subset_taxa_pq(ten, taxa_sums(ten) > 3000),
+  merge_sample_by = "patient_status",
+  fact = "patient_status",
+  nudge_y = 0.4
+)
 ```
 
 
@@ -143,7 +159,10 @@ multitax_bar_pq(ten, "Phylum", "Class", "Order", "patient_status")
 # Differential abundance analysis
 
 ```{r}
-plot_deseq2_pq(ten, contrast = c("patient_status", "ADHD", "Control"), taxolev = "Genus")
+plot_deseq2_pq(ten,
+  contrast = c("patient_status", "ADHD", "Control"),
+  taxolev = "Genus"
+)
 ```
 
 ```{r}

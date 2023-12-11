@@ -60,8 +60,6 @@ list_fastq_files <-
 #' @return the matrix with new colnames (or rownames if `taxa_are_rows` is true)
 #'
 #' @export
-#' @md
-#'
 #' @author Adrien Taudière
 #'
 #' @examples

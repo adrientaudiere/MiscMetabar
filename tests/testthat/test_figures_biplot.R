@@ -1,5 +1,5 @@
 data("data_fungi")
-data("GlobalPatterns")
+data("GlobalPatterns", package = "phyloseq")
 GP <- GlobalPatterns
 
 data_fungi_2trees <-
@@ -53,11 +53,11 @@ test_that("multi_biplot_pq works with data_fungi dataset", {
   p1 <-
     multi_biplot_pq(data_fungi_abun, split_by = "Time", na_remove = FALSE)
   p2 <- multi_biplot_pq(data_fungi_abun, "Height")
-  data_fungi_abun@sam_data$Random_paires <-
+  data_fungi_abun@sam_data$Random_pairs <-
     as.factor(sample(rep(1:(
       nsamples(data_fungi_abun) / 2
     ), 2)))
-  p3 <- multi_biplot_pq(data_fungi_abun, paires = "Random_paires")
+  p3 <- multi_biplot_pq(data_fungi_abun, pairs = "Random_pairs")
   expect_s3_class(p1[[1]], "ggplot")
   expect_type(p1, "list")
   expect_s3_class(p2[[1]], "ggplot")
@@ -65,8 +65,8 @@ test_that("multi_biplot_pq works with data_fungi dataset", {
   expect_s3_class(p3[[1]], "ggplot")
   expect_type(p3, "list")
   expect_equal(length(p3), 85)
-  expect_error(multi_biplot_pq(data_fungi_abun, paires = "Random_paires", split_by = "Time"))
+  expect_error(multi_biplot_pq(data_fungi_abun, pairs = "Random_pairs", split_by = "Time"))
   expect_error(multi_biplot_pq(data_fungi_abun))
-  expect_error(multi_biplot_pq(data_fungi_abun, paires = "RandomPARR"))
+  expect_error(multi_biplot_pq(data_fungi_abun, pairs = "RandomPARR"))
   expect_error(multi_biplot_pq(data_fungi_abun, split_by = "TIMMEE"))
 })

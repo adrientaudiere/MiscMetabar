@@ -9,7 +9,7 @@ multipatt_pq(
   fact,
   p_adjust_method = "BH",
   pval = 0.05,
-  control = how(nperm = 999),
+  control = permute::how(nperm = 999),
   ...
 )
 }
@@ -35,13 +35,20 @@ A ggplot object
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-A wrapper for the \code{\link[indicspecies:multipatt]{indicspecies::multipatt()}} function in the case of \code{physeq}
-object.
+A wrapper for the \code{\link[indicspecies:multipatt]{indicspecies::multipatt()}} function in the case of
+\code{physeq} object.
+}
+\details{
+This function is mainly a wrapper of the work of others.
+Please make a reference to \code{indicspecies::multipatt()} if you
+use this function.
 }
 \examples{
-multipatt_pq(subset_samples(data_fungi, !is.na(Time)), fact="Time")
-multipatt_pq(subset_samples(data_fungi, !is.na(Time)), fact="Time",
-   max.order = 1, control = how(nperm=9999))
+multipatt_pq(subset_samples(data_fungi, !is.na(Time)), fact = "Time")
+multipatt_pq(subset_samples(data_fungi, !is.na(Time)),
+  fact = "Time",
+  max.order = 1, control = permute::how(nperm = 9999)
+)
 }
 \author{
 Adrien Taudière

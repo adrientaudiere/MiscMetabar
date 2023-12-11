@@ -50,14 +50,14 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
-     inkscape:zoom="0.68198529"
-     inkscape:cx="104.84097"
-     inkscape:cy="398.10243"
-     inkscape:window-width="1841"
+     inkscape:zoom="0.96447286"
+     inkscape:cx="211.51451"
+     inkscape:cy="416.28958"
+     inkscape:window-width="1920"
      inkscape:window-height="1051"
-     inkscape:window-x="48"
+     inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      inkscape:current-layer="g11865">
     <inkscape:page
        x="0"
@@ -498,9 +498,9 @@
          y="366.97827"><tspan
            x="695.60699"
            y="366.97827"
-           id="tspan7286"><tspan
+           id="tspan4788"><tspan
              style="font-style:italic"
-             id="tspan7284">1. Mia — 2. microViz — 3.MicrobiotaProcess — 4. Phylosmith  </tspan></tspan></text>
+             id="tspan4786">1. Mia — 2. microViz — 3.MicrobiotaProcess — 4. Phylosmith  </tspan></tspan></text>
     </g>
     <g
        id="g12105">
@@ -1559,111 +1559,154 @@
     </g>
     <text
        xml:space="preserve"
-       transform="matrix(1,0,0,-1,-520.31391,1019.9386)"
-       style="font-variant:normal;font-weight:bold;font-size:8.705px;font-family:'Liberation Sans';-inkscape-font-specification:LiberationSans-Bold;writing-mode:lr-tb;white-space:pre;inline-size:369.971;display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       transform="matrix(1.1698586,0,0,-1.1698586,-622.85789,1081.7644)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.40285px;font-family:'Anonymous Pro for Powerline';-inkscape-font-specification:'Anonymous Pro for Powerline Bold';writing-mode:lr-tb;white-space:pre;inline-size:369.971;display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
        id="text12103-6-3"
        x="695.60699"
        y="366.97827"><tspan
          x="695.60699"
          y="366.97827"
-         id="tspan7290"><tspan
-           style="font-style:italic;font-weight:normal"
-           id="tspan7288">Fig. 1A</tspan></tspan></text>
+         id="tspan4790">A</tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(1,0,0,-1,-521.30852,984.86963)"
-       style="font-variant:normal;font-weight:bold;font-size:8.705px;font-family:'Liberation Sans';-inkscape-font-specification:LiberationSans-Bold;writing-mode:lr-tb;white-space:pre;inline-size:369.971;display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       transform="matrix(1.1698586,0,0,-1.1698586,-622.85789,1046.695)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.40285px;font-family:'Anonymous Pro for Powerline';-inkscape-font-specification:'Anonymous Pro for Powerline Bold';writing-mode:lr-tb;white-space:pre;inline-size:369.971;display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
        id="text6355"
        x="695.60699"
        y="366.97827"><tspan
          x="695.60699"
          y="366.97827"
-         id="tspan7294"><tspan
-           style="font-style:italic;font-weight:normal"
-           id="tspan7292">Fig. 1C</tspan></tspan></text>
+         id="tspan4792">C</tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(1,0,0,-1,-520.48393,904.35063)"
-       style="font-variant:normal;font-weight:bold;font-size:8.705px;font-family:'Liberation Sans';-inkscape-font-specification:LiberationSans-Bold;writing-mode:lr-tb;white-space:pre;inline-size:369.971;display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       transform="matrix(1.1698586,0,0,-1.1698586,-622.85789,966.1764)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.40285px;font-family:'Anonymous Pro for Powerline';-inkscape-font-specification:'Anonymous Pro for Powerline Bold';writing-mode:lr-tb;white-space:pre;inline-size:369.971;display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
        id="text6359"
        x="695.60699"
        y="366.97827"><tspan
          x="695.60699"
          y="366.97827"
-         id="tspan7298"><tspan
-           style="font-style:italic;font-weight:normal"
-           id="tspan7296">Fig. 1B</tspan></tspan></text>
+         id="tspan4794">B</tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(1,0,0,-1,-520.98124,688.56263)"
-       style="font-variant:normal;font-weight:bold;font-size:8.705px;font-family:'Liberation Sans';-inkscape-font-specification:LiberationSans-Bold;writing-mode:lr-tb;white-space:pre;inline-size:369.971;display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       transform="matrix(1.1698586,0,0,-1.1698586,-622.85789,750.3884)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.40285px;font-family:'Anonymous Pro for Powerline';-inkscape-font-specification:'Anonymous Pro for Powerline Bold';writing-mode:lr-tb;white-space:pre;inline-size:369.971;display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
        id="text6370"
        x="695.60699"
        y="366.97827"><tspan
          x="695.60699"
          y="366.97827"
-         id="tspan7302"><tspan
-           style="font-style:italic;font-weight:normal"
-           id="tspan7300">Fig. 1D</tspan></tspan></text>
+         id="tspan4796">D</tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(1,0,0,-1,-520.86222,711.94163)"
-       style="font-variant:normal;font-weight:bold;font-size:8.705px;font-family:'Liberation Sans';-inkscape-font-specification:LiberationSans-Bold;writing-mode:lr-tb;white-space:pre;inline-size:369.971;display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       transform="matrix(1.1698586,0,0,-1.1698586,-622.85789,773.7674)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.40285px;font-family:'Anonymous Pro for Powerline';-inkscape-font-specification:'Anonymous Pro for Powerline Bold';writing-mode:lr-tb;white-space:pre;inline-size:369.971;display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
        id="text6374"
        x="695.60699"
        y="366.97827"><tspan
          x="695.60699"
          y="366.97827"
-         id="tspan7306"><tspan
-           style="font-style:italic;font-weight:normal"
-           id="tspan7304">Fig. 1E</tspan></tspan></text>
+         id="tspan4798">E</tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(1,0,0,-1,-520.7007,870.61363)"
-       style="font-variant:normal;font-weight:bold;font-size:8.705px;font-family:'Liberation Sans';-inkscape-font-specification:LiberationSans-Bold;writing-mode:lr-tb;white-space:pre;inline-size:369.971;display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       transform="matrix(1.1698586,0,0,-1.1698586,-622.85789,932.4394)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.40285px;font-family:'Anonymous Pro for Powerline';-inkscape-font-specification:'Anonymous Pro for Powerline Bold';writing-mode:lr-tb;white-space:pre;inline-size:369.971;display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
        id="text6378"
        x="695.60699"
        y="366.97827"><tspan
          x="695.60699"
          y="366.97827"
-         id="tspan7310"><tspan
-           style="font-style:italic;font-weight:normal"
-           id="tspan7308">Fig. 1F</tspan></tspan></text>
+         id="tspan4800">F</tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(1,0,0,-1,-521.37228,882.30363)"
-       style="font-variant:normal;font-weight:bold;font-size:8.705px;font-family:'Liberation Sans';-inkscape-font-specification:LiberationSans-Bold;writing-mode:lr-tb;white-space:pre;inline-size:369.971;display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       transform="matrix(1.1698586,0,0,-1.1698586,-622.85789,944.12904)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.40285px;font-family:'Anonymous Pro for Powerline';-inkscape-font-specification:'Anonymous Pro for Powerline Bold';writing-mode:lr-tb;white-space:pre;inline-size:369.971;display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
        id="text6382"
        x="695.60699"
        y="366.97827"><tspan
          x="695.60699"
          y="366.97827"
-         id="tspan7314"><tspan
-           style="font-style:italic;font-weight:normal"
-           id="tspan7312">Fig. 1G</tspan></tspan></text>
+         id="tspan4802">G</tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(1,0,0,-1,-521.27027,758.97163)"
-       style="font-variant:normal;font-weight:bold;font-size:8.705px;font-family:'Liberation Sans';-inkscape-font-specification:LiberationSans-Bold;writing-mode:lr-tb;white-space:pre;inline-size:369.971;display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       transform="matrix(1.1698586,0,0,-1.1698586,-622.85789,820.7974)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.40285px;font-family:'Anonymous Pro for Powerline';-inkscape-font-specification:'Anonymous Pro for Powerline Bold';writing-mode:lr-tb;white-space:pre;inline-size:369.971;display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
        id="text6386"
        x="695.60699"
        y="366.97827"><tspan
          x="695.60699"
          y="366.97827"
-         id="tspan7318"><tspan
-           style="font-style:italic;font-weight:normal"
-           id="tspan7316">Fig. 1H</tspan></tspan></text>
+         id="tspan4804">H</tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(1,0,0,-1,-517.29606,735.44888)"
-       style="font-variant:normal;font-weight:bold;font-size:8.705px;font-family:'Liberation Sans';-inkscape-font-specification:LiberationSans-Bold;writing-mode:lr-tb;white-space:pre;inline-size:369.971;display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       transform="matrix(1.1698586,0,0,-1.1698586,-622.85789,797.27465)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.40285px;font-family:'Anonymous Pro for Powerline';-inkscape-font-specification:'Anonymous Pro for Powerline Bold';writing-mode:lr-tb;white-space:pre;inline-size:369.971;display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
        id="text6390"
        x="695.60699"
        y="366.97827"><tspan
          x="695.60699"
          y="366.97827"
-         id="tspan7322"><tspan
-           style="font-style:italic;font-weight:normal"
-           id="tspan7320">Fig. 1I</tspan></tspan></text>
+         id="tspan4806">I</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(1.1698586,0,0,-1.1698586,-652.40966,1151.5856)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.40285px;font-family:'Anonymous Pro for Powerline';-inkscape-font-specification:'Anonymous Pro for Powerline Bold';writing-mode:lr-tb;white-space:pre;inline-size:369.971;display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       id="text1189"
+       x="695.60699"
+       y="366.97827"><tspan
+         x="695.60699"
+         y="366.97827"
+         id="tspan4808">
+</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.74975946,-0.74975946,-0.74975946,-0.74975946,-71.38747,1507.7655)"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.40285px;font-family:'Anonymous Pro for Powerline';-inkscape-font-specification:'Anonymous Pro for Powerline Bold';writing-mode:lr-tb;white-space:pre;inline-size:369.971;display:inline;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       id="text670"
+       x="695.60699"
+       y="366.97827"
+       inkscape:transform-center-x="-2.1994609"
+       inkscape:transform-center-y="-6.5983827"><tspan
+         x="695.60699"
+         y="366.97827"
+         id="tspan4810">Fig.2</tspan></text>
+    <path
+       style="opacity:1;fill:#969696;fill-opacity:0.236756;stroke:#000000;stroke-width:0.9165;stroke-dasharray:0.91649997, 5.49899984;stroke-opacity:0.59595573;paint-order:fill markers stroke;stop-color:#000000;stroke-dashoffset:0;stroke-linecap:round"
+       d="M 193.82189,687.95777 V 667.61275"
+       id="path2601" />
+    <path
+       style="opacity:1;fill:#969696;fill-opacity:0.236756;stroke:#000000;stroke-width:0.9165;stroke-linecap:round;stroke-dasharray:0.9165, 5.499;stroke-dashoffset:0;stroke-opacity:0.595956;paint-order:fill markers stroke;stop-color:#000000"
+       d="M 193.82189,648.95777 V 628.61275"
+       id="path2819" />
+    <path
+       style="opacity:1;fill:#969696;fill-opacity:0.236756;stroke:#000000;stroke-width:0.9165;stroke-linecap:round;stroke-dasharray:0.9165, 5.499;stroke-dashoffset:0;stroke-opacity:0.595956;paint-order:fill markers stroke;stop-color:#000000"
+       d="m 193.82189,612.81066 0,-65.98628"
+       id="path2821"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="opacity:1;fill:#969696;fill-opacity:0.236756;stroke:#000000;stroke-width:0.9165;stroke-linecap:round;stroke-dasharray:0.9165, 5.499;stroke-dashoffset:0;stroke-opacity:0.595956;paint-order:fill markers stroke;stop-color:#000000"
+       d="m 193.82189,524.23478 0,9.9427"
+       id="path2823"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="opacity:1;fill:#969696;fill-opacity:0.236756;stroke:#000000;stroke-width:0.9165;stroke-linecap:round;stroke-dasharray:0.9165, 5.499;stroke-dashoffset:0;stroke-opacity:0.595956;paint-order:fill markers stroke;stop-color:#000000"
+       d="m 193.82189,402.48811 0,96.85222"
+       id="path2825"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="opacity:1;fill:#969696;fill-opacity:0.236756;stroke:#000000;stroke-width:0.9165;stroke-linecap:round;stroke-dasharray:0.9165, 5.499;stroke-dashoffset:0;stroke-opacity:0.595956;paint-order:fill markers stroke;stop-color:#000000"
+       d="m 193.82189,388.74148 0,-9.53964"
+       id="path2827"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="opacity:1;fill:#969696;fill-opacity:0.236756;stroke:#000000;stroke-width:0.9165;stroke-linecap:round;stroke-dasharray:0.9165, 5.499;stroke-dashoffset:0;stroke-opacity:0.595956;paint-order:fill markers stroke;stop-color:#000000"
+       d="m 193.82189,361.74148 v -9.53964"
+       id="path2829"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="opacity:1;fill:#969696;fill-opacity:0.236756;stroke:#000000;stroke-width:0.9165;stroke-linecap:round;stroke-dasharray:0.9165, 5.499;stroke-dashoffset:0;stroke-opacity:0.595956;paint-order:fill markers stroke;stop-color:#000000"
+       d="m 193.82189,340.74148 v -9.53964"
+       id="path2831"
+       sodipodi:nodetypes="cc" />
   </g>
 </svg>

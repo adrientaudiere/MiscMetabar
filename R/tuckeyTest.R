@@ -18,7 +18,7 @@
 #'
 #' @author Adrien Taudière
 #' @examples
-#' data("GlobalPatterns")
+#' data("GlobalPatterns", package = "phyloseq")
 #' GlobalPatterns@sam_data[, "Soil_logical"] <-
 #'   ifelse(GlobalPatterns@sam_data[, "SampleType"] == "Soil", "Soil", "Not Soil")
 #' hill_tuckey_pq(GlobalPatterns, "Soil_logical")

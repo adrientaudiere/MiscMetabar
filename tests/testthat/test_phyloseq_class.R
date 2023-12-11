@@ -84,5 +84,5 @@ test_that("count_seq works fine", {
 })
 
 # test_that("add_new_taxonomy_pq works fine", {
-#   expect_s4_class(add_new_taxonomy_pq(data_fungi, "inst/extdata/1000_sp_UNITE_sh_general_release_dynamic.fasta"), "phyloseq")
+#   expect_s4_class(add_new_taxonomy_pq(data_fungi, "inst/extdata/100_sp_UNITE_sh_general_release_dynamic.fasta"), "phyloseq")
 # })

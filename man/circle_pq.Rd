@@ -40,10 +40,10 @@ number of OTUs (add_nb_seq = FALSE)}
 order to compare them with the same amount of sequences?}
 
 \item{min_prop_tax}{(default: 0.01) The minimum proportion for taxon to be
-ploted}
+plotted}
 
 \item{min_prop_mod}{(default: 0.1) The minimum proportion for modalities
-to be ploted}
+to be plotted}
 
 \item{gap_degree}{Gap between two neighbour sectors.
 It can be a single value or a vector. If it is a vector,
@@ -77,7 +77,7 @@ fact
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
-data("GlobalPatterns")
+data("GlobalPatterns", package = "phyloseq")
 GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 circle_pq(GP, "SampleType")
 \dontrun{

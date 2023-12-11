@@ -11,28 +11,17 @@ assignees: ''
 A clear and concise description of what the bug is.
 
 **To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+Please provide a Minimal Reproducible Example (MRE). See
+[Wikipedia](https://en.wikipedia.org/wiki/Minimal_reproducible_example)
+ and [stackoverflow](https://stackoverflow.com/help/minimal-reproducible-example) for more information.
+
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
-
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+**System information (please complete the following information):**
+Please copy the result of the commande `sessionInfo()`
 
 **Additional context**
 Add any other context about the problem here.

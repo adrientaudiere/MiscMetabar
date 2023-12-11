@@ -26,11 +26,11 @@ Need to be in \code{physeq@sam_data}.}
 \item{taxa}{a vector of taxonomic rank to plot}
 
 \item{add_nb_seq}{Represent the number of sequences or the
-number of OTUs (add_nb_seq = FALSE). Note that ploting the number of
+number of OTUs (add_nb_seq = FALSE). Note that plotting the number of
 sequences is slower.}
 
 \item{min_prop_tax}{(default: 0) The minimum proportion for taxon to be
-ploted. EXPERIMENTAL. For the moment each links below the min.prop.
+plotted. EXPERIMENTAL. For the moment each links below the min.prop.
 tax is discard from the sankey network resulting in sometimes weird plot.}
 
 \item{tax2remove}{a vector of taxonomic groups to remove from the analysis
@@ -54,7 +54,7 @@ of \code{fact}
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
-data("GlobalPatterns")
+data("GlobalPatterns", package = "phyloseq")
 GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 sankey_pq(GP, fact = "SampleType")
 sankey_pq(GP, taxa = 1:4, min_prop_tax = 0.01)

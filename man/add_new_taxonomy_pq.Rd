@@ -25,7 +25,8 @@ a physeq object with a larger slot tax_table
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-One of main use of this function is to add taxonomic assignment from a new database.
+One of main use of this function is to add taxonomic assignment from
+a new database.
 }
 \examples{
 # example code

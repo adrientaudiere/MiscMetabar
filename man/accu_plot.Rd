@@ -36,7 +36,7 @@ Only used if \code{add_nb_seq} = TRUE.}
 \item{by.fact}{(default: FALSE, logical)
 First merge the OTU table by factor to plot only one line by factor}
 
-\item{ci_col}{Color vector for confidence intervall.
+\item{ci_col}{Color vector for confidence interval.
 Only use if \code{add_nb_seq} = FALSE.
 If \code{add_nb_seq} = TRUE, you can use ggplot to modify the plot.}
 
@@ -50,8 +50,8 @@ If \code{add_nb_seq} = TRUE, you can use ggplot to modify the plot.}
 \item{print_sam_names}{(default: FALSE, logical) Print samples names or not?
 Only use if \code{add_nb_seq} = TRUE.}
 
-\item{ci}{(default: 2, integer) Confidence intervall value used to multiply the
-standard error to plot confidence intervall}
+\item{ci}{(default: 2, integer) Confidence interval value used to multiply the
+standard error to plot confidence interval}
 
 \item{...}{Additional arguments passed on to \code{\link{ggplot}}
 if \code{add_nb_seq} = TRUE or to \code{\link{plot}} if \code{add_nb_seq} = FALSE}
@@ -65,7 +65,7 @@ return a base plot.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
-data("GlobalPatterns")
+data("GlobalPatterns", package = "phyloseq")
 GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10)
 

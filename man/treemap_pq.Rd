@@ -41,7 +41,7 @@ A ggplot2 graphic
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-Note that lvl2 needd to be nested in lvl1
+Note that lvl2need to be nested in lvl1
 }
 \examples{
 treemap_pq(

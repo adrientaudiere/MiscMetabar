@@ -44,6 +44,10 @@ A dataframe with uc results (invisible)
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
+\details{
+This function is mainly a wrapper of the work of others.
+Please make \href{https://github.com/torognes/vsearch}{vsearch}.
+}
 \examples{
 \dontrun{
 file_dna <- tempfile("dna.fa")

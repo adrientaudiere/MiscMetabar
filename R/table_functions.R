@@ -16,7 +16,7 @@
 #' @export
 #'
 #' @examples
-#' data("GlobalPatterns")
+#' data("GlobalPatterns", package = "phyloseq")
 #' tax_datatable(subset_taxa(
 #'   GlobalPatterns,
 #'   rowSums(GlobalPatterns@otu_table) > 10000
@@ -229,7 +229,7 @@ compare_pairs_pq <- function(physeq = NULL,
   }
 
   res_df_t <- t(as_tibble(res, .name_repair = "minimal"))
-  colnames(res_df_t) <- paste0("V", seq_along(ncol(res_df_t)))
+  colnames(res_df_t) <- paste0("V", seq_len(ncol(res_df_t)))
   res_df <- as_tibble(res_df_t)
   # res_df <- as_tibble(t(as_tibble(res, .name_repair = "universal")), .name_repair = "universal")
 

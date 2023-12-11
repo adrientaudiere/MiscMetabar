@@ -31,6 +31,9 @@ the following options to the \code{method} argument:
 
 \item{...}{Additional arguments passed on to \code{\link[edgeR]{DGEList}}}
 }
+\value{
+A DGEList object. See \code{\link[edgeR:estimateTagwiseDisp]{edgeR::estimateTagwiseDisp()}} for more details.
+}
 \description{
 Convert phyloseq OTU count data into DGEList for edgeR package
 }

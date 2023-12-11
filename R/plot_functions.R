@@ -65,7 +65,7 @@ plot_mt <-
 #'  Only used if `add_nb_seq` = TRUE.
 #' @param by.fact (default: FALSE, logical)
 #' First merge the OTU table by factor to plot only one line by factor
-#' @param ci_col Color vector for confidence intervall.
+#' @param ci_col Color vector for confidence interval.
 #'   Only use if `add_nb_seq` = FALSE.
 #'   If `add_nb_seq` = TRUE, you can use ggplot to modify the plot.
 #' @param col Color vector for lines. Only use if `add_nb_seq` = FALSE.
@@ -74,13 +74,13 @@ plot_mt <-
 #' @param leg (default: TRUE, logical) Plot legend or not. Only use if `add_nb_seq` = FALSE.
 #' @param print_sam_names (default: FALSE, logical) Print samples names or not?
 #'    Only use if `add_nb_seq` = TRUE.
-#' @param ci (default: 2, integer) Confidence intervall value used to multiply the
-#'   standard error to plot confidence intervall
+#' @param ci (default: 2, integer) Confidence interval value used to multiply the
+#'   standard error to plot confidence interval
 #' @param ... Additional arguments passed on to \code{\link{ggplot}}
 #' if `add_nb_seq` = TRUE or to \code{\link{plot}} if `add_nb_seq` = FALSE
 #'
 #' @examples
-#' data("GlobalPatterns")
+#' data("GlobalPatterns", package = "phyloseq")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #' p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10)
 #'
@@ -286,7 +286,7 @@ accu_plot <-
 #'   to obtain `threshold` proportion of the ASV
 #'
 #' @examples
-#' data("GlobalPatterns")
+#' data("GlobalPatterns", package = "phyloseq")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #' p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10)
 #'
@@ -330,9 +330,9 @@ accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
 #' @param rarefy (logical) Does each samples modalities need to be rarefy in
 #'               order to compare them with the same amount of sequences?
 #' @param min_prop_tax (default: 0.01) The minimum proportion for taxon to be
-#'                     ploted
+#'                     plotted
 #' @param min_prop_mod (default: 0.1) The minimum proportion for modalities
-#'                     to be ploted
+#'                     to be plotted
 #' @param gap_degree Gap between two neighbour sectors.
 #'                    It can be a single value or a vector. If it is a vector,
 #'                     the first value corresponds to the gap after the first
@@ -352,7 +352,7 @@ accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
 #'   \code{\link[circlize]{chordDiagram}} or \code{\link[circlize]{circos.par}}
 #'
 #' @examples
-#' data("GlobalPatterns")
+#' data("GlobalPatterns", package = "phyloseq")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #' circle_pq(GP, "SampleType")
 #' \dontrun{
@@ -538,10 +538,10 @@ circle_pq <-
 #' Need to be in \code{physeq@sam_data}.
 #' @param taxa a vector of taxonomic rank to plot
 #' @param add_nb_seq Represent the number of sequences or the
-#'   number of OTUs (add_nb_seq = FALSE). Note that ploting the number of
+#'   number of OTUs (add_nb_seq = FALSE). Note that plotting the number of
 #'   sequences is slower.
 #' @param min_prop_tax (default: 0) The minimum proportion for taxon to be
-#'  ploted. EXPERIMENTAL. For the moment each links below the min.prop.
+#'  plotted. EXPERIMENTAL. For the moment each links below the min.prop.
 #'  tax is discard from the sankey network resulting in sometimes weird plot.
 #' @param tax2remove  a vector of taxonomic groups to remove from the analysis
 #'   (e.g. \code{c('Incertae sedis', 'unidentified')})
@@ -552,7 +552,7 @@ circle_pq <-
 #'   \code{\link[networkD3]{sankeyNetwork}}
 #'
 #' @examples
-#' data("GlobalPatterns")
+#' data("GlobalPatterns", package = "phyloseq")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #' sankey_pq(GP, fact = "SampleType")
 #' sankey_pq(GP, taxa = 1:4, min_prop_tax = 0.01)
@@ -768,7 +768,7 @@ sankey_pq <-
 #' venn_pq(enterotype, fact = "ClinicalStatus", print_values = FALSE) +
 #'   scale_fill_hue()
 #'
-#' @return A \code{\link{ggplot}}2 plot representing Venn diagramm of
+#' @return A \code{\link{ggplot}}2 plot representing Venn diagram of
 #' modalities of the argument \code{factor}
 #'
 #' @export
@@ -952,7 +952,7 @@ venn_pq <-
 #' @param min_nb_seq minimum number of sequences by OTUs by
 #'   samples to take into count this OTUs in this sample. For example,
 #'   if min_nb_seq=2,each value of 2 or less in the OTU table
-#'   will not count in the venn diagramm
+#'   will not count in the venn diagram
 #' @param taxonomic_rank Name (or number) of a taxonomic rank
 #'   to count. If set to Null (the default) the number of OTUs is counted.
 #' @param  split_by Split into multiple plot using variable split_by.
@@ -968,7 +968,7 @@ venn_pq <-
 #'   modalities of args `fact`.
 #' @param ... other arguments for the `ggVennDiagram::ggVennDiagram` function
 #'   for ex. `category.names`.
-#' @return A \code{\link{ggplot}}2 plot representing Venn diagramm of
+#' @return A \code{\link{ggplot}}2 plot representing Venn diagram of
 #'   modalities of the argument \code{factor} or if split_by is set a list
 #'   of plots.
 #' @seealso [upset_pq()]
@@ -1117,6 +1117,7 @@ ggvenn_pq <- function(physeq = NULL,
 #' @param cols number of columns
 #' @param layout A matrix specifying the layout.
 #'   If present, 'cols' is ignored.
+#' @return Nothing. Print the list of ggplot objects
 #' @export
 
 multiplot <-
@@ -1180,7 +1181,7 @@ multiplot <-
 #' @param letters (optional, default=FALSE): If set to TRUE, the plot
 #'   show letters based on p-values for comparison. Use the
 #'   \code{\link[multcompView]{multcompLetters}} function from the package
-#'   multcompLetters. BROKEN for the moment. Note that na values in Tthe
+#'   multcompLetters. BROKEN for the moment. Note that na values in The
 #'   variable param need to be removed (see examples) to use letters.
 #' @param add_points (logical): add jitter point on boxplot
 #' @param add_info (logical, default TRUE) Do we add a subtitle with
@@ -1382,6 +1383,7 @@ hill_pq <-
     )
 
     if (one_plot) {
+      install_pkg_needed("patchwork")
       requireNamespace("patchwork", quietly = TRUE)
       if (letters) {
         res <- ((p_0 + theme(legend.position = "none")) + labs(subtitle = element_blank()) +
@@ -1441,7 +1443,7 @@ summary_plot_pq <- function(physeq,
         format(sum(otu_tab), big.mark = " "),
         "sequences\n",
         format(sum(otu_tab > 0), big.mark = " "),
-        "occurences"
+        "occurrences"
       ),
       paste(ncol(physeq@tax_table), "taxonomic \n levels"),
       paste(
@@ -1606,7 +1608,10 @@ summary_plot_pq <- function(physeq,
 #' @return A plot
 #' @export
 #' @author Adrien Taudière
-#'
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please make a reference to `rotl` package if you
+#'   use this function.
 #' @examples
 #' library("rotl")
 #' tr <- rotl_pq(data_fungi, species_colnames = "Genus_species")
@@ -1663,7 +1668,7 @@ rotl_pq <- function(physeq,
 #'
 #' @examples
 #' \dontrun{
-#' data("GlobalPatterns")
+#' data("GlobalPatterns", package = "phyloseq")
 #' GPsubset <- subset_taxa(
 #'   GlobalPatterns,
 #'   GlobalPatterns@tax_table[, 1] == "Bacteria"
@@ -1692,7 +1697,6 @@ rotl_pq <- function(physeq,
 #'   tree_label = taxon_names,
 #'   node_size_trans = "log10 area"
 #' )
-#'
 #' }
 heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
   requireNamespace("metacoder", quietly = TRUE)
@@ -1992,11 +1996,11 @@ biplot_pq <- function(physeq,
 #' using one factor.
 #'
 #' @inheritParams clean_pq
-#' @param split_by (required if paires is NULL) the name of the factor to make all combination
+#' @param split_by (required if pairs is NULL) the name of the factor to make all combination
 #'   of couples of values
-#' @param paires (required if paires is NULL) the name of the factor in physeq@sam_data` slot
-#'   to make plot by paires of samples. Each level must be present only two times.
-#'   Note that if you set paires, you also must set fact arguments to pass on to [biplot_pq()].
+#' @param pairs (required if pairs is NULL) the name of the factor in physeq@sam_data` slot
+#'   to make plot by pairs of samples. Each level must be present only two times.
+#'   Note that if you set pairs, you also must set fact arguments to pass on to [biplot_pq()].
 #' @param na_remove (logical, default TRUE) if TRUE remove all the samples
 #'   with NA in the `split_by` variable of the `physeq@sam_data` slot
 #' @param ... all other parameters passed on to [biplot_pq()]
@@ -2013,17 +2017,17 @@ biplot_pq <- function(physeq,
 #' @author Adrien Taudière
 multi_biplot_pq <- function(physeq,
                             split_by = NULL,
-                            paires = NULL,
+                            pairs = NULL,
                             na_remove = TRUE,
                             ...) {
-  if (is.null(paires) && is.null(split_by)) {
-    stop("You must set one of split_by or paires.")
-  } else if (!is.null(paires) && !is.null(split_by)) {
-    stop("You must set either split_by or paires, not both.")
+  if (is.null(pairs) && is.null(split_by)) {
+    stop("You must set one of split_by or pairs.")
+  } else if (!is.null(pairs) && !is.null(split_by)) {
+    stop("You must set either split_by or pairs, not both.")
   } else if (!is.null(split_by) && is.null(physeq@sam_data[[split_by]])) {
     stop("split_by must be set and must be a variable in physeq@sam_data")
-  } else if (!is.null(paires) && is.null(physeq@sam_data[[paires]])) {
-    stop("paires must be set and must be a variable in physeq@sam_data")
+  } else if (!is.null(pairs) && is.null(physeq@sam_data[[pairs]])) {
+    stop("pairs must be set and must be a variable in physeq@sam_data")
   }
 
   if (na_remove && !is.null(split_by)) {
@@ -2037,10 +2041,10 @@ multi_biplot_pq <- function(physeq,
     physeq <- new_physeq
   }
 
-  if (!is.null(paires)) {
+  if (!is.null(pairs)) {
     p <- list()
-    for (c in levels(as.factor(physeq@sam_data[[paires]]))) {
-      new_physeq <- subset_samples_pq(physeq, physeq@sam_data[[paires]] %in% c)
+    for (c in levels(as.factor(physeq@sam_data[[pairs]]))) {
+      new_physeq <- subset_samples_pq(physeq, physeq@sam_data[[pairs]] %in% c)
       p[[c]] <- biplot_pq(new_physeq, ...) + ggtitle(c)
     }
   } else {
@@ -2256,7 +2260,7 @@ plot_tax_pq <-
 #' @description
 #' `r lifecycle::badge("experimental")`
 #'
-#' Note that lvl3 needd to be nested in lvl2 which need to be nested
+#' Note that lvl3need to be nested in lvl2 which need to be nested
 #' in lvl1
 #'
 #' @inheritParams clean_pq
@@ -2279,8 +2283,9 @@ plot_tax_pq <-
 #' @examples
 #' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", "Time")
 #' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order")
-#' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", 
-#'                 nb_seq = FALSE, log10trans = FALSE)
+#' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order",
+#'   nb_seq = FALSE, log10trans = FALSE
+#' )
 multitax_bar_pq <- function(physeq,
                             lvl1,
                             lvl2,
@@ -2533,17 +2538,17 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 #'
 #' @examples
 #' \dontrun{
-#'  library("iNEXT")
-#'  res_iNEXT <- iNEXT_pq(
-#'    data_fungi_sp_known,
-#'    merge_sample_by = "Height",
-#'    q = 1,
-#'    datatype = "abundance", 
-#'    nboot = 2
-#'  )
-#'  ggiNEXT(res_iNEXT)
-#'  ggiNEXT(res_iNEXT, type = 2)
-#'  ggiNEXT(res_iNEXT, type = 3)
+#' library("iNEXT")
+#' res_iNEXT <- iNEXT_pq(
+#'   data_fungi_sp_known,
+#'   merge_sample_by = "Height",
+#'   q = 1,
+#'   datatype = "abundance",
+#'   nboot = 2
+#' )
+#' ggiNEXT(res_iNEXT)
+#' ggiNEXT(res_iNEXT, type = 2)
+#' ggiNEXT(res_iNEXT, type = 3)
 #' }
 #' @author Adrien Taudière
 #'
@@ -2573,7 +2578,7 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
 #' @param min_nb_seq minimum number of sequences by OTUs by
 #'   samples to take into count this OTUs in this sample. For example,
 #'   if min_nb_seq=2,each value of 2 or less in the OTU table
-#'   will not count in the venn diagramm
+#'   will not count in the venn diagram
 #' @param taxa_fill (default NULL) fill the ASV upset using a column in
 #'   `tax_table` slot.
 #' @param na_remove : if TRUE (the default), NA values in fact are removed
@@ -3073,7 +3078,7 @@ ridges_pq <- function(physeq,
 #' @description
 #' `r lifecycle::badge("experimental")`
 #'
-#' Note that lvl2 needd to be nested in lvl1
+#' Note that lvl2need to be nested in lvl1
 #'
 #' @inheritParams clean_pq
 #' @param lvl1 (required) Name of the first (higher) taxonomic rank of interest

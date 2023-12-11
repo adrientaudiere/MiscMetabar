@@ -179,8 +179,7 @@ test_that("multitax_bar_pq works with data_fungi_sp_known dataset", {
     "ggplot"
   )
   expect_s3_class(
-    multitax_bar_pq(
-      data_fungi_sp_known,
+    multitax_bar_pq(data_fungi_sp_known,
       "Phylum",
       "Class",
       "Order",
@@ -235,8 +234,7 @@ test_that("multitax_bar_pq works with GlobalPatterns dataset", {
 
 test_that("rigdes_pq work with data_fungi dataset", {
   expect_s3_class(
-    ridges_pq(
-      data_fungi,
+    ridges_pq(data_fungi,
       "Time",
       alpha = 0.5,
       log10trans = FALSE
@@ -353,7 +351,55 @@ test_that("tax_bar_pq work with data_fungi dataset", {
   )
 })
 
+test_that("add_funguild_info and plot_guild_pq work with data_fungi dataset", {
+  expect_s4_class(
+    df <-
+      add_funguild_info(
+        subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000),
+        taxLevels = c(
+          "Domain",
+          "Phylum",
+          "Class",
+          "Order",
+          "Family",
+          "Genus",
+          "Species"
+        )
+      ),
+    "phyloseq"
+  )
+  expect_error(df <-
+    add_funguild_info(
+      subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000),
+      taxLevels = c(
+        "PHYLLUUM",
+        "Phylum",
+        "Class",
+        "Order",
+        "Family"
+      )
+    ))
+  expect_s3_class(plot_guild_pq(df, clean_pq = TRUE), "ggplot")
+  expect_s3_class(plot_guild_pq(df, clean_pq = FALSE), "ggplot")
+})
 
-#' tax_bar_pq(data_fungi, taxa = "Class")
-#' tax_bar_pq(data_fungi, taxa = "Class", percent_bar = TRUE)
-#' tax_bar_pq(data_fungi, taxa = "Class", fact = "Time")
+
+test_that("build_phytree_pq work with data_fungi dataset", {
+  library("phangorn")
+  df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 19000)
+  expect_type(df_tree <- build_phytree_pq(df, nb_bootstrap = 2, rearrangement = "stochastic"), "list")
+  expect_type(df_tree <- build_phytree_pq(df, nb_bootstrap = 2, rearrangement = "ratchet"), "list")
+  expect_error(build_phytree_pq(df, nb_bootstrap = 2, rearrangement = "PRAtchet"))
+  expect_error(build_phytree_pq(GP, nb_bootstrap = 2))
+
+  expect_type(df_tree <- build_phytree_pq(df, nb_bootstrap = 2), "list")
+  expect_equal(length(df_tree), 6)
+  expect_type(df_tree_wo_bootstrap <- build_phytree_pq(df, nb_bootstrap = 0), "list")
+  expect_equal(length(df_tree_wo_bootstrap), 3)
+  expect_s3_class(df_tree$NJ, "phylo")
+  expect_s3_class(df_tree$UPGMA, "phylo")
+  expect_s3_class(df_tree$ML, "pml")
+  expect_s3_class(df_tree$NJ_bs, "multiPhylo")
+  expect_s3_class(df_tree$UPGMA_bs, "multiPhylo")
+  expect_s3_class(df_tree$ML_bs, "multiPhylo")
+})

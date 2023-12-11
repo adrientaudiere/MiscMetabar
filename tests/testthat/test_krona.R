@@ -1,4 +1,4 @@
-data("GlobalPatterns")
+data("GlobalPatterns", package = "phyloseq")
 GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
 
 krona_error_or_not <- try(system("ktImportText 2>&1", intern = TRUE))

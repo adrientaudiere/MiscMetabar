@@ -16,6 +16,9 @@ multiplot(..., plotlist = NULL, cols = 1, layout = NULL)
 \item{layout}{A matrix specifying the layout.
 If present, 'cols' is ignored.}
 }
+\value{
+Nothing. Print the list of ggplot objects
+}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }

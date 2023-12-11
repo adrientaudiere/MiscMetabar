@@ -1,8 +1,9 @@
-data("GlobalPatterns")
-GlobalPatterns@sam_data[, "Soil_logical"] <- ifelse(GlobalPatterns@sam_data[, "SampleType"] == "Soil", "Soil", "Not Soil")
+data("GlobalPatterns", package = "phyloseq")
+GlobalPatterns@sam_data[, "Soil_logical"] <-
+  ifelse(GlobalPatterns@sam_data[, "SampleType"] == "Soil", "Soil", "Not Soil")
 test_that("hill_tuckey_pq function works fine with GlobalPatterns dataset", {
-  expect_silent(hill_tuckey_pq(GlobalPatterns, "Soil_logical"))
-  expect_silent(hill_tuckey_pq(GlobalPatterns, "SampleType"))
+  expect_silent(suppressMessages(hill_tuckey_pq(GlobalPatterns, "Soil_logical")))
+  expect_silent(suppressMessages(hill_tuckey_pq(GlobalPatterns, "SampleType")))
   expect_message(hill_tuckey_pq(GlobalPatterns, "SampleType", silent = FALSE))
   expect_s3_class(hill_tuckey_pq(GlobalPatterns, "SampleType"), "ggplot")
   expect_error(hill_tuckey_pq(GlobalPatterns, "SampleTYPE"))

@@ -35,26 +35,34 @@ function. Need to be in \code{physeq@sam_data}}
 \item{na_remove}{(logical, default FALSE) If set to TRUE, remove samples with
 NA in the variables set in formula.}
 
-\item{correction_for_sample_size}{(logical, default FALSE) If set to TRUE, the
-sample size (number of sequences by samples) is add to formula in the form
-\code{y~Library_Size + Biological_Effect} following recommendation of
-\href{https://doi.org/10.1186/s40168-017-0237-y}{Weiss et al. 2017}.
+\item{correction_for_sample_size}{(logical, default FALSE) If set to TRUE,
+the sample size (number of sequences by samples) is add to formula in
+the form \code{y~Library_Size + Biological_Effect} following recommendation of
+\href{https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-017-0237-y}{Weiss et al. 2017}.
 \code{correction_for_sample_size} overcome \code{rarefy_nb_seqs} if both are TRUE.}
 
 \item{rarefy_nb_seqs}{(logical, default FALSE) Rarefy each sample
-(before merging if merge_sample_by is set) using \code{phyloseq::rarefy_even_depth()}.
-if \code{correction_for_sample_size} is TRUE, rarefy_nb_seqs will have no effect.}
+(before merging if merge_sample_by is set) using
+\code{phyloseq::rarefy_even_depth()}.
+if \code{correction_for_sample_size} is TRUE, rarefy_nb_seqs will have no
+effect.}
 
 \item{...}{Other arguments passed on to \code{\link[vegan:adonis]{vegan::adonis2()}} function.}
 }
 \value{
 The function returns an anova.cca result object with a
-new column for partial R^2. See help of \code{\link[vegan:adonis]{vegan::adonis2()}} for more information.
+new column for partial R^2. See help of \code{\link[vegan:adonis]{vegan::adonis2()}} for
+more information.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
 A wrapper for the \code{\link[vegan:adonis]{vegan::adonis2()}} function in the case of \code{physeq} object.
+}
+\details{
+This function is mainly a wrapper of the work of others.
+Please make a reference to \code{vegan::adonis2()} if you
+use this function.
 }
 \examples{
 data(enterotype)

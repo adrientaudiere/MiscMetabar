@@ -24,7 +24,8 @@ blast_to_derep(
 )
 }
 \arguments{
-\item{derep}{The result of \code{dada2::derepFastq()}. A list of \code{derep-class} object.}
+\item{derep}{The result of \code{dada2::derepFastq()}. A list of \code{derep-class}
+object.}
 
 \item{seq2search}{(required) path to a fasta file defining the sequences
 you want to blast against the ASV sequences from the physeq object.}
@@ -67,7 +68,8 @@ sequences by length.}
 Set to number of cpus/processors to use for blast (args -num_threads
 for blastn command)}
 
-\item{keep_temporary_files}{(logical, default: FALSE) Do we keep temporary files
+\item{keep_temporary_files}{(logical, default: FALSE) Do we keep temporary
+files :
 \itemize{
 \item db.fasta (refseq transformed into a database)
 \item dbase list of files (output of blastn)

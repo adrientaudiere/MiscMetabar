@@ -26,34 +26,64 @@ knitr::opts_chunk$set(
 
 # MiscMetabar <a href="https://adrientaudiere.github.io/MiscMetabar/"><img src="man/figures/logo.png" align="right" height="138" alt="MiscMetabar website" /></a>
 
-See the pkdown site [here](https://adrientaudiere.github.io/MiscMetabar/).
+See the pkgdown documentation site [here](https://adrientaudiere.github.io/MiscMetabar/).
 
 Biological studies, especially in ecology, health sciences and taxonomy, need to describe the biological composition of samples. During the last twenty years, (i) the development of DNA sequencing, (ii) reference databases, (iii) high-throughput sequencing (HTS), and (iv) bioinformatics resources have allowed the description of biological communities through metabarcoding. Metabarcoding involves the sequencing of millions (*meta*-) of short regions of specific DNA (*-barcoding*, @valentini2009) often from environmental samples (eDNA, @taberlet2012) such as human stomach contents, lake water, soil and air.
 
-`MiscMetabar` aims to facilitate the **description**, **transformation**, **exploration** and **reproducibility** of metabarcoding analysis using R. The development of `MiscMetabar` relies heavily on the R packages [`dada2`](https://benjjneb.github.io/dada2/index.html), [`phyloseq`](https://joey711.github.io/phyloseq/) and [`targets`](https://books.ropensci.org/targets/). 
+`MiscMetabar` aims to facilitate the **description**, **transformation**, **exploration** and **reproducibility** of metabarcoding analysis using R. The development of `MiscMetabar` relies heavily on the R packages [`dada2`](https://benjjneb.github.io/dada2/index.html) [@callahan2016], [`phyloseq`](https://joey711.github.io/phyloseq/) [@mcmurdie2013] and [`targets`](https://books.ropensci.org/targets/) [@landau2021]. 
+
 
 
 ## Installation
 
-There is no CRAN or bioconductor version of MiscMetabar for now (work in progress).
+There is no CRAN version of MiscMetabar for now (work in
+progress). As MiscMetabar heavily relies on two bioconductor packages
+(dada and phyloseq), we need to first install those 2 packages using
+BiocManager.
 
-You can install the stable version from [GitHub](https://github.com/) with:
+You can install the stable version from [GitHub](https://github.com/)
+with:
 
-```{r, message=FALSE, eval=FALSE}
-install.packages("devtools")
+```{r}
+if (!require("BiocManager", quietly = TRUE)) {
+  install.packages("BiocManager")
+}
+BiocManager::install("dada2")
+BiocManager::install("phyloseq")
+
+if (!require("devtools", quietly = TRUE)) {
+  install.packages("devtools")
+}
 devtools::install_github("adrientaudiere/MiscMetabar")
 ```
 
-You can install the developement version from [GitHub](https://github.com/) with:
+You can install the development version from
+[GitHub](https://github.com/) with:
 
-```{r, message=FALSE, eval=FALSE}
-install.packages("devtools")
+```{r}
+if (!require("BiocManager", quietly = TRUE)) {
+  install.packages("BiocManager")
+}
+BiocManager::install("dada2")
+BiocManager::install("phyloseq")
+
+if (!require("devtools", quietly = TRUE)) {
+  install.packages("devtools")
+}
 devtools::install_github("adrientaudiere/MiscMetabar", ref = "dev")
 ```
+
 
 ## Some use of MiscMetabar
 
 See vignettes in the [MiscMetabar](https://adrientaudiere.github.io/MiscMetabar/) website for more examples.
+
+For an introduction to metabarcoding in R, Please visite the [state of the field](https://adrientaudiere.github.io/MiscMetabar/articles/states_of_fields_in_R.html) vignettes. The [import, export and track]() vignette explains how import and export https://adrientaudiere.github.io/MiscMetabar/articles/Reclustering.html. Its also show how to summarize useful information (number of sequences, samples and clusters) accross bioinformatic pipelines. 
+ 
+If you are interested in ecological metrics, see the vignettes describing [alpha-diversity](https://adrientaudiere.github.io/MiscMetabar/articles/alpha-div.html) and [beta-diversity](https://adrientaudiere.github.io/MiscMetabar/articles/beta-div.html) analysis. 
+The vignette [filter taxa and samples](https://adrientaudiere.github.io/MiscMetabar/articles/filter.html) describes some data-filtering processes using MiscMetabar and the [reclustering](https://adrientaudiere.github.io/MiscMetabar/articles/Reclustering.html) tutorial introduces the different way of clustering already-clustered OTU/ASV. The vignette [tengeler]() explore the dataset from Tengeler et al. (2020) using some MiscMetabar functions.
+
+For developers, I also have a vignette describing som [rules of codes](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html). 
 
 
 ### Summarize a physeq object
@@ -80,6 +110,9 @@ p$plot_tuckey
 ### Beta-diversity analysis
 
 ```{r}
+if (!require("ggVennDiagram", quietly = TRUE)) {
+  install.packages("ggVennDiagramà")
+}
 ggvenn_pq(data_fungi, fact = "Height") +
   ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1) +
   labs(title = "Share number of ASV among Height in tree")

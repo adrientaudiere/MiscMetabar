@@ -1,18 +1,22 @@
 ################################################################################
-#' Search for exact matching of sequences using complement, reverse and reverse-complement
+#' Search for exact matching of sequences using complement,
+#' reverse and reverse-complement
 #'
 #' `r lifecycle::badge("experimental")`
 #'
 #' @inheritParams clean_pq
 #' @param sequences A DNAStringSet object of sequences to search for.
-#' @return A list of data-frames for each input sequences with the name, the sequences and the
-#'   number of occurences of the original sequence, the complement sequence,
+#' @return A list of data-frames for each input sequences with the name,
+#'   the sequences and the
+#'   number of occurrences of the original sequence, the complement sequence,
 #'   the reverse sequence and the reverse-complement sequence.
 #' @export
 #'
 #' @examples
 #' data("data_fungi")
-# search_primers <- search_seq_pq(data_fungi, sequences = DNAStringSet(c("TTGAACGCACATTGCGCC","ATCCCTACCTGATCCGAG")))
+#' search_primers <- search_exact_seq_pq(data_fungi,
+#'   sequences = Biostrings::DNAStringSet(c("TTGAACGCACATTGCGCC", "ATCCCTACCTGATCCGAG"))
+#' )
 #' @author Adrien Taudière
 
 search_exact_seq_pq <- function(physeq, sequences) {
@@ -20,7 +24,7 @@ search_exact_seq_pq <- function(physeq, sequences) {
   for (i in seq_along(sequences)) {
     original <- sequences[[i]]
     rev <- reverse(sequences[[i]])
-    rev_comp <- reverseComplement(sequences[[i]])
+    rev_comp <- Biostrings::reverseComplement(sequences[[i]])
     comp <- complement(sequences[[i]])
 
     original_count <- sum(grepl(original, physeq@refseq))
@@ -33,7 +37,7 @@ search_exact_seq_pq <- function(physeq, sequences) {
       c("rev_comp", as.character(rev_comp), rev_comp_count),
       c("comp", as.character(comp), comp_count)
     )
-    colnames(res[[i]]) <- c("Names", "Sequences", "Number of occurences")
+    colnames(res[[i]]) <- c("Names", "Sequences", "Number of occurrences")
   }
   return(res)
 }
@@ -178,10 +182,19 @@ subset_taxa_tax_control <-
           ## Cutoff such that Pr[drawn from bad component] == proba
           f <- function(x) {
             proba - (
-              model$lambda[il] * stats::dnorm(x, model$mu[il], model$sigma[il]) /
+              model$lambda[il] * stats::dnorm(
+                x, model$mu[il],
+                model$sigma[il]
+              ) /
                 (
-                  model$lambda[1] * stats::dnorm(x, model$mu[1], model$sigma[1]) +
-                    model$lambda[2] * stats::dnorm(x, model$mu[2], model$sigma[2])
+                  model$lambda[1] * stats::dnorm(
+                    x, model$mu[1],
+                    model$sigma[1]
+                  ) +
+                    model$lambda[2] * stats::dnorm(
+                      x, model$mu[2],
+                      model$sigma[2]
+                    )
                 )
             )
           }

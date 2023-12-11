@@ -25,7 +25,7 @@ Please use print_values = FALSE if you want to add ggplot function
 (cf example).}
 }
 \value{
-A \code{\link{ggplot}}2 plot representing Venn diagramm of
+A \code{\link{ggplot}}2 plot representing Venn diagram of
 modalities of the argument \code{factor}
 }
 \description{
