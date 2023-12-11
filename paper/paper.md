@@ -62,6 +62,9 @@ The filter functions `subset_samples_pq()` and `subset_taxa_pq()` complement `su
 
 I also implement a function to filter taxa based on their blast to a custom database (`filter_asv_blast()`). This function uses the blastn software [@altschul1990] to compare ASV sequences to a database and filter out species that are below a given threshold of e-value and/or bit-score.
 
+### Post-clustering
+
+Several pipelines use at least two step of clustering. The function `asv2otu()`, using either the `DECIPHER::Clusterize()` function from R or the [vsearch](https://github.com/torognes/vsearch) software allow to recluster existing groups such as **ASV** (stands for *Amplicon Sequence Variant*) obtained by the `dada2::dada()` function (see the vignette [reclustering](https://adrientaudiere.github.io/MiscMetabar/articles/Reclustering.html)).  Another transformation method is implemented in `lulu_pq()`, which uses @froslev2017's method for post-clustering curation of DNA amplicon data. Note that a fast and robust C++ re-implementation of lulu called [mumu](https://github.com/frederic-mahe/mumu) [@mahe2023] is also available through the function `mumu_pq()`.
 
 ## Exploration 
 
