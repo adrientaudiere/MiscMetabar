@@ -7,6 +7,15 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  message = FALSE
+)
+```
+
 # Introduction to MiscMetabar : an R packages to facilitate visualization and reproducibility in metabarcoding analysis
 
 ## Raison d'être
@@ -26,7 +35,7 @@ For developers, I also have a vignette describing som [rules of codes](https://a
 
 ### Summarize a physeq object
 
-```{r example, message=FALSE}
+```{r example}
 library("MiscMetabar")
 library("phyloseq")
 library("magrittr")

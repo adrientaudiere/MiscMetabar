@@ -11,11 +11,13 @@ bibliography: bibliography.bib
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  message = FALSE
 )
 ```
 
-```{r setup, message=FALSE}
+
+```{r setup}
 library(MiscMetabar)
 ```
 
@@ -48,7 +50,7 @@ summary_plot_pq(otu)
 
 Another post-clustering transformation method is implemented in `lulu_pq()`, which uses @froslev2017's method for curation of DNA amplicon data. The aim is more to clean non-biological information than to make explicitly less clusters.
 
-```{r, message=FALSE, results="hide"}
+```{r, results="hide"}
 library("lulu")
 data(data_fungi_sp_known)
 lulu_res <- lulu_pq(data_fungi_sp_known)

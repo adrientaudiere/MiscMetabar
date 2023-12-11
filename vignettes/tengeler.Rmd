@@ -8,6 +8,15 @@ vignette: >
 ---
 This tutorial explore the dataset from Tengeler et al. (2020) available in the `mia` package.
 
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  message = FALSE
+)
+```
+
 # Load library 
 
 ```{r}

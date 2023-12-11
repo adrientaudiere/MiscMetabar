@@ -1784,6 +1784,7 @@ tbl_sum_samdata <- function(physeq, remove_col_unique_value = TRUE, ...) {
 #' @author Adrien Taudière
 #' @examples
 #' df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)
+#' \dontrun{
 #' df <- add_funguild_info(df,
 #'   taxLevels = c(
 #'     "Domain", "Phylum", "Class", "Order",
@@ -1791,6 +1792,7 @@ tbl_sum_samdata <- function(physeq, remove_col_unique_value = TRUE, ...) {
 #'   )
 #' )
 #' sort(table(df@tax_table[, "guild"]), decreasing = TRUE)
+#' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `FUNGuildR::funguild_assign()` if you
@@ -1846,6 +1848,7 @@ add_funguild_info <- function(physeq,
 #' @export
 #' @author Adrien Taudière
 #' @examples
+#' \dontrun{
 #' df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)
 #' df <- add_funguild_info(df,
 #'   taxLevels = c(
@@ -1863,6 +1866,7 @@ add_funguild_info <- function(physeq,
 #'     levels_order = p$data$Guild[order(p$data$nb_seq)]
 #'   ) +
 #'     ylab("") + theme(axis.text.y = element_blank()))
+#' }
 #' @seealso [add_funguild_info()]
 
 plot_guild_pq <-
