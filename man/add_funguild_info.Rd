@@ -29,6 +29,7 @@ use this function.
 }
 \examples{
 df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)
+\dontrun{
 df <- add_funguild_info(df,
   taxLevels = c(
     "Domain", "Phylum", "Class", "Order",
@@ -36,6 +37,7 @@ df <- add_funguild_info(df,
   )
 )
 sort(table(df@tax_table[, "guild"]), decreasing = TRUE)
+}
 }
 \seealso{
 \code{\link[=plot_guild_pq]{plot_guild_pq()}}

@@ -6,37 +6,38 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-This tutorial explore the dataset from Tengeler et al. (2020) available in the `mia` package.
-
+This tutorial explore a phyloseq version of the dataset from Tengeler et al. (2020) available in the `mia` package.
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  message = FALSE
+  message = FALSE,
+  fig.width = 10
 )
 ```
 
 # Load library 
 
 ```{r}
-library("MiscMetabar")
-library("mia")
 library("MicrobiotaProcess")
+library("MiscMetabar")
 library("ggplot2")
 library("patchwork")
 library("iNEXT")
-data("Tengeler2020", package = "mia")
+```
+
+
+```{r, eval=FALSE}
+?Tengeler2020
 ```
 
 
 # Import dataset in phyloseq format
 
-```{r}
-ten <- makePhyloseqFromTreeSE(Tengeler2020)
-```
 
 ```{r}
+ten <- Tengeler2020_pq
 summary_plot_pq(ten)
 ```
 
@@ -188,6 +189,6 @@ ggeffectsize(LEfSe) +
 # References
 
 
-Tengeler, A.C., Dam, S.A., Wiesmann, M. et al. Gut microbiota from persons with attention-deficit/hyperactivity disorder affects the brain in mice. Microbiome 8, 44 (2020). https://doi.org/10.1186/s40168-020-00816-x
+Tengeler, A.C., Dam, S.A., Wiesmann, M. et al. Gut microbiota from persons with attention-deficit/hyperactivity disorder affects the brain in mice. Microbiome 8, 44 (2020). https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-020-00816-x
 
 

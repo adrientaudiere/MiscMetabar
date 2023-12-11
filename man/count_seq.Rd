@@ -22,8 +22,8 @@ Use grep to count the number of line with only one '+' (fastq, fastq.gz)
 or lines starting with a '>' (fasta) to count sequences.
 }
 \examples{
-count_seq(file_path = "inst/extdata/ex.fasta")
-count_seq(folder_path = "inst/extdata/", pattern = "*.fasta")
+count_seq(file_path = "extdata/ex.fasta")
+count_seq(folder_path = "extdata/", pattern = "*.fasta")
 }
 \author{
 Adrien Taudière

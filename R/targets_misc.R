@@ -15,8 +15,8 @@
 #' @export
 #'
 #' @examples
-#' list_fastq_files("inst/extdata")
-#' list_fastq_files("inst/extdata", paired_end = FALSE, pattern_R1 = "")
+#' list_fastq_files("extdata")
+#' list_fastq_files("extdata", paired_end = FALSE, pattern_R1 = "")
 #'
 #' @author Adrien Taudière
 
