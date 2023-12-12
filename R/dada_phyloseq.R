@@ -1749,6 +1749,8 @@ add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, ...) {
 #'   type = list(Time ~ "continuous2", Height ~ "categorical"),
 #'   statistic = list(Time ~ c("{median} ({p25}, {p75})", "{min}, {max}"))
 #' )
+#' 
+#' data(enterotype)
 #'
 #' tbl_sum_samdata(enterotype)
 #' tbl_sum_samdata(enterotype, include = !contains("SampleId"))

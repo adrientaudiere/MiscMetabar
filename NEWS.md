@@ -1,5 +1,7 @@
 # MiscMetabar 0.52 (in development) 
 
+- Add function `ggbetween_pq()` to facilitate comparison of hill number using the power of `ggstatsplot::ggbetweenstats()`
+- Add function `plot_SCBD_pq()` to plot species contributions to beta diversity (SCBD) of samples
 
 # MiscMetabar 0.51 
 

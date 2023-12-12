@@ -1206,6 +1206,7 @@ multiplot <-
 #'
 #' @export
 #' @examples
+#' @author Adrien Taudière
 #' data(data_fungi)
 #' p <- hill_pq(data_fungi, "Height")
 #' p_h1 <- p[[1]] + theme(legend.position = "none")
@@ -1399,6 +1400,71 @@ hill_pq <-
     return(res)
   }
 ################################################################################
+
+################################################################################
+#' Box/Violin plots for between-subjects comparisons of Hill Number
+#' 
+#' @description
+#' `r lifecycle::badge("experimental")`
+#' 
+#' Basically a wrapper of function [ggstatsplot::ggbetweenstats()] for 
+#' object of class phyloseq
+#' @inheritParams clean_pq
+#' @param variable (required): The variable to test. Must be present in
+#'   the `sam_data` slot of the physeq object.
+#' @param one_plot (logical, default FALSE) If TRUE, return a unique
+#'   plot with the three plot inside using the patchwork package.
+#' @return Either an unique ggplot2 object (if one_plot is TRUE) or
+#'  a list of 3 ggplot2 plot:
+#' - plot_Hill_0 : the ggbetweenstats of Hill number 0 (= species richness)
+#'     against the variable
+#' - plot_Hill_1 : the ggbetweenstats of Hill number 1 (= Shannon index)
+#'      against the variable
+#' - plot_Hill_2 : the ggbetweenstats of Hill number 2 (= Simpson index)
+#'     against the variable
+#' @export
+#' @examples
+#' p <- ggbetween_pq(data_fungi, variable = "Time",  p.adjust.method = "BH")
+#' p[[1]]
+#' ggbetween_pq(data_fungi, variable = "Height", one_plot = TRUE)
+#' @author Adrien Taudière
+#' @details This function is mainly a wrapper of the work of others.
+#'   Please make a reference to `ggstatsplot::ggbetweenstats()` if you
+#'   use this function.
+
+ggbetween_pq <- function(physeq, variable, one_plot = FALSE, ...){
+  physeq <- clean_pq(physeq, force_taxa_as_columns = TRUE)
+  df <- cbind("nb_asv" = sample_sums(physeq@otu_table), physeq@sam_data, 
+           "hill_0"= vegan::renyi(physeq@otu_table, scale = c(0), hill = TRUE),
+           "hill_1"= vegan::renyi(physeq@otu_table, scale = c(1), hill = TRUE),
+           "hill_2"= vegan::renyi(physeq@otu_table, scale = c(2), hill = TRUE)
+           )
+  variable <- sym(variable)
+  p0 <- ggstatsplot::ggbetweenstats(df,  !!variable, hill_0, ...)
+  p1 <- ggstatsplot::ggbetweenstats(df,  !!variable, hill_1, ...)
+  p2 <- ggstatsplot::ggbetweenstats(df,  !!variable, hill_2, ...)
+  
+  res <- list("plot_Hill_0" = p0, 
+              "plot_Hill_1" = p1,
+              "plot_Hill_2" = p2)
+
+   if (one_plot) {
+      install_pkg_needed("patchwork")
+      requireNamespace("patchwork", quietly = TRUE)
+       res <- res[[1]] + res[[2]] + res[[3]]
+   }
+   return(res)
+}
+
+
+
+
+
+
+
+
+
+
 
 ################################################################################
 #' Summarise a \code{\link{phyloseq-class}} object using a plot.

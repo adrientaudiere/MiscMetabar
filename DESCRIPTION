@@ -32,6 +32,7 @@ Suggests:
     FUNGuildR,
     gghalves,
     ggh4x,
+    ggstatsplot,
     ggtree,
     ggridges,
     ggVennDiagram,
