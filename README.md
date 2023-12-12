@@ -51,117 +51,16 @@ if (!require("BiocManager", quietly = TRUE)) {
   install.packages("BiocManager")
 }
 BiocManager::install("dada2")
-#> 'getOption("repos")' replaces Bioconductor standard repositories, see
-#> 'help("repositories", package = "BiocManager")' for details.
-#> Replacement repositories:
-#>     CRAN: https://cloud.r-project.org
-#> Bioconductor version 3.18 (BiocManager 1.30.22), R 4.3.2 (2023-10-31)
 #> Warning: package(s) not installed when version(s) same as or greater than current; use
 #>   `force = TRUE` to re-install: 'dada2'
-#> Installation paths not writeable, unable to update packages
-#>   path: /usr/local/lib/R/site-library
-#>   packages:
-#>     BH, cpp11, httpgd, Rcpp, rlang, systemfonts
-#> Old packages: 'ALDEx2', 'ANCOMBC', 'annotate', 'AnnotationDbi',
-#>   'AnnotationHub', 'aricode', 'basilisk', 'basilisk.utils', 'BayesFactor',
-#>   'beachmat', 'benchdamic', 'bibliometrix', 'BiocBaseUtils', 'BiocFileCache',
-#>   'BiocGenerics', 'BiocNeighbors', 'BiocSingular', 'BiocVersion', 'Biostrings',
-#>   'bluster', 'brio', 'bslib', 'Cairo', 'checkmate', 'ComplexHeatmap', 'copula',
-#>   'covr', 'crosstalk', 'curl', 'data.table', 'dbplyr', 'dearseq', 'decontam',
-#>   'DelayedMatrixStats', 'deldir', 'densvis', 'desc', 'DescTools', 'DESeq2',
-#>   'dir.expiry', 'DirichletMultinomial', 'downloadthis', 'dqrng', 'drake', 'DT',
-#>   'e1071', 'ecodist', 'edgeR', 'ExperimentHub', 'expm', 'fBasics', 'foreign',
-#>   'fstcore', 'gaston', 'gdsfmt', 'genefilter', 'GenomeInfoDb', 'GenomicRanges',
-#>   'gert', 'ggiraph', 'ggside', 'ggthemes', 'ggtree', 'ggtreeExtra', 'git2r',
-#>   'gmp', 'graphlayouts', 'grImport2', 'gtools', 'haven', 'htmlTable',
-#>   'htmlwidgets', 'httpuv', 'insight', 'interactiveDisplayBase', 'interp',
-#>   'KEGGREST', 'later', 'lava', 'LEA', 'leaflet', 'leiden', 'limma', 'link2GI',
-#>   'lintr', 'lme4', 'lpSolve', 'lpSolveAPI', 'Maaslin2', 'maps', 'markdown',
-#>   'MAST', 'Matrix', 'MatrixModels', 'matrixStats', 'mclust', 'mia',
-#>   'microbiome', 'microbiomeDataSets', 'MicrobiotaProcess',
-#>   'MultiAssayExperiment', 'mvtnorm', 'network', 'nlme', 'NOISeq', 'ordinal',
-#>   'osqp', 'pak', 'parameters', 'pcaPP', 'performance', 'plotrix', 'pls',
-#>   'pracma', 'processx', 'progress', 'PROJ', 'qgraph', 'qs', 'R.utils',
-#>   'rbibutils', 'RcppArmadillo', 'RcppEigen', 'Rdpack', 'report', 'Rfast',
-#>   'rgl', 'rhdf5', 'rhdf5filters', 'rJava', 'Rmpfr', 'robustbase', 'rpart',
-#>   'RSQLite', 'Rtsne', 's2', 'S4Vectors', 'sass', 'ScaledMatrix', 'scales',
-#>   'scater', 'scuttle', 'segmented', 'SeqArray', 'seqinr', 'seriation',
-#>   'Seurat', 'SeuratObject', 'shiny', 'shinybusy', 'SingleCellExperiment',
-#>   'sna', 'sp', 'SparseArray', 'sparseMatrixStats', 'spatstat.data',
-#>   'spatstat.explore', 'spatstat.linnet', 'spatstat.model', 'spatstat.random',
-#>   'spatstat.sparse', 'spatstat.utils', 'spdep', 'stringdist', 'stringfish',
-#>   'svglite', 'testthat', 'this.path', 'tinytex', 'TMB', 'treeio',
-#>   'TreeSummarizedExperiment', 'units', 'V8', 'vroom', 'wesanderson', 'wk',
-#>   'Wrench', 'XML', 'xml2', 'zCompositions', 'zinbwave', 'cluster'
 BiocManager::install("phyloseq")
-#> 'getOption("repos")' replaces Bioconductor standard repositories, see
-#> 'help("repositories", package = "BiocManager")' for details.
-#> Replacement repositories:
-#>     CRAN: https://cloud.r-project.org
-#> Bioconductor version 3.18 (BiocManager 1.30.22), R 4.3.2 (2023-10-31)
 #> Warning: package(s) not installed when version(s) same as or greater than current; use
 #>   `force = TRUE` to re-install: 'phyloseq'
-#> Installation paths not writeable, unable to update packages
-#>   path: /usr/local/lib/R/site-library
-#>   packages:
-#>     BH, cpp11, httpgd, Rcpp, rlang, systemfonts
-#> Old packages: 'ALDEx2', 'ANCOMBC', 'annotate', 'AnnotationDbi',
-#>   'AnnotationHub', 'aricode', 'basilisk', 'basilisk.utils', 'BayesFactor',
-#>   'beachmat', 'benchdamic', 'bibliometrix', 'BiocBaseUtils', 'BiocFileCache',
-#>   'BiocGenerics', 'BiocNeighbors', 'BiocSingular', 'BiocVersion', 'Biostrings',
-#>   'bluster', 'brio', 'bslib', 'Cairo', 'checkmate', 'ComplexHeatmap', 'copula',
-#>   'covr', 'crosstalk', 'curl', 'data.table', 'dbplyr', 'dearseq', 'decontam',
-#>   'DelayedMatrixStats', 'deldir', 'densvis', 'desc', 'DescTools', 'DESeq2',
-#>   'dir.expiry', 'DirichletMultinomial', 'downloadthis', 'dqrng', 'drake', 'DT',
-#>   'e1071', 'ecodist', 'edgeR', 'ExperimentHub', 'expm', 'fBasics', 'foreign',
-#>   'fstcore', 'gaston', 'gdsfmt', 'genefilter', 'GenomeInfoDb', 'GenomicRanges',
-#>   'gert', 'ggiraph', 'ggside', 'ggthemes', 'ggtree', 'ggtreeExtra', 'git2r',
-#>   'gmp', 'graphlayouts', 'grImport2', 'gtools', 'haven', 'htmlTable',
-#>   'htmlwidgets', 'httpuv', 'insight', 'interactiveDisplayBase', 'interp',
-#>   'KEGGREST', 'later', 'lava', 'LEA', 'leaflet', 'leiden', 'limma', 'link2GI',
-#>   'lintr', 'lme4', 'lpSolve', 'lpSolveAPI', 'Maaslin2', 'maps', 'markdown',
-#>   'MAST', 'Matrix', 'MatrixModels', 'matrixStats', 'mclust', 'mia',
-#>   'microbiome', 'microbiomeDataSets', 'MicrobiotaProcess',
-#>   'MultiAssayExperiment', 'mvtnorm', 'network', 'nlme', 'NOISeq', 'ordinal',
-#>   'osqp', 'pak', 'parameters', 'pcaPP', 'performance', 'plotrix', 'pls',
-#>   'pracma', 'processx', 'progress', 'PROJ', 'qgraph', 'qs', 'R.utils',
-#>   'rbibutils', 'RcppArmadillo', 'RcppEigen', 'Rdpack', 'report', 'Rfast',
-#>   'rgl', 'rhdf5', 'rhdf5filters', 'rJava', 'Rmpfr', 'robustbase', 'rpart',
-#>   'RSQLite', 'Rtsne', 's2', 'S4Vectors', 'sass', 'ScaledMatrix', 'scales',
-#>   'scater', 'scuttle', 'segmented', 'SeqArray', 'seqinr', 'seriation',
-#>   'Seurat', 'SeuratObject', 'shiny', 'shinybusy', 'SingleCellExperiment',
-#>   'sna', 'sp', 'SparseArray', 'sparseMatrixStats', 'spatstat.data',
-#>   'spatstat.explore', 'spatstat.linnet', 'spatstat.model', 'spatstat.random',
-#>   'spatstat.sparse', 'spatstat.utils', 'spdep', 'stringdist', 'stringfish',
-#>   'svglite', 'testthat', 'this.path', 'tinytex', 'TMB', 'treeio',
-#>   'TreeSummarizedExperiment', 'units', 'V8', 'vroom', 'wesanderson', 'wk',
-#>   'Wrench', 'XML', 'xml2', 'zCompositions', 'zinbwave', 'cluster'
 
 if (!require("devtools", quietly = TRUE)) {
   install.packages("devtools")
 }
-#> 
-#> Attachement du package : 'devtools'
-#> L'objet suivant est masqué depuis 'package:BiocManager':
-#> 
-#>     install
 devtools::install_github("adrientaudiere/MiscMetabar")
-#> Downloading GitHub repo adrientaudiere/MiscMetabar@HEAD
-#> network (1.18.1 -> 1.18.2) [CRAN]
-#> scales  (1.2.1  -> 1.3.0 ) [CRAN]
-#> sna     (2.7-1  -> 2.7-2 ) [CRAN]
-#> Installing 3 packages: network, scales, sna
-#> Installation des packages dans '/tmp/RtmpVdTtbP/temp_libpathd6864a1812db'
-#> (car 'lib' n'est pas spécifié)
-#> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/RtmpOhxQ8G/remotes3c7b64ea9dfd3/adrientaudiere-MiscMetabar-d599627/DESCRIPTION’ ... OK
-#> * preparing ‘MiscMetabar’:
-#> * checking DESCRIPTION meta-information ... OK
-#> * checking for LF line-endings in source and make files and shell scripts
-#> * checking for empty or unneeded directories
-#> * building ‘MiscMetabar_0.5.tar.gz’
-#> Installation du package dans '/tmp/RtmpVdTtbP/temp_libpathd6864a1812db'
-#> (car 'lib' n'est pas spécifié)
 ```
 
 You can install the development version from
@@ -172,107 +71,16 @@ if (!require("BiocManager", quietly = TRUE)) {
   install.packages("BiocManager")
 }
 BiocManager::install("dada2")
-#> 'getOption("repos")' replaces Bioconductor standard repositories, see
-#> 'help("repositories", package = "BiocManager")' for details.
-#> Replacement repositories:
-#>     CRAN: https://cloud.r-project.org
-#> Bioconductor version 3.18 (BiocManager 1.30.22), R 4.3.2 (2023-10-31)
 #> Warning: package(s) not installed when version(s) same as or greater than current; use
 #>   `force = TRUE` to re-install: 'dada2'
-#> Installation paths not writeable, unable to update packages
-#>   path: /usr/local/lib/R/site-library
-#>   packages:
-#>     BH, cpp11, httpgd, Rcpp, rlang, systemfonts
-#> Old packages: 'ALDEx2', 'ANCOMBC', 'annotate', 'AnnotationDbi',
-#>   'AnnotationHub', 'aricode', 'basilisk', 'basilisk.utils', 'BayesFactor',
-#>   'beachmat', 'benchdamic', 'bibliometrix', 'BiocBaseUtils', 'BiocFileCache',
-#>   'BiocGenerics', 'BiocNeighbors', 'BiocSingular', 'BiocVersion', 'Biostrings',
-#>   'bluster', 'brio', 'bslib', 'Cairo', 'checkmate', 'ComplexHeatmap', 'copula',
-#>   'covr', 'crosstalk', 'curl', 'data.table', 'dbplyr', 'dearseq', 'decontam',
-#>   'DelayedMatrixStats', 'deldir', 'densvis', 'desc', 'DescTools', 'DESeq2',
-#>   'dir.expiry', 'DirichletMultinomial', 'downloadthis', 'dqrng', 'drake', 'DT',
-#>   'e1071', 'ecodist', 'edgeR', 'ExperimentHub', 'expm', 'fBasics', 'foreign',
-#>   'fstcore', 'gaston', 'gdsfmt', 'genefilter', 'GenomeInfoDb', 'GenomicRanges',
-#>   'gert', 'ggiraph', 'ggside', 'ggthemes', 'ggtree', 'ggtreeExtra', 'git2r',
-#>   'gmp', 'graphlayouts', 'grImport2', 'gtools', 'haven', 'htmlTable',
-#>   'htmlwidgets', 'httpuv', 'insight', 'interactiveDisplayBase', 'interp',
-#>   'KEGGREST', 'later', 'lava', 'LEA', 'leaflet', 'leiden', 'limma', 'link2GI',
-#>   'lintr', 'lme4', 'lpSolve', 'lpSolveAPI', 'Maaslin2', 'maps', 'markdown',
-#>   'MAST', 'Matrix', 'MatrixModels', 'matrixStats', 'mclust', 'mia',
-#>   'microbiome', 'microbiomeDataSets', 'MicrobiotaProcess',
-#>   'MultiAssayExperiment', 'mvtnorm', 'network', 'nlme', 'NOISeq', 'ordinal',
-#>   'osqp', 'pak', 'parameters', 'pcaPP', 'performance', 'plotrix', 'pls',
-#>   'pracma', 'processx', 'progress', 'PROJ', 'qgraph', 'qs', 'R.utils',
-#>   'rbibutils', 'RcppArmadillo', 'RcppEigen', 'Rdpack', 'report', 'Rfast',
-#>   'rgl', 'rhdf5', 'rhdf5filters', 'rJava', 'Rmpfr', 'robustbase', 'rpart',
-#>   'RSQLite', 'Rtsne', 's2', 'S4Vectors', 'sass', 'ScaledMatrix', 'scales',
-#>   'scater', 'scuttle', 'segmented', 'SeqArray', 'seqinr', 'seriation',
-#>   'Seurat', 'SeuratObject', 'shiny', 'shinybusy', 'SingleCellExperiment',
-#>   'sna', 'sp', 'SparseArray', 'sparseMatrixStats', 'spatstat.data',
-#>   'spatstat.explore', 'spatstat.linnet', 'spatstat.model', 'spatstat.random',
-#>   'spatstat.sparse', 'spatstat.utils', 'spdep', 'stringdist', 'stringfish',
-#>   'svglite', 'testthat', 'this.path', 'tinytex', 'TMB', 'treeio',
-#>   'TreeSummarizedExperiment', 'units', 'V8', 'vroom', 'wesanderson', 'wk',
-#>   'Wrench', 'XML', 'xml2', 'zCompositions', 'zinbwave', 'cluster'
 BiocManager::install("phyloseq")
-#> 'getOption("repos")' replaces Bioconductor standard repositories, see
-#> 'help("repositories", package = "BiocManager")' for details.
-#> Replacement repositories:
-#>     CRAN: https://cloud.r-project.org
-#> Bioconductor version 3.18 (BiocManager 1.30.22), R 4.3.2 (2023-10-31)
 #> Warning: package(s) not installed when version(s) same as or greater than current; use
 #>   `force = TRUE` to re-install: 'phyloseq'
-#> Installation paths not writeable, unable to update packages
-#>   path: /usr/local/lib/R/site-library
-#>   packages:
-#>     BH, cpp11, httpgd, Rcpp, rlang, systemfonts
-#> Old packages: 'ALDEx2', 'ANCOMBC', 'annotate', 'AnnotationDbi',
-#>   'AnnotationHub', 'aricode', 'basilisk', 'basilisk.utils', 'BayesFactor',
-#>   'beachmat', 'benchdamic', 'bibliometrix', 'BiocBaseUtils', 'BiocFileCache',
-#>   'BiocGenerics', 'BiocNeighbors', 'BiocSingular', 'BiocVersion', 'Biostrings',
-#>   'bluster', 'brio', 'bslib', 'Cairo', 'checkmate', 'ComplexHeatmap', 'copula',
-#>   'covr', 'crosstalk', 'curl', 'data.table', 'dbplyr', 'dearseq', 'decontam',
-#>   'DelayedMatrixStats', 'deldir', 'densvis', 'desc', 'DescTools', 'DESeq2',
-#>   'dir.expiry', 'DirichletMultinomial', 'downloadthis', 'dqrng', 'drake', 'DT',
-#>   'e1071', 'ecodist', 'edgeR', 'ExperimentHub', 'expm', 'fBasics', 'foreign',
-#>   'fstcore', 'gaston', 'gdsfmt', 'genefilter', 'GenomeInfoDb', 'GenomicRanges',
-#>   'gert', 'ggiraph', 'ggside', 'ggthemes', 'ggtree', 'ggtreeExtra', 'git2r',
-#>   'gmp', 'graphlayouts', 'grImport2', 'gtools', 'haven', 'htmlTable',
-#>   'htmlwidgets', 'httpuv', 'insight', 'interactiveDisplayBase', 'interp',
-#>   'KEGGREST', 'later', 'lava', 'LEA', 'leaflet', 'leiden', 'limma', 'link2GI',
-#>   'lintr', 'lme4', 'lpSolve', 'lpSolveAPI', 'Maaslin2', 'maps', 'markdown',
-#>   'MAST', 'Matrix', 'MatrixModels', 'matrixStats', 'mclust', 'mia',
-#>   'microbiome', 'microbiomeDataSets', 'MicrobiotaProcess',
-#>   'MultiAssayExperiment', 'mvtnorm', 'network', 'nlme', 'NOISeq', 'ordinal',
-#>   'osqp', 'pak', 'parameters', 'pcaPP', 'performance', 'plotrix', 'pls',
-#>   'pracma', 'processx', 'progress', 'PROJ', 'qgraph', 'qs', 'R.utils',
-#>   'rbibutils', 'RcppArmadillo', 'RcppEigen', 'Rdpack', 'report', 'Rfast',
-#>   'rgl', 'rhdf5', 'rhdf5filters', 'rJava', 'Rmpfr', 'robustbase', 'rpart',
-#>   'RSQLite', 'Rtsne', 's2', 'S4Vectors', 'sass', 'ScaledMatrix', 'scales',
-#>   'scater', 'scuttle', 'segmented', 'SeqArray', 'seqinr', 'seriation',
-#>   'Seurat', 'SeuratObject', 'shiny', 'shinybusy', 'SingleCellExperiment',
-#>   'sna', 'sp', 'SparseArray', 'sparseMatrixStats', 'spatstat.data',
-#>   'spatstat.explore', 'spatstat.linnet', 'spatstat.model', 'spatstat.random',
-#>   'spatstat.sparse', 'spatstat.utils', 'spdep', 'stringdist', 'stringfish',
-#>   'svglite', 'testthat', 'this.path', 'tinytex', 'TMB', 'treeio',
-#>   'TreeSummarizedExperiment', 'units', 'V8', 'vroom', 'wesanderson', 'wk',
-#>   'Wrench', 'XML', 'xml2', 'zCompositions', 'zinbwave', 'cluster'
 
 if (!require("devtools", quietly = TRUE)) {
   install.packages("devtools")
 }
 devtools::install_github("adrientaudiere/MiscMetabar", ref = "dev")
-#> Downloading GitHub repo adrientaudiere/MiscMetabar@dev
-#> 
-#> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/RtmpOhxQ8G/remotes3c7b673226355/adrientaudiere-MiscMetabar-59ef25a/DESCRIPTION’ ... OK
-#> * preparing ‘MiscMetabar’:
-#> * checking DESCRIPTION meta-information ... OK
-#> * checking for LF line-endings in source and make files and shell scripts
-#> * checking for empty or unneeded directories
-#> * building ‘MiscMetabar_0.51.tar.gz’
-#> Installation du package dans '/tmp/RtmpVdTtbP/temp_libpathd6864a1812db'
-#> (car 'lib' n'est pas spécifié)
 ```
 
 ## Some use of MiscMetabar
@@ -284,11 +92,11 @@ more examples.
 For an introduction to metabarcoding in R, Please visite the [state of
 the
 field](https://adrientaudiere.github.io/MiscMetabar/articles/states_of_fields_in_R.html)
-vignettes. The [import, export and track]() vignette explains how import
-and export
-<https://adrientaudiere.github.io/MiscMetabar/articles/Reclustering.html>.
-Its also show how to summarize useful information (number of sequences,
-samples and clusters) accross bioinformatic pipelines.
+vignettes. The [import, export and
+track](https://adrientaudiere.github.io/MiscMetabar/articles/import_export_track.html)
+vignette explains how import and export `phyloseq` object. Its also show
+how to summarize useful information (number of sequences, samples and
+clusters) accross bioinformatic pipelines.
 
 If you are interested in ecological metrics, see the vignettes
 describing
@@ -303,7 +111,7 @@ tutorial introduces the different way of clustering already-clustered
 OTU/ASV. The vignette [tengeler]() explore the dataset from Tengeler et
 al. (2020) using some MiscMetabar functions.
 
-For developers, I also have a vignette describing som [rules of
+For developers, I also wrote a vignette describing som [rules of
 codes](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html).
 
 ### Summarize a physeq object
@@ -322,8 +130,6 @@ summary_plot_pq(data_fungi)
 
 ``` r
 p <- MiscMetabar::hill_pq(data_fungi, variable = "Height")
-#> Taxa are now in rows.
-#> Cleaning suppress 0 taxa and 0 samples.
 p$plot_Hill_0
 ```
 

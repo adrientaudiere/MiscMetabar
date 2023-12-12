@@ -41,6 +41,12 @@ jobs:
         with:
           extra-packages: any::rcmdcheck
           needs: check
+      
+      - name: Install vsearch
+        run: sudo apt-get install vsearch
+
+      - name: Install blastn
+        run: sudo apt-get install ncbi-blast+
 
       - uses: r-lib/actions/check-r-package@v2
         with:

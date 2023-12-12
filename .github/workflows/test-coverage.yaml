@@ -32,11 +32,11 @@ jobs:
         run: sudo apt-get install ncbi-blast+
 
       - name: Install mumu
-        run: >
+        run: |
          git clone https://github.com/frederic-mahe/mumu.git \
-         && cd ./mumu/\
-         && make\
-         && make check\
+         && cd ./mumu/ \
+         && make \
+         && make check \
          && sudo make install 
 
       - name: Test coverage
