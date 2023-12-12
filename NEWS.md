@@ -1,4 +1,7 @@
-# MiscMetabar 0.51 (in development) 
+# MiscMetabar 0.52 (in development) 
+
+
+# MiscMetabar 0.51 
 
 - Add function `LCBD_pq()` and `plot_LCBD_pq()` to compute, test and plot local contributions to beta diversity (LCBD) of samples
 - Add function `tbl_sum_samdata()` to summarize information from sample data in a table
