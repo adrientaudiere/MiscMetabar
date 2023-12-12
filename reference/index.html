@@ -68,7 +68,7 @@
     </div>
 
     <div class="section level2">
-      <h2 id="all-functions">All functions<a class="anchor" aria-label="anchor" href="#all-functions"></a></h2>
+      <h2 id="describe-phyloseq-object">Describe phyloseq object<a class="anchor" aria-label="anchor" href="#describe-phyloseq-object"></a></h2>
       
       
 
@@ -80,49 +80,37 @@
 
       <dl><dt>
           
-          <code><a href="LCBD_pq.html">LCBD_pq()</a></code> 
+          <code><a href="summary_plot_pq.html">summary_plot_pq()</a></code> 
         </dt>
-        <dd>Compute and test local contributions to beta diversity (LCBD) of
-samples</dd>
+        <dd>Summarise a <code>phyloseq-class</code> object using a plot.</dd>
       </dl><dl><dt>
           
-          <code><a href="MiscMetabar-deprecated.html">physeq_graph_test()</a></code> 
+          <code><a href="tbl_sum_samdata.html">tbl_sum_samdata()</a></code> 
         </dt>
-        <dd>Deprecated function(s) in the MiscMetabar package</dd>
+        <dd>Summarize information from sample data in a table</dd>
       </dl><dl><dt>
           
-          <code><a href="SRS_curve_pq.html">SRS_curve_pq()</a></code> 
+          <code><a href="verify_pq.html">verify_pq()</a></code> 
         </dt>
-        <dd>Scaling with ranked subsampling (SRS) curve of phyloseq object</dd>
-      </dl><dl><dt>
-          
-          <code><a href="Tengeler2020_pq.html">Tengeler2020_pq</a></code> 
-        </dt>
-        <dd>This tutorial explore the dataset from Tengeler et al. (2020) available in the <code>mia</code> package.
-obtain using <code>mia::makePhyloseqFromTreeSE(Tengeler2020)</code></dd>
-      </dl><dl><dt>
-          
-          <code><a href="accu_plot.html">accu_plot()</a></code> 
-        </dt>
-        <dd>Plot accumulation curves for <code>phyloseq-class</code> object</dd>
-      </dl><dl><dt>
-          
-          <code><a href="accu_samp_threshold.html">accu_samp_threshold()</a></code> 
-        </dt>
-        <dd>Compute the number of sequence to obtain a given proportion of ASV in
-accumulation curves</dd>
-      </dl><dl><dt>
-          
-          <code><a href="add_blast_info.html">add_blast_info()</a></code> 
-        </dt>
-        <dd>Add information from <code><a href="../reference/blast_pq.html">blast_pq()</a></code> to the <code>tax_table</code> slot of a <em>phyloseq</em> object</dd>
-      </dl><dl><dt>
-          
-          <code><a href="add_dna_to_phyloseq.html">add_dna_to_phyloseq()</a></code> 
-        </dt>
-        <dd>Add dna in <code>refseq</code> slot of a <code>physeq</code> object using taxa names and renames taxa
-using ASV_1, ASV_2, …</dd>
-      </dl><dl><dt>
+        <dd>Verify the validity of a phyloseq object</dd>
+      </dl></div><div class="section level2">
+      <h2 id="transform-phyloseq-object">Transform phyloseq object<a class="anchor" aria-label="anchor" href="#transform-phyloseq-object"></a></h2>
+      
+      
+
+      
+    </div><div class="section level2">
+      
+      <h3 id="taxonomy">Taxonomy<a class="anchor" aria-label="anchor" href="#taxonomy"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
           
           <code><a href="add_funguild_info.html">add_funguild_info()</a></code> 
         </dt>
@@ -134,31 +122,15 @@ using ASV_1, ASV_2, …</dd>
         <dd>Add new taxonomic rank to a phyloseq object.</dd>
       </dl><dl><dt>
           
-          <code><a href="adonis_pq.html">adonis_pq()</a></code> 
+          <code><a href="add_blast_info.html">add_blast_info()</a></code> 
         </dt>
-        <dd>Permanova on a phyloseq object</dd>
+        <dd>Add information from <code><a href="../reference/blast_pq.html">blast_pq()</a></code> to the <code>tax_table</code> slot of a <em>phyloseq</em> object</dd>
       </dl><dl><dt>
           
-          <code><a href="all_object_size.html">all_object_size()</a></code> 
+          <code><a href="blast_to_phyloseq.html">blast_to_phyloseq()</a></code> 
         </dt>
-        <dd>List the size of all objects of the GlobalEnv.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="as_binary_otu_table.html">as_binary_otu_table()</a></code> 
-        </dt>
-        <dd>Transform the otu_table of a <code>phyloseq-class</code> object into a
-<code>phyloseq-class</code> object with a binary otu_table.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="asv2otu.html">asv2otu()</a></code> 
-        </dt>
-        <dd>Recluster sequences of an object of class <code>physeq</code>
-(e.g. OTUs or ASV from dada)</dd>
-      </dl><dl><dt>
-          
-          <code><a href="biplot_pq.html">biplot_pq()</a></code> 
-        </dt>
-        <dd>Visualization of two samples for comparison</dd>
+        <dd>Blast some sequence against <code>refseq</code> slot of a <code>phyloseq-class</code>
+object.</dd>
       </dl><dl><dt>
           
           <code><a href="blast_pq.html">blast_pq()</a></code> 
@@ -173,93 +145,134 @@ object against a custom database.</dd>
 object.</dd>
       </dl><dl><dt>
           
-          <code><a href="blast_to_phyloseq.html">blast_to_phyloseq()</a></code> 
+          <code><a href="filter_asv_blast.html">filter_asv_blast()</a></code> 
         </dt>
-        <dd>Blast some sequence against <code>refseq</code> slot of a <code>phyloseq-class</code>
-object.</dd>
+        <dd>Filter undesirable taxa using blast against a against a custom database.</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="otu-table">OTU table<a class="anchor" aria-label="anchor" href="#otu-table"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="as_binary_otu_table.html">as_binary_otu_table()</a></code> 
+        </dt>
+        <dd>Transform the otu_table of a <code>phyloseq-class</code> object into a
+<code>phyloseq-class</code> object with a binary otu_table.</dd>
       </dl><dl><dt>
+          
+          <code><a href="asv2otu.html">asv2otu()</a></code> 
+        </dt>
+        <dd>Recluster sequences of an object of class <code>physeq</code>
+(e.g. OTUs or ASV from dada)</dd>
+      </dl><dl><dt>
+          
+          <code><a href="lulu_pq.html">lulu_pq()</a></code> 
+        </dt>
+        <dd>Lulu reclustering of class <code>physeq</code></dd>
+      </dl><dl><dt>
+          
+          <code><a href="mumu_pq.html">mumu_pq()</a></code> 
+        </dt>
+        <dd>MUMU reclustering of class <code>physeq</code></dd>
+      </dl><dl><dt>
+          
+          <code><a href="subset_taxa_pq.html">subset_taxa_pq()</a></code> 
+        </dt>
+        <dd>Subset taxa using a conditional named boolean vector.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="subset_taxa_tax_control.html">subset_taxa_tax_control()</a></code> 
+        </dt>
+        <dd>Subset taxa using a taxa control (e.g. truffle root tips) through 3 methods.</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="sample-datase">Sample datase<a class="anchor" aria-label="anchor" href="#sample-datase"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="subset_samples_pq.html">subset_samples_pq()</a></code> 
+        </dt>
+        <dd>Subset samples using a conditional boolean vector.</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="phylogenetic-tree">Phylogenetic tree<a class="anchor" aria-label="anchor" href="#phylogenetic-tree"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
           
           <code><a href="build_phytree_pq.html">build_phytree_pq()</a></code> 
         </dt>
         <dd>Build phylogenetic trees from refseq slot of a phyloseq object</dd>
-      </dl><dl><dt>
+      </dl></div><div class="section level2">
+      
+      <h3 id="others">Others<a class="anchor" aria-label="anchor" href="#others"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
           
-          <code><a href="circle_pq.html">circle_pq()</a></code> 
+          <code><a href="add_dna_to_phyloseq.html">add_dna_to_phyloseq()</a></code> 
         </dt>
-        <dd>Plot OTU circle for <code>phyloseq-class</code> object</dd>
+        <dd>Add dna in <code>refseq</code> slot of a <code>physeq</code> object using taxa names and renames taxa
+using ASV_1, ASV_2, …</dd>
       </dl><dl><dt>
           
           <code><a href="clean_pq.html">clean_pq()</a></code> 
         </dt>
         <dd>Clean phyloseq object by removing empty samples and taxa</dd>
+      </dl></div><div class="section level2">
+      <h2 id="explore-phyloseq-object">Explore phyloseq object<a class="anchor" aria-label="anchor" href="#explore-phyloseq-object"></a></h2>
+      
+      
+
+      
+    </div><div class="section level2">
+      
+      <h3 id="alpha-diversity">alpha-diversity<a class="anchor" aria-label="anchor" href="#alpha-diversity"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="accu_plot.html">accu_plot()</a></code> 
+        </dt>
+        <dd>Plot accumulation curves for <code>phyloseq-class</code> object</dd>
       </dl><dl><dt>
           
-          <code><a href="compare_pairs_pq.html">compare_pairs_pq()</a></code> 
+          <code><a href="accu_samp_threshold.html">accu_samp_threshold()</a></code> 
         </dt>
-        <dd>Compare samples in pairs using diversity and number of ASV including
-shared ASV.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="count_seq.html">count_seq()</a></code> 
-        </dt>
-        <dd>Count sequences in fasta or fastq file</dd>
-      </dl><dl><dt>
-          
-          <code><a href="data_fungi.html">data_fungi</a></code> 
-        </dt>
-        <dd>Fungal OTU in phyloseq format</dd>
-      </dl><dl><dt>
-          
-          <code><a href="data_fungi_sp_known.html">data_fungi_sp_known</a></code> 
-        </dt>
-        <dd>Fungal OTU in phyloseq format</dd>
-      </dl><dl><dt>
-          
-          <code><a href="diff_fct_diff_class.html">diff_fct_diff_class()</a></code> 
-        </dt>
-        <dd>Compute different functions for different class of vector.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="dist_bycol.html">dist_bycol()</a></code> 
-        </dt>
-        <dd>Compute paired distances among matrix (e.g. otu_table)</dd>
-      </dl><dl><dt>
-          
-          <code><a href="dist_pos_control.html">dist_pos_control()</a></code> 
-        </dt>
-        <dd>Calculate ecological distance among positive controls vs
-distance for all samples</dd>
-      </dl><dl><dt>
-          
-          <code><a href="filter_asv_blast.html">filter_asv_blast()</a></code> 
-        </dt>
-        <dd>Filter undesirable taxa using blast against a against a custom database.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="funky_color.html">funky_color()</a></code> 
-        </dt>
-        <dd>Funky palette color</dd>
-      </dl><dl><dt>
-          
-          <code><a href="get_file_extension.html">get_file_extension()</a></code> 
-        </dt>
-        <dd>Get the extension of a file</dd>
-      </dl><dl><dt>
-          
-          <code><a href="ggvenn_pq.html">ggvenn_pq()</a></code> 
-        </dt>
-        <dd>Venn diagram of <code>phyloseq-class</code> object using
-<code><a href="https://rdrr.io/pkg/ggVennDiagram/man/ggVennDiagram.html" class="external-link">ggVennDiagram::ggVennDiagram</a></code> function</dd>
-      </dl><dl><dt>
-          
-          <code><a href="graph_test_pq.html">graph_test_pq()</a></code> 
-        </dt>
-        <dd>Performs graph-based permutation tests on phyloseq object</dd>
-      </dl><dl><dt>
-          
-          <code><a href="heat_tree_pq.html">heat_tree_pq()</a></code> 
-        </dt>
-        <dd>Heat tree from <code>metacoder</code> package using <code>tax_table</code> slot</dd>
+        <dd>Compute the number of sequence to obtain a given proportion of ASV in
+accumulation curves</dd>
       </dl><dl><dt>
           
           <code><a href="hill_pq.html">hill_pq()</a></code> 
@@ -275,31 +288,61 @@ distance for all samples</dd>
           <code><a href="iNEXT_pq.html">iNEXT_pq()</a></code> 
         </dt>
         <dd>iNterpolation and EXTrapolation of Hill numbers (with iNEXT)</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="beta-diversity">beta-diversity<a class="anchor" aria-label="anchor" href="#beta-diversity"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="accu_samp_threshold.html">accu_samp_threshold()</a></code> 
+        </dt>
+        <dd>Compute the number of sequence to obtain a given proportion of ASV in
+accumulation curves</dd>
       </dl><dl><dt>
           
-          <code><a href="install_pkg_needed.html">install_pkg_needed()</a></code> 
+          <code><a href="adonis_pq.html">adonis_pq()</a></code> 
         </dt>
-        <dd>Install a package if not present</dd>
+        <dd>Permanova on a phyloseq object</dd>
       </dl><dl><dt>
           
-          <code><a href="krona.html">krona()</a></code> 
+          <code><a href="biplot_pq.html">biplot_pq()</a></code> 
         </dt>
-        <dd>Make Krona files using <a href="https://github.com/marbl/Krona/wiki" class="external-link">KronaTools</a>.</dd>
+        <dd>Visualization of two samples for comparison</dd>
       </dl><dl><dt>
           
-          <code><a href="list_fastq_files.html">list_fastq_files()</a></code> 
+          <code><a href="circle_pq.html">circle_pq()</a></code> 
         </dt>
-        <dd>List fastq files</dd>
+        <dd>Plot OTU circle for <code>phyloseq-class</code> object</dd>
       </dl><dl><dt>
           
-          <code><a href="lulu_pq.html">lulu_pq()</a></code> 
+          <code><a href="compare_pairs_pq.html">compare_pairs_pq()</a></code> 
         </dt>
-        <dd>Lulu reclustering of class <code>physeq</code></dd>
+        <dd>Compare samples in pairs using diversity and number of ASV including
+shared ASV.</dd>
       </dl><dl><dt>
           
-          <code><a href="merge_krona.html">merge_krona()</a></code> 
+          <code><a href="ggvenn_pq.html">ggvenn_pq()</a></code> 
         </dt>
-        <dd>Merge Krona files using <a href="https://github.com/marbl/Krona/wiki" class="external-link">KronaTools</a>.</dd>
+        <dd>Venn diagram of <code>phyloseq-class</code> object using
+<code><a href="https://rdrr.io/pkg/ggVennDiagram/man/ggVennDiagram.html" class="external-link">ggVennDiagram::ggVennDiagram</a></code> function</dd>
+      </dl><dl><dt>
+          
+          <code><a href="graph_test_pq.html">graph_test_pq()</a></code> 
+        </dt>
+        <dd>Performs graph-based permutation tests on phyloseq object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="LCBD_pq.html">LCBD_pq()</a></code> 
+        </dt>
+        <dd>Compute and test local contributions to beta diversity (LCBD) of
+samples</dd>
       </dl><dl><dt>
           
           <code><a href="multi_biplot_pq.html">multi_biplot_pq()</a></code> 
@@ -307,67 +350,9 @@ distance for all samples</dd>
         <dd>Visualization of a collection of couples of samples for comparison</dd>
       </dl><dl><dt>
           
-          <code><a href="multipatt_pq.html">multipatt_pq()</a></code> 
-        </dt>
-        <dd>Test and plot multipatt result</dd>
-      </dl><dl><dt>
-          
-          <code><a href="multiplot.html">multiplot()</a></code> 
-        </dt>
-        <dd>Multiple plot function</dd>
-      </dl><dl><dt>
-          
-          <code><a href="multitax_bar_pq.html">multitax_bar_pq()</a></code> 
-        </dt>
-        <dd>Plot taxonomic distribution across 3 levels</dd>
-      </dl><dl><dt>
-          
-          <code><a href="mumu_pq.html">mumu_pq()</a></code> 
-        </dt>
-        <dd>MUMU reclustering of class <code>physeq</code></dd>
-      </dl><dl><dt>
-          
-          <code><a href="perc.html">perc()</a></code> 
-        </dt>
-        <dd>Convert a value (or a fraction x/y) in percentage</dd>
-      </dl><dl><dt>
-          
-          <code><a href="phyloseq_to_edgeR.html">phyloseq_to_edgeR()</a></code> 
-        </dt>
-        <dd>Convert phyloseq OTU count data into DGEList for edgeR package</dd>
-      </dl><dl><dt>
-          
           <code><a href="plot_LCBD_pq.html">plot_LCBD_pq()</a></code> 
         </dt>
         <dd>Plot and test local contributions to beta diversity (LCBD) of samples</dd>
-      </dl><dl><dt>
-          
-          <code><a href="plot_deseq2_pq.html">plot_deseq2_pq()</a></code> 
-        </dt>
-        <dd>Plot DESeq2 results for a phyloseq or a DESeq2 object.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="plot_edgeR_pq.html">plot_edgeR_pq()</a></code> 
-        </dt>
-        <dd>Plot edgeR results for a phyloseq or a edgeR object.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="plot_guild_pq.html">plot_guild_pq()</a></code> 
-        </dt>
-        <dd>Plot information about Guild from tax_table slot previously
-created with <code><a href="../reference/add_funguild_info.html">add_funguild_info()</a></code>
-#' @description
-<a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="figures/lifecycle-experimental.svg" alt="[Experimental]"></a></dd>
-      </dl><dl><dt>
-          
-          <code><a href="plot_mt.html">plot_mt()</a></code> 
-        </dt>
-        <dd>Plot the result of a mt test <code><a href="https://rdrr.io/pkg/phyloseq/man/mt-methods.html" class="external-link">phyloseq::mt()</a></code></dd>
-      </dl><dl><dt>
-          
-          <code><a href="plot_tax_pq.html">plot_tax_pq()</a></code> 
-        </dt>
-        <dd>Plot taxonomic distribution in function of a factor with stacked bar in %</dd>
       </dl><dl><dt>
           
           <code><a href="plot_tsne_pq.html">plot_tsne_pq()</a></code> 
@@ -375,25 +360,9 @@ created with <code><a href="../reference/add_funguild_info.html">add_funguild_in
         <dd>Plot a tsne low dimensional representation of a phyloseq object</dd>
       </dl><dl><dt>
           
-          <code><a href="read_pq.html">read_pq()</a></code> 
-        </dt>
-        <dd>Read phyloseq object from multiple csv tables and a phylogenetic tree
-in Newick format.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="rename_samples_otu_table.html">rename_samples_otu_table()</a></code> 
-        </dt>
-        <dd>Rename samples of an otu_table</dd>
-      </dl><dl><dt>
-          
           <code><a href="ridges_pq.html">ridges_pq()</a></code> 
         </dt>
         <dd>Ridge plot of a phyloseq object</dd>
-      </dl><dl><dt>
-          
-          <code><a href="rotl_pq.html">rotl_pq()</a></code> 
-        </dt>
-        <dd>rotl wrapper for phyloseq data</dd>
       </dl><dl><dt>
           
           <code><a href="sankey_pq.html">sankey_pq()</a></code> 
@@ -401,86 +370,9 @@ in Newick format.</dd>
         <dd>Sankey plot of <code>phyloseq-class</code> object</dd>
       </dl><dl><dt>
           
-          <code><a href="save_pq.html">save_pq()</a></code> 
+          <code><a href="SRS_curve_pq.html">SRS_curve_pq()</a></code> 
         </dt>
-        <dd>A wrapper of write_pq to save in all three format :
-<ul><li><p>4 separate tables</p></li>
-<li><p>1 table version</p></li>
-<li><p>1 RData file</p></li>
-</ul></dd>
-      </dl><dl><dt>
-          
-          <code><a href="search_exact_seq_pq.html">search_exact_seq_pq()</a></code> 
-        </dt>
-        <dd>Search for exact matching of sequences using complement,
-reverse and reverse-complement</dd>
-      </dl><dl><dt>
-          
-          <code><a href="select_one_sample.html">select_one_sample()</a></code> 
-        </dt>
-        <dd>Select one sample from a physeq object</dd>
-      </dl><dl><dt>
-          
-          <code><a href="simplify_taxo.html">simplify_taxo()</a></code> 
-        </dt>
-        <dd>Simplify taxonomy by removing some unused characters such as "k__"</dd>
-      </dl><dl><dt>
-          
-          <code><a href="subsample_fastq.html">subsample_fastq()</a></code> 
-        </dt>
-        <dd>Subsample a fastq file copying the n_seq first sequences in a given folder</dd>
-      </dl><dl><dt>
-          
-          <code><a href="subset_samples_pq.html">subset_samples_pq()</a></code> 
-        </dt>
-        <dd>Subset samples using a conditional boolean vector.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="subset_taxa_pq.html">subset_taxa_pq()</a></code> 
-        </dt>
-        <dd>Subset taxa using a conditional named boolean vector.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="subset_taxa_tax_control.html">subset_taxa_tax_control()</a></code> 
-        </dt>
-        <dd>Subset taxa using a taxa control (e.g. truffle root tips) through 3 methods.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="summary_plot_pq.html">summary_plot_pq()</a></code> 
-        </dt>
-        <dd>Summarise a <code>phyloseq-class</code> object using a plot.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="tax_bar_pq.html">tax_bar_pq()</a></code> 
-        </dt>
-        <dd>Plot the distribution of sequences or ASV in one taxonomic levels</dd>
-      </dl><dl><dt>
-          
-          <code><a href="tax_datatable.html">tax_datatable()</a></code> 
-        </dt>
-        <dd>Make a datatable with the taxonomy of a <code>phyloseq-class</code> object</dd>
-      </dl><dl><dt>
-          
-          <code><a href="tbl_sum_samdata.html">tbl_sum_samdata()</a></code> 
-        </dt>
-        <dd>Summarize information from sample data in a table</dd>
-      </dl><dl><dt>
-          
-          <code><a href="track_wkflow.html">track_wkflow()</a></code> 
-        </dt>
-        <dd>Track the number of reads (= sequences), samples and cluster (e.g. ASV)
-from various objects including dada-class and derep-class.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="track_wkflow_samples.html">track_wkflow_samples()</a></code> 
-        </dt>
-        <dd>Track the number of reads (= sequences), samples and cluster (e.g. ASV)
-for each samples.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="treemap_pq.html">treemap_pq()</a></code> 
-        </dt>
-        <dd>Plot treemap of 2 taxonomic levels</dd>
+        <dd>Scaling with ranked subsampling (SRS) curve of phyloseq object</dd>
       </dl><dl><dt>
           
           <code><a href="tsne_pq.html">tsne_pq()</a></code> 
@@ -501,24 +393,322 @@ for each samples.</dd>
           <code><a href="venn_pq.html">venn_pq()</a></code> 
         </dt>
         <dd>Venn diagram of <code>phyloseq-class</code> object</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="differencial-abundance-analysis">Differencial abundance analysis<a class="anchor" aria-label="anchor" href="#differencial-abundance-analysis"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="multipatt_pq.html">multipatt_pq()</a></code> 
+        </dt>
+        <dd>Test and plot multipatt result</dd>
       </dl><dl><dt>
           
-          <code><a href="verify_pq.html">verify_pq()</a></code> 
+          <code><a href="phyloseq_to_edgeR.html">phyloseq_to_edgeR()</a></code> 
         </dt>
-        <dd>Verify the validity of a phyloseq object</dd>
+        <dd>Convert phyloseq OTU count data into DGEList for edgeR package</dd>
+      </dl><dl><dt>
+          
+          <code><a href="plot_edgeR_pq.html">plot_edgeR_pq()</a></code> 
+        </dt>
+        <dd>Plot edgeR results for a phyloseq or a edgeR object.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="plot_deseq2_pq.html">plot_deseq2_pq()</a></code> 
+        </dt>
+        <dd>Plot DESeq2 results for a phyloseq or a DESeq2 object.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="plot_mt.html">plot_mt()</a></code> 
+        </dt>
+        <dd>Plot the result of a mt test <code><a href="https://rdrr.io/pkg/phyloseq/man/mt-methods.html" class="external-link">phyloseq::mt()</a></code></dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="taxonomy-1">Taxonomy<a class="anchor" aria-label="anchor" href="#taxonomy-1"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="heat_tree_pq.html">heat_tree_pq()</a></code> 
+        </dt>
+        <dd>Heat tree from <code>metacoder</code> package using <code>tax_table</code> slot</dd>
+      </dl><dl><dt>
+          
+          <code><a href="krona.html">krona()</a></code> 
+        </dt>
+        <dd>Make Krona files using <a href="https://github.com/marbl/Krona/wiki" class="external-link">KronaTools</a>.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="merge_krona.html">merge_krona()</a></code> 
+        </dt>
+        <dd>Merge Krona files using <a href="https://github.com/marbl/Krona/wiki" class="external-link">KronaTools</a>.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="multitax_bar_pq.html">multitax_bar_pq()</a></code> 
+        </dt>
+        <dd>Plot taxonomic distribution across 3 levels</dd>
+      </dl><dl><dt>
+          
+          <code><a href="plot_guild_pq.html">plot_guild_pq()</a></code> 
+        </dt>
+        <dd>Plot information about Guild from tax_table slot previously
+created with <code><a href="../reference/add_funguild_info.html">add_funguild_info()</a></code>
+#' @description
+<a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="figures/lifecycle-experimental.svg" alt="[Experimental]"></a></dd>
+      </dl><dl><dt>
+          
+          <code><a href="plot_tax_pq.html">plot_tax_pq()</a></code> 
+        </dt>
+        <dd>Plot taxonomic distribution in function of a factor with stacked bar in %</dd>
+      </dl><dl><dt>
+          
+          <code><a href="rotl_pq.html">rotl_pq()</a></code> 
+        </dt>
+        <dd>rotl wrapper for phyloseq data</dd>
+      </dl><dl><dt>
+          
+          <code><a href="search_exact_seq_pq.html">search_exact_seq_pq()</a></code> 
+        </dt>
+        <dd>Search for exact matching of sequences using complement,
+reverse and reverse-complement</dd>
+      </dl><dl><dt>
+          
+          <code><a href="tax_bar_pq.html">tax_bar_pq()</a></code> 
+        </dt>
+        <dd>Plot the distribution of sequences or ASV in one taxonomic levels</dd>
+      </dl><dl><dt>
+          
+          <code><a href="tax_datatable.html">tax_datatable()</a></code> 
+        </dt>
+        <dd>Make a datatable with the taxonomy of a <code>phyloseq-class</code> object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="treemap_pq.html">treemap_pq()</a></code> 
+        </dt>
+        <dd>Plot treemap of 2 taxonomic levels</dd>
       </dl><dl><dt>
           
           <code><a href="vs_search_global.html">vs_search_global()</a></code> 
         </dt>
         <dd>Search for a list of sequence in a fasta file against physeq reference
 sequences using <a href="https://github.com/torognes/vsearch" class="external-link">vsearch</a></dd>
+      </dl></div><div class="section level2">
+      <h2 id="improve-reproducibility">Improve reproducibility<a class="anchor" aria-label="anchor" href="#improve-reproducibility"></a></h2>
+      
+      
+
+      
+    </div><div class="section level2">
+      
+      <h3 id="import-export-phyloseq-object">Import/export phyloseq object<a class="anchor" aria-label="anchor" href="#import-export-phyloseq-object"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="read_pq.html">read_pq()</a></code> 
+        </dt>
+        <dd>Read phyloseq object from multiple csv tables and a phylogenetic tree
+in Newick format.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="save_pq.html">save_pq()</a></code> 
+        </dt>
+        <dd>A wrapper of write_pq to save in all three format :
+<ul><li><p>4 separate tables</p></li>
+<li><p>1 table version</p></li>
+<li><p>1 RData file</p></li>
+</ul></dd>
       </dl><dl><dt>
           
           <code><a href="write_pq.html">write_pq()</a></code> 
         </dt>
         <dd>Save phyloseq object in the form of multiple csv tables.</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="track-info-along-pipeline">Track info along pipeline<a class="anchor" aria-label="anchor" href="#track-info-along-pipeline"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="count_seq.html">count_seq()</a></code> 
+        </dt>
+        <dd>Count sequences in fasta or fastq file</dd>
+      </dl><dl><dt>
+          
+          <code><a href="track_wkflow.html">track_wkflow()</a></code> 
+        </dt>
+        <dd>Track the number of reads (= sequences), samples and cluster (e.g. ASV)
+from various objects including dada-class and derep-class.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="track_wkflow_samples.html">track_wkflow_samples()</a></code> 
+        </dt>
+        <dd>Track the number of reads (= sequences), samples and cluster (e.g. ASV)
+for each samples.</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="utilities-for-targets-https-books-ropensci-org-targets-pipeline">Utilities for <a href="https://books.ropensci.org/targets/" class="external-link">targets</a> pipeline<a class="anchor" aria-label="anchor" href="#utilities-for-targets-https-books-ropensci-org-targets-pipeline"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="list_fastq_files.html">list_fastq_files()</a></code> 
+        </dt>
+        <dd>List fastq files</dd>
+      </dl><dl><dt>
+          
+          <code><a href="rename_samples_otu_table.html">rename_samples_otu_table()</a></code> 
+        </dt>
+        <dd>Rename samples of an otu_table</dd>
+      </dl><dl><dt>
+          
+          <code><a href="select_one_sample.html">select_one_sample()</a></code> 
+        </dt>
+        <dd>Select one sample from a physeq object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="simplify_taxo.html">simplify_taxo()</a></code> 
+        </dt>
+        <dd>Simplify taxonomy by removing some unused characters such as "k__"</dd>
+      </dl><dl><dt>
+          
+          <code><a href="subsample_fastq.html">subsample_fastq()</a></code> 
+        </dt>
+        <dd>Subsample a fastq file copying the n_seq first sequences in a given folder</dd>
+      </dl></div><div class="section level2">
+      <h2 id="datasets">Datasets<a class="anchor" aria-label="anchor" href="#datasets"></a></h2>
+      
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="data_fungi.html">data_fungi</a></code> 
+        </dt>
+        <dd>Fungal OTU in phyloseq format</dd>
+      </dl><dl><dt>
+          
+          <code><a href="data_fungi_sp_known.html">data_fungi_sp_known</a></code> 
+        </dt>
+        <dd>Fungal OTU in phyloseq format</dd>
+      </dl><dl><dt>
+          
+          <code><a href="Tengeler2020_pq.html">Tengeler2020_pq</a></code> 
+        </dt>
+        <dd>This tutorial explore the dataset from Tengeler et al. (2020) available in the <code>mia</code> package.
+obtain using <code>mia::makePhyloseqFromTreeSE(Tengeler2020)</code></dd>
+      </dl></div><div class="section level2">
+      <h2 id="others-utilities">Others utilities<a class="anchor" aria-label="anchor" href="#others-utilities"></a></h2>
+      
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="all_object_size.html">all_object_size()</a></code> 
+        </dt>
+        <dd>List the size of all objects of the GlobalEnv.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="diff_fct_diff_class.html">diff_fct_diff_class()</a></code> 
+        </dt>
+        <dd>Compute different functions for different class of vector.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="dist_bycol.html">dist_bycol()</a></code> 
+        </dt>
+        <dd>Compute paired distances among matrix (e.g. otu_table)</dd>
+      </dl><dl><dt>
+          
+          <code><a href="dist_pos_control.html">dist_pos_control()</a></code> 
+        </dt>
+        <dd>Calculate ecological distance among positive controls vs
+distance for all samples</dd>
+      </dl><dl><dt>
+          
+          <code><a href="funky_color.html">funky_color()</a></code> 
+        </dt>
+        <dd>Funky palette color</dd>
+      </dl><dl><dt>
+          
+          <code><a href="get_file_extension.html">get_file_extension()</a></code> 
+        </dt>
+        <dd>Get the extension of a file</dd>
+      </dl><dl><dt>
+          
+          <code><a href="install_pkg_needed.html">install_pkg_needed()</a></code> 
+        </dt>
+        <dd>Install a package if not present</dd>
+      </dl><dl><dt>
+          
+          <code><a href="multiplot.html">multiplot()</a></code> 
+        </dt>
+        <dd>Multiple plot function</dd>
+      </dl><dl><dt>
+          
+          <code><a href="perc.html">perc()</a></code> 
+        </dt>
+        <dd>Convert a value (or a fraction x/y) in percentage</dd>
+      </dl></div><div class="section level2">
+      <h2 id="deprecated">Deprecated<a class="anchor" aria-label="anchor" href="#deprecated"></a></h2>
+      
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="MiscMetabar-deprecated.html">physeq_graph_test()</a></code> 
+        </dt>
+        <dd>Deprecated function(s) in the MiscMetabar package</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">

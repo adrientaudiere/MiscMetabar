@@ -114,232 +114,40 @@
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"dada2"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'getOption("repos")' replaces Bioconductor standard repositories, see</span></span>
-<span><span class="co">#&gt; 'help("repositories", package = "BiocManager")' for details.</span></span>
-<span><span class="co">#&gt; Replacement repositories:</span></span>
-<span><span class="co">#&gt;     CRAN: https://cloud.r-project.org</span></span>
-<span><span class="co">#&gt; Bioconductor version 3.18 (BiocManager 1.30.22), R 4.3.2 (2023-10-31)</span></span>
 <span><span class="co">#&gt; Warning: package(s) not installed when version(s) same as or greater than current; use</span></span>
 <span><span class="co">#&gt;   `force = TRUE` to re-install: 'dada2'</span></span>
-<span><span class="co">#&gt; Installation paths not writeable, unable to update packages</span></span>
-<span><span class="co">#&gt;   path: /usr/local/lib/R/site-library</span></span>
-<span><span class="co">#&gt;   packages:</span></span>
-<span><span class="co">#&gt;     BH, cpp11, httpgd, Rcpp, rlang, systemfonts</span></span>
-<span><span class="co">#&gt; Old packages: 'ALDEx2', 'ANCOMBC', 'annotate', 'AnnotationDbi',</span></span>
-<span><span class="co">#&gt;   'AnnotationHub', 'aricode', 'basilisk', 'basilisk.utils', 'BayesFactor',</span></span>
-<span><span class="co">#&gt;   'beachmat', 'benchdamic', 'bibliometrix', 'BiocBaseUtils', 'BiocFileCache',</span></span>
-<span><span class="co">#&gt;   'BiocGenerics', 'BiocNeighbors', 'BiocSingular', 'BiocVersion', 'Biostrings',</span></span>
-<span><span class="co">#&gt;   'bluster', 'brio', 'bslib', 'Cairo', 'checkmate', 'ComplexHeatmap', 'copula',</span></span>
-<span><span class="co">#&gt;   'covr', 'crosstalk', 'curl', 'data.table', 'dbplyr', 'dearseq', 'decontam',</span></span>
-<span><span class="co">#&gt;   'DelayedMatrixStats', 'deldir', 'densvis', 'desc', 'DescTools', 'DESeq2',</span></span>
-<span><span class="co">#&gt;   'dir.expiry', 'DirichletMultinomial', 'downloadthis', 'dqrng', 'drake', 'DT',</span></span>
-<span><span class="co">#&gt;   'e1071', 'ecodist', 'edgeR', 'ExperimentHub', 'expm', 'fBasics', 'foreign',</span></span>
-<span><span class="co">#&gt;   'fstcore', 'gaston', 'gdsfmt', 'genefilter', 'GenomeInfoDb', 'GenomicRanges',</span></span>
-<span><span class="co">#&gt;   'gert', 'ggiraph', 'ggside', 'ggthemes', 'ggtree', 'ggtreeExtra', 'git2r',</span></span>
-<span><span class="co">#&gt;   'gmp', 'graphlayouts', 'grImport2', 'gtools', 'haven', 'htmlTable',</span></span>
-<span><span class="co">#&gt;   'htmlwidgets', 'httpuv', 'insight', 'interactiveDisplayBase', 'interp',</span></span>
-<span><span class="co">#&gt;   'KEGGREST', 'later', 'lava', 'LEA', 'leaflet', 'leiden', 'limma', 'link2GI',</span></span>
-<span><span class="co">#&gt;   'lintr', 'lme4', 'lpSolve', 'lpSolveAPI', 'Maaslin2', 'maps', 'markdown',</span></span>
-<span><span class="co">#&gt;   'MAST', 'Matrix', 'MatrixModels', 'matrixStats', 'mclust', 'mia',</span></span>
-<span><span class="co">#&gt;   'microbiome', 'microbiomeDataSets', 'MicrobiotaProcess',</span></span>
-<span><span class="co">#&gt;   'MultiAssayExperiment', 'mvtnorm', 'network', 'nlme', 'NOISeq', 'ordinal',</span></span>
-<span><span class="co">#&gt;   'osqp', 'pak', 'parameters', 'pcaPP', 'performance', 'plotrix', 'pls',</span></span>
-<span><span class="co">#&gt;   'pracma', 'processx', 'progress', 'PROJ', 'qgraph', 'qs', 'R.utils',</span></span>
-<span><span class="co">#&gt;   'rbibutils', 'RcppArmadillo', 'RcppEigen', 'Rdpack', 'report', 'Rfast',</span></span>
-<span><span class="co">#&gt;   'rgl', 'rhdf5', 'rhdf5filters', 'rJava', 'Rmpfr', 'robustbase', 'rpart',</span></span>
-<span><span class="co">#&gt;   'RSQLite', 'Rtsne', 's2', 'S4Vectors', 'sass', 'ScaledMatrix', 'scales',</span></span>
-<span><span class="co">#&gt;   'scater', 'scuttle', 'segmented', 'SeqArray', 'seqinr', 'seriation',</span></span>
-<span><span class="co">#&gt;   'Seurat', 'SeuratObject', 'shiny', 'shinybusy', 'SingleCellExperiment',</span></span>
-<span><span class="co">#&gt;   'sna', 'sp', 'SparseArray', 'sparseMatrixStats', 'spatstat.data',</span></span>
-<span><span class="co">#&gt;   'spatstat.explore', 'spatstat.linnet', 'spatstat.model', 'spatstat.random',</span></span>
-<span><span class="co">#&gt;   'spatstat.sparse', 'spatstat.utils', 'spdep', 'stringdist', 'stringfish',</span></span>
-<span><span class="co">#&gt;   'svglite', 'testthat', 'this.path', 'tinytex', 'TMB', 'treeio',</span></span>
-<span><span class="co">#&gt;   'TreeSummarizedExperiment', 'units', 'V8', 'vroom', 'wesanderson', 'wk',</span></span>
-<span><span class="co">#&gt;   'Wrench', 'XML', 'xml2', 'zCompositions', 'zinbwave', 'cluster'</span></span>
 <span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"phyloseq"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'getOption("repos")' replaces Bioconductor standard repositories, see</span></span>
-<span><span class="co">#&gt; 'help("repositories", package = "BiocManager")' for details.</span></span>
-<span><span class="co">#&gt; Replacement repositories:</span></span>
-<span><span class="co">#&gt;     CRAN: https://cloud.r-project.org</span></span>
-<span><span class="co">#&gt; Bioconductor version 3.18 (BiocManager 1.30.22), R 4.3.2 (2023-10-31)</span></span>
 <span><span class="co">#&gt; Warning: package(s) not installed when version(s) same as or greater than current; use</span></span>
 <span><span class="co">#&gt;   `force = TRUE` to re-install: 'phyloseq'</span></span>
-<span><span class="co">#&gt; Installation paths not writeable, unable to update packages</span></span>
-<span><span class="co">#&gt;   path: /usr/local/lib/R/site-library</span></span>
-<span><span class="co">#&gt;   packages:</span></span>
-<span><span class="co">#&gt;     BH, cpp11, httpgd, Rcpp, rlang, systemfonts</span></span>
-<span><span class="co">#&gt; Old packages: 'ALDEx2', 'ANCOMBC', 'annotate', 'AnnotationDbi',</span></span>
-<span><span class="co">#&gt;   'AnnotationHub', 'aricode', 'basilisk', 'basilisk.utils', 'BayesFactor',</span></span>
-<span><span class="co">#&gt;   'beachmat', 'benchdamic', 'bibliometrix', 'BiocBaseUtils', 'BiocFileCache',</span></span>
-<span><span class="co">#&gt;   'BiocGenerics', 'BiocNeighbors', 'BiocSingular', 'BiocVersion', 'Biostrings',</span></span>
-<span><span class="co">#&gt;   'bluster', 'brio', 'bslib', 'Cairo', 'checkmate', 'ComplexHeatmap', 'copula',</span></span>
-<span><span class="co">#&gt;   'covr', 'crosstalk', 'curl', 'data.table', 'dbplyr', 'dearseq', 'decontam',</span></span>
-<span><span class="co">#&gt;   'DelayedMatrixStats', 'deldir', 'densvis', 'desc', 'DescTools', 'DESeq2',</span></span>
-<span><span class="co">#&gt;   'dir.expiry', 'DirichletMultinomial', 'downloadthis', 'dqrng', 'drake', 'DT',</span></span>
-<span><span class="co">#&gt;   'e1071', 'ecodist', 'edgeR', 'ExperimentHub', 'expm', 'fBasics', 'foreign',</span></span>
-<span><span class="co">#&gt;   'fstcore', 'gaston', 'gdsfmt', 'genefilter', 'GenomeInfoDb', 'GenomicRanges',</span></span>
-<span><span class="co">#&gt;   'gert', 'ggiraph', 'ggside', 'ggthemes', 'ggtree', 'ggtreeExtra', 'git2r',</span></span>
-<span><span class="co">#&gt;   'gmp', 'graphlayouts', 'grImport2', 'gtools', 'haven', 'htmlTable',</span></span>
-<span><span class="co">#&gt;   'htmlwidgets', 'httpuv', 'insight', 'interactiveDisplayBase', 'interp',</span></span>
-<span><span class="co">#&gt;   'KEGGREST', 'later', 'lava', 'LEA', 'leaflet', 'leiden', 'limma', 'link2GI',</span></span>
-<span><span class="co">#&gt;   'lintr', 'lme4', 'lpSolve', 'lpSolveAPI', 'Maaslin2', 'maps', 'markdown',</span></span>
-<span><span class="co">#&gt;   'MAST', 'Matrix', 'MatrixModels', 'matrixStats', 'mclust', 'mia',</span></span>
-<span><span class="co">#&gt;   'microbiome', 'microbiomeDataSets', 'MicrobiotaProcess',</span></span>
-<span><span class="co">#&gt;   'MultiAssayExperiment', 'mvtnorm', 'network', 'nlme', 'NOISeq', 'ordinal',</span></span>
-<span><span class="co">#&gt;   'osqp', 'pak', 'parameters', 'pcaPP', 'performance', 'plotrix', 'pls',</span></span>
-<span><span class="co">#&gt;   'pracma', 'processx', 'progress', 'PROJ', 'qgraph', 'qs', 'R.utils',</span></span>
-<span><span class="co">#&gt;   'rbibutils', 'RcppArmadillo', 'RcppEigen', 'Rdpack', 'report', 'Rfast',</span></span>
-<span><span class="co">#&gt;   'rgl', 'rhdf5', 'rhdf5filters', 'rJava', 'Rmpfr', 'robustbase', 'rpart',</span></span>
-<span><span class="co">#&gt;   'RSQLite', 'Rtsne', 's2', 'S4Vectors', 'sass', 'ScaledMatrix', 'scales',</span></span>
-<span><span class="co">#&gt;   'scater', 'scuttle', 'segmented', 'SeqArray', 'seqinr', 'seriation',</span></span>
-<span><span class="co">#&gt;   'Seurat', 'SeuratObject', 'shiny', 'shinybusy', 'SingleCellExperiment',</span></span>
-<span><span class="co">#&gt;   'sna', 'sp', 'SparseArray', 'sparseMatrixStats', 'spatstat.data',</span></span>
-<span><span class="co">#&gt;   'spatstat.explore', 'spatstat.linnet', 'spatstat.model', 'spatstat.random',</span></span>
-<span><span class="co">#&gt;   'spatstat.sparse', 'spatstat.utils', 'spdep', 'stringdist', 'stringfish',</span></span>
-<span><span class="co">#&gt;   'svglite', 'testthat', 'this.path', 'tinytex', 'TMB', 'treeio',</span></span>
-<span><span class="co">#&gt;   'TreeSummarizedExperiment', 'units', 'V8', 'vroom', 'wesanderson', 'wk',</span></span>
-<span><span class="co">#&gt;   'Wrench', 'XML', 'xml2', 'zCompositions', 'zinbwave', 'cluster'</span></span>
 <span></span>
 <span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://devtools.r-lib.org/" class="external-link">"devtools"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attachement du package : 'devtools'</span></span>
-<span><span class="co">#&gt; L'objet suivant est masqué depuis 'package:BiocManager':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     install</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"adrientaudiere/MiscMetabar"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Downloading GitHub repo adrientaudiere/MiscMetabar@HEAD</span></span>
-<span><span class="co">#&gt; network (1.18.1 -&gt; 1.18.2) [CRAN]</span></span>
-<span><span class="co">#&gt; scales  (1.2.1  -&gt; 1.3.0 ) [CRAN]</span></span>
-<span><span class="co">#&gt; sna     (2.7-1  -&gt; 2.7-2 ) [CRAN]</span></span>
-<span><span class="co">#&gt; Installing 3 packages: network, scales, sna</span></span>
-<span><span class="co">#&gt; Installation des packages dans '/tmp/RtmpVdTtbP/temp_libpathd6864a1812db'</span></span>
-<span><span class="co">#&gt; (car 'lib' n'est pas spécifié)</span></span>
-<span><span class="co">#&gt; ── R CMD build ─────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt; * checking for file ‘/tmp/RtmpOhxQ8G/remotes3c7b64ea9dfd3/adrientaudiere-MiscMetabar-d599627/DESCRIPTION’ ... OK</span></span>
-<span><span class="co">#&gt; * preparing ‘MiscMetabar’:</span></span>
-<span><span class="co">#&gt; * checking DESCRIPTION meta-information ... OK</span></span>
-<span><span class="co">#&gt; * checking for LF line-endings in source and make files and shell scripts</span></span>
-<span><span class="co">#&gt; * checking for empty or unneeded directories</span></span>
-<span><span class="co">#&gt; * building ‘MiscMetabar_0.5.tar.gz’</span></span>
-<span><span class="co">#&gt; Installation du package dans '/tmp/RtmpVdTtbP/temp_libpathd6864a1812db'</span></span>
-<span><span class="co">#&gt; (car 'lib' n'est pas spécifié)</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"adrientaudiere/MiscMetabar"</span><span class="op">)</span></span></code></pre></div>
 <p>You can install the development version from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://bioconductor.github.io/BiocManager/" class="external-link">"BiocManager"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"dada2"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'getOption("repos")' replaces Bioconductor standard repositories, see</span></span>
-<span><span class="co">#&gt; 'help("repositories", package = "BiocManager")' for details.</span></span>
-<span><span class="co">#&gt; Replacement repositories:</span></span>
-<span><span class="co">#&gt;     CRAN: https://cloud.r-project.org</span></span>
-<span><span class="co">#&gt; Bioconductor version 3.18 (BiocManager 1.30.22), R 4.3.2 (2023-10-31)</span></span>
 <span><span class="co">#&gt; Warning: package(s) not installed when version(s) same as or greater than current; use</span></span>
 <span><span class="co">#&gt;   `force = TRUE` to re-install: 'dada2'</span></span>
-<span><span class="co">#&gt; Installation paths not writeable, unable to update packages</span></span>
-<span><span class="co">#&gt;   path: /usr/local/lib/R/site-library</span></span>
-<span><span class="co">#&gt;   packages:</span></span>
-<span><span class="co">#&gt;     BH, cpp11, httpgd, Rcpp, rlang, systemfonts</span></span>
-<span><span class="co">#&gt; Old packages: 'ALDEx2', 'ANCOMBC', 'annotate', 'AnnotationDbi',</span></span>
-<span><span class="co">#&gt;   'AnnotationHub', 'aricode', 'basilisk', 'basilisk.utils', 'BayesFactor',</span></span>
-<span><span class="co">#&gt;   'beachmat', 'benchdamic', 'bibliometrix', 'BiocBaseUtils', 'BiocFileCache',</span></span>
-<span><span class="co">#&gt;   'BiocGenerics', 'BiocNeighbors', 'BiocSingular', 'BiocVersion', 'Biostrings',</span></span>
-<span><span class="co">#&gt;   'bluster', 'brio', 'bslib', 'Cairo', 'checkmate', 'ComplexHeatmap', 'copula',</span></span>
-<span><span class="co">#&gt;   'covr', 'crosstalk', 'curl', 'data.table', 'dbplyr', 'dearseq', 'decontam',</span></span>
-<span><span class="co">#&gt;   'DelayedMatrixStats', 'deldir', 'densvis', 'desc', 'DescTools', 'DESeq2',</span></span>
-<span><span class="co">#&gt;   'dir.expiry', 'DirichletMultinomial', 'downloadthis', 'dqrng', 'drake', 'DT',</span></span>
-<span><span class="co">#&gt;   'e1071', 'ecodist', 'edgeR', 'ExperimentHub', 'expm', 'fBasics', 'foreign',</span></span>
-<span><span class="co">#&gt;   'fstcore', 'gaston', 'gdsfmt', 'genefilter', 'GenomeInfoDb', 'GenomicRanges',</span></span>
-<span><span class="co">#&gt;   'gert', 'ggiraph', 'ggside', 'ggthemes', 'ggtree', 'ggtreeExtra', 'git2r',</span></span>
-<span><span class="co">#&gt;   'gmp', 'graphlayouts', 'grImport2', 'gtools', 'haven', 'htmlTable',</span></span>
-<span><span class="co">#&gt;   'htmlwidgets', 'httpuv', 'insight', 'interactiveDisplayBase', 'interp',</span></span>
-<span><span class="co">#&gt;   'KEGGREST', 'later', 'lava', 'LEA', 'leaflet', 'leiden', 'limma', 'link2GI',</span></span>
-<span><span class="co">#&gt;   'lintr', 'lme4', 'lpSolve', 'lpSolveAPI', 'Maaslin2', 'maps', 'markdown',</span></span>
-<span><span class="co">#&gt;   'MAST', 'Matrix', 'MatrixModels', 'matrixStats', 'mclust', 'mia',</span></span>
-<span><span class="co">#&gt;   'microbiome', 'microbiomeDataSets', 'MicrobiotaProcess',</span></span>
-<span><span class="co">#&gt;   'MultiAssayExperiment', 'mvtnorm', 'network', 'nlme', 'NOISeq', 'ordinal',</span></span>
-<span><span class="co">#&gt;   'osqp', 'pak', 'parameters', 'pcaPP', 'performance', 'plotrix', 'pls',</span></span>
-<span><span class="co">#&gt;   'pracma', 'processx', 'progress', 'PROJ', 'qgraph', 'qs', 'R.utils',</span></span>
-<span><span class="co">#&gt;   'rbibutils', 'RcppArmadillo', 'RcppEigen', 'Rdpack', 'report', 'Rfast',</span></span>
-<span><span class="co">#&gt;   'rgl', 'rhdf5', 'rhdf5filters', 'rJava', 'Rmpfr', 'robustbase', 'rpart',</span></span>
-<span><span class="co">#&gt;   'RSQLite', 'Rtsne', 's2', 'S4Vectors', 'sass', 'ScaledMatrix', 'scales',</span></span>
-<span><span class="co">#&gt;   'scater', 'scuttle', 'segmented', 'SeqArray', 'seqinr', 'seriation',</span></span>
-<span><span class="co">#&gt;   'Seurat', 'SeuratObject', 'shiny', 'shinybusy', 'SingleCellExperiment',</span></span>
-<span><span class="co">#&gt;   'sna', 'sp', 'SparseArray', 'sparseMatrixStats', 'spatstat.data',</span></span>
-<span><span class="co">#&gt;   'spatstat.explore', 'spatstat.linnet', 'spatstat.model', 'spatstat.random',</span></span>
-<span><span class="co">#&gt;   'spatstat.sparse', 'spatstat.utils', 'spdep', 'stringdist', 'stringfish',</span></span>
-<span><span class="co">#&gt;   'svglite', 'testthat', 'this.path', 'tinytex', 'TMB', 'treeio',</span></span>
-<span><span class="co">#&gt;   'TreeSummarizedExperiment', 'units', 'V8', 'vroom', 'wesanderson', 'wk',</span></span>
-<span><span class="co">#&gt;   'Wrench', 'XML', 'xml2', 'zCompositions', 'zinbwave', 'cluster'</span></span>
 <span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"phyloseq"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'getOption("repos")' replaces Bioconductor standard repositories, see</span></span>
-<span><span class="co">#&gt; 'help("repositories", package = "BiocManager")' for details.</span></span>
-<span><span class="co">#&gt; Replacement repositories:</span></span>
-<span><span class="co">#&gt;     CRAN: https://cloud.r-project.org</span></span>
-<span><span class="co">#&gt; Bioconductor version 3.18 (BiocManager 1.30.22), R 4.3.2 (2023-10-31)</span></span>
 <span><span class="co">#&gt; Warning: package(s) not installed when version(s) same as or greater than current; use</span></span>
 <span><span class="co">#&gt;   `force = TRUE` to re-install: 'phyloseq'</span></span>
-<span><span class="co">#&gt; Installation paths not writeable, unable to update packages</span></span>
-<span><span class="co">#&gt;   path: /usr/local/lib/R/site-library</span></span>
-<span><span class="co">#&gt;   packages:</span></span>
-<span><span class="co">#&gt;     BH, cpp11, httpgd, Rcpp, rlang, systemfonts</span></span>
-<span><span class="co">#&gt; Old packages: 'ALDEx2', 'ANCOMBC', 'annotate', 'AnnotationDbi',</span></span>
-<span><span class="co">#&gt;   'AnnotationHub', 'aricode', 'basilisk', 'basilisk.utils', 'BayesFactor',</span></span>
-<span><span class="co">#&gt;   'beachmat', 'benchdamic', 'bibliometrix', 'BiocBaseUtils', 'BiocFileCache',</span></span>
-<span><span class="co">#&gt;   'BiocGenerics', 'BiocNeighbors', 'BiocSingular', 'BiocVersion', 'Biostrings',</span></span>
-<span><span class="co">#&gt;   'bluster', 'brio', 'bslib', 'Cairo', 'checkmate', 'ComplexHeatmap', 'copula',</span></span>
-<span><span class="co">#&gt;   'covr', 'crosstalk', 'curl', 'data.table', 'dbplyr', 'dearseq', 'decontam',</span></span>
-<span><span class="co">#&gt;   'DelayedMatrixStats', 'deldir', 'densvis', 'desc', 'DescTools', 'DESeq2',</span></span>
-<span><span class="co">#&gt;   'dir.expiry', 'DirichletMultinomial', 'downloadthis', 'dqrng', 'drake', 'DT',</span></span>
-<span><span class="co">#&gt;   'e1071', 'ecodist', 'edgeR', 'ExperimentHub', 'expm', 'fBasics', 'foreign',</span></span>
-<span><span class="co">#&gt;   'fstcore', 'gaston', 'gdsfmt', 'genefilter', 'GenomeInfoDb', 'GenomicRanges',</span></span>
-<span><span class="co">#&gt;   'gert', 'ggiraph', 'ggside', 'ggthemes', 'ggtree', 'ggtreeExtra', 'git2r',</span></span>
-<span><span class="co">#&gt;   'gmp', 'graphlayouts', 'grImport2', 'gtools', 'haven', 'htmlTable',</span></span>
-<span><span class="co">#&gt;   'htmlwidgets', 'httpuv', 'insight', 'interactiveDisplayBase', 'interp',</span></span>
-<span><span class="co">#&gt;   'KEGGREST', 'later', 'lava', 'LEA', 'leaflet', 'leiden', 'limma', 'link2GI',</span></span>
-<span><span class="co">#&gt;   'lintr', 'lme4', 'lpSolve', 'lpSolveAPI', 'Maaslin2', 'maps', 'markdown',</span></span>
-<span><span class="co">#&gt;   'MAST', 'Matrix', 'MatrixModels', 'matrixStats', 'mclust', 'mia',</span></span>
-<span><span class="co">#&gt;   'microbiome', 'microbiomeDataSets', 'MicrobiotaProcess',</span></span>
-<span><span class="co">#&gt;   'MultiAssayExperiment', 'mvtnorm', 'network', 'nlme', 'NOISeq', 'ordinal',</span></span>
-<span><span class="co">#&gt;   'osqp', 'pak', 'parameters', 'pcaPP', 'performance', 'plotrix', 'pls',</span></span>
-<span><span class="co">#&gt;   'pracma', 'processx', 'progress', 'PROJ', 'qgraph', 'qs', 'R.utils',</span></span>
-<span><span class="co">#&gt;   'rbibutils', 'RcppArmadillo', 'RcppEigen', 'Rdpack', 'report', 'Rfast',</span></span>
-<span><span class="co">#&gt;   'rgl', 'rhdf5', 'rhdf5filters', 'rJava', 'Rmpfr', 'robustbase', 'rpart',</span></span>
-<span><span class="co">#&gt;   'RSQLite', 'Rtsne', 's2', 'S4Vectors', 'sass', 'ScaledMatrix', 'scales',</span></span>
-<span><span class="co">#&gt;   'scater', 'scuttle', 'segmented', 'SeqArray', 'seqinr', 'seriation',</span></span>
-<span><span class="co">#&gt;   'Seurat', 'SeuratObject', 'shiny', 'shinybusy', 'SingleCellExperiment',</span></span>
-<span><span class="co">#&gt;   'sna', 'sp', 'SparseArray', 'sparseMatrixStats', 'spatstat.data',</span></span>
-<span><span class="co">#&gt;   'spatstat.explore', 'spatstat.linnet', 'spatstat.model', 'spatstat.random',</span></span>
-<span><span class="co">#&gt;   'spatstat.sparse', 'spatstat.utils', 'spdep', 'stringdist', 'stringfish',</span></span>
-<span><span class="co">#&gt;   'svglite', 'testthat', 'this.path', 'tinytex', 'TMB', 'treeio',</span></span>
-<span><span class="co">#&gt;   'TreeSummarizedExperiment', 'units', 'V8', 'vroom', 'wesanderson', 'wk',</span></span>
-<span><span class="co">#&gt;   'Wrench', 'XML', 'xml2', 'zCompositions', 'zinbwave', 'cluster'</span></span>
 <span></span>
 <span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://devtools.r-lib.org/" class="external-link">"devtools"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"adrientaudiere/MiscMetabar"</span>, ref <span class="op">=</span> <span class="st">"dev"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Downloading GitHub repo adrientaudiere/MiscMetabar@dev</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ── R CMD build ─────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt; * checking for file ‘/tmp/RtmpOhxQ8G/remotes3c7b673226355/adrientaudiere-MiscMetabar-59ef25a/DESCRIPTION’ ... OK</span></span>
-<span><span class="co">#&gt; * preparing ‘MiscMetabar’:</span></span>
-<span><span class="co">#&gt; * checking DESCRIPTION meta-information ... OK</span></span>
-<span><span class="co">#&gt; * checking for LF line-endings in source and make files and shell scripts</span></span>
-<span><span class="co">#&gt; * checking for empty or unneeded directories</span></span>
-<span><span class="co">#&gt; * building ‘MiscMetabar_0.51.tar.gz’</span></span>
-<span><span class="co">#&gt; Installation du package dans '/tmp/RtmpVdTtbP/temp_libpathd6864a1812db'</span></span>
-<span><span class="co">#&gt; (car 'lib' n'est pas spécifié)</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"adrientaudiere/MiscMetabar"</span>, ref <span class="op">=</span> <span class="st">"dev"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="some-use-of-miscmetabar">Some use of MiscMetabar<a class="anchor" aria-label="anchor" href="#some-use-of-miscmetabar"></a>
 </h2>
 <p>See vignettes in the <a href="https://adrientaudiere.github.io/MiscMetabar/">MiscMetabar</a> website for more examples.</p>
-<p>For an introduction to metabarcoding in R, Please visite the <a href="https://adrientaudiere.github.io/MiscMetabar/articles/states_of_fields_in_R.html">state of the field</a> vignettes. The <a href="">import, export and track</a> vignette explains how import and export <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Reclustering.html" class="uri">https://adrientaudiere.github.io/MiscMetabar/articles/Reclustering.html</a>. Its also show how to summarize useful information (number of sequences, samples and clusters) accross bioinformatic pipelines.</p>
+<p>For an introduction to metabarcoding in R, Please visite the <a href="https://adrientaudiere.github.io/MiscMetabar/articles/states_of_fields_in_R.html">state of the field</a> vignettes. The <a href="https://adrientaudiere.github.io/MiscMetabar/articles/import_export_track.html">import, export and track</a> vignette explains how import and export <code>phyloseq</code> object. Its also show how to summarize useful information (number of sequences, samples and clusters) accross bioinformatic pipelines.</p>
 <p>If you are interested in ecological metrics, see the vignettes describing <a href="https://adrientaudiere.github.io/MiscMetabar/articles/alpha-div.html">alpha-diversity</a> and <a href="https://adrientaudiere.github.io/MiscMetabar/articles/beta-div.html">beta-diversity</a> analysis. The vignette <a href="https://adrientaudiere.github.io/MiscMetabar/articles/filter.html">filter taxa and samples</a> describes some data-filtering processes using MiscMetabar and the <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Reclustering.html">reclustering</a> tutorial introduces the different way of clustering already-clustered OTU/ASV. The vignette <a href="">tengeler</a> explore the dataset from Tengeler et al. (2020) using some MiscMetabar functions.</p>
-<p>For developers, I also have a vignette describing som <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html">rules of codes</a>.</p>
+<p>For developers, I also wrote a vignette describing som <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html">rules of codes</a>.</p>
 <div class="section level3">
 <h3 id="summarize-a-physeq-object">Summarize a physeq object<a class="anchor" aria-label="anchor" href="#summarize-a-physeq-object"></a>
 </h3>
@@ -356,8 +164,6 @@
 </h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">MiscMetabar</span><span class="fu">::</span><span class="fu"><a href="reference/hill_pq.html">hill_pq</a></span><span class="op">(</span><span class="va">data_fungi</span>, variable <span class="op">=</span> <span class="st">"Height"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Taxa are now in rows.</span></span>
-<span><span class="co">#&gt; Cleaning suppress 0 taxa and 0 samples.</span></span>
 <span><span class="va">p</span><span class="op">$</span><span class="va">plot_Hill_0</span></span></code></pre></div>
 <div class="figure">
 <img src="reference/figures/README-unnamed-chunk-4-1.png" alt="Hill number 1" width="100%"><p class="caption">

@@ -147,22 +147,22 @@ the function <code><a href="../reference/asv2otu.html">asv2otu()</a></code>, usi
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>iteration <span class="dv">16</span> of up to <span class="dv">400</span> (<span class="fl">100.0</span>% coverage)</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 0.62 secs</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 0.61 secs</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Sorting by relatedness within 4 groups:</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>iteration <span class="dv">58</span> of up to <span class="dv">324</span> (<span class="fl">100.0</span>% stability) </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>iteration <span class="dv">53</span> of up to <span class="dv">324</span> (<span class="fl">100.0</span>% stability) </span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 2.07 secs</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 1.94 secs</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clustering sequences by 8-mer similarity:</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ================================================================================</span></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clusters via relatedness sorting: 99.3% (0% exclusively)</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clusters via rare 6-mers: 100% (0.7% exclusively)</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clusters via relatedness sorting: 99.7% (0% exclusively)</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clusters via rare 6-mers: 100% (0.3% exclusively)</span></span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Estimated clustering effectiveness: 100%</span></span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 0.67 secs</span></span></code></pre></div>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 0.65 secs</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">otu_vs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/asv2otu.html">asv2otu</a></span><span class="op">(</span><span class="va">data_fungi_sp_known</span>, method <span class="op">=</span> <span class="st">"vsearch"</span><span class="op">)</span></span></code></pre></div>
 <p>The vsearch method requires the installation of <a href="https://github.com/torognes/vsearch" class="external-link">Vsearch</a>.</p>
@@ -205,7 +205,7 @@ clusters.</p>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;             nb_sequences nb_clusters nb_samples</span></span>
 <span><span class="co">#&gt; Raw data         1106581         651        185</span></span>
-<span><span class="co">#&gt; OTU              1106581         361        185</span></span>
+<span><span class="co">#&gt; OTU              1106581         360        185</span></span>
 <span><span class="co">#&gt; OTU_vsearch      1106581         362        185</span></span>
 <span><span class="co">#&gt; LULU             1106581         549        185</span></span></code></pre></div>
 </div>
