@@ -46,12 +46,6 @@ You can install the stable version from [GitHub](https://github.com/)
 with:
 
 ```{r, results = 'hide'}
-if (!require("BiocManager", quietly = TRUE)) {
-  install.packages("BiocManager")
-}
-BiocManager::install("dada2")
-BiocManager::install("phyloseq")
-
 if (!require("devtools", quietly = TRUE)) {
   install.packages("devtools")
 }
@@ -62,12 +56,6 @@ You can install the development version from
 [GitHub](https://github.com/) with:
 
 ```{r, results = 'hide'}
-if (!require("BiocManager", quietly = TRUE)) {
-  install.packages("BiocManager")
-}
-BiocManager::install("dada2")
-BiocManager::install("phyloseq")
-
 if (!require("devtools", quietly = TRUE)) {
   install.packages("devtools")
 }
