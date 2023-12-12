@@ -62,7 +62,6 @@ The filter functions `subset_samples_pq()` and `subset_taxa_pq()` complement `su
 
 I also implement a function to filter taxa based on their blast to a custom database (`filter_asv_blast()`). This function uses the blastn software [@altschul1990] to compare ASV sequences to a database and filter out species that are below a given threshold of e-value and/or bit-score.
 
-
 ## Exploration 
 
 `MiscMetabar` provides a large number of facilities to explore the biological diversity in a phyloseq object. In most functions, a parameter enables the effect of the number of reads (sampling depth) to be controlled by rarefaction or other statistical methods, depending on the function. For example, the alpha diversity analysis (function `hill_pq()`) uses the HSD-Tuckey test on a linear model that includes the square roots of the number of reads as the first explanatory variable.
