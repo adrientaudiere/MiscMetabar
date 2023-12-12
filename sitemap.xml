@@ -151,6 +151,9 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/get_file_extension.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/ggbetween_pq.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/ggvenn_pq.html</loc>
   </url>
   <url>
@@ -209,6 +212,9 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_LCBD_pq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_SCBD_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_deseq2_pq.html</loc>
