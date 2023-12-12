@@ -45,7 +45,7 @@ BiocManager.
 You can install the stable version from [GitHub](https://github.com/)
 with:
 
-```{r}
+```{r, results = 'hide'}
 if (!require("BiocManager", quietly = TRUE)) {
   install.packages("BiocManager")
 }
@@ -61,7 +61,7 @@ devtools::install_github("adrientaudiere/MiscMetabar")
 You can install the development version from
 [GitHub](https://github.com/) with:
 
-```{r}
+```{r, results = 'hide'}
 if (!require("BiocManager", quietly = TRUE)) {
   install.packages("BiocManager")
 }
@@ -89,7 +89,7 @@ For developers, I also wrote a vignette describing som [rules of codes](https://
 
 ### Summarize a physeq object
 
-```{r example, message=FALSE}
+```{r example}
 library("MiscMetabar")
 library("phyloseq")
 library("magrittr")
