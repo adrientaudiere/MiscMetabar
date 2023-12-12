@@ -38,6 +38,161 @@ navbar:
     - text: Rules of code
       href: articles/Rules.html
 
+reference:
+- title: Describe phyloseq object
+  contents:
+  - summary_plot_pq
+  - tbl_sum_samdata
+  - verify_pq
+
+
+- title: Transform phyloseq object
+- subtitle: Taxonomy
+  contents: 
+  - add_funguild_info
+  - add_new_taxonomy_pq
+  - add_blast_info
+  - blast_to_phyloseq
+  - blast_pq
+  - blast_to_derep
+  - filter_asv_blast
+
+- subtitle: OTU table
+  contents: 
+  - as_binary_otu_table
+  - asv2otu
+  - lulu_pq
+  - mumu_pq
+  - subset_taxa_pq
+  - subset_taxa_tax_control
+
+- subtitle: Sample datase
+  contents:
+  - subset_samples_pq 
+
+- subtitle: Phylogenetic tree
+  contents: 
+  - build_phytree_pq
+
+- subtitle: Others
+  contents: 
+  - add_dna_to_phyloseq
+  - clean_pq
+
+
+- title: Explore phyloseq object
+- subtitle: alpha-diversity
+  contents:
+  - accu_plot
+  - accu_samp_threshold
+  - hill_pq
+  - hill_tuckey_pq
+  - iNEXT_pq
+
+
+- subtitle: beta-diversity
+  contents:
+  - accu_samp_threshold
+  - adonis_pq
+  - biplot_pq
+  - circle_pq
+  - compare_pairs_pq
+  - ggvenn_pq
+  - graph_test_pq
+  - LCBD_pq
+  - multi_biplot_pq
+  - plot_LCBD_pq
+  - plot_tsne_pq
+  - ridges_pq
+  - sankey_pq
+  - SRS_curve_pq
+  - tsne_pq
+  - upset_pq
+  - upset_test_pq
+  - venn_pq
+
+- subtitle: Differencial abundance analysis
+  contents:
+  - multipatt_pq
+  - phyloseq_to_edgeR
+  - plot_edgeR_pq
+  - plot_deseq2_pq
+  - plot_mt
+
+- subtitle: Taxonomy
+  contents:
+  - heat_tree_pq
+  - krona
+  - merge_krona
+  - multitax_bar_pq
+  - plot_guild_pq
+  - plot_tax_pq
+  - rotl_pq
+  - search_exact_seq_pq
+  - tax_bar_pq
+  - tax_datatable
+  - treemap_pq
+  - vs_search_global
+
+- title: Improve reproducibility
+- subtitle: Import/export phyloseq object
+  contents:
+  - read_pq
+  - save_pq
+  - write_pq
+- subtitle: Track info along pipeline
+  contents:
+  - count_seq
+  - track_wkflow
+  - track_wkflow_samples
+- subtitle: Utilities for [targets](https://books.ropensci.org/targets/) pipeline
+  contents:
+  - list_fastq_files
+  - rename_samples_otu_table
+  - select_one_sample
+  - simplify_taxo
+  - subsample_fastq
+
+- title: Datasets
+  contents: 
+  - data_fungi
+  - data_fungi_sp_known
+  - Tengeler2020_pq
+    
+- title: Others utilities
+  contents:
+  - all_object_size
+  - diff_fct_diff_class
+  - dist_bycol
+  - dist_pos_control
+  - funky_color
+  - get_file_extension
+  - install_pkg_needed
+  - multiplot
+  - perc
+
+  
+  
+- title: Deprecated
+  contents:
+  - adonis_phyloseq 
+  - biplot_physeq
+  - clean_physeq 
+  - ggVenn_phyloseq
+  - hill_phyloseq 
+  - hill_tuckey_phyloseq
+  - lulu_phyloseq
+  - otu_circle
+  - physeq_graph_test
+  - physeq_heat_tree
+  - plot_deseq2_phyloseq
+  - plot_edgeR_phyloseq
+  - read_phyloseq
+  - sankey_phyloseq
+  - summary_plot_phyloseq
+  - venn_phyloseq
+  - write_phyloseq
+  
 
 development:
   mode: auto
