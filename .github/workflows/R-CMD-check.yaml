@@ -45,4 +45,4 @@ jobs:
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
-          args: 'c("--no-tests", "--no-examples", "--no-vignettes", "--no-build-vignettes")'
+          args: 'c("--no-tests", "--no-examples", "--no-vignettes", "--no-build-vignettes", "--no-manual")'
