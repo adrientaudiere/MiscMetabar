@@ -352,6 +352,7 @@ test_that("tax_bar_pq work with data_fungi dataset", {
 })
 
 test_that("add_funguild_info and plot_guild_pq work with data_fungi dataset", {
+  library(FUNGuildR)
   expect_s4_class(
     df <-
       add_funguild_info(

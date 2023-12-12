@@ -1427,7 +1427,7 @@ hill_pq <-
 #'
 #' @export
 #' @examples
-#' p <- ggbetween_pq(data_fungi, variable = "Time",  p.adjust.method = "BH")
+#' p <- ggbetween_pq(data_fungi, variable = "Time", p.adjust.method = "BH")
 #' p[[1]]
 #' ggbetween_pq(data_fungi, variable = "Height", one_plot = TRUE)
 #' @author Adrien Taudière
@@ -1435,28 +1435,31 @@ hill_pq <-
 #'   Please make a reference to `ggstatsplot::ggbetweenstats()` if you
 #'   use this function.
 
-ggbetween_pq <- function(physeq, variable, one_plot = FALSE, ...){
+ggbetween_pq <- function(physeq, variable, one_plot = FALSE, ...) {
   physeq <- clean_pq(physeq, force_taxa_as_columns = TRUE)
-  df <- cbind("nb_asv" = sample_sums(physeq@otu_table), physeq@sam_data,
-           "hill_0"= vegan::renyi(physeq@otu_table, scale = c(0), hill = TRUE),
-           "hill_1"= vegan::renyi(physeq@otu_table, scale = c(1), hill = TRUE),
-           "hill_2"= vegan::renyi(physeq@otu_table, scale = c(2), hill = TRUE)
-           )
+  df <- cbind(
+    "nb_asv" = sample_sums(physeq@otu_table), physeq@sam_data,
+    "hill_0" = vegan::renyi(physeq@otu_table, scale = c(0), hill = TRUE),
+    "hill_1" = vegan::renyi(physeq@otu_table, scale = c(1), hill = TRUE),
+    "hill_2" = vegan::renyi(physeq@otu_table, scale = c(2), hill = TRUE)
+  )
   variable <- sym(variable)
-  p0 <- ggstatsplot::ggbetweenstats(df,  !!variable, hill_0, ...)
-  p1 <- ggstatsplot::ggbetweenstats(df,  !!variable, hill_1, ...)
-  p2 <- ggstatsplot::ggbetweenstats(df,  !!variable, hill_2, ...)
+  p0 <- ggstatsplot::ggbetweenstats(df, !!variable, hill_0, ...)
+  p1 <- ggstatsplot::ggbetweenstats(df, !!variable, hill_1, ...)
+  p2 <- ggstatsplot::ggbetweenstats(df, !!variable, hill_2, ...)
 
-  res <- list("plot_Hill_0" = p0,
-              "plot_Hill_1" = p1,
-              "plot_Hill_2" = p2)
+  res <- list(
+    "plot_Hill_0" = p0,
+    "plot_Hill_1" = p1,
+    "plot_Hill_2" = p2
+  )
 
-   if (one_plot) {
-      install_pkg_needed("patchwork")
-      requireNamespace("patchwork", quietly = TRUE)
-       res <- res[[1]] + res[[2]] + res[[3]]
-   }
-   return(res)
+  if (one_plot) {
+    install_pkg_needed("patchwork")
+    requireNamespace("patchwork", quietly = TRUE)
+    res <- res[[1]] + res[[2]] + res[[3]]
+  }
+  return(res)
 }
 
 
@@ -3044,7 +3047,7 @@ diff_fct_diff_class <-
 #' @export
 #'
 #' @examples
-#' data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi)>10000)
+#' data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
 #' tax_bar_pq(data_fungi_ab) + theme(legend.position = "none")
 #' tax_bar_pq(data_fungi_ab, taxa = "Class")
 #' tax_bar_pq(data_fungi_ab, taxa = "Class", percent_bar = TRUE)

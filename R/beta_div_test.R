@@ -422,10 +422,10 @@ plot_LCBD_pq <- function(physeq,
 #'
 #' @examples
 #' plot_SCBD_pq(data_fungi) +
-#'   geom_text(aes(label=paste(Genus, Species)), hjust=1, vjust=2) +
+#'   geom_text(aes(label = paste(Genus, Species)), hjust = 1, vjust = 2) +
 #'   xlim(c(0, NA))
 #'
-#' plot_SCBD_pq(data_fungi, tax_level="Class", tax_color="Phylum", min_SCBD=0) +
+#' plot_SCBD_pq(data_fungi, tax_level = "Class", tax_color = "Phylum", min_SCBD = 0) +
 #'   geom_jitter()
 #' @author Adrien Taudière
 #' @details
@@ -447,9 +447,14 @@ plot_SCBD_pq <- function(physeq,
     tax_tab
   )
 
-  p_SCBD <-ggplot(filter(resSCBD, SCBD > min_SCBD),
-                  aes(x=SCBD, y=factor(.data[[tax_level]]),
-                      color=.data[[tax_color]])) + geom_point()
+  p_SCBD <- ggplot(
+    filter(resSCBD, SCBD > min_SCBD),
+    aes(
+      x = SCBD, y = factor(.data[[tax_level]]),
+      color = .data[[tax_color]]
+    )
+  ) +
+    geom_point()
 
   return(p_SCBD)
 }
@@ -473,7 +478,7 @@ plot_SCBD_pq <- function(physeq,
 #' @return A ggplot object
 #' @export
 #' @examples
-#' data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi)>10000)
+#' data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
 #' multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)), fact = "Time")
 #' multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)),
 #'   fact = "Time",

@@ -15,6 +15,8 @@ the \code{sam_data} slot of the physeq object.}
 
 \item{one_plot}{(logical, default FALSE) If TRUE, return a unique
 plot with the three plot inside using the patchwork package.}
+
+\item{...}{Other arguments passed on to \code{\link[ggstatsplot:ggbetweenstats]{ggstatsplot::ggbetweenstats()}} function.}
 }
 \value{
 Either an unique ggplot2 object (if one_plot is TRUE) or
@@ -40,7 +42,7 @@ Please make a reference to \code{ggstatsplot::ggbetweenstats()} if you
 use this function.
 }
 \examples{
-p <- ggbetween_pq(data_fungi, variable = "Time",  p.adjust.method = "BH")
+p <- ggbetween_pq(data_fungi, variable = "Time", p.adjust.method = "BH")
 p[[1]]
 ggbetween_pq(data_fungi, variable = "Height", one_plot = TRUE)
 }

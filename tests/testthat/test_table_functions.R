@@ -38,8 +38,8 @@ test_that("tbl_sum_samdata function works fine with data_fungi and enterotype da
   expect_s3_class(tbl_sum_samdata(data_fungi), "tbl_summary")
   expect_s3_class(tbl_sum_samdata(data_fungi, remove_col_unique_value = FALSE), "tbl_summary")
   expect_s3_class(tbl_sum_samdata(data_fungi,
-                  include = c("Time", "Height"),
-                  type = list(Time ~ "continuous2", Height ~ "categorical"),
-                  statistic = list(Time ~ c("{median} ({p25}, {p75})", "{min}, {max}"))
+    include = c("Time", "Height"),
+    type = list(Time ~ "continuous2", Height ~ "categorical"),
+    statistic = list(Time ~ c("{median} ({p25}, {p75})", "{min}, {max}"))
   ), "tbl_summary")
-  })
+})
