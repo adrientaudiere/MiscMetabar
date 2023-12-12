@@ -88,6 +88,7 @@ reference:
   - hill_pq
   - hill_tuckey_pq
   - iNEXT_pq
+  - ggbetween_pq
 
 
 - subtitle: beta-diversity
@@ -102,6 +103,7 @@ reference:
   - LCBD_pq
   - multi_biplot_pq
   - plot_LCBD_pq
+  - plot_SCBD_pq
   - plot_tsne_pq
   - ridges_pq
   - sankey_pq
@@ -111,7 +113,7 @@ reference:
   - upset_test_pq
   - venn_pq
 
-- subtitle: Differencial abundance analysis
+- subtitle: Differential abundance analysis
   contents:
   - multipatt_pq
   - phyloseq_to_edgeR

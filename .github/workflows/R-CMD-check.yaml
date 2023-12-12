@@ -46,6 +46,6 @@ jobs:
         with:
           upload-snapshots: true
           #Character vector of arguments to pass to ⁠R CMD check⁠. 
-          args: 'c("--as-cran",  , "--no-tests", "--no-vignettes", "--no-build-vignettes", "--ignore-vignettes")'
+          args: 'c("--as-cran", "--no-tests", "--no-vignettes", "--no-build-vignettes", "--ignore-vignettes")'
           #Character vector of arguments to pass to ⁠R CMD build.
           build_args: 'c("--no-build-vignettes", "--no-manual")'

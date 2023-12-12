@@ -44,10 +44,11 @@ Please make a reference to \code{indicspecies::multipatt()} if you
 use this function.
 }
 \examples{
-multipatt_pq(subset_samples(data_fungi, !is.na(Time)), fact = "Time")
-multipatt_pq(subset_samples(data_fungi, !is.na(Time)),
+data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
+multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)), fact = "Time")
+multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)),
   fact = "Time",
-  max.order = 1, control = permute::how(nperm = 9999)
+  max.order = 1, control = permute::how(nperm = 99)
 )
 }
 \author{

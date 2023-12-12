@@ -283,3 +283,96 @@ test_that("upset_test_pq works with data_fungi dataset", {
   expect_error(upset_test_pq(data_fungi, "Height", var_to_test = "GUILDDDS"))
   expect_error(upset_test_pq(data_fungi))
 })
+
+test_that("plot_LCBD_pq works with data_fungi dataset", {
+  expect_s3_class(
+    plot_LCBD_pq(
+      data_fungi,
+      nperm = 100,
+      only_plot_significant = FALSE
+    ),
+    "ggplot"
+  )
+  expect_s3_class(
+    plot_LCBD_pq(
+      data_fungi,
+      nperm = 100,
+      only_plot_significant = TRUE,
+      pval = 0.2
+    ),
+    "ggplot"
+  )
+  expect_s3_class(
+    plot_LCBD_pq(
+      data_fungi,
+      nperm = 100,
+      only_plot_significant = TRUE,
+      p_adjust_method = "holm",
+      sam_variables = c("Time", "Height")
+    ),
+    "ggplot"
+  )
+})
+
+
+test_that("LCBD_pq works with data_fungi dataset", {
+  expect_s3_class(LCBD_pq(data_fungi, nperm = 100), "beta.div")
+  expect_s3_class(
+    LCBD_pq(data_fungi, nperm = 100, method = "jaccard"),
+    "beta.div"
+  )
+})
+
+test_that("plot_LCBD_pq works with data_fungi dataset", {
+  expect_s3_class(
+    plot_LCBD_pq(
+      data_fungi,
+      nperm = 100,
+      only_plot_significant = FALSE
+    ),
+    "ggplot"
+  )
+  expect_s3_class(
+    plot_LCBD_pq(
+      data_fungi,
+      nperm = 100,
+      only_plot_significant = TRUE,
+      pval = 0.2
+    ),
+    "ggplot"
+  )
+  expect_s3_class(
+    plot_LCBD_pq(
+      data_fungi,
+      nperm = 100,
+      only_plot_significant = TRUE,
+      p_adjust_method = "holm",
+      sam_variables = c("Time", "Height")
+    ),
+    "ggplot"
+  )
+})
+
+
+test_that("plot_SCBD_pq works with data_fungi dataset", {
+  expect_s3_class(plot_SCBD_pq(data_fungi), "ggplot")
+  expect_s3_class(
+    plot_SCBD_pq(
+      data_fungi,
+      tax_level = "Class",
+      tax_color = "Phylum",
+      min_SCBD = 0
+    ),
+    "ggplot"
+  )
+})
+
+test_that("multipatt_pq works with data_fungi dataset", {
+  expect_s3_class(
+    multipatt_pq(subset_samples(data_fungi, !is.na(Time)),
+      fact = "Time"
+    ),
+    "ggplot"
+  )
+  expect_error(multipatt_pq(data_fungi, fact = "Time"))
+})

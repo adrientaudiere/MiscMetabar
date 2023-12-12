@@ -11,10 +11,6 @@ Encoding: UTF-8
 LazyData: true
 Depends:
     R (>= 3.5.0),
-    dada2,
-    dplyr,
-    ggplot2,
-    magrittr,
     phyloseq
 Suggests: 
     adespatial,
@@ -32,6 +28,7 @@ Suggests:
     FUNGuildR,
     gghalves,
     ggh4x,
+    ggstatsplot,
     ggtree,
     ggridges,
     ggVennDiagram,
@@ -57,6 +54,7 @@ Suggests:
     patchwork,
     permute,
     phangorn,
+    phyloseqGraphTest,
     pbapply,
     plotly,
     plyr,
@@ -84,9 +82,12 @@ URL: https://github.com/adrientaudiere/MiscMetabar,
 BugReports: https://github.com/adrientaudiere/MiscMetabar/issues
 Roxygen: list(markdown = TRUE)
 Imports: 
+    dada2,
+    dplyr,
+    ggplot2,
+    magrittr,
     ape,
     lifecycle,
-    phyloseqGraphTest,
     rlang,
     speedyseq,
     stats

@@ -228,11 +228,15 @@ adonis_pq <- function(physeq,
 #' @export
 #' @seealso [plot_LCBD_pq], [adespatial::beta.div()]
 #' @examples
-#' LCBD_pq(data_fungi, nperm = 100)
+#' res <- LCBD_pq(data_fungi, nperm = 100)
+#' str(res)
+#' length(res$LCBD)
+#' length(res$SCBD)
 #' LCBD_pq(data_fungi, nperm = 100, method = "jaccard")
+#'
 #' @author Adrien Taudière
 #' This function is mainly a wrapper of the work of others.
-#'   Please make a reference to `despatial::beta.div()` if you
+#'   Please make a reference to `adespatial::beta.div()` if you
 #'   use this function.
 LCBD_pq <- function(physeq,
                     p_adjust_method = "BH",
@@ -361,7 +365,7 @@ plot_LCBD_pq <- function(physeq,
       }
 
       p <-
-        p_LCBD + patchwork::wrap_plots(p_heatmap) + plot_layout(
+        p_LCBD + patchwork::wrap_plots(p_heatmap) + patchwork::plot_layout(
           widths = c(3, 1), guides =
             "collect"
         )
@@ -388,13 +392,71 @@ plot_LCBD_pq <- function(physeq,
       }
 
       p <-
-        p_LCBD + patchwork::wrap_plots(p_heatmap) + plot_layout(
+        p_LCBD + patchwork::wrap_plots(p_heatmap) + patchwork::plot_layout(
           widths = c(3, 1), guides =
             "collect"
         )
       return(p)
     }
   }
+}
+
+
+#' @title Plot species contributions to beta diversity (SCBD) of samples
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' A wrapper for the [adespatial::beta.div()] function in the case of `physeq`
+#'   object.
+#' @inheritParams clean_pq
+#' @param tax_level: Taxonomic level to used in y axis
+#' @param tax_col: Taxonomic level to colored points
+#' @param min_SCBD (default: 0.01) the minimum SCBD value
+#'   to plot the taxa
+
+#' @param ... Others arguments passed on to [adespatial::beta.div()] function
+#'
+#' @return A ggplot object build with the package patchwork
+#' @export
+#' @seealso [LCBD_pq], [adespatial::beta.div()]
+#'
+#' @examples
+#' plot_SCBD_pq(data_fungi) +
+#'   geom_text(aes(label = paste(Genus, Species)), hjust = 1, vjust = 2) +
+#'   xlim(c(0, NA))
+#'
+#' plot_SCBD_pq(data_fungi, tax_level = "Class", tax_color = "Phylum", min_SCBD = 0) +
+#'   geom_jitter()
+#' @author Adrien Taudière
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please make a reference to `vegan::beta.div()` if you
+#'   use this function.
+plot_SCBD_pq <- function(physeq,
+                         tax_level = "ASV",
+                         tax_color = "Order",
+                         min_SCBD = 0.01,
+                         ...) {
+  resBeta <- LCBD_pq(physeq, nperm = 0, ...)
+
+  tax_tab <- data.frame(physeq@tax_table)
+
+  resSCBD <- tibble(
+    "ASV" = taxa_names(physeq),
+    "SCBD" = resBeta$SCBD,
+    tax_tab
+  )
+
+  p_SCBD <- ggplot(
+    filter(resSCBD, SCBD > min_SCBD),
+    aes(
+      x = SCBD, y = factor(.data[[tax_level]]),
+      color = .data[[tax_color]]
+    )
+  ) +
+    geom_point()
+
+  return(p_SCBD)
 }
 
 
@@ -416,10 +478,11 @@ plot_LCBD_pq <- function(physeq,
 #' @return A ggplot object
 #' @export
 #' @examples
-#' multipatt_pq(subset_samples(data_fungi, !is.na(Time)), fact = "Time")
-#' multipatt_pq(subset_samples(data_fungi, !is.na(Time)),
+#' data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
+#' multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)), fact = "Time")
+#' multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)),
 #'   fact = "Time",
-#'   max.order = 1, control = permute::how(nperm = 9999)
+#'   max.order = 1, control = permute::how(nperm = 99)
 #' )
 #' @author Adrien Taudière
 #' @details

@@ -44,12 +44,10 @@ p <- plot_guild_pq(df)
 library("patchwork")
 (plot_guild_pq(subset_samples(df, Height == "Low"),
   levels_order = p$data$Guild[order(p$data$nb_seq)]
-) +
-  theme(legend.position = "none")) +
+) + theme(legend.position = "none")) +
   (plot_guild_pq(subset_samples(df, Height == "High"),
     levels_order = p$data$Guild[order(p$data$nb_seq)]
-  ) +
-    ylab("") + theme(axis.text.y = element_blank()))
+  ) + ylab("") + theme(axis.text.y = element_blank()))
 }
 }
 \seealso{

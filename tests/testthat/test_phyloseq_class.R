@@ -24,12 +24,24 @@ test_that("asv2otu works fine with Clusterize method", {
 suppressWarnings(vsearch_error_or_not <- try(system("vsearch 2>&1", intern = TRUE), silent = TRUE))
 
 if (class(vsearch_error_or_not) == "try-error") {
-  message("lulu_phyloseq() can't be tested when vsearch is not installed")
+  message("lulu_pq() can't be tested when vsearch is not installed")
 } else {
   test_that("lulu_pq works fine", {
     expect_s4_class(lulu_pq(data_fungi_sp_known)$new_physeq, "phyloseq")
     expect_error(lulu_pq(enterotype)$new_physeq, "phyloseq")
     expect_s4_class(lulu_pq(data_fungi_sp_known, clean_pq = TRUE, verbose = TRUE)$new_physeq, "phyloseq")
+  })
+}
+
+suppressWarnings(mumu_error_or_not <- try(system("mumu --help", intern = TRUE), silent = TRUE))
+
+if (class(mumu_error_or_not) == "try-error") {
+  message("mumu_pq() can't be tested when vsearch is not installed")
+} else {
+  test_that("mumu_pq works fine", {
+    expect_s4_class(mumu_pq(data_fungi_sp_known)$new_physeq, "phyloseq")
+    expect_error(mumu_pq(enterotype)$new_physeq, "phyloseq")
+    expect_s4_class(mumu_pq(data_fungi_sp_known, clean_pq = TRUE, verbose = TRUE)$new_physeq, "phyloseq")
   })
 }
 

@@ -79,3 +79,6 @@ data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <-
 p2 <- hill_pq(data_fungi_modif, "Height", letters = TRUE)
 
 }
+\author{
+Adrien Taudière
+}

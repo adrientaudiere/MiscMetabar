@@ -1750,6 +1750,8 @@ add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, ...) {
 #'   statistic = list(Time ~ c("{median} ({p25}, {p75})", "{min}, {max}"))
 #' )
 #'
+#' data(enterotype)
+#'
 #' tbl_sum_samdata(enterotype)
 #' tbl_sum_samdata(enterotype, include = !contains("SampleId"))
 #' @details
@@ -1860,12 +1862,10 @@ add_funguild_info <- function(physeq,
 #' library("patchwork")
 #' (plot_guild_pq(subset_samples(df, Height == "Low"),
 #'   levels_order = p$data$Guild[order(p$data$nb_seq)]
-#' ) +
-#'   theme(legend.position = "none")) +
+#' ) + theme(legend.position = "none")) +
 #'   (plot_guild_pq(subset_samples(df, Height == "High"),
 #'     levels_order = p$data$Guild[order(p$data$nb_seq)]
-#'   ) +
-#'     ylab("") + theme(axis.text.y = element_blank()))
+#'   ) + ylab("") + theme(axis.text.y = element_blank()))
 #' }
 #' @seealso [add_funguild_info()]
 
