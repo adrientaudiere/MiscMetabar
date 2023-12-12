@@ -195,7 +195,8 @@ perc <- function(x, y = NULL, accuracy = 0, add_symbol = FALSE) {
 #' @author Adrien Taudière
 #' @export
 #' @examples
-#' count_seq(file_path = system.file("extdata", "ex.fasta", package = "MiscMetabar", mustWork = TRUE))
+#' count_seq(file_path = system.file("extdata", "ex.fasta",
+#'           package = "MiscMetabar", mustWork = TRUE))
 #' count_seq(folder_path = "extdata/", pattern = "*.fasta")
 count_seq <- function(file_path = NULL, folder_path = NULL, pattern = NULL) {
   if (is.null(file_path) && is.null(folder_path)) {
@@ -283,15 +284,20 @@ funky_color <-
 #' @export
 #' @examples
 #' \dontrun{
-#' subsample_fastq(system.file("extdata", "ex_R1_001.fastq.gz", package = "MiscMetabar", mustWork = TRUE)), "your_path_to_output")
+#' subsample_fastq(system.file("extdata", "
+#'   ex_R1_001.fastq.gz", package = "MiscMetabar", mustWork = TRUE)),
+#'   "your_path_to_output")
 #' subsample_fastq(list_fastq_files("extdata"), "your_path_to_output", n = 10)
 #' }
-subsample_fastq <- function(fastq_files, folder_output = "subsample", n_seq = 1000) {
+subsample_fastq <- function(fastq_files,
+                            folder_output = "subsample",
+                            n_seq = 1000) {
   for (f in unlist(fastq_files)) {
     if (!dir.exists(folder_output)) {
       dir.create(folder_output)
     }
-    writeLines(readLines(f, n = n_seq * 4), con = paste0(folder_output, "/", basename(f)))
+    writeLines(readLines(f, n = n_seq * 4), con = paste0(folder_output, "/",
+                                                         basename(f)))
   }
 }
 
@@ -319,7 +325,8 @@ subsample_fastq <- function(fastq_files, folder_output = "subsample", n_seq = 10
 #' \dontrun{
 #' install_pkg_needed("ggVennDiagram")
 #' }
-install_pkg_needed <- function(pkg, use_pak = TRUE, bioconductor_pkg = FALSE, github_pkg = FALSE, verbose = FALSE) {
+install_pkg_needed <- function(pkg, use_pak = TRUE, bioconductor_pkg = FALSE,
+                               github_pkg = FALSE, verbose = FALSE) {
   if (!requireNamespace(pkg, quietly = TRUE)) {
     if (verbose) {
       message(paste0("Installation of the package : ", pkg))
