@@ -39,6 +39,8 @@ tbl_sum_samdata(data_fungi,
   statistic = list(Time ~ c("{median} ({p25}, {p75})", "{min}, {max}"))
 )
 
+data(enterotype)
+
 tbl_sum_samdata(enterotype)
 tbl_sum_samdata(enterotype, include = !contains("SampleId"))
 }

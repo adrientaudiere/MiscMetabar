@@ -26,8 +26,12 @@ A wrapper for the \code{\link[adespatial:beta.div]{adespatial::beta.div()}} func
 object.
 }
 \examples{
-LCBD_pq(data_fungi, nperm = 100)
+res <- LCBD_pq(data_fungi, nperm = 100)
+str(res)
+length(res$LCBD)
+length(res$SCBD)
 LCBD_pq(data_fungi, nperm = 100, method = "jaccard")
+
 }
 \seealso{
 \link{plot_LCBD_pq}, \code{\link[adespatial:beta.div]{adespatial::beta.div()}}
@@ -35,6 +39,6 @@ LCBD_pq(data_fungi, nperm = 100, method = "jaccard")
 \author{
 Adrien Taudière
 This function is mainly a wrapper of the work of others.
-Please make a reference to \code{despatial::beta.div()} if you
+Please make a reference to \code{adespatial::beta.div()} if you
 use this function.
 }

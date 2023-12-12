@@ -1205,8 +1205,8 @@ multiplot <-
 #' - plot_tuckey : plot the result of the Tuckey HSD test
 #'
 #' @export
-#' @examples
 #' @author Adrien Taudière
+#' @examples
 #' data(data_fungi)
 #' p <- hill_pq(data_fungi, "Height")
 #' p_h1 <- p[[1]] + theme(legend.position = "none")
@@ -1403,17 +1403,19 @@ hill_pq <-
 
 ################################################################################
 #' Box/Violin plots for between-subjects comparisons of Hill Number
-#' 
+#'
 #' @description
 #' `r lifecycle::badge("experimental")`
-#' 
-#' Basically a wrapper of function [ggstatsplot::ggbetweenstats()] for 
+#'
+#' Basically a wrapper of function [ggstatsplot::ggbetweenstats()] for
 #' object of class phyloseq
 #' @inheritParams clean_pq
 #' @param variable (required): The variable to test. Must be present in
 #'   the `sam_data` slot of the physeq object.
 #' @param one_plot (logical, default FALSE) If TRUE, return a unique
 #'   plot with the three plot inside using the patchwork package.
+#' @param ... Other arguments passed on to [ggstatsplot::ggbetweenstats()] function.
+
 #' @return Either an unique ggplot2 object (if one_plot is TRUE) or
 #'  a list of 3 ggplot2 plot:
 #' - plot_Hill_0 : the ggbetweenstats of Hill number 0 (= species richness)
@@ -1422,6 +1424,7 @@ hill_pq <-
 #'      against the variable
 #' - plot_Hill_2 : the ggbetweenstats of Hill number 2 (= Simpson index)
 #'     against the variable
+#'
 #' @export
 #' @examples
 #' p <- ggbetween_pq(data_fungi, variable = "Time",  p.adjust.method = "BH")
@@ -1434,7 +1437,7 @@ hill_pq <-
 
 ggbetween_pq <- function(physeq, variable, one_plot = FALSE, ...){
   physeq <- clean_pq(physeq, force_taxa_as_columns = TRUE)
-  df <- cbind("nb_asv" = sample_sums(physeq@otu_table), physeq@sam_data, 
+  df <- cbind("nb_asv" = sample_sums(physeq@otu_table), physeq@sam_data,
            "hill_0"= vegan::renyi(physeq@otu_table, scale = c(0), hill = TRUE),
            "hill_1"= vegan::renyi(physeq@otu_table, scale = c(1), hill = TRUE),
            "hill_2"= vegan::renyi(physeq@otu_table, scale = c(2), hill = TRUE)
@@ -1443,8 +1446,8 @@ ggbetween_pq <- function(physeq, variable, one_plot = FALSE, ...){
   p0 <- ggstatsplot::ggbetweenstats(df,  !!variable, hill_0, ...)
   p1 <- ggstatsplot::ggbetweenstats(df,  !!variable, hill_1, ...)
   p2 <- ggstatsplot::ggbetweenstats(df,  !!variable, hill_2, ...)
-  
-  res <- list("plot_Hill_0" = p0, 
+
+  res <- list("plot_Hill_0" = p0,
               "plot_Hill_1" = p1,
               "plot_Hill_2" = p2)
 
@@ -3041,10 +3044,11 @@ diff_fct_diff_class <-
 #' @export
 #'
 #' @examples
-#' tax_bar_pq(data_fungi) + theme(legend.position = "none")
-#' tax_bar_pq(data_fungi, taxa = "Class")
-#' tax_bar_pq(data_fungi, taxa = "Class", percent_bar = TRUE)
-#' tax_bar_pq(data_fungi, taxa = "Class", fact = "Time")
+#' data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi)>10000)
+#' tax_bar_pq(data_fungi_ab) + theme(legend.position = "none")
+#' tax_bar_pq(data_fungi_ab, taxa = "Class")
+#' tax_bar_pq(data_fungi_ab, taxa = "Class", percent_bar = TRUE)
+#' tax_bar_pq(data_fungi_ab, taxa = "Class", fact = "Time")
 #' @author Adrien Taudière
 #' @seealso [plot_tax_pq()] and [multitax_bar_pq()]
 #'

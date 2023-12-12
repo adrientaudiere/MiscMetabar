@@ -63,19 +63,18 @@ against the variable
 Note that this function use a sqrt of the read numbers in the linear
 model in order to correct for uneven sampling depth.
 }
-\examples{
+\author{
+Adrien Taudière
 data(data_fungi)
 p <- hill_pq(data_fungi, "Height")
-p_h1 <- p[[1]] + theme(legend.position = "none")
-p_h2 <- p[[2]] + theme(legend.position = "none")
-p_h3 <- p[[3]] + theme(legend.position = "none")
-multiplot(plotlist = list(p_h1, p_h2, p_h3, p[[4]]), cols = 4)
+p_h1 <- p[\link{1}] + theme(legend.position = "none")
+p_h2 <- p[\link{2}] + theme(legend.position = "none")
+p_h3 <- p[\link{3}] + theme(legend.position = "none")
+multiplot(plotlist = list(p_h1, p_h2, p_h3, p[\link{4}]), cols = 4)Artificially modify data_fungi to force alpha-diversity effect
 
-# Artificially modify data_fungi to force alpha-diversity effect
 data_fungi_modif <- clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height)))
-data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <-
-  data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] +
-  sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
+data_fungi_modif@otu_table\link{data_fungi_modif@sam_data$Height == "High", } <-
+data_fungi_modif@otu_table\link{data_fungi_modif@sam_data$Height == "High", } +
+sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
 p2 <- hill_pq(data_fungi_modif, "Height", letters = TRUE)
-
 }

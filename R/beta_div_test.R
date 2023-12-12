@@ -365,7 +365,7 @@ plot_LCBD_pq <- function(physeq,
       }
 
       p <-
-        p_LCBD + patchwork::wrap_plots(p_heatmap) + plot_layout(
+        p_LCBD + patchwork::wrap_plots(p_heatmap) + patchwork::plot_layout(
           widths = c(3, 1), guides =
             "collect"
         )
@@ -392,7 +392,7 @@ plot_LCBD_pq <- function(physeq,
       }
 
       p <-
-        p_LCBD + patchwork::wrap_plots(p_heatmap) + plot_layout(
+        p_LCBD + patchwork::wrap_plots(p_heatmap) + patchwork::plot_layout(
           widths = c(3, 1), guides =
             "collect"
         )
@@ -409,7 +409,11 @@ plot_LCBD_pq <- function(physeq,
 #' A wrapper for the [adespatial::beta.div()] function in the case of `physeq`
 #'   object.
 #' @inheritParams clean_pq
-#'
+#' @param tax_level: Taxonomic level to used in y axis
+#' @param tax_col: Taxonomic level to colored points
+#' @param min_SCBD (default: 0.01) the minimum SCBD value
+#'   to plot the taxa
+
 #' @param ... Others arguments passed on to [adespatial::beta.div()] function
 #'
 #' @return A ggplot object build with the package patchwork
@@ -469,10 +473,11 @@ plot_SCBD_pq <- function(physeq,
 #' @return A ggplot object
 #' @export
 #' @examples
-#' multipatt_pq(subset_samples(data_fungi, !is.na(Time)), fact = "Time")
-#' multipatt_pq(subset_samples(data_fungi, !is.na(Time)),
+#' data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi)>10000)
+#' multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)), fact = "Time")
+#' multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)),
 #'   fact = "Time",
-#'   max.order = 1, control = permute::how(nperm = 9999)
+#'   max.order = 1, control = permute::how(nperm = 99)
 #' )
 #' @author Adrien Taudière
 #' @details
