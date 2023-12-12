@@ -31,6 +31,14 @@ jobs:
       - name: Install blastn
         run: sudo apt-get install ncbi-blast+
 
+      - name: Install mumu
+        run: >
+         git clone https://github.com/frederic-mahe/mumu.git \
+         && cd ./mumu/\
+         && make\
+         && make check\
+         && sudo make install 
+
       - name: Test coverage
         run: |
           covr::codecov(
