@@ -23,7 +23,9 @@ Nothing, create subsampled fastq files in a folder
 }
 \examples{
 \dontrun{
-subsample_fastq(system.file("extdata", "ex_R1_001.fastq.gz", package = "MiscMetabar", mustWork = TRUE)), "your_path_to_output")
+subsample_fastq(system.file("extdata", "
+  ex_R1_001.fastq.gz", package = "MiscMetabar", mustWork = TRUE)),
+  "your_path_to_output")
 subsample_fastq(list_fastq_files("extdata"), "your_path_to_output", n = 10)
 }
 }
