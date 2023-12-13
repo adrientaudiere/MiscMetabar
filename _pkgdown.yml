@@ -120,6 +120,7 @@ reference:
   - plot_edgeR_pq
   - plot_deseq2_pq
   - plot_mt
+  - ancombc_pq
 
 - subtitle: Taxonomy
   contents:

@@ -45,7 +45,7 @@ A \code{\link{ggplot}}2 plot representing edgeR results
 }
 \examples{
 \dontrun{
-data(GlobalPatterns)
+data("GlobalPatterns", package = "phyloseq")
 plot_edgeR_pq(GlobalPatterns, c("SampleType", "Soil", "Feces"),
   color_tax = "Kingdom"
 )

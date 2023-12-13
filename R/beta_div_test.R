@@ -1,3 +1,4 @@
+################################################################################
 #' @title Performs graph-based permutation tests on phyloseq object
 #' @description
 #' `r lifecycle::badge("maturing")`
@@ -86,8 +87,9 @@ graph_test_pq <- function(physeq,
     return(p)
   }
 }
+################################################################################
 
-
+################################################################################
 #' @title Permanova on a phyloseq object
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -208,9 +210,10 @@ adonis_pq <- function(physeq,
   res_ado <- vegan::adonis2(.formula, data = metadata, ...)
   return(res_ado)
 }
+################################################################################
 
 
-
+################################################################################
 #' @title Compute and test local contributions to beta diversity (LCBD) of
 #'   samples
 #' @description
@@ -228,11 +231,11 @@ adonis_pq <- function(physeq,
 #' @export
 #' @seealso [plot_LCBD_pq], [adespatial::beta.div()]
 #' @examples
-#' res <- LCBD_pq(data_fungi, nperm = 100)
+#' res <- LCBD_pq(data_fungi_sp_known, nperm = 50)
 #' str(res)
 #' length(res$LCBD)
 #' length(res$SCBD)
-#' LCBD_pq(data_fungi, nperm = 100, method = "jaccard")
+#' LCBD_pq(data_fungi_sp_known, nperm = 50, method = "jaccard")
 #'
 #' @author Adrien Taudière
 #' This function is mainly a wrapper of the work of others.
@@ -259,8 +262,9 @@ LCBD_pq <- function(physeq,
     p.adjust(resBeta$p.LCBD, method = p_adjust_method)
   return(resBeta)
 }
+################################################################################
 
-
+################################################################################
 #' @title Plot and test local contributions to beta diversity (LCBD) of samples
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -400,8 +404,9 @@ plot_LCBD_pq <- function(physeq,
     }
   }
 }
+################################################################################
 
-
+################################################################################
 #' @title Plot species contributions to beta diversity (SCBD) of samples
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -458,8 +463,9 @@ plot_SCBD_pq <- function(physeq,
 
   return(p_SCBD)
 }
+################################################################################
 
-
+################################################################################
 #' @title Test and plot multipatt result
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -532,4 +538,73 @@ multipatt_pq <- function(physeq,
       hjust = 1
     ))
   return(p)
+}
+################################################################################
+
+################################################################################
+#' Run ANCOMBC2 on phyloseq object
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' A wrapper for the [ANCOMBC::ancombc2] function
+#'
+#' @inheritParams clean_pq
+#' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
+#'    different lines
+#' @param levels_fact (default NULL) The order of the level in the factor.
+#'   Used for reorder levels and select levels (filter out levels not present
+#'   en levels_fact)
+#' @param tax_level The taxonomic level passed on to [ANCOMBC::ancombc2()]
+#' @param ... Other arguments passed on to [ANCOMBC::ancombc2()] function.
+#' @return
+#' @export
+#'
+#' @examples
+#' res_height <- ancombc_pq(
+#'   subset_taxa_pq(
+#'     data_fungi_sp_known,
+#'     taxa_sums(data_fungi_sp_known) > 5000
+#'   ),
+#'   fact = "Height",
+#'   levels_fact = c("Low", "High"),
+#'   verbose = TRUE
+#' )
+#'
+#' ggplot(
+#'   res_height$res,
+#'   aes(
+#'     y = reorder(taxon, lfc_HeightHigh),
+#'     x = lfc_HeightHigh,
+#'     color = diff_HeightHigh
+#'   )
+#' ) +
+#'   geom_vline(xintercept = 0) +
+#'   geom_segment(aes(
+#'     xend = 0, y = reorder(taxon, lfc_HeightHigh),
+#'     yend = reorder(taxon, lfc_HeightHigh)
+#'   ), color = "darkgrey") +
+#'   geom_point()
+#'
+#' @author Adrien Taudière
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please make a reference to `indicspecies::multipatt()` if you
+#'   use this function.
+ancombc_pq <- function(physeq, fact, levels_fact = NULL, tax_level = "Class", ...) {
+  if (!is.null(levels_fact)) {
+    physeq <- subset_samples_pq(physeq, as.vector(physeq@sam_data[, fact])[[1]] %in% levels_fact)
+  }
+  tse <- mia::makeTreeSummarizedExperimentFromPhyloseq(physeq)
+  if (!is.null(levels_fact)) {
+    SummarizedExperiment::colData(tse)[[fact]] <- factor(tse[[fact]], levels = levels_fact)
+  }
+  res_ancomb <- ANCOMBC::ancombc2(
+    data = tse,
+    assay_name = "counts",
+    fix_formula = fact,
+    tax_level = tax_level,
+    group = fact,
+    ...
+  )
+  return(res_ancomb)
 }

@@ -3,7 +3,7 @@ Type: Package
 Title: Miscellaneous Functions for Metabarcoding Analysis
 Version: 0.52
 Authors@R: person("Adrien", "Taudière", email = "adrien.taudiere@zaclys.net",
-  role = c("aut", "cre"), comment = c(ORCID = "0000-0003-1088-1182"))
+  role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0003-1088-1182"))
 Maintainer: Adrien Taudière <adrien.taudiere@zaclys.net>
 Description: The MiscMetabar package aims to facilitate the description, transformation, exploration, and reproducibility of metabarcoding analysis. Mainly build on the top of phyloseq, dada2 R packages.
 License: AGPL-3
@@ -16,6 +16,7 @@ Depends:
     dada2
 Suggests: 
     adespatial,
+    ANCOMBC,
     BiocManager,
     Biostrings,
     circlize,
@@ -68,6 +69,7 @@ Suggests:
     seqinr,
     SRS,
     stringr,
+    SummarizedExperiment,
     testthat (>= 3.0.0),
     tibble,
     tidyr,
@@ -77,7 +79,8 @@ Suggests:
     utils, 
     vegan,
     venneuler,
-    viridis
+    viridis,
+    withr
 RoxygenNote: 7.2.3
 URL: https://github.com/adrientaudiere/MiscMetabar,
     https://adrientaudiere.github.io/MiscMetabar/
@@ -98,6 +101,7 @@ Remotes:
     github::erocoar/gghalves,
     bioc::phyloseq,
     bioc::dada2,
+    bioc::ANCOMBC,
     github::brendanf/FUNGuildR
 Config/testthat/edition: 3
 Config/testthat/parallel: true

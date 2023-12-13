@@ -1,5 +1,7 @@
 # MiscMetabar 0.53 (in development) 
 
+- Add function `ancombc_pq()` to simplify the call to `ANCOMBC::ancombc2()` : ANalysis of COmpositions of Microbiomes with Bias Correction 2 
+
 # MiscMetabar 0.52 
 
 - Add function `ggbetween_pq()` to facilitate comparison of hill number using the power of `ggstatsplot::ggbetweenstats()`

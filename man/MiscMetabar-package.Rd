@@ -9,9 +9,7 @@
 Functions to help analyze and visualize metabarcoding data. Mainly based on
 the phyloseq and dada2 packages.
 
-\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
-
-Functions to help analyze and visualize metabarcoding data. Mainly build on the top of phyloseq, dada2 and targets R packages.
+The MiscMetabar package aims to facilitate the description, transformation, exploration, and reproducibility of metabarcoding analysis. Mainly build on the top of phyloseq, dada2 R packages.
 }
 \seealso{
 Useful links:
@@ -23,7 +21,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Adrien Taudière \email{adrien.taudiere@zaclys.net} (\href{https://orcid.org/0000-0003-1088-1182}{ORCID})
+\strong{Maintainer}: Adrien Taudière \email{adrien.taudiere@zaclys.net} (\href{https://orcid.org/0000-0003-1088-1182}{ORCID}) [copyright holder]
 
 }
 \keyword{internal}

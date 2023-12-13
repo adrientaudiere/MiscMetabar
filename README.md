@@ -5,7 +5,7 @@
 [![Contributor
 Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 [![License: GPL
-v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
+v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![CodeFactor](https://www.codefactor.io/repository/github/adrientaudiere/miscmetabar/badge/master)](https://www.codefactor.io/repository/github/adrientaudiere/miscmetabar/overview/master)
 [![R-CMD-check](https://github.com/adrientaudiere/MiscMetabar/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/adrientaudiere/MiscMetabar/actions/workflows/R-CMD-check.yaml)
 
@@ -160,6 +160,16 @@ sudo apt-get install ncbi-blast+
 
 ``` sh
 sudo apt-get install vsearch
+```
+
+#### Mumu
+
+``` sh
+git clone https://github.com/frederic-mahe/mumu.git
+cd ./mumu/
+make
+make check
+make install  # as root or sudo
 ```
 
 <div id="refs" class="references csl-bib-body hanging-indent">
