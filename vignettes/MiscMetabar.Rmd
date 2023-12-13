@@ -47,7 +47,7 @@ summary_plot_pq(data_fungi)
 ### Create an interactive table of the tax_table
 
 ```{r results="asis"}
-data("GlobalPatterns")
+data("GlobalPatterns", package = "phyloseq")
 tax_datatable(subset_taxa(
   GlobalPatterns,
   rowSums(GlobalPatterns@otu_table) > 100000

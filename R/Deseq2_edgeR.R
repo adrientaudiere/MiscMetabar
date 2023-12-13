@@ -21,7 +21,7 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' data(GlobalPatterns)
+#' data("GlobalPatterns", package = "phyloseq")
 #' plot_edgeR_pq(GlobalPatterns, c("SampleType", "Soil", "Feces"),
 #'   color_tax = "Kingdom"
 #' )

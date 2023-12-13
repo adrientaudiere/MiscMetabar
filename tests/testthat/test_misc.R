@@ -86,6 +86,11 @@ test_that("diff_fct_diff_class works fine", {
 })
 
 
+withr::local_envvar(
+  R_USER_CACHE_DIR = tempfile(),
+  .local_envir = teardown_env()
+)
+
 test_that("install_pkg_needed works fine", {
   expect_message(install_pkg_needed("abc", verbose = TRUE))
   expect_message(install_pkg_needed("MiscMetabar", verbose = TRUE))

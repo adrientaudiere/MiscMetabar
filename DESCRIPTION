@@ -5,7 +5,7 @@ Version: 0.52
 Authors@R: person("Adrien", "Taudière", email = "adrien.taudiere@zaclys.net",
   role = c("aut", "cre"), comment = c(ORCID = "0000-0003-1088-1182"))
 Maintainer: Adrien Taudière <adrien.taudiere@zaclys.net>
-Description: Functions to help analyze and visualize metabarcoding data. Mainly build on the top of phyloseq, dada2 and targets R packages.
+Description: The MiscMetabar package aims to facilitate the description, transformation, exploration, and reproducibility of metabarcoding analysis. Mainly build on the top of phyloseq, dada2 R packages.
 License: AGPL-3
 Encoding: UTF-8
 LazyData: true

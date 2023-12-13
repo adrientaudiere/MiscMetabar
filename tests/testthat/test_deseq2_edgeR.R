@@ -1,4 +1,4 @@
-data(GlobalPatterns)
+data("GlobalPatterns", package = "phyloseq")
 GP <- subset_samples(GlobalPatterns, GlobalPatterns@sam_data$SampleType %in% c("Soil", "Skin"))
 
 fac2col <- function(x, col.pal = funky_color, na.col = "transparent", seed = NULL) {
