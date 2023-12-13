@@ -409,8 +409,8 @@ plot_LCBD_pq <- function(physeq,
 #' A wrapper for the [adespatial::beta.div()] function in the case of `physeq`
 #'   object.
 #' @inheritParams clean_pq
-#' @param tax_level: Taxonomic level to used in y axis
-#' @param tax_col: Taxonomic level to colored points
+#' @param tax_level Taxonomic level to used in y axis
+#' @param tax_col Taxonomic level to colored points
 #' @param min_SCBD (default: 0.01) the minimum SCBD value
 #'   to plot the taxa
 
@@ -425,7 +425,7 @@ plot_LCBD_pq <- function(physeq,
 #'   geom_text(aes(label = paste(Genus, Species)), hjust = 1, vjust = 2) +
 #'   xlim(c(0, NA))
 #'
-#' plot_SCBD_pq(data_fungi, tax_level = "Class", tax_color = "Phylum", min_SCBD = 0) +
+#' plot_SCBD_pq(data_fungi, tax_level = "Class", tax_col = "Phylum", min_SCBD = 0) +
 #'   geom_jitter()
 #' @author Adrien Taudière
 #' @details
@@ -434,7 +434,7 @@ plot_LCBD_pq <- function(physeq,
 #'   use this function.
 plot_SCBD_pq <- function(physeq,
                          tax_level = "ASV",
-                         tax_color = "Order",
+                         tax_col = "Order",
                          min_SCBD = 0.01,
                          ...) {
   resBeta <- LCBD_pq(physeq, nperm = 0, ...)
@@ -451,7 +451,7 @@ plot_SCBD_pq <- function(physeq,
     filter(resSCBD, SCBD > min_SCBD),
     aes(
       x = SCBD, y = factor(.data[[tax_level]]),
-      color = .data[[tax_color]]
+      color = .data[[tax_col]]
     )
   ) +
     geom_point()

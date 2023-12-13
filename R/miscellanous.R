@@ -195,8 +195,12 @@ perc <- function(x, y = NULL, accuracy = 0, add_symbol = FALSE) {
 #' @author Adrien Taudière
 #' @export
 #' @examples
-#' count_seq(file_path = system.file("extdata", "ex.fasta",
-#'           package = "MiscMetabar", mustWork = TRUE))
+#' count_seq(file_path = system.file(
+#'   "extdata",
+#'   "ex.fasta",
+#'   package = "MiscMetabar",
+#'   mustWork = TRUE
+#' ))
 #' count_seq(folder_path = "extdata/", pattern = "*.fasta")
 count_seq <- function(file_path = NULL, folder_path = NULL, pattern = NULL) {
   if (is.null(file_path) && is.null(folder_path)) {
@@ -284,9 +288,11 @@ funky_color <-
 #' @export
 #' @examples
 #' \dontrun{
-#' subsample_fastq(system.file("extdata", "
-#'   ex_R1_001.fastq.gz", package = "MiscMetabar", mustWork = TRUE)),
-#'   "your_path_to_output")
+#' ex_file <- system.file("extdata", "ex_R1_001.fastq.gz",
+#'   package = "MiscMetabar",
+#'   mustWork = TRUE
+#' )
+#' subsample_fastq(ex_file, "your_path_to_output")
 #' subsample_fastq(list_fastq_files("extdata"), "your_path_to_output", n = 10)
 #' }
 subsample_fastq <- function(fastq_files,
@@ -296,8 +302,10 @@ subsample_fastq <- function(fastq_files,
     if (!dir.exists(folder_output)) {
       dir.create(folder_output)
     }
-    writeLines(readLines(f, n = n_seq * 4), con = paste0(folder_output, "/",
-                                                         basename(f)))
+    writeLines(readLines(f, n = n_seq * 4), con = paste0(
+      folder_output, "/",
+      basename(f)
+    ))
   }
 }
 
