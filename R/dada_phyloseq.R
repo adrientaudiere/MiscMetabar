@@ -1358,8 +1358,12 @@ mumu_pq <- function(physeq,
   message("Mumu algorithm")
   system2(
     mumupath,
-    "--otu_table otu_table.csv --match_list match_list.txt --log log.txt
-    --new_otu_table new_OTU.tablemumu"
+    paste(
+      "--otu_table otu_table.csv",
+      "--match_list match_list.txt",
+      "--log log.txt",
+      "--new_otu_table new_OTU.tablemumu"
+    )
   )
 
   res_mumu <- read.delim("new_OTU.tablemumu")

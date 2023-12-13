@@ -360,7 +360,7 @@ test_that("plot_SCBD_pq works with data_fungi dataset", {
     plot_SCBD_pq(
       data_fungi,
       tax_level = "Class",
-      tax_color = "Phylum",
+      tax_col = "Phylum",
       min_SCBD = 0
     ),
     "ggplot"

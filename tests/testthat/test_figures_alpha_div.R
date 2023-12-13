@@ -142,7 +142,7 @@ test_that("accu_samp_threshold works with GlobalPatterns dataset", {
 
 test_that("accu_samp_threshold works with data_fungi dataset", {
   expect_type(ggb <-
-                ggbetween_pq(data_fungi, variable = "Time"), "list")
+    ggbetween_pq(data_fungi, variable = "Time"), "list")
   expect_equal(length(ggb), 3)
   expect_s3_class(ggbetween_pq(data_fungi, variable = "Height")[[1]], "ggplot")
   expect_s3_class(
@@ -155,4 +155,3 @@ test_that("accu_samp_threshold works with data_fungi dataset", {
     "ggplot"
   )
 })
-

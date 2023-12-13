@@ -7,7 +7,7 @@
 plot_SCBD_pq(
   physeq,
   tax_level = "ASV",
-  tax_color = "Order",
+  tax_col = "Order",
   min_SCBD = 0.01,
   ...
 )
@@ -44,7 +44,7 @@ plot_SCBD_pq(data_fungi) +
   geom_text(aes(label = paste(Genus, Species)), hjust = 1, vjust = 2) +
   xlim(c(0, NA))
 
-plot_SCBD_pq(data_fungi, tax_level = "Class", tax_color = "Phylum", min_SCBD = 0) +
+plot_SCBD_pq(data_fungi, tax_level = "Class", tax_col = "Phylum", min_SCBD = 0) +
   geom_jitter()
 }
 \seealso{
