@@ -11,8 +11,8 @@ data_fungi_2trees <-
   )
 GP_archae <-
   subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
-GP_archae <- rarefy_even_depth(subset_samples_pq(GP_archae, sample_sums(GP_archae) > 3000))
-data_basidio <- subset_taxa(data_fungi, Phylum == "Basidiomycota")
+GP_archae <- clean_pq(rarefy_even_depth(subset_samples_pq(GP_archae, sample_sums(GP_archae) > 1000)))
+data_basidio <- clean_pq(subset_taxa(data_fungi, Phylum == "Basidiomycota"))
 
 test_that("hill_pq works with data_fungi dataset", {
   expect_message(expect_message(hill_pq(data_fungi, "Height")))
@@ -86,20 +86,20 @@ test_that("iNEXT_pq works with data_fungi dataset", {
 
 
 test_that("accu_plot works with GlobalPatterns dataset", {
-  expect_silent(accu_plot(GP_archae, fact = "X.SampleID", by.fact = TRUE))
-  expect_silent(accu_plot(GP_archae, fact = "X.SampleID", by.fact = FALSE))
-  expect_silent(accu_plot(
+  expect_silent(suppressWarnings(accu_plot(GP_archae, fact = "X.SampleID", by.fact = TRUE)))
+  expect_silent(suppressWarnings(accu_plot(GP_archae, fact = "X.SampleID", by.fact = FALSE)))
+  expect_silent(suppressWarnings(accu_plot(
     GP_archae,
     fact = "X.SampleID",
     by.fact = TRUE,
     print_sam_names = TRUE
-  ))
-  expect_silent(accu_plot(
+  )))
+  expect_silent(suppressWarnings(accu_plot(
     GP_archae,
     "SampleType",
     add_nb_seq = TRUE,
     by.fact = TRUE
-  ))
+  )))
   expect_silent(suppressWarnings(
     accu_plot(
       GP_archae,
