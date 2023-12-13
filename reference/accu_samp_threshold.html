@@ -12,7 +12,7 @@ accumulation curves — accu_samp_threshold"><meta property="og:description" con
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.51</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.52</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -119,13 +119,39 @@ to obtain <code>threshold</code> proportion of the ASV</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
+<span class="r-in"><span><span class="va">GP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">rarefy_even_depth</a></span><span class="op">(</span><span class="fu"><a href="subset_samples_pq.html">subset_samples_pq</a></span><span class="op">(</span><span class="va">GP</span>, <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_sums.html" class="external-link">sample_sums</a></span><span class="op">(</span><span class="va">GP</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">3000</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> You set `rngseed` to FALSE. Make sure you've set &amp; recorded</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>  the random seed of your session for reproducibility.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> See `?set.seed`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 61OTUs were removed because they are no longer </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> present in any sample after random subsampling</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="accu_plot.html">accu_plot</a></span><span class="op">(</span><span class="va">GP</span>, <span class="st">"SampleType"</span>, add_nb_seq <span class="op">=</span> <span class="cn">TRUE</span>, by.fact <span class="op">=</span> <span class="cn">TRUE</span>, step <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">val_threshold</span> <span class="op">&lt;-</span> <span class="fu">accu_samp_threshold</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">val_threshold</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     231     261    2991   17521   24471   68741 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    3631    5971    6921    6958    7908   10361 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Plot the number of sequences needed to accumulate 0.95% of ASV in 50%, 75%</span></span></span>
 <span class="r-in"><span><span class="co"># and 100% of samples</span></span></span>
