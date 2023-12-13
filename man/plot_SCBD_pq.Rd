@@ -16,14 +16,14 @@ plot_SCBD_pq(
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
+\item{tax_level}{Taxonomic level to used in y axis}
+
+\item{tax_col}{Taxonomic level to colored points}
+
 \item{min_SCBD}{(default: 0.01) the minimum SCBD value
 to plot the taxa}
 
 \item{...}{Others arguments passed on to \code{\link[adespatial:beta.div]{adespatial::beta.div()}} function}
-
-\item{tax_level:}{Taxonomic level to used in y axis}
-
-\item{tax_col:}{Taxonomic level to colored points}
 }
 \value{
 A ggplot object build with the package patchwork

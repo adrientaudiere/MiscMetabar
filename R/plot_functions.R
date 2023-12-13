@@ -82,7 +82,9 @@ plot_mt <-
 #' @examples
 #' data("GlobalPatterns", package = "phyloseq")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+#' GP <- rarefy_even_depth(subset_samples_pq(GP, sample_sums(GP) > 3000))
 #' p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10)
+#' p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, step = 10)
 #'
 #' p + theme(legend.position = "none")
 #'
@@ -288,6 +290,7 @@ accu_plot <-
 #' @examples
 #' data("GlobalPatterns", package = "phyloseq")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+#' GP <- rarefy_even_depth(subset_samples_pq(GP, sample_sums(GP) > 3000))
 #' p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10)
 #'
 #' val_threshold <- accu_samp_threshold(p)
@@ -1439,9 +1442,9 @@ ggbetween_pq <- function(physeq, variable, one_plot = FALSE, ...) {
   physeq <- clean_pq(physeq, force_taxa_as_columns = TRUE)
   df <- cbind(
     "nb_asv" = sample_sums(physeq@otu_table), physeq@sam_data,
-    "hill_0" = vegan::renyi(physeq@otu_table, scale = c(0), hill = TRUE),
-    "hill_1" = vegan::renyi(physeq@otu_table, scale = c(1), hill = TRUE),
-    "hill_2" = vegan::renyi(physeq@otu_table, scale = c(2), hill = TRUE)
+    "hill_0" = vegan::renyi(physeq@otu_table, scale = 0, hill = TRUE),
+    "hill_1" = vegan::renyi(physeq@otu_table, scale = 1, hill = TRUE),
+    "hill_2" = vegan::renyi(physeq@otu_table, scale = 2, hill = TRUE)
   )
   variable <- sym(variable)
   p0 <- ggstatsplot::ggbetweenstats(df, !!variable, hill_0, ...)
