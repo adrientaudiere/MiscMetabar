@@ -11,6 +11,7 @@ data_fungi_2trees <-
   )
 GP_archae <-
   subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+GP_archae <- rarefy_even_depth(subset_samples_pq(GP_archae, sample_sums(GP_archae) > 3000))
 data_basidio <- subset_taxa(data_fungi, Phylum == "Basidiomycota")
 
 test_that("hill_pq works with data_fungi dataset", {
