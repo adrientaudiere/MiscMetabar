@@ -1542,10 +1542,16 @@ subset_samples_pq <- function(physeq, condition) {
 #' @inheritParams clean_pq
 #' @param condition A named boolean vector to subset taxa. Length must fit
 #'   the number of taxa and names must match taxa_names. Can also be a
-#'   condition using a column of the tax_table slot (see examples).
+#'   condition using a column of the tax_table slot (see examples). If 
+#'   the order of condition is the same as taxa_names(physeq), 
+#'   you can use the parameter `taxa_names_from_physeq = TRUE`.
 #' @param clean_pq (logical)
 #'   If set to TRUE, empty samples are discarded after subsetting ASV
 #' @param verbose (logical) Informations are printed
+#' @param taxa_names_from_physeq (logical) If set to TRUE, rename the 
+#'   condition vector using taxa_names(physeq). Carefully check the result
+#'   of this function if you use this parameter. No effect if the condition
+#'   is of class `tax_table`.
 #' @examples
 #' data(data_fungi)
 #' subset_taxa_pq(data_fungi, data_fungi@tax_table[, "Phylum"] == "Ascomycota")
@@ -1554,17 +1560,26 @@ subset_samples_pq <- function(physeq, condition) {
 #' names(cond_taxa) <- taxa_names(data_fungi)
 #' subset_taxa_pq(data_fungi, cond_taxa)
 #'
+#' subset_taxa_pq(data_fungi, grepl("mycor", data_fungi@tax_table[, "Guild"]), 
+#' taxa_names_from_physeq = TRUE)
+#' 
 #' @return a new phyloseq object
 #' @export
 #'
 subset_taxa_pq <- function(physeq,
                            condition,
                            verbose = TRUE,
-                           clean_pq = TRUE) {
+                           clean_pq = TRUE, 
+                           taxa_names_from_physeq = FALSE) {
+           
   if (inherits(condition, "taxonomyTable")) {
     condition_temp <- as.vector(condition)
     names(condition_temp) <- rownames(condition)
     condition <- condition_temp
+  } else {
+    if(taxa_names_from_physeq){
+      names(condition) <- taxa_names(physeq)
+    }
   }
 
   if (!sum(names(condition) %in% taxa_names(physeq)) == length(condition)) {

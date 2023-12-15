@@ -1,6 +1,7 @@
 # MiscMetabar 0.53 (in development) 
 
 - Add function `ancombc_pq()` to simplify the call to `ANCOMBC::ancombc2()` : ANalysis of COmpositions of Microbiomes with Bias Correction 2 
+- Add param `taxa_names_from_physeq` (default FALSE) to `subset_taxa_pq()` 
 
 # MiscMetabar 0.52 
 
