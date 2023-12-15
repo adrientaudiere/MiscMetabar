@@ -3112,6 +3112,7 @@ tax_bar_pq <- function(physeq, fact = "Sample", taxa = "Order", percent_bar = FA
 #'   point_shape = "|", point_size = 3, point_alpha = 1, alpha = 0.7,
 #'   scale = 0.8
 #' )
+#' ridges_pq(data_fungi, "Height", alpha = 0.5, log10trans = T)
 ridges_pq <- function(physeq,
                       fact = NULL,
                       nb_seq = TRUE,
@@ -3124,7 +3125,7 @@ ridges_pq <- function(physeq,
     psm$Abundance <- log10(psm$Abundance)
   }
   if (nb_seq) {
-    p <- ggplot(psm, aes(y = factor(Time), x = Abundance)) +
+    p <- ggplot(psm, aes(y = factor(.data[[fact]]), x = Abundance)) +
       ggridges::geom_density_ridges(aes(fill = Class), ...) +
       xlim(c(0, NA))
   } else {
@@ -3132,10 +3133,10 @@ ridges_pq <- function(physeq,
   }
   psm_asv <-
     psm %>%
-    group_by(Time, OTU, Class) %>%
+    group_by(.data[[fact]], OTU, Class) %>%
     summarise("count" = n())
 
-  p <- ggplot(psm_asv, aes(y = factor(Time), x = count)) +
+  p <- ggplot(psm_asv, aes(y = factor(.data[[fact]]), x = count)) +
     ggridges::geom_density_ridges(
       aes(fill = Class),
       ...
