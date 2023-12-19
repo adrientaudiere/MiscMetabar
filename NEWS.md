@@ -2,6 +2,8 @@
 
 - Add function `ancombc_pq()` to simplify the call to `ANCOMBC::ancombc2()` : ANalysis of COmpositions of Microbiomes with Bias Correction 2 
 - Add param `taxa_names_from_physeq` (default FALSE) to `subset_taxa_pq()` 
+- Add param `rarefy_by_sample` (default FALSE) to function `ggbetween_pq()`
+- Add function `are_modality_even_depth()` to test if samples depth significantly vary among the modalities of a factor
 
 # MiscMetabar 0.52 
 

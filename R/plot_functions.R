@@ -1409,7 +1409,12 @@ hill_pq <-
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
-#'
+#' 
+#' Note that contrary to [hill_pq()], this function does not take into 
+#' account for difference in the number of sequences per samples/modalities.
+#' You may use rarefy_by_sample = TRUE if the mean number of sequences per 
+#' samples differs among modalities. 
+#' 
 #' Basically a wrapper of function [ggstatsplot::ggbetweenstats()] for
 #' object of class phyloseq
 #' @inheritParams clean_pq
@@ -1417,6 +1422,8 @@ hill_pq <-
 #'   the `sam_data` slot of the physeq object.
 #' @param one_plot (logical, default FALSE) If TRUE, return a unique
 #'   plot with the three plot inside using the patchwork package.
+#' @param rarefy_by_sample (logical, default FALSE) If TRUE, rarefy 
+#'   samples using [phyloseq::rarefy_even_depth()] function
 #' @param ... Other arguments passed on to [ggstatsplot::ggbetweenstats()] function.
 
 #' @return Either an unique ggplot2 object (if one_plot is TRUE) or
@@ -1433,13 +1440,26 @@ hill_pq <-
 #' p <- ggbetween_pq(data_fungi, variable = "Time", p.adjust.method = "BH")
 #' p[[1]]
 #' ggbetween_pq(data_fungi, variable = "Height", one_plot = TRUE)
+#' ggbetween_pq(data_fungi, variable = "Height", one_plot = TRUE, rarefy_by_sample = TRUE)
 #' @author Adrien Taudière
 #' @details This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `ggstatsplot::ggbetweenstats()` if you
 #'   use this function.
 
-ggbetween_pq <- function(physeq, variable, one_plot = FALSE, ...) {
+ggbetween_pq <- function(physeq, variable, one_plot = FALSE, rarefy_by_sample = FALSE, ...) {
   physeq <- clean_pq(physeq, force_taxa_as_columns = TRUE)
+
+  if (rarefy_by_sample) {
+    physeq <- clean_pq(rarefy_even_depth(physeq))
+  }
+
+  if(are_modality_even_depth(physeq, variable)$p.value < 0.05){
+    warning(paste0("The mean number of sequences per samples vary across modalities of the variable '", 
+    variable, 
+    "' You should use rarefy_by_sample = TRUE or try hill_pq() with correction_for_sample_size = TRUE"
+    ))
+  }
+
   df <- cbind(
     "nb_asv" = sample_sums(physeq@otu_table), physeq@sam_data,
     "hill_0" = vegan::renyi(physeq@otu_table, scale = 0, hill = TRUE),

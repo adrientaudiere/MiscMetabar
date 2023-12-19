@@ -1761,9 +1761,10 @@ add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, ...) {
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' tbl_sum_samdata(data_fungi)
+#' tbl_sum_samdata(data_fungi) %>%
+#'     gtsummary::as_kable()
 #'
-#' tbl_sum_samdata(data_fungi,
+#' summary_samdata <- tbl_sum_samdata(data_fungi,
 #'   include = c("Time", "Height"),
 #'   type = list(Time ~ "continuous2", Height ~ "categorical"),
 #'   statistic = list(Time ~ c("{median} ({p25}, {p75})", "{min}, {max}"))
@@ -1771,8 +1772,8 @@ add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, ...) {
 #'
 #' data(enterotype)
 #'
-#' tbl_sum_samdata(enterotype)
-#' tbl_sum_samdata(enterotype, include = !contains("SampleId"))
+#' summary_samdata <- tbl_sum_samdata(enterotype)
+#' summary_samdata <- tbl_sum_samdata(enterotype, include = !contains("SampleId"))
 #' @details
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `gtsummary::tbl_summary()` if you
@@ -1982,16 +1983,14 @@ plot_guild_pq <-
       )
   }
 
+################################################################################
 
-
-
-
-
-
-
-
+################################################################################
 #' Build phylogenetic trees from refseq slot of a phyloseq object
-#'
+#' 
+#' @description
+#' `r lifecycle::badge("experimental")`
+#' 
 #' This function build tree phylogenetic tree and if nb_bootstrap is
 #' set, it build also the 3 corresponding bootstrapped tree.
 #'
@@ -2002,9 +2001,6 @@ plot_guild_pq <-
 #' Note that phylogenetic reconstruction with markers used for metabarcoding are
 #' not robust. You must verify the robustness of your phylogenetic tree using
 #' taxonomic classification (see vignette [Tree visualization](https://adrientaudiere.github.io/MiscMetabar/articles/tree_visualization.html)) and bootstrap or multi-tree visualization
-#'
-#' @description
-#' `r lifecycle::badge("experimental")`
 #'
 #' @inheritParams clean_pq
 #' @param nb_bootstrap (default 0): If a positive number is set,
@@ -2148,4 +2144,44 @@ build_phytree_pq <- function(physeq,
       "ML" = tree_ML
     ))
   }
+}
+################################################################################
+
+################################################################################
+#' Test if the mean number of sequences by samples is link to the modality of 
+#' a factor
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' The aim of this function is to provide a warnings if samples depth significantly
+#' vary among the modalities of a factor present in the `sam_data` slot.
+#' 
+#' This function apply a Kruskal-Wallis rank sum test to the number of sequences 
+#' per samples in function of the factor `fact`.
+#' 
+#' @inheritParams clean_pq
+#' @param fact (required): Name of the factor to cluster samples by modalities.
+#'   Need to be in \code{physeq@sam_data}.
+#' @param boxplot (logical) Do you want to plot boxplot?
+#' 
+#' @return The result of a Kruskal-Wallis rank sum test
+#' @export
+#' @author Adrien Taudière
+#' @examples
+#' are_modality_even_depth(data_fungi, "Time")$p.value
+#' are_modality_even_depth(rarefy_even_depth(data_fungi), "Time")$p.value
+#' are_modality_even_depth(data_fungi, "Height", boxplot = TRUE)
+
+are_modality_even_depth <- function(physeq, fact, boxplot = FALSE) {
+  nb_seq <- sample_sums(physeq)
+  fact <- factor(unclass(physeq@sam_data[, fact])[[1]])
+  res <- kruskal.test(nb_seq ~ fact)
+  if (boxplot) {
+    boxplot(nb_seq ~ fact)
+  }
+  if(length(unique(tapply(nb_seq, fact, mean))) == 1){
+     message("All modality were undoubtedly rarefy in the physeq object.")
+    res$p.value <- 1
+  }
+  return(res)
 }

@@ -11,6 +11,7 @@ bibliography: paper/bibliography.bib
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![CodeFactor](https://www.codefactor.io/repository/github/adrientaudiere/miscmetabar/badge/master)](https://www.codefactor.io/repository/github/adrientaudiere/miscmetabar/overview/master)
 [![R-CMD-check](https://github.com/adrientaudiere/MiscMetabar/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/adrientaudiere/MiscMetabar/actions/workflows/R-CMD-check.yaml)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.06038/status.svg)](https://doi.org/10.21105/joss.06038)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- devtools::build_readme() -->
@@ -27,7 +28,7 @@ knitr::opts_chunk$set(
 
 # MiscMetabar <a href="https://adrientaudiere.github.io/MiscMetabar/"><img src="man/figures/logo.png" align="right" height="138" alt="MiscMetabar website" /></a>
 
-See the pkgdown documentation site [here](https://adrientaudiere.github.io/MiscMetabar/).
+See the pkgdown documentation site [here](https://adrientaudiere.github.io/MiscMetabar/) and the [package paper](https://doi.org/10.21105/joss.06038) in the Journal Of Open Softwares. 
 
 Biological studies, especially in ecology, health sciences and taxonomy, need to describe the biological composition of samples. During the last twenty years, (i) the development of DNA sequencing, (ii) reference databases, (iii) high-throughput sequencing (HTS), and (iv) bioinformatics resources have allowed the description of biological communities through metabarcoding. Metabarcoding involves the sequencing of millions (*meta*-) of short regions of specific DNA (*-barcoding*, @valentini2009) often from environmental samples (eDNA, @taberlet2012) such as human stomach contents, lake water, soil and air.
 

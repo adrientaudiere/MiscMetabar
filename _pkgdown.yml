@@ -173,6 +173,7 @@ reference:
   - install_pkg_needed
   - multiplot
   - perc
+  - are_modality_even_depth
 
   
   

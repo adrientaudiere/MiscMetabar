@@ -98,7 +98,6 @@ Remotes:
     github::mikemc/speedyseq,
     github::adrientaudiere/lulu,
     github::david-barnett/microViz,
-    github::erocoar/gghalves,
     bioc::phyloseq,
     bioc::dada2,
     bioc::ANCOMBC,

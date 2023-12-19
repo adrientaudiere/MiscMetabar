@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Introduction to MiscMetabar : an R packages to facilitate visualization and reproducibility in metabarcoding analysis
+# Introduction to MiscMetabar: an R package to facilitate visualization and reproducibility in metabarcoding analysis
 
 ## Raison d'être
 
