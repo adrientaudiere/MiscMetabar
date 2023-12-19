@@ -1,5 +1,5 @@
 ---
-title: 'MiscMetabar : an R packages to facilitate visualization and reproducibility in metabarcoding analysis'
+title: 'MiscMetabar: an R package to facilitate visualization and reproducibility in metabarcoding analysis'
 tags:
   - R
   - Bioinformatic
