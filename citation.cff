@@ -1,0 +1,28 @@
+cff-version: "1.2.0"
+authors:
+- family-names: Taudière
+  given-names: Adrien
+  orcid: "https://orcid.org/0000-0003-1088-1182"
+doi: 10.5281/zenodo.10370781
+message: If you use this software, please cite our article in the
+  Journal of Open Source Software.
+preferred-citation:
+  authors:
+  - family-names: Taudière
+    given-names: Adrien
+    orcid: "https://orcid.org/0000-0003-1088-1182"
+  date-published: 2023-12-19
+  doi: 10.21105/joss.06038
+  issn: 2475-9066
+  issue: 92
+  journal: Journal of Open Source Software
+  publisher:
+    name: Open Journals
+  start: 6038
+  title: "MiscMetabar: an R package to facilitate visualization and
+    reproducibility in metabarcoding analysis"
+  type: article
+  url: "https://joss.theoj.org/papers/10.21105/joss.06038"
+  volume: 8
+title: "MiscMetabar: an R package to facilitate visualization and
+  reproducibility in metabarcoding analysis"
