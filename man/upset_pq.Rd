@@ -34,7 +34,7 @@ will not count in the venn diagram}
 if FALSE, NA values are set to "NA"}
 
 \item{numeric_fonction}{(default : sum) the function for numeric vector
-usefull only for complex plot (see examples)}
+useful only for complex plot (see examples)}
 
 \item{rarefy_after_merging}{Rarefy each sample after merging by the
 modalities of \code{fact} parameter}

@@ -19,7 +19,7 @@ en levels_fact)}
 
 \item{tax_level}{The taxonomic level passed on to \code{\link[ANCOMBC:ancombc2]{ANCOMBC::ancombc2()}}}
 
-\item{...}{}
+\item{...}{Other arguments passed on to \code{\link[ANCOMBC:ancombc2]{ANCOMBC::ancombc2()}} function.}
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}

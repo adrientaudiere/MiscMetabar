@@ -36,7 +36,6 @@ Suggests:
     ggridges,
     ggVennDiagram,
     gtsummary,
-    graphics, 
     grDevices,
     grid,
     gridExtra,
@@ -52,7 +51,6 @@ Suggests:
     microViz,
     mixtools,
     multcompView,
-    networkD3, 
     pak,
     patchwork,
     permute,
@@ -76,11 +74,9 @@ Suggests:
     tidytree,
     treeio,
     treemapify,
-    utils, 
     vegan,
     venneuler,
-    viridis,
-    withr
+    viridis
 RoxygenNote: 7.2.3
 URL: https://github.com/adrientaudiere/MiscMetabar,
     https://adrientaudiere.github.io/MiscMetabar/
@@ -105,3 +101,4 @@ Remotes:
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 VignetteBuilder: knitr
+Language: en-US

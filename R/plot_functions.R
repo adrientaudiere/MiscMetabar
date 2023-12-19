@@ -2679,7 +2679,7 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
 #' @param na_remove : if TRUE (the default), NA values in fact are removed
 #'   if FALSE, NA values are set to "NA"
 #' @param numeric_fonction (default : sum) the function for numeric vector
-#'   usefull only for complex plot (see examples)
+#'   useful only for complex plot (see examples)
 #' @param rarefy_after_merging Rarefy each sample after merging by the
 #'   modalities of `fact` parameter
 #' @param ... other arguments passed on to the [ComplexUpset::upset()]
@@ -2794,7 +2794,7 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
 #'   paste0(data_fungi2@sam_data[["Height"]], "__", data_fungi2@sam_data[["Time_0"]])
 #' data_fungi2@sam_data[["Height__Time_0"]][grepl("NA", data_fungi2@sam_data[["Height__Time_0"]])] <-
 #'   NA
-#' upset_pq(data_fungi2, fact = "Height__Time_0", width_ratio = 0.2)
+#' upset_pq(data_fungi2, fact = "Height__Time_0", width_ratio = 0.2, min_size=2)
 upset_pq <- function(physeq,
                      fact,
                      taxa_fill = NULL,

@@ -55,8 +55,7 @@ A list of phylogenetic tree
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-}
-\details{
+
 This function build tree phylogenetic tree and if nb_bootstrap is
 set, it build also the 3 corresponding bootstrapped tree.
 
@@ -67,7 +66,8 @@ before using this function.
 Note that phylogenetic reconstruction with markers used for metabarcoding are
 not robust. You must verify the robustness of your phylogenetic tree using
 taxonomic classification (see vignette \href{https://adrientaudiere.github.io/MiscMetabar/articles/tree_visualization.html}{Tree visualization}) and bootstrap or multi-tree visualization
-
+}
+\details{
 This function is mainly a wrapper of the work of others.
 Please make a reference to \code{phangorn} package if you
 use this function.

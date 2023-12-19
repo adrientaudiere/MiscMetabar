@@ -17,8 +17,13 @@ A html file
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 
-Need the installation of kronatools on the computer (\href{https://github.com/marbl/Krona/wiki/Installing}{installation instruction}).
-Function merge_krona allows merging multiple html files in one interactive krona file
+Need the installation of kronatools on the computer
+(\href{https://github.com/marbl/Krona/wiki/Installing}{installation instruction}).
+Function merge_krona allows merging multiple html files in one interactive
+krona file
+
+Note that you need to use the name args in \code{krona()} function before \code{merge_krona()}
+in order to give good name to each krona pie in the output.
 }
 \details{
 This function is mainly a wrapper of the work of others.
@@ -27,11 +32,11 @@ you use this function.
 }
 \examples{
 \dontrun{
-data("GlobalPatterns", package = "phyloseq")
-GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
-krona(GA, "Number.of.sequences.html")
-krona(GA, "Number.of.ASVs.html", nb_seq = FALSE)
-merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"))
+  data("GlobalPatterns", package = "phyloseq")
+  GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
+  krona(GA, "Number.of.sequences.html", name="Nb_seq_GP_acidobacteria")
+  krona(GA, "Number.of.ASVs.html", nb_seq = FALSE, name="Nb_asv_GP_acidobacteria")
+  merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"))
 }
 }
 \seealso{

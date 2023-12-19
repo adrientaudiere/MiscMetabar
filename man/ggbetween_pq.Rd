@@ -4,7 +4,7 @@
 \alias{ggbetween_pq}
 \title{Box/Violin plots for between-subjects comparisons of Hill Number}
 \usage{
-ggbetween_pq(physeq, variable, one_plot = FALSE, ...)
+ggbetween_pq(physeq, variable, one_plot = FALSE, rarefy_by_sample = FALSE, ...)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
@@ -15,6 +15,9 @@ the \code{sam_data} slot of the physeq object.}
 
 \item{one_plot}{(logical, default FALSE) If TRUE, return a unique
 plot with the three plot inside using the patchwork package.}
+
+\item{rarefy_by_sample}{(logical, default FALSE) If TRUE, rarefy
+samples using \code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}} function}
 
 \item{...}{Other arguments passed on to \code{\link[ggstatsplot:ggbetweenstats]{ggstatsplot::ggbetweenstats()}} function.}
 }
@@ -33,6 +36,11 @@ against the variable
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
+Note that contrary to \code{\link[=hill_pq]{hill_pq()}}, this function does not take into
+account for difference in the number of sequences per samples/modalities.
+You may use rarefy_by_sample = TRUE if the mean number of sequences per
+samples differs among modalities.
+
 Basically a wrapper of function \code{\link[ggstatsplot:ggbetweenstats]{ggstatsplot::ggbetweenstats()}} for
 object of class phyloseq
 }
@@ -45,6 +53,7 @@ use this function.
 p <- ggbetween_pq(data_fungi, variable = "Time", p.adjust.method = "BH")
 p[[1]]
 ggbetween_pq(data_fungi, variable = "Height", one_plot = TRUE)
+ggbetween_pq(data_fungi, variable = "Height", one_plot = TRUE, rarefy_by_sample = TRUE)
 }
 \author{
 Adrien Taudière

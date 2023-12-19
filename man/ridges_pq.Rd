@@ -44,6 +44,7 @@ ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")),
   point_shape = "|", point_size = 3, point_alpha = 1, alpha = 0.7,
   scale = 0.8
 )
+ridges_pq(data_fungi, "Height", alpha = 0.5, log10trans = T)
 }
 \author{
 Adrien Taudière

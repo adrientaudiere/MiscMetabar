@@ -31,9 +31,10 @@ Please make a reference to \code{gtsummary::tbl_summary()} if you
 use this function.
 }
 \examples{
-tbl_sum_samdata(data_fungi)
+tbl_sum_samdata(data_fungi) \%>\%
+    gtsummary::as_kable()
 
-tbl_sum_samdata(data_fungi,
+summary_samdata <- tbl_sum_samdata(data_fungi,
   include = c("Time", "Height"),
   type = list(Time ~ "continuous2", Height ~ "categorical"),
   statistic = list(Time ~ c("{median} ({p25}, {p75})", "{min}, {max}"))
@@ -41,8 +42,8 @@ tbl_sum_samdata(data_fungi,
 
 data(enterotype)
 
-tbl_sum_samdata(enterotype)
-tbl_sum_samdata(enterotype, include = !contains("SampleId"))
+summary_samdata <- tbl_sum_samdata(enterotype)
+summary_samdata <- tbl_sum_samdata(enterotype, include = !contains("SampleId"))
 }
 \author{
 Adrien Taudière
