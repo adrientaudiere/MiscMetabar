@@ -26,11 +26,12 @@
 #' tax_datatable(GlobalPatterns,
 #'   modality = GlobalPatterns@sam_data$SampleType
 #' )
-tax_datatable <- function(physeq,
-                          abundance = TRUE,
-                          taxonomic_level = NULL,
-                          modality = NULL,
-                          ...) {
+tax_datatable <- function(
+        physeq,
+        abundance = TRUE,
+        taxonomic_level = NULL,
+        modality = NULL,
+        ...) {
   df <- as.data.frame(unclass(physeq@tax_table))
 
   if (!is.null(taxonomic_level)) {
@@ -100,7 +101,7 @@ tax_datatable <- function(physeq,
 #'   slot of the physeq object to split samples by pairs
 #' @param merge_sample_by a vector to determine
 #'   which samples to merge using the
-#'   \code{\link[speedyseq]{merge_samples2}} function.
+#'   [merge_samples2()] function.
 #'   Need to be in \code{physeq@sam_data}
 #' @param nb_min_seq minimum number of sequences per sample
 #'   to count the ASV/OTU
@@ -121,13 +122,14 @@ tax_datatable <- function(physeq,
 #'   bifactor = "Height",
 #'   merge_sample_by = "Height", modality = "Time"
 #' )
-compare_pairs_pq <- function(physeq = NULL,
-                             bifactor = NULL,
-                             modality = NULL,
-                             merge_sample_by = NULL,
-                             nb_min_seq = 0,
-                             veg_index = "shannon",
-                             na_remove = TRUE) {
+compare_pairs_pq <- function(
+        physeq = NULL,
+        bifactor = NULL,
+        modality = NULL,
+        merge_sample_by = NULL,
+        nb_min_seq = 0,
+        veg_index = "shannon",
+        na_remove = TRUE) {
   physeq <- clean_pq(physeq,
     clean_samples_names = FALSE,
     force_taxa_as_columns = TRUE,
@@ -168,10 +170,10 @@ compare_pairs_pq <- function(physeq = NULL,
 
   if (!is.null(merge_sample_by)) {
     if (is.null(modality)) {
-      physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
+      physeq <- merge_samples2(physeq, merge_sample_by)
     } else {
       physeq@sam_data[["merge_sample_by___modality"]] <- paste0(physeq@sam_data[[merge_sample_by]], " - ", physeq@sam_data[[modality]])
-      physeq <- speedyseq::merge_samples2(physeq, "merge_sample_by___modality")
+      physeq <- merge_samples2(physeq, "merge_sample_by___modality")
     }
     physeq <- clean_pq(physeq)
   }

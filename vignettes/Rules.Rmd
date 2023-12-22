@@ -22,3 +22,11 @@ vignette: >
 - **Experimental**: First status for a function
 - **Maturing**: Some tests and/or analyses make stronger these functions
 - **Stable**: Good level of confidence
+
+
+
+# Session information
+
+```{r}
+sessionInfo()
+```

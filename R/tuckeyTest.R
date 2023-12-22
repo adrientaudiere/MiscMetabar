@@ -22,8 +22,7 @@
 #' GlobalPatterns@sam_data[, "Soil_logical"] <-
 #'   ifelse(GlobalPatterns@sam_data[, "SampleType"] == "Soil", "Soil", "Not Soil")
 #' hill_tuckey_pq(GlobalPatterns, "Soil_logical")
-hill_tuckey_pq <- function(
-    physeq,
+hill_tuckey_pq <- function(physeq,
     modality,
     silent = TRUE,
     correction_for_sample_size = TRUE) {

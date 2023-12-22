@@ -54,20 +54,21 @@
 #'   blastpath = blastpath
 #' )
 #' }
-blast_to_phyloseq <- function(physeq,
-                              seq2search,
-                              blastpath = NULL,
-                              id_cut = 90,
-                              bit_score_cut = 50,
-                              min_cover_cut = 50,
-                              e_value_cut = 1e-30,
-                              unique_per_seq = FALSE,
-                              score_filter = TRUE,
-                              list_no_output_query = FALSE,
-                              args_makedb = NULL,
-                              args_blastn = NULL,
-                              nproc = 1,
-                              keep_temporary_files = FALSE) {
+blast_to_phyloseq <- function(
+        physeq,
+        seq2search,
+        blastpath = NULL,
+        id_cut = 90,
+        bit_score_cut = 50,
+        min_cover_cut = 50,
+        e_value_cut = 1e-30,
+        unique_per_seq = FALSE,
+        score_filter = TRUE,
+        list_no_output_query = FALSE,
+        args_makedb = NULL,
+        args_blastn = NULL,
+        nproc = 1,
+        keep_temporary_files = FALSE) {
   verify_pq(physeq)
   dna <- Biostrings::DNAStringSet(physeq@refseq)
   Biostrings::writeXStringSet(dna, paste0(tempdir(), "/", "db.fasta"))
@@ -195,20 +196,21 @@ blast_to_phyloseq <- function(physeq,
 #' @return  a blast table
 #' @export
 #'
-blast_pq <- function(physeq,
-                     fasta_for_db = NULL,
-                     database = NULL,
-                     blastpath = NULL,
-                     id_cut = 90,
-                     bit_score_cut = 50,
-                     min_cover_cut = 50,
-                     e_value_cut = 1e-30,
-                     unique_per_seq = FALSE,
-                     score_filter = TRUE,
-                     nproc = 1,
-                     args_makedb = NULL,
-                     args_blastn = NULL,
-                     keep_temporary_files = FALSE) {
+blast_pq <- function(
+        physeq,
+        fasta_for_db = NULL,
+        database = NULL,
+        blastpath = NULL,
+        id_cut = 90,
+        bit_score_cut = 50,
+        min_cover_cut = 50,
+        e_value_cut = 1e-30,
+        unique_per_seq = FALSE,
+        score_filter = TRUE,
+        nproc = 1,
+        args_makedb = NULL,
+        args_blastn = NULL,
+        keep_temporary_files = FALSE) {
   verify_pq(physeq)
   dna <- Biostrings::DNAStringSet(physeq@refseq)
   Biostrings::writeXStringSet(
@@ -361,16 +363,17 @@ blast_pq <- function(physeq,
 #' @return A new \code{\link{phyloseq-class}} object.
 
 
-filter_asv_blast <- function(physeq,
-                             fasta_for_db = NULL,
-                             database = NULL,
-                             clean_pq = TRUE,
-                             add_info_to_taxtable = TRUE,
-                             id_filter = 90,
-                             bit_score_filter = 50,
-                             min_cover_filter = 50,
-                             e_value_filter = 1e-30,
-                             ...) {
+filter_asv_blast <- function(
+        physeq,
+        fasta_for_db = NULL,
+        database = NULL,
+        clean_pq = TRUE,
+        add_info_to_taxtable = TRUE,
+        id_filter = 90,
+        bit_score_filter = 50,
+        min_cover_filter = 50,
+        e_value_filter = 1e-30,
+        ...) {
   blast_tab <- blast_pq(
     physeq = physeq,
     fasta_for_db = fasta_for_db,
@@ -443,21 +446,22 @@ filter_asv_blast <- function(physeq,
 #'   against un custom database and [MiscMetabar::blast_to_phyloseq()]  to use
 #'    `refseq` slot as a database
 #' @author Adrien Taudière
-blast_to_derep <- function(derep,
-                           seq2search,
-                           blastpath = NULL,
-                           id_cut = 90,
-                           bit_score_cut = 50,
-                           min_cover_cut = 50,
-                           e_value_cut = 1e-30,
-                           unique_per_seq = FALSE,
-                           score_filter = FALSE,
-                           list_no_output_query = FALSE,
-                           min_length_seq = 200,
-                           args_makedb = NULL,
-                           args_blastn = NULL,
-                           nproc = 1,
-                           keep_temporary_files = FALSE) {
+blast_to_derep <- function(
+        derep,
+        seq2search,
+        blastpath = NULL,
+        id_cut = 90,
+        bit_score_cut = 50,
+        min_cover_cut = 50,
+        e_value_cut = 1e-30,
+        unique_per_seq = FALSE,
+        score_filter = FALSE,
+        list_no_output_query = FALSE,
+        min_length_seq = 200,
+        args_makedb = NULL,
+        args_blastn = NULL,
+        nproc = 1,
+        keep_temporary_files = FALSE) {
   if (!inherits(derep[[1]], "derep")) {
     stop("derep must be an object of class derep-class")
   }

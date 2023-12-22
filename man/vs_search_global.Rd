@@ -55,6 +55,7 @@ seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCA
   ACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG",
   file = file_dna, names = "seq1"
 )
+data(data_fungi)
 res <- vs_search_global(data_fungi, file_dna)
 unlink(file_dna)
 

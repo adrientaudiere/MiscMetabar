@@ -1,21 +1,22 @@
 Package: MiscMetabar
 Type: Package
 Title: Miscellaneous Functions for Metabarcoding Analysis
-Version: 0.52
+Version: 0.6.0
 Authors@R: person("Adrien", "Taudière", email = "adrien.taudiere@zaclys.net",
-  role = c("aut", "cre"), comment = c(ORCID = "0000-0003-1088-1182"))
-Maintainer: Adrien Taudière <adrien.taudiere@zaclys.net>
-Description: Functions to help analyze and visualize metabarcoding data. Mainly build on the top of phyloseq, dada2 and targets R packages.
+  role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0003-1088-1182"))
+Description: The MiscMetabar package aims to facilitate the description, transformation, exploration, and reproducibility of metabarcoding analysis. Mainly build on the top of phyloseq, dada2 R packages. MiscMetabar help to build reproducible and robust bioinformatic pipeline in R. MiscMetabar make ecological analysis of alpha and beta-diversity simple and powerfull by integrating a large number of analysis, some of them from other R packages.  
 License: AGPL-3
 Encoding: UTF-8
-LazyData: true
+LazyData: false
 Depends:
     R (>= 3.5.0),
     phyloseq,
     ggplot2,
-    dada2
+    dada2,
+    dplyr
 Suggests: 
     adespatial,
+    ANCOMBC,
     BiocManager,
     Biostrings,
     circlize,
@@ -27,7 +28,6 @@ Suggests:
     DT,
     edgeR,
     formattable,
-    FUNGuildR,
     gghalves,
     ggh4x,
     ggstatsplot,
@@ -35,23 +35,23 @@ Suggests:
     ggridges,
     ggVennDiagram,
     gtsummary,
-    graphics, 
     grDevices,
     grid,
     gridExtra,
     here,
+    httr,
     iNEXT,
     indicspecies,
+    jsonlite,
     knitr,
-    lulu,
+    magrittr,
     metacoder,
     methods,
     mia,
     MicrobiotaProcess,
-    microViz,
     mixtools,
     multcompView,
-    networkD3, 
+    networkD3,
     pak,
     patchwork,
     permute,
@@ -60,6 +60,7 @@ Suggests:
     pbapply,
     plotly,
     plyr,
+    purrr,
     reshape2,
     rmarkdown,
     rotl,
@@ -68,37 +69,35 @@ Suggests:
     seqinr,
     SRS,
     stringr,
+    SummarizedExperiment,
     testthat (>= 3.0.0),
     tibble,
     tidyr,
     tidytree,
     treeio,
     treemapify,
-    utils, 
     vegan,
     venneuler,
-    viridis
+    vctrs,
+    viridis,
+    withr
 RoxygenNote: 7.2.3
 URL: https://github.com/adrientaudiere/MiscMetabar,
     https://adrientaudiere.github.io/MiscMetabar/
+biocViews: Sequencing, Microbiome, Metagenomics,
+    Clustering, Classification, Visualization
 BugReports: https://github.com/adrientaudiere/MiscMetabar/issues
 Roxygen: list(markdown = TRUE)
 Imports: 
-    dplyr,
-    magrittr,
     ape,
     lifecycle,
     rlang,
-    speedyseq,
     stats
 Remotes: 
-    github::mikemc/speedyseq,
-    github::adrientaudiere/lulu,
-    github::david-barnett/microViz,
-    github::erocoar/gghalves,
     bioc::phyloseq,
     bioc::dada2,
-    github::brendanf/FUNGuildR
+    bioc::ANCOMBC
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 VignetteBuilder: knitr
+Language: en-US

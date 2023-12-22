@@ -153,10 +153,11 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
 #'
 #' @author Adrien Taudière
 subset_taxa_tax_control <-
-  function(physeq,
-           taxa_distri,
-           method = "mean",
-           min_diff_for_cutoff = NULL) {
+  function(
+        physeq,
+        taxa_distri,
+        method = "mean",
+        min_diff_for_cutoff = NULL) {
     verify_pq(physeq)
 
     cutoff_seq <- vector(mode = "numeric", length = nsamples(physeq))
@@ -174,7 +175,7 @@ subset_taxa_tax_control <-
       }
     }
 
-    for (i in 1:nsamples(physeq)) {
+    for (i in seq_along(sample_names(physeq))) {
       # for each samples
 
       if (method %in% c("min", "max", "mean", "cutoff_mixt")) {
@@ -271,7 +272,7 @@ subset_taxa_tax_control <-
     }
 
     new_physeq <- physeq
-    for (i in 1:nsamples(new_physeq)) {
+    for (i in seq_along(sample_names(physeq))) {
       new_physeq@otu_table[i, new_physeq@otu_table[i, ] < floor(cutoffs)[i]] <-
         0
     }

@@ -44,15 +44,13 @@ A \code{\link{ggplot}}2 plot representing edgeR results
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
-\dontrun{
-data(GlobalPatterns)
+data("GlobalPatterns", package = "phyloseq")
 plot_edgeR_pq(GlobalPatterns, c("SampleType", "Soil", "Feces"),
   color_tax = "Kingdom"
 )
 plot_edgeR_pq(GlobalPatterns, c("SampleType", "Soil", "Feces"),
   taxolev = "Class", color_tax = "Kingdom"
 )
-}
 }
 \seealso{
 \code{\link[edgeR]{exactTest}}

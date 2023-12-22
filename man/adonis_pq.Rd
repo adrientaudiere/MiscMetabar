@@ -29,7 +29,7 @@ For aitchison and robust.aitchison distance, \code{\link[vegan:vegdist]{vegan::v
 function is directly used.}
 
 \item{merge_sample_by}{a vector to determine
-which samples to merge using the \code{\link[speedyseq:merge_samples2]{speedyseq::merge_samples2()}}
+which samples to merge using the \code{\link[=merge_samples2]{merge_samples2()}}
 function. Need to be in \code{physeq@sam_data}}
 
 \item{na_remove}{(logical, default FALSE) If set to TRUE, remove samples with

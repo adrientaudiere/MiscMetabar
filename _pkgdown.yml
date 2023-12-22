@@ -50,6 +50,8 @@ reference:
 - subtitle: Taxonomy
   contents: 
   - add_funguild_info
+  - funguild_assign
+  - get_funguild_db
   - add_new_taxonomy_pq
   - add_blast_info
   - blast_to_phyloseq
@@ -57,16 +59,23 @@ reference:
   - blast_to_derep
   - filter_asv_blast
 
+- subtitle: Function from taxonomy  
+  contents: 
+  - add_funguild_info
+  - funguild_assign
+  - get_funguild_db
+
 - subtitle: OTU table
   contents: 
   - as_binary_otu_table
   - asv2otu
   - lulu_pq
+  - lulu
   - mumu_pq
   - subset_taxa_pq
   - subset_taxa_tax_control
 
-- subtitle: Sample datase
+- subtitle: Sample data
   contents:
   - subset_samples_pq 
 
@@ -120,6 +129,7 @@ reference:
   - plot_edgeR_pq
   - plot_deseq2_pq
   - plot_mt
+  - ancombc_pq
 
 - subtitle: Taxonomy
   contents:
@@ -172,9 +182,14 @@ reference:
   - install_pkg_needed
   - multiplot
   - perc
+  - are_modality_even_depth
+  - merge_samples2
+  - merge_taxa_vec 
+  - reorder_taxa_pq
+  - unique_or_na
 
   
-  
+ 
 - title: Deprecated
   contents:
   - adonis_phyloseq 

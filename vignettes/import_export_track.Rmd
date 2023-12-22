@@ -19,6 +19,8 @@ knitr::opts_chunk$set(
 ```{r setup, message=FALSE}
 library(MiscMetabar)
 library(formattable)
+data(data_fungi)
+data(data_fungi_sp_known)
 ```
 
 ## Export phyloseq object
@@ -51,4 +53,10 @@ In bioinformatic pipeline, we often need to track the number of samples, sequenc
 
 ```{r}
 track_wkflow(list(data_fungi, data_fungi_sp_known))
+```
+
+# Session information
+
+```{r}
+sessionInfo()
 ```

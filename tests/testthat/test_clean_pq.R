@@ -27,28 +27,28 @@ test_that("clean_pq force taxa in column", {
 })
 
 data_fungi_test2 <- data_fungi_test
-taxa_names(data_fungi_test2) <- paste0("ASV", 1:ntaxa(data_fungi_test2))
+taxa_names(data_fungi_test2) <- paste0("ASV", seq_along(taxa_names(data_fungi_test2)))
 test_that("clean_pq works fine with bad taxa_names", {
   expect_s4_class(clean_pq(data_fungi_test2), "phyloseq")
   expect_message(clean_pq(data_fungi_test2), "Cleaning suppress 2 taxa and 1 samples")
 })
 
 data_fungi_test3 <- data_fungi_test
-taxa_names(data_fungi_test3@refseq) <- paste0("ASV", 1:ntaxa(data_fungi_test3))
+taxa_names(data_fungi_test3@refseq) <- paste0("ASV", seq_along(taxa_names(data_fungi_test3)))
 test_that("clean_pq works fine with bad taxa_names in refseq", {
   expect_s4_class(clean_pq(data_fungi_test3), "phyloseq")
   expect_message(clean_pq(data_fungi_test3), "Cleaning suppress 2 taxa and 1 samples")
 })
 
 data_fungi_test4 <- data_fungi_test
-taxa_names(data_fungi_test4@tax_table) <- paste0("ASV", 1:ntaxa(data_fungi_test4))
+taxa_names(data_fungi_test4@tax_table) <- paste0("ASV", seq_along(taxa_names(data_fungi_test4)))
 test_that("clean_pq works fine with bad taxa_names in tax_table", {
   expect_s4_class(clean_pq(data_fungi_test4), "phyloseq")
   expect_message(clean_pq(data_fungi_test4), "Cleaning suppress 2 taxa and 1 samples")
 })
 
 data_fungi_test5 <- data_fungi_test
-sample_names(data_fungi_test5@tax_table) <- paste0("SAMP", 1:nsamples(data_fungi_test5))
+sample_names(data_fungi_test5@tax_table) <- paste0("SAMP", seq_along(taxa_names(data_fungi_test5)))
 test_that("clean_pq works fine with bad sample_names in sam_data", {
   expect_s4_class(clean_pq(data_fungi_test5), "phyloseq")
   expect_message(clean_pq(data_fungi_test5), "Cleaning suppress 2 taxa and 1 samples")

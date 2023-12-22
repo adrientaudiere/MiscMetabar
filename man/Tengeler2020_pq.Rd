@@ -9,7 +9,7 @@ obtain using \code{mia::makePhyloseqFromTreeSE(Tengeler2020)}}
 A phyloseq object
 }
 \usage{
-Tengeler2020_pq
+data(Tengeler2020_pq)
 }
 \description{
 This is a phyloseq version of the Tengeler2020 dataset.

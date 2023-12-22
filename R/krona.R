@@ -33,12 +33,13 @@
 #'   Please cite [Krona](https://github.com/marbl/Krona) if
 #'   you use this function.
 krona <-
-  function(physeq,
-           file = "krona.html",
-           nb_seq = TRUE,
-           ranks = "All",
-           add_unassigned_rank = 0,
-           name = NULL) {
+  function(
+        physeq,
+        file = "krona.html",
+        nb_seq = TRUE,
+        ranks = "All",
+        add_unassigned_rank = 0,
+        name = NULL) {
     if (ranks[1] == "All") {
       ranks <- seq_along(physeq@tax_table[1, ])
     }
@@ -96,19 +97,25 @@ krona <-
 #' @description
 #' `r lifecycle::badge("maturing")`
 #'
-#' Need the installation of kronatools on the computer ([installation instruction](https://github.com/marbl/Krona/wiki/Installing)).
-#' Function merge_krona allows merging multiple html files in one interactive krona file
+#' Need the installation of kronatools on the computer
+#' ([installation instruction](https://github.com/marbl/Krona/wiki/Installing)).
+#' Function merge_krona allows merging multiple html files in one interactive
+#' krona file
 #'
+#' Note that you need to use the name args in `krona()` function before `merge_krona()`
+#' in order to give good name to each krona pie in the output.
 #' @param files (required) path to html files to merged
 #' @param output path to the output file
 #'
 #' @examples
-#' \dontrun{
-#' data("GlobalPatterns", package = "phyloseq")
-#' GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
-#' krona(GA, "Number.of.sequences.html")
-#' krona(GA, "Number.of.ASVs.html", nb_seq = FALSE)
-#' merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"))
+#' krona_error_or_not <- try(system("ktImportText 2>&1", intern = TRUE))
+#' if (class(krona_error_or_not) != "try-error") {
+#'   data("GlobalPatterns", package = "phyloseq")
+#'   GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
+#'   krona(GA, "Number.of.sequences.html", name = "Nb_seq_GP_acidobacteria")
+#'   krona(GA, "Number.of.ASVs.html", nb_seq = FALSE, name = "Nb_asv_GP_acidobacteria")
+#'   merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"), "mergeKrona.html")
+#'   unlink(c("Number.of.sequences.html", "Number.of.ASVs.html", "mergeKrona.html"))
 #' }
 #' @return A html file
 #' @seealso \code{\link{krona}}

@@ -4,7 +4,13 @@
 \alias{subset_taxa_pq}
 \title{Subset taxa using a conditional named boolean vector.}
 \usage{
-subset_taxa_pq(physeq, condition, verbose = TRUE, clean_pq = TRUE)
+subset_taxa_pq(
+  physeq,
+  condition,
+  verbose = TRUE,
+  clean_pq = TRUE,
+  taxa_names_from_physeq = FALSE
+)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
@@ -12,12 +18,19 @@ using the \code{phyloseq} package.}
 
 \item{condition}{A named boolean vector to subset taxa. Length must fit
 the number of taxa and names must match taxa_names. Can also be a
-condition using a column of the tax_table slot (see examples).}
+condition using a column of the tax_table slot (see examples). If
+the order of condition is the same as taxa_names(physeq),
+you can use the parameter \code{taxa_names_from_physeq = TRUE}.}
 
 \item{verbose}{(logical) Informations are printed}
 
 \item{clean_pq}{(logical)
 If set to TRUE, empty samples are discarded after subsetting ASV}
+
+\item{taxa_names_from_physeq}{(logical) If set to TRUE, rename the
+condition vector using taxa_names(physeq). Carefully check the result
+of this function if you use this parameter. No effect if the condition
+is of class \code{tax_table}.}
 }
 \value{
 a new phyloseq object
@@ -36,5 +49,9 @@ subset_taxa_pq(data_fungi, data_fungi@tax_table[, "Phylum"] == "Ascomycota")
 cond_taxa <- grepl("Endophyte", data_fungi@tax_table[, "Guild"])
 names(cond_taxa) <- taxa_names(data_fungi)
 subset_taxa_pq(data_fungi, cond_taxa)
+
+subset_taxa_pq(data_fungi, grepl("mycor", data_fungi@tax_table[, "Guild"]),
+  taxa_names_from_physeq = TRUE
+)
 
 }

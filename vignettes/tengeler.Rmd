@@ -37,6 +37,7 @@ library("iNEXT")
 
 
 ```{r}
+data(Tengeler2020_pq)
 ten <- Tengeler2020_pq
 summary_plot_pq(ten)
 ```
@@ -185,6 +186,13 @@ ggeffectsize(LEfSe) +
 
 
 
+
+
+# Session information
+
+```{r}
+sessionInfo()
+```
 
 # References
 

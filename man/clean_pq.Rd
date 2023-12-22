@@ -42,8 +42,7 @@ transpose the otu_table and set taxa_are_rows to false}
 transpose the otu_table and set taxa_are_rows to true}
 
 \item{reorder_asv}{(logical) if TRUE the otu_table is ordered by the number of
-sequences of ASV (descending order). Default to FALSE.
-Need the \href{https://github.com/david-barnett/microViz}{microViz} package.}
+sequences of ASV (descending order). Default to FALSE.}
 
 \item{rename_asv}{(logical) if TRUE, ASV are renamed by their position
 in the OTU_table (asv_1, asv_2, ...). Default to FALSE. If rename ASV is true,

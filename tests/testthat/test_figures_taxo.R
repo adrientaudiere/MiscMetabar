@@ -255,15 +255,18 @@ test_that("rigdes_pq work with data_fungi dataset", {
     "ggplot"
   )
   expect_s3_class(
-    ridges_pq(clean_pq(
-      subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")
-    )),
+    ridges_pq(
+      clean_pq(
+        subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")
+      ),
+      "Time"
+    ),
     "ggplot"
   )
   expect_s3_class(
     ridges_pq(clean_pq(
       subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")
-    ), alpha = 0.6, scale = 0.9),
+    ), "Time", alpha = 0.6, scale = 0.9),
     "ggplot"
   )
   expect_s3_class(
@@ -271,6 +274,7 @@ test_that("rigdes_pq work with data_fungi dataset", {
       clean_pq(subset_taxa(
         data_fungi_sp_known, Phylum == "Basidiomycota"
       )),
+      "Time",
       jittered_points = TRUE,
       position = ggridges::position_points_jitter(width = 0.05, height = 0),
       point_shape = "|",
@@ -280,6 +284,11 @@ test_that("rigdes_pq work with data_fungi dataset", {
       scale = 0.8
     ),
     "ggplot"
+  )
+  expect_error(
+    ridges_pq(clean_pq(
+      subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")
+    ))
   )
 })
 
@@ -352,7 +361,6 @@ test_that("tax_bar_pq work with data_fungi dataset", {
 })
 
 test_that("add_funguild_info and plot_guild_pq work with data_fungi dataset", {
-  library(FUNGuildR)
   expect_s4_class(
     df <-
       add_funguild_info(

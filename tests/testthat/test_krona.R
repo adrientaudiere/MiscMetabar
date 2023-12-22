@@ -20,7 +20,7 @@ if (class(krona_error_or_not) == "try-error") {
         paste0(testFolder, "/Number.of.sequences.html"),
         paste0(testFolder, "/Number.of.ASVs.html")
       ),
-      output = paste0(testFolder, "mergeKrona.html")
+      output = paste0(testFolder, "/mergeKrona.html")
     ))
     unlink(list.files(testFolder, full.names = TRUE), recursive = TRUE)
   })

@@ -20,7 +20,7 @@ the matrix with new colnames (or rownames if \code{taxa_are_rows} is true)
 }
 \examples{
 data(data_fungi)
-rename_samples_otu_table(data_fungi, as.character(1:nsamples(data_fungi)))
+rename_samples_otu_table(data_fungi, as.character(seq_along(sample_names(data_fungi))))
 
 }
 \author{

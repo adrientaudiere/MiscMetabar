@@ -24,8 +24,7 @@ Need to be in \code{physeq@sam_data}. This should be a factor
 with two or more levels.}
 
 \item{merge_sample_by}{a vector to determine
-which samples to merge using the
-\code{\link[speedyseq]{merge_samples2}} function.
+which samples to merge using \code{\link[=merge_samples2]{merge_samples2()}} function.
 Need to be in \code{physeq@sam_data}}
 
 \item{nperm}{(int) The number of permutations to perform.}

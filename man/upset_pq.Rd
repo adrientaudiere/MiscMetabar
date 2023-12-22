@@ -34,7 +34,7 @@ will not count in the venn diagram}
 if FALSE, NA values are set to "NA"}
 
 \item{numeric_fonction}{(default : sum) the function for numeric vector
-usefull only for complex plot (see examples)}
+useful only for complex plot (see examples)}
 
 \item{rarefy_after_merging}{Rarefy each sample after merging by the
 modalities of \code{fact} parameter}
@@ -50,6 +50,7 @@ A \code{\link{ggplot}}2 plot
 Alternative to venn plot.
 }
 \examples{
+data(data_fungi)
 upset_pq(data_fungi, fact = "Height", width_ratio = 0.2)
 upset_pq(data_fungi,
   fact = "Height", width_ratio = 0.2,
@@ -154,7 +155,7 @@ data_fungi2@sam_data[["Height__Time_0"]] <-
   paste0(data_fungi2@sam_data[["Height"]], "__", data_fungi2@sam_data[["Time_0"]])
 data_fungi2@sam_data[["Height__Time_0"]][grepl("NA", data_fungi2@sam_data[["Height__Time_0"]])] <-
   NA
-upset_pq(data_fungi2, fact = "Height__Time_0", width_ratio = 0.2)
+upset_pq(data_fungi2, fact = "Height__Time_0", width_ratio = 0.2, min_size = 2)
 }
 \seealso{
 \code{\link[=ggvenn_pq]{ggvenn_pq()}}

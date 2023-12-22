@@ -1,3 +1,4 @@
+################################################################################
 #' @title Performs graph-based permutation tests on phyloseq object
 #' @description
 #' `r lifecycle::badge("maturing")`
@@ -10,8 +11,7 @@
 #'   Need to be in \code{physeq@sam_data}. This should be a factor
 #'   with two or more levels.
 #' @param merge_sample_by a vector to determine
-#'   which samples to merge using the
-#'   \code{\link[speedyseq]{merge_samples2}} function.
+#'   which samples to merge using [merge_samples2()] function.
 #'   Need to be in \code{physeq@sam_data}
 #' @param nperm (int) The number of permutations to perform.
 #' @param return_plot (logical) Do we return only the result
@@ -35,18 +35,19 @@
 #'   Please cite `phyloseqGraphTest` package.
 #' @export
 
-graph_test_pq <- function(physeq,
-                          fact,
-                          merge_sample_by = NULL,
-                          nperm = 999,
-                          return_plot = TRUE,
-                          title = "Graph Test",
-                          na_remove = FALSE,
-                          ...) {
+graph_test_pq <- function(
+        physeq,
+        fact,
+        merge_sample_by = NULL,
+        nperm = 999,
+        return_plot = TRUE,
+        title = "Graph Test",
+        na_remove = FALSE,
+        ...) {
   verify_pq(physeq)
 
   if (!is.null(merge_sample_by)) {
-    physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
+    physeq <- merge_samples2(physeq, merge_sample_by)
     physeq <- clean_pq(physeq)
   }
 
@@ -86,8 +87,9 @@ graph_test_pq <- function(physeq,
     return(p)
   }
 }
+################################################################################
 
-
+################################################################################
 #' @title Permanova on a phyloseq object
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -102,7 +104,7 @@ graph_test_pq <- function(physeq,
 #'   For aitchison and robust.aitchison distance, [vegan::vegdist()]
 #'   function is directly used.
 #' @param merge_sample_by a vector to determine
-#'   which samples to merge using the [speedyseq::merge_samples2()]
+#'   which samples to merge using the [merge_samples2()]
 #'   function. Need to be in `physeq@sam_data`
 #' @param na_remove (logical, default FALSE) If set to TRUE, remove samples with
 #'   NA in the variables set in formula.
@@ -133,14 +135,15 @@ graph_test_pq <- function(physeq,
 #'   Please make a reference to `vegan::adonis2()` if you
 #'   use this function.
 
-adonis_pq <- function(physeq,
-                      formula,
-                      dist_method = "bray",
-                      merge_sample_by = NULL,
-                      na_remove = FALSE,
-                      correction_for_sample_size = FALSE,
-                      rarefy_nb_seqs = FALSE,
-                      ...) {
+adonis_pq <- function(
+        physeq,
+        formula,
+        dist_method = "bray",
+        merge_sample_by = NULL,
+        na_remove = FALSE,
+        correction_for_sample_size = FALSE,
+        rarefy_nb_seqs = FALSE,
+        ...) {
   physeq <- clean_pq(
     physeq,
     force_taxa_as_columns = TRUE,
@@ -159,7 +162,7 @@ adonis_pq <- function(physeq,
       )
   } else {
     phy_dist <-
-      paste0('phyloseq:::distance(physeq, method="', dist_method, '")')
+      paste0('phyloseq::distance(physeq, method="', dist_method, '")')
   }
 
   .formula <- stats::reformulate(formula, response = phy_dist)
@@ -187,7 +190,7 @@ adonis_pq <- function(physeq,
   }
 
   if (!is.null(merge_sample_by)) {
-    physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
+    physeq <- merge_samples2(physeq, merge_sample_by)
     physeq <- clean_pq(physeq)
   }
 
@@ -208,9 +211,10 @@ adonis_pq <- function(physeq,
   res_ado <- vegan::adonis2(.formula, data = metadata, ...)
   return(res_ado)
 }
+################################################################################
 
 
-
+################################################################################
 #' @title Compute and test local contributions to beta diversity (LCBD) of
 #'   samples
 #' @description
@@ -228,19 +232,21 @@ adonis_pq <- function(physeq,
 #' @export
 #' @seealso [plot_LCBD_pq], [adespatial::beta.div()]
 #' @examples
-#' res <- LCBD_pq(data_fungi, nperm = 100)
+#' data(data_fungi_sp_known)
+#' res <- LCBD_pq(data_fungi_sp_known, nperm = 50)
 #' str(res)
 #' length(res$LCBD)
 #' length(res$SCBD)
-#' LCBD_pq(data_fungi, nperm = 100, method = "jaccard")
+#' LCBD_pq(data_fungi_sp_known, nperm = 50, method = "jaccard")
 #'
 #' @author Adrien Taudière
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `adespatial::beta.div()` if you
 #'   use this function.
-LCBD_pq <- function(physeq,
-                    p_adjust_method = "BH",
-                    ...) {
+LCBD_pq <- function(
+        physeq,
+        p_adjust_method = "BH",
+        ...) {
   physeq <- clean_pq(
     physeq,
     force_taxa_as_columns = TRUE,
@@ -259,8 +265,9 @@ LCBD_pq <- function(physeq,
     p.adjust(resBeta$p.LCBD, method = p_adjust_method)
   return(resBeta)
 }
+################################################################################
 
-
+################################################################################
 #' @title Plot and test local contributions to beta diversity (LCBD) of samples
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -310,12 +317,13 @@ LCBD_pq <- function(physeq,
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `vegan::beta.div()` if you
 #'   use this function.
-plot_LCBD_pq <- function(physeq,
-                         p_adjust_method = "BH",
-                         pval = 0.05,
-                         sam_variables = NULL,
-                         only_plot_significant = TRUE,
-                         ...) {
+plot_LCBD_pq <- function(
+        physeq,
+        p_adjust_method = "BH",
+        pval = 0.05,
+        sam_variables = NULL,
+        only_plot_significant = TRUE,
+        ...) {
   resBeta <- LCBD_pq(physeq,
     p_adjust_method = p_adjust_method,
     ...
@@ -400,8 +408,9 @@ plot_LCBD_pq <- function(physeq,
     }
   }
 }
+################################################################################
 
-
+################################################################################
 #' @title Plot species contributions to beta diversity (SCBD) of samples
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -432,11 +441,12 @@ plot_LCBD_pq <- function(physeq,
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `vegan::beta.div()` if you
 #'   use this function.
-plot_SCBD_pq <- function(physeq,
-                         tax_level = "ASV",
-                         tax_col = "Order",
-                         min_SCBD = 0.01,
-                         ...) {
+plot_SCBD_pq <- function(
+        physeq,
+        tax_level = "ASV",
+        tax_col = "Order",
+        min_SCBD = 0.01,
+        ...) {
   resBeta <- LCBD_pq(physeq, nperm = 0, ...)
 
   tax_tab <- data.frame(physeq@tax_table)
@@ -458,8 +468,9 @@ plot_SCBD_pq <- function(physeq,
 
   return(p_SCBD)
 }
+################################################################################
 
-
+################################################################################
 #' @title Test and plot multipatt result
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -490,12 +501,13 @@ plot_SCBD_pq <- function(physeq,
 #'   Please make a reference to `indicspecies::multipatt()` if you
 #'   use this function.
 
-multipatt_pq <- function(physeq,
-                         fact,
-                         p_adjust_method = "BH",
-                         pval = 0.05,
-                         control = permute::how(nperm = 999),
-                         ...) {
+multipatt_pq <- function(
+        physeq,
+        fact,
+        p_adjust_method = "BH",
+        pval = 0.05,
+        control = permute::how(nperm = 999),
+        ...) {
   physeq <- clean_pq(physeq,
     clean_samples_names = FALSE,
     force_taxa_as_columns = TRUE
@@ -532,4 +544,74 @@ multipatt_pq <- function(physeq,
       hjust = 1
     ))
   return(p)
+}
+################################################################################
+
+################################################################################
+#' Run ANCOMBC2 on phyloseq object
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' A wrapper for the [ANCOMBC::ancombc2()] function
+#'
+#' @inheritParams clean_pq
+#' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
+#'    different lines
+#' @param levels_fact (default NULL) The order of the level in the factor.
+#'   Used for reorder levels and select levels (filter out levels not present
+#'   en levels_fact)
+#' @param tax_level The taxonomic level passed on to [ANCOMBC::ancombc2()]
+#' @param ... Other arguments passed on to [ANCOMBC::ancombc2()] function.
+#' @return The result of [ANCOMBC::ancombc2()] function
+#' @export
+#'
+#' @examples
+#' data(data_fungi_sp_known)
+#' res_height <- ancombc_pq(
+#'   subset_taxa_pq(
+#'     data_fungi_sp_known,
+#'     taxa_sums(data_fungi_sp_known) > 5000
+#'   ),
+#'   fact = "Height",
+#'   levels_fact = c("Low", "High"),
+#'   verbose = TRUE
+#' )
+#'
+#' ggplot(
+#'   res_height$res,
+#'   aes(
+#'     y = reorder(taxon, lfc_HeightHigh),
+#'     x = lfc_HeightHigh,
+#'     color = diff_HeightHigh
+#'   )
+#' ) +
+#'   geom_vline(xintercept = 0) +
+#'   geom_segment(aes(
+#'     xend = 0, y = reorder(taxon, lfc_HeightHigh),
+#'     yend = reorder(taxon, lfc_HeightHigh)
+#'   ), color = "darkgrey") +
+#'   geom_point()
+#'
+#' @author Adrien Taudière
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please make a reference to `ANCOMBC::ancombc2()` if you
+#'   use this function.
+ancombc_pq <- function(physeq, fact, levels_fact = NULL, tax_level = "Class", ...) {
+  if (!is.null(levels_fact)) {
+    physeq <- subset_samples_pq(physeq, as.vector(physeq@sam_data[, fact])[[1]] %in% levels_fact)
+  }
+  tse <- mia::makeTreeSummarizedExperimentFromPhyloseq(physeq)
+  if (!is.null(levels_fact)) {
+    SummarizedExperiment::colData(tse)[[fact]] <- factor(tse[[fact]], levels = levels_fact)
+  }
+  res_ancomb <- ANCOMBC::ancombc2(
+    data = tse,
+    assay_name = "counts",
+    fix_formula = fact,
+    tax_level = tax_level,
+    group = fact,
+    ...
+  )
+  return(res_ancomb)
 }
