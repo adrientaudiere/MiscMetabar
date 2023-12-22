@@ -11,7 +11,7 @@ sample_data_stable(object)
 }
 \description{
 \code{phyloseq::sample_data()} will change the sample names from the row names if
-they are \code{as.character(1:nrow(object))}. This function instead keeps the
+they are \code{as.character(seq(1, row(object)))}. This function instead keeps the
 names as is.
 }
 \examples{

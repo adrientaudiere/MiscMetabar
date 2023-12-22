@@ -24,11 +24,23 @@ see \code{\link[iNEXT:iNEXT]{iNEXT::iNEXT()}} documentation
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
-\dontrun{
 library("iNEXT")
+data("GlobalPatterns", package = "phyloseq")
+GPsubset <- subset_taxa(
+  GlobalPatterns,
+  GlobalPatterns@tax_table[, 1] == "Bacteria"
+)
+GPsubset <- subset_taxa(
+  GPsubset,
+  rowSums(GPsubset@otu_table) > 1000
+)
+GPsubset <- subset_taxa(
+  GPsubset,
+  rowSums(is.na(GPsubset@tax_table)) == 0
+)
 res_iNEXT <- iNEXT_pq(
-  data_fungi_sp_known,
-  merge_sample_by = "Height",
+  GPsubset,
+  merge_sample_by = "SampleType",
   q = 1,
   datatype = "abundance",
   nboot = 2
@@ -36,7 +48,6 @@ res_iNEXT <- iNEXT_pq(
 ggiNEXT(res_iNEXT)
 ggiNEXT(res_iNEXT, type = 2)
 ggiNEXT(res_iNEXT, type = 3)
-}
 }
 \author{
 Adrien Taudière

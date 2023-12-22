@@ -4,7 +4,7 @@
 #' The original function and documentation was written by Brendan Furneaux
 #' in the [FUNGuildR](https://github.com/brendanf/FUNGuildR/) package.
 #'
-#' Please cite this [publication](https://doi.org/10.1016/j.funeco.2015.06.006).
+#' Please cite this [publication](https://www.sciencedirect.com/science/article/abs/pii/S1754504815000847).
 #'
 #' @param db a length 1 character string giving the URL to retrieve the database
 #'     from
@@ -97,8 +97,9 @@ get_funguild_db <- function(db = "http://www.stbates.org/funguild_db_2.php") {
 #' 20:241-248.
 #' @author Brendan Furneaux (orcid: [0000-0003-3522-7363](https://orcid.org/0000-0003-3522-7363)),
 #' modified by Adrien Taudière
-funguild_assign <- function(otu_table, db = get_funguild_db(),
-                            tax_col = "Taxonomy") {
+funguild_assign <- function(
+        otu_table, db = get_funguild_db(),
+        tax_col = "Taxonomy") {
   if (is.character(otu_table)) {
     otu_table <- tibble::tibble(otu_table)
     names(otu_table) <- tax_col

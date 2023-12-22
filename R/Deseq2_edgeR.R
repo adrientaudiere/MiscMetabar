@@ -20,7 +20,6 @@
 #'
 #' @export
 #' @examples
-#' \dontrun{
 #' data("GlobalPatterns", package = "phyloseq")
 #' plot_edgeR_pq(GlobalPatterns, c("SampleType", "Soil", "Feces"),
 #'   color_tax = "Kingdom"
@@ -28,7 +27,6 @@
 #' plot_edgeR_pq(GlobalPatterns, c("SampleType", "Soil", "Feces"),
 #'   taxolev = "Class", color_tax = "Kingdom"
 #' )
-#' }
 #' @author Adrien Taudière
 #'
 #' @return A \code{\link{ggplot}}2 plot representing edgeR results

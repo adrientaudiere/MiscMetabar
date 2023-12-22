@@ -21,26 +21,27 @@
 #' @author Adrien Taudière
 
 list_fastq_files <-
-  function(path,
-           paired_end = TRUE,
-           pattern = "fastq",
-           pattern_R1 = "_R1_",
-           pattern_R2 = "_R2_",
-           nb_files = Inf) {
+  function(
+        path,
+        paired_end = TRUE,
+        pattern = "fastq",
+        pattern_R1 = "_R1_",
+        pattern_R2 = "_R2_",
+        nb_files = Inf) {
     list_files <- list.files(path, pattern = pattern, full.names = TRUE)
     if (paired_end) {
       fnfs <- sort(list_files[grepl(list_files, pattern = pattern_R1)])
       fnrs <-
         sort(list_files[grepl(list_files, pattern = pattern_R2)])
       if (is.finite(nb_files)) {
-        fnfs <- fnfs[1:nb_files]
-        fnrs <- fnrs[1:nb_files]
+        fnfs <- fnfs[seq(1, nb_files)]
+        fnrs <- fnrs[seq(1, nb_files)]
       }
       return(list("fnfs" = fnfs, "fnrs" = fnrs))
     } else {
       fnfs <- sort(list_files[grepl(list_files, pattern = pattern_R1)])
       if (is.finite(nb_files)) {
-        fnfs <- fnfs[1:nb_files]
+        fnfs <- fnfs[seq(1, nb_files)]
       }
       return(list("fnfs" = fnfs))
     }
@@ -64,7 +65,7 @@ list_fastq_files <-
 #'
 #' @examples
 #' data(data_fungi)
-#' rename_samples_otu_table(data_fungi, as.character(1:nsamples(data_fungi)))
+#' rename_samples_otu_table(data_fungi, as.character(seq_along(sample_names(data_fungi))))
 #'
 rename_samples_otu_table <- function(physeq, names_of_samples) {
   otu_tab <- physeq@otu_table

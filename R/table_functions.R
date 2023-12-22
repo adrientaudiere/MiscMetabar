@@ -26,11 +26,12 @@
 #' tax_datatable(GlobalPatterns,
 #'   modality = GlobalPatterns@sam_data$SampleType
 #' )
-tax_datatable <- function(physeq,
-                          abundance = TRUE,
-                          taxonomic_level = NULL,
-                          modality = NULL,
-                          ...) {
+tax_datatable <- function(
+        physeq,
+        abundance = TRUE,
+        taxonomic_level = NULL,
+        modality = NULL,
+        ...) {
   df <- as.data.frame(unclass(physeq@tax_table))
 
   if (!is.null(taxonomic_level)) {
@@ -121,13 +122,14 @@ tax_datatable <- function(physeq,
 #'   bifactor = "Height",
 #'   merge_sample_by = "Height", modality = "Time"
 #' )
-compare_pairs_pq <- function(physeq = NULL,
-                             bifactor = NULL,
-                             modality = NULL,
-                             merge_sample_by = NULL,
-                             nb_min_seq = 0,
-                             veg_index = "shannon",
-                             na_remove = TRUE) {
+compare_pairs_pq <- function(
+        physeq = NULL,
+        bifactor = NULL,
+        modality = NULL,
+        merge_sample_by = NULL,
+        nb_min_seq = 0,
+        veg_index = "shannon",
+        na_remove = TRUE) {
   physeq <- clean_pq(physeq,
     clean_samples_names = FALSE,
     force_taxa_as_columns = TRUE,

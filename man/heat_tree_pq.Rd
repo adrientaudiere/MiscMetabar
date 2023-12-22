@@ -26,7 +26,7 @@ Note that the number of ASV is store under the name \code{n_obs}
 and the number of sequences under the name \code{nb_sequences}
 }
 \examples{
-\dontrun{
+library("metacoder")
 data("GlobalPatterns", package = "phyloseq")
 GPsubset <- subset_taxa(
   GlobalPatterns,
@@ -50,13 +50,13 @@ heat_tree_pq(GPsubset,
 )
 
 heat_tree_pq(GPsubset,
-  node_size = n_seq,
+  node_size = nb_sequences,
   node_color = n_obs,
   node_label = taxon_names,
   tree_label = taxon_names,
   node_size_trans = "log10 area"
 )
-}
+
 }
 \author{
 Adrien Taudière

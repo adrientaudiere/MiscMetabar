@@ -52,11 +52,12 @@ as_binary_otu_table <- function(physeq, min_number = 1) {
 #' @export
 #' @seealso \code{\link[vegan]{vegdist}}
 
-dist_bycol <- function(x,
-                       y,
-                       method = "bray",
-                       nperm = 99,
-                       ...) {
+dist_bycol <- function(
+        x,
+        y,
+        method = "bray",
+        nperm = 99,
+        ...) {
   x <- as.matrix(unclass(x))
   y <- as.matrix(unclass(y))
 
@@ -96,13 +97,14 @@ dist_bycol <- function(x,
 #'
 #' Code from https://tolstoy.newcastle.edu.au/R/e6/help/09/01/1121.html
 #'
+#' @importFrom utils object.size
 #' @aliases all_object_size
 #' @return a list of size
 #' @export
 all_object_size <- function() {
-  return(sort(sapply(ls(envir = .GlobalEnv), function(x) {
+  return(sort(vapply(ls(envir = .GlobalEnv), function(x) {
     utils::object.size(get(x))
-  })))
+  }, numeric(1))))
 }
 ################################################################################
 
@@ -230,11 +232,11 @@ count_seq <- function(file_path = NULL, folder_path = NULL, pattern = NULL) {
       ))
     }
   } else {
-    seq_nb <- sapply(
+    seq_nb <- vapply(
       list.files(folder_path, full.names = TRUE, pattern = pattern),
       function(f) {
         count_seq(file_path = f)
-      }
+      }, numeric(1)
     )
   }
   return(as.numeric(seq_nb))
@@ -292,9 +294,10 @@ funky_color <-
 #' subsample_fastq(ex_file, "your_path_to_output")
 #' subsample_fastq(list_fastq_files("extdata"), "your_path_to_output", n = 10)
 #' }
-subsample_fastq <- function(fastq_files,
-                            folder_output = "subsample",
-                            n_seq = 1000) {
+subsample_fastq <- function(
+        fastq_files,
+        folder_output = "subsample",
+        n_seq = 1000) {
   for (f in unlist(fastq_files)) {
     if (!dir.exists(folder_output)) {
       dir.create(folder_output)
@@ -326,12 +329,9 @@ subsample_fastq <- function(fastq_files,
 #' @return Nothing
 #' @author Adrien Taudière
 #' @export
-#' @examples
-#' \dontrun{
-#' install_pkg_needed("ggVennDiagram")
-#' }
-install_pkg_needed <- function(pkg, use_pak = TRUE, bioconductor_pkg = FALSE,
-                               github_pkg = FALSE, verbose = FALSE) {
+install_pkg_needed <- function(
+        pkg, use_pak = TRUE, bioconductor_pkg = FALSE,
+        github_pkg = FALSE, verbose = FALSE) {
   if (!requireNamespace(pkg, quietly = TRUE)) {
     if (verbose) {
       message(paste0("Installation of the package : ", pkg))

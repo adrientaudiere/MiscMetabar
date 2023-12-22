@@ -3,9 +3,7 @@
 \name{plot_guild_pq}
 \alias{plot_guild_pq}
 \title{Plot information about Guild from tax_table slot previously
-created with \code{\link[=add_funguild_info]{add_funguild_info()}}
-#' @description
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}}
+created with \code{\link[=add_funguild_info]{add_funguild_info()}}}
 \usage{
 plot_guild_pq(physeq, levels_order = NULL, clean_pq = TRUE, ...)
 }
@@ -26,9 +24,6 @@ object is cleaned using the \code{\link[=clean_pq]{clean_pq()}} function?}
 A ggplot2 object
 }
 \description{
-Plot information about Guild from tax_table slot previously
-created with \code{\link[=add_funguild_info]{add_funguild_info()}}
-#' @description
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{

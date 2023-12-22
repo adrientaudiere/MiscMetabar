@@ -33,12 +33,13 @@
 #'   Please cite [Krona](https://github.com/marbl/Krona) if
 #'   you use this function.
 krona <-
-  function(physeq,
-           file = "krona.html",
-           nb_seq = TRUE,
-           ranks = "All",
-           add_unassigned_rank = 0,
-           name = NULL) {
+  function(
+        physeq,
+        file = "krona.html",
+        nb_seq = TRUE,
+        ranks = "All",
+        add_unassigned_rank = 0,
+        name = NULL) {
     if (ranks[1] == "All") {
       ranks <- seq_along(physeq@tax_table[1, ])
     }
@@ -107,12 +108,14 @@ krona <-
 #' @param output path to the output file
 #'
 #' @examples
-#' \dontrun{
-#' data("GlobalPatterns", package = "phyloseq")
-#' GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
-#' krona(GA, "Number.of.sequences.html", name = "Nb_seq_GP_acidobacteria")
-#' krona(GA, "Number.of.ASVs.html", nb_seq = FALSE, name = "Nb_asv_GP_acidobacteria")
-#' merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"))
+#' krona_error_or_not <- try(system("ktImportText 2>&1", intern = TRUE))
+#' if (class(krona_error_or_not) != "try-error") {
+#'   data("GlobalPatterns", package = "phyloseq")
+#'   GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
+#'   krona(GA, "Number.of.sequences.html", name = "Nb_seq_GP_acidobacteria")
+#'   krona(GA, "Number.of.ASVs.html", nb_seq = FALSE, name = "Nb_asv_GP_acidobacteria")
+#'   merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"), "mergeKrona.html")
+#'   unlink(c("Number.of.sequences.html", "Number.of.ASVs.html", "mergeKrona.html"))
 #' }
 #' @return A html file
 #' @seealso \code{\link{krona}}

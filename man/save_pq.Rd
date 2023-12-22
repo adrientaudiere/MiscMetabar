@@ -2,12 +2,7 @@
 % Please edit documentation in R/dada_phyloseq.R
 \name{save_pq}
 \alias{save_pq}
-\title{A wrapper of write_pq to save in all three format :
-\itemize{
-\item 4 separate tables
-\item 1 table version
-\item 1 RData file
-}}
+\title{A wrapper of write_pq to save in all three possible formats}
 \usage{
 save_pq(physeq, path = NULL, ...)
 }
@@ -25,7 +20,17 @@ table with all tables together + a rdata file (\code{physeq.RData}) that can be 
 \code{\link[base:load]{base::load()}} function + if present a phylogenetic tree in Newick format (\code{phy_tree.txt})
 }
 \description{
+A wrapper of write_pq to save in all three possible formats
+}
+\details{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+
+Write :
+\itemize{
+\item 4 separate tables
+\item 1 table version
+\item 1 RData file
+}
 }
 \examples{
 \dontrun{

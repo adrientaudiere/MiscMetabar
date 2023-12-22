@@ -37,6 +37,7 @@ and if present a phy_tree in Newick format. At least the otu_table.csv need to b
 \examples{
 \dontrun{
 read_pq(path = "phyloseq_data")
+read_pq(path = "phyloseq_data", taxa_are_rows = TRUE)
 }
 
 }

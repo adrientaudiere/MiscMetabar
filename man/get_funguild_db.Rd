@@ -19,7 +19,7 @@ to the \code{db} argument of \code{\link[=funguild_assign]{funguild_assign()}}
 The original function and documentation was written by Brendan Furneaux
 in the \href{https://github.com/brendanf/FUNGuildR/}{FUNGuildR} package.
 
-Please cite this \href{https://doi.org/10.1016/j.funeco.2015.06.006}{publication}.
+Please cite this \href{https://www.sciencedirect.com/science/article/abs/pii/S1754504815000847}{publication}.
 }
 \examples{
 get_funguild_db()

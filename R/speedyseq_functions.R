@@ -49,10 +49,11 @@
 #' @author Michael R. McLaren (orcid: [0000-0003-1575-473X](https://orcid.org/0000-0003-1575-473X)) modified by Adrien Taudiere
 setGeneric(
   "merge_taxa_vec",
-  function(x,
-           group,
-           reorder = FALSE,
-           tax_adjust = 1L) {
+  function(
+        x,
+        group,
+        reorder = FALSE,
+        tax_adjust = 1L) {
     standardGeneric("merge_taxa_vec")
   }
 )
@@ -179,7 +180,7 @@ setMethod(
     reduced_by_group <- as_tibble(apply(
       reduced, 2, function(xx) {
         unlist(tapply(xx, reduced$.group, bad_or_unique,
-          bad = bad_string, simplify = F
+          bad = bad_string, simplify = FALSE
         ))
       }
     ))
@@ -348,11 +349,12 @@ bad_flush_right <- function(x, bad = "BAD", na_bad = FALSE, k = length(x)) {
 #' @author Michael R. McLaren (orcid: [0000-0003-1575-473X](https://orcid.org/0000-0003-1575-473X)) modified by Adrien Taudiere
 setGeneric(
   "merge_samples2",
-  function(x,
-           group,
-           fun_otu = sum,
-           funs = list(),
-           reorder = FALSE) {
+  function(
+        x,
+        group,
+        fun_otu = sum,
+        funs = list(),
+        reorder = FALSE) {
     standardGeneric("merge_samples2")
   }
 )
@@ -567,7 +569,7 @@ merge_groups <- function(x, group, f = unique_or_na) {
 #' Create sample data without adjusting row/sample names
 #'
 #' `phyloseq::sample_data()` will change the sample names from the row names if
-#' they are `as.character(1:nrow(object))`. This function instead keeps the
+#' they are `as.character(seq(1, row(object)))`. This function instead keeps the
 #' names as is.
 #'
 #' @param object A "data.frame"-class object
@@ -692,7 +694,7 @@ setMethod(
     otu_table(x) <- select_taxa(otu_table(x), taxa)
 
     tax_order <- taxa_names(otu_table(x))
-    if (!is.null(tax_table(x11(), FALSE))) {
+    if (!is.null(tax_table(x, FALSE))) {
       # If there is a taxonomyTable, re-order that too.
       x@tax_table <- tax_table(x)[tax_order, ]
     }

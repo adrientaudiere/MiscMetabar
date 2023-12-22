@@ -35,6 +35,7 @@ Please make a reference to \code{ANCOMBC::ancombc2()} if you
 use this function.
 }
 \examples{
+data(data_fungi_sp_known)
 res_height <- ancombc_pq(
   subset_taxa_pq(
     data_fungi_sp_known,

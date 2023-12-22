@@ -27,7 +27,7 @@ Please cite this \href{https://doi.org/10.1016/j.funeco.2015.06.006}{publication
 \details{
 This function is mainly a wrapper of the work of others.
 Please make a reference to \code{FUNGuildR} package and the associate
-\href{https://doi.org/10.1016/j.funeco.2015.06.006}{publication} if you
+\href{https://www.sciencedirect.com/science/article/abs/pii/S1754504815000847}{publication} if you
 use this function.
 }
 \examples{

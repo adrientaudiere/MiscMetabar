@@ -33,11 +33,6 @@ Nothing
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
-\examples{
-\dontrun{
-install_pkg_needed("ggVennDiagram")
-}
-}
 \author{
 Adrien Taudière
 }

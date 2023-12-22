@@ -8,7 +8,7 @@
 #'
 #'  This algorithm \code{lulu} consumes an OTU table and a matchlist, and
 #'   evaluates cooccurence of 'daughters' (potential analytical artefacts) and
-#'   their 'parents' (≈ real biological species/OTUs). The algorithm requires an
+#'   their 'parents' (~= real biological species/OTUs). The algorithm requires an
 #'   OTU table (species/site matrix), and a match list. The OTU table can be
 #'   made with various r-packages (e.g. \code{DADA2}) or
 #'   external pipelines (\code{VSEARCH, USEARCH, QIIME}, etc.), and the
@@ -113,7 +113,7 @@ lulu <- function(otutable, matchlist, minimum_ratio_type = "min", minimum_ratio 
     width = 50, # Progress bar width. Defaults to getOption("width")
     char = "="
   ) # Character used to create the bar
-  for (line in seq(1:nrow(statistics_table))) {
+  for (line in seq(1, nrow(statistics_table))) {
     if (progress_bar) {
       setTxtProgressBar(pb, line)
     }

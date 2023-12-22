@@ -9,7 +9,7 @@
 Functions to help analyze and visualize metabarcoding data. Mainly based on
 the phyloseq and dada2 packages.
 
-The MiscMetabar package aims to facilitate the description, transformation, exploration, and reproducibility of metabarcoding analysis. Mainly build on the top of phyloseq, dada2 R packages.
+The MiscMetabar package aims to facilitate the description, transformation, exploration, and reproducibility of metabarcoding analysis. Mainly build on the top of phyloseq, dada2 R packages. MiscMetabar help to build reproducible and robust bioinformatic pipeline in R. MiscMetabar make ecological analysis of alpha and beta-diversity simple and powerfull by integrating a large number of analysis, some of them from other R packages.
 }
 \seealso{
 Useful links:

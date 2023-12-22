@@ -207,8 +207,10 @@ test_that("venn_pq works with data_fungi dataset", {
   )))
   expect_silent(venn_pq(data_fungi, "Height", min_nb_seq = 10))
   expect_silent(venn_pq(data_fungi, "Height", print_values = FALSE))
-  expect_silent(venn_pq(data_fungi, "Height", print_values = FALSE) + scale_fill_hue())
-  expect_silent(venn_pq(data_fungi, "Height", print_values = TRUE) + scale_fill_hue())
+  expect_silent(venn_pq(data_fungi, "Height", print_values = FALSE) +
+    scale_fill_hue())
+  expect_silent(venn_pq(data_fungi, "Height", print_values = TRUE) +
+    scale_fill_hue())
   expect_error(venn_pq(data_fungi))
   expect_error(venn_pq(data_fungi@otu_table, "Height"))
   expect_type(

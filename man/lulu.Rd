@@ -87,7 +87,7 @@ in the \href{https://github.com/tobiasgf/lulu}{lulu} package.
 
 This algorithm \code{lulu} consumes an OTU table and a matchlist, and
 evaluates cooccurence of 'daughters' (potential analytical artefacts) and
-their 'parents' (≈ real biological species/OTUs). The algorithm requires an
+their 'parents' (~= real biological species/OTUs). The algorithm requires an
 OTU table (species/site matrix), and a match list. The OTU table can be
 made with various r-packages (e.g. \code{DADA2}) or
 external pipelines (\code{VSEARCH, USEARCH, QIIME}, etc.), and the
