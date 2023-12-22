@@ -23,7 +23,7 @@ if (getRversion() >= "2.15.1") {
     "tax", "tax_col", "teststat", "Time", "tnrs_match_names", "tol_induced_subtree",
     "update", "upr", "upViewport", "val", "value", "vegdist", "viewport",
     "write.table", "x", "x1", "X1", "x2", "y", "y1", "y2", "ymax",
-    "ymin"
+    "ymin", ".SD", ".group", ":=", "archetype", "nOTUid", "taxon", "total"
   ))
 }
 

@@ -40,8 +40,7 @@
 #' @export
 #'
 #' @seealso
-#' Merging functions that use this function: [tax_glom()], [tip_glom()],
-#' [tree_glom()]
+#' Function in MiscMetabar that use this function: [asv2otu()]
 #'
 #' [base::rowsum()]
 #'
@@ -96,7 +95,7 @@ setMethod(
     if (!is.null(tax)) {
       tax_table(x) <- tax
     }
-    x
+    return(x)
   }
 )
 
@@ -139,7 +138,7 @@ setMethod(
     if (needs_flip) {
       otu <- t(otu)
     }
-    otu
+    return(otu)
   }
 )
 
@@ -301,7 +300,7 @@ bad_flush_right <- function(x, bad = "BAD", na_bad = FALSE, k = length(x)) {
   if (length(which_bad) > 0) {
     x[seq(min(which_bad), k)] <- NA
   }
-  x
+  return(x)
 }
 
 #' Merge samples by a sample variable or factor
@@ -418,27 +417,26 @@ setMethod(
       x.merged <- rowsum(x, group, reorder = reorder)
     } else {
       stopifnot(!".group" %in% colnames(x))
-      f <- purrr::as_mapper(fun_otu)
-      x <- x %>%
+      x.merged <- x %>%
         as("matrix") %>%
-        data.table::as.data.table() %>%
-        cbind(.group = group)
+        tibble::as_tibble() %>%
+        cbind(.group = group) %>%
+        group_by(.group) %>%
+        summarise(across(everything(), purrr::as_mapper(fun_otu)))
+
+
       if (reorder) {
-        x.merged <- x[, lapply(.SD, f), keyby = .(.group)]
-      } else {
-        x.merged <- x[, lapply(.SD, f), by = .(.group)]
+        x.merged <- x.merged %>% arrange(.group)
       }
-      rns <- x.merged$.group
-      x.merged[, .group := NULL]
-      x.merged <- x.merged %>% as("matrix")
-      rownames(x.merged) <- rns
+      x.merged <- x.merged %>%
+        tibble::column_to_rownames(".group")
     }
     # Return an otu table in the proper orientation
     x.merged <- x.merged %>% otu_table(taxa_are_rows = FALSE)
     if (needs_flip) {
       x.merged <- t(x.merged)
     }
-    x.merged
+    return(x.merged)
   }
 )
 
@@ -587,10 +585,11 @@ sample_data_stable <- function(object) {
   # https://github.com/joey711/phyloseq/blob/master/R/sampleData-class.R
   stopifnot(identical(class(object), "data.frame"))
   # Make sure there are no phantom levels in categorical variables
-  object <- phyloseq:::reconcile_categories(object)
+
+  object <- droplevels(as(object, "data.frame"))
   # instantiate first to check validity
   SM <- new("sample_data", object)
-  SM
+  return(SM)
 }
 
 
@@ -691,6 +690,15 @@ setMethod(
       taxa <- intersect(taxa_names(x), taxa)
     }
     otu_table(x) <- select_taxa(otu_table(x), taxa)
-    phyloseq:::index_reorder(x, index_type = "taxa")
+
+    tax_order <- taxa_names(otu_table(x))
+    if (!is.null(tax_table(x11(), FALSE))) {
+      # If there is a taxonomyTable, re-order that too.
+      x@tax_table <- tax_table(x)[tax_order, ]
+    }
+    if (!is.null(refseq(x, FALSE))) {
+      # If there is a XStringSet, re-order that too.
+      x@refseq <- refseq(x)[tax_order]
+    }
   }
 )

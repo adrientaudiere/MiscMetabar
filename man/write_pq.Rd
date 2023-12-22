@@ -85,6 +85,7 @@ and if present a phy_tree in Newick format
 }
 \examples{
 \dontrun{
+data(data_fungi)
 write_pq(data_fungi, path = "phyloseq")
 write_pq(data_fungi, path = "phyloseq", one_file = TRUE)
 }

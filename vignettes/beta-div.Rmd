@@ -169,5 +169,5 @@ plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), alpha = 0.001)
 # Session information
 
 ```{r}
-SessionInfo()
+sessionInfo()
 ```

@@ -27,6 +27,9 @@ physeq_graph_test(...)
 \arguments{
 \item{...}{Parameters to be passed on to the modern version of the function}
 }
+\value{
+Depend on the functions.
+}
 \description{
 These functions are provided for compatibility with older version of
 the MiscMetabar package. They may eventually be completely

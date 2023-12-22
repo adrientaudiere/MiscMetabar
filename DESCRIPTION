@@ -46,6 +46,7 @@ Suggests:
     jsonlite,
     knitr,
     lulu,
+    magrittr,
     metacoder,
     methods,
     mia,
@@ -53,6 +54,7 @@ Suggests:
     microViz,
     mixtools,
     multcompView,
+    networkD3,
     pak,
     patchwork,
     permute,
@@ -79,6 +81,7 @@ Suggests:
     treemapify,
     vegan,
     venneuler,
+    vctrs,
     viridis,
     withr
 RoxygenNote: 7.2.3
@@ -89,7 +92,6 @@ biocViews: Sequencing, Microbiome, Metagenomics,
 BugReports: https://github.com/adrientaudiere/MiscMetabar/issues
 Roxygen: list(markdown = TRUE)
 Imports: 
-    data.table,
     ape,
     lifecycle,
     rlang,

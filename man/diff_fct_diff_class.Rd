@@ -41,6 +41,7 @@ a single value
 Mainly an internal function useful in "lapply(..., tapply)" methods
 }
 \examples{
+data(data_fungi)
 diff_fct_diff_class(
   data_fungi@sam_data$Sample_id,
   numeric_fonction = sum,

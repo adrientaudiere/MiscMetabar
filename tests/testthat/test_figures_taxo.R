@@ -255,10 +255,12 @@ test_that("rigdes_pq work with data_fungi dataset", {
     "ggplot"
   )
   expect_s3_class(
-    ridges_pq(clean_pq(
-      subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota"),
-      "Time",
-    )),
+    ridges_pq(
+      clean_pq(
+        subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")
+      ),
+      "Time"
+    ),
     "ggplot"
   )
   expect_s3_class(

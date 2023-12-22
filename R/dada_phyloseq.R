@@ -674,6 +674,7 @@ asv2otu <- function(physeq = NULL,
 #'   ACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG",
 #'   file = file_dna, names = "seq1"
 #' )
+#' data(data_fungi)
 #' res <- vs_search_global(data_fungi, file_dna)
 #' unlink(file_dna)
 #'
@@ -804,6 +805,7 @@ vs_search_global <- function(physeq,
 #' @author Adrien Taudière
 #' @examples
 #' \dontrun{
+#' data(data_fungi)
 #' write_pq(data_fungi, path = "phyloseq")
 #' write_pq(data_fungi, path = "phyloseq", one_file = TRUE)
 #' }
@@ -1007,6 +1009,7 @@ write_pq <- function(physeq,
 #' @author Adrien Taudière
 #' @examples
 #' \dontrun{
+#' data(data_fungi)
 #' save_pq(data_fungi, path = "phyloseq")
 #' }
 #' @seealso [MiscMetabar::write_pq()]
@@ -1514,7 +1517,7 @@ subset_samples_pq <- function(physeq, condition) {
     stop("Length of condition is different from the number of samples.")
   }
   if (is.null(sample_data(physeq))) {
-    cat("Nothing subset. No sample_data in physeq.\n")
+    message("Nothing subset. No sample_data in physeq.\n")
     return(physeq)
   } else {
     old_DF <- as(sample_data(physeq), "data.frame")
@@ -1806,6 +1809,7 @@ tbl_sum_samdata <- function(physeq, remove_col_unique_value = TRUE, ...) {
 #' @export
 #' @author Adrien Taudière
 #' @examples
+#' data(data_fungi)
 #' df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)
 #' \dontrun{
 #' df <- add_funguild_info(df,
@@ -1873,6 +1877,7 @@ add_funguild_info <- function(physeq,
 #' @author Adrien Taudière
 #' @examples
 #' \dontrun{
+#' data(data_fungi)
 #' df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)
 #' df <- add_funguild_info(df,
 #'   taxLevels = c(
@@ -2169,7 +2174,9 @@ build_phytree_pq <- function(physeq,
 #' @return The result of a Kruskal-Wallis rank sum test
 #' @export
 #' @author Adrien Taudière
+#' @importFrom stats kruskal.test
 #' @examples
+#' data(data_fungi)
 #' are_modality_even_depth(data_fungi, "Time")$p.value
 #' are_modality_even_depth(rarefy_even_depth(data_fungi), "Time")$p.value
 #' are_modality_even_depth(data_fungi, "Height", boxplot = TRUE)
@@ -2207,6 +2214,7 @@ are_modality_even_depth <- function(physeq, fact, boxplot = FALSE) {
 #' @export
 #' @author Adrien Taudière
 #' @examples
+#' data(data_fungi)
 #' data_fungi_ordered_by_genus <- reorder_taxa_pq(
 #'   data_fungi,
 #'   taxa_names(data_fungi)[order(as.vector(data_fungi@tax_table[, "Genus"]))]

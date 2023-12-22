@@ -33,6 +33,7 @@ created with \code{\link[=add_funguild_info]{add_funguild_info()}}
 }
 \examples{
 \dontrun{
+data(data_fungi)
 df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)
 df <- add_funguild_info(df,
   taxLevels = c(

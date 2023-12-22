@@ -62,7 +62,7 @@ path_db <- system.file("extdata",
 suppressWarnings(blast_error_or_not <-
   try(system("blastn 2>&1", intern = TRUE), silent = TRUE))
 
-if (class(blast_error_or_not) != "try-error") {
+if (!is(blast_error_or_not, "try-error")) {
   df_blast_80 <- filter_asv_blast(df_basidio, fasta_for_db = path_db)
   df_blast_50 <- filter_asv_blast(df_basidio,
     fasta_for_db = path_db,
@@ -82,11 +82,11 @@ if (class(blast_error_or_not) != "try-error") {
 ```
 
 ```{r}
-if (class(blast_error_or_not) != "try-error") {
+if (!is(blast_error_or_not, "try-error")) {
   formattable(
     track_formattable,
     list(
-      area(col = nb_sequences) ~ color_bar("cyan", na.rm = T),
+      area(col = nb_sequences) ~ color_bar("cyan", na.rm = TRUE),
       area(col = nb_clusters) ~ normalize_bar("yellowgreen",
         na.rm = TRUE, min = 0.3
       ),
@@ -179,5 +179,5 @@ formattable(
 # Session information
 
 ```{r}
-SessionInfo()
+sessionInfo()
 ```

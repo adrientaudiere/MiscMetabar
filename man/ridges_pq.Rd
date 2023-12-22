@@ -31,7 +31,7 @@ taxonomic groups
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
-
+data(data_fungi)
 ridges_pq(data_fungi, "Time", alpha = 0.5, log10trans = FALSE) + xlim(c(0, 1000))
 ridges_pq(data_fungi, "Time", alpha = 0.5)
 ridges_pq(

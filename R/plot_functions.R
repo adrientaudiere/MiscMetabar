@@ -2295,7 +2295,7 @@ plot_tax_pq <-
     }
     if (type %in% c("nb_asv", "both")) {
       mdf <-
-        psmelt(as_binary_otu_table(physeq), as = "data.frame")
+        psmelt(as_binary_otu_table(physeq))
       mdf <- mdf %>% mutate(percent = Abundance / sum(Abundance))
 
       p_asv <-
@@ -2556,7 +2556,7 @@ plot_tsne_pq <- function(physeq,
   res_tSNE_A <- tsne$Y[, plot_dims[1]] / 100
   res_tSNE_B <- tsne$Y[, plot_dims[2]] / 100
 
-  df <- data.table::data.table(
+  df <- tibble(
     res_tSNE_A,
     res_tSNE_B,
     as(physeq@sam_data, "data.frame")
@@ -3124,7 +3124,7 @@ tax_bar_pq <- function(physeq, fact = "Sample", taxa = "Order", percent_bar = FA
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#'data(data_fungi)
+#' data(data_fungi)
 #' ridges_pq(data_fungi, "Time", alpha = 0.5, log10trans = FALSE) + xlim(c(0, 1000))
 #' ridges_pq(data_fungi, "Time", alpha = 0.5)
 #' ridges_pq(

@@ -9,6 +9,7 @@
 #' - *Height*: height of the sample in the tree
 #' - *Diameter*: diameter of the trunk
 #' - *Time*: time since the dead of the tree
+#' @usage data(data_fungi)
 "data_fungi"
 
 #' Fungal OTU in phyloseq format
@@ -28,6 +29,7 @@
 #' - *Height*: height of the sample in the tree
 #' - *Diameter*: diameter of the trunk
 #' - *Time*: time since the dead of the tree
+#' @usage data(data_fungi_sp_known)
 "data_fungi_sp_known"
 
 #' This tutorial explore the dataset from Tengeler et al. (2020) available in the `mia` package.
@@ -46,5 +48,5 @@
 #' https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-020-00816-x
 #' @format
 #' A phyloseq object
-#'
+#' @usage data(Tengeler2020_pq)
 "Tengeler2020_pq"

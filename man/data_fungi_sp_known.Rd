@@ -18,7 +18,7 @@ described by 14 taxonomic ranks and 185 samples described by 7 sample variables:
 }
 }
 \usage{
-data_fungi_sp_known
+data(data_fungi_sp_known)
 }
 \description{
 It is a subset of the data_fungi dataset including only taxa with information

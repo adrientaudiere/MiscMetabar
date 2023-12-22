@@ -98,10 +98,6 @@ for pair-wise sequence matching.
 \details{
 Please cite the lulu original paper: https://www.nature.com/articles/s41467-017-01312-x
 }
-\examples{
-lulu(my_table, my_matchlist)
-lulu(my_table, my_matchlist, minimum_ratio_type = "avg", minimum_match = 0.8, minimum_ratio = 10, minimum_relative_cooccurence = 0.9)
-}
 \author{
 Tobias Guldberg Frøslev (orcid: \href{https://orcid.org/0000-0002-3530-013X}{0000-0002-3530-013X}),
 modified by Adrien Taudière

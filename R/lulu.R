@@ -68,13 +68,14 @@
 #'   currently carried out by an external script in e.g. BLASTN or VSEARCH, prior to running \code{lulu}!
 #'   Producing the match list requires a file with all the OTU sequences (centroids) - e.g. \code{OTUcentroids.fasta}. The matchlist can be produced by mapping all OTUs against each other with an external algorithm like VSEARCH or BLASTN. In \code{VSEARCH} a matchlist can be produced e.g. with the following command: \code{vsearch --usearch_global OTUcentroids.fasta --db OTUcentroids.fasta --strand plus --self --id .80 --iddef 1 --userout matchlist.txt --userfields query+target+id --maxaccepts 0 --query_cov .9 --maxhits 10}. In \code{BLASTN} a matchlist can be produces e.g. with the following commands. First we produce a blast-database from the fasta file: \code{makeblastdb -in OTUcentroids.fasta -parse_seqids -dbtype nucl}, then we match the centroids against that database: \code{blastn -db OTUcentoids.fasta -num_threads 10 -outfmt'6 qseqid sseqid pident' -out matchlist.txt -qcov_hsp_perc .90 -perc_identity .84 -query OTUcentroids.fasta}
 #'
+#' @importFrom  utils setTxtProgressBar txtProgressBar
+#' @importFrom stats ave kruskal.test
 #' @details
 #'   Please cite the lulu original paper: https://www.nature.com/articles/s41467-017-01312-x
 #' @author Tobias Guldberg Frøslev (orcid: [0000-0002-3530-013X](https://orcid.org/0000-0002-3530-013X)),
 #' modified by Adrien Taudière
 #' @export
 lulu <- function(otutable, matchlist, minimum_ratio_type = "min", minimum_ratio = 1, minimum_match = 84, minimum_relative_cooccurence = 0.95, progress_bar = TRUE, log_conserved = FALSE) {
-
   start.time <- Sys.time()
   colnames(matchlist) <- c("OTUid", "hit", "match")
   # remove no hits (vsearch)
@@ -117,42 +118,42 @@ lulu <- function(otutable, matchlist, minimum_ratio_type = "min", minimum_ratio 
       setTxtProgressBar(pb, line)
     }
     potential_parent_id <- row.names(otutable)[line]
-    cat(paste0("\n", "####processing: ", potential_parent_id, " #####"),
+    message(paste0("\n", "####processing: ", potential_parent_id, " #####"),
       file = log_con
     )
     daughter_samples <- otutable[line, ]
     hits <- matchlist[which(matchlist$OTUid == potential_parent_id &
       matchlist$match > minimum_match), "hit"]
-    cat(paste0("\n", "---hits: ", hits), file = log_con)
+    message(paste0("\n", "---hits: ", hits), file = log_con)
     last_relevant_entry <- sum(statistics_table$spread >=
       statistics_table$spread[line])
     potential_parents <- which(row.names(otutable)[1:last_relevant_entry]
     %in% hits)
-    cat(paste0(
+    message(paste0(
       "\n", "---potential parent: ",
       row.names(statistics_table)[potential_parents]
     ), file = log_con)
     success <- FALSE
     if (length(potential_parents) > 0) {
       for (line2 in potential_parents) {
-        cat(paste0("\n", "------checking: ", row.names(statistics_table)[line2]),
+        message(paste0("\n", "------checking: ", row.names(statistics_table)[line2]),
           file = log_con
         )
         if (!success) {
           relative_cooccurence <-
             sum((daughter_samples[otutable[line2, ] > 0]) > 0) /
               sum(daughter_samples > 0)
-          cat(paste0(
+          message(paste0(
             "\n", "------relative cooccurence: ",
             relative_cooccurence
           ), file = log_con)
           if (relative_cooccurence >= minimum_relative_cooccurence) {
-            cat(paste0(" which is sufficient!"), file = log_con)
+            message(paste0(" which is sufficient!"), file = log_con)
             if (minimum_ratio_type == "avg") {
               relative_abundance <-
                 mean(otutable[line2, ][daughter_samples > 0] /
                   daughter_samples[daughter_samples > 0])
-              cat(paste0(
+              message(paste0(
                 "\n", "------mean avg abundance: ",
                 relative_abundance
               ), file = log_con)
@@ -160,17 +161,17 @@ lulu <- function(otutable, matchlist, minimum_ratio_type = "min", minimum_ratio 
               relative_abundance <-
                 min(otutable[line2, ][daughter_samples > 0] /
                   daughter_samples[daughter_samples > 0])
-              cat(paste0(
+              message(paste0(
                 "\n", "------min avg abundance: ",
                 relative_abundance
               ), file = log_con)
             }
             if (relative_abundance > minimum_ratio) {
-              cat(paste0(" which is OK!"), file = log_con)
+              message(paste0(" which is OK!"), file = log_con)
               if (line2 < line) {
                 statistics_table$parent_id[line] <-
                   statistics_table[row.names(otutable)[line2], "parent_id"]
-                cat(
+                message(
                   paste0(
                     "\n", "SETTING ",
                     potential_parent_id, " to be an ERROR of ",
@@ -183,7 +184,7 @@ lulu <- function(otutable, matchlist, minimum_ratio_type = "min", minimum_ratio 
                 )
               } else {
                 statistics_table$parent_id[line] <- row.names(otutable)[line2]
-                cat(paste0(
+                message(paste0(
                   "\n", "SETTING ", potential_parent_id,
                   " to be an ERROR of ", (row.names(otutable)[line2]),
                   "\n"
@@ -197,7 +198,7 @@ lulu <- function(otutable, matchlist, minimum_ratio_type = "min", minimum_ratio 
     }
     if (!success) {
       statistics_table$parent_id[line] <- row.names(statistics_table)[line]
-      cat(paste0("\n", "No parent found!", "\n"), file = log_con)
+      message(paste0("\n", "No parent found!", "\n"), file = log_con)
     }
   }
 

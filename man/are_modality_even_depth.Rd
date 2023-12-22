@@ -29,6 +29,7 @@ This function apply a Kruskal-Wallis rank sum test to the number of sequences
 per samples in function of the factor \code{fact}.
 }
 \examples{
+data(data_fungi)
 are_modality_even_depth(data_fungi, "Time")$p.value
 are_modality_even_depth(rarefy_even_depth(data_fungi), "Time")$p.value
 are_modality_even_depth(data_fungi, "Height", boxplot = TRUE)

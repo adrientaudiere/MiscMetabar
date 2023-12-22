@@ -64,8 +64,7 @@ phyloseq behavior. If \code{tax_adjust == 2}, then these NAs are treated as a
 disagreement; all ranks are set to NA after the first disagreement or NA.
 }
 \seealso{
-Merging functions that use this function: \code{\link[=tax_glom]{tax_glom()}}, \code{\link[=tip_glom]{tip_glom()}},
-\code{\link[=tree_glom]{tree_glom()}}
+Function in MiscMetabar that use this function: \code{\link[=asv2otu]{asv2otu()}}
 
 \code{\link[base:rowsum]{base::rowsum()}}
 

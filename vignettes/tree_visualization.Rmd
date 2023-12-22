@@ -67,5 +67,5 @@ ggtree(as.treedata(data_fungi_tree@phy_tree), branch.length = "none") %<+%
 # Session information
 
 ```{r}
-SessionInfo()
+sessionInfo()
 ```

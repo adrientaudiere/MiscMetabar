@@ -29,6 +29,7 @@ table with all tables together + a rdata file (\code{physeq.RData}) that can be 
 }
 \examples{
 \dontrun{
+data(data_fungi)
 save_pq(data_fungi, path = "phyloseq")
 }
 }

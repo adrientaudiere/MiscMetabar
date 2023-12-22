@@ -37,6 +37,7 @@ taxonomic groups
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
+data(data_fungi)
 data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
 tax_bar_pq(data_fungi_ab) + theme(legend.position = "none")
 tax_bar_pq(data_fungi_ab, taxa = "Class")

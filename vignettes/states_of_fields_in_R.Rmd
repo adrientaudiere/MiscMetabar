@@ -33,7 +33,7 @@ Some packages provide an interactive interface useful for rapid exploration and 
 # Session information
 
 ```{r}
-SessionInfo()
+sessionInfo()
 ```
 
 # References

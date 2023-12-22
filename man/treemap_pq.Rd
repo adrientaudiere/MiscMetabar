@@ -44,6 +44,7 @@ A ggplot2 graphic
 Note that lvl2need to be nested in lvl1
 }
 \examples{
+data(data_fungi_sp_known)
 treemap_pq(
   clean_pq(subset_taxa(
     data_fungi_sp_known,

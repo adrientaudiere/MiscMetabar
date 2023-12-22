@@ -19,6 +19,8 @@ knitr::opts_chunk$set(
 ```{r setup, message=FALSE}
 library(MiscMetabar)
 library(formattable)
+data(data_fungi)
+data(data_fungi_sp_known)
 ```
 
 ## Export phyloseq object
@@ -56,5 +58,5 @@ track_wkflow(list(data_fungi, data_fungi_sp_known))
 # Session information
 
 ```{r}
-SessionInfo()
+sessionInfo()
 ```
