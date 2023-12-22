@@ -38,9 +38,11 @@ GPsubset <- subset_taxa(
   GPsubset,
   rowSums(is.na(GPsubset@tax_table)) == 0
 )
+GPsubset@sam_data$human <- match(GPsubset@sam_data$SampleType,
+   c("Skin", "Feces", "Tong"))
 res_iNEXT <- iNEXT_pq(
   GPsubset,
-  merge_sample_by = "SampleType",
+  merge_sample_by = ,
   q = 1,
   datatype = "abundance",
   nboot = 2

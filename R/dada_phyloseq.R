@@ -757,10 +757,13 @@ vs_search_global <- function(
   )
 
   if (!keep_temporary_files) {
-    unlink(paste0(tempdir(), "temp.fasta"))
-    unlink(paste0(tempdir(), "temp.uc"))
-
-    if (inherits(seq2search, "DNAStringSet")) {
+    if(file.exists(paste0(tempdir(), "temp.fasta"))){
+      unlink(paste0(tempdir(), "temp.fasta"))
+    }
+    if(file.exists(paste0(tempdir(), "temp.uc"))){
+      unlink(paste0(tempdir(), "temp.uc"))
+    }
+    if(file.exists(paste0(tempdir(), "seq2search.fasta"))){
       unlink(paste0(tempdir(), "seq2search.fasta"))
     }
   } else {
@@ -1471,14 +1474,42 @@ mumu_pq <- function(
 #' Mostly for internal use in MiscMetabar functions.
 #'
 #' @inheritParams clean_pq
-#'
+#' @param verbose (logical, default FALSE) If true, prompt some warnings.
+#' @param  min_nb_seq_sample (numeric) Only used if verbose = TRUE.
+#'   Minimum number of sequences per samples to not show warning.
+#' @param  min_nb_seq_taxa (numeric) Only used if verbose = TRUE.
+#'   Minimum number of sequences per taxa to not show warning.
 #' @return Nothing if the phyloseq object is valid. An error in the other case.
+#'  Warnings if verbose = TRUE
 #' @export
 #'
-verify_pq <- function(physeq) {
+verify_pq <- function(
+    physeq,
+    verbose = FALSE,
+    min_nb_seq_sample = 500,
+    min_nb_seq_taxa = 1) {
   if (!methods::validObject(physeq) ||
     !inherits(physeq, "phyloseq")) {
     stop("The physeq argument is not a valid phyloseq object.")
+  }
+  if (verbose) {
+    if (min(sample_sums(physeq)) < min_nb_seq_sample) {
+      warning(paste0(
+        "At least one of your sample contains less than ",
+        min_nb_seq_sample,
+        " sequences."
+      ))
+    }
+    if (min(sample_sums(physeq)) < min_nb_seq_sample) {
+      warning(paste0(
+        "At least one of your taxa is represent by less than ",
+        min_nb_seq_taxa,
+        " sequences."
+      ))
+    }
+    if (sum(is.na(physeq@sam_data)) > 0) {
+      warning("At least one of your samples metadata columns contains NA.")
+    }
   }
 }
 ################################################################################

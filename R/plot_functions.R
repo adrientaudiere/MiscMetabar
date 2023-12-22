@@ -2662,9 +2662,11 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 #'   GPsubset,
 #'   rowSums(is.na(GPsubset@tax_table)) == 0
 #' )
+#' GPsubset@sam_data$human <- GPsubset@sam_data$SampleType %in%
+#'  c("Skin", "Feces", "Tong")
 #' res_iNEXT <- iNEXT_pq(
 #'   GPsubset,
-#'   merge_sample_by = "SampleType",
+#'   merge_sample_by = human,
 #'   q = 1,
 #'   datatype = "abundance",
 #'   nboot = 2

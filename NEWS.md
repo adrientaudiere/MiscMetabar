@@ -8,6 +8,7 @@
 - Add function `reorder_taxa_pq()` in order to replace the unique call to package MicroViz to decrease package dependencies.
 - Add functions `get_funguild_db()` and `funguild_assign()` from the [FUNGuildR](https://github.com/brendanf/FUNGuildR/) package into MiscMetabar to decrease package dependencies 
 - Remove all dependencies from packages not available on CRAN or Bioconductor. Improve code using `goodpractice::gp`() and `devtools::check()` function
+- Add messages in various cases (NA in samples data, low number of sequences in samples, low number of sequences by taxa) when using `verify_pq()` with args `verbose=TRUE`
 
 # MiscMetabar 0.52 
 

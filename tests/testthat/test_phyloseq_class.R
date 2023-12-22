@@ -36,7 +36,7 @@ if (class(vsearch_error_or_not) == "try-error") {
 suppressWarnings(mumu_error_or_not <- try(system("mumu --help", intern = TRUE), silent = TRUE))
 
 if (class(mumu_error_or_not) == "try-error") {
-  message("mumu_pq() can't be tested when vsearch is not installed")
+  message("mumu_pq() can't be tested when mumu is not installed")
 } else {
   test_that("mumu_pq works fine", {
     expect_s4_class(mumu_pq(data_fungi_sp_known)$new_physeq, "phyloseq")

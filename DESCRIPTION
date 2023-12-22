@@ -9,7 +9,7 @@ License: AGPL-3
 Encoding: UTF-8
 LazyData: false
 Depends:
-    R (>= 4.3.0),
+    R (>= 3.5.0),
     phyloseq,
     ggplot2,
     dada2,

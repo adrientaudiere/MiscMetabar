@@ -51,7 +51,7 @@ reference:
   contents: 
   - add_funguild_info
   - funguild_assign
-  - get_funguild_db,
+  - get_funguild_db
   - add_new_taxonomy_pq
   - add_blast_info
   - blast_to_phyloseq

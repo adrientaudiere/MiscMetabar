@@ -4,14 +4,28 @@
 \alias{verify_pq}
 \title{Verify the validity of a phyloseq object}
 \usage{
-verify_pq(physeq)
+verify_pq(
+  physeq,
+  verbose = FALSE,
+  min_nb_seq_sample = 500,
+  min_nb_seq_taxa = 1
+)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
+
+\item{verbose}{(logical, default FALSE) If true, prompt some warnings.}
+
+\item{min_nb_seq_sample}{(numeric) Only used if verbose = TRUE.
+Minimum number of sequences per samples to not show warning.}
+
+\item{min_nb_seq_taxa}{(numeric) Only used if verbose = TRUE.
+Minimum number of sequences per taxa to not show warning.}
 }
 \value{
 Nothing if the phyloseq object is valid. An error in the other case.
+Warnings if verbose = TRUE
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
