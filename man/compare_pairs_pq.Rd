@@ -27,7 +27,7 @@ slot of the physeq object to split samples by pairs}
 
 \item{merge_sample_by}{a vector to determine
 which samples to merge using the
-\code{\link[speedyseq]{merge_samples2}} function.
+\code{\link[=merge_samples2]{merge_samples2()}} function.
 Need to be in \code{physeq@sam_data}}
 
 \item{nb_min_seq}{minimum number of sequences per sample

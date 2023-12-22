@@ -72,4 +72,12 @@ track_wkflow(list(
 ))
 ```
 
+
+# Session information
+
+```{r}
+SessionInfo()
+```
+
+
 # References

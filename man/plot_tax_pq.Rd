@@ -29,7 +29,7 @@ Need to be in \code{physeq@sam_data}.}
 
 \item{merge_sample_by}{a vector to determine
 which samples to merge using the
-\code{\link[speedyseq]{merge_samples2}} function.
+\code{\link[=merge_samples2]{merge_samples2()}} function.
 Need to be in \code{physeq@sam_data}}
 
 \item{type}{If "nb_seq" (default), the number of sequences is

@@ -4,7 +4,7 @@
 \alias{ridges_pq}
 \title{Ridge plot of a phyloseq object}
 \usage{
-ridges_pq(physeq, fact = NULL, nb_seq = TRUE, log10trans = TRUE, ...)
+ridges_pq(physeq, fact, nb_seq = TRUE, log10trans = TRUE, ...)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
@@ -34,11 +34,16 @@ taxonomic groups
 
 ridges_pq(data_fungi, "Time", alpha = 0.5, log10trans = FALSE) + xlim(c(0, 1000))
 ridges_pq(data_fungi, "Time", alpha = 0.5)
-ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")))
+ridges_pq(
+  clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")),
+  "Sample_names"
+)
 ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")),
+  "Time",
   alpha = 0.6, scale = 0.9
 )
 ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")),
+  "Time",
   jittered_points = TRUE,
   position = ggridges::position_points_jitter(width = 0.05, height = 0),
   point_shape = "|", point_size = 3, point_alpha = 1, alpha = 0.7,

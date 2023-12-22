@@ -47,7 +47,7 @@ graph_test_pq <- function(physeq,
   verify_pq(physeq)
 
   if (!is.null(merge_sample_by)) {
-    physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
+    physeq <- merge_samples2(physeq, merge_sample_by)
     physeq <- clean_pq(physeq)
   }
 
@@ -104,7 +104,7 @@ graph_test_pq <- function(physeq,
 #'   For aitchison and robust.aitchison distance, [vegan::vegdist()]
 #'   function is directly used.
 #' @param merge_sample_by a vector to determine
-#'   which samples to merge using the [speedyseq::merge_samples2()]
+#'   which samples to merge using the [merge_samples2()]
 #'   function. Need to be in `physeq@sam_data`
 #' @param na_remove (logical, default FALSE) If set to TRUE, remove samples with
 #'   NA in the variables set in formula.
@@ -189,7 +189,7 @@ adonis_pq <- function(physeq,
   }
 
   if (!is.null(merge_sample_by)) {
-    physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
+    physeq <- merge_samples2(physeq, merge_sample_by)
     physeq <- clean_pq(physeq)
   }
 
@@ -546,7 +546,7 @@ multipatt_pq <- function(physeq,
 #' @description
 #' `r lifecycle::badge("experimental")`
 #'
-#' A wrapper for the [ANCOMBC::ancombc2] function
+#' A wrapper for the [ANCOMBC::ancombc2()] function
 #'
 #' @inheritParams clean_pq
 #' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
@@ -556,7 +556,7 @@ multipatt_pq <- function(physeq,
 #'   en levels_fact)
 #' @param tax_level The taxonomic level passed on to [ANCOMBC::ancombc2()]
 #' @param ... Other arguments passed on to [ANCOMBC::ancombc2()] function.
-#' @return
+#' @return The result of [ANCOMBC::ancombc2()] function
 #' @export
 #'
 #' @examples
@@ -588,7 +588,7 @@ multipatt_pq <- function(physeq,
 #' @author Adrien Taudière
 #' @details
 #' This function is mainly a wrapper of the work of others.
-#'   Please make a reference to `indicspecies::multipatt()` if you
+#'   Please make a reference to `ANCOMBC::ancombc2()` if you
 #'   use this function.
 ancombc_pq <- function(physeq, fact, levels_fact = NULL, tax_level = "Class", ...) {
   if (!is.null(levels_fact)) {

@@ -4,7 +4,7 @@
 #' the phyloseq and dada2 packages.
 #' @name MiscMetabar-package
 #' @docType package
-#' @import ggplot2 phyloseq magrittr dada2 dplyr
+#' @import ggplot2 phyloseq dada2 dplyr
 NULL
 
 if (getRversion() >= "2.15.1") {

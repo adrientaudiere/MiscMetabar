@@ -32,7 +32,7 @@ use this function.
 }
 \examples{
 tbl_sum_samdata(data_fungi) \%>\%
-    gtsummary::as_kable()
+  gtsummary::as_kable()
 
 summary_samdata <- tbl_sum_samdata(data_fungi,
   include = c("Time", "Height"),

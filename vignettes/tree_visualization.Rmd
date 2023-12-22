@@ -29,6 +29,8 @@ quiet <- function(x) {
 library("tidytree") # first load to disable warning about phylo class
 library("MiscMetabar")
 library("phangorn")
+
+data(data_fungi)
 df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 9000)
 df_tree <- quiet(build_phytree_pq(df, nb_bootstrap = 5))
 data_fungi_tree <- merge_phyloseq(df, phyloseq::phy_tree(df_tree$ML$tree))
@@ -60,3 +62,10 @@ ggtree(as.treedata(data_fungi_tree@phy_tree), branch.length = "none") %<+%
 ```
 
 
+
+
+# Session information
+
+```{r}
+SessionInfo()
+```

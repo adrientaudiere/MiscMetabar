@@ -100,7 +100,7 @@ tax_datatable <- function(physeq,
 #'   slot of the physeq object to split samples by pairs
 #' @param merge_sample_by a vector to determine
 #'   which samples to merge using the
-#'   \code{\link[speedyseq]{merge_samples2}} function.
+#'   [merge_samples2()] function.
 #'   Need to be in \code{physeq@sam_data}
 #' @param nb_min_seq minimum number of sequences per sample
 #'   to count the ASV/OTU
@@ -168,10 +168,10 @@ compare_pairs_pq <- function(physeq = NULL,
 
   if (!is.null(merge_sample_by)) {
     if (is.null(modality)) {
-      physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
+      physeq <- merge_samples2(physeq, merge_sample_by)
     } else {
       physeq@sam_data[["merge_sample_by___modality"]] <- paste0(physeq@sam_data[[merge_sample_by]], " - ", physeq@sam_data[[modality]])
-      physeq <- speedyseq::merge_samples2(physeq, "merge_sample_by___modality")
+      physeq <- merge_samples2(physeq, "merge_sample_by___modality")
     }
     physeq <- clean_pq(physeq)
   }

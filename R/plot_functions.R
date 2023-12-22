@@ -1031,7 +1031,7 @@ ggvenn_pq <- function(physeq = NULL,
   nb_samples <- table(physeq@sam_data[[fact]])
 
   if (rarefy_after_merging) {
-    physeq <- speedyseq::merge_samples2(physeq, fact)
+    physeq <- merge_samples2(physeq, fact)
     physeq <- rarefy_even_depth(physeq)
     physeq <- clean_pq(physeq)
   }
@@ -1409,12 +1409,12 @@ hill_pq <-
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
-#' 
-#' Note that contrary to [hill_pq()], this function does not take into 
+#'
+#' Note that contrary to [hill_pq()], this function does not take into
 #' account for difference in the number of sequences per samples/modalities.
-#' You may use rarefy_by_sample = TRUE if the mean number of sequences per 
-#' samples differs among modalities. 
-#' 
+#' You may use rarefy_by_sample = TRUE if the mean number of sequences per
+#' samples differs among modalities.
+#'
 #' Basically a wrapper of function [ggstatsplot::ggbetweenstats()] for
 #' object of class phyloseq
 #' @inheritParams clean_pq
@@ -1422,7 +1422,7 @@ hill_pq <-
 #'   the `sam_data` slot of the physeq object.
 #' @param one_plot (logical, default FALSE) If TRUE, return a unique
 #'   plot with the three plot inside using the patchwork package.
-#' @param rarefy_by_sample (logical, default FALSE) If TRUE, rarefy 
+#' @param rarefy_by_sample (logical, default FALSE) If TRUE, rarefy
 #'   samples using [phyloseq::rarefy_even_depth()] function
 #' @param ... Other arguments passed on to [ggstatsplot::ggbetweenstats()] function.
 
@@ -1437,6 +1437,7 @@ hill_pq <-
 #'
 #' @export
 #' @examples
+#' data(data_fungi)
 #' p <- ggbetween_pq(data_fungi, variable = "Time", p.adjust.method = "BH")
 #' p[[1]]
 #' ggbetween_pq(data_fungi, variable = "Height", one_plot = TRUE)
@@ -1453,10 +1454,11 @@ ggbetween_pq <- function(physeq, variable, one_plot = FALSE, rarefy_by_sample = 
     physeq <- clean_pq(rarefy_even_depth(physeq))
   }
 
-  if(are_modality_even_depth(physeq, variable)$p.value < 0.05){
-    warning(paste0("The mean number of sequences per samples vary across modalities of the variable '", 
-    variable, 
-    "' You should use rarefy_by_sample = TRUE or try hill_pq() with correction_for_sample_size = TRUE"
+  if (are_modality_even_depth(physeq, variable)$p.value < 0.05) {
+    warning(paste0(
+      "The mean number of sequences per samples vary across modalities of the variable '",
+      variable,
+      "' You should use rarefy_by_sample = TRUE or try hill_pq() with correction_for_sample_size = TRUE"
     ))
   }
 
@@ -1818,7 +1820,7 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #'   If left to NULL use the `left_name` and `right_name` parameter as modality.
 #' @param merge_sample_by (default: NULL) if not `NULL` samples of
 #'   physeq are merged using the vector set by `merge_sample_by`. This
-#'   merging used the [speedyseq::merge_samples2()]. In the case of
+#'   merging used the [merge_samples2()]. In the case of
 #'   [biplot_pq()] this must be a factor with two levels only.
 #' @param rarefy_after_merging Rarefy each sample after merging by the
 #'   modalities merge_sample_by
@@ -1886,7 +1888,7 @@ biplot_pq <- function(physeq,
       modality_1_nb <- table(physeq@sam_data[, merge_sample_by])[1]
       modality_2_nb <- table(physeq@sam_data[, merge_sample_by])[2]
     }
-    physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
+    physeq <- merge_samples2(physeq, merge_sample_by)
     physeq <- clean_pq(physeq)
   }
 
@@ -2176,7 +2178,7 @@ multi_biplot_pq <- function(physeq,
 #'   Need to be in \code{physeq@sam_data}.
 #' @param merge_sample_by a vector to determine
 #'   which samples to merge using the
-#'   \code{\link[speedyseq]{merge_samples2}} function.
+#'   [merge_samples2()] function.
 #'   Need to be in \code{physeq@sam_data}
 #' @param type If "nb_seq" (default), the number of sequences is
 #'   used in plot. If "nb_asv", the number of ASV is plotted. If both,
@@ -2255,7 +2257,7 @@ plot_tax_pq <-
     physeq_old <- physeq
 
     if (!is.null(merge_sample_by)) {
-      physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
+      physeq <- merge_samples2(physeq, merge_sample_by)
     }
 
     if (!is.null(nb_print_value)) {
@@ -2264,7 +2266,7 @@ plot_tax_pq <-
     }
 
     if (type %in% c("nb_seq", "both")) {
-      mdf <- speedyseq::psmelt(physeq, as = "data.frame")
+      mdf <- psmelt(physeq)
       mdf <- mdf %>% mutate(percent = Abundance / sum(Abundance))
 
       p_seq <-
@@ -2293,7 +2295,7 @@ plot_tax_pq <-
     }
     if (type %in% c("nb_asv", "both")) {
       mdf <-
-        speedyseq::psmelt(as_binary_otu_table(physeq), as = "data.frame")
+        psmelt(as_binary_otu_table(physeq), as = "data.frame")
       mdf <- mdf %>% mutate(percent = Abundance / sum(Abundance))
 
       p_asv <-
@@ -2625,7 +2627,7 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 #' @inheritParams clean_pq
 #' @param merge_sample_by (default: NULL) if not `NULL` samples of
 #'   physeq are merged using the vector set by `merge_sample_by`. This
-#'   merging used the [speedyseq::merge_samples2()]. In the case of
+#'   merging used the [merge_samples2()]. In the case of
 #'   [biplot_pq()] this must be a factor with two levels only.
 #' @param ... other arguments for the [iNEXT::iNEXT()] function
 #' @return see [iNEXT::iNEXT()] documentation
@@ -2650,7 +2652,7 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 #'
 iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
   if (!is.null(merge_sample_by)) {
-    physeq <- speedyseq::merge_samples2(physeq, merge_sample_by)
+    physeq <- merge_samples2(physeq, merge_sample_by)
     physeq <- clean_pq(physeq, force_taxa_as_columns = TRUE)
   }
 
@@ -2690,6 +2692,7 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
 #'
 #' @seealso [ggvenn_pq()]
 #' @examples
+#' data(data_fungi)
 #' upset_pq(data_fungi, fact = "Height", width_ratio = 0.2)
 #' upset_pq(data_fungi,
 #'   fact = "Height", width_ratio = 0.2,
@@ -2794,7 +2797,7 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
 #'   paste0(data_fungi2@sam_data[["Height"]], "__", data_fungi2@sam_data[["Time_0"]])
 #' data_fungi2@sam_data[["Height__Time_0"]][grepl("NA", data_fungi2@sam_data[["Height__Time_0"]])] <-
 #'   NA
-#' upset_pq(data_fungi2, fact = "Height__Time_0", width_ratio = 0.2, min_size=2)
+#' upset_pq(data_fungi2, fact = "Height__Time_0", width_ratio = 0.2, min_size = 2)
 upset_pq <- function(physeq,
                      fact,
                      taxa_fill = NULL,
@@ -2815,7 +2818,7 @@ upset_pq <- function(physeq,
       "NA"
   }
 
-  physeq <- speedyseq::merge_samples2(physeq, fact)
+  physeq <- merge_samples2(physeq, fact)
 
   if (rarefy_after_merging) {
     physeq <- clean_pq(rarefy_even_depth(physeq))
@@ -2901,7 +2904,7 @@ upset_test_pq <-
         "NA"
     }
 
-    physeq <- speedyseq::merge_samples2(physeq, fact)
+    physeq <- merge_samples2(physeq, fact)
 
     psm <- psmelt(physeq)
     samp_names <- unique(psm$Sample)
@@ -2954,6 +2957,7 @@ upset_test_pq <-
 #' @export
 #'
 #' @examples
+#' data(data_fungi)
 #' diff_fct_diff_class(
 #'   data_fungi@sam_data$Sample_id,
 #'   numeric_fonction = sum,
@@ -3070,6 +3074,7 @@ diff_fct_diff_class <-
 #' @export
 #'
 #' @examples
+#' data(data_fungi)
 #' data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
 #' tax_bar_pq(data_fungi_ab) + theme(legend.position = "none")
 #' tax_bar_pq(data_fungi_ab, taxa = "Class")
@@ -3119,14 +3124,19 @@ tax_bar_pq <- function(physeq, fact = "Sample", taxa = "Order", percent_bar = FA
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#'
+#'data(data_fungi)
 #' ridges_pq(data_fungi, "Time", alpha = 0.5, log10trans = FALSE) + xlim(c(0, 1000))
 #' ridges_pq(data_fungi, "Time", alpha = 0.5)
-#' ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")))
+#' ridges_pq(
+#'   clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")),
+#'   "Sample_names"
+#' )
 #' ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")),
+#'   "Time",
 #'   alpha = 0.6, scale = 0.9
 #' )
 #' ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")),
+#'   "Time",
 #'   jittered_points = TRUE,
 #'   position = ggridges::position_points_jitter(width = 0.05, height = 0),
 #'   point_shape = "|", point_size = 3, point_alpha = 1, alpha = 0.7,
@@ -3134,7 +3144,7 @@ tax_bar_pq <- function(physeq, fact = "Sample", taxa = "Order", percent_bar = FA
 #' )
 #' ridges_pq(data_fungi, "Height", alpha = 0.5, log10trans = T)
 ridges_pq <- function(physeq,
-                      fact = NULL,
+                      fact,
                       nb_seq = TRUE,
                       log10trans = TRUE,
                       ...) {
@@ -3149,20 +3159,18 @@ ridges_pq <- function(physeq,
       ggridges::geom_density_ridges(aes(fill = Class), ...) +
       xlim(c(0, NA))
   } else {
+    psm_asv <-
+      psm %>%
+      group_by(.data[[fact]], OTU, Class) %>%
+      summarise("count" = n())
 
+    p <- ggplot(psm_asv, aes(y = factor(.data[[fact]]), x = count)) +
+      ggridges::geom_density_ridges(
+        aes(fill = Class),
+        ...
+      ) +
+      xlim(c(0, NA))
   }
-  psm_asv <-
-    psm %>%
-    group_by(.data[[fact]], OTU, Class) %>%
-    summarise("count" = n())
-
-  p <- ggplot(psm_asv, aes(y = factor(.data[[fact]]), x = count)) +
-    ggridges::geom_density_ridges(
-      aes(fill = Class),
-      ...
-    ) +
-    xlim(c(0, NA))
-
   return(p)
 }
 ################################################################################
@@ -3195,6 +3203,7 @@ ridges_pq <- function(physeq,
 #'
 #' @author Adrien Taudière
 #' @examples
+#' data(data_fungi_sp_known)
 #' treemap_pq(
 #'   clean_pq(subset_taxa(
 #'     data_fungi_sp_known,

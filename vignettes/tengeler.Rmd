@@ -186,6 +186,13 @@ ggeffectsize(LEfSe) +
 
 
 
+
+# Session information
+
+```{r}
+SessionInfo()
+```
+
 # References
 
 

@@ -18,7 +18,7 @@ R package [`dada2`](https://bioconductor.org/packages/release/bioc/html/dada2.ht
 
 The phyloseq package introduces the S4 class object (class physeq), which contains (i) an OTU sample matrix, (ii) a taxonomic table, (iii) a sample metadata table, and two optional slots for (iv) a phylogenetic tree and (v) reference sequences.
 
-Some packages already extend the phyloseq packages. For example, the [`microbiome`](https://microbiome.github.io/) package collection [@ernst2023] provides some scripts and functions for manipulating microbiome datasets. The `speedyseq` package [@mclaren2020] provides faster versions of phyloseq's plotting and taxonomic merging functions, some of which are used in `MiscMetabar`. The [phylosmith](https://schuyler-smith.github.io/phylosmith/) [@smith2023](https://joss.theoj.org/papers/10.21105/joss.01442) package already provides some functions to extend and simplify the use of the phyloseq packages.
+Some packages already extend the phyloseq packages. For example, the [`microbiome`](https://microbiome.github.io/) package collection [@ernst2023] provides some scripts and functions for manipulating microbiome datasets.The `speedyseq` package [@mclaren2020] provides faster versions of phyloseq's plotting and taxonomic merging functions, some of which ([merge_samples2()] and [merge_taxa_vec()]) are integrated in `MiscMetabar` (thanks to Mike. R. McLaren). The [phylosmith](https://schuyler-smith.github.io/phylosmith/) [@smith2023](https://joss.theoj.org/papers/10.21105/joss.01442) package already provides some functions to extend and simplify the use of the phyloseq packages.
 
 Other packages ([`mia`](https://github.com/microbiome/mia/) forming the [`microbiome`](https://microbiome.github.io/) package collection and [`MicrobiotaProcess`](https://github.com/YuLab-SMU/MicrobiotaProcess) [@xu2023]) extend a new data structure using the comprehensive Bioconductor ecosystem of the `SummarizedExperiment` family.
 
@@ -27,5 +27,13 @@ Other packages ([`mia`](https://github.com/microbiome/mia/) forming the [`microb
 I do not try to reinvent the wheel and prefer to rely on existing packages and classes rather than building a new framework. `MiscMetabar` is based on the phyloseq class from phyloseq, the most cited package in metagenomics [@wen2023]. For a description and comparison of these integrated packages competing with phyloseq (e.g. [microeco](https://github.com/ChiLiubio/microeco) by @liu2020, [EasyAmplicon](https://github.com/YongxinLiu/EasyAmplicon) by @liu2023 and [MicrobiomeAnalystR](https://www.microbiomeanalyst.ca) by @lu2023) see @wen2023. Note that some limitations of the phyloseq packages are circumvented thanks to [phylosmith](https://schuyler-smith.github.io/phylosmith/) [@smith2023], [`microViz`](https://david-barnett.github.io/microViz/) ([@Barnett2021]) and [`MiscMetabar`](https://adrientaudiere.github.io/MiscMetabar/).
 
 Some packages provide an interactive interface useful for rapid exploration and for code-beginner biologists. [Animalcules](https://github.com/wejlab/animalcules) [@zhao2021] and [`microViz`](https://david-barnett.github.io/microViz/) [@Barnett2021] provides shiny interactive interface whereas [MicrobiomeAnalystR](https://www.microbiomeanalyst.ca) [@lu2023] is a web-based platform.
+
+
+
+# Session information
+
+```{r}
+SessionInfo()
+```
 
 # References

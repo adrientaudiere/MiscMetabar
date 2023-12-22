@@ -52,3 +52,9 @@ In bioinformatic pipeline, we often need to track the number of samples, sequenc
 ```{r}
 track_wkflow(list(data_fungi, data_fungi_sp_known))
 ```
+
+# Session information
+
+```{r}
+SessionInfo()
+```

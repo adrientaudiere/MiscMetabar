@@ -175,3 +175,9 @@ formattable(
   )
 )
 ```
+
+# Session information
+
+```{r}
+SessionInfo()
+```

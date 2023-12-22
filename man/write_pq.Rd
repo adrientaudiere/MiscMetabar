@@ -46,7 +46,7 @@ If set to TRUE, empty samples are discarded after subsetting ASV}
 
 \item{reorder_asv}{(logical) if TRUE the otu_table is ordered by the number of
 sequences of ASV (descending order). Default to TRUE. Only possible if clean_pq
-is set to TRUE. Need the \href{https://github.com/david-barnett/microViz}{microViz} package.}
+is set to TRUE.}
 
 \item{rename_asv}{reorder_asv (logical) if TRUE, ASV are renamed by their position
 in the OTU_table (asv_1, asv_2, ...). Default to FALSE. Only possible if clean_pq

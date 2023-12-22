@@ -44,7 +44,7 @@ and \verb{-strand both} (see args \code{vsearch_args})
 \item{vsearchpath}{path to vsearch}
 
 \item{tax_adjust}{See the man page
-of \code{\link[speedyseq:merge_taxa_vec]{speedyseq::merge_taxa_vec()}} for more details.
+of \code{\link[=merge_taxa_vec]{merge_taxa_vec()}} for more details.
 To conserved the taxonomic rank of the most abundant ASV,
 set tax_adjust to 0}
 
@@ -76,9 +76,9 @@ args was used.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \details{
-This function use the \code{speedyseq::merge_taxa_vec} function to
+This function use the \code{merge_taxa_vec} function to
 merge taxa into clusters. By default tax_adjust = 1L. See the man page
-of \code{\link[speedyseq:merge_taxa_vec]{speedyseq::merge_taxa_vec()}}.
+of \code{\link[=merge_taxa_vec]{merge_taxa_vec()}}.
 }
 \references{
 VSEARCH can be downloaded from

@@ -12,7 +12,7 @@ using the \code{phyloseq} package.}
 
 \item{merge_sample_by}{(default: NULL) if not \code{NULL} samples of
 physeq are merged using the vector set by \code{merge_sample_by}. This
-merging used the \code{\link[speedyseq:merge_samples2]{speedyseq::merge_samples2()}}. In the case of
+merging used the \code{\link[=merge_samples2]{merge_samples2()}}. In the case of
 \code{\link[=biplot_pq]{biplot_pq()}} this must be a factor with two levels only.}
 
 \item{...}{other arguments for the \code{\link[iNEXT:iNEXT]{iNEXT::iNEXT()}} function}

@@ -50,7 +50,8 @@ cond_taxa <- grepl("Endophyte", data_fungi@tax_table[, "Guild"])
 names(cond_taxa) <- taxa_names(data_fungi)
 subset_taxa_pq(data_fungi, cond_taxa)
 
-subset_taxa_pq(data_fungi, grepl("mycor", data_fungi@tax_table[, "Guild"]), 
-taxa_names_from_physeq = TRUE)
+subset_taxa_pq(data_fungi, grepl("mycor", data_fungi@tax_table[, "Guild"]),
+  taxa_names_from_physeq = TRUE
+)
 
 }

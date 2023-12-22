@@ -21,14 +21,17 @@ en levels_fact)}
 
 \item{...}{Other arguments passed on to \code{\link[ANCOMBC:ancombc2]{ANCOMBC::ancombc2()}} function.}
 }
+\value{
+The result of \code{\link[ANCOMBC:ancombc2]{ANCOMBC::ancombc2()}} function
+}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-A wrapper for the \link[ANCOMBC:ancombc2]{ANCOMBC::ancombc2} function
+A wrapper for the \code{\link[ANCOMBC:ancombc2]{ANCOMBC::ancombc2()}} function
 }
 \details{
 This function is mainly a wrapper of the work of others.
-Please make a reference to \code{indicspecies::multipatt()} if you
+Please make a reference to \code{ANCOMBC::ancombc2()} if you
 use this function.
 }
 \examples{

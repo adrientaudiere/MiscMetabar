@@ -66,3 +66,9 @@ clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height))) %>%
 
 
 
+
+# Session information
+
+```{r}
+SessionInfo()
+```

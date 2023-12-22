@@ -2,7 +2,7 @@
 % Please edit documentation in R/dada_phyloseq.R
 \name{add_funguild_info}
 \alias{add_funguild_info}
-\title{Add information about Guild for FUNGI using \code{\link[FUNGuildR:funguild_assign]{FUNGuildR::funguild_assign()}}}
+\title{Add information about Guild for FUNGI the FUNGuild databse}
 \usage{
 add_funguild_info(
   physeq,
@@ -21,10 +21,13 @@ A new object of class \code{physeq} with Guild information added to
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+
+Please cite this \href{https://doi.org/10.1016/j.funeco.2015.06.006}{publication}.
 }
 \details{
 This function is mainly a wrapper of the work of others.
-Please make a reference to \code{FUNGuildR::funguild_assign()} if you
+Please make a reference to \code{FUNGuildR} package and the associate
+\href{https://doi.org/10.1016/j.funeco.2015.06.006}{publication} if you
 use this function.
 }
 \examples{
