@@ -2666,7 +2666,7 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 #'  c("Skin", "Feces", "Tong")
 #' res_iNEXT <- iNEXT_pq(
 #'   GPsubset,
-#'   merge_sample_by = human,
+#'   merge_sample_by = "human",
 #'   q = 1,
 #'   datatype = "abundance",
 #'   nboot = 2
