@@ -42,7 +42,7 @@ GPsubset@sam_data$human <- GPsubset@sam_data$SampleType \%in\%
  c("Skin", "Feces", "Tong")
 res_iNEXT <- iNEXT_pq(
   GPsubset,
-  merge_sample_by = human,
+  merge_sample_by = "human",
   q = 1,
   datatype = "abundance",
   nboot = 2
