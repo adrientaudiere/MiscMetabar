@@ -2636,32 +2636,34 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 #' @export
 #'
 #' @examples
-#' library("iNEXT")
-#' data("GlobalPatterns", package = "phyloseq")
-#' GPsubset <- subset_taxa(
-#'   GlobalPatterns,
-#'   GlobalPatterns@tax_table[, 1] == "Bacteria"
-#' )
-#' GPsubset <- subset_taxa(
-#'   GPsubset,
-#'   rowSums(GPsubset@otu_table) > 1000
-#' )
-#' GPsubset <- subset_taxa(
-#'   GPsubset,
-#'   rowSums(is.na(GPsubset@tax_table)) == 0
-#' )
-#' GPsubset@sam_data$human <- GPsubset@sam_data$SampleType %in%
-#'   c("Skin", "Feces", "Tong")
-#' res_iNEXT <- iNEXT_pq(
-#'   GPsubset,
-#'   merge_sample_by = "human",
-#'   q = 1,
-#'   datatype = "abundance",
-#'   nboot = 2
-#' )
-#' ggiNEXT(res_iNEXT)
-#' ggiNEXT(res_iNEXT, type = 2)
-#' ggiNEXT(res_iNEXT, type = 3)
+#' \dontrun{
+#'   library("iNEXT")
+#'   data("GlobalPatterns", package = "phyloseq")
+#'   GPsubset <- subset_taxa(
+#'     GlobalPatterns,
+#'     GlobalPatterns@tax_table[, 1] == "Bacteria"
+#'   )
+#'   GPsubset <- subset_taxa(
+#'     GPsubset,
+#'     rowSums(GPsubset@otu_table) > 5000
+#'   )
+#'   GPsubset <- subset_taxa(
+#'     GPsubset,
+#'     rowSums(is.na(GPsubset@tax_table)) == 0
+#'   )
+#'   GPsubset@sam_data$human <- GPsubset@sam_data$SampleType %in%
+#'     c("Skin", "Feces", "Tong")
+#'   res_iNEXT <- iNEXT_pq(
+#'     GPsubset,
+#'     merge_sample_by = "human",
+#'     q = 1,
+#'     datatype = "abundance",
+#'     nboot = 2
+#'   )
+#'   ggiNEXT(res_iNEXT)
+#'   ggiNEXT(res_iNEXT, type = 2)
+#'   ggiNEXT(res_iNEXT, type = 3)
+#' }
 #' @author Adrien Taudière
 #'
 #'
