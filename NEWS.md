@@ -1,4 +1,8 @@
-# MiscMetabar 0.6.0 (in development) 
+# MiscMetabar 0.6.1 (in development) 
+
+- Minor bugs fix to pass R CMD CHECK
+
+# MiscMetabar 0.6.0 
 
 - Add function `ancombc_pq()` to simplify the call to `ANCOMBC::ancombc2()` : ANalysis of COmpositions of Microbiomes with Bias Correction 2 
 - Add param `taxa_names_from_physeq` (default FALSE) to `subset_taxa_pq()` 

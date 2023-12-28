@@ -49,11 +49,10 @@
 #' @author Michael R. McLaren (orcid: [0000-0003-1575-473X](https://orcid.org/0000-0003-1575-473X)) modified by Adrien Taudiere
 setGeneric(
   "merge_taxa_vec",
-  function(
-        x,
-        group,
-        reorder = FALSE,
-        tax_adjust = 1L) {
+  function(x,
+           group,
+           reorder = FALSE,
+           tax_adjust = 1L) {
     standardGeneric("merge_taxa_vec")
   }
 )
@@ -349,12 +348,11 @@ bad_flush_right <- function(x, bad = "BAD", na_bad = FALSE, k = length(x)) {
 #' @author Michael R. McLaren (orcid: [0000-0003-1575-473X](https://orcid.org/0000-0003-1575-473X)) modified by Adrien Taudiere
 setGeneric(
   "merge_samples2",
-  function(
-        x,
-        group,
-        fun_otu = sum,
-        funs = list(),
-        reorder = FALSE) {
+  function(x,
+           group,
+           fun_otu = sum,
+           funs = list(),
+           reorder = FALSE) {
     standardGeneric("merge_samples2")
   }
 )
@@ -577,10 +575,12 @@ merge_groups <- function(x, group, f = unique_or_na) {
 #' @keywords internal
 #'
 #' @examples
+#' \dontrun{
 #' x <- data.frame(var1 = letters[1:3], var2 = 7:9)
 #' rownames(x)
 #' sample_data(x)
 #' sample_data_stable(x)
+#' }
 #' @author Michael R. McLaren (orcid: [0000-0003-1575-473X](https://orcid.org/0000-0003-1575-473X))
 sample_data_stable <- function(object) {
   # Modified from phyloseq's sample_data data.frame method; see

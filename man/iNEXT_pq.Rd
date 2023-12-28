@@ -39,7 +39,7 @@ GPsubset <- subset_taxa(
   rowSums(is.na(GPsubset@tax_table)) == 0
 )
 GPsubset@sam_data$human <- GPsubset@sam_data$SampleType \%in\%
- c("Skin", "Feces", "Tong")
+  c("Skin", "Feces", "Tong")
 res_iNEXT <- iNEXT_pq(
   GPsubset,
   merge_sample_by = "human",
