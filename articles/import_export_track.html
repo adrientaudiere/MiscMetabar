@@ -20,7 +20,6 @@
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="import_export_track">
 <meta property="og:description" content="MiscMetabar">
-<meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -34,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.52</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,7 +96,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>import_export_track</h1>
+      <img src="" class="logo" alt=""><h1>import_export_track</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/vignettes/import_export_track.Rmd" class="external-link"><code>vignettes/import_export_track.Rmd</code></a></small>
@@ -108,10 +107,14 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/adrientaudiere/MiscMetabar" class="external-link">MiscMetabar</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://renkun-ken.github.io/formattable/" class="external-link">formattable</a></span><span class="op">)</span></span></code></pre></div>
-<div class="section level2">
-<h2 id="export-phyloseq-object">Export phyloseq object<a class="anchor" aria-label="anchor" href="#export-phyloseq-object"></a>
-</h2>
+<span><span class="co">#&gt; Warning: replacing previous import 'S4Arrays::makeNindexFromArrayViewport' by</span></span>
+<span><span class="co">#&gt; 'DelayedArray::makeNindexFromArrayViewport' when loading 'SummarizedExperiment'</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://renkun-ken.github.io/formattable/" class="external-link">formattable</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">data_fungi_sp_known</span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="export-phyloseq-object">Export phyloseq object<a class="anchor" aria-label="anchor" href="#export-phyloseq-object"></a>
+</h3>
 <p>You can export a phyloseq object to csv (and txt for phylogenetic
 tree) files in a folder. It is possible to export each table into one
 file or to merge all slot (except phytree) in one file (args
@@ -128,9 +131,9 @@ merging each slot and an Rdata file).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/save_pq.html">save_pq</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="import">Import<a class="anchor" aria-label="anchor" href="#import"></a>
-</h2>
+<div class="section level3">
+<h3 id="import">Import<a class="anchor" aria-label="anchor" href="#import"></a>
+</h3>
 <p>To import a Rdata file, just use <code><a href="https://rdrr.io/r/base/load.html" class="external-link">load()</a></code> base function.
 In order to import phyloseq object from a folder create using
 <code><a href="../reference/write_pq.html">write_pq()</a></code> or <code><a href="../reference/save_pq.html">save_pq()</a></code>, please use the
@@ -138,9 +141,9 @@ function <code><a href="../reference/read_pq.html">read_pq()</a></code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_pq.html">read_pq</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"fungi_phyloseq"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="tracking-sequences-clusters-and-samples">Tracking sequences, clusters and samples<a class="anchor" aria-label="anchor" href="#tracking-sequences-clusters-and-samples"></a>
-</h2>
+<div class="section level3">
+<h3 id="tracking-sequences-clusters-and-samples">Tracking sequences, clusters and samples<a class="anchor" aria-label="anchor" href="#tracking-sequences-clusters-and-samples"></a>
+</h3>
 <p>In bioinformatic pipeline, we often need to track the number of
 samples, sequences and clusters across step in the pipeline. MiscMetabar
 propose two utilities to achieve this goal : <code><a href="../reference/track_wkflow.html">track_wkflow()</a></code>
@@ -154,6 +157,90 @@ dada-class object, derep-class object, matrix of samples x clusters
 <span><span class="co">#&gt;   nb_sequences nb_clusters nb_samples</span></span>
 <span><span class="co">#&gt; 1      1839124        1420        185</span></span>
 <span><span class="co">#&gt; 2      1106581         651        185</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
+</h2>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; R version 4.3.2 (2023-10-31)</span></span>
+<span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
+<span><span class="co">#&gt; Running under: Ubuntu 22.04.3 LTS</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Matrix products: default</span></span>
+<span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
+<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.20.so;  LAPACK version 3.10.0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; locale:</span></span>
+<span><span class="co">#&gt;  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       </span></span>
+<span><span class="co">#&gt;  [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   </span></span>
+<span><span class="co">#&gt;  [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          </span></span>
+<span><span class="co">#&gt; [10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; time zone: UTC</span></span>
+<span><span class="co">#&gt; tzcode source: system (glibc)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; attached base packages:</span></span>
+<span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; other attached packages:</span></span>
+<span><span class="co">#&gt; [1] formattable_0.2.1 MiscMetabar_0.6.1 dplyr_1.1.4       dada2_1.30.0     </span></span>
+<span><span class="co">#&gt; [5] Rcpp_1.0.11       ggplot2_3.4.4     phyloseq_1.46.0  </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
+<span><span class="co">#&gt;   [1] bitops_1.0-7                pbapply_1.7-2              </span></span>
+<span><span class="co">#&gt;   [3] deldir_2.0-2                permute_0.9-7              </span></span>
+<span><span class="co">#&gt;   [5] rlang_1.1.2                 magrittr_2.0.3             </span></span>
+<span><span class="co">#&gt;   [7] ade4_1.7-22                 matrixStats_1.2.0          </span></span>
+<span><span class="co">#&gt;   [9] compiler_4.3.2              mgcv_1.9-0                 </span></span>
+<span><span class="co">#&gt;  [11] png_0.1-8                   systemfonts_1.0.5          </span></span>
+<span><span class="co">#&gt;  [13] vctrs_0.6.5                 reshape2_1.4.4             </span></span>
+<span><span class="co">#&gt;  [15] stringr_1.5.1               pkgconfig_2.0.3            </span></span>
+<span><span class="co">#&gt;  [17] crayon_1.5.2                fastmap_1.1.1              </span></span>
+<span><span class="co">#&gt;  [19] XVector_0.42.0              utf8_1.2.4                 </span></span>
+<span><span class="co">#&gt;  [21] Rsamtools_2.18.0            rmarkdown_2.25             </span></span>
+<span><span class="co">#&gt;  [23] ragg_1.2.7                  purrr_1.0.2                </span></span>
+<span><span class="co">#&gt;  [25] xfun_0.41                   zlibbioc_1.48.0            </span></span>
+<span><span class="co">#&gt;  [27] cachem_1.0.8                GenomeInfoDb_1.38.4        </span></span>
+<span><span class="co">#&gt;  [29] jsonlite_1.8.8              biomformat_1.30.0          </span></span>
+<span><span class="co">#&gt;  [31] rhdf5filters_1.14.1         DelayedArray_0.28.0        </span></span>
+<span><span class="co">#&gt;  [33] Rhdf5lib_1.24.1             BiocParallel_1.36.0        </span></span>
+<span><span class="co">#&gt;  [35] jpeg_0.1-10                 parallel_4.3.2             </span></span>
+<span><span class="co">#&gt;  [37] cluster_2.1.4               R6_2.5.1                   </span></span>
+<span><span class="co">#&gt;  [39] bslib_0.6.1                 stringi_1.8.3              </span></span>
+<span><span class="co">#&gt;  [41] RColorBrewer_1.1-3          GenomicRanges_1.54.1       </span></span>
+<span><span class="co">#&gt;  [43] jquerylib_0.1.4             SummarizedExperiment_1.32.0</span></span>
+<span><span class="co">#&gt;  [45] iterators_1.0.14            knitr_1.45                 </span></span>
+<span><span class="co">#&gt;  [47] IRanges_2.36.0              Matrix_1.6-1.1             </span></span>
+<span><span class="co">#&gt;  [49] splines_4.3.2               igraph_1.6.0               </span></span>
+<span><span class="co">#&gt;  [51] tidyselect_1.2.0            abind_1.4-5                </span></span>
+<span><span class="co">#&gt;  [53] yaml_2.3.8                  vegan_2.6-4                </span></span>
+<span><span class="co">#&gt;  [55] codetools_0.2-19            hwriter_1.3.2.1            </span></span>
+<span><span class="co">#&gt;  [57] lattice_0.21-9              tibble_3.2.1               </span></span>
+<span><span class="co">#&gt;  [59] plyr_1.8.9                  Biobase_2.62.0             </span></span>
+<span><span class="co">#&gt;  [61] withr_2.5.2                 ShortRead_1.60.0           </span></span>
+<span><span class="co">#&gt;  [63] evaluate_0.23               desc_1.4.3                 </span></span>
+<span><span class="co">#&gt;  [65] survival_3.5-7              RcppParallel_5.1.7         </span></span>
+<span><span class="co">#&gt;  [67] Biostrings_2.70.1           pillar_1.9.0               </span></span>
+<span><span class="co">#&gt;  [69] MatrixGenerics_1.14.0       foreach_1.5.2              </span></span>
+<span><span class="co">#&gt;  [71] stats4_4.3.2                generics_0.1.3             </span></span>
+<span><span class="co">#&gt;  [73] RCurl_1.98-1.13             S4Vectors_0.40.2           </span></span>
+<span><span class="co">#&gt;  [75] munsell_0.5.0               scales_1.3.0               </span></span>
+<span><span class="co">#&gt;  [77] glue_1.6.2                  tools_4.3.2                </span></span>
+<span><span class="co">#&gt;  [79] interp_1.1-5                data.table_1.14.10         </span></span>
+<span><span class="co">#&gt;  [81] GenomicAlignments_1.38.0    fs_1.6.3                   </span></span>
+<span><span class="co">#&gt;  [83] rhdf5_2.46.1                grid_4.3.2                 </span></span>
+<span><span class="co">#&gt;  [85] ape_5.7-1                   latticeExtra_0.6-30        </span></span>
+<span><span class="co">#&gt;  [87] colorspace_2.1-0            nlme_3.1-163               </span></span>
+<span><span class="co">#&gt;  [89] GenomeInfoDbData_1.2.11     cli_3.6.2                  </span></span>
+<span><span class="co">#&gt;  [91] textshaping_0.3.7           fansi_1.0.6                </span></span>
+<span><span class="co">#&gt;  [93] S4Arrays_1.2.0              gtable_0.3.4               </span></span>
+<span><span class="co">#&gt;  [95] sass_0.4.8                  digest_0.6.33              </span></span>
+<span><span class="co">#&gt;  [97] BiocGenerics_0.48.1         SparseArray_1.2.3          </span></span>
+<span><span class="co">#&gt;  [99] htmlwidgets_1.6.4           memoise_2.0.1              </span></span>
+<span><span class="co">#&gt; [101] htmltools_0.5.7             pkgdown_2.0.7              </span></span>
+<span><span class="co">#&gt; [103] multtest_2.58.0             lifecycle_1.0.4            </span></span>
+<span><span class="co">#&gt; [105] MASS_7.3-60</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
