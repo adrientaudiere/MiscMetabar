@@ -952,6 +952,9 @@ venn_pq <-
 #'
 #' Note that you can use ggplot2 function to customize the plot
 #' for ex. `+ scale_fill_distiller(palette = "BuPu", direction = 1)`
+#' and `+ scale_x_continuous(expand = expansion(mult = 0.5))`. See 
+#' examples.
+#' 
 #' @inheritParams clean_pq
 #' @param fact (required): Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}.
@@ -995,9 +998,10 @@ venn_pq <-
 #'   data_fungi@sam_data$Height %in% c("Low", "High"))
 #' ggvenn_pq(data_fungi2, fact = "Height")
 #'
-#' ggvenn_pq(data_fungi, fact = "Height", add_nb_sequences = TRUE, set_size = 4)
+#' ggvenn_pq(data_fungi, fact = "Height", add_nb_sequences = TRUE, set_size = 4) 
 #' ggvenn_pq(data_fungi, fact = "Height", rarefy_before_merging = TRUE)
-#' ggvenn_pq(data_fungi, fact = "Height", rarefy_after_merging = TRUE)
+#' ggvenn_pq(data_fungi, fact = "Height", rarefy_after_merging = TRUE) + 
+#'   scale_x_continuous(expand = expansion(mult = 0.5))
 #'
 #' @export
 #' @author Adrien Taudière
@@ -2677,7 +2681,9 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 #' @author Adrien Taudière
 #'
 #'
-iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
+iNEXT_pq <- function(physeq, 
+                     merge_sample_by = NULL,
+                     ...) {
   if (!is.null(merge_sample_by)) {
     physeq <- merge_samples2(physeq, merge_sample_by)
     physeq <- clean_pq(physeq, force_taxa_as_columns = TRUE)
@@ -2685,6 +2691,7 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
 
   df <- data.frame(t(as.matrix(unclass(physeq@otu_table))))
   res_iNEXT <- iNEXT::iNEXT(df, ...)
+  return(res_iNEXT)
 }
 ################################################################################
 
@@ -2948,7 +2955,8 @@ upset_test_pq <-
 
     psm2 <- data.frame(lapply(psm, function(col) {
       tapply(col, paste0(psm$OTU), function(vec) {
-        diff_fct_diff_class(vec, numeric_fonction = numeric_fonction, na.rm = TRUE)
+        diff_fct_diff_class(vec, numeric_fonction = numeric_fonction,
+                            na.rm = TRUE)
       })
     })) %>% arrange(., desc(Abundance))
 
