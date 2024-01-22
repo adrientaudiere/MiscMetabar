@@ -1,7 +1,7 @@
 
 ![R](https://img.shields.io/badge/r-%23276DC3.svg?style=for-the-badge&logo=r&logoColor=white)
 <a href="https://zenodo.org/badge/latestdoi/268765075"><img src="https://zenodo.org/badge/268765075.svg" alt="DOI"></a>
-[![codecov](https://app.codecov.io/gh/adrientaudiere/MiscMetabar/graph/badge.svg?token=NXFRSIKYC0)](https://app.codecov.io/gh/adrientaudiere/MiscMetabar)
+[![codecov](https://codecov.io/gh/adrientaudiere/MiscMetabar/graph/badge.svg?token=NXFRSIKYC0)](https://app.codecov.io/gh/adrientaudiere/MiscMetabar)
 [![Contributor
 Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](code_of_conduct.md)
 [![License: GPL
@@ -13,7 +13,7 @@ v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- devtools::build_readme() -->
 
-# MiscMetabar <a href="https://adrientaudiere.github.io/MiscMetabar/"><img src="man/figures/logo.png" align="right" height="138" alt="MiscMetabar website" /></a>
+# MiscMetabar <a href="https://adrientaudiere.github.io/MiscMetabar/"><img src="https://adrientaudiere.github.io/MiscMetabar/reference/figures/logo.png" align="right" height="138" alt="MiscMetabar website" /></a>
 
 See the pkgdown documentation site
 [here](https://adrientaudiere.github.io/MiscMetabar/) and the [package
@@ -91,8 +91,10 @@ samples](https://adrientaudiere.github.io/MiscMetabar/articles/filter.html)
 describes some data-filtering processes using MiscMetabar and the
 [reclustering](https://adrientaudiere.github.io/MiscMetabar/articles/Reclustering.html)
 tutorial introduces the different way of clustering already-clustered
-OTU/ASV. The vignette [tengeler]() explore the dataset from Tengeler et
-al. (2020) using some MiscMetabar functions.
+OTU/ASV. The vignette
+[tengeler](https://adrientaudiere.github.io/MiscMetabar/articles/tengeler.html)
+explore the dataset from Tengeler et al. (2020) using some MiscMetabar
+functions.
 
 For developers, I also wrote a vignette describing som [rules of
 codes](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html).

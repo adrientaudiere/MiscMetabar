@@ -2,7 +2,8 @@
 % Please edit documentation in R/plot_functions.R
 \name{multitax_bar_pq}
 \alias{multitax_bar_pq}
-\title{Plot taxonomic distribution across 3 levels}
+\title{Plot taxonomic distribution across 3 taxonomic levels and optionally
+one sample factor}
 \usage{
 multitax_bar_pq(
   physeq,
@@ -42,7 +43,7 @@ A ggplot2 graphic
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-Note that lvl3need to be nested in lvl2 which need to be nested
+Note that lvl3 need to be nested in lvl2 which need to be nested
 in lvl1
 }
 \examples{

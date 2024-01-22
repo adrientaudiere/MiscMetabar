@@ -62,6 +62,8 @@ of plots.
 
 Note that you can use ggplot2 function to customize the plot
 for ex. \code{+ scale_fill_distiller(palette = "BuPu", direction = 1)}
+and \code{+ scale_x_continuous(expand = expansion(mult = 0.5))}. See
+examples.
 }
 \examples{
 data(data_fungi)
@@ -80,9 +82,10 @@ data_fungi2 <- subset_samples(data_fungi, data_fungi@sam_data$Tree_name == "A10-
   data_fungi@sam_data$Height \%in\% c("Low", "High"))
 ggvenn_pq(data_fungi2, fact = "Height")
 
-ggvenn_pq(data_fungi, fact = "Height", add_nb_sequences = TRUE, set_size = 4)
+ggvenn_pq(data_fungi, fact = "Height", add_nb_sequences = TRUE, set_size = 4) 
 ggvenn_pq(data_fungi, fact = "Height", rarefy_before_merging = TRUE)
-ggvenn_pq(data_fungi, fact = "Height", rarefy_after_merging = TRUE)
+ggvenn_pq(data_fungi, fact = "Height", rarefy_after_merging = TRUE) + 
+  scale_x_continuous(expand = expansion(mult = 0.5))
 
 }
 \seealso{
