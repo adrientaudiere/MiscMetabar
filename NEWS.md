@@ -1,4 +1,6 @@
-# MiscMetabar 0.6.0 (in development) 
+# MiscMetabar 0.6.1  (in development)
+
+# MiscMetabar 0.6.0 
 
 - Add function `ancombc_pq()` to simplify the call to `ANCOMBC::ancombc2()` : ANalysis of COmpositions of Microbiomes with Bias Correction 2 
 - Add param `taxa_names_from_physeq` (default FALSE) to `subset_taxa_pq()` 
@@ -9,6 +11,7 @@
 - Add functions `get_funguild_db()` and `funguild_assign()` from the [FUNGuildR](https://github.com/brendanf/FUNGuildR/) package into MiscMetabar to decrease package dependencies 
 - Remove all dependencies from packages not available on CRAN or Bioconductor. Improve code using `goodpractice::gp`() and `devtools::check()` function
 - Add messages in various cases (NA in samples data, low number of sequences in samples, low number of sequences by taxa) when using `verify_pq()` with args `verbose=TRUE`
+- Fix a bug in `mutitax_bar_pq()` when using `nb_seq = FALSE`
 
 # MiscMetabar 0.52 
 
