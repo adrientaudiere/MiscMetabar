@@ -2453,7 +2453,7 @@ multitax_bar_pq <- function(
       summarise(Abundance = sum(Abundance)) %>% 
       filter(Abundance > 0)
     
-    psm <- inner_join(psm_2, psm_1[,c("OTU", lvl1, lvl2, lvl3, fact)], 
+    psm <- inner_join(psm_2, psm_1[,c("OTU", lvl1, lvl2, lvl3)], 
                       by = join_by("OTU" == "OTU"), multiple = 
                         "first")
     
