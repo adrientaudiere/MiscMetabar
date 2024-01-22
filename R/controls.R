@@ -153,11 +153,10 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
 #'
 #' @author Adrien Taudière
 subset_taxa_tax_control <-
-  function(
-        physeq,
-        taxa_distri,
-        method = "mean",
-        min_diff_for_cutoff = NULL) {
+  function(physeq,
+           taxa_distri,
+           method = "mean",
+           min_diff_for_cutoff = NULL) {
     verify_pq(physeq)
 
     cutoff_seq <- vector(mode = "numeric", length = nsamples(physeq))

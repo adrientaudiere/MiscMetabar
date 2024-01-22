@@ -33,13 +33,12 @@
 #'   Please cite [Krona](https://github.com/marbl/Krona) if
 #'   you use this function.
 krona <-
-  function(
-        physeq,
-        file = "krona.html",
-        nb_seq = TRUE,
-        ranks = "All",
-        add_unassigned_rank = 0,
-        name = NULL) {
+  function(physeq,
+           file = "krona.html",
+           nb_seq = TRUE,
+           ranks = "All",
+           add_unassigned_rank = 0,
+           name = NULL) {
     if (ranks[1] == "All") {
       ranks <- seq_along(physeq@tax_table[1, ])
     }
