@@ -948,6 +948,9 @@ venn_pq <-
 #'
 #' Note that you can use ggplot2 function to customize the plot
 #' for ex. `+ scale_fill_distiller(palette = "BuPu", direction = 1)`
+#' and `+ scale_x_continuous(expand = expansion(mult = 0.5))`. See 
+#' examples.
+#' 
 #' @inheritParams clean_pq
 #' @param fact (required): Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}.
@@ -991,9 +994,10 @@ venn_pq <-
 #'   data_fungi@sam_data$Height %in% c("Low", "High"))
 #' ggvenn_pq(data_fungi2, fact = "Height")
 #'
-#' ggvenn_pq(data_fungi, fact = "Height", add_nb_sequences = TRUE, set_size = 4)
+#' ggvenn_pq(data_fungi, fact = "Height", add_nb_sequences = TRUE, set_size = 4) 
 #' ggvenn_pq(data_fungi, fact = "Height", rarefy_before_merging = TRUE)
-#' ggvenn_pq(data_fungi, fact = "Height", rarefy_after_merging = TRUE)
+#' ggvenn_pq(data_fungi, fact = "Height", rarefy_after_merging = TRUE) + 
+#'   scale_x_continuous(expand = expansion(mult = 0.5))
 #'
 #' @export
 #' @author Adrien Taudière
@@ -2352,12 +2356,13 @@ plot_tax_pq <-
 
 
 ################################################################################
-#' Plot taxonomic distribution across 3 levels
+#' Plot taxonomic distribution across 3 taxonomic levels and optionally 
+#' one sample factor
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
 #'
-#' Note that lvl3need to be nested in lvl2 which need to be nested
+#' Note that lvl3 need to be nested in lvl2 which need to be nested
 #' in lvl1
 #'
 #' @inheritParams clean_pq
@@ -2384,33 +2389,44 @@ plot_tax_pq <-
 #' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order",
 #'   nb_seq = FALSE, log10trans = FALSE
 #' )
-multitax_bar_pq <- function(physeq,
-                            lvl1,
-                            lvl2,
-                            lvl3,
-                            fact = NULL,
-                            nb_seq = TRUE,
-                            log10trans = TRUE) {
-  if (!nb_seq) {
-    physeq <- as_binary_otu_table(physeq)
-  }
-  psm <- psmelt(physeq) %>% filter(!is.na(.data[[lvl1]]))
-  psm <- psm %>%
+multitax_bar_pq <- function(
+        physeq,
+        lvl1,
+        lvl2,
+        lvl3,
+        fact = NULL,
+        nb_seq = TRUE,
+        log10trans = TRUE) {
+    psm_1 <- psmelt(physeq) %>%
+    filter(Abundance > 0) %>% 
+  filter(!is.na(.data[[lvl1]])) %>%
     filter(!is.na(.data[[lvl3]])) %>%
     filter(!is.na(.data[[lvl2]]))
 
   if (is.null(fact)) {
+    psm_2 <- psm_1 %>% 
+      group_by(OTU) %>%
+      summarise(Abundance = sum(Abundance)) 
+    
+    psm <- inner_join(psm_2, psm_1[,c("OTU", lvl1, lvl2, lvl3)], 
+                     by = join_by("OTU" == "OTU"), multiple = 
+                       "first")
+    
+    if (!nb_seq) {
+      psm$Abundance = 1
+    }
+    
     data_gg <- tibble(
       "Abundance" = tapply(psm$Abundance, psm[[lvl3]], sum),
       "LVL1" = tapply(psm[[lvl1]], psm[[lvl3]], unique),
       "LVL2" = tapply(psm[[lvl2]], psm[[lvl3]], unique),
       "LVL3" = tapply(psm[[lvl3]], psm[[lvl3]], unique)
     )
-
+    
     if (log10trans) {
       data_gg$Abundance <- log10(data_gg$Abundance)
     }
-
+    
     p <- ggplot(data_gg, aes(
       x = Abundance,
       fill = LVL1,
@@ -2421,6 +2437,20 @@ multitax_bar_pq <- function(physeq,
       theme(strip.text.y.right = element_text(angle = 0)) +
       theme(legend.position = "none")
   } else {
+    
+    psm_2 <- psm %>% 
+      group_by(OTU,.data[[fact]]) %>%
+      summarise(Abundance = sum(Abundance)) %>% 
+      filter(Abundance > 0)
+    
+    psm <- inner_join(psm_2, psm_1[,c("OTU", lvl1, lvl2, lvl3, fact)], 
+                      by = join_by("OTU" == "OTU"), multiple = 
+                        "first")
+    
+    if (!nb_seq) {
+      psm$Abundance = 1
+    }    
+    
     data_gg <- tibble(
       "Abundance" = tapply(psm$Abundance, paste(psm[[fact]], psm[[lvl3]]), sum),
       "FACT" = tapply(psm[[fact]], paste(psm[[fact]], psm[[lvl3]]), unique),
@@ -2428,11 +2458,11 @@ multitax_bar_pq <- function(physeq,
       "LVL2" = tapply(psm[[lvl2]], paste(psm[[fact]], psm[[lvl3]]), unique),
       "LVL3" = tapply(psm[[lvl3]], paste(psm[[fact]], psm[[lvl3]]), unique)
     )
-
+    
     if (log10trans) {
       data_gg$Abundance <- log10(data_gg$Abundance)
     }
-
+    
     p <- ggplot(data_gg, aes(
       x = Abundance,
       fill = LVL1,
@@ -2667,7 +2697,9 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 #' @author Adrien Taudière
 #'
 #'
-iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
+iNEXT_pq <- function(physeq, 
+                     merge_sample_by = NULL,
+                     ...) {
   if (!is.null(merge_sample_by)) {
     physeq <- merge_samples2(physeq, merge_sample_by)
     physeq <- clean_pq(physeq, force_taxa_as_columns = TRUE)
@@ -2675,6 +2707,7 @@ iNEXT_pq <- function(physeq, merge_sample_by = NULL, ...) {
 
   df <- data.frame(t(as.matrix(unclass(physeq@otu_table))))
   res_iNEXT <- iNEXT::iNEXT(df, ...)
+  return(res_iNEXT)
 }
 ################################################################################
 
@@ -2937,7 +2970,8 @@ upset_test_pq <-
 
     psm2 <- data.frame(lapply(psm, function(col) {
       tapply(col, paste0(psm$OTU), function(vec) {
-        diff_fct_diff_class(vec, numeric_fonction = numeric_fonction, na.rm = TRUE)
+        diff_fct_diff_class(vec, numeric_fonction = numeric_fonction,
+                            na.rm = TRUE)
       })
     })) %>% arrange(., desc(Abundance))
 
