@@ -1,4 +1,6 @@
-# MiscMetabar 0.6.1  (in development)
+# MiscMetabar 0.6.1 (in development) 
+
+- Minor bugs fix to pass R CMD CHECK
 
 # MiscMetabar 0.6.0 
 

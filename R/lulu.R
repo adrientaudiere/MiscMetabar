@@ -75,7 +75,15 @@
 #' @author Tobias Guldberg Frøslev (orcid: [0000-0002-3530-013X](https://orcid.org/0000-0002-3530-013X)),
 #' modified by Adrien Taudière
 #' @export
-lulu <- function(otutable, matchlist, minimum_ratio_type = "min", minimum_ratio = 1, minimum_match = 84, minimum_relative_cooccurence = 0.95, progress_bar = TRUE, log_conserved = FALSE) {
+lulu <- function(
+    otutable,
+    matchlist,
+    minimum_ratio_type = "min",
+    minimum_ratio = 1,
+    minimum_match = 84,
+    minimum_relative_cooccurence = 0.95,
+    progress_bar = TRUE,
+    log_conserved = FALSE) {
   start.time <- Sys.time()
   colnames(matchlist) <- c("OTUid", "hit", "match")
   # remove no hits (vsearch)

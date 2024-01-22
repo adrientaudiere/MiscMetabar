@@ -21,13 +21,12 @@
 #' @author Adrien Taudière
 
 list_fastq_files <-
-  function(
-        path,
-        paired_end = TRUE,
-        pattern = "fastq",
-        pattern_R1 = "_R1_",
-        pattern_R2 = "_R2_",
-        nb_files = Inf) {
+  function(path,
+           paired_end = TRUE,
+           pattern = "fastq",
+           pattern_R1 = "_R1_",
+           pattern_R2 = "_R2_",
+           nb_files = Inf) {
     list_files <- list.files(path, pattern = pattern, full.names = TRUE)
     if (paired_end) {
       fnfs <- sort(list_files[grepl(list_files, pattern = pattern_R1)])

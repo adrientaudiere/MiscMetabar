@@ -31,6 +31,7 @@ Please make a reference to \code{gtsummary::tbl_summary()} if you
 use this function.
 }
 \examples{
+data(data_fungi)
 tbl_sum_samdata(data_fungi) \%>\%
   gtsummary::as_kable()
 

@@ -52,12 +52,11 @@ as_binary_otu_table <- function(physeq, min_number = 1) {
 #' @export
 #' @seealso \code{\link[vegan]{vegdist}}
 
-dist_bycol <- function(
-        x,
-        y,
-        method = "bray",
-        nperm = 99,
-        ...) {
+dist_bycol <- function(x,
+                       y,
+                       method = "bray",
+                       nperm = 99,
+                       ...) {
   x <- as.matrix(unclass(x))
   y <- as.matrix(unclass(y))
 
@@ -294,10 +293,9 @@ funky_color <-
 #' subsample_fastq(ex_file, "your_path_to_output")
 #' subsample_fastq(list_fastq_files("extdata"), "your_path_to_output", n = 10)
 #' }
-subsample_fastq <- function(
-        fastq_files,
-        folder_output = "subsample",
-        n_seq = 1000) {
+subsample_fastq <- function(fastq_files,
+                            folder_output = "subsample",
+                            n_seq = 1000) {
   for (f in unlist(fastq_files)) {
     if (!dir.exists(folder_output)) {
       dir.create(folder_output)
@@ -329,9 +327,8 @@ subsample_fastq <- function(
 #' @return Nothing
 #' @author Adrien Taudière
 #' @export
-install_pkg_needed <- function(
-        pkg, use_pak = TRUE, bioconductor_pkg = FALSE,
-        github_pkg = FALSE, verbose = FALSE) {
+install_pkg_needed <- function(pkg, use_pak = TRUE, bioconductor_pkg = FALSE,
+                               github_pkg = FALSE, verbose = FALSE) {
   if (!requireNamespace(pkg, quietly = TRUE)) {
     if (verbose) {
       message(paste0("Installation of the package : ", pkg))
