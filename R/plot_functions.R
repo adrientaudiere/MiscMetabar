@@ -2448,7 +2448,7 @@ multitax_bar_pq <- function(
       theme(legend.position = "none")
   } else {
     
-    psm_2 <- psm %>% 
+    psm_2 <- psm_1 %>% 
       group_by(OTU,.data[[fact]]) %>%
       summarise(Abundance = sum(Abundance)) %>% 
       filter(Abundance > 0)
