@@ -2367,12 +2367,13 @@ plot_tax_pq <-
 
 
 ################################################################################
-#' Plot taxonomic distribution across 3 levels
+#' Plot taxonomic distribution across 3 taxonomic levels and optionally 
+#' one sample factor
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
 #'
-#' Note that lvl3need to be nested in lvl2 which need to be nested
+#' Note that lvl3 need to be nested in lvl2 which need to be nested
 #' in lvl1
 #'
 #' @inheritParams clean_pq
@@ -2406,26 +2407,36 @@ multitax_bar_pq <- function(
         fact = NULL,
         nb_seq = TRUE,
         log10trans = TRUE) {
-  if (!nb_seq) {
-    physeq <- as_binary_otu_table(physeq)
-  }
-  psm <- psmelt(physeq) %>% filter(!is.na(.data[[lvl1]]))
-  psm <- psm %>%
+    psm_1 <- psmelt(physeq) %>%
+    filter(Abundance > 0) %>% 
+  filter(!is.na(.data[[lvl1]])) %>%
     filter(!is.na(.data[[lvl3]])) %>%
     filter(!is.na(.data[[lvl2]]))
 
   if (is.null(fact)) {
+    psm_2 <- psm_1 %>% 
+      group_by(OTU) %>%
+      summarise(Abundance = sum(Abundance)) 
+    
+    psm <- inner_join(psm_2, psm_1[,c("OTU", lvl1, lvl2, lvl3)], 
+                     by = join_by("OTU" == "OTU"), multiple = 
+                       "first")
+    
+    if (!nb_seq) {
+      psm$Abundance = 1
+    }
+    
     data_gg <- tibble(
       "Abundance" = tapply(psm$Abundance, psm[[lvl3]], sum),
       "LVL1" = tapply(psm[[lvl1]], psm[[lvl3]], unique),
       "LVL2" = tapply(psm[[lvl2]], psm[[lvl3]], unique),
       "LVL3" = tapply(psm[[lvl3]], psm[[lvl3]], unique)
     )
-
+    
     if (log10trans) {
       data_gg$Abundance <- log10(data_gg$Abundance)
     }
-
+    
     p <- ggplot(data_gg, aes(
       x = Abundance,
       fill = LVL1,
@@ -2436,6 +2447,20 @@ multitax_bar_pq <- function(
       theme(strip.text.y.right = element_text(angle = 0)) +
       theme(legend.position = "none")
   } else {
+    
+    psm_2 <- psm %>% 
+      group_by(OTU,.data[[fact]]) %>%
+      summarise(Abundance = sum(Abundance)) %>% 
+      filter(Abundance > 0)
+    
+    psm <- inner_join(psm_2, psm_1[,c("OTU", lvl1, lvl2, lvl3, fact)], 
+                      by = join_by("OTU" == "OTU"), multiple = 
+                        "first")
+    
+    if (!nb_seq) {
+      psm$Abundance = 1
+    }    
+    
     data_gg <- tibble(
       "Abundance" = tapply(psm$Abundance, paste(psm[[fact]], psm[[lvl3]]), sum),
       "FACT" = tapply(psm[[fact]], paste(psm[[fact]], psm[[lvl3]]), unique),
@@ -2443,11 +2468,11 @@ multitax_bar_pq <- function(
       "LVL2" = tapply(psm[[lvl2]], paste(psm[[fact]], psm[[lvl3]]), unique),
       "LVL3" = tapply(psm[[lvl3]], paste(psm[[fact]], psm[[lvl3]]), unique)
     )
-
+    
     if (log10trans) {
       data_gg$Abundance <- log10(data_gg$Abundance)
     }
-
+    
     p <- ggplot(data_gg, aes(
       x = Abundance,
       fill = LVL1,
