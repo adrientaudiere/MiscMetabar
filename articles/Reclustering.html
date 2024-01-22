@@ -106,35 +106,34 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/adrientaudiere/MiscMetabar" class="external-link">MiscMetabar</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: replacing previous import 'S4Arrays::makeNindexFromArrayViewport' by</span></span>
-<span><span class="co">#&gt; 'DelayedArray::makeNindexFromArrayViewport' when loading 'SummarizedExperiment'</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/adrientaudiere/MiscMetabar" class="external-link">MiscMetabar</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="re-clustering-asvs">Re-clustering ASVs<a class="anchor" aria-label="anchor" href="#re-clustering-asvs"></a>
 </h2>
 <p><strong>ASV</strong> (stands for <em>Amplicon Sequence Variant</em>;
 also called <strong>ESV</strong> for Exact Amplicon Variant) is a DNA
-sequence obtained from high-throughput analysis of marker genes. **OTU*
-are a group of closely related individuals created by clustering
-sequences based on a threshold of similarity. An ASV is a special case
-of an OTU with a similarity threshold of 100%.</p>
+sequence obtained from high-throughput analysis of marker genes.
+<strong>OTU</strong> are a group of closely related individuals created
+by clustering sequences based on a threshold of similarity. An ASV is a
+special case of an OTU with a similarity threshold of 100%. A third
+concept is the zero-radius OTU <strong>zOTU</strong> <span class="citation">(Edgar 2016)</span> which is the same concept than ASV
+but compute with other softwares than <a href="https://github.com/benjjneb/dada2" class="external-link">dada</a> (e.g. <a href="https://github.com/torognes/vsearch" class="external-link">vsearch</a>).</p>
 <p>The choice between ASV and OTU is important because they lead to
-different results <span class="citation">(Joos et al. 2020)</span>, Box
-2 in <span class="citation">(Tedersoo et al. 2022)</span>). Most
-articles recommend making a choice depending on the question. For
-example, ASV may be better than OTU for describing a group of very
-closely related species. In addition, ASV are comparable across
-different datasets (obtained using identical marker genes). On the other
-hand, <span class="citation">(Tedersoo et al. 2022)</span> report that
-ASV approaches overestimate the richness of common fungal species (due
-to haplotype variation), but underestimate the richness of rare species.
+different results (<span class="citation">Joos et al. (2020)</span>, Box
+2 in <span class="citation">Tedersoo et al. (2022)</span>, <span class="citation">Chiarello et al. (2022)</span>). Most articles
+recommend making a choice depending on the question. For example, ASV
+may be better than OTU for describing a group of very closely related
+species. In addition, ASV are comparable across different datasets
+(obtained using identical marker genes). On the other hand, <span class="citation">(Tedersoo et al. 2022)</span> report that ASV
+approaches overestimate the richness of common fungal species (due to
+haplotype variation), but underestimate the richness of rare species.
 They therefore recommend the use of OTUs in metabarcoding analyses of
 fungal communities. Finally, <span class="citation">(Kauserud
 2023)</span> argues that the ASV term falls within the original OTU term
 and recommends adopting only the OTU terms, but with a concise and clear
 report on how the OTUs were generated.</p>
-<p>Recent articles (<span class="citation">(Forster et al. 2019; Antich
-et al. 2021)</span>) propose to use both approach together. They
+<p>Recent articles <span class="citation">(Forster et al. 2019; Antich
+et al. 2021)</span> propose to use both approach together. They
 recommend (i) using ASV to denoise the dataset and (ii) for some
 questions, clustering the ASV sequences into OTUs. This is the goal of
 the function <code><a href="../reference/asv2otu.html">asv2otu()</a></code>, using either the
@@ -146,18 +145,18 @@ the function <code><a href="../reference/asv2otu.html">asv2otu()</a></code>, usi
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>otu <span class="ot">&lt;-</span> <span class="fu">asv2otu</span>(data_fungi_sp_known, <span class="at">method =</span> <span class="st">"clusterize"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Partitioning sequences by 5-mer similarity:</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ================================================================================</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 0.14 secs</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 0.15 secs</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Sorting by relatedness within 1 group:</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>iteration <span class="dv">98</span> of up to <span class="dv">325</span> (<span class="fl">100.0</span>% stability) </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>iteration <span class="dv">108</span> of up to <span class="dv">325</span> (<span class="fl">100.0</span>% stability) </span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 4.32 secs</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 4.55 secs</span></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clustering sequences by 8-mer similarity:</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ================================================================================</span></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 0.81 secs</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 0.8 secs</span></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clusters via relatedness sorting: 100% (0% exclusively)</span></span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clusters via rare 5-mers: 100% (0% exclusively)</span></span>
@@ -203,7 +202,7 @@ clusters.</p>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;             nb_sequences nb_clusters nb_samples</span></span>
 <span><span class="co">#&gt; Raw data         1106581         651        185</span></span>
-<span><span class="co">#&gt; OTU              1106581         360        185</span></span>
+<span><span class="co">#&gt; OTU              1106581         362        185</span></span>
 <span><span class="co">#&gt; OTU_vsearch      1106581         362        185</span></span>
 <span><span class="co">#&gt; LULU             1106581         549        185</span></span></code></pre></div>
 </div>
@@ -234,15 +233,15 @@ clusters.</p>
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] MiscMetabar_0.6.1 dplyr_1.1.4       dada2_1.30.0      Rcpp_1.0.11      </span></span>
+<span><span class="co">#&gt; [1] MiscMetabar_0.6.1 dplyr_1.1.4       dada2_1.30.0      Rcpp_1.0.12      </span></span>
 <span><span class="co">#&gt; [5] ggplot2_3.4.4     phyloseq_1.46.0  </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;   [1] DBI_1.2.0                   bitops_1.0-7               </span></span>
+<span><span class="co">#&gt;   [1] DBI_1.2.1                   bitops_1.0-7               </span></span>
 <span><span class="co">#&gt;   [3] pbapply_1.7-2               deldir_2.0-2               </span></span>
-<span><span class="co">#&gt;   [5] permute_0.9-7               rlang_1.1.2                </span></span>
+<span><span class="co">#&gt;   [5] permute_0.9-7               rlang_1.1.3                </span></span>
 <span><span class="co">#&gt;   [7] magrittr_2.0.3              ade4_1.7-22                </span></span>
-<span><span class="co">#&gt;   [9] RSQLite_2.3.4               matrixStats_1.2.0          </span></span>
+<span><span class="co">#&gt;   [9] RSQLite_2.3.5               matrixStats_1.2.0          </span></span>
 <span><span class="co">#&gt;  [11] compiler_4.3.2              mgcv_1.9-0                 </span></span>
 <span><span class="co">#&gt;  [13] png_0.1-8                   systemfonts_1.0.5          </span></span>
 <span><span class="co">#&gt;  [15] vctrs_0.6.5                 reshape2_1.4.4             </span></span>
@@ -253,7 +252,7 @@ clusters.</p>
 <span><span class="co">#&gt;  [25] rmarkdown_2.25              ragg_1.2.7                 </span></span>
 <span><span class="co">#&gt;  [27] bit_4.0.5                   purrr_1.0.2                </span></span>
 <span><span class="co">#&gt;  [29] xfun_0.41                   zlibbioc_1.48.0            </span></span>
-<span><span class="co">#&gt;  [31] cachem_1.0.8                GenomeInfoDb_1.38.4        </span></span>
+<span><span class="co">#&gt;  [31] cachem_1.0.8                GenomeInfoDb_1.38.5        </span></span>
 <span><span class="co">#&gt;  [33] jsonlite_1.8.8              biomformat_1.30.0          </span></span>
 <span><span class="co">#&gt;  [35] blob_1.2.4                  highr_0.10                 </span></span>
 <span><span class="co">#&gt;  [37] rhdf5filters_1.14.1         DelayedArray_0.28.0        </span></span>
@@ -271,17 +270,17 @@ clusters.</p>
 <span><span class="co">#&gt;  [61] vegan_2.6-4                 codetools_0.2-19           </span></span>
 <span><span class="co">#&gt;  [63] hwriter_1.3.2.1             lattice_0.21-9             </span></span>
 <span><span class="co">#&gt;  [65] tibble_3.2.1                plyr_1.8.9                 </span></span>
-<span><span class="co">#&gt;  [67] Biobase_2.62.0              withr_2.5.2                </span></span>
+<span><span class="co">#&gt;  [67] Biobase_2.62.0              withr_3.0.0                </span></span>
 <span><span class="co">#&gt;  [69] ShortRead_1.60.0            evaluate_0.23              </span></span>
 <span><span class="co">#&gt;  [71] desc_1.4.3                  survival_3.5-7             </span></span>
 <span><span class="co">#&gt;  [73] RcppParallel_5.1.7          Biostrings_2.70.1          </span></span>
 <span><span class="co">#&gt;  [75] pillar_1.9.0                MatrixGenerics_1.14.0      </span></span>
 <span><span class="co">#&gt;  [77] foreach_1.5.2               stats4_4.3.2               </span></span>
-<span><span class="co">#&gt;  [79] generics_0.1.3              RCurl_1.98-1.13            </span></span>
+<span><span class="co">#&gt;  [79] generics_0.1.3              RCurl_1.98-1.14            </span></span>
 <span><span class="co">#&gt;  [81] S4Vectors_0.40.2            munsell_0.5.0              </span></span>
-<span><span class="co">#&gt;  [83] scales_1.3.0                glue_1.6.2                 </span></span>
+<span><span class="co">#&gt;  [83] scales_1.3.0                glue_1.7.0                 </span></span>
 <span><span class="co">#&gt;  [85] tools_4.3.2                 interp_1.1-5               </span></span>
-<span><span class="co">#&gt;  [87] data.table_1.14.10          GenomicAlignments_1.38.0   </span></span>
+<span><span class="co">#&gt;  [87] data.table_1.14.10          GenomicAlignments_1.38.2   </span></span>
 <span><span class="co">#&gt;  [89] fs_1.6.3                    rhdf5_2.46.1               </span></span>
 <span><span class="co">#&gt;  [91] grid_4.3.2                  ape_5.7-1                  </span></span>
 <span><span class="co">#&gt;  [93] latticeExtra_0.6-30         colorspace_2.1-0           </span></span>
@@ -289,7 +288,7 @@ clusters.</p>
 <span><span class="co">#&gt;  [97] cli_3.6.2                   textshaping_0.3.7          </span></span>
 <span><span class="co">#&gt;  [99] fansi_1.0.6                 S4Arrays_1.2.0             </span></span>
 <span><span class="co">#&gt; [101] gtable_0.3.4                sass_0.4.8                 </span></span>
-<span><span class="co">#&gt; [103] digest_0.6.33               BiocGenerics_0.48.1        </span></span>
+<span><span class="co">#&gt; [103] digest_0.6.34               BiocGenerics_0.48.1        </span></span>
 <span><span class="co">#&gt; [105] SparseArray_1.2.3           farver_2.1.1               </span></span>
 <span><span class="co">#&gt; [107] memoise_2.0.1               htmltools_0.5.7            </span></span>
 <span><span class="co">#&gt; [109] pkgdown_2.0.7               multtest_2.58.0            </span></span>
@@ -305,6 +304,18 @@ Antich, Adrià, Creu Palacin, Owen S Wangensteen, and Xavier Turon. 2021.
 <span>“To Denoise or to Cluster, That Is Not the Question: Optimizing
 Pipelines for COI Metabarcoding and Metaphylogeography.”</span> <em>BMC
 Bioinformatics</em> 22: 1–24. <a href="https://doi.org/10.1101/2021.01.08.425760" class="external-link">https://doi.org/10.1101/2021.01.08.425760</a>.
+</div>
+<div id="ref-chiarello2022" class="csl-entry">
+Chiarello, Marlène, Mark McCauley, Sébastien Villéger, and Colin R
+Jackson. 2022. <span>“Ranking the Biases: The Choice of OTUs Vs. ASVs in
+16S rRNA Amplicon Data Analysis Has Stronger Effects on Diversity
+Measures Than Rarefaction and OTU Identity Threshold.”</span> <em>PLoS
+One</em> 17 (2): e0264443. <a href="https://doi.org/10.1371/journal.pone.0264443" class="external-link">https://doi.org/10.1371/journal.pone.0264443</a>.
+</div>
+<div id="ref-edgar2016" class="csl-entry">
+Edgar, Robert C. 2016. <span>“UNOISE2: Improved Error-Correction for
+Illumina 16S and ITS Amplicon Sequencing.”</span> <em>BioRxiv</em>,
+081257.
 </div>
 <div id="ref-forster2019" class="csl-entry">
 Forster, Dominik, Guillaume Lentendu, Sabine Filker, Elyssa Dubois,
