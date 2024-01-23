@@ -3,7 +3,9 @@
 on:
   push:
     branches: [main, master]
-    
+  release:
+    types: [published]
+
 name: R-CMD-check
 
 jobs:
