@@ -32,6 +32,7 @@ taxonomic groups
 }
 \examples{
 data(data_fungi)
+data(data_fungi_sp_known)
 ridges_pq(data_fungi, "Time", alpha = 0.5, log10trans = FALSE) + xlim(c(0, 1000))
 ridges_pq(data_fungi, "Time", alpha = 0.5)
 ridges_pq(

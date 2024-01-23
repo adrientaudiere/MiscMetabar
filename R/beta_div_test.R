@@ -35,15 +35,14 @@
 #'   Please cite `phyloseqGraphTest` package.
 #' @export
 
-graph_test_pq <- function(
-        physeq,
-        fact,
-        merge_sample_by = NULL,
-        nperm = 999,
-        return_plot = TRUE,
-        title = "Graph Test",
-        na_remove = FALSE,
-        ...) {
+graph_test_pq <- function(physeq,
+                          fact,
+                          merge_sample_by = NULL,
+                          nperm = 999,
+                          return_plot = TRUE,
+                          title = "Graph Test",
+                          na_remove = FALSE,
+                          ...) {
   verify_pq(physeq)
 
   if (!is.null(merge_sample_by)) {
@@ -135,15 +134,14 @@ graph_test_pq <- function(
 #'   Please make a reference to `vegan::adonis2()` if you
 #'   use this function.
 
-adonis_pq <- function(
-        physeq,
-        formula,
-        dist_method = "bray",
-        merge_sample_by = NULL,
-        na_remove = FALSE,
-        correction_for_sample_size = FALSE,
-        rarefy_nb_seqs = FALSE,
-        ...) {
+adonis_pq <- function(physeq,
+                      formula,
+                      dist_method = "bray",
+                      merge_sample_by = NULL,
+                      na_remove = FALSE,
+                      correction_for_sample_size = FALSE,
+                      rarefy_nb_seqs = FALSE,
+                      ...) {
   physeq <- clean_pq(
     physeq,
     force_taxa_as_columns = TRUE,
@@ -243,10 +241,9 @@ adonis_pq <- function(
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `adespatial::beta.div()` if you
 #'   use this function.
-LCBD_pq <- function(
-        physeq,
-        p_adjust_method = "BH",
-        ...) {
+LCBD_pq <- function(physeq,
+                    p_adjust_method = "BH",
+                    ...) {
   physeq <- clean_pq(
     physeq,
     force_taxa_as_columns = TRUE,
@@ -290,6 +287,7 @@ LCBD_pq <- function(
 #' @seealso [LCBD_pq], [adespatial::beta.div()]
 #'
 #' @examples
+#' data(data_fungi)
 #' plot_LCBD_pq(data_fungi,
 #'   nperm = 100, only_plot_significant = FALSE,
 #'   pval = 0.2
@@ -317,13 +315,12 @@ LCBD_pq <- function(
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `vegan::beta.div()` if you
 #'   use this function.
-plot_LCBD_pq <- function(
-        physeq,
-        p_adjust_method = "BH",
-        pval = 0.05,
-        sam_variables = NULL,
-        only_plot_significant = TRUE,
-        ...) {
+plot_LCBD_pq <- function(physeq,
+                         p_adjust_method = "BH",
+                         pval = 0.05,
+                         sam_variables = NULL,
+                         only_plot_significant = TRUE,
+                         ...) {
   resBeta <- LCBD_pq(physeq,
     p_adjust_method = p_adjust_method,
     ...
@@ -430,6 +427,7 @@ plot_LCBD_pq <- function(
 #' @seealso [LCBD_pq], [adespatial::beta.div()]
 #'
 #' @examples
+#' data(data_fungi)
 #' plot_SCBD_pq(data_fungi) +
 #'   geom_text(aes(label = paste(Genus, Species)), hjust = 1, vjust = 2) +
 #'   xlim(c(0, NA))
@@ -441,12 +439,11 @@ plot_LCBD_pq <- function(
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `vegan::beta.div()` if you
 #'   use this function.
-plot_SCBD_pq <- function(
-        physeq,
-        tax_level = "ASV",
-        tax_col = "Order",
-        min_SCBD = 0.01,
-        ...) {
+plot_SCBD_pq <- function(physeq,
+                         tax_level = "ASV",
+                         tax_col = "Order",
+                         min_SCBD = 0.01,
+                         ...) {
   resBeta <- LCBD_pq(physeq, nperm = 0, ...)
 
   tax_tab <- data.frame(physeq@tax_table)
@@ -489,6 +486,7 @@ plot_SCBD_pq <- function(
 #' @return A ggplot object
 #' @export
 #' @examples
+#' data(data_fungi)
 #' data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
 #' multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)), fact = "Time")
 #' multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)),
@@ -501,13 +499,12 @@ plot_SCBD_pq <- function(
 #'   Please make a reference to `indicspecies::multipatt()` if you
 #'   use this function.
 
-multipatt_pq <- function(
-        physeq,
-        fact,
-        p_adjust_method = "BH",
-        pval = 0.05,
-        control = permute::how(nperm = 999),
-        ...) {
+multipatt_pq <- function(physeq,
+                         fact,
+                         p_adjust_method = "BH",
+                         pval = 0.05,
+                         control = permute::how(nperm = 999),
+                         ...) {
   physeq <- clean_pq(physeq,
     clean_samples_names = FALSE,
     force_taxa_as_columns = TRUE
