@@ -1,6 +1,8 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
+  push:
+    branches: [main, master]
   pull_request:
     branches: [main, master]
   workflow_dispatch:
@@ -40,7 +42,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Deploy to GitHub pages 🚀
-        if: github.event_name != 'pull_request'
+        # if: github.event_name != 'pull_request'
         uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
           clean: false
