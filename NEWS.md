@@ -1,4 +1,19 @@
-# MiscMetabar 0.6.1  (in development)
+# MiscMetabar 0.7 (in development)
+
+- Add function `chimera_detection_vs()` and `chimera_removal_vs()` to process chimera detection and removal using [vsearch](https://github.com/torognes/vsearch) software 
+
+## BREAKING CHANGES
+
+- Harmonization of parameters names:
+  - `add_nb_sequences` -> `add_nb_seq` in `ggvenn_pq()`
+  - `db` -> `db_url` in `get_funguild_db()`
+  - `db` -> `db_funguild` in `get_funguild_db()`
+  - `file` -> `file_path` in `get_file_extension()`
+  - `n_seq` -> `nb_seq` in `subsample_fastq()`
+  - `otutable` -> `otu_table` in `lulu()`
+  - `alpha` -> `pval` in `plot_edgeR_pq()` and `plot_deseq2_pq()` and change default value from 0.01 to more classical 0.05
+  - `sequences` -> `seq2search` in function `search_exact_seq_pq()`
+
 
 # MiscMetabar 0.6.0 
 

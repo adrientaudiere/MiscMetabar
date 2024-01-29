@@ -5,7 +5,7 @@
 #' `r lifecycle::badge("experimental")`
 #'
 #' @inheritParams clean_pq
-#' @param sequences A DNAStringSet object of sequences to search for.
+#' @param seq2search A DNAStringSet object of sequences to search for.
 #' @return A list of data-frames for each input sequences with the name,
 #'   the sequences and the
 #'   number of occurrences of the original sequence, the complement sequence,
@@ -15,12 +15,13 @@
 #' @examples
 #' data("data_fungi")
 #' search_primers <- search_exact_seq_pq(data_fungi,
-#'   sequences = Biostrings::DNAStringSet(c("TTGAACGCACATTGCGCC", "ATCCCTACCTGATCCGAG"))
+#'   seq2search = Biostrings::DNAStringSet(c("TTGAACGCACATTGCGCC", "ATCCCTACCTGATCCGAG"))
 #' )
 #' @author Adrien Taudière
 
-search_exact_seq_pq <- function(physeq, sequences) {
+search_exact_seq_pq <- function(physeq, seq2search) {
   res <- list()
+  sequences <- seq2search
   for (i in seq_along(sequences)) {
     original <- sequences[[i]]
     rev <- Biostrings::reverse(sequences[[i]])

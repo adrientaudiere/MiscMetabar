@@ -6,7 +6,7 @@
 #'
 #' Please cite this [publication](https://www.sciencedirect.com/science/article/abs/pii/S1754504815000847).
 #'
-#' @param db a length 1 character string giving the URL to retrieve the database
+#' @param db_url a length 1 character string giving the URL to retrieve the database
 #'     from
 #'
 #' @return a [`tibble::tibble`] containing the database, which can be passed
@@ -22,9 +22,9 @@
 #' @author Brendan Furneaux (orcid: [0000-0003-3522-7363](https://orcid.org/0000-0003-3522-7363)),
 #' modified by Adrien Taudière
 #'
-get_funguild_db <- function(db = "http://www.stbates.org/funguild_db_2.php") {
+get_funguild_db <- function(db_url = "http://www.stbates.org/funguild_db_2.php") {
   taxon <- NULL
-  httr::GET(url = db) %>%
+  httr::GET(url = db_url) %>%
     httr::content(as = "text") %>%
     stringr::str_split("\n") %>%
     unlist() %>%
@@ -83,7 +83,7 @@ get_funguild_db <- function(db = "http://www.stbates.org/funguild_db_2.php") {
 #' @param tax_col A `character` string, optionally giving an alternate
 #' column name in `otu_table` to use instead of `otu_table$Taxonomy`.
 #'
-#' @param db A `data.frame` representing the FUNGuild as returned by
+#' @param db_funguild A `data.frame` representing the FUNGuild as returned by
 #' [get_funguild_db()]
 #' If not supplied, the default database will be downloaded.
 #'
@@ -98,7 +98,7 @@ get_funguild_db <- function(db = "http://www.stbates.org/funguild_db_2.php") {
 #' @author Brendan Furneaux (orcid: [0000-0003-3522-7363](https://orcid.org/0000-0003-3522-7363)),
 #' modified by Adrien Taudière
 funguild_assign <- function(
-        otu_table, db = get_funguild_db(),
+        otu_table, db_funguild = get_funguild_db(),
         tax_col = "Taxonomy") {
   if (is.character(otu_table)) {
     otu_table <- tibble::tibble(otu_table)
@@ -121,11 +121,11 @@ funguild_assign <- function(
   otu_table$taxkey <- make_taxkey(otu_table[[tax_col]])
   all_taxkey <- unique(otu_table$taxkey) %>% na.omit()
   `.` <- taxon <- taxkey <- searchkey <- taxonomicLevel <- NULL # to pass R CMD check
-  db <- dplyr::mutate(
-    db,
+  db_funguild <- dplyr::mutate(
+    db_funguild,
     searchkey = paste0("@", stringr::str_replace(taxon, "[ _]", "@"), "@")
   )
-  dplyr::select(db, taxonomicLevel, searchkey) %>%
+  dplyr::select(db_funguild, taxonomicLevel, searchkey) %>%
     dplyr::mutate(
       taxkey = purrr::map(searchkey, stringr::str_subset, string = all_taxkey)
     ) %>%
@@ -136,6 +136,6 @@ funguild_assign <- function(
     dplyr::ungroup() %>%
     dplyr::mutate_all(as.character) %>%
     dplyr::left_join(otu_table, ., by = "taxkey") %>%
-    dplyr::left_join(db, by = "searchkey", suffix = c("", ".funguild")) %>%
+    dplyr::left_join(db_funguild, by = "searchkey", suffix = c("", ".funguild")) %>%
     dplyr::select(-taxkey, -searchkey)
 }

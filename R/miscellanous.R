@@ -137,7 +137,7 @@ simplify_taxo <- function(physeq, remove_space = TRUE) {
 ################################################################################
 #' Get the extension of a file
 #'
-#' @param file (required): path to a file
+#' @param file_path (required): path to a file
 #' @description
 #' `r lifecycle::badge("maturing")`
 #'
@@ -145,8 +145,8 @@ simplify_taxo <- function(physeq, remove_space = TRUE) {
 #'
 #' @return A  \code{\link{phyloseq-class}} object with simplified taxonomy
 #' @export
-get_file_extension <- function(file) {
-  file_ext <- strsplit(basename(file), ".", fixed = TRUE)[[1]][-1]
+get_file_extension <- function(file_path) {
+  file_ext <- strsplit(basename(file_path), ".", fixed = TRUE)[[1]][-1]
   return(file_ext)
 }
 ################################################################################
@@ -280,7 +280,7 @@ funky_color <-
 #' @param fastq_files The path to one fastq file or a list of fastq files
 #'   (see examples)
 #' @param folder_output The path to a folder for output files
-#' @param n_seq (int; default 1000) : Number of sequences kept (every sequence
+#' @param nb_seq (int; default 1000) : Number of sequences kept (every sequence
 #'   spread across 4 lines)
 #' @return Nothing, create subsampled fastq files in a folder
 #' @author Adrien Taudière
@@ -297,12 +297,12 @@ funky_color <-
 subsample_fastq <- function(
         fastq_files,
         folder_output = "subsample",
-        n_seq = 1000) {
+        nb_seq = 1000) {
   for (f in unlist(fastq_files)) {
     if (!dir.exists(folder_output)) {
       dir.create(folder_output)
     }
-    writeLines(readLines(f, n = n_seq * 4), con = paste0(
+    writeLines(readLines(f, n = nb_seq * 4), con = paste0(
       folder_output, "/",
       basename(f)
     ))

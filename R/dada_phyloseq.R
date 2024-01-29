@@ -486,7 +486,7 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #'   - `vsearch` use the vsearch software (https://github.com/torognes/vsearch/)
 #'     with arguments `--cluster_size` by default (see args `vsearch_cluster_method`)
 #'     and `-strand both` (see args `vsearch_args`)
-#' @param vsearchpath path to vsearch
+#' @param vsearchpath (default: vsearch) path to vsearch
 #' @param id (default: 0.97) level of identity to cluster
 #' @param tax_adjust See the man page
 #'   of [merge_taxa_vec()] for more details.
@@ -499,7 +499,7 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #'   - `--cluster_smallmem` : Clusterize the fasta sequences in filename without automatically modifying their order beforehand. Sequence are expected to be sorted by decreasing sequence length, unless *--usersort* is used
 #' @param vsearch_args (default : "--strand both") a one length character element defining other parameters to
 #'   passed on to vsearch.
-#' @param  keep_temporary_files (logical, default: FALSE) Do we keep temporary files
+#' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files
 #'   - temp.fasta (refseq in fasta)
 #'   - cluster.fasta (centroid if method = "vsearch")
 #'   - temp.uc (clusters if method = "vsearch")
@@ -666,7 +666,7 @@ asv2otu <- function(
 #' @param vsearchpath (default: vsearch) path to vsearch
 #' @param id (default: 0.8) id for the option `--usearch_global` of the vsearch software
 #' @param iddef (default: 0) iddef for the option `--usearch_global` of the vsearch software
-#' @param  keep_temporary_files (logical, default: FALSE) Do we keep temporary files
+#' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files
 #'   - temp.fasta (refseq in fasta)
 #'   - cluster.fasta (centroid)
 #'   - temp.uc (clusters)
@@ -690,6 +690,7 @@ asv2otu <- function(
 #' @details
 #' This function is mainly a wrapper of the work of others.
 #'   Please make [vsearch](https://github.com/torognes/vsearch).
+#' @author Adrien Taudière
 
 vs_search_global <- function(
         physeq,
@@ -1145,11 +1146,11 @@ read_pq <- function(
 #' @param nproc (default 1)
 #'   Set to number of cpus/processors to use for the clustering
 #' @param id (default: 0.84) id for --usearch_global.
-#' @param vsearchpath path to vsearch.
+#' @param vsearchpath (default: vsearch) path to vsearch.
 #' @param verbose (logical) if true, print some additional messages.
 #' @param clean_pq (logical) if true, empty samples and empty ASV are discarded
 #'   before clustering.
-#' @param  keep_temporary_files (logical, default: FALSE) Do we keep temporary files
+#' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files
 #' @return a list of for object
 #' - "new_physeq": The new phyloseq object (class physeq)
 #' - "discrepancy_vector": A vector of discrepancy showing for each taxonomic
@@ -1295,13 +1296,13 @@ lulu_pq <- function(physeq,
 #' @param nproc (default 1)
 #'   Set to number of cpus/processors to use for the clustering
 #' @param id (default: 0.84) id for --usearch_global.
-#' @param vsearchpath path to vsearch.
+#' @param vsearchpath (default: vsearch) path to vsearch.
 #' @param mumupath path to mumu. See [mumu](https://github.com/frederic-mahe/mumu)
 #'   for installation instruction
 #' @param verbose (logical) if true, print some additional messages.
 #' @param clean_pq (logical) if true, empty samples and empty ASV are discarded
 #'   before clustering.
-#' @param  keep_temporary_files (logical, default: FALSE) Do we keep temporary files
+#' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files
 #' @return a list of for object
 #' - "new_physeq": The new phyloseq object (class physeq)
 #' - "mumu_results": The log file of the mumu software. Run `man mumu` into
@@ -1475,9 +1476,9 @@ mumu_pq <- function(
 #'
 #' @inheritParams clean_pq
 #' @param verbose (logical, default FALSE) If true, prompt some warnings.
-#' @param  min_nb_seq_sample (numeric) Only used if verbose = TRUE.
+#' @param min_nb_seq_sample (numeric) Only used if verbose = TRUE.
 #'   Minimum number of sequences per samples to not show warning.
-#' @param  min_nb_seq_taxa (numeric) Only used if verbose = TRUE.
+#' @param min_nb_seq_taxa (numeric) Only used if verbose = TRUE.
 #'   Minimum number of sequences per taxa to not show warning.
 #' @return Nothing if the phyloseq object is valid. An error in the other case.
 #'  Warnings if verbose = TRUE

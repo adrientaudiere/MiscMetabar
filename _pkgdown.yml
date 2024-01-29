@@ -13,12 +13,10 @@ navbar:
     text: Articles
     menu:
     - text: Tutorials
-    - text: Alpha-diversity
-      href: articles/alpha-div.html
-    - text: Beta-diversity
-      href: articles/beta-div.html
     - text: Import/export and track
       href: articles/import_export_track.html
+    - text: Explore phyloseq data
+      href: articles/explore_data.html
     - text: Filter taxa and samples
       href: articles/filter.html
     - text: Reclustering
@@ -26,7 +24,13 @@ navbar:
     - text: Tree visualization
       href: articles/tree_visualization.html
     - text: -------
-    - text: Tutorials with published dataset
+    - text: Diversity analysis
+    - text: Alpha-diversity
+      href: articles/alpha-div.html
+    - text: Beta-diversity
+      href: articles/beta-div.html
+    - text: -------
+    - text: Examples with published dataset
     - text: Tengeler
       href: articles/tengeler.html
     - text: -------

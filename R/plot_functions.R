@@ -964,12 +964,12 @@ venn_pq <-
 #'   will not count in the venn diagram
 #' @param taxonomic_rank Name (or number) of a taxonomic rank
 #'   to count. If set to Null (the default) the number of OTUs is counted.
-#' @param  split_by Split into multiple plot using variable split_by.
+#' @param split_by Split into multiple plot using variable split_by.
 #'   The name of a variable must be present in `sam_data` slot
 #'   of the physeq object.
 #' @param add_nb_samples (logical, default TRUE) Add the number of samples to
 #'    levels names
-#' @param add_nb_sequences (logical, default FALSE) Add the number of sequences to
+#' @param add_nb_seq (logical, default FALSE) Add the number of sequences to
 #'    levels names
 #' @param rarefy_before_merging Rarefy each sample before merging by the
 #'   modalities of args `fact`. Use `phyloseq::rarefy_even_depth()` function
@@ -998,7 +998,7 @@ venn_pq <-
 #'   data_fungi@sam_data$Height %in% c("Low", "High"))
 #' ggvenn_pq(data_fungi2, fact = "Height")
 #'
-#' ggvenn_pq(data_fungi, fact = "Height", add_nb_sequences = TRUE, set_size = 4) 
+#' ggvenn_pq(data_fungi, fact = "Height", add_nb_seq = TRUE, set_size = 4) 
 #' ggvenn_pq(data_fungi, fact = "Height", rarefy_before_merging = TRUE)
 #' ggvenn_pq(data_fungi, fact = "Height", rarefy_after_merging = TRUE) + 
 #'   scale_x_continuous(expand = expansion(mult = 0.5))
@@ -1014,7 +1014,7 @@ ggvenn_pq <- function(
         taxonomic_rank = NULL,
         split_by = NULL,
         add_nb_samples = TRUE,
-        add_nb_sequences = FALSE,
+        add_nb_seq = FALSE,
         rarefy_before_merging = FALSE,
         rarefy_after_merging = FALSE,
         ...) {
@@ -1080,7 +1080,7 @@ ggvenn_pq <- function(
     names(res) <- paste0(names(res), "\n (", nb_samples, " sam.)")
   }
 
-  if (add_nb_sequences) {
+  if (add_nb_seq) {
     names(res) <- paste0(names(res), "\n (", nb_seq, " seq.)")
   }
 
@@ -2931,7 +2931,7 @@ upset_pq <- function(
 #' `r lifecycle::badge("experimental")`
 #'
 #' @inheritParams upset_pq
-#' @param  var_to_test (default c("OTU")) : a vector of column present in
+#' @param var_to_test (default c("OTU")) : a vector of column present in
 #'   the tax_table slot from the physeq object
 #' @param ... other arguments passed on to the [ComplexUpset::upset_test()]
 #'
