@@ -12,10 +12,10 @@
 #'
 #'  - "Discard_only_chim" will only discard taxa classify as chimera by vsearch
 #'  - "Select_only_non_chim" will only select taxa classify as non-chimera by
-#'    vsearch(after filtering taxa based on their number of sequences by the
+#'    vsearch(after filtering taxa based on their sequence length by the
 #'    parameter `min_seq_length` from the [chimera_detection_vs()] function)
 #'  - "Select_only_chim" will only select taxa classify as chimera by
-#'    vsearch (after filtering taxa based on their number of sequences by the
+#'    vsearch (after filtering taxa based on their sequence length by the
 #'    parameter `min_seq_length` from the [chimera_detection_vs()] function)
 #' @param clean_pq (logical; default FALSE) If TRUE, return the phyloseq object
 #'   after cleaning using the default parameter of [clean_pq()] function.
@@ -80,6 +80,9 @@ chimera_removal_vs <-
       return(seq_tab_final)
 
     } else  if (inherits(object, "phyloseq")) {
+        if(sum(taxa_sums(object)==0)>0) {
+          object <- clean_pq(object)
+        }
       chim_detect <-
         chimera_detection_vs(seq2search = refseq(object),
                              nb_seq =  taxa_sums(object),
@@ -204,7 +207,7 @@ chimera_detection_vs <- function(seq2search,
       " --borderline ",
       paste0(tempdir(), "/", "borderline.fasta"),
       " ",
-      vsearch_arg
+      vsearch_args
     ),
     stdout = TRUE,
     stderr = TRUE

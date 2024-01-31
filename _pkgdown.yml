@@ -44,11 +44,15 @@ navbar:
 
 reference:
 - title: Describe phyloseq object
+- subtitle: See also vignette on [exploring data](articles/explore_data.html)
   contents:
   - summary_plot_pq
   - tbl_sum_samdata
   - verify_pq
 
+- title: Obtain phyloseq object
+  - chimera_removal_vs
+  - chimera_detection_vs
 
 - title: Transform phyloseq object
 - subtitle: Taxonomy
@@ -63,7 +67,7 @@ reference:
   - blast_to_derep
   - filter_asv_blast
 
-- subtitle: Function from taxonomy  
+- subtitle: Function to add information from taxonomy  
   contents: 
   - add_funguild_info
   - funguild_assign
