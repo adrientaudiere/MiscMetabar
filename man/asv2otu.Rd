@@ -3,11 +3,11 @@
 \name{asv2otu}
 \alias{asv2otu}
 \title{Recluster sequences of an object of class \code{physeq}
-(e.g. OTUs or ASV from dada)}
+or a list of DNA sequences}
 \usage{
 asv2otu(
   physeq = NULL,
-  seq_names = NULL,
+  dna_seq = NULL,
   nproc = 1,
   method = "clusterize",
   id = 0.97,
@@ -23,7 +23,7 @@ asv2otu(
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{seq_names}{You may directly use a character vector of DNA sequences
+\item{dna_seq}{You may directly use a character vector of DNA sequences
 in place of physeq args. When physeq is set, dna sequences take the value of
 \code{physeq@refseq}}
 
@@ -43,10 +43,10 @@ and \verb{-strand both} (see args \code{vsearch_args})
 
 \item{vsearchpath}{(default: vsearch) path to vsearch}
 
-\item{tax_adjust}{See the man page
+\item{tax_adjust}{(Default 0) See the man page
 of \code{\link[=merge_taxa_vec]{merge_taxa_vec()}} for more details.
 To conserved the taxonomic rank of the most abundant ASV,
-set tax_adjust to 0}
+set tax_adjust to 0 (default)}
 
 \item{vsearch_cluster_method}{(default: "--cluster_size) See other possible
 methods in the \href{https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf}{vsearch pdf manual} (e.g. \code{--cluster_size} or \code{--cluster_smallmem})
@@ -61,7 +61,7 @@ passed on to vsearch.}
 
 \item{keep_temporary_files}{(logical, default: FALSE) Do we keep temporary files
 \itemize{
-\item temp.fasta (refseq in fasta)
+\item temp.fasta (refseq in fasta or dna_seq sequences)
 \item cluster.fasta (centroid if method = "vsearch")
 \item temp.uc (clusters if method = "vsearch")
 }}
@@ -69,7 +69,7 @@ passed on to vsearch.}
 \item{...}{Others arguments path to \code{\link[DECIPHER:Clusterize]{DECIPHER::Clusterize()}}}
 }
 \value{
-A new object of class \code{physeq} or a list of cluster if seq_names
+A new object of class \code{physeq} or a list of cluster if dna_seq
 args was used.
 }
 \description{
@@ -77,7 +77,7 @@ args was used.
 }
 \details{
 This function use the \code{merge_taxa_vec} function to
-merge taxa into clusters. By default tax_adjust = 1L. See the man page
+merge taxa into clusters. By default tax_adjust = 0. See the man page
 of \code{\link[=merge_taxa_vec]{merge_taxa_vec()}}.
 }
 \references{
@@ -85,4 +85,7 @@ VSEARCH can be downloaded from
 \url{https://github.com/torognes/vsearch}.
 More information in the associated publication
 \url{https://pubmed.ncbi.nlm.nih.gov/27781170}.
+}
+\author{
+Adrien Taudière
 }

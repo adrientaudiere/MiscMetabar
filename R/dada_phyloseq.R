@@ -2298,3 +2298,57 @@ reorder_taxa_pq <- function(physeq, names_ordered, remove_phy_tree = FALSE) {
   return(new_physeq)
 }
 ################################################################################
+
+################################################################################
+#' @title Add information to sample_data slot of a phyloseq-class object
+#' @description
+#' `r lifecycle::badge("experimental")`
+#' 
+#' Warning: The value nb_seq and nb_otu may be outdated if you transform your 
+#' phyloseq object, e.g. using the [subset_taxa_pq()] function
+#'
+#' @inheritParams clean_pq
+#' @param df_info : A dataframe with rownames matching for sample names of the
+#'   phyloseq object
+#' @param add_nb_seq (Logical, default TRUE) Does we add a column nb_seq
+#'   collecting the number of sequences per sample?
+#' @param add_nb_otu (Logical, default TRUE) Does we add a column nb_otu
+#'   collecting the number of OTUs per sample?
+#'
+#' @return A phyloseq object with an updated sam_data slot
+#' @export
+#'
+#' @examples
+#' data(data_fungi)
+#' data_fungi <- add_info_to_sam_data(data_fungi)
+#' boxplot(data_fungi@sam_data$nb_otu ~ data_fungi@sam_data$Time)
+#'
+#' new_df <- data.frame(variable_1= runif(n=nsamples(data_fungi), min=1, max=20),
+#'                      variable_2= runif(n=nsamples(data_fungi), min=1, max=2))
+#' rownames(new_df) <- sample_names(data_fungi)
+#' data_fungi <- add_info_to_sam_data(data_fungi, new_df)
+#' plot(data_fungi@sam_data$nb_otu ~ data_fungi@sam_data$variable_1)
+#' @author Adrien Taudière
+
+add_info_to_sam_data <- function(physeq,
+                                 df_info = NULL,
+                                 add_nb_seq = TRUE,
+                                 add_nb_otu = TRUE) {
+  if (add_nb_seq) {
+    physeq@sam_data$nb_seq <- sample_sums(physeq)
+  }
+  if (add_nb_otu) {
+    physeq@sam_data$nb_otu <- sample_sums(as_binary_otu_table(physeq))
+  }
+  if (!is.null(df_info)) {
+    if (sum(sample_names(physeq) %in% rownames(df_info)) == 0) {
+      stop("Rownames of df_info must match the sample names of physeq.")
+    }
+    df_info <-
+      df_info[match(sample_names(physeq), rownames(df_info)), ]
+    physeq@sam_data <- sample_data(cbind(as_tibble(physeq@sam_data),
+                                         df_info))
+  }
+  return(physeq)
+}
+################################################################################

@@ -26,6 +26,8 @@ parameter \code{min_seq_length} from the \code{\link[=chimera_detection_vs]{chim
 
 \item{clean_pq}{(logical; default FALSE) If TRUE, return the phyloseq object
 after cleaning using the default parameter of \code{\link[=clean_pq]{clean_pq()}} function.}
+
+\item{...}{Others arguments passed on to \code{\link[=chimera_detection_vs]{chimera_detection_vs()}} function}
 }
 \value{
 \itemize{

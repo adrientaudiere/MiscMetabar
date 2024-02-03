@@ -4,7 +4,7 @@
 #' the phyloseq and dada2 packages.
 #' @name MiscMetabar-package
 #' @import ggplot2 phyloseq dada2 dplyr
-"MiscMetabar"
+NULL
 
 if (getRversion() >= "2.15.1") {
   utils::globalVariables(c(
