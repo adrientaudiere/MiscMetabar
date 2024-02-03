@@ -81,7 +81,7 @@ Suggests:
     vctrs,
     viridis,
     withr
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 URL: https://github.com/adrientaudiere/MiscMetabar,
     https://adrientaudiere.github.io/MiscMetabar/
 biocViews: Sequencing, Microbiome, Metagenomics,
@@ -96,7 +96,8 @@ Imports:
 Remotes: 
     bioc::phyloseq,
     bioc::dada2,
-    bioc::ANCOMBC
+    bioc::ANCOMBC,
+    github::briatte/ggnetwork
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 VignetteBuilder: knitr

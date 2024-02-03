@@ -4,10 +4,10 @@
 \alias{get_file_extension}
 \title{Get the extension of a file}
 \usage{
-get_file_extension(file)
+get_file_extension(file_path)
 }
 \arguments{
-\item{file}{(required): path to a file}
+\item{file_path}{(required): path to a file}
 }
 \value{
 A  \code{\link{phyloseq-class}} object with simplified taxonomy

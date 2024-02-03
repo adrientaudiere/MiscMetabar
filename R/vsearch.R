@@ -20,7 +20,7 @@
 #' @param clean_pq (logical; default FALSE) If TRUE, return the phyloseq object
 #'   after cleaning using the default parameter of [clean_pq()] function.
 #'
-#' @param ...
+#' @param ... Others arguments passed on to [chimera_detection_vs()] function
 #' @seealso [chimera_detection_vs()]
 #' @return
 #'
@@ -35,8 +35,9 @@
 #'
 #' data_fungi_nochim <- chimera_removal_vs(data_fungi)
 #' data_fungi_nochim_16 <- chimera_removal_vs(data_fungi,
-#'                                            abskew = 16,
-#'                                            min_seq_length = 10)
+#'   abskew = 16,
+#'   min_seq_length = 10
+#' )
 #' data_fungi_nochim2 <-
 #'   chimera_removal_vs(data_fungi, type = "Select_only_non_chim")
 #' data_fungi_chimera <-
@@ -53,20 +54,22 @@ chimera_removal_vs <-
            clean_pq = FALSE,
            ...) {
     if (inherits(object, "dada") ||
-        inherits(object, "derep") ||
-        inherits(object, "data.frame") ||
-        inherits(object, "list")) {
+      inherits(object, "derep") ||
+      inherits(object, "data.frame") ||
+      inherits(object, "list")) {
       object <- makeSequenceTable(object)
     }
 
     if (inherits(object, "matrix")) {
       chim_detect <-
-        chimera_detection_vs(seq2search = colnames(object),
-                             nb_seq = colSums(object),
-                             ...)
+        chimera_detection_vs(
+          seq2search = colnames(object),
+          nb_seq = colSums(object),
+          ...
+        )
       if (type == "Discard_only_chim") {
         seq_tab_final <-
-          object[,!colnames(object) %in% as.character(chim_detect$chimera)]
+          object[, !colnames(object) %in% as.character(chim_detect$chimera)]
       } else if (type == "Select_only_non_chim") {
         seq_tab_final <- seq_tab_Pairs[, as.character(chim_rm$non_chimera)]
       } else if (type == "Select_only_chim") {
@@ -78,15 +81,16 @@ chimera_removal_vs <-
         )
       }
       return(seq_tab_final)
-
-    } else  if (inherits(object, "phyloseq")) {
-        if(sum(taxa_sums(object)==0)>0) {
-          object <- clean_pq(object)
-        }
+    } else if (inherits(object, "phyloseq")) {
+      if (sum(taxa_sums(object) == 0) > 0) {
+        object <- clean_pq(object)
+      }
       chim_detect <-
-        chimera_detection_vs(seq2search = refseq(object),
-                             nb_seq =  taxa_sums(object),
-                             ...)
+        chimera_detection_vs(
+          seq2search = refseq(object),
+          nb_seq = taxa_sums(object),
+          ...
+        )
       if (type == "Discard_only_chim") {
         cond <-
           !as.character(refseq(object)) %in% as.character(chim_detect$chimera)
@@ -150,8 +154,10 @@ chimera_removal_vs <-
 #' @export
 #'
 #' @examples
-#'   chimera_detection_vs(seq2search = data_fungi@refseq,
-#'   nb_seq = taxa_sums(data_fungi))
+#' chimera_detection_vs(
+#'   seq2search = data_fungi@refseq,
+#'   nb_seq = taxa_sums(data_fungi)
+#' )
 #' @author Adrien Taudière
 #' @details
 #' This function is mainly a wrapper of the work of others.
@@ -164,8 +170,10 @@ chimera_detection_vs <- function(seq2search,
                                  vsearch_args = "--fasta_width 0",
                                  keep_temporary_files = FALSE) {
   dna_raw <- Biostrings::DNAStringSet(seq2search)
-  names(dna_raw) <- paste0("ASV", seq(1, length(seq2search)),
-                           ";size=", nb_seq)
+  names(dna_raw) <- paste0(
+    "ASV", seq(1, length(seq2search)),
+    ";size=", nb_seq
+  )
 
   dna <- dna_raw[Biostrings::width(dna_raw) >= min_seq_length]
   abun <- unlist(strsplit(names(dna), split = "="))
@@ -190,8 +198,10 @@ chimera_detection_vs <- function(seq2search,
     )
   )
 
-  Biostrings::writeXStringSet(dna,
-                              paste0(tempdir(), "/", "temp.fasta"))
+  Biostrings::writeXStringSet(
+    dna,
+    paste0(tempdir(), "/", "temp.fasta")
+  )
 
   system2(
     vsearchpath,

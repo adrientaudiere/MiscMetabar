@@ -60,18 +60,17 @@ add_dna_to_phyloseq <- function(physeq) {
 #'   `MiscMetabar::simplify_taxo()` function
 #' @return A new \code{\link{phyloseq-class}} object
 #' @export
-clean_pq <- function(
-        physeq,
-        remove_empty_samples = TRUE,
-        remove_empty_taxa = TRUE,
-        clean_samples_names = TRUE,
-        silent = FALSE,
-        verbose = FALSE,
-        force_taxa_as_columns = FALSE,
-        force_taxa_as_rows = FALSE,
-        reorder_asv = FALSE,
-        rename_asv = FALSE,
-        simplify_taxo = FALSE) {
+clean_pq <- function(physeq,
+                     remove_empty_samples = TRUE,
+                     remove_empty_taxa = TRUE,
+                     clean_samples_names = TRUE,
+                     silent = FALSE,
+                     verbose = FALSE,
+                     force_taxa_as_columns = FALSE,
+                     force_taxa_as_rows = FALSE,
+                     reorder_asv = FALSE,
+                     rename_asv = FALSE,
+                     simplify_taxo = FALSE) {
   if (clean_samples_names) {
     if (!is.null(physeq@refseq)) {
       if (sum(!names(physeq@refseq) %in% taxa_names(physeq)) > 0) {
@@ -229,12 +228,11 @@ clean_pq <- function(
 #'   each object.
 #' @export
 
-track_wkflow <- function(
-        list_of_objects,
-        obj_names = NULL,
-        clean_pq = FALSE,
-        taxonomy_rank = NULL,
-        ...) {
+track_wkflow <- function(list_of_objects,
+                         obj_names = NULL,
+                         clean_pq = FALSE,
+                         taxonomy_rank = NULL,
+                         ...) {
   message("Compute the number of sequences")
   if (!is.null(obj_names)) {
     names(list_of_objects) <- obj_names
@@ -469,13 +467,13 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 
 ################################################################################
 #' Recluster sequences of an object of class `physeq`
-#' (e.g. OTUs or ASV from dada)
+#'   or a list of DNA sequences
 #'
 #' @description
 #' `r lifecycle::badge("maturing")`
 #'
 #' @inheritParams clean_pq
-#' @param seq_names You may directly use a character vector of DNA sequences
+#' @param dna_seq You may directly use a character vector of DNA sequences
 #'   in place of physeq args. When physeq is set, dna sequences take the value of
 #'   `physeq@refseq`
 #' @param nproc (default: 1)
@@ -488,10 +486,10 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #'     and `-strand both` (see args `vsearch_args`)
 #' @param vsearchpath (default: vsearch) path to vsearch
 #' @param id (default: 0.97) level of identity to cluster
-#' @param tax_adjust See the man page
+#' @param tax_adjust (Default 0) See the man page
 #'   of [merge_taxa_vec()] for more details.
 #'   To conserved the taxonomic rank of the most abundant ASV,
-#'   set tax_adjust to 0
+#'   set tax_adjust to 0 (default)
 #' @param vsearch_cluster_method (default: "--cluster_size) See other possible
 #'   methods in the [vsearch pdf manual](https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf) (e.g. `--cluster_size` or `--cluster_smallmem`)
 #'   - `--cluster_fast` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.
@@ -500,15 +498,15 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #' @param vsearch_args (default : "--strand both") a one length character element defining other parameters to
 #'   passed on to vsearch.
 #' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files
-#'   - temp.fasta (refseq in fasta)
+#'   - temp.fasta (refseq in fasta or dna_seq sequences)
 #'   - cluster.fasta (centroid if method = "vsearch")
 #'   - temp.uc (clusters if method = "vsearch")
 #' @param ... Others arguments path to [DECIPHER::Clusterize()]
 #' @details This function use the `merge_taxa_vec` function to
-#'   merge taxa into clusters. By default tax_adjust = 1L. See the man page
+#'   merge taxa into clusters. By default tax_adjust = 0. See the man page
 #'   of [merge_taxa_vec()].
 #'
-#' @return A new object of class `physeq` or a list of cluster if seq_names
+#' @return A new object of class `physeq` or a list of cluster if dna_seq
 #'   args was used.
 #'
 #' @references
@@ -518,34 +516,34 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #'   \url{https://pubmed.ncbi.nlm.nih.gov/27781170}.
 #'
 #' @export
+#' @author Adrien Taudière
 
-asv2otu <- function(
-        physeq = NULL,
-        seq_names = NULL,
-        nproc = 1,
-        method = "clusterize",
-        id = 0.97,
-        vsearchpath = "vsearch",
-        tax_adjust = 0,
-        vsearch_cluster_method = "--cluster_size",
-        vsearch_args = "--strand both",
-        keep_temporary_files = FALSE,
-        ...) {
+asv2otu <- function(physeq = NULL,
+                    dna_seq = NULL,
+                    nproc = 1,
+                    method = "clusterize",
+                    id = 0.97,
+                    vsearchpath = "vsearch",
+                    tax_adjust = 0,
+                    vsearch_cluster_method = "--cluster_size",
+                    vsearch_args = "--strand both",
+                    keep_temporary_files = FALSE,
+                    ...) {
   if (inherits(physeq, "phyloseq")) {
     verify_pq(physeq)
     if (is.null(physeq@refseq)) {
       stop("The phyloseq object do not contain a @refseq slot")
     }
     dna <- Biostrings::DNAStringSet(physeq@refseq)
-    if (!is.null(seq_names)) {
-      stop("You must use either physeq or seq_names args but not both")
+    if (!is.null(dna_seq)) {
+      stop("You must use either physeq or dna_seq args but not both")
     }
-  } else if (inherits(seq_names, "character")) {
-    dna <- Biostrings::DNAStringSet(seq_names)
+  } else if (inherits(dna_seq, "character")) {
+    dna <- Biostrings::DNAStringSet(dna_seq)
   } else {
     stop(
       "You must set the args physeq (object of class phyloseq) or
-    seq_names (character vector)."
+    dna_seq (character vector)."
     )
   }
 
@@ -568,12 +566,12 @@ asv2otu <- function(
           clusters$cluster,
           tax_adjust = tax_adjust
         )
-    } else if (inherits(seq_names, "character")) {
+    } else if (inherits(dna_seq, "character")) {
       new_obj <- clusters
     } else {
       stop(
         "You must set the args physeq (object of class phyloseq) or
-    seq_names (character vector)."
+    dna_seq (character vector)."
       )
     }
   } else if (method == "vsearch") {
@@ -627,11 +625,11 @@ asv2otu <- function(
           clusters,
           tax_adjust = tax_adjust
         )
-    } else if (inherits(seq_names, "character")) {
+    } else if (inherits(dna_seq, "character")) {
       new_obj <- pack_clusts
     } else {
       stop(
-        "You must set the args physeq (object of class phyloseq) or seq_names (character vector)."
+        "You must set the args physeq (object of class phyloseq) or dna_seq (character vector)."
       )
     }
 
@@ -692,14 +690,13 @@ asv2otu <- function(
 #'   Please make [vsearch](https://github.com/torognes/vsearch).
 #' @author Adrien Taudière
 
-vs_search_global <- function(
-        physeq,
-        seq2search = NULL,
-        path_to_fasta = NULL,
-        vsearchpath = "vsearch",
-        id = 0.8,
-        iddef = 0,
-        keep_temporary_files = FALSE) {
+vs_search_global <- function(physeq,
+                             seq2search = NULL,
+                             path_to_fasta = NULL,
+                             vsearchpath = "vsearch",
+                             id = 0.8,
+                             iddef = 0,
+                             keep_temporary_files = FALSE) {
   verify_pq(physeq)
   dna <- Biostrings::DNAStringSet(physeq@refseq)
   Biostrings::writeXStringSet(dna, paste0(tempdir(), "/", "temp.fasta"))
@@ -758,13 +755,13 @@ vs_search_global <- function(
   )
 
   if (!keep_temporary_files) {
-    if(file.exists(paste0(tempdir(), "temp.fasta"))){
+    if (file.exists(paste0(tempdir(), "temp.fasta"))) {
       unlink(paste0(tempdir(), "temp.fasta"))
     }
-    if(file.exists(paste0(tempdir(), "temp.uc"))){
+    if (file.exists(paste0(tempdir(), "temp.uc"))) {
       unlink(paste0(tempdir(), "temp.uc"))
     }
-    if(file.exists(paste0(tempdir(), "seq2search.fasta"))){
+    if (file.exists(paste0(tempdir(), "seq2search.fasta"))) {
       unlink(paste0(tempdir(), "seq2search.fasta"))
     }
   } else {
@@ -817,24 +814,23 @@ vs_search_global <- function(
 #' # write_pq(data_fungi, path = "phyloseq", one_file = TRUE)
 #' @seealso [MiscMetabar::save_pq()]
 
-write_pq <- function(
-        physeq,
-        path = NULL,
-        rdata = FALSE,
-        one_file = FALSE,
-        write_sam_data = TRUE,
-        sam_data_first = FALSE,
-        clean_pq = TRUE,
-        reorder_asv = FALSE,
-        rename_asv = FALSE,
-        remove_empty_samples = TRUE,
-        remove_empty_taxa = TRUE,
-        clean_samples_names = TRUE,
-        silent = FALSE,
-        verbose = FALSE,
-        quote = FALSE,
-        sep_csv = "\t",
-        ...) {
+write_pq <- function(physeq,
+                     path = NULL,
+                     rdata = FALSE,
+                     one_file = FALSE,
+                     write_sam_data = TRUE,
+                     sam_data_first = FALSE,
+                     clean_pq = TRUE,
+                     reorder_asv = FALSE,
+                     rename_asv = FALSE,
+                     remove_empty_samples = TRUE,
+                     remove_empty_taxa = TRUE,
+                     clean_samples_names = TRUE,
+                     silent = FALSE,
+                     verbose = FALSE,
+                     quote = FALSE,
+                     sep_csv = "\t",
+                     ...) {
   verify_pq(physeq)
 
   physeq <- clean_pq(
@@ -1063,12 +1059,11 @@ save_pq <- function(physeq, path = NULL, ...) {
 #' read_pq(path = "phyloseq_data", taxa_are_rows = TRUE)
 #' }
 #'
-read_pq <- function(
-        path = NULL,
-        taxa_are_rows = FALSE,
-        sam_names = NULL,
-        sep_csv = "\t",
-        ...) {
+read_pq <- function(path = NULL,
+                    taxa_are_rows = FALSE,
+                    sam_names = NULL,
+                    sep_csv = "\t",
+                    ...) {
   if (file.exists(paste0(path, "/otu_table.csv"))) {
     if (taxa_are_rows) {
       otu_table_csv <-
@@ -1326,15 +1321,14 @@ lulu_pq <- function(physeq,
 #'   [lulu](https://www.nature.com/articles/s41467-017-01312-x) if you use this function
 #'   for your work.
 #'
-mumu_pq <- function(
-        physeq,
-        nproc = 1,
-        id = 0.84,
-        vsearchpath = "vsearch",
-        mumupath = "mumu",
-        verbose = FALSE,
-        clean_pq = TRUE,
-        keep_temporary_files = FALSE) {
+mumu_pq <- function(physeq,
+                    nproc = 1,
+                    id = 0.84,
+                    vsearchpath = "vsearch",
+                    mumupath = "mumu",
+                    verbose = FALSE,
+                    clean_pq = TRUE,
+                    keep_temporary_files = FALSE) {
   verify_pq(physeq)
   if (is.null(physeq@refseq)) {
     stop("The phyloseq object do not contain a @refseq slot")
@@ -1608,12 +1602,11 @@ subset_samples_pq <- function(physeq, condition) {
 #' @return a new phyloseq object
 #' @export
 #'
-subset_taxa_pq <- function(
-        physeq,
-        condition,
-        verbose = TRUE,
-        clean_pq = TRUE,
-        taxa_names_from_physeq = FALSE) {
+subset_taxa_pq <- function(physeq,
+                           condition,
+                           verbose = TRUE,
+                           clean_pq = TRUE,
+                           taxa_names_from_physeq = FALSE) {
   if (inherits(condition, "taxonomyTable")) {
     condition_temp <- as.vector(condition)
     names(condition_temp) <- rownames(condition)
@@ -1865,17 +1858,16 @@ tbl_sum_samdata <- function(physeq, remove_col_unique_value = TRUE, ...) {
 #'   use this function.
 #' @seealso [plot_guild_pq()]
 
-add_funguild_info <- function(
-        physeq,
-        taxLevels = c(
-          "Kingdom",
-          "Phylum",
-          "Class",
-          "Order",
-          "Family",
-          "Genus",
-          "Species"
-        )) {
+add_funguild_info <- function(physeq,
+                              taxLevels = c(
+                                "Kingdom",
+                                "Phylum",
+                                "Class",
+                                "Order",
+                                "Family",
+                                "Genus",
+                                "Species"
+                              )) {
   tax_tab <- physeq@tax_table
   FUNGuild_assign <-
     funguild_assign(data.frame(
@@ -1937,11 +1929,10 @@ add_funguild_info <- function(
 #' @seealso [add_funguild_info()]
 
 plot_guild_pq <-
-  function(
-        physeq,
-        levels_order = NULL,
-        clean_pq = TRUE,
-        ...) {
+  function(physeq,
+           levels_order = NULL,
+           clean_pq = TRUE,
+           ...) {
     if (clean_pq) {
       physeq <- clean_pq(physeq, ...)
     }
@@ -2100,17 +2091,16 @@ plot_guild_pq <-
 #' plot(consensusNet(df_tree$ML_bs))
 #' plot(consensusNet(df_tree$NJ_bs))
 #' ps_tree <- merge_phyloseq(df, df_tree$ML$tree)
-build_phytree_pq <- function(
-        physeq,
-        nb_bootstrap = 0,
-        model = "GTR",
-        optInv = TRUE,
-        optGamma = TRUE,
-        rearrangement = "NNI",
-        control = phangorn::pml.control(trace = 0),
-        optNni = TRUE,
-        multicore = FALSE,
-        ...) {
+build_phytree_pq <- function(physeq,
+                             nb_bootstrap = 0,
+                             model = "GTR",
+                             optInv = TRUE,
+                             optGamma = TRUE,
+                             rearrangement = "NNI",
+                             control = phangorn::pml.control(trace = 0),
+                             optNni = TRUE,
+                             multicore = FALSE,
+                             ...) {
   seqs <- physeq@refseq
   alignment <-
     DECIPHER::AlignSeqs(Biostrings::DNAStringSet(seqs), anchor = NA)

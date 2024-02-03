@@ -4,7 +4,7 @@
 \alias{subsample_fastq}
 \title{Subsample a fastq file copying the n_seq first sequences in a given folder}
 \usage{
-subsample_fastq(fastq_files, folder_output = "subsample", n_seq = 1000)
+subsample_fastq(fastq_files, folder_output = "subsample", nb_seq = 1000)
 }
 \arguments{
 \item{fastq_files}{The path to one fastq file or a list of fastq files
@@ -12,7 +12,7 @@ subsample_fastq(fastq_files, folder_output = "subsample", n_seq = 1000)
 
 \item{folder_output}{The path to a folder for output files}
 
-\item{n_seq}{(int; default 1000) : Number of sequences kept (every sequence
+\item{nb_seq}{(int; default 1000) : Number of sequences kept (every sequence
 spread across 4 lines)}
 }
 \value{

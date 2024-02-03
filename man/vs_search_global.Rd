@@ -64,3 +64,6 @@ res[res$identity != "*", ]
 clean_pq(subset_taxa(data_fungi, res$identity != "*"))
 }
 }
+\author{
+Adrien Taudière
+}

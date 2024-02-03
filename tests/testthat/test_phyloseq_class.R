@@ -10,12 +10,12 @@ test_that("asv2otu works fine with Clusterize method", {
   expect_s4_class(data_fungi_sp_known, "phyloseq")
   expect_s4_class(asv2otu(data_fungi_sp_known), "phyloseq")
 
-  expect_error(asv2otu(enterotype, seq_names = sequences_ex))
+  expect_error(asv2otu(enterotype, dna_seq = sequences_ex))
   expect_error(asv2otu(enterotype, method = "vsearch"))
   expect_error(asv2otu(enterotype))
   expect_error(asv2otu())
   expect_error(asv2otu(method = "VsaerCh"))
-  expect_error(asv2otu(data_fungi_sp_known, seq_names = sequences_ex))
+  expect_error(asv2otu(data_fungi_sp_known, dna_seq = sequences_ex))
 })
 
 

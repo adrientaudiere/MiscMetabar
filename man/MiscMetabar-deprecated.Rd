@@ -2,6 +2,7 @@
 % Please edit documentation in R/deprecated.R
 \docType{package}
 \name{MiscMetabar-deprecated}
+\alias{-package}
 \alias{MiscMetabar-deprecated}
 \alias{physeq_graph_test}
 \alias{adonis_phyloseq}

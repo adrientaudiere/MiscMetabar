@@ -5,7 +5,7 @@
 \title{Post Clustering Curation of Amplicon Data.}
 \usage{
 lulu(
-  otutable,
+  otu_table,
   matchlist,
   minimum_ratio_type = "min",
   minimum_ratio = 1,
@@ -16,7 +16,7 @@ lulu(
 )
 }
 \arguments{
-\item{otutable}{a data.frame with with an OTU table that has sites/samples as
+\item{otu_table}{a data.frame with with an OTU table that has sites/samples as
 columns and OTUs (unique OTU id's) as rows, and observations as read
 counts.}
 

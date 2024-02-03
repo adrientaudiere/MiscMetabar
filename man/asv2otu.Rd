@@ -41,7 +41,7 @@ and \verb{-strand both} (see args \code{vsearch_args})
 
 \item{id}{(default: 0.97) level of identity to cluster}
 
-\item{vsearchpath}{path to vsearch}
+\item{vsearchpath}{(default: vsearch) path to vsearch}
 
 \item{tax_adjust}{See the man page
 of \code{\link[=merge_taxa_vec]{merge_taxa_vec()}} for more details.

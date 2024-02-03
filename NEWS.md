@@ -1,6 +1,7 @@
 # MiscMetabar 0.7 (in development)
 
-- Add function `chimera_detection_vs()` and `chimera_removal_vs()` to process chimera detection and removal using [vsearch](https://github.com/torognes/vsearch) software 
+- Add functions `chimera_detection_vs()` and `chimera_removal_vs()` to process chimera detection and removal using [vsearch](https://github.com/torognes/vsearch) software 
+- Add functions `filter_trim()`, `sample_data_with_new_names()` and `rename_samples()` to facilitate the use of [targets](https://books.ropensci.org/targets/) for bioinformatic pipeline.
 
 ## BREAKING CHANGES
 
@@ -13,6 +14,7 @@
   - `otutable` -> `otu_table` in `lulu()`
   - `alpha` -> `pval` in `plot_edgeR_pq()` and `plot_deseq2_pq()` and change default value from 0.01 to more classical 0.05
   - `sequences` -> `seq2search` in function `search_exact_seq_pq()`
+  - `seq_names` -> `dna_seq` in function `asv2otu`
 
 
 # MiscMetabar 0.6.0 

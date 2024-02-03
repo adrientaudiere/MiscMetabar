@@ -20,7 +20,7 @@ if (class(vsearch_error_or_not) == "try-error") {
       method = "vsearch",
       vsearch_cluster_method = "--cluster_fast"
     ), "phyloseq")
-    expect_s3_class(asv2otu(seq_names = sequences_ex, method = "vsearch"), "data.frame")
+    expect_s3_class(asv2otu(dna_seq = sequences_ex, method = "vsearch"), "data.frame")
     expect_true(sum(!d_fast@refseq == d_vs@refseq) > 0)
     expect_equal(sum(dim(d_vs@otu_table) == dim(d_fast@otu_table)), 2)
   })

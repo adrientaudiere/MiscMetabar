@@ -24,7 +24,7 @@ Set to number of cpus/processors to use for the clustering}
 
 \item{id}{(default: 0.84) id for --usearch_global.}
 
-\item{vsearchpath}{path to vsearch.}
+\item{vsearchpath}{(default: vsearch) path to vsearch.}
 
 \item{mumupath}{path to mumu. See \href{https://github.com/frederic-mahe/mumu}{mumu}
 for installation instruction}

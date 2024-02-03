@@ -3,9 +3,8 @@
 #' Functions to help analyze and visualize metabarcoding data. Mainly based on
 #' the phyloseq and dada2 packages.
 #' @name MiscMetabar-package
-#' @docType package
 #' @import ggplot2 phyloseq dada2 dplyr
-NULL
+"MiscMetabar"
 
 if (getRversion() >= "2.15.1") {
   utils::globalVariables(c(

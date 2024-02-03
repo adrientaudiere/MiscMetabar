@@ -50,7 +50,7 @@ pointblank::create_informant(
   tbl = sam_tab,
   tbl_name = "Sample data",
   label = "data_fungi"
-    )
+)
 ```
 
 ```{r}
@@ -80,10 +80,10 @@ pillar::glimpse(tax_tab)
 pointblank::scan_data(tax_tab, sections = "OVSCM")
 
 pointblank::create_informant(
-        tbl = tax_tab,
-        tbl_name = "Taxonomic table",
-        label = "data_fungi"
-    )
+  tbl = tax_tab,
+  tbl_name = "Taxonomic table",
+  label = "data_fungi"
+)
 ```
 
 
@@ -92,8 +92,8 @@ gtExtras::gt_plt_summary(tax_tab)
 ```
 
 ```{r}
-fungi_order <- tax_glom(data_fungi,taxrank="Order")
-taxa_names(fungi_order) <- fungi_order@tax_table[,"Order"]
+fungi_order <- tax_glom(data_fungi, taxrank = "Order")
+taxa_names(fungi_order) <- fungi_order@tax_table[, "Order"]
 heatmap(fungi_order@otu_table)
 ```
 

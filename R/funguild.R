@@ -97,9 +97,8 @@ get_funguild_db <- function(db_url = "http://www.stbates.org/funguild_db_2.php")
 #' 20:241-248.
 #' @author Brendan Furneaux (orcid: [0000-0003-3522-7363](https://orcid.org/0000-0003-3522-7363)),
 #' modified by Adrien Taudière
-funguild_assign <- function(
-        otu_table, db_funguild = get_funguild_db(),
-        tax_col = "Taxonomy") {
+funguild_assign <- function(otu_table, db_funguild = get_funguild_db(),
+                            tax_col = "Taxonomy") {
   if (is.character(otu_table)) {
     otu_table <- tibble::tibble(otu_table)
     names(otu_table) <- tax_col
