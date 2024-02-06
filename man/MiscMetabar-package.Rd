@@ -2,8 +2,8 @@
 % Please edit documentation in R/MiscMetabar-package.R
 \docType{package}
 \name{MiscMetabar-package}
-\alias{MiscMetabar-package}
 \alias{MiscMetabar}
+\alias{MiscMetabar-package}
 \title{\code{MiscMetabar} package}
 \description{
 Functions to help analyze and visualize metabarcoding data. Mainly based on

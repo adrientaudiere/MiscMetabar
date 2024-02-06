@@ -5,13 +5,13 @@
 \title{Search for exact matching of sequences using complement,
 reverse and reverse-complement}
 \usage{
-search_exact_seq_pq(physeq, sequences)
+search_exact_seq_pq(physeq, seq2search)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{sequences}{A DNAStringSet object of sequences to search for.}
+\item{seq2search}{A DNAStringSet object of sequences to search for.}
 }
 \value{
 A list of data-frames for each input sequences with the name,
@@ -25,7 +25,7 @@ the reverse sequence and the reverse-complement sequence.
 \examples{
 data("data_fungi")
 search_primers <- search_exact_seq_pq(data_fungi,
-  sequences = Biostrings::DNAStringSet(c("TTGAACGCACATTGCGCC", "ATCCCTACCTGATCCGAG"))
+  seq2search = Biostrings::DNAStringSet(c("TTGAACGCACATTGCGCC", "ATCCCTACCTGATCCGAG"))
 )
 }
 \author{

@@ -155,19 +155,38 @@ ggvenn_pq(data_fungi, fact = "Height") +
 
 ### Installation of other softwares for debian Linux distributions
 
-#### blastn
+If you encounter any errors or have any questions about the installation
+of these softwares, please visit their dedicated websites.
+
+#### [blast@](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html#downloadblastdata)
 
 ``` sh
 sudo apt-get install ncbi-blast+
 ```
 
-#### vsearch
+#### [vsearch](https://github.com/torognes/vsearch)
 
 ``` sh
 sudo apt-get install vsearch
 ```
 
-#### Mumu
+An other possibilities is to [install
+vsearch](https://bioconda.github.io/recipes/vsearch/README.html?highlight=vsearch#package-package%20'vsearch')
+with `conda`.
+
+#### [swarm](https://github.com/torognes/swarm)
+
+``` sh
+git clone https://github.com/torognes/swarm.git
+cd swarm/
+make
+```
+
+An other possibilities is to [install
+swarm](https://bioconda.github.io/recipes/swarm/README.html?highlight=swarm#package-package%20'swarm')
+with `conda`.
+
+#### [Mumu](https://github.com/frederic-mahe/mumu)
 
 ``` sh
 git clone https://github.com/frederic-mahe/mumu.git
@@ -175,6 +194,12 @@ cd ./mumu/
 make
 make check
 make install  # as root or sudo
+```
+
+#### [cutadapt](https://cutadapt.readthedocs.io/en/stable/)
+
+``` sh
+conda create -n cutadaptenv cutadapt
 ```
 
 <div id="refs" class="references csl-bib-body hanging-indent">

@@ -4,7 +4,11 @@
 \alias{funguild_assign}
 \title{Assign Guilds to Organisms Based on Taxonomic Classification}
 \usage{
-funguild_assign(otu_table, db = get_funguild_db(), tax_col = "Taxonomy")
+funguild_assign(
+  otu_table,
+  db_funguild = get_funguild_db(),
+  tax_col = "Taxonomy"
+)
 }
 \arguments{
 \item{otu_table}{A \code{data.frame} with a \code{character}
@@ -17,7 +21,7 @@ Rank indicators as given by Sintax ("\verb{k:}", "\verb{p:}"...) or Unite ("\cod
 A \code{character} vector, representing only the taxonomic classification,
 is also accepted.}
 
-\item{db}{A \code{data.frame} representing the FUNGuild as returned by
+\item{db_funguild}{A \code{data.frame} representing the FUNGuild as returned by
 \code{\link[=get_funguild_db]{get_funguild_db()}}
 If not supplied, the default database will be downloaded.}
 

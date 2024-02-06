@@ -15,7 +15,7 @@
 #'   match-list can be made with external bioinformatic tools like
 #'   \code{VSEARCH, USEARCH, BLASTN} or another algorithm
 #'   for pair-wise sequence matching.
-#' @param otutable a data.frame with with an OTU table that has sites/samples as
+#' @param otu_table a data.frame with with an OTU table that has sites/samples as
 #'   columns and OTUs (unique OTU id's) as rows, and observations as read
 #'   counts.
 #' @param matchlist a data.frame containing three columns: (1) OTU id of
@@ -75,16 +75,9 @@
 #' @author Tobias Guldberg Frøslev (orcid: [0000-0002-3530-013X](https://orcid.org/0000-0002-3530-013X)),
 #' modified by Adrien Taudière
 #' @export
-lulu <- function(
-    otutable,
-    matchlist,
-    minimum_ratio_type = "min",
-    minimum_ratio = 1,
-    minimum_match = 84,
-    minimum_relative_cooccurence = 0.95,
-    progress_bar = TRUE,
-    log_conserved = FALSE) {
+lulu <- function(otu_table, matchlist, minimum_ratio_type = "min", minimum_ratio = 1, minimum_match = 84, minimum_relative_cooccurence = 0.95, progress_bar = TRUE, log_conserved = FALSE) {
   start.time <- Sys.time()
+  otutable <- otu_table
   colnames(matchlist) <- c("OTUid", "hit", "match")
   # remove no hits (vsearch)
   matchlist <- matchlist[which(matchlist$hit != "*"), ]

@@ -948,9 +948,9 @@ venn_pq <-
 #'
 #' Note that you can use ggplot2 function to customize the plot
 #' for ex. `+ scale_fill_distiller(palette = "BuPu", direction = 1)`
-#' and `+ scale_x_continuous(expand = expansion(mult = 0.5))`. See 
+#' and `+ scale_x_continuous(expand = expansion(mult = 0.5))`. See
 #' examples.
-#' 
+#'
 #' @inheritParams clean_pq
 #' @param fact (required): Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}.
@@ -960,12 +960,12 @@ venn_pq <-
 #'   will not count in the venn diagram
 #' @param taxonomic_rank Name (or number) of a taxonomic rank
 #'   to count. If set to Null (the default) the number of OTUs is counted.
-#' @param  split_by Split into multiple plot using variable split_by.
+#' @param split_by Split into multiple plot using variable split_by.
 #'   The name of a variable must be present in `sam_data` slot
 #'   of the physeq object.
 #' @param add_nb_samples (logical, default TRUE) Add the number of samples to
 #'    levels names
-#' @param add_nb_sequences (logical, default FALSE) Add the number of sequences to
+#' @param add_nb_seq (logical, default FALSE) Add the number of sequences to
 #'    levels names
 #' @param rarefy_before_merging Rarefy each sample before merging by the
 #'   modalities of args `fact`. Use `phyloseq::rarefy_even_depth()` function
@@ -994,9 +994,9 @@ venn_pq <-
 #'   data_fungi@sam_data$Height %in% c("Low", "High"))
 #' ggvenn_pq(data_fungi2, fact = "Height")
 #'
-#' ggvenn_pq(data_fungi, fact = "Height", add_nb_sequences = TRUE, set_size = 4) 
+#' ggvenn_pq(data_fungi, fact = "Height", add_nb_seq = TRUE, set_size = 4)
 #' ggvenn_pq(data_fungi, fact = "Height", rarefy_before_merging = TRUE)
-#' ggvenn_pq(data_fungi, fact = "Height", rarefy_after_merging = TRUE) + 
+#' ggvenn_pq(data_fungi, fact = "Height", rarefy_after_merging = TRUE) +
 #'   scale_x_continuous(expand = expansion(mult = 0.5))
 #'
 #' @export
@@ -1009,7 +1009,7 @@ ggvenn_pq <- function(physeq = NULL,
                       taxonomic_rank = NULL,
                       split_by = NULL,
                       add_nb_samples = TRUE,
-                      add_nb_sequences = FALSE,
+                      add_nb_seq = FALSE,
                       rarefy_before_merging = FALSE,
                       rarefy_after_merging = FALSE,
                       ...) {
@@ -1075,7 +1075,7 @@ ggvenn_pq <- function(physeq = NULL,
     names(res) <- paste0(names(res), "\n (", nb_samples, " sam.)")
   }
 
-  if (add_nb_sequences) {
+  if (add_nb_seq) {
     names(res) <- paste0(names(res), "\n (", nb_seq, " seq.)")
   }
 
@@ -2356,7 +2356,7 @@ plot_tax_pq <-
 
 
 ################################################################################
-#' Plot taxonomic distribution across 3 taxonomic levels and optionally 
+#' Plot taxonomic distribution across 3 taxonomic levels and optionally
 #' one sample factor
 #'
 #' @description
@@ -2389,44 +2389,44 @@ plot_tax_pq <-
 #' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order",
 #'   nb_seq = FALSE, log10trans = FALSE
 #' )
-multitax_bar_pq <- function(
-        physeq,
-        lvl1,
-        lvl2,
-        lvl3,
-        fact = NULL,
-        nb_seq = TRUE,
-        log10trans = TRUE) {
-    psm_1 <- psmelt(physeq) %>%
-    filter(Abundance > 0) %>% 
-  filter(!is.na(.data[[lvl1]])) %>%
+multitax_bar_pq <- function(physeq,
+                            lvl1,
+                            lvl2,
+                            lvl3,
+                            fact = NULL,
+                            nb_seq = TRUE,
+                            log10trans = TRUE) {
+  psm_1 <- psmelt(physeq) %>%
+    filter(Abundance > 0) %>%
+    filter(!is.na(.data[[lvl1]])) %>%
     filter(!is.na(.data[[lvl3]])) %>%
     filter(!is.na(.data[[lvl2]]))
 
   if (is.null(fact)) {
-    psm_2 <- psm_1 %>% 
+    psm_2 <- psm_1 %>%
       group_by(OTU) %>%
-      summarise(Abundance = sum(Abundance)) 
-    
-    psm <- inner_join(psm_2, psm_1[,c("OTU", lvl1, lvl2, lvl3)], 
-                     by = join_by("OTU" == "OTU"), multiple = 
-                       "first")
-    
+      summarise(Abundance = sum(Abundance))
+
+    psm <- inner_join(psm_2, psm_1[, c("OTU", lvl1, lvl2, lvl3)],
+      by = join_by("OTU" == "OTU"), multiple =
+        "first"
+    )
+
     if (!nb_seq) {
-      psm$Abundance = 1
+      psm$Abundance <- 1
     }
-    
+
     data_gg <- tibble(
       "Abundance" = tapply(psm$Abundance, psm[[lvl3]], sum),
       "LVL1" = tapply(psm[[lvl1]], psm[[lvl3]], unique),
       "LVL2" = tapply(psm[[lvl2]], psm[[lvl3]], unique),
       "LVL3" = tapply(psm[[lvl3]], psm[[lvl3]], unique)
     )
-    
+
     if (log10trans) {
       data_gg$Abundance <- log10(data_gg$Abundance)
     }
-    
+
     p <- ggplot(data_gg, aes(
       x = Abundance,
       fill = LVL1,
@@ -2437,20 +2437,20 @@ multitax_bar_pq <- function(
       theme(strip.text.y.right = element_text(angle = 0)) +
       theme(legend.position = "none")
   } else {
-    
-    psm_2 <- psm_1 %>% 
-      group_by(OTU,.data[[fact]]) %>%
-      summarise(Abundance = sum(Abundance)) %>% 
+    psm_2 <- psm_1 %>%
+      group_by(OTU, .data[[fact]]) %>%
+      summarise(Abundance = sum(Abundance)) %>%
       filter(Abundance > 0)
-    
-    psm <- inner_join(psm_2, psm_1[,c("OTU", lvl1, lvl2, lvl3)], 
-                      by = join_by("OTU" == "OTU"), multiple = 
-                        "first")
-    
+
+    psm <- inner_join(psm_2, psm_1[, c("OTU", lvl1, lvl2, lvl3)],
+      by = join_by("OTU" == "OTU"), multiple =
+        "first"
+    )
+
     if (!nb_seq) {
-      psm$Abundance = 1
-    }    
-    
+      psm$Abundance <- 1
+    }
+
     data_gg <- tibble(
       "Abundance" = tapply(psm$Abundance, paste(psm[[fact]], psm[[lvl3]]), sum),
       "FACT" = tapply(psm[[fact]], paste(psm[[fact]], psm[[lvl3]]), unique),
@@ -2458,11 +2458,11 @@ multitax_bar_pq <- function(
       "LVL2" = tapply(psm[[lvl2]], paste(psm[[fact]], psm[[lvl3]]), unique),
       "LVL3" = tapply(psm[[lvl3]], paste(psm[[fact]], psm[[lvl3]]), unique)
     )
-    
+
     if (log10trans) {
       data_gg$Abundance <- log10(data_gg$Abundance)
     }
-    
+
     p <- ggplot(data_gg, aes(
       x = Abundance,
       fill = LVL1,
@@ -2666,38 +2666,36 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#'   library("iNEXT")
-#'   data("GlobalPatterns", package = "phyloseq")
-#'   GPsubset <- subset_taxa(
-#'     GlobalPatterns,
-#'     GlobalPatterns@tax_table[, 1] == "Bacteria"
-#'   )
-#'   GPsubset <- subset_taxa(
-#'     GPsubset,
-#'     rowSums(GPsubset@otu_table) > 5000
-#'   )
-#'   GPsubset <- subset_taxa(
-#'     GPsubset,
-#'     rowSums(is.na(GPsubset@tax_table)) == 0
-#'   )
-#'   GPsubset@sam_data$human <- GPsubset@sam_data$SampleType %in%
-#'     c("Skin", "Feces", "Tong")
-#'   res_iNEXT <- iNEXT_pq(
-#'     GPsubset,
-#'     merge_sample_by = "human",
-#'     q = 1,
-#'     datatype = "abundance",
-#'     nboot = 2
-#'   )
-#'   ggiNEXT(res_iNEXT)
-#'   ggiNEXT(res_iNEXT, type = 2)
-#'   ggiNEXT(res_iNEXT, type = 3)
-#' }
+#' library("iNEXT")
+#' data("GlobalPatterns", package = "phyloseq")
+#' GPsubset <- subset_taxa(
+#'   GlobalPatterns,
+#'   GlobalPatterns@tax_table[, 1] == "Bacteria"
+#' )
+#' GPsubset <- subset_taxa(
+#'   GPsubset,
+#'   rowSums(GPsubset@otu_table) > 1000
+#' )
+#' GPsubset <- subset_taxa(
+#'   GPsubset,
+#'   rowSums(is.na(GPsubset@tax_table)) == 0
+#' )
+#' GPsubset@sam_data$human <- GPsubset@sam_data$SampleType %in%
+#'   c("Skin", "Feces", "Tong")
+#' res_iNEXT <- iNEXT_pq(
+#'   GPsubset,
+#'   merge_sample_by = human,
+#'   q = 1,
+#'   datatype = "abundance",
+#'   nboot = 2
+#' )
+#' ggiNEXT(res_iNEXT)
+#' ggiNEXT(res_iNEXT, type = 2)
+#' ggiNEXT(res_iNEXT, type = 3)
 #' @author Adrien Taudière
 #'
 #'
-iNEXT_pq <- function(physeq, 
+iNEXT_pq <- function(physeq,
                      merge_sample_by = NULL,
                      ...) {
   if (!is.null(merge_sample_by)) {
@@ -2921,7 +2919,7 @@ upset_pq <- function(physeq,
 #' `r lifecycle::badge("experimental")`
 #'
 #' @inheritParams upset_pq
-#' @param  var_to_test (default c("OTU")) : a vector of column present in
+#' @param var_to_test (default c("OTU")) : a vector of column present in
 #'   the tax_table slot from the physeq object
 #' @param ... other arguments passed on to the [ComplexUpset::upset_test()]
 #'
@@ -2970,8 +2968,10 @@ upset_test_pq <-
 
     psm2 <- data.frame(lapply(psm, function(col) {
       tapply(col, paste0(psm$OTU), function(vec) {
-        diff_fct_diff_class(vec, numeric_fonction = numeric_fonction,
-                            na.rm = TRUE)
+        diff_fct_diff_class(vec,
+          numeric_fonction = numeric_fonction,
+          na.rm = TRUE
+        )
       })
     })) %>% arrange(., desc(Abundance))
 

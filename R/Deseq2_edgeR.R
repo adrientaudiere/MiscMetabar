@@ -7,9 +7,9 @@
 #' @param contrast (required):This argument specifies what comparison
 #'   to extract from the object to build a results table.
 #'   See \code{\link[DESeq2]{results}} man page for more details.
-#' @param alpha (default: 0.01): the significance cutoff used for optimizing
+#' @param pval (default: 0.05): the significance cutoff used for optimizing
 #'   the independent filtering. If the adjusted p-value cutoff (FDR) will be a
-#'   value other than 0.1, alpha should be set to that value.
+#'   value other than 0.05, pval should be set to that value.
 #' @param taxolev taxonomic level of interest
 #' @param color_tax taxonomic level used for
 #'   color assignation
@@ -37,7 +37,7 @@
 plot_edgeR_pq <-
   function(physeq,
            contrast = NULL,
-           alpha = 0.01,
+           pval = 0.05,
            taxolev = "Genus",
            color_tax = "Phylum",
            verbose = TRUE,
@@ -64,7 +64,7 @@ plot_edgeR_pq <-
         sort.by = "PValue"
       )
     res <- tt@.Data[[1]]
-    sigtab <- res[(res$FDR < alpha), ]
+    sigtab <- res[(res$FDR < pval), ]
     sigtab <- cbind(methods::as(sigtab, "data.frame"))
 
     sigtabgen <- subset(sigtab, !is.na(taxolev))
@@ -127,9 +127,9 @@ plot_edgeR_pq <-
 #' @param contrast (required) contrast specifies what comparison to extract
 #'   from the object to build a results table. See \code{\link[DESeq2]{results}}
 #'   man page for more details.
-#' @param alpha (default: 0.01) the significance cutoff used for optimizing
+#' @param pval (default: 0.05) the significance cutoff used for optimizing
 #'   the independent filtering. If the adjusted p-value cutoff (FDR) will be a
-#'   value other than 0.1, alpha should be set to that value.
+#'   value other than 0.05, pval should be set to that value.
 #' @param taxolev taxonomic level of interest
 #' @param select_taxa Either the name of the taxa (in the form of [DESeq2::results()])
 #'   or a logical vector (length of the results from [DESeq2::results()]) to select taxa
@@ -161,7 +161,7 @@ plot_edgeR_pq <-
 #' )
 #' plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
 #'   tax_table = GP@tax_table, color_tax = "Kingdom",
-#'   alpha = 0.7
+#'   pval = 0.7
 #' )
 #' plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
 #'   tax_table = GP@tax_table, color_tax = "Class",
@@ -179,7 +179,7 @@ plot_deseq2_pq <-
   function(data,
            contrast = NULL,
            tax_table = NULL,
-           alpha = 0.01,
+           pval = 0.05,
            taxolev = "Genus",
            select_taxa = NULL,
            color_tax = "Phylum",
@@ -257,7 +257,7 @@ plot_deseq2_pq <-
       res <- res[select_taxa, ]
     }
 
-    d <- res[which(res$padj < alpha), ]
+    d <- res[which(res$padj < pval), ]
 
     if (dim(d)[1] == 0) {
       message("None taxa present significant distribution pattern through

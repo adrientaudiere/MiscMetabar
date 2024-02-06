@@ -44,6 +44,6 @@ test_that("subset_taxa_tax_control function works fine", {
 
 library(Biostrings)
 test_that("search_exact_seq_pq function works fine", {
-  expect_silent(search_primers <- search_exact_seq_pq(data_fungi, sequences = Biostrings::DNAStringSet(c("TTGAACGCACATTGCGCC", "ATCCCTACCTGATCCGAG"))))
+  expect_silent(search_primers <- search_exact_seq_pq(data_fungi, seq2search = Biostrings::DNAStringSet(c("TTGAACGCACATTGCGCC", "ATCCCTACCTGATCCGAG"))))
   expect_equal(search_primers[[1]][3, 1], "932")
 })

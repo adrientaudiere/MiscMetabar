@@ -7,7 +7,7 @@
 plot_edgeR_pq(
   physeq,
   contrast = NULL,
-  alpha = 0.01,
+  pval = 0.05,
   taxolev = "Genus",
   color_tax = "Phylum",
   verbose = TRUE,
@@ -22,9 +22,9 @@ using the \code{phyloseq} package.}
 to extract from the object to build a results table.
 See \code{\link[DESeq2]{results}} man page for more details.}
 
-\item{alpha}{(default: 0.01): the significance cutoff used for optimizing
+\item{pval}{(default: 0.05): the significance cutoff used for optimizing
 the independent filtering. If the adjusted p-value cutoff (FDR) will be a
-value other than 0.1, alpha should be set to that value.}
+value other than 0.05, pval should be set to that value.}
 
 \item{taxolev}{taxonomic level of interest}
 

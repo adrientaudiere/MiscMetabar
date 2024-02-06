@@ -1,0 +1,101 @@
+---
+title: "explore_data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{explore_data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, message=FALSE}
+library(MiscMetabar)
+data(data_fungi)
+```
+
+```{r}
+summary_plot_pq(data_fungi)
+```
+
+### Explore samples metadata
+
+```{r}
+sam_tab <- tibble::as_tibble(unclass(data_fungi@sam_data))
+```
+
+
+```{r}
+summarytools::dfSummary(sam_tab)
+```
+
+
+```{r}
+datawizard::data_codebook(sam_tab)
+```
+
+```{r}
+pillar::glimpse(sam_tab)
+```
+
+```{r}
+pointblank::scan_data(sam_tab, sections = "OVSCMI")
+
+pointblank::create_informant(
+  tbl = sam_tab,
+  tbl_name = "Sample data",
+  label = "data_fungi"
+)
+```
+
+```{r}
+gtExtras::gt_plt_summary(sam_tab)
+```
+
+### Explore taxonomic data
+
+```{r}
+tax_tab <- tibble::as_tibble(unclass(data_fungi@tax_table))
+```
+
+
+```{r}
+summarytools::dfSummary(tax_tab)
+```
+
+```{r}
+datawizard::data_codebook(tax_tab)
+```
+
+```{r}
+pillar::glimpse(tax_tab)
+```
+
+```{r}
+pointblank::scan_data(tax_tab, sections = "OVSCM")
+
+pointblank::create_informant(
+  tbl = tax_tab,
+  tbl_name = "Taxonomic table",
+  label = "data_fungi"
+)
+```
+
+
+```{r}
+gtExtras::gt_plt_summary(tax_tab)
+```
+
+```{r}
+fungi_order <- tax_glom(data_fungi, taxrank = "Order")
+taxa_names(fungi_order) <- fungi_order@tax_table[, "Order"]
+heatmap(fungi_order@otu_table)
+```
+
+
+

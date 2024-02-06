@@ -144,7 +144,7 @@ test_that("subsample_fastq function works fine", {
   expect_silent(subsample_fastq(
     list_fastq_files("inst/extdata"),
     "your_path_to_output2",
-    n_seq = 10
+    nb_seq = 10
   ))
   file.exists("your_path_to_output2/ex_R1_001.fastq.gz")
   unlink("your_path_to_output2", recursive = TRUE)

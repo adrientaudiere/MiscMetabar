@@ -162,7 +162,8 @@ multitax_bar_pq(ten, "Phylum", "Class", "Order", "patient_status")
 
 ```{r}
 multitax_bar_pq(ten, "Phylum", "Class", "Order", "patient_status",
-                nb_seq = FALSE, log10trans = FALSE)
+  nb_seq = FALSE, log10trans = FALSE
+)
 ```
 
 # Differential abundance analysis

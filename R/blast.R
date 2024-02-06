@@ -31,7 +31,7 @@
 #' @param nproc (default: 1)
 #'   Set to number of cpus/processors to use for blast (args -num_threads
 #'   for blastn command)
-#' @param  keep_temporary_files (logical, default: FALSE) Do we keep temporary files
+#' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files
 #'   - db.fasta (refseq transformed into a database)
 #'   - dbase list of files (output of blastn)
 #'   - blast_result.txt the summary result of blastn using
@@ -184,7 +184,7 @@ blast_to_phyloseq <- function(physeq,
 #' @inheritParams blast_to_phyloseq
 #' @param fasta_for_db path to a fasta file to make the blast database
 #' @param database path to a blast database
-#' @param  keep_temporary_files (logical, default: FALSE) Do we keep temporary files
+#' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files
 #'   - db.fasta (refseq transformed into a database)
 #'   - dbase list of files (output of blastn)
 #'   - blast_result.txt the summary result of blastn using
@@ -430,7 +430,7 @@ filter_asv_blast <- function(physeq,
 #' @param min_length_seq (default: 200) Removed sequences with less than
 #'   `min_length_seq` from derep before blast. Set to 0 to discard filtering
 #'    sequences by length.
-#' @param  keep_temporary_files (logical, default: FALSE) Do we keep temporary
+#' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary
 #'   files :
 #'   - db.fasta (refseq transformed into a database)
 #'   - dbase list of files (output of blastn)

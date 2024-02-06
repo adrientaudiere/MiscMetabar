@@ -13,12 +13,10 @@ navbar:
     text: Articles
     menu:
     - text: Tutorials
-    - text: Alpha-diversity
-      href: articles/alpha-div.html
-    - text: Beta-diversity
-      href: articles/beta-div.html
     - text: Import/export and track
       href: articles/import_export_track.html
+    - text: Explore phyloseq data
+      href: articles/explore_data.html
     - text: Filter taxa and samples
       href: articles/filter.html
     - text: Reclustering
@@ -26,7 +24,13 @@ navbar:
     - text: Tree visualization
       href: articles/tree_visualization.html
     - text: -------
-    - text: Tutorials with published dataset
+    - text: Diversity analysis
+    - text: Alpha-diversity
+      href: articles/alpha-div.html
+    - text: Beta-diversity
+      href: articles/beta-div.html
+    - text: -------
+    - text: Examples with published dataset
     - text: Tengeler
       href: articles/tengeler.html
     - text: -------
@@ -40,11 +44,16 @@ navbar:
 
 reference:
 - title: Describe phyloseq object
+- subtitle: See also vignette on [exploring data](articles/explore_data.html)
   contents:
   - summary_plot_pq
   - tbl_sum_samdata
   - verify_pq
 
+- title: Obtain phyloseq object
+  contents:
+  - chimera_removal_vs
+  - chimera_detection_vs
 
 - title: Transform phyloseq object
 - subtitle: Taxonomy
@@ -59,7 +68,7 @@ reference:
   - blast_to_derep
   - filter_asv_blast
 
-- subtitle: Function from taxonomy  
+- subtitle: Function to add information from taxonomy  
   contents: 
   - add_funguild_info
   - funguild_assign
@@ -69,6 +78,8 @@ reference:
   contents: 
   - as_binary_otu_table
   - asv2otu
+  - swarm_clustering
+  - vsearch_clustering
   - lulu_pq
   - lulu
   - mumu_pq
@@ -146,7 +157,13 @@ reference:
   - treemap_pq
   - vs_search_global
 
-- title: Improve reproducibility
+- title: Improve reproducibility using [targets](https://books.ropensci.org/targets/) pipeline
+- subtitle: Processing fastq files
+  contents:
+  - list_fastq_files
+  - filter_trim
+  - cutadapt_remove_primers
+  - subsample_fastq
 - subtitle: Import/export phyloseq object
   contents:
   - read_pq
@@ -157,13 +174,16 @@ reference:
   - count_seq
   - track_wkflow
   - track_wkflow_samples
-- subtitle: Utilities for [targets](https://books.ropensci.org/targets/) pipeline
+- subtitle: Sample data management
   contents:
-  - list_fastq_files
   - rename_samples_otu_table
-  - select_one_sample
+  - rename_samples
+  - sample_data_with_new_names
+  - add_info_to_sam_data
+- subtitle: Taxonomy management
+  contents:
   - simplify_taxo
-  - subsample_fastq
+  - reorder_taxa_pq
 
 - title: Datasets
   contents: 
@@ -184,9 +204,10 @@ reference:
   - perc
   - are_modality_even_depth
   - merge_samples2
-  - merge_taxa_vec 
-  - reorder_taxa_pq
+  - merge_taxa_vec
   - unique_or_na
+  - physeq_or_string_to_dna
+  - select_one_sample
 
   
  

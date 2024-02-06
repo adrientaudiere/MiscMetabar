@@ -8,7 +8,7 @@ plot_deseq2_pq(
   data,
   contrast = NULL,
   tax_table = NULL,
-  alpha = 0.01,
+  pval = 0.05,
   taxolev = "Genus",
   select_taxa = NULL,
   color_tax = "Phylum",
@@ -32,9 +32,9 @@ The taxonomic table used to find the \code{taxa} and \code{color_taxa}
 arguments. If data is a \code{\link{phyloseq-class}} object, data@tax_table
 is used.}
 
-\item{alpha}{(default: 0.01) the significance cutoff used for optimizing
+\item{pval}{(default: 0.05) the significance cutoff used for optimizing
 the independent filtering. If the adjusted p-value cutoff (FDR) will be a
-value other than 0.1, alpha should be set to that value.}
+value other than 0.05, pval should be set to that value.}
 
 \item{taxolev}{taxonomic level of interest}
 
@@ -79,7 +79,7 @@ plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
 )
 plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
   tax_table = GP@tax_table, color_tax = "Kingdom",
-  alpha = 0.7
+  pval = 0.7
 )
 plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
   tax_table = GP@tax_table, color_tax = "Class",

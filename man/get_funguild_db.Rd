@@ -4,10 +4,10 @@
 \alias{get_funguild_db}
 \title{Retrieve the FUNGuild database}
 \usage{
-get_funguild_db(db = "http://www.stbates.org/funguild_db_2.php")
+get_funguild_db(db_url = "http://www.stbates.org/funguild_db_2.php")
 }
 \arguments{
-\item{db}{a length 1 character string giving the URL to retrieve the database
+\item{db_url}{a length 1 character string giving the URL to retrieve the database
 from}
 }
 \value{

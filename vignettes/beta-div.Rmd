@@ -163,7 +163,7 @@ GP <- subset_samples(
   GlobalPatterns@sam_data$SampleType %in% c("Soil", "Skin")
 )
 
-plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), alpha = 0.001)
+plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), pval = 0.001)
 ```
 
 
