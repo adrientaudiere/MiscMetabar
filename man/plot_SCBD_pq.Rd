@@ -40,6 +40,7 @@ Please make a reference to \code{vegan::beta.div()} if you
 use this function.
 }
 \examples{
+data(data_fungi)
 plot_SCBD_pq(data_fungi) +
   geom_text(aes(label = paste(Genus, Species)), hjust = 1, vjust = 2) +
   xlim(c(0, NA))

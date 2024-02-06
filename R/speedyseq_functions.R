@@ -575,10 +575,12 @@ merge_groups <- function(x, group, f = unique_or_na) {
 #' @keywords internal
 #'
 #' @examples
+#' \dontrun{
 #' x <- data.frame(var1 = letters[1:3], var2 = 7:9)
 #' rownames(x)
 #' sample_data(x)
 #' sample_data_stable(x)
+#' }
 #' @author Michael R. McLaren (orcid: [0000-0003-1575-473X](https://orcid.org/0000-0003-1575-473X))
 sample_data_stable <- function(object) {
   # Modified from phyloseq's sample_data data.frame method; see
