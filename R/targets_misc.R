@@ -63,7 +63,7 @@ list_fastq_files <-
 #' @author Adrien Taudière
 #'
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' rename_samples_otu_table(data_fungi, as.character(seq_along(sample_names(data_fungi))))
 #'
 rename_samples_otu_table <- function(physeq, names_of_samples) {
@@ -222,25 +222,24 @@ filter_trim <-
 #' @return A data.frame from file_path and new names
 #' @export
 #'
+#' @examples 
+#' sam_file <- "inst/extdata/sam_data.csv"
+#' sample_data_with_new_names(sam_file, paste0("Samples_", seq(1, 185)))
+#' 
 #' @author Adrien Taudière
 #'
 #' @seealso [rename_samples()]
-sample_data_with_new_names <- function(file,
+sample_data_with_new_names <- function(file_path,
                                        names_of_samples,
-                                       samples_order,
+                                       samples_order = NULL,
                                        ...) {
-  # For use with old syntax using condition in place of samples_order
-  if (is.null(samples_order) && !missing(condition)) {
-    samples_order <- condition
-  }
-  samdata_interm <- read.delim(file, ...)
+  samdata_interm <- sample_data(read.delim(file_path, ...))
   samdata_renamed <- rename_samples(samdata_interm, names_of_samples)
-  if (missing(samples_order)) {
+  if (is.null(samples_order)) {
     samdata <- samdata_renamed
   } else {
     samdata <- samdata_renamed[samples_order, ]
   }
-
   return(samdata)
 }
 ################################################################################

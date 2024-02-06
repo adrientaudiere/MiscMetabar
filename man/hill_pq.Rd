@@ -64,7 +64,7 @@ Note that this function use a sqrt of the read numbers in the linear
 model in order to correct for uneven sampling depth.
 }
 \examples{
-data(data_fungi)
+# data(data_fungi)
 p <- hill_pq(data_fungi, "Height")
 p_h1 <- p[[1]] + theme(legend.position = "none")
 p_h2 <- p[[2]] + theme(legend.position = "none")

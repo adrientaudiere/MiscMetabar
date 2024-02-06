@@ -10,7 +10,7 @@
 #' @param taxa (default: "Species") The taxonomic level you choose for x-positioning.
 #' @author Adrien Taudière
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' # Filter samples that don't have Enterotype
 #' data_fungi <- subset_samples(data_fungi, !is.na(Time))
 #' res <- mt(data_fungi, "Time", method = "fdr", test = "f", B = 300)
@@ -978,7 +978,7 @@ venn_pq <-
 #'   of plots.
 #' @seealso [upset_pq()]
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' ggvenn_pq(data_fungi, fact = "Height")
 #' ggvenn_pq(data_fungi, fact = "Height") +
 #'   ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
@@ -1213,7 +1213,7 @@ multiplot <-
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' p <- hill_pq(data_fungi, "Height")
 #' p_h1 <- p[[1]] + theme(legend.position = "none")
 #' p_h2 <- p[[2]] + theme(legend.position = "none")
@@ -1513,7 +1513,7 @@ ggbetween_pq <- function(physeq, variable, one_plot = FALSE, rarefy_by_sample = 
 #' @param clean_pq (logical): Does the phyloseq
 #'   object is cleaned using the [clean_pq()] function?
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' summary_plot_pq(data_fungi)
 #' summary_plot_pq(data_fungi, add_info = FALSE) + scale_fill_viridis_d()
 #' @return A ggplot2 object
@@ -1769,14 +1769,17 @@ rotl_pq <- function(physeq,
 #' @examples
 #' library("metacoder")
 #' data("GlobalPatterns", package = "phyloseq")
+#'
 #' GPsubset <- subset_taxa(
 #'   GlobalPatterns,
 #'   GlobalPatterns@tax_table[, 1] == "Bacteria"
 #' )
+#'
 #' GPsubset <- subset_taxa(
 #'   GPsubset,
 #'   rowSums(GPsubset@otu_table) > 1000
 #' )
+#'
 #' GPsubset <- subset_taxa(
 #'   GPsubset,
 #'   rowSums(is.na(GPsubset@tax_table)) == 0
@@ -1857,7 +1860,7 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #' @return A plot
 #'
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' data_fungi_2Height <- subset_samples(data_fungi, Height %in% c("Low", "High"))
 #' biplot_pq(data_fungi_2Height, "Height", merge_sample_by = "Height")
 #' @export
@@ -2109,7 +2112,7 @@ biplot_pq <- function(physeq,
 #' @export
 #'
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' data_fungi_abun <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
 #' p <- multi_biplot_pq(data_fungi_abun, "Height")
 #' lapply(p, print)
@@ -2491,7 +2494,7 @@ multitax_bar_pq <- function(physeq,
 #' @export
 #'
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' res_tsne <- tsne_pq(data_fungi)
 tsne_pq <-
   function(physeq,
@@ -2663,35 +2666,39 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 #' @export
 #'
 #' @examples
-#' library("iNEXT")
-#' data("GlobalPatterns", package = "phyloseq")
-#' GPsubset <- subset_taxa(
-#'   GlobalPatterns,
-#'   GlobalPatterns@tax_table[, 1] == "Bacteria"
-#' )
-#' GPsubset <- subset_taxa(
-#'   GPsubset,
-#'   rowSums(GPsubset@otu_table) > 1000
-#' )
-#' GPsubset <- subset_taxa(
-#'   GPsubset,
-#'   rowSums(is.na(GPsubset@tax_table)) == 0
-#' )
-#' GPsubset@sam_data$human <- GPsubset@sam_data$SampleType %in%
-#'   c("Skin", "Feces", "Tong")
-#' res_iNEXT <- iNEXT_pq(
-#'   GPsubset,
-#'   merge_sample_by = human,
-#'   q = 1,
-#'   datatype = "abundance",
-#'   nboot = 2
-#' )
-#' ggiNEXT(res_iNEXT)
-#' ggiNEXT(res_iNEXT, type = 2)
-#' ggiNEXT(res_iNEXT, type = 3)
+#' \dontrun{
+#'   library("iNEXT")
+#'   data("GlobalPatterns", package = "phyloseq")
+#'   GPsubset <- subset_taxa(
+#'     GlobalPatterns,
+#'     GlobalPatterns@tax_table[, 1] == "Bacteria"
+#'   )
+#'   GPsubset <- subset_taxa(
+#'     GPsubset,
+#'     rowSums(GPsubset@otu_table) > 1000
+#'   )
+#'   GPsubset <- subset_taxa(
+#'     GPsubset,
+#'     rowSums(is.na(GPsubset@tax_table)) == 0
+#'   )
+#'   GPsubset@sam_data$human <- GPsubset@sam_data$SampleType %in%
+#'     c("Skin", "Feces", "Tong")
+#'   res_iNEXT <- iNEXT_pq(
+#'     GPsubset,
+#'     merge_sample_by = "human",
+#'     q = 1,
+#'     datatype = "abundance",
+#'     nboot = 2
+#'   )
+#'   ggiNEXT(res_iNEXT)
+#'   ggiNEXT(res_iNEXT, type = 2)
+#'   ggiNEXT(res_iNEXT, type = 3)
+#' }
 #' @author Adrien Taudière
-#'
-#'
+#' This function is mainly a wrapper of the work of others.
+#'   Please make a reference to `iNEXT::iNEXT()` if you
+#'   use this function.
+#' 
 iNEXT_pq <- function(physeq,
                      merge_sample_by = NULL,
                      ...) {
@@ -2737,7 +2744,7 @@ iNEXT_pq <- function(physeq,
 #'
 #' @seealso [ggvenn_pq()]
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' upset_pq(data_fungi, fact = "Height", width_ratio = 0.2)
 #' upset_pq(data_fungi,
 #'   fact = "Height", width_ratio = 0.2,
@@ -3005,7 +3012,7 @@ upset_test_pq <-
 #' @export
 #'
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' diff_fct_diff_class(
 #'   data_fungi@sam_data$Sample_id,
 #'   numeric_fonction = sum,
@@ -3122,7 +3129,7 @@ diff_fct_diff_class <-
 #' @export
 #'
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
 #' tax_bar_pq(data_fungi_ab) + theme(legend.position = "none")
 #' tax_bar_pq(data_fungi_ab, taxa = "Class")
@@ -3172,7 +3179,7 @@ tax_bar_pq <- function(physeq, fact = "Sample", taxa = "Order", percent_bar = FA
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' ridges_pq(data_fungi, "Time", alpha = 0.5, log10trans = FALSE) + xlim(c(0, 1000))
 #' ridges_pq(data_fungi, "Time", alpha = 0.5)
 #' ridges_pq(

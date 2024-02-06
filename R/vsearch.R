@@ -32,7 +32,7 @@
 #' @export
 #'
 #' @examples
-#'
+#' # data(data_fungi)
 #' data_fungi_nochim <- chimera_removal_vs(data_fungi)
 #' data_fungi_nochim_16 <- chimera_removal_vs(data_fungi,
 #'   abskew = 16,
@@ -154,6 +154,7 @@ chimera_removal_vs <-
 #' @export
 #'
 #' @examples
+#' # data(data_fungi)
 #' chimera_detection_vs(
 #'   seq2search = data_fungi@refseq,
 #'   nb_seq = taxa_sums(data_fungi)

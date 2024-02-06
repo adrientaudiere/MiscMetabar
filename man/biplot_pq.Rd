@@ -98,7 +98,7 @@ A plot
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
-data(data_fungi)
+# data(data_fungi)
 data_fungi_2Height <- subset_samples(data_fungi, Height \%in\% c("Low", "High"))
 biplot_pq(data_fungi_2Height, "Height", merge_sample_by = "Height")
 }

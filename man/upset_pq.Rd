@@ -50,7 +50,7 @@ A \code{\link{ggplot}}2 plot
 Alternative to venn plot.
 }
 \examples{
-data(data_fungi)
+# data(data_fungi)
 upset_pq(data_fungi, fact = "Height", width_ratio = 0.2)
 upset_pq(data_fungi,
   fact = "Height", width_ratio = 0.2,

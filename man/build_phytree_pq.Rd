@@ -74,7 +74,7 @@ use this function.
 }
 \examples{
 library("phangorn")
-data(data_fungi)
+# data(data_fungi)
 df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 9000)
 df_tree <- build_phytree_pq(df, nb_bootstrap = 5)
 plot(df_tree$UPGMA)

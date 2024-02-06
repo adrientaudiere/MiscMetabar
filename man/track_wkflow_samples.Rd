@@ -23,7 +23,7 @@ Contrary to \code{\link[=track_wkflow]{track_wkflow()}}, only phyloseq object ar
 More information are available in the manual of the function \code{\link[=track_wkflow]{track_wkflow()}}
 }
 \examples{
-data(data_fungi)
+# data(data_fungi)
 tree_A10_005 <- subset_samples(data_fungi, Tree_name == "A10-005")
 track_wkflow_samples(tree_A10_005)
 }

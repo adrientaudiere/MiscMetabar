@@ -32,7 +32,7 @@ This allow to plot all the possible \code{\link[=biplot_pq]{biplot_pq()}} combin
 using one factor.
 }
 \examples{
-data(data_fungi)
+# data(data_fungi)
 data_fungi_abun <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
 p <- multi_biplot_pq(data_fungi_abun, "Height")
 lapply(p, print)

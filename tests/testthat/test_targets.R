@@ -149,3 +149,43 @@ test_that("subsample_fastq function works fine", {
   file.exists("your_path_to_output2/ex_R1_001.fastq.gz")
   unlink("your_path_to_output2", recursive = TRUE)
 })
+
+test_that("sample_data_with_new_names function works fine", {
+   expect_silent(newdf <- sample_data_with_new_names(sam_file, paste0("Samples_", seq(1, 185))))
+   expect_equal(dim(newdf)[1], 185)
+   expect_equal(dim(newdf)[2], 7)
+})
+
+
+test_that("sample_data_with_new_names function works fine", {
+  testFastqs_fw <- c(
+    system.file("extdata", "sam1F.fastq.gz", package = "dada2"),
+    system.file("extdata", "sam2F.fastq.gz", package = "dada2")
+  )
+  testFastqs_rev <- c(
+    system.file("extdata", "sam1R.fastq.gz", package = "dada2"),
+    system.file("extdata", "sam2R.fastq.gz", package = "dada2")
+  )
+  expect_silent(filt_fastq_fw <- filter_trim(testFastqs_fw, output_fw = tempdir()))
+  expect_equal(length(derepFastq(filt_fastq_fw[1])), 4)
+  expect_silent(filt_fastq_pe <- filter_trim(testFastqs_fw,
+    testFastqs_rev,
+    output_fw = tempdir("fw"),
+    output_rev = tempdir("rev")
+  ))
+  expect_equal(length(derepFastq(filt_fastq_pe[[1]])), 4)
+  expect_equal(length(derepFastq(filt_fastq_pe[[2]])), 4)
+
+})
+
+test_that("add_info_to_sam_data function works fine with data_fungi", {
+  new_df <- data.frame(
+    variable_1 = runif(n = nsamples(data_fungi), min = 1, max = 20),
+    variable_2 = runif(n = nsamples(data_fungi), min = 1, max = 2)
+  )
+  rownames(new_df) <- sample_names(data_fungi)
+  expect_silent(data_fungi2 <- add_info_to_sam_data(data_fungi, new_df))
+  expect_equal(dim(data_fungi2@sam_data)[2], 11)
+  expect_equal(length(data_fungi2@sam_data$nb_seq), 185)
+  expect_equal(length(data_fungi2@sam_data$nb_otu), 185)
+})

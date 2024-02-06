@@ -38,6 +38,16 @@ jobs:
          && make check \
          && sudo make install 
 
+      - name: Install swarm
+        run: |
+        git clone https://github.com/torognes/swarm.git \
+        && cd swarm/ \
+        && make
+
+      - name: Install cutadapt
+        run: |
+        sudo python3 -m pip install cutadapt
+
       - name: Test coverage
         run: |
           covr::codecov(

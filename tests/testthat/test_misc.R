@@ -95,7 +95,22 @@ test_that("install_pkg_needed works fine", {
   expect_message(install_pkg_needed("abc", verbose = TRUE))
   expect_message(install_pkg_needed("MiscMetabar", verbose = TRUE))
   expect_silent(install_pkg_needed("MiscMetabar"))
-  expect_message(install_pkg_needed("adespatial"))
   expect_silent(suppressMessages(install_pkg_needed("microbiomeDataSets")))
   expect_silent(suppressMessages(install_pkg_needed("microbiomeDataSets", bioconductor_pkg = TRUE, use_pak = FALSE)))
 })
+
+test_that("add_funguild_info works fine", {
+  data_f <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)
+  expect_silent(data_f <- add_funguild_info(data_f,
+    taxLevels = c(
+      "Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species")
+    )
+  )
+  expect_equal(dim(data_f@tax_table)[2], 24)
+ })
+
+test_that("are_modality_even_depth works fine", {
+  expect_equal(are_modality_even_depth(data_fungi, "Time")$statistic[[1]], 62.143)
+  expect_equal(are_modality_even_depth(rarefy_even_depth(data_fungi), "Time")$p.value, 1)
+  expect_silent(are_modality_even_depth(data_fungi, "Height", boxplot = TRUE))
+ })

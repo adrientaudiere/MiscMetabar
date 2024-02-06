@@ -21,9 +21,6 @@ in the \href{https://github.com/brendanf/FUNGuildR/}{FUNGuildR} package.
 
 Please cite this \href{https://www.sciencedirect.com/science/article/abs/pii/S1754504815000847}{publication}.
 }
-\examples{
-get_funguild_db()
-}
 \references{
 Nguyen NH, Song Z, Bates ST, Branco S, Tedersoo L, Menke J,
 Schilling JS, Kennedy PG. 2016. \emph{FUNGuild: An open annotation tool for

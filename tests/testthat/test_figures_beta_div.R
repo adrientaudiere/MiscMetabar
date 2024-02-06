@@ -226,7 +226,7 @@ test_that("venn_pq works with data_fungi dataset", {
 test_that("ggvenn_pq works with data_fungi dataset", {
   expect_silent(ggvenn_pq(data_fungi, "Height"))
   expect_message(ggvenn_pq(data_fungi, "Height", rarefy_before_merging = TRUE))
-  expect_message(ggvenn_pq(data_fungi, "Height", rarefy_after_merging = TRUE))
+  expect_message(suppressWarnings(ggvenn_pq(data_fungi, "Height", rarefy_after_merging = TRUE)))
   expect_silent(ggvenn_pq(data_fungi, "Height", add_nb_seq = TRUE))
   expect_silent(suppressMessages(ggvenn_pq(data_fungi, "Height", rarefy_nb_seqs = TRUE)))
   expect_silent(ggvenn_pq(data_fungi, "Height", min_nb_seq = 2))

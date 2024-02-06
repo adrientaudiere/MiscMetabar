@@ -84,7 +84,7 @@ and if present a phy_tree in Newick format
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
-data(data_fungi)
+# data(data_fungi)
 # write_pq(data_fungi, path = "phyloseq")
 # write_pq(data_fungi, path = "phyloseq", one_file = TRUE)
 }

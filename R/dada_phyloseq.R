@@ -437,7 +437,7 @@ track_wkflow <- function(list_of_objects,
 #' @author Adrien Taudière
 #'
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' tree_A10_005 <- subset_samples(data_fungi, Tree_name == "A10-005")
 #' track_wkflow_samples(tree_A10_005)
 track_wkflow_samples <- function(list_pq_obj, ...) {
@@ -619,7 +619,7 @@ asv2otu <- function(physeq = NULL,
 #'   ACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG",
 #'   file = file_dna, names = "seq1"
 #' )
-#' data(data_fungi)
+#' # data(data_fungi)
 #' res <- vs_search_global(data_fungi, file_dna)
 #' unlink(file_dna)
 #'
@@ -753,7 +753,7 @@ vs_search_global <- function(physeq,
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' # write_pq(data_fungi, path = "phyloseq")
 #' # write_pq(data_fungi, path = "phyloseq", one_file = TRUE)
 #' @seealso [MiscMetabar::save_pq()]
@@ -960,7 +960,7 @@ write_pq <- function(physeq,
 #' @author Adrien Taudière
 #' @examples
 #' \dontrun{
-#' data(data_fungi)
+#' # data(data_fungi)
 #' save_pq(data_fungi, path = "phyloseq")
 #' }
 #' @seealso [MiscMetabar::write_pq()]
@@ -1478,7 +1478,7 @@ verify_pq <- function(
 #'   the number of samples
 #'
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' cond_samp <- grepl("A1", data_fungi@sam_data[["Sample_names"]])
 #' subset_samples_pq(data_fungi, cond_samp)
 #'
@@ -1532,7 +1532,7 @@ subset_samples_pq <- function(physeq, condition) {
 #'   of this function if you use this parameter. No effect if the condition
 #'   is of class `tax_table`.
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' subset_taxa_pq(data_fungi, data_fungi@tax_table[, "Phylum"] == "Ascomycota")
 #'
 #' cond_taxa <- grepl("Endophyte", data_fungi@tax_table[, "Guild"])
@@ -1637,7 +1637,7 @@ subset_taxa_pq <- function(physeq,
 #' @author Adrien Taudière
 #'
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' A8_005 <- select_one_sample(data_fungi, "A8-005_S4_MERGED.fastq.gz")
 #' A8_005
 select_one_sample <- function(physeq, sam_name, silent = FALSE) {
@@ -1784,7 +1784,7 @@ tbl_sum_samdata <- function(physeq, remove_col_unique_value = TRUE, ...) {
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)
 #' \dontrun{
 #' df <- add_funguild_info(df,
@@ -1853,7 +1853,7 @@ add_funguild_info <- function(physeq,
 #' @author Adrien Taudière
 #' @examples
 #' \dontrun{
-#' data(data_fungi)
+#' # data(data_fungi)
 #' df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)
 #' df <- add_funguild_info(df,
 #'   taxLevels = c(
@@ -2016,7 +2016,7 @@ plot_guild_pq <-
 #'   use this function.
 #' @examples
 #' library("phangorn")
-#' data(data_fungi)
+#' # data(data_fungi)
 #' df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 9000)
 #' df_tree <- build_phytree_pq(df, nb_bootstrap = 5)
 #' plot(df_tree$UPGMA)
@@ -2153,7 +2153,7 @@ build_phytree_pq <- function(physeq,
 #' @author Adrien Taudière
 #' @importFrom stats kruskal.test
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' are_modality_even_depth(data_fungi, "Time")$p.value
 #' are_modality_even_depth(rarefy_even_depth(data_fungi), "Time")$p.value
 #' are_modality_even_depth(data_fungi, "Height", boxplot = TRUE)
@@ -2191,7 +2191,7 @@ are_modality_even_depth <- function(physeq, fact, boxplot = FALSE) {
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' data_fungi_ordered_by_genus <- reorder_taxa_pq(
 #'   data_fungi,
 #'   taxa_names(data_fungi)[order(as.vector(data_fungi@tax_table[, "Genus"]))]
@@ -2263,7 +2263,7 @@ reorder_taxa_pq <- function(physeq, names_ordered, remove_phy_tree = FALSE) {
 #' @export
 #'
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' data_fungi <- add_info_to_sam_data(data_fungi)
 #' boxplot(data_fungi@sam_data$nb_otu ~ data_fungi@sam_data$Time)
 #'
@@ -2293,7 +2293,7 @@ add_info_to_sam_data <- function(physeq,
     df_info <-
       df_info[match(sample_names(physeq), rownames(df_info)), ]
     physeq@sam_data <- sample_data(cbind(
-      as_tibble(physeq@sam_data),
+      as.data.frame(physeq@sam_data),
       df_info
     ))
   }
@@ -2347,7 +2347,7 @@ add_info_to_sam_data <- function(physeq,
 #' @export
 #' @examples
 #' \dontrun{
-#' data(data_fungi)
+#' # data(data_fungi)
 #' summary_plot_pq(data_fungi)
 #' # Change with your PATH
 #' path_to_swarm <- "/home/adrien/miniconda3/bin/swarm"
@@ -2355,7 +2355,17 @@ add_info_to_sam_data <- function(physeq,
 #' data_fungi_swarm <- swarm_clustering(data_fungi, swarmpath = path_to_swarm)
 #' summary_plot_pq(data_fungi_swarm)
 #'
-#' sequences_ex <- c("TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGGGCGAATTACCTGGTATTTTAGCCCACTTACCCGGTACCAACCTACCCTGTACACCGCGCCTGGGTCTACCCTCCGGATGACATTTTTAAGACTCTTGTTTTATAGTGAAATTCTGAGTTTTTATACTTAATAAGTTAAAACTTTCAATCTCGGATCTCTTGGCTCTGGCATCGATGAAGAACGCTACGAAATGCTGATAAATAATGTGAATTGCCGAATTCATTGAATCATCGAATCTTTGAACGCACATTGCACCCATTAGTATTCTAGAGTGCATGCCTGTTCCAGCGTCATTTTCAATCCTCAAGCCCCTTATTGCTTGGTGTTGGCAGTTTAGCTGGCTTTATAGTGCTTAACTCCCTAAATATACTGCCTGATTCGCGGTGACCCCAAGCGTAATAATTATTTTCTCGCTTGAGGTG", "TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGGGCGAATTACCTGGTAAGGCCCACTTACCCGGTACCAACCTACCCTGTACACCGCGCCTGGGTCTACCCTCCGGATGACATTTTTAAGACTCTTGTTTTATAGTGAAATTCTGAGTTTTTATACTTAATAAGTTAAAACTTTCAATCTCGGATCTCTTGGCTCTGGCATCGATGAAGAACGCTACGAAATGCTGATAAATAATGTGAATTGCCGAATTCATTGAATCATCGAATCTTTGAACGCACATTGCACCCATTAGTATTCTAGAGTGCATGCCTGTTCCAGCGTCATTTTCAATCCTCAAGCCCCTTATTGCTTGGTGTTGGCAGTTTAGCTGGCTTTATAGTGCTTAACTCCCTAAATATACTGCCTGATTCGCGGTGACCCCAAGCGTAATAATTATTTTCTCGCTTGAGGTG", "TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGGGCGAATTACCTGGTAAGGCCCACTTACCCGGTACCAACCTACCCTGTACACCGCGCCTGGGTCTACCCTCCGGATGACATTTTTAAGACTCTTGTTTTATAGTGAAATTCTGAGTTTTTATACTTAATAAGTTAAAACTTTCAATCTCGGATCTCTTGGCTCTGGCATCGATGAAGAACGCTACGAAATGCTGATAAATAATGTGAATTGCCGAATTCATTGAATCATCGAATCTTTGAACGCACATTGCACCCATTAGTATTCTAGAGTGCATGCCTGTTCCAGCGTCATTTTCAATCCTCAAGCCCCTTATTGCTTGGTGTTGGCAGTTTAGCTGGCTTTATAGTGCTTAACTCCCTAAATATACTGCCTGATTCGCGGTGACCCCAAGCGTAATAATTATTTTCTCGCTTGAGGTG", "TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGCGAATTACCTGGTATTTTAGCCCACTTACCCGGTACCAACCTACCCTGTACACCGCGCCTGGGTCTACCCTCCGGATGACATTTTTAAGACTCTTGTTTTATAGTGAAATTCTGAGTTTTTATACTTAATAAGTTAAAACTTTCAATCTCGGATCTCTTGGCTCTGGCATCGATGAAGAACGCTACGAAATGCTGATAAATAATGTGAATTGCCGAATTCATTGAATCATCGAATCTTTGAACGCACATTGCACCCATTAGTATTCTAGAGTGCATGCCTGTTCCAGCGTCATTTTCAATCCTCAAGCCCCTTATTGCTTGGTGTTGGCAGTTTAGCTGGCTTTATAGTGCTTAACTCCCTAAATATACTGCCTGATTCGCGGTGACCCCAAGCGTAATAATTATTTTCTCGCTTGAGGTG", "GCGGCTAAACCTACCCGGGATTTGATGGCGAATTACCTGG", "GCGGCTAAACCTACCCGGGATTTGATGGCGAATTACAAAG", "GCGGCTAAACCTACCCGGGATTTGATGGCGAATTACAAAG", "GCGGCTAAACCTACCCGGGATTTGATGGCGAATTACAAAG")
+#' sequences_ex <- c(
+#'   "TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGGGCGAATTAATAACGAATTCATTGAATCA",
+#'   "TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGGGCGAATTACCTGGTAAGGCCCACTT",
+#'   "TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGGGCGAATTACCTGGTAGAGGTG",
+#'   "TACCTATGTTGCCTTGGCGGCTAAACCTACC",
+#'   "CGGGATTTGATGGCGAATTACCTGGTATTTTAGCCCACTTACCCGGTACCATGAGGTG",
+#'   "GCGGCTAAACCTACCCGGGATTTGATGGCGAATTACCTGG",
+#'   "GCGGCTAAACCTACCCGGGATTTGATGGCGAATTACAAAG",
+#'   "GCGGCTAAACCTACCCGGGATTTGATGGCGAATTACAAAG",
+#'   "GCGGCTAAACCTACCCGGGATTTGATGGCGAATTACAAAG"
+#' )
 #'
 #' sequences_ex_swarm <- swarm_clustering(
 #'   dna_seq = sequences_ex,
@@ -2520,11 +2530,21 @@ swarm_clustering <- function(physeq = NULL,
 #' @export
 #'
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' dna <- physeq_or_string_to_dna(data_fungi)
 #' dna
 #'
-#' sequences_ex <- c("TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGGGCGAATTACCTGGTATTTTAGCCCACTTACCCGGTACCAACCTACCCTGTACACCGCGCCTGGGTCTACCCTCCGGATGACATTTTTAAGACTCTTGTTTTATAGTGAAATTCTGAGTTTTTATACTTAATAAGTTAAAACTTTCAATCTCGGATCTCTTGGCTCTGGCATCGATGAAGAACGCTACGAAATGCTGATAAATAATGTGAATTGCCGAATTCATTGAATCATCGAATCTTTGAACGCACATTGCACCCATTAGTATTCTAGAGTGCATGCCTGTTCCAGCGTCATTTTCAATCCTCAAGCCCCTTATTGCTTGGTGTTGGCAGTTTAGCTGGCTTTATAGTGCTTAACTCCCTAAATATACTGCCTGATTCGCGGTGACCCCAAGCGTAATAATTATTTTCTCGCTTGAGGTG", "TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGGGCGAATTACCTGGTAAGGCCCACTTACCCGGTACCAACCTACCCTGTACACCGCGCCTGGGTCTACCCTCCGGATGACATTTTTAAGACTCTTGTTTTATAGTGAAATTCTGAGTTTTTATACTTAATAAGTTAAAACTTTCAATCTCGGATCTCTTGGCTCTGGCATCGATGAAGAACGCTACGAAATGCTGATAAATAATGTGAATTGCCGAATTCATTGAATCATCGAATCTTTGAACGCACATTGCACCCATTAGTATTCTAGAGTGCATGCCTGTTCCAGCGTCATTTTCAATCCTCAAGCCCCTTATTGCTTGGTGTTGGCAGTTTAGCTGGCTTTATAGTGCTTAACTCCCTAAATATACTGCCTGATTCGCGGTGACCCCAAGCGTAATAATTATTTTCTCGCTTGAGGTG", "TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGCGAATTACCTGGTATTTTAGCCCACTTACCCGGTACCAACCTACCCTGTACACCGCGCCTGGGTCTACCCTCCGGATGACATTTTTAAGACTCTTGTTTTATAGTGAAATTCTGAGTTTTTATACTTAATAAGTTAAAACTTTCAATCTCGGATCTCTTGGCTCTGGCATCGATGAAGAACGCTACGAAATGCTGATAAATAATGTGAATTGCCGAATTCATTGAATCATCGAATCTTTGAACGCACATTGCACCCATTAGTATTCTAGAGTGCATGCCTGTTCCAGCGTCATTTTCAATCCTCAAGCCCCTTATTGCTTGGTGTTGGCAGTTTAGCTGGCTTTATAGTGCTTAACTCCCTAAATATACTGCCTGATTCGCGGTGACCCCAAGCGTAATAATTATTTTCTCGCTTGAGGTG")
+#' sequences_ex <- c(
+#'   "TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGGGCGAATTAATAACGAATTCATTGAATCA",
+#'   "TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGGGCGAATTACCTGGTAAGGCCCACTT",
+#'   "TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGGGCGAATTACCTGGTAGAGGTG",
+#'   "TACCTATGTTGCCTTGGCGGCTAAACCTACC",
+#'   "CGGGATTTGATGGCGAATTACCTGGTATTTTAGCCCACTTACCCGGTACCATGAGGTG",
+#'   "GCGGCTAAACCTACCCGGGATTTGATGGCGAATTACCTGG",
+#'   "GCGGCTAAACCTACCCGGGATTTGATGGCGAATTACAAAG",
+#'   "GCGGCTAAACCTACCCGGGATTTGATGGCGAATTACAAAG",
+#'   "GCGGCTAAACCTACCCGGGATTTGATGGCGAATTACAAAG"
+#' )
 #' dna2 <- physeq_or_string_to_dna(dna_seq = sequences_ex)
 #' dna2
 #'
@@ -2602,7 +2622,7 @@ physeq_or_string_to_dna <- function(physeq = NULL,
 #' @author Adrien Taudière
 #'
 #' @examples
-#' data(data_fungi)
+#' # data(data_fungi)
 #' summary_plot_pq(data_fungi)
 #' d_vs <- vsearch_clustering(data_fungi)
 #' summary_plot_pq(d_vs)
@@ -2776,7 +2796,7 @@ cutadapt_remove_primers <- function(path_to_fastq,
                                     args_before_cutadapt = "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv && ") {
   cmd <- list()
   if (!dir.exists(folder_output)) {
-      dir.create(folder_output)
+    dir.create(folder_output)
   }
 
   if (is.null(primer_rev)) {
@@ -2813,8 +2833,8 @@ cutadapt_remove_primers <- function(path_to_fastq,
       nb_files = nb_files
     )
 
-    primer_fw_RC <- dada2:::rc(primer_fw)
-    primer_rev_RC <- dada2:::rc(primer_rev)
+    primer_fw_RC <- dada2::rc(primer_fw)
+    primer_rev_RC <- dada2::rc(primer_rev)
     for (f in lff$fnfs) {
       cmd[[f]] <-
         paste0(

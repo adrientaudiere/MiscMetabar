@@ -5,22 +5,32 @@
 \title{Load sample data from file and rename samples using names of samples and an
 optional order}
 \usage{
-sample_data_with_new_names(file, names_of_samples, samples_order, ...)
+sample_data_with_new_names(
+  file_path,
+  names_of_samples,
+  samples_order = NULL,
+  ...
+)
 }
 \arguments{
+\item{file_path}{(required) a path to the sample_data file}
+
 \item{names_of_samples}{(required) a vector of sample names}
 
 \item{samples_order}{Optional numeric vector to sort sample names}
 
 \item{...}{Other arguments passed on to \code{\link[utils:read.table]{utils::read.delim()}} function.}
-
-\item{file_path}{(required) a path to the sample_data file}
 }
 \value{
 A data.frame from file_path and new names
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+}
+\examples{
+sam_file <- "inst/extdata/sam_data.csv"
+sample_data_with_new_names(sam_file, paste0("Samples_", seq(1, 185)))
+
 }
 \seealso{
 \code{\link[=rename_samples]{rename_samples()}}
