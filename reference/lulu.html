@@ -32,7 +32,7 @@ for pair-wise sequence matching."><!-- mathjax --><script src="https://cdnjs.clo
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,14 +50,17 @@ for pair-wise sequence matching."><!-- mathjax --><script src="https://cdnjs.clo
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Tutorials</h6>
-    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
-    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
     <a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a>
+    <a class="dropdown-item" href="../articles/explore_data.html">Explore phyloseq data</a>
     <a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a>
     <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
     <a class="dropdown-item" href="../articles/tree_visualization.html">Tree visualization</a>
     <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Tutorials with published dataset</h6>
+    <h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6>
+    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
+    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>Examples with published dataset</h6>
     <a class="dropdown-item" href="../articles/tengeler.html">Tengeler</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>R ecosystem for metabarcoding</h6>
@@ -109,7 +112,7 @@ for pair-wise sequence matching.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">lulu</span><span class="op">(</span></span>
-<span>  <span class="va">otutable</span>,</span>
+<span>  <span class="va">otu_table</span>,</span>
 <span>  <span class="va">matchlist</span>,</span>
 <span>  minimum_ratio_type <span class="op">=</span> <span class="st">"min"</span>,</span>
 <span>  minimum_ratio <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -122,7 +125,7 @@ for pair-wise sequence matching.</p>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>otutable</dt>
+    <dl><dt>otu_table</dt>
 <dd><p>a data.frame with with an OTU table that has sites/samples as
 columns and OTUs (unique OTU id's) as rows, and observations as read
 counts.</p></dd>

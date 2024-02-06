@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,14 +28,17 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Tutorials</h6>
-    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
-    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
     <a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a>
+    <a class="dropdown-item" href="../articles/explore_data.html">Explore phyloseq data</a>
     <a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a>
     <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
     <a class="dropdown-item" href="../articles/tree_visualization.html">Tree visualization</a>
     <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Tutorials with published dataset</h6>
+    <h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6>
+    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
+    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>Examples with published dataset</h6>
     <a class="dropdown-item" href="../articles/tengeler.html">Tengeler</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>R ecosystem for metabarcoding</h6>
@@ -69,9 +72,47 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.6.1" id="miscmetabar-061-in-development">MiscMetabar 0.6.1 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-061-in-development"></a></h2>
-<ul><li>Minor bugs fix to pass R CMD CHECK</li>
+<h2 class="pkg-version" data-toc-text="0.7" id="miscmetabar-07-in-development">MiscMetabar 0.7 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-07-in-development"></a></h2>
+<ul><li>Add functions <code><a href="../reference/chimera_detection_vs.html">chimera_detection_vs()</a></code> and <code><a href="../reference/chimera_removal_vs.html">chimera_removal_vs()</a></code> to process chimera detection and removal using <a href="https://github.com/torognes/vsearch" class="external-link">vsearch</a> software</li>
+<li>Add functions <code><a href="../reference/filter_trim.html">filter_trim()</a></code>, <code><a href="../reference/sample_data_with_new_names.html">sample_data_with_new_names()</a></code> and <code><a href="../reference/rename_samples.html">rename_samples()</a></code> to facilitate the use of <a href="https://books.ropensci.org/targets/" class="external-link">targets</a> for bioinformatic pipeline.</li>
+<li>Add function <code><a href="../reference/add_info_to_sam_data.html">add_info_to_sam_data()</a></code> to expand sam_data slot using a data.frame and using nb_asv and nb_seq</li>
+<li>Add functions <code><a href="../reference/swarm_clustering.html">swarm_clustering()</a></code> and <code><a href="../reference/vsearch_clustering.html">vsearch_clustering()</a></code> and add <code>swarm</code> method in the function <code><a href="../reference/asv2otu.html">asv2otu()</a></code>
+</li>
+<li>Add function <code><a href="../reference/physeq_or_string_to_dna.html">physeq_or_string_to_dna()</a></code> mostly for internal use</li>
+<li>Add function <code><a href="../reference/cutadapt_remove_primers.html">cutadapt_remove_primers()</a></code> to remove primers using <a href="https://github.com/marcelm/cutadapt/" class="external-link">cutadapt</a>
+</li>
+</ul><div class="section level3">
+<h3 id="breaking-changes-0-7">BREAKING CHANGES<a class="anchor" aria-label="anchor" href="#breaking-changes-0-7"></a></h3>
+<ul><li>Harmonization of parameters names:
+<ul><li>
+<code>add_nb_sequences</code> -&gt; <code>add_nb_seq</code> in <code><a href="../reference/ggvenn_pq.html">ggvenn_pq()</a></code>
+</li>
+<li>
+<code>db</code> -&gt; <code>db_url</code> in <code><a href="../reference/get_funguild_db.html">get_funguild_db()</a></code>
+</li>
+<li>
+<code>db</code> -&gt; <code>db_funguild</code> in <code><a href="../reference/get_funguild_db.html">get_funguild_db()</a></code>
+</li>
+<li>
+<code>file</code> -&gt; <code>file_path</code> in <code><a href="../reference/get_file_extension.html">get_file_extension()</a></code>
+</li>
+<li>
+<code>n_seq</code> -&gt; <code>nb_seq</code> in <code><a href="../reference/subsample_fastq.html">subsample_fastq()</a></code>
+</li>
+<li>
+<code>otutable</code> -&gt; <code>otu_table</code> in <code><a href="../reference/lulu.html">lulu()</a></code>
+</li>
+<li>
+<code>alpha</code> -&gt; <code>pval</code> in <code><a href="../reference/plot_edgeR_pq.html">plot_edgeR_pq()</a></code> and <code><a href="../reference/plot_deseq2_pq.html">plot_deseq2_pq()</a></code> and change default value from 0.01 to more classical 0.05</li>
+<li>
+<code>sequences</code> -&gt; <code>seq2search</code> in function <code><a href="../reference/search_exact_seq_pq.html">search_exact_seq_pq()</a></code>
+</li>
+<li>
+<code>seq_names</code> -&gt; <code>dna_seq</code> in function <code>asv2otu</code>
+</li>
+</ul></li>
 </ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.6.0" id="miscmetabar-060">MiscMetabar 0.6.0<a class="anchor" aria-label="anchor" href="#miscmetabar-060"></a></h2>
 <ul><li>Add function <code><a href="../reference/ancombc_pq.html">ancombc_pq()</a></code> to simplify the call to <code><a href="https://rdrr.io/pkg/ANCOMBC/man/ancombc2.html" class="external-link">ANCOMBC::ancombc2()</a></code> : ANalysis of COmpositions of Microbiomes with Bias Correction 2</li>

@@ -14,7 +14,7 @@ and the number of sequences under the name nb_sequences"><!-- mathjax --><script
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,14 +32,17 @@ and the number of sequences under the name nb_sequences"><!-- mathjax --><script
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Tutorials</h6>
-    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
-    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
     <a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a>
+    <a class="dropdown-item" href="../articles/explore_data.html">Explore phyloseq data</a>
     <a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a>
     <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
     <a class="dropdown-item" href="../articles/tree_visualization.html">Tree visualization</a>
     <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Tutorials with published dataset</h6>
+    <h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6>
+    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
+    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>Examples with published dataset</h6>
     <a class="dropdown-item" href="../articles/tengeler.html">Tengeler</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>R ecosystem for metabarcoding</h6>
@@ -128,6 +131,7 @@ their column numbers (e.g. taxonomic_level = 1:7)</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     filter_taxa</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GlobalPatterns"</span>, package <span class="op">=</span> <span class="st">"phyloseq"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">GPsubset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html" class="external-link">subset_taxa</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">GlobalPatterns</span>,</span></span>
 <span class="r-in"><span>  <span class="va">GlobalPatterns</span><span class="op">@</span><span class="va">tax_table</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="st">"Bacteria"</span></span></span>
@@ -140,11 +144,13 @@ their column numbers (e.g. taxonomic_level = 1:7)</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’ ‘tidytree’</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’ ‘tidytree’</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">GPsubset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html" class="external-link">subset_taxa</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">GPsubset</span>,</span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">GPsubset</span><span class="op">@</span><span class="va">otu_table</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1000</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(e, x, parent.frame()):</span> object 'GPsubset' not found</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">GPsubset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html" class="external-link">subset_taxa</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">GPsubset</span>,</span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">GPsubset</span><span class="op">@</span><span class="va">tax_table</span><span class="op">)</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span></span></span>

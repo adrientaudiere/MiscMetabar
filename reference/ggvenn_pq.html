@@ -20,7 +20,7 @@ examples.'><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/m
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,14 +38,17 @@ examples.'><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/m
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Tutorials</h6>
-    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
-    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
     <a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a>
+    <a class="dropdown-item" href="../articles/explore_data.html">Explore phyloseq data</a>
     <a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a>
     <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
     <a class="dropdown-item" href="../articles/tree_visualization.html">Tree visualization</a>
     <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Tutorials with published dataset</h6>
+    <h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6>
+    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
+    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>Examples with published dataset</h6>
     <a class="dropdown-item" href="../articles/tengeler.html">Tengeler</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>R ecosystem for metabarcoding</h6>
@@ -97,7 +100,7 @@ examples.</p>
 <span>  taxonomic_rank <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  split_by <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  add_nb_samples <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  add_nb_sequences <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  add_nb_seq <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  rarefy_before_merging <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  rarefy_after_merging <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -139,7 +142,7 @@ of the physeq object.</p></dd>
 levels names</p></dd>
 
 
-<dt>add_nb_sequences</dt>
+<dt>add_nb_seq</dt>
 <dd><p>(logical, default FALSE) Add the number of sequences to
 levels names</p></dd>
 
@@ -178,7 +181,7 @@ of plots.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># data(data_fungi)</span></span></span>
 <span class="r-in"><span><span class="fu">ggvenn_pq</span><span class="op">(</span><span class="va">data_fungi</span>, fact <span class="op">=</span> <span class="st">"Height"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="ggvenn_pq-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu">ggvenn_pq</span><span class="op">(</span><span class="va">data_fungi</span>, fact <span class="op">=</span> <span class="st">"Height"</span><span class="op">)</span> <span class="op">+</span></span></span>
@@ -203,19 +206,19 @@ of plots.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Two modalities differ greatly (more than x2) in their number of sequences (432919 vs 3961). You may be interested by the parameter rarefy_after_merging</span>
 <span class="r-plt img"><img src="ggvenn_pq-7.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">ggvenn_pq</span><span class="op">(</span><span class="va">data_fungi</span>, fact <span class="op">=</span> <span class="st">"Height"</span>, add_nb_sequences <span class="op">=</span> <span class="cn">TRUE</span>, set_size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> </span></span>
+<span class="r-in"><span><span class="fu">ggvenn_pq</span><span class="op">(</span><span class="va">data_fungi</span>, fact <span class="op">=</span> <span class="st">"Height"</span>, add_nb_seq <span class="op">=</span> <span class="cn">TRUE</span>, set_size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="ggvenn_pq-8.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu">ggvenn_pq</span><span class="op">(</span><span class="va">data_fungi</span>, fact <span class="op">=</span> <span class="st">"Height"</span>, rarefy_before_merging <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> You set `rngseed` to FALSE. Make sure you've set &amp; recorded</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  the random seed of your session for reproducibility.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> See `?set.seed`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1018OTUs were removed because they are no longer </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1026OTUs were removed because they are no longer </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> present in any sample after random subsampling</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa and 0 samples.</span>
 <span class="r-plt img"><img src="ggvenn_pq-9.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">ggvenn_pq</span><span class="op">(</span><span class="va">data_fungi</span>, fact <span class="op">=</span> <span class="st">"Height"</span>, rarefy_after_merging <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> </span></span>
+<span class="r-in"><span><span class="fu">ggvenn_pq</span><span class="op">(</span><span class="va">data_fungi</span>, fact <span class="op">=</span> <span class="st">"Height"</span>, rarefy_after_merging <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html" class="external-link">expansion</a></span><span class="op">(</span>mult <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`group` has missing values; corresponding samples will be dropped</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> You set `rngseed` to FALSE. Make sure you've set &amp; recorded</span>

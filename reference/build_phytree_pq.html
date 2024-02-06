@@ -26,7 +26,7 @@ taxonomic classification (see vignette Tree visualization) and bootstrap or mult
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,14 +44,17 @@ taxonomic classification (see vignette Tree visualization) and bootstrap or mult
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Tutorials</h6>
-    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
-    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
     <a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a>
+    <a class="dropdown-item" href="../articles/explore_data.html">Explore phyloseq data</a>
     <a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a>
     <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
     <a class="dropdown-item" href="../articles/tree_visualization.html">Tree visualization</a>
     <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Tutorials with published dataset</h6>
+    <h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6>
+    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
+    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>Examples with published dataset</h6>
     <a class="dropdown-item" href="../articles/tengeler.html">Tengeler</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>R ecosystem for metabarcoding</h6>
@@ -193,7 +196,7 @@ use this function.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:dplyr’:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     where</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># data(data_fungi)</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="subset_taxa_pq.html">subset_taxa_pq</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/taxa_sums.html" class="external-link">taxa_sums</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">9000</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 15 sample(s) ( BE9-006-B_S27_MERGED.fastq.gz / C21-NV1-M_S64_MERGED.fastq.gz / DJ2-008-B_S87_MERGED.fastq.gz / DY5-004-H_S97_MERGED.fastq.gz / DY5-004-M_S98_MERGED.fastq.gz / E9-009-B_S100_MERGED.fastq.gz / E9-009-H_S101_MERGED.fastq.gz / N22-001-B_S129_MERGED.fastq.gz / O20-X-B_S139_MERGED.fastq.gz / O21-007-M_S144_MERGED.fastq.gz / R28-008-H_S159_MERGED.fastq.gz / R28-008-M_S160_MERGED.fastq.gz / W26-001-M_S167_MERGED.fastq.gz / Y29-007-H_S182_MERGED.fastq.gz / Y29-007-M_S183_MERGED.fastq.gz ).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
@@ -232,7 +235,7 @@ use this function.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Realigning Sequences:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.19 secs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.2 secs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 2 of 2:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -249,41 +252,43 @@ use this function.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Realigning Sequences:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.15 secs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.16 secs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Refining the alignment:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.05 secs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7340.889 --&gt; -7164.2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7164.2 --&gt; -7164.171 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize topology:  -7164.171 --&gt; -7148.264  NNI moves:  6 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7148.264 --&gt; -7148.263 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize topology:  -7148.263 --&gt; -7148.263  NNI moves:  0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7148.263 --&gt; -7148.263 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -6852.061 --&gt; -6680.492 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -6680.492 --&gt; -6680.473 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize topology:  -6680.473 --&gt; -6661.378  NNI moves:  7 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -6661.378 --&gt; -6661.378 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize topology:  -6661.378 --&gt; -6661.378  NNI moves:  0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7617.548 --&gt; -7396.237 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7396.237 --&gt; -7396.232 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize topology:  -7396.232 --&gt; -7375.959  NNI moves:  8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7375.959 --&gt; -7375.959 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize topology:  -7375.959 --&gt; -7375.959  NNI moves:  0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7375.959 --&gt; -7375.959 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7538.024 --&gt; -7352.432 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7352.432 --&gt; -7352.423 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize topology:  -7352.423 --&gt; -7350.582  NNI moves:  2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7350.582 --&gt; -7350.582 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize topology:  -7350.582 --&gt; -7350.582  NNI moves:  0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7476.309 --&gt; -7279.166 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7279.166 --&gt; -7279.143 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize topology:  -7279.143 --&gt; -7253.022  NNI moves:  8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7253.022 --&gt; -7252.986 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize topology:  -7252.986 --&gt; -7252.986  NNI moves:  0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7252.986 --&gt; -7252.986 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -6910.742 --&gt; -6772.959 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -6772.959 --&gt; -6772.703 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize topology:  -6772.703 --&gt; -6768.532  NNI moves:  2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -6768.532 --&gt; -6768.518 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize topology:  -6768.518 --&gt; -6768.518  NNI moves:  0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -6768.518 --&gt; -6768.518 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7505.127 --&gt; -7312.42 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7312.42 --&gt; -7312.413 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize topology:  -7312.413 --&gt; -7288.834  NNI moves:  10 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7288.834 --&gt; -7288.829 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize topology:  -7288.829 --&gt; -7288.829  NNI moves:  0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7288.829 --&gt; -7288.829 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7469.217 --&gt; -7295.771 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7295.771 --&gt; -7295.763 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize topology:  -7295.763 --&gt; -7286.68  NNI moves:  4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7286.68 --&gt; -7286.68 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize topology:  -7286.68 --&gt; -7286.68  NNI moves:  0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7286.68 --&gt; -7286.68 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7490.809 --&gt; -7282.507 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7282.507 --&gt; -7282.506 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize topology:  -7282.506 --&gt; -7269.593  NNI moves:  5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7269.593 --&gt; -7269.593 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize topology:  -7269.593 --&gt; -7269.593  NNI moves:  0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7269.593 --&gt; -7269.593 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7644.058 --&gt; -7474.304 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7474.304 --&gt; -7474.299 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize topology:  -7474.299 --&gt; -7464.905  NNI moves:  4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7464.905 --&gt; -7464.903 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize topology:  -7464.903 --&gt; -7464.903  NNI moves:  0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -7464.903 --&gt; -7464.903 </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">df_tree</span><span class="op">$</span><span class="va">UPGMA</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="build_phytree_pq-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu"><a href="https://klausvigo.github.io/phangorn/reference/plotBS.html" class="external-link">plotBS</a></span><span class="op">(</span><span class="va">df_tree</span><span class="op">$</span><span class="va">UPGMA</span>, <span class="va">df_tree</span><span class="op">$</span><span class="va">UPGMA_bs</span>, main <span class="op">=</span> <span class="st">"UPGMA"</span><span class="op">)</span></span></span>

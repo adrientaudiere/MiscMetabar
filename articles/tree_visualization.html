@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,14 +52,17 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Tutorials</h6>
-    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
-    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
     <a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a>
+    <a class="dropdown-item" href="../articles/explore_data.html">Explore phyloseq data</a>
     <a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a>
     <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
     <a class="dropdown-item" href="../articles/tree_visualization.html">Tree visualization</a>
     <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Tutorials with published dataset</h6>
+    <h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6>
+    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
+    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>Examples with published dataset</h6>
     <a class="dropdown-item" href="../articles/tengeler.html">Tengeler</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>R ecosystem for metabarcoding</h6>
@@ -99,7 +102,7 @@
       <img src="" class="logo" alt=""><h1>Tree visualization</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/vignettes/tree_visualization.Rmd" class="external-link"><code>vignettes/tree_visualization.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/vignettes/articles/tree_visualization.Rmd" class="external-link"><code>vignettes/articles/tree_visualization.Rmd</code></a></small>
       <div class="d-none name"><code>tree_visualization.Rmd</code></div>
     </div>
 
@@ -171,7 +174,7 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
 <span><span class="co">#&gt;  [1] ggtree_3.10.0     treeio_1.26.0     phangorn_2.11.1   ape_5.7-1        </span></span>
-<span><span class="co">#&gt;  [5] MiscMetabar_0.6.1 dplyr_1.1.4       dada2_1.30.0      Rcpp_1.0.12      </span></span>
+<span><span class="co">#&gt;  [5] MiscMetabar_0.7.1 dplyr_1.1.4       dada2_1.30.0      Rcpp_1.0.12      </span></span>
 <span><span class="co">#&gt;  [9] ggplot2_3.4.4     phyloseq_1.46.0   tidytree_0.4.6   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
@@ -188,7 +191,7 @@
 <span><span class="co">#&gt;  [21] bslib_0.6.1                 desc_1.4.3                 </span></span>
 <span><span class="co">#&gt;  [23] plyr_1.8.9                  DECIPHER_2.30.0            </span></span>
 <span><span class="co">#&gt;  [25] cachem_1.0.8                GenomicAlignments_1.38.2   </span></span>
-<span><span class="co">#&gt;  [27] igraph_1.6.0                lifecycle_1.0.4            </span></span>
+<span><span class="co">#&gt;  [27] igraph_2.0.1.1              lifecycle_1.0.4            </span></span>
 <span><span class="co">#&gt;  [29] iterators_1.0.14            pkgconfig_2.0.3            </span></span>
 <span><span class="co">#&gt;  [31] Matrix_1.6-1.1              R6_2.5.1                   </span></span>
 <span><span class="co">#&gt;  [33] fastmap_1.1.1               GenomeInfoDbData_1.2.11    </span></span>
@@ -210,22 +213,22 @@
 <span><span class="co">#&gt;  [65] rhdf5filters_1.14.1         grid_4.3.2                 </span></span>
 <span><span class="co">#&gt;  [67] cluster_2.1.4               reshape2_1.4.4             </span></span>
 <span><span class="co">#&gt;  [69] ade4_1.7-22                 generics_0.1.3             </span></span>
-<span><span class="co">#&gt;  [71] gtable_0.3.4                tidyr_1.3.0                </span></span>
-<span><span class="co">#&gt;  [73] data.table_1.14.10          utf8_1.2.4                 </span></span>
+<span><span class="co">#&gt;  [71] gtable_0.3.4                tidyr_1.3.1                </span></span>
+<span><span class="co">#&gt;  [73] data.table_1.15.0           utf8_1.2.4                 </span></span>
 <span><span class="co">#&gt;  [75] XVector_0.42.0              BiocGenerics_0.48.1        </span></span>
 <span><span class="co">#&gt;  [77] foreach_1.5.2               pillar_1.9.0               </span></span>
-<span><span class="co">#&gt;  [79] stringr_1.5.1               yulab.utils_0.1.3          </span></span>
+<span><span class="co">#&gt;  [79] stringr_1.5.1               yulab.utils_0.1.4          </span></span>
 <span><span class="co">#&gt;  [81] splines_4.3.2               lattice_0.21-9             </span></span>
 <span><span class="co">#&gt;  [83] survival_3.5-7              bit_4.0.5                  </span></span>
 <span><span class="co">#&gt;  [85] deldir_2.0-2                tidyselect_1.2.0           </span></span>
-<span><span class="co">#&gt;  [87] Biostrings_2.70.1           knitr_1.45                 </span></span>
+<span><span class="co">#&gt;  [87] Biostrings_2.70.2           knitr_1.45                 </span></span>
 <span><span class="co">#&gt;  [89] IRanges_2.36.0              SummarizedExperiment_1.32.0</span></span>
 <span><span class="co">#&gt;  [91] stats4_4.3.2                xfun_0.41                  </span></span>
 <span><span class="co">#&gt;  [93] Biobase_2.62.0              matrixStats_1.2.0          </span></span>
 <span><span class="co">#&gt;  [95] stringi_1.8.3               lazyeval_0.2.2             </span></span>
 <span><span class="co">#&gt;  [97] ggfun_0.1.4                 yaml_2.3.8                 </span></span>
 <span><span class="co">#&gt;  [99] evaluate_0.23               codetools_0.2-19           </span></span>
-<span><span class="co">#&gt; [101] interp_1.1-5                tibble_3.2.1               </span></span>
+<span><span class="co">#&gt; [101] interp_1.1-6                tibble_3.2.1               </span></span>
 <span><span class="co">#&gt; [103] ggplotify_0.1.2             cli_3.6.2                  </span></span>
 <span><span class="co">#&gt; [105] RcppParallel_5.1.7          systemfonts_1.0.5          </span></span>
 <span><span class="co">#&gt; [107] munsell_0.5.0               jquerylib_0.1.4            </span></span>

@@ -28,7 +28,7 @@ otu_table$Taxonomy."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/a
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,14 +46,17 @@ otu_table$Taxonomy."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/a
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Tutorials</h6>
-    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
-    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
     <a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a>
+    <a class="dropdown-item" href="../articles/explore_data.html">Explore phyloseq data</a>
     <a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a>
     <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
     <a class="dropdown-item" href="../articles/tree_visualization.html">Tree visualization</a>
     <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Tutorials with published dataset</h6>
+    <h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6>
+    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
+    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>Examples with published dataset</h6>
     <a class="dropdown-item" href="../articles/tengeler.html">Tengeler</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>R ecosystem for metabarcoding</h6>
@@ -102,7 +105,11 @@ No attempt is made to check or correct the classification in
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">funguild_assign</span><span class="op">(</span><span class="va">otu_table</span>, db <span class="op">=</span> <span class="fu"><a href="get_funguild_db.html">get_funguild_db</a></span><span class="op">(</span><span class="op">)</span>, tax_col <span class="op">=</span> <span class="st">"Taxonomy"</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">funguild_assign</span><span class="op">(</span></span>
+<span>  <span class="va">otu_table</span>,</span>
+<span>  db_funguild <span class="op">=</span> <span class="fu"><a href="get_funguild_db.html">get_funguild_db</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  tax_col <span class="op">=</span> <span class="st">"Taxonomy"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -119,7 +126,7 @@ A <code>character</code> vector, representing only the taxonomic classification,
 is also accepted.</p></dd>
 
 
-<dt>db</dt>
+<dt>db_funguild</dt>
 <dd><p>A <code>data.frame</code> representing the FUNGuild as returned by
 <code><a href="get_funguild_db.html">get_funguild_db()</a></code>
 If not supplied, the default database will be downloaded.</p></dd>

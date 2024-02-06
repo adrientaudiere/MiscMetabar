@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,14 +52,17 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Tutorials</h6>
-    <a class="dropdown-item" href="articles/alpha-div.html">Alpha-diversity</a>
-    <a class="dropdown-item" href="articles/beta-div.html">Beta-diversity</a>
     <a class="dropdown-item" href="articles/import_export_track.html">Import/export and track</a>
+    <a class="dropdown-item" href="articles/explore_data.html">Explore phyloseq data</a>
     <a class="dropdown-item" href="articles/filter.html">Filter taxa and samples</a>
     <a class="dropdown-item" href="articles/Reclustering.html">Reclustering</a>
     <a class="dropdown-item" href="articles/tree_visualization.html">Tree visualization</a>
     <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Tutorials with published dataset</h6>
+    <h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6>
+    <a class="dropdown-item" href="articles/alpha-div.html">Alpha-diversity</a>
+    <a class="dropdown-item" href="articles/beta-div.html">Beta-diversity</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>Examples with published dataset</h6>
     <a class="dropdown-item" href="articles/tengeler.html">Tengeler</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>R ecosystem for metabarcoding</h6>
@@ -170,24 +173,44 @@ Result of the Tuckey post-hoc test
 <div class="section level3">
 <h3 id="installation-of-other-softwares-for-debian-linux-distributions">Installation of other softwares for debian Linux distributions<a class="anchor" aria-label="anchor" href="#installation-of-other-softwares-for-debian-linux-distributions"></a>
 </h3>
+<p>If you encounter any errors or have any questions about the installation of these softwares, please visit their dedicated websites.</p>
 <div class="section level4">
-<h4 id="blastn">blastn<a class="anchor" aria-label="anchor" href="#blastn"></a>
+<h4 id="blast">
+<a href="https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html#downloadblastdata" class="external-link">blast@</a><a class="anchor" aria-label="anchor" href="#blast"></a>
 </h4>
 <div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install ncbi-blast+</span></code></pre></div>
 </div>
 <div class="section level4">
-<h4 id="vsearch">vsearch<a class="anchor" aria-label="anchor" href="#vsearch"></a>
+<h4 id="vsearch">
+<a href="https://github.com/torognes/vsearch" class="external-link">vsearch</a><a class="anchor" aria-label="anchor" href="#vsearch"></a>
 </h4>
 <div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install vsearch</span></code></pre></div>
+<p>An other possibilities is to <a href="https://bioconda.github.io/recipes/vsearch/README.html?highlight=vsearch#package-package%20'vsearch'" class="external-link">install vsearch</a> with <code>conda</code>.</p>
 </div>
 <div class="section level4">
-<h4 id="mumu">Mumu<a class="anchor" aria-label="anchor" href="#mumu"></a>
+<h4 id="swarm">
+<a href="https://github.com/torognes/swarm" class="external-link">swarm</a><a class="anchor" aria-label="anchor" href="#swarm"></a>
 </h4>
-<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/frederic-mahe/mumu.git</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ./mumu/</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> check</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> install  <span class="co"># as root or sudo</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/torognes/swarm.git</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> swarm/</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span></span></code></pre></div>
+<p>An other possibilities is to <a href="https://bioconda.github.io/recipes/swarm/README.html?highlight=swarm#package-package%20'swarm'" class="external-link">install swarm</a> with <code>conda</code>.</p>
+</div>
+<div class="section level4">
+<h4 id="mumu">
+<a href="https://github.com/frederic-mahe/mumu" class="external-link">Mumu</a><a class="anchor" aria-label="anchor" href="#mumu"></a>
+</h4>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/frederic-mahe/mumu.git</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ./mumu/</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> check</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">make</span> install  <span class="co"># as root or sudo</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="cutadapt">
+<a href="https://cutadapt.readthedocs.io/en/stable/" class="external-link">cutadapt</a><a class="anchor" aria-label="anchor" href="#cutadapt"></a>
+</h4>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> cutadaptenv cutadapt</span></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-callahan2016" class="csl-entry">
 Callahan, Benjamin J, Paul J McMurdie, Michael J Rosen, Andrew W Han, Amy Jo A Johnson, and Susan P Holmes. 2016. “DADA2: High-Resolution Sample Inference from Illumina Amplicon Data.” <em>Nature Methods</em> 13 (7): 581–83. <a href="https://doi.org/10.1038/nmeth.3869" class="external-link uri">https://doi.org/10.1038/nmeth.3869</a>.

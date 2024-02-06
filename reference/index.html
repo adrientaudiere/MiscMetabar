@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,14 +28,17 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Tutorials</h6>
-    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
-    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
     <a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a>
+    <a class="dropdown-item" href="../articles/explore_data.html">Explore phyloseq data</a>
     <a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a>
     <a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a>
     <a class="dropdown-item" href="../articles/tree_visualization.html">Tree visualization</a>
     <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Tutorials with published dataset</h6>
+    <h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6>
+    <a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a>
+    <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>Examples with published dataset</h6>
     <a class="dropdown-item" href="../articles/tengeler.html">Tengeler</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>R ecosystem for metabarcoding</h6>
@@ -73,6 +76,12 @@
       
 
       
+    </div><div class="section level2">
+      
+      <h3 id="see-also-vignette-on-exploring-data-articles-explore-data-html-">See also vignette on <a href="articles/explore_data.html">exploring data</a><a class="anchor" aria-label="anchor" href="#see-also-vignette-on-exploring-data-articles-explore-data-html-"></a></h3>
+      
+
+      
     </div><div id="" class="section level2">
       
       
@@ -93,6 +102,28 @@
           <code><a href="verify_pq.html">verify_pq()</a></code> 
         </dt>
         <dd>Verify the validity of a phyloseq object</dd>
+      </dl></div><div class="section level2">
+      <h2 id="obtain-phyloseq-object">Obtain phyloseq object<a class="anchor" aria-label="anchor" href="#obtain-phyloseq-object"></a></h2>
+      
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="chimera_removal_vs.html">chimera_removal_vs()</a></code> 
+        </dt>
+        <dd>Search for a list of sequence in an object to remove chimera taxa
+using <a href="https://github.com/torognes/vsearch" class="external-link">vsearch</a></dd>
+      </dl><dl><dt>
+          
+          <code><a href="chimera_detection_vs.html">chimera_detection_vs()</a></code> 
+        </dt>
+        <dd>Detect for chimera taxa using <a href="https://github.com/torognes/vsearch" class="external-link">vsearch</a></dd>
       </dl></div><div class="section level2">
       <h2 id="transform-phyloseq-object">Transform phyloseq object<a class="anchor" aria-label="anchor" href="#transform-phyloseq-object"></a></h2>
       
@@ -160,7 +191,7 @@ object.</dd>
         <dd>Filter undesirable taxa using blast against a against a custom database.</dd>
       </dl></div><div class="section level2">
       
-      <h3 id="function-from-taxonomy">Function from taxonomy<a class="anchor" aria-label="anchor" href="#function-from-taxonomy"></a></h3>
+      <h3 id="function-to-add-information-from-taxonomy">Function to add information from taxonomy<a class="anchor" aria-label="anchor" href="#function-to-add-information-from-taxonomy"></a></h3>
       
 
       
@@ -206,7 +237,19 @@ object.</dd>
           <code><a href="asv2otu.html">asv2otu()</a></code> 
         </dt>
         <dd>Recluster sequences of an object of class <code>physeq</code>
-(e.g. OTUs or ASV from dada)</dd>
+or a list of DNA sequences</dd>
+      </dl><dl><dt>
+          
+          <code><a href="swarm_clustering.html">swarm_clustering()</a></code> 
+        </dt>
+        <dd>Re-cluster sequences of an object of class <code>physeq</code>
+or cluster a list of DNA sequences using SWARM</dd>
+      </dl><dl><dt>
+          
+          <code><a href="vsearch_clustering.html">vsearch_clustering()</a></code> 
+        </dt>
+        <dd>Recluster sequences of an object of class <code>physeq</code>
+or cluster a list of DNA sequences using vsearch software</dd>
       </dl><dl><dt>
           
           <code><a href="lulu_pq.html">lulu_pq()</a></code> 
@@ -561,12 +604,44 @@ reverse and reverse-complement</dd>
         <dd>Search for a list of sequence in a fasta file against physeq reference
 sequences using <a href="https://github.com/torognes/vsearch" class="external-link">vsearch</a></dd>
       </dl></div><div class="section level2">
-      <h2 id="improve-reproducibility">Improve reproducibility<a class="anchor" aria-label="anchor" href="#improve-reproducibility"></a></h2>
+      <h2 id="improve-reproducibility-using-targets-https-books-ropensci-org-targets-pipeline">Improve reproducibility using <a href="https://books.ropensci.org/targets/" class="external-link">targets</a> pipeline<a class="anchor" aria-label="anchor" href="#improve-reproducibility-using-targets-https-books-ropensci-org-targets-pipeline"></a></h2>
       
       
 
       
     </div><div class="section level2">
+      
+      <h3 id="processing-fastq-files">Processing fastq files<a class="anchor" aria-label="anchor" href="#processing-fastq-files"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="list_fastq_files.html">list_fastq_files()</a></code> 
+        </dt>
+        <dd>List fastq files</dd>
+      </dl><dl><dt>
+          
+          <code><a href="filter_trim.html">filter_trim()</a></code> 
+        </dt>
+        <dd>A wrapper of the function <code><a href="https://rdrr.io/pkg/dada2/man/filterAndTrim.html" class="external-link">dada2::filterAndTrim()</a></code> to use in
+<a href="https://books.ropensci.org/targets/" class="external-link">targets</a> pipeline</dd>
+      </dl><dl><dt>
+          
+          <code><a href="cutadapt_remove_primers.html">cutadapt_remove_primers()</a></code> 
+        </dt>
+        <dd>Remove primers using <a href="https://github.com/marcelm/cutadapt/" class="external-link">cutadapt</a></dd>
+      </dl><dl><dt>
+          
+          <code><a href="subsample_fastq.html">subsample_fastq()</a></code> 
+        </dt>
+        <dd>Subsample a fastq file copying the n_seq first sequences in a given folder</dd>
+      </dl></div><div class="section level2">
       
       <h3 id="import-export-phyloseq-object">Import/export phyloseq object<a class="anchor" aria-label="anchor" href="#import-export-phyloseq-object"></a></h3>
       
@@ -623,7 +698,7 @@ from various objects including dada-class and derep-class.</dd>
 for each samples.</dd>
       </dl></div><div class="section level2">
       
-      <h3 id="utilities-for-targets-https-books-ropensci-org-targets-pipeline">Utilities for <a href="https://books.ropensci.org/targets/" class="external-link">targets</a> pipeline<a class="anchor" aria-label="anchor" href="#utilities-for-targets-https-books-ropensci-org-targets-pipeline"></a></h3>
+      <h3 id="sample-data-management">Sample data management<a class="anchor" aria-label="anchor" href="#sample-data-management"></a></h3>
       
 
       
@@ -634,29 +709,46 @@ for each samples.</dd>
 
       <dl><dt>
           
-          <code><a href="list_fastq_files.html">list_fastq_files()</a></code> 
-        </dt>
-        <dd>List fastq files</dd>
-      </dl><dl><dt>
-          
           <code><a href="rename_samples_otu_table.html">rename_samples_otu_table()</a></code> 
         </dt>
         <dd>Rename samples of an otu_table</dd>
       </dl><dl><dt>
           
-          <code><a href="select_one_sample.html">select_one_sample()</a></code> 
+          <code><a href="rename_samples.html">rename_samples()</a></code> 
         </dt>
-        <dd>Select one sample from a physeq object</dd>
+        <dd>Rename the samples of a phyloseq slot</dd>
       </dl><dl><dt>
+          
+          <code><a href="sample_data_with_new_names.html">sample_data_with_new_names()</a></code> 
+        </dt>
+        <dd>Load sample data from file and rename samples using names of samples and an
+optional order</dd>
+      </dl><dl><dt>
+          
+          <code><a href="add_info_to_sam_data.html">add_info_to_sam_data()</a></code> 
+        </dt>
+        <dd>Add information to sample_data slot of a phyloseq-class object</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="taxonomy-management">Taxonomy management<a class="anchor" aria-label="anchor" href="#taxonomy-management"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
           
           <code><a href="simplify_taxo.html">simplify_taxo()</a></code> 
         </dt>
         <dd>Simplify taxonomy by removing some unused characters such as "k__"</dd>
       </dl><dl><dt>
           
-          <code><a href="subsample_fastq.html">subsample_fastq()</a></code> 
+          <code><a href="reorder_taxa_pq.html">reorder_taxa_pq()</a></code> 
         </dt>
-        <dd>Subsample a fastq file copying the n_seq first sequences in a given folder</dd>
+        <dd>Reorder taxa in otu_table/tax_table/refseq slot of a phyloseq object</dd>
       </dl></div><div class="section level2">
       <h2 id="datasets">Datasets<a class="anchor" aria-label="anchor" href="#datasets"></a></h2>
       
@@ -759,14 +851,20 @@ a factor</dd>
         <dd>Merge taxa in groups (vectorized version)</dd>
       </dl><dl><dt>
           
-          <code><a href="reorder_taxa_pq.html">reorder_taxa_pq()</a></code> 
-        </dt>
-        <dd>Reorder taxa in otu_table/tax_table/refseq slot of a phyloseq object</dd>
-      </dl><dl><dt>
-          
           <code><a href="unique_or_na.html">unique_or_na()</a></code> 
         </dt>
         <dd>Get the unique value in x or NA if none</dd>
+      </dl><dl><dt>
+          
+          <code><a href="physeq_or_string_to_dna.html">physeq_or_string_to_dna()</a></code> 
+        </dt>
+        <dd>Return a DNAStringSet object from either a character vector of DNA sequences
+or the <code>refseq</code> slot of a phyloseq-class object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="select_one_sample.html">select_one_sample()</a></code> 
+        </dt>
+        <dd>Select one sample from a physeq object</dd>
       </dl></div><div class="section level2">
       <h2 id="deprecated">Deprecated<a class="anchor" aria-label="anchor" href="#deprecated"></a></h2>
       

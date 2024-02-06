@@ -28,6 +28,12 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/articles/beta-div.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/articles/essai_article.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/articles/explore_data.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/articles/filter.html</loc>
   </url>
   <url>
@@ -85,6 +91,9 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/add_funguild_info.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/add_info_to_sam_data.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/add_new_taxonomy_pq.html</loc>
   </url>
   <url>
@@ -127,6 +136,12 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/build_phytree_pq.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/chimera_detection_vs.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/chimera_removal_vs.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/circle_pq.html</loc>
   </url>
   <url>
@@ -137,6 +152,9 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/count_seq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/cutadapt_remove_primers.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/data_fungi.html</loc>
@@ -155,6 +173,9 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/filter_asv_blast.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/filter_trim.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/funguild_assign.html</loc>
@@ -244,6 +265,9 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/phyloseq_to_edgeR.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/physeq_or_string_to_dna.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_LCBD_pq.html</loc>
   </url>
   <url>
@@ -271,6 +295,9 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/read_pq.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/rename_samples.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/rename_samples_otu_table.html</loc>
   </url>
   <url>
@@ -284,6 +311,9 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/sample_data_stable.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/sample_data_with_new_names.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/sankey_pq.html</loc>
@@ -317,6 +347,9 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/summary_plot_pq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/swarm_clustering.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/tax_bar_pq.html</loc>
@@ -356,6 +389,9 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/vs_search_global.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/vsearch_clustering.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/write_pq.html</loc>
