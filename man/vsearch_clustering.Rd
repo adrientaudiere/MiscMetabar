@@ -71,7 +71,7 @@ This function is mainly a wrapper of the work of others.
 Please cite \href{https://github.com/torognes/vsearch}{vsearch}.
 }
 \examples{
-data(data_fungi)
+# data(data_fungi)
 summary_plot_pq(data_fungi)
 d_vs <- vsearch_clustering(data_fungi)
 summary_plot_pq(d_vs)

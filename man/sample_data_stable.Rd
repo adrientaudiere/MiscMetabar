@@ -19,7 +19,7 @@ names as is.
 x <- data.frame(var1 = letters[1:3], var2 = 7:9)
 rownames(x)
 sample_data(x)
-sample_data_stable(x)
+MiscMetabar:::sample_data_stable(x)
 }
 }
 \author{

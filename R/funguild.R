@@ -13,8 +13,6 @@
 #'     to the `db` argument of [funguild_assign()]
 #' @export
 #'
-#' @examples
-#' get_funguild_db()
 #' @references Nguyen NH, Song Z, Bates ST, Branco S, Tedersoo L, Menke J,
 #' Schilling JS, Kennedy PG. 2016. *FUNGuild: An open annotation tool for
 #' parsing fungal community datasets by ecological guild*. Fungal Ecology
@@ -135,6 +133,9 @@ funguild_assign <- function(otu_table, db_funguild = get_funguild_db(),
     dplyr::ungroup() %>%
     dplyr::mutate_all(as.character) %>%
     dplyr::left_join(otu_table, ., by = "taxkey") %>%
-    dplyr::left_join(db_funguild, by = "searchkey", suffix = c("", ".funguild")) %>%
+    dplyr::left_join(db_funguild,
+      by = "searchkey",
+      suffix = c("", ".funguild")
+    ) %>%
     dplyr::select(-taxkey, -searchkey)
 }

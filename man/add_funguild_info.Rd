@@ -31,7 +31,7 @@ Please make a reference to \code{FUNGuildR} package and the associate
 use this function.
 }
 \examples{
-data(data_fungi)
+# data(data_fungi)
 df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)
 \dontrun{
 df <- add_funguild_info(df,

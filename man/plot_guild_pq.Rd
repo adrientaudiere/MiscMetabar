@@ -28,7 +28,7 @@ A ggplot2 object
 }
 \examples{
 \dontrun{
-data(data_fungi)
+# data(data_fungi)
 df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)
 df <- add_funguild_info(df,
   taxLevels = c(

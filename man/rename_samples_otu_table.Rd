@@ -19,7 +19,7 @@ the matrix with new colnames (or rownames if \code{taxa_are_rows} is true)
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
-data(data_fungi)
+# data(data_fungi)
 rename_samples_otu_table(data_fungi, as.character(seq_along(sample_names(data_fungi))))
 
 }

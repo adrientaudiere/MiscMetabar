@@ -98,3 +98,11 @@ test_that("count_seq works fine", {
 # test_that("add_new_taxonomy_pq works fine", {
 #   expect_s4_class(add_new_taxonomy_pq(data_fungi, "inst/extdata/100_sp_UNITE_sh_general_release_dynamic.fasta"), "phyloseq")
 # })
+
+test_that("reorder_taxa_pq works fine", {
+expect_silent(data_fungi_asc_ordered_by_abundance <- reorder_taxa_pq(
+  data_fungi,
+   taxa_names(data_fungi)[order(taxa_sums(data_fungi))]
+ ))
+ expect_equal(unclass(data_fungi_asc_ordered_by_abundance@tax_table[,"Genus"])[2], "Peziza")
+})

@@ -28,14 +28,17 @@ and the number of sequences under the name \code{nb_sequences}
 \examples{
 library("metacoder")
 data("GlobalPatterns", package = "phyloseq")
+
 GPsubset <- subset_taxa(
   GlobalPatterns,
   GlobalPatterns@tax_table[, 1] == "Bacteria"
 )
+
 GPsubset <- subset_taxa(
   GPsubset,
   rowSums(GPsubset@otu_table) > 1000
 )
+
 GPsubset <- subset_taxa(
   GPsubset,
   rowSums(is.na(GPsubset@tax_table)) == 0

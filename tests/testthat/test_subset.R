@@ -7,6 +7,7 @@ test_that("subset_taxa_pq works fine", {
   expect_equal(ntaxa(subset_taxa_pq(data_fungi, data_fungi@tax_table[, "Phylum"] == "Ascomycota")), 1066)
   expect_s4_class(subset_taxa_pq(data_fungi, cond_taxa), "phyloseq")
   expect_equal(ntaxa(subset_taxa_pq(data_fungi, cond_taxa)), 128)
+  expect_equal(ntaxa(subset_taxa_pq(data_fungi, cond_taxa, taxa_names_from_physeq = TRUE)), 128)
   expect_error(subset_taxa_pq(data_fungi, data_fungi@sam_data[["Height"]] == "Low"))
 })
 

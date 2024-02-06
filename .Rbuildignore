@@ -13,3 +13,4 @@
 ^paper$
 ^.vscode$
 ^citation.cff$
+^vignettes/articles$

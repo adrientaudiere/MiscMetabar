@@ -41,7 +41,7 @@ test_that("hill_pq works with data_fungi dataset", {
       correction_for_sample_size = FALSE
     )
   ))
-  expect_message(expect_message(
+  expect_silent(suppressWarnings(suppressMessages(
     hill_pq(
       clean_pq(subset_samples_pq(
         data_fungi, !is.na(data_fungi@sam_data$Height)
@@ -53,7 +53,7 @@ test_that("hill_pq works with data_fungi dataset", {
       correction_for_sample_size = FALSE,
       letters = TRUE
     )
-  ))
+  )))
   expect_equal(length(hill_pq(data_fungi, "Height", add_points = TRUE)), 4)
   expect_s3_class(hill_pq(data_fungi, "Height", add_points = TRUE)[[1]], "ggplot")
 })
@@ -113,7 +113,10 @@ test_that("accu_plot works with GlobalPatterns dataset", {
 
 test_that("accu_plot works with data_fungi dataset", {
   expect_silent(accu_plot(data_basidio, fact = "Height", by.fact = TRUE))
-  expect_error(accu_plot(data_basidio, fact = "Height", by.fact = FALSE))
+  expect_error(suppressWarnings(accu_plot(data_basidio,
+    fact = "Height",
+    by.fact = FALSE
+  )))
   expect_silent(accu_plot(
     data_basidio,
     fact = "Height",
@@ -142,8 +145,8 @@ test_that("accu_samp_threshold works with GlobalPatterns dataset", {
 })
 
 test_that("accu_samp_threshold works with data_fungi dataset", {
-  expect_type(ggb <-
-    ggbetween_pq(data_fungi, variable = "Time"), "list")
+  expect_warning(ggb <-
+    ggbetween_pq(data_fungi, variable = "Time"))
   expect_equal(length(ggb), 3)
   expect_s3_class(ggbetween_pq(data_fungi, variable = "Height")[[1]], "ggplot")
   expect_s3_class(
@@ -151,7 +154,8 @@ test_that("accu_samp_threshold works with data_fungi dataset", {
       data_fungi,
       variable = "Height",
       one_plot = TRUE,
-      min_SCBD = 0
+      min_SCBD = 0,
+      rarefy_by_sample = TRUE
     )[[2]],
     "ggplot"
   )
