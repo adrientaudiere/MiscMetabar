@@ -44,6 +44,7 @@ A \code{\link{ggplot}}2 plot
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
+data(data_fungi)
 upset_test_pq(data_fungi, "Height", var_to_test = c("OTU", "Class", "Guild"))
 upset_test_pq(data_fungi, "Time")
 

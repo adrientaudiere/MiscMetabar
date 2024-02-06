@@ -1714,6 +1714,7 @@ summary_plot_pq <- function(physeq,
 #'   use this function.
 #' @examples
 #' library("rotl")
+#' data(data_fungi)
 #' tr <- rotl_pq(data_fungi, species_colnames = "Genus_species")
 #' plot(tr)
 #' tr_Asco <- rotl_pq(data_fungi, species_colnames = "Genus_species", context_name = "Ascomycetes")
@@ -2385,6 +2386,7 @@ plot_tax_pq <-
 #'
 #' @author Adrien Taudière
 #' @examples
+#' data(data_fungi_sp_known)
 #' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", "Time")
 #' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order")
 #' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order",
@@ -2553,6 +2555,7 @@ tsne_pq <-
 #' @author Adrien Taudière
 #'
 #' @examples
+#' data(data_fungi)
 #' plot_tsne_pq(data_fungi, fact = "Height", perplexity = 15)
 #' plot_tsne_pq(data_fungi, fact = "Time") + geom_label(aes(label = Sample_id, fill = Time))
 #' plot_tsne_pq(data_fungi, fact = "Time", na_remove = FALSE, force_factor = FALSE)
@@ -2933,6 +2936,7 @@ upset_pq <- function(physeq,
 #'
 #' @seealso [upset_pq()]
 #' @examples
+#' data(data_fungi)
 #' upset_test_pq(data_fungi, "Height", var_to_test = c("OTU", "Class", "Guild"))
 #' upset_test_pq(data_fungi, "Time")
 #'
@@ -3179,7 +3183,8 @@ tax_bar_pq <- function(physeq, fact = "Sample", taxa = "Order", percent_bar = FA
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' # data(data_fungi)
+#' data(data_fungi)
+#' data(data_fungi_sp_known)
 #' ridges_pq(data_fungi, "Time", alpha = 0.5, log10trans = FALSE) + xlim(c(0, 1000))
 #' ridges_pq(data_fungi, "Time", alpha = 0.5)
 #' ridges_pq(
