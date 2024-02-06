@@ -484,6 +484,7 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #'   - `vsearch` use the vsearch software (https://github.com/torognes/vsearch/)
 #'     with arguments `--cluster_size` by default (see args `vsearch_cluster_method`)
 #'     and `-strand both` (see args `vsearch_args`)
+#'   - `swarm` use the swarm
 #' @param vsearchpath (default: vsearch) path to vsearch
 #' @param id (default: 0.97) level of identity to cluster
 #' @param tax_adjust (Default 0) See the man page
@@ -501,7 +502,7 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #'   - temp.fasta (refseq in fasta or dna_seq sequences)
 #'   - cluster.fasta (centroid if method = "vsearch")
 #'   - temp.uc (clusters if method = "vsearch")
-#' @param ... Others arguments path to [DECIPHER::Clusterize()]
+#' @param ... Others arguments passed on to [DECIPHER::Clusterize()]
 #' @details This function use the `merge_taxa_vec` function to
 #'   merge taxa into clusters. By default tax_adjust = 0. See the man page
 #'   of [merge_taxa_vec()].
@@ -514,7 +515,7 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #'   \url{https://github.com/torognes/vsearch}.
 #'   More information in the associated publication
 #'   \url{https://pubmed.ncbi.nlm.nih.gov/27781170}.
-#'
+#' @seealso [vsearch_clustering()] and [swarm_clustering()]
 #' @export
 #' @author Adrien Taudière
 
@@ -547,8 +548,8 @@ asv2otu <- function(physeq = NULL,
     )
   }
 
-  if (!method %in% c("clusterize", "vsearch")) {
-    stop("Method allows 2 values only : `clusterize` or `vsearch`")
+  if (!method %in% c("clusterize", "vsearch", "swarm")) {
+    stop("Method allows 2 values only : `clusterize`, `vsearch` or `swarm`")
   }
 
   if (method == "clusterize") {
@@ -575,76 +576,19 @@ asv2otu <- function(physeq = NULL,
       )
     }
   } else if (method == "vsearch") {
-    Biostrings::writeXStringSet(dna, paste0(tempdir(), "/", "temp.fasta"))
-
-    system2(
-      vsearchpath,
-      paste0(
-        paste0(
-          " ",
-          vsearch_cluster_method,
-          " ",
-          paste0(tempdir(), "/", "temp.fasta"),
-          " ",
-          vsearch_args
-        ),
-        " -id ",
-        id,
-        " --centroids ",
-        paste0(tempdir(), "/", "cluster.fasta"),
-        " --uc ",
-        paste0(tempdir(), "/", "temp.uc")
-      ),
-      stdout = TRUE,
-      stderr = TRUE
+    new_obj <- vsearch_clustering(
+      physeq = physeq,
+      dna_seq = dna_seq,
+      nproc = nproc,
+      id = id,
+      vsearchpath = vsearchpath,
+      tax_adjust = tax_adjust,
+      vsearch_cluster_method = vsearch_cluster_method,
+      vsearch_args = vsearch_args,
+      keep_temporary_files = keep_temporary_files
     )
+  } else if (method == "swarm") {
 
-    pack_clusts <-
-      utils::read.table(paste0(tempdir(), "/", "temp.uc"), sep = "\t")
-    colnames(pack_clusts) <-
-      c(
-        "type",
-        "cluster",
-        "width",
-        "identity",
-        "strand",
-        "6",
-        "7",
-        "cigarAlignment",
-        "query",
-        "target"
-      )
-
-    clusters <- pack_clusts$cluster[pack_clusts$type != "C"]
-    names(clusters) <- pack_clusts$query[pack_clusts$type != "C"]
-    clusters <- clusters[match(taxa_names(physeq), names(clusters))]
-
-    if (inherits(physeq, "phyloseq")) {
-      new_obj <-
-        merge_taxa_vec(physeq,
-          clusters,
-          tax_adjust = tax_adjust
-        )
-    } else if (inherits(dna_seq, "character")) {
-      new_obj <- pack_clusts
-    } else {
-      stop(
-        "You must set the args physeq (object of class phyloseq) or dna_seq (character vector)."
-      )
-    }
-
-    if (file.exists(paste0(tempdir(), "/", "temp.fasta")) &&
-      !keep_temporary_files) {
-      unlink(paste0(tempdir(), "/", "temp.fasta"))
-    }
-    if (file.exists(paste0(tempdir(), "/", "cluster.fasta")) &&
-      !keep_temporary_files) {
-      unlink(paste0(tempdir(), "/", "cluster.fasta"))
-    }
-    if (file.exists(paste0(tempdir(), "/", "temp.uc")) &&
-      !keep_temporary_files) {
-      unlink(paste0(tempdir(), "/", "temp.uc"))
-    }
   }
   return(new_obj)
 }
@@ -687,7 +631,7 @@ asv2otu <- function(physeq = NULL,
 #' @export
 #' @details
 #' This function is mainly a wrapper of the work of others.
-#'   Please make [vsearch](https://github.com/torognes/vsearch).
+#'   Please cite [vsearch](https://github.com/torognes/vsearch).
 #' @author Adrien Taudière
 
 vs_search_global <- function(physeq,
@@ -2303,8 +2247,8 @@ reorder_taxa_pq <- function(physeq, names_ordered, remove_phy_tree = FALSE) {
 #' @title Add information to sample_data slot of a phyloseq-class object
 #' @description
 #' `r lifecycle::badge("experimental")`
-#' 
-#' Warning: The value nb_seq and nb_otu may be outdated if you transform your 
+#'
+#' Warning: The value nb_seq and nb_otu may be outdated if you transform your
 #' phyloseq object, e.g. using the [subset_taxa_pq()] function
 #'
 #' @inheritParams clean_pq
@@ -2323,8 +2267,10 @@ reorder_taxa_pq <- function(physeq, names_ordered, remove_phy_tree = FALSE) {
 #' data_fungi <- add_info_to_sam_data(data_fungi)
 #' boxplot(data_fungi@sam_data$nb_otu ~ data_fungi@sam_data$Time)
 #'
-#' new_df <- data.frame(variable_1= runif(n=nsamples(data_fungi), min=1, max=20),
-#'                      variable_2= runif(n=nsamples(data_fungi), min=1, max=2))
+#' new_df <- data.frame(
+#'   variable_1 = runif(n = nsamples(data_fungi), min = 1, max = 20),
+#'   variable_2 = runif(n = nsamples(data_fungi), min = 1, max = 2)
+#' )
 #' rownames(new_df) <- sample_names(data_fungi)
 #' data_fungi <- add_info_to_sam_data(data_fungi, new_df)
 #' plot(data_fungi@sam_data$nb_otu ~ data_fungi@sam_data$variable_1)
@@ -2346,9 +2292,563 @@ add_info_to_sam_data <- function(physeq,
     }
     df_info <-
       df_info[match(sample_names(physeq), rownames(df_info)), ]
-    physeq@sam_data <- sample_data(cbind(as_tibble(physeq@sam_data),
-                                         df_info))
+    physeq@sam_data <- sample_data(cbind(
+      as_tibble(physeq@sam_data),
+      df_info
+    ))
   }
   return(physeq)
+}
+################################################################################
+
+
+
+###############################################################################
+#' Re-cluster sequences of an object of class `physeq`
+#'   or cluster a list of DNA sequences using SWARM
+#'
+#' @description
+#' `r lifecycle::badge("maturing")`
+#'
+#' @inheritParams clean_pq
+#' @param dna_seq NOT WORKING FOR THE MOMENT
+#'   You may directly use a character vector of DNA sequences
+#'   in place of physeq args. When physeq is set, dna sequences take the value of
+#'   `physeq@refseq`
+#' @param d (default: 1) maximum number of differences allowed between two
+#'   amplicons, meaning that two amplicons will be grouped if they have `d`
+#'   (or less) differences
+#' @param swarmpath (default: swarm) path to swarm
+#' @param vsearch_path (default: vsearch) path to vsearch, used only if physeq
+#'   is NULL and dna_seq is provided.
+#' @param nproc (default: 1)
+#'   Set to number of cpus/processors to use for the clustering
+#' @param swarm_args (default : "--fastidious") a one length character
+#'   element defining other parameters to  passed on to swarm See other possible
+#'   methods in the [SWARM pdf manual](https://github.com/torognes/swarm/blob/master/man/swarm_manual.pdf)
+#' @param tax_adjust (Default 0) See the man page
+#'   of [merge_taxa_vec()] for more details.
+#'   To conserved the taxonomic rank of the most abundant ASV,
+#' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary
+#'   files ?
+#'   - temp.fasta (refseq in fasta or dna_seq sequences)
+#'   - temp_output (classical output of SWARM)
+#'   - temp_uclust (clusters output of SWARM)
+#' @details This function use the `merge_taxa_vec` function to
+#'   merge taxa into clusters. By default tax_adjust = 0. See the man page
+#'   of [merge_taxa_vec()].
+#' @return A new object of class `physeq` or a list of cluster if dna_seq
+#'   args was used.
+#'
+#' @references
+#'   SWARM can be downloaded from
+#'   \url{https://github.com/torognes/swarm/}.
+#'
+#' @export
+#' @examples
+#' \dontrun{
+#' data(data_fungi)
+#' summary_plot_pq(data_fungi)
+#' # Change with your PATH
+#' path_to_swarm <- "/home/adrien/miniconda3/bin/swarm"
+#'
+#' data_fungi_swarm <- swarm_clustering(data_fungi, swarmpath = path_to_swarm)
+#' summary_plot_pq(data_fungi_swarm)
+#'
+#' sequences_ex <- c("TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGGGCGAATTACCTGGTATTTTAGCCCACTTACCCGGTACCAACCTACCCTGTACACCGCGCCTGGGTCTACCCTCCGGATGACATTTTTAAGACTCTTGTTTTATAGTGAAATTCTGAGTTTTTATACTTAATAAGTTAAAACTTTCAATCTCGGATCTCTTGGCTCTGGCATCGATGAAGAACGCTACGAAATGCTGATAAATAATGTGAATTGCCGAATTCATTGAATCATCGAATCTTTGAACGCACATTGCACCCATTAGTATTCTAGAGTGCATGCCTGTTCCAGCGTCATTTTCAATCCTCAAGCCCCTTATTGCTTGGTGTTGGCAGTTTAGCTGGCTTTATAGTGCTTAACTCCCTAAATATACTGCCTGATTCGCGGTGACCCCAAGCGTAATAATTATTTTCTCGCTTGAGGTG", "TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGGGCGAATTACCTGGTAAGGCCCACTTACCCGGTACCAACCTACCCTGTACACCGCGCCTGGGTCTACCCTCCGGATGACATTTTTAAGACTCTTGTTTTATAGTGAAATTCTGAGTTTTTATACTTAATAAGTTAAAACTTTCAATCTCGGATCTCTTGGCTCTGGCATCGATGAAGAACGCTACGAAATGCTGATAAATAATGTGAATTGCCGAATTCATTGAATCATCGAATCTTTGAACGCACATTGCACCCATTAGTATTCTAGAGTGCATGCCTGTTCCAGCGTCATTTTCAATCCTCAAGCCCCTTATTGCTTGGTGTTGGCAGTTTAGCTGGCTTTATAGTGCTTAACTCCCTAAATATACTGCCTGATTCGCGGTGACCCCAAGCGTAATAATTATTTTCTCGCTTGAGGTG", "TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGGGCGAATTACCTGGTAAGGCCCACTTACCCGGTACCAACCTACCCTGTACACCGCGCCTGGGTCTACCCTCCGGATGACATTTTTAAGACTCTTGTTTTATAGTGAAATTCTGAGTTTTTATACTTAATAAGTTAAAACTTTCAATCTCGGATCTCTTGGCTCTGGCATCGATGAAGAACGCTACGAAATGCTGATAAATAATGTGAATTGCCGAATTCATTGAATCATCGAATCTTTGAACGCACATTGCACCCATTAGTATTCTAGAGTGCATGCCTGTTCCAGCGTCATTTTCAATCCTCAAGCCCCTTATTGCTTGGTGTTGGCAGTTTAGCTGGCTTTATAGTGCTTAACTCCCTAAATATACTGCCTGATTCGCGGTGACCCCAAGCGTAATAATTATTTTCTCGCTTGAGGTG", "TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGCGAATTACCTGGTATTTTAGCCCACTTACCCGGTACCAACCTACCCTGTACACCGCGCCTGGGTCTACCCTCCGGATGACATTTTTAAGACTCTTGTTTTATAGTGAAATTCTGAGTTTTTATACTTAATAAGTTAAAACTTTCAATCTCGGATCTCTTGGCTCTGGCATCGATGAAGAACGCTACGAAATGCTGATAAATAATGTGAATTGCCGAATTCATTGAATCATCGAATCTTTGAACGCACATTGCACCCATTAGTATTCTAGAGTGCATGCCTGTTCCAGCGTCATTTTCAATCCTCAAGCCCCTTATTGCTTGGTGTTGGCAGTTTAGCTGGCTTTATAGTGCTTAACTCCCTAAATATACTGCCTGATTCGCGGTGACCCCAAGCGTAATAATTATTTTCTCGCTTGAGGTG", "GCGGCTAAACCTACCCGGGATTTGATGGCGAATTACCTGG", "GCGGCTAAACCTACCCGGGATTTGATGGCGAATTACAAAG", "GCGGCTAAACCTACCCGGGATTTGATGGCGAATTACAAAG", "GCGGCTAAACCTACCCGGGATTTGATGGCGAATTACAAAG")
+#'
+#' sequences_ex_swarm <- swarm_clustering(
+#'   dna_seq = sequences_ex,
+#'   swarmpath = path_to_swarm
+#' )
+#' }
+#' @seealso [asv2otu()], [vsearch_clustering()]
+#' @references
+#'   SWARM can be downloaded from
+#'   \url{https://github.com/torognes/swarm}.
+#'   More information in the associated publications
+#'   \url{https://doi.org/10.1093/bioinformatics/btab493} and
+#'   \url{https://doi.org/10.7717%2Fpeerj.593}.
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please cite [SWARM](https://github.com/torognes/swarm).
+
+swarm_clustering <- function(physeq = NULL,
+                             dna_seq = NULL,
+                             d = 1,
+                             swarmpath = "swarm",
+                             vsearch_path = "vsearch",
+                             nproc = 1,
+                             swarm_args = "--fastidious",
+                             tax_adjust = 0,
+                             keep_temporary_files = FALSE) {
+  dna <- physeq_or_string_to_dna(
+    physeq = physeq,
+    dna_seq = dna_seq
+  )
+
+  if (!is.null(physeq)) {
+    nseq <- taxa_sums(physeq)
+    nseq <- nseq[match(names(nseq), names(dna))]
+    names(dna) <- paste0(names(dna), "_", nseq)
+    Biostrings::writeXStringSet(dna, paste0(tempdir(), "/", "temp.fasta"))
+    system2(
+      swarmpath,
+      paste0(
+        paste0(tempdir(), "/", "temp.fasta"),
+        " -o ",
+        paste0(tempdir(), "/", "temp_output"),
+        " ",
+        " -u ",
+        paste0(tempdir(), "/", "temp_uclust"),
+        " -t ",
+        nproc,
+        " ",
+        swarm_args
+      ),
+      stdout = TRUE,
+      stderr = TRUE
+    )
+  } else {
+    Biostrings::writeXStringSet(dna, paste0(tempdir(), "/", "amplicons.fasta"))
+    system2(
+      vsearch_path,
+      paste0(
+        " --derep_fulllength ",
+        paste0(tempdir(), "/", "amplicons.fasta"),
+        " --sizeout  --relabel_sha1 --fasta_width 0 --output ",
+        paste0(tempdir(), "/", "temp.fasta")
+      ),
+      stdout = TRUE,
+      stderr = TRUE
+    )
+    system2(
+      swarmpath,
+      paste0(
+        paste0(tempdir(), "/", "temp.fasta"),
+        " -o ",
+        paste0(tempdir(), "/", "temp_output"),
+        " ",
+        " -u ",
+        paste0(tempdir(), "/", "temp_uclust"),
+        " -z ",
+        " -t ",
+        nproc,
+        " ",
+        swarm_args
+      ),
+      stdout = TRUE,
+      stderr = TRUE
+    )
+  }
+
+  pack_clusts <-
+    utils::read.table(paste0(tempdir(), "/", "temp_uclust"), sep = "\t")
+  colnames(pack_clusts) <-
+    c(
+      "type",
+      "cluster",
+      "width",
+      "identity",
+      "strand",
+      "6",
+      "7",
+      "cigarAlignment",
+      "query",
+      "target"
+    )
+
+  if (inherits(physeq, "phyloseq")) {
+    clusters <- pack_clusts$cluster[pack_clusts$type != "C"]
+    names(clusters) <-
+      sub("_.*$", "", pack_clusts$query[pack_clusts$type != "C"])
+
+    clusters <- clusters[match(taxa_names(physeq), names(clusters))]
+
+    new_obj <-
+      merge_taxa_vec(physeq,
+        clusters,
+        tax_adjust = tax_adjust
+      )
+  } else if (inherits(dna_seq, "character")) {
+    new_obj <- pack_clusts
+  } else {
+    stop(
+      "You must set the args physeq (object of class phyloseq) or
+      dna_seq (character vector)."
+    )
+  }
+
+  if (file.exists(paste0(tempdir(), "/", "temp.fasta")) &&
+    !keep_temporary_files) {
+    unlink(paste0(tempdir(), "/", "temp.fasta"))
+  }
+  if (file.exists(paste0(tempdir(), "/", "temp_output")) &&
+    !keep_temporary_files) {
+    unlink(paste0(tempdir(), "/", "temp_output"))
+  }
+  if (file.exists(paste0(tempdir(), "/", "temp_uclust")) &&
+    !keep_temporary_files) {
+    unlink(paste0(tempdir(), "/", "temp_uclust"))
+  }
+  if (file.exists(paste0(tempdir(), "/", "amplicon.fasta")) &&
+    !keep_temporary_files) {
+    unlink(paste0(tempdir(), "/", "amplicon.fasta"))
+  }
+  return(new_obj)
+}
+###############################################################################
+
+
+###############################################################################
+#' Return a DNAStringSet object from either a character vector of DNA sequences
+#'   or the `refseq` slot of a phyloseq-class object
+#'
+#' @description
+#' `r lifecycle::badge("stable")`
+#'
+#'   Internally used in [vsearch_clustering()], [swarm_clustering()] and
+#'   [asv2otu()].
+#'
+#' @inheritParams clean_pq
+#' @param dna_seq You may directly use a character vector of DNA sequences
+#'   in place of physeq args. When physeq is set, dna sequences take the value
+#'   of `physeq@refseq`
+#'
+#' @return An object of class DNAStringSet (see the [Biostrings::DNAStringSet()]
+#'   function)
+#' @export
+#'
+#' @examples
+#' data(data_fungi)
+#' dna <- physeq_or_string_to_dna(data_fungi)
+#' dna
+#'
+#' sequences_ex <- c("TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGGGCGAATTACCTGGTATTTTAGCCCACTTACCCGGTACCAACCTACCCTGTACACCGCGCCTGGGTCTACCCTCCGGATGACATTTTTAAGACTCTTGTTTTATAGTGAAATTCTGAGTTTTTATACTTAATAAGTTAAAACTTTCAATCTCGGATCTCTTGGCTCTGGCATCGATGAAGAACGCTACGAAATGCTGATAAATAATGTGAATTGCCGAATTCATTGAATCATCGAATCTTTGAACGCACATTGCACCCATTAGTATTCTAGAGTGCATGCCTGTTCCAGCGTCATTTTCAATCCTCAAGCCCCTTATTGCTTGGTGTTGGCAGTTTAGCTGGCTTTATAGTGCTTAACTCCCTAAATATACTGCCTGATTCGCGGTGACCCCAAGCGTAATAATTATTTTCTCGCTTGAGGTG", "TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGGGCGAATTACCTGGTAAGGCCCACTTACCCGGTACCAACCTACCCTGTACACCGCGCCTGGGTCTACCCTCCGGATGACATTTTTAAGACTCTTGTTTTATAGTGAAATTCTGAGTTTTTATACTTAATAAGTTAAAACTTTCAATCTCGGATCTCTTGGCTCTGGCATCGATGAAGAACGCTACGAAATGCTGATAAATAATGTGAATTGCCGAATTCATTGAATCATCGAATCTTTGAACGCACATTGCACCCATTAGTATTCTAGAGTGCATGCCTGTTCCAGCGTCATTTTCAATCCTCAAGCCCCTTATTGCTTGGTGTTGGCAGTTTAGCTGGCTTTATAGTGCTTAACTCCCTAAATATACTGCCTGATTCGCGGTGACCCCAAGCGTAATAATTATTTTCTCGCTTGAGGTG", "TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGCGAATTACCTGGTATTTTAGCCCACTTACCCGGTACCAACCTACCCTGTACACCGCGCCTGGGTCTACCCTCCGGATGACATTTTTAAGACTCTTGTTTTATAGTGAAATTCTGAGTTTTTATACTTAATAAGTTAAAACTTTCAATCTCGGATCTCTTGGCTCTGGCATCGATGAAGAACGCTACGAAATGCTGATAAATAATGTGAATTGCCGAATTCATTGAATCATCGAATCTTTGAACGCACATTGCACCCATTAGTATTCTAGAGTGCATGCCTGTTCCAGCGTCATTTTCAATCCTCAAGCCCCTTATTGCTTGGTGTTGGCAGTTTAGCTGGCTTTATAGTGCTTAACTCCCTAAATATACTGCCTGATTCGCGGTGACCCCAAGCGTAATAATTATTTTCTCGCTTGAGGTG")
+#' dna2 <- physeq_or_string_to_dna(dna_seq = sequences_ex)
+#' dna2
+#'
+#' @seealso [Biostrings::DNAStringSet()]
+#' @author Adrien Taudière
+physeq_or_string_to_dna <- function(physeq = NULL,
+                                    dna_seq = NULL) {
+  if (inherits(physeq, "phyloseq")) {
+    verify_pq(physeq)
+    if (is.null(physeq@refseq)) {
+      stop("The phyloseq object do not contain a @refseq slot")
+    }
+    dna <- Biostrings::DNAStringSet(physeq@refseq)
+    if (!is.null(dna_seq)) {
+      stop("You must use either physeq or dna_seq args but not both")
+    }
+  } else if (inherits(dna_seq, "character")) {
+    dna <- Biostrings::DNAStringSet(dna_seq)
+  } else {
+    stop(
+      "You must set the args physeq (object of class phyloseq) or
+    dna_seq (character vector)."
+    )
+  }
+  return(dna)
+}
+###############################################################################
+
+
+###############################################################################
+#' Recluster sequences of an object of class `physeq`
+#'   or cluster a list of DNA sequences using vsearch software
+#'
+#' @description
+#' `r lifecycle::badge("maturing")`
+#'
+#' @inheritParams clean_pq
+#' @param dna_seq You may directly use a character vector of DNA sequences
+#'   in place of physeq args. When physeq is set, dna sequences take the value of
+#'   `physeq@refseq`
+#' @param nproc (default: 1)
+#'   Set to number of cpus/processors to use for the clustering
+#' @param id (default: 0.97) level of identity to cluster
+#' @param vsearchpath (default: vsearch) path to vsearch
+#' @param tax_adjust (Default 0) See the man page
+#'   of [merge_taxa_vec()] for more details.
+#'   To conserved the taxonomic rank of the most abundant ASV,
+#'   set tax_adjust to 0 (default)
+#' @param vsearch_cluster_method (default: "--cluster_size) See other possible
+#'   methods in the [vsearch pdf manual](https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf) (e.g. `--cluster_size` or `--cluster_smallmem`)
+#'   - `--cluster_fast` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.
+#'   - `--cluster_size` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence abundance beforehand.
+#'   - `--cluster_smallmem` : Clusterize the fasta sequences in filename without automatically modifying their order beforehand. Sequence are expected to be sorted by decreasing sequence length, unless *--usersort* is used
+#' @param vsearch_args (default : "--strand both") a one length character element defining other parameters to
+#'   passed on to vsearch.
+#' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files ?
+#'   - temp.fasta (refseq in fasta or dna_seq sequences)
+#'   - cluster.fasta (centroid if method = "vsearch")
+#'   - temp.uc (clusters if method = "vsearch")
+#'
+#' @seealso [asv2otu()], [swarm_clustering()]
+#' @details This function use the [merge_taxa_vec()] function to
+#'   merge taxa into clusters. By default tax_adjust = 0. See the man page
+#'   of [merge_taxa_vec()].
+#'
+#' @return A new object of class `physeq` or a list of cluster if dna_seq
+#'   args was used.
+#'
+#' @references
+#'   VSEARCH can be downloaded from
+#'   \url{https://github.com/torognes/vsearch}.
+#'   More information in the associated publication
+#'   \url{https://pubmed.ncbi.nlm.nih.gov/27781170}.
+#' @export
+#' @author Adrien Taudière
+#'
+#' @examples
+#' data(data_fungi)
+#' summary_plot_pq(data_fungi)
+#' d_vs <- vsearch_clustering(data_fungi)
+#' summary_plot_pq(d_vs)
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please cite [vsearch](https://github.com/torognes/vsearch).
+vsearch_clustering <- function(physeq = NULL,
+                               dna_seq = NULL,
+                               nproc = 1,
+                               id = 0.97,
+                               vsearchpath = "vsearch",
+                               tax_adjust = 0,
+                               vsearch_cluster_method = "--cluster_size",
+                               vsearch_args = "--strand both",
+                               keep_temporary_files = FALSE) {
+  dna <- physeq_or_string_to_dna(physeq = physeq, dna_seq = dna_seq)
+
+  Biostrings::writeXStringSet(dna, paste0(tempdir(), "/", "temp.fasta"))
+
+  system2(
+    vsearchpath,
+    paste0(
+      paste0(
+        " ",
+        vsearch_cluster_method,
+        " ",
+        paste0(tempdir(), "/", "temp.fasta"),
+        " ",
+        vsearch_args
+      ),
+      " -id ",
+      id,
+      " --centroids ",
+      paste0(tempdir(), "/", "cluster.fasta"),
+      " --uc ",
+      paste0(tempdir(), "/", "temp.uc")
+    ),
+    stdout = TRUE,
+    stderr = TRUE
+  )
+
+  pack_clusts <-
+    utils::read.table(paste0(tempdir(), "/", "temp.uc"), sep = "\t")
+  colnames(pack_clusts) <-
+    c(
+      "type",
+      "cluster",
+      "width",
+      "identity",
+      "strand",
+      "6",
+      "7",
+      "cigarAlignment",
+      "query",
+      "target"
+    )
+
+  clusters <- pack_clusts$cluster[pack_clusts$type != "C"]
+  names(clusters) <- pack_clusts$query[pack_clusts$type != "C"]
+  clusters <- clusters[match(taxa_names(physeq), names(clusters))]
+
+  if (inherits(physeq, "phyloseq")) {
+    new_obj <-
+      merge_taxa_vec(physeq,
+        clusters,
+        tax_adjust = tax_adjust
+      )
+  } else if (inherits(dna_seq, "character")) {
+    new_obj <- pack_clusts
+  } else {
+    stop(
+      "You must set the args physeq (object of class phyloseq) or dna_seq (character vector)."
+    )
+  }
+
+  if (file.exists(paste0(tempdir(), "/", "temp.fasta")) &&
+    !keep_temporary_files) {
+    unlink(paste0(tempdir(), "/", "temp.fasta"))
+  }
+  if (file.exists(paste0(tempdir(), "/", "cluster.fasta")) &&
+    !keep_temporary_files) {
+    unlink(paste0(tempdir(), "/", "cluster.fasta"))
+  }
+  if (file.exists(paste0(tempdir(), "/", "temp.uc")) &&
+    !keep_temporary_files) {
+    unlink(paste0(tempdir(), "/", "temp.uc"))
+  }
+  return(new_obj)
+}
+###############################################################################
+
+
+
+################################################################################
+#' Remove primers using [cutadapt](https://github.com/marcelm/cutadapt/)
+#'
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' You need to install Cutadapt
+#'
+#' @param path_to_fastq (Required) A path to a folder with fastq files. See
+#'   [list_fastq_files()] for help.
+#' @inheritParams list_fastq_files
+#' @param primer_fw (Required, String) The forward primer DNA sequence.
+#' @param primer_rev (String)  The reverse primer DNA sequence.
+#' @param folder_output The path to a folder for output files
+#' @param nproc (default 1)
+#'   Set to number of cpus/processors to use for the clustering
+#' @param cmd_is_run (logical, default TRUE) Do the cutadapt command is run.
+#'   If set to FALSE, the only effect of the function is to return a list of
+#'   command to manually run in a terminal.
+#' @param args_before_cutadapt (String) A one line bash command to run before
+#' to run cutadapt. For examples, "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv &&" allow to bypass the conda init which asks to restart the shell
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' @return a list of command and
+#'
+#' @author Adrien Taudière
+#'
+#'
+#' @examples
+#' \dontrun{
+#' cutadapt_remove_primers("inst/extdata", "TTC", "GAA",
+#'   folder_output = tempdir()
+#' )
+#'
+#'
+#' cutadapt_remove_primers(
+#'   system.file("extdata",
+#'     package = "dada2"
+#'   ),
+#'   pattern_R1 = "F.fastq.gz",
+#'   pattern_R2 = "R.fastq.gz",
+#'   primer_fw = "TTC",
+#'   primer_rev = "GAA",
+#'   folder_output = tempdir()
+#' )
+#'
+#' cutadapt_remove_primers(
+#'   system.file("extdata",
+#'     package = "dada2"
+#'   ),
+#'   pattern_R1 = "F.fastq.gz",
+#'   primer_fw = "TTC",
+#'   folder_output = tempdir(),
+#'   cmd_is_run = FALSE
+#' )
+#'
+#'
+#' unlink(tempdir(), recursive = TRUE)
+#' }
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please cite [cutadapt](http://doi.org/10.14806/ej.17.1.200).
+
+
+cutadapt_remove_primers <- function(path_to_fastq,
+                                    primer_fw = NULL,
+                                    primer_rev = NULL,
+                                    folder_output = "wo_primers",
+                                    nproc = 1,
+                                    pattern = "fastq.gz",
+                                    pattern_R1 = "_R1",
+                                    pattern_R2 = "_R2",
+                                    nb_files = Inf,
+                                    cmd_is_run = TRUE,
+                                    args_before_cutadapt = "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv && ") {
+  cmd <- list()
+  if (!dir.exists(folder_output)) {
+      dir.create(folder_output)
+  }
+
+  if (is.null(primer_rev)) {
+    lff <- list_fastq_files(
+      path_to_fastq,
+      paired_end = FALSE,
+      pattern = pattern,
+      pattern_R1 = pattern_R1,
+      pattern_R2 = pattern_R2,
+      nb_files = nb_files
+    )
+    for (f in lff$fnfs) {
+      cmd[[f]] <-
+        paste0(
+          args_before_cutadapt,
+          "cutadapt --cores=",
+          nproc,
+          " --discard-untrimmed -g '",
+          primer_fw,
+          "' -o ",
+          folder_output,
+          "/",
+          basename(f),
+          " ",
+          f
+        )
+    }
+  } else {
+    lff <- list_fastq_files(path_to_fastq,
+      paired_end = TRUE,
+      pattern = pattern,
+      pattern_R1 = pattern_R1,
+      pattern_R2 = pattern_R2,
+      nb_files = nb_files
+    )
+
+    primer_fw_RC <- dada2:::rc(primer_fw)
+    primer_rev_RC <- dada2:::rc(primer_rev)
+    for (f in lff$fnfs) {
+      cmd[[f]] <-
+        paste0(
+          args_before_cutadapt,
+          "cutadapt -n 2 --cores=",
+          nproc,
+          " --discard-untrimmed -g '",
+          primer_fw,
+          "' -G '",
+          primer_rev,
+          "' -a '",
+          primer_rev_RC,
+          "' -A '",
+          primer_fw_RC,
+          "' -o ",
+          folder_output,
+          "/",
+          basename(f),
+          " -p ",
+          folder_output,
+          "/",
+          gsub(pattern_R1, pattern_R2, basename(f)),
+          " ",
+          f,
+          " ",
+          gsub(pattern_R1, pattern_R2, f)
+        )
+    }
+  }
+  if (cmd_is_run) {
+    writeLines(unlist(cmd), paste0(tempdir(), "script_cutadapt.sh"))
+    system2("bash", paste0(tempdir(), "script_cutadapt.sh"))
+    message(paste0("Output files are available in the folder ", normalizePath(folder_output)))
+  }
+  return(cmd)
 }
 ################################################################################

@@ -38,8 +38,10 @@ data(data_fungi)
 data_fungi <- add_info_to_sam_data(data_fungi)
 boxplot(data_fungi@sam_data$nb_otu ~ data_fungi@sam_data$Time)
 
-new_df <- data.frame(variable_1= runif(n=nsamples(data_fungi), min=1, max=20),
-                     variable_2= runif(n=nsamples(data_fungi), min=1, max=2))
+new_df <- data.frame(
+  variable_1 = runif(n = nsamples(data_fungi), min = 1, max = 20),
+  variable_2 = runif(n = nsamples(data_fungi), min = 1, max = 2)
+)
 rownames(new_df) <- sample_names(data_fungi)
 data_fungi <- add_info_to_sam_data(data_fungi, new_df)
 plot(data_fungi@sam_data$nb_otu ~ data_fungi@sam_data$variable_1)

@@ -3,6 +3,9 @@
 - Add functions `chimera_detection_vs()` and `chimera_removal_vs()` to process chimera detection and removal using [vsearch](https://github.com/torognes/vsearch) software 
 - Add functions `filter_trim()`, `sample_data_with_new_names()` and `rename_samples()` to facilitate the use of [targets](https://books.ropensci.org/targets/) for bioinformatic pipeline.
 - Add function `add_info_to_sam_data()` to expand sam_data slot using a data.frame and using nb_asv and nb_seq 
+- Add functions `swarm_clustering()` and `vsearch_clustering()` and add `swarm` method in the function `asv2otu()`
+- Add function `physeq_or_string_to_dna()` mostly for internal use
+- Add function `cutadapt_remove_primers()` to remove primers using [cutadapt](https://github.com/marcelm/cutadapt/)
 
 ## BREAKING CHANGES
 

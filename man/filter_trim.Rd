@@ -2,7 +2,8 @@
 % Please edit documentation in R/targets_misc.R
 \name{filter_trim}
 \alias{filter_trim}
-\title{Remove primers using cutadapt Work In Progress}
+\title{A wrapper of the function \code{\link[dada2:filterAndTrim]{dada2::filterAndTrim()}} to use in
+\href{https://books.ropensci.org/targets/}{targets} pipeline}
 \usage{
 filter_trim(
   fw = NULL,
@@ -28,16 +29,11 @@ a folder "output/filterAndTrim_fwd" in the current working directory.}
 \item{...}{Other parameters passed on to \code{\link[dada2:filterAndTrim]{dada2::filterAndTrim()}} function.}
 }
 \value{
-a list of commande but in The future, will
-run the commandes using system
-
 A list of files. If rev is set, will return a list of two lists.
 The first list is a list of forward files, and the second one
 is a list of reverse files.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 
 This function filter and trim (with parameters passed on to
@@ -73,10 +69,5 @@ derep_rv_pe
 \code{\link[dada2:filterAndTrim]{dada2::filterAndTrim()}}
 }
 \author{
-Adrien Taudière
-
-A wrapper of the function \code{\link[dada2:filterAndTrim]{dada2::filterAndTrim()}} to use in
-\href{https://books.ropensci.org/targets/}{targets} pipeline
-
 Adrien Taudière
 }

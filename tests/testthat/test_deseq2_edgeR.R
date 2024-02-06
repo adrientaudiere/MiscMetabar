@@ -49,7 +49,7 @@ test_that("plot_deseq2_pq works with phyloseq object", {
   expect_message(suppressWarnings(plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"))))
   expect_message(suppressWarnings(plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), color_tax = "Class", select_taxa = c("522457", "271582", "200359"))))
   expect_message(suppressWarnings(plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), taxolev = "Class", verbose = TRUE)))
-  expect_message(suppressWarnings(plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), alpha = 0.1)))
+  expect_message(suppressWarnings(plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), pval = 0.1)))
 })
 
 GlobalPatterns_row <- clean_pq(GP, force_taxa_as_columns = TRUE)

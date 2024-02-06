@@ -51,6 +51,7 @@ reference:
   - verify_pq
 
 - title: Obtain phyloseq object
+  contents:
   - chimera_removal_vs
   - chimera_detection_vs
 
@@ -77,6 +78,8 @@ reference:
   contents: 
   - as_binary_otu_table
   - asv2otu
+  - swarm_clustering
+  - vsearch_clustering
   - lulu_pq
   - lulu
   - mumu_pq
@@ -154,7 +157,13 @@ reference:
   - treemap_pq
   - vs_search_global
 
-- title: Improve reproducibility
+- title: Improve reproducibility using [targets](https://books.ropensci.org/targets/) pipeline
+- subtitle: Processing fastq files
+  contents:
+  - list_fastq_files
+  - filter_trim
+  - cutadapt_remove_primers
+  - subsample_fastq
 - subtitle: Import/export phyloseq object
   contents:
   - read_pq
@@ -165,17 +174,16 @@ reference:
   - count_seq
   - track_wkflow
   - track_wkflow_samples
-- subtitle: Utilities for [targets](https://books.ropensci.org/targets/) pipeline
+- subtitle: Sample data management
   contents:
-  - list_fastq_files
-  - filter_trim
   - rename_samples_otu_table
   - rename_samples
-  - select_one_sample
-  - simplify_taxo
-  - subsample_fastq
   - sample_data_with_new_names
-  
+  - add_info_to_sam_data
+- subtitle: Taxonomy management
+  contents:
+  - simplify_taxo
+  - reorder_taxa_pq
 
 - title: Datasets
   contents: 
@@ -196,9 +204,10 @@ reference:
   - perc
   - are_modality_even_depth
   - merge_samples2
-  - merge_taxa_vec 
-  - reorder_taxa_pq
+  - merge_taxa_vec
   - unique_or_na
+  - physeq_or_string_to_dna
+  - select_one_sample
 
   
  
