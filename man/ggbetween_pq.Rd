@@ -50,7 +50,6 @@ Please make a reference to \code{ggstatsplot::ggbetweenstats()} if you
 use this function.
 }
 \examples{
-data(data_fungi)
 p <- ggbetween_pq(data_fungi, variable = "Time", p.adjust.method = "BH")
 p[[1]]
 ggbetween_pq(data_fungi, variable = "Height", one_plot = TRUE)

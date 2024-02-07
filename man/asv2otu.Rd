@@ -16,6 +16,9 @@ asv2otu(
   vsearch_cluster_method = "--cluster_size",
   vsearch_args = "--strand both",
   keep_temporary_files = FALSE,
+  swarmpath = "swarm",
+  d = 1,
+  swarm_args = "--fastidious",
   ...
 )
 }
@@ -47,14 +50,16 @@ and \verb{-strand both} (see args \code{vsearch_args})
 \item{tax_adjust}{(Default 0) See the man page
 of \code{\link[=merge_taxa_vec]{merge_taxa_vec()}} for more details.
 To conserved the taxonomic rank of the most abundant ASV,
-set tax_adjust to 0 (default)}
+set tax_adjust to 0 (default). For the moment only tax_adjust = 0 is
+robust}
 
 \item{vsearch_cluster_method}{(default: "--cluster_size) See other possible
 methods in the \href{https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf}{vsearch pdf manual} (e.g. \code{--cluster_size} or \code{--cluster_smallmem})
 \itemize{
 \item \code{--cluster_fast} : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.
 \item \code{--cluster_size} : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence abundance beforehand.
-\item \code{--cluster_smallmem} : Clusterize the fasta sequences in filename without automatically modifying their order beforehand. Sequence are expected to be sorted by decreasing sequence length, unless \emph{--usersort} is used
+\item \code{--cluster_smallmem} : Clusterize the fasta sequences in filename without automatically modifying their order beforehand. Sequence are expected to be sorted by decreasing sequence length, unless \emph{--usersort} is used.
+In that case you may set \code{vsearch_args} to vsearch_args = "--strand both --usersort"
 }}
 
 \item{vsearch_args}{(default : "--strand both") a one length character element defining other parameters to
@@ -66,6 +71,16 @@ passed on to vsearch.}
 \item cluster.fasta (centroid if method = "vsearch")
 \item temp.uc (clusters if method = "vsearch")
 }}
+
+\item{swarmpath}{(default: swarm) path to swarm}
+
+\item{d}{(default: 1) maximum number of differences allowed between two
+amplicons, meaning that two amplicons will be grouped if they have \code{d}
+(or less) differences}
+
+\item{swarm_args}{(default : "--fastidious") a one length character
+element defining other parameters to  passed on to swarm See other possible
+methods in the \href{https://github.com/torognes/swarm/blob/master/man/swarm_manual.pdf}{SWARM pdf manual}}
 
 \item{...}{Others arguments passed on to \code{\link[DECIPHER:Clusterize]{DECIPHER::Clusterize()}}}
 }

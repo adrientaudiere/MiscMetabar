@@ -57,11 +57,12 @@ This function is mainly a wrapper of the work of others.
 Please make \href{https://github.com/torognes/vsearch}{vsearch}.
 }
 \examples{
-
-chimera_detection_vs(
-  seq2search = data_fungi@refseq,
-  nb_seq = taxa_sums(data_fungi)
-)
+\dontrun{
+  chimera_detection_vs(
+    seq2search = data_fungi@refseq,
+    nb_seq = taxa_sums(data_fungi)
+  )
+}
 }
 \author{
 Adrien Taudière
