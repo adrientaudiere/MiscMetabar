@@ -28,6 +28,6 @@ See ?Rtsne::Rtsne() for more information
 Compute tSNE position of samples from a phyloseq object
 }
 \examples{
-# data(data_fungi)
+
 res_tsne <- tsne_pq(data_fungi)
 }

@@ -63,7 +63,7 @@ list_fastq_files <-
 #' @author Adrien Taudière
 #'
 #' @examples
-#' # data(data_fungi)
+#' 
 #' rename_samples_otu_table(data_fungi, as.character(seq_along(sample_names(data_fungi))))
 #'
 rename_samples_otu_table <- function(physeq, names_of_samples) {

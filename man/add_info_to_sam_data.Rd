@@ -34,7 +34,7 @@ Warning: The value nb_seq and nb_otu may be outdated if you transform your
 phyloseq object, e.g. using the \code{\link[=subset_taxa_pq]{subset_taxa_pq()}} function
 }
 \examples{
-# data(data_fungi)
+
 data_fungi <- add_info_to_sam_data(data_fungi)
 boxplot(data_fungi@sam_data$nb_otu ~ data_fungi@sam_data$Time)
 

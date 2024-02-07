@@ -43,6 +43,7 @@ jobs:
           git clone https://github.com/torognes/swarm.git \
           && cd swarm/ \
           && make
+          sudo cp ../swarm /usr/bin/swarm
 
       - name: Install cutadapt
         run: |

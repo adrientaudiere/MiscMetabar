@@ -66,7 +66,7 @@ and \code{+ scale_x_continuous(expand = expansion(mult = 0.5))}. See
 examples.
 }
 \examples{
-# data(data_fungi)
+
 ggvenn_pq(data_fungi, fact = "Height")
 ggvenn_pq(data_fungi, fact = "Height") +
   ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)

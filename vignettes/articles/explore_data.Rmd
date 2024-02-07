@@ -10,7 +10,8 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  message = FALSE
 )
 ```
 
@@ -99,3 +100,9 @@ heatmap(fungi_order@otu_table)
 
 
 
+
+# Session information
+
+```{r}
+sessionInfo()
+```

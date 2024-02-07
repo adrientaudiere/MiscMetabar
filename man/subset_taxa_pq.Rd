@@ -43,7 +43,7 @@ The main objective of this function is to complete the
 subset_taxa using a named boolean vector. Names must match taxa_names.
 }
 \examples{
-# data(data_fungi)
+
 subset_taxa_pq(data_fungi, data_fungi@tax_table[, "Phylum"] == "Ascomycota")
 
 cond_taxa <- grepl("Endophyte", data_fungi@tax_table[, "Guild"])

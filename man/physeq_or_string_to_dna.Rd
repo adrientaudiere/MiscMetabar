@@ -26,7 +26,7 @@ Internally used in \code{\link[=vsearch_clustering]{vsearch_clustering()}}, \cod
 \code{\link[=asv2otu]{asv2otu()}}.
 }
 \examples{
-# data(data_fungi)
+
 dna <- physeq_or_string_to_dna(data_fungi)
 dna
 

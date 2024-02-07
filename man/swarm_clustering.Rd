@@ -71,7 +71,7 @@ Please cite \href{https://github.com/torognes/swarm}{SWARM}.
 }
 \examples{
 \dontrun{
-# data(data_fungi)
+
 summary_plot_pq(data_fungi)
 # Change with your PATH
 path_to_swarm <- "/home/adrien/miniconda3/bin/swarm"
