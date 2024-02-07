@@ -71,7 +71,7 @@ or cluster a list of DNA sequences using vsearch software — vsearch_clustering
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Recluster sequences of an object of class <code>physeq</code>
 or cluster a list of DNA sequences using vsearch software</h1>
-      <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/dada_phyloseq.R" class="external-link"><code>R/dada_phyloseq.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/vsearch.R" class="external-link"><code>R/vsearch.R</code></a></small>
       <div class="d-none name"><code>vsearch_clustering.Rd</code></div>
     </div>
 
@@ -124,14 +124,16 @@ Set to number of cpus/processors to use for the clustering</p></dd>
 <dd><p>(Default 0) See the man page
 of <code><a href="merge_taxa_vec.html">merge_taxa_vec()</a></code> for more details.
 To conserved the taxonomic rank of the most abundant ASV,
-set tax_adjust to 0 (default)</p></dd>
+set tax_adjust to 0 (default). For the moment only tax_adjust = 0 is
+robust</p></dd>
 
 
 <dt>vsearch_cluster_method</dt>
 <dd><p>(default: "--cluster_size) See other possible
 methods in the <a href="https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf" class="external-link">vsearch pdf manual</a> (e.g. <code>--cluster_size</code> or <code>--cluster_smallmem</code>)</p><ul><li><p><code>--cluster_fast</code> : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.</p></li>
 <li><p><code>--cluster_size</code> : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence abundance beforehand.</p></li>
-<li><p><code>--cluster_smallmem</code> : Clusterize the fasta sequences in filename without automatically modifying their order beforehand. Sequence are expected to be sorted by decreasing sequence length, unless <em>--usersort</em> is used</p></li>
+<li><p><code>--cluster_smallmem</code> : Clusterize the fasta sequences in filename without automatically modifying their order beforehand. Sequence are expected to be sorted by decreasing sequence length, unless <em>--usersort</em> is used.
+In that case you may set <code>vsearch_args</code> to vsearch_args = "--strand both --usersort"</p></li>
 </ul></dd>
 
 

@@ -152,57 +152,12 @@ Please make <a href="https://github.com/torognes/vsearch" class="external-link">
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">chimera_detection_vs</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  seq2search <span class="op">=</span> <span class="va">data_fungi</span><span class="op">@</span><span class="va">refseq</span>,</span></span>
-<span class="r-in"><span>  nb_seq <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/taxa_sums.html" class="external-link">taxa_sums</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering for sequences under 100 bp remove a total of 0 ( 0 %) unique sequences for a total of 0 sequences removed ( 0 %)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $non_chimera</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> AAStringSet object of length 1051:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        width seq                                            names               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    [1]   312 AAATGCGATAAGTAATGTGAAT...TAGGAATACCCGCTGAACTTA ASV1;size=92884</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    [2]   301 AAATGCGATAAGTAATGTGAAT...TAGGAATACCCGCTGAACTTA ASV2;size=53538</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    [3]   349 AAATGCGATAAGTAATGTGAAT...TGGGACTACCCGCTGAACTTA ASV3;size=47410</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    [4]   357 AAATGCGATAAGTAATGTGAAT...TGGGACTACCCGCTGAACTTA ASV4;size=46857</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    [5]   300 AAATGCGATAAGTAATGTGAAT...TAGGAATACCCGCTGAACTTA ASV5;size=41082</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    ...   ... ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1047]   260 AAACGCGAAAAGTGTTATGATG...AAGATCACCCGCTGAACTTAA ASV1420;size=2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1048]   365 AAATGCGATAAGTAATGTGAAT...TAGGACTACCCGCTGAACTTA ASV602;size=2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1049]   344 AAATGCGATAAGTAATGTGAAT...TAGGAATACGCGCTGAACTTA ASV1142;size=1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1050]   290 GAAATGCGATAAGTAATGTGAA...TAGGGATACCCGCTGAACTTA ASV246;size=1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1051]   318 GAAATGCGATACGTAATGTGAA...AGGGATACCCGCTGAACTTAA ASV412;size=1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $chimera</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> AAStringSet object of length 242:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       width seq                                             names               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]   341 GAAATGCGATAAGTAATGTGAA...GTAGGATTACCCGCTGAACTTA ASV136;size=2743</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]   307 AAATGCGATAAGTAATGTGAAT...GTAGGGATACCCGCTGAACTTA ASV163;size=2028</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [3]   339 AAATGCGATAAGTAATGTGAAT...GTAGGATTACCCGCTGAACTTA ASV206;size=1471</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [4]   312 AAATGCGATAAGTAATGTGAAT...GTAGGAATACCCGCTGAACTTA ASV286;size=875</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [5]   306 AAATGCGAAAAGTAGTGTGAAT...GTAGGGATACCCGCTGAACTTA ASV294;size=832</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ...   ... ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [238]   303 GAAATGCGATACTTGGTGTGAA...GTGGGACTACCCGCTGAACTTA ASV1390;size=29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [239]   293 GAACTACGATAAGTAATGTGAA...TAGGGATACCCGCTGAACTTAA ASV1395;size=25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [240]   301 AAATGCGAAAAGTAGTGTGAAT...TAGGGATACCCGCTGAACTTAA ASV1407;size=18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [241]   382 AAATGCGATAAATAATATGAAT...GCAAGATTACCCGCTGAACTTA ASV1411;size=12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [242]   287 GAAATGCGATAAGTAATGTGAA...TAGGGCTACCCGCTGAACTTAA ASV789;size=2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $borderline</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> AAStringSet object of length 127:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       width seq                                             names               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [1]   344 AAATGCGATAAGTAATGTGAAT...GTAGGACTACCCGCTGAACTTA ASV74;size=5699</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [2]   298 AAATGCGATAAGTAATGTGAAT...GTAGGGATACCCGCTGAACTTA ASV123;size=3164</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [3]   300 AAATGCGATAAGTAATGTGAAT...GTAGGGATACCCGCTGAACTTA ASV139;size=2712</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [4]   304 AAATGCGATAAGTAATGTGAAT...GTAGGACTACCCGCTGAACTTA ASV141;size=2611</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [5]   295 AAATGCGATAAGTAATGTGAAT...GTAGGGATACCCGCTGAACTTA ASV153;size=2294</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ...   ... ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [123]   330 AAACGCGATAGGTAATGTGAAT...GTAGGACTACCCGCTGAACTTA ASV1292;size=62</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [124]   332 AAATGCGATAAGTAATGTGAAT...GTAGGAATACCCGCTGAACTTA ASV1353;size=48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [125]   300 GAAATGCGATAAGTAATGCGAA...GTAGGGATACCCGCTGAACTTA ASV1384;size=31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [126]   302 GAAATGCGATACGTAATGTGAA...TAGGAATACCCGCTGAACTTAA ASV1388;size=29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [127]   316 GAAATGCGATAAATAATATGAA...ACAAGATTACCCGCTGAACTTA ASV1399;size=22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">chimera_detection_vs</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    seq2search <span class="op">=</span> <span class="va">data_fungi</span><span class="op">@</span><span class="va">refseq</span>,</span></span>
+<span class="r-in"><span>    nb_seq <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/taxa_sums.html" class="external-link">taxa_sums</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
