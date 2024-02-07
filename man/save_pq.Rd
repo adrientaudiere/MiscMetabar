@@ -34,7 +34,7 @@ Write :
 }
 \examples{
 \dontrun{
-# data(data_fungi)
+
 save_pq(data_fungi, path = "phyloseq")
 }
 }

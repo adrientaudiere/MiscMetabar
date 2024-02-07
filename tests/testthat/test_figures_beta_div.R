@@ -378,3 +378,32 @@ test_that("multipatt_pq works with data_fungi dataset", {
   )
   expect_error(multipatt_pq(data_fungi, fact = "Time"))
 })
+
+test_that("multipatt_pq works with data_fungi dataset", {
+  expect_type(suppressMessages(suppressWarnings(res_height <- ancombc_pq(
+    subset_taxa_pq(
+      data_fungi_sp_known,
+      taxa_sums(data_fungi_sp_known) > 5000
+    ),
+    fact = "Height",
+    levels_fact = c("Low", "High"),
+    verbose = TRUE
+  ))), "list")
+
+  expect_s3_class(res_height$bias_correct_log_table, "data.frame")
+  expect_equal(dim(res_height$res), c(6, 15))
+
+  expect_type(suppressMessages(suppressWarnings(res_time <- ancombc_pq(
+    subset_taxa_pq(
+      data_fungi_sp_known,
+      taxa_sums(data_fungi_sp_known) > 5000
+    ),
+    fact = "Time",
+    levels_fact = c("0", "15"),
+    tax_level = "Family",
+    verbose = TRUE
+  ))), "list")
+
+  expect_s3_class(res_time$ss_tab, "data.frame")
+  expect_equal(dim(res_time$res), c(12, 15))
+})

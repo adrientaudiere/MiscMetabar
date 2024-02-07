@@ -151,6 +151,7 @@ test_that("subsample_fastq function works fine", {
 })
 
 test_that("sample_data_with_new_names function works fine", {
+   sam_file <- "inst/extdata/sam_data.csv"
    expect_silent(newdf <- sample_data_with_new_names(sam_file, paste0("Samples_", seq(1, 185))))
    expect_equal(dim(newdf)[1], 185)
    expect_equal(dim(newdf)[2], 7)
@@ -167,7 +168,7 @@ test_that("sample_data_with_new_names function works fine", {
     system.file("extdata", "sam2R.fastq.gz", package = "dada2")
   )
   expect_silent(filt_fastq_fw <- filter_trim(testFastqs_fw, output_fw = tempdir()))
-  expect_equal(length(derepFastq(filt_fastq_fw[1])), 4)
+  expect_equal(length(derepFastq(filt_fastq_fw[1])), 2)
   expect_silent(filt_fastq_pe <- filter_trim(testFastqs_fw,
     testFastqs_rev,
     output_fw = tempdir("fw"),

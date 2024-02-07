@@ -22,7 +22,7 @@ a \code{\link{ggplot}}2 plot of result of a mt test
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
-# data(data_fungi)
+
 # Filter samples that don't have Enterotype
 data_fungi <- subset_samples(data_fungi, !is.na(Time))
 res <- mt(data_fungi, "Time", method = "fdr", test = "f", B = 300)

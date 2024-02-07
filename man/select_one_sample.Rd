@@ -23,7 +23,7 @@ a physeq object with one sample
 Mostly for internal used, for example in function \code{\link[=track_wkflow_samples]{track_wkflow_samples()}}.
 }
 \examples{
-# data(data_fungi)
+
 A8_005 <- select_one_sample(data_fungi, "A8-005_S4_MERGED.fastq.gz")
 A8_005
 }

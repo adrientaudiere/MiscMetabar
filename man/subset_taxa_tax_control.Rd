@@ -41,7 +41,7 @@ A new \code{\link{phyloseq-class}} object.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
-# data(data_fungi)
+
 
 subset_taxa_tax_control(data_fungi,
   as.numeric(data_fungi@otu_table[, 300]),

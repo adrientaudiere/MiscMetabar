@@ -586,6 +586,16 @@ multipatt_pq <- function(physeq,
 #'   ), color = "darkgrey") +
 #'   geom_point()
 #'
+#' res_time <- ancombc_pq(
+#'    subset_taxa_pq(
+#'      data_fungi_sp_known,
+#'      taxa_sums(data_fungi_sp_known) > 5000
+#'    ),
+#'    fact = "Time",
+#'    levels_fact = c("0", "15"),
+#'    tax_level = "Family",
+#'    verbose = TRUE
+#'  )
 #' @author Adrien Taudière
 #' @details
 #' This function is mainly a wrapper of the work of others.

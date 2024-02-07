@@ -70,7 +70,7 @@ test_that("hill_pq works with GP dataset", {
 test_that("iNEXT_pq works with data_fungi dataset", {
   library("iNEXT")
   expect_s3_class(
-    res_iNEXT <- iNEXT_pq(
+    suppressWarnings(res_iNEXT <- iNEXT_pq(
       data_fungi_sp_known,
       merge_sample_by = "Height",
       q = 1,
@@ -78,7 +78,7 @@ test_that("iNEXT_pq works with data_fungi dataset", {
       nboot = 5
     ),
     "iNEXT"
-  )
+  ))
   expect_s3_class(ggiNEXT(res_iNEXT), "ggplot")
   expect_s3_class(ggiNEXT(res_iNEXT, type = 2), "ggplot")
   expect_s3_class(ggiNEXT(res_iNEXT, type = 3), "ggplot")

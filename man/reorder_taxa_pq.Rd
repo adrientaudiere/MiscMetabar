@@ -26,7 +26,7 @@ Note that the taxa order in a physeq object with a tree is locked by
 the order of leaf in the phylogenetic tree.
 }
 \examples{
-# data(data_fungi)
+
 data_fungi_ordered_by_genus <- reorder_taxa_pq(
   data_fungi,
   taxa_names(data_fungi)[order(as.vector(data_fungi@tax_table[, "Genus"]))]

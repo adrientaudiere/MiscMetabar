@@ -32,7 +32,7 @@
 - Add functions `get_funguild_db()` and `funguild_assign()` from the [FUNGuildR](https://github.com/brendanf/FUNGuildR/) package into MiscMetabar to decrease package dependencies 
 - Remove all dependencies from packages not available on CRAN or Bioconductor. Improve code using `goodpractice::gp`() and `devtools::check()` function
 - Add messages in various cases (NA in samples data, low number of sequences in samples, low number of sequences by taxa) when using `verify_pq()` with args `verbose=TRUE`
-- Fix a bug in `mutitax_bar_pq()` when using `nb_seq = FALSE`
+- Fix a bug in `multitax_bar_pq()` when using `nb_seq = FALSE`
 
 # MiscMetabar 0.52 
 
