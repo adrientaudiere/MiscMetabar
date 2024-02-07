@@ -102,8 +102,7 @@ SWARM can be downloaded from
 SWARM can be downloaded from
 \url{https://github.com/torognes/swarm}.
 More information in the associated publications
-\url{https://doi.org/10.1093/bioinformatics/btab493} and
-\url{https://doi.org/10.7717\%2Fpeerj.593}.
+\doi{doi:10.1093/bioinformatics/btab493} and \doi{doi:10.7717/2Fpeerj.593}
 }
 \seealso{
 \code{\link[=asv2otu]{asv2otu()}}, \code{\link[=vsearch_clustering]{vsearch_clustering()}}

@@ -22,7 +22,7 @@ A new object of class \code{physeq} with Guild information added to
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-Please cite this \href{https://doi.org/10.1016/j.funeco.2015.06.006}{publication}.
+Please cite Nguyen et al. 2016 (\doi{doi:10.1016/j.funeco.2015.06.006})
 }
 \details{
 This function is mainly a wrapper of the work of others.

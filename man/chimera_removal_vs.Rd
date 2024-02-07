@@ -46,15 +46,15 @@ Please make \href{https://github.com/torognes/vsearch}{vsearch}.
 }
 \examples{
 \dontrun{
-  data_fungi_nochim <- chimera_removal_vs(data_fungi)
-  data_fungi_nochim_16 <- chimera_removal_vs(data_fungi,
-    abskew = 16,
-    min_seq_length = 10
-  )
-  data_fungi_nochim2 <-
-    chimera_removal_vs(data_fungi, type = "Select_only_non_chim")
-  data_fungi_chimera <-
-    chimera_removal_vs(data_fungi, type = "Select_only_chim")
+data_fungi_nochim <- chimera_removal_vs(data_fungi)
+data_fungi_nochim_16 <- chimera_removal_vs(data_fungi,
+  abskew = 16,
+  min_seq_length = 10
+)
+data_fungi_nochim2 <-
+  chimera_removal_vs(data_fungi, type = "Select_only_non_chim")
+data_fungi_chimera <-
+  chimera_removal_vs(data_fungi, type = "Select_only_chim")
 }
 }
 \seealso{

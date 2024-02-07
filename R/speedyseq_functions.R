@@ -241,6 +241,7 @@ setMethod(
 #' @param group a vector with one element for each taxon in `x` that defines
 #'   the new groups
 #' @keywords internal
+#' @noRd
 merge_taxa_vec_pseudo <- function(x, group, reorder = FALSE) {
   stopifnot(ntaxa(x) == length(group))
   # drop taxa with `is.na(group)`
@@ -272,6 +273,7 @@ merge_taxa_vec_pseudo <- function(x, group, reorder = FALSE) {
 #' @param x a vector
 #' @param bad the string representing a bad value
 #' @keywords internal
+#' @noRd
 #' @author Michael R. McLaren (orcid: [0000-0003-1575-473X](https://orcid.org/0000-0003-1575-473X))
 bad_or_unique <- function(x, bad = "BAD") {
   if (length(unique(x)) == 1) {
@@ -290,6 +292,7 @@ bad_or_unique <- function(x, bad = "BAD") {
 #' @param na_bad whether NAs should also be treated as bad
 #' @param k the index to which values are flushed
 #' @keywords internal
+#' @noRd
 #' @author Michael R. McLaren (orcid: [0000-0003-1575-473X](https://orcid.org/0000-0003-1575-473X))
 bad_flush_right <- function(x, bad = "BAD", na_bad = FALSE, k = length(x)) {
   if (na_bad) {
@@ -553,6 +556,7 @@ unique_or_na.factor <- function(x) {
 #'   value. Can also be a formula as interpretted by `purrr::as_mapper()`.
 #'
 #' @keywords internal
+#' @noRd
 #' @author Michael R. McLaren (orcid: [0000-0003-1575-473X](https://orcid.org/0000-0003-1575-473X))
 merge_groups <- function(x, group, f = unique_or_na) {
   f <- purrr::as_mapper(f)
@@ -573,6 +577,7 @@ merge_groups <- function(x, group, f = unique_or_na) {
 #' @param object A "data.frame"-class object
 #'
 #' @keywords internal
+#' @noRd
 #'
 #' @examples
 #' x <- data.frame(var1 = letters[1:3], var2 = 7:9)
@@ -593,8 +598,6 @@ sample_data_stable <- function(object) {
 }
 
 
-# select_taxa -----------------------------------------------------------------
-
 #' Select a subset of taxa in a specified order where possible
 #'
 #' Select (a subset of) taxa; if `x` allows taxa to be reordered, then taxa are
@@ -609,7 +612,6 @@ sample_data_stable <- function(object) {
 #' @param taxa Character vector of taxa to select, in requested order
 #' @param reorder Logical specifying whether to use the order in `taxa` (TRUE)
 #'   or keep the order in `taxa_names(x)` (FALSE)
-#' @keywords internal
 #' @author Michael R. McLaren (orcid: [0000-0003-1575-473X](https://orcid.org/0000-0003-1575-473X))
 #' @rdname select_taxa-methods
 setGeneric(

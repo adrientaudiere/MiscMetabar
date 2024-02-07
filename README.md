@@ -68,35 +68,37 @@ devtools::install_github("adrientaudiere/MiscMetabar", ref = "dev")
 
 ## Some use of MiscMetabar
 
-See vignettes in the
+See articles in the
 [MiscMetabar](https://adrientaudiere.github.io/MiscMetabar/) website for
 more examples.
 
 For an introduction to metabarcoding in R, Please visite the [state of
 the
 field](https://adrientaudiere.github.io/MiscMetabar/articles/states_of_fields_in_R.html)
-vignettes. The [import, export and
+articles. The [import, export and
 track](https://adrientaudiere.github.io/MiscMetabar/articles/import_export_track.html)
-vignette explains how import and export `phyloseq` object. Its also show
+article explains how import and export `phyloseq` object. Its also show
 how to summarize useful information (number of sequences, samples and
-clusters) accross bioinformatic pipelines.
+clusters) accross bioinformatic pipelines. The article [explore
+data](https://adrientaudiere.github.io/MiscMetabar/articles/explore_data.html)
+takes a closer look to different way of explore samples and taxonomical
+data from `phyloseq` object.
 
-If you are interested in ecological metrics, see the vignettes
-describing
+If you are interested in ecological metrics, see the articles describing
 [alpha-diversity](https://adrientaudiere.github.io/MiscMetabar/articles/alpha-div.html)
 and
 [beta-diversity](https://adrientaudiere.github.io/MiscMetabar/articles/beta-div.html)
-analysis. The vignette [filter taxa and
+analysis. The article [filter taxa and
 samples](https://adrientaudiere.github.io/MiscMetabar/articles/filter.html)
 describes some data-filtering processes using MiscMetabar and the
 [reclustering](https://adrientaudiere.github.io/MiscMetabar/articles/Reclustering.html)
 tutorial introduces the different way of clustering already-clustered
-OTU/ASV. The vignette
+OTU/ASV. The article
 [tengeler](https://adrientaudiere.github.io/MiscMetabar/articles/tengeler.html)
 explore the dataset from Tengeler et al. (2020) using some MiscMetabar
 functions.
 
-For developers, I also wrote a vignette describing som [rules of
+For developers, I also wrote a article describing som [rules of
 codes](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html).
 
 ### Summarize a physeq object

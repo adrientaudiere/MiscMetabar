@@ -11,7 +11,7 @@ df_basidio <-
 # path_db <- "inst/extdata/100_sp_UNITE_sh_general_release_dynamic.fasta"
 
 suppressWarnings(vsearch_error_or_not <-
-                   try(system("vsearch 2>&1", intern = TRUE), silent = TRUE))
+  try(system("vsearch 2>&1", intern = TRUE), silent = TRUE))
 
 if (class(vsearch_error_or_not) == "try-error") {
   message(
@@ -117,14 +117,16 @@ if (class(vsearch_error_or_not) == "try-error") {
     expect_equal(ntaxa(d_vs2), 817)
 
     expect_s4_class(d_vs3 <- vsearch_clustering(data_fungi,
-                                               id = 0.98,
-                                               vsearch_cluster_method = "--cluster_smallmem",
-                                               vsearch_args = "--strand both --usersort"
+      id = 0.98,
+      vsearch_cluster_method = "--cluster_smallmem",
+      vsearch_args = "--strand both --usersort"
     ), "phyloseq")
 
 
-    expect_type(seq_clustered <- vsearch_clustering(dna_seq = sequences_ex),
-                "list")
+    expect_type(
+      seq_clustered <- vsearch_clustering(dna_seq = sequences_ex),
+      "list"
+    )
     expect_equal(dim(seq_clustered), c(4, 10))
   })
 }

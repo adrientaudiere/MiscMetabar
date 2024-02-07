@@ -63,7 +63,7 @@ list_fastq_files <-
 #' @author Adrien Taudière
 #'
 #' @examples
-#' 
+#'
 #' rename_samples_otu_table(data_fungi, as.character(seq_along(sample_names(data_fungi))))
 #'
 rename_samples_otu_table <- function(physeq, names_of_samples) {
@@ -222,10 +222,10 @@ filter_trim <-
 #' @return A data.frame from file_path and new names
 #' @export
 #'
-#' @examples 
-#' sam_file <- "inst/extdata/sam_data.csv"
+#' @examples
+#' sam_file <- system.file("extdata", "sam_data.csv", package = "MiscMetabar")
 #' sample_data_with_new_names(sam_file, paste0("Samples_", seq(1, 185)))
-#' 
+#'
 #' @author Adrien Taudière
 #'
 #' @seealso [rename_samples()]

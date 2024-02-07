@@ -145,7 +145,7 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
 #' @export
 #'
 #' @examples
-#' 
+#'
 #'
 #' subset_taxa_tax_control(data_fungi,
 #'   as.numeric(data_fungi@otu_table[, 300]),

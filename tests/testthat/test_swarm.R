@@ -1,5 +1,5 @@
 suppressWarnings(swarm_error_or_not <-
-                   try(system("swarm -h 2>&1", intern = TRUE), silent = TRUE))
+  try(system("swarm -h 2>&1", intern = TRUE), silent = TRUE))
 
 if (class(swarm_error_or_not) == "try-error") {
   message(
@@ -7,7 +7,6 @@ if (class(swarm_error_or_not) == "try-error") {
     tested when swarm is not installed"
   )
 } else {
-
   sequences_ex <- c(
     "TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGGGCGAATTAATAACGAATTCATTGAATCA",
     "TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGGGCGAATTACCTGGTAAGGCCCACTT",
@@ -40,11 +39,11 @@ if (class(swarm_error_or_not) == "try-error") {
     expect_equal(ntaxa(d_swarm), 600)
     expect_true(nsamples(d_swarm) == nsamples(data_fungi_sp_known))
 
-     expect_s3_class(
-       seq_swarm <-
-      asv2otu(dna_seq = sequences_ex, method = "swarm"),
+    expect_s3_class(
+      seq_swarm <-
+        asv2otu(dna_seq = sequences_ex, method = "swarm"),
       "data.frame"
     )
-     expect_equal(dim(seq_swarm), c(12, 10))
+    expect_equal(dim(seq_swarm), c(12, 10))
   })
 }

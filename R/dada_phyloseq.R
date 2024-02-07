@@ -437,7 +437,7 @@ track_wkflow <- function(list_of_objects,
 #' @author Adrien Taudière
 #'
 #' @examples
-#' 
+#'
 #' tree_A10_005 <- subset_samples(data_fungi, Tree_name == "A10-005")
 #' track_wkflow_samples(tree_A10_005)
 track_wkflow_samples <- function(list_pq_obj, ...) {
@@ -490,14 +490,14 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #' @param tax_adjust (Default 0) See the man page
 #'   of [merge_taxa_vec()] for more details.
 #'   To conserved the taxonomic rank of the most abundant ASV,
-#'   set tax_adjust to 0 (default). For the moment only tax_adjust = 0 is 
+#'   set tax_adjust to 0 (default). For the moment only tax_adjust = 0 is
 #'   robust
 #' @param vsearch_cluster_method (default: "--cluster_size) See other possible
 #'   methods in the [vsearch pdf manual](https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf) (e.g. `--cluster_size` or `--cluster_smallmem`)
 #'   - `--cluster_fast` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.
 #'   - `--cluster_size` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence abundance beforehand.
 #'   - `--cluster_smallmem` : Clusterize the fasta sequences in filename without automatically modifying their order beforehand. Sequence are expected to be sorted by decreasing sequence length, unless *--usersort* is used.
-#'     In that case you may set `vsearch_args` to vsearch_args = "--strand both --usersort" 
+#'     In that case you may set `vsearch_args` to vsearch_args = "--strand both --usersort"
 #' @param vsearch_args (default : "--strand both") a one length character element defining other parameters to
 #'   passed on to vsearch.
 #' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files
@@ -511,6 +511,7 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #' @param swarm_args (default : "--fastidious") a one length character
 #'   element defining other parameters to  passed on to swarm See other possible
 #'   methods in the [SWARM pdf manual](https://github.com/torognes/swarm/blob/master/man/swarm_manual.pdf)
+#' @param method_clusterize (default "overlap") the method for the [DECIPHER::Clusterize()] method
 #' @param ... Others arguments passed on to [DECIPHER::Clusterize()]
 #' @details This function use the `merge_taxa_vec` function to
 #'   merge taxa into clusters. By default tax_adjust = 0. See the man page
@@ -539,8 +540,9 @@ asv2otu <- function(physeq = NULL,
                     vsearch_args = "--strand both",
                     keep_temporary_files = FALSE,
                     swarmpath = "swarm",
-                     d = 1,
-                     swarm_args = "--fastidious",
+                    d = 1,
+                    swarm_args = "--fastidious",
+                    method_clusterize = "overlap",
                     ...) {
   if (inherits(physeq, "phyloseq")) {
     verify_pq(physeq)
@@ -566,6 +568,7 @@ asv2otu <- function(physeq = NULL,
       cutoff = 1 - id,
       # e.g. `cutoff = 0.03` for a 97% OTU
       processors = nproc,
+      method = method_clusterize,
       ...
     )
 
@@ -597,15 +600,15 @@ asv2otu <- function(physeq = NULL,
     )
   } else if (method == "swarm") {
     new_obj <- swarm_clustering(
-     physeq = physeq,
-     dna_seq = dna_seq,
-     d = d,
-     swarmpath = swarmpath,
-     vsearch_path = vsearchpath,
-     nproc = nproc,
-     swarm_args = swarm_args,
-     tax_adjust = tax_adjust,
-     keep_temporary_files = keep_temporary_files
+      physeq = physeq,
+      dna_seq = dna_seq,
+      d = d,
+      swarmpath = swarmpath,
+      vsearch_path = vsearchpath,
+      nproc = nproc,
+      swarm_args = swarm_args,
+      tax_adjust = tax_adjust,
+      keep_temporary_files = keep_temporary_files
     )
   } else {
     stop("Method allows 2 values only : `clusterize`, `vsearch` or `swarm`")
@@ -650,7 +653,7 @@ asv2otu <- function(physeq = NULL,
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' 
+#'
 #' # write_pq(data_fungi, path = "phyloseq")
 #' # write_pq(data_fungi, path = "phyloseq", one_file = TRUE)
 #' @seealso [MiscMetabar::save_pq()]
@@ -857,7 +860,7 @@ write_pq <- function(physeq,
 #' @author Adrien Taudière
 #' @examples
 #' \dontrun{
-#' 
+#'
 #' save_pq(data_fungi, path = "phyloseq")
 #' }
 #' @seealso [MiscMetabar::write_pq()]
@@ -1375,7 +1378,7 @@ verify_pq <- function(
 #'   the number of samples
 #'
 #' @examples
-#' 
+#'
 #' cond_samp <- grepl("A1", data_fungi@sam_data[["Sample_names"]])
 #' subset_samples_pq(data_fungi, cond_samp)
 #'
@@ -1429,7 +1432,7 @@ subset_samples_pq <- function(physeq, condition) {
 #'   of this function if you use this parameter. No effect if the condition
 #'   is of class `tax_table`.
 #' @examples
-#' 
+#'
 #' subset_taxa_pq(data_fungi, data_fungi@tax_table[, "Phylum"] == "Ascomycota")
 #'
 #' cond_taxa <- grepl("Endophyte", data_fungi@tax_table[, "Guild"])
@@ -1534,7 +1537,7 @@ subset_taxa_pq <- function(physeq,
 #' @author Adrien Taudière
 #'
 #' @examples
-#' 
+#'
 #' A8_005 <- select_one_sample(data_fungi, "A8-005_S4_MERGED.fastq.gz")
 #' A8_005
 select_one_sample <- function(physeq, sam_name, silent = FALSE) {
@@ -1671,7 +1674,8 @@ tbl_sum_samdata <- function(physeq, remove_col_unique_value = TRUE, ...) {
 #' @description
 #' `r lifecycle::badge("experimental")`
 #'
-#' Please cite this [publication](https://doi.org/10.1016/j.funeco.2015.06.006).
+#' Please cite Nguyen et al. 2016 (\doi{doi:10.1016/j.funeco.2015.06.006})
+#'
 #'
 #' @inheritParams clean_pq
 #' @param taxLevels Name of the 7 columns in tax_table required by funguild
@@ -1681,7 +1685,7 @@ tbl_sum_samdata <- function(physeq, remove_col_unique_value = TRUE, ...) {
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' 
+#'
 #' df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)
 #' \dontrun{
 #' df <- add_funguild_info(df,
@@ -1750,7 +1754,7 @@ add_funguild_info <- function(physeq,
 #' @author Adrien Taudière
 #' @examples
 #' \dontrun{
-#' 
+#'
 #' df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)
 #' df <- add_funguild_info(df,
 #'   taxLevels = c(
@@ -1874,7 +1878,7 @@ plot_guild_pq <-
 #' This function build tree phylogenetic tree and if nb_bootstrap is
 #' set, it build also the 3 corresponding bootstrapped tree.
 #'
-#' Default parameters are based on https://doi.org/10.12688/f1000research.8986.2
+#' Default parameters are based on \doi{doi:10.12688/f1000research.8986.2}
 #' and phangorn vignette [Estimating phylogenetic trees with phangorn](https://klausvigo.github.io/phangorn/articles/Trees.html). You should understand your data, especially the markers,
 #' before using this function.
 #'
@@ -1913,7 +1917,7 @@ plot_guild_pq <-
 #'   use this function.
 #' @examples
 #' library("phangorn")
-#' 
+#'
 #' df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 9000)
 #' df_tree <- build_phytree_pq(df, nb_bootstrap = 5)
 #' plot(df_tree$UPGMA)
@@ -2050,7 +2054,7 @@ build_phytree_pq <- function(physeq,
 #' @author Adrien Taudière
 #' @importFrom stats kruskal.test
 #' @examples
-#' 
+#'
 #' are_modality_even_depth(data_fungi, "Time")$p.value
 #' are_modality_even_depth(rarefy_even_depth(data_fungi), "Time")$p.value
 #' are_modality_even_depth(data_fungi, "Height", boxplot = TRUE)
@@ -2088,7 +2092,7 @@ are_modality_even_depth <- function(physeq, fact, boxplot = FALSE) {
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' 
+#'
 #' data_fungi_ordered_by_genus <- reorder_taxa_pq(
 #'   data_fungi,
 #'   taxa_names(data_fungi)[order(as.vector(data_fungi@tax_table[, "Genus"]))]
@@ -2160,7 +2164,7 @@ reorder_taxa_pq <- function(physeq, names_ordered, remove_phy_tree = FALSE) {
 #' @export
 #'
 #' @examples
-#' 
+#'
 #' data_fungi <- add_info_to_sam_data(data_fungi)
 #' boxplot(data_fungi@sam_data$nb_otu ~ data_fungi@sam_data$Time)
 #'
@@ -2219,7 +2223,7 @@ add_info_to_sam_data <- function(physeq,
 #' @export
 #'
 #' @examples
-#' 
+#'
 #' dna <- physeq_or_string_to_dna(data_fungi)
 #' dna
 #'
@@ -2291,9 +2295,8 @@ physeq_or_string_to_dna <- function(physeq = NULL,
 #' `r lifecycle::badge("experimental")`
 #'
 #' @return a list of command and
-#'
+#' @export
 #' @author Adrien Taudière
-#'
 #'
 #' @examples
 #' \dontrun{
@@ -2328,7 +2331,7 @@ physeq_or_string_to_dna <- function(physeq = NULL,
 #' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
-#'   Please cite [cutadapt](http://doi.org/10.14806/ej.17.1.200).
+#'   Please cite cutadapt (\doi{doi:10.14806/ej.17.1.200}).
 
 
 cutadapt_remove_primers <- function(path_to_fastq,
@@ -2413,9 +2416,10 @@ cutadapt_remove_primers <- function(path_to_fastq,
     }
   }
   if (cmd_is_run) {
-    writeLines(unlist(cmd), paste0(tempdir(), "script_cutadapt.sh"))
-    system2("bash", paste0(tempdir(), "script_cutadapt.sh"))
+    writeLines(unlist(cmd), paste0(tempdir(), "/script_cutadapt.sh"))
+    system2("bash", paste0(tempdir(), "/script_cutadapt.sh"))
     message(paste0("Output files are available in the folder ", normalizePath(folder_output)))
+    unlink(paste0(tempdir(), "/script_cutadapt.sh"))
   }
   return(cmd)
 }

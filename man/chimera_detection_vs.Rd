@@ -58,10 +58,10 @@ Please make \href{https://github.com/torognes/vsearch}{vsearch}.
 }
 \examples{
 \dontrun{
-  chimera_detection_vs(
-    seq2search = data_fungi@refseq,
-    nb_seq = taxa_sums(data_fungi)
-  )
+chimera_detection_vs(
+  seq2search = data_fungi@refseq,
+  nb_seq = taxa_sums(data_fungi)
+)
 }
 }
 \author{
