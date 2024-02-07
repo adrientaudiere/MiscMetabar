@@ -1597,8 +1597,6 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #' @return a physeq object with a larger slot tax_table
 #'
 #' @export
-#' @examples
-#' # example code
 #'
 #' @author Adrien Taudière
 #'
@@ -1637,6 +1635,7 @@ add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, ...) {
 #' @export
 #' @author Adrien Taudière
 #' @examples
+#' data(data_fungi)
 #' tbl_sum_samdata(data_fungi) %>%
 #'   gtsummary::as_kable()
 #'

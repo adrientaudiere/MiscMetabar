@@ -47,6 +47,7 @@ Note that lvl3 need to be nested in lvl2 which need to be nested
 in lvl1
 }
 \examples{
+data(data_fungi_sp_known)
 multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", "Time")
 multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order")
 multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order",
