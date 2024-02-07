@@ -10,7 +10,8 @@ test_that("asv2otu works fine with Clusterize method", {
   expect_s4_class(data_fungi_sp_known, "phyloseq")
   expect_s4_class(suppressWarnings(asv2otu(data_fungi_sp_known)), "phyloseq")
   expect_s4_class(suppressWarnings(asv2otu(data_fungi_sp_known,
-                                           method = "longest")), "phyloseq")
+    method_clusterize = "longest"
+  )), "phyloseq")
 
   expect_error(asv2otu(enterotype, dna_seq = sequences_ex))
   expect_error(asv2otu(enterotype, method = "vsearch"))
@@ -102,9 +103,9 @@ test_that("count_seq works fine", {
 # })
 
 test_that("reorder_taxa_pq works fine", {
-expect_silent(data_fungi_asc_ordered_by_abundance <- reorder_taxa_pq(
-  data_fungi,
-   taxa_names(data_fungi)[order(taxa_sums(data_fungi))]
- ))
- expect_equal(unclass(data_fungi_asc_ordered_by_abundance@tax_table[,"Genus"])[2], "Peziza")
+  expect_silent(data_fungi_asc_ordered_by_abundance <- reorder_taxa_pq(
+    data_fungi,
+    taxa_names(data_fungi)[order(taxa_sums(data_fungi))]
+  ))
+  expect_equal(unclass(data_fungi_asc_ordered_by_abundance@tax_table[, "Genus"])[2], "Peziza")
 })

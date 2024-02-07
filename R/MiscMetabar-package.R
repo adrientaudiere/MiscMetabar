@@ -28,6 +28,7 @@ if (getRversion() >= "2.15.1") {
 }
 
 #' @keywords internal
+#' @noRd
 "_PACKAGE"
 
 ## usethis namespace: start

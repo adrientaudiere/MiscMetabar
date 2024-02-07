@@ -19,6 +19,7 @@ asv2otu(
   swarmpath = "swarm",
   d = 1,
   swarm_args = "--fastidious",
+  method_clusterize = "overlap",
   ...
 )
 }
@@ -81,6 +82,8 @@ amplicons, meaning that two amplicons will be grouped if they have \code{d}
 \item{swarm_args}{(default : "--fastidious") a one length character
 element defining other parameters to  passed on to swarm See other possible
 methods in the \href{https://github.com/torognes/swarm/blob/master/man/swarm_manual.pdf}{SWARM pdf manual}}
+
+\item{method_clusterize}{(default "overlap") the method for the \code{\link[DECIPHER:Clusterize]{DECIPHER::Clusterize()}} method}
 
 \item{...}{Others arguments passed on to \code{\link[DECIPHER:Clusterize]{DECIPHER::Clusterize()}}}
 }

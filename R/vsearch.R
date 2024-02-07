@@ -1,4 +1,3 @@
-
 ################################################################################
 #' Search for a list of sequence in a fasta file against physeq reference
 #'   sequences using [vsearch](https://github.com/torognes/vsearch)
@@ -24,7 +23,7 @@
 #'   ACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG",
 #'   file = file_dna, names = "seq1"
 #' )
-#' 
+#'
 #' res <- vs_search_global(data_fungi, file_dna)
 #' unlink(file_dna)
 #'
@@ -167,10 +166,10 @@ vs_search_global <- function(physeq,
 #' @export
 #' @examples
 #' \dontrun{
-#' 
+#'
 #' summary_plot_pq(data_fungi)
 #' system2("swarm", "-h")
-#' 
+#'
 #' data_fungi_swarm <- swarm_clustering(data_fungi)
 #' summary_plot_pq(data_fungi_swarm)
 #'
@@ -195,8 +194,7 @@ vs_search_global <- function(physeq,
 #'   SWARM can be downloaded from
 #'   \url{https://github.com/torognes/swarm}.
 #'   More information in the associated publications
-#'   \url{https://doi.org/10.1093/bioinformatics/btab493} and
-#'   \url{https://doi.org/10.7717%2Fpeerj.593}.
+#'   \doi{doi:10.1093/bioinformatics/btab493} and \doi{doi:10.7717/2Fpeerj.593}
 #' @details
 #' This function is mainly a wrapper of the work of others.
 #'   Please cite [SWARM](https://github.com/torognes/swarm).
@@ -347,14 +345,14 @@ swarm_clustering <- function(physeq = NULL,
 #' @param tax_adjust (Default 0) See the man page
 #'   of [merge_taxa_vec()] for more details.
 #'   To conserved the taxonomic rank of the most abundant ASV,
-#'   set tax_adjust to 0 (default). For the moment only tax_adjust = 0 is 
+#'   set tax_adjust to 0 (default). For the moment only tax_adjust = 0 is
 #'   robust
 #' @param vsearch_cluster_method (default: "--cluster_size) See other possible
 #'   methods in the [vsearch pdf manual](https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf) (e.g. `--cluster_size` or `--cluster_smallmem`)
 #'   - `--cluster_fast` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.
 #'   - `--cluster_size` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence abundance beforehand.
 #'   - `--cluster_smallmem` : Clusterize the fasta sequences in filename without automatically modifying their order beforehand. Sequence are expected to be sorted by decreasing sequence length, unless *--usersort* is used.
-#'     In that case you may set `vsearch_args` to vsearch_args = "--strand both --usersort" 
+#'     In that case you may set `vsearch_args` to vsearch_args = "--strand both --usersort"
 #' @param vsearch_args (default : "--strand both") a one length character element defining other parameters to
 #'   passed on to vsearch.
 #' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files ?
@@ -379,7 +377,7 @@ swarm_clustering <- function(physeq = NULL,
 #' @author Adrien Taudière
 #'
 #' @examples
-#' 
+#'
 #' summary_plot_pq(data_fungi)
 #' d_vs <- vsearch_clustering(data_fungi)
 #' summary_plot_pq(d_vs)
@@ -507,15 +505,15 @@ vsearch_clustering <- function(physeq = NULL,
 #'
 #' @examples
 #' \dontrun{
-#'   data_fungi_nochim <- chimera_removal_vs(data_fungi)
-#'   data_fungi_nochim_16 <- chimera_removal_vs(data_fungi,
-#'     abskew = 16,
-#'     min_seq_length = 10
-#'   )
-#'   data_fungi_nochim2 <-
-#'     chimera_removal_vs(data_fungi, type = "Select_only_non_chim")
-#'   data_fungi_chimera <-
-#'     chimera_removal_vs(data_fungi, type = "Select_only_chim")
+#' data_fungi_nochim <- chimera_removal_vs(data_fungi)
+#' data_fungi_nochim_16 <- chimera_removal_vs(data_fungi,
+#'   abskew = 16,
+#'   min_seq_length = 10
+#' )
+#' data_fungi_nochim2 <-
+#'   chimera_removal_vs(data_fungi, type = "Select_only_non_chim")
+#' data_fungi_chimera <-
+#'   chimera_removal_vs(data_fungi, type = "Select_only_chim")
 #' }
 #' @author Adrien Taudière
 #' @details
@@ -630,10 +628,10 @@ chimera_removal_vs <-
 #'
 #' @examples
 #' \dontrun{
-#'   chimera_detection_vs(
-#'     seq2search = data_fungi@refseq,
-#'     nb_seq = taxa_sums(data_fungi)
-#'   )
+#' chimera_detection_vs(
+#'   seq2search = data_fungi@refseq,
+#'   nb_seq = taxa_sums(data_fungi)
+#' )
 #' }
 #' @author Adrien Taudière
 #' @details

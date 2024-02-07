@@ -59,7 +59,7 @@ A list of phylogenetic tree
 This function build tree phylogenetic tree and if nb_bootstrap is
 set, it build also the 3 corresponding bootstrapped tree.
 
-Default parameters are based on https://doi.org/10.12688/f1000research.8986.2
+Default parameters are based on \doi{doi:10.12688/f1000research.8986.2}
 and phangorn vignette \href{https://klausvigo.github.io/phangorn/articles/Trees.html}{Estimating phylogenetic trees with phangorn}. You should understand your data, especially the markers,
 before using this function.
 

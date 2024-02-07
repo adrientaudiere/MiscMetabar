@@ -71,14 +71,17 @@ test_that("iNEXT_pq works with data_fungi dataset", {
   library("iNEXT")
   expect_s3_class(
     suppressWarnings(res_iNEXT <- iNEXT_pq(
-      data_fungi_sp_known,
+      subset_taxa_pq(
+        data_fungi,
+        taxa_sums(data_fungi) > 5000
+      ),
       merge_sample_by = "Height",
       q = 1,
       datatype = "abundance",
       nboot = 5
-    ),
+    )),
     "iNEXT"
-  ))
+  )
   expect_s3_class(ggiNEXT(res_iNEXT), "ggplot")
   expect_s3_class(ggiNEXT(res_iNEXT, type = 2), "ggplot")
   expect_s3_class(ggiNEXT(res_iNEXT, type = 3), "ggplot")

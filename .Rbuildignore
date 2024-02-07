@@ -14,3 +14,4 @@
 ^.vscode$
 ^citation.cff$
 ^vignettes/articles$
+^cran-comments\.md$

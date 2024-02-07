@@ -1,7 +1,8 @@
-suppressWarnings(swarm_error_or_not <-
+suppressWarnings(cutadapt_error_or_not <-
   try(system("cutadapt 2>&1", intern = TRUE), silent = TRUE))
 
-if (class(swarm_error_or_not) == "try-error") {
+if (class(cutadapt_error_or_not) == "try-error" ||
+    sum(grepl("ModuleNotFoundError", cutadapt_error_or_not)) != 0) {
   message(
     "cutadapt_remove_primers()  can't be
     tested when cutadapt is not installed"

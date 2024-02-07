@@ -28,7 +28,7 @@ A data.frame from file_path and new names
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
-sam_file <- "inst/extdata/sam_data.csv"
+sam_file <- system.file("extdata", "sam_data.csv", package = "MiscMetabar")
 sample_data_with_new_names(sam_file, paste0("Samples_", seq(1, 185)))
 
 }

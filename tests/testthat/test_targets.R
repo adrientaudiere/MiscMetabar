@@ -151,10 +151,10 @@ test_that("subsample_fastq function works fine", {
 })
 
 test_that("sample_data_with_new_names function works fine", {
-   sam_file <- "inst/extdata/sam_data.csv"
-   expect_silent(newdf <- sample_data_with_new_names(sam_file, paste0("Samples_", seq(1, 185))))
-   expect_equal(dim(newdf)[1], 185)
-   expect_equal(dim(newdf)[2], 7)
+  sam_file <- system.file("extdata", "sam_data.csv", package = "MiscMetabar")
+  expect_silent(newdf <- sample_data_with_new_names(sam_file, paste0("Samples_", seq(1, 185))))
+  expect_equal(dim(newdf)[1], 185)
+  expect_equal(dim(newdf)[2], 7)
 })
 
 
@@ -176,7 +176,6 @@ test_that("sample_data_with_new_names function works fine", {
   ))
   expect_equal(length(derepFastq(filt_fastq_pe[[1]])), 4)
   expect_equal(length(derepFastq(filt_fastq_pe[[2]])), 4)
-
 })
 
 test_that("add_info_to_sam_data function works fine with data_fungi", {
