@@ -580,6 +580,7 @@ merge_groups <- function(x, group, f = unique_or_na) {
 #' @noRd
 #'
 #' @examples
+#' \dontrun{
 #' x <- data.frame(var1 = letters[1:3], var2 = 7:9)
 #' rownames(x)
 #' sample_data(x)

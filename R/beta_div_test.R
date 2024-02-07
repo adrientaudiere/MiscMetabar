@@ -287,6 +287,7 @@ LCBD_pq <- function(physeq,
 #' @seealso [LCBD_pq], [adespatial::beta.div()]
 #'
 #' @examples
+#' data(data_fungi)
 #' plot_LCBD_pq(data_fungi,
 #'   nperm = 100, only_plot_significant = FALSE,
 #'   pval = 0.2
@@ -426,6 +427,7 @@ plot_LCBD_pq <- function(physeq,
 #' @seealso [LCBD_pq], [adespatial::beta.div()]
 #'
 #' @examples
+#' data(data_fungi)
 #' plot_SCBD_pq(data_fungi) +
 #'   geom_text(aes(label = paste(Genus, Species)), hjust = 1, vjust = 2) +
 #'   xlim(c(0, NA))
@@ -484,6 +486,7 @@ plot_SCBD_pq <- function(physeq,
 #' @return A ggplot object
 #' @export
 #' @examples
+#' data(data_fungi)
 #' data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
 #' multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)), fact = "Time")
 #' multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)),
