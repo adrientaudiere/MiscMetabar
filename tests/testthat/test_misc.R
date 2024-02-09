@@ -100,6 +100,7 @@ test_that("install_pkg_needed works fine", {
 })
 
 test_that("add_funguild_info works fine", {
+  skip_on_cran()
   data_f <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)
   expect_silent(data_f <- add_funguild_info(data_f,
     taxLevels = c(
@@ -108,6 +109,7 @@ test_that("add_funguild_info works fine", {
   ))
   expect_equal(dim(data_f@tax_table)[2], 24)
 })
+
 
 test_that("are_modality_even_depth works fine", {
   expect_equal(are_modality_even_depth(data_fungi, "Time")$statistic[[1]], 62.143)

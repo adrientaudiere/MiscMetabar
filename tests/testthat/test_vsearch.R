@@ -10,10 +10,7 @@ df_basidio <-
   subset_taxa_pq(df_basidio, colSums(df_basidio@otu_table) > 1000)
 # path_db <- "inst/extdata/100_sp_UNITE_sh_general_release_dynamic.fasta"
 
-suppressWarnings(vsearch_error_or_not <-
-  try(system("vsearch 2>&1", intern = TRUE), silent = TRUE))
-
-if (class(vsearch_error_or_not) == "try-error") {
+if (!MiscMetabar:::is_vsearch_installed()) {
   message(
     "vs_search_global() and asv2otu(..., method=vsearch) can't be tested when vsearch is not installed"
   )

@@ -585,6 +585,7 @@ merge_groups <- function(x, group, f = unique_or_na) {
 #' rownames(x)
 #' sample_data(x)
 #' MiscMetabar:::sample_data_stable(x)
+#' }
 #' @author Michael R. McLaren (orcid: [0000-0003-1575-473X](https://orcid.org/0000-0003-1575-473X))
 sample_data_stable <- function(object) {
   # Modified from phyloseq's sample_data data.frame method; see

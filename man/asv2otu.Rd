@@ -38,7 +38,7 @@ Set to number of cpus/processors to use for the clustering}
 Set the clustering method.
 \itemize{
 \item \code{clusterize} use the \code{\link[DECIPHER:Clusterize]{DECIPHER::Clusterize()}} fonction,
-\item \code{vsearch} use the vsearch software (https://github.com/torognes/vsearch/)
+\item \code{vsearch} use the vsearch software (https://github.com/torognes/vsearch)
 with arguments \code{--cluster_size} by default (see args \code{vsearch_cluster_method})
 and \verb{-strand both} (see args \code{vsearch_args})
 \item \code{swarm} use the swarm
@@ -55,7 +55,7 @@ set tax_adjust to 0 (default). For the moment only tax_adjust = 0 is
 robust}
 
 \item{vsearch_cluster_method}{(default: "--cluster_size) See other possible
-methods in the \href{https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf}{vsearch pdf manual} (e.g. \code{--cluster_size} or \code{--cluster_smallmem})
+methods in the \href{https://github.com/torognes/vsearch/}{vsearch manual} (e.g. \code{--cluster_size} or \code{--cluster_smallmem})
 \itemize{
 \item \code{--cluster_fast} : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.
 \item \code{--cluster_size} : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence abundance beforehand.
@@ -98,6 +98,16 @@ args was used.
 This function use the \code{merge_taxa_vec} function to
 merge taxa into clusters. By default tax_adjust = 0. See the man page
 of \code{\link[=merge_taxa_vec]{merge_taxa_vec()}}.
+}
+\examples{
+asv2otu(data_fungi_mini)
+asv2otu(data_fungi_mini, method_clusterize = "longest")
+if (MiscMetabar:::is_swarm_installed()) {
+  d_swarm <- asv2otu(data_fungi_mini, method = "swarm")
+}
+if (MiscMetabar:::is_vsearch_installed()) {
+  d_vs <- asv2otu(data_fungi_mini, method = "vsearch")
+}
 }
 \references{
 VSEARCH can be downloaded from

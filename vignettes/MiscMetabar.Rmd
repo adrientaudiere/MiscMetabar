@@ -71,10 +71,10 @@ circle_pq(gp, "SampleType", taxa = "Class")
 
 # References
 
-Tengeler, A.C., Dam, S.A., Wiesmann, M. et al. Gut microbiota from persons with attention-deficit/hyperactivity disorder affects the brain in mice. Microbiome 8, 44 (2020). https://doi.org/10.1186/s40168-020-00816-x
+Tengeler, A.C., Dam, S.A., Wiesmann, M. et al. Gut microbiota from persons with attention-deficit/hyperactivity disorder affects the brain in mice. Microbiome 8, 44 (2020). <https://doi.org/10.1186/s40168-020-00816-x>
 
 
-# Session information
+# Session inform
 
 ```{r}
 sessionInfo()

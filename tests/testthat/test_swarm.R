@@ -1,7 +1,4 @@
-suppressWarnings(swarm_error_or_not <-
-  try(system("swarm -h 2>&1", intern = TRUE), silent = TRUE))
-
-if (class(swarm_error_or_not) == "try-error") {
+if (!MiscMetabar:::is_swarm_installed()) {
   message(
     "swarm_clustering() and asv2otu(..., method=swarm) can't be
     tested when swarm is not installed"

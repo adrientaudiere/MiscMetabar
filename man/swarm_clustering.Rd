@@ -70,8 +70,7 @@ This function is mainly a wrapper of the work of others.
 Please cite \href{https://github.com/torognes/swarm}{SWARM}.
 }
 \examples{
-\dontrun{
-
+\dontshow{if (MiscMetabar:::is_swarm_installed()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 summary_plot_pq(data_fungi)
 system2("swarm", "-h")
 
@@ -93,7 +92,7 @@ sequences_ex <- c(
 sequences_ex_swarm <- swarm_clustering(
   dna_seq = sequences_ex
 )
-}
+\dontshow{\}) # examplesIf}
 }
 \references{
 SWARM can be downloaded from
@@ -102,7 +101,7 @@ SWARM can be downloaded from
 SWARM can be downloaded from
 \url{https://github.com/torognes/swarm}.
 More information in the associated publications
-\doi{doi:10.1093/bioinformatics/btab493} and \doi{doi:10.7717/2Fpeerj.593}
+\doi{doi:10.1093/bioinformatics/btab493} and \doi{doi:10.7717/peerj.593}
 }
 \seealso{
 \code{\link[=asv2otu]{asv2otu()}}, \code{\link[=vsearch_clustering]{vsearch_clustering()}}

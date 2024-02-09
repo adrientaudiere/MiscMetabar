@@ -563,11 +563,10 @@ multipatt_pq <- function(physeq,
 #' @export
 #'
 #' @examples
-#' data(data_fungi_sp_known)
 #' res_height <- ancombc_pq(
 #'   subset_taxa_pq(
-#'     data_fungi_sp_known,
-#'     taxa_sums(data_fungi_sp_known) > 5000
+#'     data_fungi_mini,
+#'     taxa_sums(data_fungi_mini) > 5000
 #'   ),
 #'   fact = "Height",
 #'   levels_fact = c("Low", "High"),
@@ -591,8 +590,8 @@ multipatt_pq <- function(physeq,
 #'
 #' res_time <- ancombc_pq(
 #'   subset_taxa_pq(
-#'     data_fungi_sp_known,
-#'     taxa_sums(data_fungi_sp_known) > 5000
+#'     data_fungi_mini,
+#'     taxa_sums(data_fungi_mini) > 5000
 #'   ),
 #'   fact = "Time",
 #'   levels_fact = c("0", "15"),

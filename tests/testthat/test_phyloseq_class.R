@@ -1,5 +1,4 @@
 data(enterotype)
-data("data_fungi_sp_known")
 
 sequences_ex <- c(
   "TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGGGCGAATTACCTGGTATTTTAGCCCACTTACCCGGTACCAACCTACCCTGTACACCGCGCCTGGGTCTACCCTCCGGATGACATTTTTAAGACTCTTGTTTTATAGTGAAATTCTGAGTTTTTATACTTAATAAGTTAAAACTTTCAATCTCGGATCTCTTGGCTCTGGCATCGATGAAGAACGCTACGAAATGCTGATAAATAATGTGAATTGCCGAATTCATTGAATCATCGAATCTTTGAACGCACATTGCACCCATTAGTATTCTAGAGTGCATGCCTGTTCCAGCGTCATTTTCAATCCTCAAGCCCCTTATTGCTTGGTGTTGGCAGTTTAGCTGGCTTTATAGTGCTTAACTCCCTAAATATACTGCCTGATTCGCGGTGACCCCAAGCGTAATAATTATTTTCTCGCTTGAGGTG",
@@ -7,9 +6,9 @@ sequences_ex <- c(
   "TACCTATGTTGCCTTGGCGGCTAAACCTACCCGGGATTTGATGGCGAATTACCTGGTATTTTAGCCCACTTACCCGGTACCAACCTACCCTGTACACCGCGCCTGGGTCTACCCTCCGGATGACATTTTTAAGACTCTTGTTTTATAGTGAAATTCTGAGTTTTTATACTTAATAAGTTAAAACTTTCAATCTCGGATCTCTTGGCTCTGGCATCGATGAAGAACGCTACGAAATGCTGATAAATAATGTGAATTGCCGAATTCATTGAATCATCGAATCTTTGAACGCACATTGCACCCATTAGTATTCTAGAGTGCATGCCTGTTCCAGCGTCATTTTCAATCCTCAAGCCCCTTATTGCTTGGTGTTGGCAGTTTAGCTGGCTTTATAGTGCTTAACTCCCTAAATATACTGCCTGATTCGCGGTGACCCCAAGCGTAATAATTATTTTCTCGCTTGAGGTG"
 )
 test_that("asv2otu works fine with Clusterize method", {
-  expect_s4_class(data_fungi_sp_known, "phyloseq")
-  expect_s4_class(suppressWarnings(asv2otu(data_fungi_sp_known)), "phyloseq")
-  expect_s4_class(suppressWarnings(asv2otu(data_fungi_sp_known,
+  expect_s4_class(data_fungi_mini, "phyloseq")
+  expect_s4_class(suppressWarnings(asv2otu(data_fungi_mini)), "phyloseq")
+  expect_s4_class(suppressWarnings(asv2otu(data_fungi_mini,
     method_clusterize = "longest"
   )), "phyloseq")
 
@@ -17,8 +16,8 @@ test_that("asv2otu works fine with Clusterize method", {
   expect_error(asv2otu(enterotype, method = "vsearch"))
   expect_error(asv2otu(enterotype))
   expect_error(asv2otu())
-  expect_error(asv2otu(data_fungi_sp_known, method = "VsaerCh"))
-  expect_error(asv2otu(data_fungi_sp_known, dna_seq = sequences_ex))
+  expect_error(asv2otu(data_fungi_mini, method = "VsaerCh"))
+  expect_error(asv2otu(data_fungi_mini, dna_seq = sequences_ex))
 })
 
 
@@ -30,7 +29,7 @@ if (class(vsearch_error_or_not) == "try-error") {
   message("lulu_pq() can't be tested when vsearch is not installed")
 } else {
   test_that("lulu_pq works fine", {
-    expect_s4_class(lulu_pq(data_fungi_sp_known)$new_physeq, "phyloseq")
+    expect_s4_class(lulu_pq(data_fungi)$new_physeq, "phyloseq")
     expect_error(lulu_pq(enterotype)$new_physeq, "phyloseq")
     expect_s4_class(lulu_pq(data_fungi_sp_known, clean_pq = TRUE, verbose = TRUE)$new_physeq, "phyloseq")
   })
@@ -42,19 +41,19 @@ if (class(mumu_error_or_not) == "try-error") {
   message("mumu_pq() can't be tested when mumu is not installed")
 } else {
   test_that("mumu_pq works fine", {
-    expect_s4_class(mumu_pq(data_fungi_sp_known)$new_physeq, "phyloseq")
+    expect_s4_class(mumu_pq(data_fungi_mini)$new_physeq, "phyloseq")
     expect_error(mumu_pq(enterotype)$new_physeq, "phyloseq")
-    expect_s4_class(mumu_pq(data_fungi_sp_known, clean_pq = TRUE, verbose = TRUE)$new_physeq, "phyloseq")
+    expect_s4_class(mumu_pq(data_fungi_mini, clean_pq = TRUE, verbose = TRUE)$new_physeq, "phyloseq")
   })
 }
 
 
 test_that("as_binary_otu_table works fine", {
-  expect_s4_class(as_binary_otu_table(data_fungi_sp_known), "phyloseq")
+  expect_s4_class(as_binary_otu_table(data_fungi_mini), "phyloseq")
   expect_s4_class(as_binary_otu_table(enterotype), "phyloseq")
 })
 
-data_fungi_taxaSeq <- data_fungi
+data_fungi_taxaSeq <- data_fungi_mini
 taxa_names(data_fungi_taxaSeq) <- as.character(data_fungi_taxaSeq@refseq)
 data_fungi_taxaSeq@refseq <- NULL
 test_that("add_dna_to_phyloseq works fine", {
@@ -63,17 +62,17 @@ test_that("add_dna_to_phyloseq works fine", {
 })
 
 
-df <- data_fungi
-df <- unclass(data_fungi)
+df <- data_fungi_mini
+df <- unclass(data_fungi_mini)
 test_that("verify_pq works fine", {
   expect_error(verify_pq(df), "The physeq argument is not a valid phyloseq object.")
 })
 
-data_fungi_with__P <- data_fungi
+data_fungi_with__P <- data_fungi_mini
 data_fungi_with__P@tax_table[, "Phylum"] <- paste0("P__", data_fungi_with__P@tax_table[, "Phylum"])
 test_that("simplify_taxo works fine", {
-  expect_equal(sum(data_fungi_with__P@tax_table[, "Phylum"] == data_fungi@tax_table[, "Phylum"]), 0)
-  expect_equal(simplify_taxo(data_fungi_with__P)@tax_table[, "Phylum"], data_fungi@tax_table[, "Phylum"])
+  expect_equal(sum(data_fungi_with__P@tax_table[, "Phylum"] == data_fungi_mini@tax_table[, "Phylum"]), 0)
+  expect_equal(simplify_taxo(data_fungi_with__P)@tax_table[, "Phylum"], data_fungi_mini@tax_table[, "Phylum"])
 })
 
 

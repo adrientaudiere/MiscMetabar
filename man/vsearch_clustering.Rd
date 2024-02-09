@@ -39,7 +39,7 @@ set tax_adjust to 0 (default). For the moment only tax_adjust = 0 is
 robust}
 
 \item{vsearch_cluster_method}{(default: "--cluster_size) See other possible
-methods in the \href{https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf}{vsearch pdf manual} (e.g. \code{--cluster_size} or \code{--cluster_smallmem})
+methods in the \href{https://github.com/torognes/vsearch}{vsearch manual} (e.g. \code{--cluster_size} or \code{--cluster_smallmem})
 \itemize{
 \item \code{--cluster_fast} : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.
 \item \code{--cluster_size} : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence abundance beforehand.
@@ -73,10 +73,11 @@ This function is mainly a wrapper of the work of others.
 Please cite \href{https://github.com/torognes/vsearch}{vsearch}.
 }
 \examples{
-
+\dontshow{if (MiscMetabar:::is_vsearch_installed()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 summary_plot_pq(data_fungi)
 d_vs <- vsearch_clustering(data_fungi)
 summary_plot_pq(d_vs)
+\dontshow{\}) # examplesIf}
 }
 \references{
 VSEARCH can be downloaded from

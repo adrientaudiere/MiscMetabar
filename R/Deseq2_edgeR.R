@@ -21,12 +21,15 @@
 #' @export
 #' @examples
 #' data("GlobalPatterns", package = "phyloseq")
-#' plot_edgeR_pq(GlobalPatterns, c("SampleType", "Soil", "Feces"),
+#' GP_archae <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+#' plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
 #'   color_tax = "Kingdom"
 #' )
-#' plot_edgeR_pq(GlobalPatterns, c("SampleType", "Soil", "Feces"),
+#' \dontrun{
+#' plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
 #'   taxolev = "Class", color_tax = "Kingdom"
 #' )
+#' }
 #' @author Adrien Taudière
 #'
 #' @return A \code{\link{ggplot}}2 plot representing edgeR results
