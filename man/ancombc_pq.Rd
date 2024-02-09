@@ -36,10 +36,7 @@ use this function.
 }
 \examples{
 res_height <- ancombc_pq(
-  subset_taxa_pq(
-    data_fungi_mini,
-    taxa_sums(data_fungi_mini) > 5000
-  ),
+  data_fungi_mini,
   fact = "Height",
   levels_fact = c("Low", "High"),
   verbose = TRUE
@@ -61,10 +58,7 @@ ggplot(
   geom_point()
 
 res_time <- ancombc_pq(
-  subset_taxa_pq(
-    data_fungi_mini,
-    taxa_sums(data_fungi_mini) > 5000
-  ),
+  data_fungi_mini,
   fact = "Time",
   levels_fact = c("0", "15"),
   tax_level = "Family",

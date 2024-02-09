@@ -70,6 +70,7 @@ reference:
   - get_funguild_db
 
 - subtitle: Transform OTU table only
+  contents: 
   - as_binary_otu_table
 
 - subtitle: Subset/merge taxa
@@ -85,6 +86,7 @@ reference:
   - merge_samples2
 
 - subtitle: (Re)clustering OTU table
+  contents: 
   - asv2otu
   - swarm_clustering
   - vsearch_clustering
@@ -200,6 +202,7 @@ reference:
   contents: 
   - data_fungi
   - data_fungi_sp_known
+  - data_fungi_mini
   - Tengeler2020_pq
     
 - title: Others utilities

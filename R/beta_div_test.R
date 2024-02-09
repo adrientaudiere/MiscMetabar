@@ -230,12 +230,11 @@ adonis_pq <- function(physeq,
 #' @export
 #' @seealso [plot_LCBD_pq], [adespatial::beta.div()]
 #' @examples
-#' data(data_fungi_sp_known)
-#' res <- LCBD_pq(data_fungi_sp_known, nperm = 50)
+#' res <- LCBD_pq(data_fungi_sp_known, nperm = 5)
 #' str(res)
 #' length(res$LCBD)
 #' length(res$SCBD)
-#' LCBD_pq(data_fungi_sp_known, nperm = 50, method = "jaccard")
+#' LCBD_pq(data_fungi_sp_known, nperm = 5, method = "jaccard")
 #'
 #' @author Adrien Taudière
 #' This function is mainly a wrapper of the work of others.
@@ -288,20 +287,20 @@ LCBD_pq <- function(physeq,
 #'
 #' @examples
 #' data(data_fungi)
-#' plot_LCBD_pq(data_fungi,
+#' plot_LCBD_pq(data_fungi_mini,
 #'   nperm = 100, only_plot_significant = FALSE,
 #'   pval = 0.2
 #' )
-#' plot_LCBD_pq(data_fungi,
+#' plot_LCBD_pq(data_fungi_mini,
 #'   nperm = 100, only_plot_significant = TRUE,
 #'   pval = 0.2
 #' )
 #' library("patchwork")
-#' plot_LCBD_pq(data_fungi,
+#' plot_LCBD_pq(data_fungi_mini,
 #'   nperm = 100, only_plot_significant = FALSE,
 #'   sam_variables = c("Time", "Height")
 #' )
-#' plot_LCBD_pq(data_fungi,
+#' plot_LCBD_pq(data_fungi_mini,
 #'   nperm = 100, only_plot_significant = TRUE, pval = 0.2,
 #'   sam_variables = c("Time", "Height", "Tree_name")
 #' ) &
@@ -564,10 +563,7 @@ multipatt_pq <- function(physeq,
 #'
 #' @examples
 #' res_height <- ancombc_pq(
-#'   subset_taxa_pq(
-#'     data_fungi_mini,
-#'     taxa_sums(data_fungi_mini) > 5000
-#'   ),
+#'   data_fungi_mini,
 #'   fact = "Height",
 #'   levels_fact = c("Low", "High"),
 #'   verbose = TRUE
@@ -589,10 +585,7 @@ multipatt_pq <- function(physeq,
 #'   geom_point()
 #'
 #' res_time <- ancombc_pq(
-#'   subset_taxa_pq(
-#'     data_fungi_mini,
-#'     taxa_sums(data_fungi_mini) > 5000
-#'   ),
+#'   data_fungi_mini,
 #'   fact = "Time",
 #'   levels_fact = c("0", "15"),
 #'   tax_level = "Family",

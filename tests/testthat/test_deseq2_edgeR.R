@@ -1,10 +1,14 @@
 data("GlobalPatterns", package = "phyloseq")
 
-GP_archae <- subset_taxa(GlobalPatterns,
-                         GlobalPatterns@tax_table[, 1] == "Archaea")
+GP_archae <- subset_taxa(
+  GlobalPatterns,
+  GlobalPatterns@tax_table[, 1] == "Archaea"
+)
 
-GP <- subset_samples_pq(GP_archae,
-                     GP_archae@sam_data$SampleType %in% c("Soil", "Skin"))
+GP <- subset_samples_pq(
+  GP_archae,
+  GP_archae@sam_data$SampleType %in% c("Soil", "Skin")
+)
 
 fac2col <- function(x, col.pal = funky_color, na.col = "transparent", seed = NULL) {
   x <- factor(x)

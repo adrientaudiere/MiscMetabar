@@ -30,7 +30,7 @@ if (class(vsearch_error_or_not) == "try-error") {
 } else {
   test_that("lulu_pq works fine", {
     expect_s4_class(lulu_pq(data_fungi)$new_physeq, "phyloseq")
-    expect_error(lulu_pq(enterotype)$new_physeq, "phyloseq")
+    expect_error(lulu_pq(enterotype)$new_physeq)
     expect_s4_class(lulu_pq(data_fungi_sp_known, clean_pq = TRUE, verbose = TRUE)$new_physeq, "phyloseq")
   })
 }

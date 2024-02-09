@@ -32,24 +32,18 @@ taxonomic groups
 }
 \examples{
 
-ridges_pq(data_fungi, "Time", alpha = 0.5, log10trans = FALSE) + xlim(c(0, 1000))
-ridges_pq(data_fungi, "Time", alpha = 0.5)
-ridges_pq(
-  clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")),
-  "Sample_names"
-)
-ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")),
-  "Time",
-  alpha = 0.6, scale = 0.9
-)
-ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")),
+ridges_pq(data_fungi_mini, "Time", alpha = 0.5, log10trans = FALSE) + xlim(c(0, 1000))
+ridges_pq(data_fungi_mini, "Time", alpha = 0.5, scale = 0.9)
+ridges_pq(data_fungi_mini, "Sample_names", log10trans = TRUE)
+
+ridges_pq(data_fungi_mini,
   "Time",
   jittered_points = TRUE,
   position = ggridges::position_points_jitter(width = 0.05, height = 0),
   point_shape = "|", point_size = 3, point_alpha = 1, alpha = 0.7,
   scale = 0.8
 )
-ridges_pq(data_fungi, "Height", alpha = 0.5, log10trans = TRUE)
+
 }
 \author{
 Adrien Taudière

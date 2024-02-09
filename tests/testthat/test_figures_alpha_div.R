@@ -162,8 +162,8 @@ test_that("accu_samp_threshold works with data_fungi_mini dataset", {
     )[[2]],
     "ggplot"
   )
-  expect_s3_class( ggbetween_pq(
+  expect_s3_class(ggbetween_pq(
     data_fungi_mini,
-    variable = "Height"   )[[1]], "ggplot")
-
+    variable = "Height"
+  )[[1]], "ggplot")
 })

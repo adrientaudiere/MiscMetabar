@@ -1927,7 +1927,7 @@ plot_guild_pq <-
 #' library("phangorn")
 #'
 #' df <- subset_taxa_pq(data_fungi_mini, taxa_sums(data_fungi_mini) > 9000)
-#' df_tree <- build_phytree_pq(df, nb_bootstrap = 5)
+#' df_tree <- build_phytree_pq(df, nb_bootstrap = 2)
 #' plot(df_tree$UPGMA)
 #' plotBS(df_tree$UPGMA, df_tree$UPGMA_bs, main = "UPGMA")
 #' plot(df_tree$NJ, "unrooted")

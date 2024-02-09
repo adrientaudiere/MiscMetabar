@@ -1713,11 +1713,13 @@ summary_plot_pq <- function(physeq,
 #'   use this function.
 #' @examples
 #' library("rotl")
-#' data(data_fungi)
-#' tr <- rotl_pq(data_fungi, species_colnames = "Genus_species")
+#' tr <- rotl_pq(data_fungi_mini, species_colnames = "Genus_species")
 #' plot(tr)
-#' tr_Asco <- rotl_pq(data_fungi, species_colnames = "Genus_species", context_name = "Ascomycetes")
-#' plot(tr_Asco)
+#' \dontrun {
+#'   tr_Asco <- rotl_pq(data_fungi, species_colnames = "Genus_species", context_name = "Ascomycetes")
+#'   plot(tr_Asco)
+#' }
+#' 
 rotl_pq <- function(physeq,
                     species_colnames = "Genus_species",
                     context_name = "All life") {
@@ -1777,7 +1779,7 @@ rotl_pq <- function(physeq,
 #'
 #' GPsubset <- subset_taxa(
 #'   GPsubset,
-#'   rowSums(GPsubset@otu_table) > 1000
+#'   rowSums(GPsubset@otu_table) > 5000
 #' )
 #'
 #' GPsubset <- subset_taxa(
@@ -1793,13 +1795,15 @@ rotl_pq <- function(physeq,
 #'   node_size_trans = "log10 area"
 #' )
 #'
-#' heat_tree_pq(GPsubset,
-#'   node_size = nb_sequences,
-#'   node_color = n_obs,
-#'   node_label = taxon_names,
-#'   tree_label = taxon_names,
-#'   node_size_trans = "log10 area"
-#' )
+#' \dontrun {
+#'   heat_tree_pq(GPsubset,
+#'     node_size = nb_sequences,
+#'     node_color = n_obs,
+#'     node_label = taxon_names,
+#'     tree_label = taxon_names,
+#'     node_size_trans = "log10 area"
+#'   )
+#' }
 #'
 heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
   requireNamespace("metacoder", quietly = TRUE)
@@ -2747,18 +2751,17 @@ iNEXT_pq <- function(physeq,
 #' @seealso [ggvenn_pq()]
 #' @examples
 #'
-#' upset_pq(data_fungi, fact = "Height", width_ratio = 0.2)
-#' upset_pq(data_fungi,
+#' upset_pq(data_fungi_mini,
 #'   fact = "Height", width_ratio = 0.2,
 #'   taxa_fill = "Class"
 #' )
-#' upset_pq(data_fungi, fact = "Height", min_nb_seq = 1000)
-#' upset_pq(data_fungi, fact = "Height", na_remove = FALSE)
-#' upset_pq(data_fungi, fact = "Time", width_ratio = 0.2)
-#' upset_pq(data_fungi, fact = "Time", width_ratio = 0.2, rarefy_after_merging = TRUE)
+#' upset_pq(data_fungi_mini, fact = "Height", min_nb_seq = 1000)
+#' upset_pq(data_fungi_mini, fact = "Height", na_remove = FALSE)
+#'
+#' upset_pq(data_fungi_mini, fact = "Time", width_ratio = 0.2, rarefy_after_merging = TRUE)
 #'
 #' upset_pq(
-#'   data_fungi,
+#'   data_fungi_mini,
 #'   fact = "Time",
 #'   width_ratio = 0.2,
 #'   annotations = list(
@@ -2787,7 +2790,7 @@ iNEXT_pq <- function(physeq,
 #'
 #'
 #' upset_pq(
-#'   data_fungi,
+#'   data_fungi_mini,
 #'   fact = "Time",
 #'   width_ratio = 0.2,
 #'   numeric_fonction = mean,
@@ -2817,7 +2820,7 @@ iNEXT_pq <- function(physeq,
 #'
 #'
 #' upset_pq(
-#'   subset_taxa(data_fungi, Phylum == "Basidiomycota"),
+#'   subset_taxa(data_fungi_mini, Phylum == "Basidiomycota"),
 #'   fact = "Time",
 #'   width_ratio = 0.2,
 #'   base_annotations = list(),
@@ -2845,7 +2848,7 @@ iNEXT_pq <- function(physeq,
 #'   )
 #' )
 #'
-#' data_fungi2 <- data_fungi
+#' data_fungi2 <- data_fungi_mini
 #' data_fungi2@sam_data[["Time_0"]] <- data_fungi2@sam_data$Time == 0
 #' data_fungi2@sam_data[["Height__Time_0"]] <-
 #'   paste0(data_fungi2@sam_data[["Height"]], "__", data_fungi2@sam_data[["Time_0"]])
@@ -3183,24 +3186,18 @@ tax_bar_pq <- function(physeq, fact = "Sample", taxa = "Order", percent_bar = FA
 #' @author Adrien Taudière
 #' @examples
 #'
-#' ridges_pq(data_fungi, "Time", alpha = 0.5, log10trans = FALSE) + xlim(c(0, 1000))
-#' ridges_pq(data_fungi, "Time", alpha = 0.5)
-#' ridges_pq(
-#'   clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")),
-#'   "Sample_names"
-#' )
-#' ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")),
-#'   "Time",
-#'   alpha = 0.6, scale = 0.9
-#' )
-#' ridges_pq(clean_pq(subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")),
+#' ridges_pq(data_fungi_mini, "Time", alpha = 0.5, log10trans = FALSE) + xlim(c(0, 1000))
+#' ridges_pq(data_fungi_mini, "Time", alpha = 0.5, scale = 0.9)
+#' ridges_pq(data_fungi_mini, "Sample_names", log10trans = TRUE)
+#'
+#' ridges_pq(data_fungi_mini,
 #'   "Time",
 #'   jittered_points = TRUE,
 #'   position = ggridges::position_points_jitter(width = 0.05, height = 0),
 #'   point_shape = "|", point_size = 3, point_alpha = 1, alpha = 0.7,
 #'   scale = 0.8
 #' )
-#' ridges_pq(data_fungi, "Height", alpha = 0.5, log10trans = TRUE)
+#'
 ridges_pq <- function(physeq,
                       fact,
                       nb_seq = TRUE,

@@ -15,7 +15,7 @@ test_that("tsne_pq works with data_fungi_mini dataset", {
 test_that("plot_tsne_pq works with data_fungi_mini dataset", {
   expect_silent(suppressMessages(pt <- plot_tsne_pq(data_fungi_mini, fact = "Height", perplexity = 15)))
   expect_s3_class(pt, "ggplot")
-  expect_error(plot_tsne_pq(data_fungi_mini, fact="HEIgTHT"))
+  expect_error(plot_tsne_pq(data_fungi_mini, fact = "HEIgTHT"))
 })
 
 test_that("SRS_curve_pq works with data_fungi_mini dataset", {

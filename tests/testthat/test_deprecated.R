@@ -1,18 +1,26 @@
 data("GlobalPatterns", package = "phyloseq")
 data("enterotype")
 
-data_fungi_low_high <- subset_samples(data_fungi_mini,
-                                      Height %in% c("Low", "High"))
+data_fungi_low_high <- subset_samples(
+  data_fungi_mini,
+  Height %in% c("Low", "High")
+)
 data_basidio <- subset_taxa(data_fungi, Phylum == "Basidiomycota")
 data_fungi_2trees <-
-  subset_samples(data_fungi,
-                 data_fungi@sam_data$Tree_name %in% c("A10-005", "AD30-abm-X"))
+  subset_samples(
+    data_fungi,
+    data_fungi@sam_data$Tree_name %in% c("A10-005", "AD30-abm-X")
+  )
 
 GlobalPatterns@sam_data[, "Soil_logical"] <- ifelse(GlobalPatterns@sam_data[, "SampleType"] == "Soil", "Soil", "Not Soil")
-GP_archae <- subset_taxa(GlobalPatterns,
-                         GlobalPatterns@tax_table[, 1] == "Archaea")
-GP <- subset_samples_pq(GP_archae,
-                        GP_archae@sam_data$SampleType %in% c("Soil", "Skin"))
+GP_archae <- subset_taxa(
+  GlobalPatterns,
+  GlobalPatterns@tax_table[, 1] == "Archaea"
+)
+GP <- subset_samples_pq(
+  GP_archae,
+  GP_archae@sam_data$SampleType %in% c("Soil", "Skin")
+)
 
 res_deseq <- DESeq2::DESeq(phyloseq_to_deseq2(GP, ~SampleType), test = "Wald", fitType = "local")
 
