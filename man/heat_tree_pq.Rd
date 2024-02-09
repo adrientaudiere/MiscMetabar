@@ -52,7 +52,7 @@ heat_tree_pq(GPsubset,
   node_size_trans = "log10 area"
 )
 
-\dontrun {
+\dontrun{
   heat_tree_pq(GPsubset,
     node_size = nb_sequences,
     node_color = n_obs,

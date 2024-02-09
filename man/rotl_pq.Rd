@@ -34,7 +34,7 @@ use this function.
 library("rotl")
 tr <- rotl_pq(data_fungi_mini, species_colnames = "Genus_species")
 plot(tr)
-\dontrun {
+\dontrun{
   tr_Asco <- rotl_pq(data_fungi, species_colnames = "Genus_species", context_name = "Ascomycetes")
   plot(tr_Asco)
 }
