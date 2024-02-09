@@ -50,11 +50,6 @@ reference:
   - tbl_sum_samdata
   - verify_pq
 
-- title: Obtain phyloseq object
-  contents:
-  - chimera_removal_vs
-  - chimera_detection_vs
-
 - title: Transform phyloseq object
 - subtitle: Taxonomy
   contents: 
@@ -74,17 +69,35 @@ reference:
   - funguild_assign
   - get_funguild_db
 
-- subtitle: OTU table
+- subtitle: Transform OTU table only
   contents: 
   - as_binary_otu_table
+
+- subtitle: Subset/merge taxa
+  contents: 
+  - subset_taxa_pq
+  - subset_taxa_tax_control
+  - select_taxa
+  - merge_taxa_vec
+
+- subtitle: Subset/merge samples
+  contents: 
+  - select_one_sample
+  - merge_samples2
+
+- subtitle: (Re)clustering OTU table
+  contents: 
   - asv2otu
   - swarm_clustering
   - vsearch_clustering
   - lulu_pq
   - lulu
   - mumu_pq
-  - subset_taxa_pq
-  - subset_taxa_tax_control
+
+- subtitle: Remove chimera using vsearch
+  contents:
+  - chimera_removal_vs
+  - chimera_detection_vs
 
 - subtitle: Sample data
   contents:
@@ -189,6 +202,7 @@ reference:
   contents: 
   - data_fungi
   - data_fungi_sp_known
+  - data_fungi_mini
   - Tengeler2020_pq
     
 - title: Others utilities
@@ -203,11 +217,10 @@ reference:
   - multiplot
   - perc
   - are_modality_even_depth
-  - merge_samples2
-  - merge_taxa_vec
   - unique_or_na
   - physeq_or_string_to_dna
-  - select_one_sample
+  - MiscMetabar-package
+
 
   
  

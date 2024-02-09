@@ -26,13 +26,12 @@ test_that("rotl_pq works with data_fungi dataset", {
   expect_silent(plot(tr))
 })
 
-data_basidio <- subset_taxa(data_fungi, Phylum == "Basidiomycota")
 test_that("heat_tree_pq works with data_fungi dataset", {
   library(metacoder)
-  expect_silent(suppressMessages(ht <- heat_tree_pq(data_basidio)))
+  expect_silent(suppressMessages(ht <- heat_tree_pq(data_fungi_mini)))
   expect_s3_class(ht, "ggplot")
   expect_s3_class(
-    heat_tree_pq(data_basidio, taxonomic_level = 1:4),
+    heat_tree_pq(data_fungi_mini, taxonomic_level = 1:4),
     "ggplot"
   )
 })
@@ -63,7 +62,7 @@ test_that("plot_tax_pq works with data_fungi dataset", {
   expect_silent(suppressMessages(
     pt <-
       plot_tax_pq(
-        data_fungi_sp_known,
+        data_fungi_mini,
         "Time",
         merge_sample_by = "Time",
         taxa_fill = "Class",
@@ -73,7 +72,7 @@ test_that("plot_tax_pq works with data_fungi dataset", {
   expect_silent(suppressMessages(
     pt <-
       plot_tax_pq(
-        data_fungi_sp_known,
+        data_fungi_mini,
         "Time",
         merge_sample_by = "Time",
         taxa_fill = "Class"
@@ -82,13 +81,13 @@ test_that("plot_tax_pq works with data_fungi dataset", {
   expect_s3_class(pt, "ggplot")
   expect_silent(suppressMessages(
     pt <-
-      plot_tax_pq(data_fungi_sp_known, "Time", taxa_fill = "Class")
+      plot_tax_pq(data_fungi_mini, "Time", taxa_fill = "Class")
   ))
   expect_s3_class(pt, "ggplot")
   expect_silent(suppressMessages(
     pt <-
       plot_tax_pq(
-        data_fungi_sp_known,
+        data_fungi_mini,
         "Time",
         merge_sample_by = "Time",
         taxa_fill = "Class",
@@ -99,7 +98,7 @@ test_that("plot_tax_pq works with data_fungi dataset", {
   expect_silent(suppressMessages(
     pt <-
       plot_tax_pq(
-        data_fungi_sp_known,
+        data_fungi_mini,
         "Time",
         merge_sample_by = "Time",
         taxa_fill = "Class",
@@ -110,7 +109,7 @@ test_that("plot_tax_pq works with data_fungi dataset", {
   expect_silent(suppressMessages(
     pt <-
       plot_tax_pq(
-        data_fungi_sp_known,
+        data_fungi_mini,
         "Time",
         merge_sample_by = "Time",
         taxa_fill = "Class",
@@ -121,7 +120,7 @@ test_that("plot_tax_pq works with data_fungi dataset", {
   expect_silent(suppressMessages(
     pt <-
       plot_tax_pq(
-        data_fungi_sp_known,
+        data_fungi_mini,
         "Time",
         merge_sample_by = "Time",
         taxa_fill = "Class",
@@ -131,7 +130,7 @@ test_that("plot_tax_pq works with data_fungi dataset", {
   expect_s3_class(pt[[1]], "ggplot")
   expect_silent(suppressMessages(
     plot_tax_pq(
-      data_fungi_sp_known,
+      data_fungi_mini,
       "Time",
       merge_sample_by = "Time",
       taxa_fill = "Class",
@@ -140,7 +139,7 @@ test_that("plot_tax_pq works with data_fungi dataset", {
   ))
   expect_silent(suppressMessages(
     plot_tax_pq(
-      data_fungi_sp_known,
+      data_fungi_mini,
       "Time",
       merge_sample_by = "Time",
       taxa_fill = "Order",
@@ -149,7 +148,7 @@ test_that("plot_tax_pq works with data_fungi dataset", {
   ))
   expect_silent(suppressMessages(
     plot_tax_pq(
-      data_fungi_sp_known,
+      data_fungi_mini,
       "Height",
       merge_sample_by = "Height",
       taxa_fill = "Order"
@@ -160,16 +159,16 @@ test_that("plot_tax_pq works with data_fungi dataset", {
 
 test_that("multitax_bar_pq works with data_fungi_sp_known dataset", {
   expect_s3_class(
-    multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", "Time"),
+    multitax_bar_pq(data_fungi_mini, "Phylum", "Class", "Order", "Time"),
     "ggplot"
   )
   expect_s3_class(
-    multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order"),
+    multitax_bar_pq(data_fungi_mini, "Phylum", "Class", "Order"),
     "ggplot"
   )
   expect_s3_class(
     multitax_bar_pq(
-      data_fungi_sp_known,
+      data_fungi_mini,
       "Phylum",
       "Class",
       "Order",
@@ -179,7 +178,7 @@ test_that("multitax_bar_pq works with data_fungi_sp_known dataset", {
     "ggplot"
   )
   expect_s3_class(
-    multitax_bar_pq(data_fungi_sp_known,
+    multitax_bar_pq(data_fungi_mini,
       "Phylum",
       "Class",
       "Order",
@@ -188,10 +187,10 @@ test_that("multitax_bar_pq works with data_fungi_sp_known dataset", {
     "ggplot"
   )
   expect_error(print(
-    multitax_bar_pq(data_fungi_sp_known, "Class", "Genus", "Order")
+    multitax_bar_pq(data_fungi_mini, "Class", "Genus", "Order")
   ))
   expect_error(print(
-    multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", "TIMESS")
+    multitax_bar_pq(data_fungi_mini, "Phylum", "Class", "Order", "TIMESS")
   ))
 })
 
@@ -234,7 +233,7 @@ test_that("multitax_bar_pq works with GlobalPatterns dataset", {
 
 test_that("rigdes_pq work with data_fungi dataset", {
   expect_s3_class(
-    ridges_pq(data_fungi,
+    ridges_pq(data_fungi_mini,
       "Time",
       alpha = 0.5,
       log10trans = FALSE
@@ -242,12 +241,12 @@ test_that("rigdes_pq work with data_fungi dataset", {
     "ggplot"
   )
   expect_s3_class(
-    ridges_pq(data_fungi, "Time", alpha = 0.5),
+    ridges_pq(data_fungi_mini, "Time", alpha = 0.5),
     "ggplot"
   )
   expect_s3_class(
     ridges_pq(
-      data_fungi,
+      data_fungi_mini,
       "Time",
       nb_seq = FALSE,
       log10trans = FALSE
@@ -298,10 +297,7 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
   expect_s3_class(
     treemap_pq(
       clean_pq(
-        subset_taxa(
-          data_fungi_sp_known,
-          Phylum == "Basidiomycota"
-        )
+        data_fungi_mini
       ),
       "Order", "Class",
       plot_legend = TRUE
@@ -311,10 +307,7 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
   expect_s3_class(
     treemap_pq(
       clean_pq(
-        subset_taxa(
-          data_fungi_sp_known,
-          Phylum == "Basidiomycota"
-        )
+        data_fungi_mini
       ),
       "Order", "Class",
       log10trans = FALSE
@@ -323,10 +316,7 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
   )
   expect_s3_class(
     treemap_pq(
-      clean_pq(subset_taxa(
-        data_fungi_sp_known,
-        Phylum == "Basidiomycota"
-      )),
+      data_fungi_mini,
       "Order",
       "Class",
       nb_seq = FALSE,
@@ -337,11 +327,11 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
 })
 
 test_that("tax_bar_pq work with data_fungi dataset", {
-  expect_s3_class(tax_bar_pq(data_fungi, taxa = "Class"), "ggplot")
-  expect_s3_class(tax_bar_pq(data_fungi, taxa = "Class", fact = "Time"), "ggplot")
+  expect_s3_class(tax_bar_pq(data_fungi_mini, taxa = "Class"), "ggplot")
+  expect_s3_class(tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time"), "ggplot")
   expect_s3_class(
     tax_bar_pq(
-      data_fungi,
+      data_fungi_mini,
       taxa = "Class",
       fact = "Time",
       nb_seq = FALSE
@@ -350,7 +340,7 @@ test_that("tax_bar_pq work with data_fungi dataset", {
   )
   expect_s3_class(
     tax_bar_pq(
-      data_fungi,
+      data_fungi_mini,
       taxa = "Class",
       fact = "Time",
       nb_seq = FALSE,
@@ -360,11 +350,12 @@ test_that("tax_bar_pq work with data_fungi dataset", {
   )
 })
 
-test_that("add_funguild_info and plot_guild_pq work with data_fungi dataset", {
+test_that("add_funguild_info and plot_guild_pq work with data_fungi_mini dataset", {
+  skip_on_cran()
   expect_s4_class(
     df <-
       add_funguild_info(
-        subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000),
+        subset_taxa_pq(data_fungi_mini, taxa_sums(data_fungi_mini) > 5000),
         taxLevels = c(
           "Domain",
           "Phylum",
@@ -379,7 +370,7 @@ test_that("add_funguild_info and plot_guild_pq work with data_fungi dataset", {
   )
   expect_error(df <-
     add_funguild_info(
-      subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000),
+      subset_taxa_pq(data_fungi_mini, taxa_sums(data_fungi_mini) > 5000),
       taxLevels = c(
         "PHYLLUUM",
         "Phylum",

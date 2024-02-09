@@ -51,18 +51,17 @@ Alternative to venn plot.
 }
 \examples{
 
-upset_pq(data_fungi, fact = "Height", width_ratio = 0.2)
-upset_pq(data_fungi,
+upset_pq(data_fungi_mini,
   fact = "Height", width_ratio = 0.2,
   taxa_fill = "Class"
 )
-upset_pq(data_fungi, fact = "Height", min_nb_seq = 1000)
-upset_pq(data_fungi, fact = "Height", na_remove = FALSE)
-upset_pq(data_fungi, fact = "Time", width_ratio = 0.2)
-upset_pq(data_fungi, fact = "Time", width_ratio = 0.2, rarefy_after_merging = TRUE)
+upset_pq(data_fungi_mini, fact = "Height", min_nb_seq = 1000)
+upset_pq(data_fungi_mini, fact = "Height", na_remove = FALSE)
+
+upset_pq(data_fungi_mini, fact = "Time", width_ratio = 0.2, rarefy_after_merging = TRUE)
 
 upset_pq(
-  data_fungi,
+  data_fungi_mini,
   fact = "Time",
   width_ratio = 0.2,
   annotations = list(
@@ -91,7 +90,7 @@ upset_pq(
 
 
 upset_pq(
-  data_fungi,
+  data_fungi_mini,
   fact = "Time",
   width_ratio = 0.2,
   numeric_fonction = mean,
@@ -121,7 +120,7 @@ upset_pq(
 
 
 upset_pq(
-  subset_taxa(data_fungi, Phylum == "Basidiomycota"),
+  subset_taxa(data_fungi_mini, Phylum == "Basidiomycota"),
   fact = "Time",
   width_ratio = 0.2,
   base_annotations = list(),
@@ -149,7 +148,7 @@ upset_pq(
   )
 )
 
-data_fungi2 <- data_fungi
+data_fungi2 <- data_fungi_mini
 data_fungi2@sam_data[["Time_0"]] <- data_fungi2@sam_data$Time == 0
 data_fungi2@sam_data[["Height__Time_0"]] <-
   paste0(data_fungi2@sam_data[["Height"]], "__", data_fungi2@sam_data[["Time_0"]])

@@ -481,7 +481,7 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #' @param method (default: clusterize)
 #'   Set the clustering method.
 #'   - `clusterize` use the [DECIPHER::Clusterize()] fonction,
-#'   - `vsearch` use the vsearch software (https://github.com/torognes/vsearch/)
+#'   - `vsearch` use the vsearch software (https://github.com/torognes/vsearch)
 #'     with arguments `--cluster_size` by default (see args `vsearch_cluster_method`)
 #'     and `-strand both` (see args `vsearch_args`)
 #'   - `swarm` use the swarm
@@ -493,7 +493,7 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #'   set tax_adjust to 0 (default). For the moment only tax_adjust = 0 is
 #'   robust
 #' @param vsearch_cluster_method (default: "--cluster_size) See other possible
-#'   methods in the [vsearch pdf manual](https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf) (e.g. `--cluster_size` or `--cluster_smallmem`)
+#'   methods in the [vsearch manual](https://github.com/torognes/vsearch/) (e.g. `--cluster_size` or `--cluster_smallmem`)
 #'   - `--cluster_fast` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.
 #'   - `--cluster_size` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence abundance beforehand.
 #'   - `--cluster_smallmem` : Clusterize the fasta sequences in filename without automatically modifying their order beforehand. Sequence are expected to be sorted by decreasing sequence length, unless *--usersort* is used.
@@ -520,6 +520,15 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #' @return A new object of class `physeq` or a list of cluster if dna_seq
 #'   args was used.
 #'
+#' @examples
+#' asv2otu(data_fungi_mini)
+#' asv2otu(data_fungi_mini, method_clusterize = "longest")
+#' if (MiscMetabar:::is_swarm_installed()) {
+#'   d_swarm <- asv2otu(data_fungi_mini, method = "swarm")
+#' }
+#' if (MiscMetabar:::is_vsearch_installed()) {
+#'   d_vs <- asv2otu(data_fungi_mini, method = "vsearch")
+#' }
 #' @references
 #'   VSEARCH can be downloaded from
 #'   \url{https://github.com/torognes/vsearch}.
@@ -1917,8 +1926,8 @@ plot_guild_pq <-
 #' @examples
 #' library("phangorn")
 #'
-#' df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 9000)
-#' df_tree <- build_phytree_pq(df, nb_bootstrap = 5)
+#' df <- subset_taxa_pq(data_fungi_mini, taxa_sums(data_fungi_mini) > 9000)
+#' df_tree <- build_phytree_pq(df, nb_bootstrap = 2)
 #' plot(df_tree$UPGMA)
 #' plotBS(df_tree$UPGMA, df_tree$UPGMA_bs, main = "UPGMA")
 #' plot(df_tree$NJ, "unrooted")

@@ -32,6 +32,39 @@
 #' @usage data(data_fungi_sp_known)
 "data_fungi_sp_known"
 
+
+#' Fungal OTU in phyloseq format
+#'
+#' It is a subset of the data_fungi dataset including only Basidiomycota
+#'   with more than 5000 sequences.
+#'
+#' Obtain using `data_fungi_mini <- subset_taxa(data_fungi, Phylum == "Basidiomycota")`
+#' and then `data_fungi_mini <-   subset_taxa_pq(data_fungi_mini, colSums(data_fungi_mini@otu_table) > 5000)`
+#'
+#'
+#' @format A physeq object containing 45 taxa with references sequences
+#' described by 14 taxonomic ranks and 137 samples described by 7 sample variables:
+#' - *X*: the name of the fastq-file
+#' - *Sample_names*: the names of ... the samples
+#' - *Treename*: the name of an tree
+#' - *Sample_id*: identifier for each sample
+#' - *Height*: height of the sample in the tree
+#' - *Diameter*: diameter of the trunk
+#' - *Time*: time since the dead of the tree
+#' @usage data(data_fungi_mini)
+#' @format A physeq object containing 45 taxa with references sequences
+#' described by 14 taxonomic ranks and 137 samples described by 7 sample variables:
+#' - *X*: the name of the fastq-file
+#' - *Sample_names*: the names of ... the samples
+#' - *Treename*: the name of an tree
+#' - *Sample_id*: identifier for each sample
+#' - *Height*: height of the sample in the tree
+#' - *Diameter*: diameter of the trunk
+#' - *Time*: time since the dead of the tree
+#' @usage data(data_fungi_mini)
+"data_fungi_mini"
+
+
 #' This tutorial explore the dataset from Tengeler et al. (2020) available in the `mia` package.
 #' obtain using `mia::makePhyloseqFromTreeSE(Tengeler2020)`
 #'

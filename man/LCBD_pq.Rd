@@ -26,12 +26,11 @@ A wrapper for the \code{\link[adespatial:beta.div]{adespatial::beta.div()}} func
 object.
 }
 \examples{
-data(data_fungi_sp_known)
-res <- LCBD_pq(data_fungi_sp_known, nperm = 50)
+res <- LCBD_pq(data_fungi_sp_known, nperm = 5)
 str(res)
 length(res$LCBD)
 length(res$SCBD)
-LCBD_pq(data_fungi_sp_known, nperm = 50, method = "jaccard")
+LCBD_pq(data_fungi_sp_known, nperm = 5, method = "jaccard")
 
 }
 \seealso{

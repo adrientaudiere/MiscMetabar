@@ -1,7 +1,3 @@
-data("data_fungi")
-df_basidio <- subset_taxa(data_fungi, Phylum == "Basidiomycota")
-df_basidio <-
-  subset_taxa_pq(df_basidio, colSums(df_basidio@otu_table) > 1000)
 path_db <- system.file("extdata",
   "100_sp_UNITE_sh_general_release_dynamic.fasta",
   package = "MiscMetabar", mustWork = TRUE
@@ -22,23 +18,23 @@ if (class(blast_error_or_not) == "try-error") {
     {
       expect_s3_class(
         blast_on_df <-
-          blast_to_phyloseq(df_basidio, path_db),
+          blast_to_phyloseq(data_fungi_mini, path_db),
         "data.frame"
       )
       expect_s3_class(
-        blast_to_phyloseq(df_basidio, path_db, list_no_output_query = TRUE),
+        blast_to_phyloseq(data_fungi_mini, path_db, list_no_output_query = TRUE),
         "data.frame"
       )
       expect_s3_class(
         blast_to_phyloseq(
-          df_basidio,
+          data_fungi_mini,
           path_db,
           unique_per_seq = TRUE,
           score_filter = FALSE
         ),
         "data.frame"
       )
-      expect_error(blast_to_phyloseq(df_basidio, "inst/extdata/nil.fasta"))
+      expect_error(blast_to_phyloseq(data_fungi_mini, "inst/extdata/nil.fasta"))
     }
   )
 
@@ -46,17 +42,17 @@ if (class(blast_error_or_not) == "try-error") {
     "blast_pq works fine",
     {
       expect_s3_class(blast_df <-
-        blast_pq(df_basidio, path_db), "data.frame")
+        blast_pq(data_fungi_mini, path_db), "data.frame")
       expect_equal(ncol(blast_df), 9)
       expect_true(nrow(blast_df) > 0)
       expect_s3_class(
-        blast_df <- blast_pq(df_basidio, path_db,
+        blast_df <- blast_pq(data_fungi_mini, path_db,
           unique_per_seq = TRUE
         ),
         "data.frame"
       )
       expect_s3_class(
-        blast_df <- blast_pq(df_basidio, path_db,
+        blast_df <- blast_pq(data_fungi_mini, path_db,
           score_filter = FALSE
         ),
         "data.frame"
@@ -64,7 +60,7 @@ if (class(blast_error_or_not) == "try-error") {
       expect_s3_class(
         blast_df <-
           blast_pq(
-            df_basidio,
+            data_fungi_mini,
             path_db,
             unique_per_seq = FALSE,
             score_filter = FALSE
@@ -73,14 +69,14 @@ if (class(blast_error_or_not) == "try-error") {
       )
       expect_s3_class(
         blast_df <-
-          blast_pq(df_basidio, database = "inst/extdata/dbase"),
+          blast_pq(data_fungi_mini, database = "inst/extdata/dbase"),
         "data.frame"
       )
       expect_error(
         blast_df <-
-          blast_pq(df_basidio, fasta_for_db = path_db, database = "inst/extdata/dbase")
+          blast_pq(data_fungi_mini, fasta_for_db = path_db, database = "inst/extdata/dbase")
       )
-      expect_error(blast_df <- blast_pq(df_basidio))
+      expect_error(blast_df <- blast_pq(data_fungi_mini))
     }
   )
 
@@ -89,13 +85,13 @@ if (class(blast_error_or_not) == "try-error") {
     {
       expect_s4_class(
         df_blast <-
-          filter_asv_blast(df_basidio, path_db),
+          filter_asv_blast(data_fungi_mini, path_db),
         "phyloseq"
       )
       expect_s4_class(
         df_blast <-
           filter_asv_blast(
-            df_basidio,
+            data_fungi_mini,
             path_db,
             id_filter = 50,
             e_value_filter = 10,
@@ -107,14 +103,14 @@ if (class(blast_error_or_not) == "try-error") {
       expect_s4_class(
         df_blast <-
           filter_asv_blast(
-            df_basidio,
+            data_fungi_mini,
             path_db,
             add_info_to_taxtable = FALSE,
             nproc = 2
           ),
         "phyloseq"
       )
-      expect_error(filter_asv_blast(df_basidio, "inst/extdata/nil.fasta"))
+      expect_error(filter_asv_blast(data_fungi_mini, "inst/extdata/nil.fasta"))
     }
   )
 
@@ -123,10 +119,10 @@ if (class(blast_error_or_not) == "try-error") {
     {
       expect_s4_class(
         df_blast <-
-          add_blast_info(df_basidio, path_db),
+          add_blast_info(data_fungi_mini, path_db),
         "phyloseq"
       )
-      expect_error(add_blast_info(df_basidio, "inst/extdata/nil.fasta"))
+      expect_error(add_blast_info(data_fungi_mini, "inst/extdata/nil.fasta"))
     }
   )
 

@@ -359,3 +359,100 @@ install_pkg_needed <- function(pkg, use_pak = TRUE, bioconductor_pkg = FALSE,
     }
   }
 }
+
+################################################################################
+#' Test if cutadapt is installed.
+#'
+#' @description
+#'  `r lifecycle::badge("maturing")`
+#'
+#' Useful for testthat and examples compilation for R CMD CHECK and
+#'   test coverage
+#'
+#' @param args_before_cutadapt : (String) A one line bash command to run before
+#' to run cutadapt. For examples, "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv &&" allow to bypass the conda init which asks to restart the shell
+#' @keywords internal
+#' @noRd
+#' @return A logical that say if cutadapt is install in
+#'
+#' @examples
+#' MiscMetabar:::is_cutadapt_installed()
+#' @author Adrien Taudière
+
+is_cutadapt_installed <- function(args_before_cutadapt = "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv && ") {
+  writeLines(paste0(args_before_cutadapt, " cutadapt -h"), paste0(tempdir(), "/script_cutadapt.sh"))
+  cutadapt_error_or_not <- try(system(paste0("bash ", tempdir(), "/script_cutadapt.sh 2>&1"), intern = TRUE), silent = T)
+  unlink(paste0(tempdir(), "/script_cutadapt.sh"))
+
+  return(class(cutadapt_error_or_not) != "try-error")
+}
+
+#' Test if falco is installed.
+#'
+#' @description
+#'  `r lifecycle::badge("maturing")`
+#'
+#' Useful for testthat and examples compilation for R CMD CHECK and
+#'   test coverage
+#'
+#' @param path (default: falco) Path to falco
+#' @keywords internal
+#' @noRd
+#' @return A logical that say if falco is install in
+#'
+#' @examples
+#' MiscMetabar:::is_falco_installed()
+#' @author Adrien Taudière
+
+is_falco_installed <- function(path = "falco") {
+  return(class(try(system(paste0(path, " 2>&1"), intern = TRUE),
+    silent = TRUE
+  )) != "try-error")
+}
+
+#' Test if swarm is installed.
+#'
+#' @description
+#'  `r lifecycle::badge("maturing")`
+#'
+#' Useful for testthat and examples compilation for R CMD CHECK and
+#'   test coverage
+#'
+#' @param path (default: swarm) Path to falco
+#' @keywords internal
+#' @noRd
+#' @return A logical that say if swarm is install in
+#'
+#' @examples
+#' MiscMetabar:::is_swarm_installed()
+#' @author Adrien Taudière
+
+is_swarm_installed <- function(path = "swarm") {
+  return(class(try(system(paste0(path, " -h 2>&1"), intern = TRUE),
+    silent = TRUE
+  )) != "try-error")
+}
+
+#' Test if vsearch is installed.
+#'
+#' @description
+#'  `r lifecycle::badge("maturing")`
+#'
+#' Useful for testthat and examples compilation for R CMD CHECK and
+#'   test coverage
+#'
+#' @param path (default: vsearch) Path to vsearch
+#' @keywords internal
+#' @noRd
+#' @return A logical that say if vsearch is install in
+#'
+#' @examples
+#' MiscMetabar:::is_vsearch_installed()
+#' @author Adrien Taudière
+
+is_vsearch_installed <- function(path = "vsearch") {
+  return(class(try(system(paste0(path, " 2>&1"), intern = TRUE),
+    silent = TRUE
+  )) != "try-error")
+}
+################################################################################
