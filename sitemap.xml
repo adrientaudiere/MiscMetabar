@@ -112,12 +112,6 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/asv2otu.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/bad_flush_right.html</loc>
-  </url>
-  <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/bad_or_unique.html</loc>
-  </url>
-  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/biplot_pq.html</loc>
   </url>
   <url>
@@ -155,6 +149,9 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/data_fungi.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/data_fungi_mini.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/data_fungi_sp_known.html</loc>
@@ -226,9 +223,6 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/lulu_pq.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/merge_groups.html</loc>
-  </url>
-  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/merge_krona.html</loc>
   </url>
   <url>
@@ -236,9 +230,6 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/merge_taxa_vec.html</loc>
-  </url>
-  <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/merge_taxa_vec_pseudo.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/multi_biplot_pq.html</loc>
@@ -305,9 +296,6 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/rotl_pq.html</loc>
-  </url>
-  <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/sample_data_stable.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/sample_data_with_new_names.html</loc>

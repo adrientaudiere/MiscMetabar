@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -102,28 +102,6 @@
           <code><a href="verify_pq.html">verify_pq()</a></code> 
         </dt>
         <dd>Verify the validity of a phyloseq object</dd>
-      </dl></div><div class="section level2">
-      <h2 id="obtain-phyloseq-object">Obtain phyloseq object<a class="anchor" aria-label="anchor" href="#obtain-phyloseq-object"></a></h2>
-      
-      
-
-      
-    </div><div id="" class="section level2">
-      
-      
-      
-
-      <dl><dt>
-          
-          <code><a href="chimera_removal_vs.html">chimera_removal_vs()</a></code> 
-        </dt>
-        <dd>Search for a list of sequence in an object to remove chimera taxa
-using <a href="https://github.com/torognes/vsearch" class="external-link">vsearch</a></dd>
-      </dl><dl><dt>
-          
-          <code><a href="chimera_detection_vs.html">chimera_detection_vs()</a></code> 
-        </dt>
-        <dd>Detect for chimera taxa using <a href="https://github.com/torognes/vsearch" class="external-link">vsearch</a></dd>
       </dl></div><div class="section level2">
       <h2 id="transform-phyloseq-object">Transform phyloseq object<a class="anchor" aria-label="anchor" href="#transform-phyloseq-object"></a></h2>
       
@@ -217,7 +195,7 @@ object.</dd>
         <dd>Retrieve the FUNGuild database</dd>
       </dl></div><div class="section level2">
       
-      <h3 id="otu-table">OTU table<a class="anchor" aria-label="anchor" href="#otu-table"></a></h3>
+      <h3 id="transform-otu-table-only">Transform OTU table only<a class="anchor" aria-label="anchor" href="#transform-otu-table-only"></a></h3>
       
 
       
@@ -232,7 +210,70 @@ object.</dd>
         </dt>
         <dd>Transform the otu_table of a <code>phyloseq-class</code> object into a
 <code>phyloseq-class</code> object with a binary otu_table.</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="subset-merge-taxa">Subset/merge taxa<a class="anchor" aria-label="anchor" href="#subset-merge-taxa"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="subset_taxa_pq.html">subset_taxa_pq()</a></code> 
+        </dt>
+        <dd>Subset taxa using a conditional named boolean vector.</dd>
       </dl><dl><dt>
+          
+          <code><a href="subset_taxa_tax_control.html">subset_taxa_tax_control()</a></code> 
+        </dt>
+        <dd>Subset taxa using a taxa control (e.g. truffle root tips) through 3 methods.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="select_taxa-methods.html">select_taxa()</a></code> 
+        </dt>
+        <dd>Select a subset of taxa in a specified order where possible</dd>
+      </dl><dl><dt>
+          
+          <code><a href="merge_taxa_vec.html">merge_taxa_vec()</a></code> 
+        </dt>
+        <dd>Merge taxa in groups (vectorized version)</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="subset-merge-samples">Subset/merge samples<a class="anchor" aria-label="anchor" href="#subset-merge-samples"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="select_one_sample.html">select_one_sample()</a></code> 
+        </dt>
+        <dd>Select one sample from a physeq object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="merge_samples2.html">merge_samples2()</a></code> 
+        </dt>
+        <dd>Merge samples by a sample variable or factor</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="-re-clustering-otu-table">(Re)clustering OTU table<a class="anchor" aria-label="anchor" href="#-re-clustering-otu-table"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
           
           <code><a href="asv2otu.html">asv2otu()</a></code> 
         </dt>
@@ -265,16 +306,28 @@ or cluster a list of DNA sequences using vsearch software</dd>
           <code><a href="mumu_pq.html">mumu_pq()</a></code> 
         </dt>
         <dd>MUMU reclustering of class <code>physeq</code></dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="remove-chimera-using-vsearch">Remove chimera using vsearch<a class="anchor" aria-label="anchor" href="#remove-chimera-using-vsearch"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="chimera_removal_vs.html">chimera_removal_vs()</a></code> 
+        </dt>
+        <dd>Search for a list of sequence in an object to remove chimera taxa
+using <a href="https://github.com/torognes/vsearch" class="external-link">vsearch</a></dd>
       </dl><dl><dt>
           
-          <code><a href="subset_taxa_pq.html">subset_taxa_pq()</a></code> 
+          <code><a href="chimera_detection_vs.html">chimera_detection_vs()</a></code> 
         </dt>
-        <dd>Subset taxa using a conditional named boolean vector.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="subset_taxa_tax_control.html">subset_taxa_tax_control()</a></code> 
-        </dt>
-        <dd>Subset taxa using a taxa control (e.g. truffle root tips) through 3 methods.</dd>
+        <dd>Detect for chimera taxa using <a href="https://github.com/torognes/vsearch" class="external-link">vsearch</a></dd>
       </dl></div><div class="section level2">
       
       <h3 id="sample-data">Sample data<a class="anchor" aria-label="anchor" href="#sample-data"></a></h3>
@@ -772,6 +825,11 @@ optional order</dd>
         <dd>Fungal OTU in phyloseq format</dd>
       </dl><dl><dt>
           
+          <code><a href="data_fungi_mini.html">data_fungi_mini</a></code> <code><a href="data_fungi_mini.html">data_fungi_mini</a></code> 
+        </dt>
+        <dd>Fungal OTU in phyloseq format</dd>
+      </dl><dl><dt>
+          
           <code><a href="Tengeler2020_pq.html">Tengeler2020_pq</a></code> 
         </dt>
         <dd>This tutorial explore the dataset from Tengeler et al. (2020) available in the <code>mia</code> package.
@@ -841,16 +899,6 @@ distance for all samples</dd>
 a factor</dd>
       </dl><dl><dt>
           
-          <code><a href="merge_samples2.html">merge_samples2()</a></code> 
-        </dt>
-        <dd>Merge samples by a sample variable or factor</dd>
-      </dl><dl><dt>
-          
-          <code><a href="merge_taxa_vec.html">merge_taxa_vec()</a></code> 
-        </dt>
-        <dd>Merge taxa in groups (vectorized version)</dd>
-      </dl><dl><dt>
-          
           <code><a href="unique_or_na.html">unique_or_na()</a></code> 
         </dt>
         <dd>Get the unique value in x or NA if none</dd>
@@ -862,9 +910,9 @@ a factor</dd>
 or the <code>refseq</code> slot of a phyloseq-class object</dd>
       </dl><dl><dt>
           
-          <code><a href="select_one_sample.html">select_one_sample()</a></code> 
+          <code><a href="MiscMetabar-package.html">MiscMetabar-package</a></code> 
         </dt>
-        <dd>Select one sample from a physeq object</dd>
+        <dd><code>MiscMetabar</code> package</dd>
       </dl></div><div class="section level2">
       <h2 id="deprecated">Deprecated<a class="anchor" aria-label="anchor" href="#deprecated"></a></h2>
       

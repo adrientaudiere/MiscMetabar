@@ -14,7 +14,7 @@ and the number of sequences under the name nb_sequences"><!-- mathjax --><script
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -147,7 +147,7 @@ their column numbers (e.g. taxonomic_level = 1:7)</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">GPsubset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html" class="external-link">subset_taxa</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">GPsubset</span>,</span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">GPsubset</span><span class="op">@</span><span class="va">otu_table</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1000</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">GPsubset</span><span class="op">@</span><span class="va">otu_table</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">5000</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(e, x, parent.frame()):</span> object 'GPsubset' not found</span>
 <span class="r-in"><span></span></span>
@@ -171,21 +171,15 @@ their column numbers (e.g. taxonomic_level = 1:7)</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Summing per-taxon counts from 26 columns for 2616 taxa</span>
 <span class="r-plt img"><img src="heat_tree_pq-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">heat_tree_pq</span><span class="op">(</span><span class="va">GPsubset</span>,</span></span>
-<span class="r-in"><span>  node_size <span class="op">=</span> <span class="va">nb_sequences</span>,</span></span>
-<span class="r-in"><span>  node_color <span class="op">=</span> <span class="va">n_obs</span>,</span></span>
-<span class="r-in"><span>  node_label <span class="op">=</span> <span class="va">taxon_names</span>,</span></span>
-<span class="r-in"><span>  tree_label <span class="op">=</span> <span class="va">taxon_names</span>,</span></span>
-<span class="r-in"><span>  node_size_trans <span class="op">=</span> <span class="st">"log10 area"</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following 17689 of 19008 (93.1%) input indexes have `NA` in their classifications:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    4, 6, 7, 8, 9, 10 ... 19003, 19004, 19005, 19006, 19007, 19008</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> No `cols` specified, so using all numeric columns:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>    CL3, CC1, SV1, M31Fcsw, M11Fcsw ... TS29, Even1, Even2, Even3</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Summing per-taxon counts from 26 columns for 2616 taxa</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to max; returning -Inf</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to max; returning -Inf</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in if (object@run &gt;= run) break:</span> missing value where TRUE/FALSE needed</span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">heat_tree_pq</span><span class="op">(</span><span class="va">GPsubset</span>,</span></span>
+<span class="r-in"><span>    node_size <span class="op">=</span> <span class="va">nb_sequences</span>,</span></span>
+<span class="r-in"><span>    node_color <span class="op">=</span> <span class="va">n_obs</span>,</span></span>
+<span class="r-in"><span>    node_label <span class="op">=</span> <span class="va">taxon_names</span>,</span></span>
+<span class="r-in"><span>    tree_label <span class="op">=</span> <span class="va">taxon_names</span>,</span></span>
+<span class="r-in"><span>    node_size_trans <span class="op">=</span> <span class="st">"log10 area"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

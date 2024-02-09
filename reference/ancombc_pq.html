@@ -12,7 +12,7 @@ A wrapper for the ANCOMBC::ancombc2() function"><!-- mathjax --><script src="htt
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -129,32 +129,22 @@ use this function.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">data_fungi_sp_known</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">res_height</span> <span class="op">&lt;-</span> <span class="fu">ancombc_pq</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="subset_taxa_pq.html">subset_taxa_pq</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="va">data_fungi_sp_known</span>,</span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/taxa_sums.html" class="external-link">taxa_sums</a></span><span class="op">(</span><span class="va">data_fungi_sp_known</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">5000</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span>,</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">res_height</span> <span class="op">&lt;-</span> <span class="fu">ancombc_pq</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">data_fungi_mini</span>,</span></span>
 <span class="r-in"><span>  fact <span class="op">=</span> <span class="st">"Height"</span>,</span></span>
 <span class="r-in"><span>  levels_fact <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Low"</span>, <span class="st">"High"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 11 sample(s) ( BE9-006-B_S27_MERGED.fastq.gz / C21-NV1-M_S64_MERGED.fastq.gz / DY5-004-M_S98_MERGED.fastq.gz / E9-009-B_S100_MERGED.fastq.gz / E9-009-H_S101_MERGED.fastq.gz / N22-001-B_S129_MERGED.fastq.gz / N23-002-M_S132_MERGED.fastq.gz / O20-X-B_S139_MERGED.fastq.gz / O21-007-M_S144_MERGED.fastq.gz / W26-001-M_S167_MERGED.fastq.gz / Y29-007-H_S182_MERGED.fastq.gz ).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 651</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 596</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 55</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 174</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The group variable has &lt; 3 categories </span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> The multi-group comparisons (global/pairwise/dunnet/trend) will be deactivated</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The number of taxa used for estimating sample-specific biases is: 15</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The number of taxa used for estimating sample-specific biases is: 11</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> A large number of taxa (&gt;50) is required for the consistent estimation of biases</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Obtaining initial estimates ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Estimating sample-specific biases ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: foreach</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: rngtools</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Estimation of sampling fractions failed for the following samples:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> B18-006-B_S19_MERGED.fastq.gz, DJ2-008-H_S88_MERGED.fastq.gz, DY5-004-H_S97_MERGED.fastq.gz, W26-001-H_S166_MERGED.fastq.gz</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> B18-006-B_S19_MERGED.fastq.gz, DY5-004-B_S96_MERGED.fastq.gz, W26-001-B_S165_MERGED.fastq.gz, X24-009-B_S170_MERGED.fastq.gz, X29-004-B_S174_MERGED.fastq.gz, Y28-002-B_S178_MERGED.fastq.gz, Z29-001-H_S185_MERGED.fastq.gz</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> These samples may have an excessive number of zero values</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Sensitivity analysis for pseudo-count addition to 0s: ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ANCOM-BC2 primary results ...</span>
@@ -176,29 +166,20 @@ use this function.</p>
 <span class="r-plt img"><img src="ancombc_pq-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">res_time</span> <span class="op">&lt;-</span> <span class="fu">ancombc_pq</span><span class="op">(</span></span></span>
-<span class="r-in"><span>   <span class="fu"><a href="subset_taxa_pq.html">subset_taxa_pq</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>     <span class="va">data_fungi_sp_known</span>,</span></span>
-<span class="r-in"><span>     <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/taxa_sums.html" class="external-link">taxa_sums</a></span><span class="op">(</span><span class="va">data_fungi_sp_known</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">5000</span></span></span>
-<span class="r-in"><span>   <span class="op">)</span>,</span></span>
-<span class="r-in"><span>   fact <span class="op">=</span> <span class="st">"Time"</span>,</span></span>
-<span class="r-in"><span>   levels_fact <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"15"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>   tax_level <span class="op">=</span> <span class="st">"Family"</span>,</span></span>
-<span class="r-in"><span>   verbose <span class="op">=</span> <span class="cn">TRUE</span></span></span>
-<span class="r-in"><span> <span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 11 sample(s) ( BE9-006-B_S27_MERGED.fastq.gz / C21-NV1-M_S64_MERGED.fastq.gz / DY5-004-M_S98_MERGED.fastq.gz / E9-009-B_S100_MERGED.fastq.gz / E9-009-H_S101_MERGED.fastq.gz / N22-001-B_S129_MERGED.fastq.gz / N23-002-M_S132_MERGED.fastq.gz / O20-X-B_S139_MERGED.fastq.gz / O21-007-M_S144_MERGED.fastq.gz / W26-001-M_S167_MERGED.fastq.gz / Y29-007-H_S182_MERGED.fastq.gz ).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 651</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 596</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 55</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 174</span>
+<span class="r-in"><span>  <span class="va">data_fungi_mini</span>,</span></span>
+<span class="r-in"><span>  fact <span class="op">=</span> <span class="st">"Time"</span>,</span></span>
+<span class="r-in"><span>  levels_fact <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"15"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  tax_level <span class="op">=</span> <span class="st">"Family"</span>,</span></span>
+<span class="r-in"><span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The group variable has &lt; 3 categories </span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> The multi-group comparisons (global/pairwise/dunnet/trend) will be deactivated</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The number of taxa used for estimating sample-specific biases is: 12</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The number of taxa used for estimating sample-specific biases is: 9</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> A large number of taxa (&gt;50) is required for the consistent estimation of biases</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Obtaining initial estimates ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Estimating sample-specific biases ...</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Estimation of sampling fractions failed for the following samples:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> BE9-006-H_S28_MERGED.fastq.gz, DJ2-008-H_S88_MERGED.fastq.gz, DY5-004-H_S97_MERGED.fastq.gz, J18-004-H_S115_MERGED.fastq.gz, J18-004-M_S116_MERGED.fastq.gz, M22-001_S125_MERGED.fastq.gz</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> BT-006-M_S55_MERGED.fastq.gz, C21-NV1-B_S62_MERGED.fastq.gz, CB8-019-H_S70_MERGED.fastq.gz, DY5-004-B_S96_MERGED.fastq.gz, DY5-004-H_S97_MERGED.fastq.gz, J18-004-M_S116_MERGED.fastq.gz, W26-001-B_S165_MERGED.fastq.gz, X24-009-B_S170_MERGED.fastq.gz</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> These samples may have an excessive number of zero values</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Sensitivity analysis for pseudo-count addition to 0s: ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ANCOM-BC2 primary results ...</span>

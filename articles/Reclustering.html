@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -109,7 +109,9 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/adrientaudiere/MiscMetabar" class="external-link">MiscMetabar</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/adrientaudiere/MiscMetabar" class="external-link">MiscMetabar</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: replacing previous import 'S4Arrays::makeNindexFromArrayViewport' by</span></span>
+<span><span class="co">#&gt; 'DelayedArray::makeNindexFromArrayViewport' when loading 'SummarizedExperiment'</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="re-clustering-asvs">Re-clustering ASVs<a class="anchor" aria-label="anchor" href="#re-clustering-asvs"></a>
 </h2>
@@ -148,24 +150,22 @@ the function <code><a href="../reference/asv2otu.html">asv2otu()</a></code>, usi
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>otu <span class="ot">&lt;-</span> <span class="fu">asv2otu</span>(data_fungi_sp_known, <span class="at">method =</span> <span class="st">"clusterize"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Partitioning sequences by 5-mer similarity:</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ================================================================================</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 0.13 secs</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 0.16 secs</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Sorting by relatedness within 1 group:</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>iteration <span class="dv">1</span> of up to <span class="dv">325</span> (<span class="fl">100.0</span>% stability) </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>iteration <span class="dv">106</span> of up to <span class="dv">325</span> (<span class="fl">100.0</span>% stability) </span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 0.1 secs</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 4.02 secs</span></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clustering sequences by 8-mer similarity:</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in rm(b1, b2, bins, d, inPlay, keep, ksims, psims, ls, m1, m2, ov, :</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; object 'temp' not found</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ================================================================================</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ================================================================================</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 0.87 secs</span></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Time difference of 1.42 secs</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clusters via relatedness sorting: 100% (0% exclusively)</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clusters via rare 5-mers: 100% (0% exclusively)</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Estimated clustering effectiveness: 100%</span></span></code></pre></div>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clusters via relatedness sorting: 100% (0% exclusively)</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Clusters via rare 5-mers: 100% (0% exclusively)</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Estimated clustering effectiveness: 100%</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">otu_vs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/asv2otu.html">asv2otu</a></span><span class="op">(</span><span class="va">data_fungi_sp_known</span>, method <span class="op">=</span> <span class="st">"vsearch"</span><span class="op">)</span></span></code></pre></div>
 <p>The vsearch method requires the installation of <a href="https://github.com/torognes/vsearch" class="external-link">Vsearch</a>.</p>
@@ -207,7 +207,7 @@ clusters.</p>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;             nb_sequences nb_clusters nb_samples</span></span>
 <span><span class="co">#&gt; Raw data         1106581         651        185</span></span>
-<span><span class="co">#&gt; OTU              1106581         361        185</span></span>
+<span><span class="co">#&gt; OTU              1106581         360        185</span></span>
 <span><span class="co">#&gt; OTU_vsearch      1106581         362        185</span></span>
 <span><span class="co">#&gt; LULU             1106581         549        185</span></span></code></pre></div>
 </div>
@@ -238,7 +238,7 @@ clusters.</p>
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] MiscMetabar_0.7.2 dplyr_1.1.4       dada2_1.30.0      Rcpp_1.0.12      </span></span>
+<span><span class="co">#&gt; [1] MiscMetabar_0.7.4 dplyr_1.1.4       dada2_1.30.0      Rcpp_1.0.12      </span></span>
 <span><span class="co">#&gt; [5] ggplot2_3.4.4     phyloseq_1.46.0  </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
@@ -261,7 +261,7 @@ clusters.</p>
 <span><span class="co">#&gt;  [33] jsonlite_1.8.8              biomformat_1.30.0          </span></span>
 <span><span class="co">#&gt;  [35] blob_1.2.4                  highr_0.10                 </span></span>
 <span><span class="co">#&gt;  [37] rhdf5filters_1.14.1         DelayedArray_0.28.0        </span></span>
-<span><span class="co">#&gt;  [39] Rhdf5lib_1.24.1             BiocParallel_1.36.0        </span></span>
+<span><span class="co">#&gt;  [39] Rhdf5lib_1.24.2             BiocParallel_1.36.0        </span></span>
 <span><span class="co">#&gt;  [41] jpeg_0.1-10                 parallel_4.3.2             </span></span>
 <span><span class="co">#&gt;  [43] cluster_2.1.4               R6_2.5.1                   </span></span>
 <span><span class="co">#&gt;  [45] bslib_0.6.1                 stringi_1.8.3              </span></span>

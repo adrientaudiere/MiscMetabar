@@ -12,7 +12,7 @@ or cluster a list of DNA sequences using vsearch software — vsearch_clustering
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -130,7 +130,7 @@ robust</p></dd>
 
 <dt>vsearch_cluster_method</dt>
 <dd><p>(default: "--cluster_size) See other possible
-methods in the <a href="https://github.com/torognes/vsearch/releases/download/v2.23.0/vsearch_manual.pdf" class="external-link">vsearch pdf manual</a> (e.g. <code>--cluster_size</code> or <code>--cluster_smallmem</code>)</p><ul><li><p><code>--cluster_fast</code> : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.</p></li>
+methods in the <a href="https://github.com/torognes/vsearch" class="external-link">vsearch manual</a> (e.g. <code>--cluster_size</code> or <code>--cluster_smallmem</code>)</p><ul><li><p><code>--cluster_fast</code> : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.</p></li>
 <li><p><code>--cluster_size</code> : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence abundance beforehand.</p></li>
 <li><p><code>--cluster_smallmem</code> : Clusterize the fasta sequences in filename without automatically modifying their order beforehand. Sequence are expected to be sorted by decreasing sequence length, unless <em>--usersort</em> is used.
 In that case you may set <code>vsearch_args</code> to vsearch_args = "--strand both --usersort"</p></li>
@@ -182,8 +182,7 @@ More information in the associated publication
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="summary_plot_pq.html">summary_plot_pq</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="summary_plot_pq.html">summary_plot_pq</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa and 0 samples.</span>
 <span class="r-plt img"><img src="vsearch_clustering-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="va">d_vs</span> <span class="op">&lt;-</span> <span class="fu">vsearch_clustering</span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span></span>

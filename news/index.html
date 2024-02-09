@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,14 +73,14 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.7" id="miscmetabar-07-in-development">MiscMetabar 0.7 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-07-in-development"></a></h2>
-<ul><li>Add functions <code><a href="../reference/chimera_detection_vs.html">chimera_detection_vs()</a></code> and <code><a href="../reference/chimera_removal_vs.html">chimera_removal_vs()</a></code> to process chimera detection and removal using <a href="https://github.com/torognes/vsearch" class="external-link">vsearch</a> software</li>
-<li>Add functions <code><a href="../reference/filter_trim.html">filter_trim()</a></code>, <code><a href="../reference/sample_data_with_new_names.html">sample_data_with_new_names()</a></code> and <code><a href="../reference/rename_samples.html">rename_samples()</a></code> to facilitate the use of <a href="https://books.ropensci.org/targets/" class="external-link">targets</a> for bioinformatic pipeline.</li>
-<li>Add function <code><a href="../reference/add_info_to_sam_data.html">add_info_to_sam_data()</a></code> to expand sam_data slot using a data.frame and using nb_asv and nb_seq</li>
-<li>Add functions <code><a href="../reference/swarm_clustering.html">swarm_clustering()</a></code> and <code><a href="../reference/vsearch_clustering.html">vsearch_clustering()</a></code> and add <code>swarm</code> method in the function <code><a href="../reference/asv2otu.html">asv2otu()</a></code>
-</li>
-<li>Add function <code><a href="../reference/physeq_or_string_to_dna.html">physeq_or_string_to_dna()</a></code> mostly for internal use</li>
-<li>Add function <code><a href="../reference/cutadapt_remove_primers.html">cutadapt_remove_primers()</a></code> to remove primers using <a href="https://github.com/marcelm/cutadapt/" class="external-link">cutadapt</a>
-</li>
+<ul><li><p>Add functions <code><a href="../reference/chimera_detection_vs.html">chimera_detection_vs()</a></code> and <code><a href="../reference/chimera_removal_vs.html">chimera_removal_vs()</a></code> to process chimera detection and removal using <a href="https://github.com/torognes/vsearch" class="external-link">vsearch</a> software</p></li>
+<li><p>Add functions <code><a href="../reference/filter_trim.html">filter_trim()</a></code>, <code><a href="../reference/sample_data_with_new_names.html">sample_data_with_new_names()</a></code> and <code><a href="../reference/rename_samples.html">rename_samples()</a></code> to facilitate the use of <a href="https://books.ropensci.org/targets/" class="external-link">targets</a> for bioinformatic pipeline.</p></li>
+<li><p>Add function <code><a href="../reference/add_info_to_sam_data.html">add_info_to_sam_data()</a></code> to expand sam_data slot using a data.frame and using nb_asv and nb_seq</p></li>
+<li><p>Add functions <code><a href="../reference/swarm_clustering.html">swarm_clustering()</a></code> and <code><a href="../reference/vsearch_clustering.html">vsearch_clustering()</a></code> and add <code>swarm</code> method in the function <code><a href="../reference/asv2otu.html">asv2otu()</a></code></p></li>
+<li><p>Add function <code><a href="../reference/physeq_or_string_to_dna.html">physeq_or_string_to_dna()</a></code> mostly for internal use</p></li>
+<li><p>Add function <code><a href="../reference/cutadapt_remove_primers.html">cutadapt_remove_primers()</a></code> to remove primers using <a href="https://github.com/marcelm/cutadapt/" class="external-link">cutadapt</a></p></li>
+<li><p>Add internal functions <code>is_swarm_installed()</code>, <code>is_cutadapt_installed()</code>, <code>is_vsearch_installed()</code> and <code>is_falco_installed()</code> to test for the availability of external software in order to run examples and test from testthat.</p></li>
+<li><p>Submit to CRAN and change code to comply with their rules (patch 0.7.1 to 0.7.4)</p></li>
 </ul><div class="section level3">
 <h3 id="breaking-changes-0-7">BREAKING CHANGES<a class="anchor" aria-label="anchor" href="#breaking-changes-0-7"></a></h3>
 <ul><li>Harmonization of parameters names:
