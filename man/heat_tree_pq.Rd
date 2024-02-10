@@ -53,13 +53,13 @@ heat_tree_pq(GPsubset,
 )
 
 \dontrun{
-  heat_tree_pq(GPsubset,
-    node_size = nb_sequences,
-    node_color = n_obs,
-    node_label = taxon_names,
-    tree_label = taxon_names,
-    node_size_trans = "log10 area"
-  )
+heat_tree_pq(GPsubset,
+  node_size = nb_sequences,
+  node_color = n_obs,
+  node_label = taxon_names,
+  tree_label = taxon_names,
+  node_size_trans = "log10 area"
+)
 }
 
 }

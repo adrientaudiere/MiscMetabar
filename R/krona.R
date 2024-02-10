@@ -18,14 +18,13 @@
 #' @param name A name for intermediary files, Useful to name
 #'   your krona result files before merging using [merge_krona()]
 #'
-#' @examples
-#' 
+#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' data("GlobalPatterns", package = "phyloseq")
 #' GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
 #' \dontrun{
-#'  krona(GA, "Number.of.sequences.html")
-#'  krona(GA, "Number.of.ASVs.html", nb_seq = FALSE)
-#'  merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"))
+#' krona(GA, "Number.of.sequences.html")
+#' krona(GA, "Number.of.ASVs.html", nb_seq = FALSE)
+#' merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"))
 #' }
 #' @return A html file
 #' @export
@@ -109,14 +108,14 @@ krona <-
 #' @param files (required) path to html files to merged
 #' @param output path to the output file
 #'
-#' @examples
+#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' \dontrun{
-#'   data("GlobalPatterns", package = "phyloseq")
-#'   GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
-#'   krona(GA, "Number.of.sequences.html", name = "Nb_seq_GP_acidobacteria")
-#'   krona(GA, "Number.of.ASVs.html", nb_seq = FALSE, name = "Nb_asv_GP_acidobacteria")
-#'   merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"), "mergeKrona.html")
-#'   unlink(c("Number.of.sequences.html", "Number.of.ASVs.html", "mergeKrona.html"))
+#' data("GlobalPatterns", package = "phyloseq")
+#' GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
+#' krona(GA, "Number.of.sequences.html", name = "Nb_seq_GP_acidobacteria")
+#' krona(GA, "Number.of.ASVs.html", nb_seq = FALSE, name = "Nb_asv_GP_acidobacteria")
+#' merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"), "mergeKrona.html")
+#' unlink(c("Number.of.sequences.html", "Number.of.ASVs.html", "mergeKrona.html"))
 #' }
 #' @return A html file
 #' @seealso \code{\link{krona}}

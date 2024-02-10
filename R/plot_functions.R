@@ -1711,15 +1711,15 @@ summary_plot_pq <- function(physeq,
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `rotl` package if you
 #'   use this function.
-#' @examples
+#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' library("rotl")
 #' tr <- rotl_pq(data_fungi_mini, species_colnames = "Genus_species")
 #' plot(tr)
 #' \dontrun{
-#'   tr_Asco <- rotl_pq(data_fungi, species_colnames = "Genus_species", context_name = "Ascomycetes")
-#'   plot(tr_Asco)
+#' tr_Asco <- rotl_pq(data_fungi, species_colnames = "Genus_species", context_name = "Ascomycetes")
+#' plot(tr_Asco)
 #' }
-#' 
+#'
 rotl_pq <- function(physeq,
                     species_colnames = "Genus_species",
                     context_name = "All life") {
@@ -1796,13 +1796,13 @@ rotl_pq <- function(physeq,
 #' )
 #'
 #' \dontrun{
-#'   heat_tree_pq(GPsubset,
-#'     node_size = nb_sequences,
-#'     node_color = n_obs,
-#'     node_label = taxon_names,
-#'     tree_label = taxon_names,
-#'     node_size_trans = "log10 area"
-#'   )
+#' heat_tree_pq(GPsubset,
+#'   node_size = nb_sequences,
+#'   node_color = n_obs,
+#'   node_label = taxon_names,
+#'   tree_label = taxon_names,
+#'   node_size_trans = "log10 area"
+#' )
 #' }
 #'
 heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {

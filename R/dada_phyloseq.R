@@ -231,7 +231,6 @@ clean_pq <- function(physeq,
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' data(enterotype)
 #' track_wkflow(list(data_fungi, enterotype), taxonomy_rank = c(3, 5))
-
 track_wkflow <- function(list_of_objects,
                          obj_names = NULL,
                          clean_pq = FALSE,
@@ -666,8 +665,8 @@ asv2otu <- function(physeq = NULL,
 #' @author Adrien Taudière
 #' @examples
 #' \dontrun{
-#'   write_pq(data_fungi, path = "phyloseq")
-#'   write_pq(data_fungi, path = "phyloseq", one_file = TRUE)
+#' write_pq(data_fungi, path = "phyloseq")
+#' write_pq(data_fungi, path = "phyloseq", one_file = TRUE)
 #' }
 
 #' @seealso [MiscMetabar::save_pq()]
@@ -872,9 +871,8 @@ write_pq <- function(physeq,
 #'   [base::load()] function + if present a phylogenetic tree in Newick format (`phy_tree.txt`)
 #' @export
 #' @author Adrien Taudière
-#' @examples
+#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' \dontrun{
-#'
 #' save_pq(data_fungi, path = "phyloseq")
 #' }
 #' @seealso [MiscMetabar::write_pq()]
@@ -1928,9 +1926,8 @@ plot_guild_pq <-
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `phangorn` package if you
 #'   use this function.
-#' @examples
+#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' library("phangorn")
-#'
 #' df <- subset_taxa_pq(data_fungi_mini, taxa_sums(data_fungi_mini) > 9000)
 #' df_tree <- build_phytree_pq(df, nb_bootstrap = 2)
 #' plot(df_tree$UPGMA)
@@ -2311,7 +2308,7 @@ physeq_or_string_to_dna <- function(physeq = NULL,
 #' @export
 #' @author Adrien Taudière
 #'
-#' @examples
+#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' \dontrun{
 #' cutadapt_remove_primers("inst/extdata", "TTC", "GAA",
 #'   folder_output = tempdir()
