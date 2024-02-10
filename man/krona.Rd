@@ -47,14 +47,15 @@ Please cite \href{https://github.com/marbl/Krona}{Krona} if
 you use this function.
 }
 \examples{
-
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data("GlobalPatterns", package = "phyloseq")
 GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
 \dontrun{
- krona(GA, "Number.of.sequences.html")
- krona(GA, "Number.of.ASVs.html", nb_seq = FALSE)
- merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"))
+krona(GA, "Number.of.sequences.html")
+krona(GA, "Number.of.ASVs.html", nb_seq = FALSE)
+merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"))
 }
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link{merge_krona}}

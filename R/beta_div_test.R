@@ -484,7 +484,7 @@ plot_SCBD_pq <- function(physeq,
 #'
 #' @return A ggplot object
 #' @export
-#' @examples
+#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' data(data_fungi)
 #' data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
 #' multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)), fact = "Time")

@@ -19,7 +19,7 @@
 #'   or \code{\link[ggplot2]{ggplot}}
 #'
 #' @export
-#' @examplesIf  tolower(Sys.info()[["sysname"]]) != "windows"
+#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' data("GlobalPatterns", package = "phyloseq")
 #' GP_archae <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #' plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),

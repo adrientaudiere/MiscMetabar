@@ -33,10 +33,11 @@ Write :
 }
 }
 \examples{
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \dontrun{
-
 save_pq(data_fungi, path = "phyloseq")
 }
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=write_pq]{write_pq()}}

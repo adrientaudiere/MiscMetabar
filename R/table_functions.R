@@ -15,7 +15,7 @@
 #' @return A datatable
 #' @export
 #'
-#' @examples
+#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' data("GlobalPatterns", package = "phyloseq")
 #' tax_datatable(subset_taxa(
 #'   GlobalPatterns,

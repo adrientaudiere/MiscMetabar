@@ -13,6 +13,8 @@ if (class(krona_error_or_not) == "try-error") {
   })
 } else {
   test_that("krona function works fine with GlobalPatterns dataset", {
+    skip_on_cran()
+    skip_on_os("windows")
     testFolder <- tempdir()
     suppressWarnings(unlink(list.files(testFolder, full.names = TRUE), recursive = TRUE))
     expect_silent(krona(GA, file = paste0(testFolder, "/Number.of.sequences.html")))

@@ -162,6 +162,22 @@ Some functions may not work on windows (*e.g.* \[track_wflow()\],
 …). A solution is to exploit docker container, for example the using the
 great [rocker project](https://rocker-project.org/).
 
+Here is a list of functions with some limitations or not working at all
+on windows OS:
+
+- \[build_phytree_pq()\]
+- \[count_seq()\]
+- \[cutadapt_remove_primers()\]
+- \[krona()\]
+- \[merge_krona()\]
+- \[multipatt_pq()\]
+- \[plot_tsne_pq()\]
+- \[rotl_pq()\]
+- \[save_pq()\]
+- \[tax_datatable()\]
+- \[track_wkflow()\]
+- \[track_wkflow_samples()\]
+
 MiscMetabar is developed under Linux and the vast majority of functions
 may works on Unix system, but its functionning is not test under iOS.
 

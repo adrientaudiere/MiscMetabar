@@ -44,6 +44,7 @@ Please make a reference to \code{indicspecies::multipatt()} if you
 use this function.
 }
 \examples{
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(data_fungi)
 data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
 multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)), fact = "Time")
@@ -51,6 +52,7 @@ multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)),
   fact = "Time",
   max.order = 1, control = permute::how(nperm = 99)
 )
+\dontshow{\}) # examplesIf}
 }
 \author{
 Adrien Taudière

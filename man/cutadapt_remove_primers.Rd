@@ -62,6 +62,7 @@ This function is mainly a wrapper of the work of others.
 Please cite cutadapt (\doi{doi:10.14806/ej.17.1.200}).
 }
 \examples{
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \dontrun{
 cutadapt_remove_primers("inst/extdata", "TTC", "GAA",
   folder_output = tempdir()
@@ -92,6 +93,7 @@ cutadapt_remove_primers(
 
 unlink(tempdir(), recursive = TRUE)
 }
+\dontshow{\}) # examplesIf}
 }
 \author{
 Adrien Taudière

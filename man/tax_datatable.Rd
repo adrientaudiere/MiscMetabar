@@ -33,6 +33,7 @@ A datatable
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data("GlobalPatterns", package = "phyloseq")
 tax_datatable(subset_taxa(
   GlobalPatterns,
@@ -43,6 +44,7 @@ tax_datatable(subset_taxa(
 tax_datatable(GlobalPatterns,
   modality = GlobalPatterns@sam_data$SampleType
 )
+\dontshow{\}) # examplesIf}
 }
 \author{
 Adrien Taudière
