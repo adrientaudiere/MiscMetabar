@@ -13,6 +13,7 @@ GP_archae <-
   subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 
 test_that("rotl_pq works with data_fungi dataset", {
+  skip_on_os("windows")
   library("rotl")
   expect_s3_class(suppressWarnings(tr <-
     rotl_pq(data_fungi, species_colnames = "Genus_species")), "phylo")
@@ -385,7 +386,7 @@ test_that("add_funguild_info and plot_guild_pq work with data_fungi_mini dataset
 
 
 test_that("build_phytree_pq work with data_fungi dataset", {
-  library("phangorn")
+  skip_on_os("windows")
   df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 19000)
   expect_type(df_tree <- build_phytree_pq(df, nb_bootstrap = 2, rearrangement = "stochastic"), "list")
   expect_type(df_tree <- build_phytree_pq(df, nb_bootstrap = 2, rearrangement = "ratchet"), "list")

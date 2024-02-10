@@ -227,6 +227,10 @@ clean_pq <- function(physeq,
 #' @return The number of sequences, clusters (e.g. OTUs, ASVs) and samples for
 #'   each object.
 #' @export
+#' @seealso [track_wkflow_samples()]
+#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
+#' data(enterotype)
+#' track_wkflow(list(data_fungi, enterotype), taxonomy_rank = c(3, 5))
 
 track_wkflow <- function(list_of_objects,
                          obj_names = NULL,
@@ -436,8 +440,7 @@ track_wkflow <- function(list_of_objects,
 #' @export
 #' @author Adrien Taudière
 #'
-#' @examples
-#'
+#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' tree_A10_005 <- subset_samples(data_fungi, Tree_name == "A10-005")
 #' track_wkflow_samples(tree_A10_005)
 track_wkflow_samples <- function(list_pq_obj, ...) {

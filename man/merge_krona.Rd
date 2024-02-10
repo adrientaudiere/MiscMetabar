@@ -31,8 +31,7 @@ Please cite \href{https://github.com/marbl/Krona}{Krona} if
 you use this function.
 }
 \examples{
-krona_error_or_not <- try(system("ktImportText 2>&1", intern = TRUE))
-if (class(krona_error_or_not) != "try-error") {
+\dontrun{
   data("GlobalPatterns", package = "phyloseq")
   GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
   krona(GA, "Number.of.sequences.html", name = "Nb_seq_GP_acidobacteria")

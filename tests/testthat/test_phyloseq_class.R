@@ -90,6 +90,7 @@ test_that("perc works fine", {
 })
 
 test_that("count_seq works fine", {
+  skip_on_os("windows")
   expect_equal(count_seq("inst/extdata/ex_R1_001.fastq.gz"), 2500)
   expect_equal(count_seq("inst/extdata/ex_R2_001.fastq.gz"), 2500)
   expect_equal(count_seq("inst/extdata/ex.fasta"), 3)

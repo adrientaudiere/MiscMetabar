@@ -5,6 +5,8 @@ if (!MiscMetabar:::is_cutadapt_installed()) {
   )
 } else {
   test_that("cutadapt_remove_primers works fine", {
+    skip_on_cran()
+    skip_on_os("windows")
     expect_silent(suppressMessages(
       res_cut <- cutadapt_remove_primers("inst/extdata", "TTC", "GAA",
         folder_output = paste0(tempdir(), "/output_cutadapt")

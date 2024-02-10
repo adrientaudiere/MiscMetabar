@@ -23,9 +23,10 @@ Contrary to \code{\link[=track_wkflow]{track_wkflow()}}, only phyloseq object ar
 More information are available in the manual of the function \code{\link[=track_wkflow]{track_wkflow()}}
 }
 \examples{
-
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 tree_A10_005 <- subset_samples(data_fungi, Tree_name == "A10-005")
 track_wkflow_samples(tree_A10_005)
+\dontshow{\}) # examplesIf}
 }
 \author{
 Adrien Taudière

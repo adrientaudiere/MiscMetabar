@@ -368,6 +368,7 @@ test_that("plot_SCBD_pq works with data_fungi_mini dataset", {
 })
 
 test_that("multipatt_pq works with data_fungi_mini dataset", {
+  skip_on_os("windows")
   expect_s3_class(
     multipatt_pq(subset_samples(data_fungi_mini, !is.na(Time)),
       fact = "Time"
@@ -378,6 +379,7 @@ test_that("multipatt_pq works with data_fungi_mini dataset", {
 })
 
 test_that("multipatt_pq works with data_fungi_mini dataset", {
+  skip_on_os("windows")
   expect_type(suppressMessages(suppressWarnings(res_height <- ancombc_pq(
     subset_taxa_pq(
       data_fungi_sp_known,

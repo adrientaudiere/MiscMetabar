@@ -19,11 +19,14 @@
 #'   your krona result files before merging using [merge_krona()]
 #'
 #' @examples
+#' 
 #' data("GlobalPatterns", package = "phyloseq")
 #' GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
-#' # krona(GA, "Number.of.sequences.html")
-#' # krona(GA, "Number.of.ASVs.html", nb_seq = FALSE)
-#' # merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"))
+#' \dontrun{
+#'  krona(GA, "Number.of.sequences.html")
+#'  krona(GA, "Number.of.ASVs.html", nb_seq = FALSE)
+#'  merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"))
+#' }
 #' @return A html file
 #' @export
 #' @seealso \code{\link{merge_krona}}
@@ -107,8 +110,7 @@ krona <-
 #' @param output path to the output file
 #'
 #' @examples
-#' krona_error_or_not <- try(system("ktImportText 2>&1", intern = TRUE))
-#' if (class(krona_error_or_not) != "try-error") {
+#' \dontrun{
 #'   data("GlobalPatterns", package = "phyloseq")
 #'   GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
 #'   krona(GA, "Number.of.sequences.html", name = "Nb_seq_GP_acidobacteria")
