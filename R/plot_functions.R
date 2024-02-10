@@ -2557,7 +2557,7 @@ tsne_pq <-
 #' @export
 #' @author Adrien Taudière
 #'
-#' @examples
+#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' data(data_fungi)
 #' plot_tsne_pq(data_fungi, fact = "Height", perplexity = 15)
 #' plot_tsne_pq(data_fungi, fact = "Time") + geom_label(aes(label = Sample_id, fill = Time))
