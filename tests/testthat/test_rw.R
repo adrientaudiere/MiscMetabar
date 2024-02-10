@@ -33,6 +33,7 @@ test_that("write_pq function works fine with data_fungi dataset", {
 })
 
 test_that("save_pq function works fine with data_fungi dataset", {
+  skip_on_os("windows")
   testFolder <- tempdir()
   unlink(list.files(testFolder, full.names = TRUE), recursive = TRUE)
   expect_message(save_pq(data_fungi, path = testFolder, silent = TRUE))

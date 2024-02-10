@@ -35,7 +35,7 @@ jobs:
         run: sudo apt-get install ncbi-blast+
 
       - name: Install R packages not in DESCRIPTION
-        run: Rscript -e 'pak::pkg_install(c(datawizard, formattable, ggforce, ggtree, gtExtras, MicrobiotaProcess, pillar, pointblank, summarytools, svglite, tidytree, treeio))'
+        run: Rscript -e 'pak::pkg_install(c("datawizard", "formattable", "ggforce", "ggtree", "gtExtras", "MicrobiotaProcess", "pillar", "pointblank", "summarytools", "svglite", "tidytree", "treeio"))'
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE, clean = TRUE)

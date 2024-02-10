@@ -665,9 +665,11 @@ asv2otu <- function(physeq = NULL,
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#'
-#' # write_pq(data_fungi, path = "phyloseq")
-#' # write_pq(data_fungi, path = "phyloseq", one_file = TRUE)
+#' \dontrun{
+#'   write_pq(data_fungi, path = "phyloseq")
+#'   write_pq(data_fungi, path = "phyloseq", one_file = TRUE)
+#' }
+
 #' @seealso [MiscMetabar::save_pq()]
 
 write_pq <- function(physeq,

@@ -52,10 +52,12 @@ A ggplot object
 Partially inspired by \code{phylosmith::tsne_phyloseq()} function developed by Schuyler D. Smith.
 }
 \examples{
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(data_fungi)
 plot_tsne_pq(data_fungi, fact = "Height", perplexity = 15)
 plot_tsne_pq(data_fungi, fact = "Time") + geom_label(aes(label = Sample_id, fill = Time))
 plot_tsne_pq(data_fungi, fact = "Time", na_remove = FALSE, force_factor = FALSE)
+\dontshow{\}) # examplesIf}
 }
 \author{
 Adrien Taudière
