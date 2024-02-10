@@ -155,12 +155,22 @@ ggvenn_pq(data_fungi, fact = "Height") +
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
+### Note for non-linux users
+
+Some functions may not work on windows (*e.g.* \[track_wflow()\],
+\[cutadapt_remove_primers()\], \[krona()\], \[vsearch_clustering()\],
+…). A solution is to exploit docker container, for example the using the
+great [rocker project](https://rocker-project.org/).
+
+MiscMetabar is developed under Linux and the vast majority of functions
+may works on Unix system, but its functionning is not test under iOS.
+
 ### Installation of other softwares for debian Linux distributions
 
 If you encounter any errors or have any questions about the installation
 of these softwares, please visit their dedicated websites.
 
-#### [blast@](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html#downloadblastdata)
+#### [blast+](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html#downloadblastdata)
 
 ``` sh
 sudo apt-get install ncbi-blast+

@@ -4,6 +4,8 @@ GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
 krona_error_or_not <- try(system("ktImportText 2>&1", intern = TRUE))
 
 if (class(krona_error_or_not) == "try-error") {
+  skip_on_cran()
+  skip_on_os("windows")
   test_that("krona send an error when krona is not installed", {
     expect_warning(krona(GA, "Number.of.sequences.html"))
     expect_warning(krona(GA, "Number.of.ASVs.html", nb_seq = FALSE))

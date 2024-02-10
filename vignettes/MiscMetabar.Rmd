@@ -29,7 +29,7 @@ knitr::opts_chunk$set(
 For an introduction to metabarcoding in R, Please visite the [state of the field](https://adrientaudiere.github.io/MiscMetabar/articles/states_of_fields_in_R.html) vignettes. The [import, export and track](https://adrientaudiere.github.io/MiscMetabar/articles/import_export_track.html) vignette explains how import and export `phyloseq` object. Its also show how to summarize useful information (number of sequences, samples and clusters) accross bioinformatic pipelines. 
  
 If you are interested in ecological metrics, see the vignettes describing [alpha-diversity](https://adrientaudiere.github.io/MiscMetabar/articles/alpha-div.html) and [beta-diversity](https://adrientaudiere.github.io/MiscMetabar/articles/beta-div.html) analysis. 
-The vignette [filter taxa and samples](https://adrientaudiere.github.io/MiscMetabar/articles/filter.html) describes some data-filtering processes using MiscMetabar and the [reclustering](https://adrientaudiere.github.io/MiscMetabar/articles/Reclustering.html) tutorial introduces the different way of clustering already-clustered OTU/ASV. The vignette [tengeler]() explore the dataset from Tengeler et al. (2020) using some MiscMetabar functions.
+The vignette [filter taxa and samples](https://adrientaudiere.github.io/MiscMetabar/articles/filter.html) describes some data-filtering processes using MiscMetabar and the [reclustering](https://adrientaudiere.github.io/MiscMetabar/articles/Reclustering.html) tutorial introduces the different way of clustering already-clustered OTU/ASV. The vignette [tengeler](https://adrientaudiere.github.io/MiscMetabar/articles/tengeler.html) explore the dataset from Tengeler et al. (2020) using some MiscMetabar functions.
 
 For developers, I also wrote a vignette describing som [rules of codes](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html). 
 
@@ -62,10 +62,10 @@ sankey_pq(gp, taxa = c(1:5))
 ```
 
 
-### Circle for visualize distribution of taxa in function of samples variables
+### Upset plot for visualize distribution of taxa in function of samples variables
 
 ```{r}
-circle_pq(gp, "SampleType", taxa = "Class")
+upset_pq(gp, "SampleType", taxa = "Class")
 ```
 
 

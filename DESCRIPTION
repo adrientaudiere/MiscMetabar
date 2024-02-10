@@ -1,7 +1,7 @@
 Package: MiscMetabar
 Type: Package
 Title: Miscellaneous Functions for Metabarcoding Analysis
-Version: 0.7.4
+Version: 0.7.5
 Authors@R: person("Adrien", "Taudière", email = "adrien.taudiere@zaclys.net",
   role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0003-1088-1182"))
 Description: The MiscMetabar package aims to facilitate the description, transformation, exploration, and reproducibility of metabarcoding analysis. Mainly build on the top of phyloseq, dada2 R packages. MiscMetabar help to build reproducible and robust bioinformatic pipeline in R. MiscMetabar make ecological analysis of alpha and beta-diversity simple and powerful by integrating a large number of analysis, some of them from other R packages.  
@@ -74,19 +74,7 @@ Suggests:
     venneuler,
     vctrs,
     viridis,
-    withr,
-    datawizard,
-    formattable,
-    ggforce,
-    ggtree,
-    gtExtras,
-    MicrobiotaProcess,
-    pillar,
-    pointblank,
-    summarytools,   
-    svglite,
-    tidytree,
-    treeio
+    withr
 RoxygenNote: 7.3.1
 URL: https://github.com/adrientaudiere/MiscMetabar,
     https://adrientaudiere.github.io/MiscMetabar/

@@ -78,6 +78,7 @@ data_fungi_test@otu_table[10, ] <-
   rep(0, ncol(data_fungi_test@otu_table))
 
 test_that("track_wkflow function works fine", {
+  skip_on_os("windows")
   expect_message(track_wkflow(list(
     unlist(list_fastq_files("inst/extdata/")), data_fungi, enterotype
   )))
@@ -119,6 +120,7 @@ derep_R_001 <-
     "inst/extdata/ex_R2_001.fastq.gz"
   ))
 test_that("track_wkflow_samples function works fine with object of class matrix, dada and derep", {
+  skip_on_os("windows")
   expect_s3_class(track_wkflow(
     list(
       data_fungi@otu_table,

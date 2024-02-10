@@ -22,6 +22,7 @@ Use grep to count the number of line with only one '+' (fastq, fastq.gz)
 or lines starting with a '>' (fasta) to count sequences.
 }
 \examples{
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 count_seq(file_path = system.file(
   "extdata",
   "ex.fasta",
@@ -29,6 +30,7 @@ count_seq(file_path = system.file(
   mustWork = TRUE
 ))
 count_seq(folder_path = "extdata/", pattern = "*.fasta")
+\dontshow{\}) # examplesIf}
 }
 \author{
 Adrien Taudière

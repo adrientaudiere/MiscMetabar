@@ -195,7 +195,7 @@ perc <- function(x, y = NULL, accuracy = 0, add_symbol = FALSE) {
 #' @return the number of sequences
 #' @author Adrien Taudière
 #' @export
-#' @examples
+#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' count_seq(file_path = system.file(
 #'   "extdata",
 #'   "ex.fasta",
