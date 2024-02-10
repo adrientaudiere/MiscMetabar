@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -171,12 +171,18 @@ Result of the Tuckey post-hoc test
 <p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%"></p>
 </div>
 <div class="section level3">
+<h3 id="note-for-non-linux-users">Note for non-linux users<a class="anchor" aria-label="anchor" href="#note-for-non-linux-users"></a>
+</h3>
+<p>Some functions may not work on windows (<em>e.g.</em> [track_wflow()], [cutadapt_remove_primers()], [krona()], [vsearch_clustering()], …). A solution is to exploit docker container, for example the using the great <a href="https://rocker-project.org/" class="external-link">rocker project</a>.</p>
+<p>MiscMetabar is developed under Linux and the vast majority of functions may works on Unix system, but its functionning is not test under iOS.</p>
+</div>
+<div class="section level3">
 <h3 id="installation-of-other-softwares-for-debian-linux-distributions">Installation of other softwares for debian Linux distributions<a class="anchor" aria-label="anchor" href="#installation-of-other-softwares-for-debian-linux-distributions"></a>
 </h3>
 <p>If you encounter any errors or have any questions about the installation of these softwares, please visit their dedicated websites.</p>
 <div class="section level4">
 <h4 id="blast">
-<a href="https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html#downloadblastdata" class="external-link">blast@</a><a class="anchor" aria-label="anchor" href="#blast"></a>
+<a href="https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html#downloadblastdata" class="external-link">blast+</a><a class="anchor" aria-label="anchor" href="#blast"></a>
 </h4>
 <div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install ncbi-blast+</span></code></pre></div>
 </div>

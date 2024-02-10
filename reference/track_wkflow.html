@@ -30,7 +30,7 @@ Phyloseq-class -&amp;gt; nb of reads, clusters and samples
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -147,7 +147,34 @@ Default is NULL and do not compute values for any taxonomic rank</p></dd>
 <p>The number of sequences, clusters (e.g. OTUs, ASVs) and samples for
 each object.</p>
     </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code><a href="track_wkflow_samples.html">track_wkflow_samples()</a></code></p></div>
+    </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">enterotype</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">track_wkflow</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="va">enterotype</span><span class="op">)</span>, taxonomy_rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Compute the number of sequences</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Compute the number of clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Compute the number of samples</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Compute the number of values in taxonomic rank</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   nb_sequences nb_clusters nb_samples Class Family</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 1839124.0000        1420        185    25    163</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     279.9807         553        280     1      1</span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
