@@ -62,10 +62,10 @@ sankey_pq(gp, taxa = c(1:5))
 ```
 
 
-### Circle for visualize distribution of taxa in function of samples variables
+### Upset plot for visualize distribution of taxa in function of samples variables
 
 ```{r}
-circle_pq(gp, "SampleType", taxa = "Class")
+upset_pq(gp, "SampleType", taxa = "Class")
 ```
 
 
