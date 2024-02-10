@@ -174,6 +174,21 @@ Result of the Tuckey post-hoc test
 <h3 id="note-for-non-linux-users">Note for non-linux users<a class="anchor" aria-label="anchor" href="#note-for-non-linux-users"></a>
 </h3>
 <p>Some functions may not work on windows (<em>e.g.</em> [track_wflow()], [cutadapt_remove_primers()], [krona()], [vsearch_clustering()], …). A solution is to exploit docker container, for example the using the great <a href="https://rocker-project.org/" class="external-link">rocker project</a>.</p>
+<p>Here is a list of functions with some limitations or not working at all on windows OS:</p>
+<ul>
+<li>[build_phytree_pq()]</li>
+<li>[count_seq()]</li>
+<li>[cutadapt_remove_primers()]</li>
+<li>[krona()]</li>
+<li>[merge_krona()]</li>
+<li>[multipatt_pq()]</li>
+<li>[plot_tsne_pq()]</li>
+<li>[rotl_pq()]</li>
+<li>[save_pq()]</li>
+<li>[tax_datatable()]</li>
+<li>[track_wkflow()]</li>
+<li>[track_wkflow_samples()]</li>
+</ul>
 <p>MiscMetabar is developed under Linux and the vast majority of functions may works on Unix system, but its functionning is not test under iOS.</p>
 </div>
 <div class="section level3">
