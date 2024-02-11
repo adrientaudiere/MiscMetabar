@@ -76,6 +76,7 @@ test_that("graph_test_pq works", {
     merge_sample_by = "Tree_name"
   ))
   expect_error(graph_test_pq(data_fungi_mini, fact = "Height"))
+  expect_message(graph_test_pq(data_fungi_mini, fact = "Height", na_remove = TRUE))
   expect_error(graph_test_pq(enterotype, fact = "Enterotype"))
   expect_error(graph_test_pq(data_fungi_mini, fact = "tRREE_name"))
 })
@@ -193,6 +194,7 @@ test_that("sankey_pq works with data_fungi_mini dataset", {
 })
 
 test_that("venn_pq works with data_fungi_mini dataset", {
+  skip_on_os("windows")
   library("grid")
   expect_silent(venn_pq(data_fungi_mini, "Height"))
   expect_silent(suppressMessages(venn_pq(

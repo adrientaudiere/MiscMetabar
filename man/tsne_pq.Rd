@@ -28,6 +28,7 @@ See ?Rtsne::Rtsne() for more information
 Compute tSNE position of samples from a phyloseq object
 }
 \examples{
-
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 res_tsne <- tsne_pq(data_fungi)
+\dontshow{\}) # examplesIf}
 }

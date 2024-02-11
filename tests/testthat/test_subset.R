@@ -16,4 +16,8 @@ test_that("subset_samples_pq works fine", {
   expect_s4_class(subset_samples_pq(data_fungi, data_fungi@sam_data[["Height"]] == "Low"), "phyloseq")
   expect_s4_class(subset_samples_pq(data_fungi, cond_samp), "phyloseq")
   expect_error(subset_samples_pq(data_fungi, data_fungi@tax_table[, "Phylum"] == "Ascomycota"))
+  data_fungi2 <- data_fungi
+  data_fungi2@sam_data <- NULL
+  expect_message(subset_samples_pq(data_fungi2, cond_samp))
+  expect_s4_class(suppressMessages(subset_samples_pq(data_fungi2, cond_samp)), "phyloseq")
 })

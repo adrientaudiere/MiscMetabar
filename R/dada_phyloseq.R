@@ -1403,7 +1403,7 @@ subset_samples_pq <- function(physeq, condition) {
   if (length(condition) != nsamples(physeq)) {
     stop("Length of condition is different from the number of samples.")
   }
-  if (is.null(sample_data(physeq))) {
+  if (is.null(physeq@sam_data)) {
     message("Nothing subset. No sample_data in physeq.\n")
     return(physeq)
   } else {

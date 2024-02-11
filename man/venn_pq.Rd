@@ -32,6 +32,7 @@ modalities of the argument \code{factor}
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data("enterotype")
 venn_pq(enterotype, fact = "SeqTech")
 venn_pq(enterotype, fact = "ClinicalStatus")
@@ -40,7 +41,7 @@ venn_pq(enterotype, fact = "ClinicalStatus", print_values = FALSE) +
   scale_fill_hue()
 venn_pq(enterotype, fact = "ClinicalStatus", print_values = FALSE) +
   scale_fill_hue()
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[venneuler]{venneuler}}

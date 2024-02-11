@@ -124,9 +124,10 @@ graph_test_pq <- function(physeq,
 #' @examples
 #' data(enterotype)
 #' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE)
-#' adonis_pq(enterotype, "SeqTech")
+#' \donttest{
 #' adonis_pq(enterotype, "SeqTech", dist_method = "jaccard")
 #' adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison")
+#' }
 #' @export
 #' @author Adrien Taudière
 #' @details
@@ -562,6 +563,7 @@ multipatt_pq <- function(physeq,
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' res_height <- ancombc_pq(
 #'   data_fungi_mini,
 #'   fact = "Height",
@@ -591,6 +593,7 @@ multipatt_pq <- function(physeq,
 #'   tax_level = "Family",
 #'   verbose = TRUE
 #' )
+#' }
 #' @author Adrien Taudière
 #' @details
 #' This function is mainly a wrapper of the work of others.

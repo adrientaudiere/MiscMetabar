@@ -62,10 +62,9 @@ test_that("add_dna_to_phyloseq works fine", {
 })
 
 
-df <- data_fungi_mini
-df <- unclass(data_fungi_mini)
 test_that("verify_pq works fine", {
-  expect_error(verify_pq(df), "The physeq argument is not a valid phyloseq object.")
+  expect_error(verify_pq(unclass(data_fungi_mini)), "The physeq argument is not a valid phyloseq object.")
+  expect_silent(verify_pq(data_fungi_mini, verbose = TRUE))
 })
 
 data_fungi_with__P <- data_fungi_mini

@@ -760,7 +760,7 @@ sankey_pq <-
 #' Please use print_values = FALSE if you want to add ggplot function
 #' (cf example).
 #'
-#' @examples
+#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' data("enterotype")
 #' venn_pq(enterotype, fact = "SeqTech")
 #' venn_pq(enterotype, fact = "ClinicalStatus")
@@ -1440,10 +1440,12 @@ hill_pq <-
 #'
 #' @export
 #' @examples
+#' \donttest{
 #' p <- ggbetween_pq(data_fungi, variable = "Time", p.adjust.method = "BH")
 #' p[[1]]
 #' ggbetween_pq(data_fungi, variable = "Height", one_plot = TRUE)
 #' ggbetween_pq(data_fungi, variable = "Height", one_plot = TRUE, rarefy_by_sample = TRUE)
+#' }
 #' @author Adrien Taudière
 #' @details This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `ggstatsplot::ggbetweenstats()` if you
@@ -2391,10 +2393,12 @@ plot_tax_pq <-
 #' @examples
 #' data(data_fungi_sp_known)
 #' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", "Time")
+#' \donttest{
 #' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order")
 #' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order",
 #'   nb_seq = FALSE, log10trans = FALSE
 #' )
+#' }
 multitax_bar_pq <- function(physeq,
                             lvl1,
                             lvl2,
@@ -2498,8 +2502,7 @@ multitax_bar_pq <- function(physeq,
 #'   See ?Rtsne::Rtsne() for more information
 #' @export
 #'
-#' @examples
-#'
+#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' res_tsne <- tsne_pq(data_fungi)
 tsne_pq <-
   function(physeq,

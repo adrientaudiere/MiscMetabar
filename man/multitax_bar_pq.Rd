@@ -49,10 +49,12 @@ in lvl1
 \examples{
 data(data_fungi_sp_known)
 multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", "Time")
+\donttest{
 multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order")
 multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order",
   nb_seq = FALSE, log10trans = FALSE
 )
+}
 }
 \author{
 Adrien Taudière
