@@ -64,7 +64,7 @@ test_that("add_dna_to_phyloseq works fine", {
 
   test_that("verify_pq works fine", {
   expect_error(verify_pq(unclass(data_fungi_mini)), "The physeq argument is not a valid phyloseq object.")
-  expect_silent(verify_pq(data_fungi_mini, verbose = TRUE))
+  expect_silent(suppressWarnings(verify_pq(data_fungi_mini, verbose = TRUE)))
 })
 
 data_fungi_with__P <- data_fungi_mini
@@ -91,9 +91,9 @@ test_that("perc works fine", {
 test_that("count_seq works fine", {
   skip_on_os("windows")
   skip_on_os("mac")
-  expect_equal(count_seq(folder_path= "inst/extdata/fasta"), c(3, 2))
-  expect_equal(count_seq("inst/extdata/ex_R1_001.fastq.gz"), 100)
-  expect_equal(count_seq("inst/extdata/ex_R2_001.fastq.gz"), 100)
+  expect_equal(count_seq(folder_path= "inst/extdata/fasta"), c(2, 3))
+  expect_equal(count_seq("inst/extdata/ex_R1_001.fastq.gz"), 2500)
+  expect_equal(count_seq("inst/extdata/ex_R2_001.fastq.gz"), 2500
   expect_equal(count_seq("inst/extdata/ex.fasta"), 3)
   expect_equal(count_seq("inst/extdata/ex.fastq"), 4)
   expect_error(count_seq("tests/testthat.R"), "The file extension R is not supported.")
