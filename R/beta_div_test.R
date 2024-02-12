@@ -25,7 +25,9 @@
 #' @examples
 #' data(enterotype)
 #' graph_test_pq(enterotype, fact = "SeqTech")
-#' graph_test_pq(enterotype, fact = "Enterotype", na_remove = TRUE)
+#' \donttest{
+#'   graph_test_pq(enterotype, fact = "Enterotype", na_remove = TRUE)
+#' }
 #' @author Adrien Taudière
 #'
 #' @return A \code{\link{ggplot}}2 plot with a subtitle indicating the pvalue
@@ -235,7 +237,9 @@ adonis_pq <- function(physeq,
 #' str(res)
 #' length(res$LCBD)
 #' length(res$SCBD)
-#' LCBD_pq(data_fungi_sp_known, nperm = 5, method = "jaccard")
+#' \donttest{
+#'   LCBD_pq(data_fungi_sp_known, nperm = 5, method = "jaccard")
+#' }
 #'
 #' @author Adrien Taudière
 #' This function is mainly a wrapper of the work of others.
@@ -292,6 +296,7 @@ LCBD_pq <- function(physeq,
 #'   nperm = 100, only_plot_significant = FALSE,
 #'   pval = 0.2
 #' )
+#' \donttest{
 #' plot_LCBD_pq(data_fungi_mini,
 #'   nperm = 100, only_plot_significant = TRUE,
 #'   pval = 0.2
@@ -310,6 +315,7 @@ LCBD_pq <- function(physeq,
 #'     legend.text = element_text(size = 10),
 #'     axis.title.x = element_text(size = 6)
 #'   )
+#' }
 #' @author Adrien Taudière
 #' @details
 #' This function is mainly a wrapper of the work of others.
@@ -431,9 +437,10 @@ plot_LCBD_pq <- function(physeq,
 #' plot_SCBD_pq(data_fungi) +
 #'   geom_text(aes(label = paste(Genus, Species)), hjust = 1, vjust = 2) +
 #'   xlim(c(0, NA))
-#'
+#' \donttest{
 #' plot_SCBD_pq(data_fungi, tax_level = "Class", tax_col = "Phylum", min_SCBD = 0) +
 #'   geom_jitter()
+#' }
 #' @author Adrien Taudière
 #' @details
 #' This function is mainly a wrapper of the work of others.
@@ -489,10 +496,12 @@ plot_SCBD_pq <- function(physeq,
 #' data(data_fungi)
 #' data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
 #' multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)), fact = "Time")
+#' \donttest{
 #' multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)),
 #'   fact = "Time",
 #'   max.order = 1, control = permute::how(nperm = 99)
 #' )
+#' }
 #' @author Adrien Taudière
 #' @details
 #' This function is mainly a wrapper of the work of others.

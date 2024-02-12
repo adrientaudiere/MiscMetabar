@@ -40,9 +40,11 @@ taxonomic groups
 
 data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
 tax_bar_pq(data_fungi_ab) + theme(legend.position = "none")
+\donttest{
 tax_bar_pq(data_fungi_ab, taxa = "Class")
 tax_bar_pq(data_fungi_ab, taxa = "Class", percent_bar = TRUE)
 tax_bar_pq(data_fungi_ab, taxa = "Class", fact = "Time")
+}
 }
 \seealso{
 \code{\link[=plot_tax_pq]{plot_tax_pq()}} and \code{\link[=multitax_bar_pq]{multitax_bar_pq()}}

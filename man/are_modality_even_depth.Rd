@@ -30,9 +30,9 @@ per samples in function of the factor \code{fact}.
 }
 \examples{
 
-are_modality_even_depth(data_fungi, "Time")$p.value
-are_modality_even_depth(rarefy_even_depth(data_fungi), "Time")$p.value
-are_modality_even_depth(data_fungi, "Height", boxplot = TRUE)
+are_modality_even_depth(data_fungi_mini, "Time")$p.value
+are_modality_even_depth(rarefy_even_depth(data_fungi_mini), "Time")$p.value
+are_modality_even_depth(data_fungi_mini, "Height", boxplot = TRUE)
 }
 \author{
 Adrien Taudière

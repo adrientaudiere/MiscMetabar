@@ -55,6 +55,7 @@ upset_pq(data_fungi_mini,
   fact = "Height", width_ratio = 0.2,
   taxa_fill = "Class"
 )
+\donttest{
 upset_pq(data_fungi_mini, fact = "Height", min_nb_seq = 1000)
 upset_pq(data_fungi_mini, fact = "Height", na_remove = FALSE)
 
@@ -155,6 +156,7 @@ data_fungi2@sam_data[["Height__Time_0"]] <-
 data_fungi2@sam_data[["Height__Time_0"]][grepl("NA", data_fungi2@sam_data[["Height__Time_0"]])] <-
   NA
 upset_pq(data_fungi2, fact = "Height__Time_0", width_ratio = 0.2, min_size = 2)
+}
 }
 \seealso{
 \code{\link[=ggvenn_pq]{ggvenn_pq()}}

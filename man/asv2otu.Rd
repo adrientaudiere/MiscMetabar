@@ -101,13 +101,16 @@ of \code{\link[=merge_taxa_vec]{merge_taxa_vec()}}.
 }
 \examples{
 asv2otu(data_fungi_mini)
-asv2otu(data_fungi_mini, method_clusterize = "longest")
+\donttest{
+  asv2otu(data_fungi_mini, method_clusterize = "longest")
+}
 if (MiscMetabar:::is_swarm_installed()) {
   d_swarm <- asv2otu(data_fungi_mini, method = "swarm")
 }
 if (MiscMetabar:::is_vsearch_installed()) {
   d_vs <- asv2otu(data_fungi_mini, method = "vsearch")
 }
+
 }
 \references{
 VSEARCH can be downloaded from

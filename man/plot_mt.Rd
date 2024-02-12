@@ -27,7 +27,9 @@ a \code{\link{ggplot}}2 plot of result of a mt test
 data_fungi <- subset_samples(data_fungi, !is.na(Time))
 res <- mt(data_fungi, "Time", method = "fdr", test = "f", B = 300)
 plot_mt(res)
+\donttest{
 plot_mt(res, taxa = "Genus", color_tax = "Order")
+}
 }
 \seealso{
 \code{\link[phyloseq:mt-methods]{phyloseq::mt()}}

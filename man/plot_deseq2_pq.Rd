@@ -68,6 +68,7 @@ A \code{\link{ggplot}}2 plot representing DESeq2 results
 Please cite \code{DESeq2} package if you use chis function.
 }
 \examples{
+\donttest{
 data("GlobalPatterns", package = "phyloseq")
 GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 GP <- subset_samples(GP, SampleType \%in\% c("Soil", "Skin"))
@@ -85,6 +86,7 @@ plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
   tax_table = GP@tax_table, color_tax = "Class",
   select_taxa = c("522457", "271582")
 )
+}
 }
 \seealso{
 \code{\link[DESeq2]{DESeq}}

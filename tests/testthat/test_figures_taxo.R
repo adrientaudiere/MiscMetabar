@@ -14,6 +14,7 @@ GP_archae <-
 
 test_that("rotl_pq works with data_fungi dataset", {
   skip_on_os("windows")
+  skip_on_cran()
   library("rotl")
   expect_s3_class(suppressWarnings(tr <-
     rotl_pq(data_fungi, species_colnames = "Genus_species")), "phylo")
@@ -30,6 +31,7 @@ test_that("rotl_pq works with data_fungi dataset", {
 test_that("heat_tree_pq works with data_fungi dataset", {
   library(metacoder)
   expect_silent(suppressMessages(ht <- heat_tree_pq(data_fungi_mini)))
+  skip_on_cran()
   expect_s3_class(ht, "ggplot")
   expect_s3_class(
     heat_tree_pq(data_fungi_mini, taxonomic_level = 1:4),
@@ -44,6 +46,7 @@ GPsubset <- subset_taxa(
 test_that("heat_tree_pq works with GlobalPatterns dataset", {
   library(metacoder)
   expect_silent(suppressMessages(ht <- heat_tree_pq(GPsubset)))
+  skip_on_cran()
   expect_silent(suppressMessages(
     ht <-
       heat_tree_pq(
@@ -70,6 +73,7 @@ test_that("plot_tax_pq works with data_fungi dataset", {
         add_info = FALSE
       )
   ))
+  skip_on_cran()
   expect_silent(suppressMessages(
     pt <-
       plot_tax_pq(
@@ -163,6 +167,7 @@ test_that("multitax_bar_pq works with data_fungi_sp_known dataset", {
     multitax_bar_pq(data_fungi_mini, "Phylum", "Class", "Order", "Time"),
     "ggplot"
   )
+  skip_on_cran()
   expect_s3_class(
     multitax_bar_pq(data_fungi_mini, "Phylum", "Class", "Order"),
     "ggplot"
@@ -201,6 +206,7 @@ test_that("multitax_bar_pq works with GlobalPatterns dataset", {
     multitax_bar_pq(GP_archae, "Phylum", "Class", "Order", "SampleType"),
     "ggplot"
   )
+  skip_on_cran()
   expect_s3_class(
     multitax_bar_pq(GP_archae, "Phylum", "Class", "Order"),
     "ggplot"
@@ -241,6 +247,7 @@ test_that("rigdes_pq work with data_fungi dataset", {
     ) + xlim(c(0, 1000)),
     "ggplot"
   )
+  skip_on_cran()
   expect_s3_class(
     ridges_pq(data_fungi_mini, "Time", alpha = 0.5),
     "ggplot"
@@ -305,6 +312,7 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
     ),
     "ggplot"
   )
+  skip_on_cran()
   expect_s3_class(
     treemap_pq(
       clean_pq(
@@ -329,6 +337,7 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
 
 test_that("tax_bar_pq work with data_fungi dataset", {
   expect_s3_class(tax_bar_pq(data_fungi_mini, taxa = "Class"), "ggplot")
+  skip_on_cran()
   expect_s3_class(tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time"), "ggplot")
   expect_s3_class(
     tax_bar_pq(
@@ -387,6 +396,7 @@ test_that("add_funguild_info and plot_guild_pq work with data_fungi_mini dataset
 
 test_that("build_phytree_pq work with data_fungi dataset", {
   skip_on_os("windows")
+  skip_on_cran()
   df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 19000)
   expect_type(df_tree <- build_phytree_pq(df, nb_bootstrap = 2, rearrangement = "stochastic"), "list")
   expect_type(df_tree <- build_phytree_pq(df, nb_bootstrap = 2, rearrangement = "ratchet"), "list")

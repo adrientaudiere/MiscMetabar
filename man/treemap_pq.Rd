@@ -53,6 +53,7 @@ treemap_pq(
   "Order", "Class",
   plot_legend = TRUE
 )
+\donttest{
 treemap_pq(
   clean_pq(subset_taxa(
     data_fungi_sp_known,
@@ -69,6 +70,7 @@ treemap_pq(
   "Order", "Class",
   nb_seq = FALSE, log10trans = FALSE
 )
+}
 }
 \author{
 Adrien Taudière

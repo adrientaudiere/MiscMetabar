@@ -20,6 +20,7 @@ res_mt <-
 
 test_that("circle_pq works", {
   expect_message(circle_pq(data_basidio_2trees, fact = "Tree_name", nproc = 1))
+  skip_on_cran()
   expect_message(circle_pq(
     clean_pq(data_basidio_2trees, force_taxa_as_rows = TRUE),
     fact = "Tree_name",
@@ -68,6 +69,7 @@ test_that("circle_pq works", {
 
 test_that("graph_test_pq works", {
   expect_silent(graph_test_pq(data_fungi_mini, fact = "Tree_name"))
+  skip_on_cran()
   expect_silent(graph_test_pq(data_fungi_mini, fact = "Tree_name", na_remove = TRUE))
   expect_silent(graph_test_pq(data_fungi_mini, fact = "Tree_name", return_plot = FALSE))
   expect_message(graph_test_pq(
@@ -85,6 +87,7 @@ test_that("graph_test_pq works", {
 test_that("plot_mt works", {
   expect_s3_class(res_mt, "data.frame")
   expect_s3_class(suppressWarnings(plot_mt(res_mt)), "ggplot")
+  skip_on_cran()
   expect_s3_class(suppressWarnings(plot_mt(
     res_mt,
     taxa = "Genus", color_tax = "Order"
@@ -93,6 +96,7 @@ test_that("plot_mt works", {
 
 test_that("sankey_pq works with GlobalPatterns dataset", {
   expect_silent(sankey_pq(GP_archae))
+  skip_on_cran()
   expect_s3_class(sankey_pq(GP_archae), "htmlwidget")
   expect_s3_class(sankey_pq(GP_archae), "sankeyNetwork")
   expect_silent(suppressWarnings(sankey_pq(GP_archae, fact = "SampleType")))
@@ -147,6 +151,7 @@ test_that("sankey_pq works with GlobalPatterns dataset", {
 
 test_that("sankey_pq works with data_fungi_mini dataset", {
   expect_silent(sankey_pq(data_fungi_mini))
+  skip_on_cran()
   expect_s3_class(sankey_pq(data_fungi_mini), "htmlwidget")
   expect_s3_class(sankey_pq(data_fungi_mini), "sankeyNetwork")
   expect_silent(suppressWarnings(sankey_pq(data_fungi_mini, fact = "Height")))
@@ -197,6 +202,7 @@ test_that("venn_pq works with data_fungi_mini dataset", {
   skip_on_os("windows")
   library("grid")
   expect_silent(venn_pq(data_fungi_mini, "Height"))
+  skip_on_cran()
   expect_silent(suppressMessages(venn_pq(
     clean_pq(
       data_fungi_mini,
@@ -225,6 +231,7 @@ test_that("venn_pq works with data_fungi_mini dataset", {
 
 test_that("ggvenn_pq works with data_fungi_mini dataset", {
   expect_message(ggvenn_pq(data_fungi_mini, "Height"))
+  skip_on_cran()
   expect_message(ggvenn_pq(data_fungi_mini, "Height", rarefy_before_merging = TRUE))
   expect_message(suppressWarnings(ggvenn_pq(data_fungi_mini, "Height", rarefy_after_merging = TRUE)))
   expect_message(ggvenn_pq(data_fungi_mini, "Height", add_nb_seq = TRUE))
@@ -240,6 +247,7 @@ test_that("ggvenn_pq works with data_fungi_mini dataset", {
 
 test_that("upset_pq works with data_fungi dataset", {
   expect_silent(suppressMessages(upset_pq(data_fungi_mini, "Height")))
+  skip_on_cran()
   expect_s3_class(upset_pq(data_fungi_mini, "Height", taxa_fill = "Class"), "ggplot")
   expect_s3_class(upset_pq(data_fungi_mini, "Height"), "ggplot")
   expect_s3_class(
@@ -264,6 +272,7 @@ test_that("upset_pq works with data_fungi dataset", {
 
 test_that("upset_test_pq works with data_fungi_mini dataset", {
   expect_s3_class(upset_test_pq(data_fungi_mini, "Height"), "data.frame")
+  skip_on_cran()
   expect_s3_class(upset_test_pq(data_fungi_mini, "Time"), "data.frame")
   expect_s3_class(
     upset_test_pq(data_fungi_mini, "Time", min_nb_seq = 10),
@@ -295,6 +304,7 @@ test_that("plot_LCBD_pq works with data_fungi dataset", {
     ),
     "ggplot"
   )
+  skip_on_cran()
   expect_s3_class(
     plot_LCBD_pq(
       data_fungi_mini,
@@ -319,6 +329,7 @@ test_that("plot_LCBD_pq works with data_fungi dataset", {
 
 test_that("LCBD_pq works with data_fungi_mini dataset", {
   expect_s3_class(LCBD_pq(data_fungi_mini, nperm = 100), "beta.div")
+  skip_on_cran()
   expect_s3_class(
     LCBD_pq(data_fungi_mini, nperm = 100, method = "jaccard"),
     "beta.div"
@@ -334,6 +345,7 @@ test_that("plot_LCBD_pq works with data_fungi_mini dataset", {
     ),
     "ggplot"
   )
+  skip_on_cran()
   expect_s3_class(
     plot_LCBD_pq(
       data_fungi_mini,
@@ -358,6 +370,7 @@ test_that("plot_LCBD_pq works with data_fungi_mini dataset", {
 
 test_that("plot_SCBD_pq works with data_fungi_mini dataset", {
   expect_s3_class(plot_SCBD_pq(data_fungi_mini), "ggplot")
+  skip_on_cran()
   expect_s3_class(
     plot_SCBD_pq(
       data_fungi_mini,
@@ -391,7 +404,8 @@ test_that("multipatt_pq works with data_fungi_mini dataset", {
     levels_fact = c("Low", "High"),
     verbose = TRUE
   ))), "list")
-
+  skip_on_cran()
+  
   expect_s3_class(res_height$bias_correct_log_table, "data.frame")
   expect_equal(dim(res_height$res), c(6, 15))
 

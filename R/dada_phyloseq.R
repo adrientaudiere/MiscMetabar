@@ -524,13 +524,16 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #'
 #' @examples
 #' asv2otu(data_fungi_mini)
-#' asv2otu(data_fungi_mini, method_clusterize = "longest")
+#' \donttest{
+#'   asv2otu(data_fungi_mini, method_clusterize = "longest")
+#' }
 #' if (MiscMetabar:::is_swarm_installed()) {
 #'   d_swarm <- asv2otu(data_fungi_mini, method = "swarm")
 #' }
 #' if (MiscMetabar:::is_vsearch_installed()) {
 #'   d_vs <- asv2otu(data_fungi_mini, method = "vsearch")
 #' }
+#' 
 #' @references
 #'   VSEARCH can be downloaded from
 #'   \url{https://github.com/torognes/vsearch}.
@@ -1927,6 +1930,7 @@ plot_guild_pq <-
 #'   Please make a reference to `phangorn` package if you
 #'   use this function.
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
+#' \donttest{
 #' library("phangorn")
 #' df <- subset_taxa_pq(data_fungi_mini, taxa_sums(data_fungi_mini) > 9000)
 #' df_tree <- build_phytree_pq(df, nb_bootstrap = 2)
@@ -1946,6 +1950,7 @@ plot_guild_pq <-
 #' plot(consensusNet(df_tree$ML_bs))
 #' plot(consensusNet(df_tree$NJ_bs))
 #' ps_tree <- merge_phyloseq(df, df_tree$ML$tree)
+#' }
 build_phytree_pq <- function(physeq,
                              nb_bootstrap = 0,
                              model = "GTR",
@@ -2065,9 +2070,9 @@ build_phytree_pq <- function(physeq,
 #' @importFrom stats kruskal.test
 #' @examples
 #'
-#' are_modality_even_depth(data_fungi, "Time")$p.value
-#' are_modality_even_depth(rarefy_even_depth(data_fungi), "Time")$p.value
-#' are_modality_even_depth(data_fungi, "Height", boxplot = TRUE)
+#' are_modality_even_depth(data_fungi_mini, "Time")$p.value
+#' are_modality_even_depth(rarefy_even_depth(data_fungi_mini), "Time")$p.value
+#' are_modality_even_depth(data_fungi_mini, "Height", boxplot = TRUE)
 are_modality_even_depth <- function(physeq, fact, boxplot = FALSE) {
   nb_seq <- sample_sums(physeq)
   fact <- factor(unclass(physeq@sam_data[, fact])[[1]])
@@ -2108,9 +2113,9 @@ are_modality_even_depth <- function(physeq, fact, boxplot = FALSE) {
 #'   taxa_names(data_fungi)[order(as.vector(data_fungi@tax_table[, "Genus"]))]
 #' )
 #'
-#' data_fungi_asc_ordered_by_abundance <- reorder_taxa_pq(
-#'   data_fungi,
-#'   taxa_names(data_fungi)[order(taxa_sums(data_fungi))]
+#' data_fungi_mini_asc_ordered_by_abundance <- reorder_taxa_pq(
+#'   data_fungi_mini,
+#'   taxa_names(data_fungi_mini)[order(taxa_sums(data_fungi_mini))]
 #' )
 reorder_taxa_pq <- function(physeq, names_ordered, remove_phy_tree = FALSE) {
   new_physeq <- physeq

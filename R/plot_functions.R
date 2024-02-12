@@ -15,7 +15,9 @@
 #' data_fungi <- subset_samples(data_fungi, !is.na(Time))
 #' res <- mt(data_fungi, "Time", method = "fdr", test = "f", B = 300)
 #' plot_mt(res)
+#' \donttest{
 #' plot_mt(res, taxa = "Genus", color_tax = "Order")
+#' }
 #' @return a \code{\link{ggplot}}2 plot of result of a mt test
 #' @export
 #' @seealso [phyloseq::mt()]
@@ -80,6 +82,7 @@ plot_mt <-
 #' if `add_nb_seq` = TRUE or to \code{\link{plot}} if `add_nb_seq` = FALSE
 #'
 #' @examples
+#' \donttest{
 #' data("GlobalPatterns", package = "phyloseq")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #' GP <- rarefy_even_depth(subset_samples_pq(GP, sample_sums(GP) > 3000))
@@ -89,7 +92,7 @@ plot_mt <-
 #' p + theme(legend.position = "none")
 #'
 #' p + xlim(c(0, 400))
-#'
+#' }
 #' @return A \code{\link{ggplot}}2 plot representing the richness
 #' accumulation plot if add_nb_seq = TRUE, else, if add_nb_seq = FALSE
 #' return a base plot.
@@ -288,6 +291,7 @@ accu_plot <-
 #'   to obtain `threshold` proportion of the ASV
 #'
 #' @examples
+#' \donttest{
 #' data("GlobalPatterns", package = "phyloseq")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #' GP <- rarefy_even_depth(subset_samples_pq(GP, sample_sums(GP) > 3000))
@@ -300,6 +304,7 @@ accu_plot <-
 #' # Plot the number of sequences needed to accumulate 0.95% of ASV in 50%, 75%
 #' # and 100% of samples
 #' p + geom_vline(xintercept = quantile(val_threshold, probs = c(0.50, 0.75, 1)))
+#' }
 #' @export
 #' @author Adrien Taudière
 #' @seealso [accu_plot()]
@@ -355,12 +360,13 @@ accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
 #'   \code{\link[circlize]{chordDiagram}} or \code{\link[circlize]{circos.par}}
 #'
 #' @examples
+#' \donttest{
 #' data("GlobalPatterns", package = "phyloseq")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #' circle_pq(GP, "SampleType")
-#' # circle_pq(GP, "SampleType", add_nb_seq = FALSE)
-#' # circle_pq(GP, "SampleType", taxa = "Class")
-#'
+#' circle_pq(GP, "SampleType", add_nb_seq = FALSE)
+#' circle_pq(GP, "SampleType", taxa = "Class")
+#'}
 #' @author Adrien Taudière
 #'
 #' @return A \code{\link[circlize]{chordDiagram}} plot representing the
@@ -557,8 +563,10 @@ circle_pq <-
 #' data("GlobalPatterns", package = "phyloseq")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #' sankey_pq(GP, fact = "SampleType")
+#' \donttest{
 #' sankey_pq(GP, taxa = 1:4, min_prop_tax = 0.01)
 #' sankey_pq(GP, taxa = 1:4, min_prop_tax = 0.01, add_nb_seq = TRUE)
+#' }
 #' @author Adrien Taudière
 #'
 #' @return A \code{\link[networkD3]{sankeyNetwork}} plot representing the
@@ -763,13 +771,14 @@ sankey_pq <-
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' data("enterotype")
 #' venn_pq(enterotype, fact = "SeqTech")
+#' \donttest{
 #' venn_pq(enterotype, fact = "ClinicalStatus")
 #' venn_pq(enterotype, fact = "Nationality", print_values = FALSE)
 #' venn_pq(enterotype, fact = "ClinicalStatus", print_values = FALSE) +
 #'   scale_fill_hue()
 #' venn_pq(enterotype, fact = "ClinicalStatus", print_values = FALSE) +
 #'   scale_fill_hue()
-#'
+#' }
 #' @return A \code{\link{ggplot}}2 plot representing Venn diagram of
 #' modalities of the argument \code{factor}
 #'
@@ -980,6 +989,7 @@ venn_pq <-
 #' @examples
 #'
 #' ggvenn_pq(data_fungi, fact = "Height")
+#' \donttest{
 #' ggvenn_pq(data_fungi, fact = "Height") +
 #'   ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
 #' pl <- ggvenn_pq(data_fungi, fact = "Height", split_by = "Time")
@@ -998,7 +1008,7 @@ venn_pq <-
 #' ggvenn_pq(data_fungi, fact = "Height", rarefy_before_merging = TRUE)
 #' ggvenn_pq(data_fungi, fact = "Height", rarefy_after_merging = TRUE) +
 #'   scale_x_continuous(expand = expansion(mult = 0.5))
-#'
+#' }
 #' @export
 #' @author Adrien Taudière
 
@@ -1771,6 +1781,7 @@ rotl_pq <- function(physeq,
 #' @author Adrien Taudière
 #'
 #' @examples
+#' \donttest{
 #' library("metacoder")
 #' data("GlobalPatterns", package = "phyloseq")
 #'
@@ -1797,7 +1808,6 @@ rotl_pq <- function(physeq,
 #'   node_size_trans = "log10 area"
 #' )
 #'
-#' \dontrun{
 #' heat_tree_pq(GPsubset,
 #'   node_size = nb_sequences,
 #'   node_color = n_obs,
@@ -2220,7 +2230,7 @@ multi_biplot_pq <- function(physeq,
 #'   merge_sample_by = "Time",
 #'   taxa_fill = "Class"
 #' )
-#'
+#' \donttest{
 #' plot_tax_pq(data_fungi_sp_known,
 #'   "Height",
 #'   merge_sample_by = "Height",
@@ -2236,6 +2246,7 @@ multi_biplot_pq <- function(physeq,
 #'   na_remove = FALSE,
 #'   clean_pq = FALSE
 #' )
+#' }
 plot_tax_pq <-
   function(physeq,
            fact = NULL,
@@ -2563,8 +2574,10 @@ tsne_pq <-
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' data(data_fungi)
 #' plot_tsne_pq(data_fungi, fact = "Height", perplexity = 15)
+#' \donttest{
 #' plot_tsne_pq(data_fungi, fact = "Time") + geom_label(aes(label = Sample_id, fill = Time))
 #' plot_tsne_pq(data_fungi, fact = "Time", na_remove = FALSE, force_factor = FALSE)
+#' }
 plot_tsne_pq <- function(physeq,
                          method = "bray",
                          dims = 2,
@@ -2758,6 +2771,7 @@ iNEXT_pq <- function(physeq,
 #'   fact = "Height", width_ratio = 0.2,
 #'   taxa_fill = "Class"
 #' )
+#' \donttest{
 #' upset_pq(data_fungi_mini, fact = "Height", min_nb_seq = 1000)
 #' upset_pq(data_fungi_mini, fact = "Height", na_remove = FALSE)
 #'
@@ -2858,6 +2872,7 @@ iNEXT_pq <- function(physeq,
 #' data_fungi2@sam_data[["Height__Time_0"]][grepl("NA", data_fungi2@sam_data[["Height__Time_0"]])] <-
 #'   NA
 #' upset_pq(data_fungi2, fact = "Height__Time_0", width_ratio = 0.2, min_size = 2)
+#' }
 upset_pq <- function(physeq,
                      fact,
                      taxa_fill = NULL,
@@ -3141,9 +3156,11 @@ diff_fct_diff_class <-
 #'
 #' data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
 #' tax_bar_pq(data_fungi_ab) + theme(legend.position = "none")
+#' \donttest{
 #' tax_bar_pq(data_fungi_ab, taxa = "Class")
 #' tax_bar_pq(data_fungi_ab, taxa = "Class", percent_bar = TRUE)
 #' tax_bar_pq(data_fungi_ab, taxa = "Class", fact = "Time")
+#' }
 #' @author Adrien Taudière
 #' @seealso [plot_tax_pq()] and [multitax_bar_pq()]
 #'
@@ -3190,6 +3207,7 @@ tax_bar_pq <- function(physeq, fact = "Sample", taxa = "Order", percent_bar = FA
 #' @examples
 #'
 #' ridges_pq(data_fungi_mini, "Time", alpha = 0.5, log10trans = FALSE) + xlim(c(0, 1000))
+#' \donttest{
 #' ridges_pq(data_fungi_mini, "Time", alpha = 0.5, scale = 0.9)
 #' ridges_pq(data_fungi_mini, "Sample_names", log10trans = TRUE)
 #'
@@ -3200,7 +3218,7 @@ tax_bar_pq <- function(physeq, fact = "Sample", taxa = "Order", percent_bar = FA
 #'   point_shape = "|", point_size = 3, point_alpha = 1, alpha = 0.7,
 #'   scale = 0.8
 #' )
-#'
+#'}
 ridges_pq <- function(physeq,
                       fact,
                       nb_seq = TRUE,
@@ -3270,6 +3288,7 @@ ridges_pq <- function(physeq,
 #'   "Order", "Class",
 #'   plot_legend = TRUE
 #' )
+#' \donttest{
 #' treemap_pq(
 #'   clean_pq(subset_taxa(
 #'     data_fungi_sp_known,
@@ -3286,6 +3305,7 @@ ridges_pq <- function(physeq,
 #'   "Order", "Class",
 #'   nb_seq = FALSE, log10trans = FALSE
 #' )
+#' }
 treemap_pq <- function(physeq,
                        lvl1,
                        lvl2,

@@ -74,7 +74,7 @@ plot_tax_pq(data_fungi_sp_known,
   merge_sample_by = "Time",
   taxa_fill = "Class"
 )
-
+\donttest{
 plot_tax_pq(data_fungi_sp_known,
   "Height",
   merge_sample_by = "Height",
@@ -90,6 +90,7 @@ plot_tax_pq(data_fungi_sp_known,
   na_remove = FALSE,
   clean_pq = FALSE
 )
+}
 }
 \seealso{
 \code{\link[=tax_bar_pq]{tax_bar_pq()}} and \code{\link[=multitax_bar_pq]{multitax_bar_pq()}}

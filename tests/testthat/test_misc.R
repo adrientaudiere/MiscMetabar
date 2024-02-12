@@ -8,6 +8,7 @@ test_that("dist_bycol works fine", {
       as_binary_otu_table(data_fungi)@otu_table
     )
   ), 2)
+  skip_on_cran()
   expect_error(length(dist_bycol(
     data_fungi@otu_table, enterotype@otu_table
   )))
@@ -26,6 +27,7 @@ test_that("diff_fct_diff_class works fine", {
     ),
     17852
   )
+  skip_on_cran()
   expect_equal(
     round(diff_fct_diff_class(
       data_fungi@sam_data$Time,
@@ -93,6 +95,7 @@ withr::local_envvar(
 
 test_that("install_pkg_needed works fine", {
   expect_message(install_pkg_needed("abc", verbose = TRUE))
+  skip_on_cran()
   expect_message(install_pkg_needed("MiscMetabar", verbose = TRUE))
   expect_silent(install_pkg_needed("MiscMetabar"))
   expect_silent(suppressMessages(install_pkg_needed("microbiomeDataSets")))
@@ -100,6 +103,7 @@ test_that("install_pkg_needed works fine", {
 })
 
 test_that("add_funguild_info works fine", {
+  skip_on_cran()
   skip_on_cran()
   data_f <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)
   expect_silent(data_f <- add_funguild_info(data_f,
