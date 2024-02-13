@@ -66,8 +66,8 @@ use this function.
 }
 \examples{
 data(enterotype)
-adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE)
 \donttest{
+adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE)
 adonis_pq(enterotype, "SeqTech", dist_method = "jaccard")
 adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison")
 }

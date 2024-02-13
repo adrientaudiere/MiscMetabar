@@ -1,5 +1,3 @@
-data("data_fungi")
-data("data_fungi_sp_known")
 data("GlobalPatterns", package = "phyloseq")
 data("enterotype", package = "phyloseq")
 
@@ -29,9 +27,9 @@ test_that("rotl_pq works with data_fungi dataset", {
 })
 
 test_that("heat_tree_pq works with data_fungi dataset", {
+  skip_on_cran()
   library(metacoder)
   expect_silent(suppressMessages(ht <- heat_tree_pq(data_fungi_mini)))
-  skip_on_cran()
   expect_s3_class(ht, "ggplot")
   expect_s3_class(
     heat_tree_pq(data_fungi_mini, taxonomic_level = 1:4),
@@ -44,9 +42,9 @@ GPsubset <- subset_taxa(
   GlobalPatterns@tax_table[, 1] == "Bacteria"
 )
 test_that("heat_tree_pq works with GlobalPatterns dataset", {
+  skip_on_cran()
   library(metacoder)
   expect_silent(suppressMessages(ht <- heat_tree_pq(GPsubset)))
-  skip_on_cran()
   expect_silent(suppressMessages(
     ht <-
       heat_tree_pq(

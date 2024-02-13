@@ -46,6 +46,7 @@ Please make \href{https://github.com/torognes/vsearch}{vsearch}.
 }
 \examples{
 \dontshow{if (MiscMetabar:::is_vsearch_installed()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\donttest{
 data_fungi_nochim <- chimera_removal_vs(data_fungi)
 data_fungi_nochim_16 <- chimera_removal_vs(data_fungi,
   abskew = 16,
@@ -55,6 +56,7 @@ data_fungi_nochim2 <-
   chimera_removal_vs(data_fungi, type = "Select_only_non_chim")
 data_fungi_chimera <-
   chimera_removal_vs(data_fungi, type = "Select_only_chim")
+}
 \dontshow{\}) # examplesIf}
 }
 \seealso{

@@ -60,7 +60,6 @@ for your work.
 }
 \examples{
 \dontrun{
-data(data_fungi_sp_known)
 mumu_pq(data_fungi_sp_known)
 }
 }

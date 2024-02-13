@@ -7,6 +7,7 @@ sequences_ex <- c(
 )
 test_that("asv2otu works fine with Clusterize method", {
   expect_s4_class(data_fungi_mini, "phyloseq")
+  skip_on_cran()
   expect_s4_class(suppressWarnings(asv2otu(data_fungi_mini)), "phyloseq")
   expect_s4_class(suppressWarnings(asv2otu(data_fungi_mini,
     method_clusterize = "longest"
@@ -62,7 +63,7 @@ test_that("add_dna_to_phyloseq works fine", {
 })
 
 
-  test_that("verify_pq works fine", {
+test_that("verify_pq works fine", {
   expect_error(verify_pq(unclass(data_fungi_mini)), "The physeq argument is not a valid phyloseq object.")
   expect_silent(suppressWarnings(verify_pq(data_fungi_mini, verbose = TRUE)))
 })
@@ -91,6 +92,7 @@ test_that("perc works fine", {
 test_that("count_seq works fine", {
   skip_on_os("windows")
   skip_on_os("mac")
+  skip_on_cran()
   expect_equal(count_seq(folder_path = "inst/extdata", pattern = "*.fasta"), c(1000, 3, 2))
   expect_equal(count_seq("inst/extdata/ex_R1_001.fastq.gz"), 2500)
   expect_equal(count_seq("inst/extdata/ex_R2_001.fastq.gz"), 2500)

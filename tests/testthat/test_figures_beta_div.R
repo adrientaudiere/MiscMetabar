@@ -19,8 +19,8 @@ res_mt <-
   )
 
 test_that("circle_pq works", {
-  expect_message(circle_pq(data_basidio_2trees, fact = "Tree_name", nproc = 1))
   skip_on_cran()
+  expect_message(circle_pq(data_basidio_2trees, fact = "Tree_name", nproc = 1))
   expect_message(circle_pq(
     clean_pq(data_basidio_2trees, force_taxa_as_rows = TRUE),
     fact = "Tree_name",
@@ -200,9 +200,9 @@ test_that("sankey_pq works with data_fungi_mini dataset", {
 
 test_that("venn_pq works with data_fungi_mini dataset", {
   skip_on_os("windows")
+  skip_on_cran()
   library("grid")
   expect_silent(venn_pq(data_fungi_mini, "Height"))
-  skip_on_cran()
   expect_silent(suppressMessages(venn_pq(
     clean_pq(
       data_fungi_mini,
@@ -296,6 +296,7 @@ test_that("upset_test_pq works with data_fungi_mini dataset", {
 })
 
 test_that("plot_LCBD_pq works with data_fungi dataset", {
+  skip_on_cran()
   expect_s3_class(
     plot_LCBD_pq(
       data_fungi_mini,
@@ -304,7 +305,6 @@ test_that("plot_LCBD_pq works with data_fungi dataset", {
     ),
     "ggplot"
   )
-  skip_on_cran()
   expect_s3_class(
     plot_LCBD_pq(
       data_fungi_mini,
@@ -384,6 +384,7 @@ test_that("plot_SCBD_pq works with data_fungi_mini dataset", {
 
 test_that("multipatt_pq works with data_fungi_mini dataset", {
   skip_on_os("windows")
+  skip_on_cran()
   expect_s3_class(
     multipatt_pq(subset_samples(data_fungi_mini, !is.na(Time)),
       fact = "Time"
@@ -395,6 +396,7 @@ test_that("multipatt_pq works with data_fungi_mini dataset", {
 
 test_that("multipatt_pq works with data_fungi_mini dataset", {
   skip_on_os("windows")
+  skip_on_cran()
   expect_type(suppressMessages(suppressWarnings(res_height <- ancombc_pq(
     subset_taxa_pq(
       data_fungi_sp_known,
@@ -404,8 +406,6 @@ test_that("multipatt_pq works with data_fungi_mini dataset", {
     levels_fact = c("Low", "High"),
     verbose = TRUE
   ))), "list")
-  skip_on_cran()
-  
   expect_s3_class(res_height$bias_correct_log_table, "data.frame")
   expect_equal(dim(res_height$res), c(6, 15))
 

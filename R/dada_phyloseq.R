@@ -525,15 +525,15 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #' @examples
 #' asv2otu(data_fungi_mini)
 #' \donttest{
-#'   asv2otu(data_fungi_mini, method_clusterize = "longest")
-#' }
+#' asv2otu(data_fungi_mini, method_clusterize = "longest")
+#'
 #' if (MiscMetabar:::is_swarm_installed()) {
 #'   d_swarm <- asv2otu(data_fungi_mini, method = "swarm")
 #' }
 #' if (MiscMetabar:::is_vsearch_installed()) {
 #'   d_vs <- asv2otu(data_fungi_mini, method = "vsearch")
 #' }
-#' 
+#' }
 #' @references
 #'   VSEARCH can be downloaded from
 #'   \url{https://github.com/torognes/vsearch}.
@@ -1165,7 +1165,6 @@ lulu_pq <- function(physeq,
 #' @export
 #' @examples
 #' \dontrun{
-#' data(data_fungi_sp_known)
 #' mumu_pq(data_fungi_sp_known)
 #' }
 #' @author Frédéric Mahé

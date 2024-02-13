@@ -29,7 +29,10 @@ count_seq(file_path = system.file(
   package = "MiscMetabar",
   mustWork = TRUE
 ))
-count_seq(folder_path = "extdata/", pattern = "*.fasta")
+count_seq(
+  folder_path = system.file("extdata", package = "MiscMetabar"),
+  pattern = "*.fasta"
+)
 \dontshow{\}) # examplesIf}
 }
 \author{

@@ -22,10 +22,9 @@ GP <- subset_samples_pq(
   GP_archae@sam_data$SampleType %in% c("Soil", "Skin")
 )
 
-res_deseq <- DESeq2::DESeq(phyloseq_to_deseq2(GP, ~SampleType), test = "Wald", fitType = "local")
-
 test_that("Test one case for each deprecated functions", {
   skip_on_cran()
+  res_deseq <- DESeq2::DESeq(phyloseq_to_deseq2(GP, ~SampleType), test = "Wald", fitType = "local")
   expect_warning(physeq_graph_test(data_fungi_mini, fact = "Tree_name"), "deprecated")
   expect_s3_class(suppressWarnings(adonis_phyloseq(data_fungi_mini, "Tree_name")), "anova")
   expect_s4_class(suppressWarnings(clean_pq(data_fungi_mini)), "phyloseq")

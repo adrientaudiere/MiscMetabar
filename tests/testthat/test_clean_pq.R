@@ -7,6 +7,7 @@ data_fungi_test@otu_table[10, ] <- rep(0, ncol(data_fungi_test@otu_table))
 test_that("clean_pq return a phyloseq object after cleaning empty taxa and samples", {
   expect_s4_class(data_fungi_test, "phyloseq")
   expect_s4_class(clean_pq(data_fungi_test), "phyloseq")
+  skip_on_cran()
   expect_s4_class(clean_pq(data_fungi_test, verbose = TRUE), "phyloseq")
   expect_s4_class(clean_pq(data_fungi_test, reorder_asv = TRUE), "phyloseq")
   expect_s4_class(clean_pq(data_fungi_test, rename_asv = TRUE), "phyloseq")
@@ -15,6 +16,7 @@ test_that("clean_pq return a phyloseq object after cleaning empty taxa and sampl
 
 test_that("clean_pq clean empty taxa and samples", {
   expect_message(clean_pq(data_fungi_test), "Cleaning suppress 2 taxa and 1 samples")
+  skip_on_cran()
   expect_equal(nrow(data_fungi_test@otu_table) -
     nrow(clean_pq(data_fungi_test)@otu_table), 1)
   expect_equal(ncol(data_fungi_test@otu_table) -

@@ -366,7 +366,7 @@ accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
 #' circle_pq(GP, "SampleType")
 #' circle_pq(GP, "SampleType", add_nb_seq = FALSE)
 #' circle_pq(GP, "SampleType", taxa = "Class")
-#'}
+#' }
 #' @author Adrien Taudière
 #'
 #' @return A \code{\link[circlize]{chordDiagram}} plot representing the
@@ -1724,10 +1724,11 @@ summary_plot_pq <- function(physeq,
 #'   Please make a reference to `rotl` package if you
 #'   use this function.
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
+#' \donttest{
 #' library("rotl")
 #' tr <- rotl_pq(data_fungi_mini, species_colnames = "Genus_species")
 #' plot(tr)
-#' \dontrun{
+#'
 #' tr_Asco <- rotl_pq(data_fungi, species_colnames = "Genus_species", context_name = "Ascomycetes")
 #' plot(tr_Asco)
 #' }
@@ -2128,11 +2129,11 @@ biplot_pq <- function(physeq,
 #' @export
 #'
 #' @examples
-#'
+#' \donttest{
 #' data_fungi_abun <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
 #' p <- multi_biplot_pq(data_fungi_abun, "Height")
 #' lapply(p, print)
-#'
+#' }
 #' @author Adrien Taudière
 multi_biplot_pq <- function(physeq,
                             split_by = NULL,
@@ -2402,9 +2403,8 @@ plot_tax_pq <-
 #'
 #' @author Adrien Taudière
 #' @examples
-#' data(data_fungi_sp_known)
-#' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", "Time")
 #' \donttest{
+#' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", "Time")
 #' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order")
 #' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order",
 #'   nb_seq = FALSE, log10trans = FALSE
@@ -3218,7 +3218,7 @@ tax_bar_pq <- function(physeq, fact = "Sample", taxa = "Order", percent_bar = FA
 #'   point_shape = "|", point_size = 3, point_alpha = 1, alpha = 0.7,
 #'   scale = 0.8
 #' )
-#'}
+#' }
 ridges_pq <- function(physeq,
                       fact,
                       nb_seq = TRUE,

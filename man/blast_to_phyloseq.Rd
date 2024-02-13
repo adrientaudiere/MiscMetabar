@@ -80,13 +80,13 @@ the blast table
 \examples{
 \dontrun{
 
-blastpath <- "...YOUR_PATH_TO_BLAST..."
-blast_to_phyloseq(data_fungi,
-  seq2search = system.file("extdata", "ex.fasta",
-    package = "MiscMetabar", mustWork = TRUE
-  ),
-  blastpath = blastpath
-)
+# blastpath <- "...YOUR_PATH_TO_BLAST..."
+# blast_to_phyloseq(data_fungi,
+#   seq2search = system.file("extdata", "ex.fasta",
+#     package = "MiscMetabar", mustWork = TRUE
+#   ),
+#   blastpath = blastpath
+# )
 }
 }
 \seealso{

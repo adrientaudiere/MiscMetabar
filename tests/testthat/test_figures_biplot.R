@@ -20,7 +20,7 @@ test_that("biplot_pq works", {
     ),
     "plotly"
   )
-    skip_on_cran()
+  skip_on_cran()
   expect_s3_class(
     biplot_pq(
       data_fungi_2trees,

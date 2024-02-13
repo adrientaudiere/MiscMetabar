@@ -104,7 +104,6 @@ test_that("install_pkg_needed works fine", {
 
 test_that("add_funguild_info works fine", {
   skip_on_cran()
-  skip_on_cran()
   data_f <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)
   expect_silent(data_f <- add_funguild_info(data_f,
     taxLevels = c(

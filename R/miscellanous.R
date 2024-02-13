@@ -202,7 +202,10 @@ perc <- function(x, y = NULL, accuracy = 0, add_symbol = FALSE) {
 #'   package = "MiscMetabar",
 #'   mustWork = TRUE
 #' ))
-#' count_seq(folder_path = "extdata/", pattern = "*.fasta")
+#' count_seq(
+#'   folder_path = system.file("extdata", package = "MiscMetabar"),
+#'   pattern = "*.fasta"
+#' )
 count_seq <- function(file_path = NULL, folder_path = NULL, pattern = NULL) {
   if (is.null(file_path) && is.null(folder_path)) {
     stop("You need to specify one of file_path or folder_path param!")

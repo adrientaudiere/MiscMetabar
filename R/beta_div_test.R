@@ -26,7 +26,7 @@
 #' data(enterotype)
 #' graph_test_pq(enterotype, fact = "SeqTech")
 #' \donttest{
-#'   graph_test_pq(enterotype, fact = "Enterotype", na_remove = TRUE)
+#' graph_test_pq(enterotype, fact = "Enterotype", na_remove = TRUE)
 #' }
 #' @author Adrien Taudière
 #'
@@ -125,8 +125,8 @@ graph_test_pq <- function(physeq,
 #'   more information.
 #' @examples
 #' data(enterotype)
-#' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE)
 #' \donttest{
+#' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE)
 #' adonis_pq(enterotype, "SeqTech", dist_method = "jaccard")
 #' adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison")
 #' }
@@ -238,7 +238,7 @@ adonis_pq <- function(physeq,
 #' length(res$LCBD)
 #' length(res$SCBD)
 #' \donttest{
-#'   LCBD_pq(data_fungi_sp_known, nperm = 5, method = "jaccard")
+#' LCBD_pq(data_fungi_sp_known, nperm = 5, method = "jaccard")
 #' }
 #'
 #' @author Adrien Taudière

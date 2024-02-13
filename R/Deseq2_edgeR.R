@@ -26,7 +26,7 @@
 #' plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
 #'   color_tax = "Kingdom"
 #' )
-#' 
+#'
 #' plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
 #'   taxolev = "Class", color_tax = "Kingdom"
 #' )
