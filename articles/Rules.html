@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.8</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -142,6 +142,51 @@ these functions</li>
 <li>
 <strong>Stable</strong>: Good level of confidence</li>
 </ul>
+</div>
+<div class="section level3">
+<h3 id="tests-and-examples">Tests and examples<a class="anchor" aria-label="anchor" href="#tests-and-examples"></a>
+</h3>
+<div class="section level4">
+<h4 id="special-cases-of-external-softwares">Special cases of external softwares<a class="anchor" aria-label="anchor" href="#special-cases-of-external-softwares"></a>
+</h4>
+<p>Some examples and test required the installation of external
+softwares. I used MiscMetabar internal functions (such as
+[is_vsearch_installed()]) to conditionnaly test
+(<code>if(is_vsearch_installed()){...test...}</code>) and run examples
+<code>#' @examplesIf is_vsearch_installed()</code>.</p>
+</div>
+<div class="section level4">
+<h4 id="special-case-of-cran">Special case of CRAN<a class="anchor" aria-label="anchor" href="#special-case-of-cran"></a>
+</h4>
+<p>I use <code>\donttest{}</code> for some long examples (in roxygen
+documentation) and <code><a href="https://testthat.r-lib.org/reference/skip.html" class="external-link">testthat::skip_on_cran()</a></code> in long
+test.</p>
+</div>
+<div class="section level4">
+<h4 id="special-case-of-windows">Special case of windows<a class="anchor" aria-label="anchor" href="#special-case-of-windows"></a>
+</h4>
+<p>Some tests and examples are not tested on windows. I used
+<code>testthat::skip_on_os("windows")</code> inside test and
+<code>#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"</code>
+in examples (roxygen documentation). Here is a list of functions with
+some limitations or not working at all on windows OS:</p>
+<ul>
+<li>[build_phytree_pq()]</li>
+<li>[count_seq()]</li>
+<li>[cutadapt_remove_primers()]</li>
+<li>[krona()]</li>
+<li>[merge_krona()]</li>
+<li>[multipatt_pq()]</li>
+<li>[plot_tsne_pq()]</li>
+<li>[rotl_pq()]</li>
+<li>[save_pq()]</li>
+<li>[tax_datatable()]</li>
+<li>[track_wkflow()]</li>
+<li>[track_wkflow_samples()]</li>
+<li>[tsne_pq()]</li>
+<li>[venn_pq()]</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="section level2">
