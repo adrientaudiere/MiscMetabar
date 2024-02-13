@@ -12,7 +12,7 @@ sequences using vsearch — vs_search_global"><meta property="og:description" co
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -146,10 +146,10 @@ Please cite <a href="https://github.com/torognes/vsearch" class="external-link">
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="va">file_dna</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span><span class="st">"dna.fa"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">seqinr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/seqinr/man/write.fasta.html" class="external-link">write.fasta</a></span><span class="op">(</span><span class="st">"GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCA</span></span></span>
-<span class="r-in"><span><span class="st">  ACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG"</span>,</span></span>
+<span class="r-in"><span><span class="fu">seqinr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/seqinr/man/write.fasta.html" class="external-link">write.fasta</a></span><span class="op">(</span><span class="st">"GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCAACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG"</span>,</span></span>
+<span class="r-in"><span>  nbchar <span class="op">=</span> <span class="fl">200</span>,</span></span>
 <span class="r-in"><span>  file <span class="op">=</span> <span class="va">file_dna</span>, names <span class="op">=</span> <span class="st">"seq1"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -157,9 +157,40 @@ Please cite <a href="https://github.com/torognes/vsearch" class="external-link">
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="va">file_dna</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">res</span><span class="op">[</span><span class="va">res</span><span class="op">$</span><span class="va">identity</span> <span class="op">!=</span> <span class="st">"*"</span>, <span class="op">]</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      type cluster width identity strand 6 7          cigarAlignment   query</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       H       0   312    100.0      + 0 0             64D122M126D    ASV2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12      H       0   305     80.3      + 0 0     64D40MI55M7I19M127D   ASV22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 149     H       0   316     80.3      + 0 0 64D40MI18MI25M2I35M134D  ASV194</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 288     H       0   312     98.4      + 0 0             64D122M126D  ASV375</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 426     H       0   312     96.7      + 0 0             64D122M126D  ASV541</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 460     H       0   313    100.0      + 0 0             65D122M126D  ASV576</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 510     H       0   312     95.1      + 0 0             64D122M126D  ASV634</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 799     H       0   313     95.1      + 0 0             65D122M126D  ASV962</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 857     H       0   312     95.1      + 0 0             64D122M126D ASV1027</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 905     H       0   312     95.1      + 0 0             64D122M126D ASV1082</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1043    H       0   315     93.4      + 0 0             66D122M127D ASV1247</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1075    H       0   312    100.0      + 0 0             64D122M126D ASV1284</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1110    H       0   312     95.9      + 0 0             64D122M126D ASV1323</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1353    H       0   313     95.9      + 0 0             64D122M127D ASV1616</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      target</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      seq1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12     seq1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 149    seq1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 288    seq1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 426    seq1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 460    seq1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 510    seq1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 799    seq1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 857    seq1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 905    seq1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1043   seq1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1075   seq1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1110   seq1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1353   seq1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="clean_pq.html">clean_pq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html" class="external-link">subset_taxa</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="va">res</span><span class="op">$</span><span class="va">identity</span> <span class="op">!=</span> <span class="st">"*"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(e, x, parent.frame()):</span> object 'res' not found</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

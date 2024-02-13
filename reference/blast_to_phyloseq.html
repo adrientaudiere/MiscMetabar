@@ -12,7 +12,7 @@ object. — blast_to_phyloseq"><meta property="og:description" content=""><!-- m
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -191,13 +191,13 @@ against un custom database.</p></div>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">blastpath</span> <span class="op">&lt;-</span> <span class="st">"...YOUR_PATH_TO_BLAST..."</span></span></span>
-<span class="r-in"><span><span class="fu">blast_to_phyloseq</span><span class="op">(</span><span class="va">data_fungi</span>,</span></span>
-<span class="r-in"><span>  seq2search <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"ex.fasta"</span>,</span></span>
-<span class="r-in"><span>    package <span class="op">=</span> <span class="st">"MiscMetabar"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span>,</span></span>
-<span class="r-in"><span>  blastpath <span class="op">=</span> <span class="va">blastpath</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># blastpath &lt;- "...YOUR_PATH_TO_BLAST..."</span></span></span>
+<span class="r-in"><span><span class="co"># blast_to_phyloseq(data_fungi,</span></span></span>
+<span class="r-in"><span><span class="co">#   seq2search = system.file("extdata", "ex.fasta",</span></span></span>
+<span class="r-in"><span><span class="co">#     package = "MiscMetabar", mustWork = TRUE</span></span></span>
+<span class="r-in"><span><span class="co">#   ),</span></span></span>
+<span class="r-in"><span><span class="co">#   blastpath = blastpath</span></span></span>
+<span class="r-in"><span><span class="co"># )</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>

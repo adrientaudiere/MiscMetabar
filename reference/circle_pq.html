@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.7</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -192,7 +192,8 @@ fact</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GlobalPatterns"</span>, package <span class="op">=</span> <span class="st">"phyloseq"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GlobalPatterns"</span>, package <span class="op">=</span> <span class="st">"phyloseq"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">GP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html" class="external-link">subset_taxa</a></span><span class="op">(</span><span class="va">GlobalPatterns</span>, <span class="va">GlobalPatterns</span><span class="op">@</span><span class="va">tax_table</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="st">"Archaea"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’ ‘tidytree’</span>
@@ -206,9 +207,15 @@ fact</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Only 4 modalities are plot (44.44%). Use 'min_prop_mod' to plot more samples.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Only 5 taxa are plot (45.45%). Use 'min_prop_tax' to plot more taxa</span>
 <span class="r-plt img"><img src="circle_pq-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="co"># circle_pq(GP, "SampleType", add_nb_seq = FALSE)</span></span></span>
-<span class="r-in"><span><span class="co"># circle_pq(GP, "SampleType", taxa = "Class")</span></span></span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">circle_pq</span><span class="op">(</span><span class="va">GP</span>, <span class="st">"SampleType"</span>, add_nb_seq <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Only 4 modalities are plot (44.44%). Use 'min_prop_mod' to plot more samples.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Only 9 taxa are plot (81.82%). Use 'min_prop_tax' to plot more taxa</span>
+<span class="r-plt img"><img src="circle_pq-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">circle_pq</span><span class="op">(</span><span class="va">GP</span>, <span class="st">"SampleType"</span>, taxa <span class="op">=</span> <span class="st">"Class"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Only 4 modalities are plot (44.44%). Use 'min_prop_mod' to plot more samples.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Only 4 taxa are plot (44.44%). Use 'min_prop_tax' to plot more taxa</span>
+<span class="r-plt img"><img src="circle_pq-3.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
