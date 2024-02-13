@@ -16,11 +16,10 @@
 #'   - temp.fasta (refseq in fasta)
 #'   - cluster.fasta (centroid)
 #'   - temp.uc (clusters)
-#' @examples
-#' \dontrun{
+#' @examplesIf  MiscMetabar:::is_vsearch_installed()
+#' \donttest{
 #' file_dna <- tempfile("dna.fa")
-#' seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCA
-#'   ACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG",
+#' seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCAACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG", nbchar = 200,
 #'   file = file_dna, names = "seq1"
 #' )
 #'
@@ -58,7 +57,7 @@ vs_search_global <- function(physeq,
   }
   if (!is.null(seq2search)) {
     if (inherits(seq2search, "character")) {
-      seq2search <- Biostrings::DNAStringSet(seq2search)
+      seq2search <- Biostrings::readDNAStringSet(seq2search)
     }
     Biostrings::writeXStringSet(seq2search, paste0(tempdir(), "seq2search.fasta"))
     seq2search <- paste0(tempdir(), "seq2search.fasta")

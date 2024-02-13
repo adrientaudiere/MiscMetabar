@@ -913,10 +913,8 @@ save_pq <- function(physeq, path = NULL, ...) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' read_pq(path = "phyloseq_data")
-#' read_pq(path = "phyloseq_data", taxa_are_rows = TRUE)
-#' }
+#' # read_pq(path = "phyloseq_folder")
+#' # read_pq(path = "phyloseq_folder", taxa_are_rows = TRUE)
 #'
 read_pq <- function(path = NULL,
                     taxa_are_rows = FALSE,
@@ -2341,7 +2339,7 @@ physeq_or_string_to_dna <- function(physeq = NULL,
 #' )
 #'
 #'
-#' unlink(tempdir(), recursive = TRUE)
+#' # unlink(tempdir(), recursive = TRUE)
 #' }
 #' @details
 #' This function is mainly a wrapper of the work of others.

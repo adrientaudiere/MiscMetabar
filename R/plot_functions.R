@@ -2697,7 +2697,7 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 #' )
 #' GPsubset <- subset_taxa(
 #'   GPsubset,
-#'   rowSums(GPsubset@otu_table) > 1000
+#'   rowSums(GPsubset@otu_table) > 20000
 #' )
 #' GPsubset <- subset_taxa(
 #'   GPsubset,
