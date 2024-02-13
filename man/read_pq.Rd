@@ -35,9 +35,7 @@ and if present a phy_tree in Newick format. At least the otu_table.csv need to b
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
-\dontrun{
-read_pq(path = "phyloseq_data")
-read_pq(path = "phyloseq_data", taxa_are_rows = TRUE)
-}
+# read_pq(path = "phyloseq_folder")
+# read_pq(path = "phyloseq_folder", taxa_are_rows = TRUE)
 
 }

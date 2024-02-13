@@ -16,10 +16,11 @@
 #'   - temp.fasta (refseq in fasta)
 #'   - cluster.fasta (centroid)
 #'   - temp.uc (clusters)
-#' @examplesIf  MiscMetabar:::is_vsearch_installed()
+#' @examplesIf MiscMetabar:::is_vsearch_installed()
 #' \donttest{
 #' file_dna <- tempfile("dna.fa")
-#' seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCAACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG", nbchar = 200,
+#' seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCAACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG",
+#'   nbchar = 200,
 #'   file = file_dna, names = "seq1"
 #' )
 #'
