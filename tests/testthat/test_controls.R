@@ -9,29 +9,27 @@ test_that("dist_pos_control function works fine", {
   expect_equal(length(dist_pos_control(enterotype, sam_name_factice)), 2)
 })
 
-data(data_fungi)
-
-res_seq <- suppressWarnings(subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 50]),
-  method = "cutoff_seq"
-))
-res_mixt <- suppressWarnings(subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 50]),
-  method = "cutoff_mixt"
-))
-res_diff <- suppressWarnings(subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 50]),
-  method = "cutoff_diff", min_diff_for_cutoff = 2
-))
-res_min <- suppressWarnings(subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 50]),
-  method = "min", min_diff_for_cutoff = 2
-))
-res_max <- suppressWarnings(subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 50]),
-  method = "max", min_diff_for_cutoff = 2
-))
-res_mean <- suppressWarnings(subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 50]),
-  method = "mean", min_diff_for_cutoff = 2
-))
-
-
 test_that("subset_taxa_tax_control function works fine", {
+  skip_on_cran()
+  res_seq <- suppressWarnings(subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 50]),
+    method = "cutoff_seq"
+  ))
+  res_mixt <- suppressWarnings(subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 50]),
+    method = "cutoff_mixt"
+  ))
+  res_diff <- suppressWarnings(subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 50]),
+    method = "cutoff_diff", min_diff_for_cutoff = 2
+  ))
+  res_min <- suppressWarnings(subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 50]),
+    method = "min", min_diff_for_cutoff = 2
+  ))
+  res_max <- suppressWarnings(subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 50]),
+    method = "max", min_diff_for_cutoff = 2
+  ))
+  res_mean <- suppressWarnings(subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 50]),
+    method = "mean", min_diff_for_cutoff = 2
+  ))
+
   expect_error(subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 50]), method = "cutoff_diff"))
   expect_error(subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 50]), method = "cut", min_diff_for_cutoff = 2))
   expect_s4_class(res_seq, "phyloseq")

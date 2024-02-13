@@ -77,12 +77,13 @@ fact
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
+\donttest{
 data("GlobalPatterns", package = "phyloseq")
 GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 circle_pq(GP, "SampleType")
-# circle_pq(GP, "SampleType", add_nb_seq = FALSE)
-# circle_pq(GP, "SampleType", taxa = "Class")
-
+circle_pq(GP, "SampleType", add_nb_seq = FALSE)
+circle_pq(GP, "SampleType", taxa = "Class")
+}
 }
 \seealso{
 \code{\link[circlize]{chordDiagram}}

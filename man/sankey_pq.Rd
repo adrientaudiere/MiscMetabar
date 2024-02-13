@@ -57,8 +57,10 @@ of \code{fact}
 data("GlobalPatterns", package = "phyloseq")
 GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 sankey_pq(GP, fact = "SampleType")
+\donttest{
 sankey_pq(GP, taxa = 1:4, min_prop_tax = 0.01)
 sankey_pq(GP, taxa = 1:4, min_prop_tax = 0.01, add_nb_seq = TRUE)
+}
 }
 \seealso{
 \code{\link[networkD3]{sankeyNetwork}}

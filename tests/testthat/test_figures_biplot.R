@@ -20,6 +20,7 @@ test_that("biplot_pq works", {
     ),
     "plotly"
   )
+  skip_on_cran()
   expect_s3_class(
     biplot_pq(
       data_fungi_2trees,
@@ -44,8 +45,6 @@ test_that("biplot_pq works", {
     "biplot_pq needs only two samples"
   )
   expect_error(biplot_pq(data_fungi_2trees, merge_sample_by = "tRREE_name"))
-
-  geom_label
 })
 
 
@@ -60,6 +59,7 @@ test_that("multi_biplot_pq works with data_fungi dataset", {
   p3 <- multi_biplot_pq(data_fungi_abun, pairs = "Random_pairs")
   expect_s3_class(p1[[1]], "ggplot")
   expect_type(p1, "list")
+  skip_on_cran()
   expect_s3_class(p2[[1]], "ggplot")
   expect_type(p2, "list")
   expect_s3_class(p3[[1]], "ggplot")

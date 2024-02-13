@@ -7,6 +7,8 @@ GP_archae <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archa
 data_basidio <- subset_taxa(data_fungi, Phylum == "Basidiomycota")
 
 test_that("tsne_pq works with data_fungi_mini dataset", {
+  skip_on_os("windows")
+  skip_on_cran()
   expect_silent(suppressMessages(res_tsne <- tsne_pq(data_fungi_mini)))
   expect_s3_class(res_tsne, "Rtsne")
   expect_silent(suppressMessages(res_tsne <- tsne_pq(data_fungi_mini, dims = 3, perplexity = 25)))
@@ -14,6 +16,7 @@ test_that("tsne_pq works with data_fungi_mini dataset", {
 
 test_that("plot_tsne_pq works with data_fungi_mini dataset", {
   skip_on_os("windows")
+  skip_on_cran()
   expect_silent(suppressMessages(pt <- plot_tsne_pq(data_fungi_mini, fact = "Height", perplexity = 15)))
   expect_s3_class(pt, "ggplot")
   expect_error(plot_tsne_pq(data_fungi_mini, fact = "HEIgTHT"))
@@ -21,6 +24,7 @@ test_that("plot_tsne_pq works with data_fungi_mini dataset", {
 
 test_that("SRS_curve_pq works with data_fungi_mini dataset", {
   expect_silent(suppressMessages(sc <- SRS_curve_pq(data_fungi_mini)))
+  skip_on_cran()
   expect_silent(suppressMessages(sc <- SRS_curve_pq(data_fungi_mini, clean_pq = TRUE)))
   expect_s3_class(sc, "recordedplot")
   expect_silent(suppressMessages(sc <- SRS_curve_pq(data_fungi_mini, metric = "shannon")))
@@ -28,6 +32,7 @@ test_that("SRS_curve_pq works with data_fungi_mini dataset", {
 })
 
 test_that("multiplot works fine", {
+  skip_on_cran()
   res_venn1 <- ggvenn_pq(data_fungi_mini, "Height")
   res_venn2 <- ggvenn_pq(data_fungi_mini, "Time")
   expect_silent(multiplot(res_venn1, res_venn2))

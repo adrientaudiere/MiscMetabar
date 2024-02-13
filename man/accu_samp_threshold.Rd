@@ -20,6 +20,7 @@ to obtain \code{threshold} proportion of the ASV
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
+\donttest{
 data("GlobalPatterns", package = "phyloseq")
 GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 GP <- rarefy_even_depth(subset_samples_pq(GP, sample_sums(GP) > 3000))
@@ -32,6 +33,7 @@ summary(val_threshold)
 # Plot the number of sequences needed to accumulate 0.95\% of ASV in 50\%, 75\%
 # and 100\% of samples
 p + geom_vline(xintercept = quantile(val_threshold, probs = c(0.50, 0.75, 1)))
+}
 }
 \seealso{
 \code{\link[=accu_plot]{accu_plot()}}

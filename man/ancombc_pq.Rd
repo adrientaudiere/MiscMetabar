@@ -35,6 +35,7 @@ Please make a reference to \code{ANCOMBC::ancombc2()} if you
 use this function.
 }
 \examples{
+\donttest{
 res_height <- ancombc_pq(
   data_fungi_mini,
   fact = "Height",
@@ -64,6 +65,7 @@ res_time <- ancombc_pq(
   tax_level = "Family",
   verbose = TRUE
 )
+}
 }
 \author{
 Adrien Taudière

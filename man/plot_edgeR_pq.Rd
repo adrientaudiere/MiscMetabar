@@ -47,10 +47,11 @@ A \code{\link{ggplot}}2 plot representing edgeR results
 \dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data("GlobalPatterns", package = "phyloseq")
 GP_archae <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+\donttest{
 plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
   color_tax = "Kingdom"
 )
-\dontrun{
+
 plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
   taxolev = "Class", color_tax = "Kingdom"
 )

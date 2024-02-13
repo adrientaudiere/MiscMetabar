@@ -58,10 +58,12 @@ Please make \href{https://github.com/torognes/vsearch}{vsearch}.
 }
 \examples{
 \dontshow{if (MiscMetabar:::is_vsearch_installed()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\donttest{
 chimera_detection_vs(
   seq2search = data_fungi@refseq,
   nb_seq = taxa_sums(data_fungi)
 )
+}
 \dontshow{\}) # examplesIf}
 }
 \author{

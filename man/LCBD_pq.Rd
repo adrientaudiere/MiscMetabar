@@ -30,7 +30,9 @@ res <- LCBD_pq(data_fungi_sp_known, nperm = 5)
 str(res)
 length(res$LCBD)
 length(res$SCBD)
+\donttest{
 LCBD_pq(data_fungi_sp_known, nperm = 5, method = "jaccard")
+}
 
 }
 \seealso{

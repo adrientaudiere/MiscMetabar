@@ -91,7 +91,7 @@ cutadapt_remove_primers(
 )
 
 
-unlink(tempdir(), recursive = TRUE)
+# unlink(tempdir(), recursive = TRUE)
 }
 \dontshow{\}) # examplesIf}
 }

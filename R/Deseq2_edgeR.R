@@ -22,10 +22,11 @@
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' data("GlobalPatterns", package = "phyloseq")
 #' GP_archae <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+#' \donttest{
 #' plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
 #'   color_tax = "Kingdom"
 #' )
-#' \dontrun{
+#'
 #' plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
 #'   taxolev = "Class", color_tax = "Kingdom"
 #' )
@@ -153,6 +154,7 @@ plot_edgeR_pq <-
 #' @details
 #'   Please cite `DESeq2` package if you use chis function.
 #' @examples
+#' \donttest{
 #' data("GlobalPatterns", package = "phyloseq")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #' GP <- subset_samples(GP, SampleType %in% c("Soil", "Skin"))
@@ -170,6 +172,7 @@ plot_edgeR_pq <-
 #'   tax_table = GP@tax_table, color_tax = "Class",
 #'   select_taxa = c("522457", "271582")
 #' )
+#' }
 #' @author Adrien Taudière
 #'
 #' @return A \code{\link{ggplot}}2 plot representing DESeq2 results

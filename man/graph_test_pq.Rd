@@ -57,7 +57,9 @@ Please cite \code{phyloseqGraphTest} package.
 \examples{
 data(enterotype)
 graph_test_pq(enterotype, fact = "SeqTech")
+\donttest{
 graph_test_pq(enterotype, fact = "Enterotype", na_remove = TRUE)
+}
 }
 \author{
 Adrien Taudière

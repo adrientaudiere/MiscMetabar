@@ -50,6 +50,7 @@ plot_LCBD_pq(data_fungi_mini,
   nperm = 100, only_plot_significant = FALSE,
   pval = 0.2
 )
+\donttest{
 plot_LCBD_pq(data_fungi_mini,
   nperm = 100, only_plot_significant = TRUE,
   pval = 0.2
@@ -68,6 +69,7 @@ plot_LCBD_pq(data_fungi_mini,
     legend.text = element_text(size = 10),
     axis.title.x = element_text(size = 6)
   )
+}
 }
 \seealso{
 \link{LCBD_pq}, \code{\link[adespatial:beta.div]{adespatial::beta.div()}}

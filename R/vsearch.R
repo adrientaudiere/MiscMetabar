@@ -16,11 +16,11 @@
 #'   - temp.fasta (refseq in fasta)
 #'   - cluster.fasta (centroid)
 #'   - temp.uc (clusters)
-#' @examples
-#' \dontrun{
+#' @examplesIf MiscMetabar:::is_vsearch_installed()
+#' \donttest{
 #' file_dna <- tempfile("dna.fa")
-#' seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCA
-#'   ACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG",
+#' seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCAACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG",
+#'   nbchar = 200,
 #'   file = file_dna, names = "seq1"
 #' )
 #'
@@ -58,7 +58,7 @@ vs_search_global <- function(physeq,
   }
   if (!is.null(seq2search)) {
     if (inherits(seq2search, "character")) {
-      seq2search <- Biostrings::DNAStringSet(seq2search)
+      seq2search <- Biostrings::readDNAStringSet(seq2search)
     }
     Biostrings::writeXStringSet(seq2search, paste0(tempdir(), "seq2search.fasta"))
     seq2search <- paste0(tempdir(), "seq2search.fasta")
@@ -374,9 +374,11 @@ swarm_clustering <- function(physeq = NULL,
 #' @author Adrien Taudière
 #'
 #' @examplesIf MiscMetabar:::is_vsearch_installed()
+#' \donttest{
 #' summary_plot_pq(data_fungi)
 #' d_vs <- vsearch_clustering(data_fungi)
 #' summary_plot_pq(d_vs)
+#' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
 #'   Please cite [vsearch](https://github.com/torognes/vsearch).
@@ -500,6 +502,7 @@ vsearch_clustering <- function(physeq = NULL,
 #' @export
 #'
 #' @examplesIf MiscMetabar:::is_vsearch_installed()
+#' \donttest{
 #' data_fungi_nochim <- chimera_removal_vs(data_fungi)
 #' data_fungi_nochim_16 <- chimera_removal_vs(data_fungi,
 #'   abskew = 16,
@@ -509,6 +512,7 @@ vsearch_clustering <- function(physeq = NULL,
 #'   chimera_removal_vs(data_fungi, type = "Select_only_non_chim")
 #' data_fungi_chimera <-
 #'   chimera_removal_vs(data_fungi, type = "Select_only_chim")
+#' }
 #' @author Adrien Taudière
 #' @details
 #' This function is mainly a wrapper of the work of others.
@@ -621,10 +625,12 @@ chimera_removal_vs <-
 #' @export
 #'
 #' @examplesIf MiscMetabar:::is_vsearch_installed()
+#' \donttest{
 #' chimera_detection_vs(
 #'   seq2search = data_fungi@refseq,
 #'   nb_seq = taxa_sums(data_fungi)
 #' )
+#' }
 #' @author Adrien Taudière
 #' @details
 #' This function is mainly a wrapper of the work of others.

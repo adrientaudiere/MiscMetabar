@@ -524,12 +524,15 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #'
 #' @examples
 #' asv2otu(data_fungi_mini)
+#' \donttest{
 #' asv2otu(data_fungi_mini, method_clusterize = "longest")
+#'
 #' if (MiscMetabar:::is_swarm_installed()) {
 #'   d_swarm <- asv2otu(data_fungi_mini, method = "swarm")
 #' }
 #' if (MiscMetabar:::is_vsearch_installed()) {
 #'   d_vs <- asv2otu(data_fungi_mini, method = "vsearch")
+#' }
 #' }
 #' @references
 #'   VSEARCH can be downloaded from
@@ -910,10 +913,8 @@ save_pq <- function(physeq, path = NULL, ...) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' read_pq(path = "phyloseq_data")
-#' read_pq(path = "phyloseq_data", taxa_are_rows = TRUE)
-#' }
+#' # read_pq(path = "phyloseq_folder")
+#' # read_pq(path = "phyloseq_folder", taxa_are_rows = TRUE)
 #'
 read_pq <- function(path = NULL,
                     taxa_are_rows = FALSE,
@@ -1162,7 +1163,6 @@ lulu_pq <- function(physeq,
 #' @export
 #' @examples
 #' \dontrun{
-#' data(data_fungi_sp_known)
 #' mumu_pq(data_fungi_sp_known)
 #' }
 #' @author Frédéric Mahé
@@ -1403,7 +1403,7 @@ subset_samples_pq <- function(physeq, condition) {
   if (length(condition) != nsamples(physeq)) {
     stop("Length of condition is different from the number of samples.")
   }
-  if (is.null(sample_data(physeq))) {
+  if (is.null(physeq@sam_data)) {
     message("Nothing subset. No sample_data in physeq.\n")
     return(physeq)
   } else {
@@ -1927,6 +1927,7 @@ plot_guild_pq <-
 #'   Please make a reference to `phangorn` package if you
 #'   use this function.
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
+#' \donttest{
 #' library("phangorn")
 #' df <- subset_taxa_pq(data_fungi_mini, taxa_sums(data_fungi_mini) > 9000)
 #' df_tree <- build_phytree_pq(df, nb_bootstrap = 2)
@@ -1946,6 +1947,7 @@ plot_guild_pq <-
 #' plot(consensusNet(df_tree$ML_bs))
 #' plot(consensusNet(df_tree$NJ_bs))
 #' ps_tree <- merge_phyloseq(df, df_tree$ML$tree)
+#' }
 build_phytree_pq <- function(physeq,
                              nb_bootstrap = 0,
                              model = "GTR",
@@ -2065,9 +2067,9 @@ build_phytree_pq <- function(physeq,
 #' @importFrom stats kruskal.test
 #' @examples
 #'
-#' are_modality_even_depth(data_fungi, "Time")$p.value
-#' are_modality_even_depth(rarefy_even_depth(data_fungi), "Time")$p.value
-#' are_modality_even_depth(data_fungi, "Height", boxplot = TRUE)
+#' are_modality_even_depth(data_fungi_mini, "Time")$p.value
+#' are_modality_even_depth(rarefy_even_depth(data_fungi_mini), "Time")$p.value
+#' are_modality_even_depth(data_fungi_mini, "Height", boxplot = TRUE)
 are_modality_even_depth <- function(physeq, fact, boxplot = FALSE) {
   nb_seq <- sample_sums(physeq)
   fact <- factor(unclass(physeq@sam_data[, fact])[[1]])
@@ -2108,9 +2110,9 @@ are_modality_even_depth <- function(physeq, fact, boxplot = FALSE) {
 #'   taxa_names(data_fungi)[order(as.vector(data_fungi@tax_table[, "Genus"]))]
 #' )
 #'
-#' data_fungi_asc_ordered_by_abundance <- reorder_taxa_pq(
-#'   data_fungi,
-#'   taxa_names(data_fungi)[order(taxa_sums(data_fungi))]
+#' data_fungi_mini_asc_ordered_by_abundance <- reorder_taxa_pq(
+#'   data_fungi_mini,
+#'   taxa_names(data_fungi_mini)[order(taxa_sums(data_fungi_mini))]
 #' )
 reorder_taxa_pq <- function(physeq, names_ordered, remove_phy_tree = FALSE) {
   new_physeq <- physeq
@@ -2337,7 +2339,7 @@ physeq_or_string_to_dna <- function(physeq = NULL,
 #' )
 #'
 #'
-#' unlink(tempdir(), recursive = TRUE)
+#' # unlink(tempdir(), recursive = TRUE)
 #' }
 #' @details
 #' This function is mainly a wrapper of the work of others.

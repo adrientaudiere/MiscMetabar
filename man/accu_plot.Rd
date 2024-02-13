@@ -65,6 +65,7 @@ return a base plot.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
+\donttest{
 data("GlobalPatterns", package = "phyloseq")
 GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 GP <- rarefy_even_depth(subset_samples_pq(GP, sample_sums(GP) > 3000))
@@ -74,7 +75,7 @@ p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, step = 10)
 p + theme(legend.position = "none")
 
 p + xlim(c(0, 400))
-
+}
 }
 \seealso{
 \code{\link[vegan]{specaccum}} \code{\link[=accu_samp_threshold]{accu_samp_threshold()}}

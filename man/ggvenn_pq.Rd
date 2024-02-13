@@ -68,6 +68,7 @@ examples.
 \examples{
 
 ggvenn_pq(data_fungi, fact = "Height")
+\donttest{
 ggvenn_pq(data_fungi, fact = "Height") +
   ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
 pl <- ggvenn_pq(data_fungi, fact = "Height", split_by = "Time")
@@ -86,7 +87,7 @@ ggvenn_pq(data_fungi, fact = "Height", add_nb_seq = TRUE, set_size = 4)
 ggvenn_pq(data_fungi, fact = "Height", rarefy_before_merging = TRUE)
 ggvenn_pq(data_fungi, fact = "Height", rarefy_after_merging = TRUE) +
   scale_x_continuous(expand = expansion(mult = 0.5))
-
+}
 }
 \seealso{
 \code{\link[=upset_pq]{upset_pq()}}

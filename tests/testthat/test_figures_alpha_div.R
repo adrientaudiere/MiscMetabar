@@ -16,6 +16,7 @@ data_basidio <- subset_taxa(data_fungi, Phylum == "Basidiomycota")
 
 test_that("hill_pq works with data_fungi dataset", {
   expect_message(hill_pq(data_fungi_mini, "Height"))
+  skip_on_cran()
   expect_message(hill_pq(data_fungi_mini, "Height", add_points = TRUE))
   expect_silent(suppressMessages(hill_pq(
     clean_pq(subset_samples_pq(
@@ -60,6 +61,7 @@ test_that("hill_pq works with data_fungi dataset", {
 
 test_that("hill_pq works with GP dataset", {
   expect_message(hill_pq(GP, "SampleType"))
+  skip_on_cran()
   expect_message(hill_pq(GP, "SampleType", add_points = TRUE))
   expect_silent(suppressMessages(hill_pq(GP, "SampleType", letters = TRUE)))
   expect_silent(suppressMessages(hill_pq(GP, "SampleType", add_points = TRUE)))
@@ -68,6 +70,7 @@ test_that("hill_pq works with GP dataset", {
 })
 
 test_that("iNEXT_pq works with data_fungi_mini dataset", {
+  skip_on_cran()
   library("iNEXT")
   expect_s3_class(
     suppressWarnings(res_iNEXT <- iNEXT_pq(
@@ -90,6 +93,7 @@ test_that("iNEXT_pq works with data_fungi_mini dataset", {
 
 test_that("accu_plot works with GlobalPatterns dataset", {
   expect_silent(suppressWarnings(accu_plot(GP_archae, fact = "X.SampleID", by.fact = TRUE)))
+  skip_on_cran()
   expect_silent(suppressWarnings(accu_plot(GP_archae, fact = "X.SampleID", by.fact = FALSE)))
   expect_silent(suppressWarnings(accu_plot(
     GP_archae,
@@ -115,6 +119,7 @@ test_that("accu_plot works with GlobalPatterns dataset", {
 })
 
 test_that("accu_plot works with data_fungi dataset", {
+  skip_on_cran()
   expect_silent(accu_plot(data_basidio, fact = "Height", by.fact = TRUE))
   expect_error(suppressWarnings(accu_plot(data_basidio,
     fact = "Height",
@@ -148,6 +153,7 @@ test_that("accu_samp_threshold works with GlobalPatterns dataset", {
 })
 
 test_that("accu_samp_threshold works with data_fungi_mini dataset", {
+  skip_on_cran()
   expect_warning(ggb <-
     ggbetween_pq(data_fungi_mini, variable = "Time"))
   expect_equal(length(ggb), 3)

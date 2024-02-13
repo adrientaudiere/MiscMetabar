@@ -26,6 +26,7 @@ Note that the number of ASV is store under the name \code{n_obs}
 and the number of sequences under the name \code{nb_sequences}
 }
 \examples{
+\donttest{
 library("metacoder")
 data("GlobalPatterns", package = "phyloseq")
 
@@ -52,7 +53,6 @@ heat_tree_pq(GPsubset,
   node_size_trans = "log10 area"
 )
 
-\dontrun{
 heat_tree_pq(GPsubset,
   node_size = nb_sequences,
   node_color = n_obs,

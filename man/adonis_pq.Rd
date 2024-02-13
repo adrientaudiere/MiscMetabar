@@ -66,10 +66,11 @@ use this function.
 }
 \examples{
 data(enterotype)
+\donttest{
 adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE)
-adonis_pq(enterotype, "SeqTech")
 adonis_pq(enterotype, "SeqTech", dist_method = "jaccard")
 adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison")
+}
 }
 \author{
 Adrien Taudière

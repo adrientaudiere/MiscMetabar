@@ -32,9 +32,9 @@ data_fungi_ordered_by_genus <- reorder_taxa_pq(
   taxa_names(data_fungi)[order(as.vector(data_fungi@tax_table[, "Genus"]))]
 )
 
-data_fungi_asc_ordered_by_abundance <- reorder_taxa_pq(
-  data_fungi,
-  taxa_names(data_fungi)[order(taxa_sums(data_fungi))]
+data_fungi_mini_asc_ordered_by_abundance <- reorder_taxa_pq(
+  data_fungi_mini,
+  taxa_names(data_fungi_mini)[order(taxa_sums(data_fungi_mini))]
 )
 }
 \author{
