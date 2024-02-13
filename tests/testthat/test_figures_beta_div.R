@@ -263,7 +263,10 @@ test_that("upset_pq works with data_fungi dataset", {
   expect_s3_class(upset_pq(data_fungi_mini, "Time"), "ggplot")
   expect_s3_class(upset_pq(data_fungi_mini, "Time", min_nb_seq = 10), "ggplot")
   expect_s3_class(
-    upset_pq(data_fungi_mini, "Time", numeric_fonction = mean),
+    upset_pq(data_fungi_mini, "Time",
+      numeric_fonction = mean,
+      na_remove = FALSE
+    ),
     "ggplot"
   )
 

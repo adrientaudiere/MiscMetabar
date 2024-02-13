@@ -171,8 +171,9 @@ test_that("sample_data_with_new_names function works fine", {
   )
   expect_silent(filt_fastq_fw <- filter_trim(testFastqs_fw, output_fw = tempdir()))
   expect_equal(length(derepFastq(filt_fastq_fw[1])), 2)
-  expect_silent(filt_fastq_pe <- filter_trim(testFastqs_fw,
-    testFastqs_rev,
+  expect_silent(filt_fastq_pe <- filter_trim(
+    fw = testFastqs_fw,
+    rev = testFastqs_rev,
     output_fw = tempdir("fw"),
     output_rev = tempdir("rev")
   ))

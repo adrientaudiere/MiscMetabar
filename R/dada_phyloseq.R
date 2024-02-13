@@ -1003,6 +1003,7 @@ read_pq <- function(path = NULL,
 #' @param clean_pq (logical) if true, empty samples and empty ASV are discarded
 #'   before clustering.
 #' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files
+#' @param ... Others args for function [lulu()]
 #' @return a list of for object
 #' - "new_physeq": The new phyloseq object (class physeq)
 #' - "discrepancy_vector": A vector of discrepancy showing for each taxonomic
@@ -1037,7 +1038,8 @@ lulu_pq <- function(physeq,
                     vsearchpath = "vsearch",
                     verbose = FALSE,
                     clean_pq = FALSE,
-                    keep_temporary_files = FALSE) {
+                    keep_temporary_files = FALSE,
+                    ...) {
   verify_pq(physeq)
   if (is.null(physeq@refseq)) {
     stop("The phyloseq object do not contain a @refseq slot")
@@ -1067,7 +1069,7 @@ lulu_pq <- function(physeq,
 
   message("Lulu algorithm")
   res_lulu <-
-    lulu(data.frame(t(physeq@otu_table)), match_list)
+    lulu(data.frame(t(physeq@otu_table), ...), match_list)
 
   if (!keep_temporary_files) {
     if (file.exists("temp.fasta")) {

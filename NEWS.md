@@ -8,7 +8,8 @@
 - Add function `cutadapt_remove_primers()` to remove primers using [cutadapt](https://github.com/marcelm/cutadapt/)
 - Add internal functions `is_swarm_installed()`, `is_cutadapt_installed()`, `is_vsearch_installed()` and `is_falco_installed()` to test for the availability of external software in order to run examples and test from testthat.
 
-- Submit to CRAN and change code to comply with their rules (patch 0.7.1 to 0.7.4)
+- Submit to CRAN and change code to comply with their rules (patch 0.7.1 to 0.7.8)
+- Numerous examples and tests are skipped on CRAN because it spends to much time to run. Rules vignettes is updated to details the strategy for this.
 
 
 ## BREAKING CHANGES

@@ -23,7 +23,34 @@ vignette: >
 - **Maturing**: Some tests and/or analyses make stronger these functions
 - **Stable**: Good level of confidence
 
+## Tests and examples
 
+### Special cases of external softwares
+
+Some examples and test required the installation of external softwares. I used MiscMetabar internal functions (such as [is_vsearch_installed()]) to conditionnaly test (`if(is_vsearch_installed()){...test...}`) and run examples `#' @examplesIf is_vsearch_installed()`.
+
+### Special case of CRAN
+
+I use `\donttest{}` for some long examples (in roxygen documentation) and `testthat::skip_on_cran()` in long test.
+
+### Special case of windows
+
+Some tests and examples are not tested on windows. I used `testthat::skip_on_os("windows")` inside test and `#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"` in examples (roxygen documentation). Here is a list of functions with some limitations or not working at all on windows OS: 
+
+- [build_phytree_pq()]
+- [count_seq()]
+- [cutadapt_remove_primers()]
+- [krona()]
+- [merge_krona()]
+- [multipatt_pq()]
+- [plot_tsne_pq()]
+- [rotl_pq()]
+- [save_pq()]
+- [tax_datatable()]
+- [track_wkflow()]
+- [track_wkflow_samples()] 
+- [tsne_pq()]
+- [venn_pq()]
 
 # Session information
 

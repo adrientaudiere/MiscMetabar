@@ -51,6 +51,7 @@ test_that("plot_deseq2_pq works with results on GP dataset", {
 
   expect_error(plot_deseq2_pq(res, c("SampleType", "Soil", "Skyp"), tax_table = GP@tax_table, color_tax = "Kingdom"))
   expect_error(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), color_tax = "Class"))
+  expect_error(plot_deseq2_pq(data_fungi_mini@otu_table, c("SampleType", "Soil", "Skyp"), tax_table = GP@tax_table, color_tax = "Kingdom"))
   expect_message(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table, color_tax = "Class", select_taxa = "522457"))
   expect_message(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table, color_tax = "Class", select_taxa = c("522457", "271582")))
   expect_message(suppressWarnings(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table, select_taxa = c("522457", "200359"))))
@@ -61,7 +62,7 @@ test_that("plot_deseq2_pq works with GP dataset", {
   skip_on_cran()
   expect_message(suppressWarnings(plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), color_tax = "Class", select_taxa = c("522457", "271582", "200359"))))
   expect_message(suppressWarnings(plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), taxolev = "Class", verbose = TRUE)))
-  expect_message(suppressWarnings(plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), pval = 0.1)))
+  expect_message(suppressWarnings(plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), pval = 0.1, tax_depth = "Family")))
 })
 
 
