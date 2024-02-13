@@ -21,18 +21,14 @@ test_that("asv2otu works fine with Clusterize method", {
   expect_error(asv2otu(data_fungi_mini, dna_seq = sequences_ex))
 })
 
-
-
-
-suppressWarnings(vsearch_error_or_not <- try(system("vsearch 2>&1", intern = TRUE), silent = TRUE))
-
-if (class(vsearch_error_or_not) == "try-error") {
+if (!is_vsearch_installed()) {
   message("lulu_pq() can't be tested when vsearch is not installed")
 } else {
   test_that("lulu_pq works fine", {
     expect_s4_class(lulu_pq(data_fungi)$new_physeq, "phyloseq")
     expect_error(lulu_pq(enterotype)$new_physeq)
     expect_s4_class(lulu_pq(data_fungi_sp_known, clean_pq = TRUE, verbose = TRUE)$new_physeq, "phyloseq")
+    expect_error(lulu_pq(data_fungi_sp_known, minimum_ratio_type = "avg")$new_physeq)
   })
 }
 

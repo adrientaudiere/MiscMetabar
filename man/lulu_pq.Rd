@@ -11,7 +11,8 @@ lulu_pq(
   vsearchpath = "vsearch",
   verbose = FALSE,
   clean_pq = FALSE,
-  keep_temporary_files = FALSE
+  keep_temporary_files = FALSE,
+  ...
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ Set to number of cpus/processors to use for the clustering}
 before clustering.}
 
 \item{keep_temporary_files}{(logical, default: FALSE) Do we keep temporary files}
+
+\item{...}{Others args for function \code{\link[=lulu]{lulu()}}}
 }
 \value{
 a list of for object

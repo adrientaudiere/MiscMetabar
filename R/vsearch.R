@@ -19,12 +19,11 @@
 #' @examplesIf MiscMetabar:::is_vsearch_installed()
 #' \donttest{
 #' file_dna <- tempfile("dna.fa")
-#' seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCAACCCTCAAGCCCCTTATTGCTTGGTGTTGGGAGTTTAGCTGGCTTTATAGCGGTTAACTCCCTAAATATACTGGCG",
-#'   nbchar = 200,
+#' seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCAACC",
 #'   file = file_dna, names = "seq1"
 #' )
 #'
-#' res <- vs_search_global(data_fungi, file_dna)
+#' res <- vs_search_global(data_fungi, path_to_fasta = file_dna)
 #' unlink(file_dna)
 #'
 #' res[res$identity != "*", ]
@@ -58,7 +57,7 @@ vs_search_global <- function(physeq,
   }
   if (!is.null(seq2search)) {
     if (inherits(seq2search, "character")) {
-      seq2search <- Biostrings::readDNAStringSet(seq2search)
+      seq2search <- Biostrings::DNAStringSet(seq2search)
     }
     Biostrings::writeXStringSet(seq2search, paste0(tempdir(), "seq2search.fasta"))
     seq2search <- paste0(tempdir(), "seq2search.fasta")

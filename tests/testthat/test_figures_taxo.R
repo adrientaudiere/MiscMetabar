@@ -78,7 +78,8 @@ test_that("plot_tax_pq works with data_fungi dataset", {
         data_fungi_mini,
         "Time",
         merge_sample_by = "Time",
-        taxa_fill = "Class"
+        taxa_fill = "Class",
+        nb_print_value = 2
       )
   ))
   expect_s3_class(pt, "ggplot")
@@ -206,7 +207,7 @@ test_that("multitax_bar_pq works with GlobalPatterns dataset", {
   )
   skip_on_cran()
   expect_s3_class(
-    multitax_bar_pq(GP_archae, "Phylum", "Class", "Order"),
+    multitax_bar_pq(GP_archae, "Phylum", "Class", "Order", nb_seq = FALSE),
     "ggplot"
   )
   expect_s3_class(
@@ -328,6 +329,16 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
       "Class",
       nb_seq = FALSE,
       log10trans = FALSE
+    ),
+    "ggplot"
+  )
+  expect_s3_class(
+    treemap_pq(
+      data_fungi_mini,
+      "Order",
+      "Class",
+      nb_seq = FALSE,
+      log10trans = TRUE
     ),
     "ggplot"
   )
