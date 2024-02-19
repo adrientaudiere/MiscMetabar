@@ -3,8 +3,9 @@ data(enterotype)
 
 test_that("tax_datatable function works fine with data_fungi dataset", {
   skip_on_os("windows")
-  expect_silent(taxdt <- tax_datatable(data_fungi))
   skip_on_cran()
+  expect_silent(taxdt <- tax_datatable(data_fungi))
+
   expect_s3_class(taxdt, "datatables")
   expect_silent(taxdt <- tax_datatable(data_fungi, taxonomic_level = 1:2))
   expect_s3_class(taxdt, "datatables")
@@ -15,8 +16,8 @@ test_that("tax_datatable function works fine with data_fungi dataset", {
 
 test_that("tax_datatable function works fine with enterotype dataset", {
   skip_on_os("windows")
-  expect_silent(tax_datatable(enterotype))
   skip_on_cran()
+  expect_silent(tax_datatable(enterotype))
   expect_s3_class(tax_datatable(enterotype), "datatables")
   expect_silent(tax_datatable(enterotype, modality = enterotype@sam_data$SeqTech))
   expect_s3_class(tax_datatable(enterotype, modality = enterotype@sam_data$SeqTech), "datatables")

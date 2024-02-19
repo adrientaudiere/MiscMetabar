@@ -31,6 +31,10 @@ is \code{sum}. Can be a formula to be converted to a function by
 \item{reorder}{Logical specifying whether to reorder the new (merged)
 samples by name}
 }
+\value{
+A new phyloseq-class, otu_table or sam_data object depending on
+the class of the x param
+}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 

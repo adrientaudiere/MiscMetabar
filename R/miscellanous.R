@@ -288,13 +288,14 @@ funky_color <-
 #' @author Adrien Taudière
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ex_file <- system.file("extdata", "ex_R1_001.fastq.gz",
 #'   package = "MiscMetabar",
 #'   mustWork = TRUE
 #' )
-#' subsample_fastq(ex_file, "your_path_to_output")
-#' subsample_fastq(list_fastq_files("extdata"), "your_path_to_output", n = 10)
+#' subsample_fastq(ex_file, paste0(tempdir(), "/output_fastq"))
+#' subsample_fastq(list_fastq_files("extdata"), paste0(tempdir(), "/output_fastq"), n = 10)
+#' unlink(paste0(tempdir(), "/output_fastq"), recursive = TRUE)
 #' }
 subsample_fastq <- function(fastq_files,
                             folder_output = "subsample",
@@ -313,57 +314,6 @@ subsample_fastq <- function(fastq_files,
 ################################################################################
 
 ################################################################################
-#' Install a package if not present
-#'
-#' @description
-#'  `r lifecycle::badge("experimental")`
-#'
-#' @param pkg The name of the package
-#' @param use_pak (logical, default TRUE) Use of `pak::pkg_install()`. If FALSE
-#'   use the base `install.package()` function or the function
-#'   `BiocManager::install()` if bioconductor_pkg is true or the function
-#' @param bioconductor_pkg (logical, default FALSE). If use_pak is TRUE,
-#'   do nothing, else use `BiocManager::install()` to install the package.
-#' @param github_pkg (logical, default FALSE). If use_pak is TRUE,
-#'   do nothing, else use `devtools::install_github` to install the package.
-#' @param verbose (logical, default FALSE) Does the function print message?
-#' @return Nothing
-#' @author Adrien Taudière
-#' @export
-install_pkg_needed <- function(pkg, use_pak = TRUE, bioconductor_pkg = FALSE,
-                               github_pkg = FALSE, verbose = FALSE) {
-  if (!requireNamespace(pkg, quietly = TRUE)) {
-    if (verbose) {
-      message(paste0("Installation of the package : ", pkg))
-    }
-    if (use_pak) {
-      if (!requireNamespace("pak", quietly = TRUE)) {
-        install.packages("pak")
-      }
-      pak::pkg_install(pkg)
-    } else {
-      if (bioconductor_pkg) {
-        if (!requireNamespace("BiocManager", quietly = TRUE)) {
-          install.packages("BiocManager")
-        }
-        BiocManager::install(pkg)
-      } else if (github_pkg) {
-        if (!requireNamespace("devtools", quietly = TRUE)) {
-          install.packages("devtools", quietly = TRUE)
-        }
-        devtools::install_github(pkg)
-      } else {
-        install.packages(pkg)
-      }
-    }
-  } else {
-    if (verbose) {
-      message(paste0(pkg, " is already present."))
-    }
-  }
-}
-
-################################################################################
 #' Test if cutadapt is installed.
 #'
 #' @description
@@ -374,12 +324,11 @@ install_pkg_needed <- function(pkg, use_pak = TRUE, bioconductor_pkg = FALSE,
 #'
 #' @param args_before_cutadapt : (String) A one line bash command to run before
 #' to run cutadapt. For examples, "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv &&" allow to bypass the conda init which asks to restart the shell
-#' @keywords internal
-#' @noRd
+#' @export
 #' @return A logical that say if cutadapt is install in
 #'
 #' @examples
-#' MiscMetabar:::is_cutadapt_installed()
+#' MiscMetabar::is_cutadapt_installed()
 #' @author Adrien Taudière
 
 is_cutadapt_installed <- function(args_before_cutadapt = "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv && ") {
@@ -399,12 +348,11 @@ is_cutadapt_installed <- function(args_before_cutadapt = "source ~/miniconda3/et
 #'   test coverage
 #'
 #' @param path (default: falco) Path to falco
-#' @keywords internal
-#' @noRd
+#' @export
 #' @return A logical that say if falco is install in
 #'
 #' @examples
-#' MiscMetabar:::is_falco_installed()
+#' MiscMetabar::is_falco_installed()
 #' @author Adrien Taudière
 
 is_falco_installed <- function(path = "falco") {
@@ -422,12 +370,11 @@ is_falco_installed <- function(path = "falco") {
 #'   test coverage
 #'
 #' @param path (default: swarm) Path to falco
-#' @keywords internal
-#' @noRd
+#' @export
 #' @return A logical that say if swarm is install in
 #'
 #' @examples
-#' MiscMetabar:::is_swarm_installed()
+#' MiscMetabar::is_swarm_installed()
 #' @author Adrien Taudière
 
 is_swarm_installed <- function(path = "swarm") {
@@ -445,12 +392,11 @@ is_swarm_installed <- function(path = "swarm") {
 #'   test coverage
 #'
 #' @param path (default: vsearch) Path to vsearch
-#' @keywords internal
-#' @noRd
+#' @export
 #' @return A logical that say if vsearch is install in
 #'
 #' @examples
-#' MiscMetabar:::is_vsearch_installed()
+#' MiscMetabar::is_vsearch_installed()
 #' @author Adrien Taudière
 
 is_vsearch_installed <- function(path = "vsearch") {

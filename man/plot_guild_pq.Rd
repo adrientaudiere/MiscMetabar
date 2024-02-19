@@ -27,23 +27,29 @@ A ggplot2 object
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
-\dontrun{
-
-df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)
-df <- add_funguild_info(df,
+\donttest{
+d_fung_mini <- add_funguild_info(data_fungi_mini,
   taxLevels = c(
-    "Domain", "Phylum", "Class", "Order",
-    "Family", "Genus", "Species"
+    "Domain",
+    "Phylum",
+    "Class",
+    "Order",
+    "Family",
+    "Genus",
+    "Species"
   )
 )
-p <- plot_guild_pq(df)
-library("patchwork")
-(plot_guild_pq(subset_samples(df, Height == "Low"),
-  levels_order = p$data$Guild[order(p$data$nb_seq)]
-) + theme(legend.position = "none")) +
-  (plot_guild_pq(subset_samples(df, Height == "High"),
+sort(table(d_fung_mini@tax_table[, "guild"]), decreasing = TRUE)
+
+p <- plot_guild_pq(d_fung_mini)
+if(!requireNamespace("patchwork")) {
+  (plot_guild_pq(subset_samples(d_fung_mini, Height == "Low"),
     levels_order = p$data$Guild[order(p$data$nb_seq)]
-  ) + ylab("") + theme(axis.text.y = element_blank()))
+  ) + theme(legend.position = "none")) +
+    (plot_guild_pq(subset_samples(d_fung_mini, Height == "High"),
+      levels_order = p$data$Guild[order(p$data$nb_seq)]
+    ) + ylab("") + theme(axis.text.y = element_blank()))
+}
 }
 }
 \seealso{

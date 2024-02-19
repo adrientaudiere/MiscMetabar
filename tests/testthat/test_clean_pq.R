@@ -1,5 +1,3 @@
-data("data_fungi")
-
 data_fungi_test <- data_fungi
 data_fungi_test@otu_table[, 1] <- rep(0, nrow(data_fungi_test@otu_table))
 data_fungi_test@otu_table[10, ] <- rep(0, ncol(data_fungi_test@otu_table))

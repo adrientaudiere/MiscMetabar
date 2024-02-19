@@ -331,8 +331,8 @@ test_that("plot_LCBD_pq works with data_fungi dataset", {
 
 
 test_that("LCBD_pq works with data_fungi_mini dataset", {
-  expect_s3_class(LCBD_pq(data_fungi_mini, nperm = 100), "beta.div")
   skip_on_cran()
+  expect_s3_class(LCBD_pq(data_fungi_mini, nperm = 100), "beta.div")
   expect_s3_class(
     LCBD_pq(data_fungi_mini, nperm = 100, method = "jaccard"),
     "beta.div"
@@ -340,6 +340,7 @@ test_that("LCBD_pq works with data_fungi_mini dataset", {
 })
 
 test_that("plot_LCBD_pq works with data_fungi_mini dataset", {
+  skip_on_cran()
   expect_s3_class(
     plot_LCBD_pq(
       data_fungi_mini,
@@ -348,7 +349,6 @@ test_that("plot_LCBD_pq works with data_fungi_mini dataset", {
     ),
     "ggplot"
   )
-  skip_on_cran()
   expect_s3_class(
     plot_LCBD_pq(
       data_fungi_mini,
@@ -372,8 +372,8 @@ test_that("plot_LCBD_pq works with data_fungi_mini dataset", {
 
 
 test_that("plot_SCBD_pq works with data_fungi_mini dataset", {
-  expect_s3_class(plot_SCBD_pq(data_fungi_mini), "ggplot")
   skip_on_cran()
+  expect_s3_class(plot_SCBD_pq(data_fungi_mini), "ggplot")
   expect_s3_class(
     plot_SCBD_pq(
       data_fungi_mini,

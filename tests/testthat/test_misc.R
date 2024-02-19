@@ -93,15 +93,6 @@ withr::local_envvar(
   .local_envir = teardown_env()
 )
 
-test_that("install_pkg_needed works fine", {
-  expect_message(install_pkg_needed("abc", verbose = TRUE))
-  skip_on_cran()
-  expect_message(install_pkg_needed("MiscMetabar", verbose = TRUE))
-  expect_silent(install_pkg_needed("MiscMetabar"))
-  expect_silent(suppressMessages(install_pkg_needed("microbiomeDataSets")))
-  expect_silent(suppressMessages(install_pkg_needed("microbiomeDataSets", bioconductor_pkg = TRUE, use_pak = FALSE)))
-})
-
 test_that("add_funguild_info works fine", {
   skip_on_cran()
   data_f <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)

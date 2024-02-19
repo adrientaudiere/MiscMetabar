@@ -75,25 +75,26 @@ use this function.
 \examples{
 \dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
-library("phangorn")
-df <- subset_taxa_pq(data_fungi_mini, taxa_sums(data_fungi_mini) > 9000)
-df_tree <- build_phytree_pq(df, nb_bootstrap = 2)
-plot(df_tree$UPGMA)
-plotBS(df_tree$UPGMA, df_tree$UPGMA_bs, main = "UPGMA")
-plot(df_tree$NJ, "unrooted")
-plot(df_tree$ML)
-# plotBS(df_tree$ML_bs)
-plotBS(df_tree$ML$tree, df_tree$ML_bs, p = 20, frame = "circle")
-plotBS(
-  df_tree$ML$tree,
-  df_tree$ML_bs,
-  p = 20,
-  frame = "circle",
-  method = "TBE"
-)
-plot(consensusNet(df_tree$ML_bs))
-plot(consensusNet(df_tree$NJ_bs))
-ps_tree <- merge_phyloseq(df, df_tree$ML$tree)
+if(!requireNamespace("phangorn")) {
+  df <- subset_taxa_pq(data_fungi_mini, taxa_sums(data_fungi_mini) > 9000)
+  df_tree <- build_phytree_pq(df, nb_bootstrap = 2)
+  plot(df_tree$UPGMA)
+  phangorn::plotBS(df_tree$UPGMA, df_tree$UPGMA_bs, main = "UPGMA")
+  plot(df_tree$NJ, "unrooted")
+  plot(df_tree$ML)
+
+  phangorn::plotBS(df_tree$ML$tree, df_tree$ML_bs, p = 20, frame = "circle")
+  phangorn::plotBS(
+    df_tree$ML$tree,
+    df_tree$ML_bs,
+    p = 20,
+    frame = "circle",
+    method = "TBE"
+  )
+  plot(phangorn::consensusNet(df_tree$ML_bs))
+  plot(phangorn::consensusNet(df_tree$NJ_bs))
+  ps_tree <- merge_phyloseq(df, df_tree$ML$tree)
+}
 }
 \dontshow{\}) # examplesIf}
 }

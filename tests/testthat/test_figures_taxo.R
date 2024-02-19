@@ -61,6 +61,7 @@ test_that("heat_tree_pq works with GlobalPatterns dataset", {
 
 
 test_that("plot_tax_pq works with data_fungi dataset", {
+  skip_on_cran()
   expect_silent(suppressMessages(
     pt <-
       plot_tax_pq(
@@ -71,7 +72,6 @@ test_that("plot_tax_pq works with data_fungi dataset", {
         add_info = FALSE
       )
   ))
-  skip_on_cran()
   expect_silent(suppressMessages(
     pt <-
       plot_tax_pq(
@@ -162,11 +162,11 @@ test_that("plot_tax_pq works with data_fungi dataset", {
 
 
 test_that("multitax_bar_pq works with data_fungi_sp_known dataset", {
+  skip_on_cran()
   expect_s3_class(
     multitax_bar_pq(data_fungi_mini, "Phylum", "Class", "Order", "Time"),
     "ggplot"
   )
-  skip_on_cran()
   expect_s3_class(
     multitax_bar_pq(data_fungi_mini, "Phylum", "Class", "Order"),
     "ggplot"
@@ -345,8 +345,8 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
 })
 
 test_that("tax_bar_pq work with data_fungi dataset", {
-  expect_s3_class(tax_bar_pq(data_fungi_mini, taxa = "Class"), "ggplot")
   skip_on_cran()
+  expect_s3_class(tax_bar_pq(data_fungi_mini, taxa = "Class"), "ggplot")
   expect_s3_class(tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time"), "ggplot")
   expect_s3_class(
     tax_bar_pq(

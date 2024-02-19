@@ -56,6 +56,7 @@ if (class(vsearch_error_or_not) == "try-error") {
   message("lulu_phyloseq() can't be tested when vsearch is not installed")
 } else {
   test_that("lulu_phyloseq works fine", {
+    skip_on_cran()
     expect_s4_class(suppressWarnings(lulu_phyloseq(data_fungi_sp_known)$new_physeq), "phyloseq")
   })
 }

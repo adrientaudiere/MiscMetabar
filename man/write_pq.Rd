@@ -84,10 +84,9 @@ and if present a phy_tree in Newick format
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
 }
 \examples{
-\dontrun{
-write_pq(data_fungi, path = "phyloseq")
-write_pq(data_fungi, path = "phyloseq", one_file = TRUE)
-}
+write_pq(data_fungi, path = paste0(tempdir(), "/phyloseq"))
+write_pq(data_fungi, path = paste0(tempdir(), "/phyloseq"), one_file = TRUE)
+unlink(paste0(tempdir(), "/phyloseq"), recursive = TRUE)
 }
 \seealso{
 \code{\link[=save_pq]{save_pq()}}

@@ -55,9 +55,9 @@ This function is mainly a wrapper of the work of others.
 Please cite \code{phyloseqGraphTest} package.
 }
 \examples{
+\donttest{
 data(enterotype)
 graph_test_pq(enterotype, fact = "SeqTech")
-\donttest{
 graph_test_pq(enterotype, fact = "Enterotype", na_remove = TRUE)
 }
 }

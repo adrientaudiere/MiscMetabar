@@ -12,6 +12,7 @@ adonis_pq(
   na_remove = FALSE,
   correction_for_sample_size = FALSE,
   rarefy_nb_seqs = FALSE,
+  verbose = TRUE,
   ...
 )
 }
@@ -46,6 +47,8 @@ the form \code{y~Library_Size + Biological_Effect} following recommendation of
 \code{phyloseq::rarefy_even_depth()}.
 if \code{correction_for_sample_size} is TRUE, rarefy_nb_seqs will have no
 effect.}
+
+\item{verbose}{(logical, default TRUE) If TRUE, prompt some messages.}
 
 \item{...}{Other arguments passed on to \code{\link[vegan:adonis]{vegan::adonis2()}} function.}
 }

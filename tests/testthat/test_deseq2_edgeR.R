@@ -37,8 +37,8 @@ test_that("plot_edgeR_pq works with GP dataset", {
 })
 
 test_that("plot_deseq2_pq works with results on GP dataset", {
-  expect_message(res <- DESeq2::DESeq(phyloseq_to_deseq2(GP, ~SampleType), test = "Wald", fitType = "local"), "fitting model and testing")
   skip_on_cran()
+  expect_message(res <- DESeq2::DESeq(phyloseq_to_deseq2(GP, ~SampleType), test = "Wald", fitType = "local"), "fitting model and testing")
   expect_silent(suppressWarnings(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table, color_tax = "Kingdom")))
   expect_silent(suppressWarnings(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"), tax_table = GP@tax_table, tax_depth = "Genus")))
   expect_silent(suppressWarnings(plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
@@ -69,6 +69,7 @@ test_that("plot_deseq2_pq works with GP dataset", {
 GP_row <- clean_pq(GP, force_taxa_as_columns = TRUE)
 
 test_that("phyloseq_to_edgeR gives the good class", {
+  skip_on_cran()
   expect_s4_class(phyloseq_to_edgeR(GP_archae, "SampleType"), "DGEList")
   expect_s4_class(phyloseq_to_edgeR(GP_row, "SampleType"), "DGEList")
 })

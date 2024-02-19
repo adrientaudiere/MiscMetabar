@@ -60,8 +60,7 @@ The version of LULU is a fork of Adrien Taudière (\url{https://github.com/adrie
 from \url{https://github.com/tobiasgf/lulu}
 }
 \examples{
-\dontrun{
-data(data_fungi_sp_known)
+\donttest{
 lulu_pq(data_fungi_sp_known)
 }
 }

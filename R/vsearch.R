@@ -16,7 +16,7 @@
 #'   - temp.fasta (refseq in fasta)
 #'   - cluster.fasta (centroid)
 #'   - temp.uc (clusters)
-#' @examplesIf MiscMetabar:::is_vsearch_installed()
+#' @examplesIf MiscMetabar::is_vsearch_installed()
 #' \donttest{
 #' file_dna <- tempfile("dna.fa")
 #' seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCAACC",
@@ -163,7 +163,7 @@ vs_search_global <- function(physeq,
 #'   \url{https://github.com/torognes/swarm/}.
 #'
 #' @export
-#' @examplesIf MiscMetabar:::is_swarm_installed()
+#' @examplesIf MiscMetabar::is_swarm_installed()
 #' summary_plot_pq(data_fungi)
 #' system2("swarm", "-h")
 #'
@@ -372,7 +372,7 @@ swarm_clustering <- function(physeq = NULL,
 #' @export
 #' @author Adrien Taudière
 #'
-#' @examplesIf MiscMetabar:::is_vsearch_installed()
+#' @examplesIf MiscMetabar::is_vsearch_installed()
 #' \donttest{
 #' summary_plot_pq(data_fungi)
 #' d_vs <- vsearch_clustering(data_fungi)
@@ -500,7 +500,7 @@ vsearch_clustering <- function(physeq = NULL,
 #'
 #' @export
 #'
-#' @examplesIf MiscMetabar:::is_vsearch_installed()
+#' @examplesIf MiscMetabar::is_vsearch_installed()
 #' \donttest{
 #' data_fungi_nochim <- chimera_removal_vs(data_fungi)
 #' data_fungi_nochim_16 <- chimera_removal_vs(data_fungi,
@@ -623,7 +623,7 @@ chimera_removal_vs <-
 #'   (`$chimera`) and bordeline taxa (`$borderline`)
 #' @export
 #'
-#' @examplesIf MiscMetabar:::is_vsearch_installed()
+#' @examplesIf MiscMetabar::is_vsearch_installed()
 #' \donttest{
 #' chimera_detection_vs(
 #'   seq2search = data_fungi@refseq,

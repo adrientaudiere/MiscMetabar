@@ -23,9 +23,9 @@
 #'   [phyloseqGraphTest::graph_perm_test()] function
 #'
 #' @examples
+#' \donttest{
 #' data(enterotype)
 #' graph_test_pq(enterotype, fact = "SeqTech")
-#' \donttest{
 #' graph_test_pq(enterotype, fact = "Enterotype", na_remove = TRUE)
 #' }
 #' @author Adrien Taudière
@@ -119,6 +119,7 @@ graph_test_pq <- function(physeq,
 #'    `phyloseq::rarefy_even_depth()`.
 #'   if `correction_for_sample_size` is TRUE, rarefy_nb_seqs will have no
 #'   effect.
+#' @param verbose (logical, default TRUE) If TRUE, prompt some messages.
 #' @param ... Other arguments passed on to [vegan::adonis2()] function.
 #' @return The function returns an anova.cca result object with a
 #'   new column for partial R^2. See help of [vegan::adonis2()] for
@@ -144,6 +145,7 @@ adonis_pq <- function(physeq,
                       na_remove = FALSE,
                       correction_for_sample_size = FALSE,
                       rarefy_nb_seqs = FALSE,
+                      verbose = TRUE,
                       ...) {
   physeq <- clean_pq(
     physeq,
@@ -175,7 +177,9 @@ adonis_pq <- function(physeq,
   if (na_remove) {
     new_physeq <- physeq
     for (tl in term_lab) {
-      print(tl)
+      if (verbose) {
+        message(tl)
+      }
       new_physeq <-
         subset_samples_pq(new_physeq, !is.na(physeq@sam_data[[tl]]))
     }
@@ -257,8 +261,6 @@ LCBD_pq <- function(physeq,
     silent = TRUE
   )
 
-  install_pkg_needed("adespatial")
-
   mat <- as.matrix(unclass(physeq@otu_table))
   resBeta <- adespatial::beta.div(mat, adj = FALSE, ...)
 
@@ -301,20 +303,21 @@ LCBD_pq <- function(physeq,
 #'   nperm = 100, only_plot_significant = TRUE,
 #'   pval = 0.2
 #' )
-#' library("patchwork")
-#' plot_LCBD_pq(data_fungi_mini,
-#'   nperm = 100, only_plot_significant = FALSE,
-#'   sam_variables = c("Time", "Height")
-#' )
-#' plot_LCBD_pq(data_fungi_mini,
-#'   nperm = 100, only_plot_significant = TRUE, pval = 0.2,
-#'   sam_variables = c("Time", "Height", "Tree_name")
-#' ) &
-#'   theme(
-#'     legend.key.size = unit(0.4, "cm"),
-#'     legend.text = element_text(size = 10),
-#'     axis.title.x = element_text(size = 6)
+#' if(!requireNamespace("patchwork")) {
+#'   plot_LCBD_pq(data_fungi_mini,
+#'     nperm = 100, only_plot_significant = FALSE,
+#'     sam_variables = c("Time", "Height")
 #'   )
+#'   plot_LCBD_pq(data_fungi_mini,
+#'     nperm = 100, only_plot_significant = TRUE, pval = 0.2,
+#'     sam_variables = c("Time", "Height", "Tree_name")
+#'   ) &
+#'     theme(
+#'       legend.key.size = unit(0.4, "cm"),
+#'       legend.text = element_text(size = 10),
+#'       axis.title.x = element_text(size = 6)
+#'     )
+#' }
 #' }
 #' @author Adrien Taudière
 #' @details

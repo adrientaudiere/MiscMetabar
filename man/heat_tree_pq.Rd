@@ -27,7 +27,7 @@ and the number of sequences under the name \code{nb_sequences}
 }
 \examples{
 \donttest{
-library("metacoder")
+if(!requireNamespace("metacoder")){
 data("GlobalPatterns", package = "phyloseq")
 
 GPsubset <- subset_taxa(
@@ -61,7 +61,7 @@ heat_tree_pq(GPsubset,
   node_size_trans = "log10 area"
 )
 }
-
+}
 }
 \author{
 Adrien Taudière

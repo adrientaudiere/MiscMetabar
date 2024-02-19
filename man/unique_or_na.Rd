@@ -9,6 +9,9 @@ unique_or_na(x)
 \arguments{
 \item{x}{A vector}
 }
+\value{
+Either a single value (if \code{unique(x)} return a single value) or a NA
+}
 \description{
 If \code{unique(x)} is a single value, return it; otherwise, return an NA of the
 same type as \code{x}. If \code{x} is a factor, then the levels and ordered status
