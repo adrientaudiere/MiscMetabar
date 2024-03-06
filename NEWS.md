@@ -1,3 +1,9 @@
+# MiscMetabar 0.8 (in development)
+
+- Add param `plot_with_tuckey` to `hill_pq()`.
+
+
+
 # MiscMetabar 0.7 (in development)
 
 - Add functions `chimera_detection_vs()` and `chimera_removal_vs()` to process chimera detection and removal using [vsearch](https://github.com/torognes/vsearch) software 

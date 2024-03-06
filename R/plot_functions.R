@@ -1206,6 +1206,9 @@ multiplot <-
 #'   Note that if letters and one_plot are both TRUE, tuckey HSD results
 #'   are discarded from the unique plot. In that case, use one_plot = FALSE
 #'   to see the tuckey HSD results in the fourth plot of the resulting list.
+#' @param plot_with_tuckey (logical, default TRUE). If one_plot is set to 
+#'   TRUE and letters to FALSE, allow to discard the tuckey plot part with
+#'   plot_with_tuckey = FALSE
 #' @param correction_for_sample_size (logical, default TRUE) This function
 #'   use a sqrt of the read numbers in the linear model in order to
 #'   correct for uneven sampling depth.
@@ -1401,7 +1404,7 @@ hill_pq <-
 
     if (one_plot) {
       requireNamespace("patchwork", quietly = TRUE)
-      if (letters) {
+      if (letters || !plot_with_tuckey) {
         res <- ((p_0 + theme(legend.position = "none")) + labs(subtitle = element_blank()) +
           (p_1 + theme(legend.position = "none", axis.text.y = element_blank()) + labs(subtitle = element_blank()) + ylab(NULL)) +
           (p_2 + theme(legend.position = "none", axis.text.y = element_blank()) + labs(subtitle = element_blank()) + ylab(NULL)))
@@ -2648,7 +2651,10 @@ plot_tsne_pq <- function(physeq,
 #' @return A plot
 #' @export
 #'
-#'
+#' @examples 
+#' SRS_curve_pq(data_fungi_mini, max.sample.size = 200,
+#'              rarefy.comparison = TRUE, rarefy.repeats = 10)
+#' SRS_curve_pq(data_fungi_mini, max.sample.size = 2000, metric = "shannon")
 
 SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
   if (clean_pq) {

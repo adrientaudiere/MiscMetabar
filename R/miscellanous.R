@@ -404,4 +404,51 @@ is_vsearch_installed <- function(path = "vsearch") {
     silent = TRUE
   )) != "try-error")
 }
+
+#' Test if mumu is installed.
+#'
+#' @description
+#'  `r lifecycle::badge("maturing")`
+#'
+#' Useful for testthat and examples compilation for R CMD CHECK and
+#'   test coverage
+#'
+#' @param path (default: mumu) Path to mumu
+#' @export
+#' @return A logical that say if mumu is install in
+#'
+#' @examples
+#' MiscMetabar::is_mumu_installed()
+#' @author Adrien Taudière
+
+is_mumu_installed <- function(path = "mumu") {
+  return(class(try(system(paste0(path, " 2>&1"), intern = TRUE),
+    silent = TRUE
+  )) != "try-error")
+}
+
+
+#' Test if krona is installed.
+#'
+#' @description
+#'  `r lifecycle::badge("maturing")`
+#'
+#' Useful for testthat and examples compilation for R CMD CHECK and
+#'   test coverage
+#'
+#' @param path (default: krona) Path to krona
+#' @export
+#' @return A logical that say if krona is install in
+#'
+#' @examples
+#' MiscMetabar::is_krona_installed()
+#' @author Adrien Taudière
+
+is_krona_installed <- function(path = "ktImportKrona") {
+  return(class(try(system(paste0(path, " 2>&1"), intern = TRUE),
+    silent = TRUE
+  )) != "try-error")
+}
 ################################################################################
+
+ 

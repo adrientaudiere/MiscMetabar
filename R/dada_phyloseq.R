@@ -1013,7 +1013,7 @@ read_pq <- function(path = NULL,
 #' - "merged_ASV": the data.frame used to merged ASV
 #'
 #' @export
-#' @examples
+#' @examplesIf MiscMetabar::is_vsearch_installed()
 #' \donttest{
 #' lulu_pq(data_fungi_sp_known)
 #' }
@@ -1159,7 +1159,7 @@ lulu_pq <- function(physeq,
 #'   bash to obtain details about columns' signification.
 #'
 #' @export
-#' @examples
+#' @examplesIf MiscMetabar::is_mumu_installed()
 #' \dontrun{
 #' mumu_pq(data_fungi_sp_known)
 #' }
