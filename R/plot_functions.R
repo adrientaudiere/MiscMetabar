@@ -2655,9 +2655,9 @@ plot_tsne_pq <- function(physeq,
 #' @examples
 #' SRS_curve_pq(data_fungi_mini,
 #'   max.sample.size = 200,
-#'   rarefy.comparison = TRUE, rarefy.repeats = 5
+#'   rarefy.comparison = TRUE, rarefy.repeats = 3
 #' )
-#' SRS_curve_pq(data_fungi_mini, max.sample.size = 1000, metric = "shannon")
+#' SRS_curve_pq(data_fungi_mini, max.sample.size = 500, metric = "shannon")
 SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
   if (clean_pq) {
     physeq <- clean_pq(physeq)
