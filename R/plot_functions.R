@@ -1206,7 +1206,7 @@ multiplot <-
 #'   Note that if letters and one_plot are both TRUE, tuckey HSD results
 #'   are discarded from the unique plot. In that case, use one_plot = FALSE
 #'   to see the tuckey HSD results in the fourth plot of the resulting list.
-#' @param plot_with_tuckey (logical, default TRUE). If one_plot is set to 
+#' @param plot_with_tuckey (logical, default TRUE). If one_plot is set to
 #'   TRUE and letters to FALSE, allow to discard the tuckey plot part with
 #'   plot_with_tuckey = FALSE
 #' @param correction_for_sample_size (logical, default TRUE) This function
@@ -1248,6 +1248,7 @@ hill_pq <-
            add_points = FALSE,
            add_info = TRUE,
            one_plot = FALSE,
+           plot_with_tuckey = TRUE,
            correction_for_sample_size = TRUE) {
     var <- sym(variable)
     if (is.na(color_fac)) {
@@ -1726,14 +1727,14 @@ summary_plot_pq <- function(physeq,
 #'   use this function.
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' \donttest{
-#' if(!requireNamespace("rotl")){
-#' tr <- rotl_pq(data_fungi_mini, species_colnames = "Genus_species")
-#' plot(tr)
+#' if (!requireNamespace("rotl")) {
+#'   tr <- rotl_pq(data_fungi_mini, species_colnames = "Genus_species")
+#'   plot(tr)
 #'
-#' tr_Asco <- rotl_pq(data_fungi, species_colnames = "Genus_species", context_name = "Ascomycetes")
-#' plot(tr_Asco)
+#'   tr_Asco <- rotl_pq(data_fungi, species_colnames = "Genus_species", context_name = "Ascomycetes")
+#'   plot(tr_Asco)
 #' }
-#'}
+#' }
 rotl_pq <- function(physeq,
                     species_colnames = "Genus_species",
                     context_name = "All life") {
@@ -1784,39 +1785,39 @@ rotl_pq <- function(physeq,
 #'
 #' @examples
 #' \donttest{
-#' if(!requireNamespace("metacoder")){
-#' data("GlobalPatterns", package = "phyloseq")
+#' if (!requireNamespace("metacoder")) {
+#'   data("GlobalPatterns", package = "phyloseq")
 #'
-#' GPsubset <- subset_taxa(
-#'   GlobalPatterns,
-#'   GlobalPatterns@tax_table[, 1] == "Bacteria"
-#' )
+#'   GPsubset <- subset_taxa(
+#'     GlobalPatterns,
+#'     GlobalPatterns@tax_table[, 1] == "Bacteria"
+#'   )
 #'
-#' GPsubset <- subset_taxa(
-#'   GPsubset,
-#'   rowSums(GPsubset@otu_table) > 5000
-#' )
+#'   GPsubset <- subset_taxa(
+#'     GPsubset,
+#'     rowSums(GPsubset@otu_table) > 5000
+#'   )
 #'
-#' GPsubset <- subset_taxa(
-#'   GPsubset,
-#'   rowSums(is.na(GPsubset@tax_table)) == 0
-#' )
+#'   GPsubset <- subset_taxa(
+#'     GPsubset,
+#'     rowSums(is.na(GPsubset@tax_table)) == 0
+#'   )
 #'
-#' heat_tree_pq(GPsubset,
-#'   node_size = n_obs,
-#'   node_color = n_obs,
-#'   node_label = taxon_names,
-#'   tree_label = taxon_names,
-#'   node_size_trans = "log10 area"
-#' )
+#'   heat_tree_pq(GPsubset,
+#'     node_size = n_obs,
+#'     node_color = n_obs,
+#'     node_label = taxon_names,
+#'     tree_label = taxon_names,
+#'     node_size_trans = "log10 area"
+#'   )
 #'
-#' heat_tree_pq(GPsubset,
-#'   node_size = nb_sequences,
-#'   node_color = n_obs,
-#'   node_label = taxon_names,
-#'   tree_label = taxon_names,
-#'   node_size_trans = "log10 area"
-#' )
+#'   heat_tree_pq(GPsubset,
+#'     node_size = nb_sequences,
+#'     node_color = n_obs,
+#'     node_label = taxon_names,
+#'     tree_label = taxon_names,
+#'     node_size_trans = "log10 area"
+#'   )
 #' }
 #' }
 heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
@@ -2651,11 +2652,12 @@ plot_tsne_pq <- function(physeq,
 #' @return A plot
 #' @export
 #'
-#' @examples 
-#' SRS_curve_pq(data_fungi_mini, max.sample.size = 200,
-#'              rarefy.comparison = TRUE, rarefy.repeats = 10)
-#' SRS_curve_pq(data_fungi_mini, max.sample.size = 2000, metric = "shannon")
-
+#' @examples
+#' SRS_curve_pq(data_fungi_mini,
+#'   max.sample.size = 200,
+#'   rarefy.comparison = TRUE, rarefy.repeats = 5
+#' )
+#' SRS_curve_pq(data_fungi_mini, max.sample.size = 1000, metric = "shannon")
 SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
   if (clean_pq) {
     physeq <- clean_pq(physeq)
@@ -2692,32 +2694,32 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 #'
 #' @examples
 #' \donttest{
-#' if(!requireNamespace("iNEXT")){ 
-#' data("GlobalPatterns", package = "phyloseq")
-#' GPsubset <- subset_taxa(
-#'   GlobalPatterns,
-#'   GlobalPatterns@tax_table[, 1] == "Bacteria"
-#' )
-#' GPsubset <- subset_taxa(
-#'   GPsubset,
-#'   rowSums(GPsubset@otu_table) > 20000
-#' )
-#' GPsubset <- subset_taxa(
-#'   GPsubset,
-#'   rowSums(is.na(GPsubset@tax_table)) == 0
-#' )
-#' GPsubset@sam_data$human <- GPsubset@sam_data$SampleType %in%
-#'   c("Skin", "Feces", "Tong")
-#' res_iNEXT <- iNEXT_pq(
-#'   GPsubset,
-#'   merge_sample_by = "human",
-#'   q = 1,
-#'   datatype = "abundance",
-#'   nboot = 2
-#' )
-#' iNEXT::ggiNEXT(res_iNEXT)
-#' iNEXT::ggiNEXT(res_iNEXT, type = 2)
-#' iNEXT::ggiNEXT(res_iNEXT, type = 3)
+#' if (!requireNamespace("iNEXT")) {
+#'   data("GlobalPatterns", package = "phyloseq")
+#'   GPsubset <- subset_taxa(
+#'     GlobalPatterns,
+#'     GlobalPatterns@tax_table[, 1] == "Bacteria"
+#'   )
+#'   GPsubset <- subset_taxa(
+#'     GPsubset,
+#'     rowSums(GPsubset@otu_table) > 20000
+#'   )
+#'   GPsubset <- subset_taxa(
+#'     GPsubset,
+#'     rowSums(is.na(GPsubset@tax_table)) == 0
+#'   )
+#'   GPsubset@sam_data$human <- GPsubset@sam_data$SampleType %in%
+#'     c("Skin", "Feces", "Tong")
+#'   res_iNEXT <- iNEXT_pq(
+#'     GPsubset,
+#'     merge_sample_by = "human",
+#'     q = 1,
+#'     datatype = "abundance",
+#'     nboot = 2
+#'   )
+#'   iNEXT::ggiNEXT(res_iNEXT)
+#'   iNEXT::ggiNEXT(res_iNEXT, type = 2)
+#'   iNEXT::ggiNEXT(res_iNEXT, type = 3)
 #' }
 #' }
 #' @author Adrien Taudière

@@ -60,9 +60,11 @@ The version of LULU is a fork of Adrien Taudière (\url{https://github.com/adrie
 from \url{https://github.com/tobiasgf/lulu}
 }
 \examples{
+\dontshow{if (MiscMetabar::is_vsearch_installed()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
 lulu_pq(data_fungi_sp_known)
 }
+\dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{

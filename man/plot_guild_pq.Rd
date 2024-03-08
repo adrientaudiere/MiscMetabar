@@ -42,7 +42,7 @@ d_fung_mini <- add_funguild_info(data_fungi_mini,
 sort(table(d_fung_mini@tax_table[, "guild"]), decreasing = TRUE)
 
 p <- plot_guild_pq(d_fung_mini)
-if(!requireNamespace("patchwork")) {
+if (!requireNamespace("patchwork")) {
   (plot_guild_pq(subset_samples(d_fung_mini, Height == "Low"),
     levels_order = p$data$Guild[order(p$data$nb_seq)]
   ) + theme(legend.position = "none")) +

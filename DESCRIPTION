@@ -11,7 +11,7 @@ LazyData: true
 Depends:
     R (>= 3.5.0),
     phyloseq,
-    ggplot2,
+    ggplot2 (>= 3.5.0),
     dada2,
     dplyr
 Suggests: 

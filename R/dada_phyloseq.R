@@ -1780,7 +1780,7 @@ add_funguild_info <- function(physeq,
 #' sort(table(d_fung_mini@tax_table[, "guild"]), decreasing = TRUE)
 #'
 #' p <- plot_guild_pq(d_fung_mini)
-#' if(!requireNamespace("patchwork")) {
+#' if (!requireNamespace("patchwork")) {
 #'   (plot_guild_pq(subset_samples(d_fung_mini, Height == "Low"),
 #'     levels_order = p$data$Guild[order(p$data$nb_seq)]
 #'   ) + theme(legend.position = "none")) +
@@ -1935,7 +1935,7 @@ plot_guild_pq <-
 #'   use this function.
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' \donttest{
-#' if(!requireNamespace("phangorn")) {
+#' if (!requireNamespace("phangorn")) {
 #'   df <- subset_taxa_pq(data_fungi_mini, taxa_sums(data_fungi_mini) > 9000)
 #'   df_tree <- build_phytree_pq(df, nb_bootstrap = 2)
 #'   plot(df_tree$UPGMA)

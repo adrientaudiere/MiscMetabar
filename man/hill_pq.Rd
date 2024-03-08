@@ -12,6 +12,7 @@ hill_pq(
   add_points = FALSE,
   add_info = TRUE,
   one_plot = FALSE,
+  plot_with_tuckey = TRUE,
   correction_for_sample_size = TRUE
 )
 }
@@ -40,6 +41,10 @@ plot with the four plot inside using the patchwork package.
 Note that if letters and one_plot are both TRUE, tuckey HSD results
 are discarded from the unique plot. In that case, use one_plot = FALSE
 to see the tuckey HSD results in the fourth plot of the resulting list.}
+
+\item{plot_with_tuckey}{(logical, default TRUE). If one_plot is set to
+TRUE and letters to FALSE, allow to discard the tuckey plot part with
+plot_with_tuckey = FALSE}
 
 \item{correction_for_sample_size}{(logical, default TRUE) This function
 use a sqrt of the read numbers in the linear model in order to

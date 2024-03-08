@@ -303,7 +303,7 @@ LCBD_pq <- function(physeq,
 #'   nperm = 100, only_plot_significant = TRUE,
 #'   pval = 0.2
 #' )
-#' if(!requireNamespace("patchwork")) {
+#' if (!requireNamespace("patchwork")) {
 #'   plot_LCBD_pq(data_fungi_mini,
 #'     nperm = 100, only_plot_significant = FALSE,
 #'     sam_variables = c("Time", "Height")
