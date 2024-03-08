@@ -213,7 +213,12 @@ reference:
   - dist_pos_control
   - funky_color
   - get_file_extension
-  - install_pkg_needed
+  - is_cutadapt_installed
+  - is_falco_installed
+  - is_krona_installed
+  - is_mumu_installed
+  - is_swarm_installed
+  - is_vsearch_installed
   - multiplot
   - perc
   - are_modality_even_depth

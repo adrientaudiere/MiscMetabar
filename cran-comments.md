@@ -1,9 +1,18 @@
-## R CMD check results
+## Benjamin Altmann comments
 
-0 errors | 0 warnings | 1 note
+1. Examples for unexported function
+  plot_guild_pq() in:
+     merge_samples2.Rd
+Please export those functions or omit the example.
 
-* This is a First release.
+2. You still have some \dontrun{} examples. Please change that to \donttest{} or let us know why \dontrun{} is necessary in your case.
 
-- Examples with CPU (user + system) or elapsed time > 5s
--> Answer: This is an intrinsic problem with metabarcoding analyses that deal with large datasets. I've often reduced the datasets for the examples, but occasionally the use of quite large dataset is necessary. The functions ancombc_pq() and build_phytree_pq() rely on already time-consuming functions from other packages. The total example run time is 166s on my computer, which appears to be reasonable given the high number of examples in this package.
+3. Note, please wrap examples that need packages in 'Suggests' in if(requireNamespace("pkgname")){} instead.
 
+## Answers
+
+1. Sorry, I don't understand this error. merge_samples2() and plot_guild_pq() are exported. Moreover, there is no reference to plot_guild_pq() in the file merge_samples2.Rd.
+
+2. There are 5 still \dontrun in examples for functions relying on external software (namely blast, cutadapt, mumu and krona x2).
+
+3. Done. There's no more library() calls in examples. Thanks for the comment.

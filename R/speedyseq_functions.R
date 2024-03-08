@@ -38,7 +38,8 @@
 #' @param tax_adjust 0: no adjustment; 1: phyloseq-compatible adjustment; 2:
 #' conservative adjustment
 #' @export
-#'
+#' @return A new phyloseq-class, otu_table, tax_table, XStringset or
+#'   sam_data object depending on the class of the x param
 #' @seealso
 #' Function in MiscMetabar that use this function: [asv2otu()]
 #'
@@ -334,7 +335,8 @@ bad_flush_right <- function(x, bad = "BAD", na_bad = FALSE, k = length(x)) {
 #'   samples by name
 #'
 #' @export
-#'
+#' @return A new phyloseq-class, otu_table or sam_data object depending on
+#'   the class of the x param
 #' @examples
 #' data(enterotype)
 #'
@@ -510,6 +512,7 @@ setMethod(
 #'
 #' @param x A vector
 #' @export
+#' @return Either a single value (if `unique(x)` return a single value) or a NA
 #' @author Michael R. McLaren (orcid: [0000-0003-1575-473X](https://orcid.org/0000-0003-1575-473X))
 #' @examples
 #' f <- factor(c("a", "a", "b", "c"), ordered = TRUE)
@@ -579,13 +582,6 @@ merge_groups <- function(x, group, f = unique_or_na) {
 #' @keywords internal
 #' @noRd
 #'
-#' @examples
-#' \dontrun{
-#' x <- data.frame(var1 = letters[1:3], var2 = 7:9)
-#' rownames(x)
-#' sample_data(x)
-#' MiscMetabar:::sample_data_stable(x)
-#' }
 #' @author Michael R. McLaren (orcid: [0000-0003-1575-473X](https://orcid.org/0000-0003-1575-473X))
 sample_data_stable <- function(object) {
   # Modified from phyloseq's sample_data data.frame method; see

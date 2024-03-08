@@ -23,8 +23,8 @@ test_that("plot_tsne_pq works with data_fungi_mini dataset", {
 })
 
 test_that("SRS_curve_pq works with data_fungi_mini dataset", {
-  expect_silent(suppressMessages(sc <- SRS_curve_pq(data_fungi_mini)))
   skip_on_cran()
+  expect_silent(suppressMessages(sc <- SRS_curve_pq(data_fungi_mini)))
   expect_silent(suppressMessages(sc <- SRS_curve_pq(data_fungi_mini, clean_pq = TRUE)))
   expect_s3_class(sc, "recordedplot")
   expect_silent(suppressMessages(sc <- SRS_curve_pq(data_fungi_mini, metric = "shannon")))

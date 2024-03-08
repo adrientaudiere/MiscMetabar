@@ -10,12 +10,11 @@
 #' @param taxa (default: "Species") The taxonomic level you choose for x-positioning.
 #' @author Adrien Taudière
 #' @examples
-#'
-#' # Filter samples that don't have Enterotype
-#' data_fungi <- subset_samples(data_fungi, !is.na(Time))
-#' res <- mt(data_fungi, "Time", method = "fdr", test = "f", B = 300)
-#' plot_mt(res)
 #' \donttest{
+#' # Filter samples that don't have Time
+#' data_fungi_mini2 <- subset_samples(data_fungi_mini, !is.na(Time))
+#' res <- mt(data_fungi_mini2, "Time", method = "fdr", test = "f", B = 300)
+#' plot_mt(res)
 #' plot_mt(res, taxa = "Genus", color_tax = "Order")
 #' }
 #' @return a \code{\link{ggplot}}2 plot of result of a mt test
@@ -1207,6 +1206,9 @@ multiplot <-
 #'   Note that if letters and one_plot are both TRUE, tuckey HSD results
 #'   are discarded from the unique plot. In that case, use one_plot = FALSE
 #'   to see the tuckey HSD results in the fourth plot of the resulting list.
+#' @param plot_with_tuckey (logical, default TRUE). If one_plot is set to
+#'   TRUE and letters to FALSE, allow to discard the tuckey plot part with
+#'   plot_with_tuckey = FALSE
 #' @param correction_for_sample_size (logical, default TRUE) This function
 #'   use a sqrt of the read numbers in the linear model in order to
 #'   correct for uneven sampling depth.
@@ -1224,19 +1226,20 @@ multiplot <-
 #' @author Adrien Taudière
 #' @examples
 #'
-#' p <- hill_pq(data_fungi, "Height")
+#' p <- hill_pq(data_fungi_mini, "Height")
 #' p_h1 <- p[[1]] + theme(legend.position = "none")
 #' p_h2 <- p[[2]] + theme(legend.position = "none")
 #' p_h3 <- p[[3]] + theme(legend.position = "none")
 #' multiplot(plotlist = list(p_h1, p_h2, p_h3, p[[4]]), cols = 4)
 #'
+#' \donttest{
 #' # Artificially modify data_fungi to force alpha-diversity effect
 #' data_fungi_modif <- clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height)))
 #' data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <-
 #'   data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] +
 #'   sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
 #' p2 <- hill_pq(data_fungi_modif, "Height", letters = TRUE)
-#'
+#' }
 hill_pq <-
   function(physeq,
            variable,
@@ -1245,6 +1248,7 @@ hill_pq <-
            add_points = FALSE,
            add_info = TRUE,
            one_plot = FALSE,
+           plot_with_tuckey = TRUE,
            correction_for_sample_size = TRUE) {
     var <- sym(variable)
     if (is.na(color_fac)) {
@@ -1400,9 +1404,8 @@ hill_pq <-
     )
 
     if (one_plot) {
-      install_pkg_needed("patchwork")
       requireNamespace("patchwork", quietly = TRUE)
-      if (letters) {
+      if (letters || !plot_with_tuckey) {
         res <- ((p_0 + theme(legend.position = "none")) + labs(subtitle = element_blank()) +
           (p_1 + theme(legend.position = "none", axis.text.y = element_blank()) + labs(subtitle = element_blank()) + ylab(NULL)) +
           (p_2 + theme(legend.position = "none", axis.text.y = element_blank()) + labs(subtitle = element_blank()) + ylab(NULL)))
@@ -1494,7 +1497,6 @@ ggbetween_pq <- function(physeq, variable, one_plot = FALSE, rarefy_by_sample = 
   )
 
   if (one_plot) {
-    install_pkg_needed("patchwork")
     requireNamespace("patchwork", quietly = TRUE)
     res <- res[[1]] + res[[2]] + res[[3]]
   }
@@ -1725,14 +1727,14 @@ summary_plot_pq <- function(physeq,
 #'   use this function.
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' \donttest{
-#' library("rotl")
-#' tr <- rotl_pq(data_fungi_mini, species_colnames = "Genus_species")
-#' plot(tr)
+#' if (!requireNamespace("rotl")) {
+#'   tr <- rotl_pq(data_fungi_mini, species_colnames = "Genus_species")
+#'   plot(tr)
 #'
-#' tr_Asco <- rotl_pq(data_fungi, species_colnames = "Genus_species", context_name = "Ascomycetes")
-#' plot(tr_Asco)
+#'   tr_Asco <- rotl_pq(data_fungi, species_colnames = "Genus_species", context_name = "Ascomycetes")
+#'   plot(tr_Asco)
 #' }
-#'
+#' }
 rotl_pq <- function(physeq,
                     species_colnames = "Genus_species",
                     context_name = "All life") {
@@ -1783,41 +1785,41 @@ rotl_pq <- function(physeq,
 #'
 #' @examples
 #' \donttest{
-#' library("metacoder")
-#' data("GlobalPatterns", package = "phyloseq")
+#' if (!requireNamespace("metacoder")) {
+#'   data("GlobalPatterns", package = "phyloseq")
 #'
-#' GPsubset <- subset_taxa(
-#'   GlobalPatterns,
-#'   GlobalPatterns@tax_table[, 1] == "Bacteria"
-#' )
+#'   GPsubset <- subset_taxa(
+#'     GlobalPatterns,
+#'     GlobalPatterns@tax_table[, 1] == "Bacteria"
+#'   )
 #'
-#' GPsubset <- subset_taxa(
-#'   GPsubset,
-#'   rowSums(GPsubset@otu_table) > 5000
-#' )
+#'   GPsubset <- subset_taxa(
+#'     GPsubset,
+#'     rowSums(GPsubset@otu_table) > 5000
+#'   )
 #'
-#' GPsubset <- subset_taxa(
-#'   GPsubset,
-#'   rowSums(is.na(GPsubset@tax_table)) == 0
-#' )
+#'   GPsubset <- subset_taxa(
+#'     GPsubset,
+#'     rowSums(is.na(GPsubset@tax_table)) == 0
+#'   )
 #'
-#' heat_tree_pq(GPsubset,
-#'   node_size = n_obs,
-#'   node_color = n_obs,
-#'   node_label = taxon_names,
-#'   tree_label = taxon_names,
-#'   node_size_trans = "log10 area"
-#' )
+#'   heat_tree_pq(GPsubset,
+#'     node_size = n_obs,
+#'     node_color = n_obs,
+#'     node_label = taxon_names,
+#'     tree_label = taxon_names,
+#'     node_size_trans = "log10 area"
+#'   )
 #'
-#' heat_tree_pq(GPsubset,
-#'   node_size = nb_sequences,
-#'   node_color = n_obs,
-#'   node_label = taxon_names,
-#'   tree_label = taxon_names,
-#'   node_size_trans = "log10 area"
-#' )
+#'   heat_tree_pq(GPsubset,
+#'     node_size = nb_sequences,
+#'     node_color = n_obs,
+#'     node_label = taxon_names,
+#'     tree_label = taxon_names,
+#'     node_size_trans = "log10 area"
+#'   )
 #' }
-#'
+#' }
 heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
   requireNamespace("metacoder", quietly = TRUE)
   if (!is.null(taxonomic_level)) {
@@ -1877,8 +1879,7 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #' @return A plot
 #'
 #' @examples
-#'
-#' data_fungi_2Height <- subset_samples(data_fungi, Height %in% c("Low", "High"))
+#' data_fungi_2Height <- subset_samples(data_fungi_mini, Height %in% c("Low", "High"))
 #' biplot_pq(data_fungi_2Height, "Height", merge_sample_by = "Height")
 #' @export
 #' @author Adrien Taudière
@@ -2651,8 +2652,12 @@ plot_tsne_pq <- function(physeq,
 #' @return A plot
 #' @export
 #'
-#'
-
+#' @examples
+#' SRS_curve_pq(data_fungi_mini,
+#'   max.sample.size = 200,
+#'   rarefy.comparison = TRUE, rarefy.repeats = 3
+#' )
+#' SRS_curve_pq(data_fungi_mini, max.sample.size = 500, metric = "shannon")
 SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
   if (clean_pq) {
     physeq <- clean_pq(physeq)
@@ -2688,33 +2693,34 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' library("iNEXT")
-#' data("GlobalPatterns", package = "phyloseq")
-#' GPsubset <- subset_taxa(
-#'   GlobalPatterns,
-#'   GlobalPatterns@tax_table[, 1] == "Bacteria"
-#' )
-#' GPsubset <- subset_taxa(
-#'   GPsubset,
-#'   rowSums(GPsubset@otu_table) > 20000
-#' )
-#' GPsubset <- subset_taxa(
-#'   GPsubset,
-#'   rowSums(is.na(GPsubset@tax_table)) == 0
-#' )
-#' GPsubset@sam_data$human <- GPsubset@sam_data$SampleType %in%
-#'   c("Skin", "Feces", "Tong")
-#' res_iNEXT <- iNEXT_pq(
-#'   GPsubset,
-#'   merge_sample_by = "human",
-#'   q = 1,
-#'   datatype = "abundance",
-#'   nboot = 2
-#' )
-#' ggiNEXT(res_iNEXT)
-#' ggiNEXT(res_iNEXT, type = 2)
-#' ggiNEXT(res_iNEXT, type = 3)
+#' \donttest{
+#' if (!requireNamespace("iNEXT")) {
+#'   data("GlobalPatterns", package = "phyloseq")
+#'   GPsubset <- subset_taxa(
+#'     GlobalPatterns,
+#'     GlobalPatterns@tax_table[, 1] == "Bacteria"
+#'   )
+#'   GPsubset <- subset_taxa(
+#'     GPsubset,
+#'     rowSums(GPsubset@otu_table) > 20000
+#'   )
+#'   GPsubset <- subset_taxa(
+#'     GPsubset,
+#'     rowSums(is.na(GPsubset@tax_table)) == 0
+#'   )
+#'   GPsubset@sam_data$human <- GPsubset@sam_data$SampleType %in%
+#'     c("Skin", "Feces", "Tong")
+#'   res_iNEXT <- iNEXT_pq(
+#'     GPsubset,
+#'     merge_sample_by = "human",
+#'     q = 1,
+#'     datatype = "abundance",
+#'     nboot = 2
+#'   )
+#'   iNEXT::ggiNEXT(res_iNEXT)
+#'   iNEXT::ggiNEXT(res_iNEXT, type = 2)
+#'   iNEXT::ggiNEXT(res_iNEXT, type = 3)
+#' }
 #' }
 #' @author Adrien Taudière
 #' This function is mainly a wrapper of the work of others.

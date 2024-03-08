@@ -2,6 +2,7 @@ data(enterotype)
 data(data_fungi)
 
 test_that("list_fastq_files function works fine", {
+  skip_on_cran()
   expect_type(
     list_fastq_files(
       "inst/extdata",
@@ -52,6 +53,7 @@ test_that("rename_samples_otu_table function works fine when taxa_are_rows", {
 data_fungi_row <- clean_pq(data_fungi, force_taxa_as_rows = TRUE)
 
 test_that("rename_samples_otu_table function works fine when taxa_are_columns", {
+  skip_on_cran()
   expect_s4_class(
     rename_samples_otu_table(data_fungi_row, as.character(1:nsamples(data_fungi_row))),
     "otu_table"
@@ -79,6 +81,7 @@ data_fungi_test@otu_table[10, ] <-
 
 test_that("track_wkflow function works fine", {
   skip_on_os("windows")
+  skip_on_cran()
   expect_message(track_wkflow(list(
     unlist(list_fastq_files("inst/extdata/")), data_fungi, enterotype
   )))
@@ -95,6 +98,7 @@ test_that("track_wkflow function works fine", {
 })
 
 test_that("track_wkflow function works fine with taxonomy_rank", {
+  skip_on_cran()
   expect_error(track_wkflow(list(
     unlist(list_fastq_files("inst/extdata/")), data_fungi, enterotype
   ), taxonomy_rank = c(3, 5)))
@@ -104,6 +108,7 @@ test_that("track_wkflow function works fine with taxonomy_rank", {
 tree_A10_005 <- subset_samples(data_fungi, Tree_name == "A10-005")
 
 test_that("track_wkflow_samples function works fine", {
+  skip_on_cran()
   expect_message(track_wkflow_samples(tree_A10_005))
   expect_equal(length(track_wkflow_samples(tree_A10_005)), 3)
   expect_type(track_wkflow_samples(tree_A10_005), "list")

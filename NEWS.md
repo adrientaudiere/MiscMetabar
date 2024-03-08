@@ -1,3 +1,9 @@
+# MiscMetabar 0.8 (in development)
+
+- Add param `plot_with_tuckey` to `hill_pq()`.
+
+
+
 # MiscMetabar 0.7 (in development)
 
 - Add functions `chimera_detection_vs()` and `chimera_removal_vs()` to process chimera detection and removal using [vsearch](https://github.com/torognes/vsearch) software 
@@ -8,7 +14,7 @@
 - Add function `cutadapt_remove_primers()` to remove primers using [cutadapt](https://github.com/marcelm/cutadapt/)
 - Add internal functions `is_swarm_installed()`, `is_cutadapt_installed()`, `is_vsearch_installed()` and `is_falco_installed()` to test for the availability of external software in order to run examples and test from testthat.
 
-- Submit to CRAN and change code to comply with their rules (patch 0.7.1 to 0.7.8)
+- Submit to CRAN and change code to comply with their rules (patch 0.7.1 to 0.7.9)
 - Numerous examples and tests are skipped on CRAN because it spends to much time to run. Rules vignettes is updated to details the strategy for this.
 
 
@@ -25,6 +31,7 @@
   - `sequences` -> `seq2search` in function `search_exact_seq_pq()`
   - `seq_names` -> `dna_seq` in function `asv2otu`
 
+- Removing the function `install_pkg_needed()` which do not comply with CRAN policies
 
 # MiscMetabar 0.6.0 
 

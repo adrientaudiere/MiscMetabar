@@ -18,7 +18,7 @@
 #' @param name A name for intermediary files, Useful to name
 #'   your krona result files before merging using [merge_krona()]
 #'
-#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
+#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows" && MiscMetabar::is_krona_installed()
 #' data("GlobalPatterns", package = "phyloseq")
 #' GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
 #' \dontrun{
@@ -108,7 +108,7 @@ krona <-
 #' @param files (required) path to html files to merged
 #' @param output path to the output file
 #'
-#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
+#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows" && MiscMetabar::is_krona_installed()
 #' \dontrun{
 #' data("GlobalPatterns", package = "phyloseq")
 #' GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")

@@ -25,6 +25,7 @@ if (!is_vsearch_installed()) {
   message("lulu_pq() can't be tested when vsearch is not installed")
 } else {
   test_that("lulu_pq works fine", {
+    skip_on_cran()
     expect_s4_class(lulu_pq(data_fungi)$new_physeq, "phyloseq")
     expect_error(lulu_pq(enterotype)$new_physeq)
     expect_s4_class(lulu_pq(data_fungi_sp_known, clean_pq = TRUE, verbose = TRUE)$new_physeq, "phyloseq")
@@ -38,6 +39,7 @@ if (class(mumu_error_or_not) == "try-error") {
   message("mumu_pq() can't be tested when mumu is not installed")
 } else {
   test_that("mumu_pq works fine", {
+    skip_on_cran()
     expect_s4_class(mumu_pq(data_fungi_mini)$new_physeq, "phyloseq")
     expect_error(mumu_pq(enterotype)$new_physeq, "phyloseq")
     expect_s4_class(mumu_pq(data_fungi_mini, clean_pq = TRUE, verbose = TRUE)$new_physeq, "phyloseq")
@@ -46,6 +48,7 @@ if (class(mumu_error_or_not) == "try-error") {
 
 
 test_that("as_binary_otu_table works fine", {
+  skip_on_cran()
   expect_s4_class(as_binary_otu_table(data_fungi_mini), "phyloseq")
   expect_s4_class(as_binary_otu_table(enterotype), "phyloseq")
 })

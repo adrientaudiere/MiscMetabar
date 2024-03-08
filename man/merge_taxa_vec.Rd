@@ -33,6 +33,10 @@ defines the new groups. see \code{base::rowsum()}.}
 \item{tax_adjust}{0: no adjustment; 1: phyloseq-compatible adjustment; 2:
 conservative adjustment}
 }
+\value{
+A new phyloseq-class, otu_table, tax_table, XStringset or
+sam_data object depending on the class of the x param
+}
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 

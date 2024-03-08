@@ -33,12 +33,13 @@ use this function.
 \examples{
 \dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
-library("rotl")
-tr <- rotl_pq(data_fungi_mini, species_colnames = "Genus_species")
-plot(tr)
+if (!requireNamespace("rotl")) {
+  tr <- rotl_pq(data_fungi_mini, species_colnames = "Genus_species")
+  plot(tr)
 
-tr_Asco <- rotl_pq(data_fungi, species_colnames = "Genus_species", context_name = "Ascomycetes")
-plot(tr_Asco)
+  tr_Asco <- rotl_pq(data_fungi, species_colnames = "Genus_species", context_name = "Ascomycetes")
+  plot(tr_Asco)
+}
 }
 \dontshow{\}) # examplesIf}
 }

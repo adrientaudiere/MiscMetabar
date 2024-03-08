@@ -60,8 +60,8 @@ test_that("hill_pq works with data_fungi dataset", {
 })
 
 test_that("hill_pq works with GP dataset", {
-  expect_message(hill_pq(GP, "SampleType"))
   skip_on_cran()
+  expect_message(hill_pq(GP, "SampleType"))
   expect_message(hill_pq(GP, "SampleType", add_points = TRUE))
   expect_silent(suppressMessages(hill_pq(GP, "SampleType", letters = TRUE)))
   expect_silent(suppressMessages(hill_pq(GP, "SampleType", add_points = TRUE)))
@@ -92,8 +92,8 @@ test_that("iNEXT_pq works with data_fungi_mini dataset", {
 
 
 test_that("accu_plot works with GlobalPatterns dataset", {
-  expect_silent(suppressWarnings(accu_plot(GP_archae, fact = "X.SampleID", by.fact = TRUE)))
   skip_on_cran()
+  expect_silent(suppressWarnings(accu_plot(GP_archae, fact = "X.SampleID", by.fact = TRUE)))
   expect_silent(suppressWarnings(accu_plot(GP_archae, fact = "X.SampleID", by.fact = FALSE)))
   expect_silent(suppressWarnings(accu_plot(
     GP_archae,
@@ -148,6 +148,7 @@ test_that("accu_plot works with data_fungi dataset", {
 
 
 test_that("accu_samp_threshold works with GlobalPatterns dataset", {
+  skip_on_cran()
   expect_s3_class(p <- accu_plot(GP_archae, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10), "ggplot")
   expect_equal(length(accu_samp_threshold(p)), 5)
 })

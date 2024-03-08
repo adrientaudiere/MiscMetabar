@@ -31,16 +31,19 @@ Please make a reference to \code{FUNGuildR} package and the associate
 use this function.
 }
 \examples{
-
-df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)
-\dontrun{
-df <- add_funguild_info(df,
+\donttest{
+d_fung_mini <- add_funguild_info(data_fungi_mini,
   taxLevels = c(
-    "Domain", "Phylum", "Class", "Order",
-    "Family", "Genus", "Species"
+    "Domain",
+    "Phylum",
+    "Class",
+    "Order",
+    "Family",
+    "Genus",
+    "Species"
   )
 )
-sort(table(df@tax_table[, "guild"]), decreasing = TRUE)
+sort(table(d_fung_mini@tax_table[, "guild"]), decreasing = TRUE)
 }
 }
 \seealso{

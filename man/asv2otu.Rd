@@ -104,10 +104,10 @@ asv2otu(data_fungi_mini)
 \donttest{
 asv2otu(data_fungi_mini, method_clusterize = "longest")
 
-if (MiscMetabar:::is_swarm_installed()) {
+if (MiscMetabar::is_swarm_installed()) {
   d_swarm <- asv2otu(data_fungi_mini, method = "swarm")
 }
-if (MiscMetabar:::is_vsearch_installed()) {
+if (MiscMetabar::is_vsearch_installed()) {
   d_vs <- asv2otu(data_fungi_mini, method = "vsearch")
 }
 }

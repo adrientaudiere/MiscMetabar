@@ -34,9 +34,8 @@ Write :
 }
 \examples{
 \dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-\dontrun{
-save_pq(data_fungi, path = "phyloseq")
-}
+save_pq(data_fungi, path = paste0(tempdir(), "/phyloseq"))
+unlink(paste0(tempdir(), "/phyloseq"), recursive = TRUE)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

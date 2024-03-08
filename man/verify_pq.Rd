@@ -15,7 +15,7 @@ verify_pq(
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{verbose}{(logical, default FALSE) If true, prompt some warnings.}
+\item{verbose}{(logical, default FALSE) If TRUE, prompt some warnings.}
 
 \item{min_nb_seq_sample}{(numeric) Only used if verbose = TRUE.
 Minimum number of sequences per samples to not show warning.}

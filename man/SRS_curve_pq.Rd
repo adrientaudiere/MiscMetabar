@@ -21,3 +21,10 @@ A plot
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
+\examples{
+SRS_curve_pq(data_fungi_mini,
+  max.sample.size = 200,
+  rarefy.comparison = TRUE, rarefy.repeats = 5
+)
+SRS_curve_pq(data_fungi_mini, max.sample.size = 1000, metric = "shannon")
+}

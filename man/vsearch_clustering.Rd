@@ -73,7 +73,7 @@ This function is mainly a wrapper of the work of others.
 Please cite \href{https://github.com/torognes/vsearch}{vsearch}.
 }
 \examples{
-\dontshow{if (MiscMetabar:::is_vsearch_installed()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (MiscMetabar::is_vsearch_installed()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
 summary_plot_pq(data_fungi)
 d_vs <- vsearch_clustering(data_fungi)

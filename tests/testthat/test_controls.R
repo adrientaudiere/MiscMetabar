@@ -4,6 +4,7 @@ sam_name_factice <- gsub("TS1_V2", "TS10_V2", sample_names(enterotype))
 
 test_that("dist_pos_control function works fine", {
   expect_type(dist_pos_control(enterotype, sam_name_factice), "list")
+  skip_on_cran()
   expect_s3_class(dist_pos_control(enterotype, sam_name_factice)[[1]], "data.frame")
   expect_s3_class(dist_pos_control(enterotype, sam_name_factice)[[2]], "data.frame")
   expect_equal(length(dist_pos_control(enterotype, sam_name_factice)), 2)
@@ -42,6 +43,7 @@ test_that("subset_taxa_tax_control function works fine", {
 
 library(Biostrings)
 test_that("search_exact_seq_pq function works fine", {
+  skip_on_cran()
   expect_silent(search_primers <- search_exact_seq_pq(data_fungi, seq2search = Biostrings::DNAStringSet(c("TTGAACGCACATTGCGCC", "ATCCCTACCTGATCCGAG"))))
   expect_equal(search_primers[[1]][3, 1], "932")
 })

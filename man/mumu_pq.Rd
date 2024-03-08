@@ -59,9 +59,11 @@ Please cite \href{https://github.com/frederic-mahe/mumu/blob/main/CITATION.cff}{
 for your work.
 }
 \examples{
+\dontshow{if (MiscMetabar::is_mumu_installed()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \dontrun{
 mumu_pq(data_fungi_sp_known)
 }
+\dontshow{\}) # examplesIf}
 }
 \references{
 \itemize{

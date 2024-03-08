@@ -27,41 +27,41 @@ and the number of sequences under the name \code{nb_sequences}
 }
 \examples{
 \donttest{
-library("metacoder")
-data("GlobalPatterns", package = "phyloseq")
+if (!requireNamespace("metacoder")) {
+  data("GlobalPatterns", package = "phyloseq")
 
-GPsubset <- subset_taxa(
-  GlobalPatterns,
-  GlobalPatterns@tax_table[, 1] == "Bacteria"
-)
+  GPsubset <- subset_taxa(
+    GlobalPatterns,
+    GlobalPatterns@tax_table[, 1] == "Bacteria"
+  )
 
-GPsubset <- subset_taxa(
-  GPsubset,
-  rowSums(GPsubset@otu_table) > 5000
-)
+  GPsubset <- subset_taxa(
+    GPsubset,
+    rowSums(GPsubset@otu_table) > 5000
+  )
 
-GPsubset <- subset_taxa(
-  GPsubset,
-  rowSums(is.na(GPsubset@tax_table)) == 0
-)
+  GPsubset <- subset_taxa(
+    GPsubset,
+    rowSums(is.na(GPsubset@tax_table)) == 0
+  )
 
-heat_tree_pq(GPsubset,
-  node_size = n_obs,
-  node_color = n_obs,
-  node_label = taxon_names,
-  tree_label = taxon_names,
-  node_size_trans = "log10 area"
-)
+  heat_tree_pq(GPsubset,
+    node_size = n_obs,
+    node_color = n_obs,
+    node_label = taxon_names,
+    tree_label = taxon_names,
+    node_size_trans = "log10 area"
+  )
 
-heat_tree_pq(GPsubset,
-  node_size = nb_sequences,
-  node_color = n_obs,
-  node_label = taxon_names,
-  tree_label = taxon_names,
-  node_size_trans = "log10 area"
-)
+  heat_tree_pq(GPsubset,
+    node_size = nb_sequences,
+    node_color = n_obs,
+    node_label = taxon_names,
+    tree_label = taxon_names,
+    node_size_trans = "log10 area"
+  )
 }
-
+}
 }
 \author{
 Adrien Taudière

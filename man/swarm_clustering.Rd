@@ -70,7 +70,7 @@ This function is mainly a wrapper of the work of others.
 Please cite \href{https://github.com/torognes/swarm}{SWARM}.
 }
 \examples{
-\dontshow{if (MiscMetabar:::is_swarm_installed()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (MiscMetabar::is_swarm_installed()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 summary_plot_pq(data_fungi)
 system2("swarm", "-h")
 

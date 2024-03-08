@@ -527,10 +527,10 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #' \donttest{
 #' asv2otu(data_fungi_mini, method_clusterize = "longest")
 #'
-#' if (MiscMetabar:::is_swarm_installed()) {
+#' if (MiscMetabar::is_swarm_installed()) {
 #'   d_swarm <- asv2otu(data_fungi_mini, method = "swarm")
 #' }
-#' if (MiscMetabar:::is_vsearch_installed()) {
+#' if (MiscMetabar::is_vsearch_installed()) {
 #'   d_vs <- asv2otu(data_fungi_mini, method = "vsearch")
 #' }
 #' }
@@ -667,11 +667,9 @@ asv2otu <- function(physeq = NULL,
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' \dontrun{
-#' write_pq(data_fungi, path = "phyloseq")
-#' write_pq(data_fungi, path = "phyloseq", one_file = TRUE)
-#' }
-
+#' write_pq(data_fungi, path = paste0(tempdir(), "/phyloseq"))
+#' write_pq(data_fungi, path = paste0(tempdir(), "/phyloseq"), one_file = TRUE)
+#' unlink(paste0(tempdir(), "/phyloseq"), recursive = TRUE)
 #' @seealso [MiscMetabar::save_pq()]
 
 write_pq <- function(physeq,
@@ -875,9 +873,8 @@ write_pq <- function(physeq,
 #' @export
 #' @author Adrien Taudière
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
-#' \dontrun{
-#' save_pq(data_fungi, path = "phyloseq")
-#' }
+#' save_pq(data_fungi, path = paste0(tempdir(), "/phyloseq"))
+#' unlink(paste0(tempdir(), "/phyloseq"), recursive = TRUE)
 #' @seealso [MiscMetabar::write_pq()]
 save_pq <- function(physeq, path = NULL, ...) {
   write_pq(physeq,
@@ -913,9 +910,9 @@ save_pq <- function(physeq, path = NULL, ...) {
 #' @export
 #'
 #' @examples
-#' # read_pq(path = "phyloseq_folder")
-#' # read_pq(path = "phyloseq_folder", taxa_are_rows = TRUE)
-#'
+#' write_pq(data_fungi, path = paste0(tempdir(), "/phyloseq"))
+#' read_pq(path = paste0(tempdir(), "/phyloseq"))
+#' unlink(paste0(tempdir(), "/phyloseq"), recursive = TRUE)
 read_pq <- function(path = NULL,
                     taxa_are_rows = FALSE,
                     sam_names = NULL,
@@ -1016,9 +1013,8 @@ read_pq <- function(path = NULL,
 #' - "merged_ASV": the data.frame used to merged ASV
 #'
 #' @export
-#' @examples
-#' \dontrun{
-#' data(data_fungi_sp_known)
+#' @examplesIf MiscMetabar::is_vsearch_installed()
+#' \donttest{
 #' lulu_pq(data_fungi_sp_known)
 #' }
 #' @author Tobias Guldberg Frøslev \email{tobiasgf@snm.ku.dk}
@@ -1163,7 +1159,7 @@ lulu_pq <- function(physeq,
 #'   bash to obtain details about columns' signification.
 #'
 #' @export
-#' @examples
+#' @examplesIf MiscMetabar::is_mumu_installed()
 #' \dontrun{
 #' mumu_pq(data_fungi_sp_known)
 #' }
@@ -1327,7 +1323,7 @@ mumu_pq <- function(physeq,
 #' Mostly for internal use in MiscMetabar functions.
 #'
 #' @inheritParams clean_pq
-#' @param verbose (logical, default FALSE) If true, prompt some warnings.
+#' @param verbose (logical, default FALSE) If TRUE, prompt some warnings.
 #' @param min_nb_seq_sample (numeric) Only used if verbose = TRUE.
 #'   Minimum number of sequences per samples to not show warning.
 #' @param min_nb_seq_taxa (numeric) Only used if verbose = TRUE.
@@ -1652,7 +1648,6 @@ add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, ...) {
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' data(data_fungi)
 #' tbl_sum_samdata(data_fungi) %>%
 #'   gtsummary::as_kable()
 #'
@@ -1661,11 +1656,12 @@ add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, ...) {
 #'   type = list(Time ~ "continuous2", Height ~ "categorical"),
 #'   statistic = list(Time ~ c("{median} ({p25}, {p75})", "{min}, {max}"))
 #' )
-#'
+#' \donttest{
 #' data(enterotype)
 #'
 #' summary_samdata <- tbl_sum_samdata(enterotype)
 #' summary_samdata <- tbl_sum_samdata(enterotype, include = !contains("SampleId"))
+#' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `gtsummary::tbl_summary()` if you
@@ -1698,16 +1694,19 @@ tbl_sum_samdata <- function(physeq, remove_col_unique_value = TRUE, ...) {
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#'
-#' df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)
-#' \dontrun{
-#' df <- add_funguild_info(df,
+#' \donttest{
+#' d_fung_mini <- add_funguild_info(data_fungi_mini,
 #'   taxLevels = c(
-#'     "Domain", "Phylum", "Class", "Order",
-#'     "Family", "Genus", "Species"
+#'     "Domain",
+#'     "Phylum",
+#'     "Class",
+#'     "Order",
+#'     "Family",
+#'     "Genus",
+#'     "Species"
 #'   )
 #' )
-#' sort(table(df@tax_table[, "guild"]), decreasing = TRUE)
+#' sort(table(d_fung_mini@tax_table[, "guild"]), decreasing = TRUE)
 #' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
@@ -1766,23 +1765,29 @@ add_funguild_info <- function(physeq,
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' \dontrun{
-#'
-#' df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)
-#' df <- add_funguild_info(df,
+#' \donttest{
+#' d_fung_mini <- add_funguild_info(data_fungi_mini,
 #'   taxLevels = c(
-#'     "Domain", "Phylum", "Class", "Order",
-#'     "Family", "Genus", "Species"
+#'     "Domain",
+#'     "Phylum",
+#'     "Class",
+#'     "Order",
+#'     "Family",
+#'     "Genus",
+#'     "Species"
 #'   )
 #' )
-#' p <- plot_guild_pq(df)
-#' library("patchwork")
-#' (plot_guild_pq(subset_samples(df, Height == "Low"),
-#'   levels_order = p$data$Guild[order(p$data$nb_seq)]
-#' ) + theme(legend.position = "none")) +
-#'   (plot_guild_pq(subset_samples(df, Height == "High"),
+#' sort(table(d_fung_mini@tax_table[, "guild"]), decreasing = TRUE)
+#'
+#' p <- plot_guild_pq(d_fung_mini)
+#' if (!requireNamespace("patchwork")) {
+#'   (plot_guild_pq(subset_samples(d_fung_mini, Height == "Low"),
 #'     levels_order = p$data$Guild[order(p$data$nb_seq)]
-#'   ) + ylab("") + theme(axis.text.y = element_blank()))
+#'   ) + theme(legend.position = "none")) +
+#'     (plot_guild_pq(subset_samples(d_fung_mini, Height == "High"),
+#'       levels_order = p$data$Guild[order(p$data$nb_seq)]
+#'     ) + ylab("") + theme(axis.text.y = element_blank()))
+#' }
 #' }
 #' @seealso [add_funguild_info()]
 
@@ -1930,25 +1935,26 @@ plot_guild_pq <-
 #'   use this function.
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' \donttest{
-#' library("phangorn")
-#' df <- subset_taxa_pq(data_fungi_mini, taxa_sums(data_fungi_mini) > 9000)
-#' df_tree <- build_phytree_pq(df, nb_bootstrap = 2)
-#' plot(df_tree$UPGMA)
-#' plotBS(df_tree$UPGMA, df_tree$UPGMA_bs, main = "UPGMA")
-#' plot(df_tree$NJ, "unrooted")
-#' plot(df_tree$ML)
-#' # plotBS(df_tree$ML_bs)
-#' plotBS(df_tree$ML$tree, df_tree$ML_bs, p = 20, frame = "circle")
-#' plotBS(
-#'   df_tree$ML$tree,
-#'   df_tree$ML_bs,
-#'   p = 20,
-#'   frame = "circle",
-#'   method = "TBE"
-#' )
-#' plot(consensusNet(df_tree$ML_bs))
-#' plot(consensusNet(df_tree$NJ_bs))
-#' ps_tree <- merge_phyloseq(df, df_tree$ML$tree)
+#' if (!requireNamespace("phangorn")) {
+#'   df <- subset_taxa_pq(data_fungi_mini, taxa_sums(data_fungi_mini) > 9000)
+#'   df_tree <- build_phytree_pq(df, nb_bootstrap = 2)
+#'   plot(df_tree$UPGMA)
+#'   phangorn::plotBS(df_tree$UPGMA, df_tree$UPGMA_bs, main = "UPGMA")
+#'   plot(df_tree$NJ, "unrooted")
+#'   plot(df_tree$ML)
+#'
+#'   phangorn::plotBS(df_tree$ML$tree, df_tree$ML_bs, p = 20, frame = "circle")
+#'   phangorn::plotBS(
+#'     df_tree$ML$tree,
+#'     df_tree$ML_bs,
+#'     p = 20,
+#'     frame = "circle",
+#'     method = "TBE"
+#'   )
+#'   plot(phangorn::consensusNet(df_tree$ML_bs))
+#'   plot(phangorn::consensusNet(df_tree$NJ_bs))
+#'   ps_tree <- merge_phyloseq(df, df_tree$ML$tree)
+#' }
 #' }
 build_phytree_pq <- function(physeq,
                              nb_bootstrap = 0,
@@ -2341,7 +2347,7 @@ physeq_or_string_to_dna <- function(physeq = NULL,
 #' )
 #'
 #'
-#' # unlink(tempdir(), recursive = TRUE)
+#' unlink(tempdir(), recursive = TRUE)
 #' }
 #' @details
 #' This function is mainly a wrapper of the work of others.

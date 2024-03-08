@@ -22,13 +22,14 @@ Nothing, create subsampled fastq files in a folder
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
-\dontrun{
+\donttest{
 ex_file <- system.file("extdata", "ex_R1_001.fastq.gz",
   package = "MiscMetabar",
   mustWork = TRUE
 )
-subsample_fastq(ex_file, "your_path_to_output")
-subsample_fastq(list_fastq_files("extdata"), "your_path_to_output", n = 10)
+subsample_fastq(ex_file, paste0(tempdir(), "/output_fastq"))
+subsample_fastq(list_fastq_files("extdata"), paste0(tempdir(), "/output_fastq"), n = 10)
+unlink(paste0(tempdir(), "/output_fastq"), recursive = TRUE)
 }
 }
 \author{

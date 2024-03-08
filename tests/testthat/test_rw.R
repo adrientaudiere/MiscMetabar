@@ -5,6 +5,7 @@ test_that("write_pq function works fine with enterotype dataset", {
   testFolder <- tempdir()
   unlink(list.files(testFolder, full.names = TRUE), recursive = TRUE)
   expect_silent(write_pq(enterotype, path = testFolder, silent = TRUE))
+  skip_on_cran()
   expect_silent(write_pq(enterotype, path = testFolder, silent = TRUE, sam_data_first = TRUE))
   expect_silent(write_pq(enterotype, path = testFolder, silent = TRUE, write_sam_data = TRUE))
   expect_message(write_pq(enterotype, path = testFolder))
@@ -20,6 +21,7 @@ test_that("write_pq function works fine with data_fungi dataset", {
   testFolder <- tempdir()
   unlink(list.files(testFolder, full.names = TRUE), recursive = TRUE)
   expect_silent(write_pq(data_fungi, path = testFolder, silent = TRUE))
+  skip_on_cran()
   expect_silent(write_pq(data_fungi, path = testFolder, silent = TRUE, sam_data_first = TRUE))
   expect_silent(write_pq(data_fungi, path = testFolder, silent = TRUE, write_sam_data = FALSE))
   expect_message(write_pq(data_fungi, path = testFolder, silent = TRUE, sam_data_first = TRUE, one_file = TRUE))
@@ -34,6 +36,7 @@ test_that("write_pq function works fine with data_fungi dataset", {
 
 test_that("save_pq function works fine with data_fungi dataset", {
   skip_on_os("windows")
+  skip_on_cran()
   testFolder <- tempdir()
   unlink(list.files(testFolder, full.names = TRUE), recursive = TRUE)
   expect_message(save_pq(data_fungi, path = testFolder, silent = TRUE))

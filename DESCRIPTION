@@ -1,17 +1,17 @@
 Package: MiscMetabar
 Type: Package
 Title: Miscellaneous Functions for Metabarcoding Analysis
-Version: 0.7.8
+Version: 0.7.10
 Authors@R: person("Adrien", "Taudière", email = "adrien.taudiere@zaclys.net",
   role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0003-1088-1182"))
-Description: The MiscMetabar package aims to facilitate the description, transformation, exploration, and reproducibility of metabarcoding analysis. Mainly build on the top of phyloseq, dada2 R packages. MiscMetabar help to build reproducible and robust bioinformatics pipelines in R. MiscMetabar make ecological analysis of alpha and beta-diversity simple and powerful by integrating a large number of analysis, some of them from other R packages.  
+Description: Facilitate the description, transformation, exploration, and reproducibility of metabarcoding analyses. 'MiscMetabar' is mainly built on top of the 'phyloseq', 'dada2' and 'targets' R packages. It helps to build reproducible and robust bioinformatics pipelines in R. 'MiscMetabar' makes ecological analysis of alpha and beta-diversity easier, more reproducible and more powerful by integrating a large number of tools. Important features are described in Taudière A. (2023) <doi:10.21105/joss.06038>.
 License: AGPL-3
 Encoding: UTF-8
 LazyData: true
 Depends:
     R (>= 3.5.0),
     phyloseq,
-    ggplot2,
+    ggplot2 (>= 3.5.0),
     dada2,
     dplyr
 Suggests: 
