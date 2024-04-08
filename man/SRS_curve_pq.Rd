@@ -24,7 +24,7 @@ A plot
 \examples{
 SRS_curve_pq(data_fungi_mini,
   max.sample.size = 200,
-  rarefy.comparison = TRUE, rarefy.repeats = 5
+  rarefy.comparison = TRUE, rarefy.repeats = 3
 )
-SRS_curve_pq(data_fungi_mini, max.sample.size = 1000, metric = "shannon")
+SRS_curve_pq(data_fungi_mini, max.sample.size = 500, metric = "shannon")
 }

@@ -159,7 +159,7 @@ compare_pairs_pq <- function(physeq = NULL,
       if (nsamples(physeq) - nsamples(new_physeq) > 0) {
         message(paste0(
           nsamples(physeq) - nsamples(new_physeq),
-          " were discarded due to NA in variable modality."
+          " samples were discarded due to NA in variable modality."
         ))
       }
       physeq <- new_physeq
@@ -265,3 +265,309 @@ compare_pairs_pq <- function(physeq = NULL,
 
   return(res_df)
 }
+################################################################################
+
+
+################################################################################
+#' Create an visualization table to describe taxa distribution across a modality
+#' @description
+#' `r lifecycle::badge("maturing")`
+#' @inheritParams clean_pq
+#' @param modality (required) The name of a column present in the `@sam_data` slot
+#'   of the physeq object. Must be a character vector or a factor.
+#' @param taxonomic_levels (default = c("Phylum", "Order", "Family", "Genus"))
+#'   The taxonomic levels (must be present in the `@sam_data` slot) you want to
+#'   see and/or used (for example to compute a color) in the table.
+#' @param min_nb_seq_taxa (default = 1000) filter out taxa with less than `min_nb_seq_taxa`
+#'    sequences
+#' @param log10trans (logical, default TRUE) Do sequences count is log10 transformed
+#'   (using log10(x + 1) to allow 0)
+#' @param void_style (logical, default FALSE) Do the default style is discard ?
+#' @param lev_col_taxa Taxonomic level used to plot the background color of taxa names
+#' @param arrange_by The column used to sort the table.
+#'   Can take the values NULL, "proportion_samp", "nb_seq" (default), "OTU", or a column names
+#'   from the levels of modality or from taxonomic levels
+#' @param descending_order (logical, default TRUE) Do we use descending order when sort the table
+#'  (if arrange_by is not NULL) ?
+#' @param na_remove (logical, default TRUE) if TRUE remove all the samples
+#'   with NA in the `split_by` variable of the `physeq@sam_data` slot
+#' @param formattable_args Other args to the formattable function. See examples and `formattable::formattable()`
+#'
+#' @seealso `formattable::formattable()`
+#'
+#' @author Adrien Taudière
+#' @return A datatable
+#' @export
+#' @importFrom grDevices col2rgb
+#' @importFrom stats runif
+#' @examples
+#' library(formattable)
+#' ## Distribution of the nb of sequences per OTU across Height
+#' ##   modality (nb of sequences are log-transformed).
+#' ## Only OTU with more than 10000 sequences are taking into account
+#' ## The Phylum column is discarded
+#' formattable_pq(
+#'   data_fungi,
+#'   "Height",
+#'   min_nb_seq_taxa = 10000,
+#'   formattable_args = list("Phylum" = FALSE),
+#'   log10trans = TRUE
+#' )
+#'
+#' ## Distribution of the nb of samples per OTU across Height modality
+#' ## Only OTU  present in more than 50 samples are taking into account
+#' formattable_pq(
+#'   as_binary_otu_table(data_fungi),
+#'   "Height",
+#'   min_nb_seq_taxa = 50,
+#'   formattable_args = list("nb_seq" = FALSE),
+#' )
+#'
+#' ## Distribution of the nb of sequences per OTU across Time modality
+#' ##  arranged by Family Name in ascending order.
+#' ## Only OTU with more than 10000 sequences are taking into account
+#' ## The Phylum column is discarded
+#' formattable_pq(
+#'   data_fungi,
+#'   "Time",
+#'   min_nb_seq_taxa = 10000,
+#'   taxonomic_levels = c("Order", "Family", "Genus", "Species"),
+#'   formattable_args = list(
+#'     Order = FALSE,
+#'     Species = formatter(
+#'       "span",
+#'       style = x ~ style(
+#'         "font-style" = "italic",
+#'         `color` = ifelse(is.na(x), "white", "grey")
+#'       )
+#'     )
+#'   ),
+#'   arrange_by = "Family",
+#'   descending_order = FALSE
+#' )
+#'
+#' ## Distribution of the nb of sequences per OTU across Height modality
+#' ##  (nb of sequences are log-transformed).
+#' ## OTU name background is light gray for Basidiomycota
+#' ##  and dark grey otherwise (Ascomycota)
+#' ## A different color is defined for each modality level
+#' formattable_pq(
+#'   data_fungi,
+#'   "Height",
+#'   taxonomic_levels = c("Phylum", "Family", "Genus"),
+#'   void_style = TRUE,
+#'   formattable_args = list(
+#'     OTU = formatter(
+#'       "span",
+#'       style = ~ style(
+#'         "display" = "block",
+#'         `border-radius` = "5px",
+#'         `background-color` = ifelse(Phylum == "Basidiomycota", transp("gray"), "gray")
+#'       ),
+#'       `padding-right` = "2px"
+#'     ),
+#'     High = formatter(
+#'       "span",
+#'       style = x ~ style(
+#'         "font-size" = "80%",
+#'         "display" = "inline-block",
+#'         direction = "rtl",
+#'         `border-radius` = "0px",
+#'         `padding-right` = "2px",
+#'         `background-color` = csscolor(gradient(
+#'           as.numeric(x), transp("#1a91ff"), "#1a91ff"
+#'         )),
+#'         width = percent(proportion(as.numeric(x), na.rm = TRUE))
+#'       )
+#'     ),
+#'     Low = formatter(
+#'       "span",
+#'       style = x ~ style(
+#'         "font-size" = "80%",
+#'         "display" = "inline-block",
+#'         direction = "rtl",
+#'         `border-radius` = "0px",
+#'         `padding-right` = "2px",
+#'         `background-color` = csscolor(gradient(as.numeric(x), transp("green"), "green")),
+#'         width = percent(proportion(as.numeric(x), na.rm = TRUE))
+#'       )
+#'     ),
+#'     Middle = formatter(
+#'       "span",
+#'       style = x ~ style(
+#'         "font-size" = "80%",
+#'         "display" = "inline-block",
+#'         direction = "rtl",
+#'         `border-radius` = "0px",
+#'         `padding-right` = "2px",
+#'         `background-color` = csscolor(gradient(
+#'           as.numeric(x), transp("orange"), "orange"
+#'         )),
+#'         width = percent(proportion(as.numeric(x), na.rm = TRUE))
+#'       )
+#'     )
+#'   )
+#' )
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please make a reference to `formattable::formattable()` if you
+#'   use this function.
+formattable_pq <- function(physeq,
+                           modality,
+                           taxonomic_levels = c("Phylum", "Order", "Family", "Genus"),
+                           min_nb_seq_taxa = 1000,
+                           log10trans = FALSE,
+                           void_style = FALSE,
+                           lev_col_taxa = "Phylum",
+                           arrange_by = "nb_seq",
+                           descending_order = TRUE,
+                           na_remove = TRUE,
+                           formattable_args = NULL) {
+  verify_pq(physeq)
+
+  if (na_remove) {
+    new_physeq <-
+      subset_samples_pq(physeq, !is.na(physeq@sam_data[[modality]]))
+    if (nsamples(physeq) - nsamples(new_physeq) > 0) {
+      message(paste0(
+        nsamples(physeq) - nsamples(new_physeq),
+        " samples were discarded due to NA in variable modality"
+      ))
+    }
+  }
+  new_physeq2 <-
+    clean_pq(subset_taxa_pq(new_physeq, taxa_sums(new_physeq) > min_nb_seq_taxa))
+
+  psm <- psmelt(new_physeq2)
+
+  if (log10trans) {
+    psm2 <- psm %>%
+      group_by_at(c(modality, "OTU", taxonomic_levels)) %>%
+      summarise(Ab = round(log10(1 + sum(Abundance)), 2)) %>%
+      tidyr::spread(modality, Ab)
+
+    psm3 <-
+      left_join(
+        psm2,
+        data.frame(
+          "OTU" = taxa_names(physeq),
+          "proportion_samp" = round(
+            taxa_sums(as_binary_otu_table(physeq)) / nsamples(physeq),
+            2
+          ),
+          "nb_seq" = round(log10(taxa_sums(physeq)), 2)
+        )
+      )
+  } else {
+    psm2 <- psm %>%
+      group_by_at(c(modality, "OTU", taxonomic_levels)) %>%
+      summarise(Ab = sum(Abundance)) %>%
+      tidyr::spread(modality, Ab)
+
+    psm3 <-
+      left_join(
+        psm2,
+        data.frame(
+          "OTU" = taxa_names(physeq),
+          "proportion_samp" = round(
+            taxa_sums(as_binary_otu_table(physeq)) / nsamples(physeq),
+            2
+          ),
+          "nb_seq" = taxa_sums(physeq)
+        )
+      )
+  }
+  if (!is.null(arrange_by)) {
+    if (descending_order) {
+      psm3 <- psm3 %>% arrange(desc(.data[[arrange_by]]))
+    } else {
+      psm3 <- psm3 %>% arrange(.data[[arrange_by]])
+    }
+  }
+  if (void_style) {
+    ftab <- formattable::formattable(psm3, formattable_args)
+    return(ftab)
+  } else {
+    color_back_OTU <- fac2col(psm3[[lev_col_taxa]], na.col = "grey")
+    formattable_args <- c(
+      formattable_args,
+      list(
+        OTU = formattable::formatter(
+          "span",
+          style = ~ formattable::style(
+            "display" = "block",
+            `border-radius` = "5px",
+            `background-color` = color_back_OTU
+          ),
+          `padding-right` = "2px"
+        ),
+        formattable::area(col = levels(as.factor(
+          new_physeq2@sam_data[[modality]]
+        ))) ~ formattable::formatter(
+          "span",
+          style = x ~ formattable::style(
+            "font-size" = "80%",
+            "display" = "inline-block",
+            direction = "rtl",
+            `border-radius` = "0px",
+            `padding-right` = "2px",
+            `background-color` = ifelse(x == 0, "white", formattable::csscolor(
+              formattable::gradient(as.numeric(x), transp("#1a9641ff"), "#1a9641ff")
+            )),
+            width = percent(proportion(as.numeric(x), na.rm = TRUE))
+          )
+        ),
+        Family = formattable::formatter(
+          "span",
+          style = ~ formattable::style(
+            "display" = "block",
+            `border-radius` = "5px",
+            `background-color` = formattable::csscolor(transp(fac2col(Family)))
+          ),
+          `padding-right` = "2px"
+        ),
+        Order = formattable::formatter(
+          "span",
+          style = ~ formattable::style(
+            "display" = "block",
+            `border-radius` = "5px",
+            `background-color` = formattable::csscolor(transp(fac2col(Order, col.pal = viridis::viridis_pal()), 0.7))
+          ),
+          `padding-right` = "2px"
+        ),
+        Genus = formattable::formatter("span", style = x ~ formattable::style("font-style" = "italic")),
+        nb_seq = formattable::formatter(
+          "span",
+          style = x ~ formattable::style(
+            "font-size" = "80%",
+            "display" = "inline-block",
+            direction = "rtl",
+            `border-radius` = "0px",
+            `padding-right` = "5px",
+            `background-color` = ifelse(x == 0, "white", formattable::csscolor(
+              formattable::gradient(as.numeric(x), transp("#4d4888ff"), "#4d4888ff")
+            )),
+            width = percent(proportion(as.numeric(x), na.rm = TRUE))
+          )
+        ),
+        proportion_samp = formattable::formatter(
+          "span",
+          style = x ~ formattable::style(
+            "font-size" = "80%",
+            "display" = "inline-block",
+            direction = "rtl",
+            `border-radius` = "0px",
+            `padding-right` = "5px",
+            `background-color` = ifelse(x == 0, "white", formattable::csscolor(
+              formattable::gradient(as.numeric(x), transp("#1f78b4ff"), "#1f78b4ff")
+            )),
+            width = percent(as.numeric(x))
+          )
+        )
+      )
+    )
+    ftab <- formattable::formattable(psm3, formattable_args)
+    return(ftab)
+  }
+}
+################################################################################

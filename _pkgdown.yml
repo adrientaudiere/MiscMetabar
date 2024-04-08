@@ -131,6 +131,7 @@ reference:
   - biplot_pq
   - circle_pq
   - compare_pairs_pq
+  - formattable_pq
   - ggvenn_pq
   - graph_test_pq
   - LCBD_pq
@@ -212,6 +213,8 @@ reference:
   - dist_bycol
   - dist_pos_control
   - funky_color
+  - fac2col
+  - transp
   - get_file_extension
   - is_cutadapt_installed
   - is_falco_installed

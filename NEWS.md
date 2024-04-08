@@ -1,6 +1,8 @@
 # MiscMetabar 0.8 (in development)
 
-- Add param `plot_with_tuckey` to `hill_pq()`.
+- Add param `plot_with_tuckey` to `hill_pq()`.,
+- Add function `formattable_pq()` to make beautiful table of the distribution of taxa across a modality using visualization inside in the table.
+- Add functions `fac2col()` and `transp()` to facilitate manipulation of colors, especially in function `formattable_pq()`
 
 
 
