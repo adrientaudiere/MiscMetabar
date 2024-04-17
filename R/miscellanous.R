@@ -251,9 +251,10 @@ count_seq <- function(file_path = NULL, folder_path = NULL, pattern = NULL) {
 #' Funky palette color
 #' @return a color palette
 #' @param n a number of colors
-#' @author Thibaut Jombart
+#' @author Thibaut Jombart in `adegenet` package
 #' @export
-#'
+#' @seealso The R package RColorBrewer, proposing a nice selection of color palettes. The viridis package, with many excellent palettes
+
 funky_color <-
   grDevices::colorRampPalette(
     c(
@@ -272,6 +273,60 @@ funky_color <-
     )
   )
 ################################################################################
+
+################################################################################
+#' Translates a factor into colors.
+#' @param x	a numeric vector (for num2col) or a vector converted to a factor (for fac2col).
+#' @param col.pal (default funky_color)	a function generating colors according to a given palette.
+#' @param na.col (default grey) the color to be used for missing values (NAs)
+#' @param seed (default NULL) a seed for R's random number generated, used to fix the random permutation of colors in the palette used; if NULL, no randomization is used and the colors are taken from the palette according to the ordering of the levels
+#' @return a color vector
+#' @author Thibaut Jombart in `adegenet` package
+#' @export
+#' @seealso The R package RColorBrewer, proposing a nice selection of color palettes. The viridis package, with many excellent palettes
+fac2col <-
+  function(x,
+           col.pal = funky_color,
+           na.col = "grey",
+           seed = NULL) {
+    x <- factor(x)
+    lev <- levels(x)
+    nlev <- length(lev)
+    if (!is.null(seed)) {
+      set.seed(seed)
+      newseed <- round(runif(1, 1, 1e+09))
+      on.exit(set.seed(newseed))
+      col <- sample(col.pal(nlev))
+    } else {
+      col <- col.pal(nlev)
+    }
+    res <- rep(na.col, length(x))
+    res[!is.na(x)] <- col[as.integer(x[!is.na(x)])]
+    return(res)
+  }
+################################################################################
+
+
+################################################################################
+#' Adds transparency to a vector of colors
+#' @param col a vector of colors
+#' @param alpha (default 0.5) a numeric value between 0 and 1 representing the alpha coefficient; 0: total transparency; 1: no transparency.
+#' @return a color vector
+#' @author Thibaut Jombart in `adegenet` package
+#' @export
+#' @seealso The R package RColorBrewer, proposing a nice selection of color palettes. The viridis package, with many excellent palettes
+
+transp <- function(col, alpha = 0.5) {
+  res <-
+    apply(col2rgb(col), 2, function(c) {
+      rgb(c[1] / 255, c[2] / 255, c[3] / 255, alpha)
+    })
+  return(res)
+}
+################################################################################
+
+
+
 
 ################################################################################
 #' Subsample a fastq file copying the n_seq first sequences in a given folder

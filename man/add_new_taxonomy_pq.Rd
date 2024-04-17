@@ -20,7 +20,7 @@ is used.}
 \item{...}{Others arguments pass on to \code{dada2::assignTaxonomy}.}
 }
 \value{
-a physeq object with a larger slot tax_table
+A new \code{\link{phyloseq-class}} object with a larger slot tax_table"
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}

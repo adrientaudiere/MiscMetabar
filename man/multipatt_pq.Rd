@@ -30,7 +30,7 @@ LCBD}
 \item{...}{Others arguments passed on to \code{\link[indicspecies:multipatt]{indicspecies::multipatt()}} function}
 }
 \value{
-A ggplot object
+A ggplot2 object
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}

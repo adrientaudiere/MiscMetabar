@@ -15,7 +15,7 @@ using the \code{phyloseq} package.}
 \item{silent}{(logical) If true, no message are printing.}
 }
 \value{
-a physeq object with one sample
+A new \code{\link{phyloseq-class}} object with one sample
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}

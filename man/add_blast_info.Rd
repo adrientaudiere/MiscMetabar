@@ -17,7 +17,7 @@ using the \code{phyloseq} package.}
 \item{...}{Other arguments passed on to \code{\link[=blast_pq]{blast_pq()}} function.}
 }
 \value{
-a physeq object with more information in tax_table based on a
+A new \code{\link{phyloseq-class}} object with more information in tax_table based on a
 blast on a given database
 }
 \description{

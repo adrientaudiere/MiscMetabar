@@ -288,7 +288,7 @@ LCBD_pq <- function(physeq,
 #'   values or only the significant ones
 #' @param ... Others arguments passed on to [adespatial::beta.div()] function
 #'
-#' @return A ggplot object build with the package patchwork
+#' @return A ggplot2 object build with the package patchwork
 #' @export
 #' @seealso [LCBD_pq], [adespatial::beta.div()]
 #'
@@ -426,12 +426,12 @@ plot_LCBD_pq <- function(physeq,
 #' @inheritParams clean_pq
 #' @param tax_level Taxonomic level to used in y axis
 #' @param tax_col Taxonomic level to colored points
-#' @param min_SCBD (default: 0.01) the minimum SCBD value
+#' @param min_SCBD (default 0.01) the minimum SCBD value
 #'   to plot the taxa
 
 #' @param ... Others arguments passed on to [adespatial::beta.div()] function
 #'
-#' @return A ggplot object build with the package patchwork
+#' @return A ggplot2 object build with the package patchwork
 #' @export
 #' @seealso [LCBD_pq], [adespatial::beta.div()]
 #'
@@ -493,7 +493,7 @@ plot_SCBD_pq <- function(physeq,
 #' @param control see `?indicspecies::multipatt()`
 #' @param ... Others arguments passed on to [indicspecies::multipatt()] function
 #'
-#' @return A ggplot object
+#' @return A ggplot2 object
 #' @export
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' data(data_fungi)
@@ -576,6 +576,10 @@ multipatt_pq <- function(physeq,
 #'
 #' @examples
 #' \donttest{
+#' data_fungi_mini@tax_table <- phyloseq::tax_table(cbind(
+#'   data_fungi_mini@tax_table,
+#'   "taxon" = taxa_names(data_fungi_mini)
+#' ))
 #' res_height <- ancombc_pq(
 #'   data_fungi_mini,
 #'   fact = "Height",
@@ -629,3 +633,358 @@ ancombc_pq <- function(physeq, fact, levels_fact = NULL, tax_level = "Class", ..
   )
   return(res_ancomb)
 }
+################################################################################
+
+
+################################################################################
+#' Filter ancombc_pq results
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' @param ancombc_res (required) the result of the ancombc_pq function
+#'   For the moment only bimodal factors are possible.
+#' @param filter_passed (logical, default TRUE) Do we filter using the column
+#'   passed_ss? The passed_ss value is  TRUE if the taxon passed the sensitivity
+#'   analysis, i.e., adding different pseudo-counts to 0s would not change the results.
+#' @param filter_diff (logical, default TRUE) Do we filter using the column
+#'   diff? The diff value is TRUE if the taxon is significant
+#'   (has q less than alpha)
+#' @param min_abs_lfc (integer, default0) Minimum absolute value to filter
+#'   results based on Log Fold Change. For ex. a value of 1 filter out taxa
+#'   for which the abundance in a given level of the modality is not at least
+#'   the double of the abundance in the other level.
+#'
+#' @return A data.frame with the same number of columns than the `ancombc_res`
+#'   param but with less (or equal) numbers of rows
+#' @export
+#'
+#' @seealso [ancombc_pq()], [plot_ancombc_pq()]
+#'
+#' @examples
+#' \donttest{
+#' data_fungi_mini@tax_table <- phyloseq::tax_table(cbind(
+#'   data_fungi_mini@tax_table,
+#'   "taxon" = taxa_names(data_fungi_mini)
+#' ))
+#'
+#' res_time <- ancombc_pq(
+#'   data_fungi_mini,
+#'   fact = "Time",
+#'   levels_fact = c("0", "15"),
+#'   tax_level = "taxon",
+#'   verbose = TRUE
+#' )
+#'
+#' signif_ancombc(res_time)
+#' }
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please make a reference to `ANCOMBC::ancombc2()` if you
+#'   use this function.
+signif_ancombc <- function(ancombc_res,
+                           filter_passed = TRUE,
+                           filter_diff = TRUE,
+                           min_abs_lfc = 0) {
+  signif_ancombc_res <- ancombc_res$res
+  clnames <- colnames(signif_ancombc_res)
+
+  name_modality <-
+    gsub(
+      "passed_ss", "",
+      clnames[grepl("passed_ss", clnames) &
+        !grepl("Intercept", clnames)]
+    )
+
+  if (filter_passed) {
+    signif_ancombc_res <- signif_ancombc_res %>%
+      filter(.data[[paste0("passed_ss", name_modality)]])
+  }
+
+  if (filter_diff) {
+    signif_ancombc_res <- signif_ancombc_res %>%
+      filter(.data[[paste0("diff", name_modality)]])
+  }
+  signif_ancombc_res <- signif_ancombc_res %>%
+    filter(abs(.data[[paste0("lfc", name_modality)]]) > min_abs_lfc)
+
+  return(signif_ancombc_res)
+}
+################################################################################
+
+
+################################################################################
+#' Plot ANCOMBC2 result for phyloseq object
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' @inheritParams clean_pq
+#' @param ancombc_res (required) the result of the ancombc_pq function
+#'   For the moment only bimodal factors are possible.
+#' @param filter_passed (logical, default TRUE) Do we filter using the column
+#'   passed_ss? The passed_ss value is  TRUE if the taxon passed the sensitivity
+#'   analysis, i.e., adding different pseudo-counts to 0s would not change the results.
+#' @param filter_diff (logical, default TRUE) Do we filter using the column
+#'   diff? The diff value is TRUE if the taxon is significant
+#'   (has q less than alpha)
+#' @param min_abs_lfc (integer, default 0) Minimum absolute value to filter
+#'   results based on Log Fold Change. For ex. a value of 1 filter out taxa
+#'   for which the abundance in a given level of the modality is not at least
+#'   the double of the abundance in the other level.
+#' @param tax_col The taxonomic level (must be present in `tax_table` slot)
+#'   to color the points
+#' @param tax_label The taxonomic level (must be present in `tax_table` slot)
+#'   to add label
+#' @param add_marginal_vioplot (logical, default TRUE) Do we add a marginal
+#'   vioplot representing all the taxa lfc from ancombc_res.
+#' @param add_label (logical, default TRUE) Do we add a label?
+#' @param add_hline_cut_lfc (logical, default NULL) Do we add two horizontal
+#'   lines when min_abs_lfc is set (different from zero)?
+#'
+#' @return A ggplot2 object. If add_marginal_vioplot is TRUE, this is a
+#'   patchworks of plot made using `patchwork::plot_layout()`.
+#' @export
+#'
+#' @examples
+#' \donttest{
+#' data_fungi_mini@tax_table <- phyloseq::tax_table(cbind(
+#'   data_fungi_mini@tax_table,
+#'   "taxon" = taxa_names(data_fungi_mini)
+#' ))
+#'
+#' res_time <- ancombc_pq(
+#'   data_fungi_mini,
+#'   fact = "Time",
+#'   levels_fact = c("0", "15"),
+#'   tax_level = "taxon",
+#'   verbose = TRUE
+#' )
+#'
+#' plot_ancombc_pq(data_fungi_mini, res_time,
+#'   filter_passed = FALSE,
+#'   tax_label = "Genus", tax_col = "Order"
+#' )
+#' plot_ancombc_pq(data_fungi_mini, res_time, tax_col = "Genus")
+#' plot_ancombc_pq(data_fungi_mini, res_time,
+#'   filter_passed = FALSE,
+#'   filter_diff = FALSE, tax_col = "Family", add_label = FALSE
+#' )
+#' }
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please make a reference to `ANCOMBC::ancombc2()` if you
+#'   use this function.
+#' @author Adrien Taudière
+
+
+plot_ancombc_pq <-
+  function(physeq,
+           ancombc_res,
+           filter_passed = TRUE,
+           filter_diff = TRUE,
+           min_abs_lfc = 0,
+           tax_col = "Genus",
+           tax_label = "Species",
+           add_marginal_vioplot = TRUE,
+           add_label = TRUE,
+           add_hline_cut_lfc = NULL) {
+    verify_pq(physeq)
+
+    if (is.null(add_hline_cut_lfc)) {
+      if (min_abs_lfc != 0) {
+        add_hline_cut_lfc <- TRUE
+      } else {
+        add_hline_cut_lfc <- FALSE
+      }
+    }
+
+    signif_ancombc_res <- signif_ancombc(
+      ancombc_res,
+      filter_passed = filter_passed,
+      filter_diff = filter_diff,
+      min_abs_lfc = min_abs_lfc
+    )
+
+    clnames <- colnames(ancombc_res$res)
+    name_modality <-
+      gsub(
+        "passed_ss", "",
+        clnames[grepl("passed_ss", clnames) &
+          !grepl("Intercept", clnames)]
+      )
+
+    taxtable <- data.frame(physeq@tax_table)
+    taxtable$taxon <- taxa_names(physeq)
+
+    df <-
+      left_join(signif_ancombc_res, taxtable, by = join_by("taxon" == "taxon"))
+    df[[tax_label]] <- gsub("unidentified", NA, df[[tax_label]])
+
+    p <- ggplot(
+      df,
+      aes(
+        y = reorder(taxon, .data[[paste0("lfc", name_modality)]]),
+        x = .data[[paste0("lfc", name_modality)]],
+        color = .data[[tax_col]]
+      )
+    ) +
+      geom_vline(xintercept = 0) +
+      geom_segment(aes(
+        xend = 0,
+        y = reorder(taxon, .data[[paste0("lfc", name_modality)]]),
+        yend = reorder(taxon, .data[[paste0("lfc", name_modality)]])
+      ), color = "darkgrey") +
+      geom_point(size = 3)
+
+    if (add_label) {
+      p <- p + geom_label(aes(
+        label = .data[[tax_label]], x =
+          0
+      ))
+    }
+    if (add_hline_cut_lfc) {
+      p <- p +
+        geom_vline(
+          xintercept = min_abs_lfc,
+          color = "grey20",
+          lty = 2
+        ) +
+        geom_vline(
+          xintercept = -min_abs_lfc,
+          color = "grey20",
+          lty = 2
+        )
+    }
+
+    if (add_marginal_vioplot) {
+      marg_vio <-
+        (
+          ggplot(data = ancombc_res$res, aes(x = .data[[paste0("lfc", name_modality)]], y = 1)) +
+            geom_violin(fill = transp("grey", 0.5)) +
+            geom_point(aes(color = .data[[paste0("diff", name_modality)]] &
+              .data[[paste0("passed_ss", name_modality)]]), position = position_jitter()) +
+            scale_color_manual(values = c("grey70", "grey20")) +
+            theme(legend.position = "none")
+        )
+
+      p <-
+        marg_vio / (p + xlim(layer_scales(marg_vio)$x$get_limits())) +
+        patchwork::plot_layout(heights = c(1, 7), axes = "collect")
+    }
+    return(p)
+  }
+################################################################################
+
+################################################################################
+#' Show taxa which are present in only one given level of a modality
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' @inheritParams clean_pq
+#' @param modality (required) The name of a column present in the `@sam_data` slot
+#'   of the physeq object. Must be a character vector or a factor.
+#' @param level (required) The level (must be present in modality) of interest
+#' @param min_nb_seq_taxa (default 0 = no filter) The minimum number of sequences per taxa
+#' @param min_nb_samples_taxa (default 0 = no filter) The minimum number of samples per taxa
+#'
+#' @return A vector of taxa names
+#' @export
+#'
+#' @author Adrien Taudière
+#' @examples
+#' data_fungi_mini_woNA4height <- subset_samples(
+#'   data_fungi_mini,
+#'   !is.na(data_fungi_mini@sam_data$Height)
+#' )
+#' taxa_only_in_one_level(data_fungi_mini_woNA4height, "Height", "High")
+taxa_only_in_one_level <- function(physeq,
+                                   modality,
+                                   level,
+                                   min_nb_seq_taxa = 0,
+                                   min_nb_samples_taxa = 0) {
+  if (min_nb_seq_taxa > 0) {
+    physeq <-
+      subset_taxa_pq(physeq, taxa_sums(physeq) >= min_nb_seq_taxa)
+  }
+  if (min_nb_samples_taxa > 0) {
+    physeq <-
+      subset_taxa_pq(
+        physeq,
+        taxa_sums(as_binary_otu_table(physeq)) >= min_nb_samples_taxa
+      )
+  }
+
+  physeq_merged <- clean_pq(merge_samples2(physeq, modality))
+
+  physeq_merged_only_one_level <-
+    subset_taxa_pq(physeq_merged, taxa_sums(as_binary_otu_table(physeq_merged)) ==
+      1)
+  physeq_merged_only_level_given <-
+    clean_pq(subset_samples_pq(
+      physeq_merged_only_one_level,
+      rownames(physeq_merged_only_one_level@sam_data) == level
+    ))
+  return(taxa_names(physeq_merged_only_level_given))
+}
+################################################################################
+
+################################################################################
+#' Distribution of sequences across a factor for one taxa
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' @inheritParams clean_pq
+#' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
+#'    different lines
+#' @param taxa_name (required): the name of the taxa
+#' @param digits (default = 2) integer indicating the number of decimal places
+#'   to be used (see `?round` for more information)
+#'
+#' @return a dataframe with levels as rows and information as column :
+#'   - the number of sequences of the taxa (nb_seq)
+#'   - the number of samples of the taxa (nb_samp)
+#'   - the mean (mean_nb_seq) and standard deviation (sd_nb_seq) of the *nb_seq*
+#'   - the mean (mean_nb_seq_when_present) *nb_seq* excluding samples with zero
+#'   - the total number of samples (nb_total_samp)
+#'   - the proportion of samples with the taxa
+#'
+#' @export
+#' @author Adrien Taudière
+#' @examples
+#' distri_1_taxa(data_fungi, "Height", "ASV2")
+#' distri_1_taxa(data_fungi, "Time", "ASV81", digits = 1)
+#' @importFrom stats sd
+distri_1_taxa <- function(physeq, fact, taxa_name, digits = 2) {
+  physeq <- clean_pq(physeq, force_taxa_as_rows = TRUE)
+  df <-
+    data.frame(
+      "nb_seq" = tapply(
+        as.vector(physeq@otu_table[taxa_name, ]),
+        physeq@sam_data[[fact]], sum
+      ),
+      "nb_samp" = tapply(
+        as.vector(as_binary_otu_table(physeq)@otu_table[taxa_name, ]),
+        physeq@sam_data[[fact]],
+        sum
+      ),
+      "mean_nb_seq" = round(tapply(
+        as.vector(physeq@otu_table[taxa_name, ]),
+        physeq@sam_data[[fact]], mean
+      ), digits = digits),
+      "sd_nb_seq" = round(tapply(
+        as.vector(physeq@otu_table[taxa_name, ]),
+        physeq@sam_data[[fact]], sd
+      ), digits = digits)
+    ) %>%
+    mutate("mean_nb_seq_when_present" = round(nb_seq / nb_samp,
+      digits =
+        digits
+    ))
+
+  df$nb_total_samp <- table(physeq@sam_data[[fact]])
+  df$prop_samp <-
+    round(df$nb_samp / df$nb_total_samp, digits = digits)
+  return(df)
+}
+################################################################################

@@ -23,7 +23,7 @@ if (getRversion() >= "2.15.1") {
     "update", "upr", "upViewport", "val", "value", "vegdist", "viewport",
     "write.table", "x", "x1", "X1", "x2", "y", "y1", "y2", "ymax",
     "ymin", ".group", "archetype", "nOTUid", "taxon", "total",
-    "chim_rm", "condition", "physeq", "seq_tab_Pairs"
+    "chim_rm", "condition", "physeq", "seq_tab_Pairs", "nb_samp", "silent"
   ))
 }
 

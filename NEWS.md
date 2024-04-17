@@ -1,8 +1,11 @@
 # MiscMetabar 0.8 (in development)
 
-- Add param `plot_with_tuckey` to `hill_pq()`.
-
-
+- Add param `plot_with_tuckey` to `hill_pq()`.,
+- Add function `formattable_pq()` to make beautiful table of the distribution of taxa across a modality using visualization inside in the table.
+- Add functions `fac2col()` and `transp()` to facilitate manipulation of colors, especially in function `formattable_pq()`
+- Add functions `signif_ancombc()` and `plot_ancombc_pq()` to plot significant results from `ancombc_pq()` function
+- Add function `distri_1_taxa()` to summarize the distribution of one given taxa across level of a modality
+- Add function `normalize_prop_pq()` to implement the method proposed by [McKnight et al. 2018](https://doi.org/10.5061/dryad.tn8qs35)
 
 # MiscMetabar 0.7 (in development)
 
