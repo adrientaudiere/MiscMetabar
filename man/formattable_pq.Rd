@@ -40,7 +40,7 @@ sequences}
 \item{lev_col_taxa}{Taxonomic level used to plot the background color of taxa names}
 
 \item{arrange_by}{The column used to sort the table.
-Can take the values NULL, "proportion_samp", "nb_seq" (default), "OTU", or a column names
+Can take the values NULL, "proportion_samp", "nb_seq" (default), , "nb_sam" "OTU", or a column names
 from the levels of modality or from taxonomic levels}
 
 \item{descending_order}{(logical, default TRUE) Do we use descending order when sort the table

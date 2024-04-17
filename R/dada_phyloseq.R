@@ -1359,6 +1359,15 @@ verify_pq <- function(
     if (sum(is.na(physeq@sam_data)) > 0) {
       warning("At least one of your samples metadata columns contains NA.")
     }
+    if (sum(grepl("^[0-9]", sample_names(physeq)) > 0) && !silent) {
+      message(
+        "At least one sample name start with a number.
+      It may introduce bug in some function such
+      as psmelt. You may replace sample_names using
+      for example :
+      sample_names(physeq) <- paste('samp', sample_names(physeq))"
+      )
+    }
   }
 }
 ################################################################################
@@ -1540,7 +1549,7 @@ subset_taxa_pq <- function(physeq,
 #' @inheritParams clean_pq
 #' @param sam_name (required) The sample name to select
 #' @param silent (logical) If true, no message are printing.
-#' @return a physeq object with one sample
+#' @return A new \code{\link{phyloseq-class}} object with one sample
 #'
 #' @export
 #'
@@ -1607,7 +1616,7 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #'   If set to NULL (the default), the basename of the file reFasta
 #'   is used.
 #' @param ... Others arguments pass on to `dada2::assignTaxonomy`.
-#' @return a physeq object with a larger slot tax_table
+#' @return A new \code{\link{phyloseq-class}} object with a larger slot tax_table"
 #'
 #' @export
 #'
@@ -1643,7 +1652,7 @@ add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, ...) {
 #'  informative columns (categorical column with one value per samples),
 #'   e.g. samples names ?
 #' @param ... Others arguments pass on to [gtsummary::tbl_summary()].
-#' @return a physeq object with a larger slot tax_table
+#' @return A new \code{\link{phyloseq-class}} object with a larger slot tax_table
 #'
 #' @export
 #' @author Adrien Taudière
@@ -2442,5 +2451,120 @@ cutadapt_remove_primers <- function(path_to_fastq,
     unlink(paste0(tempdir(), "/script_cutadapt.sh"))
   }
   return(cmd)
+}
+################################################################################
+
+
+################################################################################
+
+################################################################################
+#' List the taxa that founded only in one given level of a modality
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' @inheritParams clean_pq
+#' @param modality (required) The name of a column present in the `@sam_data` slot
+#'   of the physeq object. Must be a character vector or a factor.
+#' @param level (required) The level (must be present in modality) of interest
+#' @param min_nb_seq_taxa (default 0 = no filter) The minimum number of sequences per taxa
+#' @param min_nb_samples_taxa (default 0 = no filter) The minimum number of samples per taxa
+#'
+#' @return A vector of taxa names
+#'
+#' @examples
+#' # Taxa present only in low height samples
+#' suppressMessages(suppressWarnings(taxa_only_in_one_level(data_fungi, "Height", "Low")))
+#' # Number of taxa present only in sample of time equal to 15
+#' suppressMessages(suppressWarnings(length(taxa_only_in_one_level(data_fungi, "Time", "15"))))
+#' @seealso [ggvenn_pq()] and [upset_pq()]
+#' @export
+#' @author Adrien Taudière
+
+taxa_only_in_one_level <- function(physeq,
+                                   modality,
+                                   level,
+                                   min_nb_seq_taxa = 0,
+                                   min_nb_samples_taxa = 0) {
+  if (min_nb_seq_taxa > 0) {
+    physeq <-
+      subset_taxa_pq(physeq, taxa_sums(physeq) >= min_nb_seq_taxa)
+  }
+  if (min_nb_samples_taxa > 0) {
+    physeq <-
+      subset_taxa_pq(
+        physeq,
+        taxa_sums(as_binary_otu_table(physeq)) >= min_nb_samples_taxa
+      )
+  }
+
+  physeq_merged <- clean_pq(merge_samples2(physeq, modality))
+
+  physeq_merged_only_one_level <-
+    subset_taxa_pq(physeq_merged, taxa_sums(as_binary_otu_table(physeq_merged)) ==
+      1)
+  physeq_merged_only_level_given <-
+    clean_pq(subset_samples_pq(
+      physeq_merged_only_one_level,
+      rownames(physeq_merged_only_one_level@sam_data) == level
+    ))
+  return(taxa_names(physeq_merged_only_level_given))
+}
+################################################################################
+
+
+
+################################################################################
+#' Normalize otu table using samples depth
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#'   This function implement the method proposed by
+#'   [McKnight et al. 2018](https://doi.org/10.5061/dryad.tn8qs35)
+#'
+#' @inheritParams clean_pq
+#'
+#' @param base_log (integer, default 2) the base for log-transformation. If
+#'   set to NULL or NA, no log-transformation is compute after normalization.
+#' @param constante a constante to multiply the otu_table values
+#' @param digits (default = 2) integer indicating the number of decimal places
+#'   to be used (see `?round` for more information)
+#'
+#' @return A new \code{\link{phyloseq-class}} object with otu_table count
+#'   normalize and log transformed (if base_log is an integer)
+#' @export
+#' @author Adrien Taudière
+#' @examples
+#' taxa_sums(data_fungi_mini)
+#' data_f_norm <- normalize_prop_pq(data_fungi_mini)
+#' taxa_sums(data_f_norm)
+#' ggplot(data.frame(
+#'   "norm" = scale(taxa_sums(data_f_norm)),
+#'   "raw" = scale(taxa_sums(data_fungi_mini)),
+#'   "name_otu" = taxa_names(data_f_norm)
+#' )) +
+#'   geom_point(aes(x = raw, y = norm))
+#'
+#' data_f_norm <- normalize_prop_pq(data_fungi_mini, base_log = NULL)
+normalize_prop_pq <- function(physeq, base_log = 2, constante = 10000, digits = 4) {
+  verify_pq(physeq)
+  if (taxa_are_rows(physeq)) {
+    new_otutab <- round((apply(physeq@otu_table, 2, function(x) {
+      x / sum(x)
+    })) * constante, digits = digits)
+  } else {
+    new_otutab <- round((apply(physeq@otu_table, 1, function(x) {
+      x / sum(x)
+    })) * constante, digits = digits)
+  }
+
+  if (!is.null(base_log) && !is.na(base_log)) {
+    new_otutab <- round(log(new_otutab + 1, base = base_log), digits = digits)
+  }
+
+  new_physeq <- physeq
+  new_physeq@otu_table <- otu_table(new_otutab, taxa_are_rows = taxa_are_rows(physeq))
+
+  return(new_physeq)
 }
 ################################################################################

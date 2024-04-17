@@ -72,6 +72,7 @@ reference:
 - subtitle: Transform OTU table only
   contents: 
   - as_binary_otu_table
+  - normalize_prop_pq
 
 - subtitle: Subset/merge taxa
   contents: 
@@ -155,6 +156,8 @@ reference:
   - plot_deseq2_pq
   - plot_mt
   - ancombc_pq
+  - signif_ancombc
+  - plot_ancombc_pq
 
 - subtitle: Taxonomy
   contents:
@@ -170,6 +173,11 @@ reference:
   - tax_datatable
   - treemap_pq
   - vs_search_global
+
+- subtitle: Zoom on given taxa
+  contents:
+  - distri_1_taxa
+  - taxa_only_in_one_level
 
 - title: Improve reproducibility using [targets](https://books.ropensci.org/targets/) pipeline
 - subtitle: Processing fastq files

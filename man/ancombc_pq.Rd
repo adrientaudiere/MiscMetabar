@@ -36,6 +36,10 @@ use this function.
 }
 \examples{
 \donttest{
+data_fungi_mini@tax_table <- phyloseq::tax_table(cbind(
+  data_fungi_mini@tax_table,
+  "taxon" = taxa_names(data_fungi_mini)
+))
 res_height <- ancombc_pq(
   data_fungi_mini,
   fact = "Height",

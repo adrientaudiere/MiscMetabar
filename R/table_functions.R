@@ -285,7 +285,7 @@ compare_pairs_pq <- function(physeq = NULL,
 #' @param void_style (logical, default FALSE) Do the default style is discard ?
 #' @param lev_col_taxa Taxonomic level used to plot the background color of taxa names
 #' @param arrange_by The column used to sort the table.
-#'   Can take the values NULL, "proportion_samp", "nb_seq" (default), "OTU", or a column names
+#'   Can take the values NULL, "proportion_samp", "nb_seq" (default), , "nb_sam" "OTU", or a column names
 #'   from the levels of modality or from taxonomic levels
 #' @param descending_order (logical, default TRUE) Do we use descending order when sort the table
 #'  (if arrange_by is not NULL) ?
@@ -455,7 +455,8 @@ formattable_pq <- function(physeq,
             taxa_sums(as_binary_otu_table(physeq)) / nsamples(physeq),
             2
           ),
-          "nb_seq" = round(log10(taxa_sums(physeq)), 2)
+          "nb_seq" = round(log10(taxa_sums(physeq)), 2),
+          "nb_sam" = round(taxa_sums(as_binary_otu_table(physeq)), 2)
         )
       )
   } else {
@@ -473,7 +474,8 @@ formattable_pq <- function(physeq,
             taxa_sums(as_binary_otu_table(physeq)) / nsamples(physeq),
             2
           ),
-          "nb_seq" = taxa_sums(physeq)
+          "nb_seq" = taxa_sums(physeq),
+          "nb_sam" = round(taxa_sums(as_binary_otu_table(physeq)), 2)
         )
       )
   }
@@ -563,7 +565,8 @@ formattable_pq <- function(physeq,
             )),
             width = percent(as.numeric(x))
           )
-        )
+        ),
+        nb_sam = FALSE
       )
     )
     ftab <- formattable::formattable(psm3, formattable_args)

@@ -31,7 +31,7 @@ values or only the significant ones}
 \item{...}{Others arguments passed on to \code{\link[adespatial:beta.div]{adespatial::beta.div()}} function}
 }
 \value{
-A ggplot object build with the package patchwork
+A ggplot2 object build with the package patchwork
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
