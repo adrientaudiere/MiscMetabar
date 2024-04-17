@@ -1,0 +1,10 @@
+PASS	Basic Statistics	23MET1906_S105_L001_R1_001.fastq.gz
+WARN	Per base sequence quality	23MET1906_S105_L001_R1_001.fastq.gz
+PASS	Per sequence quality scores	23MET1906_S105_L001_R1_001.fastq.gz
+FAIL	Per base sequence content	23MET1906_S105_L001_R1_001.fastq.gz
+FAIL	Per sequence GC content	23MET1906_S105_L001_R1_001.fastq.gz
+PASS	Per base N content	23MET1906_S105_L001_R1_001.fastq.gz
+WARN	Sequence Length Distribution	23MET1906_S105_L001_R1_001.fastq.gz
+FAIL	Sequence Duplication Levels	23MET1906_S105_L001_R1_001.fastq.gz
+FAIL	Overrepresented sequences	23MET1906_S105_L001_R1_001.fastq.gz
+PASS	Adapter Content	23MET1906_S105_L001_R1_001.fastq.gz
