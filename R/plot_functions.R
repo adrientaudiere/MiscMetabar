@@ -1211,7 +1211,11 @@ multiplot <-
 #'   plot_with_tuckey = FALSE
 #' @param correction_for_sample_size (logical, default TRUE) This function
 #'   use a sqrt of the read numbers in the linear model in order to
-#'   correct for uneven sampling depth.
+#'   correct for uneven sampling depth in the Tuckey TEST. This params 
+#'   do not change value of Hill number but only the test associated 
+#'   values (including the pvalues). To rarefy samples, you may use the
+#'   function [phyloseq::rarefy_even_depth()].
+#' 
 #' @return Either an unique ggplot2 object (if one_plot is TRUE) or
 #'  a list of 4 ggplot2 plot:
 #' - plot_Hill_0 : the boxplot of Hill number 0 (= species richness)
