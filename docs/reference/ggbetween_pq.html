@@ -22,7 +22,7 @@ object of class phyloseq"><!-- mathjax --><script src="https://cdnjs.cloudflare.
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.12</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,7 +96,7 @@ object of class phyloseq</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ggbetween_pq</span><span class="op">(</span><span class="va">physeq</span>, <span class="va">variable</span>, one_plot <span class="op">=</span> <span class="cn">FALSE</span>, rarefy_by_sample <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ggbetween_pq</span><span class="op">(</span><span class="va">physeq</span>, <span class="va">fact</span>, one_plot <span class="op">=</span> <span class="cn">FALSE</span>, rarefy_by_sample <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -106,7 +106,7 @@ object of class phyloseq</p>
 using the <code>phyloseq</code> package.</p></dd>
 
 
-<dt>variable</dt>
+<dt>fact</dt>
 <dd><p>(required): The variable to test. Must be present in
 the <code>sam_data</code> slot of the physeq object.</p></dd>
 
@@ -131,11 +131,11 @@ samples using <code><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.
 
 <p>Either an unique ggplot2 object (if one_plot is TRUE) or
 a list of 3 ggplot2 plot:</p><ul><li><p>plot_Hill_0 : the ggbetweenstats of Hill number 0 (= species richness)
-against the variable</p></li>
+against the variable fact</p></li>
 <li><p>plot_Hill_1 : the ggbetweenstats of Hill number 1 (= Shannon index)
-against the variable</p></li>
+against the variable fact</p></li>
 <li><p>plot_Hill_2 : the ggbetweenstats of Hill number 2 (= Simpson index)
-against the variable</p></li>
+against the variable fact</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -151,14 +151,14 @@ use this function.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggbetween_pq</span><span class="op">(</span><span class="va">data_fungi</span>, variable <span class="op">=</span> <span class="st">"Time"</span>, p.adjust.method <span class="op">=</span> <span class="st">"BH"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggbetween_pq</span><span class="op">(</span><span class="va">data_fungi</span>, fact <span class="op">=</span> <span class="st">"Time"</span>, p.adjust.method <span class="op">=</span> <span class="st">"BH"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa and 0 samples.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The mean number of sequences per samples vary across modalities of the variable 'Time' You should use rarefy_by_sample = TRUE or try hill_pq() with correction_for_sample_size = TRUE</span>
 <span class="r-in"><span><span class="va">p</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to min; returning Inf</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to max; returning -Inf</span>
 <span class="r-plt img"><img src="ggbetween_pq-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">ggbetween_pq</span><span class="op">(</span><span class="va">data_fungi</span>, variable <span class="op">=</span> <span class="st">"Height"</span>, one_plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ggbetween_pq</span><span class="op">(</span><span class="va">data_fungi</span>, fact <span class="op">=</span> <span class="st">"Height"</span>, one_plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa and 0 samples.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to min; returning Inf</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to max; returning -Inf</span>
@@ -167,13 +167,13 @@ use this function.</p>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to min; returning Inf</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to max; returning -Inf</span>
 <span class="r-plt img"><img src="ggbetween_pq-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">ggbetween_pq</span><span class="op">(</span><span class="va">data_fungi</span>, variable <span class="op">=</span> <span class="st">"Height"</span>, one_plot <span class="op">=</span> <span class="cn">TRUE</span>, rarefy_by_sample <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ggbetween_pq</span><span class="op">(</span><span class="va">data_fungi</span>, fact <span class="op">=</span> <span class="st">"Height"</span>, one_plot <span class="op">=</span> <span class="cn">TRUE</span>, rarefy_by_sample <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa and 0 samples.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> You set `rngseed` to FALSE. Make sure you've set &amp; recorded</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  the random seed of your session for reproducibility.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> See `?set.seed`</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1024OTUs were removed because they are no longer </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 1028OTUs were removed because they are no longer </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> present in any sample after random subsampling</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa and 0 samples.</span>

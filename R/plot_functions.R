@@ -1187,11 +1187,21 @@ multiplot <-
 #' Graphical representation of hill number 0, 1 and 2 across a factor
 #' @description
 #' `r lifecycle::badge("experimental")`
-#' Note that this function use a sqrt of the read numbers in the linear
-#'   model in order to correct for uneven sampling depth.
+#'   Hill numbers are the number of equiprobable species giving the same
+#'   diversity value as the observed distribution. The Hill number 0
+#'   correspond to Species richness), the Hill number 1 to
+#'   the exponential of Shannon Index and the Hill number 2 to the inverse
+#'   of Simpson Index)
+#'
+#'   Note that (if correction_for_sample_size is TRUE, default behavior)
+#'   this function use a sqrt of the read numbers in the linear
+#'   model in order to correct for uneven sampling depth. This correction
+#'   is only done before tuckey HSD plot and do not change the hill number
+#'   computed.
 #' @inheritParams clean_pq
-#' @param variable (required): The variable to test. Must be present in
+#' @param fact (required): The variable to test. Must be present in
 #'   the `sam_data` slot of the physeq object.
+#' @param variable : Alias for factor. Kept only for backward compatibility.
 #' @param color_fac (optional): The variable to color the barplot
 #' @param letters (optional, default=FALSE): If set to TRUE, the plot
 #'   show letters based on p-values for comparison. Use the
@@ -1211,11 +1221,11 @@ multiplot <-
 #'   plot_with_tuckey = FALSE
 #' @param correction_for_sample_size (logical, default TRUE) This function
 #'   use a sqrt of the read numbers in the linear model in order to
-#'   correct for uneven sampling depth in the Tuckey TEST. This params 
-#'   do not change value of Hill number but only the test associated 
+#'   correct for uneven sampling depth in the Tuckey TEST. This params
+#'   do not change value of Hill number but only the test associated
 #'   values (including the pvalues). To rarefy samples, you may use the
 #'   function [phyloseq::rarefy_even_depth()].
-#' 
+#'
 #' @return Either an unique ggplot2 object (if one_plot is TRUE) or
 #'  a list of 4 ggplot2 plot:
 #' - plot_Hill_0 : the boxplot of Hill number 0 (= species richness)
@@ -1244,9 +1254,11 @@ multiplot <-
 #'   sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
 #' p2 <- hill_pq(data_fungi_modif, "Height", letters = TRUE)
 #' }
+#' @seealso [psmelt_samples_pq()] and [ggbetween_pq()]
 hill_pq <-
   function(physeq,
-           variable,
+           fact = NULL,
+           variable = NULL,
            color_fac = NA,
            letters = FALSE,
            add_points = FALSE,
@@ -1254,6 +1266,18 @@ hill_pq <-
            one_plot = FALSE,
            plot_with_tuckey = TRUE,
            correction_for_sample_size = TRUE) {
+    if (!is.null(variable)) {
+      if (!is.null(fact)) {
+        stop("You must set only one parameter of variable or fact. This 2
+        parameters are strictly equivalent.")
+      }
+    } else {
+      if (!is.null(fact)) {
+        variable <- fact
+      } else {
+        stop("You must set the parameter fact.")
+      }
+    }
     var <- sym(variable)
     if (is.na(color_fac)) {
       color_fac <- sym(variable)
@@ -1271,7 +1295,7 @@ hill_pq <-
 
     otu_hill <-
       vegan::renyi(t(physeq)@otu_table,
-        scale = c(0, 1, 2),
+        scales = c(0, 1, 2),
         hill = TRUE
       )
     colnames(otu_hill) <- c("Hill_0", "Hill_1", "Hill_2")
@@ -1438,7 +1462,7 @@ hill_pq <-
 #' Basically a wrapper of function [ggstatsplot::ggbetweenstats()] for
 #' object of class phyloseq
 #' @inheritParams clean_pq
-#' @param variable (required): The variable to test. Must be present in
+#' @param fact (required): The variable to test. Must be present in
 #'   the `sam_data` slot of the physeq object.
 #' @param one_plot (logical, default FALSE) If TRUE, return a unique
 #'   plot with the three plot inside using the patchwork package.
@@ -1449,50 +1473,50 @@ hill_pq <-
 #' @return Either an unique ggplot2 object (if one_plot is TRUE) or
 #'  a list of 3 ggplot2 plot:
 #' - plot_Hill_0 : the ggbetweenstats of Hill number 0 (= species richness)
-#'     against the variable
+#'     against the variable fact
 #' - plot_Hill_1 : the ggbetweenstats of Hill number 1 (= Shannon index)
-#'      against the variable
+#'      against the variable fact
 #' - plot_Hill_2 : the ggbetweenstats of Hill number 2 (= Simpson index)
-#'     against the variable
+#'     against the variable fact
 #'
 #' @export
 #' @examples
 #' \donttest{
-#' p <- ggbetween_pq(data_fungi, variable = "Time", p.adjust.method = "BH")
+#' p <- ggbetween_pq(data_fungi, fact = "Time", p.adjust.method = "BH")
 #' p[[1]]
-#' ggbetween_pq(data_fungi, variable = "Height", one_plot = TRUE)
-#' ggbetween_pq(data_fungi, variable = "Height", one_plot = TRUE, rarefy_by_sample = TRUE)
+#' ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE)
+#' ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE, rarefy_by_sample = TRUE)
 #' }
 #' @author Adrien Taudière
 #' @details This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `ggstatsplot::ggbetweenstats()` if you
 #'   use this function.
 
-ggbetween_pq <- function(physeq, variable, one_plot = FALSE, rarefy_by_sample = FALSE, ...) {
+ggbetween_pq <- function(physeq, fact, one_plot = FALSE, rarefy_by_sample = FALSE, ...) {
   physeq <- clean_pq(physeq, force_taxa_as_columns = TRUE)
 
   if (rarefy_by_sample) {
     physeq <- clean_pq(rarefy_even_depth(physeq))
   }
 
-  if (are_modality_even_depth(physeq, variable)$p.value < 0.05) {
+  if (are_modality_even_depth(physeq, fact)$p.value < 0.05) {
     warning(paste0(
       "The mean number of sequences per samples vary across modalities of the variable '",
-      variable,
+      fact,
       "' You should use rarefy_by_sample = TRUE or try hill_pq() with correction_for_sample_size = TRUE"
     ))
   }
 
   df <- cbind(
     "nb_asv" = sample_sums(physeq@otu_table), physeq@sam_data,
-    "hill_0" = vegan::renyi(physeq@otu_table, scale = 0, hill = TRUE),
-    "hill_1" = vegan::renyi(physeq@otu_table, scale = 1, hill = TRUE),
-    "hill_2" = vegan::renyi(physeq@otu_table, scale = 2, hill = TRUE)
+    "hill_0" = vegan::renyi(physeq@otu_table, scales = 0, hill = TRUE),
+    "hill_1" = vegan::renyi(physeq@otu_table, scales = 1, hill = TRUE),
+    "hill_2" = vegan::renyi(physeq@otu_table, scales = 2, hill = TRUE)
   )
-  variable <- sym(variable)
-  p0 <- ggstatsplot::ggbetweenstats(df, !!variable, hill_0, ...)
-  p1 <- ggstatsplot::ggbetweenstats(df, !!variable, hill_1, ...)
-  p2 <- ggstatsplot::ggbetweenstats(df, !!variable, hill_2, ...)
+  fact <- sym(fact)
+  p0 <- ggstatsplot::ggbetweenstats(df, !!fact, hill_0, ...)
+  p1 <- ggstatsplot::ggbetweenstats(df, !!fact, hill_1, ...)
+  p2 <- ggstatsplot::ggbetweenstats(df, !!fact, hill_2, ...)
 
   res <- list(
     "plot_Hill_0" = p0,

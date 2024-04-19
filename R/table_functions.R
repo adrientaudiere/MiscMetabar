@@ -516,7 +516,7 @@ formattable_pq <- function(physeq,
             `background-color` = ifelse(x == 0, "white", formattable::csscolor(
               formattable::gradient(as.numeric(x), transp("#1a9641ff"), "#1a9641ff")
             )),
-            width = percent(proportion(as.numeric(x), na.rm = TRUE))
+            width = formattable::percent(proportion(as.numeric(x), na.rm = TRUE))
           )
         ),
         Family = formattable::formatter(
@@ -549,7 +549,7 @@ formattable_pq <- function(physeq,
             `background-color` = ifelse(x == 0, "white", formattable::csscolor(
               formattable::gradient(as.numeric(x), transp("#4d4888ff"), "#4d4888ff")
             )),
-            width = percent(proportion(as.numeric(x), na.rm = TRUE))
+            width = formattable::percent(proportion(as.numeric(x), na.rm = TRUE))
           )
         ),
         proportion_samp = formattable::formatter(
@@ -563,7 +563,7 @@ formattable_pq <- function(physeq,
             `background-color` = ifelse(x == 0, "white", formattable::csscolor(
               formattable::gradient(as.numeric(x), transp("#1f78b4ff"), "#1f78b4ff")
             )),
-            width = percent(as.numeric(x))
+            width = formattable::percent(as.numeric(x))
           )
         ),
         nb_sam = FALSE

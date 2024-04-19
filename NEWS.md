@@ -6,9 +6,11 @@
 - Add functions `signif_ancombc()` and `plot_ancombc_pq()` to plot significant results from `ancombc_pq()` function
 - Add function `distri_1_taxa()` to summarize the distribution of one given taxa across level of a modality
 - Add function `normalize_prop_pq()` to implement the method proposed by [McKnight et al. 2018](https://doi.org/10.5061/dryad.tn8qs35)
+- Add function `psmelt_samples_pq()` to build data frame of samples information including the number of sequences (Abundance) and Hill diversity metrics. Useful to use with the [ggstatsplot](https://indrajeetpatil.github.io/ggstatsplot/) packages (see examples).
+- Replace param `variable` by `fact` in function `ggbetween_pq()` and `hill_pq()` (keeping the variable option in `hill_pq()` for backward compatibility)
 
 # MiscMetabar 0.7 (in development)
-
+ 
 - Add functions `chimera_detection_vs()` and `chimera_removal_vs()` to process chimera detection and removal using [vsearch](https://github.com/torognes/vsearch) software 
 - Add functions `filter_trim()`, `sample_data_with_new_names()` and `rename_samples()` to facilitate the use of [targets](https://books.ropensci.org/targets/) for bioinformatic pipeline.
 - Add function `add_info_to_sam_data()` to expand sam_data slot using a data.frame and using nb_asv and nb_seq 

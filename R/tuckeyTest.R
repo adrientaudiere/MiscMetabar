@@ -44,7 +44,7 @@ hill_tuckey_pq <- function(
   )
   otu_hill <-
     vegan::renyi(t(physeq@otu_table),
-      scale = c(0, 1, 2),
+      scales = c(0, 1, 2),
       hill = TRUE
     )
 

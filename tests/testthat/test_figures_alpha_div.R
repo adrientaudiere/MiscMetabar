@@ -156,13 +156,13 @@ test_that("accu_samp_threshold works with GlobalPatterns dataset", {
 test_that("accu_samp_threshold works with data_fungi_mini dataset", {
   skip_on_cran()
   expect_warning(ggb <-
-    ggbetween_pq(data_fungi_mini, variable = "Time"))
+    ggbetween_pq(data_fungi_mini, "Time"))
   expect_equal(length(ggb), 3)
-  expect_s3_class(ggbetween_pq(data_fungi_mini, variable = "Height")[[1]], "ggplot")
+  expect_s3_class(ggbetween_pq(data_fungi_mini, fact = "Height")[[1]], "ggplot")
   expect_s3_class(
     ggbetween_pq(
       data_fungi,
-      variable = "Height",
+      fact = "Height",
       one_plot = TRUE,
       min_SCBD = 0,
       rarefy_by_sample = TRUE
@@ -171,6 +171,6 @@ test_that("accu_samp_threshold works with data_fungi_mini dataset", {
   )
   expect_s3_class(ggbetween_pq(
     data_fungi_mini,
-    variable = "Height"
+    fact = "Height"
   )[[1]], "ggplot")
 })
