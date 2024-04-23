@@ -14,7 +14,7 @@ Please cite Nguyen et al. 2016 (doi:10.1016/j.funeco.2015.06.006
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.00</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,18 +127,20 @@ use this function.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="va">d_fung_mini</span> <span class="op">&lt;-</span> <span class="fu">add_funguild_info</span><span class="op">(</span><span class="va">data_fungi_mini</span>,</span></span>
-<span class="r-in"><span>  taxLevels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="st">"Domain"</span>,</span></span>
-<span class="r-in"><span>    <span class="st">"Phylum"</span>,</span></span>
-<span class="r-in"><span>    <span class="st">"Class"</span>,</span></span>
-<span class="r-in"><span>    <span class="st">"Order"</span>,</span></span>
-<span class="r-in"><span>    <span class="st">"Family"</span>,</span></span>
-<span class="r-in"><span>    <span class="st">"Genus"</span>,</span></span>
-<span class="r-in"><span>    <span class="st">"Species"</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"httr"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">d_fung_mini</span> <span class="op">&lt;-</span> <span class="fu">add_funguild_info</span><span class="op">(</span><span class="va">data_fungi_mini</span>,</span></span>
+<span class="r-in"><span>    taxLevels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="st">"Domain"</span>,</span></span>
+<span class="r-in"><span>      <span class="st">"Phylum"</span>,</span></span>
+<span class="r-in"><span>      <span class="st">"Class"</span>,</span></span>
+<span class="r-in"><span>      <span class="st">"Order"</span>,</span></span>
+<span class="r-in"><span>      <span class="st">"Family"</span>,</span></span>
+<span class="r-in"><span>      <span class="st">"Genus"</span>,</span></span>
+<span class="r-in"><span>      <span class="st">"Species"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">d_fung_mini</span><span class="op">@</span><span class="va">tax_table</span><span class="op">[</span>, <span class="st">"guild"</span><span class="op">]</span><span class="op">)</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">d_fung_mini</span><span class="op">@</span><span class="va">tax_table</span><span class="op">[</span>, <span class="st">"guild"</span><span class="op">]</span><span class="op">)</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                      Wood Saprotroph </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                                   11 </span>

@@ -17,7 +17,7 @@ reorder the levels of guild. See examples.}
 \item{clean_pq}{(logical, default TRUE): Does the phyloseq
 object is cleaned using the \code{\link[=clean_pq]{clean_pq()}} function?}
 
-\item{...}{other params for be passed on to
+\item{...}{Other params for be passed on to
 \code{\link[=clean_pq]{clean_pq()}} function}
 }
 \value{
@@ -28,27 +28,29 @@ A ggplot2 object
 }
 \examples{
 \donttest{
-d_fung_mini <- add_funguild_info(data_fungi_mini,
-  taxLevels = c(
-    "Domain",
-    "Phylum",
-    "Class",
-    "Order",
-    "Family",
-    "Genus",
-    "Species"
+if (requireNamespace("httr")) {
+  d_fung_mini <- add_funguild_info(data_fungi_mini,
+    taxLevels = c(
+      "Domain",
+      "Phylum",
+      "Class",
+      "Order",
+      "Family",
+      "Genus",
+      "Species"
+    )
   )
-)
-sort(table(d_fung_mini@tax_table[, "guild"]), decreasing = TRUE)
+  sort(table(d_fung_mini@tax_table[, "guild"]), decreasing = TRUE)
 
-p <- plot_guild_pq(d_fung_mini)
-if (!requireNamespace("patchwork")) {
-  (plot_guild_pq(subset_samples(d_fung_mini, Height == "Low"),
-    levels_order = p$data$Guild[order(p$data$nb_seq)]
-  ) + theme(legend.position = "none")) +
-    (plot_guild_pq(subset_samples(d_fung_mini, Height == "High"),
+  p <- plot_guild_pq(d_fung_mini)
+  if (requireNamespace("patchwork")) {
+    (plot_guild_pq(subset_samples(d_fung_mini, Height == "Low"),
       levels_order = p$data$Guild[order(p$data$nb_seq)]
-    ) + ylab("") + theme(axis.text.y = element_blank()))
+    ) + theme(legend.position = "none")) +
+      (plot_guild_pq(subset_samples(d_fung_mini, Height == "High"),
+        levels_order = p$data$Guild[order(p$data$nb_seq)]
+      ) + ylab("") + theme(axis.text.y = element_blank()))
+  }
 }
 }
 }

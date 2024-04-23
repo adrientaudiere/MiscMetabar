@@ -18,7 +18,7 @@ using the \code{phyloseq} package.}
 
 \item{perplexity}{(Numeric) Perplexity parameter (should not be bigger than 3 * perplexity < nrow(X) - 1, see details in the man page of \code{Rtsne::Rtsne})}
 
-\item{...}{: other arguments passed on to \code{Rtsne::Rtsne()}}
+\item{...}{Other arguments passed on to \code{Rtsne::Rtsne()}}
 }
 \value{
 A list of element including the matrix Y containing the new representations for the objects.
@@ -29,6 +29,8 @@ Compute tSNE position of samples from a phyloseq object
 }
 \examples{
 \dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-res_tsne <- tsne_pq(data_fungi)
+if (requireNamespace("Rtsne")) {
+  res_tsne <- tsne_pq(data_fungi)
+}
 \dontshow{\}) # examplesIf}
 }

@@ -51,17 +51,19 @@ Please cite \href{https://github.com/torognes/vsearch}{vsearch}.
 \examples{
 \dontshow{if (MiscMetabar::is_vsearch_installed()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
-file_dna <- tempfile("dna.fa")
-seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCAACC",
-  file = file_dna, names = "seq1"
-)
+if (requireNamespace("seqinr")) {
+  file_dna <- tempfile("dna.fa")
+  seqinr::write.fasta("GCCCATTAGTATTCTAGTGGGCATGCCTGTTCGAGCGTCATTTTCAACC",
+    file = file_dna, names = "seq1"
+  )
 
-res <- vs_search_global(data_fungi, path_to_fasta = file_dna)
-unlink(file_dna)
+  res <- vs_search_global(data_fungi, path_to_fasta = file_dna)
+  unlink(file_dna)
 
-res[res$identity != "*", ]
+  res[res$identity != "*", ]
 
-clean_pq(subset_taxa(data_fungi, res$identity != "*"))
+  clean_pq(subset_taxa(data_fungi, res$identity != "*"))
+}
 }
 \dontshow{\}) # examplesIf}
 }

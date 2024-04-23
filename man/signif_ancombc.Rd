@@ -42,20 +42,22 @@ use this function.
 }
 \examples{
 \donttest{
-data_fungi_mini@tax_table <- phyloseq::tax_table(cbind(
-  data_fungi_mini@tax_table,
-  "taxon" = taxa_names(data_fungi_mini)
-))
+if (requireNamespace("mia")) {
+  data_fungi_mini@tax_table <- phyloseq::tax_table(cbind(
+    data_fungi_mini@tax_table,
+    "taxon" = taxa_names(data_fungi_mini)
+  ))
 
-res_time <- ancombc_pq(
-  data_fungi_mini,
-  fact = "Time",
-  levels_fact = c("0", "15"),
-  tax_level = "taxon",
-  verbose = TRUE
-)
+  res_time <- ancombc_pq(
+    data_fungi_mini,
+    fact = "Time",
+    levels_fact = c("0", "15"),
+    tax_level = "taxon",
+    verbose = TRUE
+  )
 
-signif_ancombc(res_time)
+  signif_ancombc(res_time)
+}
 }
 }
 \seealso{

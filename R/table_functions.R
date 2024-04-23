@@ -17,15 +17,17 @@
 #'
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' data("GlobalPatterns", package = "phyloseq")
-#' tax_datatable(subset_taxa(
-#'   GlobalPatterns,
-#'   rowSums(GlobalPatterns@otu_table) > 10000
-#' ))
+#' if (requireNamespace("DT")) {
+#'   tax_datatable(subset_taxa(
+#'     GlobalPatterns,
+#'     rowSums(GlobalPatterns@otu_table) > 10000
+#'   ))
 #'
-#' # Using modality
-#' tax_datatable(GlobalPatterns,
-#'   modality = GlobalPatterns@sam_data$SampleType
-#' )
+#'   # Using modality
+#'   tax_datatable(GlobalPatterns,
+#'     modality = GlobalPatterns@sam_data$SampleType
+#'   )
+#' }
 tax_datatable <- function(physeq,
                           abundance = TRUE,
                           taxonomic_level = NULL,
@@ -114,7 +116,6 @@ tax_datatable <- function(physeq,
 #' @importFrom rlang .data
 #' @export
 #' @examples
-#'
 #' data_fungi_low_high <- subset_samples(data_fungi, Height %in% c("Low", "High"))
 #' compare_pairs_pq(data_fungi_low_high, bifactor = "Height", merge_sample_by = "Height")
 #' compare_pairs_pq(data_fungi_low_high,
@@ -301,113 +302,114 @@ compare_pairs_pq <- function(physeq = NULL,
 #' @importFrom grDevices col2rgb
 #' @importFrom stats runif
 #' @examples
-#' library(formattable)
-#' ## Distribution of the nb of sequences per OTU across Height
-#' ##   modality (nb of sequences are log-transformed).
-#' ## Only OTU with more than 10000 sequences are taking into account
-#' ## The Phylum column is discarded
-#' formattable_pq(
-#'   data_fungi,
-#'   "Height",
-#'   min_nb_seq_taxa = 10000,
-#'   formattable_args = list("Phylum" = FALSE),
-#'   log10trans = TRUE
-#' )
+#' if (requireNamespace("formattable")) {
+#'   ## Distribution of the nb of sequences per OTU across Height
+#'   ##   modality (nb of sequences are log-transformed).
+#'   ## Only OTU with more than 10000 sequences are taking into account
+#'   ## The Phylum column is discarded
+#'   formattable_pq(
+#'     data_fungi,
+#'     "Height",
+#'     min_nb_seq_taxa = 10000,
+#'     formattable_args = list("Phylum" = FALSE),
+#'     log10trans = TRUE
+#'   )
 #'
-#' ## Distribution of the nb of samples per OTU across Height modality
-#' ## Only OTU  present in more than 50 samples are taking into account
-#' formattable_pq(
-#'   as_binary_otu_table(data_fungi),
-#'   "Height",
-#'   min_nb_seq_taxa = 50,
-#'   formattable_args = list("nb_seq" = FALSE),
-#' )
+#'   ## Distribution of the nb of samples per OTU across Height modality
+#'   ## Only OTU  present in more than 50 samples are taking into account
+#'   formattable_pq(
+#'     as_binary_otu_table(data_fungi),
+#'     "Height",
+#'     min_nb_seq_taxa = 50,
+#'     formattable_args = list("nb_seq" = FALSE),
+#'   )
 #'
-#' ## Distribution of the nb of sequences per OTU across Time modality
-#' ##  arranged by Family Name in ascending order.
-#' ## Only OTU with more than 10000 sequences are taking into account
-#' ## The Phylum column is discarded
-#' formattable_pq(
-#'   data_fungi,
-#'   "Time",
-#'   min_nb_seq_taxa = 10000,
-#'   taxonomic_levels = c("Order", "Family", "Genus", "Species"),
-#'   formattable_args = list(
-#'     Order = FALSE,
-#'     Species = formatter(
-#'       "span",
-#'       style = x ~ style(
-#'         "font-style" = "italic",
-#'         `color` = ifelse(is.na(x), "white", "grey")
+#'   ## Distribution of the nb of sequences per OTU across Time modality
+#'   ##  arranged by Family Name in ascending order.
+#'   ## Only OTU with more than 10000 sequences are taking into account
+#'   ## The Phylum column is discarded
+#'   formattable_pq(
+#'     data_fungi,
+#'     "Time",
+#'     min_nb_seq_taxa = 10000,
+#'     taxonomic_levels = c("Order", "Family", "Genus", "Species"),
+#'     formattable_args = list(
+#'       Order = FALSE,
+#'       Species = formatter(
+#'         "span",
+#'         style = x ~ style(
+#'           "font-style" = "italic",
+#'           `color` = ifelse(is.na(x), "white", "grey")
+#'         )
 #'       )
-#'     )
-#'   ),
-#'   arrange_by = "Family",
-#'   descending_order = FALSE
-#' )
+#'     ),
+#'     arrange_by = "Family",
+#'     descending_order = FALSE
+#'   )
 #'
-#' ## Distribution of the nb of sequences per OTU across Height modality
-#' ##  (nb of sequences are log-transformed).
-#' ## OTU name background is light gray for Basidiomycota
-#' ##  and dark grey otherwise (Ascomycota)
-#' ## A different color is defined for each modality level
-#' formattable_pq(
-#'   data_fungi,
-#'   "Height",
-#'   taxonomic_levels = c("Phylum", "Family", "Genus"),
-#'   void_style = TRUE,
-#'   formattable_args = list(
-#'     OTU = formatter(
-#'       "span",
-#'       style = ~ style(
-#'         "display" = "block",
-#'         `border-radius` = "5px",
-#'         `background-color` = ifelse(Phylum == "Basidiomycota", transp("gray"), "gray")
+#'   ## Distribution of the nb of sequences per OTU across Height modality
+#'   ##  (nb of sequences are log-transformed).
+#'   ## OTU name background is light gray for Basidiomycota
+#'   ##  and dark grey otherwise (Ascomycota)
+#'   ## A different color is defined for each modality level
+#'   formattable_pq(
+#'     data_fungi,
+#'     "Height",
+#'     taxonomic_levels = c("Phylum", "Family", "Genus"),
+#'     void_style = TRUE,
+#'     formattable_args = list(
+#'       OTU = formatter(
+#'         "span",
+#'         style = ~ style(
+#'           "display" = "block",
+#'           `border-radius` = "5px",
+#'           `background-color` = ifelse(Phylum == "Basidiomycota", transp("gray"), "gray")
+#'         ),
+#'         `padding-right` = "2px"
 #'       ),
-#'       `padding-right` = "2px"
-#'     ),
-#'     High = formatter(
-#'       "span",
-#'       style = x ~ style(
-#'         "font-size" = "80%",
-#'         "display" = "inline-block",
-#'         direction = "rtl",
-#'         `border-radius` = "0px",
-#'         `padding-right` = "2px",
-#'         `background-color` = csscolor(gradient(
-#'           as.numeric(x), transp("#1a91ff"), "#1a91ff"
-#'         )),
-#'         width = percent(proportion(as.numeric(x), na.rm = TRUE))
-#'       )
-#'     ),
-#'     Low = formatter(
-#'       "span",
-#'       style = x ~ style(
-#'         "font-size" = "80%",
-#'         "display" = "inline-block",
-#'         direction = "rtl",
-#'         `border-radius` = "0px",
-#'         `padding-right` = "2px",
-#'         `background-color` = csscolor(gradient(as.numeric(x), transp("green"), "green")),
-#'         width = percent(proportion(as.numeric(x), na.rm = TRUE))
-#'       )
-#'     ),
-#'     Middle = formatter(
-#'       "span",
-#'       style = x ~ style(
-#'         "font-size" = "80%",
-#'         "display" = "inline-block",
-#'         direction = "rtl",
-#'         `border-radius` = "0px",
-#'         `padding-right` = "2px",
-#'         `background-color` = csscolor(gradient(
-#'           as.numeric(x), transp("orange"), "orange"
-#'         )),
-#'         width = percent(proportion(as.numeric(x), na.rm = TRUE))
+#'       High = formatter(
+#'         "span",
+#'         style = x ~ style(
+#'           "font-size" = "80%",
+#'           "display" = "inline-block",
+#'           direction = "rtl",
+#'           `border-radius` = "0px",
+#'           `padding-right` = "2px",
+#'           `background-color` = csscolor(gradient(
+#'             as.numeric(x), transp("#1a91ff"), "#1a91ff"
+#'           )),
+#'           width = percent(proportion(as.numeric(x), na.rm = TRUE))
+#'         )
+#'       ),
+#'       Low = formatter(
+#'         "span",
+#'         style = x ~ style(
+#'           "font-size" = "80%",
+#'           "display" = "inline-block",
+#'           direction = "rtl",
+#'           `border-radius` = "0px",
+#'           `padding-right` = "2px",
+#'           `background-color` = csscolor(gradient(as.numeric(x), transp("green"), "green")),
+#'           width = percent(proportion(as.numeric(x), na.rm = TRUE))
+#'         )
+#'       ),
+#'       Middle = formatter(
+#'         "span",
+#'         style = x ~ style(
+#'           "font-size" = "80%",
+#'           "display" = "inline-block",
+#'           direction = "rtl",
+#'           `border-radius` = "0px",
+#'           `padding-right` = "2px",
+#'           `background-color` = csscolor(gradient(
+#'             as.numeric(x), transp("orange"), "orange"
+#'           )),
+#'           width = percent(proportion(as.numeric(x), na.rm = TRUE))
+#'         )
 #'       )
 #'     )
 #'   )
-#' )
+#' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `formattable::formattable()` if you
@@ -516,7 +518,7 @@ formattable_pq <- function(physeq,
             `background-color` = ifelse(x == 0, "white", formattable::csscolor(
               formattable::gradient(as.numeric(x), transp("#1a9641ff"), "#1a9641ff")
             )),
-            width = percent(proportion(as.numeric(x), na.rm = TRUE))
+            width = formattable::percent(proportion(as.numeric(x), na.rm = TRUE))
           )
         ),
         Family = formattable::formatter(
@@ -549,7 +551,7 @@ formattable_pq <- function(physeq,
             `background-color` = ifelse(x == 0, "white", formattable::csscolor(
               formattable::gradient(as.numeric(x), transp("#4d4888ff"), "#4d4888ff")
             )),
-            width = percent(proportion(as.numeric(x), na.rm = TRUE))
+            width = formattable::percent(proportion(as.numeric(x), na.rm = TRUE))
           )
         ),
         proportion_samp = formattable::formatter(
@@ -563,7 +565,7 @@ formattable_pq <- function(physeq,
             `background-color` = ifelse(x == 0, "white", formattable::csscolor(
               formattable::gradient(as.numeric(x), transp("#1f78b4ff"), "#1f78b4ff")
             )),
-            width = percent(as.numeric(x))
+            width = formattable::percent(as.numeric(x))
           )
         ),
         nb_sam = FALSE

@@ -31,7 +31,7 @@ after cleaning using the default parameter of \code{\link[=clean_pq]{clean_pq()}
 }
 \value{
 \itemize{
-\item I/ a sequences tables () if object is of class dada, derep, data.frame or
+\item I/ a sequences tables if object is of class dada, derep, data.frame or
 list.
 \item II/ a phyloseq object without (or with if type = 'Select_only_chim')
 chimeric taxa

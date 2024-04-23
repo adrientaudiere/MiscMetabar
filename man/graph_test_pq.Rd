@@ -37,7 +37,7 @@ of the test or do we plot the result?}
 \item{na_remove}{(logical, default FALSE) If set to TRUE, remove samples with
 NA in the variables set in formula.}
 
-\item{...}{other params for be passed on to
+\item{...}{Other params for be passed on to
 \code{\link[phyloseqGraphTest:graph_perm_test]{phyloseqGraphTest::graph_perm_test()}} function}
 }
 \value{
@@ -56,9 +56,11 @@ Please cite \code{phyloseqGraphTest} package.
 }
 \examples{
 \donttest{
-data(enterotype)
-graph_test_pq(enterotype, fact = "SeqTech")
-graph_test_pq(enterotype, fact = "Enterotype", na_remove = TRUE)
+if (requireNamespace("phyloseqGraphTest")) {
+  data(enterotype)
+  graph_test_pq(enterotype, fact = "SeqTech")
+  graph_test_pq(enterotype, fact = "Enterotype", na_remove = TRUE)
+}
 }
 }
 \author{

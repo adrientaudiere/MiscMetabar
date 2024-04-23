@@ -16,7 +16,7 @@ More information are available in the manual of the function track_wkflow()"><!-
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.00</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,7 +98,7 @@ Only phyloseq object will return value because information of sample is needed</
 
 
 <dt>...</dt>
-<dd><p>: other args passed on to <code><a href="track_wkflow.html">track_wkflow()</a></code></p></dd>
+<dd><p>Other args passed on to <code><a href="track_wkflow.html">track_wkflow()</a></code></p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -115,7 +115,9 @@ Only phyloseq object will return value because information of sample is needed</
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">tree_A10_005</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html" class="external-link">subset_samples</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="va">Tree_name</span> <span class="op">==</span> <span class="st">"A10-005"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">track_wkflow_samples</span><span class="op">(</span><span class="va">tree_A10_005</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"pbapply"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">track_wkflow_samples</span><span class="op">(</span><span class="va">tree_A10_005</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> You select 1 of 3 samples and conserved 67 out of 1420 taxa represented by 13314 sequences (out of 56868 sequences [23%])</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Compute the number of sequences</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>

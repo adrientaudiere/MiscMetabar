@@ -45,31 +45,35 @@ Note that lvl2need to be nested in lvl1
 }
 \examples{
 data(data_fungi_sp_known)
-treemap_pq(
-  clean_pq(subset_taxa(
-    data_fungi_sp_known,
-    Phylum == "Basidiomycota"
-  )),
-  "Order", "Class",
-  plot_legend = TRUE
-)
+if (requireNamespace("treemapify")) {
+  treemap_pq(
+    clean_pq(subset_taxa(
+      data_fungi_sp_known,
+      Phylum == "Basidiomycota"
+    )),
+    "Order", "Class",
+    plot_legend = TRUE
+  )
+}
 \donttest{
-treemap_pq(
-  clean_pq(subset_taxa(
-    data_fungi_sp_known,
-    Phylum == "Basidiomycota"
-  )),
-  "Order", "Class",
-  log10trans = FALSE
-)
-treemap_pq(
-  clean_pq(subset_taxa(
-    data_fungi_sp_known,
-    Phylum == "Basidiomycota"
-  )),
-  "Order", "Class",
-  nb_seq = FALSE, log10trans = FALSE
-)
+if (requireNamespace("treemapify")) {
+  treemap_pq(
+    clean_pq(subset_taxa(
+      data_fungi_sp_known,
+      Phylum == "Basidiomycota"
+    )),
+    "Order", "Class",
+    log10trans = FALSE
+  )
+  treemap_pq(
+    clean_pq(subset_taxa(
+      data_fungi_sp_known,
+      Phylum == "Basidiomycota"
+    )),
+    "Order", "Class",
+    nb_seq = FALSE, log10trans = FALSE
+  )
+}
 }
 }
 \author{

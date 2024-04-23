@@ -68,19 +68,21 @@ test_that("circle_pq works", {
 })
 
 test_that("graph_test_pq works", {
-  expect_silent(graph_test_pq(data_fungi_mini, fact = "Tree_name"))
-  skip_on_cran()
-  expect_silent(graph_test_pq(data_fungi_mini, fact = "Tree_name", na_remove = TRUE))
-  expect_silent(graph_test_pq(data_fungi_mini, fact = "Tree_name", return_plot = FALSE))
-  expect_message(graph_test_pq(
-    subset_samples(data_fungi_mini, !is.na(data_fungi_mini@sam_data$Time)),
-    fact = "Time",
-    merge_sample_by = "Tree_name"
-  ))
-  expect_error(graph_test_pq(data_fungi_mini, fact = "Height"))
-  expect_message(graph_test_pq(data_fungi_mini, fact = "Height", na_remove = TRUE))
-  expect_error(graph_test_pq(enterotype, fact = "Enterotype"))
-  expect_error(graph_test_pq(data_fungi_mini, fact = "tRREE_name"))
+  if (requireNamespace("phyloseqGraphTest")) {
+    expect_silent(graph_test_pq(data_fungi_mini, fact = "Tree_name"))
+    skip_on_cran()
+    expect_silent(graph_test_pq(data_fungi_mini, fact = "Tree_name", na_remove = TRUE))
+    expect_silent(graph_test_pq(data_fungi_mini, fact = "Tree_name", return_plot = FALSE))
+    expect_message(graph_test_pq(
+      subset_samples(data_fungi_mini, !is.na(data_fungi_mini@sam_data$Time)),
+      fact = "Time",
+      merge_sample_by = "Tree_name"
+    ))
+    expect_error(graph_test_pq(data_fungi_mini, fact = "Height"))
+    expect_message(graph_test_pq(data_fungi_mini, fact = "Height", na_remove = TRUE))
+    expect_error(graph_test_pq(enterotype, fact = "Enterotype"))
+    expect_error(graph_test_pq(data_fungi_mini, fact = "tRREE_name"))
+  }
 })
 
 
@@ -95,107 +97,111 @@ test_that("plot_mt works", {
 })
 
 test_that("sankey_pq works with GlobalPatterns dataset", {
-  expect_silent(sankey_pq(GP_archae))
-  skip_on_cran()
-  expect_s3_class(sankey_pq(GP_archae), "htmlwidget")
-  expect_s3_class(sankey_pq(GP_archae), "sankeyNetwork")
-  expect_silent(suppressWarnings(sankey_pq(GP_archae, fact = "SampleType")))
-  expect_silent(sankey_pq(
-    GP_archae,
-    taxa = 1:4,
-    min_prop_tax = 0.01,
-    units = "sequences"
-  ))
-  expect_silent(sankey_pq(
-    GP_archae,
-    taxa = 1:4,
-    min_prop_tax = 0.01,
-    add_nb_seq = TRUE
-  ))
-  expect_silent(suppressWarnings(sankey_pq(
-    GP_archae,
-    fact = "SampleType", add_nb_seq = TRUE
-  )))
-  expect_silent(
-    sankey_pq(
-      GP_archae,
-      taxa = 1:4,
-      min_prop_tax = 0.001,
-      add_nb_seq = TRUE,
-      tax2remove = "NRP-J"
-    )
-  )
-  expect_silent(
-    sankey_pq(
+  if (requireNamespace("networkD3")) {
+    expect_silent(sankey_pq(GP_archae))
+    skip_on_cran()
+    expect_s3_class(sankey_pq(GP_archae), "htmlwidget")
+    expect_s3_class(sankey_pq(GP_archae), "sankeyNetwork")
+    expect_silent(suppressWarnings(sankey_pq(GP_archae, fact = "SampleType")))
+    expect_silent(sankey_pq(
       GP_archae,
       taxa = 1:4,
       min_prop_tax = 0.01,
-      add_nb_seq = TRUE,
-      units = "sequences",
-      symbol2sub = NULL
-    )
-  )
-  expect_warning(
-    sankey_pq(
+      units = "sequences"
+    ))
+    expect_silent(sankey_pq(
       GP_archae,
       taxa = 1:4,
       min_prop_tax = 0.01,
-      add_nb_seq = TRUE,
-      units = "sequences",
-      symbol2sub = NA
+      add_nb_seq = TRUE
+    ))
+    expect_silent(suppressWarnings(sankey_pq(
+      GP_archae,
+      fact = "SampleType", add_nb_seq = TRUE
+    )))
+    expect_silent(
+      sankey_pq(
+        GP_archae,
+        taxa = 1:4,
+        min_prop_tax = 0.001,
+        add_nb_seq = TRUE,
+        tax2remove = "NRP-J"
+      )
     )
-  )
-  expect_error(sankey_pq(GP_archae, taxa = 1:9))
-  expect_error(sankey_pq(GP_archae@otu_table))
+    expect_silent(
+      sankey_pq(
+        GP_archae,
+        taxa = 1:4,
+        min_prop_tax = 0.01,
+        add_nb_seq = TRUE,
+        units = "sequences",
+        symbol2sub = NULL
+      )
+    )
+    expect_warning(
+      sankey_pq(
+        GP_archae,
+        taxa = 1:4,
+        min_prop_tax = 0.01,
+        add_nb_seq = TRUE,
+        units = "sequences",
+        symbol2sub = NA
+      )
+    )
+    expect_error(sankey_pq(GP_archae, taxa = 1:9))
+    expect_error(sankey_pq(GP_archae@otu_table))
+  }
 })
 
 test_that("sankey_pq works with data_fungi_mini dataset", {
-  expect_silent(sankey_pq(data_fungi_mini))
-  skip_on_cran()
-  expect_s3_class(sankey_pq(data_fungi_mini), "htmlwidget")
-  expect_s3_class(sankey_pq(data_fungi_mini), "sankeyNetwork")
-  expect_silent(suppressWarnings(sankey_pq(data_fungi_mini, fact = "Height")))
-  expect_silent(sankey_pq(
-    data_fungi_mini,
-    taxa = 3:7,
-    min_prop_tax = 0.01,
-    units = "sequences"
-  ))
-  expect_silent(sankey_pq(
-    data_fungi_mini,
-    taxa = 1:4,
-    min_prop_tax = 0.01,
-    add_nb_seq = TRUE
-  ))
-  expect_silent(
-    sankey_pq(
+  if (requireNamespace("networkD3")) {
+    expect_silent(sankey_pq(data_fungi_mini))
+    skip_on_cran()
+    expect_s3_class(sankey_pq(data_fungi_mini), "htmlwidget")
+    expect_s3_class(sankey_pq(data_fungi_mini), "sankeyNetwork")
+    expect_silent(suppressWarnings(sankey_pq(data_fungi_mini, fact = "Height")))
+    expect_silent(sankey_pq(
       data_fungi_mini,
-      taxa = 1:4,
-      min_prop_tax = 0.001,
-      add_nb_seq = TRUE,
-      tax2remove = "Undefined"
-    )
-  )
-  expect_silent(
-    sankey_pq(
-      data_fungi_mini,
-      taxa = 1:4,
-      add_nb_seq = TRUE,
-      units = "sequences",
-      symbol2sub = NULL
-    )
-  )
-  expect_warning(
-    sankey_pq(
+      taxa = 3:7,
+      min_prop_tax = 0.01,
+      units = "sequences"
+    ))
+    expect_silent(sankey_pq(
       data_fungi_mini,
       taxa = 1:4,
       min_prop_tax = 0.01,
-      add_nb_seq = TRUE,
-      units = "sequences",
-      symbol2sub = NA
+      add_nb_seq = TRUE
+    ))
+    expect_silent(
+      sankey_pq(
+        data_fungi_mini,
+        taxa = 1:4,
+        min_prop_tax = 0.001,
+        add_nb_seq = TRUE,
+        tax2remove = "Undefined"
+      )
     )
-  )
-  expect_error(sankey_pq(data_fungi_mini, "HEIGHT"))
+    expect_silent(
+      sankey_pq(
+        data_fungi_mini,
+        taxa = 1:4,
+        add_nb_seq = TRUE,
+        units = "sequences",
+        symbol2sub = NULL
+      )
+    )
+    expect_warning(
+      sankey_pq(
+        data_fungi_mini,
+        taxa = 1:4,
+        min_prop_tax = 0.01,
+        add_nb_seq = TRUE,
+        units = "sequences",
+        symbol2sub = NA
+      )
+    )
+    expect_error(sankey_pq(data_fungi_mini, "HEIGHT"))
+  }
 })
 
 test_that("venn_pq works with data_fungi_mini dataset", {
@@ -230,72 +236,78 @@ test_that("venn_pq works with data_fungi_mini dataset", {
 })
 
 test_that("ggvenn_pq works with data_fungi_mini dataset", {
-  expect_message(ggvenn_pq(data_fungi_mini, "Height"))
-  skip_on_cran()
-  expect_message(ggvenn_pq(data_fungi_mini, "Height", rarefy_before_merging = TRUE))
-  expect_message(suppressWarnings(ggvenn_pq(data_fungi_mini, "Height", rarefy_after_merging = TRUE)))
-  expect_message(ggvenn_pq(data_fungi_mini, "Height", add_nb_seq = TRUE))
-  expect_silent(suppressMessages(ggvenn_pq(data_fungi_mini, "Height", rarefy_nb_seqs = TRUE)))
-  expect_message(ggvenn_pq(data_fungi_mini, "Height", min_nb_seq = 2))
-  expect_message(ggvenn_pq(data_fungi_mini, "Height", taxonomic_rank = 4))
-  expect_silent(suppressMessages(ggvenn_pq(data_fungi_mini, "Height", split_by = "Time")))
-  expect_error(ggvenn_pq(data_fungi_mini))
-  expect_s3_class(suppressMessages(ggvenn_pq(data_fungi_mini, "Height")), "ggplot")
-  expect_error(ggvenn_pq(data_fungi_mini@otu_table, "Height"))
+  if (requireNamespace("ggVennDiagram")) {
+    expect_message(ggvenn_pq(data_fungi_mini, "Height"))
+    skip_on_cran()
+    expect_message(ggvenn_pq(data_fungi_mini, "Height", rarefy_before_merging = TRUE))
+    expect_message(suppressWarnings(ggvenn_pq(data_fungi_mini, "Height", rarefy_after_merging = TRUE)))
+    expect_message(ggvenn_pq(data_fungi_mini, "Height", add_nb_seq = TRUE))
+    expect_silent(suppressMessages(ggvenn_pq(data_fungi_mini, "Height", rarefy_nb_seqs = TRUE)))
+    expect_message(ggvenn_pq(data_fungi_mini, "Height", min_nb_seq = 2))
+    expect_message(ggvenn_pq(data_fungi_mini, "Height", taxonomic_rank = 4))
+    expect_silent(suppressMessages(ggvenn_pq(data_fungi_mini, "Height", split_by = "Time")))
+    expect_error(ggvenn_pq(data_fungi_mini))
+    expect_s3_class(suppressMessages(ggvenn_pq(data_fungi_mini, "Height")), "ggplot")
+    expect_error(ggvenn_pq(data_fungi_mini@otu_table, "Height"))
+  }
 })
 
 
 test_that("upset_pq works with data_fungi dataset", {
-  expect_silent(suppressMessages(upset_pq(data_fungi_mini, "Height")))
-  skip_on_cran()
-  expect_s3_class(upset_pq(data_fungi_mini, "Height", taxa_fill = "Class"), "ggplot")
-  expect_s3_class(upset_pq(data_fungi_mini, "Height"), "ggplot")
-  expect_s3_class(
-    upset_pq(
-      data_fungi_mini,
-      "Height",
-      na_remove = TRUE,
-      rarefy_after_merging = TRUE
-    ),
-    "ggplot"
-  )
+  if (requireNamespace("tidyr") && requireNamespace("ComplexUpset")) {
+    expect_silent(suppressMessages(upset_pq(data_fungi_mini, "Height")))
+    skip_on_cran()
+    expect_s3_class(upset_pq(data_fungi_mini, "Height", taxa_fill = "Class"), "ggplot")
+    expect_s3_class(upset_pq(data_fungi_mini, "Height"), "ggplot")
+    expect_s3_class(
+      upset_pq(
+        data_fungi_mini,
+        "Height",
+        na_remove = TRUE,
+        rarefy_after_merging = TRUE
+      ),
+      "ggplot"
+    )
 
-  expect_s3_class(upset_pq(data_fungi_mini, "Time"), "ggplot")
-  expect_s3_class(upset_pq(data_fungi_mini, "Time", min_nb_seq = 10), "ggplot")
-  expect_s3_class(
-    upset_pq(data_fungi_mini, "Time",
-      numeric_fonction = mean,
-      na_remove = FALSE
-    ),
-    "ggplot"
-  )
+    expect_s3_class(upset_pq(data_fungi_mini, "Time"), "ggplot")
+    expect_s3_class(upset_pq(data_fungi_mini, "Time", min_nb_seq = 10), "ggplot")
+    expect_s3_class(
+      upset_pq(data_fungi_mini, "Time",
+        numeric_fonction = mean,
+        na_remove = FALSE
+      ),
+      "ggplot"
+    )
 
-  expect_error(upset_pq(data_fungi_mini))
+    expect_error(upset_pq(data_fungi_mini))
+  }
 })
 
 test_that("upset_test_pq works with data_fungi_mini dataset", {
-  expect_s3_class(upset_test_pq(data_fungi_mini, "Height"), "data.frame")
-  skip_on_cran()
-  expect_s3_class(upset_test_pq(data_fungi_mini, "Time"), "data.frame")
-  expect_s3_class(
-    upset_test_pq(data_fungi_mini, "Time", min_nb_seq = 10),
-    "data.frame"
-  )
-  expect_s3_class(
-    upset_test_pq(data_fungi_mini, "Time", numeric_fonction = mean),
-    "data.frame"
-  )
-  expect_s3_class(
-    upset_test_pq(
-      data_fungi_mini,
-      "Time",
-      numeric_fonction = mean,
-      var_to_test = c("OTU", "Guild", "Genus")
-    ),
-    "data.frame"
-  )
-  expect_error(upset_test_pq(data_fungi_mini, "Height", var_to_test = "GUILDDDS"))
-  expect_error(upset_test_pq(data_fungi_mini))
+  if (requireNamespace("tidyr") && requireNamespace("ComplexUpset")) {
+    expect_s3_class(upset_test_pq(data_fungi_mini, "Height"), "data.frame")
+    skip_on_cran()
+    expect_s3_class(upset_test_pq(data_fungi_mini, "Time"), "data.frame")
+    expect_s3_class(
+      upset_test_pq(data_fungi_mini, "Time", min_nb_seq = 10),
+      "data.frame"
+    )
+    expect_s3_class(
+      upset_test_pq(data_fungi_mini, "Time", numeric_fonction = mean),
+      "data.frame"
+    )
+    expect_s3_class(
+      upset_test_pq(
+        data_fungi_mini,
+        "Time",
+        numeric_fonction = mean,
+        var_to_test = c("OTU", "Guild", "Genus")
+      ),
+      "data.frame"
+    )
+    expect_error(upset_test_pq(data_fungi_mini, "Height", var_to_test = "GUILDDDS"))
+    expect_error(upset_test_pq(data_fungi_mini))
+  }
 })
 
 test_that("plot_LCBD_pq works with data_fungi dataset", {

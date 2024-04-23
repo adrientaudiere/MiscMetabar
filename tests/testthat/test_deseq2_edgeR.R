@@ -28,12 +28,14 @@ fac2col <- function(x, col.pal = funky_color, na.col = "transparent", seed = NUL
 }
 
 test_that("plot_edgeR_pq works with GP dataset", {
-  expect_message(plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"), color_tax = "Kingdom"), "Perform edgeR binary test")
-  skip_on_cran()
-  expect_message(plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"), color_tax = "Species"), "Perform edgeR binary test")
-  expect_message(plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"), taxolev = "Class", color_tax = "Kingdom"), "Perform edgeR binary test")
-  expect_error(plot_edgeR_pq(GP_archae, "SampleType", taxolev = "Class", color_tax = "Kingdom"), "At least one element of given pair is not a group")
-  expect_error(plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"), color_tax = "Samples"))
+  if (requireNamespace("edgeR")) {
+    expect_message(plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"), color_tax = "Kingdom"), "Perform edgeR binary test")
+    skip_on_cran()
+    expect_message(plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"), color_tax = "Species"), "Perform edgeR binary test")
+    expect_message(plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"), taxolev = "Class", color_tax = "Kingdom"), "Perform edgeR binary test")
+    expect_error(plot_edgeR_pq(GP_archae, "SampleType", taxolev = "Class", color_tax = "Kingdom"), "At least one element of given pair is not a group")
+    expect_error(plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"), color_tax = "Samples"))
+  }
 })
 
 test_that("plot_deseq2_pq works with results on GP dataset", {
@@ -58,11 +60,13 @@ test_that("plot_deseq2_pq works with results on GP dataset", {
 })
 
 test_that("plot_deseq2_pq works with GP dataset", {
-  expect_message(suppressWarnings(plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"))))
-  skip_on_cran()
-  expect_message(suppressWarnings(plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), color_tax = "Class", select_taxa = c("522457", "271582", "200359"))))
-  expect_message(suppressWarnings(plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), taxolev = "Class", verbose = TRUE)))
-  expect_message(suppressWarnings(plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), pval = 0.1, tax_depth = "Family")))
+  if (requireNamespace("DESeq2")) {
+    expect_message(suppressWarnings(plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"))))
+    skip_on_cran()
+    expect_message(suppressWarnings(plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), color_tax = "Class", select_taxa = c("522457", "271582", "200359"))))
+    expect_message(suppressWarnings(plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), taxolev = "Class", verbose = TRUE)))
+    expect_message(suppressWarnings(plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), pval = 0.1, tax_depth = "Family")))
+  }
 })
 
 

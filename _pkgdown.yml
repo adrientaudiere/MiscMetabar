@@ -165,6 +165,7 @@ reference:
   - krona
   - merge_krona
   - multitax_bar_pq
+  - physeq_or_string_to_dna
   - plot_guild_pq
   - plot_tax_pq
   - rotl_pq
@@ -202,6 +203,7 @@ reference:
   - rename_samples
   - sample_data_with_new_names
   - add_info_to_sam_data
+  - psmelt_samples_pq
 - subtitle: Taxonomy management
   contents:
   - simplify_taxo
@@ -215,30 +217,37 @@ reference:
   - Tengeler2020_pq
     
 - title: Others utilities
+- subtitle: Color management
   contents:
-  - all_object_size
-  - diff_fct_diff_class
-  - dist_bycol
-  - dist_pos_control
   - funky_color
   - fac2col
   - transp
+- subtitle: File management
+  contents: 
   - get_file_extension
+- subtitle: External software management
+  contents: 
   - is_cutadapt_installed
   - is_falco_installed
   - is_krona_installed
   - is_mumu_installed
   - is_swarm_installed
   - is_vsearch_installed
+- subtitle: Plot management
+  contents: 
   - multiplot
+- subtitle: Variable management
+  contents: 
+  - diff_fct_diff_class
   - perc
-  - are_modality_even_depth
   - unique_or_na
-  - physeq_or_string_to_dna
+- subtitle: Others
+  contents:
+  - all_object_size
+  - dist_bycol
+  - dist_pos_control
+  - are_modality_even_depth
   - MiscMetabar-package
-
-
-  
  
 - title: Deprecated
   contents:

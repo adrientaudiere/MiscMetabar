@@ -48,11 +48,13 @@ in lvl1
 }
 \examples{
 \donttest{
-multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", "Time")
-multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order")
-multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order",
-  nb_seq = FALSE, log10trans = FALSE
-)
+if (requireNamespace("ggh4x")) {
+  multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", "Time")
+  multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order")
+  multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order",
+    nb_seq = FALSE, log10trans = FALSE
+  )
+}
 }
 }
 \author{

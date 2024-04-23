@@ -126,15 +126,17 @@ derep_R_001 <-
   ))
 test_that("track_wkflow_samples function works fine with object of class matrix, dada and derep", {
   skip_on_os("windows")
-  expect_s3_class(track_wkflow(
-    list(
-      data_fungi@otu_table,
-      derep_R1_001,
-      derep_R_001,
-      "inst/extdata/ex_R1_001.fastq.gz",
-      dada_R1_001
-    )
-  ), "data.frame")
+  if (requireNamespace("pbapply")) {
+    expect_s3_class(track_wkflow(
+      list(
+        data_fungi@otu_table,
+        derep_R1_001,
+        derep_R_001,
+        "inst/extdata/ex_R1_001.fastq.gz",
+        dada_R1_001
+      )
+    ), "data.frame")
+  }
 })
 
 test_that("select_one_sample function works fine", {

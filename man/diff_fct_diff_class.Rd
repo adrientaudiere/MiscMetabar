@@ -31,14 +31,14 @@ diff_fct_diff_class(
 \item more_frequent_without_equality
 }}
 
-\item{...}{other arguments passed on to the numeric function (ex. na.rm=TRUE)}
+\item{...}{Other arguments passed on to the numeric function (ex. na.rm=TRUE)}
 }
 \value{
 a single value
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-Mainly an internal function useful in "lapply(..., tapply)" methods
+Mainly an internal function useful in "sapply(..., tapply)" methods
 }
 \examples{
 

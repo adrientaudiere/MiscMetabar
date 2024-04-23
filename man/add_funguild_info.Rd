@@ -32,18 +32,20 @@ use this function.
 }
 \examples{
 \donttest{
-d_fung_mini <- add_funguild_info(data_fungi_mini,
-  taxLevels = c(
-    "Domain",
-    "Phylum",
-    "Class",
-    "Order",
-    "Family",
-    "Genus",
-    "Species"
+if (requireNamespace("httr")) {
+  d_fung_mini <- add_funguild_info(data_fungi_mini,
+    taxLevels = c(
+      "Domain",
+      "Phylum",
+      "Class",
+      "Order",
+      "Family",
+      "Genus",
+      "Species"
+    )
   )
-)
-sort(table(d_fung_mini@tax_table[, "guild"]), decreasing = TRUE)
+  sort(table(d_fung_mini@tax_table[, "guild"]), decreasing = TRUE)
+}
 }
 }
 \seealso{

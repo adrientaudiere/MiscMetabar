@@ -47,7 +47,9 @@ clusters and samples
 \examples{
 \dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(enterotype)
-track_wkflow(list(data_fungi, enterotype), taxonomy_rank = c(3, 5))
+if (requireNamespace("pbapply")) {
+  track_wkflow(list(data_fungi, enterotype), taxonomy_rank = c(3, 5))
+}
 \dontshow{\}) # examplesIf}
 }
 \seealso{

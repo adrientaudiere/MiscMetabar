@@ -36,39 +36,41 @@ use this function.
 }
 \examples{
 \donttest{
-data_fungi_mini@tax_table <- phyloseq::tax_table(cbind(
-  data_fungi_mini@tax_table,
-  "taxon" = taxa_names(data_fungi_mini)
-))
-res_height <- ancombc_pq(
-  data_fungi_mini,
-  fact = "Height",
-  levels_fact = c("Low", "High"),
-  verbose = TRUE
-)
-
-ggplot(
-  res_height$res,
-  aes(
-    y = reorder(taxon, lfc_HeightHigh),
-    x = lfc_HeightHigh,
-    color = diff_HeightHigh
+if (requireNamespace("mia")) {
+  data_fungi_mini@tax_table <- phyloseq::tax_table(cbind(
+    data_fungi_mini@tax_table,
+    "taxon" = taxa_names(data_fungi_mini)
+  ))
+  res_height <- ancombc_pq(
+    data_fungi_mini,
+    fact = "Height",
+    levels_fact = c("Low", "High"),
+    verbose = TRUE
   )
-) +
-  geom_vline(xintercept = 0) +
-  geom_segment(aes(
-    xend = 0, y = reorder(taxon, lfc_HeightHigh),
-    yend = reorder(taxon, lfc_HeightHigh)
-  ), color = "darkgrey") +
-  geom_point()
 
-res_time <- ancombc_pq(
-  data_fungi_mini,
-  fact = "Time",
-  levels_fact = c("0", "15"),
-  tax_level = "Family",
-  verbose = TRUE
-)
+  ggplot(
+    res_height$res,
+    aes(
+      y = reorder(taxon, lfc_HeightHigh),
+      x = lfc_HeightHigh,
+      color = diff_HeightHigh
+    )
+  ) +
+    geom_vline(xintercept = 0) +
+    geom_segment(aes(
+      xend = 0, y = reorder(taxon, lfc_HeightHigh),
+      yend = reorder(taxon, lfc_HeightHigh)
+    ), color = "darkgrey") +
+    geom_point()
+
+  res_time <- ancombc_pq(
+    data_fungi_mini,
+    fact = "Time",
+    levels_fact = c("0", "15"),
+    tax_level = "Family",
+    verbose = TRUE
+  )
+}
 }
 }
 \author{

@@ -14,9 +14,9 @@ dist_bycol(x, y, method = "bray", nperm = 99, ...)
 \item{method}{(default: 'bray') the method to use internally in the vegdist
 function.}
 
-\item{nperm}{(default: 99) The number of permutations}
+\item{nperm}{(int) The number of permutations to perform.}
 
-\item{...}{others argument for \code{vegan::vegdist} function}
+\item{...}{Others argument for \code{vegan::vegdist} function}
 }
 \value{
 A list of length two : (i) a vector of observed distance ($obs) and

@@ -230,7 +230,9 @@ clean_pq <- function(physeq,
 #' @seealso [track_wkflow_samples()]
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' data(enterotype)
-#' track_wkflow(list(data_fungi, enterotype), taxonomy_rank = c(3, 5))
+#' if (requireNamespace("pbapply")) {
+#'   track_wkflow(list(data_fungi, enterotype), taxonomy_rank = c(3, 5))
+#' }
 track_wkflow <- function(list_of_objects,
                          obj_names = NULL,
                          clean_pq = FALSE,
@@ -432,7 +434,7 @@ track_wkflow <- function(list_of_objects,
 #'
 #' @param list_pq_obj (required): a list of object passed on to [track_wkflow()]
 #'   Only phyloseq object will return value because information of sample is needed
-#' @param ... : other args passed on to [track_wkflow()]
+#' @param ... Other args passed on to [track_wkflow()]
 #'
 #' @return A list of dataframe. cf [track_wkflow()] for more information
 #'
@@ -441,7 +443,9 @@ track_wkflow <- function(list_of_objects,
 #'
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' tree_A10_005 <- subset_samples(data_fungi, Tree_name == "A10-005")
-#' track_wkflow_samples(tree_A10_005)
+#' if (requireNamespace("pbapply")) {
+#'   track_wkflow_samples(tree_A10_005)
+#' }
 track_wkflow_samples <- function(list_pq_obj, ...) {
   if (!inherits(list_pq_obj, "list")) {
     list_pq_obj <- list(list_pq_obj)
@@ -523,15 +527,19 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #'   args was used.
 #'
 #' @examples
-#' asv2otu(data_fungi_mini)
-#' \donttest{
-#' asv2otu(data_fungi_mini, method_clusterize = "longest")
-#'
-#' if (MiscMetabar::is_swarm_installed()) {
-#'   d_swarm <- asv2otu(data_fungi_mini, method = "swarm")
+#' if (requireNamespace("DECIPHER")) {
+#'   asv2otu(data_fungi_mini)
 #' }
-#' if (MiscMetabar::is_vsearch_installed()) {
-#'   d_vs <- asv2otu(data_fungi_mini, method = "vsearch")
+#' \donttest{
+#' if (requireNamespace("DECIPHER")) {
+#'   asv2otu(data_fungi_mini, method_clusterize = "longest")
+#'
+#'   if (MiscMetabar::is_swarm_installed()) {
+#'     d_swarm <- asv2otu(data_fungi_mini, method = "swarm")
+#'   }
+#'   if (MiscMetabar::is_vsearch_installed()) {
+#'     d_vs <- asv2otu(data_fungi_mini, method = "vsearch")
+#'   }
 #' }
 #' }
 #' @references
@@ -898,7 +906,7 @@ save_pq <- function(physeq, path = NULL, ...) {
 #' `r lifecycle::badge("maturing")`
 #'
 #' @param path (required) a path to the folder to read the phyloseq object
-#' @param taxa_are_rows (required, default to FALSE) see ?phyloseq for details
+#' @param taxa_are_rows (default to FALSE) see ?phyloseq for details
 #' @param sam_names The name of the variable (column) in sam_data.csv to rename
 #'   samples. Note that if you use [write_phyloseq()] function to save your
 #'   physeq object, you may use sam_names = "X" to rename the samples names
@@ -1657,19 +1665,22 @@ add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, ...) {
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' tbl_sum_samdata(data_fungi) %>%
-#'   gtsummary::as_kable()
+#' if (requireNamespace("gtsummary")) {
+#'   tbl_sum_samdata(data_fungi) %>%
+#'     gtsummary::as_kable()
 #'
-#' summary_samdata <- tbl_sum_samdata(data_fungi,
-#'   include = c("Time", "Height"),
-#'   type = list(Time ~ "continuous2", Height ~ "categorical"),
-#'   statistic = list(Time ~ c("{median} ({p25}, {p75})", "{min}, {max}"))
-#' )
+#'   summary_samdata <- tbl_sum_samdata(data_fungi,
+#'     include = c("Time", "Height"),
+#'     type = list(Time ~ "continuous2", Height ~ "categorical"),
+#'     statistic = list(Time ~ c("{median} ({p25}, {p75})", "{min}, {max}"))
+#'   )
+#' }
 #' \donttest{
 #' data(enterotype)
-#'
-#' summary_samdata <- tbl_sum_samdata(enterotype)
-#' summary_samdata <- tbl_sum_samdata(enterotype, include = !contains("SampleId"))
+#' if (requireNamespace("gtsummary")) {
+#'   summary_samdata <- tbl_sum_samdata(enterotype)
+#'   summary_samdata <- tbl_sum_samdata(enterotype, include = !contains("SampleId"))
+#' }
 #' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
@@ -1704,18 +1715,20 @@ tbl_sum_samdata <- function(physeq, remove_col_unique_value = TRUE, ...) {
 #' @author Adrien Taudière
 #' @examples
 #' \donttest{
-#' d_fung_mini <- add_funguild_info(data_fungi_mini,
-#'   taxLevels = c(
-#'     "Domain",
-#'     "Phylum",
-#'     "Class",
-#'     "Order",
-#'     "Family",
-#'     "Genus",
-#'     "Species"
+#' if (requireNamespace("httr")) {
+#'   d_fung_mini <- add_funguild_info(data_fungi_mini,
+#'     taxLevels = c(
+#'       "Domain",
+#'       "Phylum",
+#'       "Class",
+#'       "Order",
+#'       "Family",
+#'       "Genus",
+#'       "Species"
+#'     )
 #'   )
-#' )
-#' sort(table(d_fung_mini@tax_table[, "guild"]), decreasing = TRUE)
+#'   sort(table(d_fung_mini@tax_table[, "guild"]), decreasing = TRUE)
+#' }
 #' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
@@ -1767,7 +1780,7 @@ add_funguild_info <- function(physeq,
 #'   reorder the levels of guild. See examples.
 #' @param clean_pq (logical, default TRUE): Does the phyloseq
 #'   object is cleaned using the [clean_pq()] function?
-#' @param ... other params for be passed on to
+#' @param ... Other params for be passed on to
 #'   [clean_pq()] function
 #' @return A ggplot2 object
 #'
@@ -1775,27 +1788,29 @@ add_funguild_info <- function(physeq,
 #' @author Adrien Taudière
 #' @examples
 #' \donttest{
-#' d_fung_mini <- add_funguild_info(data_fungi_mini,
-#'   taxLevels = c(
-#'     "Domain",
-#'     "Phylum",
-#'     "Class",
-#'     "Order",
-#'     "Family",
-#'     "Genus",
-#'     "Species"
+#' if (requireNamespace("httr")) {
+#'   d_fung_mini <- add_funguild_info(data_fungi_mini,
+#'     taxLevels = c(
+#'       "Domain",
+#'       "Phylum",
+#'       "Class",
+#'       "Order",
+#'       "Family",
+#'       "Genus",
+#'       "Species"
+#'     )
 #'   )
-#' )
-#' sort(table(d_fung_mini@tax_table[, "guild"]), decreasing = TRUE)
+#'   sort(table(d_fung_mini@tax_table[, "guild"]), decreasing = TRUE)
 #'
-#' p <- plot_guild_pq(d_fung_mini)
-#' if (!requireNamespace("patchwork")) {
-#'   (plot_guild_pq(subset_samples(d_fung_mini, Height == "Low"),
-#'     levels_order = p$data$Guild[order(p$data$nb_seq)]
-#'   ) + theme(legend.position = "none")) +
-#'     (plot_guild_pq(subset_samples(d_fung_mini, Height == "High"),
+#'   p <- plot_guild_pq(d_fung_mini)
+#'   if (requireNamespace("patchwork")) {
+#'     (plot_guild_pq(subset_samples(d_fung_mini, Height == "Low"),
 #'       levels_order = p$data$Guild[order(p$data$nb_seq)]
-#'     ) + ylab("") + theme(axis.text.y = element_blank()))
+#'     ) + theme(legend.position = "none")) +
+#'       (plot_guild_pq(subset_samples(d_fung_mini, Height == "High"),
+#'         levels_order = p$data$Guild[order(p$data$nb_seq)]
+#'       ) + ylab("") + theme(axis.text.y = element_blank()))
+#'   }
 #' }
 #' }
 #' @seealso [add_funguild_info()]
@@ -1932,7 +1947,7 @@ plot_guild_pq <-
 #'   see [phangorn::optim.pml()] for more details
 #' @param multicore	(logical) whether models should estimated in parallel.
 #'   see [phangorn::bootstrap.pml()] for more details
-#' @param ... other params for be passed on to
+#' @param ... Other params for be passed on to
 #'   [phangorn::optim.pml()] function
 #'
 #' @return A list of phylogenetic tree
@@ -1944,7 +1959,7 @@ plot_guild_pq <-
 #'   use this function.
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' \donttest{
-#' if (!requireNamespace("phangorn")) {
+#' if (requireNamespace("phangorn")) {
 #'   df <- subset_taxa_pq(data_fungi_mini, taxa_sums(data_fungi_mini) > 9000)
 #'   df_tree <- build_phytree_pq(df, nb_bootstrap = 2)
 #'   plot(df_tree$UPGMA)
@@ -2567,4 +2582,108 @@ normalize_prop_pq <- function(physeq, base_log = 2, constante = 10000, digits = 
 
   return(new_physeq)
 }
+################################################################################
+
+
+
+################################################################################
+#' Build a samples information data.frame from physeq object
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#'   Hill numbers are the number of equiprobable species giving the same diversity
+#'   value as the observed distribution.
+#'
+#'   Note that contrary to [hill_pq()], this function does not take into
+#'   account for difference in the number of sequences per samples/modalities.
+#'   You may use rarefy_by_sample = TRUE if the mean number of sequences per
+#'   samples differs among modalities.
+#' @inheritParams clean_pq
+#' @param hill_scales (a vector of integer) The list of q values to compute
+#'   the hill number H^q. If Null, no hill number are computed. Default value
+#'   compute the Hill number 0 (Species richness), the Hill number 1
+#'   (exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
+#'   Index).
+#' @param filter_zero (logical, default TRUE) Do we filter non present OTU from
+#'   samples ? For the moment, this has no effect on the result because the dataframe
+#'   is grouped by samples with abundance summed across OTU.
+#' @param rarefy_by_sample (logical, default FALSE) If TRUE, rarefy
+#'   samples using [phyloseq::rarefy_even_depth()] function.
+#' @author Adrien Taudière
+#' @export
+#' @return A tibble with a row for each samples. Columns provide information
+#'   from `sam_data` slot as well as hill numbers, Abundance (nb of sequences),
+#'   and Abundance_log10 (*log10(1+Abundance)*).
+#' @examples
+#' if (requireNamespace("ggstatsplot")) {
+#'   psm_tib <- psmelt_samples_pq(data_fungi_mini, hill_scales = c(0, 2, 7))
+#'   ggstatsplot::ggbetweenstats(psm_tib, Height, Hill_0)
+#'   ggstatsplot::ggbetweenstats(psm_tib, Height, Hill_7)
+#'   ggstatsplot::ggscatterstats(psmelt_samples_pq(data_fungi_mini,
+#'     filter_zero = TRUE
+#'   ), Abundance_log10, Hill_1)
+#'   ggstatsplot::ggscatterstats(psmelt_samples_pq(data_fungi,
+#'     rarefy_by_sample = TRUE
+#'   ), Time, Hill_1)
+#' }
+psmelt_samples_pq <-
+  function(physeq,
+           hill_scales = c(0, 1, 2),
+           filter_zero = TRUE,
+           rarefy_by_sample = FALSE) {
+    verify_pq(physeq)
+    if (rarefy_by_sample) {
+      physeq <- rarefy_even_depth(physeq)
+    }
+    psm <- psmelt(physeq)
+    if (filter_zero) {
+      psm <- psm |> filter(Abundance > 0)
+    }
+    psm <- psm |>
+      select(Sample, OTU, Abundance, colnames(physeq@sam_data))
+
+    if (!is.null(hill_scales)) {
+      physeq <- clean_pq(
+        physeq,
+        force_taxa_as_rows = TRUE,
+        remove_empty_samples = FALSE,
+        remove_empty_taxa = FALSE,
+        clean_samples_names = FALSE
+      )
+      df_hill <-
+        vegan::renyi(t(physeq)@otu_table,
+          scales = hill_scales,
+          hill = TRUE
+        )
+
+      colnames(df_hill) <- paste0("Hill_", hill_scales)
+      df_hill$Sample <- rownames(df_hill)
+
+      psm <- full_join(psm, df_hill)
+    }
+    nb_distinct_samp <- psm |>
+      group_by(Sample) |>
+      select(-OTU, -Abundance) |>
+      distinct() |>
+      nrow()
+
+    if (nsamples(physeq) != nb_distinct_samp) {
+      stop("The number of samples in physeq is different from the resulting
+         number in psm tibble.")
+    }
+
+    psm <- psm |>
+      select(-OTU) |>
+      group_by(Sample) |>
+      summarise(
+        Abundance = sum(Abundance),
+        across(where(is.numeric) &
+          !Abundance, ~ mean(.x, na.rm = TRUE)),
+        across(where(is.character), ~ .x[1])
+      )
+
+    psm <- psm |> mutate(Abundance_log10 = log10(1 + Abundance))
+    return(tibble(psm))
+  }
 ################################################################################

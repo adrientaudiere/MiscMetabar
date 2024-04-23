@@ -42,12 +42,14 @@ Holmes 2013) and [`targets`](https://books.ropensci.org/targets/)
 
 ## Installation
 
-There is no CRAN version of MiscMetabar for now (work in progress). As
-MiscMetabar heavily relies on two bioconductor packages (dada and
-phyloseq), we need to first install those 2 packages using BiocManager.
+There is a CRAN version of MiscMetabar.
 
-You can install the stable version from [GitHub](https://github.com/)
-with:
+``` r
+install.packages("MiscMetabar")
+```
+
+You can also install the stable development version from
+[GitHub](https://github.com/) with:
 
 ``` r
 if (!require("devtools", quietly = TRUE)) {
@@ -56,7 +58,7 @@ if (!require("devtools", quietly = TRUE)) {
 devtools::install_github("adrientaudiere/MiscMetabar")
 ```
 
-You can install the development version from
+You can install the unstable development version from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -122,7 +124,7 @@ p$plot_Hill_0
 
 <div class="figure">
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" alt="Hill number 1" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" alt="Hill number 1" width="100%" />
 <p class="caption">
 Hill number 1
 </p>
@@ -135,7 +137,7 @@ p$plot_tuckey
 
 <div class="figure">
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" alt="Result of the Tuckey post-hoc test" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" alt="Result of the Tuckey post-hoc test" width="100%" />
 <p class="caption">
 Result of the Tuckey post-hoc test
 </p>
@@ -153,32 +155,32 @@ ggvenn_pq(data_fungi, fact = "Height") +
   labs(title = "Share number of ASV among Height in tree")
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
 ### Note for non-linux users
 
-Some functions may not work on windows (*e.g.* \[track_wflow()\],
-\[cutadapt_remove_primers()\], \[krona()\], \[vsearch_clustering()\],
-…). A solution is to exploit docker container, for example the using the
-great [rocker project](https://rocker-project.org/).
+Some functions may not work on windows (*e.g.* `track_wflow()`,
+`cutadapt_remove_primers()`, `krona()`, `vsearch_clustering()`, …). A
+solution is to exploit docker container, for example the using the great
+[rocker project](https://rocker-project.org/).
 
 Here is a list of functions with some limitations or not working at all
 on windows OS:
 
-- \[build_phytree_pq()\]
-- \[count_seq()\]
-- \[cutadapt_remove_primers()\]
-- \[krona()\]
-- \[merge_krona()\]
-- \[multipatt_pq()\]
-- \[plot_tsne_pq()\]
-- \[rotl_pq()\]
-- \[save_pq()\]
-- \[tax_datatable()\]
-- \[track_wkflow()\]
-- \[track_wkflow_samples()\]
-- \[tsne_pq()\]
-- \[venn_pq()\]
+- `build_phytree_pq()`
+- `count_seq()`
+- `cutadapt_remove_primers()`
+- `krona()`
+- `merge_krona()`
+- `multipatt_pq()`
+- `plot_tsne_pq()`
+- `rotl_pq()`
+- `save_pq()`
+- `tax_datatable()`
+- `track_wkflow()`
+- `track_wkflow_samples()`
+- `tsne_pq()`
+- `venn_pq()`
 
 MiscMetabar is developed under Linux and the vast majority of functions
 may works on Unix system, but its functionning is not test under iOS.

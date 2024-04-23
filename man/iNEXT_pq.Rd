@@ -15,7 +15,7 @@ physeq are merged using the vector set by \code{merge_sample_by}. This
 merging used the \code{\link[=merge_samples2]{merge_samples2()}}. In the case of
 \code{\link[=biplot_pq]{biplot_pq()}} this must be a factor with two levels only.}
 
-\item{...}{other arguments for the \code{\link[iNEXT:iNEXT]{iNEXT::iNEXT()}} function}
+\item{...}{Other arguments for the \code{\link[iNEXT:iNEXT]{iNEXT::iNEXT()}} function}
 }
 \value{
 see \code{\link[iNEXT:iNEXT]{iNEXT::iNEXT()}} documentation
@@ -25,7 +25,7 @@ see \code{\link[iNEXT:iNEXT]{iNEXT::iNEXT()}} documentation
 }
 \examples{
 \donttest{
-if (!requireNamespace("iNEXT")) {
+if (requireNamespace("iNEXT")) {
   data("GlobalPatterns", package = "phyloseq")
   GPsubset <- subset_taxa(
     GlobalPatterns,

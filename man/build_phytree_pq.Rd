@@ -47,7 +47,7 @@ see \code{\link[phangorn:pml]{phangorn::optim.pml()}} for more details}
 \item{multicore}{(logical) whether models should estimated in parallel.
 see \code{\link[phangorn:bootstrap.pml]{phangorn::bootstrap.pml()}} for more details}
 
-\item{...}{other params for be passed on to
+\item{...}{Other params for be passed on to
 \code{\link[phangorn:pml]{phangorn::optim.pml()}} function}
 }
 \value{
@@ -75,7 +75,7 @@ use this function.
 \examples{
 \dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
-if (!requireNamespace("phangorn")) {
+if (requireNamespace("phangorn")) {
   df <- subset_taxa_pq(data_fungi_mini, taxa_sums(data_fungi_mini) > 9000)
   df_tree <- build_phytree_pq(df, nb_bootstrap = 2)
   plot(df_tree$UPGMA)

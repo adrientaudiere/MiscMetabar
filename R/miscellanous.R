@@ -42,8 +42,8 @@ as_binary_otu_table <- function(physeq, min_number = 1) {
 #' @param y (required) A second matrix.
 #' @param method (default: 'bray') the method to use internally in the vegdist
 #'   function.
-#' @param nperm (default: 99) The number of permutations
-#' @param ... others argument for `vegan::vegdist` function
+#' @param nperm (int) The number of permutations to perform.
+#' @param ... Others argument for `vegan::vegdist` function
 #'
 #' @author Adrien Taudière
 #'

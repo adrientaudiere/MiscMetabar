@@ -49,7 +49,7 @@ modalities of args \code{fact}. Use \code{phyloseq::rarefy_even_depth()} functio
 \item{rarefy_after_merging}{Rarefy each sample after merging by the
 modalities of args \code{fact}.}
 
-\item{...}{other arguments for the \code{ggVennDiagram::ggVennDiagram} function
+\item{...}{Other arguments for the \code{ggVennDiagram::ggVennDiagram} function
 for ex. \code{category.names}.}
 }
 \value{
@@ -66,27 +66,30 @@ and \code{+ scale_x_continuous(expand = expansion(mult = 0.5))}. See
 examples.
 }
 \examples{
-
-ggvenn_pq(data_fungi, fact = "Height")
-\donttest{
-ggvenn_pq(data_fungi, fact = "Height") +
-  ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
-pl <- ggvenn_pq(data_fungi, fact = "Height", split_by = "Time")
-for (i in 1:length(pl)) {
-  p <- pl[[i]] +
-    scale_fill_distiller(palette = "BuPu", direction = 1) +
-    theme(plot.title = element_text(hjust = 0.5, size = 22))
-  print(p)
+if (requireNamespace("ggVennDiagram")) {
+  ggvenn_pq(data_fungi, fact = "Height")
 }
+\donttest{
+if (requireNamespace("ggVennDiagram")) {
+  ggvenn_pq(data_fungi, fact = "Height") +
+    ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
+  pl <- ggvenn_pq(data_fungi, fact = "Height", split_by = "Time")
+  for (i in 1:length(pl)) {
+    p <- pl[[i]] +
+      scale_fill_distiller(palette = "BuPu", direction = 1) +
+      theme(plot.title = element_text(hjust = 0.5, size = 22))
+    print(p)
+  }
 
-data_fungi2 <- subset_samples(data_fungi, data_fungi@sam_data$Tree_name == "A10-005" |
-  data_fungi@sam_data$Height \%in\% c("Low", "High"))
-ggvenn_pq(data_fungi2, fact = "Height")
+  data_fungi2 <- subset_samples(data_fungi, data_fungi@sam_data$Tree_name == "A10-005" |
+    data_fungi@sam_data$Height \%in\% c("Low", "High"))
+  ggvenn_pq(data_fungi2, fact = "Height")
 
-ggvenn_pq(data_fungi, fact = "Height", add_nb_seq = TRUE, set_size = 4)
-ggvenn_pq(data_fungi, fact = "Height", rarefy_before_merging = TRUE)
-ggvenn_pq(data_fungi, fact = "Height", rarefy_after_merging = TRUE) +
-  scale_x_continuous(expand = expansion(mult = 0.5))
+  ggvenn_pq(data_fungi, fact = "Height", add_nb_seq = TRUE, set_size = 4)
+  ggvenn_pq(data_fungi, fact = "Height", rarefy_before_merging = TRUE)
+  ggvenn_pq(data_fungi, fact = "Height", rarefy_after_merging = TRUE) +
+    scale_x_continuous(expand = expansion(mult = 0.5))
+}
 }
 }
 \seealso{

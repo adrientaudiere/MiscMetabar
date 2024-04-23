@@ -6,7 +6,8 @@
 \usage{
 hill_pq(
   physeq,
-  variable,
+  fact = NULL,
+  variable = NULL,
   color_fac = NA,
   letters = FALSE,
   add_points = FALSE,
@@ -20,8 +21,10 @@ hill_pq(
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{variable}{(required): The variable to test. Must be present in
+\item{fact}{(required): The variable to test. Must be present in
 the \code{sam_data} slot of the physeq object.}
+
+\item{variable}{: Alias for factor. Kept only for backward compatibility.}
 
 \item{color_fac}{(optional): The variable to color the barplot}
 
@@ -48,7 +51,10 @@ plot_with_tuckey = FALSE}
 
 \item{correction_for_sample_size}{(logical, default TRUE) This function
 use a sqrt of the read numbers in the linear model in order to
-correct for uneven sampling depth.}
+correct for uneven sampling depth in the Tuckey TEST. This params
+do not change value of Hill number but only the test associated
+values (including the pvalues). To rarefy samples, you may use the
+function \code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}}.}
 }
 \value{
 Either an unique ggplot2 object (if one_plot is TRUE) or
@@ -65,8 +71,17 @@ against the variable
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-Note that this function use a sqrt of the read numbers in the linear
-model in order to correct for uneven sampling depth.
+Hill numbers are the number of equiprobable species giving the same
+diversity value as the observed distribution. The Hill number 0
+correspond to Species richness), the Hill number 1 to
+the exponential of Shannon Index and the Hill number 2 to the inverse
+of Simpson Index)
+
+Note that (if correction_for_sample_size is TRUE, default behavior)
+this function use a sqrt of the read numbers in the linear
+model in order to correct for uneven sampling depth. This correction
+is only done before tuckey HSD plot and do not change the hill number
+computed.
 }
 \examples{
 
@@ -77,13 +92,18 @@ p_h3 <- p[[3]] + theme(legend.position = "none")
 multiplot(plotlist = list(p_h1, p_h2, p_h3, p[[4]]), cols = 4)
 
 \donttest{
-# Artificially modify data_fungi to force alpha-diversity effect
-data_fungi_modif <- clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height)))
-data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <-
-  data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] +
-  sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
-p2 <- hill_pq(data_fungi_modif, "Height", letters = TRUE)
+if (requireNamespace("multcompView")) {
+  # Artificially modify data_fungi to force alpha-diversity effect
+  data_fungi_modif <- clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height)))
+  data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <-
+    data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] +
+    sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
+  p2 <- hill_pq(data_fungi_modif, "Height", letters = TRUE)
 }
+}
+}
+\seealso{
+\code{\link[=psmelt_samples_pq]{psmelt_samples_pq()}} and \code{\link[=ggbetween_pq]{ggbetween_pq()}}
 }
 \author{
 Adrien Taudière

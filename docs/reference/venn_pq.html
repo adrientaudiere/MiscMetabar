@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.00</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -128,20 +128,23 @@ modalities of the argument <code>factor</code></p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"enterotype"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">venn_pq</span><span class="op">(</span><span class="va">enterotype</span>, fact <span class="op">=</span> <span class="st">"SeqTech"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"venneuler"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"enterotype"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">venn_pq</span><span class="op">(</span><span class="va">enterotype</span>, fact <span class="op">=</span> <span class="st">"SeqTech"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: venneuler</span>
 <span class="r-plt img"><img src="venn_pq-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="fu">venn_pq</span><span class="op">(</span><span class="va">enterotype</span>, fact <span class="op">=</span> <span class="st">"ClinicalStatus"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"venneuler"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">venn_pq</span><span class="op">(</span><span class="va">enterotype</span>, fact <span class="op">=</span> <span class="st">"ClinicalStatus"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">venn_pq</span><span class="op">(</span><span class="va">enterotype</span>, fact <span class="op">=</span> <span class="st">"Nationality"</span>, print_values <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">venn_pq</span><span class="op">(</span><span class="va">enterotype</span>, fact <span class="op">=</span> <span class="st">"ClinicalStatus"</span>, print_values <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html" class="external-link">scale_fill_hue</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">venn_pq</span><span class="op">(</span><span class="va">enterotype</span>, fact <span class="op">=</span> <span class="st">"ClinicalStatus"</span>, print_values <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html" class="external-link">scale_fill_hue</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-plt img"><img src="venn_pq-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">venn_pq</span><span class="op">(</span><span class="va">enterotype</span>, fact <span class="op">=</span> <span class="st">"Nationality"</span>, print_values <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="venn_pq-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">venn_pq</span><span class="op">(</span><span class="va">enterotype</span>, fact <span class="op">=</span> <span class="st">"ClinicalStatus"</span>, print_values <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html" class="external-link">scale_fill_hue</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="venn_pq-4.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">venn_pq</span><span class="op">(</span><span class="va">enterotype</span>, fact <span class="op">=</span> <span class="st">"ClinicalStatus"</span>, print_values <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_hue.html" class="external-link">scale_fill_hue</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="venn_pq-5.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

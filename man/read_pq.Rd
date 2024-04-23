@@ -16,7 +16,7 @@ read_pq(
 \arguments{
 \item{path}{(required) a path to the folder to read the phyloseq object}
 
-\item{taxa_are_rows}{(required, default to FALSE) see ?phyloseq for details}
+\item{taxa_are_rows}{(default to FALSE) see ?phyloseq for details}
 
 \item{sam_names}{The name of the variable (column) in sam_data.csv to rename
 samples. Note that if you use \code{\link[=write_phyloseq]{write_phyloseq()}} function to save your

@@ -201,147 +201,153 @@ test_that("multitax_bar_pq works with data_fungi_sp_known dataset", {
 
 
 test_that("multitax_bar_pq works with GlobalPatterns dataset", {
-  expect_s3_class(
-    multitax_bar_pq(GP_archae, "Phylum", "Class", "Order", "SampleType"),
-    "ggplot"
-  )
-  skip_on_cran()
-  expect_s3_class(
-    multitax_bar_pq(GP_archae, "Phylum", "Class", "Order", nb_seq = FALSE),
-    "ggplot"
-  )
-  expect_s3_class(
-    multitax_bar_pq(
-      GP_archae,
-      "Phylum",
-      "Class",
-      "Order",
-      nb_seq = FALSE,
-      log10trans = FALSE
-    ),
-    "ggplot"
-  )
-  expect_s3_class(
-    multitax_bar_pq(GP_archae,
-      "Phylum",
-      "Class",
-      "Order",
-      log10trans = FALSE
-    ),
-    "ggplot"
-  )
-  expect_error(print(multitax_bar_pq(GP_archae, "Class", "Genus", "Order")))
-  expect_error(print(
-    multitax_bar_pq(GP_archae, "Phylum", "Class", "Order", "UNKOWNS")
-  ))
+  if (requireNamespace("ggh4x")) {
+    expect_s3_class(
+      multitax_bar_pq(GP_archae, "Phylum", "Class", "Order", "SampleType"),
+      "ggplot"
+    )
+    skip_on_cran()
+    expect_s3_class(
+      multitax_bar_pq(GP_archae, "Phylum", "Class", "Order", nb_seq = FALSE),
+      "ggplot"
+    )
+    expect_s3_class(
+      multitax_bar_pq(
+        GP_archae,
+        "Phylum",
+        "Class",
+        "Order",
+        nb_seq = FALSE,
+        log10trans = FALSE
+      ),
+      "ggplot"
+    )
+    expect_s3_class(
+      multitax_bar_pq(GP_archae,
+        "Phylum",
+        "Class",
+        "Order",
+        log10trans = FALSE
+      ),
+      "ggplot"
+    )
+    expect_error(print(multitax_bar_pq(GP_archae, "Class", "Genus", "Order")))
+    expect_error(print(
+      multitax_bar_pq(GP_archae, "Phylum", "Class", "Order", "UNKOWNS")
+    ))
+  }
 })
 
 
 test_that("rigdes_pq work with data_fungi dataset", {
-  expect_s3_class(
-    ridges_pq(data_fungi_mini,
-      "Time",
-      alpha = 0.5,
-      log10trans = FALSE
-    ) + xlim(c(0, 1000)),
-    "ggplot"
-  )
-  skip_on_cran()
-  expect_s3_class(
-    ridges_pq(data_fungi_mini, "Time", alpha = 0.5),
-    "ggplot"
-  )
-  expect_s3_class(
-    ridges_pq(
-      data_fungi_mini,
-      "Time",
-      nb_seq = FALSE,
-      log10trans = FALSE
-    ),
-    "ggplot"
-  )
-  expect_s3_class(
-    ridges_pq(
-      clean_pq(
-        subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")
+  if (requireNamespace("ggridges")) {
+    expect_s3_class(
+      ridges_pq(data_fungi_mini,
+        "Time",
+        alpha = 0.5,
+        log10trans = FALSE
+      ) + xlim(c(0, 1000)),
+      "ggplot"
+    )
+    skip_on_cran()
+    expect_s3_class(
+      ridges_pq(data_fungi_mini, "Time", alpha = 0.5),
+      "ggplot"
+    )
+    expect_s3_class(
+      ridges_pq(
+        data_fungi_mini,
+        "Time",
+        nb_seq = FALSE,
+        log10trans = FALSE
       ),
-      "Time"
-    ),
-    "ggplot"
-  )
-  expect_s3_class(
-    ridges_pq(clean_pq(
-      subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")
-    ), "Time", alpha = 0.6, scale = 0.9),
-    "ggplot"
-  )
-  expect_s3_class(
-    ridges_pq(
-      clean_pq(subset_taxa(
-        data_fungi_sp_known, Phylum == "Basidiomycota"
-      )),
-      "Time",
-      jittered_points = TRUE,
-      position = ggridges::position_points_jitter(width = 0.05, height = 0),
-      point_shape = "|",
-      point_size = 3,
-      point_alpha = 1,
-      alpha = 0.7,
-      scale = 0.8
-    ),
-    "ggplot"
-  )
-  expect_error(
-    ridges_pq(clean_pq(
-      subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")
-    ))
-  )
+      "ggplot"
+    )
+    expect_s3_class(
+      ridges_pq(
+        clean_pq(
+          subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")
+        ),
+        "Time"
+      ),
+      "ggplot"
+    )
+    expect_s3_class(
+      ridges_pq(clean_pq(
+        subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")
+      ), "Time", alpha = 0.6, scale = 0.9),
+      "ggplot"
+    )
+    expect_s3_class(
+      ridges_pq(
+        clean_pq(subset_taxa(
+          data_fungi_sp_known, Phylum == "Basidiomycota"
+        )),
+        "Time",
+        jittered_points = TRUE,
+        position = ggridges::position_points_jitter(width = 0.05, height = 0),
+        point_shape = "|",
+        point_size = 3,
+        point_alpha = 1,
+        alpha = 0.7,
+        scale = 0.8
+      ),
+      "ggplot"
+    )
+    expect_error(
+      ridges_pq(clean_pq(
+        subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")
+      ))
+    )
+  }
 })
 
 
 
 test_that("treemap_pq work with data_fungi_sp_known dataset", {
-  expect_s3_class(
-    treemap_pq(
-      clean_pq(
-        data_fungi_mini
+  if (requireNamespace("treemapify")) {
+    expect_s3_class(
+      treemap_pq(
+        clean_pq(
+          data_fungi_mini
+        ),
+        "Order", "Class",
+        plot_legend = TRUE
       ),
-      "Order", "Class",
-      plot_legend = TRUE
-    ),
-    "ggplot"
-  )
-  skip_on_cran()
-  expect_s3_class(
-    treemap_pq(
-      clean_pq(
-        data_fungi_mini
+      "ggplot"
+    )
+    skip_on_cran()
+    expect_s3_class(
+      treemap_pq(
+        clean_pq(
+          data_fungi_mini
+        ),
+        "Order", "Class",
+        log10trans = FALSE
       ),
-      "Order", "Class",
-      log10trans = FALSE
-    ),
-    "ggplot"
-  )
-  expect_s3_class(
-    treemap_pq(
-      data_fungi_mini,
-      "Order",
-      "Class",
-      nb_seq = FALSE,
-      log10trans = FALSE
-    ),
-    "ggplot"
-  )
-  expect_s3_class(
-    treemap_pq(
-      data_fungi_mini,
-      "Order",
-      "Class",
-      nb_seq = FALSE,
-      log10trans = TRUE
-    ),
-    "ggplot"
-  )
+      "ggplot"
+    )
+    expect_s3_class(
+      treemap_pq(
+        data_fungi_mini,
+        "Order",
+        "Class",
+        nb_seq = FALSE,
+        log10trans = FALSE
+      ),
+      "ggplot"
+    )
+    expect_s3_class(
+      treemap_pq(
+        data_fungi_mini,
+        "Order",
+        "Class",
+        nb_seq = FALSE,
+        log10trans = TRUE
+      ),
+      "ggplot"
+    )
+  }
 })
 
 test_that("tax_bar_pq work with data_fungi dataset", {

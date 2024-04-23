@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.00</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -635,6 +635,12 @@ samples</dd>
 one sample factor</dd>
       </dl><dl><dt>
           
+          <code><a href="physeq_or_string_to_dna.html">physeq_or_string_to_dna()</a></code> 
+        </dt>
+        <dd>Return a DNAStringSet object from either a character vector of DNA sequences
+or the <code>refseq</code> slot of a phyloseq-class object</dd>
+      </dl><dl><dt>
+          
           <code><a href="plot_guild_pq.html">plot_guild_pq()</a></code> 
         </dt>
         <dd>Plot information about Guild from tax_table slot previously
@@ -822,6 +828,11 @@ optional order</dd>
           <code><a href="add_info_to_sam_data.html">add_info_to_sam_data()</a></code> 
         </dt>
         <dd>Add information to sample_data slot of a phyloseq-class object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="psmelt_samples_pq.html">psmelt_samples_pq()</a></code> 
+        </dt>
+        <dd>Build a samples information data.frame from physeq object</dd>
       </dl></div><div class="section level2">
       
       <h3 id="taxonomy-management">Taxonomy management<a class="anchor" aria-label="anchor" href="#taxonomy-management"></a></h3>
@@ -881,33 +892,18 @@ obtain using <code>mia::makePhyloseqFromTreeSE(Tengeler2020)</code></dd>
       
 
       
+    </div><div class="section level2">
+      
+      <h3 id="color-management">Color management<a class="anchor" aria-label="anchor" href="#color-management"></a></h3>
+      
+
+      
     </div><div id="" class="section level2">
       
       
       
 
       <dl><dt>
-          
-          <code><a href="all_object_size.html">all_object_size()</a></code> 
-        </dt>
-        <dd>List the size of all objects of the GlobalEnv.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="diff_fct_diff_class.html">diff_fct_diff_class()</a></code> 
-        </dt>
-        <dd>Compute different functions for different class of vector.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="dist_bycol.html">dist_bycol()</a></code> 
-        </dt>
-        <dd>Compute paired distances among matrix (e.g. otu_table)</dd>
-      </dl><dl><dt>
-          
-          <code><a href="dist_pos_control.html">dist_pos_control()</a></code> 
-        </dt>
-        <dd>Calculate ecological distance among positive controls vs
-distance for all samples</dd>
-      </dl><dl><dt>
           
           <code><a href="funky_color.html">funky_color()</a></code> 
         </dt>
@@ -922,12 +918,34 @@ distance for all samples</dd>
           <code><a href="transp.html">transp()</a></code> 
         </dt>
         <dd>Adds transparency to a vector of colors</dd>
-      </dl><dl><dt>
+      </dl></div><div class="section level2">
+      
+      <h3 id="file-management">File management<a class="anchor" aria-label="anchor" href="#file-management"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
           
           <code><a href="get_file_extension.html">get_file_extension()</a></code> 
         </dt>
         <dd>Get the extension of a file</dd>
-      </dl><dl><dt>
+      </dl></div><div class="section level2">
+      
+      <h3 id="external-software-management">External software management<a class="anchor" aria-label="anchor" href="#external-software-management"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
           
           <code><a href="is_cutadapt_installed.html">is_cutadapt_installed()</a></code> 
         </dt>
@@ -957,11 +975,38 @@ distance for all samples</dd>
           <code><a href="is_vsearch_installed.html">is_vsearch_installed()</a></code> 
         </dt>
         <dd>Test if vsearch is installed.</dd>
-      </dl><dl><dt>
+      </dl></div><div class="section level2">
+      
+      <h3 id="plot-management">Plot management<a class="anchor" aria-label="anchor" href="#plot-management"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
           
           <code><a href="multiplot.html">multiplot()</a></code> 
         </dt>
         <dd>Multiple plot function</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="variable-management">Variable management<a class="anchor" aria-label="anchor" href="#variable-management"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="diff_fct_diff_class.html">diff_fct_diff_class()</a></code> 
+        </dt>
+        <dd>Compute different functions for different class of vector.</dd>
       </dl><dl><dt>
           
           <code><a href="perc.html">perc()</a></code> 
@@ -969,21 +1014,42 @@ distance for all samples</dd>
         <dd>Convert a value (or a fraction x/y) in percentage</dd>
       </dl><dl><dt>
           
+          <code><a href="unique_or_na.html">unique_or_na()</a></code> 
+        </dt>
+        <dd>Get the unique value in x or NA if none</dd>
+      </dl></div><div class="section level2">
+      
+      <h3 id="others-1">Others<a class="anchor" aria-label="anchor" href="#others-1"></a></h3>
+      
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="all_object_size.html">all_object_size()</a></code> 
+        </dt>
+        <dd>List the size of all objects of the GlobalEnv.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="dist_bycol.html">dist_bycol()</a></code> 
+        </dt>
+        <dd>Compute paired distances among matrix (e.g. otu_table)</dd>
+      </dl><dl><dt>
+          
+          <code><a href="dist_pos_control.html">dist_pos_control()</a></code> 
+        </dt>
+        <dd>Calculate ecological distance among positive controls vs
+distance for all samples</dd>
+      </dl><dl><dt>
+          
           <code><a href="are_modality_even_depth.html">are_modality_even_depth()</a></code> 
         </dt>
         <dd>Test if the mean number of sequences by samples is link to the modality of
 a factor</dd>
-      </dl><dl><dt>
-          
-          <code><a href="unique_or_na.html">unique_or_na()</a></code> 
-        </dt>
-        <dd>Get the unique value in x or NA if none</dd>
-      </dl><dl><dt>
-          
-          <code><a href="physeq_or_string_to_dna.html">physeq_or_string_to_dna()</a></code> 
-        </dt>
-        <dd>Return a DNAStringSet object from either a character vector of DNA sequences
-or the <code>refseq</code> slot of a phyloseq-class object</dd>
       </dl><dl><dt>
           
           <code><a href="MiscMetabar-package.html">MiscMetabar-package</a></code> 

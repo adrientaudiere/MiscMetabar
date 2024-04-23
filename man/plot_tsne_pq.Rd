@@ -40,7 +40,7 @@ using the \code{phyloseq} package.}
 
 \item{force_factor}{(logical, default TRUE) Force the fact column to be a factor.}
 
-\item{...}{: other arguments passed on to \code{Rtsne::Rtsne()}}
+\item{...}{Other arguments passed on to \code{Rtsne::Rtsne()}}
 }
 \value{
 A ggplot object
@@ -54,10 +54,14 @@ Partially inspired by \code{phylosmith::tsne_phyloseq()} function developed by S
 \examples{
 \dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(data_fungi)
-plot_tsne_pq(data_fungi, fact = "Height", perplexity = 15)
+if (requireNamespace("Rtsne")) {
+  plot_tsne_pq(data_fungi, fact = "Height", perplexity = 15)
+}
 \donttest{
-plot_tsne_pq(data_fungi, fact = "Time") + geom_label(aes(label = Sample_id, fill = Time))
-plot_tsne_pq(data_fungi, fact = "Time", na_remove = FALSE, force_factor = FALSE)
+if (requireNamespace("Rtsne")) {
+  plot_tsne_pq(data_fungi, fact = "Time") + geom_label(aes(label = Sample_id, fill = Time))
+  plot_tsne_pq(data_fungi, fact = "Time", na_remove = FALSE, force_factor = FALSE)
+}
 }
 \dontshow{\}) # examplesIf}
 }

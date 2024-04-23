@@ -253,6 +253,7 @@ sample_data_with_new_names <- function(file_path,
 #' @param phyloseq_component (required) one of otu_table or sam_data slot of a
 #'   phyloseq-class object
 #' @param names_of_samples (required) A vector of samples names
+#' @param taxa_are_rows (default to FALSE) see ?phyloseq for details
 #'
 #' @return The otu_table or the sam_data slot with new samples names
 #' @export
@@ -273,7 +274,11 @@ sample_data_with_new_names <- function(file_path,
 #'   paste0("data_f", sample_names(data_fungi))
 #' )
 rename_samples <- function(phyloseq_component,
-                           names_of_samples) {
+                           names_of_samples,
+                           taxa_are_rows = FALSE) {
+  if (is.null(sample_names(phyloseq_component)) && inherits(phyloseq_component, "matrix")) {
+    phyloseq_component <- otu_table(phyloseq_component, taxa_are_rows = taxa_are_rows)
+  }
   if (length(names_of_samples) != length(sample_names(phyloseq_component))) {
     stop("Names_of_samples must have a length equal to the number of samples.")
   }

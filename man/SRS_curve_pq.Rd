@@ -22,9 +22,11 @@ A plot
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
-SRS_curve_pq(data_fungi_mini,
-  max.sample.size = 200,
-  rarefy.comparison = TRUE, rarefy.repeats = 3
-)
-SRS_curve_pq(data_fungi_mini, max.sample.size = 500, metric = "shannon")
+if (requireNamespace("SRS")) {
+  SRS_curve_pq(data_fungi_mini,
+    max.sample.size = 200,
+    rarefy.comparison = TRUE, rarefy.repeats = 3
+  )
+  SRS_curve_pq(data_fungi_mini, max.sample.size = 500, metric = "shannon")
+}
 }
