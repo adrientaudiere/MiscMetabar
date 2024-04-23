@@ -550,10 +550,10 @@ chimera_removal_vs <-
              'Select_only_non_chim', or 'Select_only_chim'"
         )
       }
-      seq_tab_final <- data.frame(seq_tab_final)
+      seq_tab_final <- seq_tab_final
       return(seq_tab_final)
     } else if (inherits(object, "phyloseq")) {
-        verify_pq(object)
+      verify_pq(object)
       if (sum(taxa_sums(object) == 0) > 0) {
         object <- clean_pq(object)
       }
