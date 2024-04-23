@@ -33,7 +33,7 @@ use this function.
 \examples{
 \dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 \donttest{
-if (!requireNamespace("rotl")) {
+if (requireNamespace("rotl")) {
   tr <- rotl_pq(data_fungi_mini, species_colnames = "Genus_species")
   plot(tr)
 

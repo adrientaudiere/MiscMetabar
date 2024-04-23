@@ -38,13 +38,14 @@ Biological studies, especially in ecology, health sciences and taxonomy, need to
 
 ## Installation
 
-There is no CRAN version of MiscMetabar for now (work in
-progress). As MiscMetabar heavily relies on two bioconductor packages
-(dada and phyloseq), we need to first install those 2 packages using
-BiocManager.
+There is a CRAN version of MiscMetabar.
 
-You can install the stable version from [GitHub](https://github.com/)
-with:
+```{r, results = 'hide', eval=FALSE}
+install.packages("MiscMetabar")
+```
+
+
+You can also install the stable development version from [GitHub](https://github.com/) with:
 
 ```{r, results = 'hide', eval=FALSE}
 if (!require("devtools", quietly = TRUE)) {
@@ -53,8 +54,7 @@ if (!require("devtools", quietly = TRUE)) {
 devtools::install_github("adrientaudiere/MiscMetabar")
 ```
 
-You can install the development version from
-[GitHub](https://github.com/) with:
+You can install the unstable development version from [GitHub](https://github.com/) with:
 
 ```{r, results = 'hide', eval=FALSE}
 if (!require("devtools", quietly = TRUE)) {

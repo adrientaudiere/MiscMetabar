@@ -92,12 +92,14 @@ p_h3 <- p[[3]] + theme(legend.position = "none")
 multiplot(plotlist = list(p_h1, p_h2, p_h3, p[[4]]), cols = 4)
 
 \donttest{
-# Artificially modify data_fungi to force alpha-diversity effect
-data_fungi_modif <- clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height)))
-data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <-
-  data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] +
-  sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
-p2 <- hill_pq(data_fungi_modif, "Height", letters = TRUE)
+if (requireNamespace("multcompView")) {
+  # Artificially modify data_fungi to force alpha-diversity effect
+  data_fungi_modif <- clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height)))
+  data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <-
+    data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] +
+    sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
+  p2 <- hill_pq(data_fungi_modif, "Height", letters = TRUE)
+}
 }
 }
 \seealso{

@@ -31,19 +31,22 @@ taxonomic groups
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
-
-ridges_pq(data_fungi_mini, "Time", alpha = 0.5, log10trans = FALSE) + xlim(c(0, 1000))
+if (requireNamespace("ggridges")) {
+  ridges_pq(data_fungi_mini, "Time", alpha = 0.5, log10trans = FALSE) + xlim(c(0, 1000))
+}
 \donttest{
-ridges_pq(data_fungi_mini, "Time", alpha = 0.5, scale = 0.9)
-ridges_pq(data_fungi_mini, "Sample_names", log10trans = TRUE)
+if (requireNamespace("ggridges")) {
+  ridges_pq(data_fungi_mini, "Time", alpha = 0.5, scale = 0.9)
+  ridges_pq(data_fungi_mini, "Sample_names", log10trans = TRUE)
 
-ridges_pq(data_fungi_mini,
-  "Time",
-  jittered_points = TRUE,
-  position = ggridges::position_points_jitter(width = 0.05, height = 0),
-  point_shape = "|", point_size = 3, point_alpha = 1, alpha = 0.7,
-  scale = 0.8
-)
+  ridges_pq(data_fungi_mini,
+    "Time",
+    jittered_points = TRUE,
+    position = ggridges::position_points_jitter(width = 0.05, height = 0),
+    point_shape = "|", point_size = 3, point_alpha = 1, alpha = 0.7,
+    scale = 0.8
+  )
+}
 }
 }
 \author{

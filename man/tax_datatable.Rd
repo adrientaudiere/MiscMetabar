@@ -35,15 +35,17 @@ A datatable
 \examples{
 \dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data("GlobalPatterns", package = "phyloseq")
-tax_datatable(subset_taxa(
-  GlobalPatterns,
-  rowSums(GlobalPatterns@otu_table) > 10000
-))
+if (requireNamespace("DT")) {
+  tax_datatable(subset_taxa(
+    GlobalPatterns,
+    rowSums(GlobalPatterns@otu_table) > 10000
+  ))
 
-# Using modality
-tax_datatable(GlobalPatterns,
-  modality = GlobalPatterns@sam_data$SampleType
-)
+  # Using modality
+  tax_datatable(GlobalPatterns,
+    modality = GlobalPatterns@sam_data$SampleType
+  )
+}
 \dontshow{\}) # examplesIf}
 }
 \author{

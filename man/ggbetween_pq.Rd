@@ -51,10 +51,12 @@ use this function.
 }
 \examples{
 \donttest{
-p <- ggbetween_pq(data_fungi, fact = "Time", p.adjust.method = "BH")
-p[[1]]
-ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE)
-ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE, rarefy_by_sample = TRUE)
+if (requireNamespace("ggstatsplot")) {
+  p <- ggbetween_pq(data_fungi, fact = "Time", p.adjust.method = "BH")
+  p[[1]]
+  ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE)
+  ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE, rarefy_by_sample = TRUE)
+}
 }
 }
 \author{

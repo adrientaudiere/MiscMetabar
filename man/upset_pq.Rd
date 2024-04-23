@@ -39,7 +39,7 @@ useful only for complex plot (see examples)}
 \item{rarefy_after_merging}{Rarefy each sample after merging by the
 modalities of \code{fact} parameter}
 
-\item{...}{other arguments passed on to the \code{\link[ComplexUpset:upset]{ComplexUpset::upset()}}}
+\item{...}{Other arguments passed on to the \code{\link[ComplexUpset:upset]{ComplexUpset::upset()}}}
 }
 \value{
 A \code{\link{ggplot}}2 plot
@@ -50,112 +50,115 @@ A \code{\link{ggplot}}2 plot
 Alternative to venn plot.
 }
 \examples{
-
-upset_pq(data_fungi_mini,
-  fact = "Height", width_ratio = 0.2,
-  taxa_fill = "Class"
-)
+if (requireNamespace("ComplexUpset")) {
+  upset_pq(data_fungi_mini,
+    fact = "Height", width_ratio = 0.2,
+    taxa_fill = "Class"
+  )
+}
 \donttest{
-upset_pq(data_fungi_mini, fact = "Height", min_nb_seq = 1000)
-upset_pq(data_fungi_mini, fact = "Height", na_remove = FALSE)
+if (requireNamespace("ComplexUpset")) {
+  upset_pq(data_fungi_mini, fact = "Height", min_nb_seq = 1000)
+  upset_pq(data_fungi_mini, fact = "Height", na_remove = FALSE)
 
-upset_pq(data_fungi_mini, fact = "Time", width_ratio = 0.2, rarefy_after_merging = TRUE)
+  upset_pq(data_fungi_mini, fact = "Time", width_ratio = 0.2, rarefy_after_merging = TRUE)
 
-upset_pq(
-  data_fungi_mini,
-  fact = "Time",
-  width_ratio = 0.2,
-  annotations = list(
-    "Sequences per ASV \n (log10)" = (
-      ggplot(mapping = aes(y = log10(Abundance)))
-      +
-        geom_jitter(aes(
-          color =
-            Abundance
-        ), na.rm = TRUE)
+  upset_pq(
+    data_fungi_mini,
+    fact = "Time",
+    width_ratio = 0.2,
+    annotations = list(
+      "Sequences per ASV \n (log10)" = (
+        ggplot(mapping = aes(y = log10(Abundance)))
         +
-        geom_violin(alpha = 0.5, na.rm = TRUE) +
-        theme(legend.key.size = unit(0.2, "cm")) +
-        theme(axis.text = element_text(size = 12))
-    ),
-    "ASV per phylum" = (
-      ggplot(mapping = aes(fill = Phylum))
-      +
-        geom_bar() +
-        ylab("ASV per phylum") +
-        theme(legend.key.size = unit(0.2, "cm")) +
-        theme(axis.text = element_text(size = 12))
+          geom_jitter(aes(
+            color =
+              Abundance
+          ), na.rm = TRUE)
+          +
+          geom_violin(alpha = 0.5, na.rm = TRUE) +
+          theme(legend.key.size = unit(0.2, "cm")) +
+          theme(axis.text = element_text(size = 12))
+      ),
+      "ASV per phylum" = (
+        ggplot(mapping = aes(fill = Phylum))
+        +
+          geom_bar() +
+          ylab("ASV per phylum") +
+          theme(legend.key.size = unit(0.2, "cm")) +
+          theme(axis.text = element_text(size = 12))
+      )
     )
   )
-)
 
 
-upset_pq(
-  data_fungi_mini,
-  fact = "Time",
-  width_ratio = 0.2,
-  numeric_fonction = mean,
-  annotations = list(
-    "Sequences per ASV \n (log10)" = (
-      ggplot(mapping = aes(y = log10(Abundance)))
-      +
-        geom_jitter(aes(
-          color =
-            Abundance
-        ), na.rm = TRUE)
+  upset_pq(
+    data_fungi_mini,
+    fact = "Time",
+    width_ratio = 0.2,
+    numeric_fonction = mean,
+    annotations = list(
+      "Sequences per ASV \n (log10)" = (
+        ggplot(mapping = aes(y = log10(Abundance)))
         +
-        geom_violin(alpha = 0.5, na.rm = TRUE) +
-        theme(legend.key.size = unit(0.2, "cm")) +
-        theme(axis.text = element_text(size = 12))
-    ),
-    "ASV per phylum" = (
-      ggplot(mapping = aes(fill = Phylum))
-      +
-        geom_bar() +
-        ylab("ASV per phylum") +
-        theme(legend.key.size = unit(0.2, "cm")) +
-        theme(axis.text = element_text(size = 12))
+          geom_jitter(aes(
+            color =
+              Abundance
+          ), na.rm = TRUE)
+          +
+          geom_violin(alpha = 0.5, na.rm = TRUE) +
+          theme(legend.key.size = unit(0.2, "cm")) +
+          theme(axis.text = element_text(size = 12))
+      ),
+      "ASV per phylum" = (
+        ggplot(mapping = aes(fill = Phylum))
+        +
+          geom_bar() +
+          ylab("ASV per phylum") +
+          theme(legend.key.size = unit(0.2, "cm")) +
+          theme(axis.text = element_text(size = 12))
+      )
     )
   )
-)
 
 
-upset_pq(
-  subset_taxa(data_fungi_mini, Phylum == "Basidiomycota"),
-  fact = "Time",
-  width_ratio = 0.2,
-  base_annotations = list(),
-  annotations = list(
-    "Sequences per ASV \n (log10)" = (
-      ggplot(mapping = aes(y = log10(Abundance)))
-      +
-        geom_jitter(aes(
-          color =
-            Abundance
-        ), na.rm = TRUE)
+  upset_pq(
+    subset_taxa(data_fungi_mini, Phylum == "Basidiomycota"),
+    fact = "Time",
+    width_ratio = 0.2,
+    base_annotations = list(),
+    annotations = list(
+      "Sequences per ASV \n (log10)" = (
+        ggplot(mapping = aes(y = log10(Abundance)))
         +
-        geom_violin(alpha = 0.5, na.rm = TRUE) +
-        theme(legend.key.size = unit(0.2, "cm")) +
-        theme(axis.text = element_text(size = 12))
-    ),
-    "ASV per phylum" = (
-      ggplot(mapping = aes(fill = Class))
-      +
-        geom_bar() +
-        ylab("ASV per Class") +
-        theme(legend.key.size = unit(0.2, "cm")) +
-        theme(axis.text = element_text(size = 12))
+          geom_jitter(aes(
+            color =
+              Abundance
+          ), na.rm = TRUE)
+          +
+          geom_violin(alpha = 0.5, na.rm = TRUE) +
+          theme(legend.key.size = unit(0.2, "cm")) +
+          theme(axis.text = element_text(size = 12))
+      ),
+      "ASV per phylum" = (
+        ggplot(mapping = aes(fill = Class))
+        +
+          geom_bar() +
+          ylab("ASV per Class") +
+          theme(legend.key.size = unit(0.2, "cm")) +
+          theme(axis.text = element_text(size = 12))
+      )
     )
   )
-)
 
-data_fungi2 <- data_fungi_mini
-data_fungi2@sam_data[["Time_0"]] <- data_fungi2@sam_data$Time == 0
-data_fungi2@sam_data[["Height__Time_0"]] <-
-  paste0(data_fungi2@sam_data[["Height"]], "__", data_fungi2@sam_data[["Time_0"]])
-data_fungi2@sam_data[["Height__Time_0"]][grepl("NA", data_fungi2@sam_data[["Height__Time_0"]])] <-
-  NA
-upset_pq(data_fungi2, fact = "Height__Time_0", width_ratio = 0.2, min_size = 2)
+  data_fungi2 <- data_fungi_mini
+  data_fungi2@sam_data[["Time_0"]] <- data_fungi2@sam_data$Time == 0
+  data_fungi2@sam_data[["Height__Time_0"]] <-
+    paste0(data_fungi2@sam_data[["Height"]], "__", data_fungi2@sam_data[["Time_0"]])
+  data_fungi2@sam_data[["Height__Time_0"]][grepl("NA", data_fungi2@sam_data[["Height__Time_0"]])] <-
+    NA
+  upset_pq(data_fungi2, fact = "Height__Time_0", width_ratio = 0.2, min_size = 2)
+}
 }
 }
 \seealso{

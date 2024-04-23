@@ -35,7 +35,7 @@ if FALSE, NA values are set to "NA"}
 \item{numeric_fonction}{(default : sum) the function for numeric vector
 useful only for complex plot (see examples)}
 
-\item{...}{other arguments passed on to the \code{\link[ComplexUpset:upset_test]{ComplexUpset::upset_test()}}}
+\item{...}{Other arguments passed on to the \code{\link[ComplexUpset:upset_test]{ComplexUpset::upset_test()}}}
 }
 \value{
 A \code{\link{ggplot}}2 plot
@@ -45,9 +45,10 @@ A \code{\link{ggplot}}2 plot
 }
 \examples{
 data(data_fungi)
-upset_test_pq(data_fungi, "Height", var_to_test = c("OTU", "Class", "Guild"))
-upset_test_pq(data_fungi, "Time")
-
+if (requireNamespace("ComplexUpset")) {
+  upset_test_pq(data_fungi, "Height", var_to_test = c("OTU", "Class", "Guild"))
+  upset_test_pq(data_fungi, "Time")
+}
 }
 \seealso{
 \code{\link[=upset_pq]{upset_pq()}}

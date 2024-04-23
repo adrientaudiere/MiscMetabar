@@ -360,11 +360,13 @@ accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
 #'
 #' @examples
 #' \donttest{
-#' data("GlobalPatterns", package = "phyloseq")
-#' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
-#' circle_pq(GP, "SampleType")
-#' circle_pq(GP, "SampleType", add_nb_seq = FALSE)
-#' circle_pq(GP, "SampleType", taxa = "Class")
+#' if (requireNamespace("pbapply")) {
+#'   data("GlobalPatterns", package = "phyloseq")
+#'   GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+#'   circle_pq(GP, "SampleType")
+#'   circle_pq(GP, "SampleType", add_nb_seq = FALSE)
+#'   circle_pq(GP, "SampleType", taxa = "Class")
+#' }
 #' }
 #' @author Adrien Taudière
 #'
@@ -561,10 +563,14 @@ circle_pq <-
 #' @examples
 #' data("GlobalPatterns", package = "phyloseq")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
-#' sankey_pq(GP, fact = "SampleType")
+#' if (requireNamespace("networkD3")) {
+#'   sankey_pq(GP, fact = "SampleType")
+#' }
 #' \donttest{
-#' sankey_pq(GP, taxa = 1:4, min_prop_tax = 0.01)
-#' sankey_pq(GP, taxa = 1:4, min_prop_tax = 0.01, add_nb_seq = TRUE)
+#' if (requireNamespace("networkD3")) {
+#'   sankey_pq(GP, taxa = 1:4, min_prop_tax = 0.01)
+#'   sankey_pq(GP, taxa = 1:4, min_prop_tax = 0.01, add_nb_seq = TRUE)
+#' }
 #' }
 #' @author Adrien Taudière
 #'
@@ -768,15 +774,19 @@ sankey_pq <-
 #' (cf example).
 #'
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
-#' data("enterotype")
-#' venn_pq(enterotype, fact = "SeqTech")
+#' if (requireNamespace("venneuler")) {
+#'   data("enterotype")
+#'   venn_pq(enterotype, fact = "SeqTech")
+#' }
 #' \donttest{
-#' venn_pq(enterotype, fact = "ClinicalStatus")
-#' venn_pq(enterotype, fact = "Nationality", print_values = FALSE)
-#' venn_pq(enterotype, fact = "ClinicalStatus", print_values = FALSE) +
-#'   scale_fill_hue()
-#' venn_pq(enterotype, fact = "ClinicalStatus", print_values = FALSE) +
-#'   scale_fill_hue()
+#' if (requireNamespace("venneuler")) {
+#'   venn_pq(enterotype, fact = "ClinicalStatus")
+#'   venn_pq(enterotype, fact = "Nationality", print_values = FALSE)
+#'   venn_pq(enterotype, fact = "ClinicalStatus", print_values = FALSE) +
+#'     scale_fill_hue()
+#'   venn_pq(enterotype, fact = "ClinicalStatus", print_values = FALSE) +
+#'     scale_fill_hue()
+#' }
 #' }
 #' @return A \code{\link{ggplot}}2 plot representing Venn diagram of
 #' modalities of the argument \code{factor}
@@ -979,34 +989,37 @@ venn_pq <-
 #'   modalities of args `fact`. Use `phyloseq::rarefy_even_depth()` function
 #' @param rarefy_after_merging Rarefy each sample after merging by the
 #'   modalities of args `fact`.
-#' @param ... other arguments for the `ggVennDiagram::ggVennDiagram` function
+#' @param ... Other arguments for the `ggVennDiagram::ggVennDiagram` function
 #'   for ex. `category.names`.
 #' @return A \code{\link{ggplot}}2 plot representing Venn diagram of
 #'   modalities of the argument \code{factor} or if split_by is set a list
 #'   of plots.
 #' @seealso [upset_pq()]
 #' @examples
-#'
-#' ggvenn_pq(data_fungi, fact = "Height")
-#' \donttest{
-#' ggvenn_pq(data_fungi, fact = "Height") +
-#'   ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
-#' pl <- ggvenn_pq(data_fungi, fact = "Height", split_by = "Time")
-#' for (i in 1:length(pl)) {
-#'   p <- pl[[i]] +
-#'     scale_fill_distiller(palette = "BuPu", direction = 1) +
-#'     theme(plot.title = element_text(hjust = 0.5, size = 22))
-#'   print(p)
+#' if (requireNamespace("ggVennDiagram")) {
+#'   ggvenn_pq(data_fungi, fact = "Height")
 #' }
+#' \donttest{
+#' if (requireNamespace("ggVennDiagram")) {
+#'   ggvenn_pq(data_fungi, fact = "Height") +
+#'     ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
+#'   pl <- ggvenn_pq(data_fungi, fact = "Height", split_by = "Time")
+#'   for (i in 1:length(pl)) {
+#'     p <- pl[[i]] +
+#'       scale_fill_distiller(palette = "BuPu", direction = 1) +
+#'       theme(plot.title = element_text(hjust = 0.5, size = 22))
+#'     print(p)
+#'   }
 #'
-#' data_fungi2 <- subset_samples(data_fungi, data_fungi@sam_data$Tree_name == "A10-005" |
-#'   data_fungi@sam_data$Height %in% c("Low", "High"))
-#' ggvenn_pq(data_fungi2, fact = "Height")
+#'   data_fungi2 <- subset_samples(data_fungi, data_fungi@sam_data$Tree_name == "A10-005" |
+#'     data_fungi@sam_data$Height %in% c("Low", "High"))
+#'   ggvenn_pq(data_fungi2, fact = "Height")
 #'
-#' ggvenn_pq(data_fungi, fact = "Height", add_nb_seq = TRUE, set_size = 4)
-#' ggvenn_pq(data_fungi, fact = "Height", rarefy_before_merging = TRUE)
-#' ggvenn_pq(data_fungi, fact = "Height", rarefy_after_merging = TRUE) +
-#'   scale_x_continuous(expand = expansion(mult = 0.5))
+#'   ggvenn_pq(data_fungi, fact = "Height", add_nb_seq = TRUE, set_size = 4)
+#'   ggvenn_pq(data_fungi, fact = "Height", rarefy_before_merging = TRUE)
+#'   ggvenn_pq(data_fungi, fact = "Height", rarefy_after_merging = TRUE) +
+#'     scale_x_continuous(expand = expansion(mult = 0.5))
+#' }
 #' }
 #' @export
 #' @author Adrien Taudière
@@ -1247,12 +1260,14 @@ multiplot <-
 #' multiplot(plotlist = list(p_h1, p_h2, p_h3, p[[4]]), cols = 4)
 #'
 #' \donttest{
-#' # Artificially modify data_fungi to force alpha-diversity effect
-#' data_fungi_modif <- clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height)))
-#' data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <-
-#'   data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] +
-#'   sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
-#' p2 <- hill_pq(data_fungi_modif, "Height", letters = TRUE)
+#' if (requireNamespace("multcompView")) {
+#'   # Artificially modify data_fungi to force alpha-diversity effect
+#'   data_fungi_modif <- clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height)))
+#'   data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <-
+#'     data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] +
+#'     sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
+#'   p2 <- hill_pq(data_fungi_modif, "Height", letters = TRUE)
+#' }
 #' }
 #' @seealso [psmelt_samples_pq()] and [ggbetween_pq()]
 hill_pq <-
@@ -1482,10 +1497,12 @@ hill_pq <-
 #' @export
 #' @examples
 #' \donttest{
-#' p <- ggbetween_pq(data_fungi, fact = "Time", p.adjust.method = "BH")
-#' p[[1]]
-#' ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE)
-#' ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE, rarefy_by_sample = TRUE)
+#' if (requireNamespace("ggstatsplot")) {
+#'   p <- ggbetween_pq(data_fungi, fact = "Time", p.adjust.method = "BH")
+#'   p[[1]]
+#'   ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE)
+#'   ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE, rarefy_by_sample = TRUE)
+#' }
 #' }
 #' @author Adrien Taudière
 #' @details This function is mainly a wrapper of the work of others.
@@ -1755,7 +1772,7 @@ summary_plot_pq <- function(physeq,
 #'   use this function.
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' \donttest{
-#' if (!requireNamespace("rotl")) {
+#' if (requireNamespace("rotl")) {
 #'   tr <- rotl_pq(data_fungi_mini, species_colnames = "Genus_species")
 #'   plot(tr)
 #'
@@ -1813,7 +1830,7 @@ rotl_pq <- function(physeq,
 #'
 #' @examples
 #' \donttest{
-#' if (!requireNamespace("metacoder")) {
+#' if (requireNamespace("metacoder")) {
 #'   data("GlobalPatterns", package = "phyloseq")
 #'
 #'   GPsubset <- subset_taxa(
@@ -1903,7 +1920,7 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #'   add the number of samples merged for both levels.
 #' @param plotly_version If TRUE, use [plotly::ggplotly()] to return
 #'   a interactive ggplot.
-#' @param ... other arguments for the ggplot function
+#' @param ... Other arguments for the ggplot function
 #' @return A plot
 #'
 #' @examples
@@ -2152,7 +2169,7 @@ biplot_pq <- function(physeq,
 #'   Note that if you set pairs, you also must set fact arguments to pass on to [biplot_pq()].
 #' @param na_remove (logical, default TRUE) if TRUE remove all the samples
 #'   with NA in the `split_by` variable of the `physeq@sam_data` slot
-#' @param ... all other parameters passed on to [biplot_pq()]
+#' @param ... Other parameters passed on to [biplot_pq()]
 #'
 #' @return a list of ggplot object
 #' @export
@@ -2433,11 +2450,13 @@ plot_tax_pq <-
 #' @author Adrien Taudière
 #' @examples
 #' \donttest{
-#' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", "Time")
-#' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order")
-#' multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order",
-#'   nb_seq = FALSE, log10trans = FALSE
-#' )
+#' if (requireNamespace("ggh4x")) {
+#'   multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", "Time")
+#'   multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order")
+#'   multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order",
+#'     nb_seq = FALSE, log10trans = FALSE
+#'   )
+#' }
 #' }
 multitax_bar_pq <- function(physeq,
                             lvl1,
@@ -2536,14 +2555,16 @@ multitax_bar_pq <- function(physeq,
 #' @param dims (Int) Output dimensionality (default: 2)
 #' @param theta (Numeric) Speed/accuracy trade-off (increase for less accuracy), set to 0.0 for exact TSNE (default: 0.0 see details in the man page of `Rtsne::Rtsne`).
 #' @param perplexity (Numeric) Perplexity parameter (should not be bigger than 3 * perplexity < nrow(X) - 1, see details in the man page of `Rtsne::Rtsne`)
-#' @param ... : other arguments passed on to `Rtsne::Rtsne()`
+#' @param ... Other arguments passed on to `Rtsne::Rtsne()`
 #'
 #' @return A list of element including the matrix Y containing the new representations for the objects.
 #'   See ?Rtsne::Rtsne() for more information
 #' @export
 #'
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
-#' res_tsne <- tsne_pq(data_fungi)
+#' if (requireNamespace("Rtsne")) {
+#'   res_tsne <- tsne_pq(data_fungi)
+#' }
 tsne_pq <-
   function(physeq,
            method = "bray",
@@ -2592,7 +2613,7 @@ tsne_pq <-
 #' @param plot_dims A vector of 2 values defining the rank of dimension to plot (default: c(1,2))
 #' @param na_remove (logical, default TRUE) Does the samples with NA values in fact are removed? (default: true)
 #' @param force_factor (logical, default TRUE) Force the fact column to be a factor.
-#' @param ... : other arguments passed on to `Rtsne::Rtsne()`
+#' @param ... Other arguments passed on to `Rtsne::Rtsne()`
 #'
 #' @return
 #' A ggplot object
@@ -2602,11 +2623,16 @@ tsne_pq <-
 #'
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' data(data_fungi)
-#' plot_tsne_pq(data_fungi, fact = "Height", perplexity = 15)
-#' \donttest{
-#' plot_tsne_pq(data_fungi, fact = "Time") + geom_label(aes(label = Sample_id, fill = Time))
-#' plot_tsne_pq(data_fungi, fact = "Time", na_remove = FALSE, force_factor = FALSE)
+#' if (requireNamespace("Rtsne")) {
+#'   plot_tsne_pq(data_fungi, fact = "Height", perplexity = 15)
 #' }
+#' \donttest{
+#' if (requireNamespace("Rtsne")) {
+#'   plot_tsne_pq(data_fungi, fact = "Time") + geom_label(aes(label = Sample_id, fill = Time))
+#'   plot_tsne_pq(data_fungi, fact = "Time", na_remove = FALSE, force_factor = FALSE)
+#' }
+#' }
+#'
 plot_tsne_pq <- function(physeq,
                          method = "bray",
                          dims = 2,
@@ -2681,11 +2707,13 @@ plot_tsne_pq <- function(physeq,
 #' @export
 #'
 #' @examples
-#' SRS_curve_pq(data_fungi_mini,
-#'   max.sample.size = 200,
-#'   rarefy.comparison = TRUE, rarefy.repeats = 3
-#' )
-#' SRS_curve_pq(data_fungi_mini, max.sample.size = 500, metric = "shannon")
+#' if (requireNamespace("SRS")) {
+#'   SRS_curve_pq(data_fungi_mini,
+#'     max.sample.size = 200,
+#'     rarefy.comparison = TRUE, rarefy.repeats = 3
+#'   )
+#'   SRS_curve_pq(data_fungi_mini, max.sample.size = 500, metric = "shannon")
+#' }
 SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
   if (clean_pq) {
     physeq <- clean_pq(physeq)
@@ -2716,13 +2744,13 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 #'   physeq are merged using the vector set by `merge_sample_by`. This
 #'   merging used the [merge_samples2()]. In the case of
 #'   [biplot_pq()] this must be a factor with two levels only.
-#' @param ... other arguments for the [iNEXT::iNEXT()] function
+#' @param ... Other arguments for the [iNEXT::iNEXT()] function
 #' @return see [iNEXT::iNEXT()] documentation
 #' @export
 #'
 #' @examples
 #' \donttest{
-#' if (!requireNamespace("iNEXT")) {
+#' if (requireNamespace("iNEXT")) {
 #'   data("GlobalPatterns", package = "phyloseq")
 #'   GPsubset <- subset_taxa(
 #'     GlobalPatterns,
@@ -2792,7 +2820,7 @@ iNEXT_pq <- function(physeq,
 #'   useful only for complex plot (see examples)
 #' @param rarefy_after_merging Rarefy each sample after merging by the
 #'   modalities of `fact` parameter
-#' @param ... other arguments passed on to the [ComplexUpset::upset()]
+#' @param ... Other arguments passed on to the [ComplexUpset::upset()]
 #'
 #' @return A \code{\link{ggplot}}2 plot
 #' @export
@@ -2800,112 +2828,115 @@ iNEXT_pq <- function(physeq,
 #'
 #' @seealso [ggvenn_pq()]
 #' @examples
-#'
-#' upset_pq(data_fungi_mini,
-#'   fact = "Height", width_ratio = 0.2,
-#'   taxa_fill = "Class"
-#' )
+#' if (requireNamespace("ComplexUpset")) {
+#'   upset_pq(data_fungi_mini,
+#'     fact = "Height", width_ratio = 0.2,
+#'     taxa_fill = "Class"
+#'   )
+#' }
 #' \donttest{
-#' upset_pq(data_fungi_mini, fact = "Height", min_nb_seq = 1000)
-#' upset_pq(data_fungi_mini, fact = "Height", na_remove = FALSE)
+#' if (requireNamespace("ComplexUpset")) {
+#'   upset_pq(data_fungi_mini, fact = "Height", min_nb_seq = 1000)
+#'   upset_pq(data_fungi_mini, fact = "Height", na_remove = FALSE)
 #'
-#' upset_pq(data_fungi_mini, fact = "Time", width_ratio = 0.2, rarefy_after_merging = TRUE)
+#'   upset_pq(data_fungi_mini, fact = "Time", width_ratio = 0.2, rarefy_after_merging = TRUE)
 #'
-#' upset_pq(
-#'   data_fungi_mini,
-#'   fact = "Time",
-#'   width_ratio = 0.2,
-#'   annotations = list(
-#'     "Sequences per ASV \n (log10)" = (
-#'       ggplot(mapping = aes(y = log10(Abundance)))
-#'       +
-#'         geom_jitter(aes(
-#'           color =
-#'             Abundance
-#'         ), na.rm = TRUE)
+#'   upset_pq(
+#'     data_fungi_mini,
+#'     fact = "Time",
+#'     width_ratio = 0.2,
+#'     annotations = list(
+#'       "Sequences per ASV \n (log10)" = (
+#'         ggplot(mapping = aes(y = log10(Abundance)))
 #'         +
-#'         geom_violin(alpha = 0.5, na.rm = TRUE) +
-#'         theme(legend.key.size = unit(0.2, "cm")) +
-#'         theme(axis.text = element_text(size = 12))
-#'     ),
-#'     "ASV per phylum" = (
-#'       ggplot(mapping = aes(fill = Phylum))
-#'       +
-#'         geom_bar() +
-#'         ylab("ASV per phylum") +
-#'         theme(legend.key.size = unit(0.2, "cm")) +
-#'         theme(axis.text = element_text(size = 12))
+#'           geom_jitter(aes(
+#'             color =
+#'               Abundance
+#'           ), na.rm = TRUE)
+#'           +
+#'           geom_violin(alpha = 0.5, na.rm = TRUE) +
+#'           theme(legend.key.size = unit(0.2, "cm")) +
+#'           theme(axis.text = element_text(size = 12))
+#'       ),
+#'       "ASV per phylum" = (
+#'         ggplot(mapping = aes(fill = Phylum))
+#'         +
+#'           geom_bar() +
+#'           ylab("ASV per phylum") +
+#'           theme(legend.key.size = unit(0.2, "cm")) +
+#'           theme(axis.text = element_text(size = 12))
+#'       )
 #'     )
 #'   )
-#' )
 #'
 #'
-#' upset_pq(
-#'   data_fungi_mini,
-#'   fact = "Time",
-#'   width_ratio = 0.2,
-#'   numeric_fonction = mean,
-#'   annotations = list(
-#'     "Sequences per ASV \n (log10)" = (
-#'       ggplot(mapping = aes(y = log10(Abundance)))
-#'       +
-#'         geom_jitter(aes(
-#'           color =
-#'             Abundance
-#'         ), na.rm = TRUE)
+#'   upset_pq(
+#'     data_fungi_mini,
+#'     fact = "Time",
+#'     width_ratio = 0.2,
+#'     numeric_fonction = mean,
+#'     annotations = list(
+#'       "Sequences per ASV \n (log10)" = (
+#'         ggplot(mapping = aes(y = log10(Abundance)))
 #'         +
-#'         geom_violin(alpha = 0.5, na.rm = TRUE) +
-#'         theme(legend.key.size = unit(0.2, "cm")) +
-#'         theme(axis.text = element_text(size = 12))
-#'     ),
-#'     "ASV per phylum" = (
-#'       ggplot(mapping = aes(fill = Phylum))
-#'       +
-#'         geom_bar() +
-#'         ylab("ASV per phylum") +
-#'         theme(legend.key.size = unit(0.2, "cm")) +
-#'         theme(axis.text = element_text(size = 12))
+#'           geom_jitter(aes(
+#'             color =
+#'               Abundance
+#'           ), na.rm = TRUE)
+#'           +
+#'           geom_violin(alpha = 0.5, na.rm = TRUE) +
+#'           theme(legend.key.size = unit(0.2, "cm")) +
+#'           theme(axis.text = element_text(size = 12))
+#'       ),
+#'       "ASV per phylum" = (
+#'         ggplot(mapping = aes(fill = Phylum))
+#'         +
+#'           geom_bar() +
+#'           ylab("ASV per phylum") +
+#'           theme(legend.key.size = unit(0.2, "cm")) +
+#'           theme(axis.text = element_text(size = 12))
+#'       )
 #'     )
 #'   )
-#' )
 #'
 #'
-#' upset_pq(
-#'   subset_taxa(data_fungi_mini, Phylum == "Basidiomycota"),
-#'   fact = "Time",
-#'   width_ratio = 0.2,
-#'   base_annotations = list(),
-#'   annotations = list(
-#'     "Sequences per ASV \n (log10)" = (
-#'       ggplot(mapping = aes(y = log10(Abundance)))
-#'       +
-#'         geom_jitter(aes(
-#'           color =
-#'             Abundance
-#'         ), na.rm = TRUE)
+#'   upset_pq(
+#'     subset_taxa(data_fungi_mini, Phylum == "Basidiomycota"),
+#'     fact = "Time",
+#'     width_ratio = 0.2,
+#'     base_annotations = list(),
+#'     annotations = list(
+#'       "Sequences per ASV \n (log10)" = (
+#'         ggplot(mapping = aes(y = log10(Abundance)))
 #'         +
-#'         geom_violin(alpha = 0.5, na.rm = TRUE) +
-#'         theme(legend.key.size = unit(0.2, "cm")) +
-#'         theme(axis.text = element_text(size = 12))
-#'     ),
-#'     "ASV per phylum" = (
-#'       ggplot(mapping = aes(fill = Class))
-#'       +
-#'         geom_bar() +
-#'         ylab("ASV per Class") +
-#'         theme(legend.key.size = unit(0.2, "cm")) +
-#'         theme(axis.text = element_text(size = 12))
+#'           geom_jitter(aes(
+#'             color =
+#'               Abundance
+#'           ), na.rm = TRUE)
+#'           +
+#'           geom_violin(alpha = 0.5, na.rm = TRUE) +
+#'           theme(legend.key.size = unit(0.2, "cm")) +
+#'           theme(axis.text = element_text(size = 12))
+#'       ),
+#'       "ASV per phylum" = (
+#'         ggplot(mapping = aes(fill = Class))
+#'         +
+#'           geom_bar() +
+#'           ylab("ASV per Class") +
+#'           theme(legend.key.size = unit(0.2, "cm")) +
+#'           theme(axis.text = element_text(size = 12))
+#'       )
 #'     )
 #'   )
-#' )
 #'
-#' data_fungi2 <- data_fungi_mini
-#' data_fungi2@sam_data[["Time_0"]] <- data_fungi2@sam_data$Time == 0
-#' data_fungi2@sam_data[["Height__Time_0"]] <-
-#'   paste0(data_fungi2@sam_data[["Height"]], "__", data_fungi2@sam_data[["Time_0"]])
-#' data_fungi2@sam_data[["Height__Time_0"]][grepl("NA", data_fungi2@sam_data[["Height__Time_0"]])] <-
-#'   NA
-#' upset_pq(data_fungi2, fact = "Height__Time_0", width_ratio = 0.2, min_size = 2)
+#'   data_fungi2 <- data_fungi_mini
+#'   data_fungi2@sam_data[["Time_0"]] <- data_fungi2@sam_data$Time == 0
+#'   data_fungi2@sam_data[["Height__Time_0"]] <-
+#'     paste0(data_fungi2@sam_data[["Height"]], "__", data_fungi2@sam_data[["Time_0"]])
+#'   data_fungi2@sam_data[["Height__Time_0"]][grepl("NA", data_fungi2@sam_data[["Height__Time_0"]])] <-
+#'     NA
+#'   upset_pq(data_fungi2, fact = "Height__Time_0", width_ratio = 0.2, min_size = 2)
+#' }
 #' }
 upset_pq <- function(physeq,
                      fact,
@@ -2982,7 +3013,7 @@ upset_pq <- function(physeq,
 #' @inheritParams upset_pq
 #' @param var_to_test (default c("OTU")) : a vector of column present in
 #'   the tax_table slot from the physeq object
-#' @param ... other arguments passed on to the [ComplexUpset::upset_test()]
+#' @param ... Other arguments passed on to the [ComplexUpset::upset_test()]
 #'
 #' @return A \code{\link{ggplot}}2 plot
 #' @export
@@ -2991,9 +3022,10 @@ upset_pq <- function(physeq,
 #' @seealso [upset_pq()]
 #' @examples
 #' data(data_fungi)
-#' upset_test_pq(data_fungi, "Height", var_to_test = c("OTU", "Class", "Guild"))
-#' upset_test_pq(data_fungi, "Time")
-#'
+#' if (requireNamespace("ComplexUpset")) {
+#'   upset_test_pq(data_fungi, "Height", var_to_test = c("OTU", "Class", "Guild"))
+#'   upset_test_pq(data_fungi, "Time")
+#' }
 upset_test_pq <-
   function(physeq,
            fact,
@@ -3052,8 +3084,7 @@ upset_test_pq <-
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
-#' Mainly an internal function useful in "lapply(..., tapply)" methods
-#'
+#' Mainly an internal function useful in "sapply(..., tapply)" methods
 #'
 #' @param x : a vector
 #' @param numeric_fonction : a function for numeric vector. For ex. `sum` or `mean`
@@ -3065,7 +3096,7 @@ upset_test_pq <-
 #'   - unique_or_na (default)
 #'   - more_frequent
 #'   - more_frequent_without_equality
-#' @param ... other arguments passed on to the numeric function (ex. na.rm=TRUE)
+#' @param ... Other arguments passed on to the numeric function (ex. na.rm=TRUE)
 #' @return a single value
 #' @export
 #'
@@ -3239,19 +3270,22 @@ tax_bar_pq <- function(physeq, fact = "Sample", taxa = "Order", percent_bar = FA
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#'
-#' ridges_pq(data_fungi_mini, "Time", alpha = 0.5, log10trans = FALSE) + xlim(c(0, 1000))
+#' if (requireNamespace("ggridges")) {
+#'   ridges_pq(data_fungi_mini, "Time", alpha = 0.5, log10trans = FALSE) + xlim(c(0, 1000))
+#' }
 #' \donttest{
-#' ridges_pq(data_fungi_mini, "Time", alpha = 0.5, scale = 0.9)
-#' ridges_pq(data_fungi_mini, "Sample_names", log10trans = TRUE)
+#' if (requireNamespace("ggridges")) {
+#'   ridges_pq(data_fungi_mini, "Time", alpha = 0.5, scale = 0.9)
+#'   ridges_pq(data_fungi_mini, "Sample_names", log10trans = TRUE)
 #'
-#' ridges_pq(data_fungi_mini,
-#'   "Time",
-#'   jittered_points = TRUE,
-#'   position = ggridges::position_points_jitter(width = 0.05, height = 0),
-#'   point_shape = "|", point_size = 3, point_alpha = 1, alpha = 0.7,
-#'   scale = 0.8
-#' )
+#'   ridges_pq(data_fungi_mini,
+#'     "Time",
+#'     jittered_points = TRUE,
+#'     position = ggridges::position_points_jitter(width = 0.05, height = 0),
+#'     point_shape = "|", point_size = 3, point_alpha = 1, alpha = 0.7,
+#'     scale = 0.8
+#'   )
+#' }
 #' }
 ridges_pq <- function(physeq,
                       fact,
@@ -3314,31 +3348,35 @@ ridges_pq <- function(physeq,
 #' @author Adrien Taudière
 #' @examples
 #' data(data_fungi_sp_known)
-#' treemap_pq(
-#'   clean_pq(subset_taxa(
-#'     data_fungi_sp_known,
-#'     Phylum == "Basidiomycota"
-#'   )),
-#'   "Order", "Class",
-#'   plot_legend = TRUE
-#' )
+#' if (requireNamespace("treemapify")) {
+#'   treemap_pq(
+#'     clean_pq(subset_taxa(
+#'       data_fungi_sp_known,
+#'       Phylum == "Basidiomycota"
+#'     )),
+#'     "Order", "Class",
+#'     plot_legend = TRUE
+#'   )
+#' }
 #' \donttest{
-#' treemap_pq(
-#'   clean_pq(subset_taxa(
-#'     data_fungi_sp_known,
-#'     Phylum == "Basidiomycota"
-#'   )),
-#'   "Order", "Class",
-#'   log10trans = FALSE
-#' )
-#' treemap_pq(
-#'   clean_pq(subset_taxa(
-#'     data_fungi_sp_known,
-#'     Phylum == "Basidiomycota"
-#'   )),
-#'   "Order", "Class",
-#'   nb_seq = FALSE, log10trans = FALSE
-#' )
+#' if (requireNamespace("treemapify")) {
+#'   treemap_pq(
+#'     clean_pq(subset_taxa(
+#'       data_fungi_sp_known,
+#'       Phylum == "Basidiomycota"
+#'     )),
+#'     "Order", "Class",
+#'     log10trans = FALSE
+#'   )
+#'   treemap_pq(
+#'     clean_pq(subset_taxa(
+#'       data_fungi_sp_known,
+#'       Phylum == "Basidiomycota"
+#'     )),
+#'     "Order", "Class",
+#'     nb_seq = FALSE, log10trans = FALSE
+#'   )
+#' }
 #' }
 treemap_pq <- function(physeq,
                        lvl1,

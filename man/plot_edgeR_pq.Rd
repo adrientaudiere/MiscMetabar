@@ -48,13 +48,15 @@ A \code{\link{ggplot}}2 plot representing edgeR results
 data("GlobalPatterns", package = "phyloseq")
 GP_archae <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 \donttest{
-plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
-  color_tax = "Kingdom"
-)
+if (requireNamespace("edgeR")) {
+  plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
+    color_tax = "Kingdom"
+  )
 
-plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
-  taxolev = "Class", color_tax = "Kingdom"
-)
+  plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
+    taxolev = "Class", color_tax = "Kingdom"
+  )
+}
 }
 \dontshow{\}) # examplesIf}
 }

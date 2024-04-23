@@ -4,13 +4,15 @@
 \alias{rename_samples}
 \title{Rename the samples of a phyloseq slot}
 \usage{
-rename_samples(phyloseq_component, names_of_samples)
+rename_samples(phyloseq_component, names_of_samples, taxa_are_rows = FALSE)
 }
 \arguments{
 \item{phyloseq_component}{(required) one of otu_table or sam_data slot of a
 phyloseq-class object}
 
 \item{names_of_samples}{(required) A vector of samples names}
+
+\item{taxa_are_rows}{(default to FALSE) see ?phyloseq for details}
 }
 \value{
 The otu_table or the sam_data slot with new samples names

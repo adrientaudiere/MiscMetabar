@@ -89,7 +89,7 @@ add the number of samples merged for both levels.}
 \item{plotly_version}{If TRUE, use \code{\link[plotly:ggplotly]{plotly::ggplotly()}} to return
 a interactive ggplot.}
 
-\item{...}{other arguments for the ggplot function}
+\item{...}{Other arguments for the ggplot function}
 }
 \value{
 A plot

@@ -20,7 +20,7 @@ Note that if you set pairs, you also must set fact arguments to pass on to \code
 \item{na_remove}{(logical, default TRUE) if TRUE remove all the samples
 with NA in the \code{split_by} variable of the \code{physeq@sam_data} slot}
 
-\item{...}{all other parameters passed on to \code{\link[=biplot_pq]{biplot_pq()}}}
+\item{...}{Other parameters passed on to \code{\link[=biplot_pq]{biplot_pq()}}}
 }
 \value{
 a list of ggplot object

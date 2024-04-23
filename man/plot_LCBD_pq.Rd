@@ -46,29 +46,33 @@ use this function.
 }
 \examples{
 data(data_fungi)
-plot_LCBD_pq(data_fungi_mini,
-  nperm = 100, only_plot_significant = FALSE,
-  pval = 0.2
-)
-\donttest{
-plot_LCBD_pq(data_fungi_mini,
-  nperm = 100, only_plot_significant = TRUE,
-  pval = 0.2
-)
-if (!requireNamespace("patchwork")) {
+if (requireNamespace("adespatial")) {
   plot_LCBD_pq(data_fungi_mini,
     nperm = 100, only_plot_significant = FALSE,
-    sam_variables = c("Time", "Height")
+    pval = 0.2
   )
+}
+\donttest{
+if (requireNamespace("adespatial")) {
   plot_LCBD_pq(data_fungi_mini,
-    nperm = 100, only_plot_significant = TRUE, pval = 0.2,
-    sam_variables = c("Time", "Height", "Tree_name")
-  ) &
-    theme(
-      legend.key.size = unit(0.4, "cm"),
-      legend.text = element_text(size = 10),
-      axis.title.x = element_text(size = 6)
+    nperm = 100, only_plot_significant = TRUE,
+    pval = 0.2
+  )
+  if (requireNamespace("patchwork")) {
+    plot_LCBD_pq(data_fungi_mini,
+      nperm = 100, only_plot_significant = FALSE,
+      sam_variables = c("Time", "Height")
     )
+    plot_LCBD_pq(data_fungi_mini,
+      nperm = 100, only_plot_significant = TRUE, pval = 0.2,
+      sam_variables = c("Time", "Height", "Tree_name")
+    ) &
+      theme(
+        legend.key.size = unit(0.4, "cm"),
+        legend.text = element_text(size = 10),
+        axis.title.x = element_text(size = 6)
+      )
+  }
 }
 }
 }

@@ -19,14 +19,16 @@
 #' @param title The title of the Graph.
 #' @param na_remove (logical, default FALSE) If set to TRUE, remove samples with
 #'   NA in the variables set in formula.
-#' @param ... other params for be passed on to
+#' @param ... Other params for be passed on to
 #'   [phyloseqGraphTest::graph_perm_test()] function
 #'
 #' @examples
 #' \donttest{
-#' data(enterotype)
-#' graph_test_pq(enterotype, fact = "SeqTech")
-#' graph_test_pq(enterotype, fact = "Enterotype", na_remove = TRUE)
+#' if (requireNamespace("phyloseqGraphTest")) {
+#'   data(enterotype)
+#'   graph_test_pq(enterotype, fact = "SeqTech")
+#'   graph_test_pq(enterotype, fact = "Enterotype", na_remove = TRUE)
+#' }
 #' }
 #' @author Adrien Taudière
 #'
@@ -237,12 +239,16 @@ adonis_pq <- function(physeq,
 #' @export
 #' @seealso [plot_LCBD_pq], [adespatial::beta.div()]
 #' @examples
-#' res <- LCBD_pq(data_fungi_sp_known, nperm = 5)
-#' str(res)
-#' length(res$LCBD)
-#' length(res$SCBD)
+#' if (requireNamespace("adespatial")) {
+#'   res <- LCBD_pq(data_fungi_sp_known, nperm = 5)
+#'   str(res)
+#'   length(res$LCBD)
+#'   length(res$SCBD)
+#' }
 #' \donttest{
-#' LCBD_pq(data_fungi_sp_known, nperm = 5, method = "jaccard")
+#' if (requireNamespace("adespatial")) {
+#'   LCBD_pq(data_fungi_sp_known, nperm = 5, method = "jaccard")
+#' }
 #' }
 #'
 #' @author Adrien Taudière
@@ -294,29 +300,33 @@ LCBD_pq <- function(physeq,
 #'
 #' @examples
 #' data(data_fungi)
-#' plot_LCBD_pq(data_fungi_mini,
-#'   nperm = 100, only_plot_significant = FALSE,
-#'   pval = 0.2
-#' )
-#' \donttest{
-#' plot_LCBD_pq(data_fungi_mini,
-#'   nperm = 100, only_plot_significant = TRUE,
-#'   pval = 0.2
-#' )
-#' if (!requireNamespace("patchwork")) {
+#' if (requireNamespace("adespatial")) {
 #'   plot_LCBD_pq(data_fungi_mini,
 #'     nperm = 100, only_plot_significant = FALSE,
-#'     sam_variables = c("Time", "Height")
+#'     pval = 0.2
 #'   )
+#' }
+#' \donttest{
+#' if (requireNamespace("adespatial")) {
 #'   plot_LCBD_pq(data_fungi_mini,
-#'     nperm = 100, only_plot_significant = TRUE, pval = 0.2,
-#'     sam_variables = c("Time", "Height", "Tree_name")
-#'   ) &
-#'     theme(
-#'       legend.key.size = unit(0.4, "cm"),
-#'       legend.text = element_text(size = 10),
-#'       axis.title.x = element_text(size = 6)
+#'     nperm = 100, only_plot_significant = TRUE,
+#'     pval = 0.2
+#'   )
+#'   if (requireNamespace("patchwork")) {
+#'     plot_LCBD_pq(data_fungi_mini,
+#'       nperm = 100, only_plot_significant = FALSE,
+#'       sam_variables = c("Time", "Height")
 #'     )
+#'     plot_LCBD_pq(data_fungi_mini,
+#'       nperm = 100, only_plot_significant = TRUE, pval = 0.2,
+#'       sam_variables = c("Time", "Height", "Tree_name")
+#'     ) &
+#'       theme(
+#'         legend.key.size = unit(0.4, "cm"),
+#'         legend.text = element_text(size = 10),
+#'         axis.title.x = element_text(size = 6)
+#'       )
+#'   }
 #' }
 #' }
 #' @author Adrien Taudière
@@ -437,13 +447,18 @@ plot_LCBD_pq <- function(physeq,
 #'
 #' @examples
 #' data(data_fungi)
-#' plot_SCBD_pq(data_fungi) +
-#'   geom_text(aes(label = paste(Genus, Species)), hjust = 1, vjust = 2) +
-#'   xlim(c(0, NA))
-#' \donttest{
-#' plot_SCBD_pq(data_fungi, tax_level = "Class", tax_col = "Phylum", min_SCBD = 0) +
-#'   geom_jitter()
+#' if (requireNamespace("adespatial")) {
+#'   plot_SCBD_pq(data_fungi) +
+#'     geom_text(aes(label = paste(Genus, Species)), hjust = 1, vjust = 2) +
+#'     xlim(c(0, NA))
 #' }
+#' \donttest{
+#' if (requireNamespace("adespatial")) {
+#'   plot_SCBD_pq(data_fungi, tax_level = "Class", tax_col = "Phylum", min_SCBD = 0) +
+#'     geom_jitter()
+#' }
+#' }
+#'
 #' @author Adrien Taudière
 #' @details
 #' This function is mainly a wrapper of the work of others.
@@ -496,15 +511,20 @@ plot_SCBD_pq <- function(physeq,
 #' @return A ggplot2 object
 #' @export
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
-#' data(data_fungi)
-#' data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
-#' multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)), fact = "Time")
-#' \donttest{
-#' multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)),
-#'   fact = "Time",
-#'   max.order = 1, control = permute::how(nperm = 99)
-#' )
+#' if (requireNamespace("indicspecies")) {
+#'   data(data_fungi)
+#'   data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
+#'   multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)), fact = "Time")
 #' }
+#' \donttest{
+#' if (requireNamespace("indicspecies")) {
+#'   multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)),
+#'     fact = "Time",
+#'     max.order = 1, control = permute::how(nperm = 99)
+#'   )
+#' }
+#' }
+#'
 #' @author Adrien Taudière
 #' @details
 #' This function is mainly a wrapper of the work of others.
@@ -576,39 +596,41 @@ multipatt_pq <- function(physeq,
 #'
 #' @examples
 #' \donttest{
-#' data_fungi_mini@tax_table <- phyloseq::tax_table(cbind(
-#'   data_fungi_mini@tax_table,
-#'   "taxon" = taxa_names(data_fungi_mini)
-#' ))
-#' res_height <- ancombc_pq(
-#'   data_fungi_mini,
-#'   fact = "Height",
-#'   levels_fact = c("Low", "High"),
-#'   verbose = TRUE
-#' )
-#'
-#' ggplot(
-#'   res_height$res,
-#'   aes(
-#'     y = reorder(taxon, lfc_HeightHigh),
-#'     x = lfc_HeightHigh,
-#'     color = diff_HeightHigh
+#' if (requireNamespace("mia")) {
+#'   data_fungi_mini@tax_table <- phyloseq::tax_table(cbind(
+#'     data_fungi_mini@tax_table,
+#'     "taxon" = taxa_names(data_fungi_mini)
+#'   ))
+#'   res_height <- ancombc_pq(
+#'     data_fungi_mini,
+#'     fact = "Height",
+#'     levels_fact = c("Low", "High"),
+#'     verbose = TRUE
 #'   )
-#' ) +
-#'   geom_vline(xintercept = 0) +
-#'   geom_segment(aes(
-#'     xend = 0, y = reorder(taxon, lfc_HeightHigh),
-#'     yend = reorder(taxon, lfc_HeightHigh)
-#'   ), color = "darkgrey") +
-#'   geom_point()
 #'
-#' res_time <- ancombc_pq(
-#'   data_fungi_mini,
-#'   fact = "Time",
-#'   levels_fact = c("0", "15"),
-#'   tax_level = "Family",
-#'   verbose = TRUE
-#' )
+#'   ggplot(
+#'     res_height$res,
+#'     aes(
+#'       y = reorder(taxon, lfc_HeightHigh),
+#'       x = lfc_HeightHigh,
+#'       color = diff_HeightHigh
+#'     )
+#'   ) +
+#'     geom_vline(xintercept = 0) +
+#'     geom_segment(aes(
+#'       xend = 0, y = reorder(taxon, lfc_HeightHigh),
+#'       yend = reorder(taxon, lfc_HeightHigh)
+#'     ), color = "darkgrey") +
+#'     geom_point()
+#'
+#'   res_time <- ancombc_pq(
+#'     data_fungi_mini,
+#'     fact = "Time",
+#'     levels_fact = c("0", "15"),
+#'     tax_level = "Family",
+#'     verbose = TRUE
+#'   )
+#' }
 #' }
 #' @author Adrien Taudière
 #' @details
@@ -662,20 +684,22 @@ ancombc_pq <- function(physeq, fact, levels_fact = NULL, tax_level = "Class", ..
 #'
 #' @examples
 #' \donttest{
-#' data_fungi_mini@tax_table <- phyloseq::tax_table(cbind(
-#'   data_fungi_mini@tax_table,
-#'   "taxon" = taxa_names(data_fungi_mini)
-#' ))
+#' if (requireNamespace("mia")) {
+#'   data_fungi_mini@tax_table <- phyloseq::tax_table(cbind(
+#'     data_fungi_mini@tax_table,
+#'     "taxon" = taxa_names(data_fungi_mini)
+#'   ))
 #'
-#' res_time <- ancombc_pq(
-#'   data_fungi_mini,
-#'   fact = "Time",
-#'   levels_fact = c("0", "15"),
-#'   tax_level = "taxon",
-#'   verbose = TRUE
-#' )
+#'   res_time <- ancombc_pq(
+#'     data_fungi_mini,
+#'     fact = "Time",
+#'     levels_fact = c("0", "15"),
+#'     tax_level = "taxon",
+#'     verbose = TRUE
+#'   )
 #'
-#' signif_ancombc(res_time)
+#'   signif_ancombc(res_time)
+#' }
 #' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
@@ -746,28 +770,30 @@ signif_ancombc <- function(ancombc_res,
 #'
 #' @examples
 #' \donttest{
-#' data_fungi_mini@tax_table <- phyloseq::tax_table(cbind(
-#'   data_fungi_mini@tax_table,
-#'   "taxon" = taxa_names(data_fungi_mini)
-#' ))
+#' if (requireNamespace("mia")) {
+#'   data_fungi_mini@tax_table <- phyloseq::tax_table(cbind(
+#'     data_fungi_mini@tax_table,
+#'     "taxon" = taxa_names(data_fungi_mini)
+#'   ))
 #'
-#' res_time <- ancombc_pq(
-#'   data_fungi_mini,
-#'   fact = "Time",
-#'   levels_fact = c("0", "15"),
-#'   tax_level = "taxon",
-#'   verbose = TRUE
-#' )
+#'   res_time <- ancombc_pq(
+#'     data_fungi_mini,
+#'     fact = "Time",
+#'     levels_fact = c("0", "15"),
+#'     tax_level = "taxon",
+#'     verbose = TRUE
+#'   )
 #'
-#' plot_ancombc_pq(data_fungi_mini, res_time,
-#'   filter_passed = FALSE,
-#'   tax_label = "Genus", tax_col = "Order"
-#' )
-#' plot_ancombc_pq(data_fungi_mini, res_time, tax_col = "Genus")
-#' plot_ancombc_pq(data_fungi_mini, res_time,
-#'   filter_passed = FALSE,
-#'   filter_diff = FALSE, tax_col = "Family", add_label = FALSE
-#' )
+#'   plot_ancombc_pq(data_fungi_mini, res_time,
+#'     filter_passed = FALSE,
+#'     tax_label = "Genus", tax_col = "Order"
+#'   )
+#'   plot_ancombc_pq(data_fungi_mini, res_time, tax_col = "Genus")
+#'   plot_ancombc_pq(data_fungi_mini, res_time,
+#'     filter_passed = FALSE,
+#'     filter_diff = FALSE, tax_col = "Family", add_label = FALSE
+#'   )
+#' }
 #' }
 #' @details
 #' This function is mainly a wrapper of the work of others.

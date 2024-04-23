@@ -78,11 +78,13 @@ fact
 }
 \examples{
 \donttest{
-data("GlobalPatterns", package = "phyloseq")
-GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
-circle_pq(GP, "SampleType")
-circle_pq(GP, "SampleType", add_nb_seq = FALSE)
-circle_pq(GP, "SampleType", taxa = "Class")
+if (requireNamespace("pbapply")) {
+  data("GlobalPatterns", package = "phyloseq")
+  GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+  circle_pq(GP, "SampleType")
+  circle_pq(GP, "SampleType", add_nb_seq = FALSE)
+  circle_pq(GP, "SampleType", taxa = "Class")
+}
 }
 }
 \seealso{

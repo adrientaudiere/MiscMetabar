@@ -23,13 +23,15 @@
 #' data("GlobalPatterns", package = "phyloseq")
 #' GP_archae <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #' \donttest{
-#' plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
-#'   color_tax = "Kingdom"
-#' )
+#' if (requireNamespace("edgeR")) {
+#'   plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
+#'     color_tax = "Kingdom"
+#'   )
 #'
-#' plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
-#'   taxolev = "Class", color_tax = "Kingdom"
-#' )
+#'   plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
+#'     taxolev = "Class", color_tax = "Kingdom"
+#'   )
+#' }
 #' }
 #' @author Adrien Taudière
 #'
@@ -155,23 +157,26 @@ plot_edgeR_pq <-
 #'   Please cite `DESeq2` package if you use chis function.
 #' @examples
 #' \donttest{
+#'
 #' data("GlobalPatterns", package = "phyloseq")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #' GP <- subset_samples(GP, SampleType %in% c("Soil", "Skin"))
-#' res <- DESeq2::DESeq(phyloseq_to_deseq2(GP, ~SampleType),
-#'   test = "Wald", fitType = "local"
-#' )
-#' plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
-#'   tax_table = GP@tax_table, color_tax = "Kingdom"
-#' )
-#' plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
-#'   tax_table = GP@tax_table, color_tax = "Kingdom",
-#'   pval = 0.7
-#' )
-#' plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
-#'   tax_table = GP@tax_table, color_tax = "Class",
-#'   select_taxa = c("522457", "271582")
-#' )
+#' if (requireNamespace("DESeq2")) {
+#'   res <- DESeq2::DESeq(phyloseq_to_deseq2(GP, ~SampleType),
+#'     test = "Wald", fitType = "local"
+#'   )
+#'   plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
+#'     tax_table = GP@tax_table, color_tax = "Kingdom"
+#'   )
+#'   plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
+#'     tax_table = GP@tax_table, color_tax = "Kingdom",
+#'     pval = 0.7
+#'   )
+#'   plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
+#'     tax_table = GP@tax_table, color_tax = "Class",
+#'     select_taxa = c("522457", "271582")
+#'   )
+#' }
 #' }
 #' @author Adrien Taudière
 #'

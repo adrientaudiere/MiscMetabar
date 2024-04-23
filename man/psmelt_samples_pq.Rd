@@ -45,15 +45,17 @@ You may use rarefy_by_sample = TRUE if the mean number of sequences per
 samples differs among modalities.
 }
 \examples{
-psm_tib <- psmelt_samples_pq(data_fungi_mini, hill_scales = c(0, 2, 7))
-ggstatsplot::ggbetweenstats(psm_tib, Height, Hill_0)
-ggstatsplot::ggbetweenstats(psm_tib, Height, Hill_7)
-ggstatsplot::ggscatterstats(psmelt_samples_pq(data_fungi_mini,
-  filter_zero = TRUE
-), Abundance_log10, Hill_1)
-ggstatsplot::ggscatterstats(psmelt_samples_pq(data_fungi_mini,
-  rarefy_by_sample = TRUE
-), Abundance_log10, Hill_1)
+if (requireNamespace("ggstatsplot")) {
+  psm_tib <- psmelt_samples_pq(data_fungi_mini, hill_scales = c(0, 2, 7))
+  ggstatsplot::ggbetweenstats(psm_tib, Height, Hill_0)
+  ggstatsplot::ggbetweenstats(psm_tib, Height, Hill_7)
+  ggstatsplot::ggscatterstats(psmelt_samples_pq(data_fungi_mini,
+    filter_zero = TRUE
+  ), Abundance_log10, Hill_1)
+  ggstatsplot::ggscatterstats(psmelt_samples_pq(data_fungi,
+    rarefy_by_sample = TRUE
+  ), Time, Hill_1)
+}
 }
 \author{
 Adrien Taudière

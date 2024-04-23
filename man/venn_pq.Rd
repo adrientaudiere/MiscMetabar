@@ -33,15 +33,19 @@ modalities of the argument \code{factor}
 }
 \examples{
 \dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-data("enterotype")
-venn_pq(enterotype, fact = "SeqTech")
+if (requireNamespace("venneuler")) {
+  data("enterotype")
+  venn_pq(enterotype, fact = "SeqTech")
+}
 \donttest{
-venn_pq(enterotype, fact = "ClinicalStatus")
-venn_pq(enterotype, fact = "Nationality", print_values = FALSE)
-venn_pq(enterotype, fact = "ClinicalStatus", print_values = FALSE) +
-  scale_fill_hue()
-venn_pq(enterotype, fact = "ClinicalStatus", print_values = FALSE) +
-  scale_fill_hue()
+if (requireNamespace("venneuler")) {
+  venn_pq(enterotype, fact = "ClinicalStatus")
+  venn_pq(enterotype, fact = "Nationality", print_values = FALSE)
+  venn_pq(enterotype, fact = "ClinicalStatus", print_values = FALSE) +
+    scale_fill_hue()
+  venn_pq(enterotype, fact = "ClinicalStatus", print_values = FALSE) +
+    scale_fill_hue()
+}
 }
 \dontshow{\}) # examplesIf}
 }

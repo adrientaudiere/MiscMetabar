@@ -230,7 +230,9 @@ clean_pq <- function(physeq,
 #' @seealso [track_wkflow_samples()]
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' data(enterotype)
-#' track_wkflow(list(data_fungi, enterotype), taxonomy_rank = c(3, 5))
+#' if (requireNamespace("pbapply")) {
+#'   track_wkflow(list(data_fungi, enterotype), taxonomy_rank = c(3, 5))
+#' }
 track_wkflow <- function(list_of_objects,
                          obj_names = NULL,
                          clean_pq = FALSE,
@@ -441,7 +443,9 @@ track_wkflow <- function(list_of_objects,
 #'
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' tree_A10_005 <- subset_samples(data_fungi, Tree_name == "A10-005")
-#' track_wkflow_samples(tree_A10_005)
+#' if (requireNamespace("pbapply")) {
+#'   track_wkflow_samples(tree_A10_005)
+#' }
 track_wkflow_samples <- function(list_pq_obj, ...) {
   if (!inherits(list_pq_obj, "list")) {
     list_pq_obj <- list(list_pq_obj)
