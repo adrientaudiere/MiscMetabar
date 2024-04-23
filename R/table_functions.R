@@ -335,7 +335,7 @@ compare_pairs_pq <- function(physeq = NULL,
 #'     taxonomic_levels = c("Order", "Family", "Genus", "Species"),
 #'     formattable_args = list(
 #'       Order = FALSE,
-#'       Species = formatter(
+#'       Species = formattable::formatter(
 #'         "span",
 #'         style = x ~ style(
 #'           "font-style" = "italic",
@@ -358,7 +358,7 @@ compare_pairs_pq <- function(physeq = NULL,
 #'     taxonomic_levels = c("Phylum", "Family", "Genus"),
 #'     void_style = TRUE,
 #'     formattable_args = list(
-#'       OTU = formatter(
+#'       OTU = formattable::formatter(
 #'         "span",
 #'         style = ~ style(
 #'           "display" = "block",
@@ -367,7 +367,7 @@ compare_pairs_pq <- function(physeq = NULL,
 #'         ),
 #'         `padding-right` = "2px"
 #'       ),
-#'       High = formatter(
+#'       High = formattable::formatter(
 #'         "span",
 #'         style = x ~ style(
 #'           "font-size" = "80%",
@@ -381,7 +381,7 @@ compare_pairs_pq <- function(physeq = NULL,
 #'           width = percent(proportion(as.numeric(x), na.rm = TRUE))
 #'         )
 #'       ),
-#'       Low = formatter(
+#'       Low = formattable::formatter(
 #'         "span",
 #'         style = x ~ style(
 #'           "font-size" = "80%",
@@ -393,7 +393,7 @@ compare_pairs_pq <- function(physeq = NULL,
 #'           width = percent(proportion(as.numeric(x), na.rm = TRUE))
 #'         )
 #'       ),
-#'       Middle = formatter(
+#'       Middle = formattable::formatter(
 #'         "span",
 #'         style = x ~ style(
 #'           "font-size" = "80%",

@@ -2535,7 +2535,7 @@ taxa_only_in_one_level <- function(physeq,
 #' `r lifecycle::badge("experimental")`
 #'
 #'   This function implement the method proposed by
-#'   [McKnight et al. 2018](https://doi.org/10.5061/dryad.tn8qs35)
+#'   [McKnight et al. 2018](\doi{doi:10.1016/10.5061/dryad.tn8qs35})
 #'
 #' @inheritParams clean_pq
 #'
