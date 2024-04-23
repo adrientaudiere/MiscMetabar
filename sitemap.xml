@@ -166,10 +166,19 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/dist_pos_control.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/distri_1_taxa.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/fac2col.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/filter_asv_blast.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/filter_trim.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/formattable_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/funguild_assign.html</loc>
@@ -208,7 +217,22 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/install_pkg_needed.html</loc>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/is_cutadapt_installed.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/is_falco_installed.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/is_krona_installed.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/is_mumu_installed.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/is_swarm_installed.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/is_vsearch_installed.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/krona.html</loc>
@@ -247,6 +271,9 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/mumu_pq.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/normalize_prop_pq.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/perc.html</loc>
   </url>
   <url>
@@ -260,6 +287,9 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_SCBD_pq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_ancombc_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_deseq2_pq.html</loc>
@@ -278,6 +308,9 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_tsne_pq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/psmelt_samples_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/read_pq.html</loc>
@@ -316,6 +349,9 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/select_taxa-methods.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/signif_ancombc.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/simplify_taxo.html</loc>
   </url>
   <url>
@@ -343,6 +379,9 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/tax_datatable.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/taxa_only_in_one_level.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/tbl_sum_samdata.html</loc>
   </url>
   <url>
@@ -350,6 +389,9 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/track_wkflow_samples.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/transp.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/treemap_pq.html</loc>

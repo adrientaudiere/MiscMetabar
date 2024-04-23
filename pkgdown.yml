@@ -1,19 +1,19 @@
-pandoc: 2.19.2
-pkgdown: 2.0.7
+pandoc: 3.1.11
+pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
-  MiscMetabar: MiscMetabar.html
-  Reclustering: Reclustering.html
-  Rules: Rules.html
   alpha-div: alpha-div.html
   beta-div: beta-div.html
   explore_data: explore_data.html
   filter: filter.html
   import_export_track: import_export_track.html
+  MiscMetabar: MiscMetabar.html
+  Reclustering: Reclustering.html
+  Rules: Rules.html
   states_of_fields_in_R: states_of_fields_in_R.html
   tengeler: tengeler.html
   tree_visualization: tree_visualization.html
-last_built: 2024-02-13T12:56Z
+last_built: 2024-04-23T14:02Z
 urls:
   reference: https://adrientaudiere.github.io/MiscMetabar/reference
   article: https://adrientaudiere.github.io/MiscMetabar/articles
