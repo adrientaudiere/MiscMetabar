@@ -42,12 +42,14 @@ Holmes 2013) and [`targets`](https://books.ropensci.org/targets/)
 
 ## Installation
 
-There is no CRAN version of MiscMetabar for now (work in progress). As
-MiscMetabar heavily relies on two bioconductor packages (dada and
-phyloseq), we need to first install those 2 packages using BiocManager.
+There is a CRAN version of MiscMetabar.
 
-You can install the stable version from [GitHub](https://github.com/)
-with:
+``` r
+install.packages("MiscMetabar")
+```
+
+You can also install the stable development version from
+[GitHub](https://github.com/) with:
 
 ``` r
 if (!require("devtools", quietly = TRUE)) {
@@ -56,7 +58,7 @@ if (!require("devtools", quietly = TRUE)) {
 devtools::install_github("adrientaudiere/MiscMetabar")
 ```
 
-You can install the development version from
+You can install the unstable development version from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -122,7 +124,7 @@ p$plot_Hill_0
 
 <div class="figure">
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" alt="Hill number 1" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" alt="Hill number 1" width="100%" />
 <p class="caption">
 Hill number 1
 </p>
@@ -135,7 +137,7 @@ p$plot_tuckey
 
 <div class="figure">
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" alt="Result of the Tuckey post-hoc test" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" alt="Result of the Tuckey post-hoc test" width="100%" />
 <p class="caption">
 Result of the Tuckey post-hoc test
 </p>
@@ -153,7 +155,7 @@ ggvenn_pq(data_fungi, fact = "Height") +
   labs(title = "Share number of ASV among Height in tree")
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
 ### Note for non-linux users
 

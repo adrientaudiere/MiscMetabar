@@ -14,7 +14,7 @@ important statistics"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.12</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.00</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -134,7 +134,7 @@ NA in the variables set in formula.</p></dd>
 
 
 <dt>...</dt>
-<dd><p>other params for be passed on to
+<dd><p>Other params for be passed on to
 <code><a href="https://rdrr.io/pkg/phyloseqGraphTest/man/graph_perm_test.html" class="external-link">phyloseqGraphTest::graph_perm_test()</a></code> function</p></dd>
 
 </dl></div>
@@ -158,12 +158,13 @@ Please cite <code>phyloseqGraphTest</code> package.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">enterotype</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">graph_test_pq</span><span class="op">(</span><span class="va">enterotype</span>, fact <span class="op">=</span> <span class="st">"SeqTech"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="graph_test_pq-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">graph_test_pq</span><span class="op">(</span><span class="va">enterotype</span>, fact <span class="op">=</span> <span class="st">"Enterotype"</span>, na_remove <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"phyloseqGraphTest"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">enterotype</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">graph_test_pq</span><span class="op">(</span><span class="va">enterotype</span>, fact <span class="op">=</span> <span class="st">"SeqTech"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">graph_test_pq</span><span class="op">(</span><span class="va">enterotype</span>, fact <span class="op">=</span> <span class="st">"Enterotype"</span>, na_remove <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 9 were discarded due to NA in variables present in formula.</span>
-<span class="r-plt img"><img src="graph_test_pq-2.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="graph_test_pq-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

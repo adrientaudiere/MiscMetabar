@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.12</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.00</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,15 +107,17 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>There is no CRAN version of MiscMetabar for now (work in progress). As MiscMetabar heavily relies on two bioconductor packages (dada and phyloseq), we need to first install those 2 packages using BiocManager.</p>
-<p>You can install the stable version from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>There is a CRAN version of MiscMetabar.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"MiscMetabar"</span><span class="op">)</span></span></code></pre></div>
+<p>You can also install the stable development version from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://devtools.r-lib.org/" class="external-link">"devtools"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"adrientaudiere/MiscMetabar"</span><span class="op">)</span></span></code></pre></div>
-<p>You can install the development version from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<p>You can install the unstable development version from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://devtools.r-lib.org/" class="external-link">"devtools"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
@@ -131,7 +133,7 @@
 <div class="section level3">
 <h3 id="summarize-a-physeq-object">Summarize a physeq object<a class="anchor" aria-label="anchor" href="#summarize-a-physeq-object"></a>
 </h3>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/adrientaudiere/MiscMetabar" class="external-link">"MiscMetabar"</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="http://dx.plos.org/10.1371/journal.pone.0061217" class="external-link">"phyloseq"</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://magrittr.tidyverse.org" class="external-link">"magrittr"</a></span><span class="op">)</span></span>
@@ -142,18 +144,18 @@
 <div class="section level3">
 <h3 id="alpha-diversity-analysis">Alpha-diversity analysis<a class="anchor" aria-label="anchor" href="#alpha-diversity-analysis"></a>
 </h3>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">MiscMetabar</span><span class="fu">::</span><span class="fu"><a href="reference/hill_pq.html">hill_pq</a></span><span class="op">(</span><span class="va">data_fungi</span>, variable <span class="op">=</span> <span class="st">"Height"</span><span class="op">)</span></span>
 <span><span class="va">p</span><span class="op">$</span><span class="va">plot_Hill_0</span></span></code></pre></div>
 <div class="figure">
-<img src="reference/figures/README-unnamed-chunk-4-1.png" alt="Hill number 1" width="100%"><p class="caption">
+<img src="reference/figures/README-unnamed-chunk-5-1.png" alt="Hill number 1" width="100%"><p class="caption">
 Hill number 1
 </p>
 </div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span><span class="op">$</span><span class="va">plot_tuckey</span></span></code></pre></div>
 <div class="figure">
-<img src="reference/figures/README-unnamed-chunk-5-1.png" alt="Result of the Tuckey post-hoc test" width="100%"><p class="caption">
+<img src="reference/figures/README-unnamed-chunk-6-1.png" alt="Result of the Tuckey post-hoc test" width="100%"><p class="caption">
 Result of the Tuckey post-hoc test
 </p>
 </div>
@@ -161,14 +163,14 @@ Result of the Tuckey post-hoc test
 <div class="section level3">
 <h3 id="beta-diversity-analysis">Beta-diversity analysis<a class="anchor" aria-label="anchor" href="#beta-diversity-analysis"></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/gaospecial/ggVennDiagram" class="external-link">"ggVennDiagram"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"ggVennDiagramà"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu"><a href="reference/ggvenn_pq.html">ggvenn_pq</a></span><span class="op">(</span><span class="va">data_fungi</span>, fact <span class="op">=</span> <span class="st">"Height"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_distiller</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"BuPu"</span>, direction <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Share number of ASV among Height in tree"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="note-for-non-linux-users">Note for non-linux users<a class="anchor" aria-label="anchor" href="#note-for-non-linux-users"></a>
@@ -201,39 +203,39 @@ Result of the Tuckey post-hoc test
 <h4 id="blast">
 <a href="https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html#downloadblastdata" class="external-link">blast+</a><a class="anchor" aria-label="anchor" href="#blast"></a>
 </h4>
-<div class="sourceCode" id="cb7"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">sudo</span> apt-get install ncbi-blast+</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">sudo</span> apt-get install ncbi-blast+</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="vsearch">
 <a href="https://github.com/torognes/vsearch" class="external-link">vsearch</a><a class="anchor" aria-label="anchor" href="#vsearch"></a>
 </h4>
-<div class="sourceCode" id="cb8"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">sudo</span> apt-get install vsearch</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">sudo</span> apt-get install vsearch</span></code></pre></div>
 <p>An other possibilities is to <a href="https://bioconda.github.io/recipes/vsearch/README.html?highlight=vsearch#package-package%20'vsearch'" class="external-link">install vsearch</a> with <code>conda</code>.</p>
 </div>
 <div class="section level4">
 <h4 id="swarm">
 <a href="https://github.com/torognes/swarm" class="external-link">swarm</a><a class="anchor" aria-label="anchor" href="#swarm"></a>
 </h4>
-<div class="sourceCode" id="cb9"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/torognes/swarm.git</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="bu">cd</span> swarm/</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="fu">make</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/torognes/swarm.git</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="bu">cd</span> swarm/</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="fu">make</span></span></code></pre></div>
 <p>An other possibilities is to <a href="https://bioconda.github.io/recipes/swarm/README.html?highlight=swarm#package-package%20'swarm'" class="external-link">install swarm</a> with <code>conda</code>.</p>
 </div>
 <div class="section level4">
 <h4 id="mumu">
 <a href="https://github.com/frederic-mahe/mumu" class="external-link">Mumu</a><a class="anchor" aria-label="anchor" href="#mumu"></a>
 </h4>
-<div class="sourceCode" id="cb10"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/frederic-mahe/mumu.git</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="bu">cd</span> ./mumu/</span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="fu">make</span></span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="fu">make</span> check</span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="fu">make</span> install  <span class="co"># as root or sudo</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/frederic-mahe/mumu.git</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="bu">cd</span> ./mumu/</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="fu">make</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="fu">make</span> check</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="fu">make</span> install  <span class="co"># as root or sudo</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="cutadapt">
 <a href="https://cutadapt.readthedocs.io/en/stable/" class="external-link">cutadapt</a><a class="anchor" aria-label="anchor" href="#cutadapt"></a>
 </h4>
-<div class="sourceCode" id="cb11"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> cutadaptenv cutadapt</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> cutadaptenv cutadapt</span></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-callahan2016" class="csl-entry">
 Callahan, Benjamin J, Paul J McMurdie, Michael J Rosen, Andrew W Han, Amy Jo A Johnson, and Susan P Holmes. 2016. “DADA2: High-Resolution Sample Inference from Illumina Amplicon Data.” <em>Nature Methods</em> 13 (7): 581–83. <a href="https://doi.org/10.1038/nmeth.3869" class="external-link uri">https://doi.org/10.1038/nmeth.3869</a>.

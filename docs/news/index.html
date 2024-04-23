@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.7.12</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.00</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,6 +83,7 @@
 </li>
 <li>Add function <code><a href="../reference/psmelt_samples_pq.html">psmelt_samples_pq()</a></code> to build data frame of samples information including the number of sequences (Abundance) and Hill diversity metrics. Useful to use with the <a href="https://indrajeetpatil.github.io/ggstatsplot/" class="external-link">ggstatsplot</a> packages (see examples).</li>
 <li>Replace param <code>variable</code> by <code>fact</code> in function <code><a href="../reference/ggbetween_pq.html">ggbetween_pq()</a></code> and <code><a href="../reference/hill_pq.html">hill_pq()</a></code> (keeping the variable option in <code><a href="../reference/hill_pq.html">hill_pq()</a></code> for backward compatibility)</li>
+<li>Fix a bug in the class of the return object of function <code><a href="../reference/chimera_removal_vs.html">chimera_removal_vs()</a></code>. Now it return a matrix to be able to be parsed on to [dada2::getUniques()]</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.7" id="miscmetabar-07-in-development">MiscMetabar 0.7 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-07-in-development"></a></h2>
