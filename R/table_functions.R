@@ -337,7 +337,7 @@ compare_pairs_pq <- function(physeq = NULL,
 #'       Order = FALSE,
 #'       Species = formattable::formatter(
 #'         "span",
-#'         style = x ~ style(
+#'         style = x ~ formattable::style(
 #'           "font-style" = "italic",
 #'           `color` = ifelse(is.na(x), "white", "grey")
 #'         )
@@ -346,7 +346,9 @@ compare_pairs_pq <- function(physeq = NULL,
 #'     arrange_by = "Family",
 #'     descending_order = FALSE
 #'   )
-#'
+#' }
+#' \donttest{
+#' if (requireNamespace("formattable")) {
 #'   ## Distribution of the nb of sequences per OTU across Height modality
 #'   ##  (nb of sequences are log-transformed).
 #'   ## OTU name background is light gray for Basidiomycota
@@ -360,7 +362,7 @@ compare_pairs_pq <- function(physeq = NULL,
 #'     formattable_args = list(
 #'       OTU = formattable::formatter(
 #'         "span",
-#'         style = ~ style(
+#'         style = ~ formattable::style(
 #'           "display" = "block",
 #'           `border-radius` = "5px",
 #'           `background-color` = ifelse(Phylum == "Basidiomycota", transp("gray"), "gray")
@@ -369,46 +371,50 @@ compare_pairs_pq <- function(physeq = NULL,
 #'       ),
 #'       High = formattable::formatter(
 #'         "span",
-#'         style = x ~ style(
+#'         style = x ~ formattable::style(
 #'           "font-size" = "80%",
 #'           "display" = "inline-block",
 #'           direction = "rtl",
 #'           `border-radius` = "0px",
 #'           `padding-right` = "2px",
-#'           `background-color` = csscolor(gradient(
+#'           `background-color` = formattable::csscolor(formattable::gradient(
 #'             as.numeric(x), transp("#1a91ff"), "#1a91ff"
 #'           )),
-#'           width = percent(proportion(as.numeric(x), na.rm = TRUE))
+#'           width = formattable::percent(formattable::proportion(as.numeric(x), na.rm = TRUE))
 #'         )
 #'       ),
 #'       Low = formattable::formatter(
 #'         "span",
-#'         style = x ~ style(
+#'         style = x ~ formattable::style(
 #'           "font-size" = "80%",
 #'           "display" = "inline-block",
 #'           direction = "rtl",
 #'           `border-radius` = "0px",
 #'           `padding-right` = "2px",
-#'           `background-color` = csscolor(gradient(as.numeric(x), transp("green"), "green")),
-#'           width = percent(proportion(as.numeric(x), na.rm = TRUE))
+#'           `background-color` = formattable::csscolor(formattable::gradient(
+#'             as.numeric(x),
+#'             transp("green"), "green"
+#'           )),
+#'           width = formattable::percent(formattable::proportion(as.numeric(x), na.rm = TRUE))
 #'         )
 #'       ),
 #'       Middle = formattable::formatter(
 #'         "span",
-#'         style = x ~ style(
+#'         style = x ~ formattable::style(
 #'           "font-size" = "80%",
 #'           "display" = "inline-block",
 #'           direction = "rtl",
 #'           `border-radius` = "0px",
 #'           `padding-right` = "2px",
-#'           `background-color` = csscolor(gradient(
+#'           `background-color` = formattable::csscolor(formattable::gradient(
 #'             as.numeric(x), transp("orange"), "orange"
 #'           )),
-#'           width = percent(proportion(as.numeric(x), na.rm = TRUE))
+#'           width = formattable::percent(formattable::proportion(as.numeric(x), na.rm = TRUE))
 #'         )
 #'       )
 #'     )
 #'   )
+#' }
 #' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
@@ -518,7 +524,7 @@ formattable_pq <- function(physeq,
             `background-color` = ifelse(x == 0, "white", formattable::csscolor(
               formattable::gradient(as.numeric(x), transp("#1a9641ff"), "#1a9641ff")
             )),
-            width = formattable::percent(proportion(as.numeric(x), na.rm = TRUE))
+            width = formattable::percent(formattable::proportion(as.numeric(x), na.rm = TRUE))
           )
         ),
         Family = formattable::formatter(
@@ -551,7 +557,7 @@ formattable_pq <- function(physeq,
             `background-color` = ifelse(x == 0, "white", formattable::csscolor(
               formattable::gradient(as.numeric(x), transp("#4d4888ff"), "#4d4888ff")
             )),
-            width = formattable::percent(proportion(as.numeric(x), na.rm = TRUE))
+            width = formattable::percent(formattable::proportion(as.numeric(x), na.rm = TRUE))
           )
         ),
         proportion_samp = formattable::formatter(

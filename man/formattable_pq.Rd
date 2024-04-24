@@ -96,9 +96,9 @@ if (requireNamespace("formattable")) {
     taxonomic_levels = c("Order", "Family", "Genus", "Species"),
     formattable_args = list(
       Order = FALSE,
-      Species = formatter(
+      Species = formattable::formatter(
         "span",
-        style = x ~ style(
+        style = x ~ formattable::style(
           "font-style" = "italic",
           `color` = ifelse(is.na(x), "white", "grey")
         )
@@ -107,7 +107,9 @@ if (requireNamespace("formattable")) {
     arrange_by = "Family",
     descending_order = FALSE
   )
-
+}
+\donttest{
+if (requireNamespace("formattable")) {
   ## Distribution of the nb of sequences per OTU across Height modality
   ##  (nb of sequences are log-transformed).
   ## OTU name background is light gray for Basidiomycota
@@ -119,57 +121,61 @@ if (requireNamespace("formattable")) {
     taxonomic_levels = c("Phylum", "Family", "Genus"),
     void_style = TRUE,
     formattable_args = list(
-      OTU = formatter(
+      OTU = formattable::formatter(
         "span",
-        style = ~ style(
+        style = ~ formattable::style(
           "display" = "block",
           `border-radius` = "5px",
           `background-color` = ifelse(Phylum == "Basidiomycota", transp("gray"), "gray")
         ),
         `padding-right` = "2px"
       ),
-      High = formatter(
+      High = formattable::formatter(
         "span",
-        style = x ~ style(
+        style = x ~ formattable::style(
           "font-size" = "80\%",
           "display" = "inline-block",
           direction = "rtl",
           `border-radius` = "0px",
           `padding-right` = "2px",
-          `background-color` = csscolor(gradient(
+          `background-color` = formattable::csscolor(formattable::gradient(
             as.numeric(x), transp("#1a91ff"), "#1a91ff"
           )),
-          width = percent(proportion(as.numeric(x), na.rm = TRUE))
+          width = formattable::percent(formattable::proportion(as.numeric(x), na.rm = TRUE))
         )
       ),
-      Low = formatter(
+      Low = formattable::formatter(
         "span",
-        style = x ~ style(
+        style = x ~ formattable::style(
           "font-size" = "80\%",
           "display" = "inline-block",
           direction = "rtl",
           `border-radius` = "0px",
           `padding-right` = "2px",
-          `background-color` = csscolor(gradient(as.numeric(x), transp("green"), "green")),
-          width = percent(proportion(as.numeric(x), na.rm = TRUE))
+          `background-color` = formattable::csscolor(formattable::gradient(
+            as.numeric(x),
+            transp("green"), "green"
+          )),
+          width = formattable::percent(formattable::proportion(as.numeric(x), na.rm = TRUE))
         )
       ),
-      Middle = formatter(
+      Middle = formattable::formatter(
         "span",
-        style = x ~ style(
+        style = x ~ formattable::style(
           "font-size" = "80\%",
           "display" = "inline-block",
           direction = "rtl",
           `border-radius` = "0px",
           `padding-right` = "2px",
-          `background-color` = csscolor(gradient(
+          `background-color` = formattable::csscolor(formattable::gradient(
             as.numeric(x), transp("orange"), "orange"
           )),
-          width = percent(proportion(as.numeric(x), na.rm = TRUE))
+          width = formattable::percent(formattable::proportion(as.numeric(x), na.rm = TRUE))
         )
       )
     )
   )
+}
 }
 }
 \seealso{

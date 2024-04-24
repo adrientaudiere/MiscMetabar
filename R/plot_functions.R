@@ -1510,10 +1510,11 @@ hill_pq <-
 #'   use this function.
 
 ggbetween_pq <- function(physeq, fact, one_plot = FALSE, rarefy_by_sample = FALSE, ...) {
-  
   verify_pq(physeq)
-  physeq <- clean_pq(physeq, force_taxa_as_columns = TRUE, remove_empty_samples = FALSE,
-   remove_empty_taxa = FALSE,  clean_samples_names = FALSE)
+  physeq <- clean_pq(physeq,
+    force_taxa_as_columns = TRUE, remove_empty_samples = FALSE,
+    remove_empty_taxa = FALSE, clean_samples_names = FALSE
+  )
 
   if (rarefy_by_sample) {
     physeq <- clean_pq(rarefy_even_depth(physeq))
@@ -1800,15 +1801,15 @@ rotl_pq <- function(physeq,
   taxa_names_rotl <- taxa_names_rotl[!grepl("NA", taxa_names_rotl)]
   taxa_names_rotl <- c(unclass(gsub("_", " ", taxa_names_rotl)))
 
-  resolved_names <- tnrs_match_names(taxa_names_rotl)
+  resolved_names <- rotl::tnrs_match_names(taxa_names_rotl)
   resolved_names <- resolved_names[resolved_names$flags == "", ]
   clean_taxa_names_rotl <-
     taxa_names_rotl[taxa_names_rotl %in% resolved_names$unique_name]
 
   resolved_names2 <-
-    tnrs_match_names(clean_taxa_names_rotl, context_name = context_name)
+    rotl::tnrs_match_names(clean_taxa_names_rotl, context_name = context_name)
 
-  tr <- tol_induced_subtree(ott_ids = ott_id(resolved_names2))
+  tr <- rotl::tol_induced_subtree(ott_ids = rotl::ott_id(resolved_names2))
   return(tr)
 }
 ################################################################################
@@ -1834,6 +1835,7 @@ rotl_pq <- function(physeq,
 #' @examples
 #' \donttest{
 #' if (requireNamespace("metacoder")) {
+#'   library("metacoder")
 #'   data("GlobalPatterns", package = "phyloseq")
 #'
 #'   GPsubset <- subset_taxa(
