@@ -65,8 +65,8 @@
 "data_fungi_mini"
 
 
-#' This tutorial explore the dataset from Tengeler et al. (2020) available in the `mia` package.
-#' obtain using `mia::makePhyloseqFromTreeSE(Tengeler2020)`
+#' This tutorial explores the dataset from Tengeler et al. (2020) available in the `mia` package.
+#' obtained using `mia::makePhyloseqFromTreeSE(Tengeler2020)`
 #'
 #' This is a phyloseq version of the Tengeler2020 dataset.
 #'

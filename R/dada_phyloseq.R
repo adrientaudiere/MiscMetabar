@@ -424,7 +424,7 @@ track_wkflow <- function(list_of_objects,
 
 ################################################################################
 #' Track the number of reads (= sequences), samples and cluster (e.g. ASV)
-#' for each samples.
+#' for each sample
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -2530,7 +2530,7 @@ taxa_only_in_one_level <- function(physeq,
 
 
 ################################################################################
-#' Normalize otu table using samples depth
+#' Normalize OTU table using samples depth
 #' @description
 #' `r lifecycle::badge("experimental")`
 #'
@@ -2587,7 +2587,7 @@ normalize_prop_pq <- function(physeq, base_log = 2, constante = 10000, digits = 
 
 
 ################################################################################
-#' Build a samples information data.frame from physeq object
+#' Build a sample information tibble from physeq object
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -2612,7 +2612,7 @@ normalize_prop_pq <- function(physeq, base_log = 2, constante = 10000, digits = 
 #'   samples using [phyloseq::rarefy_even_depth()] function.
 #' @author Adrien Taudière
 #' @export
-#' @return A tibble with a row for each samples. Columns provide information
+#' @return A tibble with a row for each sample. Columns provide information
 #'   from `sam_data` slot as well as hill numbers, Abundance (nb of sequences),
 #'   and Abundance_log10 (*log10(1+Abundance)*).
 #' @examples

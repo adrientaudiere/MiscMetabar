@@ -9,7 +9,7 @@
 #'
 #' @inheritParams clean_pq
 #' @param min_number (int) the minimum number of sequences to put
-#'   a 1 in the otu table.
+#'   a 1 in the OTU table.
 #' @author Adrien Taudière
 #'
 #' @return A \code{physeq} object with only 0/1 in the OTU table

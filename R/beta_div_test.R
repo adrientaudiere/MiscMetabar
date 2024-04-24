@@ -955,7 +955,7 @@ taxa_only_in_one_level <- function(physeq,
 ################################################################################
 
 ################################################################################
-#' Distribution of sequences across a factor for one taxa
+#' Distribution of sequences across a factor for one taxon
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`

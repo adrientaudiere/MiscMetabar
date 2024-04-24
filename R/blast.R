@@ -331,7 +331,7 @@ blast_pq <- function(physeq,
 
 
 ################################################################################
-#' Filter undesirable taxa using blast against a against a custom database.
+#' Filter undesirable taxa using blast against a custom database.
 #'
 #' `r lifecycle::badge("experimental")`
 #'

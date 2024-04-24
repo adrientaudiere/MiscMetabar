@@ -286,7 +286,7 @@ accu_plot <-
 #' @param res_accuplot the result of the function accu_plot()
 #' @param threshold the proportion of ASV to obtain in each samples
 #'
-#' @return a value for each samples of the number of sequences needed
+#' @return a value for each sample of the number of sequences needed
 #'   to obtain `threshold` proportion of the ASV
 #'
 #' @examples
@@ -1563,7 +1563,7 @@ ggbetween_pq <- function(physeq, fact, one_plot = FALSE, rarefy_by_sample = FALS
 
 
 ################################################################################
-#' Summarise a \code{\link{phyloseq-class}} object using a plot.
+#' Summarize a \code{\link{phyloseq-class}} object using a plot.
 #' @description
 #' `r lifecycle::badge("maturing")`
 #' @inheritParams clean_pq
@@ -1727,7 +1727,7 @@ summary_plot_pq <- function(physeq,
             "Max nb seq 1 taxa in 1 sample: ",
             max(otu_tab),
             "\n",
-            "Max nb of sample for one taxa (",
+            "Max nb of sample for one taxon (",
             names(sort(taxa_sums(otu_tab > 0), decreasing = TRUE))[1],
             "): ",
             max(taxa_sums(otu_tab > 0)),
