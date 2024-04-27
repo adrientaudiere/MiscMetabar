@@ -129,11 +129,7 @@ compare_pairs_pq <- function(physeq = NULL,
                              nb_min_seq = 0,
                              veg_index = "shannon",
                              na_remove = TRUE) {
-  physeq <- clean_pq(physeq,
-    clean_samples_names = FALSE,
-    force_taxa_as_columns = TRUE,
-    silent = TRUE
-  )
+  physeq <- taxa_as_columns(physeq)
 
   if (na_remove) {
     new_physeq <- subset_samples_pq(physeq, !is.na(physeq@sam_data[[bifactor]]))

@@ -53,9 +53,6 @@ reference:
 - title: Transform phyloseq object
 - subtitle: Taxonomy
   contents: 
-  - add_funguild_info
-  - funguild_assign
-  - get_funguild_db
   - add_new_taxonomy_pq
   - add_blast_info
   - blast_to_phyloseq
@@ -73,6 +70,8 @@ reference:
   contents: 
   - as_binary_otu_table
   - normalize_prop_pq
+  - taxa_as_rows
+  - taxa_as_columns
 
 - subtitle: Subset/merge taxa
   contents: 
@@ -83,8 +82,10 @@ reference:
 
 - subtitle: Subset/merge samples
   contents: 
-  - select_one_sample
   - merge_samples2
+  - rarefy_sample_count_by_modality
+  - select_one_sample 
+  - subset_samples_pq 
 
 - subtitle: (Re)clustering OTU table
   contents: 
@@ -102,7 +103,7 @@ reference:
 
 - subtitle: Sample data
   contents:
-  - subset_samples_pq 
+  - add_info_to_sam_data
 
 - subtitle: Phylogenetic tree
   contents: 
@@ -118,17 +119,20 @@ reference:
 - subtitle: alpha-diversity
   contents:
   - accu_plot
+  - accu_plot_balanced_modality
   - accu_samp_threshold
+  - ggbetween_pq
+  - ggscatt_pq
+  - glmutli_pq
   - hill_pq
+  - hill_test_rarperm_pq
   - hill_tuckey_pq
   - iNEXT_pq
-  - ggbetween_pq
-
 
 - subtitle: beta-diversity
   contents:
-  - accu_samp_threshold
   - adonis_pq
+  - adonis_rarperm_pq
   - biplot_pq
   - circle_pq
   - compare_pairs_pq
@@ -141,11 +145,13 @@ reference:
   - plot_SCBD_pq
   - plot_tsne_pq
   - ridges_pq
-  - sankey_pq
   - SRS_curve_pq
   - tsne_pq
   - upset_pq
   - upset_test_pq
+  - var_par_pq
+  - var_par_rarperm_pq
+  - plot_var_part_pq
   - venn_pq
 
 - subtitle: Differential abundance analysis
@@ -161,6 +167,7 @@ reference:
 
 - subtitle: Taxonomy
   contents:
+  - ggaluv_pq
   - heat_tree_pq
   - krona
   - merge_krona
@@ -169,6 +176,7 @@ reference:
   - plot_guild_pq
   - plot_tax_pq
   - rotl_pq
+  - sankey_pq
   - search_exact_seq_pq
   - tax_bar_pq
   - tax_datatable
@@ -202,7 +210,6 @@ reference:
   - rename_samples_otu_table
   - rename_samples
   - sample_data_with_new_names
-  - add_info_to_sam_data
   - psmelt_samples_pq
 - subtitle: Taxonomy management
   contents:

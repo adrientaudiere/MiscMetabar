@@ -2,13 +2,14 @@
 % Please edit documentation in R/dada_phyloseq.R
 \name{psmelt_samples_pq}
 \alias{psmelt_samples_pq}
-\title{Build a samples information data.frame from physeq object}
+\title{Build a sample information tibble from physeq object}
 \usage{
 psmelt_samples_pq(
   physeq,
   hill_scales = c(0, 1, 2),
   filter_zero = TRUE,
-  rarefy_by_sample = FALSE
+  rarefy_by_sample = FALSE,
+  taxa_ranks = NULL
 )
 }
 \arguments{
@@ -27,9 +28,13 @@ is grouped by samples with abundance summed across OTU.}
 
 \item{rarefy_by_sample}{(logical, default FALSE) If TRUE, rarefy
 samples using \code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}} function.}
+
+\item{taxa_ranks}{A vector of taxonomic ranks. For examples c("Family","Genus").
+If taxa ranks is not set (default value = NULL), taxonomic information are not
+present in the resulting tibble.}
 }
 \value{
-A tibble with a row for each samples. Columns provide information
+A tibble with a row for each sample. Columns provide information
 from \code{sam_data} slot as well as hill numbers, Abundance (nb of sequences),
 and Abundance_log10 (\emph{log10(1+Abundance)}).
 }
@@ -49,12 +54,11 @@ if (requireNamespace("ggstatsplot")) {
   psm_tib <- psmelt_samples_pq(data_fungi_mini, hill_scales = c(0, 2, 7))
   ggstatsplot::ggbetweenstats(psm_tib, Height, Hill_0)
   ggstatsplot::ggbetweenstats(psm_tib, Height, Hill_7)
-  ggstatsplot::ggscatterstats(psmelt_samples_pq(data_fungi_mini,
-    filter_zero = TRUE
-  ), Abundance_log10, Hill_1)
-  ggstatsplot::ggscatterstats(psmelt_samples_pq(data_fungi,
-    rarefy_by_sample = TRUE
-  ), Time, Hill_1)
+
+  psm_tib_tax <- psmelt_samples_pq(data_fungi_mini, taxa_ranks = c("Class", "Family"))
+  ggplot(filter(psm_tib_tax, Abundance > 2000), aes(y = Family, x = Abundance, fill = Time)) +
+    geom_bar(stat = "identity") +
+    facet_wrap(~Height)
 }
 }
 \author{

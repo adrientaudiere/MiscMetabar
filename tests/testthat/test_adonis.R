@@ -1,9 +1,10 @@
+skip_on_cran()
+
 data(data_fungi)
 data(enterotype, package = "phyloseq")
 
 test_that("adonis function works fine", {
   expect_s3_class(adonis_pq(data_fungi, "Tree_name"), "anova")
-  skip_on_cran()
   expect_s3_class(adonis_pq(data_fungi, "Height", na_remove = TRUE), "anova")
   expect_s3_class(adonis_pq(data_fungi, "Tree_name", correction_for_sample_size = TRUE), "anova")
   expect_s3_class(adonis_pq(data_fungi, "Tree_name", rarefy_nb_seqs = TRUE), "anova")

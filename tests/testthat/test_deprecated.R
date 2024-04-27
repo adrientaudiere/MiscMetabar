@@ -1,3 +1,4 @@
+skip_on_cran()
 data("GlobalPatterns", package = "phyloseq")
 data("enterotype")
 
@@ -23,7 +24,6 @@ GP <- subset_samples_pq(
 )
 
 test_that("Test one case for each deprecated functions", {
-  skip_on_cran()
   res_deseq <- DESeq2::DESeq(phyloseq_to_deseq2(GP, ~SampleType), test = "Wald", fitType = "local")
   expect_warning(physeq_graph_test(data_fungi_mini, fact = "Tree_name"), "deprecated")
   expect_s3_class(suppressWarnings(adonis_phyloseq(data_fungi_mini, "Tree_name")), "anova")
@@ -43,7 +43,7 @@ test_that("Test one case for each deprecated functions", {
   expect_warning(venn_phyloseq(data_fungi_mini, "Height"), "deprecated")
   expect_warning(ggVenn_phyloseq(data_fungi_mini, "Height"), "deprecated")
   expect_warning(hill_tuckey_phyloseq(GlobalPatterns, "Soil_logical"), "deprecated")
-  expect_message(expect_warning(hill_phyloseq(GP, "SampleType"), "deprecated"))
+  expect_silent(suppressMessages(expect_warning(hill_phyloseq(GP, "SampleType"), "deprecated")))
 
   library(metacoder)
   expect_warning(suppressMessages(ht <- physeq_heat_tree(data_basidio)), "deprecated")
@@ -56,7 +56,6 @@ if (class(vsearch_error_or_not) == "try-error") {
   message("lulu_phyloseq() can't be tested when vsearch is not installed")
 } else {
   test_that("lulu_phyloseq works fine", {
-    skip_on_cran()
     expect_s4_class(suppressWarnings(lulu_phyloseq(data_fungi_sp_known)$new_physeq), "phyloseq")
   })
 }

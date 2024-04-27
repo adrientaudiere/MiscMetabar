@@ -65,8 +65,107 @@ clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height))) %>%
 ```
 
 
+## Effect of samples variables on alpha diversity using automated model selection and multimodel inference with (G)LMs 
+
+From the help of glmulti package : 
+
+> glmulti finds what are the n best models (the confidence set of models) among all possible models (the candidate set, as specified by the user). Models are fitted with the specified fitting function (default is glm) and are ranked with the specified Information Criterion (default is aicc). The best models are found either through exhaustive screening of the candidates, or using a genetic algorithm, which allows very large candidate sets to be adressed. The output can be used for model selection, variable selection, and multimodel inference.
+
+```{r}
+library("glmulti")
+res_glmulti <-
+  glmutli_pq(data_fungi, "Hill_0 ~ Hill_1 + Abundance + Time + Height", level = 1)
+res_glmulti
+
+ggplot(data = res_glmulti, aes(x = estimates, y = variable)) +
+  geom_point(
+    size = 2,
+    alpha = 1,
+    show.legend = FALSE
+  ) +
+  geom_vline(
+    xintercept = 0,
+    linetype = "dotted",
+    linewidth = 1
+  ) +
+  geom_errorbar(
+    aes(xmin = estimates - alpha, xmax = estimates + alpha),
+    width = 0.8,
+    position = position_dodge(width = 0.8),
+    alpha = 0.7,
+    show.legend = FALSE
+  ) +
+  geom_label(aes(label = nb_model), nudge_y = 0.3, size = 3) +
+  xlab("Standardized estimates") +
+  ylab(formula)
+
+ggplot(data = res_glmulti, aes(
+  x = importance,
+  y = as.factor(variable),
+  fill = estimates
+)) +
+  geom_bar(
+    stat = "identity",
+    show.legend = FALSE,
+    alpha = 0.8
+  ) +
+  xlim(c(0, 1)) +
+  geom_label(aes(label = nb_model, x = 0.1),
+    size = 3,
+    fill = "white"
+  ) +
+  scale_fill_viridis_b() +
+  xlab("Importance") +
+  ylab(formula)
+```
 
 
+```{r}
+res_glmulti_interaction <-
+  glmutli_pq(data_fungi, "Hill_0 ~ Abundance + Time + Height", level = 2)
+res_glmulti_interaction
+
+ggplot(data = res_glmulti_interaction, aes(x = estimates, y = variable)) +
+  geom_point(
+    size = 2,
+    alpha = 1,
+    show.legend = FALSE
+  ) +
+  geom_vline(
+    xintercept = 0,
+    linetype = "dotted",
+    linewidth = 1
+  ) +
+  geom_errorbar(
+    aes(xmin = estimates - alpha, xmax = estimates + alpha),
+    width = 0.8,
+    position = position_dodge(width = 0.8),
+    alpha = 0.7,
+    show.legend = FALSE
+  ) +
+  geom_label(aes(label = nb_model), nudge_y = 0.3, size = 3) +
+  xlab("Standardized estimates") +
+  ylab(formula)
+
+ggplot(data = res_glmulti_interaction, aes(
+  x = importance,
+  y = as.factor(variable),
+  fill = estimates
+)) +
+  geom_bar(
+    stat = "identity",
+    show.legend = FALSE,
+    alpha = 0.8
+  ) +
+  xlim(c(0, 1)) +
+  geom_label(aes(label = nb_model, x = 0.1),
+    size = 3,
+    fill = "white"
+  ) +
+  scale_fill_viridis_b() +
+  xlab("Importance") +
+  ylab(formula)
+```
 # Session information
 
 ```{r}

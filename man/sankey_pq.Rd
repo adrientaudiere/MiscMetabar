@@ -67,7 +67,7 @@ if (requireNamespace("networkD3")) {
 }
 }
 \seealso{
-\code{\link[networkD3]{sankeyNetwork}}
+\code{\link[networkD3]{sankeyNetwork}}, \code{\link[=ggaluv_pq]{ggaluv_pq()}}
 }
 \author{
 Adrien Taudière

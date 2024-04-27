@@ -3,7 +3,7 @@
 \name{track_wkflow_samples}
 \alias{track_wkflow_samples}
 \title{Track the number of reads (= sequences), samples and cluster (e.g. ASV)
-for each samples.}
+for each sample}
 \usage{
 track_wkflow_samples(list_pq_obj, ...)
 }

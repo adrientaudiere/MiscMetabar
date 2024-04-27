@@ -5,7 +5,7 @@ value as the observed distribution.
 Note that contrary to hill_pq(), this function does not take into
 account for difference in the number of sequences per samples/modalities.
 You may use rarefy_by_sample = TRUE if the mean number of sequences per
-samples differs among modalities."><title>Build a samples information data.frame from physeq object — psmelt_samples_pq • MiscMetabar</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet"><meta property="og:title" content="Build a samples information data.frame from physeq object — psmelt_samples_pq"><meta property="og:description" content="
+samples differs among modalities."><title>Build a sample information tibble from physeq object — psmelt_samples_pq • MiscMetabar</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet"><meta property="og:title" content="Build a sample information tibble from physeq object — psmelt_samples_pq"><meta property="og:description" content="
 Hill numbers are the number of equiprobable species giving the same diversity
 value as the observed distribution.
 Note that contrary to hill_pq(), this function does not take into
@@ -22,7 +22,7 @@ samples differs among modalities."><!-- mathjax --><script src="https://cdnjs.cl
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.00</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,7 +79,7 @@ samples differs among modalities."><!-- mathjax --><script src="https://cdnjs.cl
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Build a samples information data.frame from physeq object</h1>
+      <img src="" class="logo" alt=""><h1>Build a sample information tibble from physeq object</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/dada_phyloseq.R" class="external-link"><code>R/dada_phyloseq.R</code></a></small>
       <div class="d-none name"><code>psmelt_samples_pq.Rd</code></div>
     </div>
@@ -100,7 +100,8 @@ samples differs among modalities.</p>
 <span>  <span class="va">physeq</span>,</span>
 <span>  hill_scales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  filter_zero <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  rarefy_by_sample <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  rarefy_by_sample <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  taxa_ranks <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -129,12 +130,18 @@ is grouped by samples with abundance summed across OTU.</p></dd>
 <dd><p>(logical, default FALSE) If TRUE, rarefy
 samples using <code><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">phyloseq::rarefy_even_depth()</a></code> function.</p></dd>
 
+
+<dt>taxa_ranks</dt>
+<dd><p>A vector of taxonomic ranks. For examples c("Family","Genus").
+If taxa ranks is not set (default value = NULL), taxonomic information are not
+present in the resulting tibble.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A tibble with a row for each samples. Columns provide information
+<p>A tibble with a row for each sample. Columns provide information
 from <code>sam_data</code> slot as well as hill numbers, Abundance (nb of sequences),
 and Abundance_log10 (<em>log10(1+Abundance)</em>).</p>
     </div>
@@ -149,32 +156,14 @@ and Abundance_log10 (<em>log10(1+Abundance)</em>).</p>
 <span class="r-in"><span>  <span class="va">psm_tib</span> <span class="op">&lt;-</span> <span class="fu">psmelt_samples_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, hill_scales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">ggstatsplot</span><span class="fu">::</span><span class="fu"><a href="https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html" class="external-link">ggbetweenstats</a></span><span class="op">(</span><span class="va">psm_tib</span>, <span class="va">Height</span>, <span class="va">Hill_0</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">ggstatsplot</span><span class="fu">::</span><span class="fu"><a href="https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html" class="external-link">ggbetweenstats</a></span><span class="op">(</span><span class="va">psm_tib</span>, <span class="va">Height</span>, <span class="va">Hill_7</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">ggstatsplot</span><span class="fu">::</span><span class="fu"><a href="https://indrajeetpatil.github.io/ggstatsplot/reference/ggscatterstats.html" class="external-link">ggscatterstats</a></span><span class="op">(</span><span class="fu">psmelt_samples_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>,</span></span>
-<span class="r-in"><span>    filter_zero <span class="op">=</span> <span class="cn">TRUE</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span>, <span class="va">Abundance_log10</span>, <span class="va">Hill_1</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">ggstatsplot</span><span class="fu">::</span><span class="fu"><a href="https://indrajeetpatil.github.io/ggstatsplot/reference/ggscatterstats.html" class="external-link">ggscatterstats</a></span><span class="op">(</span><span class="fu">psmelt_samples_pq</span><span class="op">(</span><span class="va">data_fungi</span>,</span></span>
-<span class="r-in"><span>    rarefy_by_sample <span class="op">=</span> <span class="cn">TRUE</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span>, <span class="va">Time</span>, <span class="va">Hill_1</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="va">psm_tib_tax</span> <span class="op">&lt;-</span> <span class="fu">psmelt_samples_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, taxa_ranks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Class"</span>, <span class="st">"Family"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">psm_tib_tax</span>, <span class="va">Abundance</span> <span class="op">&gt;</span> <span class="fl">2000</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">Family</span>, x <span class="op">=</span> <span class="va">Abundance</span>, fill <span class="op">=</span> <span class="va">Time</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Height</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa and 0 samples.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(Sample)`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa and 0 samples.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(Sample)`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Registered S3 method overwritten by 'ggside':</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   method from   </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>   +.gg   ggplot2</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> You set `rngseed` to FALSE. Make sure you've set &amp; recorded</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  the random seed of your session for reproducibility.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> See `?set.seed`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 1018OTUs were removed because they are no longer </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> present in any sample after random subsampling</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in rows.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa and 0 samples.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(Sample)`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> `stat_xsidebin()` using `bins = 30`. Pick better value with `binwidth`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> `stat_ysidebin()` using `bins = 30`. Pick better value with `binwidth`.</span>
 <span class="r-plt img"><img src="psmelt_samples_pq-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>

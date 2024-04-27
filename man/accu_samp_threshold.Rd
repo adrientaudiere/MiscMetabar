@@ -13,7 +13,7 @@ accu_samp_threshold(res_accuplot, threshold = 0.95)
 \item{threshold}{the proportion of ASV to obtain in each samples}
 }
 \value{
-a value for each samples of the number of sequences needed
+a value for each sample of the number of sequences needed
 to obtain \code{threshold} proportion of the ASV
 }
 \description{
