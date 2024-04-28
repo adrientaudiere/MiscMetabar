@@ -1,7 +1,7 @@
 Package: MiscMetabar
 Type: Package
 Title: Miscellaneous Functions for Metabarcoding Analysis
-Version: 0.8.00
+Version: 0.9.1
 Authors@R: person("Adrien", "Taudière", email = "adrien.taudiere@zaclys.net",
   role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0003-1088-1182"))
 Description: Facilitate the description, transformation, exploration, and reproducibility of metabarcoding analyses. 'MiscMetabar' is mainly built on top of the 'phyloseq', 'dada2' and 'targets' R packages. It helps to build reproducible and robust bioinformatics pipelines in R. 'MiscMetabar' makes ecological analysis of alpha and beta-diversity easier, more reproducible and more powerful by integrating a large number of tools. Important features are described in Taudière A. (2023) <doi:10.21105/joss.06038>.
@@ -28,11 +28,14 @@ Suggests:
     DT,
     edgeR,
     formattable,
+    ggalluvial,
+    ggfittext,
     gghalves,
     ggh4x,
     ggstatsplot,
     ggridges,
     ggVennDiagram,
+    glmulti,
     gtsummary,
     grDevices,
     grid,

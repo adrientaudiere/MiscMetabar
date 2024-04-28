@@ -2,7 +2,7 @@
 % Please edit documentation in R/beta_div_test.R
 \name{distri_1_taxa}
 \alias{distri_1_taxa}
-\title{Distribution of sequences across a factor for one taxa}
+\title{Distribution of sequences across a factor for one taxon}
 \usage{
 distri_1_taxa(physeq, fact, taxa_name, digits = 2)
 }

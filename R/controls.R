@@ -176,7 +176,7 @@ subset_taxa_tax_control <-
     }
 
     for (i in seq_along(sample_names(physeq))) {
-      # for each samples
+      # for each sample
 
       if (method %in% c("min", "max", "mean", "cutoff_mixt")) {
         find_cutoff <- function(proba = 0.5, il = index_lower) {

@@ -21,7 +21,7 @@ merge_samples2(x, group, fun_otu = sum, funs = list(), reorder = FALSE)
 \item{group}{A sample variable or a vector of length \code{nsamples(x)} defining
 the sample grouping. A vector must be supplied if x is an otu_table}
 
-\item{fun_otu}{Function for combining abundances in the otu table; default
+\item{fun_otu}{Function for combining abundances in the otu_table; default
 is \code{sum}. Can be a formula to be converted to a function by
 \code{\link[purrr:as_mapper]{purrr::as_mapper()}}}
 

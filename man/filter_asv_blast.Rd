@@ -2,7 +2,7 @@
 % Please edit documentation in R/blast.R
 \name{filter_asv_blast}
 \alias{filter_asv_blast}
-\title{Filter undesirable taxa using blast against a against a custom database.}
+\title{Filter undesirable taxa using blast against a custom database.}
 \usage{
 filter_asv_blast(
   physeq,

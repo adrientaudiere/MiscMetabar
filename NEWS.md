@@ -1,4 +1,25 @@
-# MiscMetabar 0.8 (in development)
+# MiscMetabar 0.9.1 (in development)
+
+## New functions 
+- Add functions [taxa_as_rows()] and [taxa_as_columns()] to replace verbose called to [clean_pq()]
+- Add function [ggscatt_pq()] to plot and test for effect of a numerical columns in sam_data on Hill number. Its the equivalent for numerical variables of [ggbetween_pq()] which focus on the effect of a factor. 
+- Add functions [var_par_pq()] , [var_par_rarperm_pq()] and [plot_var_part_pq()] to compute the partition of the variation of community and plot it. It introduce the notion of `rarperm` part in the function name. It refers to the fact that this function compute permutation of samples depth rarefaction to measure the variation due to the random process in rarefaction. 
+- Add function [hill_test_rarperm_pq()] to test the effect of a factor on hill diversity accounting for the variation due to random nature of the rarefaction by sample depth. 
+- Add function [rarefy_sample_count_by_modality()] to equalize the number of samples for each levels of a modality (factor)
+- Add function [accu_plot_balanced_modality()] to plot accumulation curves with balanced modality (same number of samples per level) and depth rarefaction (same number of sequences per sample) 
+- Add function [adonis_rarperm_pq()] to compute multiple Permanova analyses on different sample depth rarefaction.
+- Add function [ggaluv_pq()] to plot taxonomic distribution in alluvial fashion with ggplot2 (using the [ggalluvial] package)
+- Add function [glmutli_pq()] to use automated model selection and multimodel inference with (G)LMs for phyloseq object
+
+
+## New parameters
+
+- Add param `taxa_ranks` in function [psmelt_samples_pq()] to group results by samples AND taxonomic ranks. 
+- Add param `hill_scales` in functions [hill_tuckey_pq()] and [hill_pq()] to choose the level of the hill number. 
+- Add param `na_remove` in function `hill_pq()` to remove samples with NA in the factor fact.
+
+
+# MiscMetabar 0.8.1 
 
 - Add param `plot_with_tuckey` to `hill_pq()`.,
 - Add function `formattable_pq()` to make beautiful table of the distribution of taxa across a modality using visualization inside in the table.

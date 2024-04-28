@@ -424,7 +424,7 @@ track_wkflow <- function(list_of_objects,
 
 ################################################################################
 #' Track the number of reads (= sequences), samples and cluster (e.g. ASV)
-#' for each samples.
+#' for each sample
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -1215,7 +1215,7 @@ mumu_pq <- function(physeq,
     stderr = TRUE
   )
   otu_tab <-
-    data.frame(unclass(clean_pq(physeq, force_taxa_as_rows = TRUE)@otu_table))
+    data.frame(unclass(taxa_as_rows(physeq)@otu_table))
   otu_tab <- cbind("ASV" = rownames(otu_tab), otu_tab)
   write.table(
     otu_tab,
@@ -2530,12 +2530,12 @@ taxa_only_in_one_level <- function(physeq,
 
 
 ################################################################################
-#' Normalize otu table using samples depth
+#' Normalize OTU table using samples depth
 #' @description
 #' `r lifecycle::badge("experimental")`
 #'
 #'   This function implement the method proposed by
-#'   [McKnight et al. 2018](https://doi.org/10.5061/dryad.tn8qs35)
+#'   McKnight et al. 2018 (\doi{doi:10.5061/dryad.tn8qs35})
 #'
 #' @inheritParams clean_pq
 #'
@@ -2587,7 +2587,7 @@ normalize_prop_pq <- function(physeq, base_log = 2, constante = 10000, digits = 
 
 
 ################################################################################
-#' Build a samples information data.frame from physeq object
+#' Build a sample information tibble from physeq object
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -2610,9 +2610,12 @@ normalize_prop_pq <- function(physeq, base_log = 2, constante = 10000, digits = 
 #'   is grouped by samples with abundance summed across OTU.
 #' @param rarefy_by_sample (logical, default FALSE) If TRUE, rarefy
 #'   samples using [phyloseq::rarefy_even_depth()] function.
+#' @param taxa_ranks A vector of taxonomic ranks. For examples c("Family","Genus").
+#'   If taxa ranks is not set (default value = NULL), taxonomic information are not
+#'   present in the resulting tibble.
 #' @author Adrien Taudière
 #' @export
-#' @return A tibble with a row for each samples. Columns provide information
+#' @return A tibble with a row for each sample. Columns provide information
 #'   from `sam_data` slot as well as hill numbers, Abundance (nb of sequences),
 #'   and Abundance_log10 (*log10(1+Abundance)*).
 #' @examples
@@ -2620,18 +2623,18 @@ normalize_prop_pq <- function(physeq, base_log = 2, constante = 10000, digits = 
 #'   psm_tib <- psmelt_samples_pq(data_fungi_mini, hill_scales = c(0, 2, 7))
 #'   ggstatsplot::ggbetweenstats(psm_tib, Height, Hill_0)
 #'   ggstatsplot::ggbetweenstats(psm_tib, Height, Hill_7)
-#'   ggstatsplot::ggscatterstats(psmelt_samples_pq(data_fungi_mini,
-#'     filter_zero = TRUE
-#'   ), Abundance_log10, Hill_1)
-#'   ggstatsplot::ggscatterstats(psmelt_samples_pq(data_fungi,
-#'     rarefy_by_sample = TRUE
-#'   ), Time, Hill_1)
+#'
+#'   psm_tib_tax <- psmelt_samples_pq(data_fungi_mini, taxa_ranks = c("Class", "Family"))
+#'   ggplot(filter(psm_tib_tax, Abundance > 2000), aes(y = Family, x = Abundance, fill = Time)) +
+#'     geom_bar(stat = "identity") +
+#'     facet_wrap(~Height)
 #' }
 psmelt_samples_pq <-
   function(physeq,
            hill_scales = c(0, 1, 2),
            filter_zero = TRUE,
-           rarefy_by_sample = FALSE) {
+           rarefy_by_sample = FALSE,
+           taxa_ranks = NULL) {
     verify_pq(physeq)
     if (rarefy_by_sample) {
       physeq <- rarefy_even_depth(physeq)
@@ -2640,17 +2643,56 @@ psmelt_samples_pq <-
     if (filter_zero) {
       psm <- psm |> filter(Abundance > 0)
     }
-    psm <- psm |>
-      select(Sample, OTU, Abundance, colnames(physeq@sam_data))
+    if (is.null(taxa_ranks)) {
+      psm <- psm |>
+        select(Sample, OTU, Abundance, colnames(physeq@sam_data))
+      nb_distinct_samp <- psm |>
+        group_by(Sample) |>
+        select(-OTU, -Abundance) |>
+        distinct() |>
+        nrow()
+
+      if (nsamples(physeq) != nb_distinct_samp) {
+        stop("The number of samples in physeq is different from the resulting
+         number in psm tibble.")
+      }
+    } else {
+      psm <- psm |>
+        select(Sample, OTU, Abundance, colnames(physeq@sam_data), !!taxa_ranks)
+    }
+
+    if (is.null(taxa_ranks)) {
+      psm_samp <- psm |>
+        select(-OTU) |>
+        group_by(Sample) |>
+        summarise(
+          Abundance = sum(Abundance),
+          across(where(is.numeric) &
+            !Abundance, ~ mean(.x, na.rm = TRUE)),
+          across(where(is.character), ~ .x[1])
+        )
+    } else {
+      psm_temp <- psm |>
+        select(-OTU) |>
+        group_by(Sample)
+
+      for (i in seq_along(taxa_ranks)) {
+        psm_temp <- psm_temp |>
+          group_by(.data[[taxa_ranks[[i]]]], .add = TRUE)
+      }
+
+      psm_samp <- psm_temp |>
+        summarise(
+          Abundance = sum(Abundance),
+          across(where(is.numeric) &
+            !Abundance, ~ mean(.x, na.rm = TRUE)),
+          across(where(is.character), ~ .x[1]),
+          .groups = "drop"
+        )
+    }
 
     if (!is.null(hill_scales)) {
-      physeq <- clean_pq(
-        physeq,
-        force_taxa_as_rows = TRUE,
-        remove_empty_samples = FALSE,
-        remove_empty_taxa = FALSE,
-        clean_samples_names = FALSE
-      )
+      physeq <- taxa_as_rows(physeq)
       df_hill <-
         vegan::renyi(t(physeq)@otu_table,
           scales = hill_scales,
@@ -2660,30 +2702,120 @@ psmelt_samples_pq <-
       colnames(df_hill) <- paste0("Hill_", hill_scales)
       df_hill$Sample <- rownames(df_hill)
 
-      psm <- full_join(psm, df_hill)
-    }
-    nb_distinct_samp <- psm |>
-      group_by(Sample) |>
-      select(-OTU, -Abundance) |>
-      distinct() |>
-      nrow()
-
-    if (nsamples(physeq) != nb_distinct_samp) {
-      stop("The number of samples in physeq is different from the resulting
-         number in psm tibble.")
+      psm_samp <- full_join(psm_samp, df_hill)
     }
 
-    psm <- psm |>
-      select(-OTU) |>
-      group_by(Sample) |>
-      summarise(
-        Abundance = sum(Abundance),
-        across(where(is.numeric) &
-          !Abundance, ~ mean(.x, na.rm = TRUE)),
-        across(where(is.character), ~ .x[1])
+    psm_samp <- psm_samp |> mutate(Abundance_log10 = log10(1 + Abundance))
+    return(tibble(psm_samp))
+  }
+################################################################################
+
+################################################################################
+#' Force taxa to be in columns in the otu_table of a physeq object
+#'
+#' @description
+#' `r lifecycle::badge("maturing")`
+#' @inheritParams clean_pq
+#' @author Adrien Taudière
+#' @export
+#' @return A new \code{\link{phyloseq-class}} object
+taxa_as_columns <- function(physeq) {
+  physeq <- clean_pq(
+    physeq,
+    clean_samples_names = FALSE,
+    remove_empty_samples = FALSE,
+    remove_empty_taxa = FALSE,
+    force_taxa_as_columns = TRUE,
+    silent = TRUE
+  )
+  return(physeq)
+}
+################################################################################
+
+################################################################################
+#' Force taxa to be in columns in the otu_table of a physeq object
+#'
+#' @description
+#' `r lifecycle::badge("maturing")`
+#' @inheritParams clean_pq
+#' @author Adrien Taudière
+#' @export
+#' @return A new \code{\link{phyloseq-class}} object
+taxa_as_rows <- function(physeq) {
+  physeq <- clean_pq(
+    physeq,
+    clean_samples_names = FALSE,
+    remove_empty_samples = FALSE,
+    remove_empty_taxa = FALSE,
+    force_taxa_as_rows = TRUE,
+    silent = TRUE
+  )
+  return(physeq)
+}
+################################################################################
+
+################################################################################
+#' Rarefy (equalize) the number of samples per modality of a factor
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' @inheritParams clean_pq
+#' @param fact (required): The variable to rarefy. Must be present in
+#'   the `sam_data` slot of the physeq object.
+#' @param rngseed	(Optional). A single integer value passed to set.seed,
+#'   which is used to fix a seed for reproducibly random number generation
+#'   (in this case, reproducibly random subsampling). If set to FALSE, then no
+#'   iddling with the RNG seed is performed,
+#'   and it is up to the user to appropriately call
+#' @param verbose (logical). If TRUE, print additional informations.
+#' @export
+#' @author Adrien Taudière
+#' @return A new \code{\link{phyloseq-class}} object.
+#' @seealso [accu_plot_balanced_modality()]
+#' @examples
+#' table(data_fungi_mini@sam_data$Height)
+#' data_fungi_mini2 <- rarefy_sample_count_by_modality(data_fungi_mini, "Height")
+#' table(data_fungi_mini2@sam_data$Height)
+#' if (requireNamespace("patchwork")) {
+#'   ggvenn_pq(data_fungi_mini, "Height") + ggvenn_pq(data_fungi_mini2, "Height")
+#' }
+rarefy_sample_count_by_modality <-
+  function(physeq, fact, rngseed = FALSE, verbose = TRUE) {
+    if (as(rngseed, "logical")) {
+      set.seed(rngseed)
+      if (verbose) {
+        message("`set.seed(", rngseed, ")` was used to initialize repeatable random subsampling.")
+        message("Please record this for your records so others can reproduce.")
+        message("Try `set.seed(", rngseed, "); .Random.seed` for the full vector",
+          sep = ""
+        )
+        message("...")
+      }
+    } else if (verbose) {
+      message(
+        "You set `rngseed` to FALSE. Make sure you've set & recorded\n",
+        " the random seed of your session for reproducibility.\n",
+        "See `?set.seed`\n"
       )
-
-    psm <- psm |> mutate(Abundance_log10 = log10(1 + Abundance))
-    return(tibble(psm))
+      message("...")
+    }
+    mod <- physeq@sam_data[[fact]]
+    n_mod <- table(mod)
+    samples_names <- sample_names(physeq)
+    samp_to_keep <- c()
+    for (modality in levels(as.factor(mod))) {
+      samp_to_keep <-
+        c(
+          samp_to_keep,
+          sample(
+            as.numeric(grep(modality, mod)),
+            size = min(n_mod),
+            replace = FALSE
+          )
+        )
+    }
+    new_physeq <-
+      subset_samples_pq(physeq, 1:nsamples(physeq) %in% samp_to_keep)
+    return(new_physeq)
   }
 ################################################################################

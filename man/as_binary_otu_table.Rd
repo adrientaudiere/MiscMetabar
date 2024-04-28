@@ -12,7 +12,7 @@ as_binary_otu_table(physeq, min_number = 1)
 using the \code{phyloseq} package.}
 
 \item{min_number}{(int) the minimum number of sequences to put
-a 1 in the otu table.}
+a 1 in the OTU table.}
 }
 \value{
 A \code{physeq} object with only 0/1 in the OTU table

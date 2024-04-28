@@ -2,7 +2,7 @@
 % Please edit documentation in R/dada_phyloseq.R
 \name{normalize_prop_pq}
 \alias{normalize_prop_pq}
-\title{Normalize otu table using samples depth}
+\title{Normalize OTU table using samples depth}
 \usage{
 normalize_prop_pq(physeq, base_log = 2, constante = 10000, digits = 4)
 }
@@ -26,7 +26,7 @@ normalize and log transformed (if base_log is an integer)
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
 This function implement the method proposed by
-\href{https://doi.org/10.5061/dryad.tn8qs35}{McKnight et al. 2018}
+McKnight et al. 2018 (\doi{doi:10.5061/dryad.tn8qs35})
 }
 \examples{
 taxa_sums(data_fungi_mini)

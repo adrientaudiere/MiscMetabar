@@ -1,5 +1,3 @@
-data("data_fungi")
-data("data_fungi_sp_known")
 data("GlobalPatterns", package = "phyloseq")
 data("enterotype", package = "phyloseq")
 
@@ -15,9 +13,9 @@ GP_archae <- clean_pq(rarefy_even_depth(subset_samples_pq(GP_archae, sample_sums
 data_basidio <- subset_taxa(data_fungi, Phylum == "Basidiomycota")
 
 test_that("hill_pq works with data_fungi dataset", {
-  expect_message(hill_pq(data_fungi_mini, "Height"))
+  expect_silent(suppressMessages(hill_pq(data_fungi_mini, "Height")))
   skip_on_cran()
-  expect_message(hill_pq(data_fungi_mini, "Height", add_points = TRUE))
+  expect_silent(suppressMessages(hill_pq(data_fungi_mini, "Height", add_points = TRUE)))
   expect_silent(suppressMessages(hill_pq(
     clean_pq(subset_samples_pq(
       data_fungi_mini, !is.na(data_fungi_mini@sam_data$Height)
@@ -32,14 +30,16 @@ test_that("hill_pq works with data_fungi dataset", {
       color_fac = "Time"
     )
   ))
-  expect_message(
-    hill_pq(
-      data_fungi_mini,
-      "Height",
-      add_points = TRUE,
-      color_fac = "Time",
-      one_plot = TRUE,
-      correction_for_sample_size = FALSE
+  expect_silent(
+    suppressMessages(
+      hill_pq(
+        data_fungi_mini,
+        "Height",
+        add_points = TRUE,
+        color_fac = "Time",
+        one_plot = TRUE,
+        correction_for_sample_size = FALSE
+      )
     )
   )
   expect_silent(suppressWarnings(suppressMessages(
@@ -61,8 +61,8 @@ test_that("hill_pq works with data_fungi dataset", {
 
 test_that("hill_pq works with GP dataset", {
   skip_on_cran()
-  expect_message(hill_pq(GP, "SampleType"))
-  expect_message(hill_pq(GP, "SampleType", add_points = TRUE))
+  expect_silent(suppressMessages(hill_pq(GP, "SampleType")))
+  expect_silent(suppressMessages(hill_pq(GP, "SampleType", add_points = TRUE)))
   expect_silent(suppressMessages(hill_pq(GP, "SampleType", letters = TRUE)))
   expect_silent(suppressMessages(hill_pq(GP, "SampleType", add_points = TRUE)))
   expect_equal(length(hill_pq(GP, "SampleType", add_points = TRUE)), 4)

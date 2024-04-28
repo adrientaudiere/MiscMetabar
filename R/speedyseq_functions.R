@@ -75,7 +75,7 @@ setMethod(
       x <- prune_taxa(!is.na(group), x)
       group <- group[!is.na(group)]
     }
-    # Get the merged otu table with new taxa named by most abundant
+    # Get the merged otu_table with new taxa named by most abundant
     otu <- merge_taxa_vec(otu_table(x), group, reorder = reorder)
     # Adjust taxonomy if necessary
     if (!is.null(x@tax_table) & tax_adjust != 0) {
@@ -326,7 +326,7 @@ bad_flush_right <- function(x, bad = "BAD", na_bad = FALSE, k = length(x)) {
 #' @param x A `phyloseq`, `otu_table`, or `sample_data` object
 #' @param group A sample variable or a vector of length `nsamples(x)` defining
 #'   the sample grouping. A vector must be supplied if x is an otu_table
-#' @param fun_otu Function for combining abundances in the otu table; default
+#' @param fun_otu Function for combining abundances in the otu_table; default
 #'   is `sum`. Can be a formula to be converted to a function by
 #'   [purrr::as_mapper()]
 #' @param funs Named list of merge functions for sample variables; default is
@@ -436,7 +436,7 @@ setMethod(
       x.merged <- x.merged %>%
         tibble::column_to_rownames(".group")
     }
-    # Return an otu table in the proper orientation
+    # Return an otu_table in the proper orientation
     x.merged <- x.merged %>% otu_table(taxa_are_rows = FALSE)
     if (needs_flip) {
       x.merged <- t(x.merged)

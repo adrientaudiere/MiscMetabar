@@ -3,8 +3,8 @@
 \docType{data}
 \name{Tengeler2020_pq}
 \alias{Tengeler2020_pq}
-\title{This tutorial explore the dataset from Tengeler et al. (2020) available in the \code{mia} package.
-obtain using \code{mia::makePhyloseqFromTreeSE(Tengeler2020)}}
+\title{This tutorial explores the dataset from Tengeler et al. (2020) available in the \code{mia} package.
+obtained using \code{mia::makePhyloseqFromTreeSE(Tengeler2020)}}
 \format{
 A phyloseq object
 }

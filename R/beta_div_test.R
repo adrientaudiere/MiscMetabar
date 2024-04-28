@@ -149,14 +149,7 @@ adonis_pq <- function(physeq,
                       rarefy_nb_seqs = FALSE,
                       verbose = TRUE,
                       ...) {
-  physeq <- clean_pq(
-    physeq,
-    force_taxa_as_columns = TRUE,
-    remove_empty_samples = TRUE,
-    remove_empty_taxa = FALSE,
-    clean_samples_names = FALSE,
-    silent = TRUE
-  )
+  physeq <- taxa_as_columns(physeq)
 
   if (dist_method %in% c("aitchison", "robust.aitchison")) {
     phy_dist <-
@@ -174,7 +167,7 @@ adonis_pq <- function(physeq,
   termf <- stats::terms(.formula)
   term_lab <- attr(termf, "term.labels")[attr(termf, "order") == 1]
 
-  verify_pq(physeq, ...)
+  verify_pq(physeq)
 
   if (na_remove) {
     new_physeq <- physeq
@@ -220,6 +213,117 @@ adonis_pq <- function(physeq,
 }
 ################################################################################
 
+################################################################################
+#' Permanova (adonis) on permutations of rarefaction even depth
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' @inheritParams adonis_pq
+#' @param nperm (int) The number of permutations to perform.
+#' @param progress_bar (logical, default TRUE) Do we print progress during
+#'   the calculation.
+#' @param quantile_prob (float, `[0:1]`) the value to compute the quantile.
+#'   Minimum quantile is compute using 1-quantile_prob.
+#' @param sample.size (int) A single integer value equal to the number of
+#'   reads being simulated, also known as the depth. See
+#'   [phyloseq::rarefy_even_depth()].
+#' @param ... Other params for be passed on to [adonis_pq()] function
+#'
+#' @return A list of three dataframe representing the mean, the minimum quantile
+#'  and the maximum quantile value for adonis results. See [adonis_pq()].
+#' @export
+#' @author Adrien Taudière
+#' @seealso [adonis_pq()]
+#' @examples
+#' if (requireNamespace("vegan")) {
+#'   data_fungi_woNA <-
+#'     subset_samples(data_fungi, !is.na(Time) & !is.na(Height))
+#'   adonis_rarperm_pq(data_fungi_woNA, "Time*Height", na_remove = TRUE, nperm = 3)
+#' }
+adonis_rarperm_pq <- function(physeq,
+                              formula,
+                              dist_method = "bray",
+                              merge_sample_by = NULL,
+                              na_remove = FALSE,
+                              rarefy_nb_seqs = FALSE,
+                              verbose = TRUE,
+                              nperm = 99,
+                              progress_bar = TRUE,
+                              quantile_prob = 0.975,
+                              sample.size = min(sample_sums(physeq)),
+                              ...) {
+  res_perm <- list()
+  if (progress_bar) {
+    pb <- txtProgressBar(
+      min = 0,
+      max = nperm,
+      style = 3,
+      width = 50,
+      char = "="
+    )
+  }
+  for (i in 1:nperm) {
+    res_perm[[i]] <-
+      adonis_pq(
+        rarefy_even_depth(
+          physeq,
+          rngseed = i,
+          sample.size = sample.size,
+          verbose = verbose
+        ),
+        formula,
+        dist_method = dist_method,
+        merge_sample_by = merge_sample_by,
+        na_remove = na_remove,
+        correction_for_sample_size = FALSE,
+        rarefy_nb_seqs = rarefy_nb_seqs,
+        verbose = verbose,
+        sample.size = sample.size,
+        ...
+      )
+    if (progress_bar) {
+      setTxtProgressBar(pb, i)
+    }
+  }
+  res_adonis <- list()
+  res_adonis[["mean"]] <-
+    apply(array(unlist(res_perm), c(dim(
+      as.data.frame(res_perm[[1]])
+    ), nperm)), c(1, 2), mean)
+  colnames(res_adonis[["mean"]]) <- colnames(res_perm[[1]])
+  rownames(res_adonis[["mean"]]) <- rownames(res_perm[[1]])
+
+
+  res_adonis[["quantile_min"]] <-
+    apply(
+      array(unlist(res_perm), c(dim(
+        as.data.frame(res_perm[[1]])
+      ), nperm)),
+      c(1, 2),
+      quantile,
+      na.rm = TRUE,
+      probs = 1 - quantile_prob
+    )
+  colnames(res_adonis[["quantile_min"]]) <- colnames(res_perm[[1]])
+  rownames(res_adonis[["quantile_min"]]) <- rownames(res_perm[[1]])
+
+  res_adonis[["quantile_max"]] <-
+    apply(
+      array(unlist(res_perm), c(dim(
+        as.data.frame(res_perm[[1]])
+      ), nperm)),
+      c(1, 2),
+      quantile,
+      na.rm = TRUE,
+      probs = quantile_prob
+    )
+  colnames(res_adonis[["quantile_max"]]) <- colnames(res_perm[[1]])
+  rownames(res_adonis[["quantile_max"]]) <- rownames(res_perm[[1]])
+
+  return(res_adonis)
+}
+################################################################################
 
 ################################################################################
 #' @title Compute and test local contributions to beta diversity (LCBD) of
@@ -258,14 +362,7 @@ adonis_pq <- function(physeq,
 LCBD_pq <- function(physeq,
                     p_adjust_method = "BH",
                     ...) {
-  physeq <- clean_pq(
-    physeq,
-    force_taxa_as_columns = TRUE,
-    remove_empty_samples = TRUE,
-    remove_empty_taxa = FALSE,
-    clean_samples_names = FALSE,
-    silent = TRUE
-  )
+  physeq <- taxa_as_columns(physeq)
 
   mat <- as.matrix(unclass(physeq@otu_table))
   resBeta <- adespatial::beta.div(mat, adj = FALSE, ...)
@@ -537,10 +634,7 @@ multipatt_pq <- function(physeq,
                          pval = 0.05,
                          control = permute::how(nperm = 999),
                          ...) {
-  physeq <- clean_pq(physeq,
-    clean_samples_names = FALSE,
-    force_taxa_as_columns = TRUE
-  )
+  physeq <- taxa_as_columns(physeq)
 
   res <-
     indicspecies::multipatt(as.matrix(physeq@otu_table),
@@ -955,7 +1049,7 @@ taxa_only_in_one_level <- function(physeq,
 ################################################################################
 
 ################################################################################
-#' Distribution of sequences across a factor for one taxa
+#' Distribution of sequences across a factor for one taxon
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
@@ -982,7 +1076,7 @@ taxa_only_in_one_level <- function(physeq,
 #' distri_1_taxa(data_fungi, "Time", "ASV81", digits = 1)
 #' @importFrom stats sd
 distri_1_taxa <- function(physeq, fact, taxa_name, digits = 2) {
-  physeq <- clean_pq(physeq, force_taxa_as_rows = TRUE)
+  physeq <- taxa_as_rows(physeq)
   df <-
     data.frame(
       "nb_seq" = tapply(
@@ -1013,4 +1107,299 @@ distri_1_taxa <- function(physeq, fact, taxa_name, digits = 2) {
     round(df$nb_samp / df$nb_total_samp, digits = digits)
   return(df)
 }
+################################################################################
+
+################################################################################
+#' Partition the Variation of a phyloseq object by 2, 3, or 4 Explanatory Matrices
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'   The function partitions the variation in otu_table using
+#'   distance (Bray per default) with respect to two, three, or four explanatory
+#'   tables, using
+#'   adjusted R² in redundancy analysis ordination (RDA) or distance-based
+#'   redundancy analysis. If response is a single vector, partitioning is by
+#'   partial regression. Collinear variables in the explanatory tables do NOT
+#'   have to be removed prior to partitioning. See [vegan::varpart()] for more
+#'   information.
+#'
+#' @inheritParams clean_pq
+#' @param list_component (required) A named list of 2, 3 or four vectors with
+#'   names from the `@sam_data` slot.
+#' @param dist_method (default "bray") the distance used. See
+#'   [phyloseq::distance()] for all available distances or run
+#'   [phyloseq::distanceMethodList()].
+#'   For "aitchison" and "robust.aitchison" distance, [vegan::vegdist()]
+#'   function is directly used.
+#' @param dbrda_computation (logical) Do dbrda computations are runned for each
+#'  individual component (each name of the list component) ?
+#'
+#' @return an object of class "varpart", see [vegan::varpart()]
+#' @export
+#' @author Adrien Taudière
+#' @seealso [var_par_rarperm_pq()], [vegan::varpart()], [plot_var_part_pq()]
+#' @examples
+#' \donttest{
+#' if (requireNamespace("vegan")) {
+#'   data_fungi_woNA <-
+#'     subset_samples(data_fungi, !is.na(Time) & !is.na(Height))
+#'   res_var <- var_par_pq(data_fungi_woNA,
+#'     list_component = list(
+#'       "Time" = c("Time"),
+#'       "Size" = c("Height", "Diameter")
+#'     ),
+#'     dbrda_computation = TRUE
+#'   )
+#' }
+#' }
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please make a reference to `vegan::varpart()` if you
+#'   use this function.
+var_par_pq <-
+  function(physeq,
+           list_component,
+           dist_method = "bray",
+           dbrda_computation = TRUE) {
+    physeq <- taxa_as_columns(physeq)
+
+    verify_pq(physeq)
+
+    if (dist_method %in% c("robust.aitchison", "aitchison")) {
+      dist_physeq <-
+        vegan::vegdist(as(otu_table(physeq, taxa_are_rows = FALSE), "matrix"),
+          method = dist_method
+        )
+    } else {
+      dist_physeq <- phyloseq::distance(physeq, method = dist_method)
+    }
+
+    for (i in 1:length(list_component)) {
+      assign(
+        names(list_component)[i],
+        as.data.frame(unclass(physeq@sam_data[, list_component[[i]]]))
+      )
+    }
+
+    if (length(list_component) == 2) {
+      res_varpart <-
+        vegan::varpart(
+          dist_physeq,
+          eval(sym(names(list_component)[1])),
+          eval(sym(names(list_component)[2]))
+        )
+    } else if (length(list_component) == 3) {
+      res_varpart <-
+        vegan::varpart(
+          dist_physeq,
+          eval(sym(names(list_component)[1])),
+          eval(sym(names(list_component)[2])),
+          eval(sym(names(list_component)[3]))
+        )
+    } else if (length(list_component) == 4) {
+      res_varpart <-
+        vegan::varpart(
+          dist_physeq,
+          eval(sym(names(list_component)[1])),
+          eval(sym(names(list_component)[2])),
+          eval(sym(names(list_component)[3])),
+          eval(sym(names(list_component)[4]))
+        )
+    } else {
+      stop("The list_component must be of length 2, 3 or 4")
+    }
+
+    if (dbrda_computation) {
+      res_varpart$dbrda_result <- list()
+      for (i in 1:length(list_component)) {
+        res_varpart$dbrda_result[[i]] <-
+          anova(vegan::dbrda(
+            as.formula(paste0(
+              "dist_physeq ~ ", paste(c(list_component[[i]]), collapse = " + ")
+            )),
+            data = as.data.frame(unclass(
+              physeq@sam_data
+            ))
+          ))
+      }
+    }
+    res_varpart$Xnames <- names(list_component)
+    return(res_varpart)
+  }
+################################################################################
+
+
+################################################################################
+#' Partition the Variation of a phyloseq object with rarefaction permutations
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#'   This is an extension of the function [var_par_pq()]. The main addition is
+#'   the computation of nperm permutations with rarefaction even depth by
+#'   sample. The return object
+#'
+#'
+#' @inheritParams clean_pq
+#' @param list_component (required) A named list of 2, 3 or four vectors with
+#'   names from the `@sam_data` slot.
+#' @param dist_method (default "bray") the distance used. See
+#'   [phyloseq::distance()] for all available distances or run
+#'   [phyloseq::distanceMethodList()].
+#'   For aitchison and robust.aitchison distance, [vegan::vegdist()]
+#'   function is directly used.#' @param fill_bg
+#' @param nperm (int) The number of permutations to perform.
+#' @param quantile_prob (float, `[0:1]`) the value to compute the quantile.
+#'   Minimum quantile is compute using 1-quantile_prob.
+#' @param dbrda_computation (logical) Do dbrda computations are runned for each
+#'  individual component (each name of the list component) ?
+#' @param dbrda_signif_pval (float, `[0:1]`) The value under which the dbrda is
+#'   considered significant.
+#' @param sample.size (int) A single integer value equal to the number of
+#'   reads being simulated, also known as the depth. See
+#'   [phyloseq::rarefy_even_depth()].
+#' @param verbose (logical). If TRUE, print additional informations.
+#' @param progress_bar (logical, default TRUE) Do we print progress during
+#'   the calculation?
+#'
+#' @return A list of class varpart with additional information in the
+#'  `$part$indfract` part. Adj.R.square is the mean across permutation.
+#'   Adj.R.squared_quantil_min and Adj.R.squared_quantil_max represent
+#'   the quantile values of adjuste R squared
+#' @export
+#' @seealso [var_par_pq()], [vegan::varpart()], [plot_var_part_pq()]
+#' @author Adrien Taudière
+#' @examples
+#' \donttest{
+#' if (requireNamespace("vegan")) {
+#'   data_fungi_woNA <- subset_samples(data_fungi, !is.na(Time) & !is.na(Height))
+#'   res_var_9 <- var_par_rarperm_pq(
+#'     data_fungi_woNA,
+#'     list_component = list(
+#'       "Time" = c("Time"),
+#'       "Size" = c("Height", "Diameter")
+#'     ),
+#'     nperm = 9,
+#'     dbrda_computation = TRUE
+#'   )
+#'   res_var_2 <- var_par_rarperm_pq(
+#'     data_fungi_woNA,
+#'     list_component = list(
+#'       "Time" = c("Time"),
+#'       "Size" = c("Height", "Diameter")
+#'     ),
+#'     nperm = 2,
+#'     dbrda_computation = TRUE
+#'   )
+#' }
+#' }
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please make a reference to `vegan::varpart()` if you
+#'   use this function.
+var_par_rarperm_pq <-
+  function(physeq,
+           list_component,
+           dist_method = "bray",
+           nperm = 99,
+           quantile_prob = 0.975,
+           dbrda_computation = FALSE,
+           dbrda_signif_pval = 0.05,
+           sample.size = min(sample_sums(physeq)),
+           verbose = FALSE,
+           progress_bar = TRUE) {
+    physeq <- taxa_as_columns(physeq)
+    verify_pq(physeq)
+
+    if (progress_bar) {
+      pb <- txtProgressBar(
+        min = 0,
+        max = nperm,
+        style = 3,
+        width = 50,
+        char = "="
+      )
+    }
+
+    if (dist_method %in% c("robust.aitchison", "aitchison")) {
+      dist_physeq <-
+        vegdist(as(otu_table(physeq, taxa_are_rows = FALSE), "matrix"), method = dist_method)
+    } else {
+      dist_physeq <- phyloseq::distance(physeq, method = dist_method)
+    }
+
+    res_perm <- list()
+    for (i in 1:nperm) {
+      res_perm[[i]] <-
+        var_par_pq(
+          physeq =
+            rarefy_even_depth(
+              physeq,
+              rngseed = i,
+              sample.size = sample.size,
+              verbose = verbose
+            ),
+          list_component = list_component,
+          dist_method = dist_method,
+          dbrda_computation = dbrda_computation
+        )
+
+      if (progress_bar) {
+        setTxtProgressBar(pb, i)
+      }
+    }
+    res_varpart <- var_par_pq(
+      physeq = physeq,
+      list_component = list_component,
+      dist_method = dist_method,
+      dbrda_computation = dbrda_computation
+    )
+
+    if (dbrda_computation) {
+      res_varpart$dbrda_result_prop_pval_signif <-
+        rowSums(sapply(res_perm, function(x) {
+          sapply(x$dbrda_result, function(xx) {
+            xx$`Pr(>F)`[[1]]
+          })
+        }) < dbrda_signif_pval) / nperm
+    }
+
+
+    res_varpart$part$indfract$R.square <-
+      rowMeans(sapply(res_perm, function(x) {
+        (x$part$indfract$R.square)
+      }))
+    res_varpart$part$indfract$R.square_quantil_max <-
+      apply(sapply(res_perm, function(x) {
+        (x$part$indfract$R.square)
+      }), 1, function(xx) {
+        quantile(xx, probs = quantile_prob, na.rm = TRUE)
+      })
+    res_varpart$part$indfract$R.square_quantil_min <-
+      apply(sapply(res_perm, function(x) {
+        (x$part$indfract$R.square)
+      }), 1, function(xx) {
+        quantile(xx, probs = 1 - quantile_prob, na.rm = TRUE)
+      })
+
+    res_varpart$part$indfract$Adj.R.square <-
+      rowMeans(sapply(res_perm, function(x) {
+        (x$part$indfract$Adj.R.square)
+      }))
+    res_varpart$part$indfract$Adj.R.squared_quantil_max <-
+      apply(sapply(res_perm, function(x) {
+        (x$part$indfract$Adj.R.square)
+      }), 1, function(xx) {
+        quantile(xx, probs = quantile_prob, na.rm = TRUE)
+      })
+    res_varpart$part$indfract$Adj.R.squared_quantil_min <-
+      apply(sapply(res_perm, function(x) {
+        (x$part$indfract$Adj.R.square)
+      }), 1, function(xx) {
+        quantile(xx, probs = 1 - quantile_prob, na.rm = TRUE)
+      })
+    return(res_varpart)
+
+
+    res_varpart$Xnames <- names(list_component)
+    return(res_varpart)
+  }
 ################################################################################
