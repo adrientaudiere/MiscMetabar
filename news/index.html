@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.00</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +72,28 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.8" id="miscmetabar-08-in-development">MiscMetabar 0.8 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-08-in-development"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.9.1" id="miscmetabar-091-in-development">MiscMetabar 0.9.1 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-091-in-development"></a></h2>
+<div class="section level3">
+<h3 id="new-functions-0-9-1">New functions<a class="anchor" aria-label="anchor" href="#new-functions-0-9-1"></a></h3>
+<ul><li>Add functions [taxa_as_rows()] and [taxa_as_columns()] to replace verbose called to [clean_pq()]</li>
+<li>Add function [ggscatt_pq()] to plot and test for effect of a numerical columns in sam_data on Hill number. Its the equivalent for numerical variables of [ggbetween_pq()] which focus on the effect of a factor.</li>
+<li>Add functions [var_par_pq()] , [var_par_rarperm_pq()] and [plot_var_part_pq()] to compute the partition of the variation of community and plot it. It introduce the notion of <code>rarperm</code> part in the function name. It refers to the fact that this function compute permutation of samples depth rarefaction to measure the variation due to the random process in rarefaction.</li>
+<li>Add function [hill_test_rarperm_pq()] to test the effect of a factor on hill diversity accounting for the variation due to random nature of the rarefaction by sample depth.</li>
+<li>Add function [rarefy_sample_count_by_modality()] to equalize the number of samples for each levels of a modality (factor)</li>
+<li>Add function [accu_plot_balanced_modality()] to plot accumulation curves with balanced modality (same number of samples per level) and depth rarefaction (same number of sequences per sample)</li>
+<li>Add function [adonis_rarperm_pq()] to compute multiple Permanova analyses on different sample depth rarefaction.</li>
+<li>Add function [ggaluv_pq()] to plot taxonomic distribution in alluvial fashion with ggplot2 (using the [ggalluvial] package)</li>
+<li>Add function [glmutli_pq()] to use automated model selection and multimodel inference with (G)LMs for phyloseq object</li>
+</ul></div>
+<div class="section level3">
+<h3 id="new-parameters-0-9-1">New parameters<a class="anchor" aria-label="anchor" href="#new-parameters-0-9-1"></a></h3>
+<ul><li>Add param <code>taxa_ranks</code> in function [psmelt_samples_pq()] to group results by samples AND taxonomic ranks.</li>
+<li>Add param <code>hill_scales</code> in functions [hill_tuckey_pq()] and [hill_pq()] to choose the level of the hill number.</li>
+<li>Add param <code>na_remove</code> in function <code><a href="../reference/hill_pq.html">hill_pq()</a></code> to remove samples with NA in the factor fact.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.8.1" id="miscmetabar-081">MiscMetabar 0.8.1<a class="anchor" aria-label="anchor" href="#miscmetabar-081"></a></h2>
 <ul><li>Add param <code>plot_with_tuckey</code> to <code><a href="../reference/hill_pq.html">hill_pq()</a></code>.,</li>
 <li>Add function <code><a href="../reference/formattable_pq.html">formattable_pq()</a></code> to make beautiful table of the distribution of taxa across a modality using visualization inside in the table.</li>
 <li>Add functions <code><a href="../reference/fac2col.html">fac2col()</a></code> and <code><a href="../reference/transp.html">transp()</a></code> to facilitate manipulation of colors, especially in function <code><a href="../reference/formattable_pq.html">formattable_pq()</a></code>

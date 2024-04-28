@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.00</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +91,7 @@
           
           <code><a href="summary_plot_pq.html">summary_plot_pq()</a></code> 
         </dt>
-        <dd>Summarise a <code>phyloseq-class</code> object using a plot.</dd>
+        <dd>Summarize a <code>phyloseq-class</code> object using a plot.</dd>
       </dl><dl><dt>
           
           <code><a href="tbl_sum_samdata.html">tbl_sum_samdata()</a></code> 
@@ -121,21 +121,6 @@
 
       <dl><dt>
           
-          <code><a href="add_funguild_info.html">add_funguild_info()</a></code> 
-        </dt>
-        <dd>Add information about Guild for FUNGI the FUNGuild databse</dd>
-      </dl><dl><dt>
-          
-          <code><a href="funguild_assign.html">funguild_assign()</a></code> 
-        </dt>
-        <dd>Assign Guilds to Organisms Based on Taxonomic Classification</dd>
-      </dl><dl><dt>
-          
-          <code><a href="get_funguild_db.html">get_funguild_db()</a></code> 
-        </dt>
-        <dd>Retrieve the FUNGuild database</dd>
-      </dl><dl><dt>
-          
           <code><a href="add_new_taxonomy_pq.html">add_new_taxonomy_pq()</a></code> 
         </dt>
         <dd>Add new taxonomic rank to a phyloseq object.</dd>
@@ -163,7 +148,7 @@
           
           <code><a href="filter_asv_blast.html">filter_asv_blast()</a></code> 
         </dt>
-        <dd>Filter undesirable taxa using blast against a against a custom database.</dd>
+        <dd>Filter undesirable taxa using blast against a custom database.</dd>
       </dl></div><div class="section level2">
       
       <h3 id="function-to-add-information-from-taxonomy">Function to add information from taxonomy<a class="anchor" aria-label="anchor" href="#function-to-add-information-from-taxonomy"></a></h3>
@@ -210,7 +195,17 @@
           
           <code><a href="normalize_prop_pq.html">normalize_prop_pq()</a></code> 
         </dt>
-        <dd>Normalize otu table using samples depth</dd>
+        <dd>Normalize OTU table using samples depth</dd>
+      </dl><dl><dt>
+          
+          <code><a href="taxa_as_rows.html">taxa_as_rows()</a></code> 
+        </dt>
+        <dd>Force taxa to be in columns in the otu_table of a physeq object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="taxa_as_columns.html">taxa_as_columns()</a></code> 
+        </dt>
+        <dd>Force taxa to be in columns in the otu_table of a physeq object</dd>
       </dl></div><div class="section level2">
       
       <h3 id="subset-merge-taxa">Subset/merge taxa<a class="anchor" aria-label="anchor" href="#subset-merge-taxa"></a></h3>
@@ -255,14 +250,24 @@
 
       <dl><dt>
           
+          <code><a href="merge_samples2.html">merge_samples2()</a></code> 
+        </dt>
+        <dd>Merge samples by a sample variable or factor</dd>
+      </dl><dl><dt>
+          
+          <code><a href="rarefy_sample_count_by_modality.html">rarefy_sample_count_by_modality()</a></code> 
+        </dt>
+        <dd>Rarefy (equalize) the number of samples per modality of a factor</dd>
+      </dl><dl><dt>
+          
           <code><a href="select_one_sample.html">select_one_sample()</a></code> 
         </dt>
         <dd>Select one sample from a physeq object</dd>
       </dl><dl><dt>
           
-          <code><a href="merge_samples2.html">merge_samples2()</a></code> 
+          <code><a href="subset_samples_pq.html">subset_samples_pq()</a></code> 
         </dt>
-        <dd>Merge samples by a sample variable or factor</dd>
+        <dd>Subset samples using a conditional boolean vector.</dd>
       </dl></div><div class="section level2">
       
       <h3 id="-re-clustering-otu-table">(Re)clustering OTU table<a class="anchor" aria-label="anchor" href="#-re-clustering-otu-table"></a></h3>
@@ -338,9 +343,9 @@
 
       <dl><dt>
           
-          <code><a href="subset_samples_pq.html">subset_samples_pq()</a></code> 
+          <code><a href="add_info_to_sam_data.html">add_info_to_sam_data()</a></code> 
         </dt>
-        <dd>Subset samples using a conditional boolean vector.</dd>
+        <dd>Add information to sample_data slot of a phyloseq-class object</dd>
       </dl></div><div class="section level2">
       
       <h3 id="phylogenetic-tree">Phylogenetic tree<a class="anchor" aria-label="anchor" href="#phylogenetic-tree"></a></h3>
@@ -402,14 +407,39 @@
         <dd>Plot accumulation curves for <code>phyloseq-class</code> object</dd>
       </dl><dl><dt>
           
+          <code><a href="accu_plot_balanced_modality.html">accu_plot_balanced_modality()</a></code> 
+        </dt>
+        <dd>Plot accumulation curves with balanced modality and depth rarefaction</dd>
+      </dl><dl><dt>
+          
           <code><a href="accu_samp_threshold.html">accu_samp_threshold()</a></code> 
         </dt>
         <dd>Compute the number of sequence to obtain a given proportion of ASV in accumulation curves</dd>
       </dl><dl><dt>
           
+          <code><a href="ggbetween_pq.html">ggbetween_pq()</a></code> 
+        </dt>
+        <dd>Box/Violin plots for between-subjects comparisons of Hill Number</dd>
+      </dl><dl><dt>
+          
+          <code><a href="ggscatt_pq.html">ggscatt_pq()</a></code> 
+        </dt>
+        <dd>Scatterplot with marginal distributions and statistical results against Hill diversity of phyloseq object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="glmutli_pq.html">glmutli_pq()</a></code> 
+        </dt>
+        <dd>Automated model selection and multimodel inference with (G)LMs for phyloseq</dd>
+      </dl><dl><dt>
+          
           <code><a href="hill_pq.html">hill_pq()</a></code> 
         </dt>
         <dd>Graphical representation of hill number 0, 1 and 2 across a factor</dd>
+      </dl><dl><dt>
+          
+          <code><a href="hill_test_rarperm_pq.html">hill_test_rarperm_pq()</a></code> 
+        </dt>
+        <dd>Test multiple times effect of factor on Hill diversity with different rarefaction even depth</dd>
       </dl><dl><dt>
           
           <code><a href="hill_tuckey_pq.html">hill_tuckey_pq()</a></code> 
@@ -420,11 +450,6 @@
           <code><a href="iNEXT_pq.html">iNEXT_pq()</a></code> 
         </dt>
         <dd>iNterpolation and EXTrapolation of Hill numbers (with iNEXT)</dd>
-      </dl><dl><dt>
-          
-          <code><a href="ggbetween_pq.html">ggbetween_pq()</a></code> 
-        </dt>
-        <dd>Box/Violin plots for between-subjects comparisons of Hill Number</dd>
       </dl></div><div class="section level2">
       
       <h3 id="beta-diversity">beta-diversity<a class="anchor" aria-label="anchor" href="#beta-diversity"></a></h3>
@@ -438,14 +463,14 @@
 
       <dl><dt>
           
-          <code><a href="accu_samp_threshold.html">accu_samp_threshold()</a></code> 
-        </dt>
-        <dd>Compute the number of sequence to obtain a given proportion of ASV in accumulation curves</dd>
-      </dl><dl><dt>
-          
           <code><a href="adonis_pq.html">adonis_pq()</a></code> 
         </dt>
         <dd>Permanova on a phyloseq object</dd>
+      </dl><dl><dt>
+          
+          <code><a href="adonis_rarperm_pq.html">adonis_rarperm_pq()</a></code> 
+        </dt>
+        <dd>Permanova (adonis) on permutations of rarefaction even depth</dd>
       </dl><dl><dt>
           
           <code><a href="biplot_pq.html">biplot_pq()</a></code> 
@@ -508,11 +533,6 @@
         <dd>Ridge plot of a phyloseq object</dd>
       </dl><dl><dt>
           
-          <code><a href="sankey_pq.html">sankey_pq()</a></code> 
-        </dt>
-        <dd>Sankey plot of <code>phyloseq-class</code> object</dd>
-      </dl><dl><dt>
-          
           <code><a href="SRS_curve_pq.html">SRS_curve_pq()</a></code> 
         </dt>
         <dd>Scaling with ranked subsampling (SRS) curve of phyloseq object</dd>
@@ -531,6 +551,21 @@
           <code><a href="upset_test_pq.html">upset_test_pq()</a></code> 
         </dt>
         <dd>Test for differences between intersections</dd>
+      </dl><dl><dt>
+          
+          <code><a href="var_par_pq.html">var_par_pq()</a></code> 
+        </dt>
+        <dd>Partition the Variation of a phyloseq object by 2, 3, or 4 Explanatory Matrices</dd>
+      </dl><dl><dt>
+          
+          <code><a href="var_par_rarperm_pq.html">var_par_rarperm_pq()</a></code> 
+        </dt>
+        <dd>Partition the Variation of a phyloseq object with rarefaction permutations</dd>
+      </dl><dl><dt>
+          
+          <code><a href="plot_var_part_pq.html">plot_var_part_pq()</a></code> 
+        </dt>
+        <dd>Plot the partition the variation of a phyloseq object</dd>
       </dl><dl><dt>
           
           <code><a href="venn_pq.html">venn_pq()</a></code> 
@@ -600,6 +635,11 @@
 
       <dl><dt>
           
+          <code><a href="ggaluv_pq.html">ggaluv_pq()</a></code> 
+        </dt>
+        <dd>Alluvial plot for taxonomy and samples factor vizualisation</dd>
+      </dl><dl><dt>
+          
           <code><a href="heat_tree_pq.html">heat_tree_pq()</a></code> 
         </dt>
         <dd>Heat tree from <code>metacoder</code> package using <code>tax_table</code> slot</dd>
@@ -640,6 +680,11 @@
         <dd>rotl wrapper for phyloseq data</dd>
       </dl><dl><dt>
           
+          <code><a href="sankey_pq.html">sankey_pq()</a></code> 
+        </dt>
+        <dd>Sankey plot of <code>phyloseq-class</code> object</dd>
+      </dl><dl><dt>
+          
           <code><a href="search_exact_seq_pq.html">search_exact_seq_pq()</a></code> 
         </dt>
         <dd>Search for exact matching of sequences using complement, reverse and reverse-complement</dd>
@@ -678,7 +723,7 @@
           
           <code><a href="distri_1_taxa.html">distri_1_taxa()</a></code> 
         </dt>
-        <dd>Distribution of sequences across a factor for one taxa</dd>
+        <dd>Distribution of sequences across a factor for one taxon</dd>
       </dl><dl><dt>
           
           <code><a href="taxa_only_in_one_level.html">taxa_only_in_one_level()</a></code> 
@@ -772,7 +817,7 @@
           
           <code><a href="track_wkflow_samples.html">track_wkflow_samples()</a></code> 
         </dt>
-        <dd>Track the number of reads (= sequences), samples and cluster (e.g. ASV) for each samples.</dd>
+        <dd>Track the number of reads (= sequences), samples and cluster (e.g. ASV) for each sample</dd>
       </dl></div><div class="section level2">
       
       <h3 id="sample-data-management">Sample data management<a class="anchor" aria-label="anchor" href="#sample-data-management"></a></h3>
@@ -801,14 +846,9 @@
         <dd>Load sample data from file and rename samples using names of samples and an optional order</dd>
       </dl><dl><dt>
           
-          <code><a href="add_info_to_sam_data.html">add_info_to_sam_data()</a></code> 
-        </dt>
-        <dd>Add information to sample_data slot of a phyloseq-class object</dd>
-      </dl><dl><dt>
-          
           <code><a href="psmelt_samples_pq.html">psmelt_samples_pq()</a></code> 
         </dt>
-        <dd>Build a samples information data.frame from physeq object</dd>
+        <dd>Build a sample information tibble from physeq object</dd>
       </dl></div><div class="section level2">
       
       <h3 id="taxonomy-management">Taxonomy management<a class="anchor" aria-label="anchor" href="#taxonomy-management"></a></h3>
@@ -860,9 +900,9 @@
           
           <code><a href="Tengeler2020_pq.html">Tengeler2020_pq</a></code> 
         </dt>
-        <dd>This tutorial explore the dataset from Tengeler et al. (2020) available in the <code>mia</code> package. obtain using <code>mia::makePhyloseqFromTreeSE(Tengeler2020)</code></dd>
+        <dd>This tutorial explores the dataset from Tengeler et al. (2020) available in the <code>mia</code> package. obtained using <code>mia::makePhyloseqFromTreeSE(Tengeler2020)</code></dd>
       </dl></div><div class="section level2">
-      <h2 id="others-utilities">Others utilities<a class="anchor" aria-label="anchor" href="#others-utilities"></a></h2>
+      <h2 id="other-utilities">Other utilities<a class="anchor" aria-label="anchor" href="#other-utilities"></a></h2>
       
       
 

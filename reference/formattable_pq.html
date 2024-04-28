@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.00</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -205,9 +205,9 @@ use this function.</p>
 <span class="r-in"><span>    taxonomic_levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Order"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span>, <span class="st">"Species"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    formattable_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>      Order <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>      Species <span class="op">=</span> <span class="fu">formatter</span><span class="op">(</span></span></span>
+<span class="r-in"><span>      Species <span class="op">=</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/formatter.html" class="external-link">formatter</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>        <span class="st">"span"</span>,</span></span>
-<span class="r-in"><span>        style <span class="op">=</span> <span class="va">x</span> <span class="op">~</span> <span class="fu">style</span><span class="op">(</span></span></span>
+<span class="r-in"><span>        style <span class="op">=</span> <span class="va">x</span> <span class="op">~</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/style.html" class="external-link">style</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>          <span class="st">"font-style"</span> <span class="op">=</span> <span class="st">"italic"</span>,</span></span>
 <span class="r-in"><span>          `color` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="st">"white"</span>, <span class="st">"grey"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>        <span class="op">)</span></span></span>
@@ -215,69 +215,6 @@ use this function.</p>
 <span class="r-in"><span>    <span class="op">)</span>,</span></span>
 <span class="r-in"><span>    arrange_by <span class="op">=</span> <span class="st">"Family"</span>,</span></span>
 <span class="r-in"><span>    descending_order <span class="op">=</span> <span class="cn">FALSE</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="co">## Distribution of the nb of sequences per OTU across Height modality</span></span></span>
-<span class="r-in"><span>  <span class="co">##  (nb of sequences are log-transformed).</span></span></span>
-<span class="r-in"><span>  <span class="co">## OTU name background is light gray for Basidiomycota</span></span></span>
-<span class="r-in"><span>  <span class="co">##  and dark grey otherwise (Ascomycota)</span></span></span>
-<span class="r-in"><span>  <span class="co">## A different color is defined for each modality level</span></span></span>
-<span class="r-in"><span>  <span class="fu">formattable_pq</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="va">data_fungi</span>,</span></span>
-<span class="r-in"><span>    <span class="st">"Height"</span>,</span></span>
-<span class="r-in"><span>    taxonomic_levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Phylum"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    void_style <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
-<span class="r-in"><span>    formattable_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>      OTU <span class="op">=</span> <span class="fu">formatter</span><span class="op">(</span></span></span>
-<span class="r-in"><span>        <span class="st">"span"</span>,</span></span>
-<span class="r-in"><span>        style <span class="op">=</span> <span class="op">~</span> <span class="fu">style</span><span class="op">(</span></span></span>
-<span class="r-in"><span>          <span class="st">"display"</span> <span class="op">=</span> <span class="st">"block"</span>,</span></span>
-<span class="r-in"><span>          `border-radius` <span class="op">=</span> <span class="st">"5px"</span>,</span></span>
-<span class="r-in"><span>          `background-color` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">Phylum</span> <span class="op">==</span> <span class="st">"Basidiomycota"</span>, <span class="fu"><a href="transp.html">transp</a></span><span class="op">(</span><span class="st">"gray"</span><span class="op">)</span>, <span class="st">"gray"</span><span class="op">)</span></span></span>
-<span class="r-in"><span>        <span class="op">)</span>,</span></span>
-<span class="r-in"><span>        `padding-right` <span class="op">=</span> <span class="st">"2px"</span></span></span>
-<span class="r-in"><span>      <span class="op">)</span>,</span></span>
-<span class="r-in"><span>      High <span class="op">=</span> <span class="fu">formatter</span><span class="op">(</span></span></span>
-<span class="r-in"><span>        <span class="st">"span"</span>,</span></span>
-<span class="r-in"><span>        style <span class="op">=</span> <span class="va">x</span> <span class="op">~</span> <span class="fu">style</span><span class="op">(</span></span></span>
-<span class="r-in"><span>          <span class="st">"font-size"</span> <span class="op">=</span> <span class="st">"80%"</span>,</span></span>
-<span class="r-in"><span>          <span class="st">"display"</span> <span class="op">=</span> <span class="st">"inline-block"</span>,</span></span>
-<span class="r-in"><span>          direction <span class="op">=</span> <span class="st">"rtl"</span>,</span></span>
-<span class="r-in"><span>          `border-radius` <span class="op">=</span> <span class="st">"0px"</span>,</span></span>
-<span class="r-in"><span>          `padding-right` <span class="op">=</span> <span class="st">"2px"</span>,</span></span>
-<span class="r-in"><span>          `background-color` <span class="op">=</span> <span class="fu">csscolor</span><span class="op">(</span><span class="fu">gradient</span><span class="op">(</span></span></span>
-<span class="r-in"><span>            <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="transp.html">transp</a></span><span class="op">(</span><span class="st">"#1a91ff"</span><span class="op">)</span>, <span class="st">"#1a91ff"</span></span></span>
-<span class="r-in"><span>          <span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>          width <span class="op">=</span> <span class="fu">percent</span><span class="op">(</span><span class="fu">proportion</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>        <span class="op">)</span></span></span>
-<span class="r-in"><span>      <span class="op">)</span>,</span></span>
-<span class="r-in"><span>      Low <span class="op">=</span> <span class="fu">formatter</span><span class="op">(</span></span></span>
-<span class="r-in"><span>        <span class="st">"span"</span>,</span></span>
-<span class="r-in"><span>        style <span class="op">=</span> <span class="va">x</span> <span class="op">~</span> <span class="fu">style</span><span class="op">(</span></span></span>
-<span class="r-in"><span>          <span class="st">"font-size"</span> <span class="op">=</span> <span class="st">"80%"</span>,</span></span>
-<span class="r-in"><span>          <span class="st">"display"</span> <span class="op">=</span> <span class="st">"inline-block"</span>,</span></span>
-<span class="r-in"><span>          direction <span class="op">=</span> <span class="st">"rtl"</span>,</span></span>
-<span class="r-in"><span>          `border-radius` <span class="op">=</span> <span class="st">"0px"</span>,</span></span>
-<span class="r-in"><span>          `padding-right` <span class="op">=</span> <span class="st">"2px"</span>,</span></span>
-<span class="r-in"><span>          `background-color` <span class="op">=</span> <span class="fu">csscolor</span><span class="op">(</span><span class="fu">gradient</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="transp.html">transp</a></span><span class="op">(</span><span class="st">"green"</span><span class="op">)</span>, <span class="st">"green"</span><span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>          width <span class="op">=</span> <span class="fu">percent</span><span class="op">(</span><span class="fu">proportion</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>        <span class="op">)</span></span></span>
-<span class="r-in"><span>      <span class="op">)</span>,</span></span>
-<span class="r-in"><span>      Middle <span class="op">=</span> <span class="fu">formatter</span><span class="op">(</span></span></span>
-<span class="r-in"><span>        <span class="st">"span"</span>,</span></span>
-<span class="r-in"><span>        style <span class="op">=</span> <span class="va">x</span> <span class="op">~</span> <span class="fu">style</span><span class="op">(</span></span></span>
-<span class="r-in"><span>          <span class="st">"font-size"</span> <span class="op">=</span> <span class="st">"80%"</span>,</span></span>
-<span class="r-in"><span>          <span class="st">"display"</span> <span class="op">=</span> <span class="st">"inline-block"</span>,</span></span>
-<span class="r-in"><span>          direction <span class="op">=</span> <span class="st">"rtl"</span>,</span></span>
-<span class="r-in"><span>          `border-radius` <span class="op">=</span> <span class="st">"0px"</span>,</span></span>
-<span class="r-in"><span>          `padding-right` <span class="op">=</span> <span class="st">"2px"</span>,</span></span>
-<span class="r-in"><span>          `background-color` <span class="op">=</span> <span class="fu">csscolor</span><span class="op">(</span><span class="fu">gradient</span><span class="op">(</span></span></span>
-<span class="r-in"><span>            <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="transp.html">transp</a></span><span class="op">(</span><span class="st">"orange"</span><span class="op">)</span>, <span class="st">"orange"</span></span></span>
-<span class="r-in"><span>          <span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>          width <span class="op">=</span> <span class="fu">percent</span><span class="op">(</span><span class="fu">proportion</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>        <span class="op">)</span></span></span>
-<span class="r-in"><span>      <span class="op">)</span></span></span>
-<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: formattable</span>
@@ -308,7 +245,84 @@ use this function.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 148</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa and 0 samples.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(OTU)`</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in formatter("span", style = x ~ style(`font-style` = "italic",     color = ifelse(is.na(x), "white", "grey"))):</span> could not find function "formatter"</span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"formattable"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="co">## Distribution of the nb of sequences per OTU across Height modality</span></span></span>
+<span class="r-in"><span>  <span class="co">##  (nb of sequences are log-transformed).</span></span></span>
+<span class="r-in"><span>  <span class="co">## OTU name background is light gray for Basidiomycota</span></span></span>
+<span class="r-in"><span>  <span class="co">##  and dark grey otherwise (Ascomycota)</span></span></span>
+<span class="r-in"><span>  <span class="co">## A different color is defined for each modality level</span></span></span>
+<span class="r-in"><span>  <span class="fu">formattable_pq</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">data_fungi</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Height"</span>,</span></span>
+<span class="r-in"><span>    taxonomic_levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Phylum"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    void_style <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>    formattable_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      OTU <span class="op">=</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/formatter.html" class="external-link">formatter</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="st">"span"</span>,</span></span>
+<span class="r-in"><span>        style <span class="op">=</span> <span class="op">~</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/style.html" class="external-link">style</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>          <span class="st">"display"</span> <span class="op">=</span> <span class="st">"block"</span>,</span></span>
+<span class="r-in"><span>          `border-radius` <span class="op">=</span> <span class="st">"5px"</span>,</span></span>
+<span class="r-in"><span>          `background-color` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">Phylum</span> <span class="op">==</span> <span class="st">"Basidiomycota"</span>, <span class="fu"><a href="transp.html">transp</a></span><span class="op">(</span><span class="st">"gray"</span><span class="op">)</span>, <span class="st">"gray"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="op">)</span>,</span></span>
+<span class="r-in"><span>        `padding-right` <span class="op">=</span> <span class="st">"2px"</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span>,</span></span>
+<span class="r-in"><span>      High <span class="op">=</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/formatter.html" class="external-link">formatter</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="st">"span"</span>,</span></span>
+<span class="r-in"><span>        style <span class="op">=</span> <span class="va">x</span> <span class="op">~</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/style.html" class="external-link">style</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>          <span class="st">"font-size"</span> <span class="op">=</span> <span class="st">"80%"</span>,</span></span>
+<span class="r-in"><span>          <span class="st">"display"</span> <span class="op">=</span> <span class="st">"inline-block"</span>,</span></span>
+<span class="r-in"><span>          direction <span class="op">=</span> <span class="st">"rtl"</span>,</span></span>
+<span class="r-in"><span>          `border-radius` <span class="op">=</span> <span class="st">"0px"</span>,</span></span>
+<span class="r-in"><span>          `padding-right` <span class="op">=</span> <span class="st">"2px"</span>,</span></span>
+<span class="r-in"><span>          `background-color` <span class="op">=</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/csscolor.html" class="external-link">csscolor</a></span><span class="op">(</span><span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/gradient.html" class="external-link">gradient</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>            <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="transp.html">transp</a></span><span class="op">(</span><span class="st">"#1a91ff"</span><span class="op">)</span>, <span class="st">"#1a91ff"</span></span></span>
+<span class="r-in"><span>          <span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>          width <span class="op">=</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/percent.html" class="external-link">percent</a></span><span class="op">(</span><span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/proportion.html" class="external-link">proportion</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span>,</span></span>
+<span class="r-in"><span>      Low <span class="op">=</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/formatter.html" class="external-link">formatter</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="st">"span"</span>,</span></span>
+<span class="r-in"><span>        style <span class="op">=</span> <span class="va">x</span> <span class="op">~</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/style.html" class="external-link">style</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>          <span class="st">"font-size"</span> <span class="op">=</span> <span class="st">"80%"</span>,</span></span>
+<span class="r-in"><span>          <span class="st">"display"</span> <span class="op">=</span> <span class="st">"inline-block"</span>,</span></span>
+<span class="r-in"><span>          direction <span class="op">=</span> <span class="st">"rtl"</span>,</span></span>
+<span class="r-in"><span>          `border-radius` <span class="op">=</span> <span class="st">"0px"</span>,</span></span>
+<span class="r-in"><span>          `padding-right` <span class="op">=</span> <span class="st">"2px"</span>,</span></span>
+<span class="r-in"><span>          `background-color` <span class="op">=</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/csscolor.html" class="external-link">csscolor</a></span><span class="op">(</span><span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/gradient.html" class="external-link">gradient</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>            <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>            <span class="fu"><a href="transp.html">transp</a></span><span class="op">(</span><span class="st">"green"</span><span class="op">)</span>, <span class="st">"green"</span></span></span>
+<span class="r-in"><span>          <span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>          width <span class="op">=</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/percent.html" class="external-link">percent</a></span><span class="op">(</span><span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/proportion.html" class="external-link">proportion</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span>,</span></span>
+<span class="r-in"><span>      Middle <span class="op">=</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/formatter.html" class="external-link">formatter</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="st">"span"</span>,</span></span>
+<span class="r-in"><span>        style <span class="op">=</span> <span class="va">x</span> <span class="op">~</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/style.html" class="external-link">style</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>          <span class="st">"font-size"</span> <span class="op">=</span> <span class="st">"80%"</span>,</span></span>
+<span class="r-in"><span>          <span class="st">"display"</span> <span class="op">=</span> <span class="st">"inline-block"</span>,</span></span>
+<span class="r-in"><span>          direction <span class="op">=</span> <span class="st">"rtl"</span>,</span></span>
+<span class="r-in"><span>          `border-radius` <span class="op">=</span> <span class="st">"0px"</span>,</span></span>
+<span class="r-in"><span>          `padding-right` <span class="op">=</span> <span class="st">"2px"</span>,</span></span>
+<span class="r-in"><span>          `background-color` <span class="op">=</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/csscolor.html" class="external-link">csscolor</a></span><span class="op">(</span><span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/gradient.html" class="external-link">gradient</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>            <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="transp.html">transp</a></span><span class="op">(</span><span class="st">"orange"</span><span class="op">)</span>, <span class="st">"orange"</span></span></span>
+<span class="r-in"><span>          <span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>          width <span class="op">=</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/percent.html" class="external-link">percent</a></span><span class="op">(</span><span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/proportion.html" class="external-link">proportion</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 54 samples were discarded due to NA in variable modality</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 5 sample(s) ( DY5-004-M_S98_MERGED.fastq.gz / E9-009-B_S100_MERGED.fastq.gz / O21-007-M_S144_MERGED.fastq.gz / Y29-007-H_S182_MERGED.fastq.gz / Y29-007-M_S183_MERGED.fastq.gz ).</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 1420</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 1265</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 155</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 126</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa and 0 samples.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(OTU)`</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
