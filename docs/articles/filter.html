@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.00</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -194,7 +194,7 @@ similar quality (score) that could be found just by chance.</li>
 <span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="va">blast_error_or_not</span> <span class="op">&lt;-</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.html" class="external-link">system</a></span><span class="op">(</span><span class="st">"blastn 2&gt;&amp;1"</span>, intern <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu">is</span><span class="op">(</span><span class="va">blast_error_or_not</span>, <span class="st">"try-error"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/methods/is.html" class="external-link">is</a></span><span class="op">(</span><span class="va">blast_error_or_not</span>, <span class="st">"try-error"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">df_blast_80</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_asv_blast.html">filter_asv_blast</a></span><span class="op">(</span><span class="va">df_basidio</span>, fasta_for_db <span class="op">=</span> <span class="va">path_db</span><span class="op">)</span></span>
 <span>  <span class="va">df_blast_50</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/filter_asv_blast.html">filter_asv_blast</a></span><span class="op">(</span><span class="va">df_basidio</span>,</span>
 <span>    fasta_for_db <span class="op">=</span> <span class="va">path_db</span>,</span>
@@ -212,7 +212,7 @@ similar quality (score) that could be found just by chance.</li>
 <span>    <span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu">is</span><span class="op">(</span><span class="va">blast_error_or_not</span>, <span class="st">"try-error"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/methods/is.html" class="external-link">is</a></span><span class="op">(</span><span class="va">blast_error_or_not</span>, <span class="st">"try-error"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/formattable.html" class="external-link">formattable</a></span><span class="op">(</span></span>
 <span>    <span class="va">track_formattable</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -401,7 +401,7 @@ cutoff_seq
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 98.83%">1817543</span>
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 93.11%">1402</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 93.40%">1402</span>
 </td>
 <td style="text-align:right;">
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
@@ -412,10 +412,10 @@ cutoff_seq
 cutoff_mixt
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 96.30%">1771124</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 96.33%">1771585</span>
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 46.07%">1279</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 49.06%">1281</span>
 </td>
 <td style="text-align:right;">
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
@@ -429,7 +429,7 @@ cutoff_diff
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 98.16%">1805274</span>
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 83.93%">1378</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 84.61%">1378</span>
 </td>
 <td style="text-align:right;">
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
@@ -440,10 +440,10 @@ cutoff_diff
 min
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 99.84%">1836158</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 99.83%">1835949</span>
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 98.85%">1417</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 98.90%">1417</span>
 </td>
 <td style="text-align:right;">
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
@@ -454,10 +454,10 @@ min
 max
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 95.47%">1755811</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 95.55%">1757372</span>
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 30.00%">1237</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 30.00%">1229</span>
 </td>
 <td style="text-align:right;">
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
@@ -468,10 +468,10 @@ max
 mean
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 97.34%">1790270</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: cyan; width: 97.42%">1791685</span>
 </td>
 <td style="text-align:right;">
-<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 62.51%">1322</span>
+<span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: yellowgreen; width: 66.65%">1329</span>
 </td>
 <td style="text-align:right;">
 <span style="display: inline-block; direction: rtl; unicode-bidi: plaintext; border-radius: 4px; padding-right: 2px; background-color: lightpink; width: 100.00%">185</span>
@@ -509,8 +509,8 @@ mean
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] formattable_0.2.1  MiscMetabar_0.8.00 purrr_1.0.2        dplyr_1.1.4       </span></span>
-<span><span class="co">#&gt; [5] dada2_1.30.0       Rcpp_1.0.12        ggplot2_3.5.0      phyloseq_1.46.0   </span></span>
+<span><span class="co">#&gt; [1] formattable_0.2.1 MiscMetabar_0.9.1 purrr_1.0.2       dplyr_1.1.4      </span></span>
+<span><span class="co">#&gt; [5] dada2_1.30.0      Rcpp_1.0.12       ggplot2_3.5.0     phyloseq_1.46.0  </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;   [1] bitops_1.0-7                pbapply_1.7-2              </span></span>

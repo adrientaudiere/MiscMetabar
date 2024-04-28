@@ -115,6 +115,9 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/accu_plot.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/accu_plot_balanced_modality.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/accu_samp_threshold.html</loc>
   </url>
   <url>
@@ -134,6 +137,9 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/adonis_pq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/adonis_rarperm_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/all_object_size.html</loc>
@@ -238,10 +244,19 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/get_funguild_db.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/ggaluv_pq.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/ggbetween_pq.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/ggscatt_pq.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/ggvenn_pq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/glmutli_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/graph_test_pq.html</loc>
@@ -251,6 +266,9 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/hill_pq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/hill_test_rarperm_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/hill_tuckey_pq.html</loc>
@@ -367,7 +385,13 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_tsne_pq.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_var_part_pq.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/psmelt_samples_pq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/rarefy_sample_count_by_modality.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/read_pq.html</loc>
@@ -439,6 +463,12 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/tax_datatable.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/taxa_as_columns.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/taxa_as_rows.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/taxa_only_in_one_level.html</loc>
   </url>
   <url>
@@ -467,6 +497,12 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/upset_test_pq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/var_par_pq.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/reference/var_par_rarperm_pq.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/reference/venn_pq.html</loc>
