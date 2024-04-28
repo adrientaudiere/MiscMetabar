@@ -87,7 +87,7 @@ summary_plot_pq(data_fungi)
 ### Alpha-diversity analysis
 
 ```{r, fig.cap="Hill number 1"}
-p <- MiscMetabar::hill_pq(data_fungi, variable = "Height")
+p <- MiscMetabar::hill_pq(data_fungi, fact = "Height")
 p$plot_Hill_0
 ```
 

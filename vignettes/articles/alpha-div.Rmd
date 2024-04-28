@@ -43,7 +43,7 @@ One way to keep into account for difference in the number of sequences per sampl
 [^Balint15]: Bálint M et al. 2015. Relocation, high-latitude warming and host genetic identity shape the foliar fungal microbiome of poplars. Molecular Ecology 24, 235-248. https://doi.org/10.1111/mec.13018
 
 ```{r, fig.cap="Hill number 1"}
-p <- MiscMetabar::hill_pq(data_fungi, variable = "Height")
+p <- MiscMetabar::hill_pq(data_fungi, fact = "Height")
 p$plot_Hill_0
 ```
 
@@ -73,8 +73,9 @@ From the help of glmulti package :
 
 ```{r}
 library("glmulti")
+formula <- "Hill_0 ~ Hill_1 + Abundance + Time + Height"
 res_glmulti <-
-  glmutli_pq(data_fungi, "Hill_0 ~ Hill_1 + Abundance + Time + Height", level = 1)
+  glmutli_pq(data_fungi, formula = formula, level = 1)
 res_glmulti
 
 ggplot(data = res_glmulti, aes(x = estimates, y = variable)) +
@@ -121,8 +122,9 @@ ggplot(data = res_glmulti, aes(
 
 
 ```{r}
+formula <- "Hill_0 ~ Abundance + Time + Height"
 res_glmulti_interaction <-
-  glmutli_pq(data_fungi, "Hill_0 ~ Abundance + Time + Height", level = 2)
+  glmutli_pq(data_fungi, formula = formula, level = 2)
 res_glmulti_interaction
 
 ggplot(data = res_glmulti_interaction, aes(x = estimates, y = variable)) +
@@ -166,6 +168,7 @@ ggplot(data = res_glmulti_interaction, aes(
   xlab("Importance") +
   ylab(formula)
 ```
+
 # Session information
 
 ```{r}

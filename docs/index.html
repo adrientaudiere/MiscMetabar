@@ -102,12 +102,12 @@
 <a class="anchor" aria-label="anchor" href="#miscmetabar-"></a>
 </h1></div>
 <p>See the pkgdown documentation site <a href="https://adrientaudiere.github.io/MiscMetabar/">here</a> and the <a href="https://doi.org/10.21105/joss.06038" class="external-link">package paper</a> in the Journal Of Open Softwares.</p>
-<p>Biological studies, especially in ecology, health sciences and taxonomy, need to describe the biological composition of samples. During the last twenty years, (i) the development of DNA sequencing, (ii) reference databases, (iii) high-throughput sequencing (HTS), and (iv) bioinformatics resources have allowed the description of biological communities through metabarcoding. Metabarcoding involves the sequencing of millions (<em>meta</em>-) of short regions of specific DNA (<em>-barcoding</em>, Valentini, Pompanon, and Taberlet (2009)) often from environmental samples (eDNA, Taberlet et al. (2012)) such as human stomach contents, lake water, soil and air.</p>
-<p><code>MiscMetabar</code> aims to facilitate the <strong>description</strong>, <strong>transformation</strong>, <strong>exploration</strong> and <strong>reproducibility</strong> of metabarcoding analysis using R. The development of <code>MiscMetabar</code> relies heavily on the R packages <a href="https://benjjneb.github.io/dada2/index.html" class="external-link"><code>dada2</code></a> (Callahan et al. 2016), <a href="https://joey711.github.io/phyloseq/" class="external-link"><code>phyloseq</code></a> (McMurdie and Holmes 2013) and <a href="https://books.ropensci.org/targets/" class="external-link"><code>targets</code></a> (Landau 2021).</p>
+<p>Biological studies, especially in ecology, health sciences and taxonomy, need to describe the biological composition of samples. Over the last twenty years, (i) the development of DNA sequencing, (ii) reference databases, (iii) high-throughput sequencing (HTS), and (iv) bioinformatics resources have enabled the description of biological communities through metabarcoding. Metabarcoding involves the sequencing of millions (<em>meta</em>-) of short regions of specific DNA (<em>-barcoding</em>, Valentini, Pompanon, and Taberlet (2009)) often from environmental samples (eDNA, Taberlet et al. (2012)) such as human stomach contents, lake water, soil, and air.</p>
+<p><code>MiscMetabar</code> aims to facilitate the <strong>description</strong>, <strong>transformation</strong>, <strong>exploration</strong> and <strong>reproducibility</strong> of metabarcoding analyses using R. The development of <code>MiscMetabar</code> relies heavily on the R packages <a href="https://benjjneb.github.io/dada2/index.html" class="external-link"><code>dada2</code></a> (Callahan et al. 2016), <a href="https://joey711.github.io/phyloseq/" class="external-link"><code>phyloseq</code></a> (McMurdie and Holmes 2013) and <a href="https://books.ropensci.org/targets/" class="external-link"><code>targets</code></a> (Landau 2021).</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>There is a CRAN version of MiscMetabar.</p>
+<p>A CRAN version of MiscMetabar is available.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"MiscMetabar"</span><span class="op">)</span></span></code></pre></div>
 <p>You can also install the stable development version from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
@@ -127,9 +127,9 @@
 <h2 id="some-use-of-miscmetabar">Some use of MiscMetabar<a class="anchor" aria-label="anchor" href="#some-use-of-miscmetabar"></a>
 </h2>
 <p>See articles in the <a href="https://adrientaudiere.github.io/MiscMetabar/">MiscMetabar</a> website for more examples.</p>
-<p>For an introduction to metabarcoding in R, Please visite the <a href="https://adrientaudiere.github.io/MiscMetabar/articles/states_of_fields_in_R.html">state of the field</a> articles. The <a href="https://adrientaudiere.github.io/MiscMetabar/articles/import_export_track.html">import, export and track</a> article explains how import and export <code>phyloseq</code> object. Its also show how to summarize useful information (number of sequences, samples and clusters) accross bioinformatic pipelines. The article <a href="https://adrientaudiere.github.io/MiscMetabar/articles/explore_data.html">explore data</a> takes a closer look to different way of explore samples and taxonomical data from <code>phyloseq</code> object.</p>
-<p>If you are interested in ecological metrics, see the articles describing <a href="https://adrientaudiere.github.io/MiscMetabar/articles/alpha-div.html">alpha-diversity</a> and <a href="https://adrientaudiere.github.io/MiscMetabar/articles/beta-div.html">beta-diversity</a> analysis. The article <a href="https://adrientaudiere.github.io/MiscMetabar/articles/filter.html">filter taxa and samples</a> describes some data-filtering processes using MiscMetabar and the <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Reclustering.html">reclustering</a> tutorial introduces the different way of clustering already-clustered OTU/ASV. The article <a href="https://adrientaudiere.github.io/MiscMetabar/articles/tengeler.html">tengeler</a> explore the dataset from Tengeler et al. (2020) using some MiscMetabar functions.</p>
-<p>For developers, I also wrote a article describing som <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html">rules of codes</a>.</p>
+<p>For an introduction to metabarcoding in R, see the <a href="https://adrientaudiere.github.io/MiscMetabar/articles/states_of_fields_in_R.html">state of the field</a> article. The <a href="https://adrientaudiere.github.io/MiscMetabar/articles/import_export_track.html">import, export and tracking</a> article explains how to import and export <code>phyloseq</code> objects. It also shows how to summarize useful information (number of sequences, samples and clusters) across bioinformatic pipelines. The article <a href="https://adrientaudiere.github.io/MiscMetabar/articles/explore_data.html">explore data</a> takes a closer look at different ways to explore samples and taxonomic data from <code>phyloseq</code> object.</p>
+<p>If you are interested in ecological metrics, see the articles describing <a href="https://adrientaudiere.github.io/MiscMetabar/articles/alpha-div.html">alpha-diversity</a> and <a href="https://adrientaudiere.github.io/MiscMetabar/articles/beta-div.html">beta-diversity</a> analysis. The article <a href="https://adrientaudiere.github.io/MiscMetabar/articles/filter.html">filter taxa and samples</a> describes some data filtering processes using MiscMetabar and the <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Reclustering.html">reclustering</a> tutorial introduces the different way of clustering already-clustered OTU/ASV. The article <a href="https://adrientaudiere.github.io/MiscMetabar/articles/tengeler.html">tengeler</a> explore the dataset from Tengeler et al. (2020) using some MiscMetabar functions.</p>
+<p>For developers, I also wrote an article describing some <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html">rules of codes</a>.</p>
 <div class="section level3">
 <h3 id="summarize-a-physeq-object">Summarize a physeq object<a class="anchor" aria-label="anchor" href="#summarize-a-physeq-object"></a>
 </h3>
@@ -145,20 +145,12 @@
 <h3 id="alpha-diversity-analysis">Alpha-diversity analysis<a class="anchor" aria-label="anchor" href="#alpha-diversity-analysis"></a>
 </h3>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">MiscMetabar</span><span class="fu">::</span><span class="fu"><a href="reference/hill_pq.html">hill_pq</a></span><span class="op">(</span><span class="va">data_fungi</span>, variable <span class="op">=</span> <span class="st">"Height"</span><span class="op">)</span></span>
-<span><span class="va">p</span><span class="op">$</span><span class="va">plot_Hill_0</span></span></code></pre></div>
-<div class="figure">
-<img src="reference/figures/README-unnamed-chunk-5-1.png" alt="Hill number 1" width="100%"><p class="caption">
-Hill number 1
-</p>
-</div>
+<code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">MiscMetabar</span><span class="fu">::</span><span class="fu"><a href="reference/hill_pq.html">hill_pq</a></span><span class="op">(</span><span class="va">data_fungi</span>, fact <span class="op">=</span> <span class="st">"Height"</span><span class="op">)</span></span>
+<span><span class="va">p</span><span class="op">$</span><span class="va">plot_Hill_0</span></span>
+<span><span class="co">#&gt; NULL</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p</span><span class="op">$</span><span class="va">plot_tuckey</span></span></code></pre></div>
-<div class="figure">
-<img src="reference/figures/README-unnamed-chunk-6-1.png" alt="Result of the Tuckey post-hoc test" width="100%"><p class="caption">
-Result of the Tuckey post-hoc test
-</p>
-</div>
+<code class="sourceCode R"><span><span class="va">p</span><span class="op">$</span><span class="va">plot_tuckey</span></span>
+<span><span class="co">#&gt; NULL</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="beta-diversity-analysis">Beta-diversity analysis<a class="anchor" aria-label="anchor" href="#beta-diversity-analysis"></a>
@@ -173,10 +165,10 @@ Result of the Tuckey post-hoc test
 <p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="100%"></p>
 </div>
 <div class="section level3">
-<h3 id="note-for-non-linux-users">Note for non-linux users<a class="anchor" aria-label="anchor" href="#note-for-non-linux-users"></a>
+<h3 id="note-for-non-linux-users">Note for non-Linux users<a class="anchor" aria-label="anchor" href="#note-for-non-linux-users"></a>
 </h3>
-<p>Some functions may not work on windows (<em>e.g.</em> <code>track_wflow()</code>, <code><a href="reference/cutadapt_remove_primers.html">cutadapt_remove_primers()</a></code>, <code><a href="reference/krona.html">krona()</a></code>, <code><a href="reference/vsearch_clustering.html">vsearch_clustering()</a></code>, …). A solution is to exploit docker container, for example the using the great <a href="https://rocker-project.org/" class="external-link">rocker project</a>.</p>
-<p>Here is a list of functions with some limitations or not working at all on windows OS:</p>
+<p>Some functions may not work on Windows (<em>e.g.</em> <code>track_wflow()</code>, <code><a href="reference/cutadapt_remove_primers.html">cutadapt_remove_primers()</a></code>, <code><a href="reference/krona.html">krona()</a></code>, <code><a href="reference/vsearch_clustering.html">vsearch_clustering()</a></code>, …). A solution is to exploit docker container, for example the using the great <a href="https://rocker-project.org/" class="external-link">rocker project</a>.</p>
+<p>Here is a list of functions with some limitations or not working at all on Windows OS:</p>
 <ul>
 <li><code><a href="reference/build_phytree_pq.html">build_phytree_pq()</a></code></li>
 <li><code><a href="reference/count_seq.html">count_seq()</a></code></li>
@@ -193,10 +185,10 @@ Result of the Tuckey post-hoc test
 <li><code><a href="reference/tsne_pq.html">tsne_pq()</a></code></li>
 <li><code><a href="reference/venn_pq.html">venn_pq()</a></code></li>
 </ul>
-<p>MiscMetabar is developed under Linux and the vast majority of functions may works on Unix system, but its functionning is not test under iOS.</p>
+<p>MiscMetabar is developed under Linux and the vast majority of functions may works on Unix system, but its functionning is not tested under iOS.</p>
 </div>
 <div class="section level3">
-<h3 id="installation-of-other-softwares-for-debian-linux-distributions">Installation of other softwares for debian Linux distributions<a class="anchor" aria-label="anchor" href="#installation-of-other-softwares-for-debian-linux-distributions"></a>
+<h3 id="installation-of-other-softwares-for-debian-linux-distributions">Installation of other softwares for Debian Linux distributions<a class="anchor" aria-label="anchor" href="#installation-of-other-softwares-for-debian-linux-distributions"></a>
 </h3>
 <p>If you encounter any errors or have any questions about the installation of these softwares, please visit their dedicated websites.</p>
 <div class="section level4">

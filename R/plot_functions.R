@@ -1471,17 +1471,19 @@ hill_pq <- function(physeq,
         "You must set only one parameter of variable or fact. This 2
         parameters are strictly equivalent."
       )
+    } else {
+      variable_fac <- variable
     }
   } else {
     if (!is.null(fact)) {
-      variable <- fact
+      variable_fac <- fact
     } else {
       stop("You must set the parameter fact.")
     }
   }
-  var <- sym(variable)
+  var <- sym(variable_fac)
   if (is.na(color_fac)) {
-    color_fac <- sym(variable)
+    color_fac <- sym(variable_fac)
   } else {
     color_fac <- sym(color_fac)
   }
@@ -1507,7 +1509,7 @@ hill_pq <- function(physeq,
   p_var <-
     hill_tuckey_pq(
       physeq,
-      modality = variable,
+      modality = variable_fac,
       hill_scales = hill_scales,
       correction_for_sample_size = correction_for_sample_size
     )
@@ -1525,9 +1527,9 @@ hill_pq <- function(physeq,
       subtitle_plot <- paste0(
         "Nb of samples: '",
         paste0(
-          names(table(physeq@sam_data[[variable]])),
+          names(table(physeq@sam_data[[variable_fac]])),
           sep = "' : ",
-          table(physeq@sam_data[[variable]]),
+          table(physeq@sam_data[[variable_fac]]),
           collapse = " - '"
         )
       )

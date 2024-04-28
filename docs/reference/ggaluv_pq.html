@@ -87,6 +87,7 @@ package</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ggaluv_pq</span><span class="op">(</span></span>
 <span>  <span class="va">physeq</span>,</span>
 <span>  taxa_ranks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>, <span class="st">"Family"</span><span class="op">)</span>,</span>
+<span>  wrap_factor <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  by_sample <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  rarefy_by_sample <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  fact <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -94,6 +95,9 @@ package</p>
 <span>  width <span class="op">=</span> <span class="fl">1.2</span>,</span>
 <span>  min.size <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  na_remove <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  use_ggfittext <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  use_geom_label <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  size_lab <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -111,6 +115,14 @@ If taxa ranks is not set
 (default value = c("Phylum", "Class", "Order", "Family")).</p></dd>
 
 
+<dt>wrap_factor</dt>
+<dd><p>A name to determine
+which samples to merge using <code><a href="merge_samples2.html">merge_samples2()</a></code> function.
+Need to be in <code>physeq@sam_data</code>.
+Need to be use when you want to wrap by factor the final plot
+with the number of taxa (type="nb_asv")</p></dd>
+
+
 <dt>by_sample</dt>
 <dd><p>(logical) If FALSE (default), sample information is not taking
 into account, so the taxonomy is studied globally. If fact is not NULL, by_sample
@@ -119,12 +131,11 @@ is automatically set to TRUE.</p></dd>
 
 <dt>rarefy_by_sample</dt>
 <dd><p>(logical, default FALSE) If TRUE, rarefy
-samples using <code><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">phyloseq::rarefy_even_depth()</a></code> function</p></dd>
+samples using <code><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">phyloseq::rarefy_even_depth()</a></code> function.</p></dd>
 
 
 <dt>fact</dt>
-<dd><p>(required) Name of the factor in <code>physeq@sam_data</code> used to plot
-the last column</p></dd>
+<dd><p>(required) Name of the factor in <code>physeq@sam_data</code> used to plot  the last column</p></dd>
 
 
 <dt>type</dt>
@@ -146,6 +157,18 @@ be hidden. Defaults to 4 pt.</p></dd>
 <dt>na_remove</dt>
 <dd><p>(logical, default FALSE) If set to TRUE, remove samples with
 NA in the variables set in formula.</p></dd>
+
+
+<dt>use_ggfittext</dt>
+<dd><p>(logical, default FALSE) Do we use ggfittext to plot labels?</p></dd>
+
+
+<dt>use_geom_label</dt>
+<dd><p>(logical, default FALSE) Do we use geom_label to plot labels?</p></dd>
+
+
+<dt>size_lab</dt>
+<dd><p>Size for label if use_ggfittext is FALSE</p></dd>
 
 
 <dt>...</dt>
@@ -179,13 +202,13 @@ use this function.</p>
 <span class="r-in"><span>  <span class="fu">ggaluv_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: ggalluvial</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in to_lodes_form(psm_samp, axes = taxa_ranks):</span> could not find function "to_lodes_form"</span>
+<span class="r-plt img"><img src="ggaluv_pq-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ggalluvial"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">ggaluv_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, type <span class="op">=</span> <span class="st">"nb_asv"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="fu">ggaluv_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, by_sample <span class="op">=</span> <span class="cn">TRUE</span>, type <span class="op">=</span> <span class="st">"nb_asv"</span>, <span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="op">+</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="st">"Height"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">ggaluv_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, wrap_factor <span class="op">=</span> <span class="st">"Height"</span>, by_sample <span class="op">=</span> <span class="cn">TRUE</span>, type <span class="op">=</span> <span class="st">"nb_asv"</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="st">"Height"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="fu">ggaluv_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>,</span></span>
 <span class="r-in"><span>    width <span class="op">=</span> <span class="fl">0.9</span>, min.size <span class="op">=</span> <span class="fl">10</span>,</span></span>
@@ -193,7 +216,8 @@ use this function.</p>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html" class="external-link">scale_x_discrete</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="va">rev</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in to_lodes_form(psm_samp, axes = taxa_ranks):</span> could not find function "to_lodes_form"</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`group` has missing values; corresponding samples will be dropped</span>
+<span class="r-plt img"><img src="ggaluv_pq-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

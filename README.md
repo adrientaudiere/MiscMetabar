@@ -117,31 +117,15 @@ summary_plot_pq(data_fungi)
 ### Alpha-diversity analysis
 
 ``` r
-p <- MiscMetabar::hill_pq(data_fungi, variable = "Height")
+p <- MiscMetabar::hill_pq(data_fungi, fact = "Height")
 p$plot_Hill_0
+#> NULL
 ```
-
-<div class="figure">
-
-<img src="man/figures/README-unnamed-chunk-5-1.png" alt="Hill number 1" width="100%" />
-<p class="caption">
-Hill number 1
-</p>
-
-</div>
 
 ``` r
 p$plot_tuckey
+#> NULL
 ```
-
-<div class="figure">
-
-<img src="man/figures/README-unnamed-chunk-6-1.png" alt="Result of the Tuckey post-hoc test" width="100%" />
-<p class="caption">
-Result of the Tuckey post-hoc test
-</p>
-
-</div>
 
 ### Beta-diversity analysis
 
