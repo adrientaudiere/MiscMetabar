@@ -1175,7 +1175,7 @@ venn_pq <-
 #'   ggvenn_pq(data_fungi, fact = "Height") +
 #'     ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
 #'   pl <- ggvenn_pq(data_fungi, fact = "Height", split_by = "Time")
-#'   for (i in 1:length(pl)) {
+#'   for (i in seq_along(pl)) {
 #'     p <- pl[[i]] +
 #'       scale_fill_distiller(palette = "BuPu", direction = 1) +
 #'       theme(plot.title = element_text(hjust = 0.5, size = 22))
@@ -3735,14 +3735,14 @@ plot_var_part_pq <-
     if (show_dbrda_signif) {
       if (is.null(res_varpart$dbrda_result_prop_pval_signif)) {
         cond <-
-          c(1:length(res_varpart$dbrda_result))[sapply(res_varpart$dbrda_result, function(x) {
+          seq_along(res_varpart$dbrda_result)[sapply(res_varpart$dbrda_result, function(x) {
             x$`Pr(>F)`[[1]] < show_dbrda_signif_pval
           })]
         res_varpart$Xnames[cond] <-
           paste0(res_varpart$Xnames[cond], "*")
       } else {
         cond <-
-          c(1:length(res_varpart$dbrda_result))[res_varpart$dbrda_result_prop_pval_signif >=
+          seq_along(res_varpart$dbrda_result)[res_varpart$dbrda_result_prop_pval_signif >=
             min_prop_pval_signif_dbrda]
         res_varpart$Xnames[cond] <-
           paste0(res_varpart$Xnames[cond], "*")
