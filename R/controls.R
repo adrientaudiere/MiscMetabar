@@ -2,7 +2,7 @@
 #' Search for exact matching of sequences using complement,
 #' reverse and reverse-complement
 #'
-#' `r lifecycle::badge("experimental")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @inheritParams clean_pq
 #' @param seq2search A DNAStringSet object of sequences to search for.
@@ -50,7 +50,7 @@ search_exact_seq_pq <- function(physeq, seq2search) {
 #'   distance for all samples
 
 #' @description
-#' `r lifecycle::badge("experimental")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Compute distance among positive controls,
 #'   i.e. samples which are duplicated
@@ -123,7 +123,7 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
 ################################################################################
 #' Subset taxa using a taxa control (e.g. truffle root tips) through 3 methods.
 #'
-#' `r lifecycle::badge("experimental")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @aliases subset_taxa_tax_control
 #' @inheritParams clean_pq

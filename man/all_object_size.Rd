@@ -10,7 +10,7 @@ all_object_size()
 a list of size
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+\href{https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle}{\if{html}{\figure{lifecycle-stable.svg}}}
 
 Code from https://tolstoy.newcastle.edu.au/R/e6/help/09/01/1121.html
 }

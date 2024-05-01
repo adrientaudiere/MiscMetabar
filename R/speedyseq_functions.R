@@ -1,7 +1,7 @@
 #' Merge taxa in groups (vectorized version)
 #'
 #' @description
-#' `r lifecycle::badge("stable")`
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' Firstly release in the [speedyseq](https://github.com/mikemc/speedyseq/) R
 #' package by Michael R. McLaren.
@@ -309,7 +309,7 @@ bad_flush_right <- function(x, bad = "BAD", na_bad = FALSE, k = length(x)) {
 
 #' Merge samples by a sample variable or factor
 #' @description
-#' `r lifecycle::badge("stable")`
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' Firstly release in the [speedyseq](https://github.com/mikemc/speedyseq/) R
 #' package by Michael R. McLaren.

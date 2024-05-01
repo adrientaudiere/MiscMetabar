@@ -2,7 +2,7 @@
 #' Search for a list of sequence in a fasta file against physeq reference
 #'   sequences using [vsearch](https://github.com/torognes/vsearch)
 #'
-#' `r lifecycle::badge("maturing")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @inheritParams clean_pq
 #' @param seq2search (required if path_to_fasta is NULL) Either (i) a DNAstringSet object
@@ -128,7 +128,7 @@ vs_search_global <- function(physeq,
 #'   or cluster a list of DNA sequences using SWARM
 #'
 #' @description
-#' `r lifecycle::badge("maturing")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @inheritParams clean_pq
 #' @param dna_seq NOT WORKING FOR THE MOMENT
@@ -330,7 +330,7 @@ swarm_clustering <- function(physeq = NULL,
 #'   or cluster a list of DNA sequences using vsearch software
 #'
 #' @description
-#' `r lifecycle::badge("maturing")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @inheritParams clean_pq
 #' @param dna_seq You may directly use a character vector of DNA sequences
@@ -473,7 +473,7 @@ vsearch_clustering <- function(physeq = NULL,
 #' Search for a list of sequence in an object to remove chimera taxa
 #'   using [vsearch](https://github.com/torognes/vsearch)
 #'
-#' `r lifecycle::badge("experimental")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @param object (required) A phyloseq-class object or one of dada, derep,
 #'   data.frame or list coercible to sequences table using the
@@ -598,7 +598,7 @@ chimera_removal_vs <-
 
 #' Detect for chimera taxa using [vsearch](https://github.com/torognes/vsearch)
 #'
-#' `r lifecycle::badge("experimental")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #'
 #' @param seq2search (required) a list of DNA sequences coercible by function

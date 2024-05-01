@@ -20,5 +20,5 @@ If present, 'cols' is ignored.}
 Nothing. Print the list of ggplot objects
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+\href{https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle}{\if{html}{\figure{lifecycle-stable.svg}}}
 }

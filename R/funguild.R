@@ -1,6 +1,6 @@
 #' Retrieve the FUNGuild database
 #' @description
-#' `r lifecycle::badge("stable")`
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #' The original function and documentation was written by Brendan Furneaux
 #' in the [FUNGuildR](https://github.com/brendanf/FUNGuildR/) package.
 #'
@@ -54,7 +54,7 @@ get_funguild_db <- function(db_url = "http://www.stbates.org/funguild_db_2.php")
 #' Assign Guilds to Organisms Based on Taxonomic Classification
 #'
 #' @description
-#' `r lifecycle::badge("stable")`
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' The original function and documentation was written by Brendan Furneaux
 #' in the [FUNGuildR](https://github.com/brendanf/FUNGuildR/) package.

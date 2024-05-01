@@ -74,7 +74,7 @@ if (requireNamespace("ggVennDiagram")) {
   ggvenn_pq(data_fungi, fact = "Height") +
     ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
   pl <- ggvenn_pq(data_fungi, fact = "Height", split_by = "Time")
-  for (i in 1:length(pl)) {
+  for (i in seq_along(pl)) {
     p <- pl[[i]] +
       scale_fill_distiller(palette = "BuPu", direction = 1) +
       theme(plot.title = element_text(hjust = 0.5, size = 22))

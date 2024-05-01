@@ -1,7 +1,7 @@
 ################################################################################
 #' @title Performs graph-based permutation tests on phyloseq object
 #' @description
-#' `r lifecycle::badge("maturing")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' A wrapper of [phyloseqGraphTest::graph_perm_test()] for quick plot with
 #' important statistics
@@ -95,7 +95,7 @@ graph_test_pq <- function(physeq,
 ################################################################################
 #' @title Permanova on a phyloseq object
 #' @description
-#' `r lifecycle::badge("experimental")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' A wrapper for the [vegan::adonis2()] function in the case of `physeq` object.
 #' @inheritParams clean_pq
@@ -217,7 +217,7 @@ adonis_pq <- function(physeq,
 #' Permanova (adonis) on permutations of rarefaction even depth
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @inheritParams adonis_pq
 #' @param nperm (int) The number of permutations to perform.
@@ -329,7 +329,7 @@ adonis_rarperm_pq <- function(physeq,
 #' @title Compute and test local contributions to beta diversity (LCBD) of
 #'   samples
 #' @description
-#' `r lifecycle::badge("experimental")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' A wrapper for the [adespatial::beta.div()] function in the case of `physeq`
 #'   object.
@@ -376,7 +376,7 @@ LCBD_pq <- function(physeq,
 ################################################################################
 #' @title Plot and test local contributions to beta diversity (LCBD) of samples
 #' @description
-#' `r lifecycle::badge("experimental")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' A wrapper for the [adespatial::beta.div()] function in the case of `physeq`
 #'   object.
@@ -526,7 +526,7 @@ plot_LCBD_pq <- function(physeq,
 ################################################################################
 #' @title Plot species contributions to beta diversity (SCBD) of samples
 #' @description
-#' `r lifecycle::badge("experimental")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' A wrapper for the [adespatial::beta.div()] function in the case of `physeq`
 #'   object.
@@ -592,7 +592,7 @@ plot_SCBD_pq <- function(physeq,
 ################################################################################
 #' @title Test and plot multipatt result
 #' @description
-#' `r lifecycle::badge("experimental")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' A wrapper for the [indicspecies::multipatt()] function in the case of
 #'   `physeq` object.
@@ -673,7 +673,7 @@ multipatt_pq <- function(physeq,
 ################################################################################
 #' Run ANCOMBC2 on phyloseq object
 #' @description
-#' `r lifecycle::badge("experimental")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' A wrapper for the [ANCOMBC::ancombc2()] function
 #'
@@ -755,7 +755,7 @@ ancombc_pq <- function(physeq, fact, levels_fact = NULL, tax_level = "Class", ..
 ################################################################################
 #' Filter ancombc_pq results
 #' @description
-#' `r lifecycle::badge("experimental")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @param ancombc_res (required) the result of the ancombc_pq function
 #'   For the moment only bimodal factors are possible.
@@ -833,7 +833,7 @@ signif_ancombc <- function(ancombc_res,
 ################################################################################
 #' Plot ANCOMBC2 result for phyloseq object
 #' @description
-#' `r lifecycle::badge("experimental")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @inheritParams clean_pq
 #' @param ancombc_res (required) the result of the ancombc_pq function
@@ -998,7 +998,7 @@ plot_ancombc_pq <-
 #' Show taxa which are present in only one given level of a modality
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @inheritParams clean_pq
 #' @param modality (required) The name of a column present in the `@sam_data` slot
@@ -1052,7 +1052,7 @@ taxa_only_in_one_level <- function(physeq,
 #' Distribution of sequences across a factor for one taxon
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @inheritParams clean_pq
 #' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
@@ -1112,7 +1112,7 @@ distri_1_taxa <- function(physeq, fact, taxa_name, digits = 2) {
 ################################################################################
 #' Partition the Variation of a phyloseq object by 2, 3, or 4 Explanatory Matrices
 #' @description
-#' `r lifecycle::badge("experimental")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'   The function partitions the variation in otu_table using
 #'   distance (Bray per default) with respect to two, three, or four explanatory
 #'   tables, using
@@ -1173,7 +1173,7 @@ var_par_pq <-
       dist_physeq <- phyloseq::distance(physeq, method = dist_method)
     }
 
-    for (i in 1:length(list_component)) {
+    for (i in seq_along(list_component)) {
       assign(
         names(list_component)[i],
         as.data.frame(unclass(physeq@sam_data[, list_component[[i]]]))
@@ -1210,7 +1210,7 @@ var_par_pq <-
 
     if (dbrda_computation) {
       res_varpart$dbrda_result <- list()
-      for (i in 1:length(list_component)) {
+      for (i in seq_along(list_component)) {
         res_varpart$dbrda_result[[i]] <-
           anova(vegan::dbrda(
             as.formula(paste0(
@@ -1231,7 +1231,7 @@ var_par_pq <-
 ################################################################################
 #' Partition the Variation of a phyloseq object with rarefaction permutations
 #' @description
-#' `r lifecycle::badge("experimental")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #'   This is an extension of the function [var_par_pq()]. The main addition is
 #'   the computation of nperm permutations with rarefaction even depth by

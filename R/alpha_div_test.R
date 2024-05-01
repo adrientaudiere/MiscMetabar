@@ -2,7 +2,7 @@
 #' Calculate hill number and compute Tuckey post-hoc test
 #' @description
 #'
-#' `r lifecycle::badge("maturing")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #' Note that, by default, this function use a sqrt of the read numbers in the linear
 #'   model in order to correct for uneven sampling depth.
 #' @aliases hill_tuckey_pq
@@ -104,7 +104,7 @@ hill_tuckey_pq <- function(
 #'   with different rarefaction even depth
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @inheritParams clean_pq
 #' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
@@ -268,7 +268,7 @@ hill_test_rarperm_pq <- function(physeq,
 ################################################################################
 #' Automated model selection and multimodel inference with (G)LMs for phyloseq
 #' @description
-#' `r lifecycle::badge("experimental")`
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @inheritParams clean_pq
 #' @param formula (required) a formula for [glmulti::glmulti()]

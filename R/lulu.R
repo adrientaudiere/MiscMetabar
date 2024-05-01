@@ -1,9 +1,10 @@
 #' Post Clustering Curation of Amplicon Data.
 #'
 #' @description
-#' `r lifecycle::badge("stable")`
+#' 
+#'  <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
-#' The original function and documentation was written by Tobias Guldberg Frøslev
+#'  The original function and documentation was written by Tobias Guldberg Frøslev
 #' in the [lulu](https://github.com/tobiasgf/lulu) package.
 #'
 #'  This algorithm \code{lulu} consumes an OTU table and a matchlist, and
