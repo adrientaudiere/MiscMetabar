@@ -55,7 +55,11 @@ reads being simulated, also known as the depth. See
 A ggplot2 plot representing the richness accumulation plot
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+}}
+
 
 This function (i) rarefy (equalize) the number of samples per modality of a
 factor and (ii) rarefy the number of sequences per sample (depth). The

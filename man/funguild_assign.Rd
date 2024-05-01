@@ -33,7 +33,9 @@ A \code{\link[tibble:tibble]{tibble::tibble}} containing all columns of
 \code{otu_table}, plus relevant columns of information from the FUNGuild
 }
 \description{
-\href{https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle}{\if{html}{\figure{lifecycle-stable.svg}}}
+#'
+\if{html}{\out{<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">}}
+<img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stablealt="lifecycle-maturing">\if{html}{\out{</a>}}
 
 The original function and documentation was written by Brendan Furneaux
 in the \href{https://github.com/brendanf/FUNGuildR/}{FUNGuildR} package.

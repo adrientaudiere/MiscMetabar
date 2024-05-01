@@ -23,7 +23,11 @@ table with all tables together + a rdata file (\code{physeq.RData}) that can be 
 A wrapper of write_pq to save in all three possible formats
 }
 \details{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturingalt="lifecycle-maturing"></a>
+}}
+
 
 Write :
 \itemize{

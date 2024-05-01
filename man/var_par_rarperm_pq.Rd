@@ -57,7 +57,11 @@ Adj.R.squared_quantil_min and Adj.R.squared_quantil_max represent
 the quantile values of adjuste R squared
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+}}
+
 
 This is an extension of the function \code{\link[=var_par_pq]{var_par_pq()}}. The main addition is
 the computation of nperm permutations with rarefaction even depth by

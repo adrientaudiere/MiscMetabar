@@ -2,7 +2,8 @@
 #' Blast some sequence against `refseq` slot of a \code{\link{phyloseq-class}}
 #'   object.
 #'
-<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturingalt="lifecycle-maturing"></a>
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object obtained
 #'   using the `phyloseq` package.
@@ -179,7 +180,8 @@ blast_to_phyloseq <- function(physeq,
 #' Blast all sequence of `refseq` slot of a \code{\link{phyloseq-class}}
 #'   object against a custom database.
 #'
-<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
 #'
 #' @inheritParams blast_to_phyloseq
 #' @param fasta_for_db path to a fasta file to make the blast database
@@ -333,7 +335,8 @@ blast_pq <- function(physeq,
 ################################################################################
 #' Filter undesirable taxa using blast against a custom database.
 #'
-<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
 #'
 #' @inheritParams blast_to_phyloseq
 #' @param fasta_for_db path to a fasta file to make the blast database
@@ -420,7 +423,8 @@ filter_asv_blast <- function(physeq,
 #' Blast some sequence against sequences from of a \code{\link{derep-class}}
 #'   object.
 #'
-<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
 #'
 #' @inheritParams blast_to_phyloseq
 #' @param derep The result of `dada2::derepFastq()`. A list of `derep-class`
@@ -594,7 +598,9 @@ blast_to_derep <- function(derep,
 #' Add information from [blast_pq()] to the `tax_table` slot of a *phyloseq* object
 #'
 #' @description
-<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
 #'
 #' Basically a wrapper of [blast_pq()] with option `unique_per_seq = TRUE` and
 #'  `score_filter = FALSE`.

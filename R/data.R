@@ -41,7 +41,6 @@
 #' Obtain using `data_fungi_mini <- subset_taxa(data_fungi, Phylum == "Basidiomycota")`
 #' and then `data_fungi_mini <-   subset_taxa_pq(data_fungi_mini, colSums(data_fungi_mini@otu_table) > 5000)`
 #'
-#'
 #' @format A physeq object containing 45 taxa with references sequences
 #' described by 14 taxonomic ranks and 137 samples described by 7 sample variables:
 #' - *X*: the name of the fastq-file

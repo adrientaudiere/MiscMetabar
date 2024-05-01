@@ -21,7 +21,11 @@ A new \code{\link{phyloseq-class}} object with more information in tax_table bas
 blast on a given database
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+}}
+
 
 Basically a wrapper of \code{\link[=blast_pq]{blast_pq()}} with option \code{unique_per_seq = TRUE} and
 \code{score_filter = FALSE}.

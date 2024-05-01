@@ -23,7 +23,11 @@ A new \code{\link{phyloseq-class}} object with otu_table count
 normalize and log transformed (if base_log is an integer)
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+}}
+
 
 This function implement the method proposed by
 McKnight et al. 2018 (\doi{doi:10.5061/dryad.tn8qs35})

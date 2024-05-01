@@ -20,7 +20,11 @@ their column numbers (e.g. taxonomic_level = 1:7)}
 A plot
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturingalt="lifecycle-maturing"></a>
+}}
+
 
 Note that the number of ASV is store under the name \code{n_obs}
 and the number of sequences under the name \code{nb_sequences}

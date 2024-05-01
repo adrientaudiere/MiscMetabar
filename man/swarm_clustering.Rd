@@ -59,7 +59,10 @@ A new object of class \code{physeq} or a list of cluster if dna_seq
 args was used.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturingalt="lifecycle-maturing"></a>
+}}
 }
 \details{
 This function use the \code{merge_taxa_vec} function to

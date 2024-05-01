@@ -58,7 +58,11 @@ modalities of the argument \code{factor} or if split_by is set a list
 of plots.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturingalt="lifecycle-maturing"></a>
+}}
+
 
 Note that you can use ggplot2 function to customize the plot
 for ex. \code{+ scale_fill_distiller(palette = "BuPu", direction = 1)}

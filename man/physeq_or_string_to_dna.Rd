@@ -20,7 +20,9 @@ An object of class DNAStringSet (see the \code{\link[Biostrings:XStringSet-class
 function)
 }
 \description{
-\href{https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle}{\if{html}{\figure{lifecycle-stable.svg}}}
+#'
+\if{html}{\out{<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">}}
+<img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stablealt="lifecycle-maturing">\if{html}{\out{</a>}}
 
 Internally used in \code{\link[=vsearch_clustering]{vsearch_clustering()}}, \code{\link[=swarm_clustering]{swarm_clustering()}} and
 \code{\link[=asv2otu]{asv2otu()}}.

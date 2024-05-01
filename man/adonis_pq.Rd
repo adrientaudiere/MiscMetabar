@@ -58,7 +58,11 @@ new column for partial R^2. See help of \code{\link[vegan:adonis]{vegan::adonis2
 more information.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+}}
+
 
 A wrapper for the \code{\link[vegan:adonis]{vegan::adonis2()}} function in the case of \code{physeq} object.
 }

@@ -81,7 +81,10 @@ Build a folder (path) containing one to four csv tables
 and if present a phy_tree in Newick format
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturingalt="lifecycle-maturing"></a>
+}}
 }
 \examples{
 write_pq(data_fungi, path = paste0(tempdir(), "/phyloseq"))

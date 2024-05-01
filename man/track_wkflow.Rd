@@ -33,7 +33,11 @@ The number of sequences, clusters (e.g. OTUs, ASVs) and samples for
 each object.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturingalt="lifecycle-maturing"></a>
+}}
+
 \itemize{
 \item List of fastq and fastg.gz files -> nb of reads and samples
 \item List of dada-class -> nb of reads, clusters (ASV) and samples

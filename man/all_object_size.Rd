@@ -10,7 +10,9 @@ all_object_size()
 a list of size
 }
 \description{
-\href{https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle}{\if{html}{\figure{lifecycle-stable.svg}}}
+#'
+\if{html}{\out{<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">}}
+<img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stablealt="lifecycle-maturing">\if{html}{\out{</a>}}
 
 Code from https://tolstoy.newcastle.edu.au/R/e6/help/09/01/1121.html
 }
