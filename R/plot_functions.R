@@ -4,7 +4,7 @@
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturingalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @param mt (required) Result of a mt test from the function [phyloseq::mt()].
 #' @param alpha (default: 0.05) Choose the cut off p-value to plot taxa.
@@ -59,7 +59,7 @@ plot_mt <-
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturingalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @inheritParams clean_pq
 #' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
@@ -284,7 +284,7 @@ accu_plot <-
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #'   This function (i) rarefy (equalize) the number of samples per modality of a
 #'   factor and (ii) rarefy the number of sequences per sample (depth). The
@@ -462,7 +462,7 @@ accu_plot_balanced_modality <- function(physeq,
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @param res_accuplot the result of the function accu_plot()
 #' @param threshold the proportion of ASV to obtain in each samples
@@ -508,7 +508,7 @@ accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturingalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @inheritParams clean_pq
 #' @param fact (required) Name of the factor to cluster samples by modalities.
@@ -727,7 +727,7 @@ circle_pq <-
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturingalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @inheritParams clean_pq
 #' @param fact Name of the factor to cluster samples by modalities.
@@ -948,7 +948,7 @@ sankey_pq <-
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturingalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @inheritParams clean_pq
 #' @param fact (required): Name of the factor to cluster samples by modalities.
@@ -1154,7 +1154,7 @@ venn_pq <-
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturingalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Note that you can use ggplot2 function to customize the plot
 #' for ex. `+ scale_fill_distiller(palette = "BuPu", direction = 1)`
@@ -1319,9 +1319,9 @@ ggvenn_pq <- function(physeq = NULL,
 ################################################################################
 #' Multiple plot function
 #' @description
-#' #'
+#'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stablealt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 # ggplot objects can be passed in ..., or to plotlist (as a list of ggplot
 # objects)
@@ -1392,7 +1392,7 @@ multiplot <-
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #'   Hill numbers are the number of equiprobable species giving the same
 #'   diversity value as the observed distribution. The Hill number 0
@@ -1614,7 +1614,7 @@ hill_pq <- function(physeq,
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Note that contrary to [hill_pq()], this function does not take into
 #' account for difference in the number of sequences per samples/modalities.
@@ -1719,7 +1719,7 @@ ggbetween_pq <-
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturingalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @inheritParams clean_pq
 #' @param add_info Does the bottom down corner contain
@@ -1920,7 +1920,7 @@ summary_plot_pq <- function(physeq,
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #'   Make a phylogenetic tree using the ASV names of a physeq object and the
 #'   Open Tree of Life tree.
@@ -1984,7 +1984,7 @@ rotl_pq <- function(physeq,
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturingalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Note that the number of ASV is store under the name `n_obs`
 #' and the number of sequences under the name `nb_sequences`
@@ -2060,7 +2060,7 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturingalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @inheritParams clean_pq
 #' @param fact (default: NULL) Name of the factor in `physeq@sam_data`.
@@ -2338,7 +2338,7 @@ biplot_pq <- function(physeq,
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' This allow to plot all the possible [biplot_pq()] combination
 #' using one factor.
@@ -2428,7 +2428,7 @@ multi_biplot_pq <- function(physeq,
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #'   An alternative to `phyloseq::plot_bar()` function.
 #'
@@ -2625,7 +2625,7 @@ plot_tax_pq <-
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Note that lvl3 need to be nested in lvl2 which need to be nested
 #' in lvl1
@@ -2796,7 +2796,7 @@ tsne_pq <-
 #' Plot a tsne low dimensional representation of a phyloseq object
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Partially inspired by `phylosmith::tsne_phyloseq()` function developed by Schuyler D. Smith.
 #'
@@ -2897,7 +2897,7 @@ plot_tsne_pq <- function(physeq,
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @inheritParams clean_pq
 #' @param clean_pq (logical): Does the phyloseq
@@ -2933,7 +2933,7 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @inheritParams clean_pq
 #' @param merge_sample_by (default: NULL) if not `NULL` samples of
@@ -2999,7 +2999,7 @@ iNEXT_pq <- function(physeq,
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Alternative to venn plot.
 #'
@@ -3208,7 +3208,7 @@ upset_pq <- function(physeq,
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @inheritParams upset_pq
 #' @param var_to_test (default c("OTU")) : a vector of column present in
@@ -3285,7 +3285,7 @@ upset_test_pq <-
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Mainly an internal function useful in "sapply(..., tapply)" methods
 #'
@@ -3414,7 +3414,7 @@ diff_fct_diff_class <-
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @inheritParams clean_pq
 #' @param fact Name of the factor to cluster samples by modalities.
@@ -3473,7 +3473,7 @@ tax_bar_pq <-
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @inheritParams clean_pq
 #' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
@@ -3497,7 +3497,7 @@ tax_bar_pq <-
 #' \donttest{
 #' if (requireNamespace("ggridges")) {
 #'   ridges_pq(data_fungi_mini, "Time", alpha = 0.5, scale = 0.9)
-#'   ridges_pq(data_fungi_mini, "Sample_names", log10trans = TRUE)
+#'   ridges_pq(data_fungi_mini, "Sample_names", log10trans = TRUE) + facet_wrap("~Height")
 #'
 #'   ridges_pq(data_fungi_mini,
 #'     "Time",
@@ -3512,6 +3512,7 @@ ridges_pq <- function(physeq,
                       fact,
                       nb_seq = TRUE,
                       log10trans = TRUE,
+                      tax_level = "Class",
                       ...) {
   psm <- psmelt(physeq)
   psm <- psm %>% filter(Abundance > 0)
@@ -3521,18 +3522,18 @@ ridges_pq <- function(physeq,
   }
   if (nb_seq) {
     p <- ggplot(psm, aes(y = factor(.data[[fact]]), x = Abundance)) +
-      ggridges::geom_density_ridges(aes(fill = Class), ...) +
+      ggridges::geom_density_ridges(aes(fill = .data[[tax_level]]), ...) +
       xlim(c(0, NA))
   } else {
     psm_asv <-
       psm %>%
-      group_by(.data[[fact]], OTU, Class) %>%
+      group_by(.data[[fact]], OTU, .data[[tax_level]]) %>%
       summarise("count" = n())
 
     p <-
       ggplot(psm_asv, aes(y = factor(.data[[fact]]), x = count)) +
       ggridges::geom_density_ridges(
-        aes(fill = Class),
+        aes(fill = .data[[tax_level]]),
         ...
       ) +
       xlim(c(0, NA))
@@ -3549,7 +3550,7 @@ ridges_pq <- function(physeq,
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Note that lvl2need to be nested in lvl1
 #'
@@ -3681,7 +3682,7 @@ treemap_pq <- function(physeq,
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @param res_varpart (required) the result of the functions [var_par_pq()]
 #'   or [var_par_rarperm_pq()]
@@ -3864,7 +3865,7 @@ plot_var_part_pq <-
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Basically a wrapper of function [ggstatsplot::ggscatterstats()] for
 #' object of class phyloseq and Hill number.
@@ -3944,7 +3945,7 @@ ggscatt_pq <- function(physeq,
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Basically a wrapper of [ggalluvial](https://corybrunson.github.io/ggalluvial/index.html)
 #' package

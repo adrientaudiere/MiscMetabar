@@ -1,5 +1,7 @@
 # MiscMetabar 0.9.2 (in development)
 
+- Add param `default_fun` in function `merge_samples2()` in order to replace the default function that change the sample data in case of merging. A useful parameter is `default_fun=diff_fct_diff_class`.
+
 
 # MiscMetabar 0.9.1
 
@@ -34,7 +36,7 @@
 - Replace param `variable` by `fact` in function `ggbetween_pq()` and `hill_pq()` (keeping the variable option in `hill_pq()` for backward compatibility)
 - Fix a bug in the class of the return object of function `chimera_removal_vs()`. Now it return a matrix to be able to be parsed on to [dada2::getUniques()] 
 
-# MiscMetabar 0.7 (in development)
+# MiscMetabar 0.7
  
 - Add functions `chimera_detection_vs()` and `chimera_removal_vs()` to process chimera detection and removal using [vsearch](https://github.com/torognes/vsearch) software 
 - Add functions `filter_trim()`, `sample_data_with_new_names()` and `rename_samples()` to facilitate the use of [targets](https://books.ropensci.org/targets/) for bioinformatic pipeline.

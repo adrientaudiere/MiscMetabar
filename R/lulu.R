@@ -4,7 +4,7 @@
 #'
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stablealt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #'  The original function and documentation was written by Tobias Guldberg Frøslev
 #' in the [lulu](https://github.com/tobiasgf/lulu) package.

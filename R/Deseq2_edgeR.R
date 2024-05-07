@@ -2,7 +2,7 @@
 #' Plot edgeR results for a phyloseq or a edgeR object.
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturingalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @inheritParams clean_pq
 #' @param contrast (required):This argument specifies what comparison
@@ -124,7 +124,7 @@ plot_edgeR_pq <-
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @param data (required) a \code{\link{phyloseq-class}} or a
 #' \code{\link[DESeq2]{DESeqDataSet-class}} object.
