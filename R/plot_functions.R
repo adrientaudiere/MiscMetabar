@@ -1417,12 +1417,12 @@ multiplot <-
 #' @param color_fac (optional): The variable to color the barplot. For ex.
 #'   same as fact. Not very useful because ggplot2 plot colors can be
 #'   change using `scale_color_XXX()` function.
-#' @param letters (optional, default=FALSE): If set to TRUE, the plot
+#' @param letters (optional, default FALSE): If set to TRUE, the plot
 #'   show letters based on p-values for comparison. Use the
 #'   \code{\link[multcompView]{multcompLetters}} function from the package
 #'   multcompLetters. BROKEN for the moment. Note that na values in The
 #'   variable param need to be removed (see examples) to use letters.
-#' @param add_points (logical): add jitter point on boxplot
+#' @param add_points (logical, default FALSE): add jitter point on boxplot
 #' @param add_info (logical, default TRUE) Do we add a subtitle with
 #'   information about the number of samples per modality ?
 #' @param one_plot (logical, default FALSE) If TRUE, return a unique
@@ -1430,6 +1430,13 @@ multiplot <-
 #'   Note that if letters and one_plot are both TRUE, tuckey HSD results
 #'   are discarded from the unique plot. In that case, use one_plot = FALSE
 #'   to see the tuckey HSD results in the fourth plot of the resulting list.
+#' @param kruskal_test (logical, default TRUE) Do we test for global effect of
+#'   our factor on each hill scales values? When kruskal_test is TRUE, the
+#'   resulting test value are add in each plot in subtitle (unless add_info is
+#'   FALSE). Moreover, if at
+#'   least one hill scales is not significantly link to fact (pval>0.05),
+#'   a message is prompt saying that Tuckey HSD plot is not informative for
+#'   those Hill scales and letters are not printed.
 #' @param plot_with_tuckey (logical, default TRUE). If one_plot is set to
 #'   TRUE and letters to FALSE, allow to discard the tuckey plot part with
 #'   plot_with_tuckey = FALSE
@@ -1442,8 +1449,11 @@ multiplot <-
 #' @param na_remove (logical, default TRUE) Do we remove samples with NA in
 #'   the factor fact ? Note that na_remove is always TRUE when using
 #'   letters = TRUE
+#' @param vioplot (logical, default FALSE) Do we plot violin plot instead of
+#'   boxplot ?
 #' @return Either an unique ggplot2 object (if one_plot is TRUE) or
-#'  a list of 4 ggplot2 plot:
+#'  a list of n+1 ggplot2 plot (with n the number of hill scale value).
+#'  For example, with the default scale value:
 #' - plot_Hill_0 : the boxplot of Hill number 0 (= species richness)
 #'     against the variable
 #' - plot_Hill_1 : the boxplot of Hill number 1 (= Shannon index)
@@ -1464,7 +1474,8 @@ multiplot <-
 #' if (requireNamespace("multcompView")) {
 #'   p2 <- hill_pq(data_fungi, "Time",
 #'     correction_for_sample_size = FALSE,
-#'     letters = TRUE, add_points = TRUE, plot_with_tuckey = FALSE
+#'     letters = TRUE, add_points = TRUE,
+#'     plot_with_tuckey = FALSE
 #'   )
 #'   if (requireNamespace("patchwork")) {
 #'     patchwork::wrap_plots(p2, guides = "collect")
@@ -1474,8 +1485,8 @@ multiplot <-
 #'   data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <-
 #'     data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] +
 #'     sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
-#'   p3 <- hill_pq(data_fungi_modif, "Height", letters = TRUE)
-#'   p3[[1]]
+#'   p3 <- hill_pq(data_fungi_modif, "Height", letters = TRUE, vioplot = TRUE,
+#'                 add_points = TRUE)
 #' }
 #' }
 #' @seealso [psmelt_samples_pq()] and [ggbetween_pq()]
@@ -1487,10 +1498,12 @@ hill_pq <- function(physeq,
                     letters = FALSE,
                     add_points = FALSE,
                     add_info = TRUE,
+                    kruskal_test = TRUE,
                     one_plot = FALSE,
                     plot_with_tuckey = TRUE,
                     correction_for_sample_size = TRUE,
-                    na_remove = TRUE) {
+                    na_remove = TRUE,
+                    vioplot =FALSE) {
   if (!is.null(variable)) {
     if (!is.null(fact)) {
       stop(
@@ -1540,11 +1553,35 @@ hill_pq <- function(physeq,
       correction_for_sample_size = correction_for_sample_size
     )
   p_list <- list()
+
+  if (kruskal_test) {
+    kt_res <- list()
+    for (i in seq_along(hill_scales)) {
+      kt_res[[i]] <- kruskal.test(df_hill[, paste0("Hill_", hill_scales[[i]])], df_hill[, fact])
+    }
+    if (sum(sapply(kt_res, function(x) {
+      x$p.value > 0.05
+    })) > 0) {
+      message(paste0(sum(sapply(kt_res, function(x) {
+        x$p.value > 0.05
+      })), " out of ", length(kt_res), " Hill scales do not show any global trends with you factor ", fact, ". Tuckey HSD plot is not informative for those Hill scales. Letters are not printed for those Hill scales"))
+    }
+  }
+
   for (i in seq_along(hill_scales)) {
-    p_list[[i]] <-
-      ggplot(df_hill, aes(group = !!var, .data[[paste0("Hill_", hill_scales[[i]])]])) +
+    if(vioplot){
+      p_list[[i]] <-
+        ggplot(df_hill, aes(x=.data[[paste0("Hill_", hill_scales[[i]])]],
+                            y = !!var)) +
+        geom_violin(aes(colour = as.factor(!!color_fac))) +
+        labs(x = paste0("Hill_", hill_scales[[i]]))
+    }else{
+          p_list[[i]] <-
+      ggplot(df_hill, aes(group = !!var, x=.data[[paste0("Hill_", hill_scales[[i]])]])) +
       geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac), y = !!var)) +
       labs(x = paste0("Hill_", hill_scales[[i]]))
+    }
+
     if (add_points) {
       p_list[[i]] <-
         p_list[[i]] + geom_jitter(aes(y = !!var, colour = as.factor(!!color_fac)), alpha = 0.5)
@@ -1559,9 +1596,20 @@ hill_pq <- function(physeq,
           collapse = " - '"
         )
       )
-
+if (kruskal_test) {
+  subtitle_plot <- paste0(subtitle_plot, "\n",
+          paste0(
+            " Hill ", hill_scales[[i]],
+            " -- Kruskal-Wallis chi-squared =",
+            round(kt_res[[i]]$statistic, 2),
+            "; df = ", kt_res[[i]]$parameter,
+            "; p.value =", format.pval(kt_res[[i]]$p.value, 2)
+          )
+        )
+    }
       p_list[[i]] <- p_list[[i]] + labs(subtitle = subtitle_plot)
     }
+
     if (letters) {
       data_h <-
         p_var$data[grep(paste0("Hill_", hill_scales[[i]]), p_var$data[, 5]), ]
@@ -1575,20 +1623,22 @@ hill_pq <- function(physeq,
       data_letters <- p_list[[i]]$data %>%
         group_by(!!var) %>%
         summarize(pos_letters = max(.data[[paste0("Hill_", hill_scales[[i]])]]) + 1) %>%
-        inner_join(dt)
+        inner_join(dt, by = join_by(!!fact))
 
-      p_list[[i]] <- p_list[[i]] +
-        geom_label(
-          data = data_letters,
-          aes(
-            x = pos_letters,
-            label = Letters
-          ),
-          y = ggplot_build(p_list[[i]])$data[[1]]$y,
-          size = 4,
-          stat = "unique",
-          parse = TRUE
-        )
+      if (!kruskal_test | kt_res[[i]]$p.value < 0.05) {
+        p_list[[i]] <- p_list[[i]] +
+          geom_label(
+            data = data_letters,
+            aes(
+              x = pos_letters,
+              label = Letters,
+            ),
+            y = unique(ggplot_build(p_list[[i]])$data[[1]]$y),
+            size = 4,
+            stat = "unique",
+            parse = TRUE
+          )
+      }
     }
   }
 
