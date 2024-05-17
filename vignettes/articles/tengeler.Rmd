@@ -1,5 +1,5 @@
 ---
-title: "tengeler"
+title: "Examples with published dataset: Tengeler"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{tengeler}

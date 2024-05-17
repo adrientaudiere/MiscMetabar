@@ -1,5 +1,5 @@
 ---
-title: "Filter"
+title: "Filter taxa and samples"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Filter}

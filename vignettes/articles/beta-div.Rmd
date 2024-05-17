@@ -1,5 +1,5 @@
 ---
-title: "beta-div"
+title: "Beta-diversity analysis"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{beta-div}

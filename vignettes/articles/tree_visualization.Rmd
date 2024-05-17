@@ -1,5 +1,5 @@
 ---
-title: "Tree visualization"
+title: "Tree building and visualization"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Tree visualization}

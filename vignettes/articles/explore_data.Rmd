@@ -1,5 +1,5 @@
 ---
-title: "explore_data"
+title: "Explore phyloseq data"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{explore_data}

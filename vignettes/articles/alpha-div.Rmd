@@ -1,5 +1,5 @@
 ---
-title: "alpha-div"
+title: "Alpha-diversity analysis"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{alpha-div}
