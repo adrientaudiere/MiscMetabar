@@ -7,7 +7,7 @@ if (getRversion() >= "2.15.1") {
 #'   using ASV_1, ASV_2, …
 #'
 #' @description
-#' 
+#'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
@@ -2359,7 +2359,7 @@ physeq_or_string_to_dna <- function(physeq = NULL,
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
-#' You need to install [Cutadapt](https://cutadapt.readthedocs.io/). 
+#' You need to install [Cutadapt](https://cutadapt.readthedocs.io/).
 #'   See also https://github.com/VascoElbrecht/JAMP/blob/master/JAMP/R/Cutadapt.R for another call to cutadapt
 #'   from R
 #'

@@ -338,7 +338,7 @@ bad_flush_right <- function(x, bad = "BAD", na_bad = FALSE, k = length(x)) {
 #' @param reorder Logical specifying whether to reorder the new (merged)
 #'   samples by name
 #' @param default_fun Default functions if funs is not set. Per default
-#'   the function unique_or_na is used. See `diff_fct_diff_class()` for 
+#'   the function unique_or_na is used. See `diff_fct_diff_class()` for
 #'   a useful alternative.
 #' @export
 #' @return A new phyloseq-class, otu_table or sam_data object depending on
