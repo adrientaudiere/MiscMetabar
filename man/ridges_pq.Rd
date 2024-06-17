@@ -4,7 +4,14 @@
 \alias{ridges_pq}
 \title{Ridge plot of a phyloseq object}
 \usage{
-ridges_pq(physeq, fact, nb_seq = TRUE, log10trans = TRUE, ...)
+ridges_pq(
+  physeq,
+  fact,
+  nb_seq = TRUE,
+  log10trans = TRUE,
+  tax_level = "Class",
+  ...
+)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
@@ -30,7 +37,7 @@ taxonomic groups
 \description{
 \if{html}{\out{
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
 }
 \examples{
@@ -40,7 +47,7 @@ if (requireNamespace("ggridges")) {
 \donttest{
 if (requireNamespace("ggridges")) {
   ridges_pq(data_fungi_mini, "Time", alpha = 0.5, scale = 0.9)
-  ridges_pq(data_fungi_mini, "Sample_names", log10trans = TRUE)
+  ridges_pq(data_fungi_mini, "Sample_names", log10trans = TRUE) + facet_wrap("~Height")
 
   ridges_pq(data_fungi_mini,
     "Time",

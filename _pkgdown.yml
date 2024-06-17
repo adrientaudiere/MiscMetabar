@@ -32,7 +32,7 @@ navbar:
     - text: -------
     - text: Bioinformatics actions
     - text: Fastq quality check
-      href: fastq_quality_check
+      href: articles/fastq_quality_check.html
     - text: -------
     - text: Examples with published dataset
     - text: Tengeler

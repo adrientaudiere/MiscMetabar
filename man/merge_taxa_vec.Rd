@@ -38,9 +38,11 @@ A new phyloseq-class, otu_table, tax_table, XStringset or
 sam_data object depending on the class of the x param
 }
 \description{
-#'
-\if{html}{\out{<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">}}
-<img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stablealt="lifecycle-maturing">\if{html}{\out{</a>}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
+}}
+
 
 Firstly release in the \href{https://github.com/mikemc/speedyseq/}{speedyseq} R
 package by Michael R. McLaren.

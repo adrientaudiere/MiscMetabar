@@ -13,10 +13,12 @@ hill_pq(
   letters = FALSE,
   add_points = FALSE,
   add_info = TRUE,
+  kruskal_test = TRUE,
   one_plot = FALSE,
   plot_with_tuckey = TRUE,
   correction_for_sample_size = TRUE,
-  na_remove = TRUE
+  na_remove = TRUE,
+  vioplot = FALSE
 )
 }
 \arguments{
@@ -38,16 +40,24 @@ Index).}
 same as fact. Not very useful because ggplot2 plot colors can be
 change using \code{scale_color_XXX()} function.}
 
-\item{letters}{(optional, default=FALSE): If set to TRUE, the plot
+\item{letters}{(optional, default FALSE): If set to TRUE, the plot
 show letters based on p-values for comparison. Use the
 \code{\link[multcompView]{multcompLetters}} function from the package
 multcompLetters. BROKEN for the moment. Note that na values in The
 variable param need to be removed (see examples) to use letters.}
 
-\item{add_points}{(logical): add jitter point on boxplot}
+\item{add_points}{(logical, default FALSE): add jitter point on boxplot}
 
 \item{add_info}{(logical, default TRUE) Do we add a subtitle with
 information about the number of samples per modality ?}
+
+\item{kruskal_test}{(logical, default TRUE) Do we test for global effect of
+our factor on each hill scales values? When kruskal_test is TRUE, the
+resulting test value are add in each plot in subtitle (unless add_info is
+FALSE). Moreover, if at
+least one hill scales is not significantly link to fact (pval>0.05),
+a message is prompt saying that Tuckey HSD plot is not informative for
+those Hill scales and letters are not printed.}
 
 \item{one_plot}{(logical, default FALSE) If TRUE, return a unique
 plot with the four plot inside using the patchwork package.
@@ -69,10 +79,14 @@ function \code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}}
 \item{na_remove}{(logical, default TRUE) Do we remove samples with NA in
 the factor fact ? Note that na_remove is always TRUE when using
 letters = TRUE}
+
+\item{vioplot}{(logical, default FALSE) Do we plot violin plot instead of
+boxplot ?}
 }
 \value{
 Either an unique ggplot2 object (if one_plot is TRUE) or
-a list of 4 ggplot2 plot:
+a list of n+1 ggplot2 plot (with n the number of hill scale value).
+For example, with the default scale value:
 \itemize{
 \item plot_Hill_0 : the boxplot of Hill number 0 (= species richness)
 against the variable
@@ -86,7 +100,7 @@ against the variable
 \description{
 \if{html}{\out{
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimentalalt="lifecycle-maturing"></a>
+<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
 
 
@@ -112,7 +126,8 @@ multiplot(plotlist = list(p_h1, p_h2, p[[3]]), cols = 4)
 if (requireNamespace("multcompView")) {
   p2 <- hill_pq(data_fungi, "Time",
     correction_for_sample_size = FALSE,
-    letters = TRUE, add_points = TRUE, plot_with_tuckey = FALSE
+    letters = TRUE, add_points = TRUE,
+    plot_with_tuckey = FALSE
   )
   if (requireNamespace("patchwork")) {
     patchwork::wrap_plots(p2, guides = "collect")
@@ -122,8 +137,10 @@ if (requireNamespace("multcompView")) {
   data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <-
     data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] +
     sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
-  p3 <- hill_pq(data_fungi_modif, "Height", letters = TRUE)
-  p3[[1]]
+  p3 <- hill_pq(data_fungi_modif, "Height",
+    letters = TRUE, vioplot = TRUE,
+    add_points = TRUE
+  )
 }
 }
 }

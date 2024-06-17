@@ -1485,8 +1485,10 @@ multiplot <-
 #'   data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <-
 #'     data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] +
 #'     sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
-#'   p3 <- hill_pq(data_fungi_modif, "Height", letters = TRUE, vioplot = TRUE,
-#'                 add_points = TRUE)
+#'   p3 <- hill_pq(data_fungi_modif, "Height",
+#'     letters = TRUE, vioplot = TRUE,
+#'     add_points = TRUE
+#'   )
 #' }
 #' }
 #' @seealso [psmelt_samples_pq()] and [ggbetween_pq()]
@@ -1503,7 +1505,7 @@ hill_pq <- function(physeq,
                     plot_with_tuckey = TRUE,
                     correction_for_sample_size = TRUE,
                     na_remove = TRUE,
-                    vioplot =FALSE) {
+                    vioplot = FALSE) {
   if (!is.null(variable)) {
     if (!is.null(fact)) {
       stop(
@@ -1569,17 +1571,19 @@ hill_pq <- function(physeq,
   }
 
   for (i in seq_along(hill_scales)) {
-    if(vioplot){
+    if (vioplot) {
       p_list[[i]] <-
-        ggplot(df_hill, aes(x=.data[[paste0("Hill_", hill_scales[[i]])]],
-                            y = !!var)) +
+        ggplot(df_hill, aes(
+          x = .data[[paste0("Hill_", hill_scales[[i]])]],
+          y = !!var
+        )) +
         geom_violin(aes(colour = as.factor(!!color_fac))) +
         labs(x = paste0("Hill_", hill_scales[[i]]))
-    }else{
-          p_list[[i]] <-
-      ggplot(df_hill, aes(group = !!var, x=.data[[paste0("Hill_", hill_scales[[i]])]])) +
-      geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac), y = !!var)) +
-      labs(x = paste0("Hill_", hill_scales[[i]]))
+    } else {
+      p_list[[i]] <-
+        ggplot(df_hill, aes(group = !!var, x = .data[[paste0("Hill_", hill_scales[[i]])]])) +
+        geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac), y = !!var)) +
+        labs(x = paste0("Hill_", hill_scales[[i]]))
     }
 
     if (add_points) {
@@ -1596,8 +1600,9 @@ hill_pq <- function(physeq,
           collapse = " - '"
         )
       )
-if (kruskal_test) {
-  subtitle_plot <- paste0(subtitle_plot, "\n",
+      if (kruskal_test) {
+        subtitle_plot <- paste0(
+          subtitle_plot, "\n",
           paste0(
             " Hill ", hill_scales[[i]],
             " -- Kruskal-Wallis chi-squared =",
@@ -1606,7 +1611,7 @@ if (kruskal_test) {
             "; p.value =", format.pval(kt_res[[i]]$p.value, 2)
           )
         )
-    }
+      }
       p_list[[i]] <- p_list[[i]] + labs(subtitle = subtitle_plot)
     }
 
