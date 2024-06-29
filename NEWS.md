@@ -3,6 +3,7 @@
 - Add param `default_fun` in function `merge_samples2()` in order to replace the default function that change the sample data in case of merging. A useful parameter is `default_fun=diff_fct_diff_class`.
 - Add param `kruskal_test` to `hill_pq()` function to prevent user to mis-interpret Tuckey HSD result (and letters) if the global effect of the tested factor on Hill diversity is non significant.
 - Add param `vioplot` to hill_pq() function to allow violin plot instead of boxplot.
+- Modify `rarefy_sample_count_by_modality` to debug the case of modality with level of length one.
 
 # MiscMetabar 0.9.1
 
