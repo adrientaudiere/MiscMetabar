@@ -1,5 +1,5 @@
 ---
-title: "import_export_track"
+title: "Import/export and track"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{import_export_track}

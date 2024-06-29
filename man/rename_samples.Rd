@@ -18,7 +18,7 @@ phyloseq-class object}
 The otu_table or the sam_data slot with new samples names
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\if{html}{\out{<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">}}\if{html}{\out{<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing">}}\if{html}{\out{</a>}}
 }
 \examples{
 otutab <- rename_samples(

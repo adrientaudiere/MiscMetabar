@@ -69,7 +69,11 @@ NA in the variables set in formula.}
 A ggplot object
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+}}
+
 
 Basically a wrapper of \href{https://corybrunson.github.io/ggalluvial/index.html}{ggalluvial}
 package

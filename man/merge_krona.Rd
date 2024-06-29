@@ -15,7 +15,11 @@ merge_krona(files = NULL, output = "mergeKrona.html")
 A html file
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+}}
+
 
 Need the installation of kronatools on the computer
 (\href{https://github.com/marbl/Krona/wiki/Installing}{installation instruction}).

@@ -16,5 +16,8 @@ A new \code{\link{phyloseq-class}} object with \code{refseq} slot and new
 taxa names
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
+}}
 }

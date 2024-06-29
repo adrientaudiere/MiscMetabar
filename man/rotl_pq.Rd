@@ -21,7 +21,12 @@ of Life. See \code{?rotl::tnrs_contexts()} for available values}
 A plot
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+}}
+
+
 Make a phylogenetic tree using the ASV names of a physeq object and the
 Open Tree of Life tree.
 }

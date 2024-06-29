@@ -1,21 +1,28 @@
-# MiscMetabar 0.9.1 (in development)
+# MiscMetabar 0.9.2 (in development)
+
+- Add param `default_fun` in function `merge_samples2()` in order to replace the default function that change the sample data in case of merging. A useful parameter is `default_fun=diff_fct_diff_class`.
+- Add param `kruskal_test` to `hill_pq()` function to prevent user to mis-interpret Tuckey HSD result (and letters) if the global effect of the tested factor on Hill diversity is non significant.
+- Add param `vioplot` to hill_pq() function to allow violin plot instead of boxplot.
+- Modify `rarefy_sample_count_by_modality` to debug the case of modality with level of length one.
+
+# MiscMetabar 0.9.1
 
 ## New functions 
-- Add functions [taxa_as_rows()] and [taxa_as_columns()] to replace verbose called to [clean_pq()]
-- Add function [ggscatt_pq()] to plot and test for effect of a numerical columns in sam_data on Hill number. Its the equivalent for numerical variables of [ggbetween_pq()] which focus on the effect of a factor. 
-- Add functions [var_par_pq()] , [var_par_rarperm_pq()] and [plot_var_part_pq()] to compute the partition of the variation of community and plot it. It introduce the notion of `rarperm` part in the function name. It refers to the fact that this function compute permutation of samples depth rarefaction to measure the variation due to the random process in rarefaction. 
-- Add function [hill_test_rarperm_pq()] to test the effect of a factor on hill diversity accounting for the variation due to random nature of the rarefaction by sample depth. 
-- Add function [rarefy_sample_count_by_modality()] to equalize the number of samples for each levels of a modality (factor)
-- Add function [accu_plot_balanced_modality()] to plot accumulation curves with balanced modality (same number of samples per level) and depth rarefaction (same number of sequences per sample) 
-- Add function [adonis_rarperm_pq()] to compute multiple Permanova analyses on different sample depth rarefaction.
-- Add function [ggaluv_pq()] to plot taxonomic distribution in alluvial fashion with ggplot2 (using the [ggalluvial] package)
-- Add function [glmutli_pq()] to use automated model selection and multimodel inference with (G)LMs for phyloseq object
+- Add functions `taxa_as_rows()` and `taxa_as_columns()` to replace verbose called to `clean_pq()`
+- Add function `ggscatt_pq()` to plot and test for effect of a numerical columns in sam_data on Hill number. Its the equivalent for numerical variables of `ggbetween_pq()` which focus on the effect of a factor. 
+- Add functions `var_par_pq()` , `var_par_rarperm_pq()` and `plot_var_part_pq()` to compute the partition of the variation of community and plot it. It introduce the notion of `rarperm` part in the function name. It refers to the fact that this function compute permutation of samples depth rarefaction to measure the variation due to the random process in rarefaction. 
+- Add function `hill_test_rarperm_pq()` to test the effect of a factor on hill diversity accounting for the variation due to random nature of the rarefaction by sample depth. 
+- Add function `rarefy_sample_count_by_modality()` to equalize the number of samples for each levels of a modality (factor)
+- Add function `accu_plot_balanced_modality()` to plot accumulation curves with balanced modality (same number of samples per level) and depth rarefaction (same number of sequences per sample) 
+- Add function `adonis_rarperm_pq()` to compute multiple Permanova analyses on different sample depth rarefaction.
+- Add function `ggaluv_pq()` to plot taxonomic distribution in alluvial fashion with ggplot2 (using the [ggalluvial] package)
+- Add function `glmutli_pq()` to use automated model selection and multimodel inference with (G)LMs for phyloseq object
 
 
 ## New parameters
 
-- Add param `taxa_ranks` in function [psmelt_samples_pq()] to group results by samples AND taxonomic ranks. 
-- Add param `hill_scales` in functions [hill_tuckey_pq()] and [hill_pq()] to choose the level of the hill number. 
+- Add param `taxa_ranks` in function `psmelt_samples_pq()` to group results by samples AND taxonomic ranks. 
+- Add param `hill_scales` in functions `hill_tuckey_pq()` and `hill_p()` to choose the level of the hill number. 
 - Add param `na_remove` in function `hill_pq()` to remove samples with NA in the factor fact.
 
 
@@ -31,7 +38,7 @@
 - Replace param `variable` by `fact` in function `ggbetween_pq()` and `hill_pq()` (keeping the variable option in `hill_pq()` for backward compatibility)
 - Fix a bug in the class of the return object of function `chimera_removal_vs()`. Now it return a matrix to be able to be parsed on to [dada2::getUniques()] 
 
-# MiscMetabar 0.7 (in development)
+# MiscMetabar 0.7
  
 - Add functions `chimera_detection_vs()` and `chimera_removal_vs()` to process chimera detection and removal using [vsearch](https://github.com/torognes/vsearch) software 
 - Add functions `filter_trim()`, `sample_data_with_new_names()` and `rename_samples()` to facilitate the use of [targets](https://books.ropensci.org/targets/) for bioinformatic pipeline.

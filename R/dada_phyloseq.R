@@ -6,7 +6,10 @@ if (getRversion() >= "2.15.1") {
 #' Add dna in `refseq` slot of a `physeq` object using taxa names and renames taxa
 #'   using ASV_1, ASV_2, …
 #'
-#' `r lifecycle::badge("stable")`
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' @inheritParams clean_pq
 #'
@@ -35,7 +38,6 @@ add_dna_to_phyloseq <- function(physeq) {
 #'  In addition, this function check for discrepancy (and rename) between
 #' (i) taxa names in refseq, taxonomy table and otu_table and between
 #' (ii) sample names in sam_data and otu_table.
-#'
 #'
 #' @param physeq (required): a \code{\link{phyloseq-class}} object obtained
 #'   using the `phyloseq` package.
@@ -203,7 +205,9 @@ clean_pq <- function(physeq,
 #' from various objects including dada-class and derep-class.
 #'
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #'  * List of fastq and fastg.gz files -> nb of reads and samples
 #'  * List of dada-class -> nb of reads, clusters (ASV) and samples
@@ -427,7 +431,9 @@ track_wkflow <- function(list_of_objects,
 #' for each sample
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Contrary to [track_wkflow()], only phyloseq object are possible.
 #' More information are available in the manual of the function [track_wkflow()]
@@ -476,7 +482,9 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #'   or a list of DNA sequences
 #'
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @inheritParams clean_pq
 #' @param dna_seq You may directly use a character vector of DNA sequences
@@ -643,7 +651,8 @@ asv2otu <- function(physeq = NULL,
 ################################################################################
 #' Save phyloseq object in the form of multiple csv tables.
 #'
-#' `r lifecycle::badge("maturing")`
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @inheritParams clean_pq
 #' @param path a path to the folder to save the phyloseq object
@@ -864,13 +873,14 @@ write_pq <- function(physeq,
 #' A wrapper of write_pq to save in all three possible formats
 #'
 #' @details
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Write :
 #' - 4 separate tables
 #' - 1 table version
 #' - 1 RData file
-#'
 #'
 #' @inheritParams clean_pq
 #' @param path a path to the folder to save the phyloseq object
@@ -903,7 +913,8 @@ save_pq <- function(physeq, path = NULL, ...) {
 #' Read phyloseq object from multiple csv tables and a phylogenetic tree
 #' in Newick format.
 #'
-#' `r lifecycle::badge("maturing")`
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @param path (required) a path to the folder to read the phyloseq object
 #' @param taxa_are_rows (default to FALSE) see ?phyloseq for details
@@ -993,7 +1004,9 @@ read_pq <- function(path = NULL,
 #' Lulu reclustering of class `physeq`
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' See https://www.nature.com/articles/s41467-017-01312-x for more information
 #'  on the method.
@@ -1143,7 +1156,9 @@ lulu_pq <- function(physeq,
 #' MUMU reclustering of class `physeq`
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' See https://www.nature.com/articles/s41467-017-01312-x for more information
 #'  on the original method LULU. This is a wrapper of
@@ -1326,7 +1341,9 @@ mumu_pq <- function(physeq,
 #' Verify the validity of a phyloseq object
 #'
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Mostly for internal use in MiscMetabar functions.
 #'
@@ -1385,7 +1402,9 @@ verify_pq <- function(
 #' Subset samples using a conditional boolean vector.
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' The main objective of this function is to complete the
 #' [phyloseq::subset_samples()] function by propose a more easy
@@ -1438,12 +1457,13 @@ subset_samples_pq <- function(physeq, condition) {
 #' Subset taxa using a conditional named boolean vector.
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' The main objective of this function is to complete the
 #' [phyloseq::subset_taxa()] function by propose a more easy way of
 #' subset_taxa using a named boolean vector. Names must match taxa_names.
-#'
 #'
 #' @inheritParams clean_pq
 #' @param condition A named boolean vector to subset taxa. Length must fit
@@ -1550,7 +1570,9 @@ subset_taxa_pq <- function(physeq,
 #' Select one sample from a physeq object
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Mostly for internal used, for example in function [track_wkflow_samples()].
 #'
@@ -1612,7 +1634,9 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #' Add new taxonomic rank to a phyloseq object.
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' One of main use of this function is to add taxonomic assignment from
 #' a new database.
@@ -1650,7 +1674,9 @@ add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, ...) {
 #' Summarize information from sample data in a table
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' A wrapper for the [gtsummary::tbl_summary()] function in the case of `physeq`
 #'   object.
@@ -1701,10 +1727,11 @@ tbl_sum_samdata <- function(physeq, remove_col_unique_value = TRUE, ...) {
 #' Add information about Guild for FUNGI the FUNGuild databse
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Please cite Nguyen et al. 2016 (\doi{doi:10.1016/j.funeco.2015.06.006})
-#'
 #'
 #' @inheritParams clean_pq
 #' @param taxLevels Name of the 7 columns in tax_table required by funguild
@@ -1773,7 +1800,9 @@ add_funguild_info <- function(physeq,
 #' created with [add_funguild_info()]
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @inheritParams clean_pq
 #' @param levels_order (Default NULL) A character vector to
@@ -1915,7 +1944,9 @@ plot_guild_pq <-
 #' Build phylogenetic trees from refseq slot of a phyloseq object
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' This function build tree phylogenetic tree and if nb_bootstrap is
 #' set, it build also the 3 corresponding bootstrapped tree.
@@ -2080,7 +2111,9 @@ build_phytree_pq <- function(physeq,
 #' Test if the mean number of sequences by samples is link to the modality of
 #' a factor
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' The aim of this function is to provide a warnings if samples depth significantly
 #' vary among the modalities of a factor present in the `sam_data` slot.
@@ -2122,7 +2155,9 @@ are_modality_even_depth <- function(physeq, fact, boxplot = FALSE) {
 #' Reorder taxa in otu_table/tax_table/refseq slot of a phyloseq object
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Note that the taxa order in a physeq object with a tree is locked by
 #' the order of leaf in the phylogenetic tree.
@@ -2191,7 +2226,9 @@ reorder_taxa_pq <- function(physeq, names_ordered, remove_phy_tree = FALSE) {
 ################################################################################
 #' @title Add information to sample_data slot of a phyloseq-class object
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Warning: The value nb_seq and nb_otu may be outdated if you transform your
 #' phyloseq object, e.g. using the [subset_taxa_pq()] function
@@ -2252,7 +2289,9 @@ add_info_to_sam_data <- function(physeq,
 #'   or the `refseq` slot of a phyloseq-class object
 #'
 #' @description
-#' `r lifecycle::badge("stable")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #'   Internally used in [vsearch_clustering()], [swarm_clustering()] and
 #'   [asv2otu()].
@@ -2315,11 +2354,14 @@ physeq_or_string_to_dna <- function(physeq = NULL,
 ################################################################################
 #' Remove primers using [cutadapt](https://github.com/marcelm/cutadapt/)
 #'
-#'
 #' @description
-#' `r lifecycle::badge("experimental")`
 #'
-#' You need to install Cutadapt
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#' You need to install [Cutadapt](https://cutadapt.readthedocs.io/).
+#'   See also https://github.com/VascoElbrecht/JAMP/blob/master/JAMP/R/Cutadapt.R for another call to cutadapt
+#'   from R
 #'
 #' @param path_to_fastq (Required) A path to a folder with fastq files. See
 #'   [list_fastq_files()] for help.
@@ -2336,7 +2378,9 @@ physeq_or_string_to_dna <- function(physeq = NULL,
 #' to run cutadapt. For examples, "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv &&" allow to bypass the conda init which asks to restart the shell
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @return a list of command and
 #' @export
@@ -2347,7 +2391,6 @@ physeq_or_string_to_dna <- function(physeq = NULL,
 #' cutadapt_remove_primers("inst/extdata", "TTC", "GAA",
 #'   folder_output = tempdir()
 #' )
-#'
 #'
 #' cutadapt_remove_primers(
 #'   system.file("extdata",
@@ -2369,7 +2412,6 @@ physeq_or_string_to_dna <- function(physeq = NULL,
 #'   folder_output = tempdir(),
 #'   cmd_is_run = FALSE
 #' )
-#'
 #'
 #' unlink(tempdir(), recursive = TRUE)
 #' }
@@ -2469,14 +2511,13 @@ cutadapt_remove_primers <- function(path_to_fastq,
 }
 ################################################################################
 
-
-################################################################################
-
 ################################################################################
 #' List the taxa that founded only in one given level of a modality
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @inheritParams clean_pq
 #' @param modality (required) The name of a column present in the `@sam_data` slot
@@ -2532,7 +2573,9 @@ taxa_only_in_one_level <- function(physeq,
 ################################################################################
 #' Normalize OTU table using samples depth
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #'   This function implement the method proposed by
 #'   McKnight et al. 2018 (\doi{doi:10.5061/dryad.tn8qs35})
@@ -2590,7 +2633,9 @@ normalize_prop_pq <- function(physeq, base_log = 2, constante = 10000, digits = 
 #' Build a sample information tibble from physeq object
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #'   Hill numbers are the number of equiprobable species giving the same diversity
 #'   value as the observed distribution.
@@ -2714,7 +2759,10 @@ psmelt_samples_pq <-
 #' Force taxa to be in columns in the otu_table of a physeq object
 #'
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
 #' @inheritParams clean_pq
 #' @author Adrien Taudière
 #' @export
@@ -2736,7 +2784,10 @@ taxa_as_columns <- function(physeq) {
 #' Force taxa to be in columns in the otu_table of a physeq object
 #'
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
 #' @inheritParams clean_pq
 #' @author Adrien Taudière
 #' @export
@@ -2757,7 +2808,9 @@ taxa_as_rows <- function(physeq) {
 ################################################################################
 #' Rarefy (equalize) the number of samples per modality of a factor
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @inheritParams clean_pq
 #' @param fact (required): The variable to rarefy. Must be present in
@@ -2799,16 +2852,25 @@ rarefy_sample_count_by_modality <-
       )
       message("...")
     }
-    mod <- physeq@sam_data[[fact]]
+    mod <- as.factor(physeq@sam_data[[fact]])
     n_mod <- table(mod)
     samples_names <- sample_names(physeq)
     samp_to_keep <- c()
-    for (modality in levels(as.factor(mod))) {
+    for (modality in levels(mod)) {
+      vec_samp_mod <- c(as.numeric(grep(modality, mod)))
+      
+      # To bypass the pb of vector of length 1
+      # We build a vector of two equal values and we will take only one 
+      # It is cause by range base behavior:
+      # 'If x has length 1, is numeric (in the sense of is.numeric) and x >= 1, sampling via sample takes place from 1:x.'
+      if(length(vec_samp_mod)==1){
+        vec_samp_mod <- c(vec_samp_mod, vec_samp_mod)
+      }
       samp_to_keep <-
         c(
           samp_to_keep,
           sample(
-            as.numeric(grep(modality, mod)),
+            vec_samp_mod,
             size = min(n_mod),
             replace = FALSE
           )
@@ -2816,6 +2878,17 @@ rarefy_sample_count_by_modality <-
     }
     new_physeq <-
       subset_samples_pq(physeq, 1:nsamples(physeq) %in% samp_to_keep)
+    
+    if (length(table(new_physeq@sam_data[[fact]])) != length(table(mod))) {
+      warning(
+        paste0(
+          "The number of final levels (sam_data of the output phyloseq
+                    object) is not equal to the inital (sam_data of the input
+                    phyloseq object) number of levels in the  factor: '",
+          fact , "'"
+        )
+      )}
+      
     return(new_physeq)
   }
 ################################################################################

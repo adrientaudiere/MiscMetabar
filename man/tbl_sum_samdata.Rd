@@ -20,7 +20,11 @@ e.g. samples names ?}
 A new \code{\link{phyloseq-class}} object with a larger slot tax_table
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+}}
+
 
 A wrapper for the \code{\link[gtsummary:tbl_summary]{gtsummary::tbl_summary()}} function in the case of \code{physeq}
 object.

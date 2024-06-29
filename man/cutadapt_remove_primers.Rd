@@ -51,11 +51,20 @@ to run cutadapt. For examples, "source ~/miniconda3/etc/profile.d/conda.sh && co
 a list of command and
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+}}
 
-You need to install Cutadapt
 
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+You need to install \href{https://cutadapt.readthedocs.io/}{Cutadapt}.
+See also https://github.com/VascoElbrecht/JAMP/blob/master/JAMP/R/Cutadapt.R for another call to cutadapt
+from R
+
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+}}
 }
 \details{
 This function is mainly a wrapper of the work of others.
@@ -67,7 +76,6 @@ Please cite cutadapt (\doi{doi:10.14806/ej.17.1.200}).
 cutadapt_remove_primers("inst/extdata", "TTC", "GAA",
   folder_output = tempdir()
 )
-
 
 cutadapt_remove_primers(
   system.file("extdata",
@@ -89,7 +97,6 @@ cutadapt_remove_primers(
   folder_output = tempdir(),
   cmd_is_run = FALSE
 )
-
 
 unlink(tempdir(), recursive = TRUE)
 }

@@ -66,7 +66,10 @@ A list of three dataframe representing the mean, the minimum quantile
 and the maximum quantile value for adonis results. See \code{\link[=adonis_pq]{adonis_pq()}}.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+}}
 }
 \examples{
 if (requireNamespace("vegan")) {

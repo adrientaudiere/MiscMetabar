@@ -21,7 +21,7 @@ navbar:
       href: articles/filter.html
     - text: Reclustering
       href: articles/Reclustering.html
-    - text: Tree visualization
+    - text: Tree building and visualization
       href: articles/tree_visualization.html
     - text: -------
     - text: Diversity analysis
@@ -29,6 +29,10 @@ navbar:
       href: articles/alpha-div.html
     - text: Beta-diversity
       href: articles/beta-div.html
+    - text: -------
+    - text: Bioinformatics actions
+    - text: Fastq quality check
+      href: articles/fastq_quality_check.html
     - text: -------
     - text: Examples with published dataset
     - text: Tengeler

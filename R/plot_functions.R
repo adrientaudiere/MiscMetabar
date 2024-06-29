@@ -2,7 +2,9 @@
 #' Plot the result of a mt test [phyloseq::mt()]
 #'
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @param mt (required) Result of a mt test from the function [phyloseq::mt()].
 #' @param alpha (default: 0.05) Choose the cut off p-value to plot taxa.
@@ -55,7 +57,10 @@ plot_mt <-
 #' Plot accumulation curves for \code{\link{phyloseq-class}} object
 #'
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
 #' @inheritParams clean_pq
 #' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
 #'    different lines
@@ -277,7 +282,9 @@ accu_plot <-
 ################################################################################
 #' Plot accumulation curves with balanced modality and depth rarefaction
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #'   This function (i) rarefy (equalize) the number of samples per modality of a
 #'   factor and (ii) rarefy the number of sequences per sample (depth). The
@@ -453,7 +460,10 @@ accu_plot_balanced_modality <- function(physeq,
 #'  accumulation curves
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
 #' @param res_accuplot the result of the function accu_plot()
 #' @param threshold the proportion of ASV to obtain in each samples
 #'
@@ -496,7 +506,10 @@ accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
 ################################################################################
 #' Plot OTU circle for \code{\link{phyloseq-class}} object
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
 #' @inheritParams clean_pq
 #' @param fact (required) Name of the factor to cluster samples by modalities.
 #'        Need to be in \code{physeq@sam_data}.
@@ -712,7 +725,10 @@ circle_pq <-
 ################################################################################
 #' Sankey plot of \code{\link{phyloseq-class}} object
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
 #' @inheritParams clean_pq
 #' @param fact Name of the factor to cluster samples by modalities.
 #' Need to be in \code{physeq@sam_data}.
@@ -930,7 +946,10 @@ sankey_pq <-
 ################################################################################
 #' Venn diagram of \code{\link{phyloseq-class}} object
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
 #' @inheritParams clean_pq
 #' @param fact (required): Name of the factor to cluster samples by modalities.
 #' Need to be in \code{physeq@sam_data}.
@@ -1133,7 +1152,9 @@ venn_pq <-
 #' Venn diagram of \code{\link{phyloseq-class}} object using
 #' `ggVennDiagram::ggVennDiagram` function
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Note that you can use ggplot2 function to customize the plot
 #' for ex. `+ scale_fill_distiller(palette = "BuPu", direction = 1)`
@@ -1175,7 +1196,7 @@ venn_pq <-
 #'   ggvenn_pq(data_fungi, fact = "Height") +
 #'     ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
 #'   pl <- ggvenn_pq(data_fungi, fact = "Height", split_by = "Time")
-#'   for (i in 1:length(pl)) {
+#'   for (i in seq_along(pl)) {
 #'     p <- pl[[i]] +
 #'       scale_fill_distiller(palette = "BuPu", direction = 1) +
 #'       theme(plot.title = element_text(hjust = 0.5, size = 22))
@@ -1298,7 +1319,9 @@ ggvenn_pq <- function(physeq = NULL,
 ################################################################################
 #' Multiple plot function
 #' @description
-#' `r lifecycle::badge("stable")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 # ggplot objects can be passed in ..., or to plotlist (as a list of ggplot
 # objects)
@@ -1367,7 +1390,10 @@ multiplot <-
 ################################################################################
 #' Graphical representation of hill number 0, 1 and 2 across a factor
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
 #'   Hill numbers are the number of equiprobable species giving the same
 #'   diversity value as the observed distribution. The Hill number 0
 #'   correspond to Species richness), the Hill number 1 to
@@ -1391,12 +1417,12 @@ multiplot <-
 #' @param color_fac (optional): The variable to color the barplot. For ex.
 #'   same as fact. Not very useful because ggplot2 plot colors can be
 #'   change using `scale_color_XXX()` function.
-#' @param letters (optional, default=FALSE): If set to TRUE, the plot
+#' @param letters (optional, default FALSE): If set to TRUE, the plot
 #'   show letters based on p-values for comparison. Use the
 #'   \code{\link[multcompView]{multcompLetters}} function from the package
 #'   multcompLetters. BROKEN for the moment. Note that na values in The
 #'   variable param need to be removed (see examples) to use letters.
-#' @param add_points (logical): add jitter point on boxplot
+#' @param add_points (logical, default FALSE): add jitter point on boxplot
 #' @param add_info (logical, default TRUE) Do we add a subtitle with
 #'   information about the number of samples per modality ?
 #' @param one_plot (logical, default FALSE) If TRUE, return a unique
@@ -1404,6 +1430,13 @@ multiplot <-
 #'   Note that if letters and one_plot are both TRUE, tuckey HSD results
 #'   are discarded from the unique plot. In that case, use one_plot = FALSE
 #'   to see the tuckey HSD results in the fourth plot of the resulting list.
+#' @param kruskal_test (logical, default TRUE) Do we test for global effect of
+#'   our factor on each hill scales values? When kruskal_test is TRUE, the
+#'   resulting test value are add in each plot in subtitle (unless add_info is
+#'   FALSE). Moreover, if at
+#'   least one hill scales is not significantly link to fact (pval>0.05),
+#'   a message is prompt saying that Tuckey HSD plot is not informative for
+#'   those Hill scales and letters are not printed.
 #' @param plot_with_tuckey (logical, default TRUE). If one_plot is set to
 #'   TRUE and letters to FALSE, allow to discard the tuckey plot part with
 #'   plot_with_tuckey = FALSE
@@ -1416,8 +1449,11 @@ multiplot <-
 #' @param na_remove (logical, default TRUE) Do we remove samples with NA in
 #'   the factor fact ? Note that na_remove is always TRUE when using
 #'   letters = TRUE
+#' @param vioplot (logical, default FALSE) Do we plot violin plot instead of
+#'   boxplot ?
 #' @return Either an unique ggplot2 object (if one_plot is TRUE) or
-#'  a list of 4 ggplot2 plot:
+#'  a list of n+1 ggplot2 plot (with n the number of hill scale value).
+#'  For example, with the default scale value:
 #' - plot_Hill_0 : the boxplot of Hill number 0 (= species richness)
 #'     against the variable
 #' - plot_Hill_1 : the boxplot of Hill number 1 (= Shannon index)
@@ -1438,7 +1474,8 @@ multiplot <-
 #' if (requireNamespace("multcompView")) {
 #'   p2 <- hill_pq(data_fungi, "Time",
 #'     correction_for_sample_size = FALSE,
-#'     letters = TRUE, add_points = TRUE, plot_with_tuckey = FALSE
+#'     letters = TRUE, add_points = TRUE,
+#'     plot_with_tuckey = FALSE
 #'   )
 #'   if (requireNamespace("patchwork")) {
 #'     patchwork::wrap_plots(p2, guides = "collect")
@@ -1448,8 +1485,10 @@ multiplot <-
 #'   data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <-
 #'     data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] +
 #'     sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
-#'   p3 <- hill_pq(data_fungi_modif, "Height", letters = TRUE)
-#'   p3[[1]]
+#'   p3 <- hill_pq(data_fungi_modif, "Height",
+#'     letters = TRUE, vioplot = TRUE,
+#'     add_points = TRUE
+#'   )
 #' }
 #' }
 #' @seealso [psmelt_samples_pq()] and [ggbetween_pq()]
@@ -1461,10 +1500,12 @@ hill_pq <- function(physeq,
                     letters = FALSE,
                     add_points = FALSE,
                     add_info = TRUE,
+                    kruskal_test = TRUE,
                     one_plot = FALSE,
                     plot_with_tuckey = TRUE,
                     correction_for_sample_size = TRUE,
-                    na_remove = TRUE) {
+                    na_remove = TRUE,
+                    vioplot = FALSE) {
   if (!is.null(variable)) {
     if (!is.null(fact)) {
       stop(
@@ -1514,11 +1555,37 @@ hill_pq <- function(physeq,
       correction_for_sample_size = correction_for_sample_size
     )
   p_list <- list()
+
+  if (kruskal_test) {
+    kt_res <- list()
+    for (i in seq_along(hill_scales)) {
+      kt_res[[i]] <- kruskal.test(df_hill[, paste0("Hill_", hill_scales[[i]])], df_hill[, fact])
+    }
+    if (sum(sapply(kt_res, function(x) {
+      x$p.value > 0.05
+    })) > 0) {
+      message(paste0(sum(sapply(kt_res, function(x) {
+        x$p.value > 0.05
+      })), " out of ", length(kt_res), " Hill scales do not show any global trends with you factor ", fact, ". Tuckey HSD plot is not informative for those Hill scales. Letters are not printed for those Hill scales"))
+    }
+  }
+
   for (i in seq_along(hill_scales)) {
-    p_list[[i]] <-
-      ggplot(df_hill, aes(group = !!var, .data[[paste0("Hill_", hill_scales[[i]])]])) +
-      geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac), y = !!var)) +
-      labs(x = paste0("Hill_", hill_scales[[i]]))
+    if (vioplot) {
+      p_list[[i]] <-
+        ggplot(df_hill, aes(
+          x = .data[[paste0("Hill_", hill_scales[[i]])]],
+          y = !!var
+        )) +
+        geom_violin(aes(colour = as.factor(!!color_fac))) +
+        labs(x = paste0("Hill_", hill_scales[[i]]))
+    } else {
+      p_list[[i]] <-
+        ggplot(df_hill, aes(group = !!var, x = .data[[paste0("Hill_", hill_scales[[i]])]])) +
+        geom_boxplot(outlier.size = 2, aes(colour = as.factor(!!color_fac), y = !!var)) +
+        labs(x = paste0("Hill_", hill_scales[[i]]))
+    }
+
     if (add_points) {
       p_list[[i]] <-
         p_list[[i]] + geom_jitter(aes(y = !!var, colour = as.factor(!!color_fac)), alpha = 0.5)
@@ -1533,9 +1600,21 @@ hill_pq <- function(physeq,
           collapse = " - '"
         )
       )
-
+      if (kruskal_test) {
+        subtitle_plot <- paste0(
+          subtitle_plot, "\n",
+          paste0(
+            " Hill ", hill_scales[[i]],
+            " -- Kruskal-Wallis chi-squared =",
+            round(kt_res[[i]]$statistic, 2),
+            "; df = ", kt_res[[i]]$parameter,
+            "; p.value =", format.pval(kt_res[[i]]$p.value, 2)
+          )
+        )
+      }
       p_list[[i]] <- p_list[[i]] + labs(subtitle = subtitle_plot)
     }
+
     if (letters) {
       data_h <-
         p_var$data[grep(paste0("Hill_", hill_scales[[i]]), p_var$data[, 5]), ]
@@ -1549,20 +1628,22 @@ hill_pq <- function(physeq,
       data_letters <- p_list[[i]]$data %>%
         group_by(!!var) %>%
         summarize(pos_letters = max(.data[[paste0("Hill_", hill_scales[[i]])]]) + 1) %>%
-        inner_join(dt)
+        inner_join(dt, by = join_by(!!fact))
 
-      p_list[[i]] <- p_list[[i]] +
-        geom_label(
-          data = data_letters,
-          aes(
-            x = pos_letters,
-            label = Letters
-          ),
-          y = ggplot_build(p_list[[i]])$data[[1]]$y,
-          size = 4,
-          stat = "unique",
-          parse = TRUE
-        )
+      if (!kruskal_test | kt_res[[i]]$p.value < 0.05) {
+        p_list[[i]] <- p_list[[i]] +
+          geom_label(
+            data = data_letters,
+            aes(
+              x = pos_letters,
+              label = Letters,
+            ),
+            y = unique(ggplot_build(p_list[[i]])$data[[1]]$y),
+            size = 4,
+            stat = "unique",
+            parse = TRUE
+          )
+      }
     }
   }
 
@@ -1586,7 +1667,9 @@ hill_pq <- function(physeq,
 #' Box/Violin plots for between-subjects comparisons of Hill Number
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Note that contrary to [hill_pq()], this function does not take into
 #' account for difference in the number of sequences per samples/modalities.
@@ -1689,7 +1772,10 @@ ggbetween_pq <-
 ################################################################################
 #' Summarize a \code{\link{phyloseq-class}} object using a plot.
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
 #' @inheritParams clean_pq
 #' @param add_info Does the bottom down corner contain
 #'   extra informations?
@@ -1887,7 +1973,10 @@ summary_plot_pq <- function(physeq,
 ################################################################################
 #' rotl wrapper for phyloseq data
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
 #'   Make a phylogenetic tree using the ASV names of a physeq object and the
 #'   Open Tree of Life tree.
 #'
@@ -1948,7 +2037,9 @@ rotl_pq <- function(physeq,
 ################################################################################
 #' Heat tree from `metacoder` package using `tax_table` slot
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Note that the number of ASV is store under the name `n_obs`
 #' and the number of sequences under the name `nb_sequences`
@@ -2022,7 +2113,10 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 ################################################################################
 #' Visualization of two samples for comparison
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
 #' @inheritParams clean_pq
 #' @param fact (default: NULL) Name of the factor in `physeq@sam_data`.
 #'   If left to NULL use the `left_name` and `right_name` parameter as modality.
@@ -2297,7 +2391,9 @@ biplot_pq <- function(physeq,
 ################################################################################
 #' Visualization of a collection of couples of samples for comparison
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' This allow to plot all the possible [biplot_pq()] combination
 #' using one factor.
@@ -2385,7 +2481,9 @@ multi_biplot_pq <- function(physeq,
 #' Plot taxonomic distribution in function of a factor with stacked bar in %
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #'   An alternative to `phyloseq::plot_bar()` function.
 #'
@@ -2580,7 +2678,9 @@ plot_tax_pq <-
 #' one sample factor
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Note that lvl3 need to be nested in lvl2 which need to be nested
 #' in lvl1
@@ -2750,7 +2850,8 @@ tsne_pq <-
 ################################################################################
 #' Plot a tsne low dimensional representation of a phyloseq object
 #'
-#' `r lifecycle::badge("experimental")`
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Partially inspired by `phylosmith::tsne_phyloseq()` function developed by Schuyler D. Smith.
 #'
@@ -2849,7 +2950,10 @@ plot_tsne_pq <- function(physeq,
 ################################################################################
 #' Scaling with ranked subsampling (SRS) curve of phyloseq object
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
 #' @inheritParams clean_pq
 #' @param clean_pq (logical): Does the phyloseq
 #'   object is cleaned using the [clean_pq()] function?
@@ -2882,7 +2986,9 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 ################################################################################
 #' iNterpolation and EXTrapolation of Hill numbers (with iNEXT)
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @inheritParams clean_pq
 #' @param merge_sample_by (default: NULL) if not `NULL` samples of
@@ -2946,7 +3052,9 @@ iNEXT_pq <- function(physeq,
 ################################################################################
 #' Make upset plot for phyloseq object.
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Alternative to venn plot.
 #'
@@ -3014,7 +3122,6 @@ iNEXT_pq <- function(physeq,
 #'     )
 #'   )
 #'
-#'
 #'   upset_pq(
 #'     data_fungi_mini,
 #'     fact = "Time",
@@ -3043,7 +3150,6 @@ iNEXT_pq <- function(physeq,
 #'       )
 #'     )
 #'   )
-#'
 #'
 #'   upset_pq(
 #'     subset_taxa(data_fungi_mini, Phylum == "Basidiomycota"),
@@ -3155,7 +3261,9 @@ upset_pq <- function(physeq,
 ################################################################################
 #' Test for differences between intersections
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @inheritParams upset_pq
 #' @param var_to_test (default c("OTU")) : a vector of column present in
@@ -3230,7 +3338,10 @@ upset_test_pq <-
 #' Compute different functions for different class of vector.
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
 #' Mainly an internal function useful in "sapply(..., tapply)" methods
 #'
 #' @param x : a vector
@@ -3356,7 +3467,9 @@ diff_fct_diff_class <-
 ################################################################################
 #' Plot the distribution of sequences or ASV in one taxonomic levels
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @inheritParams clean_pq
 #' @param fact Name of the factor to cluster samples by modalities.
@@ -3413,7 +3526,9 @@ tax_bar_pq <-
 ################################################################################
 #' Ridge plot of a phyloseq object
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @inheritParams clean_pq
 #' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
@@ -3437,7 +3552,7 @@ tax_bar_pq <-
 #' \donttest{
 #' if (requireNamespace("ggridges")) {
 #'   ridges_pq(data_fungi_mini, "Time", alpha = 0.5, scale = 0.9)
-#'   ridges_pq(data_fungi_mini, "Sample_names", log10trans = TRUE)
+#'   ridges_pq(data_fungi_mini, "Sample_names", log10trans = TRUE) + facet_wrap("~Height")
 #'
 #'   ridges_pq(data_fungi_mini,
 #'     "Time",
@@ -3452,6 +3567,7 @@ ridges_pq <- function(physeq,
                       fact,
                       nb_seq = TRUE,
                       log10trans = TRUE,
+                      tax_level = "Class",
                       ...) {
   psm <- psmelt(physeq)
   psm <- psm %>% filter(Abundance > 0)
@@ -3461,18 +3577,18 @@ ridges_pq <- function(physeq,
   }
   if (nb_seq) {
     p <- ggplot(psm, aes(y = factor(.data[[fact]]), x = Abundance)) +
-      ggridges::geom_density_ridges(aes(fill = Class), ...) +
+      ggridges::geom_density_ridges(aes(fill = .data[[tax_level]]), ...) +
       xlim(c(0, NA))
   } else {
     psm_asv <-
       psm %>%
-      group_by(.data[[fact]], OTU, Class) %>%
+      group_by(.data[[fact]], OTU, .data[[tax_level]]) %>%
       summarise("count" = n())
 
     p <-
       ggplot(psm_asv, aes(y = factor(.data[[fact]]), x = count)) +
       ggridges::geom_density_ridges(
-        aes(fill = Class),
+        aes(fill = .data[[tax_level]]),
         ...
       ) +
       xlim(c(0, NA))
@@ -3487,7 +3603,9 @@ ridges_pq <- function(physeq,
 #' Plot treemap of 2 taxonomic levels
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Note that lvl2need to be nested in lvl1
 #'
@@ -3617,7 +3735,9 @@ treemap_pq <- function(physeq,
 ################################################################################
 #' Plot the partition the variation of a phyloseq object
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @param res_varpart (required) the result of the functions [var_par_pq()]
 #'   or [var_par_rarperm_pq()]
@@ -3735,14 +3855,14 @@ plot_var_part_pq <-
     if (show_dbrda_signif) {
       if (is.null(res_varpart$dbrda_result_prop_pval_signif)) {
         cond <-
-          c(1:length(res_varpart$dbrda_result))[sapply(res_varpart$dbrda_result, function(x) {
+          seq_along(res_varpart$dbrda_result)[sapply(res_varpart$dbrda_result, function(x) {
             x$`Pr(>F)`[[1]] < show_dbrda_signif_pval
           })]
         res_varpart$Xnames[cond] <-
           paste0(res_varpart$Xnames[cond], "*")
       } else {
         cond <-
-          c(1:length(res_varpart$dbrda_result))[res_varpart$dbrda_result_prop_pval_signif >=
+          seq_along(res_varpart$dbrda_result)[res_varpart$dbrda_result_prop_pval_signif >=
             min_prop_pval_signif_dbrda]
         res_varpart$Xnames[cond] <-
           paste0(res_varpart$Xnames[cond], "*")
@@ -3798,7 +3918,9 @@ plot_var_part_pq <-
 #' Hill diversity of phyloseq object
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Basically a wrapper of function [ggstatsplot::ggscatterstats()] for
 #' object of class phyloseq and Hill number.
@@ -3876,7 +3998,9 @@ ggscatt_pq <- function(physeq,
 #' Alluvial plot for taxonomy and samples factor vizualisation
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Basically a wrapper of [ggalluvial](https://corybrunson.github.io/ggalluvial/index.html)
 #' package

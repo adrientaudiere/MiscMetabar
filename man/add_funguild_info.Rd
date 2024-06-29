@@ -20,7 +20,11 @@ A new object of class \code{physeq} with Guild information added to
 \code{tax_table} slot
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+}}
+
 
 Please cite Nguyen et al. 2016 (\doi{doi:10.1016/j.funeco.2015.06.006})
 }

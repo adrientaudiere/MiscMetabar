@@ -1,7 +1,9 @@
 #' Merge taxa in groups (vectorized version)
 #'
 #' @description
-#' `r lifecycle::badge("stable")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' Firstly release in the [speedyseq](https://github.com/mikemc/speedyseq/) R
 #' package by Michael R. McLaren.
@@ -309,7 +311,9 @@ bad_flush_right <- function(x, bad = "BAD", na_bad = FALSE, k = length(x)) {
 
 #' Merge samples by a sample variable or factor
 #' @description
-#' `r lifecycle::badge("stable")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' Firstly release in the [speedyseq](https://github.com/mikemc/speedyseq/) R
 #' package by Michael R. McLaren.
@@ -333,7 +337,9 @@ bad_flush_right <- function(x, bad = "BAD", na_bad = FALSE, k = length(x)) {
 #'   `unique_or_na`
 #' @param reorder Logical specifying whether to reorder the new (merged)
 #'   samples by name
-#'
+#' @param default_fun Default functions if funs is not set. Per default
+#'   the function unique_or_na is used. See `diff_fct_diff_class()` for
+#'   a useful alternative.
 #' @export
 #' @return A new phyloseq-class, otu_table or sam_data object depending on
 #'   the class of the x param
@@ -357,7 +363,8 @@ setGeneric(
            group,
            fun_otu = sum,
            funs = list(),
-           reorder = FALSE) {
+           reorder = FALSE,
+           default_fun = unique_or_na) {
     standardGeneric("merge_samples2")
   }
 )
@@ -366,7 +373,8 @@ setGeneric(
 setMethod(
   "merge_samples2",
   signature("phyloseq"),
-  function(x, group, fun_otu = sum, funs = list(), reorder = FALSE) {
+  function(x, group, fun_otu = sum, funs = list(), reorder = FALSE,
+           default_fun = unique_or_na) {
     if (length(group) == 1) {
       stopifnot(group %in% sample_variables(x))
       group <- sample_data(x)[[group]]
@@ -385,7 +393,7 @@ setMethod(
       reorder = reorder
     )
     if (!is.null(access(x, "sam_data"))) {
-      sam.merged <- merge_samples2(sample_data(x), group, funs = funs)
+      sam.merged <- merge_samples2(sample_data(x), group, funs = funs, default_fun = default_fun)
     } else {
       sam.merged <- NULL
     }
@@ -403,7 +411,8 @@ setMethod(
 setMethod(
   "merge_samples2",
   signature("otu_table"),
-  function(x, group, fun_otu = sum, reorder = FALSE) {
+  function(x, group, fun_otu = sum, reorder = FALSE,
+           default_fun = unique_or_na) {
     stopifnot(identical(length(group), nsamples(x)))
     # Work with samples as rows, and remember to flip back at end if needed
     needs_flip <- taxa_are_rows(x)
@@ -449,7 +458,8 @@ setMethod(
 setMethod(
   "merge_samples2",
   signature("sample_data"),
-  function(x, group, funs = list(), reorder = FALSE) {
+  function(x, group, funs = list(), reorder = FALSE,
+           default_fun = unique_or_na) {
     if (length(group) == 1) {
       stopifnot(group %in% sample_variables(x))
       group <- x[[group]]
@@ -469,7 +479,7 @@ setMethod(
     # For vars in the funs, run f through as_mapper; else, use the default f
     funs <- purrr::map2(
       var_in_funs, names(var_in_funs),
-      ~ if (.x) purrr::as_mapper(funs[[.y]]) else unique_or_na
+      ~ if (.x) purrr::as_mapper(funs[[.y]]) else default_fun
     )
     ## Merge variable values, creating a new sample_data object with one row
     ## per group.

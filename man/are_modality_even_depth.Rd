@@ -20,7 +20,11 @@ Need to be in \code{physeq@sam_data}.}
 The result of a Kruskal-Wallis rank sum test
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+}}
+
 
 The aim of this function is to provide a warnings if samples depth significantly
 vary among the modalities of a factor present in the \code{sam_data} slot.

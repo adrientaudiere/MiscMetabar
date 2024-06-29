@@ -1,7 +1,9 @@
 ################################################################################
 #' List fastq files
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @param path path to files (required)
 #' @param paired_end do you have paired_end files? (default TRUE)
@@ -52,7 +54,9 @@ list_fastq_files <-
 #' Rename samples of an otu_table
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @inheritParams clean_pq
 #' @param names_of_samples (required) The new names of the samples
@@ -92,13 +96,14 @@ rename_samples_otu_table <- function(physeq, names_of_samples) {
 #'   [targets](https://books.ropensci.org/targets/) pipeline
 #'
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' This function filter and trim (with parameters passed on to
 #'   [dada2::filterAndTrim()] function) forward sequences or paired end
 #'   sequence if 'rev' parameter is set. It return the list of files to
 #'   subsequent analysis in a targets pipeline.
-#'
 #'
 #' @param fw (required) a list of forward fastq files
 #' @param rev a list of reverse fastq files for paired end trimming
@@ -139,7 +144,6 @@ rename_samples_otu_table <- function(physeq, names_of_samples) {
 #' derep_fw_pe
 #' derep_rv_pe
 #' @author Adrien Taudière
-#'
 #'
 #' @seealso [dada2::filterAndTrim()]
 filter_trim <-
@@ -212,7 +216,9 @@ filter_trim <-
 #'   optional order
 #'
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @param file_path (required) a path to the sample_data file
 #' @param names_of_samples (required) a vector of sample names
@@ -248,7 +254,8 @@ sample_data_with_new_names <- function(file_path,
 #' Rename the samples of a phyloseq slot
 #'
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"><img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @param phyloseq_component (required) one of otu_table or sam_data slot of a
 #'   phyloseq-class object

@@ -58,7 +58,11 @@ modalities of the argument \code{factor} or if split_by is set a list
 of plots.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#maturing}{\figure{lifecycle-maturing.svg}{options: alt='[Maturing]'}}}{\strong{[Maturing]}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+}}
+
 
 Note that you can use ggplot2 function to customize the plot
 for ex. \code{+ scale_fill_distiller(palette = "BuPu", direction = 1)}
@@ -74,7 +78,7 @@ if (requireNamespace("ggVennDiagram")) {
   ggvenn_pq(data_fungi, fact = "Height") +
     ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
   pl <- ggvenn_pq(data_fungi, fact = "Height", split_by = "Time")
-  for (i in 1:length(pl)) {
+  for (i in seq_along(pl)) {
     p <- pl[[i]] +
       scale_fill_distiller(palette = "BuPu", direction = 1) +
       theme(plot.title = element_text(hjust = 0.5, size = 22))

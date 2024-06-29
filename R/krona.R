@@ -1,7 +1,9 @@
 ################################################################################
 #' Make Krona files using [KronaTools](https://github.com/marbl/Krona/wiki).
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Need the installation of kronatools on the computer ([installation instruction](https://github.com/marbl/Krona/wiki/Installing)).
 #'
@@ -96,7 +98,9 @@ krona <-
 ###############################################################################
 #' Merge Krona files using [KronaTools](https://github.com/marbl/Krona/wiki).
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Need the installation of kronatools on the computer
 #' ([installation instruction](https://github.com/marbl/Krona/wiki/Installing)).

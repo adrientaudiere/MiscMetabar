@@ -5,7 +5,9 @@
 #'   that appended during PCR or NGS pipeline.
 #'
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @inheritParams clean_pq
 #' @param min_number (int) the minimum number of sequences to put
@@ -33,7 +35,9 @@ as_binary_otu_table <- function(physeq, min_number = 1) {
 #' Compute paired distances among matrix (e.g. otu_table)
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @note the first column of the first matrix is compare to the first column of
 #'   the second matrix, the second column of the first matrix is compare to the
@@ -92,7 +96,9 @@ dist_bycol <- function(x,
 ################################################################################
 #' List the size of all objects of the GlobalEnv.
 #' @description
-#' `r lifecycle::badge("stable")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' Code from https://tolstoy.newcastle.edu.au/R/e6/help/09/01/1121.html
 #'
@@ -115,7 +121,9 @@ all_object_size <- function() {
 #' @inheritParams clean_pq
 #' @param remove_space (logical; default TRUE): do we remove space?
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @author Adrien Taudière
 #'
@@ -138,7 +146,9 @@ simplify_taxo <- function(physeq, remove_space = TRUE) {
 #'
 #' @param file_path (required): path to a file
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @author Adrien Taudière
 #'
@@ -159,7 +169,9 @@ get_file_extension <- function(file_path) {
 #' @param accuracy number of digits (number of digits after zero)
 #' @param add_symbol if set to TRUE add the % symbol to the value
 #' @description
-#' `r lifecycle::badge("maturing")`
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @author Adrien Taudière
 #'
