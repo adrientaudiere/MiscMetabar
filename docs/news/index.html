@@ -39,7 +39,7 @@
     <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Bioinformatics actions</h6>
-    <a class="dropdown-item" href="../fastq_quality_check">Fastq quality check</a>
+    <a class="dropdown-item" href="../articles/fastq_quality_check.html">Fastq quality check</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Examples with published dataset</h6>
     <a class="dropdown-item" href="../articles/tengeler.html">Tengeler</a>
@@ -79,6 +79,7 @@
 <ul><li>Add param <code>default_fun</code> in function <code><a href="../reference/merge_samples2.html">merge_samples2()</a></code> in order to replace the default function that change the sample data in case of merging. A useful parameter is <code>default_fun=diff_fct_diff_class</code>.</li>
 <li>Add param <code>kruskal_test</code> to <code><a href="../reference/hill_pq.html">hill_pq()</a></code> function to prevent user to mis-interpret Tuckey HSD result (and letters) if the global effect of the tested factor on Hill diversity is non significant.</li>
 <li>Add param <code>vioplot</code> to hill_pq() function to allow violin plot instead of boxplot.</li>
+<li>Modify <code>rarefy_sample_count_by_modality</code> to debug the case of modality with level of length one.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.9.1" id="miscmetabar-091">MiscMetabar 0.9.1<a class="anchor" aria-label="anchor" href="#miscmetabar-091"></a></h2><p class="text-muted">CRAN release: 2024-04-28</p>

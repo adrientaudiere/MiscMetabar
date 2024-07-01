@@ -2858,12 +2858,12 @@ rarefy_sample_count_by_modality <-
     samp_to_keep <- c()
     for (modality in levels(mod)) {
       vec_samp_mod <- c(as.numeric(grep(modality, mod)))
-      
+
       # To bypass the pb of vector of length 1
-      # We build a vector of two equal values and we will take only one 
+      # We build a vector of two equal values and we will take only one
       # It is cause by range base behavior:
       # 'If x has length 1, is numeric (in the sense of is.numeric) and x >= 1, sampling via sample takes place from 1:x.'
-      if(length(vec_samp_mod)==1){
+      if (length(vec_samp_mod) == 1) {
         vec_samp_mod <- c(vec_samp_mod, vec_samp_mod)
       }
       samp_to_keep <-
@@ -2878,17 +2878,18 @@ rarefy_sample_count_by_modality <-
     }
     new_physeq <-
       subset_samples_pq(physeq, 1:nsamples(physeq) %in% samp_to_keep)
-    
+
     if (length(table(new_physeq@sam_data[[fact]])) != length(table(mod))) {
       warning(
         paste0(
           "The number of final levels (sam_data of the output phyloseq
                     object) is not equal to the inital (sam_data of the input
                     phyloseq object) number of levels in the  factor: '",
-          fact , "'"
+          fact, "'"
         )
-      )}
-      
+      )
+    }
+
     return(new_physeq)
   }
 ################################################################################

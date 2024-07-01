@@ -52,6 +52,9 @@
     <loc>https://adrientaudiere.github.io/MiscMetabar/articles/articles/import_export_track.html</loc>
   </url>
   <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/articles/articles/quality_fastq.html</loc>
+  </url>
+  <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/articles/articles/states_of_fields_in_R.html</loc>
   </url>
   <url>
@@ -68,6 +71,9 @@
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/articles/explore_data.html</loc>
+  </url>
+  <url>
+    <loc>https://adrientaudiere.github.io/MiscMetabar/articles/fastq_quality_check.html</loc>
   </url>
   <url>
     <loc>https://adrientaudiere.github.io/MiscMetabar/articles/filter.html</loc>

@@ -5,16 +5,16 @@ articles:
   alpha-div: alpha-div.html
   beta-div: beta-div.html
   explore_data: explore_data.html
+  fastq_quality_check: fastq_quality_check.html
   filter: filter.html
   import_export_track: import_export_track.html
   MiscMetabar: MiscMetabar.html
-  quality_fastq: quality_fastq.html
   Reclustering: Reclustering.html
   Rules: Rules.html
   states_of_fields_in_R: states_of_fields_in_R.html
   tengeler: tengeler.html
   tree_visualization: tree_visualization.html
-last_built: 2024-05-17T13:29Z
+last_built: 2024-07-01T08:14Z
 urls:
   reference: https://adrientaudiere.github.io/MiscMetabar/reference
   article: https://adrientaudiere.github.io/MiscMetabar/articles

@@ -3539,6 +3539,7 @@ tax_bar_pq <-
 #' @param log10trans (logical, default TRUE) If TRUE,
 #'   the number of sequences (or ASV if nb_seq = FALSE) is log10
 #'   transformed.
+#' @param tax_level The taxonomic level to fill ridges
 #' @param ... Other params passed on to [ggridges::geom_density_ridges()]
 #'
 #' @return A \code{\link{ggplot}}2 plot  with bar representing the number of sequence en each

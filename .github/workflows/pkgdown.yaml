@@ -1,8 +1,8 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
-  release:
-    types: [published]
+#  release:
+#    types: [published]
     
 name: pkgdown
 
@@ -35,7 +35,7 @@ jobs:
         run: sudo apt-get install ncbi-blast+
 
       - name: Install R packages not in DESCRIPTION
-        run: Rscript -e 'pak::pkg_install(c("datawizard", "formattable", "ggforce", "ggtree", "gtExtras", "MicrobiotaProcess", "pillar", "pointblank", "summarytools", "svglite", "tidytree", "treeio"))'
+        run: Rscript -e 'pak::pkg_install(c("datawizard", "formattable", "ggforce", "ggtree", "gtExtras", "MicrobiotaProcess", "pillar", "pointblank", "summarytools", "svglite", "tidytree", "treeio", "fastqcr"))'
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE, clean = TRUE)

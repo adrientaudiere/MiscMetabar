@@ -28,6 +28,8 @@ is count. Concretely, physeq \code{otu_table} is transformed in a binary
 the number of sequences (or ASV if nb_seq = FALSE) is log10
 transformed.}
 
+\item{tax_level}{The taxonomic level to fill ridges}
+
 \item{...}{Other params passed on to \code{\link[ggridges:geom_density_ridges]{ggridges::geom_density_ridges()}}}
 }
 \value{
