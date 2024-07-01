@@ -45,7 +45,7 @@ A wrapper for the vegan::adonis2() function in the case of physeq object."><!-- 
     <a class="dropdown-item" href="../articles/beta-div.html">Beta-diversity</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Bioinformatics actions</h6>
-    <a class="dropdown-item" href="../fastq_quality_check">Fastq quality check</a>
+    <a class="dropdown-item" href="../articles/fastq_quality_check.html">Fastq quality check</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Examples with published dataset</h6>
     <a class="dropdown-item" href="../articles/tengeler.html">Tengeler</a>
@@ -209,9 +209,9 @@ use this function.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> vegan::adonis2(formula = .formula, data = metadata)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           Df SumOfSqs      R2      F Pr(&gt;F)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTech    2   31.330 0.40211 93.147  0.001 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual 277   46.585 0.59789                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total    279   77.915 1.00000                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTech    2   27.069 0.27946 53.718  0.001 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual 277   69.792 0.72054                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total    279   96.862 1.00000                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-in"><span><span class="fu">adonis_pq</span><span class="op">(</span><span class="va">enterotype</span>, <span class="st">"SeqTech"</span>, dist_method <span class="op">=</span> <span class="st">"robust.aitchison"</span><span class="op">)</span></span></span>
