@@ -37,6 +37,9 @@ param but with less (or equal) numbers of rows
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
+
+
+Internally used in \code{\link[=plot_ancombc_pq]{plot_ancombc_pq()}}.
 }
 \details{
 This function is mainly a wrapper of the work of others.

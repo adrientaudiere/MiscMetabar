@@ -17,7 +17,12 @@ count_seq(file_path = NULL, folder_path = NULL, pattern = NULL)
 the number of sequences
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+}}
+
+
 Use grep to count the number of line with only one '+' (fastq, fastq.gz)
 or lines starting with a '>' (fasta) to count sequences.
 }

@@ -18,6 +18,9 @@ A new \code{\link{phyloseq-class}} object
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 }}
+
+
+Mainly for internal use. It is a special case of clean_pq function.
 }
 \author{
 Adrien Taudière

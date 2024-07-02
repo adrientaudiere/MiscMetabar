@@ -63,6 +63,9 @@ args was used.
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 }}
+
+
+A wrapper of SWARM software.
 }
 \details{
 This function use the \code{merge_taxa_vec} function to

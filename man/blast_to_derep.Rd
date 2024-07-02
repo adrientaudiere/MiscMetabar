@@ -85,6 +85,9 @@ A blast table
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
+
+
+Use the blast software.
 }
 \seealso{
 \code{\link[=blast_pq]{blast_pq()}} to use \code{refseq} slot as query sequences

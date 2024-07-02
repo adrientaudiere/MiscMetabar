@@ -37,7 +37,7 @@ function. Need to be in \code{physeq@sam_data}}
 NA in the variables set in formula.}
 
 \item{correction_for_sample_size}{(logical, default FALSE) If set to TRUE,
-the sample size (number of sequences by samples) is add to formula in
+the sample size (number of sequences by samples) is added to formula in
 the form \code{y~Library_Size + Biological_Effect} following recommendation of
 \href{https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-017-0237-y}{Weiss et al. 2017}.
 \code{correction_for_sample_size} overcome \code{rarefy_nb_seqs} if both are TRUE.}

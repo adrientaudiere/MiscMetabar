@@ -2,7 +2,7 @@
 % Please edit documentation in R/table_functions.R
 \name{formattable_pq}
 \alias{formattable_pq}
-\title{Create an visualization table to describe taxa distribution across a modality}
+\title{Create a visualization table to describe taxa distribution across a modality}
 \usage{
 formattable_pq(
   physeq,
@@ -59,6 +59,9 @@ A datatable
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 }}
+
+
+Allow to visualize a table with graphical input.
 }
 \details{
 This function is mainly a wrapper of the work of others.

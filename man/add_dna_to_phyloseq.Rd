@@ -20,4 +20,7 @@ taxa names
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 }}
+
+
+Useful in targets bioinformatic pipeline.
 }

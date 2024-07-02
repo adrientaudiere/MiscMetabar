@@ -1,10 +1,14 @@
 ################################################################################
-#' Search for exact matching of sequences using complement,
-#' reverse and reverse-complement
+#' Search for exact matching of sequences
 #'
+#' @description 
+#' 
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
+#' Search for exact matching of sequences using complement,
+#' reverse and reverse-complement
+#' 
 #' @inheritParams clean_pq
 #' @param seq2search A DNAStringSet object of sequences to search for.
 #' @return A list of data-frames for each input sequences with the name,
@@ -49,7 +53,6 @@ search_exact_seq_pq <- function(physeq, seq2search) {
 ################################################################################
 #' Calculate ecological distance among positive controls vs
 #'   distance for all samples
-
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
@@ -124,17 +127,23 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
 
 
 ################################################################################
-#' Subset taxa using a taxa control (e.g. truffle root tips) through 3 methods.
+#' Subset taxa using a taxa control or distribution based method
 #'
+#' @description 
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' 
+#' There is 3 main methods : discard taxa (i) using a control taxa (e.g. truffle root tips), 
+#' (ii) using a mixture models to detect bimodality in pseudo-abundance distribution or 
+#' (iii) using a minimum difference threshold pseudo-abundance. Each cutoff is defined at 
+#' the sample level.
 #'
 #' @aliases subset_taxa_tax_control
 #' @inheritParams clean_pq
 #' @param taxa_distri (required) a vector of length equal to the number of
-#'   samples with the number of sequences per samples for the taxa control
+#'   samples with the number of sequences per sample for the taxa control
 #' @param method (default: "mean") a method to calculate the cut-off value.
-#'   There is 6 available methods:
+#'   There are 6 available methods:
 #'   1. `cutoff_seq`: discard taxa with less than the number of sequence
 #'           than taxa control,
 #'   2. `cutoff_mixt`: using mixture models,

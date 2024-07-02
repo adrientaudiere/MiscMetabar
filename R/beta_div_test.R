@@ -17,7 +17,7 @@
 #'   Need to be in \code{physeq@sam_data}
 #' @param nperm (int) The number of permutations to perform.
 #' @param return_plot (logical) Do we return only the result
-#'   of the test or do we plot the result?
+#'   of the test, or do we plot the result?
 #' @param title The title of the Graph.
 #' @param na_remove (logical, default FALSE) If set to TRUE, remove samples with
 #'   NA in the variables set in formula.
@@ -116,7 +116,7 @@ graph_test_pq <- function(physeq,
 #' @param na_remove (logical, default FALSE) If set to TRUE, remove samples with
 #'   NA in the variables set in formula.
 #' @param correction_for_sample_size (logical, default FALSE) If set to TRUE,
-#'   the sample size (number of sequences by samples) is add to formula in
+#'   the sample size (number of sequences by samples) is added to formula in
 #'   the form `y~Library_Size + Biological_Effect` following recommendation of
 #'   [Weiss et al. 2017](https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-017-0237-y).
 #'   `correction_for_sample_size` overcome `rarefy_nb_seqs` if both are TRUE.
@@ -220,21 +220,25 @@ adonis_pq <- function(physeq,
 ################################################################################
 #' Permanova (adonis) on permutations of rarefaction even depth
 #'
-#' @description
-#'
+#' @description 
+#' 
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
+#' Permanova are computed on a given number of rarefaction with different 
+#' seed.number. This reduce the risk of a random drawing of a exceptional 
+#' situation of an unique rarefaction. 
+#' 
 #' @inheritParams adonis_pq
-#' @param nperm (int) The number of permutations to perform.
+#' @param nperm (int, default = 99) The number of permutations to perform.
 #' @param progress_bar (logical, default TRUE) Do we print progress during
 #'   the calculation.
 #' @param quantile_prob (float, `[0:1]`) the value to compute the quantile.
-#'   Minimum quantile is compute using 1-quantile_prob.
+#'   Minimum quantile is computed using 1-quantile_prob.
 #' @param sample.size (int) A single integer value equal to the number of
 #'   reads being simulated, also known as the depth. See
 #'   [phyloseq::rarefy_even_depth()].
-#' @param ... Other params for be passed on to [adonis_pq()] function
+#' @param ... Other params to be passed on to [adonis_pq()] function
 #'
 #' @return A list of three dataframe representing the mean, the minimum quantile
 #'  and the maximum quantile value for adonis results. See [adonis_pq()].
@@ -344,7 +348,7 @@ adonis_rarperm_pq <- function(physeq,
 #' @inheritParams clean_pq
 #'
 #' @param p_adjust_method (chr, default "BH"): the method used to adjust p-value
-#' @param ... Others arguments passed on to [adespatial::beta.div()] function
+#' @param ... Other arguments passed on to [adespatial::beta.div()] function
 #'
 #' @return An object of class `beta.div` see [adespatial::beta.div()] function
 #'   for more information
@@ -395,11 +399,11 @@ LCBD_pq <- function(physeq,
 #' @param p_adjust_method (chr, default "BH"): the method used to adjust p-value
 #' @param pval (int, default 0.05): the value to determine the significance of
 #'   LCBD
-#' @param sam_variables A vector of variables names present in the `sam_data`
+#' @param sam_variables A vector of variable names present in the `sam_data`
 #'   slot to plot alongside the LCBD value
 #' @param only_plot_significant (logical, default TRUE) Do we plot all LCBD
 #'   values or only the significant ones
-#' @param ... Others arguments passed on to [adespatial::beta.div()] function
+#' @param ... Other arguments passed on to [adespatial::beta.div()] function
 #'
 #' @return A ggplot2 object build with the package patchwork
 #' @export
@@ -548,7 +552,7 @@ plot_LCBD_pq <- function(physeq,
 #' @param min_SCBD (default 0.01) the minimum SCBD value
 #'   to plot the taxa
 
-#' @param ... Others arguments passed on to [adespatial::beta.div()] function
+#' @param ... Other arguments passed on to [adespatial::beta.div()] function
 #'
 #' @return A ggplot2 object build with the package patchwork
 #' @export
@@ -617,7 +621,7 @@ plot_SCBD_pq <- function(physeq,
 #' @param pval (int, default 0.05): the value to determine the significance of
 #'   LCBD
 #' @param control see `?indicspecies::multipatt()`
-#' @param ... Others arguments passed on to [indicspecies::multipatt()] function
+#' @param ... Other arguments passed on to [indicspecies::multipatt()] function
 #'
 #' @return A ggplot2 object
 #' @export
@@ -770,11 +774,13 @@ ancombc_pq <- function(physeq, fact, levels_fact = NULL, tax_level = "Class", ..
 
 ################################################################################
 #' Filter ancombc_pq results
-#' @description
 #'
+#' @description 
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
+#' Internally used in [plot_ancombc_pq()].
+#' 
 #' @param ancombc_res (required) the result of the ancombc_pq function
 #'   For the moment only bimodal factors are possible.
 #' @param filter_passed (logical, default TRUE) Do we filter using the column
@@ -850,11 +856,13 @@ signif_ancombc <- function(ancombc_res,
 
 ################################################################################
 #' Plot ANCOMBC2 result for phyloseq object
-#' @description
 #'
+#' @description 
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
+#' Graphical representation of ANCOMBC2 result.
+#' 
 #' @inheritParams clean_pq
 #' @param ancombc_res (required) the result of the ancombc_pq function
 #'   For the moment only bimodal factors are possible.
@@ -866,7 +874,7 @@ signif_ancombc <- function(ancombc_res,
 #'   (has q less than alpha)
 #' @param min_abs_lfc (integer, default 0) Minimum absolute value to filter
 #'   results based on Log Fold Change. For ex. a value of 1 filter out taxa
-#'   for which the abundance in a given level of the modality is not at least
+#'   for which the abundance in a given level of the modalty is not at least
 #'   the double of the abundance in the other level.
 #' @param tax_col The taxonomic level (must be present in `tax_table` slot)
 #'   to color the points
@@ -1017,7 +1025,6 @@ plot_ancombc_pq <-
 ################################################################################
 #' Show taxa which are present in only one given level of a modality
 #'
-#' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
@@ -1073,11 +1080,13 @@ taxa_only_in_one_level <- function(physeq,
 ################################################################################
 #' Distribution of sequences across a factor for one taxon
 #'
-#' @description
-#'
+#' @description 
+#' 
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
+#' Focus on one taxon and one factor. 
+#' 
 #' @inheritParams clean_pq
 #' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
 #'    different lines

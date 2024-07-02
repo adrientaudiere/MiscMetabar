@@ -30,7 +30,7 @@ Need to be in \code{physeq@sam_data}}
 \item{nperm}{(int) The number of permutations to perform.}
 
 \item{return_plot}{(logical) Do we return only the result
-of the test or do we plot the result?}
+of the test, or do we plot the result?}
 
 \item{title}{The title of the Graph.}
 

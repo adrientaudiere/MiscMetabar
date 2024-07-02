@@ -58,6 +58,9 @@ A plot
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
+
+
+Graphical representation of the partition of variation obtain with \code{\link[=var_par_pq]{var_par_pq()}}.
 }
 \details{
 This function is mainly a wrapper of the work of others.

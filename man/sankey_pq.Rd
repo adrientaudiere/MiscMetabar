@@ -55,6 +55,9 @@ of \code{fact}
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 }}
+
+
+Graphical representation of distribution of taxa across Taxonomy and (optionnaly a factor).
 }
 \examples{
 data("GlobalPatterns", package = "phyloseq")

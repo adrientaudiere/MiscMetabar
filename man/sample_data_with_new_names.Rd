@@ -29,6 +29,9 @@ A data.frame from file_path and new names
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 }}
+
+
+Useful for targets bioinformatic pipeline.
 }
 \examples{
 sam_file <- system.file("extdata", "sam_data.csv", package = "MiscMetabar")

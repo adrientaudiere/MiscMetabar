@@ -35,6 +35,9 @@ files are sorted by names (default behavior of \code{list.files()})
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 }}
+
+
+Useful for targets bioinformatic pipeline.
 }
 \examples{
 list_fastq_files("extdata")

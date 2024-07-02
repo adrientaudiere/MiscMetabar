@@ -34,6 +34,9 @@ a dataframe with levels as rows and information as column :
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
+
+
+Focus on one taxon and one factor.
 }
 \examples{
 distri_1_taxa(data_fungi, "Height", "ASV2")

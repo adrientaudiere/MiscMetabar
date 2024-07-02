@@ -48,7 +48,7 @@ command to manually run in a terminal.}
 to run cutadapt. For examples, "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv &&" allow to bypass the conda init which asks to restart the shell}
 }
 \value{
-a list of command and
+a list of command
 }
 \description{
 \if{html}{\out{
@@ -60,11 +60,6 @@ a list of command and
 You need to install \href{https://cutadapt.readthedocs.io/}{Cutadapt}.
 See also https://github.com/VascoElbrecht/JAMP/blob/master/JAMP/R/Cutadapt.R for another call to cutadapt
 from R
-
-\if{html}{\out{
-<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
-}}
 }
 \details{
 This function is mainly a wrapper of the work of others.

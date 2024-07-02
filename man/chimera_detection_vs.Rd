@@ -54,6 +54,9 @@ A list of 3 including non-chimera taxa (\verb{$non_chimera}), chimera taxa
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
+
+
+Use the VSEARCH software.
 }
 \details{
 This function is mainly a wrapper of the work of others.

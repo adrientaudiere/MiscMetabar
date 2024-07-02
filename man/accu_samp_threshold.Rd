@@ -21,6 +21,10 @@ to obtain \code{threshold} proportion of the ASV
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
+
+
+Note that as most bioinformatic pipeline discard singleton, accumulation curves from metabarcoding
+cannot be interpreted in the same way as with conventional biodiversity sampling techniques.
 }
 \examples{
 \donttest{

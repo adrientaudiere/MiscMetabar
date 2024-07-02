@@ -85,7 +85,7 @@ methods in the \href{https://github.com/torognes/swarm/blob/master/man/swarm_man
 
 \item{method_clusterize}{(default "overlap") the method for the \code{\link[DECIPHER:Clusterize]{DECIPHER::Clusterize()}} method}
 
-\item{...}{Others arguments passed on to \code{\link[DECIPHER:Clusterize]{DECIPHER::Clusterize()}}}
+\item{...}{Other arguments passed on to \code{\link[DECIPHER:Clusterize]{DECIPHER::Clusterize()}}}
 }
 \value{
 A new object of class \code{physeq} or a list of cluster if dna_seq
@@ -96,6 +96,9 @@ args was used.
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 }}
+
+
+This function use the \code{merge_taxa_vec} function to  merge taxa into clusters.
 }
 \details{
 This function use the \code{merge_taxa_vec} function to

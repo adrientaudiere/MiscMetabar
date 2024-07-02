@@ -66,6 +66,9 @@ A \code{\link{ggplot}}2 plot representing DESeq2 results
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
+
+
+Graphical representation of DESeq2 analysis.
 }
 \details{
 Please cite \code{DESeq2} package if you use chis function.

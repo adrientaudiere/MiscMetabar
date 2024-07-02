@@ -54,7 +54,7 @@ test as significant int the \code{prop_signif} result.}
 \item "bayes"
 }}
 
-\item{...}{Others arguments passed on to \code{\link[ggstatsplot:ggbetweenstats]{ggstatsplot::ggbetweenstats()}} function}
+\item{...}{Other arguments passed on to \code{\link[ggstatsplot:ggbetweenstats]{ggstatsplot::ggbetweenstats()}} function}
 }
 \value{
 A list of 6 components :
@@ -72,6 +72,9 @@ A list of 6 components :
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
+
+
+This reduce the risk of a random drawing of a exceptional situation of an unique rarefaction.
 }
 \examples{
 \donttest{

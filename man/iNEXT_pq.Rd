@@ -25,6 +25,9 @@ see \code{\link[iNEXT:iNEXT]{iNEXT::iNEXT()}} documentation
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
+
+
+Note that this function is quite time-consuming due to high dimensionality in metabarcoding community matrix.
 }
 \examples{
 \donttest{
