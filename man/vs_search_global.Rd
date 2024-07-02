@@ -46,6 +46,9 @@ A dataframe with uc results (invisible)
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 }}
+
+
+Use of VSEARCH software.
 }
 \details{
 This function is mainly a wrapper of the work of others.

@@ -99,6 +99,9 @@ A plot
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 }}
+
+
+Graphical representation of distribution of taxa across two samples.
 }
 \examples{
 data_fungi_2Height <- subset_samples(data_fungi_mini, Height \%in\% c("Low", "High"))

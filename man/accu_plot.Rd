@@ -66,6 +66,10 @@ return a base plot.
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 }}
+
+
+Note that as most bioinformatic pipeline discard singleton, accumulation curves from metabarcoding
+cannot be interpreted in the same way as with conventional biodiversity sampling techniques.
 }
 \examples{
 \donttest{

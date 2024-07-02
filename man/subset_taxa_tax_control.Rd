@@ -2,7 +2,7 @@
 % Please edit documentation in R/controls.R
 \name{subset_taxa_tax_control}
 \alias{subset_taxa_tax_control}
-\title{Subset taxa using a taxa control (e.g. truffle root tips) through 3 methods.}
+\title{Subset taxa using a taxa control or distribution based method}
 \usage{
 subset_taxa_tax_control(
   physeq,
@@ -16,10 +16,10 @@ subset_taxa_tax_control(
 using the \code{phyloseq} package.}
 
 \item{taxa_distri}{(required) a vector of length equal to the number of
-samples with the number of sequences per samples for the taxa control}
+samples with the number of sequences per sample for the taxa control}
 
 \item{method}{(default: "mean") a method to calculate the cut-off value.
-There is 6 available methods:
+There are 6 available methods:
 \enumerate{
 \item \code{cutoff_seq}: discard taxa with less than the number of sequence
 than taxa control,
@@ -42,6 +42,12 @@ A new \code{\link{phyloseq-class}} object.
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
+
+
+There is 3 main methods : discard taxa (i) using a control taxa (e.g. truffle root tips),
+(ii) using a mixture models to detect bimodality in pseudo-abundance distribution or
+(iii) using a minimum difference threshold pseudo-abundance. Each cutoff is defined at
+the sample level.
 }
 \examples{
 

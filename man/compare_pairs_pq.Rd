@@ -47,8 +47,11 @@ and diversity
 \description{
 \if{html}{\out{
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a> #'   For the moment refseq slot need to be not Null.
+<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a> 
 }}
+
+
+For the moment refseq slot need to be not Null.
 }
 \examples{
 data_fungi_low_high <- subset_samples(data_fungi, Height \%in\% c("Low", "High"))

@@ -34,7 +34,7 @@ diff? The diff value is TRUE if the taxon is significant
 
 \item{min_abs_lfc}{(integer, default 0) Minimum absolute value to filter
 results based on Log Fold Change. For ex. a value of 1 filter out taxa
-for which the abundance in a given level of the modality is not at least
+for which the abundance in a given level of the modalty is not at least
 the double of the abundance in the other level.}
 
 \item{tax_col}{The taxonomic level (must be present in \code{tax_table} slot)
@@ -60,6 +60,9 @@ patchworks of plot made using \code{patchwork::plot_layout()}.
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
+
+
+Graphical representation of ANCOMBC2 result.
 }
 \details{
 This function is mainly a wrapper of the work of others.

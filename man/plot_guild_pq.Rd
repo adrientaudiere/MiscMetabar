@@ -28,6 +28,9 @@ A ggplot2 object
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
+
+
+Graphical function.
 }
 \examples{
 \donttest{

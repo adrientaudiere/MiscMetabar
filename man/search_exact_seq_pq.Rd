@@ -2,8 +2,7 @@
 % Please edit documentation in R/controls.R
 \name{search_exact_seq_pq}
 \alias{search_exact_seq_pq}
-\title{Search for exact matching of sequences using complement,
-reverse and reverse-complement}
+\title{Search for exact matching of sequences}
 \usage{
 search_exact_seq_pq(physeq, seq2search)
 }
@@ -24,6 +23,10 @@ the reverse sequence and the reverse-complement sequence.
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
+
+
+Search for exact matching of sequences using complement,
+reverse and reverse-complement
 }
 \examples{
 data("data_fungi")

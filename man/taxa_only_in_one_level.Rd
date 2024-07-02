@@ -48,6 +48,10 @@ A vector of taxa names
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
+
+
+Given one modality name in sam_data and one level of the modality,
+return the taxa strictly specific of this level.
 }
 \examples{
 data_fungi_mini_woNA4height <- subset_samples(

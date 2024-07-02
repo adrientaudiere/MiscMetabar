@@ -45,6 +45,9 @@ A \code{\link{ggplot}}2 plot
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
+
+
+See \code{\link[=upset_pq]{upset_pq()}} to plot upset.
 }
 \examples{
 data(data_fungi)

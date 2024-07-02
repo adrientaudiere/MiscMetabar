@@ -47,19 +47,19 @@ effect.}
 
 \item{verbose}{(logical, default TRUE) If TRUE, prompt some messages.}
 
-\item{nperm}{(int) The number of permutations to perform.}
+\item{nperm}{(int, default = 99) The number of permutations to perform.}
 
 \item{progress_bar}{(logical, default TRUE) Do we print progress during
 the calculation.}
 
 \item{quantile_prob}{(float, \verb{[0:1]}) the value to compute the quantile.
-Minimum quantile is compute using 1-quantile_prob.}
+Minimum quantile is computed using 1-quantile_prob.}
 
 \item{sample.size}{(int) A single integer value equal to the number of
 reads being simulated, also known as the depth. See
 \code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}}.}
 
-\item{...}{Other params for be passed on to \code{\link[=adonis_pq]{adonis_pq()}} function}
+\item{...}{Other params to be passed on to \code{\link[=adonis_pq]{adonis_pq()}} function}
 }
 \value{
 A list of three dataframe representing the mean, the minimum quantile
@@ -70,6 +70,11 @@ and the maximum quantile value for adonis results. See \code{\link[=adonis_pq]{a
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
+
+
+Permanova are computed on a given number of rarefaction with different
+seed.number. This reduce the risk of a random drawing of a exceptional
+situation of an unique rarefaction.
 }
 \examples{
 if (requireNamespace("vegan")) {

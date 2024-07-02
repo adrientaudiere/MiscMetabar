@@ -10,13 +10,16 @@ get_file_extension(file_path)
 \item{file_path}{(required): path to a file}
 }
 \value{
-A  \code{\link{phyloseq-class}} object with simplified taxonomy
+The extension of a file.
 }
 \description{
 \if{html}{\out{
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 }}
+
+
+Internally used in \code{\link[=count_seq]{count_seq()}}.
 }
 \author{
 Adrien Taudière

@@ -85,6 +85,9 @@ and if present a phy_tree in Newick format
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 }}
+
+
+This is the reverse function of \code{\link[=read_pq]{read_pq()}}.
 }
 \examples{
 write_pq(data_fungi, path = paste0(tempdir(), "/phyloseq"))

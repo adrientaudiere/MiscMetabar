@@ -22,8 +22,8 @@ A \code{physeq} object with only 0/1 in the OTU table
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 }}
-}
-\note{
+
+
 Useful to test if the results are not biased by sequences bias
 that appended during PCR or NGS pipeline.
 }

@@ -27,7 +27,7 @@ parameter \code{min_seq_length} from the \code{\link[=chimera_detection_vs]{chim
 \item{clean_pq}{(logical; default FALSE) If TRUE, return the phyloseq object
 after cleaning using the default parameter of \code{\link[=clean_pq]{clean_pq()}} function.}
 
-\item{...}{Others arguments passed on to \code{\link[=chimera_detection_vs]{chimera_detection_vs()}} function}
+\item{...}{Other arguments passed on to \code{\link[=chimera_detection_vs]{chimera_detection_vs()}} function}
 }
 \value{
 \itemize{
@@ -42,6 +42,9 @@ chimeric taxa
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
+
+
+Use the VSEARCH software.
 }
 \details{
 This function is mainly a wrapper of the work of others.

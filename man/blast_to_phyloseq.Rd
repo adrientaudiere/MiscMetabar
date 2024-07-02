@@ -79,6 +79,9 @@ the blast table
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 }}
+
+
+Use the blast software.
 }
 \examples{
 \dontrun{

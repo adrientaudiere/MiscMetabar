@@ -55,7 +55,7 @@ is printed, including the number of candidate models.}
 
 \item{crit}{The Information Criterion to be used. Default is the small-sample corrected AIC (aicc). This should be a function that accepts a fitted model as first argument. Other provided functions are the classic AIC, the Bayes IC (bic), and QAIC/QAICc (qaic and qaicc).}
 
-\item{...}{Others arguments passed on to \code{\link[glmulti:glmulti]{glmulti::glmulti()}} function}
+\item{...}{Other arguments passed on to \code{\link[glmulti:glmulti]{glmulti::glmulti()}} function}
 }
 \value{
 A data.frame summarizing the glmulti results with columns
@@ -71,6 +71,9 @@ A data.frame summarizing the glmulti results with columns
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
+
+
+See \code{\link[glmulti:glmulti]{glmulti::glmulti()}} for more information.
 }
 \details{
 This function is mainly a wrapper of the work of others.

@@ -105,11 +105,11 @@ hill_tuckey_pq <- function(
 #' Test multiple times effect of factor on Hill diversity
 #'   with different rarefaction even depth
 #'
-#' @description
-#'
+#' @description 
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
-#'
+#' 
+#' This reduce the risk of a random drawing of a exceptional situation of an unique rarefaction. 
 #' @inheritParams clean_pq
 #' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
 #'    different lines
@@ -135,7 +135,7 @@ hill_tuckey_pq <- function(
 #'   - "robust"
 #'   - "bayes"
 #'
-#' @param ... Others arguments passed on to [ggstatsplot::ggbetweenstats()] function
+#' @param ... Other arguments passed on to [ggstatsplot::ggbetweenstats()] function
 #' @seealso [ggstatsplot::ggbetweenstats()], [hill_pq()]
 #' @return A list of 6 components :
 #'
@@ -271,11 +271,13 @@ hill_test_rarperm_pq <- function(physeq,
 
 ################################################################################
 #' Automated model selection and multimodel inference with (G)LMs for phyloseq
-#' @description
 #'
+#' @description 
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
+#' See [glmulti::glmulti()] for more information.
+#' 
 #' @inheritParams clean_pq
 #' @param formula (required) a formula for [glmulti::glmulti()]
 #'   Variables must be present in the `physeq@sam_data` slot or be one
@@ -301,7 +303,7 @@ hill_test_rarperm_pq <- function(physeq,
 #'   with covariates and no interactions. If "d", a simple summary of the candidate set
 #'   is printed, including the number of candidate models.
 #' @param crit The Information Criterion to be used. Default is the small-sample corrected AIC (aicc). This should be a function that accepts a fitted model as first argument. Other provided functions are the classic AIC, the Bayes IC (bic), and QAIC/QAICc (qaic and qaicc).
-#' @param ... Others arguments passed on to [glmulti::glmulti()] function
+#' @param ... Other arguments passed on to [glmulti::glmulti()] function
 #'
 #' @return A data.frame summarizing the glmulti results with columns
 #'

@@ -17,7 +17,7 @@ Pass on to \code{dada2::assignTaxonomy}.}
 If set to NULL (the default), the basename of the file reFasta
 is used.}
 
-\item{...}{Others arguments pass on to \code{dada2::assignTaxonomy}.}
+\item{...}{Other arguments pass on to \code{dada2::assignTaxonomy}.}
 }
 \value{
 A new \code{\link{phyloseq-class}} object with a larger slot tax_table"

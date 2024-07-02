@@ -2,9 +2,13 @@
 #' Blast some sequence against `refseq` slot of a \code{\link{phyloseq-class}}
 #'   object.
 #'
+#' @description 
+#' 
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
-#'
+#' 
+#' Use the blast software.
+#' 
 #' @param physeq (required): a \code{\link{phyloseq-class}} object obtained
 #'   using the `phyloseq` package.
 #' @param seq2search (required) path to a fasta file defining the sequences
@@ -180,9 +184,13 @@ blast_to_phyloseq <- function(physeq,
 #' Blast all sequence of `refseq` slot of a \code{\link{phyloseq-class}}
 #'   object against a custom database.
 #'
+#' @description 
+#' 
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
+#' Use the blast software.
+#' 
 #' @inheritParams blast_to_phyloseq
 #' @param fasta_for_db path to a fasta file to make the blast database
 #' @param database path to a blast database
@@ -335,9 +343,13 @@ blast_pq <- function(physeq,
 ################################################################################
 #' Filter undesirable taxa using blast against a custom database.
 #'
+#' @description 
+#' 
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
+#' Use the blast software.
+#' 
 #' @inheritParams blast_to_phyloseq
 #' @param fasta_for_db path to a fasta file to make the blast database
 #' @param database path to a blast database
@@ -423,9 +435,12 @@ filter_asv_blast <- function(physeq,
 #' Blast some sequence against sequences from of a \code{\link{derep-class}}
 #'   object.
 #'
+#' @description 
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
+#' Use the blast software.
+#' 
 #' @inheritParams blast_to_phyloseq
 #' @param derep The result of `dada2::derepFastq()`. A list of `derep-class`
 #'   object.

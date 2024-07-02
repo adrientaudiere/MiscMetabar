@@ -22,13 +22,13 @@ using the \code{phyloseq} package.}
 \item{pval}{(int, default 0.05): the value to determine the significance of
 LCBD}
 
-\item{sam_variables}{A vector of variables names present in the \code{sam_data}
+\item{sam_variables}{A vector of variable names present in the \code{sam_data}
 slot to plot alongside the LCBD value}
 
 \item{only_plot_significant}{(logical, default TRUE) Do we plot all LCBD
 values or only the significant ones}
 
-\item{...}{Others arguments passed on to \code{\link[adespatial:beta.div]{adespatial::beta.div()}} function}
+\item{...}{Other arguments passed on to \code{\link[adespatial:beta.div]{adespatial::beta.div()}} function}
 }
 \value{
 A ggplot2 object build with the package patchwork

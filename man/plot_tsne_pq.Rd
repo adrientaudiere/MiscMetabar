@@ -50,8 +50,8 @@ A ggplot object
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
-}
-\details{
+
+
 Partially inspired by \code{phylosmith::tsne_phyloseq()} function developed by Schuyler D. Smith.
 }
 \examples{

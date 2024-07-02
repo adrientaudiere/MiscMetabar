@@ -2,9 +2,12 @@
 #' Search for a list of sequence in a fasta file against physeq reference
 #'   sequences using [vsearch](https://github.com/torognes/vsearch)
 #'
+#' @description 
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
+#' Use of VSEARCH software.
+#' 
 #' @inheritParams clean_pq
 #' @param seq2search (required if path_to_fasta is NULL) Either (i) a DNAstringSet object
 #'   or (ii) a character vector that will be convert to DNAstringSet using
@@ -133,6 +136,8 @@ vs_search_global <- function(physeq,
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
+#' A wrapper of SWARM software.
+#' 
 #' @inheritParams clean_pq
 #' @param dna_seq NOT WORKING FOR THE MOMENT
 #'   You may directly use a character vector of DNA sequences
@@ -337,6 +342,8 @@ swarm_clustering <- function(physeq = NULL,
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
+#' A wrapper of VSEARCH software.
+#' 
 #' @inheritParams clean_pq
 #' @param dna_seq You may directly use a character vector of DNA sequences
 #'   in place of physeq args. When physeq is set, dna sequences take the value of
@@ -478,9 +485,12 @@ vsearch_clustering <- function(physeq = NULL,
 #' Search for a list of sequence in an object to remove chimera taxa
 #'   using [vsearch](https://github.com/torognes/vsearch)
 #'
+#' @description 
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
+#' Use the VSEARCH software.
+#' 
 #' @param object (required) A phyloseq-class object or one of dada, derep,
 #'   data.frame or list coercible to sequences table using the
 #'   function [dada2::makeSequenceTable()]
@@ -497,7 +507,7 @@ vsearch_clustering <- function(physeq = NULL,
 #' @param clean_pq (logical; default FALSE) If TRUE, return the phyloseq object
 #'   after cleaning using the default parameter of [clean_pq()] function.
 #'
-#' @param ... Others arguments passed on to [chimera_detection_vs()] function
+#' @param ... Other arguments passed on to [chimera_detection_vs()] function
 #' @seealso [chimera_detection_vs()]
 #' @return
 #'
@@ -604,9 +614,12 @@ chimera_removal_vs <-
 
 #' Detect for chimera taxa using [vsearch](https://github.com/torognes/vsearch)
 #'
+#' @description 
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
+#' Use the VSEARCH software.
+#' 
 #' @param seq2search (required) a list of DNA sequences coercible by function
 #'  [Biostrings::DNAStringSet()]
 #' @param nb_seq (required) a numeric vector giving the number of sequences for

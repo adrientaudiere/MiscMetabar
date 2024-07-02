@@ -66,6 +66,9 @@ args was used.
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 }}
+
+
+A wrapper of VSEARCH software.
 }
 \details{
 This function use the \code{\link[=merge_taxa_vec]{merge_taxa_vec()}} function to

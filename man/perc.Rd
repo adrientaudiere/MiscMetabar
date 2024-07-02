@@ -24,6 +24,9 @@ is set to TRUE)
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 }}
+
+
+Mostly for internal use.
 }
 \author{
 Adrien Taudière

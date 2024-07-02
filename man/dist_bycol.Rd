@@ -27,6 +27,9 @@ A list of length two : (i) a vector of observed distance ($obs) and
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
+
+
+May be used to verify ecological distance among samples.
 }
 \note{
 the first column of the first matrix is compare to the first column of

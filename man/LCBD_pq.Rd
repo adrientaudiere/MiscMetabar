@@ -13,7 +13,7 @@ using the \code{phyloseq} package.}
 
 \item{p_adjust_method}{(chr, default "BH"): the method used to adjust p-value}
 
-\item{...}{Others arguments passed on to \code{\link[adespatial:beta.div]{adespatial::beta.div()}} function}
+\item{...}{Other arguments passed on to \code{\link[adespatial:beta.div]{adespatial::beta.div()}} function}
 }
 \value{
 An object of class \code{beta.div} see \code{\link[adespatial:beta.div]{adespatial::beta.div()}} function
