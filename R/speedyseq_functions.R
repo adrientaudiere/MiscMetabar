@@ -43,7 +43,7 @@
 #' @return A new phyloseq-class, otu_table, tax_table, XStringset or
 #'   sam_data object depending on the class of the x param
 #' @seealso
-#' Function in MiscMetabar that use this function: [asv2otu()]
+#' Function in MiscMetabar that use this function: [postcluster_pq()]
 #'
 #' [base::rowsum()]
 #'

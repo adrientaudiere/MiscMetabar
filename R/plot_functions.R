@@ -530,7 +530,7 @@ accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
 #'    number of OTUs (add_nb_seq = FALSE)
 #' @param rarefy (logical) Does each samples modalities need to be rarefy in
 #'               order to compare them with the same amount of sequences?
-#' @param min_prop_tax (default: 0.01) The minimum proportion for taxon to be
+#' @param min_prop_tax (default: 0.01) The minimum proportion for taxa to be
 #'                     plotted
 #' @param min_prop_mod (default: 0.1) The minimum proportion for modalities
 #'                     to be plotted
@@ -748,7 +748,7 @@ circle_pq <-
 #' @param add_nb_seq Represent the number of sequences or the
 #'   number of OTUs (add_nb_seq = FALSE). Note that plotting the number of
 #'   sequences is slower.
-#' @param min_prop_tax (default: 0) The minimum proportion for taxon to be
+#' @param min_prop_tax (default: 0) The minimum proportion for taxa to be
 #'  plotted. EXPERIMENTAL. For the moment each links below the min.prop.
 #'  tax is discard from the sankey network resulting in sometimes weird plot.
 #' @param tax2remove  a vector of taxonomic groups to remove from the analysis
@@ -1752,7 +1752,7 @@ ggbetween_pq <-
     }
 
     df <- cbind(
-      "nb_asv" = sample_sums(physeq@otu_table),
+      "nb_taxa" = sample_sums(physeq@otu_table),
       physeq@sam_data,
       "hill_0" = vegan::renyi(physeq@otu_table, scales = 0, hill = TRUE),
       "hill_1" = vegan::renyi(physeq@otu_table, scales = 1, hill = TRUE),
@@ -1950,7 +1950,7 @@ summary_plot_pq <- function(physeq,
             min(taxa_sums(otu_tab)),
             " (",
             sum(taxa_sums(otu_tab) == min(taxa_sums(otu_tab))),
-            " ASV)",
+            " Taxons)",
             "\n",
             "Min seq length: ",
             ifelse(
@@ -2516,7 +2516,7 @@ multi_biplot_pq <- function(physeq,
 #'   [merge_samples2()] function.
 #'   Need to be in \code{physeq@sam_data}
 #' @param type If "nb_seq" (default), the number of sequences is
-#'   used in plot. If "nb_asv", the number of ASV is plotted. If both,
+#'   used in plot. If "nb_taxa", the number of ASV is plotted. If both,
 #'   return a list of two plots, one for nbSeq and one for ASV.
 #' @param taxa_fill (default: 'Order'): Name of the taxonomic rank of interest
 #' @param print_values (logical, default TRUE): Do we print some values on plot?
@@ -2632,12 +2632,12 @@ plot_tax_pq <-
         )
       }
     }
-    if (type %in% c("nb_asv", "both")) {
+    if (type %in% c("nb_taxa", "both")) {
       mdf <-
         psmelt(as_binary_otu_table(physeq))
       mdf <- mdf %>% mutate(percent = Abundance / sum(Abundance))
 
-      p_asv <-
+      p_taxa <-
         ggplot(mdf, aes(x = .data[[fact]], y = .data[["Abundance"]], fill = .data[[taxa_fill]])) +
         geom_bar(
           aes(fill = .data[[taxa_fill]]),
@@ -2666,8 +2666,8 @@ plot_tax_pq <-
             )
           )
       }
-      if (type %in% c("nb_asv", "both")) {
-        p_asv <- p_asv +
+      if (type %in% c("nb_taxa", "both")) {
+        p_taxa <- p_taxa +
           labs(
             title = paste("Total nb of sequences: ", sum(physeq_old@otu_table)),
             subtitle = paste0(
@@ -2685,10 +2685,10 @@ plot_tax_pq <-
 
     if (type == "nb_seq") {
       return(p_seq)
-    } else if (type == "nb_asv") {
-      return(p_asv)
+    } else if (type == "nb_taxa") {
+      return(p_taxa)
     } else if (type == "both") {
-      return(list(p_seq, p_asv))
+      return(list(p_seq, p_taxa))
     }
   }
 ################################################################################
@@ -3268,10 +3268,10 @@ upset_pq <- function(physeq,
       psm2,
       intersect = samp_names,
       base_annotations = list(),
-      annotations = list("ASV" = (
+      annotations = list("Taxa" = (
         ggplot(mapping = aes(fill = .data[[taxa_fill]])) +
           geom_bar() +
-          ylab("ASV per Class") +
+          ylab("Taxa per Class") +
           theme(legend.key.size = unit(0.2, "cm")) +
           theme(axis.text = element_text(size = 12))
       )),
@@ -4047,7 +4047,7 @@ ggscatt_pq <- function(physeq,
 #'   which samples to merge using [merge_samples2()] function.
 #'   Need to be in \code{physeq@sam_data}.
 #'   Need to be use when you want to wrap by factor the final plot
-#'   with the number of taxa (type="nb_asv")
+#'   with the number of taxa (type="nb_taxa")
 #' @param by_sample (logical) If FALSE (default), sample information is not taking
 #'   into account, so the taxonomy is studied globally. If fact is not NULL, by_sample
 #'   is automatically set to TRUE.
@@ -4055,7 +4055,7 @@ ggscatt_pq <- function(physeq,
 #'   samples using [phyloseq::rarefy_even_depth()] function.
 #' @param fact (required) Name of the factor in `physeq@sam_data` used to plot  the last column
 #' @param type If "nb_seq" (default), the number of sequences is
-#'   used in plot. If "nb_asv", the number of ASV is plotted.
+#'   used in plot. If "nb_taxa", the number of ASV is plotted.
 #' @param width (passed on to [ggalluvial::geom_flow()]) the width of each stratum,
 #'   as a proportion of the distance between axes. Defaults to 1/3.
 #' @param min.size (passed on to [ggfittext::geom_fit_text()]) Minimum font size,
@@ -4077,14 +4077,14 @@ ggscatt_pq <- function(physeq,
 #' }
 #' \donttest{
 #' if (requireNamespace("ggalluvial")) {
-#'   ggaluv_pq(data_fungi_mini, type = "nb_asv")
+#'   ggaluv_pq(data_fungi_mini, type = "nb_taxa")
 #'
-#'   ggaluv_pq(data_fungi_mini, wrap_factor = "Height", by_sample = TRUE, type = "nb_asv") +
+#'   ggaluv_pq(data_fungi_mini, wrap_factor = "Height", by_sample = TRUE, type = "nb_taxa") +
 #'     facet_wrap("Height")
 #'
 #'   ggaluv_pq(data_fungi_mini,
 #'     width = 0.9, min.size = 10,
-#'     type = "nb_asv", taxa_ranks = c("Phylum", "Class", "Order", "Family", "Genus")
+#'     type = "nb_taxa", taxa_ranks = c("Phylum", "Class", "Order", "Family", "Genus")
 #'   ) +
 #'     coord_flip() + scale_x_discrete(limits = rev)
 #' }
@@ -4125,10 +4125,10 @@ ggaluv_pq <- function(physeq,
       merge_samples2(physeq, group = rep("all_samples_together", nsamples(physeq)))
   }
 
-  if (type == "nb_asv") {
+  if (type == "nb_taxa") {
     physeq <- as_binary_otu_table(physeq)
   } else if (type != "nb_seq") {
-    stop("Type must be eiter nb_seq or nb_asv")
+    stop("Type must be eiter nb_seq or nb_taxa")
   }
 
   psm_samp <-

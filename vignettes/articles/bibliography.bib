@@ -10,7 +10,6 @@
   publisher = {Elsevier}
 }
 
-
 @article{antich2021,
   title     = {To denoise or to cluster, that is not the question: optimizing pipelines for COI metabarcoding and metaphylogeography},
   author    = {Antich, Adri{\`a} and Palacin, Creu and Wangensteen, Owen S and Turon, Xavier},
@@ -21,6 +20,8 @@
   publisher = {Springer},
   doi       = {10.1101/2021.01.08.425760}
 }
+
+
 @article{Barnett2021,
   doi       = {10.21105/joss.03201},
   url       = {https://doi.org/10.21105/joss.03201},
@@ -33,6 +34,7 @@
   title     = {microViz: an R package for microbiome data visualization and statistics},
   journal   = {Journal of Open Source Software}
 }
+
 
 @article{bolyen2019,
   doi       = {10.1038/s41587-019-0209-9},
@@ -55,7 +57,20 @@
   publisher = {Cold Spring Harbor Laboratory}
 }
 
-
+@article{brandt2021,
+author = {Brandt, Miriam I. and Trouche, Blandine and Quintric, Laure and Günther, Babett and Wincker, Patrick and Poulain, Julie and Arnaud-Haond, Sophie},
+title = {Bioinformatic pipelines combining denoising and clustering tools allow for more comprehensive prokaryotic and eukaryotic metabarcoding},
+journal = {Molecular Ecology Resources},
+volume = {21},
+number = {6},
+pages = {1904-1921},
+keywords = {DADA2, deep-sea biodiversity, LULU, mock communities, multimarker metabarcoding, swarm},
+doi = {https://doi.org/10.1111/1755-0998.13398},
+url = {https://onlinelibrary.wiley.com/doi/abs/10.1111/1755-0998.13398},
+eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.1111/1755-0998.13398},
+abstract = {Abstract Environmental DNA metabarcoding is a powerful tool for studying biodiversity. However, bioinformatic approaches need to adjust to the diversity of taxonomic compartments targeted as well as to each barcode gene specificities. We built and tested a pipeline based on read correction with DADA2 allowing analysing metabarcoding data from prokaryotic (16S) and eukaryotic (18S, COI) life compartments. We implemented the option to cluster amplicon sequence variants (ASVs) into operational taxonomic units (OTUs) with swarm, a network-based clustering algorithm, and the option to curate ASVs/OTUs using LULU. Finally, taxonomic assignment was implemented via the Ribosomal Database Project Bayesian classifier (RDP) and BLAST. We validated this pipeline with ribosomal and mitochondrial markers using metazoan mock communities and 42 deep-sea sediment samples. The results show that ASVs and OTUs describe different levels of biotic diversity, the choice of which depends on the research questions. They underline the advantages and complementarity of clustering and LULU-curation for producing metazoan biodiversity inventories at a level approaching the one obtained using morphological criteria. While clustering removes intraspecific variation, LULU effectively removes spurious clusters, originating from errors or intragenomic variability. Swarm clustering affected alpha and beta diversity differently depending on genetic marker. Specifically, d-values > 1 appeared to be less appropriate with 18S for metazoans. Similarly, increasing LULU’s minimum ratio level proved essential to avoid losing species in sample-poor data sets. Comparing BLAST and RDP underlined that accurate assignments of deep-sea species can be obtained with RDP, but highlighted the need for a concerted effort to build comprehensive, ecosystem-specific databases.},
+year = {2021}
+}
 @article{callahan2016,
   doi       = {10.1038/nmeth.3869},
   title     = {DADA2: High-resolution sample inference from Illumina amplicon data},
@@ -69,6 +84,28 @@
 }
 
 
+@article{chiarello2022,
+  title={Ranking the biases: The choice of OTUs vs. ASVs in 16S rRNA amplicon data analysis has stronger effects on diversity measures than rarefaction and OTU identity threshold},
+  author={Chiarello, Marl{\`e}ne and McCauley, Mark and Vill{\'e}ger, S{\'e}bastien and Jackson, Colin R},
+  journal={PLoS One},
+  volume={17},
+  number={2},
+  pages={e0264443},
+  year={2022},
+  publisher={Public Library of Science San Francisco, CA USA},
+  doi={10.1371/journal.pone.0264443}
+}
+
+
+@article{edgar2016,
+  title={UNOISE2: improved error-correction for Illumina 16S and ITS amplicon sequencing},
+  author={Edgar, Robert C},
+  journal={BioRxiv},
+  pages={081257},
+  year={2016},
+  publisher={Cold Spring Harbor Laboratory}
+}
+
 @manual{ernst2023,
   title  = {mia: Microbiome analysis},
   author = {Felix G.M. Ernst and Sudarshan A. Shetty and Tuomas Borman and Leo Lahti},
@@ -76,7 +113,7 @@
   note   = {R package version 1.8.0},
   url    = {https://bioconductor.org/packages/mia},
   doi    = {10.18129/B9.bioc.mia}
-}
+} 
 
 @article{forster2019,
   doi       = {10.1111/1462-2920.14764},
@@ -88,7 +125,7 @@
   pages     = {4109--4124},
   year      = {2019},
   publisher = {Wiley Online Library}
-} 
+}
 
 @article{froslev2017,
   doi       = {10.1038/s41467-017-01312-x},
@@ -100,6 +137,22 @@
   pages     = {1188},
   year      = {2017},
   publisher = {Nature Publishing Group UK London}
+}
+
+@article{garcia2019,
+    author = {García-García, Natalia and Tamames, Javier and Linz, Alexandra M and Pedrós-Alió, Carlos and Puente-Sánchez, Fernando},
+    title = "{Microdiversity ensures the maintenance of functional microbial communities under changing environmental conditions}",
+    journal = {The ISME Journal},
+    volume = {13},
+    number = {12},
+    pages = {2969-2983},
+    year = {2019},
+    month = {08},
+    abstract = "{Microdiversity can lead to different ecotypes within the same species. These are assumed to provide stability in time and space to those species. However, the role of microdiversity in the stability of whole microbial communities remains underexplored. Understanding the drivers of microbial community stability is necessary to predict community response to future disturbances. Here, we analyzed 16S rRNA gene amplicons from eight different temperate bog lakes at the 97\\% OTU and amplicon sequence variant (ASV) levels and found ecotypes within the same OTU with different distribution patterns in space and time. We observed that these ecotypes are adapted to different values of environmental factors such as water temperature and oxygen concentration. Our results showed that the existence of several ASVs within a OTU favored its persistence across changing environmental conditions. We propose that microdiversity aids the stability of microbial communities in the face of fluctuations in environmental factors.}",
+    issn = {1751-7362},
+    doi = {10.1038/s41396-019-0487-8},
+    url = {https://doi.org/10.1038/s41396-019-0487-8},
+    eprint = {https://academic.oup.com/ismej/article-pdf/13/12/2969/55551090/41396\_2019\_article\_487.pdf},
 }
 
 @article{jalili2020,
@@ -162,7 +215,6 @@
   url      = {https://doi.org/10.1093/femsec/fiaa255},
   eprint   = {https://academic.oup.com/femsec/article-pdf/97/2/fiaa255/36115026/fiaa255.pdf}
 }
-
 @article{liu2023,
   title     = {EasyAmplicon: An easy-to-use, open-source, reproducible, and community-based pipeline for amplicon data analysis in microbiome research},
   author    = {Liu, Yong-Xin and Chen, Lei and Ma, Tengfei and Li, Xiaofang and Zheng, Maosheng and Zhou, Xin and Chen, Liang and Qian, Xubo and Xi, Jiao and Lu, Hongye and others},
@@ -174,7 +226,7 @@
   publisher = {Wiley Online Library}
 }
 
-@article{lu2023,
+ @article{lu2023,
   author   = {Lu, Yao and Zhou, Guangyan and Ewald, Jessica and Pang, Zhiqiang and Shiri, Tanisha and Xia, Jianguo},
   title    = {{MicrobiomeAnalyst 2.0: comprehensive statistical, functional and integrative analysis of microbiome data}},
   journal  = {Nucleic Acids Research},
@@ -189,6 +241,7 @@
   url      = {https://doi.org/10.1093/nar/gkad407},
   eprint   = {https://academic.oup.com/nar/article-pdf/51/W1/W310/50737014/gkad407.pdf}
 }
+
 @software{mahe2023,
   url     = {https://github.com/frederic-mahe/mumu/},
   year    = {2023},
@@ -197,7 +250,7 @@
   title   = {mumu: post-clustering curation tool for metabarcoding data}
 }
 
- @article{McCauley2022,
+@article{McCauley2022,
   author   = {McCauley, Mark and Goulet, Tamar and Jackson, Colin and Loesgen, Sandra},
   journal  = {Research Square},
   title    = {Meta-analysis of cnidarian microbiomes reveals insights into the structure, specificity, and fidelity of marine associations.},
@@ -221,39 +274,6 @@
   url      = {https://app.dimensions.ai/details/publication/pub.1151239188}
 }
 
-@article{chiarello2022,
-  title={Ranking the biases: The choice of OTUs vs. ASVs in 16S rRNA amplicon data analysis has stronger effects on diversity measures than rarefaction and OTU identity threshold},
-  author={Chiarello, Marl{\`e}ne and McCauley, Mark and Vill{\'e}ger, S{\'e}bastien and Jackson, Colin R},
-  journal={PLoS One},
-  volume={17},
-  number={2},
-  pages={e0264443},
-  year={2022},
-  publisher={Public Library of Science San Francisco, CA USA},
-  doi={10.1371/journal.pone.0264443}
-}
-
-@article{edgar2016,
-  title={UNOISE2: improved error-correction for Illumina 16S and ITS amplicon sequencing},
-  author={Edgar, Robert C},
-  journal={BioRxiv},
-  pages={081257},
-  year={2016},
-  publisher={Cold Spring Harbor Laboratory}
-}
-
-@article{segata2011,
-  title={Metagenomic biomarker discovery and explanation},
-  author={Segata, Nicola and Izard, Jacques and Waldron, Levi and Gevers, Dirk and Miropolsky, Larisa and Garrett, Wendy S and Huttenhower, Curtis},
-  journal={Genome biology},
-  volume={12},
-  pages={1--18},
-  year={2011},
-  publisher={Springer},
-  doi={10.1186/gb-2011-12-6-r60}
-}
-
-
 @software{mclaren2020,
   author    = {Michael McLaren},
   title     = {mikemc/speedyseq: speedyseq v0.2.0},
@@ -264,6 +284,7 @@
   doi       = {10.5281/zenodo.3923184},
   url       = {https://doi.org/10.5281/zenodo.3923184}
 }
+
 
 @article{mcmurdie2013,
   doi     = {10.1371/journal.pone.0061217},
@@ -333,6 +354,17 @@
   pages     = {e02343--19},
   year      = {2020},
   publisher = {Am Soc Microbiol}
+}
+
+@article{segata2011,
+  title={Metagenomic biomarker discovery and explanation},
+  author={Segata, Nicola and Izard, Jacques and Waldron, Levi and Gevers, Dirk and Miropolsky, Larisa and Garrett, Wendy S and Huttenhower, Curtis},
+  journal={Genome biology},
+  volume={12},
+  pages={1--18},
+  year={2011},
+  publisher={Springer},
+  doi={10.1186/gb-2011-12-6-r60}
 }
 
 @article{smith2019,

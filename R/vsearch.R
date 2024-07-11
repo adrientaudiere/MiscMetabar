@@ -195,7 +195,7 @@ vs_search_global <- function(physeq,
 #' sequences_ex_swarm <- swarm_clustering(
 #'   dna_seq = sequences_ex
 #' )
-#' @seealso [asv2otu()], [vsearch_clustering()]
+#' @seealso [postcluster_pq()], [vsearch_clustering()]
 #' @references
 #'   SWARM can be downloaded from
 #'   \url{https://github.com/torognes/swarm}.
@@ -370,7 +370,7 @@ swarm_clustering <- function(physeq = NULL,
 #'   - cluster.fasta (centroid if method = "vsearch")
 #'   - temp.uc (clusters if method = "vsearch")
 #'
-#' @seealso [asv2otu()], [swarm_clustering()]
+#' @seealso [postcluster_pq()], [swarm_clustering()]
 #' @details This function use the [merge_taxa_vec()] function to
 #'   merge taxa into clusters. By default tax_adjust = 0. See the man page
 #'   of [merge_taxa_vec()].
@@ -666,7 +666,7 @@ chimera_detection_vs <- function(seq2search,
                                  keep_temporary_files = FALSE) {
   dna_raw <- Biostrings::DNAStringSet(seq2search)
   names(dna_raw) <- paste0(
-    "ASV", seq(1, length(seq2search)),
+    "Taxa", seq(1, length(seq2search)),
     ";size=", nb_seq
   )
 

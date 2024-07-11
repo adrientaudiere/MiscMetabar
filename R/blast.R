@@ -12,7 +12,7 @@
 #' @param physeq (required): a \code{\link{phyloseq-class}} object obtained
 #'   using the `phyloseq` package.
 #' @param seq2search (required) path to a fasta file defining the sequences
-#'   you want to blast against the ASV sequences from the physeq object.
+#'   you want to blast against the taxa (ASV, OTU) sequences from the physeq object.
 #' @param blastpath path to blast program
 #' @param id_cut (default: 90) cut of in identity percent to keep result
 #' @param bit_score_cut (default: 50) cut of in bit score to keep result
@@ -339,6 +339,11 @@ blast_pq <- function(physeq,
 }
 
 
+################################################################################
+#' @rdname filter_asv_blast
+#' @export
+filter_taxa_blast <- filter_asv_blast
+################################################################################
 
 ################################################################################
 #' Filter undesirable taxa using blast against a custom database.
@@ -354,7 +359,7 @@ blast_pq <- function(physeq,
 #' @param fasta_for_db path to a fasta file to make the blast database
 #' @param database path to a blast database
 #' @param clean_pq (logical)
-#'   If set to TRUE, empty samples and empty ASV are discarded
+#'   If set to TRUE, empty samples and empty taxa (ASV, OTU) are discarded
 #'   after filtering.
 #' @param id_filter (default: 90) cut of in identity percent to keep result
 #' @param bit_score_filter (default: 50) cut of in bit score to keep result
@@ -445,7 +450,7 @@ filter_asv_blast <- function(physeq,
 #' @param derep The result of `dada2::derepFastq()`. A list of `derep-class`
 #'   object.
 #' @param seq2search (required) path to a fasta file defining the sequences
-#'   you want to blast against the ASV sequences from the physeq object.
+#'   you want to blast against the taxa (ASV, OTU) sequences from the physeq object.
 #' @param min_length_seq (default: 200) Removed sequences with less than
 #'   `min_length_seq` from derep before blast. Set to 0 to discard filtering
 #'    sequences by length.

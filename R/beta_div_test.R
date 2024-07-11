@@ -578,7 +578,7 @@ plot_LCBD_pq <- function(physeq,
 #'   Please make a reference to `vegan::beta.div()` if you
 #'   use this function.
 plot_SCBD_pq <- function(physeq,
-                         tax_level = "ASV",
+                         tax_level = "Taxa",
                          tax_col = "Order",
                          min_SCBD = 0.01,
                          ...) {
@@ -587,7 +587,7 @@ plot_SCBD_pq <- function(physeq,
   tax_tab <- data.frame(physeq@tax_table)
 
   resSCBD <- tibble(
-    "ASV" = taxa_names(physeq),
+    "Taxa" = taxa_names(physeq),
     "SCBD" = resBeta$SCBD,
     tax_tab
   )
@@ -663,7 +663,7 @@ multipatt_pq <- function(physeq,
 
   res_df <- res$sign
   res_df$p.adj <- p.adjust(res_df$p.value, method = p_adjust_method)
-  res_df$ASV_names <- rownames(res_df)
+  res_df$taxon_names <- rownames(res_df)
   res_df_signif <-
     res_df %>%
     filter(p.adj < pval) %>%
@@ -672,7 +672,7 @@ multipatt_pq <- function(physeq,
   p <- ggplot(
     res_df_signif,
     aes(
-      x = ASV_names,
+      x = taxon_names,
       y = name,
       size = 2 * value,
       color = stat
@@ -961,7 +961,7 @@ plot_ancombc_pq <-
       )
 
     taxtable <- data.frame(physeq@tax_table)
-    taxtable$taxon <- taxa_names(physeq)
+    taxtable$taxa<- taxa_names(physeq)
 
     df <-
       left_join(signif_ancombc_res, taxtable, by = join_by("taxon" == "taxon"))
