@@ -27,7 +27,7 @@ blast_to_phyloseq(
 using the \code{phyloseq} package.}
 
 \item{seq2search}{(required) path to a fasta file defining the sequences
-you want to blast against the ASV sequences from the physeq object.}
+you want to blast against the taxa (ASV, OTU) sequences from the physeq object.}
 
 \item{blastpath}{path to blast program}
 

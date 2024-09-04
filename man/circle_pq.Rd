@@ -39,7 +39,7 @@ number of OTUs (add_nb_seq = FALSE)}
 \item{rarefy}{(logical) Does each samples modalities need to be rarefy in
 order to compare them with the same amount of sequences?}
 
-\item{min_prop_tax}{(default: 0.01) The minimum proportion for taxon to be
+\item{min_prop_tax}{(default: 0.01) The minimum proportion for taxa to be
 plotted}
 
 \item{min_prop_mod}{(default: 0.1) The minimum proportion for modalities

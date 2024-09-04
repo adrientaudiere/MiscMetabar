@@ -1,3 +1,6 @@
-- There are 5 \dontrun in examples for functions relying on external software (namely blast, cutadapt, mumu and krona x2).
+Problem raised by CRAN Team the 22/08/2024 :
 
-- I spent long time to simplify data and example, but in total, the run time is still quite long. It is intrinsically due to the nature of metagenomic big data.
+'Packages which use Internet resources should fail gracefully with an informative message
+if the resource is not available or has changed (and not give a check warning nor error).'
+
+Problem resolved in issue https://github.com/adrientaudiere/MiscMetabar/issues/97

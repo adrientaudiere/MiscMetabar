@@ -110,5 +110,5 @@ More information in the associated publications
 \doi{doi:10.1093/bioinformatics/btab493} and \doi{doi:10.7717/peerj.593}
 }
 \seealso{
-\code{\link[=asv2otu]{asv2otu()}}, \code{\link[=vsearch_clustering]{vsearch_clustering()}}
+\code{\link[=postcluster_pq]{postcluster_pq()}}, \code{\link[=vsearch_clustering]{vsearch_clustering()}}
 }

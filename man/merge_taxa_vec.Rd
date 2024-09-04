@@ -72,7 +72,7 @@ phyloseq behavior. If \code{tax_adjust == 2}, then these NAs are treated as a
 disagreement; all ranks are set to NA after the first disagreement or NA.
 }
 \seealso{
-Function in MiscMetabar that use this function: \code{\link[=asv2otu]{asv2otu()}}
+Function in MiscMetabar that use this function: \code{\link[=postcluster_pq]{postcluster_pq()}}
 
 \code{\link[base:rowsum]{base::rowsum()}}
 

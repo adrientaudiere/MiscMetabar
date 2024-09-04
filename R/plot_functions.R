@@ -7,7 +7,7 @@
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Graphical representation of mt test.
-#' 
+#'
 #' @param mt (required) Result of a mt test from the function [phyloseq::mt()].
 #' @param alpha (default: 0.05) Choose the cut off p-value to plot taxa.
 #' @param color_tax (default: "Class") A taxonomic level to color the points.
@@ -57,12 +57,12 @@ plot_mt <-
 
 ################################################################################
 #' Plot accumulation curves for \code{\link{phyloseq-class}} object
-#' 
-#' @description 
-#' 
+#'
+#' @description
+#'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
-#' 
+#'
 #' Note that as most bioinformatic pipeline discard singleton, accumulation curves from metabarcoding
 #' cannot be interpreted in the same way as with conventional biodiversity sampling techniques.
 #'
@@ -517,7 +517,7 @@ accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
-#' 
+#'
 #' Graphical representation of distribution of taxa across a factor.
 #'
 #' @inheritParams clean_pq
@@ -740,7 +740,7 @@ circle_pq <-
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Graphical representation of distribution of taxa across Taxonomy and (optionnaly a factor).
-#' 
+#'
 #' @inheritParams clean_pq
 #' @param fact Name of the factor to cluster samples by modalities.
 #' Need to be in \code{physeq@sam_data}.
@@ -961,7 +961,7 @@ sankey_pq <-
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
-#' 
+#'
 #' Graphical representation of distribution of taxa across combined modality of a factor.
 #'
 #' @inheritParams clean_pq
@@ -1404,7 +1404,7 @@ multiplot <-
 
 ################################################################################
 #' Graphical representation of hill number 0, 1 and 2 across a factor
-#' 
+#'
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
@@ -1421,7 +1421,7 @@ multiplot <-
 #'   model in order to correct for uneven sampling depth. This correction
 #'   is only done before tuckey HSD plot and do not change the hill number
 #'   computed.
-#' 
+#'
 #' @inheritParams clean_pq
 #' @param fact (required): The variable to test. Must be present in
 #'   the `sam_data` slot of the physeq object.
@@ -1794,7 +1794,7 @@ ggbetween_pq <-
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Graphical representation of a phyloseq object.
-#' 
+#'
 #' @inheritParams clean_pq
 #' @param add_info Does the bottom down corner contain
 #'   extra informations?
@@ -2039,16 +2039,21 @@ rotl_pq <- function(physeq,
   taxa_names_rotl <- taxa_names_rotl[!grepl("NA", taxa_names_rotl)]
   taxa_names_rotl <- c(unclass(gsub("_", " ", taxa_names_rotl)))
 
-  resolved_names <- rotl::tnrs_match_names(taxa_names_rotl)
+  resolved_names <- httr::with_config(
+    httr::config(ssl_verifypeer = FALSE),
+    rotl::tnrs_match_names(taxa_names_rotl)
+  )
   resolved_names <- resolved_names[resolved_names$flags == "", ]
   clean_taxa_names_rotl <-
     taxa_names_rotl[taxa_names_rotl %in% resolved_names$unique_name]
 
-  resolved_names2 <-
-    rotl::tnrs_match_names(clean_taxa_names_rotl, context_name = context_name)
+  resolved_names2 <- httr::with_config(
+    httr::config(ssl_verifypeer = FALSE), rotl::tnrs_match_names(clean_taxa_names_rotl, context_name = context_name)
+  )
 
-  tr <-
-    rotl::tol_induced_subtree(ott_ids = rotl::ott_id(resolved_names2))
+  tr <- httr::with_config(
+    httr::config(ssl_verifypeer = FALSE), rotl::tol_induced_subtree(ott_ids = rotl::ott_id(resolved_names2))
+  )
   return(tr)
 }
 ################################################################################
@@ -2137,7 +2142,7 @@ heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Graphical representation of distribution of taxa across two samples.
-#' 
+#'
 #' @inheritParams clean_pq
 #' @param fact (default: NULL) Name of the factor in `physeq@sam_data`.
 #'   If left to NULL use the `left_name` and `right_name` parameter as modality.
@@ -2872,7 +2877,7 @@ tsne_pq <-
 #' Plot a tsne low dimensional representation of a phyloseq object
 #'
 #' @description
-#' 
+#'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
@@ -2972,8 +2977,8 @@ plot_tsne_pq <- function(physeq,
 
 ################################################################################
 #' Scaling with ranked subsampling (SRS) curve of phyloseq object
-#' 
-#' @description 
+#'
+#' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
@@ -3015,7 +3020,7 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Note that this function is quite time-consuming due to high dimensionality in metabarcoding community matrix.
-#' 
+#'
 #' @inheritParams clean_pq
 #' @param merge_sample_by (default: NULL) if not `NULL` samples of
 #'   physeq are merged using the vector set by `merge_sample_by`. This
@@ -3287,10 +3292,10 @@ upset_pq <- function(physeq,
 ################################################################################
 #' Test for differences between intersections
 #'
-#' @description 
+#' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
-#' 
+#'
 #' See [upset_pq()] to plot upset.
 #'
 #' @inheritParams upset_pq
@@ -3500,7 +3505,7 @@ diff_fct_diff_class <-
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Graphical representation of distribution of taxonomy, optionnaly across a factor.
-#' 
+#'
 #' @inheritParams clean_pq
 #' @param fact Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}.
@@ -3560,8 +3565,8 @@ tax_bar_pq <-
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
-#' Graphical representation of distribution of taxa across a factor using ridges. 
-#' 
+#' Graphical representation of distribution of taxa across a factor using ridges.
+#'
 #' @inheritParams clean_pq
 #' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
 #'    different lines

@@ -95,7 +95,7 @@ test_that("plot_tax_pq works with data_fungi dataset", {
         "Time",
         merge_sample_by = "Time",
         taxa_fill = "Class",
-        type = "nb_asv",
+        type = "nb_taxa",
         add_info = FALSE
       )
   ))
@@ -106,7 +106,7 @@ test_that("plot_tax_pq works with data_fungi dataset", {
         "Time",
         merge_sample_by = "Time",
         taxa_fill = "Class",
-        type = "nb_asv"
+        type = "nb_taxa"
       )
   ))
   expect_s3_class(pt, "ggplot")

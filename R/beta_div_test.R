@@ -220,15 +220,15 @@ adonis_pq <- function(physeq,
 ################################################################################
 #' Permanova (adonis) on permutations of rarefaction even depth
 #'
-#' @description 
-#' 
+#' @description
+#'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
-#' Permanova are computed on a given number of rarefaction with different 
-#' seed.number. This reduce the risk of a random drawing of a exceptional 
-#' situation of an unique rarefaction. 
-#' 
+#' Permanova are computed on a given number of rarefaction with different
+#' seed.number. This reduce the risk of a random drawing of a exceptional
+#' situation of an unique rarefaction.
+#'
 #' @inheritParams adonis_pq
 #' @param nperm (int, default = 99) The number of permutations to perform.
 #' @param progress_bar (logical, default TRUE) Do we print progress during
@@ -775,12 +775,12 @@ ancombc_pq <- function(physeq, fact, levels_fact = NULL, tax_level = "Class", ..
 ################################################################################
 #' Filter ancombc_pq results
 #'
-#' @description 
+#' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Internally used in [plot_ancombc_pq()].
-#' 
+#'
 #' @param ancombc_res (required) the result of the ancombc_pq function
 #'   For the moment only bimodal factors are possible.
 #' @param filter_passed (logical, default TRUE) Do we filter using the column
@@ -857,12 +857,12 @@ signif_ancombc <- function(ancombc_res,
 ################################################################################
 #' Plot ANCOMBC2 result for phyloseq object
 #'
-#' @description 
+#' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Graphical representation of ANCOMBC2 result.
-#' 
+#'
 #' @inheritParams clean_pq
 #' @param ancombc_res (required) the result of the ancombc_pq function
 #'   For the moment only bimodal factors are possible.
@@ -961,7 +961,7 @@ plot_ancombc_pq <-
       )
 
     taxtable <- data.frame(physeq@tax_table)
-    taxtable$taxa<- taxa_names(physeq)
+    taxtable$taxa <- taxa_names(physeq)
 
     df <-
       left_join(signif_ancombc_res, taxtable, by = join_by("taxon" == "taxon"))
@@ -1080,13 +1080,13 @@ taxa_only_in_one_level <- function(physeq,
 ################################################################################
 #' Distribution of sequences across a factor for one taxon
 #'
-#' @description 
-#' 
+#' @description
+#'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
-#' Focus on one taxon and one factor. 
-#' 
+#' Focus on one taxon and one factor.
+#'
 #' @inheritParams clean_pq
 #' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
 #'    different lines

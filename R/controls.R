@@ -1,14 +1,14 @@
 ################################################################################
 #' Search for exact matching of sequences
 #'
-#' @description 
-#' 
+#' @description
+#'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Search for exact matching of sequences using complement,
 #' reverse and reverse-complement
-#' 
+#'
 #' @inheritParams clean_pq
 #' @param seq2search A DNAStringSet object of sequences to search for.
 #' @return A list of data-frames for each input sequences with the name,
@@ -129,13 +129,13 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
 ################################################################################
 #' Subset taxa using a taxa control or distribution based method
 #'
-#' @description 
+#' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
-#' 
-#' There is 3 main methods : discard taxa (i) using a control taxa (e.g. truffle root tips), 
-#' (ii) using a mixture models to detect bimodality in pseudo-abundance distribution or 
-#' (iii) using a minimum difference threshold pseudo-abundance. Each cutoff is defined at 
+#'
+#' There is 3 main methods : discard taxa (i) using a control taxa (e.g. truffle root tips),
+#' (ii) using a mixture models to detect bimodality in pseudo-abundance distribution or
+#' (iii) using a minimum difference threshold pseudo-abundance. Each cutoff is defined at
 #' the sample level.
 #'
 #' @aliases subset_taxa_tax_control

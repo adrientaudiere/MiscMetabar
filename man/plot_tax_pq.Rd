@@ -33,7 +33,7 @@ which samples to merge using the
 Need to be in \code{physeq@sam_data}}
 
 \item{type}{If "nb_seq" (default), the number of sequences is
-used in plot. If "nb_asv", the number of ASV is plotted. If both,
+used in plot. If "nb_taxa", the number of ASV is plotted. If both,
 return a list of two plots, one for nbSeq and one for ASV.}
 
 \item{taxa_fill}{(default: 'Order'): Name of the taxonomic rank of interest}

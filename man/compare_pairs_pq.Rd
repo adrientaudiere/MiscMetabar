@@ -47,7 +47,7 @@ and diversity
 \description{
 \if{html}{\out{
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a> 
+<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 }}
 
 

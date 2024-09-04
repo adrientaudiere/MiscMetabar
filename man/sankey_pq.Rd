@@ -29,7 +29,7 @@ Need to be in \code{physeq@sam_data}.}
 number of OTUs (add_nb_seq = FALSE). Note that plotting the number of
 sequences is slower.}
 
-\item{min_prop_tax}{(default: 0) The minimum proportion for taxon to be
+\item{min_prop_tax}{(default: 0) The minimum proportion for taxa to be
 plotted. EXPERIMENTAL. For the moment each links below the min.prop.
 tax is discard from the sankey network resulting in sometimes weird plot.}
 

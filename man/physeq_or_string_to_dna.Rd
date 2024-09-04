@@ -27,7 +27,7 @@ function)
 
 
 Internally used in \code{\link[=vsearch_clustering]{vsearch_clustering()}}, \code{\link[=swarm_clustering]{swarm_clustering()}} and
-\code{\link[=asv2otu]{asv2otu()}}.
+\code{\link[=postcluster_pq]{postcluster_pq()}}.
 }
 \examples{
 
