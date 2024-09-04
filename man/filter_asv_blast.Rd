@@ -2,9 +2,23 @@
 % Please edit documentation in R/blast.R
 \name{filter_asv_blast}
 \alias{filter_asv_blast}
+\alias{filter_taxa_blast}
 \title{Filter undesirable taxa using blast against a custom database.}
 \usage{
 filter_asv_blast(
+  physeq,
+  fasta_for_db = NULL,
+  database = NULL,
+  clean_pq = TRUE,
+  add_info_to_taxtable = TRUE,
+  id_filter = 90,
+  bit_score_filter = 50,
+  min_cover_filter = 50,
+  e_value_filter = 1e-30,
+  ...
+)
+
+filter_taxa_blast(
   physeq,
   fasta_for_db = NULL,
   database = NULL,
@@ -26,7 +40,7 @@ using the \code{phyloseq} package.}
 \item{database}{path to a blast database}
 
 \item{clean_pq}{(logical)
-If set to TRUE, empty samples and empty ASV are discarded
+If set to TRUE, empty samples and empty taxa (ASV, OTU) are discarded
 after filtering.}
 
 \item{add_info_to_taxtable}{(logical, default TRUE) Does the blast information

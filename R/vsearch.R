@@ -2,12 +2,12 @@
 #' Search for a list of sequence in a fasta file against physeq reference
 #'   sequences using [vsearch](https://github.com/torognes/vsearch)
 #'
-#' @description 
+#' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Use of VSEARCH software.
-#' 
+#'
 #' @inheritParams clean_pq
 #' @param seq2search (required if path_to_fasta is NULL) Either (i) a DNAstringSet object
 #'   or (ii) a character vector that will be convert to DNAstringSet using
@@ -137,7 +137,7 @@ vs_search_global <- function(physeq,
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' A wrapper of SWARM software.
-#' 
+#'
 #' @inheritParams clean_pq
 #' @param dna_seq NOT WORKING FOR THE MOMENT
 #'   You may directly use a character vector of DNA sequences
@@ -195,7 +195,7 @@ vs_search_global <- function(physeq,
 #' sequences_ex_swarm <- swarm_clustering(
 #'   dna_seq = sequences_ex
 #' )
-#' @seealso [asv2otu()], [vsearch_clustering()]
+#' @seealso [postcluster_pq()], [vsearch_clustering()]
 #' @references
 #'   SWARM can be downloaded from
 #'   \url{https://github.com/torognes/swarm}.
@@ -343,7 +343,7 @@ swarm_clustering <- function(physeq = NULL,
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' A wrapper of VSEARCH software.
-#' 
+#'
 #' @inheritParams clean_pq
 #' @param dna_seq You may directly use a character vector of DNA sequences
 #'   in place of physeq args. When physeq is set, dna sequences take the value of
@@ -370,7 +370,7 @@ swarm_clustering <- function(physeq = NULL,
 #'   - cluster.fasta (centroid if method = "vsearch")
 #'   - temp.uc (clusters if method = "vsearch")
 #'
-#' @seealso [asv2otu()], [swarm_clustering()]
+#' @seealso [postcluster_pq()], [swarm_clustering()]
 #' @details This function use the [merge_taxa_vec()] function to
 #'   merge taxa into clusters. By default tax_adjust = 0. See the man page
 #'   of [merge_taxa_vec()].
@@ -485,12 +485,12 @@ vsearch_clustering <- function(physeq = NULL,
 #' Search for a list of sequence in an object to remove chimera taxa
 #'   using [vsearch](https://github.com/torognes/vsearch)
 #'
-#' @description 
+#' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Use the VSEARCH software.
-#' 
+#'
 #' @param object (required) A phyloseq-class object or one of dada, derep,
 #'   data.frame or list coercible to sequences table using the
 #'   function [dada2::makeSequenceTable()]
@@ -614,12 +614,12 @@ chimera_removal_vs <-
 
 #' Detect for chimera taxa using [vsearch](https://github.com/torognes/vsearch)
 #'
-#' @description 
+#' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Use the VSEARCH software.
-#' 
+#'
 #' @param seq2search (required) a list of DNA sequences coercible by function
 #'  [Biostrings::DNAStringSet()]
 #' @param nb_seq (required) a numeric vector giving the number of sequences for
@@ -666,7 +666,7 @@ chimera_detection_vs <- function(seq2search,
                                  keep_temporary_files = FALSE) {
   dna_raw <- Biostrings::DNAStringSet(seq2search)
   names(dna_raw) <- paste0(
-    "ASV", seq(1, length(seq2search)),
+    "Taxa", seq(1, length(seq2search)),
     ";size=", nb_seq
   )
 

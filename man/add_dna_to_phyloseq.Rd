@@ -3,13 +3,15 @@
 \name{add_dna_to_phyloseq}
 \alias{add_dna_to_phyloseq}
 \title{Add dna in \code{refseq} slot of a \code{physeq} object using taxa names and renames taxa
-using ASV_1, ASV_2, …}
+using prefix_taxa_names and number (default Taxa_1, Taxa_2 ...)}
 \usage{
-add_dna_to_phyloseq(physeq)
+add_dna_to_phyloseq(physeq, prefix_taxa_names = "Taxa_")
 }
 \arguments{
 \item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
+
+\item{prefix_taxa_names}{(default "Taxa_"): the prefix of taxa names (eg. "ASV_" or "OTU_")}
 }
 \value{
 A new \code{\link{phyloseq-class}} object with \code{refseq} slot and new

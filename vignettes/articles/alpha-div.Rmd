@@ -1,5 +1,5 @@
 ---
-title: "Alpha-diversity analysis"
+title: "alpha-div"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{alpha-div}
@@ -22,7 +22,7 @@ library(MiscMetabar)
 data(data_fungi)
 ```
 
-### Alpha diversity
+### Alpha diversity analysis
 
 #### Hill number
 

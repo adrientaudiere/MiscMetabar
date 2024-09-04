@@ -6,7 +6,7 @@
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
-#' 
+#'
 #' Useful to test if the results are not biased by sequences bias
 #'   that appended during PCR or NGS pipeline.
 #'
@@ -36,10 +36,10 @@ as_binary_otu_table <- function(physeq, min_number = 1) {
 #' Compute paired distances among matrix (e.g. otu_table)
 #'
 #' @description
-#' 
+#'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
-#' 
+#'
 #' May be used to verify ecological distance among samples.
 #'
 #' @note the first column of the first matrix is compare to the first column of
@@ -120,7 +120,7 @@ all_object_size <- function() {
 
 ################################################################################
 #' Simplify taxonomy by removing some unused characters such as "k__"
-#' 
+#'
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
@@ -148,7 +148,7 @@ simplify_taxo <- function(physeq, remove_space = TRUE) {
 ################################################################################
 #' Get the extension of a file
 #'
-#' @description 
+#' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
@@ -169,12 +169,12 @@ get_file_extension <- function(file_path) {
 #' Convert a value (or a fraction x/y) in percentage
 #'
 #' @description
-#' 
+#'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
-#' 
+#'
 #' Mostly for internal use.
-#' 
+#'
 #' @param x (required): value
 #' @param y if y is set, compute the division of x by y
 #' @param accuracy number of digits (number of digits after zero)
@@ -206,7 +206,7 @@ perc <- function(x, y = NULL, accuracy = 0, add_symbol = FALSE) {
 #' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
-#' 
+#'
 #' Use grep to count the number of line with only one '+' (fastq, fastq.gz)
 #'   or lines starting with a '>' (fasta) to count sequences.
 #'
@@ -357,7 +357,7 @@ transp <- function(col, alpha = 0.5) {
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Useful to test a pipeline on small fastq files.
-#' 
+#'
 #' @param fastq_files The path to one fastq file or a list of fastq files
 #'   (see examples)
 #' @param folder_output The path to a folder for output files

@@ -1,4 +1,21 @@
-# MiscMetabar 0.9.2 (in development)
+
+# MiscMetabar 0.9.3 (in development)
+
+- Homogenize terminology replacing ASV by taxa/taxon in documentation and code
+- Build an alias function `filter_taxa_blast()` for 
+`filter_asv_blast()`
+- Build an alias function `postcluster_pq()` for 
+`asv2otu()`
+
+
+## BREAKING CHANGES
+
+- Replacing misnamed param `rename_asv` by `rename_taxons` in `clean_pq()`
+- Replacing misnamed param `reorder_asv` by `reorder_taxons` in `clean_pq()`
+
+
+
+# MiscMetabar 0.9.2
 
 - Add param `default_fun` in function `merge_samples2()` in order to replace the default function that change the sample data in case of merging. A useful parameter is `default_fun=diff_fct_diff_class`.
 - Add param `kruskal_test` to `hill_pq()` function to prevent user to mis-interpret Tuckey HSD result (and letters) if the global effect of the tested factor on Hill diversity is non significant.

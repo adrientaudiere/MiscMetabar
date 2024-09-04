@@ -4,28 +4,29 @@ if (getRversion() >= "2.15.1") {
 
 ################################################################################
 #' Add dna in `refseq` slot of a `physeq` object using taxa names and renames taxa
-#'   using ASV_1, ASV_2, …
+#'   using prefix_taxa_names and number (default Taxa_1, Taxa_2 ...)
 #'
-#' @description 
-#' 
+#' @description
+#'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' Useful in targets bioinformatic pipeline.
-#' 
+#'
 #' @inheritParams clean_pq
+#' @param prefix_taxa_names (default "Taxa_"): the prefix of taxa names (eg. "ASV_" or "OTU_")
 #'
 #' @return A new \code{\link{phyloseq-class}} object with `refseq` slot and new
 #'   taxa names
 #' @export
 
-add_dna_to_phyloseq <- function(physeq) {
+add_dna_to_phyloseq <- function(physeq, prefix_taxa_names = "Taxa_") {
   verify_pq(physeq)
   dna <- Biostrings::DNAStringSet(phyloseq::taxa_names(physeq))
   names(dna) <- phyloseq::taxa_names(physeq)
   physeq <- phyloseq::merge_phyloseq(physeq, dna)
   phyloseq::taxa_names(physeq) <-
-    paste0("ASV_", seq(phyloseq::ntaxa(physeq)))
+    paste0(prefix_taxa_names, seq(phyloseq::ntaxa(physeq)))
   return(physeq)
 }
 ################################################################################
@@ -35,11 +36,11 @@ add_dna_to_phyloseq <- function(physeq) {
 ################################################################################
 #'  Clean phyloseq object by removing empty samples and taxa
 #'
-#' @description 
+#' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
-#' 
+#'
 #'  In addition, this function check for discrepancy (and rename) between
 #' (i) taxa names in refseq, taxonomy table and otu_table and between
 #' (ii) sample names in sam_data and otu_table.
@@ -58,13 +59,15 @@ add_dna_to_phyloseq <- function(physeq) {
 #'   transpose the otu_table and set taxa_are_rows to false
 #' @param force_taxa_as_rows (logical) If true, if the taxa are columns
 #'   transpose the otu_table and set taxa_are_rows to true
-#' @param reorder_asv (logical) if TRUE the otu_table is ordered by the number of
-#'   sequences of ASV (descending order). Default to FALSE.
-#' @param rename_asv (logical) if TRUE, ASV are renamed by their position
-#'   in the OTU_table (asv_1, asv_2, ...). Default to FALSE. If rename ASV is true,
-#'   the ASV names in verbose information can be misleading.
+#' @param reorder_taxa (logical) if TRUE the otu_table is ordered by the number of
+#'   sequences of taxa (ASV, OTU) in descending order. Default to FALSE.
+#' @param rename_taxa (logical) if TRUE, taxa (ASV, OTU) are renamed by their position
+#'   in the OTU_table and prefix_taxa_names param (by default: Taxa_1, Taxa_2, ...).
+#'   Default to FALSE. If rename taxa (ASV, OTU) is true,
+#'   the taxa (ASV, OTU) names in verbose information can be misleading.
 #' @param simplify_taxo (logical) if TRUE, correct the taxonomy_table using the
 #'   `MiscMetabar::simplify_taxo()` function
+#' @param prefix_taxa_names (default "Taxa_"): the prefix of taxa names (eg. "ASV_" or "OTU_")
 #' @return A new \code{\link{phyloseq-class}} object
 #' @export
 clean_pq <- function(physeq,
@@ -75,9 +78,10 @@ clean_pq <- function(physeq,
                      verbose = FALSE,
                      force_taxa_as_columns = FALSE,
                      force_taxa_as_rows = FALSE,
-                     reorder_asv = FALSE,
-                     rename_asv = FALSE,
-                     simplify_taxo = FALSE) {
+                     reorder_taxa = FALSE,
+                     rename_taxa = FALSE,
+                     simplify_taxo = FALSE,
+                     prefix_taxa_names = "_Taxa") {
   if (clean_samples_names) {
     if (!is.null(physeq@refseq)) {
       if (sum(!names(physeq@refseq) %in% taxa_names(physeq)) > 0) {
@@ -108,15 +112,15 @@ clean_pq <- function(physeq,
 
   verify_pq(physeq)
 
-  if (reorder_asv) {
+  if (reorder_taxa) {
     physeq <- reorder_taxa_pq(
       physeq,
       taxa_names(physeq)[order(taxa_sums(physeq), decreasing = TRUE)]
     )
   }
 
-  if (rename_asv) {
-    taxa_names(physeq) <- paste0("ASV_", seq(1, ntaxa(physeq)))
+  if (rename_taxa) {
+    taxa_names(physeq) <- paste0(prefix_taxa_names, seq(1, ntaxa(physeq)))
   }
 
   if (sum(grepl("^0", sample_names(physeq)) > 0) && !silent) {
@@ -482,6 +486,8 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 ###########################################################################
 
 
+
+
 ################################################################################
 #' Recluster sequences of an object of class `physeq`
 #'   or a list of DNA sequences
@@ -492,7 +498,7 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' This function use the `merge_taxa_vec` function to  merge taxa into clusters.
-#' 
+#'
 #' @inheritParams clean_pq
 #' @param dna_seq You may directly use a character vector of DNA sequences
 #'   in place of physeq args. When physeq is set, dna sequences take the value of
@@ -510,7 +516,7 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #' @param id (default: 0.97) level of identity to cluster
 #' @param tax_adjust (Default 0) See the man page
 #'   of [merge_taxa_vec()] for more details.
-#'   To conserved the taxonomic rank of the most abundant ASV,
+#'   To conserved the taxonomic rank of the most abundant taxa (ASV, OTU,...),
 #'   set tax_adjust to 0 (default). For the moment only tax_adjust = 0 is
 #'   robust
 #' @param vsearch_cluster_method (default: "--cluster_size) See other possible
@@ -543,17 +549,17 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #'
 #' @examples
 #' if (requireNamespace("DECIPHER")) {
-#'   asv2otu(data_fungi_mini)
+#'   postcluster_pq(data_fungi_mini)
 #' }
 #' \donttest{
 #' if (requireNamespace("DECIPHER")) {
-#'   asv2otu(data_fungi_mini, method_clusterize = "longest")
+#'   postcluster_pq(data_fungi_mini, method_clusterize = "longest")
 #'
 #'   if (MiscMetabar::is_swarm_installed()) {
-#'     d_swarm <- asv2otu(data_fungi_mini, method = "swarm")
+#'     d_swarm <- postcluster_pq(data_fungi_mini, method = "swarm")
 #'   }
 #'   if (MiscMetabar::is_vsearch_installed()) {
-#'     d_vs <- asv2otu(data_fungi_mini, method = "vsearch")
+#'     d_vs <- postcluster_pq(data_fungi_mini, method = "vsearch")
 #'   }
 #' }
 #' }
@@ -566,21 +572,21 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #' @export
 #' @author Adrien Taudière
 
-asv2otu <- function(physeq = NULL,
-                    dna_seq = NULL,
-                    nproc = 1,
-                    method = "clusterize",
-                    id = 0.97,
-                    vsearchpath = "vsearch",
-                    tax_adjust = 0,
-                    vsearch_cluster_method = "--cluster_size",
-                    vsearch_args = "--strand both",
-                    keep_temporary_files = FALSE,
-                    swarmpath = "swarm",
-                    d = 1,
-                    swarm_args = "--fastidious",
-                    method_clusterize = "overlap",
-                    ...) {
+postcluster_pq <- function(physeq = NULL,
+                           dna_seq = NULL,
+                           nproc = 1,
+                           method = "clusterize",
+                           id = 0.97,
+                           vsearchpath = "vsearch",
+                           tax_adjust = 0,
+                           vsearch_cluster_method = "--cluster_size",
+                           vsearch_args = "--strand both",
+                           keep_temporary_files = FALSE,
+                           swarmpath = "swarm",
+                           d = 1,
+                           swarm_args = "--fastidious",
+                           method_clusterize = "overlap",
+                           ...) {
   if (inherits(physeq, "phyloseq")) {
     verify_pq(physeq)
     if (is.null(physeq@refseq)) {
@@ -655,10 +661,19 @@ asv2otu <- function(physeq = NULL,
 ################################################################################
 
 
+
+################################################################################
+#' @rdname postcluster_pq
+#' @export
+asv2otu <- postcluster_pq
+################################################################################
+
+
+
 ################################################################################
 #' Save phyloseq object in the form of multiple csv tables.
 #'
-#' @description 
+#' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
@@ -673,11 +688,11 @@ asv2otu <- function(physeq = NULL,
 #' @param sam_data_first (logical) if TRUE, put the sample data at the top of the table
 #'   Only used if `one_file` and write_sam_data are both TRUE.
 #' @param clean_pq (logical)
-#'   If set to TRUE, empty samples are discarded after subsetting ASV
-#' @param reorder_asv (logical) if TRUE the otu_table is ordered by the number of
-#'   sequences of ASV (descending order). Default to TRUE. Only possible if clean_pq
+#'   If set to TRUE, empty samples are discarded after subsetting taxa (ASV, OTU, ...)
+#' @param reorder_taxa (logical) if TRUE the otu_table is ordered by the number of
+#'   sequences of taxa (ASV, OTU, ...) (descending order). Default to TRUE. Only possible if clean_pq
 #'   is set to TRUE.
-#' @param rename_asv reorder_asv (logical) if TRUE, ASV are renamed by their position
+#' @param rename_taxa reorder_taxa (logical) if TRUE, taxa (ASV, OTU, ...) are renamed by their position
 #'   in the OTU_table (asv_1, asv_2, ...). Default to FALSE. Only possible if clean_pq
 #'   is set to TRUE.
 #' @param quote a logical value (default FALSE) or a numeric vector.
@@ -705,8 +720,8 @@ write_pq <- function(physeq,
                      write_sam_data = TRUE,
                      sam_data_first = FALSE,
                      clean_pq = TRUE,
-                     reorder_asv = FALSE,
-                     rename_asv = FALSE,
+                     reorder_taxa = FALSE,
+                     rename_taxa = FALSE,
                      remove_empty_samples = TRUE,
                      remove_empty_taxa = TRUE,
                      clean_samples_names = TRUE,
@@ -719,8 +734,8 @@ write_pq <- function(physeq,
 
   physeq <- clean_pq(
     physeq,
-    reorder_asv = reorder_asv,
-    rename_asv = rename_asv,
+    reorder_taxa = reorder_taxa,
+    rename_taxa = rename_taxa,
     remove_empty_samples = remove_empty_samples,
     remove_empty_taxa = remove_empty_taxa,
     clean_samples_names = clean_samples_names,
@@ -922,10 +937,10 @@ save_pq <- function(physeq, path = NULL, ...) {
 #' Read phyloseq object from multiple csv tables and a phylogenetic tree
 #' in Newick format.
 #'
-#' @description 
+#' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
-#' 
+#'
 #' This is the reverse function of [write_pq()].
 #'
 #' @param path (required) a path to the folder to read the phyloseq object
@@ -1242,7 +1257,7 @@ mumu_pq <- function(physeq,
   )
   otu_tab <-
     data.frame(unclass(taxa_as_rows(physeq)@otu_table))
-  otu_tab <- cbind("ASV" = rownames(otu_tab), otu_tab)
+  otu_tab <- cbind("Taxa" = rownames(otu_tab), otu_tab)
   write.table(
     otu_tab,
     "otu_table.csv",
@@ -1816,7 +1831,7 @@ add_funguild_info <- function(physeq,
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Graphical function.
-#' 
+#'
 #' @inheritParams clean_pq
 #' @param levels_order (Default NULL) A character vector to
 #'   reorder the levels of guild. See examples.
@@ -1893,9 +1908,9 @@ plot_guild_pq <-
     names(nb_seq_by_guild) <- guilds$Var1
     guilds$seq <- nb_seq_by_guild
 
-    names(guilds) <- c("Guild", "nb_asv", "nb_seq")
+    names(guilds) <- c("Guild", "nb_taxa", "nb_seq")
     guilds$nb_seq <- as.numeric(guilds$nb_seq)
-    guilds$nb_asv <- as.numeric(guilds$nb_asv)
+    guilds$nb_taxa <- as.numeric(guilds$nb_taxa)
 
     guilds$Guild <- factor(as.vector(guilds$Guild),
       levels = guilds$Guild[order(guilds$nb_seq)]
@@ -1915,7 +1930,7 @@ plot_guild_pq <-
       guilds,
       data.frame(
         "Guild" = "All ASV",
-        "nb_asv" = ntaxa(physeq),
+        "nb_taxa" = ntaxa(physeq),
         "nb_seq" = sum(physeq@otu_table),
         "colors" = "ALL"
       )
@@ -1942,7 +1957,7 @@ plot_guild_pq <-
           "lightpink4"
         )
       ) +
-      geom_text(aes(label = nb_asv, x = log10(nb_seq) + 0.2),
+      geom_text(aes(label = nb_taxa, x = log10(nb_seq) + 0.2),
         family = "serif"
       ) +
       geom_text(aes(label = nb_seq, x = log10(nb_seq) / 2),
@@ -2307,7 +2322,7 @@ add_info_to_sam_data <- function(physeq,
 #' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #'   Internally used in [vsearch_clustering()], [swarm_clustering()] and
-#'   [asv2otu()].
+#'   [postcluster_pq()].
 #'
 #' @inheritParams clean_pq
 #' @param dna_seq You may directly use a character vector of DNA sequences
@@ -2390,7 +2405,7 @@ physeq_or_string_to_dna <- function(physeq = NULL,
 #' @param args_before_cutadapt (String) A one line bash command to run before
 #' to run cutadapt. For examples, "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv &&" allow to bypass the conda init which asks to restart the shell
 #'
-#' @return a list of command 
+#' @return a list of command
 #' @export
 #' @author Adrien Taudière
 #'
@@ -2522,11 +2537,11 @@ cutadapt_remove_primers <- function(path_to_fastq,
 ################################################################################
 #' List the taxa founded only in one given level of a modality
 #'
-#' @description 
-#'   
+#' @description
+#'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
-#' 
+#'
 #' Given one modality name in sam_data and one level of the modality,
 #' return the taxa strictly specific of this level.
 #'
@@ -2538,7 +2553,7 @@ cutadapt_remove_primers <- function(path_to_fastq,
 #' @param min_nb_samples_taxa (default 0 = no filter) The minimum number of samples per taxa
 #'
 #' @return A vector of taxa names
-#' @export 
+#' @export
 #'
 #' @examples
 #' # Taxa present only in low height samples
@@ -2776,7 +2791,7 @@ psmelt_samples_pq <-
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Mainly for internal use. It is a special case of clean_pq function.
-#' 
+#'
 #' @inheritParams clean_pq
 #' @author Adrien Taudière
 #' @export
@@ -2803,7 +2818,7 @@ taxa_as_columns <- function(physeq) {
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Mainly for internal use. It is a special case of clean_pq function.
-#' 
+#'
 #' @inheritParams clean_pq
 #' @author Adrien Taudière
 #' @export
@@ -2828,10 +2843,10 @@ taxa_as_rows <- function(physeq) {
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
-#' This function randomly draw the same number of samples for each modality of factor.  
-#' It is usefull to dissentangle the effect of different number of samples per modality 
+#' This function randomly draw the same number of samples for each modality of factor.
+#' It is usefull to dissentangle the effect of different number of samples per modality
 #' on diversity. Internally used in [accu_plot_balanced_modality()].
-#' 
+#'
 #' @inheritParams clean_pq
 #' @param fact (required): The variable to rarefy. Must be present in
 #'   the `sam_data` slot of the physeq object.

@@ -105,11 +105,11 @@ hill_tuckey_pq <- function(
 #' Test multiple times effect of factor on Hill diversity
 #'   with different rarefaction even depth
 #'
-#' @description 
+#' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
-#' 
-#' This reduce the risk of a random drawing of a exceptional situation of an unique rarefaction. 
+#'
+#' This reduce the risk of a random drawing of a exceptional situation of an unique rarefaction.
 #' @inheritParams clean_pq
 #' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
 #'    different lines
@@ -272,12 +272,12 @@ hill_test_rarperm_pq <- function(physeq,
 ################################################################################
 #' Automated model selection and multimodel inference with (G)LMs for phyloseq
 #'
-#' @description 
+#' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' See [glmulti::glmulti()] for more information.
-#' 
+#'
 #' @inheritParams clean_pq
 #' @param formula (required) a formula for [glmulti::glmulti()]
 #'   Variables must be present in the `physeq@sam_data` slot or be one

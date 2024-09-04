@@ -6,7 +6,7 @@
 \usage{
 plot_SCBD_pq(
   physeq,
-  tax_level = "ASV",
+  tax_level = "Taxa",
   tax_col = "Order",
   min_SCBD = 0.01,
   ...

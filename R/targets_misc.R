@@ -6,7 +6,7 @@
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Useful for targets bioinformatic pipeline.
-#' 
+#'
 #' @param path path to files (required)
 #' @param paired_end do you have paired_end files? (default TRUE)
 #' @param pattern a pattern to filter files (passed on to list.files function).
@@ -61,7 +61,7 @@ list_fastq_files <-
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Useful for targets bioinformatic pipeline.
-#' 
+#'
 #' @inheritParams clean_pq
 #' @param names_of_samples (required) The new names of the samples
 #'
@@ -223,7 +223,7 @@ filter_trim <-
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
-#' 
+#'
 #' Useful for targets bioinformatic pipeline.
 #'
 #' @param file_path (required) a path to the sample_data file
@@ -265,7 +265,7 @@ sample_data_with_new_names <- function(file_path,
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Useful for targets bioinformatic pipeline.
-#' 
+#'
 #' @param phyloseq_component (required) one of otu_table or sam_data slot of a
 #'   phyloseq-class object
 #' @param names_of_samples (required) A vector of samples names

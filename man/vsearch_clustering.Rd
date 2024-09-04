@@ -94,7 +94,7 @@ More information in the associated publication
 \url{https://pubmed.ncbi.nlm.nih.gov/27781170}.
 }
 \seealso{
-\code{\link[=asv2otu]{asv2otu()}}, \code{\link[=swarm_clustering]{swarm_clustering()}}
+\code{\link[=postcluster_pq]{postcluster_pq()}}, \code{\link[=swarm_clustering]{swarm_clustering()}}
 }
 \author{
 Adrien Taudière
