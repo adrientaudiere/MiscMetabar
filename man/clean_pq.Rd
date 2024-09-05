@@ -20,7 +20,7 @@ clean_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{remove_empty_samples}{(logical) Do you want to remove samples
@@ -56,7 +56,7 @@ the taxa (ASV, OTU) names in verbose information can be misleading.}
 \item{prefix_taxa_names}{(default "Taxa_"): the prefix of taxa names (eg. "ASV_" or "OTU_")}
 }
 \value{
-A new \code{\link{phyloseq-class}} object
+A new \code{\link[phyloseq]{phyloseq-class}} object
 }
 \description{
 \if{html}{\out{

@@ -7,13 +7,13 @@
 simplify_taxo(physeq, remove_space = TRUE)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{remove_space}{(logical; default TRUE): do we remove space?}
 }
 \value{
-A  \code{\link{phyloseq-class}} object with simplified taxonomy
+A  \code{\link[phyloseq]{phyloseq-class}} object with simplified taxonomy
 }
 \description{
 \if{html}{\out{

@@ -12,7 +12,7 @@ subset_taxa_tax_control(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{taxa_distri}{(required) a vector of length equal to the number of
@@ -35,7 +35,7 @@ than taxa control,
 Required if method is \code{cutoff_diff}, \code{min}, \code{max} or \code{mean}}
 }
 \value{
-A new \code{\link{phyloseq-class}} object.
+A new \code{\link[phyloseq]{phyloseq-class}} object.
 }
 \description{
 \if{html}{\out{

@@ -12,7 +12,7 @@ verify_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{verbose}{(logical, default FALSE) If TRUE, prompt some warnings.}

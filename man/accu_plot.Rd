@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_functions.R
 \name{accu_plot}
 \alias{accu_plot}
-\title{Plot accumulation curves for \code{\link{phyloseq-class}} object}
+\title{Plot accumulation curves for \code{\link[phyloseq]{phyloseq-class}} object}
 \usage{
 accu_plot(
   physeq,
@@ -20,7 +20,7 @@ accu_plot(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{fact}{(required) Name of the factor in \code{physeq@sam_data} used to plot
@@ -53,11 +53,11 @@ Only use if \code{add_nb_seq} = TRUE.}
 \item{ci}{(default: 2, integer) Confidence interval value used to multiply the
 standard error to plot confidence interval}
 
-\item{...}{Additional arguments passed on to \code{\link{ggplot}}
+\item{...}{Additional arguments passed on to \code{\link[ggplot2]{ggplot}}
 if \code{add_nb_seq} = TRUE or to \code{\link{plot}} if \code{add_nb_seq} = FALSE}
 }
 \value{
-A \code{\link{ggplot}}2 plot representing the richness
+A \code{\link[ggplot2]{ggplot}}2 plot representing the richness
 accumulation plot if add_nb_seq = TRUE, else, if add_nb_seq = FALSE
 return a base plot.
 }

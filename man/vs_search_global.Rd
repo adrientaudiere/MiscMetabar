@@ -16,7 +16,7 @@ vs_search_global(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{seq2search}{(required if path_to_fasta is NULL) Either (i) a DNAstringSet object

@@ -14,7 +14,7 @@ ridges_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{fact}{(required) Name of the factor in \code{physeq@sam_data} used to plot
@@ -33,7 +33,7 @@ transformed.}
 \item{...}{Other params passed on to \code{\link[ggridges:geom_density_ridges]{ggridges::geom_density_ridges()}}}
 }
 \value{
-A \code{\link{ggplot}}2 plot  with bar representing the number of sequence en each
+A \code{\link[ggplot2]{ggplot}}2 plot  with bar representing the number of sequence en each
 taxonomic groups
 }
 \description{

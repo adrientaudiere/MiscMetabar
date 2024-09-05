@@ -7,7 +7,7 @@
 rotl_pq(physeq, species_colnames = "Genus_species", context_name = "All life")
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{species_colnames}{(default: "Genus_species"): the name of the column

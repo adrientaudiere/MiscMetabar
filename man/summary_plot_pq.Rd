@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_functions.R
 \name{summary_plot_pq}
 \alias{summary_plot_pq}
-\title{Summarize a \code{\link{phyloseq-class}} object using a plot.}
+\title{Summarize a \code{\link[phyloseq]{phyloseq-class}} object using a plot.}
 \usage{
 summary_plot_pq(
   physeq,
@@ -12,7 +12,7 @@ summary_plot_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{add_info}{Does the bottom down corner contain

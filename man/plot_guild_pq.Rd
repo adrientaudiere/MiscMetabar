@@ -8,7 +8,7 @@ created with \code{\link[=add_funguild_info]{add_funguild_info()}}}
 plot_guild_pq(physeq, levels_order = NULL, clean_pq = TRUE, ...)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{levels_order}{(Default NULL) A character vector to

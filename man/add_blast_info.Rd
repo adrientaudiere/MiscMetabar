@@ -7,7 +7,7 @@
 add_blast_info(physeq, fasta_for_db, silent = FALSE, ...)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{fasta_for_db}{path to a fasta file to make the blast database}
@@ -17,7 +17,7 @@ using the \code{phyloseq} package.}
 \item{...}{Other arguments passed on to \code{\link[=blast_pq]{blast_pq()}} function.}
 }
 \value{
-A new \code{\link{phyloseq-class}} object with more information in tax_table based on a
+A new \code{\link[phyloseq]{phyloseq-class}} object with more information in tax_table based on a
 blast on a given database
 }
 \description{

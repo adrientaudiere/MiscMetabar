@@ -7,7 +7,7 @@
 add_new_taxonomy_pq(physeq, ref_fasta, suffix = NULL, ...)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{ref_fasta}{(required) A link to a database.
@@ -20,7 +20,7 @@ is used.}
 \item{...}{Other arguments pass on to \code{dada2::assignTaxonomy}.}
 }
 \value{
-A new \code{\link{phyloseq-class}} object with a larger slot tax_table"
+A new \code{\link[phyloseq]{phyloseq-class}} object with a larger slot tax_table"
 }
 \description{
 \if{html}{\out{

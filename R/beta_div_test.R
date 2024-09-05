@@ -34,7 +34,7 @@
 #' }
 #' @author Adrien Taudière
 #'
-#' @return A \code{\link{ggplot}}2 plot with a subtitle indicating the pvalue
+#' @return A \code{\link[ggplot2]{ggplot}}2 plot with a subtitle indicating the pvalue
 #' and the number of permutations
 #' @details
 #' This function is mainly a wrapper of the work of others.

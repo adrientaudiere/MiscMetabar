@@ -19,7 +19,7 @@ plot_deseq2_pq(
 )
 }
 \arguments{
-\item{data}{(required) a \code{\link{phyloseq-class}} or a
+\item{data}{(required) a \code{\link[phyloseq]{phyloseq-class}} or a
 \code{\link[DESeq2]{DESeqDataSet-class}} object.}
 
 \item{contrast}{(required) contrast specifies what comparison to extract
@@ -29,7 +29,7 @@ man page for more details.}
 \item{tax_table}{Required if data is a
 \code{\link[DESeq2]{DESeqDataSet-class}} object.
 The taxonomic table used to find the \code{taxa} and \code{color_taxa}
-arguments. If data is a \code{\link{phyloseq-class}} object, data@tax_table
+arguments. If data is a \code{\link[phyloseq]{phyloseq-class}} object, data@tax_table
 is used.}
 
 \item{pval}{(default: 0.05) the significance cutoff used for optimizing
@@ -48,7 +48,7 @@ color vector.}
 \item{tax_depth}{Taxonomic depth to test for differential
 distribution among contrast. If Null the analysis is done at the OTU
 (i.e. Species) level. If not Null, data need to be a column name in
-the \code{tax_table} slot of the \code{\link{phyloseq-class}} object.}
+the \code{tax_table} slot of the \code{\link[phyloseq]{phyloseq-class}} object.}
 
 \item{verbose}{whether the function print some information during
 the computation}
@@ -59,7 +59,7 @@ the computation}
 or \code{\link[ggplot2]{ggplot}}}
 }
 \value{
-A \code{\link{ggplot}}2 plot representing DESeq2 results
+A \code{\link[ggplot2]{ggplot}}2 plot representing DESeq2 results
 }
 \description{
 \if{html}{\out{

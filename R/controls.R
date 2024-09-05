@@ -154,7 +154,7 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
 #'   6. `mean`: the mean of the three firsts methods
 #' @param min_diff_for_cutoff (int) argument for method `cutoff_diff`.
 #'   Required if method is `cutoff_diff`, `min`, `max` or `mean`
-#' @return A new \code{\link{phyloseq-class}} object.
+#' @return A new \code{\link[phyloseq]{phyloseq-class}} object.
 #' @export
 #'
 #' @examples

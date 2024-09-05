@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_functions.R
 \name{sankey_pq}
 \alias{sankey_pq}
-\title{Sankey plot of \code{\link{phyloseq-class}} object}
+\title{Sankey plot of \code{\link[phyloseq]{phyloseq-class}} object}
 \usage{
 sankey_pq(
   physeq = NULL,
@@ -17,7 +17,7 @@ sankey_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{fact}{Name of the factor to cluster samples by modalities.

@@ -7,7 +7,7 @@
 tsne_pq(physeq, method = "bray", dims = 2, theta = 0, perplexity = 30, ...)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{method}{A method to calculate distance using \code{vegan::vegdist()} function}

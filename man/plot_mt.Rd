@@ -16,7 +16,7 @@ plot_mt(mt = NULL, alpha = 0.05, color_tax = "Class", taxa = "Species")
 \item{taxa}{(default: "Species") The taxonomic level you choose for x-positioning.}
 }
 \value{
-a \code{\link{ggplot}}2 plot of result of a mt test
+a \code{\link[ggplot2]{ggplot}}2 plot of result of a mt test
 }
 \description{
 \if{html}{\out{

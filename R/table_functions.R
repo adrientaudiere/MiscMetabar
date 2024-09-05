@@ -1,5 +1,5 @@
 ################################################################################
-#' Make a datatable with the taxonomy of a \code{\link{phyloseq-class}} object
+#' Make a datatable with the taxonomy of a \code{\link[phyloseq]{phyloseq-class}} object
 #'
 #' @description
 #'

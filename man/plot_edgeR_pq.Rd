@@ -15,7 +15,7 @@ plot_edgeR_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{contrast}{(required):This argument specifies what comparison
@@ -38,7 +38,7 @@ information during the computation}
 or \code{\link[ggplot2]{ggplot}}}
 }
 \value{
-A \code{\link{ggplot}}2 plot representing edgeR results
+A \code{\link[ggplot2]{ggplot}}2 plot representing edgeR results
 }
 \description{
 \if{html}{\out{

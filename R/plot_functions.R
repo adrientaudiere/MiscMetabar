@@ -21,7 +21,7 @@
 #' plot_mt(res)
 #' plot_mt(res, taxa = "Genus", color_tax = "Order")
 #' }
-#' @return a \code{\link{ggplot}}2 plot of result of a mt test
+#' @return a \code{\link[ggplot2]{ggplot}}2 plot of result of a mt test
 #' @export
 #' @seealso [phyloseq::mt()]
 
@@ -56,7 +56,7 @@ plot_mt <-
 
 
 ################################################################################
-#' Plot accumulation curves for \code{\link{phyloseq-class}} object
+#' Plot accumulation curves for \code{\link[phyloseq]{phyloseq-class}} object
 #'
 #' @description
 #'
@@ -87,7 +87,7 @@ plot_mt <-
 #'    Only use if `add_nb_seq` = TRUE.
 #' @param ci (default: 2, integer) Confidence interval value used to multiply the
 #'   standard error to plot confidence interval
-#' @param ... Additional arguments passed on to \code{\link{ggplot}}
+#' @param ... Additional arguments passed on to \code{\link[ggplot2]{ggplot}}
 #' if `add_nb_seq` = TRUE or to \code{\link{plot}} if `add_nb_seq` = FALSE
 #'
 #' @examples
@@ -102,7 +102,7 @@ plot_mt <-
 #'
 #' p + xlim(c(0, 400))
 #' }
-#' @return A \code{\link{ggplot}}2 plot representing the richness
+#' @return A \code{\link[ggplot2]{ggplot}}2 plot representing the richness
 #' accumulation plot if add_nb_seq = TRUE, else, if add_nb_seq = FALSE
 #' return a base plot.
 #'
@@ -512,7 +512,7 @@ accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
 
 
 ################################################################################
-#' Plot OTU circle for \code{\link{phyloseq-class}} object
+#' Plot OTU circle for \code{\link[phyloseq]{phyloseq-class}} object
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
@@ -733,7 +733,7 @@ circle_pq <-
 ################################################################################
 
 ################################################################################
-#' Sankey plot of \code{\link{phyloseq-class}} object
+#' Sankey plot of \code{\link[phyloseq]{phyloseq-class}} object
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
@@ -956,7 +956,7 @@ sankey_pq <-
 ################################################################################
 
 ################################################################################
-#' Venn diagram of \code{\link{phyloseq-class}} object
+#' Venn diagram of \code{\link[phyloseq]{phyloseq-class}} object
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
@@ -992,7 +992,7 @@ sankey_pq <-
 #'     scale_fill_hue()
 #' }
 #' }
-#' @return A \code{\link{ggplot}}2 plot representing Venn diagram of
+#' @return A \code{\link[ggplot2]{ggplot}}2 plot representing Venn diagram of
 #' modalities of the argument \code{factor}
 #'
 #' @export
@@ -1163,7 +1163,7 @@ venn_pq <-
 
 
 ################################################################################
-#' Venn diagram of \code{\link{phyloseq-class}} object using
+#' Venn diagram of \code{\link[phyloseq]{phyloseq-class}} object using
 #' `ggVennDiagram::ggVennDiagram` function
 #' @description
 #'
@@ -1197,7 +1197,7 @@ venn_pq <-
 #'   modalities of args `fact`.
 #' @param ... Other arguments for the `ggVennDiagram::ggVennDiagram` function
 #'   for ex. `category.names`.
-#' @return A \code{\link{ggplot}}2 plot representing Venn diagram of
+#' @return A \code{\link[ggplot2]{ggplot}}2 plot representing Venn diagram of
 #'   modalities of the argument \code{factor} or if split_by is set a list
 #'   of plots.
 #' @seealso [upset_pq()]
@@ -1787,7 +1787,7 @@ ggbetween_pq <-
 
 
 ################################################################################
-#' Summarize a \code{\link{phyloseq-class}} object using a plot.
+#' Summarize a \code{\link[phyloseq]{phyloseq-class}} object using a plot.
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
@@ -3106,7 +3106,7 @@ iNEXT_pq <- function(physeq,
 #'   modalities of `fact` parameter
 #' @param ... Other arguments passed on to the [ComplexUpset::upset()]
 #'
-#' @return A \code{\link{ggplot}}2 plot
+#' @return A \code{\link[ggplot2]{ggplot}}2 plot
 #' @export
 #' @author Adrien Taudière
 #'
@@ -3303,7 +3303,7 @@ upset_pq <- function(physeq,
 #'   the tax_table slot from the physeq object
 #' @param ... Other arguments passed on to the [ComplexUpset::upset_test()]
 #'
-#' @return A \code{\link{ggplot}}2 plot
+#' @return A \code{\link[ggplot2]{ggplot}}2 plot
 #' @export
 #' @author Adrien Taudière
 #'
@@ -3516,7 +3516,7 @@ diff_fct_diff_class <-
 #' @param nb_seq (logical; default TRUE) If set to FALSE, only the number of ASV
 #'   is count. Concretely, physeq otu_table is transformed in a binary
 #'   otu_table (each value different from zero is set to one)
-#' @return A \code{\link{ggplot}}2 plot  with bar representing the number of sequence en each
+#' @return A \code{\link[ggplot2]{ggplot}}2 plot  with bar representing the number of sequence en each
 #'   taxonomic groups
 #' @export
 #'
@@ -3579,7 +3579,7 @@ tax_bar_pq <-
 #' @param tax_level The taxonomic level to fill ridges
 #' @param ... Other params passed on to [ggridges::geom_density_ridges()]
 #'
-#' @return A \code{\link{ggplot}}2 plot  with bar representing the number of sequence en each
+#' @return A \code{\link[ggplot2]{ggplot}}2 plot  with bar representing the number of sequence en each
 #'   taxonomic groups
 #' @export
 #' @author Adrien Taudière
