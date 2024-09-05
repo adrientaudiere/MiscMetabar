@@ -7,7 +7,7 @@
 select_one_sample(physeq, sam_name, silent = FALSE)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{sam_name}{(required) The sample name to select}
@@ -15,7 +15,7 @@ using the \code{phyloseq} package.}
 \item{silent}{(logical) If true, no message are printing.}
 }
 \value{
-A new \code{\link{phyloseq-class}} object with one sample
+A new \code{\link[phyloseq]{phyloseq-class}} object with one sample
 }
 \description{
 \if{html}{\out{

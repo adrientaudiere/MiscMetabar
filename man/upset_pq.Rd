@@ -16,7 +16,7 @@ upset_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{fact}{(required): Name of the factor to cluster samples by modalities.
@@ -42,7 +42,7 @@ modalities of \code{fact} parameter}
 \item{...}{Other arguments passed on to the \code{\link[ComplexUpset:upset]{ComplexUpset::upset()}}}
 }
 \value{
-A \code{\link{ggplot}}2 plot
+A \code{\link[ggplot2]{ggplot}}2 plot
 }
 \description{
 \if{html}{\out{

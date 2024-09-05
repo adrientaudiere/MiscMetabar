@@ -7,7 +7,7 @@
 iNEXT_pq(physeq, merge_sample_by = NULL, ...)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{merge_sample_by}{(default: NULL) if not \code{NULL} samples of

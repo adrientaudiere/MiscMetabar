@@ -40,7 +40,7 @@
 #' }
 #' @author Adrien Taudière
 #'
-#' @return A \code{\link{ggplot}}2 plot representing edgeR results
+#' @return A \code{\link[ggplot2]{ggplot}}2 plot representing edgeR results
 #'
 #' @seealso \code{\link[edgeR]{exactTest}}
 #' @seealso \code{\link{plot_deseq2_pq}}
@@ -133,12 +133,12 @@ plot_edgeR_pq <-
 #'
 #' Graphical representation of DESeq2 analysis.
 #'
-#' @param data (required) a \code{\link{phyloseq-class}} or a
+#' @param data (required) a \code{\link[phyloseq]{phyloseq-class}} or a
 #' \code{\link[DESeq2]{DESeqDataSet-class}} object.
 #' @param tax_table Required if data is a
 #' \code{\link[DESeq2]{DESeqDataSet-class}} object.
 #' The taxonomic table used to find the \code{taxa} and \code{color_taxa}
-#' arguments. If data is a \code{\link{phyloseq-class}} object, data@tax_table
+#' arguments. If data is a \code{\link[phyloseq]{phyloseq-class}} object, data@tax_table
 #' is used.
 #' @param contrast (required) contrast specifies what comparison to extract
 #'   from the object to build a results table. See \code{\link[DESeq2]{results}}
@@ -155,7 +155,7 @@ plot_edgeR_pq <-
 #' @param tax_depth Taxonomic depth to test for differential
 #'   distribution among contrast. If Null the analysis is done at the OTU
 #'   (i.e. Species) level. If not Null, data need to be a column name in
-#'   the `tax_table` slot of the \code{\link{phyloseq-class}} object.
+#'   the `tax_table` slot of the \code{\link[phyloseq]{phyloseq-class}} object.
 #' @param verbose whether the function print some information during
 #'   the computation
 #' @param jitter_width width for the jitter positioning
@@ -190,7 +190,7 @@ plot_edgeR_pq <-
 #' }
 #' @author Adrien Taudière
 #'
-#' @return A \code{\link{ggplot}}2 plot representing DESeq2 results
+#' @return A \code{\link[ggplot2]{ggplot}}2 plot representing DESeq2 results
 #'
 #' @seealso \code{\link[DESeq2]{DESeq}}
 #' @seealso \code{\link[DESeq2]{results}}

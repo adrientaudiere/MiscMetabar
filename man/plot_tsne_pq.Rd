@@ -19,7 +19,7 @@ plot_tsne_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{method}{A method to calculate distance using \code{vegan::vegdist()} function (default: "bray")}

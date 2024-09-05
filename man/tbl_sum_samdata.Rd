@@ -7,7 +7,7 @@
 tbl_sum_samdata(physeq, remove_col_unique_value = TRUE, ...)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{remove_col_unique_value}{(logical, default TRUE) Do we remove
@@ -17,7 +17,7 @@ e.g. samples names ?}
 \item{...}{Other arguments pass on to \code{\link[gtsummary:tbl_summary]{gtsummary::tbl_summary()}}.}
 }
 \value{
-A new \code{\link{phyloseq-class}} object with a larger slot tax_table
+A new \code{\link[phyloseq]{phyloseq-class}} object with a larger slot tax_table
 }
 \description{
 \if{html}{\out{

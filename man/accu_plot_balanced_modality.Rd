@@ -19,7 +19,7 @@ accu_plot_balanced_modality(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{fact}{(required) The variable to rarefy. Must be present in

@@ -2,7 +2,7 @@
 % Please edit documentation in R/blast.R
 \name{blast_to_phyloseq}
 \alias{blast_to_phyloseq}
-\title{Blast some sequence against \code{refseq} slot of a \code{\link{phyloseq-class}}
+\title{Blast some sequence against \code{refseq} slot of a \code{\link[phyloseq]{phyloseq-class}}
 object.}
 \usage{
 blast_to_phyloseq(
@@ -23,7 +23,7 @@ blast_to_phyloseq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{seq2search}{(required) path to a fasta file defining the sequences

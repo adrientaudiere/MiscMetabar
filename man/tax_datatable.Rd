@@ -2,7 +2,7 @@
 % Please edit documentation in R/table_functions.R
 \name{tax_datatable}
 \alias{tax_datatable}
-\title{Make a datatable with the taxonomy of a \code{\link{phyloseq-class}} object}
+\title{Make a datatable with the taxonomy of a \code{\link[phyloseq]{phyloseq-class}} object}
 \usage{
 tax_datatable(
   physeq,
@@ -13,7 +13,7 @@ tax_datatable(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{abundance}{(default: TRUE) Does the number of sequences is print}

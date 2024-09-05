@@ -32,7 +32,7 @@ filter_taxa_blast(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{fasta_for_db}{path to a fasta file to make the blast database}
@@ -66,7 +66,7 @@ Note that params \code{unique_per_seq} must be lft to TRUE and \code{score_filte
 must be left to FALSE.}
 }
 \value{
-A new \code{\link{phyloseq-class}} object.
+A new \code{\link[phyloseq]{phyloseq-class}} object.
 }
 \description{
 \if{html}{\out{

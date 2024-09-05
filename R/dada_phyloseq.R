@@ -16,7 +16,7 @@ if (getRversion() >= "2.15.1") {
 #' @inheritParams clean_pq
 #' @param prefix_taxa_names (default "Taxa_"): the prefix of taxa names (eg. "ASV_" or "OTU_")
 #'
-#' @return A new \code{\link{phyloseq-class}} object with `refseq` slot and new
+#' @return A new \code{\link[phyloseq]{phyloseq-class}} object with `refseq` slot and new
 #'   taxa names
 #' @export
 
@@ -45,7 +45,7 @@ add_dna_to_phyloseq <- function(physeq, prefix_taxa_names = "Taxa_") {
 #' (i) taxa names in refseq, taxonomy table and otu_table and between
 #' (ii) sample names in sam_data and otu_table.
 #'
-#' @param physeq (required): a \code{\link{phyloseq-class}} object obtained
+#' @param physeq (required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 #'   using the `phyloseq` package.
 #' @param remove_empty_samples (logical) Do you want to remove samples
 #'   without sequences (this is done after removing empty taxa)
@@ -68,7 +68,7 @@ add_dna_to_phyloseq <- function(physeq, prefix_taxa_names = "Taxa_") {
 #' @param simplify_taxo (logical) if TRUE, correct the taxonomy_table using the
 #'   `MiscMetabar::simplify_taxo()` function
 #' @param prefix_taxa_names (default "Taxa_"): the prefix of taxa names (eg. "ASV_" or "OTU_")
-#' @return A new \code{\link{phyloseq-class}} object
+#' @return A new \code{\link[phyloseq]{phyloseq-class}} object
 #' @export
 clean_pq <- function(physeq,
                      remove_empty_samples = TRUE,
@@ -1605,7 +1605,7 @@ subset_taxa_pq <- function(physeq,
 #' @inheritParams clean_pq
 #' @param sam_name (required) The sample name to select
 #' @param silent (logical) If true, no message are printing.
-#' @return A new \code{\link{phyloseq-class}} object with one sample
+#' @return A new \code{\link[phyloseq]{phyloseq-class}} object with one sample
 #'
 #' @export
 #'
@@ -1674,7 +1674,7 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #'   If set to NULL (the default), the basename of the file reFasta
 #'   is used.
 #' @param ... Other arguments pass on to `dada2::assignTaxonomy`.
-#' @return A new \code{\link{phyloseq-class}} object with a larger slot tax_table"
+#' @return A new \code{\link[phyloseq]{phyloseq-class}} object with a larger slot tax_table"
 #'
 #' @export
 #'
@@ -1712,7 +1712,7 @@ add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, ...) {
 #'  informative columns (categorical column with one value per samples),
 #'   e.g. samples names ?
 #' @param ... Other arguments pass on to [gtsummary::tbl_summary()].
-#' @return A new \code{\link{phyloseq-class}} object with a larger slot tax_table
+#' @return A new \code{\link[phyloseq]{phyloseq-class}} object with a larger slot tax_table
 #'
 #' @export
 #' @author Adrien Taudière
@@ -2615,7 +2615,7 @@ taxa_only_in_one_level <- function(physeq,
 #' @param digits (default = 2) integer indicating the number of decimal places
 #'   to be used (see `?round` for more information)
 #'
-#' @return A new \code{\link{phyloseq-class}} object with otu_table count
+#' @return A new \code{\link[phyloseq]{phyloseq-class}} object with otu_table count
 #'   normalize and log transformed (if base_log is an integer)
 #' @export
 #' @author Adrien Taudière
@@ -2795,7 +2795,7 @@ psmelt_samples_pq <-
 #' @inheritParams clean_pq
 #' @author Adrien Taudière
 #' @export
-#' @return A new \code{\link{phyloseq-class}} object
+#' @return A new \code{\link[phyloseq]{phyloseq-class}} object
 taxa_as_columns <- function(physeq) {
   physeq <- clean_pq(
     physeq,
@@ -2822,7 +2822,7 @@ taxa_as_columns <- function(physeq) {
 #' @inheritParams clean_pq
 #' @author Adrien Taudière
 #' @export
-#' @return A new \code{\link{phyloseq-class}} object
+#' @return A new \code{\link[phyloseq]{phyloseq-class}} object
 taxa_as_rows <- function(physeq) {
   physeq <- clean_pq(
     physeq,
@@ -2858,7 +2858,7 @@ taxa_as_rows <- function(physeq) {
 #' @param verbose (logical). If TRUE, print additional informations.
 #' @export
 #' @author Adrien Taudière
-#' @return A new \code{\link{phyloseq-class}} object.
+#' @return A new \code{\link[phyloseq]{phyloseq-class}} object.
 #' @seealso [accu_plot_balanced_modality()]
 #' @examples
 #' table(data_fungi_mini@sam_data$Height)

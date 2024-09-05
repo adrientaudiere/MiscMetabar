@@ -2,13 +2,13 @@
 % Please edit documentation in R/miscellanous.R
 \name{as_binary_otu_table}
 \alias{as_binary_otu_table}
-\title{Transform the otu_table of a \code{\link{phyloseq-class}} object into a
-\code{\link{phyloseq-class}} object with a binary otu_table.}
+\title{Transform the otu_table of a \code{\link[phyloseq]{phyloseq-class}} object into a
+\code{\link[phyloseq]{phyloseq-class}} object with a binary otu_table.}
 \usage{
 as_binary_otu_table(physeq, min_number = 1)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{min_number}{(int) the minimum number of sequences to put

@@ -2,12 +2,12 @@
 % Please edit documentation in R/plot_functions.R
 \name{venn_pq}
 \alias{venn_pq}
-\title{Venn diagram of \code{\link{phyloseq-class}} object}
+\title{Venn diagram of \code{\link[phyloseq]{phyloseq-class}} object}
 \usage{
 venn_pq(physeq, fact, min_nb_seq = 0, print_values = TRUE)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{fact}{(required): Name of the factor to cluster samples by modalities.
@@ -25,7 +25,7 @@ Please use print_values = FALSE if you want to add ggplot function
 (cf example).}
 }
 \value{
-A \code{\link{ggplot}}2 plot representing Venn diagram of
+A \code{\link[ggplot2]{ggplot}}2 plot representing Venn diagram of
 modalities of the argument \code{factor}
 }
 \description{

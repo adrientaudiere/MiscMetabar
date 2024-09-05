@@ -16,7 +16,7 @@ graph_test_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{fact}{(required) Name of the factor to cluster samples by modalities.
@@ -41,7 +41,7 @@ NA in the variables set in formula.}
 \code{\link[phyloseqGraphTest:graph_perm_test]{phyloseqGraphTest::graph_perm_test()}} function}
 }
 \value{
-A \code{\link{ggplot}}2 plot with a subtitle indicating the pvalue
+A \code{\link[ggplot2]{ggplot}}2 plot with a subtitle indicating the pvalue
 and the number of permutations
 }
 \description{

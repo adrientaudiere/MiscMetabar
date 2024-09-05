@@ -7,7 +7,7 @@
 save_pq(physeq, path = NULL, ...)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{path}{a path to the folder to save the phyloseq object}

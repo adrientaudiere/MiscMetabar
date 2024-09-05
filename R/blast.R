@@ -1,5 +1,5 @@
 ################################################################################
-#' Blast some sequence against `refseq` slot of a \code{\link{phyloseq-class}}
+#' Blast some sequence against `refseq` slot of a \code{\link[phyloseq]{phyloseq-class}}
 #'   object.
 #'
 #' @description
@@ -9,7 +9,7 @@
 #'
 #' Use the blast software.
 #'
-#' @param physeq (required): a \code{\link{phyloseq-class}} object obtained
+#' @param physeq (required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 #'   using the `phyloseq` package.
 #' @param seq2search (required) path to a fasta file defining the sequences
 #'   you want to blast against the taxa (ASV, OTU) sequences from the physeq object.
@@ -181,7 +181,7 @@ blast_to_phyloseq <- function(physeq,
 
 
 ################################################################################
-#' Blast all sequence of `refseq` slot of a \code{\link{phyloseq-class}}
+#' Blast all sequence of `refseq` slot of a \code{\link[phyloseq]{phyloseq-class}}
 #'   object against a custom database.
 #'
 #' @description
@@ -371,7 +371,7 @@ blast_pq <- function(physeq,
 #'   Note that params `unique_per_seq` must be lft to TRUE and `score_filter`
 #'   must be left to FALSE.
 #' @export
-#' @return A new \code{\link{phyloseq-class}} object.
+#' @return A new \code{\link[phyloseq]{phyloseq-class}} object.
 
 
 filter_asv_blast <- function(physeq,
@@ -631,7 +631,7 @@ blast_to_derep <- function(derep,
 #' @param fasta_for_db path to a fasta file to make the blast database
 #' @param silent (logical) If true, no message are printing.
 #' @param ... Other arguments passed on to [blast_pq()] function.
-#' @return A new \code{\link{phyloseq-class}} object with more information in tax_table based on a
+#' @return A new \code{\link[phyloseq]{phyloseq-class}} object with more information in tax_table based on a
 #'   blast on a given database
 #'
 #' @export

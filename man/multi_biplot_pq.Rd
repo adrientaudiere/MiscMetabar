@@ -7,7 +7,7 @@
 multi_biplot_pq(physeq, split_by = NULL, pairs = NULL, na_remove = TRUE, ...)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{split_by}{(required if pairs is NULL) the name of the factor to make all combination

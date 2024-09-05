@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_functions.R
 \name{ggvenn_pq}
 \alias{ggvenn_pq}
-\title{Venn diagram of \code{\link{phyloseq-class}} object using
+\title{Venn diagram of \code{\link[phyloseq]{phyloseq-class}} object using
 \code{ggVennDiagram::ggVennDiagram} function}
 \usage{
 ggvenn_pq(
@@ -19,7 +19,7 @@ ggvenn_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{fact}{(required): Name of the factor to cluster samples by modalities.
@@ -53,7 +53,7 @@ modalities of args \code{fact}.}
 for ex. \code{category.names}.}
 }
 \value{
-A \code{\link{ggplot}}2 plot representing Venn diagram of
+A \code{\link[ggplot2]{ggplot}}2 plot representing Venn diagram of
 modalities of the argument \code{factor} or if split_by is set a list
 of plots.
 }

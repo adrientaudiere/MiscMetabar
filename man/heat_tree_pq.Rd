@@ -7,7 +7,7 @@
 heat_tree_pq(physeq, taxonomic_level = NULL, ...)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{taxonomic_level}{(default: NULL): a vector of selected

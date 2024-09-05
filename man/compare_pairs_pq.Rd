@@ -16,7 +16,7 @@ compare_pairs_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{bifactor}{(required) a factor (present in the \code{sam_data} slot of

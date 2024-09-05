@@ -20,7 +20,7 @@ adonis_rarperm_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{formula}{(required) the right part of a formula for \code{\link[vegan:adonis]{vegan::adonis2()}}.

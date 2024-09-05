@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_functions.R
 \name{circle_pq}
 \alias{circle_pq}
-\title{Plot OTU circle for \code{\link{phyloseq-class}} object}
+\title{Plot OTU circle for \code{\link[phyloseq]{phyloseq-class}} object}
 \usage{
 circle_pq(
   physeq = NULL,
@@ -22,7 +22,7 @@ circle_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link{phyloseq-class}} object obtained
+\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{fact}{(required) Name of the factor to cluster samples by modalities.

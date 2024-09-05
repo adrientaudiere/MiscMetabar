@@ -1,6 +1,6 @@
 ################################################################################
-#' Transform the otu_table of a \code{\link{phyloseq-class}} object into a
-#'   \code{\link{phyloseq-class}} object with a binary otu_table.
+#' Transform the otu_table of a \code{\link[phyloseq]{phyloseq-class}} object into a
+#'   \code{\link[phyloseq]{phyloseq-class}} object with a binary otu_table.
 #'
 #' @description
 #'
@@ -131,7 +131,7 @@ all_object_size <- function() {
 #' @param remove_space (logical; default TRUE): do we remove space?
 #' @author Adrien Taudière
 #'
-#' @return A  \code{\link{phyloseq-class}} object with simplified taxonomy
+#' @return A  \code{\link[phyloseq]{phyloseq-class}} object with simplified taxonomy
 #' @export
 simplify_taxo <- function(physeq, remove_space = TRUE) {
   taxo <- physeq@tax_table
