@@ -437,7 +437,7 @@ filter_taxa_blast <- filter_asv_blast
 ################################################################################
 
 
-#' Blast some sequence against sequences from of a \code{\link{derep-class}}
+#' Blast some sequence against sequences from of a \code{\link[dada2]{derep-class}}
 #'   object.
 #'
 #' @description

@@ -1786,7 +1786,7 @@ tbl_sum_samdata <- function(physeq, remove_col_unique_value = TRUE, ...) {
 #' @details
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `FUNGuildR` package and the associate
-#'   [publication](https://www.sciencedirect.com/science/article/abs/pii/S1754504815000847) if you
+#'   publication (\doi{10.1016/j.funeco.2015.06.006}) if you
 #'   use this function.
 #' @seealso [plot_guild_pq()]
 

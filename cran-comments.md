@@ -10,7 +10,8 @@ Found the following (possibly) invalid URLs:
     Status: 403
     Message: Forbidden
 
-> I don't understand why the URL is invalid. It works for me.
+> I don't understand why the URL is invalid. It works for me. I change the url
+> by (\doi{10.1016/j.funeco.2015.06.006})
 
 
 # Bad \link{} for external packages
