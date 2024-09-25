@@ -2,10 +2,9 @@
 # MiscMetabar 0.9.3 (in development)
 
 - Homogenize terminology replacing ASV by taxa/taxon in documentation and code
-- Build an alias function `filter_taxa_blast()` for 
-`filter_asv_blast()`
-- Build an alias function `postcluster_pq()` for 
-`asv2otu()`
+- Build an alias function `filter_taxa_blast()` for `filter_asv_blast()`
+- Build an alias function `postcluster_pq()` for `asv2otu()`
+- Add param `return_data_for_venn` in function `ggvenn_pq` in order to make more customizable plot following [ggVennDiagram tutorial](https://gaospecial.github.io/ggVennDiagram/articles/fully-customed.html)
 
 
 ## BREAKING CHANGES

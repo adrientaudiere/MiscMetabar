@@ -2,7 +2,7 @@
 % Please edit documentation in R/blast.R
 \name{blast_to_derep}
 \alias{blast_to_derep}
-\title{Blast some sequence against sequences from of a \code{\link{derep-class}}
+\title{Blast some sequence against sequences from of a \code{\link[dada2]{derep-class}}
 object.}
 \usage{
 blast_to_derep(
