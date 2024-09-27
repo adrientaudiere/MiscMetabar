@@ -42,6 +42,15 @@ A CRAN version of MiscMetabar is available.
 install.packages("MiscMetabar")
 ```
 
+You may need to install required bioconductor packages (dada2 and phyloseq) first. See their installation pages. 
+One other solution is to use the package [pak](https://pak.r-lib.org/) to install MiscMetabar. It comes with the benefit to check for 
+uninstalled dependencies on your computer (system requirements), thank you [pak](https://pak.r-lib.org/)! 
+
+```{r, results = 'hide', eval=FALSE}
+pak::pkg_install("MiscMetabar")
+```
+
+
 
 You can also install the stable development version from [GitHub](https://github.com/) with:
 

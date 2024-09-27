@@ -7,7 +7,7 @@
 #' The original function and documentation was written by Brendan Furneaux
 #' in the [FUNGuildR](https://github.com/brendanf/FUNGuildR/) package.
 #'
-#' Please cite this [publication](https://www.sciencedirect.com/science/article/abs/pii/S1754504815000847).
+#' Please cite this publication (\doi{10.1016/j.funeco.2015.06.006}).
 #'
 #' @param db_url a length 1 character string giving the URL to retrieve the database
 #'     from

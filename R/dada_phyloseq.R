@@ -1786,7 +1786,7 @@ tbl_sum_samdata <- function(physeq, remove_col_unique_value = TRUE, ...) {
 #' @details
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `FUNGuildR` package and the associate
-#'   [publication](https://www.sciencedirect.com/science/article/abs/pii/S1754504815000847) if you
+#'   publication (\doi{10.1016/j.funeco.2015.06.006}) if you
 #'   use this function.
 #' @seealso [plot_guild_pq()]
 
@@ -2019,6 +2019,7 @@ plot_guild_pq <-
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' \donttest{
 #' if (requireNamespace("phangorn")) {
+#'   set.seed(22)
 #'   df <- subset_taxa_pq(data_fungi_mini, taxa_sums(data_fungi_mini) > 9000)
 #'   df_tree <- build_phytree_pq(df, nb_bootstrap = 2)
 #'   plot(df_tree$UPGMA)

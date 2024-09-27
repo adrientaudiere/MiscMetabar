@@ -11,6 +11,7 @@ v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.06038/status.svg)](https://doi.org/10.21105/joss.06038)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 <!-- devtools::build_readme() -->
 
 # MiscMetabar <a href="https://adrientaudiere.github.io/MiscMetabar/"><img src="https://adrientaudiere.github.io/MiscMetabar/reference/figures/logo.png" align="right" height="138" alt="MiscMetabar website" /></a>
@@ -46,6 +47,16 @@ A CRAN version of MiscMetabar is available.
 
 ``` r
 install.packages("MiscMetabar")
+```
+
+You may need to install required bioconductor packages (dada2 and
+phyloseq) first. See their installation pages. One other solution is to
+use the package [pak](https://pak.r-lib.org/) to install MiscMetabar. It
+comes with the benefit to check for uninstalled dependencies on your
+computer (system requirements), thank you [pak](https://pak.r-lib.org/)!
+
+``` r
+pak::pkg_install("MiscMetabar")
 ```
 
 You can also install the stable development version from
@@ -138,7 +149,7 @@ ggvenn_pq(data_fungi, fact = "Height") +
   labs(title = "Share number of ASV among Height in tree")
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
 
 ### Note for non-Linux users
 

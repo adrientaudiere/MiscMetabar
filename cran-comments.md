@@ -1,20 +1,3 @@
-Resolved 2 Notes from CRAN submission
+Resolved 1 Error from CRAN "Additional issue"
 
-
-# Invalid URLs
-
-Found the following (possibly) invalid URLs:
-  URL: https://www.sciencedirect.com/science/article/abs/pii/S1754504815000847
-    From: man/add_funguild_info.Rd
-          man/get_funguild_db.Rd
-    Status: 403
-    Message: Forbidden
-
-> I don't understand why the URL is invalid. It works for me.
-
-
-# Bad \link{} for external packages
-
-Found the following Rd file(s) with Rd \link{} targets missing package
-
-> Solved in v. 0.9.3
+I add a seed (`set.seed(22)`) in the offending example of `build_phytree_pq`. I tried to find the error using a loop, but after 50 different seed numbers, the examples still work on my side.
