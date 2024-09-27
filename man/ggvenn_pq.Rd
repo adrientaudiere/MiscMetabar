@@ -15,6 +15,7 @@ ggvenn_pq(
   add_nb_seq = FALSE,
   rarefy_before_merging = FALSE,
   rarefy_after_merging = FALSE,
+  return_data_for_venn = FALSE,
   ...
 )
 }
@@ -48,6 +49,10 @@ modalities of args \code{fact}. Use \code{phyloseq::rarefy_even_depth()} functio
 
 \item{rarefy_after_merging}{Rarefy each sample after merging by the
 modalities of args \code{fact}.}
+
+\item{return_data_for_venn}{(logical, default FALSE) If TRUE, the plot is
+not returned, but the resulting dataframe to plot with ggVennDiagram package
+is returned.}
 
 \item{...}{Other arguments for the \code{ggVennDiagram::ggVennDiagram} function
 for ex. \code{category.names}.}
@@ -93,6 +98,35 @@ if (requireNamespace("ggVennDiagram")) {
   ggvenn_pq(data_fungi, fact = "Height", rarefy_before_merging = TRUE)
   ggvenn_pq(data_fungi, fact = "Height", rarefy_after_merging = TRUE) +
     scale_x_continuous(expand = expansion(mult = 0.5))
+
+  # For more flexibility, you can save the dataset for more precise construction
+  # with ggplot2 and ggVennDiagramm
+  # (https://gaospecial.github.io/ggVennDiagram/articles/fully-customed.html)
+  res_venn <- ggvenn_pq(data_fungi, fact = "Height", return_data_for_venn = TRUE)
+
+  ggplot() +
+    # 1. region count layer
+    geom_polygon(aes(X, Y, group = id, fill = name),
+      data = ggVennDiagram::venn_regionedge(res_venn)
+    ) +
+    # 2. set edge layer
+    geom_path(aes(X, Y, color = id, group = id),
+      data = ggVennDiagram::venn_setedge(res_venn),
+      show.legend = FALSE, linewidth = 3
+    ) +
+    # 3. set label layer
+    geom_text(aes(X, Y, label = name),
+      data = ggVennDiagram::venn_setlabel(res_venn)
+    ) +
+    # 4. region label layer
+    geom_label(
+      aes(X, Y, label = paste0(
+        count, " (",
+        scales::percent(count / sum(count), accuracy = 2), ")"
+      )),
+      data = ggVennDiagram::venn_regionlabel(res_venn)
+    ) +
+    theme_void()
 }
 }
 }

@@ -2019,6 +2019,7 @@ plot_guild_pq <-
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' \donttest{
 #' if (requireNamespace("phangorn")) {
+#'   set.seed(22)
 #'   df <- subset_taxa_pq(data_fungi_mini, taxa_sums(data_fungi_mini) > 9000)
 #'   df_tree <- build_phytree_pq(df, nb_bootstrap = 2)
 #'   plot(df_tree$UPGMA)

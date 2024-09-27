@@ -1,5 +1,11 @@
 
-# MiscMetabar 0.9.3 (in development)
+# MiscMetabar 0.9.5 (in development)
+
+# MiscMetabar 0.9.4 
+
+- Set a seed in the example of `build_tree_pq` to resubmit to CRAN
+
+# MiscMetabar 0.9.3
 
 - Homogenize terminology replacing ASV by taxa/taxon in documentation and code
 - Build an alias function `filter_taxa_blast()` for `filter_asv_blast()`
