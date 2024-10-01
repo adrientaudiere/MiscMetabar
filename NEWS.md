@@ -1,11 +1,15 @@
 
 # MiscMetabar 0.9.5 (in development)
 
+- Add a param `return_a_vector` in function `filter_trim()` to make possible to return a vector of path as it is usefull when used with `targets::tar_targets(..., format="file")`)
+
 # MiscMetabar 0.9.4 
 
 - Set a seed in the example of `build_tree_pq` to resubmit to CRAN
 
 # MiscMetabar 0.9.3
+
+> CRAN 2024-09-09
 
 - Homogenize terminology replacing ASV by taxa/taxon in documentation and code
 - Build an alias function `filter_taxa_blast()` for `filter_asv_blast()`
@@ -19,7 +23,6 @@
 - Replacing misnamed param `reorder_asv` by `reorder_taxons` in `clean_pq()`
 
 
-
 # MiscMetabar 0.9.2
 
 - Add param `default_fun` in function `merge_samples2()` in order to replace the default function that change the sample data in case of merging. A useful parameter is `default_fun=diff_fct_diff_class`.
@@ -28,6 +31,8 @@
 - Modify `rarefy_sample_count_by_modality` to debug the case of modality with level of length one.
 
 # MiscMetabar 0.9.1
+
+> CRAN 2024-04-28
 
 ## New functions 
 - Add functions `taxa_as_rows()` and `taxa_as_columns()` to replace verbose called to `clean_pq()`
@@ -61,6 +66,8 @@
 - Fix a bug in the class of the return object of function `chimera_removal_vs()`. Now it return a matrix to be able to be parsed on to [dada2::getUniques()] 
 
 # MiscMetabar 0.7
+
+> CRAN 2024-03-08
  
 - Add functions `chimera_detection_vs()` and `chimera_removal_vs()` to process chimera detection and removal using [vsearch](https://github.com/torognes/vsearch) software 
 - Add functions `filter_trim()`, `sample_data_with_new_names()` and `rename_samples()` to facilitate the use of [targets](https://books.ropensci.org/targets/) for bioinformatic pipeline.
