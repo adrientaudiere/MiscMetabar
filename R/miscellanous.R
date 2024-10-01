@@ -72,7 +72,7 @@ dist_bycol <- function(x,
     stop("x and y must be of the same dimension")
   }
 
-  res <- list()
+  res <- vector("list", 2)
   res$obs <- rep(NA, ncol(x))
   res$null <- list(length = nperm)
 

@@ -25,7 +25,7 @@
 #' @author Adrien Taudière
 
 search_exact_seq_pq <- function(physeq, seq2search) {
-  res <- list()
+  res <- vector("list", length(sequences))
   sequences <- seq2search
   for (i in seq_along(sequences)) {
     original <- sequences[[i]]
@@ -90,7 +90,7 @@ search_exact_seq_pq <- function(physeq, seq2search) {
 dist_pos_control <- function(physeq, samples_names, method = "bray") {
   verify_pq(physeq)
 
-  res <- list()
+  res <- vector("list", 2)
   dist_control <- vector()
 
   for (i in levels(as.factor(samples_names))) {

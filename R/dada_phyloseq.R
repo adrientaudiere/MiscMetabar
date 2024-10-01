@@ -468,7 +468,7 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
   if (sum(!unlist(lapply(list_pq_obj, inherits, "phyloseq"))) != 0) {
     stop("At least one object in your list_pq_obj is not a phyloseq obj.")
   }
-  res <- list()
+  res <- vector("list", length(sam_names))
   sam_names <- unique(unlist(lapply(list_pq_obj, sample_names)))
   for (s in sam_names) {
     list_pq_obj_samples <-

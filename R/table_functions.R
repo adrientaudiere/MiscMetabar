@@ -191,13 +191,14 @@ compare_pairs_pq <- function(physeq = NULL,
   lev1 <- levels(physeq@sam_data[[bifactor]])[1]
   lev2 <- levels(physeq@sam_data[[bifactor]])[2]
 
-  res <- list()
   if (!is.null(modality)) {
     physeq@sam_data[[modality]] <- as.factor(physeq@sam_data[[modality]])
     nmodality <- levels(physeq@sam_data[[modality]])
   } else {
     nmodality <- bifactor
   }
+
+  res <- vector("list", length(nmodality))
 
   for (i in nmodality) {
     newphyseq <- physeq

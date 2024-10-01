@@ -140,7 +140,7 @@ accu_plot <-
       physeq_accu[physeq_accu > 0] <- 1
       accu_all <- vegan::specaccum(physeq_accu)
 
-      accu <- list()
+      accu <- vector("list", nlevels(factor_interm))
       for (i in seq_along(levels(factor_interm))) {
         accu[[i]] <-
           vegan::specaccum(physeq_accu[factor_interm ==
@@ -210,7 +210,6 @@ accu_plot <-
 
       n_max <- seq(1, max(tot), by = step)
       out <- lapply(seq_len(nr), function(i) {
-        res <- list()
         n <- seq(1, tot[i], by = step)
         if (n[length(n)] != tot[i]) {
           n <- c(n, tot[i])
@@ -497,7 +496,7 @@ accu_plot_balanced_modality <- function(physeq,
 #' @author Adrien Taudière
 #' @seealso [accu_plot()]
 accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
-  res <- list()
+  res <- vector("list", length(unique(res_accuplot$data$.id)))
   for (id in unique(res_accuplot$data$.id)) {
     data <- res_accuplot$data %>% dplyr::filter(.id == id)
     proportion <- data$X1 / max(data$X1)
@@ -899,7 +898,7 @@ sankey_pq <-
       })
     }
 
-    tax_sank <- list()
+    tax_sank <- vector("list", 2)
     names_nodes <-
       unique(c(as.vector(mat[, 1]), as.vector(mat[, 2])))
     names_nodes <- names_nodes[!is.na(names_nodes)]
@@ -1057,7 +1056,7 @@ venn_pq <-
       )
 
     nmod <- nrow(venn_res)
-    x1 <- list()
+    x1 <- vector("list", nmod)
     for (i in seq(1, nmod)) {
       x1[[i]] <- grep(rownames(venn_res)[i], table_value$combinations)
     }
@@ -1293,7 +1292,7 @@ ggvenn_pq <- function(physeq = NULL,
     physeq <- clean_pq(physeq)
   }
 
-  res <- list()
+  res <- vector("list", nlevels(physeq@sam_data[[fact]]))
   nb_seq <- vector(mode = "integer")
 
   for (f in levels(physeq@sam_data[[fact]])) {
@@ -1339,7 +1338,7 @@ ggvenn_pq <- function(physeq = NULL,
   if (is.null(split_by)) {
     p <- ggVennDiagram::ggVennDiagram(res, ...)
   } else {
-    p <- list()
+    p <- vector("list", nlevels(modalities))
     modalities <-
       as.factor(unlist(unclass(physeq@sam_data[[split_by]])))
     for (moda in levels(modalities)) {
@@ -1608,10 +1607,10 @@ hill_pq <- function(physeq,
       hill_scales = hill_scales,
       correction_for_sample_size = correction_for_sample_size
     )
-  p_list <- list()
+  p_list <- vector("list", length(hill_scales))
 
   if (kruskal_test) {
-    kt_res <- list()
+    kt_res <- vector("list", length(hill_scales))
     for (i in seq_along(hill_scales)) {
       kt_res[[i]] <- kruskal.test(df_hill[, paste0("Hill_", hill_scales[[i]])], df_hill[, fact])
     }
@@ -2512,7 +2511,7 @@ multi_biplot_pq <- function(physeq,
   }
 
   if (!is.null(pairs)) {
-    p <- list()
+    p <- vector("list", nlevels(as.factor(physeq@sam_data[[pairs]])))
     for (c in levels(as.factor(physeq@sam_data[[pairs]]))) {
       new_physeq <-
         subset_samples_pq(physeq, physeq@sam_data[[pairs]] %in% c)
@@ -2522,7 +2521,7 @@ multi_biplot_pq <- function(physeq,
     names_split_by <- names(table(physeq@sam_data[[split_by]]))
     couples <- combn(names_split_by, 2)
 
-    p <- list()
+    p <- vector("list", ncol(couples))
     for (c in seq_along(ncol(couples))) {
       names_p <- paste0(couples[1, c], " - ", couples[2, c])
       new_physeq <-
@@ -4048,7 +4047,7 @@ ggscatt_pq <- function(physeq,
     physeq <- clean_pq(rarefy_even_depth(physeq))
   }
 
-  p_list <- list()
+  p_list <- vector("list", length(hill_scales))
   psm_res <- psmelt_samples_pq(physeq, hill_scales = hill_scales)
   for (i in seq_along(hill_scales)) {
     p_list[[i]] <-
