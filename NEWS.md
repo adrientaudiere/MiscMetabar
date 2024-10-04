@@ -1,11 +1,12 @@
 
 # MiscMetabar 0.9.5 (in development)
 
-- Add a param `return_a_vector` in function `filter_trim()` to make possible to return a vector of path as it is usefull when used with `targets::tar_targets(..., format="file")`)
 
 # MiscMetabar 0.9.4 
 
 - Set a seed in the example of `build_tree_pq` to resubmit to CRAN
+   Add a param `return_a_vector` in function `filter_trim()` to make possible to return a vector of path as it is usefull when used with `targets::tar_targets(..., format="file")`)
+- Make some storage amelioration by replacing `list()` by `vector(list, ...)` 
 
 # MiscMetabar 0.9.3
 

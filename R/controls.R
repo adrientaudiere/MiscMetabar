@@ -25,8 +25,8 @@
 #' @author Adrien Taudière
 
 search_exact_seq_pq <- function(physeq, seq2search) {
-  res <- vector("list", length(sequences))
   sequences <- seq2search
+  res <- vector("list", length(sequences))
   for (i in seq_along(sequences)) {
     original <- sequences[[i]]
     rev <- Biostrings::reverse(sequences[[i]])

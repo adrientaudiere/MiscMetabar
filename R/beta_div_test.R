@@ -527,9 +527,9 @@ plot_LCBD_pq <- function(physeq,
       }
 
       p <-
-        p_LCBD + patchwork::wrap_plots(p_heatmap) + 
-          patchwork::plot_layout(
-            widths = c(3, 1), guides = "collect"
+        p_LCBD + patchwork::wrap_plots(p_heatmap) +
+        patchwork::plot_layout(
+          widths = c(3, 1), guides = "collect"
         )
       return(p)
     }

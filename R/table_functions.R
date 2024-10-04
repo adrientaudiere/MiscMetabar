@@ -198,7 +198,7 @@ compare_pairs_pq <- function(physeq = NULL,
     nmodality <- bifactor
   }
 
-  res <- vector("list", length(nmodality))
+  res <- c()
 
   for (i in nmodality) {
     newphyseq <- physeq

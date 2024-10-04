@@ -63,10 +63,15 @@
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.9.4" id="miscmetabar-094">MiscMetabar 0.9.4<a class="anchor" aria-label="anchor" href="#miscmetabar-094"></a></h2>
-<ul><li>Set a seed in the example of <code>build_tree_pq</code> to resubmit to CRAN</li>
+<ul><li>Set a seed in the example of <code>build_tree_pq</code> to resubmit to CRAN Add a param <code>return_a_vector</code> in function <code><a href="../reference/filter_trim.html">filter_trim()</a></code> to make possible to return a vector of path as it is usefull when used with <code>targets::tar_targets(..., format="file")</code>)</li>
+<li>Make some storage amelioration by replacing <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> by <code>vector(list, ...)</code>
+</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.9.3" id="miscmetabar-093">MiscMetabar 0.9.3<a class="anchor" aria-label="anchor" href="#miscmetabar-093"></a></h2><p class="text-muted">CRAN release: 2024-09-09</p>
+<blockquote>
+<p>CRAN 2024-09-09</p>
+</blockquote>
 <ul><li>Homogenize terminology replacing ASV by taxa/taxon in documentation and code</li>
 <li>Build an alias function <code><a href="../reference/filter_asv_blast.html">filter_taxa_blast()</a></code> for <code><a href="../reference/filter_asv_blast.html">filter_asv_blast()</a></code>
 </li>
@@ -91,6 +96,9 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.9.1" id="miscmetabar-091">MiscMetabar 0.9.1<a class="anchor" aria-label="anchor" href="#miscmetabar-091"></a></h2><p class="text-muted">CRAN release: 2024-04-28</p>
+<blockquote>
+<p>CRAN 2024-04-28</p>
+</blockquote>
 <div class="section level3">
 <h3 id="new-functions-0-9-1">New functions<a class="anchor" aria-label="anchor" href="#new-functions-0-9-1"></a></h3>
 <ul><li>Add functions <code><a href="../reference/taxa_as_rows.html">taxa_as_rows()</a></code> and <code><a href="../reference/taxa_as_columns.html">taxa_as_columns()</a></code> to replace verbose called to <code><a href="../reference/clean_pq.html">clean_pq()</a></code>
@@ -127,6 +135,9 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.7" id="miscmetabar-07">MiscMetabar 0.7<a class="anchor" aria-label="anchor" href="#miscmetabar-07"></a></h2>
+<blockquote>
+<p>CRAN 2024-03-08</p>
+</blockquote>
 <ul><li><p>Add functions <code><a href="../reference/chimera_detection_vs.html">chimera_detection_vs()</a></code> and <code><a href="../reference/chimera_removal_vs.html">chimera_removal_vs()</a></code> to process chimera detection and removal using <a href="https://github.com/torognes/vsearch" class="external-link">vsearch</a> software</p></li>
 <li><p>Add functions <code><a href="../reference/filter_trim.html">filter_trim()</a></code>, <code><a href="../reference/sample_data_with_new_names.html">sample_data_with_new_names()</a></code> and <code><a href="../reference/rename_samples.html">rename_samples()</a></code> to facilitate the use of <a href="https://books.ropensci.org/targets/" class="external-link">targets</a> for bioinformatic pipeline.</p></li>
 <li><p>Add function <code><a href="../reference/add_info_to_sam_data.html">add_info_to_sam_data()</a></code> to expand sam_data slot using a data.frame and using nb_asv and nb_seq</p></li>

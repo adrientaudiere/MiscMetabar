@@ -52,7 +52,7 @@ hill_tuckey_pq <- function(
     )
 
   colnames(otu_hill) <- paste0("Hill_", hill_scales)
-  tuk <-  vector("list", length(hill_scales))
+  tuk <- vector("list", length(hill_scales))
   for (i in seq_along(hill_scales)) {
     if (correction_for_sample_size) {
       tuk[[i]] <-

@@ -497,6 +497,7 @@ accu_plot_balanced_modality <- function(physeq,
 #' @seealso [accu_plot()]
 accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
   res <- vector("list", length(unique(res_accuplot$data$.id)))
+  names(res) <- unique(res_accuplot$data$.id)
   for (id in unique(res_accuplot$data$.id)) {
     data <- res_accuplot$data %>% dplyr::filter(.id == id)
     proportion <- data$X1 / max(data$X1)
@@ -1293,6 +1294,7 @@ ggvenn_pq <- function(physeq = NULL,
   }
 
   res <- vector("list", nlevels(physeq@sam_data[[fact]]))
+  names(res) <- levels(physeq@sam_data[[fact]])
   nb_seq <- vector(mode = "integer")
 
   for (f in levels(physeq@sam_data[[fact]])) {
@@ -1338,9 +1340,10 @@ ggvenn_pq <- function(physeq = NULL,
   if (is.null(split_by)) {
     p <- ggVennDiagram::ggVennDiagram(res, ...)
   } else {
-    p <- vector("list", nlevels(modalities))
     modalities <-
       as.factor(unlist(unclass(physeq@sam_data[[split_by]])))
+    p <- vector("list", nlevels(modalities))
+    names(p) <- levels(modalities)
     for (moda in levels(modalities)) {
       physeq_interm <-
         clean_pq(subset_samples_pq(physeq, modalities == moda),
@@ -2512,6 +2515,7 @@ multi_biplot_pq <- function(physeq,
 
   if (!is.null(pairs)) {
     p <- vector("list", nlevels(as.factor(physeq@sam_data[[pairs]])))
+    names(p) <- levels(as.factor(physeq@sam_data[[pairs]]))
     for (c in levels(as.factor(physeq@sam_data[[pairs]]))) {
       new_physeq <-
         subset_samples_pq(physeq, physeq@sam_data[[pairs]] %in% c)
@@ -2521,7 +2525,7 @@ multi_biplot_pq <- function(physeq,
     names_split_by <- names(table(physeq@sam_data[[split_by]]))
     couples <- combn(names_split_by, 2)
 
-    p <- vector("list", ncol(couples))
+    p <- list()
     for (c in seq_along(ncol(couples))) {
       names_p <- paste0(couples[1, c], " - ", couples[2, c])
       new_physeq <-

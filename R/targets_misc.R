@@ -117,7 +117,7 @@ rename_samples_otu_table <- function(physeq, names_of_samples) {
 #' @param output_rev Path to output folder for reverse files. By default,
 #'   this function will create
 #'   a folder "output/filterAndTrim_fwd" in the current working directory.
-#' @param return_a_vector (logical, default FALSE) If true, the return is 
+#' @param return_a_vector (logical, default FALSE) If true, the return is
 #'   a vector of path (usefull when used with
 #'   targets::tar_targets(..., format="file"))
 #' @param ... Other parameters passed on to [dada2::filterAndTrim()] function.
