@@ -37,8 +37,8 @@ val_threshold <- accu_samp_threshold(p)
 
 summary(val_threshold)
 
-# Plot the number of sequences needed to accumulate 0.95\% of ASV in 50\%, 75\%
-# and 100\% of samples
+##'  Plot the number of sequences needed to accumulate 0.95\% of ASV in 50\%, 75\%
+##'  and 100\% of samples
 p + geom_vline(xintercept = quantile(val_threshold, probs = c(0.50, 0.75, 1)))
 }
 }

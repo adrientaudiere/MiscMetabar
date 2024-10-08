@@ -72,9 +72,7 @@ dist_bycol <- function(x,
     stop("x and y must be of the same dimension")
   }
 
-  res <- list()
-  res$obs <- rep(NA, ncol(x))
-  res$null <- list(length = nperm)
+  res <- list(obs = rep(NA, ncol(x)), null = list(length = nperm))
 
   for (i in seq_len(ncol(x))) {
     res$obs[i] <-

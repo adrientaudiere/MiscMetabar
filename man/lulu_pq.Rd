@@ -78,6 +78,9 @@ forked from \url{https://github.com/tobiasgf/lulu}.
 \url{https://github.com/torognes/vsearch}.
 }
 }
+\seealso{
+\code{\link[=mumu_pq]{mumu_pq()}}
+}
 \author{
 Tobias Guldberg Frøslev \email{tobiasgf@snm.ku.dk}
 & Adrien Taudière \email{adrien.taudiere@zaclys.net}

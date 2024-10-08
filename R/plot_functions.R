@@ -15,7 +15,7 @@
 #' @author Adrien Taudière
 #' @examples
 #' \donttest{
-#' # Filter samples that don't have Time
+# #'  Filter samples that don't have Time
 #' data_fungi_mini2 <- subset_samples(data_fungi_mini, !is.na(Time))
 #' res <- mt(data_fungi_mini2, "Time", method = "fdr", test = "f", B = 300)
 #' plot_mt(res)
@@ -140,7 +140,7 @@ accu_plot <-
       physeq_accu[physeq_accu > 0] <- 1
       accu_all <- vegan::specaccum(physeq_accu)
 
-      accu <- list()
+      accu <- vector("list", nlevels(factor_interm))
       for (i in seq_along(levels(factor_interm))) {
         accu[[i]] <-
           vegan::specaccum(physeq_accu[factor_interm ==
@@ -210,7 +210,6 @@ accu_plot <-
 
       n_max <- seq(1, max(tot), by = step)
       out <- lapply(seq_len(nr), function(i) {
-        res <- list()
         n <- seq(1, tot[i], by = step)
         if (n[length(n)] != tot[i]) {
           n <- c(n, tot[i])
@@ -489,15 +488,16 @@ accu_plot_balanced_modality <- function(physeq,
 #'
 #' summary(val_threshold)
 #'
-#' # Plot the number of sequences needed to accumulate 0.95% of ASV in 50%, 75%
-#' # and 100% of samples
+#' ##'  Plot the number of sequences needed to accumulate 0.95% of ASV in 50%, 75%
+#' ##'  and 100% of samples
 #' p + geom_vline(xintercept = quantile(val_threshold, probs = c(0.50, 0.75, 1)))
 #' }
 #' @export
 #' @author Adrien Taudière
 #' @seealso [accu_plot()]
 accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
-  res <- list()
+  res <- vector("list", length(unique(res_accuplot$data$.id)))
+  names(res) <- unique(res_accuplot$data$.id)
   for (id in unique(res_accuplot$data$.id)) {
     data <- res_accuplot$data %>% dplyr::filter(.id == id)
     proportion <- data$X1 / max(data$X1)
@@ -899,7 +899,7 @@ sankey_pq <-
       })
     }
 
-    tax_sank <- list()
+    tax_sank <- vector("list", 2)
     names_nodes <-
       unique(c(as.vector(mat[, 1]), as.vector(mat[, 2])))
     names_nodes <- names_nodes[!is.na(names_nodes)]
@@ -1057,7 +1057,7 @@ venn_pq <-
       )
 
     nmod <- nrow(venn_res)
-    x1 <- list()
+    x1 <- vector("list", nmod)
     for (i in seq(1, nmod)) {
       x1[[i]] <- grep(rownames(venn_res)[i], table_value$combinations)
     }
@@ -1293,7 +1293,8 @@ ggvenn_pq <- function(physeq = NULL,
     physeq <- clean_pq(physeq)
   }
 
-  res <- list()
+  res <- vector("list", nlevels(physeq@sam_data[[fact]]))
+  names(res) <- levels(physeq@sam_data[[fact]])
   nb_seq <- vector(mode = "integer")
 
   for (f in levels(physeq@sam_data[[fact]])) {
@@ -1339,9 +1340,10 @@ ggvenn_pq <- function(physeq = NULL,
   if (is.null(split_by)) {
     p <- ggVennDiagram::ggVennDiagram(res, ...)
   } else {
-    p <- list()
     modalities <-
       as.factor(unlist(unclass(physeq@sam_data[[split_by]])))
+    p <- vector("list", nlevels(modalities))
+    names(p) <- levels(modalities)
     for (moda in levels(modalities)) {
       physeq_interm <-
         clean_pq(subset_samples_pq(physeq, modalities == moda),
@@ -1608,10 +1610,10 @@ hill_pq <- function(physeq,
       hill_scales = hill_scales,
       correction_for_sample_size = correction_for_sample_size
     )
-  p_list <- list()
+  p_list <- vector("list", length(hill_scales))
 
   if (kruskal_test) {
-    kt_res <- list()
+    kt_res <- vector("list", length(hill_scales))
     for (i in seq_along(hill_scales)) {
       kt_res[[i]] <- kruskal.test(df_hill[, paste0("Hill_", hill_scales[[i]])], df_hill[, fact])
     }
@@ -2096,79 +2098,81 @@ rotl_pq <- function(physeq,
 ################################################################################
 
 ################################################################################
-#' Heat tree from `metacoder` package using `tax_table` slot
-#' @description
-#'
-#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
-#'
-#' Note that the number of ASV is store under the name `n_obs`
-#' and the number of sequences under the name `nb_sequences`
-#'
-#' @inheritParams clean_pq
-#' @param taxonomic_level (default: NULL): a vector of selected
-#' taxonomic level using
-#'   their column numbers (e.g. taxonomic_level = 1:7)
-#' @param ... Arguments passed on to \code{\link[metacoder]{heat_tree}}
-#'
-#' @return A plot
-#' @export
-#' @author Adrien Taudière
-#'
-#' @examples
-#' \donttest{
-#' if (requireNamespace("metacoder")) {
-#'   library("metacoder")
-#'   data("GlobalPatterns", package = "phyloseq")
-#'
-#'   GPsubset <- subset_taxa(
-#'     GlobalPatterns,
-#'     GlobalPatterns@tax_table[, 1] == "Bacteria"
-#'   )
-#'
-#'   GPsubset <- subset_taxa(
-#'     GPsubset,
-#'     rowSums(GPsubset@otu_table) > 5000
-#'   )
-#'
-#'   GPsubset <- subset_taxa(
-#'     GPsubset,
-#'     rowSums(is.na(GPsubset@tax_table)) == 0
-#'   )
-#'
-#'   heat_tree_pq(GPsubset,
-#'     node_size = n_obs,
-#'     node_color = n_obs,
-#'     node_label = taxon_names,
-#'     tree_label = taxon_names,
-#'     node_size_trans = "log10 area"
-#'   )
-#'
-#'   heat_tree_pq(GPsubset,
-#'     node_size = nb_sequences,
-#'     node_color = n_obs,
-#'     node_label = taxon_names,
-#'     tree_label = taxon_names,
-#'     node_size_trans = "log10 area"
-#'   )
-#' }
-#' }
-heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
-  requireNamespace("metacoder", quietly = TRUE)
-  if (!is.null(taxonomic_level)) {
-    physeq@tax_table <- physeq@tax_table[, taxonomic_level]
-  }
+# #'  Heat tree from `metacoder` package using `tax_table` slot
+# #'  @description
+# #'
+# #'  <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+# #'  <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+# #'
+# #'  Note that the number of ASV is store under the name `n_obs`
+# #'  and the number of sequences under the name `nb_sequences`
+# #'
+# #'  @inheritParams clean_pq
+# #'  @param taxonomic_level (default: NULL): a vector of selected
+# #'  taxonomic level using
+# #'    their column numbers (e.g. taxonomic_level = 1:7)
+# #'  @param ... Arguments passed on to \code{\link[metacoder]{heat_tree}}
+# #'
+# #'  @return A plot
+# #'  @export
+# #'  @author Adrien Taudière
+# #'
+# #'  @examples
+# #'  \donttest{
+# #'  if (requireNamespace("metacoder")) {
+# #'    library("metacoder")
+# #'    data("GlobalPatterns", package = "phyloseq")
+# #'
+# #'    GPsubset <- subset_taxa(
+# #'      GlobalPatterns,
+# #'      GlobalPatterns@tax_table[, 1] == "Bacteria"
+# #'    )
+# #'
+# #'    GPsubset <- subset_taxa(
+# #'      GPsubset,
+# #'      rowSums(GPsubset@otu_table) > 5000
+# #'    )
+# #'
+# #'    GPsubset <- subset_taxa(
+# #'      GPsubset,
+# #'      rowSums(is.na(GPsubset@tax_table)) == 0
+# #'    )
+# #'
+# #'    heat_tree_pq(GPsubset,
+# #'      node_size = n_obs,
+# #'      node_color = n_obs,
+# #'      node_label = taxon_names,
+# #'      tree_label = taxon_names,
+# #'      node_size_trans = "log10 area"
+# #'    )
+# #'
+# #'    heat_tree_pq(GPsubset,
+# #'      node_size = nb_sequences,
+# #'      node_color = n_obs,
+# #'      node_label = taxon_names,
+# #'      tree_label = taxon_names,
+# #'      node_size_trans = "log10 area"
+# #'    )
+# #'  }
+# #'  }
+# heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
+#   requireNamespace("metacoder", quietly = TRUE)
+#   if (!is.null(taxonomic_level)) {
+#     physeq@tax_table <- physeq@tax_table[, taxonomic_level]
+#   }
+#
+#   data_metacoder <- metacoder::parse_phyloseq(physeq)
+#   data_metacoder$data$taxon_counts <-
+#     metacoder::calc_taxon_abund(data_metacoder, data = "otu_table")
+#   data_metacoder$data$taxon_counts$nb_sequences <-
+#     rowSums(data_metacoder$data$taxon_counts[, -1])
+#
+#   p <- heat_tree(data_metacoder, ...)
+#
+#   return(p)
+# }
 
-  data_metacoder <- metacoder::parse_phyloseq(physeq)
-  data_metacoder$data$taxon_counts <-
-    metacoder::calc_taxon_abund(data_metacoder, data = "otu_table")
-  data_metacoder$data$taxon_counts$nb_sequences <-
-    rowSums(data_metacoder$data$taxon_counts[, -1])
 
-  p <- heat_tree(data_metacoder, ...)
-
-  return(p)
-}
 ################################################################################
 
 ################################################################################
@@ -2512,7 +2516,8 @@ multi_biplot_pq <- function(physeq,
   }
 
   if (!is.null(pairs)) {
-    p <- list()
+    p <- vector("list", nlevels(as.factor(physeq@sam_data[[pairs]])))
+    names(p) <- levels(as.factor(physeq@sam_data[[pairs]]))
     for (c in levels(as.factor(physeq@sam_data[[pairs]]))) {
       new_physeq <-
         subset_samples_pq(physeq, physeq@sam_data[[pairs]] %in% c)
@@ -4048,7 +4053,7 @@ ggscatt_pq <- function(physeq,
     physeq <- clean_pq(rarefy_even_depth(physeq))
   }
 
-  p_list <- list()
+  p_list <- vector("list", length(hill_scales))
   psm_res <- psmelt_samples_pq(physeq, hill_scales = hill_scales)
   for (i in seq_along(hill_scales)) {
     p_list[[i]] <-

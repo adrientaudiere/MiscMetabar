@@ -66,7 +66,7 @@ data_fungi_chimera <-
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[=chimera_detection_vs]{chimera_detection_vs()}}
+\code{\link[=chimera_detection_vs]{chimera_detection_vs()}}, \code{\link[dada2:removeBimeraDenovo]{dada2::removeBimeraDenovo()}}
 }
 \author{
 Adrien Taudière

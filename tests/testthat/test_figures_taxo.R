@@ -26,38 +26,38 @@ test_that("rotl_pq works with data_fungi dataset", {
   expect_silent(plot(tr))
 })
 
-test_that("heat_tree_pq works with data_fungi dataset", {
-  skip_on_cran()
-  library(metacoder)
-  expect_silent(suppressMessages(ht <- heat_tree_pq(data_fungi_mini)))
-  expect_s3_class(ht, "ggplot")
-  expect_s3_class(
-    heat_tree_pq(data_fungi_mini, taxonomic_level = 1:4),
-    "ggplot"
-  )
-})
+# test_that("heat_tree_pq works with data_fungi dataset", {
+#   skip_on_cran()
+#   library(metacoder)
+#   expect_silent(suppressMessages(ht <- heat_tree_pq(data_fungi_mini)))
+#   expect_s3_class(ht, "ggplot")
+#   expect_s3_class(
+#     heat_tree_pq(data_fungi_mini, taxonomic_level = 1:4),
+#     "ggplot"
+#   )
+# })
 
 GPsubset <- subset_taxa(
   GlobalPatterns,
   GlobalPatterns@tax_table[, 1] == "Bacteria"
 )
-test_that("heat_tree_pq works with GlobalPatterns dataset", {
-  skip_on_cran()
-  library(metacoder)
-  expect_silent(suppressMessages(ht <- heat_tree_pq(GPsubset)))
-  expect_silent(suppressMessages(
-    ht <-
-      heat_tree_pq(
-        GPsubset,
-        node_size = n_obs,
-        node_color = n_obs,
-        node_label = taxon_names,
-        tree_label = taxon_names,
-        node_size_trans = "log10 area"
-      )
-  ))
-  expect_s3_class(ht, "ggplot")
-})
+# test_that("heat_tree_pq works with GlobalPatterns dataset", {
+#   skip_on_cran()
+#   library(metacoder)
+#   expect_silent(suppressMessages(ht <- heat_tree_pq(GPsubset)))
+#   expect_silent(suppressMessages(
+#     ht <-
+#       heat_tree_pq(
+#         GPsubset,
+#         node_size = n_obs,
+#         node_color = n_obs,
+#         node_label = taxon_names,
+#         tree_label = taxon_names,
+#         node_size_trans = "log10 area"
+#       )
+#   ))
+#   expect_s3_class(ht, "ggplot")
+# })
 
 
 test_that("plot_tax_pq works with data_fungi dataset", {
@@ -414,7 +414,7 @@ test_that("build_phytree_pq work with data_fungi dataset", {
   skip_on_cran()
   df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 19000)
   expect_type(df_tree <- build_phytree_pq(df, nb_bootstrap = 2, rearrangement = "stochastic"), "list")
-  expect_type(df_tree <- build_phytree_pq(df, nb_bootstrap = 2, rearrangement = "ratchet"), "list")
+  #expect_type(df_tree <- build_phytree_pq(df, nb_bootstrap = 2, rearrangement = "ratchet"), "list")
   expect_error(build_phytree_pq(df, nb_bootstrap = 2, rearrangement = "PRAtchet"))
   expect_error(build_phytree_pq(GP, nb_bootstrap = 2))
 

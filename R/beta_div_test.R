@@ -263,7 +263,7 @@ adonis_rarperm_pq <- function(physeq,
                               quantile_prob = 0.975,
                               sample.size = min(sample_sums(physeq)),
                               ...) {
-  res_perm <- list()
+  res_perm <- vector("list", nperm)
   if (progress_bar) {
     pb <- txtProgressBar(
       min = 0,
@@ -296,7 +296,7 @@ adonis_rarperm_pq <- function(physeq,
       setTxtProgressBar(pb, i)
     }
   }
-  res_adonis <- list()
+  res_adonis <- list("mean" = NULL, "quantile_min" = NULL, "quantile_max" = NULL)
   res_adonis[["mean"]] <-
     apply(array(unlist(res_perm), c(dim(
       as.data.frame(res_perm[[1]])
@@ -486,7 +486,7 @@ plot_LCBD_pq <- function(physeq,
     if (is.null(sam_variables)) {
       return(p_LCBD)
     } else {
-      p_heatmap <- list()
+      p_heatmap <- vector("list", length(sam_variables))
       for (i in seq_len(length(sam_variables))) {
         p_heatmap[[i]] <- ggplot(filter(resLCBD, p.adj < pval)) +
           geom_tile(inherit.aes = FALSE, aes(
@@ -513,7 +513,7 @@ plot_LCBD_pq <- function(physeq,
     if (is.null(sam_variables)) {
       return(p_LCBD)
     } else {
-      p_heatmap <- list()
+      p_heatmap <- vector("list", length(sam_variables))
       for (i in seq_len(length(sam_variables))) {
         p_heatmap[[i]] <- ggplot(resLCBD) +
           geom_tile(inherit.aes = FALSE, aes(
@@ -527,9 +527,9 @@ plot_LCBD_pq <- function(physeq,
       }
 
       p <-
-        p_LCBD + patchwork::wrap_plots(p_heatmap) + patchwork::plot_layout(
-          widths = c(3, 1), guides =
-            "collect"
+        p_LCBD + patchwork::wrap_plots(p_heatmap) +
+        patchwork::plot_layout(
+          widths = c(3, 1), guides = "collect"
         )
       return(p)
     }
@@ -1245,7 +1245,7 @@ var_par_pq <-
     }
 
     if (dbrda_computation) {
-      res_varpart$dbrda_result <- list()
+      res_varpart$dbrda_result <- vector("list", length(list_component))
       for (i in seq_along(list_component)) {
         res_varpart$dbrda_result[[i]] <-
           anova(vegan::dbrda(
@@ -1363,7 +1363,7 @@ var_par_rarperm_pq <-
       dist_physeq <- phyloseq::distance(physeq, method = dist_method)
     }
 
-    res_perm <- list()
+    res_perm <- vector("list", nperm)
     for (i in 1:nperm) {
       res_perm[[i]] <-
         var_par_pq(

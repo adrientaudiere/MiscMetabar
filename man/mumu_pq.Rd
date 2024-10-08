@@ -76,6 +76,9 @@ mumu_pq(data_fungi_sp_known)
 \url{https://github.com/torognes/vsearch}.
 }
 }
+\seealso{
+\code{\link[=lulu_pq]{lulu_pq()}}
+}
 \author{
 Frédéric Mahé
 & Adrien Taudière \email{adrien.taudiere@zaclys.net}

@@ -10,6 +10,7 @@ filter_trim(
   rev = NULL,
   output_fw = paste(getwd(), "/output/filterAndTrim_fwd", sep = ""),
   output_rev = paste(getwd(), "/output/filterAndTrim_rev", sep = ""),
+  return_a_vector = FALSE,
   ...
 )
 }
@@ -25,6 +26,10 @@ a folder "output/filterAndTrim_fwd" in the current working directory.}
 \item{output_rev}{Path to output folder for reverse files. By default,
 this function will create
 a folder "output/filterAndTrim_fwd" in the current working directory.}
+
+\item{return_a_vector}{(logical, default FALSE) If true, the return is
+a vector of path (usefull when used with
+targets::tar_targets(..., format="file"))}
 
 \item{...}{Other parameters passed on to \code{\link[dada2:filterAndTrim]{dada2::filterAndTrim()}} function.}
 }

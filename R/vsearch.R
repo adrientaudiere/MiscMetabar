@@ -508,7 +508,7 @@ vsearch_clustering <- function(physeq = NULL,
 #'   after cleaning using the default parameter of [clean_pq()] function.
 #'
 #' @param ... Other arguments passed on to [chimera_detection_vs()] function
-#' @seealso [chimera_detection_vs()]
+#' @seealso [chimera_detection_vs()], [dada2::removeBimeraDenovo()]
 #' @return
 #'
 #' - I/ a sequences tables if object is of class dada, derep, data.frame or
@@ -645,6 +645,7 @@ chimera_removal_vs <-
 #' @return A list of 3 including non-chimera taxa (`$non_chimera`), chimera taxa
 #'   (`$chimera`) and bordeline taxa (`$borderline`)
 #' @export
+#' @seealso [chimera_removal_vs()], [dada2::removeBimeraDenovo()]
 #'
 #' @examplesIf MiscMetabar::is_vsearch_installed()
 #' \donttest{

@@ -52,7 +52,7 @@ hill_tuckey_pq <- function(
     )
 
   colnames(otu_hill) <- paste0("Hill_", hill_scales)
-  tuk <- list()
+  tuk <- vector("list", length(hill_scales))
   for (i in seq_along(hill_scales)) {
     if (correction_for_sample_size) {
       tuk[[i]] <-
@@ -175,8 +175,8 @@ hill_test_rarperm_pq <- function(physeq,
                                  type = "non-parametrique",
                                  ...) {
   verify_pq(physeq)
-  res_perm <- list()
-  p_perm <- list()
+  res_perm <- list() # no pre-set values because nested structure
+  p_perm <- list() # no pre-set values because nested structure
   if (progress_bar) {
     pb <- txtProgressBar(
       min = 0,
@@ -210,8 +210,8 @@ hill_test_rarperm_pq <- function(physeq,
           hill_scales = hill_scales
         ))
     }
-    p_perm[[i]] <- list()
-    res_perm[[i]] <- list()
+    p_perm[[i]] <- vector("list", length(hill_scales))
+    res_perm[[i]] <- vector("list", length(hill_scales))
     for (j in seq_along(hill_scales)) {
       p_perm[[i]][[j]] <-
         ggstatsplot::ggbetweenstats(psm, !!fact, !!paste0("Hill_", hill_scales[[j]]),
@@ -378,7 +378,7 @@ glmutli_pq <-
     cf <- cf %>% filter(!grepl("Intercept", variable))
 
     if (fitfunction == "lm") {
-      test <- list()
+      test <- vector("list", nrow(top_glmulti))
       R2__h0 <- NULL
       for (i in 1:nrow(top_glmulti)) {
         test[[i]] <- summary(res_glmulti@objects[[i]])
