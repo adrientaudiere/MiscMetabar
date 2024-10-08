@@ -193,12 +193,12 @@ accu_plot <-
       fact_interm <-
         as.factor(unlist(unclass(physeq@sam_data[, fact])[fact]))
 
-      if (!by.fact) {
-        x <- t(physeq@otu_table)
-      } else {
+      if (by.fact) {
         x <- apply(physeq@otu_table, 1, function(x) {
           tapply(x, fact_interm, sum)
         })
+      } else {
+        x <- t(physeq@otu_table)
       }
 
       tot <- rowSums(x)
@@ -232,13 +232,13 @@ accu_plot <-
 
       df$x <- n_max[cond]
 
-      if (!by.fact) {
+      if (by.fact) {
+        df$fact <- df$.id
+      } else {
         df$fact <-
           as.factor(unlist(unclass(physeq@sam_data
           [match(df$.id, sample_names(physeq)), fact])
           [fact]))
-      } else {
-        df$fact <- df$.id
       }
 
       df$ymin <- df$X1 - df$X2 * ci
@@ -418,7 +418,7 @@ accu_plot_balanced_modality <- function(physeq,
             ...
           )
         ))$data[, c(2:4, 6, 7)])
-      plist[1:nrow(res_interm), , i] <- res_interm
+      plist[seq_along(nrow(res_interm)), , i] <- res_interm
     }
     if (progress_bar) {
       setTxtProgressBar(pb, i)
@@ -591,10 +591,10 @@ circle_pq <-
       stop("physeq must be an object of class 'phyloseq'")
     }
 
-    if (!physeq@otu_table@taxa_are_rows) {
-      otu_tab <- t(physeq@otu_table)
-    } else {
+    if (physeq@otu_table@taxa_are_rows) {
       otu_tab <- physeq@otu_table
+    } else {
+      otu_tab <- t(physeq@otu_table)
     }
 
     if (!add_nb_seq) {
@@ -795,10 +795,10 @@ sankey_pq <-
       stop("physeq must be an object of class 'phyloseq'")
     }
 
-    if (!physeq@otu_table@taxa_are_rows) {
-      otu_tab <- t(physeq@otu_table)
-    } else {
+    if (physeq@otu_table@taxa_are_rows) {
       otu_tab <- physeq@otu_table
+    } else {
+      otu_tab <- t(physeq@otu_table)
     }
 
     if (!add_nb_seq) {
@@ -1045,7 +1045,8 @@ venn_pq <-
     table_value <-
       data.frame(
         combinations = as.character(combinations),
-        weights = as.double(weights)
+        weights = as.double(weights),
+        stringsAsFactors = FALSE
       )
 
     venn <- venneuler::venneuler(data_venn > min_nb_seq)
@@ -1132,7 +1133,7 @@ venn_pq <-
         width = 0.75,
         height = 1,
         x = 0.375,
-        y = .5
+        y = 0.5
       )
       vpleg <-
         grid::viewport(
@@ -1686,7 +1687,7 @@ hill_pq <- function(physeq,
         summarize(pos_letters = max(.data[[paste0("Hill_", hill_scales[[i]])]]) + 1) %>%
         inner_join(dt, by = join_by(!!fact))
 
-      if (!kruskal_test | kt_res[[i]]$p.value < 0.05) {
+      if (!kruskal_test || kt_res[[i]]$p.value < 0.05) {
         p_list[[i]] <- p_list[[i]] +
           geom_label(
             data = data_letters,
@@ -1898,7 +1899,8 @@ summary_plot_pq <- function(physeq,
           )
         )
       )
-    )
+    ),
+    stringsAsFactors = FALSE
   )
 
   p <- ggplot() +
@@ -2363,7 +2365,7 @@ biplot_pq <- function(physeq,
       ),
       ...
     ) +
-    geom_bar(stat = "identity", width = .6) +
+    geom_bar(stat = "identity", width = 0.6) +
     annotate(
       "rect",
       xmin = "Samples",
@@ -2426,7 +2428,7 @@ biplot_pq <- function(physeq,
 
   p <- p + coord_flip() +
     theme_minimal() +
-    theme(plot.title = element_text(hjust = .5), axis.ticks = element_blank()) +
+    theme(plot.title = element_text(hjust = 0.5), axis.ticks = element_blank()) +
     scale_fill_manual(values = c(left_fill, right_fill)) +
     scale_color_manual(values = c(left_col, right_col), guide = "none") +
     ylim(
@@ -3904,10 +3906,10 @@ plot_var_part_pq <-
            alpha = 63,
            id.size = 1.2,
            min_prop_pval_signif_dbrda = 0.95) {
-    if (show_dbrda_signif_pval > 1 | show_dbrda_signif_pval < 0) {
+    if (show_dbrda_signif_pval > 1 || show_dbrda_signif_pval < 0) {
       stop("show_dbrda_signif_pval value must be within the range [0-1]")
     }
-    if (min_prop_pval_signif_dbrda > 1 |
+    if (min_prop_pval_signif_dbrda > 1 ||
       min_prop_pval_signif_dbrda < 0) {
       stop("show_dbrda_signif_pval value must be within the range [0-1]")
     }

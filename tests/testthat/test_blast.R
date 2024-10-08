@@ -6,7 +6,7 @@ path_db <- system.file("extdata",
 suppressWarnings(blast_error_or_not <-
   try(system("blastn 2>&1", intern = TRUE), silent = TRUE))
 
-if (class(blast_error_or_not) == "try-error") {
+if (inherits(blast_error_or_not, "try-error")) {
   message(
     "blast_to_phyloseq(), filter_asv_blast(), blast_to_derep(),
           add_blast_info, and blast_pq() can't be tested when

@@ -53,7 +53,9 @@ Package leaps must then be loaded, and this can only be applied to linear models
 with covariates and no interactions. If "d", a simple summary of the candidate set
 is printed, including the number of candidate models.}
 
-\item{crit}{The Information Criterion to be used. Default is the small-sample corrected AIC (aicc). This should be a function that accepts a fitted model as first argument. Other provided functions are the classic AIC, the Bayes IC (bic), and QAIC/QAICc (qaic and qaicc).}
+\item{crit}{The Information Criterion to be used. Default is the small-sample corrected AIC (aicc).
+This should be a function that accepts a fitted model as first argument.
+Other provided functions are the classic AIC, the Bayes IC (bic), and QAIC/QAICc (qaic and qaicc).}
 
 \item{...}{Other arguments passed on to \code{\link[glmulti:glmulti]{glmulti::glmulti()}} function}
 }

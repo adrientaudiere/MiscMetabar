@@ -206,7 +206,7 @@ lulu <- function(otu_table, matchlist, minimum_ratio_type = "min", minimum_ratio
   }
 
   close(log_con)
-  total_abundances <- rowSums(otutable)
+
   curation_table <- cbind(nOTUid = statistics_table$parent_id, otutable)
   statistics_table$curated <- "merged"
   curate_index <- row.names(statistics_table) == statistics_table$parent_id

@@ -231,12 +231,12 @@ count_seq <- function(file_path = NULL, folder_path = NULL, pattern = NULL) {
   } else if (!is.null(file_path) && !is.null(folder_path)) {
     stop("You need to specify either file_path or folder_path param not both!")
   } else if (!is.null(file_path) && is.null(folder_path)) {
-    if (sum(get_file_extension(file_path) %in% "fasta") > 0) {
+    if (sum(get_file_extension(file_path) == "fasta") > 0) {
       seq_nb <- system(paste0("cat ", file_path, " | grep -ce '^>'"),
         intern = TRUE
       )
-    } else if (sum(get_file_extension(file_path) %in% "fastq") > 0) {
-      if (sum(get_file_extension(file_path) %in% "gz") > 0) {
+    } else if (sum(get_file_extension(file_path) == "fastq") > 0) {
+      if (sum(get_file_extension(file_path) == "gz") > 0) {
         seq_nb <- system(paste0("zcat ", file_path, " | grep -ce '^+$'"),
           intern = TRUE
         )
@@ -414,7 +414,7 @@ is_cutadapt_installed <- function(args_before_cutadapt = "source ~/miniconda3/et
   cutadapt_error_or_not <- try(system(paste0("bash ", tempdir(), "/script_cutadapt.sh 2>&1"), intern = TRUE), silent = T)
   unlink(paste0(tempdir(), "/script_cutadapt.sh"))
 
-  return(class(cutadapt_error_or_not) != "try-error")
+  return(!inherits(cutadapt_error_or_not, "try-error"))
 }
 
 #' Test if falco is installed.
@@ -435,9 +435,9 @@ is_cutadapt_installed <- function(args_before_cutadapt = "source ~/miniconda3/et
 #' @author Adrien Taudière
 
 is_falco_installed <- function(path = "falco") {
-  return(class(try(system(paste0(path, " 2>&1"), intern = TRUE),
+  return(!inherits(try(system(paste0(path, " 2>&1"), intern = TRUE),
     silent = TRUE
-  )) != "try-error")
+  ), "try-error"))
 }
 
 #' Test if swarm is installed.
@@ -458,9 +458,9 @@ is_falco_installed <- function(path = "falco") {
 #' @author Adrien Taudière
 
 is_swarm_installed <- function(path = "swarm") {
-  return(class(try(system(paste0(path, " -h 2>&1"), intern = TRUE),
+  return(!inherits(try(system(paste0(path, " -h 2>&1"), intern = TRUE),
     silent = TRUE
-  )) != "try-error")
+  ), "try-error"))
 }
 
 #' Test if vsearch is installed.
@@ -481,9 +481,9 @@ is_swarm_installed <- function(path = "swarm") {
 #' @author Adrien Taudière
 
 is_vsearch_installed <- function(path = "vsearch") {
-  return(class(try(system(paste0(path, " 2>&1"), intern = TRUE),
+  return(!inherits(try(system(paste0(path, " 2>&1"), intern = TRUE),
     silent = TRUE
-  )) != "try-error")
+  ), "try-error"))
 }
 
 #' Test if mumu is installed.
@@ -504,9 +504,9 @@ is_vsearch_installed <- function(path = "vsearch") {
 #' @author Adrien Taudière
 
 is_mumu_installed <- function(path = "mumu") {
-  return(class(try(system(paste0(path, " 2>&1"), intern = TRUE),
+  return(!inherits(try(system(paste0(path, " 2>&1"), intern = TRUE),
     silent = TRUE
-  )) != "try-error")
+  ), "try-error"))
 }
 
 
@@ -528,8 +528,8 @@ is_mumu_installed <- function(path = "mumu") {
 #' @author Adrien Taudière
 
 is_krona_installed <- function(path = "ktImportKrona") {
-  return(class(try(system(paste0(path, " 2>&1"), intern = TRUE),
+  return(inherits(try(system(paste0(path, " 2>&1"), intern = TRUE),
     silent = TRUE
-  )) != "try-error")
+  ), "try-error"))
 }
 ################################################################################

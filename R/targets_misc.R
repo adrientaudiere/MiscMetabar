@@ -156,8 +156,8 @@ rename_samples_otu_table <- function(physeq, names_of_samples) {
 filter_trim <-
   function(fw = NULL,
            rev = NULL,
-           output_fw = paste(getwd(), "/output/filterAndTrim_fwd", sep = ""),
-           output_rev = paste(getwd(), "/output/filterAndTrim_rev", sep = ""),
+           output_fw = file.path(paste(getwd(), "/output/filterAndTrim_fwd", sep = "")),
+           output_rev = file.path(paste(getwd(), "/output/filterAndTrim_rev", sep = "")),
            return_a_vector = FALSE,
            ...) {
     if (length(fw) == 1) {

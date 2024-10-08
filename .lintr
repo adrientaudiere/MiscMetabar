@@ -1,0 +1,18 @@
+linters: linters_with_tags(
+      tags = c("default", "common_mistakes", "package_development", "consistency", "correctness", "robustness"),
+      undesirable_operator_linter = NULL,
+      line_length_linter(120),
+      keyword_quote_linter = NULL,
+      condition_message_linter = NULL,
+      paste_linter = NULL,
+      implicit_integer_linter = NULL,
+      packages = "lintr",
+      exclude_tags = "deprecated"
+    )
+encoding: "UTF-8"
+
+exclusions: list(
+    # excluded from all lints:
+    "tests/testthat.R"
+    )
+

@@ -107,7 +107,9 @@ vs_search_global <- function(physeq,
     "target"
   )
 
-  if (!keep_temporary_files) {
+  if (keep_temporary_files) {
+    message(paste0("Temporary files are located at ", tempdir()))
+  } else {
     if (file.exists(paste0(tempdir(), "temp.fasta"))) {
       unlink(paste0(tempdir(), "temp.fasta"))
     }
@@ -117,8 +119,6 @@ vs_search_global <- function(physeq,
     if (file.exists(paste0(tempdir(), "seq2search.fasta"))) {
       unlink(paste0(tempdir(), "seq2search.fasta"))
     }
-  } else {
-    message(paste0("Temporary files are located at ", tempdir()))
   }
 
   return(invisible(pack_clusts))
@@ -726,7 +726,9 @@ chimera_detection_vs <- function(seq2search,
   borderline_AAStringSet <-
     Biostrings::readAAStringSet(paste0(tempdir(), "/", "borderline.fasta"))
 
-  if (!keep_temporary_files) {
+  if (keep_temporary_files) {
+    message(paste0("Temporary files are located at ", tempdir()))
+  } else {
     if (file.exists(paste0(tempdir(), "temp.fasta"))) {
       unlink(paste0(tempdir(), "temp.fasta"))
     }
@@ -736,8 +738,6 @@ chimera_detection_vs <- function(seq2search,
     if (file.exists(paste0(tempdir(), "chimeras.fasta"))) {
       unlink(paste0(tempdir(), "chimeras.fasta"))
     }
-  } else {
-    message(paste0("Temporary files are located at ", tempdir()))
   }
 
   return(

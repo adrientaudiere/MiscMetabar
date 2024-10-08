@@ -57,7 +57,6 @@ See also the [tutorial](https://microbiome.github.io/tutorials/Alphadiversity.ht
 
 ```{r}
 library("MicrobiotaProcess")
-library("ggh4x")
 clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height))) %>%
   as.MPSE() %>%
   mp_cal_alpha() %>%

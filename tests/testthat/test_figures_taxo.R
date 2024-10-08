@@ -414,7 +414,7 @@ test_that("build_phytree_pq work with data_fungi dataset", {
   skip_on_cran()
   df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 19000)
   expect_type(df_tree <- build_phytree_pq(df, nb_bootstrap = 2, rearrangement = "stochastic"), "list")
-  #expect_type(df_tree <- build_phytree_pq(df, nb_bootstrap = 2, rearrangement = "ratchet"), "list")
+  # expect_type(df_tree <- build_phytree_pq(df, nb_bootstrap = 2, rearrangement = "ratchet"), "list")
   expect_error(build_phytree_pq(df, nb_bootstrap = 2, rearrangement = "PRAtchet"))
   expect_error(build_phytree_pq(GP, nb_bootstrap = 2))
 

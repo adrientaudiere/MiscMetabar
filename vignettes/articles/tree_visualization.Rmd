@@ -29,7 +29,6 @@ quiet <- function(x) {
 library("tidytree") # first load to disable warning about phylo class
 library("MiscMetabar")
 library("phangorn")
-
 data(data_fungi)
 df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 9000)
 df_tree <- quiet(build_phytree_pq(df, nb_bootstrap = 5))

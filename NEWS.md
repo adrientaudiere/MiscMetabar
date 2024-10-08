@@ -1,5 +1,10 @@
 
-# MiscMetabar 0.10.1 (in development)
+# MiscMetabar 0.10.2 (in development)
+
+- Improve code thanks to {lintr} package
+# MiscMetabar 0.10.1
+
+> CRAN 2024-09-10
 
 - Delete function `heat_tree_pq()` because {metacoder} package is archived from CRAN.
 

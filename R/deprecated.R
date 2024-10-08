@@ -7,8 +7,8 @@
 #' @name MiscMetabar-deprecated
 #' @param ... Parameters to be passed on to the modern version of the function
 #' @return Depend on the functions.
-#' @export  physeq_graph_test adonis_phyloseq clean_physeq lulu_phyloseq otu_circle biplot_physeq read_phyloseq write_phyloseq sankey_phyloseq summary_plot_phyloseq plot_deseq2_phyloseq plot_edgeR_phyloseq venn_phyloseq ggVenn_phyloseq hill_tuckey_phyloseq hill_phyloseq 
-#' @aliases physeq_graph_test adonis_phyloseq clean_physeq lulu_phyloseq otu_circle biplot_physeq read_phyloseq write_phyloseq sankey_phyloseq summary_plot_phyloseq plot_deseq2_phyloseq plot_edgeR_phyloseq venn_phyloseq ggVenn_phyloseq hill_tuckey_phyloseq hill_phyloseq 
+#' @export  physeq_graph_test adonis_phyloseq clean_physeq lulu_phyloseq otu_circle biplot_physeq read_phyloseq write_phyloseq sankey_phyloseq summary_plot_phyloseq plot_deseq2_phyloseq plot_edgeR_phyloseq venn_phyloseq ggVenn_phyloseq hill_tuckey_phyloseq hill_phyloseq
+#' @aliases physeq_graph_test adonis_phyloseq clean_physeq lulu_phyloseq otu_circle biplot_physeq read_phyloseq write_phyloseq sankey_phyloseq summary_plot_phyloseq plot_deseq2_phyloseq plot_edgeR_phyloseq venn_phyloseq ggVenn_phyloseq hill_tuckey_phyloseq hill_phyloseq
 #' @section Details:
 #' \tabular{rl}{
 #'   [graph_test_pq] \tab now a synonym for `physeq_graph_test`\cr

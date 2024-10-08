@@ -75,9 +75,7 @@ graph_test_pq <- function(physeq,
     nperm = nperm,
     ...
   )
-  if (!return_plot) {
-    return(res_graph_test)
-  } else {
+  if (return_plot) {
     p <- phyloseqGraphTest::plot_test_network(res_graph_test) +
       labs(
         title = title,
@@ -90,6 +88,8 @@ graph_test_pq <- function(physeq,
         )
       )
     return(p)
+  } else {
+    return(res_graph_test)
   }
 }
 ################################################################################
@@ -831,11 +831,8 @@ signif_ancombc <- function(ancombc_res,
   clnames <- colnames(signif_ancombc_res)
 
   name_modality <-
-    gsub(
-      "passed_ss", "",
-      clnames[grepl("passed_ss", clnames) &
-        !grepl("Intercept", clnames)]
-    )
+    gsub("passed_ss", "", clnames[grepl("passed_ss", clnames) &
+      !grepl("Intercept", clnames)])
 
   if (filter_passed) {
     signif_ancombc_res <- signif_ancombc_res %>%
@@ -1354,13 +1351,6 @@ var_par_rarperm_pq <-
         width = 50,
         char = "="
       )
-    }
-
-    if (dist_method %in% c("robust.aitchison", "aitchison")) {
-      dist_physeq <-
-        vegdist(as(otu_table(physeq, taxa_are_rows = FALSE), "matrix"), method = dist_method)
-    } else {
-      dist_physeq <- phyloseq::distance(physeq, method = dist_method)
     }
 
     res_perm <- vector("list", nperm)
