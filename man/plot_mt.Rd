@@ -29,7 +29,6 @@ Graphical representation of mt test.
 }
 \examples{
 \donttest{
-# Filter samples that don't have Time
 data_fungi_mini2 <- subset_samples(data_fungi_mini, !is.na(Time))
 res <- mt(data_fungi_mini2, "Time", method = "fdr", test = "f", B = 300)
 plot_mt(res)

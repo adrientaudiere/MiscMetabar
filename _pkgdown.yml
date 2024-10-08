@@ -172,7 +172,7 @@ reference:
 - subtitle: Taxonomy
   contents:
   - ggaluv_pq
-  - heat_tree_pq
+ #- heat_tree_pq
   - krona
   - merge_krona
   - multitax_bar_pq
@@ -271,7 +271,7 @@ reference:
   - lulu_phyloseq
   - otu_circle
   - physeq_graph_test
-  - physeq_heat_tree
+#  - physeq_heat_tree
   - plot_deseq2_phyloseq
   - plot_edgeR_phyloseq
   - read_phyloseq

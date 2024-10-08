@@ -72,6 +72,9 @@ chimera_detection_vs(
 }
 \dontshow{\}) # examplesIf}
 }
+\seealso{
+\code{\link[=chimera_removal_vs]{chimera_removal_vs()}}, \code{\link[dada2:removeBimeraDenovo]{dada2::removeBimeraDenovo()}}
+}
 \author{
 Adrien Taudière
 }

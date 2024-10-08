@@ -18,7 +18,6 @@
 \alias{ggVenn_phyloseq}
 \alias{hill_tuckey_phyloseq}
 \alias{hill_phyloseq}
-\alias{physeq_heat_tree}
 \title{Deprecated function(s) in the MiscMetabar package}
 \usage{
 physeq_graph_test(...)
@@ -53,7 +52,7 @@ removed.
 \link{ggvenn_pq} \tab now a synonym for \code{ggVenn_phyloseq}\cr
 \link{hill_tuckey_pq} \tab now a synonym for \code{hill_tuckey_phyloseq}\cr
 \link{hill_pq} \tab now a synonym for \code{hill_phyloseq}\cr
-\link{heat_tree_pq} \tab now a synonym for \code{physeq_heat_tree}\cr
+heat_tree_pq \tab now a synonym for \code{physeq_heat_tree}\cr
 \link{compare_pairs_pq} \tab now a synonym for \code{multiple_share_bisamples}\cr
 }
 }

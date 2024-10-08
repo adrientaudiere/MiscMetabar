@@ -15,7 +15,7 @@
 #' @author Adrien Taudière
 #' @examples
 #' \donttest{
-#' # Filter samples that don't have Time
+# #'  Filter samples that don't have Time
 #' data_fungi_mini2 <- subset_samples(data_fungi_mini, !is.na(Time))
 #' res <- mt(data_fungi_mini2, "Time", method = "fdr", test = "f", B = 300)
 #' plot_mt(res)
@@ -488,8 +488,8 @@ accu_plot_balanced_modality <- function(physeq,
 #'
 #' summary(val_threshold)
 #'
-#' # Plot the number of sequences needed to accumulate 0.95% of ASV in 50%, 75%
-#' # and 100% of samples
+#' ##'  Plot the number of sequences needed to accumulate 0.95% of ASV in 50%, 75%
+#' ##'  and 100% of samples
 #' p + geom_vline(xintercept = quantile(val_threshold, probs = c(0.50, 0.75, 1)))
 #' }
 #' @export
@@ -2098,79 +2098,81 @@ rotl_pq <- function(physeq,
 ################################################################################
 
 ################################################################################
-#' Heat tree from `metacoder` package using `tax_table` slot
-#' @description
-#'
-#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
-#'
-#' Note that the number of ASV is store under the name `n_obs`
-#' and the number of sequences under the name `nb_sequences`
-#'
-#' @inheritParams clean_pq
-#' @param taxonomic_level (default: NULL): a vector of selected
-#' taxonomic level using
-#'   their column numbers (e.g. taxonomic_level = 1:7)
-#' @param ... Arguments passed on to \code{\link[metacoder]{heat_tree}}
-#'
-#' @return A plot
-#' @export
-#' @author Adrien Taudière
-#'
-#' @examples
-#' \donttest{
-#' if (requireNamespace("metacoder")) {
-#'   library("metacoder")
-#'   data("GlobalPatterns", package = "phyloseq")
-#'
-#'   GPsubset <- subset_taxa(
-#'     GlobalPatterns,
-#'     GlobalPatterns@tax_table[, 1] == "Bacteria"
-#'   )
-#'
-#'   GPsubset <- subset_taxa(
-#'     GPsubset,
-#'     rowSums(GPsubset@otu_table) > 5000
-#'   )
-#'
-#'   GPsubset <- subset_taxa(
-#'     GPsubset,
-#'     rowSums(is.na(GPsubset@tax_table)) == 0
-#'   )
-#'
-#'   heat_tree_pq(GPsubset,
-#'     node_size = n_obs,
-#'     node_color = n_obs,
-#'     node_label = taxon_names,
-#'     tree_label = taxon_names,
-#'     node_size_trans = "log10 area"
-#'   )
-#'
-#'   heat_tree_pq(GPsubset,
-#'     node_size = nb_sequences,
-#'     node_color = n_obs,
-#'     node_label = taxon_names,
-#'     tree_label = taxon_names,
-#'     node_size_trans = "log10 area"
-#'   )
-#' }
-#' }
-heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
-  requireNamespace("metacoder", quietly = TRUE)
-  if (!is.null(taxonomic_level)) {
-    physeq@tax_table <- physeq@tax_table[, taxonomic_level]
-  }
+# #'  Heat tree from `metacoder` package using `tax_table` slot
+# #'  @description
+# #'
+# #'  <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+# #'  <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+# #'
+# #'  Note that the number of ASV is store under the name `n_obs`
+# #'  and the number of sequences under the name `nb_sequences`
+# #'
+# #'  @inheritParams clean_pq
+# #'  @param taxonomic_level (default: NULL): a vector of selected
+# #'  taxonomic level using
+# #'    their column numbers (e.g. taxonomic_level = 1:7)
+# #'  @param ... Arguments passed on to \code{\link[metacoder]{heat_tree}}
+# #'
+# #'  @return A plot
+# #'  @export
+# #'  @author Adrien Taudière
+# #'
+# #'  @examples
+# #'  \donttest{
+# #'  if (requireNamespace("metacoder")) {
+# #'    library("metacoder")
+# #'    data("GlobalPatterns", package = "phyloseq")
+# #'
+# #'    GPsubset <- subset_taxa(
+# #'      GlobalPatterns,
+# #'      GlobalPatterns@tax_table[, 1] == "Bacteria"
+# #'    )
+# #'
+# #'    GPsubset <- subset_taxa(
+# #'      GPsubset,
+# #'      rowSums(GPsubset@otu_table) > 5000
+# #'    )
+# #'
+# #'    GPsubset <- subset_taxa(
+# #'      GPsubset,
+# #'      rowSums(is.na(GPsubset@tax_table)) == 0
+# #'    )
+# #'
+# #'    heat_tree_pq(GPsubset,
+# #'      node_size = n_obs,
+# #'      node_color = n_obs,
+# #'      node_label = taxon_names,
+# #'      tree_label = taxon_names,
+# #'      node_size_trans = "log10 area"
+# #'    )
+# #'
+# #'    heat_tree_pq(GPsubset,
+# #'      node_size = nb_sequences,
+# #'      node_color = n_obs,
+# #'      node_label = taxon_names,
+# #'      tree_label = taxon_names,
+# #'      node_size_trans = "log10 area"
+# #'    )
+# #'  }
+# #'  }
+# heat_tree_pq <- function(physeq, taxonomic_level = NULL, ...) {
+#   requireNamespace("metacoder", quietly = TRUE)
+#   if (!is.null(taxonomic_level)) {
+#     physeq@tax_table <- physeq@tax_table[, taxonomic_level]
+#   }
+#
+#   data_metacoder <- metacoder::parse_phyloseq(physeq)
+#   data_metacoder$data$taxon_counts <-
+#     metacoder::calc_taxon_abund(data_metacoder, data = "otu_table")
+#   data_metacoder$data$taxon_counts$nb_sequences <-
+#     rowSums(data_metacoder$data$taxon_counts[, -1])
+#
+#   p <- heat_tree(data_metacoder, ...)
+#
+#   return(p)
+# }
 
-  data_metacoder <- metacoder::parse_phyloseq(physeq)
-  data_metacoder$data$taxon_counts <-
-    metacoder::calc_taxon_abund(data_metacoder, data = "otu_table")
-  data_metacoder$data$taxon_counts$nb_sequences <-
-    rowSums(data_metacoder$data$taxon_counts[, -1])
 
-  p <- heat_tree(data_metacoder, ...)
-
-  return(p)
-}
 ################################################################################
 
 ################################################################################

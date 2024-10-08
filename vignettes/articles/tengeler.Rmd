@@ -72,14 +72,15 @@ accu_plot(
 # Explore taxonomy
 
 ```{r}
-library(metacoder)
-heat_tree_pq(ten,
-  node_size = n_obs,
-  node_color = nb_sequences,
-  node_label = taxon_names,
-  tree_label = taxon_names,
-  node_size_trans = "log10 area"
-)
+# library(metacoder)
+# heat_tree_pq(
+#   ten,
+#   node_size = n_obs,
+#   node_color = nb_sequences,
+#   node_label = taxon_names,
+#   tree_label = taxon_names,
+#   node_size_trans = "log10 area"
+# )
 ```
 
 ```{r}
