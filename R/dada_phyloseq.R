@@ -1899,7 +1899,7 @@ plot_guild_pq <-
     guilds <- guilds[guilds$Var1 != "", ]
 
     # Number of sequences per guild
-    nb_seq_by_guild <- c()
+    nb_seq_by_guild <- vector("integer", length(guilds$Var1))
     for (i in seq(1, length(guilds$Var1))) {
       nb_seq_by_guild[i] <-
         sum(taxa_sums(physeq@otu_table)[grepl(
@@ -2893,7 +2893,7 @@ rarefy_sample_count_by_modality <-
     mod <- as.factor(physeq@sam_data[[fact]])
     n_mod <- table(mod)
     samples_names <- sample_names(physeq)
-    samp_to_keep <- c()
+    samp_to_keep <- NULL
     for (modality in levels(mod)) {
       vec_samp_mod <- c(as.numeric(grep(modality, mod)))
 
