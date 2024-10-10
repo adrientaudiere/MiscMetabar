@@ -27,7 +27,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.10.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,7 +56,7 @@
     <li><a class="dropdown-item" href="../articles/fastq_quality_check.html">Fastq quality check</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Examples with published dataset</h6></li>
-    <li><a class="dropdown-item" href="../articles/tengeler.html">Tengeler</a></li>
+    <li><a class="dropdown-item" href="../articles/tengeler.html">Tengeler dataset</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>R ecosystem for metabarcoding</h6></li>
     <li><a class="dropdown-item" href="../articles/states_of_fields_in_R.html">Metabarcoding with R</a></li>
@@ -140,13 +140,13 @@ changing environmental conditions. This is the goal of the function
 <span><span class="co">#&gt; Partitioning sequences by 5-mer similarity:</span></span>
 <span><span class="co">#&gt; ================================================================================</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Time difference of 0.18 secs</span></span>
+<span><span class="co">#&gt; Time difference of 0.17 secs</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Sorting by relatedness within 651 groups:</span></span>
 <span><span class="co">#&gt; Clustering sequences by 9-mer similarity:</span></span>
 <span><span class="co">#&gt; ================================================================================</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Time difference of 1.75 secs</span></span>
+<span><span class="co">#&gt; Time difference of 1.62 secs</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Clusters via relatedness sorting: 100% (0% exclusively)</span></span>
 <span><span class="co">#&gt; Clusters via rare 5-mers: 100% (0% exclusively)</span></span>
@@ -228,15 +228,15 @@ ASVs/OTUs using LULU.</p>
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] MiscMetabar_0.9.4 purrr_1.0.2       dplyr_1.1.4       dada2_1.32.0     </span></span>
-<span><span class="co">#&gt; [5] Rcpp_1.0.13       ggplot2_3.5.1     phyloseq_1.48.0  </span></span>
+<span><span class="co">#&gt; [1] MiscMetabar_0.10.2 purrr_1.0.2        dplyr_1.1.4        dada2_1.32.0      </span></span>
+<span><span class="co">#&gt; [5] Rcpp_1.0.13        ggplot2_3.5.1      phyloseq_1.48.0   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;   [1] DBI_1.2.3                   bitops_1.0-8               </span></span>
+<span><span class="co">#&gt;   [1] DBI_1.2.3                   bitops_1.0-9               </span></span>
 <span><span class="co">#&gt;   [3] pbapply_1.7-2               deldir_2.0-4               </span></span>
 <span><span class="co">#&gt;   [5] permute_0.9-7               rlang_1.1.4                </span></span>
 <span><span class="co">#&gt;   [7] magrittr_2.0.3              ade4_1.7-22                </span></span>
-<span><span class="co">#&gt;   [9] matrixStats_1.3.0           compiler_4.4.1             </span></span>
+<span><span class="co">#&gt;   [9] matrixStats_1.4.1           compiler_4.4.1             </span></span>
 <span><span class="co">#&gt;  [11] mgcv_1.9-1                  png_0.1-8                  </span></span>
 <span><span class="co">#&gt;  [13] systemfonts_1.1.0           vctrs_0.6.5                </span></span>
 <span><span class="co">#&gt;  [15] reshape2_1.4.4              stringr_1.5.1              </span></span>
@@ -245,7 +245,7 @@ ASVs/OTUs using LULU.</p>
 <span><span class="co">#&gt;  [21] XVector_0.44.0              labeling_0.4.3             </span></span>
 <span><span class="co">#&gt;  [23] utf8_1.2.4                  Rsamtools_2.20.0           </span></span>
 <span><span class="co">#&gt;  [25] rmarkdown_2.28              UCSC.utils_1.0.0           </span></span>
-<span><span class="co">#&gt;  [27] ragg_1.3.3                  xfun_0.47                  </span></span>
+<span><span class="co">#&gt;  [27] ragg_1.3.3                  xfun_0.48                  </span></span>
 <span><span class="co">#&gt;  [29] zlibbioc_1.50.0             cachem_1.1.0               </span></span>
 <span><span class="co">#&gt;  [31] GenomeInfoDb_1.40.1         jsonlite_1.8.9             </span></span>
 <span><span class="co">#&gt;  [33] biomformat_1.32.0           highr_0.11                 </span></span>
@@ -260,7 +260,7 @@ ASVs/OTUs using LULU.</p>
 <span><span class="co">#&gt;  [51] DECIPHER_3.0.0              IRanges_2.38.1             </span></span>
 <span><span class="co">#&gt;  [53] Matrix_1.7-0                splines_4.4.1              </span></span>
 <span><span class="co">#&gt;  [55] igraph_2.0.3                tidyselect_1.2.1           </span></span>
-<span><span class="co">#&gt;  [57] rstudioapi_0.16.0           abind_1.4-5                </span></span>
+<span><span class="co">#&gt;  [57] rstudioapi_0.16.0           abind_1.4-8                </span></span>
 <span><span class="co">#&gt;  [59] yaml_2.3.10                 vegan_2.6-8                </span></span>
 <span><span class="co">#&gt;  [61] codetools_0.2-20            hwriter_1.3.2.1            </span></span>
 <span><span class="co">#&gt;  [63] lattice_0.22-6              tibble_3.2.1               </span></span>
@@ -278,14 +278,14 @@ ASVs/OTUs using LULU.</p>
 <span><span class="co">#&gt;  [87] fs_1.6.4                    rhdf5_2.48.0               </span></span>
 <span><span class="co">#&gt;  [89] grid_4.4.1                  ape_5.8                    </span></span>
 <span><span class="co">#&gt;  [91] latticeExtra_0.6-30         colorspace_2.1-1           </span></span>
-<span><span class="co">#&gt;  [93] nlme_3.1-165                GenomeInfoDbData_1.2.12    </span></span>
+<span><span class="co">#&gt;  [93] nlme_3.1-166                GenomeInfoDbData_1.2.12    </span></span>
 <span><span class="co">#&gt;  [95] cli_3.6.3                   textshaping_0.4.0          </span></span>
 <span><span class="co">#&gt;  [97] fansi_1.0.6                 S4Arrays_1.4.1             </span></span>
 <span><span class="co">#&gt;  [99] gtable_0.3.5                sass_0.4.9                 </span></span>
 <span><span class="co">#&gt; [101] digest_0.6.37               BiocGenerics_0.50.0        </span></span>
 <span><span class="co">#&gt; [103] SparseArray_1.4.8           farver_2.1.2               </span></span>
 <span><span class="co">#&gt; [105] htmlwidgets_1.6.4           htmltools_0.5.8.1          </span></span>
-<span><span class="co">#&gt; [107] pkgdown_2.1.0               multtest_2.60.0            </span></span>
+<span><span class="co">#&gt; [107] pkgdown_2.1.1               multtest_2.60.0            </span></span>
 <span><span class="co">#&gt; [109] lifecycle_1.0.4             httr_1.4.7                 </span></span>
 <span><span class="co">#&gt; [111] MASS_7.3-61</span></span></code></pre></div>
 </div>
@@ -372,7 +372,7 @@ Design to Results.”</span> <em>Molecular Ecology</em> 31 (10): 2769–95.
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
