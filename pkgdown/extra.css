@@ -43,3 +43,11 @@
         border-radius: 12px;
         padding: 6px;
 }
+
+.text-muted {
+  color: #0d4b7e !important;
+}
+
+.aa-suggestions {
+  color: #faefd1 !important
+}
