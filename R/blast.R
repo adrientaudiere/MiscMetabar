@@ -115,12 +115,12 @@ blast_to_phyloseq <- function(physeq,
     blast_tab_OK <- FALSE
   }
 
-  if (!keep_temporary_files) {
+  if (keep_temporary_files) {
+    message(paste0("Temporary files are located at ", tempdir()))
+  } else {
     unlink(paste0(tempdir(), "/", "blast_result.txt"))
     unlink(list.files(tempdir(), pattern = "dbase"))
     unlink(paste0(tempdir(), "/", "db.fasta"))
-  } else {
-    message(paste0("Temporary files are located at ", tempdir()))
   }
 
   if (!blast_tab_OK) {
@@ -292,12 +292,12 @@ blast_pq <- function(physeq,
     blast_tab_OK <- FALSE
   }
 
-  if (!keep_temporary_files) {
+  if (keep_temporary_files) {
+    message(paste0("Temporary files are located at ", tempdir()))
+  } else {
     unlink(paste0(tempdir(), "/", "blast_result.txt"))
     unlink(list.files(tempdir(), pattern = "dbase"))
     unlink(paste0(tempdir(), "/", "db.fasta"))
-  } else {
-    message(paste0("Temporary files are located at ", tempdir()))
   }
 
   if (!blast_tab_OK) {
@@ -542,12 +542,12 @@ blast_to_derep <- function(derep,
     blast_tab_OK <- FALSE
   }
 
-  if (!keep_temporary_files) {
+  if (keep_temporary_files) {
+    message(paste0("Temporary files are located at ", tempdir()))
+  } else {
     unlink(paste0(tempdir(), "/", "blast_result.txt"))
     unlink(list.files(tempdir(), pattern = "dbase"))
     unlink(paste0(tempdir(), "/", "db.fasta"))
-  } else {
-    message(paste0("Temporary files are located at ", tempdir()))
   }
 
   if (!blast_tab_OK) {

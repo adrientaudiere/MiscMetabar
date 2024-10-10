@@ -302,7 +302,9 @@ hill_test_rarperm_pq <- function(physeq,
 #'   Package leaps must then be loaded, and this can only be applied to linear models
 #'   with covariates and no interactions. If "d", a simple summary of the candidate set
 #'   is printed, including the number of candidate models.
-#' @param crit The Information Criterion to be used. Default is the small-sample corrected AIC (aicc). This should be a function that accepts a fitted model as first argument. Other provided functions are the classic AIC, the Bayes IC (bic), and QAIC/QAICc (qaic and qaicc).
+#' @param crit The Information Criterion to be used. Default is the small-sample corrected AIC (aicc).
+#'   This should be a function that accepts a fitted model as first argument.
+#'   Other provided functions are the classic AIC, the Bayes IC (bic), and QAIC/QAICc (qaic and qaicc).
 #' @param ... Other arguments passed on to [glmulti::glmulti()] function
 #'
 #' @return A data.frame summarizing the glmulti results with columns
@@ -380,7 +382,7 @@ glmutli_pq <-
     if (fitfunction == "lm") {
       test <- vector("list", nrow(top_glmulti))
       R2__h0 <- NULL
-      for (i in 1:nrow(top_glmulti)) {
+      for (i in seq_along(nrow(top_glmulti))) {
         test[[i]] <- summary(res_glmulti@objects[[i]])
         R2__h0[i] <- test[[i]]$adj.r.squared
       }

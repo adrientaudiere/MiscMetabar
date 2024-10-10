@@ -2,7 +2,7 @@
 title: "Examples with published dataset: Tengeler"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{tengeler}
+  %\VignetteIndexEntry{Examples with published dataset: Tengeler}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -108,24 +108,26 @@ ggvenn_pq(clean_pq(ten, force_taxa_as_columns = TRUE),
 
 ```{r}
 ten_control <- clean_pq(subset_samples(ten, patient_status == "Control"))
-p_control <- heat_tree_pq(ten_control,
-  node_size = n_obs,
-  node_color = nb_sequences,
-  node_label = taxon_names,
-  tree_label = taxon_names,
-  node_size_trans = "log10 area"
-)
+# p_control <- heat_tree_pq(
+#   ten_control,
+#   node_size = n_obs,
+#   node_color = nb_sequences,
+#   node_label = taxon_names,
+#   tree_label = taxon_names,
+#   node_size_trans = "log10 area"
+# )
 
-ten_ADHD <- clean_pq(subset_samples(ten, patient_status == "ADHD"))
-p_ADHD <- heat_tree_pq(ten_ADHD,
-  node_size = n_obs,
-  node_color = nb_sequences,
-  node_label = taxon_names,
-  tree_label = taxon_names,
-  node_size_trans = "log10 area"
-)
-
-p_control + ggtitle("Control") + p_ADHD + ggtitle("ADHD")
+# ten_ADHD <- clean_pq(subset_samples(ten, patient_status == "ADHD"))
+# p_ADHD <- heat_tree_pq(
+#   ten_ADHD,
+#   node_size = n_obs,
+#   node_color = nb_sequences,
+#   node_label = taxon_names,
+#   tree_label = taxon_names,
+#   node_size_trans = "log10 area"
+# )
+#
+# p_control + ggtitle("Control") + p_ADHD + ggtitle("ADHD")
 ```
 
 

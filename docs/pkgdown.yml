@@ -1,5 +1,5 @@
 pandoc: '3.4'
-pkgdown: 2.1.0
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   articles/alpha-div: alpha-div.html
@@ -14,7 +14,7 @@ articles:
   articles/states_of_fields_in_R: states_of_fields_in_R.html
   articles/tengeler: tengeler.html
   articles/tree_visualization: tree_visualization.html
-last_built: 2024-10-02T13:44Z
+last_built: 2024-10-08T19:39Z
 urls:
   reference: https://adrientaudiere.github.io/MiscMetabar/reference
   article: https://adrientaudiere.github.io/MiscMetabar/articles

@@ -13,7 +13,7 @@ Graphical representation of mt test."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.10.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,7 +40,7 @@ Graphical representation of mt test."></head><body>
     <li><a class="dropdown-item" href="../articles/fastq_quality_check.html">Fastq quality check</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Examples with published dataset</h6></li>
-    <li><a class="dropdown-item" href="../articles/tengeler.html">Tengeler</a></li>
+    <li><a class="dropdown-item" href="../articles/tengeler.html">Tengeler dataset</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>R ecosystem for metabarcoding</h6></li>
     <li><a class="dropdown-item" href="../articles/states_of_fields_in_R.html">Metabarcoding with R</a></li>
@@ -113,7 +113,6 @@ Graphical representation of mt test."></head><body>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="co"># Filter samples that don't have Time</span></span></span>
 <span class="r-in"><span><span class="va">data_fungi_mini2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html" class="external-link">subset_samples</a></span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Time</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/mt-methods.html" class="external-link">mt</a></span><span class="op">(</span><span class="va">data_fungi_mini2</span>, <span class="st">"Time"</span>, method <span class="op">=</span> <span class="st">"fdr"</span>, test <span class="op">=</span> <span class="st">"f"</span>, B <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> B=300</span>
@@ -150,7 +149,7 @@ Graphical representation of mt test."></head><body>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>

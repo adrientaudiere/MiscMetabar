@@ -38,7 +38,6 @@ For developers, I also wrote a vignette describing som [rules of codes](https://
 ```{r example}
 library("MiscMetabar")
 library("phyloseq")
-library("magrittr")
 data("data_fungi")
 summary_plot_pq(data_fungi)
 ```

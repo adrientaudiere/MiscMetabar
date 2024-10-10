@@ -35,7 +35,7 @@ navbar:
       href: articles/fastq_quality_check.html
     - text: -------
     - text: Examples with published dataset
-    - text: Tengeler
+    - text: Tengeler dataset
       href: articles/tengeler.html
     - text: -------
     - text: "R ecosystem for metabarcoding"
@@ -56,7 +56,7 @@ reference:
 
 - title: Transform phyloseq object
 - subtitle: Taxonomy
-  contents: 
+  contents:
   - add_new_taxonomy_pq
   - add_blast_info
   - blast_to_phyloseq
@@ -64,35 +64,35 @@ reference:
   - blast_to_derep
   - filter_asv_blast
 
-- subtitle: Function to add information from taxonomy  
-  contents: 
+- subtitle: Function to add information from taxonomy
+  contents:
   - add_funguild_info
   - funguild_assign
   - get_funguild_db
 
 - subtitle: Transform OTU table only
-  contents: 
+  contents:
   - as_binary_otu_table
   - normalize_prop_pq
   - taxa_as_rows
   - taxa_as_columns
 
 - subtitle: Subset/merge taxa
-  contents: 
+  contents:
   - subset_taxa_pq
   - subset_taxa_tax_control
   - select_taxa
   - merge_taxa_vec
 
 - subtitle: Subset/merge samples
-  contents: 
+  contents:
   - merge_samples2
   - rarefy_sample_count_by_modality
-  - select_one_sample 
-  - subset_samples_pq 
+  - select_one_sample
+  - subset_samples_pq
 
 - subtitle: (Re)clustering OTU table
-  contents: 
+  contents:
   - asv2otu
   - swarm_clustering
   - vsearch_clustering
@@ -110,11 +110,11 @@ reference:
   - add_info_to_sam_data
 
 - subtitle: Phylogenetic tree
-  contents: 
+  contents:
   - build_phytree_pq
 
 - subtitle: Others
-  contents: 
+  contents:
   - add_dna_to_phyloseq
   - clean_pq
 
@@ -221,12 +221,12 @@ reference:
   - reorder_taxa_pq
 
 - title: Datasets
-  contents: 
+  contents:
   - data_fungi
   - data_fungi_sp_known
   - data_fungi_mini
   - Tengeler2020_pq
-    
+
 - title: Other utilities
 - subtitle: Color management
   contents:
@@ -234,10 +234,10 @@ reference:
   - fac2col
   - transp
 - subtitle: File management
-  contents: 
+  contents:
   - get_file_extension
 - subtitle: External software management
-  contents: 
+  contents:
   - is_cutadapt_installed
   - is_falco_installed
   - is_krona_installed
@@ -245,10 +245,10 @@ reference:
   - is_swarm_installed
   - is_vsearch_installed
 - subtitle: Plot management
-  contents: 
+  contents:
   - multiplot
 - subtitle: Variable management
-  contents: 
+  contents:
   - diff_fct_diff_class
   - perc
   - unique_or_na
@@ -259,14 +259,14 @@ reference:
   - dist_pos_control
   - are_modality_even_depth
   - MiscMetabar-package
- 
+
 - title: Deprecated
   contents:
-  - adonis_phyloseq 
+  - adonis_phyloseq
   - biplot_physeq
-  - clean_physeq 
+  - clean_physeq
   - ggVenn_phyloseq
-  - hill_phyloseq 
+  - hill_phyloseq
   - hill_tuckey_phyloseq
   - lulu_phyloseq
   - otu_circle
@@ -279,7 +279,7 @@ reference:
   - summary_plot_phyloseq
   - venn_phyloseq
   - write_phyloseq
-  
+
 
 development:
   mode: auto

@@ -8,8 +8,8 @@
 filter_trim(
   fw = NULL,
   rev = NULL,
-  output_fw = paste(getwd(), "/output/filterAndTrim_fwd", sep = ""),
-  output_rev = paste(getwd(), "/output/filterAndTrim_rev", sep = ""),
+  output_fw = file.path(paste(getwd(), "/output/filterAndTrim_fwd", sep = "")),
+  output_rev = file.path(paste(getwd(), "/output/filterAndTrim_rev", sep = "")),
   return_a_vector = FALSE,
   ...
 )

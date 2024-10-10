@@ -24,7 +24,6 @@
 #' modified by Adrien Taudière
 #'
 get_funguild_db <- function(db_url = "http://www.stbates.org/funguild_db_2.php") {
-  taxon <- NULL
   httr::GET(url = db_url) %>%
     httr::content(as = "text") %>%
     stringr::str_split("\n") %>%
