@@ -127,6 +127,12 @@ graph_test_pq <- function(physeq,
 #'   effect.
 #' @param verbose (logical, default TRUE) If TRUE, prompt some messages.
 #' @param ... Other arguments passed on to [vegan::adonis2()] function.
+#'   Note that the parameter `by` is important. If by is set to NULL
+#'   (default) the p-value is computed for the entire model.  
+#' 	 by = NULL will assess the overall significance of all terms together, 
+#'   by = "terms" will assess significance for each term (sequentially from first to last), 
+#'   setting by = "margin" will assess the marginal effects of the terms (each marginal term analysed in a model with all other variables), 
+#'   by = "onedf" will analyse one-degree-of-freedom contrasts sequentially. The argument is passed on to anova.cca.
 #' @return The function returns an anova.cca result object with a
 #'   new column for partial R^2. See help of [vegan::adonis2()] for
 #'   more information.
@@ -134,8 +140,12 @@ graph_test_pq <- function(physeq,
 #' data(enterotype)
 #' \donttest{
 #' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE)
-#' adonis_pq(enterotype, "SeqTech", dist_method = "jaccard")
-#' adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison")
+#' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "terms")
+#' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "onedf")
+#' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "margin")
+#' 
+#' adonis_pq(enterotype, "SeqTech", dist_method = "jaccard", by = "terms")
+#' adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison", by = "terms")
 #' }
 #' @export
 #' @author Adrien Taudière
