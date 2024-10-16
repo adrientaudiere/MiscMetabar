@@ -1384,7 +1384,7 @@ verify_pq <- function(physeq,
     if (sum(is.na(physeq@sam_data)) > 0) {
       warning("At least one of your samples metadata columns contains NA.")
     }
-    if (sum(grepl("^[0-9]", sample_names(physeq)) > 0) && !silent) {
+    if (sum(grepl("^[0-9]", sample_names(physeq)) > 0)) {
       message(
         "At least one sample name start with a number.
       It may introduce bug in some function such
