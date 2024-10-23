@@ -1048,11 +1048,20 @@ plot_ancombc_pq <-
 #'
 #' @author Adrien Taudière
 #' @examples
-#' data_fungi_mini_woNA4height <- subset_samples(
-#'   data_fungi_mini,
-#'   !is.na(data_fungi_mini@sam_data$Height)
-#' )
-#' taxa_only_in_one_level(data_fungi_mini_woNA4height, "Height", "High")
+#'  data_fungi_mini_woNA4height <- subset_samples(
+#'     data_fungi_mini,
+#'     !is.na(data_fungi_mini@sam_data$Height)
+#'   )
+#'   taxa_only_in_one_level(data_fungi_mini_woNA4height, "Height", "High")
+#'   #' # Taxa present only in low height samples
+#'   suppressMessages(suppressWarnings(
+#'     taxa_only_in_one_level(data_fungi, "Height", "Low")
+#'   ))
+#'   # Number of taxa present only in sample of time equal to 15
+#'   suppressMessages(suppressWarnings(
+#'     length(taxa_only_in_one_level(data_fungi, "Time", "15"))
+#'   ))
+
 taxa_only_in_one_level <- function(physeq,
                                    modality,
                                    level,
