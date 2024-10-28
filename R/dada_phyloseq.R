@@ -2346,10 +2346,14 @@ physeq_or_string_to_dna <- function(physeq = NULL, dna_seq = NULL) {
 #' @param cmd_is_run (logical, default TRUE) Do the cutadapt command is run.
 #'   If set to FALSE, the only effect of the function is to return a list of
 #'   command to manually run in a terminal.
+#' @param return_file_path (logical, default FALSE) If true, the function
+#'   return the path of the output folder (param `folder_output`). Useful
+#'   in targets workflow 
 #' @param args_before_cutadapt (String) A one line bash command to run before
 #' to run cutadapt. For examples, "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv &&" allow to bypass the conda init which asks to restart the shell
 #'
-#' @return a list of command
+#' @return a list of command or if `return_file_path` is TRUE, the path to 
+#'   the output folder
 #' @export
 #' @author Adrien Taudière
 #'
@@ -2397,6 +2401,7 @@ cutadapt_remove_primers <- function(path_to_fastq,
                                     pattern_R2 = "_R2",
                                     nb_files = Inf,
                                     cmd_is_run = TRUE,
+                                    return_file_path = FALSE,
                                     args_before_cutadapt = "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv && ") {
   cmd <- list()
   if (!dir.exists(folder_output)) {
@@ -2478,7 +2483,11 @@ cutadapt_remove_primers <- function(path_to_fastq,
     ))
     unlink(paste0(tempdir(), "/script_cutadapt.sh"))
   }
-  return(cmd)
+  if(return_file_path){
+    return(normalizePath(folder_output))
+  } else {
+    return(cmd)
+  }
 }
 ################################################################################
 

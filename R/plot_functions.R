@@ -4010,7 +4010,7 @@ plot_var_part_pq <-
 #'
 #' @inheritParams clean_pq
 #' @param num_modality (required) Name of the numeric column in
-#'   `physeq@sam_data` to plot and test against hill numberk
+#'   `physeq@sam_data` to plot and test against hill number
 #' @param hill_scales (a vector of integer) The list of q values to compute
 #'   the hill number H^q. If Null, no hill number are computed. Default value
 #'   compute the Hill number 0 (Species richness), the Hill number 1

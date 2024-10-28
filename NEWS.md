@@ -2,6 +2,8 @@
 # MiscMetabar 0.10.2 (in development)
 
 - Improve code thanks to {lintr} package
+- Add option `return_file_path` to `cutadapt_remove_primers()` in order to facilitate targets pipeline
+- Add function `sam_data_matching_names()` to match and verify congruence between fastq files names and sample metadata (sam_data)
 # MiscMetabar 0.10.1
 
 > CRAN 2024-09-10
