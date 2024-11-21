@@ -1,9 +1,14 @@
+# MiscMetabar 0.10.3 (in development)
+
+- Add params `type`, `na_remove` and `verbose` to `ggvenn_pq()`. The type = "nb_seq" allow to plot Venn diagramm with the number of shared sequences instead of shared ASV. 
 
 # MiscMetabar 0.10.2 (in development)
 
 - Improve code thanks to {lintr} package
 - Add option `return_file_path` to `cutadapt_remove_primers()` in order to facilitate targets pipeline
 - Add function `sam_data_matching_names()` to match and verify congruence between fastq files names and sample metadata (sam_data)
+
+
 # MiscMetabar 0.10.1
 
 > CRAN 2024-09-10

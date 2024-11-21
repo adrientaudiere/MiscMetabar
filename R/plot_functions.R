@@ -1199,6 +1199,13 @@ venn_pq <-
 #' @param return_data_for_venn (logical, default FALSE) If TRUE, the plot is
 #'   not returned, but the resulting dataframe to plot with ggVennDiagram package
 #'   is returned.
+#' @param verbose (logical, default TRUE) If TRUE, prompt some messages.
+#' @param type If "nb_taxa" (default), the number of taxa (ASV, OTU or
+#'   taxonomic_rank if `taxonomic_rank` is not NULL) is
+#'   used in plot. If "nb_seq", the number of sequences is plotted.
+#'   `taxonomic_rank` is never used if type = "nb_seq".
+#' @param na_remove (logical, default TRUE) If set to TRUE, remove samples with
+#'   NA in the variables set in `fact` param
 #' @param ... Other arguments for the `ggVennDiagram::ggVennDiagram` function
 #'   for ex. `category.names`.
 #' @return A \code{\link[ggplot2]{ggplot}}2 plot representing Venn diagram of
@@ -1224,6 +1231,8 @@ venn_pq <-
 #'   data_fungi2 <- subset_samples(data_fungi, data_fungi@sam_data$Tree_name == "A10-005" |
 #'     data_fungi@sam_data$Height %in% c("Low", "High"))
 #'   ggvenn_pq(data_fungi2, fact = "Height")
+#' 
+#'   ggvenn_pq(data_fungi2, fact = "Height", type = "nb_seq")
 #'
 #'   ggvenn_pq(data_fungi, fact = "Height", add_nb_seq = TRUE, set_size = 4)
 #'   ggvenn_pq(data_fungi, fact = "Height", rarefy_before_merging = TRUE)
@@ -1274,9 +1283,23 @@ ggvenn_pq <- function(physeq = NULL,
                       rarefy_before_merging = FALSE,
                       rarefy_after_merging = FALSE,
                       return_data_for_venn = FALSE,
+                      verbose = TRUE,
+                      type = "nb_taxa",
+                      na_remove = TRUE,
                       ...) {
   if (!is.factor(physeq@sam_data[[fact]])) {
     physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
+  }
+
+  if (na_remove) {
+    new_physeq <- subset_samples_pq(physeq, !is.na(physeq@sam_data[[fact]]))
+    if (nsamples(physeq) - nsamples(new_physeq) > 0 && verbose) {
+      message(paste0(
+        nsamples(physeq) - nsamples(new_physeq),
+        " were discarded due to NA in variable fact"
+      ))
+    }
+    physeq <- new_physeq
   }
 
   physeq <- taxa_as_columns(physeq)
@@ -1302,7 +1325,8 @@ ggvenn_pq <- function(physeq = NULL,
     newphyseq <- physeq
     new_DF <- newphyseq@sam_data[newphyseq@sam_data[[fact]] == f, ]
     sample_data(newphyseq) <- sample_data(new_DF)
-    if (is.null(taxonomic_rank)) {
+    newphyseq <- clean_pq(newphyseq)
+    if (is.null(taxonomic_rank) || type == "nb_seq") {
       res[[f]] <- colnames(newphyseq@otu_table[
         ,
         colSums(newphyseq@otu_table) > min_nb_seq
@@ -1316,9 +1340,15 @@ ggvenn_pq <- function(physeq = NULL,
     }
     nb_seq <-
       c(nb_seq, sum(physeq@otu_table[physeq@sam_data[[fact]] == f, ], na.rm = TRUE))
+  
+    if(type == "nb_seq") {
+      res[[f]] <- unlist(sapply(res[[f]], function(x) {
+        paste0(x, "_", seq(1, taxa_sums(physeq)[[x]]))
+      }))
+    }
   }
 
-  if (max(nb_seq) / min(nb_seq) > 2) {
+  if (max(nb_seq) / min(nb_seq) > 2 && verbose) {
     message(
       paste0(
         "Two modalities differ greatly (more than x2) in their number of sequences (",
