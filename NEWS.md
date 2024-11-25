@@ -1,6 +1,7 @@
 # MiscMetabar 0.10.3 (in development)
 
 - Add params `type`, `na_remove` and `verbose` to `ggvenn_pq()`. The type = "nb_seq" allow to plot Venn diagramm with the number of shared sequences instead of shared ASV. 
+- Add automatic report in json for the function `cutadapt_remove_primers()`.
 
 # MiscMetabar 0.10.2 (in development)
 
