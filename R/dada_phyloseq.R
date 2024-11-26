@@ -236,13 +236,20 @@ clean_pq <- function(physeq,
 #' data(enterotype)
 #' if (requireNamespace("pbapply")) {
 #'   track_wkflow(list(data_fungi, enterotype), taxonomy_rank = c(3, 5))
+#'   track_wkflow(list("data FUNGI"=data_fungi,
+#'     "fastq files forward" =
+#'     unlist(list_fastq_files(system.file("extdata", package = "MiscMetabar"),
+#'     paired_end = FALSE))))
 #' }
 track_wkflow <- function(list_of_objects,
                          obj_names = NULL,
                          clean_pq = FALSE,
                          taxonomy_rank = NULL,
+                         verbose=TRUE,
                          ...) {
-  message("Compute the number of sequences")
+  if(verbose) {
+    message("Compute the number of sequences")
+  }
   if (!is.null(obj_names)) {
     names(list_of_objects) <- obj_names
   }
@@ -257,7 +264,9 @@ track_wkflow <- function(list_of_objects,
 
   track_nb_seq_per_obj <-
     pbapply::pblapply(list_of_objects, function(object) {
+      if(verbose) {
       message(paste("Start object of class:", class(object), sep = " "))
+      }
       if (inherits(object, "phyloseq")) {
         sum(object@otu_table)
       } else if (inherits(object, "matrix")) {
@@ -292,7 +301,9 @@ track_wkflow <- function(list_of_objects,
   message("Compute the number of clusters")
   track_nb_cluster_per_obj <-
     pbapply::pblapply(list_of_objects, function(object) {
+      if(verbose) {
       message(paste("Start object of class:", class(object), sep = " "))
+      }
       if (inherits(object, "phyloseq")) {
         ntaxa(object)
       } else if (inherits(object, "matrix")) {
@@ -318,7 +329,9 @@ track_wkflow <- function(list_of_objects,
   message("Compute the number of samples")
   track_nb_sam_per_obj <-
     pbapply::pblapply(list_of_objects, function(object) {
+      if(verbose) {
       message(paste("Start object of class:", class(object), sep = " "))
+      }
       if (inherits(object, "phyloseq")) {
         nsamples(object)
       } else if (inherits(object, "matrix")) {
@@ -347,7 +360,9 @@ track_wkflow <- function(list_of_objects,
     message("Compute the number of values in taxonomic rank")
     track_nb_tax_value_per_obj <-
       pbapply::pblapply(list_of_objects, function(object) {
+        if(verbose) {
         message(paste("Start object of class:", class(object), sep = " "))
+        }
         if (inherits(object, "phyloseq")) {
           if (taxa_are_rows(object)) {
             apply(object@tax_table[taxonomy_rank, ], 1, function(x) {
@@ -365,7 +380,9 @@ track_wkflow <- function(list_of_objects,
 
     names_taxonomic_rank <-
       pbapply::pblapply(list_of_objects, function(object) {
+        if(verbose) {
         message(paste("Start object of class:", class(object), sep = " "))
+        }
         if (inherits(object, "phyloseq")) {
           if (taxa_are_rows(object)) {
             rownames(object@tax_table)[taxonomy_rank]
@@ -2428,7 +2445,7 @@ cutadapt_remove_primers <- function(path_to_fastq,
           " --json=",
           folder_output,
           "/",
-          basename(f),
+          gsub(".fastq", "", gsub(".fastq.gz", "", basename(f))),
           ".cutadapt.json",
           " --discard-untrimmed -g '",
           primer_fw,
@@ -2461,7 +2478,7 @@ cutadapt_remove_primers <- function(path_to_fastq,
           " --json=",
           folder_output,
           "/",
-          basename(f),
+          gsub(".fastq", "", gsub(".fastq.gz", "", basename(f))),
           ".cutadapt.json",
           " --discard-untrimmed -g '",
           primer_fw,

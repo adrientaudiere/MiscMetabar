@@ -153,7 +153,7 @@ ggvenn_pq(data_fungi, fact = "Height") +
 
 ### Note for non-Linux users
 
-Some functions may not work on Windows (*e.g.* `track_wflow()`,
+Some functions may not work on Windows (*e.g.* `track_wkflow()`,
 `cutadapt_remove_primers()`, `krona()`, `vsearch_clustering()`, …). A
 solution is to exploit docker container, for example the using the great
 [rocker project](https://rocker-project.org/).
