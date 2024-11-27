@@ -1231,7 +1231,7 @@ venn_pq <-
 #'   data_fungi2 <- subset_samples(data_fungi, data_fungi@sam_data$Tree_name == "A10-005" |
 #'     data_fungi@sam_data$Height %in% c("Low", "High"))
 #'   ggvenn_pq(data_fungi2, fact = "Height")
-#' 
+#'
 #'   ggvenn_pq(data_fungi2, fact = "Height", type = "nb_seq")
 #'
 #'   ggvenn_pq(data_fungi, fact = "Height", add_nb_seq = TRUE, set_size = 4)
@@ -1249,11 +1249,13 @@ venn_pq <-
 #'     geom_polygon(aes(X, Y, group = id, fill = name),
 #'       data = ggVennDiagram::venn_regionedge(res_venn)
 #'     ) +
+#'     scale_fill_manual(values = funky_color(7)) +
 #'     # 2. set edge layer
 #'     geom_path(aes(X, Y, color = id, group = id),
 #'       data = ggVennDiagram::venn_setedge(res_venn),
-#'       show.legend = FALSE, linewidth = 3
+#'       show.legend = FALSE, linewidth = 2
 #'     ) +
+#'      scale_color_manual(values = c("red", "red","blue")) +
 #'     # 3. set label layer
 #'     geom_text(aes(X, Y, label = name),
 #'       data = ggVennDiagram::venn_setlabel(res_venn)
@@ -1340,7 +1342,7 @@ ggvenn_pq <- function(physeq = NULL,
     }
     nb_seq <-
       c(nb_seq, sum(physeq@otu_table[physeq@sam_data[[fact]] == f, ], na.rm = TRUE))
-  
+
     if(type == "nb_seq") {
       res[[f]] <- unlist(sapply(res[[f]], function(x) {
         paste0(x, "_", seq(1, taxa_sums(physeq)[[x]]))
