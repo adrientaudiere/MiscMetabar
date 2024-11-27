@@ -236,13 +236,20 @@ clean_pq <- function(physeq,
 #' data(enterotype)
 #' if (requireNamespace("pbapply")) {
 #'   track_wkflow(list(data_fungi, enterotype), taxonomy_rank = c(3, 5))
+#'   track_wkflow(list("data FUNGI"=data_fungi,
+#'     "fastq files forward" =
+#'     unlist(list_fastq_files(system.file("extdata", package = "MiscMetabar"),
+#'     paired_end = FALSE))))
 #' }
 track_wkflow <- function(list_of_objects,
                          obj_names = NULL,
                          clean_pq = FALSE,
                          taxonomy_rank = NULL,
+                         verbose=TRUE,
                          ...) {
-  message("Compute the number of sequences")
+  if(verbose) {
+    message("Compute the number of sequences")
+  }
   if (!is.null(obj_names)) {
     names(list_of_objects) <- obj_names
   }
@@ -257,7 +264,9 @@ track_wkflow <- function(list_of_objects,
 
   track_nb_seq_per_obj <-
     pbapply::pblapply(list_of_objects, function(object) {
+      if(verbose) {
       message(paste("Start object of class:", class(object), sep = " "))
+      }
       if (inherits(object, "phyloseq")) {
         sum(object@otu_table)
       } else if (inherits(object, "matrix")) {
@@ -292,7 +301,9 @@ track_wkflow <- function(list_of_objects,
   message("Compute the number of clusters")
   track_nb_cluster_per_obj <-
     pbapply::pblapply(list_of_objects, function(object) {
+      if(verbose) {
       message(paste("Start object of class:", class(object), sep = " "))
+      }
       if (inherits(object, "phyloseq")) {
         ntaxa(object)
       } else if (inherits(object, "matrix")) {
@@ -318,7 +329,9 @@ track_wkflow <- function(list_of_objects,
   message("Compute the number of samples")
   track_nb_sam_per_obj <-
     pbapply::pblapply(list_of_objects, function(object) {
+      if(verbose) {
       message(paste("Start object of class:", class(object), sep = " "))
+      }
       if (inherits(object, "phyloseq")) {
         nsamples(object)
       } else if (inherits(object, "matrix")) {
@@ -347,7 +360,9 @@ track_wkflow <- function(list_of_objects,
     message("Compute the number of values in taxonomic rank")
     track_nb_tax_value_per_obj <-
       pbapply::pblapply(list_of_objects, function(object) {
+        if(verbose) {
         message(paste("Start object of class:", class(object), sep = " "))
+        }
         if (inherits(object, "phyloseq")) {
           if (taxa_are_rows(object)) {
             apply(object@tax_table[taxonomy_rank, ], 1, function(x) {
@@ -365,7 +380,9 @@ track_wkflow <- function(list_of_objects,
 
     names_taxonomic_rank <-
       pbapply::pblapply(list_of_objects, function(object) {
+        if(verbose) {
         message(paste("Start object of class:", class(object), sep = " "))
+        }
         if (inherits(object, "phyloseq")) {
           if (taxa_are_rows(object)) {
             rownames(object@tax_table)[taxonomy_rank]
@@ -1384,7 +1401,7 @@ verify_pq <- function(physeq,
     if (sum(is.na(physeq@sam_data)) > 0) {
       warning("At least one of your samples metadata columns contains NA.")
     }
-    if (sum(grepl("^[0-9]", sample_names(physeq)) > 0) && !silent) {
+    if (sum(grepl("^[0-9]", sample_names(physeq)) > 0)) {
       message(
         "At least one sample name start with a number.
       It may introduce bug in some function such
@@ -2346,10 +2363,14 @@ physeq_or_string_to_dna <- function(physeq = NULL, dna_seq = NULL) {
 #' @param cmd_is_run (logical, default TRUE) Do the cutadapt command is run.
 #'   If set to FALSE, the only effect of the function is to return a list of
 #'   command to manually run in a terminal.
+#' @param return_file_path (logical, default FALSE) If true, the function
+#'   return the path of the output folder (param `folder_output`). Useful
+#'   in targets workflow
 #' @param args_before_cutadapt (String) A one line bash command to run before
 #' to run cutadapt. For examples, "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv &&" allow to bypass the conda init which asks to restart the shell
 #'
-#' @return a list of command
+#' @return a list of command or if `return_file_path` is TRUE, the path to
+#'   the output folder
 #' @export
 #' @author Adrien Taudière
 #'
@@ -2397,11 +2418,14 @@ cutadapt_remove_primers <- function(path_to_fastq,
                                     pattern_R2 = "_R2",
                                     nb_files = Inf,
                                     cmd_is_run = TRUE,
-                                    args_before_cutadapt = "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv && ") {
+                                    return_file_path = FALSE,
+                                    args_before_cutadapt = "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv && "
+                                    ) {
   cmd <- list()
   if (!dir.exists(folder_output)) {
     dir.create(folder_output)
   }
+
 
   if (is.null(primer_rev)) {
     lff <- list_fastq_files(
@@ -2418,6 +2442,11 @@ cutadapt_remove_primers <- function(path_to_fastq,
           args_before_cutadapt,
           "cutadapt --cores=",
           nproc,
+          " --json=",
+          folder_output,
+          "/",
+          gsub(".fastq", "", gsub(".fastq.gz", "", basename(f))),
+          ".cutadapt.json",
           " --discard-untrimmed -g '",
           primer_fw,
           "' -o ",
@@ -2446,6 +2475,11 @@ cutadapt_remove_primers <- function(path_to_fastq,
           args_before_cutadapt,
           "cutadapt -n 2 --cores=",
           nproc,
+          " --json=",
+          folder_output,
+          "/",
+          gsub(".fastq", "", gsub(".fastq.gz", "", basename(f))),
+          ".cutadapt.json",
           " --discard-untrimmed -g '",
           primer_fw,
           "' -G '",
@@ -2478,7 +2512,11 @@ cutadapt_remove_primers <- function(path_to_fastq,
     ))
     unlink(paste0(tempdir(), "/script_cutadapt.sh"))
   }
-  return(cmd)
+  if(return_file_path){
+    return(normalizePath(folder_output))
+  } else {
+    return(cmd)
+  }
 }
 ################################################################################
 
@@ -2503,14 +2541,21 @@ cutadapt_remove_primers <- function(path_to_fastq,
 #' @return A vector of taxa names
 #' @export
 #'
-#' @examples
-#' # Taxa present only in low height samples
-#' suppressMessages(suppressWarnings(taxa_only_in_one_level(data_fungi, "Height", "Low")))
-#' # Number of taxa present only in sample of time equal to 15
-#' suppressMessages(suppressWarnings(length(taxa_only_in_one_level(data_fungi, "Time", "15"))))
-#' @seealso [ggvenn_pq()] and [upset_pq()]
-#' @export
 #' @author Adrien Taudière
+#' @examples
+#'  data_fungi_mini_woNA4height <- subset_samples(
+#'     data_fungi_mini,
+#'     !is.na(data_fungi_mini@sam_data$Height)
+#'   )
+#'   taxa_only_in_one_level(data_fungi_mini_woNA4height, "Height", "High")
+#'   #' # Taxa present only in low height samples
+#'   suppressMessages(suppressWarnings(
+#'     taxa_only_in_one_level(data_fungi, "Height", "Low")
+#'   ))
+#'   # Number of taxa present only in sample of time equal to 15
+#'   suppressMessages(suppressWarnings(
+#'     length(taxa_only_in_one_level(data_fungi, "Time", "15"))
+#'   ))
 
 taxa_only_in_one_level <- function(physeq,
                                    modality,
@@ -2542,7 +2587,6 @@ taxa_only_in_one_level <- function(physeq,
   return(taxa_names(physeq_merged_only_level_given))
 }
 ################################################################################
-
 
 
 ################################################################################

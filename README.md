@@ -123,7 +123,7 @@ data("data_fungi")
 summary_plot_pq(data_fungi)
 ```
 
-<img src="man/figures/README-example-1.png" width="100%" />
+<img src="man/figures/README-example-1.png" alt="Four rectangles represent the four component of an example phyloseq dataset. In each rectangle, some informations about the component are shown." width="100%" />
 
 ### Alpha-diversity analysis
 
@@ -142,18 +142,18 @@ p$plot_tuckey
 
 ``` r
 if (!require("ggVennDiagram", quietly = TRUE)) {
-  install.packages("ggVennDiagramà")
+  install.packages("ggVennDiagram")
 }
 ggvenn_pq(data_fungi, fact = "Height") +
   ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1) +
   labs(title = "Share number of ASV among Height in tree")
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-8-1.png" alt="A venn diagram showing the number of shared ASV and the percentage of shared ASV between the three modality of Height (low, middle and high)." width="100%" />
 
 ### Note for non-Linux users
 
-Some functions may not work on Windows (*e.g.* `track_wflow()`,
+Some functions may not work on Windows (*e.g.* `track_wkflow()`,
 `cutadapt_remove_primers()`, `krona()`, `vsearch_clustering()`, …). A
 solution is to exploit docker container, for example the using the great
 [rocker project](https://rocker-project.org/).

@@ -17,7 +17,7 @@ from R"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.10.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.10.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,6 +91,7 @@ from R</p>
 <span>  pattern_R2 <span class="op">=</span> <span class="st">"_R2"</span>,</span>
 <span>  nb_files <span class="op">=</span> <span class="cn">Inf</span>,</span>
 <span>  cmd_is_run <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  return_file_path <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  args_before_cutadapt <span class="op">=</span></span>
 <span>    <span class="st">"source ~/miniconda3/etc/profile.d/conda.sh &amp;&amp; conda activate cutadaptenv &amp;&amp; "</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -144,6 +145,12 @@ If set to FALSE, the only effect of the function is to return a list of
 command to manually run in a terminal.</p></dd>
 
 
+<dt id="arg-return-file-path">return_file_path<a class="anchor" aria-label="anchor" href="#arg-return-file-path"></a></dt>
+<dd><p>(logical, default FALSE) If true, the function
+return the path of the output folder (param <code>folder_output</code>). Useful
+in targets workflow</p></dd>
+
+
 <dt id="arg-args-before-cutadapt">args_before_cutadapt<a class="anchor" aria-label="anchor" href="#arg-args-before-cutadapt"></a></dt>
 <dd><p>(String) A one line bash command to run before
 to run cutadapt. For examples, "source ~/miniconda3/etc/profile.d/conda.sh &amp;&amp; conda activate cutadaptenv &amp;&amp;" allow to bypass the conda init which asks to restart the shell</p></dd>
@@ -151,7 +158,8 @@ to run cutadapt. For examples, "source ~/miniconda3/etc/profile.d/conda.sh &amp;
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>a list of command</p>
+    <p>a list of command or if <code>return_file_path</code> is TRUE, the path to
+the output folder</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>

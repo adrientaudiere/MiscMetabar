@@ -1,7 +1,16 @@
+# MiscMetabar 0.10.3 (in development)
+
+- Add params `type`, `na_remove` and `verbose` to `ggvenn_pq()`. The type = "nb_seq" allow to plot Venn diagram with the number of shared sequences instead of shared ASV. 
+- Add automatic report in json for the function `cutadapt_remove_primers()`.
+- Add param `verbose` to `track_wkflow()` and improve examples for `track_wkflow()` and `list_fastq_files`
 
 # MiscMetabar 0.10.2 (in development)
 
 - Improve code thanks to {lintr} package
+- Add option `return_file_path` to `cutadapt_remove_primers()` in order to facilitate targets pipeline
+- Add function `sam_data_matching_names()` to match and verify congruence between fastq files names and sample metadata (sam_data)
+
+
 # MiscMetabar 0.10.1
 
 > CRAN 2024-09-10
@@ -12,7 +21,7 @@
 # MiscMetabar 0.9.4 
 
 - Set a seed in the example of `build_tree_pq` to resubmit to CRAN
-   Add a param `return_a_vector` in function `filter_trim()` to make possible to return a vector of path as it is usefull when used with `targets::tar_targets(..., format="file")`)
+   Add a param `return_a_vector` in function `filter_trim()` to make possible to return a vector of path as it is useful when used with `targets::tar_targets(..., format="file")`)
 - Make some storage amelioration by replacing `list()` by `vector(list, ...)` 
 
 # MiscMetabar 0.9.3

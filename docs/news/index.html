@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.10.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +34,7 @@
     <li><a class="dropdown-item" href="../articles/fastq_quality_check.html">Fastq quality check</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Examples with published dataset</h6></li>
-    <li><a class="dropdown-item" href="../articles/tengeler.html">Tengeler</a></li>
+    <li><a class="dropdown-item" href="../articles/tengeler.html">Tengeler dataset</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>R ecosystem for metabarcoding</h6></li>
     <li><a class="dropdown-item" href="../articles/states_of_fields_in_R.html">Metabarcoding with R</a></li>
@@ -59,11 +59,28 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.9.5" id="miscmetabar-095-in-development">MiscMetabar 0.9.5 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-095-in-development"></a></h2>
-</div>
+<h2 class="pkg-version" data-toc-text="0.10.3" id="miscmetabar-0103-in-development">MiscMetabar 0.10.3 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-0103-in-development"></a></h2>
+<ul><li>Add params <code>type</code>, <code>na_remove</code> and <code>verbose</code> to <code><a href="../reference/ggvenn_pq.html">ggvenn_pq()</a></code>. The type = “nb_seq” allow to plot Venn diagram with the number of shared sequences instead of shared ASV.</li>
+<li>Add automatic report in json for the function <code><a href="../reference/cutadapt_remove_primers.html">cutadapt_remove_primers()</a></code>.</li>
+<li>Add param <code>verbose</code> to <code><a href="../reference/track_wkflow.html">track_wkflow()</a></code> and improve examples for <code><a href="../reference/track_wkflow.html">track_wkflow()</a></code> and <code>list_fastq_files</code>
+</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.10.2" id="miscmetabar-0102-in-development">MiscMetabar 0.10.2 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-0102-in-development"></a></h2>
+<ul><li>Improve code thanks to {lintr} package</li>
+<li>Add option <code>return_file_path</code> to <code><a href="../reference/cutadapt_remove_primers.html">cutadapt_remove_primers()</a></code> in order to facilitate targets pipeline</li>
+<li>Add function <code><a href="../reference/sam_data_matching_names.html">sam_data_matching_names()</a></code> to match and verify congruence between fastq files names and sample metadata (sam_data)</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.10.1" id="miscmetabar-0101">MiscMetabar 0.10.1<a class="anchor" aria-label="anchor" href="#miscmetabar-0101"></a></h2><p class="text-muted">CRAN release: 2024-10-07</p>
+<blockquote>
+<p>CRAN 2024-09-10</p>
+</blockquote>
+<ul><li>Delete function <code>heat_tree_pq()</code> because {metacoder} package is archived from CRAN.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.9.4" id="miscmetabar-094">MiscMetabar 0.9.4<a class="anchor" aria-label="anchor" href="#miscmetabar-094"></a></h2>
-<ul><li>Set a seed in the example of <code>build_tree_pq</code> to resubmit to CRAN Add a param <code>return_a_vector</code> in function <code><a href="../reference/filter_trim.html">filter_trim()</a></code> to make possible to return a vector of path as it is usefull when used with <code>targets::tar_targets(..., format="file")</code>)</li>
+<ul><li>Set a seed in the example of <code>build_tree_pq</code> to resubmit to CRAN Add a param <code>return_a_vector</code> in function <code><a href="../reference/filter_trim.html">filter_trim()</a></code> to make possible to return a vector of path as it is useful when used with <code>targets::tar_targets(..., format="file")</code>)</li>
 <li>Make some storage amelioration by replacing <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> by <code>vector(list, ...)</code>
 </li>
 </ul></div>
@@ -191,7 +208,7 @@
 <li>Add functions <code><a href="../reference/merge_taxa_vec.html">merge_taxa_vec()</a></code> and <code><a href="../reference/merge_samples2.html">merge_samples2()</a></code> from the <a href="https://github.com/mikemc/speedyseq/" class="external-link">speedyseq</a> package into MiscMetabar to decrease package dependencies (Thanks to Mike R. Mclaren)</li>
 <li>Add function <code><a href="../reference/reorder_taxa_pq.html">reorder_taxa_pq()</a></code> in order to replace the unique call to package MicroViz to decrease package dependencies.</li>
 <li>Add functions <code><a href="../reference/get_funguild_db.html">get_funguild_db()</a></code> and <code><a href="../reference/funguild_assign.html">funguild_assign()</a></code> from the <a href="https://github.com/brendanf/FUNGuildR/" class="external-link">FUNGuildR</a> package into MiscMetabar to decrease package dependencies</li>
-<li>Remove all dependencies from packages not available on CRAN or Bioconductor. Improve code using <code>goodpractice::gp</code>() and <code><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">devtools::check()</a></code> function</li>
+<li>Remove all dependencies from packages not available on CRAN or Bioconductor. Improve code using <code><a href="https://docs.ropensci.org/goodpractice/reference/gp.html" class="external-link">goodpractice::gp</a></code>() and <code><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">devtools::check()</a></code> function</li>
 <li>Add messages in various cases (NA in samples data, low number of sequences in samples, low number of sequences by taxa) when using <code><a href="../reference/verify_pq.html">verify_pq()</a></code> with args <code>verbose=TRUE</code>
 </li>
 <li>Fix a bug in <code><a href="../reference/multitax_bar_pq.html">multitax_bar_pq()</a></code> when using <code>nb_seq = FALSE</code>
@@ -375,7 +392,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>

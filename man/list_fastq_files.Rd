@@ -40,8 +40,9 @@ files are sorted by names (default behavior of \code{list.files()})
 Useful for targets bioinformatic pipeline.
 }
 \examples{
-list_fastq_files("extdata")
-list_fastq_files("extdata", paired_end = FALSE, pattern_R1 = "")
+list_fastq_files(system.file("extdata", package = "MiscMetabar"))
+list_fastq_files(system.file("extdata", package = "MiscMetabar"),
+                              paired_end = FALSE, pattern_R1 = "")
 
 }
 \author{

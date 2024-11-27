@@ -117,7 +117,7 @@ ten_control <- clean_pq(subset_samples(ten, patient_status == "Control"))
 #   node_size_trans = "log10 area"
 # )
 
-# ten_ADHD <- clean_pq(subset_samples(ten, patient_status == "ADHD"))
+ten_ADHD <- clean_pq(subset_samples(ten, patient_status == "ADHD"))
 # p_ADHD <- heat_tree_pq(
 #   ten_ADHD,
 #   node_size = n_obs,

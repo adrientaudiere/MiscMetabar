@@ -19,7 +19,7 @@ return the taxa strictly specific of this level."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.10.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.10.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -132,21 +132,17 @@ of the physeq object. Must be a character vector or a factor.</p></dd>
 <p>A vector of taxa names</p>
     </div>
     <div class="section level2">
-    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="ggvenn_pq.html">ggvenn_pq()</a></code> and <code><a href="upset_pq.html">upset_pq()</a></code></p></div>
-    </div>
-    <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
     <p>Adrien Taudière</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">data_fungi_mini_woNA4height</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html" class="external-link">subset_samples</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">data_fungi_mini</span>,</span></span>
-<span class="r-in"><span>  <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">@</span><span class="va">sam_data</span><span class="op">$</span><span class="va">Height</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">taxa_only_in_one_level</span><span class="op">(</span><span class="va">data_fungi_mini_woNA4height</span>, <span class="st">"Height"</span>, <span class="st">"High"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span> <span class="va">data_fungi_mini_woNA4height</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html" class="external-link">subset_samples</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">data_fungi_mini</span>,</span></span>
+<span class="r-in"><span>    <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">@</span><span class="va">sam_data</span><span class="op">$</span><span class="va">Height</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">taxa_only_in_one_level</span><span class="op">(</span><span class="va">data_fungi_mini_woNA4height</span>, <span class="st">"Height"</span>, <span class="st">"High"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 3 taxa and 0 samples.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
@@ -156,8 +152,10 @@ of the physeq object. Must be a character vector or a factor.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 3</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 3 taxa and 0 samples.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ASV48" "ASV50" "ASV77" "ASV93"</span>
-<span class="r-in"><span><span class="co"># Taxa present only in low height samples</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu">taxa_only_in_one_level</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Height"</span>, <span class="st">"Low"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co">#' # Taxa present only in low height samples</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu">taxa_only_in_one_level</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Height"</span>, <span class="st">"Low"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1] "ASV54"   "ASV84"   "ASV143"  "ASV190"  "ASV202"  "ASV229"  "ASV247" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [8] "ASV253"  "ASV254"  "ASV274"  "ASV307"  "ASV311"  "ASV318"  "ASV330" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [15] "ASV388"  "ASV394"  "ASV408"  "ASV412"  "ASV422"  "ASV433"  "ASV442" </span>
@@ -176,8 +174,51 @@ of the physeq object. Must be a character vector or a factor.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [106] "ASV1600" "ASV1611" "ASV1624" "ASV1627" "ASV1632" "ASV1645" "ASV1653"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [113] "ASV1654" "ASV1664" "ASV1665" "ASV1667" "ASV1670" "ASV1672" "ASV1680"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [120] "ASV1681" "ASV1704" "ASV1705" "ASV1716" "ASV1726"</span>
-<span class="r-in"><span><span class="co"># Number of taxa present only in sample of time equal to 15</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu">taxa_only_in_one_level</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Time"</span>, <span class="st">"15"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="co"># Number of taxa present only in sample of time equal to 15</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu">taxa_only_in_one_level</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Time"</span>, <span class="st">"15"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 126</span>
+<span class="r-in"><span> <span class="va">data_fungi_mini_woNA4height</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html" class="external-link">subset_samples</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">data_fungi_mini</span>,</span></span>
+<span class="r-in"><span>    <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">@</span><span class="va">sam_data</span><span class="op">$</span><span class="va">Height</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">taxa_only_in_one_level</span><span class="op">(</span><span class="va">data_fungi_mini_woNA4height</span>, <span class="st">"Height"</span>, <span class="st">"High"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 3 taxa and 0 samples.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 42</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 35</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 7</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 3</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 3 taxa and 0 samples.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ASV48" "ASV50" "ASV77" "ASV93"</span>
+<span class="r-in"><span>  <span class="co">#' # Taxa present only in low height samples</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu">taxa_only_in_one_level</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Height"</span>, <span class="st">"Low"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [1] "ASV54"   "ASV84"   "ASV143"  "ASV190"  "ASV202"  "ASV229"  "ASV247" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [8] "ASV253"  "ASV254"  "ASV274"  "ASV307"  "ASV311"  "ASV318"  "ASV330" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [15] "ASV388"  "ASV394"  "ASV408"  "ASV412"  "ASV422"  "ASV433"  "ASV442" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [22] "ASV457"  "ASV476"  "ASV487"  "ASV491"  "ASV495"  "ASV549"  "ASV554" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [29] "ASV560"  "ASV571"  "ASV604"  "ASV659"  "ASV664"  "ASV672"  "ASV679" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [36] "ASV682"  "ASV683"  "ASV703"  "ASV710"  "ASV713"  "ASV716"  "ASV730" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [43] "ASV739"  "ASV751"  "ASV753"  "ASV777"  "ASV804"  "ASV808"  "ASV814" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [50] "ASV827"  "ASV829"  "ASV862"  "ASV867"  "ASV900"  "ASV943"  "ASV946" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [57] "ASV957"  "ASV993"  "ASV1033" "ASV1041" "ASV1045" "ASV1105" "ASV1115"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [64] "ASV1116" "ASV1117" "ASV1124" "ASV1158" "ASV1166" "ASV1184" "ASV1197"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [71] "ASV1199" "ASV1214" "ASV1218" "ASV1228" "ASV1242" "ASV1262" "ASV1265"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [78] "ASV1298" "ASV1307" "ASV1364" "ASV1374" "ASV1378" "ASV1381" "ASV1384"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [85] "ASV1405" "ASV1416" "ASV1430" "ASV1450" "ASV1454" "ASV1470" "ASV1471"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [92] "ASV1480" "ASV1485" "ASV1498" "ASV1524" "ASV1527" "ASV1537" "ASV1542"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [99] "ASV1559" "ASV1563" "ASV1569" "ASV1575" "ASV1576" "ASV1584" "ASV1594"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [106] "ASV1600" "ASV1611" "ASV1624" "ASV1627" "ASV1632" "ASV1645" "ASV1653"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [113] "ASV1654" "ASV1664" "ASV1665" "ASV1667" "ASV1670" "ASV1672" "ASV1680"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [120] "ASV1681" "ASV1704" "ASV1705" "ASV1716" "ASV1726"</span>
+<span class="r-in"><span>  <span class="co"># Number of taxa present only in sample of time equal to 15</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu">taxa_only_in_one_level</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Time"</span>, <span class="st">"15"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 126</span>
 </code></pre></div>
     </div>
