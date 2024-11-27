@@ -19,7 +19,7 @@ ggscatt_pq(
 using the \code{phyloseq} package.}
 
 \item{num_modality}{(required) Name of the numeric column in
-\code{physeq@sam_data} to plot and test against hill numberk}
+\code{physeq@sam_data} to plot and test against hill number}
 
 \item{hill_scales}{(a vector of integer) The list of q values to compute
 the hill number H^q. If Null, no hill number are computed. Default value

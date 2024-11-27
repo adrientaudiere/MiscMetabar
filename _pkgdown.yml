@@ -108,6 +108,7 @@ reference:
 - subtitle: Sample data
   contents:
   - add_info_to_sam_data
+  - sam_data_matching_names
 
 - subtitle: Phylogenetic tree
   contents:

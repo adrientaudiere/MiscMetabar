@@ -16,6 +16,9 @@ ggvenn_pq(
   rarefy_before_merging = FALSE,
   rarefy_after_merging = FALSE,
   return_data_for_venn = FALSE,
+  verbose = TRUE,
+  type = "nb_taxa",
+  na_remove = TRUE,
   ...
 )
 }
@@ -53,6 +56,16 @@ modalities of args \code{fact}.}
 \item{return_data_for_venn}{(logical, default FALSE) If TRUE, the plot is
 not returned, but the resulting dataframe to plot with ggVennDiagram package
 is returned.}
+
+\item{verbose}{(logical, default TRUE) If TRUE, prompt some messages.}
+
+\item{type}{If "nb_taxa" (default), the number of taxa (ASV, OTU or
+taxonomic_rank if \code{taxonomic_rank} is not NULL) is
+used in plot. If "nb_seq", the number of sequences is plotted.
+\code{taxonomic_rank} is never used if type = "nb_seq".}
+
+\item{na_remove}{(logical, default TRUE) If set to TRUE, remove samples with
+NA in the variables set in \code{fact} param}
 
 \item{...}{Other arguments for the \code{ggVennDiagram::ggVennDiagram} function
 for ex. \code{category.names}.}
@@ -94,6 +107,8 @@ if (requireNamespace("ggVennDiagram")) {
     data_fungi@sam_data$Height \%in\% c("Low", "High"))
   ggvenn_pq(data_fungi2, fact = "Height")
 
+  ggvenn_pq(data_fungi2, fact = "Height", type = "nb_seq")
+
   ggvenn_pq(data_fungi, fact = "Height", add_nb_seq = TRUE, set_size = 4)
   ggvenn_pq(data_fungi, fact = "Height", rarefy_before_merging = TRUE)
   ggvenn_pq(data_fungi, fact = "Height", rarefy_after_merging = TRUE) +
@@ -109,11 +124,13 @@ if (requireNamespace("ggVennDiagram")) {
     geom_polygon(aes(X, Y, group = id, fill = name),
       data = ggVennDiagram::venn_regionedge(res_venn)
     ) +
+    scale_fill_manual(values = funky_color(7)) +
     # 2. set edge layer
     geom_path(aes(X, Y, color = id, group = id),
       data = ggVennDiagram::venn_setedge(res_venn),
-      show.legend = FALSE, linewidth = 3
+      show.legend = FALSE, linewidth = 2
     ) +
+     scale_color_manual(values = c("red", "red","blue")) +
     # 3. set label layer
     geom_text(aes(X, Y, label = name),
       data = ggVennDiagram::venn_setlabel(res_venn)

@@ -15,6 +15,7 @@ cutadapt_remove_primers(
   pattern_R2 = "_R2",
   nb_files = Inf,
   cmd_is_run = TRUE,
+  return_file_path = FALSE,
   args_before_cutadapt =
     "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv && "
 )
@@ -44,11 +45,16 @@ Set to number of cpus/processors to use for the clustering}
 If set to FALSE, the only effect of the function is to return a list of
 command to manually run in a terminal.}
 
+\item{return_file_path}{(logical, default FALSE) If true, the function
+return the path of the output folder (param \code{folder_output}). Useful
+in targets workflow}
+
 \item{args_before_cutadapt}{(String) A one line bash command to run before
 to run cutadapt. For examples, "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv &&" allow to bypass the conda init which asks to restart the shell}
 }
 \value{
-a list of command
+a list of command or if \code{return_file_path} is TRUE, the path to
+the output folder
 }
 \description{
 \if{html}{\out{
