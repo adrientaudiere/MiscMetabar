@@ -44,6 +44,7 @@ Suggests:
     httr,
     iNEXT,
     indicspecies,
+    IRanges,
     jsonlite,
     knitr,
     magrittr,

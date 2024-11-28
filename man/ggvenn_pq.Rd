@@ -130,7 +130,7 @@ if (requireNamespace("ggVennDiagram")) {
       data = ggVennDiagram::venn_setedge(res_venn),
       show.legend = FALSE, linewidth = 2
     ) +
-     scale_color_manual(values = c("red", "red","blue")) +
+    scale_color_manual(values = c("red", "red", "blue")) +
     # 3. set label layer
     geom_text(aes(X, Y, label = name),
       data = ggVennDiagram::venn_setlabel(res_venn)

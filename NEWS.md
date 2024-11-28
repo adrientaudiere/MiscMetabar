@@ -1,4 +1,8 @@
-# MiscMetabar 0.10.4 (in development)
+# MiscMetabar 0.10.5 (in development)
+
+# MiscMetabar 0.10.4
+
+- Add functions `plot_refseq_pq()` and `plot_refseq_extremity_pq()` to plot the proportion of each nucleotide and the diversity of nucleotides from `@refseq` of a phyloseq object.
 
 # MiscMetabar 0.10.3 
 
