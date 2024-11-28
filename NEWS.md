@@ -1,10 +1,12 @@
-# MiscMetabar 0.10.3 (in development)
+# MiscMetabar 0.10.4 (in development)
+
+# MiscMetabar 0.10.3 
 
 - Add params `type`, `na_remove` and `verbose` to `ggvenn_pq()`. The type = "nb_seq" allow to plot Venn diagram with the number of shared sequences instead of shared ASV. 
 - Add automatic report in json for the function `cutadapt_remove_primers()`.
 - Add param `verbose` to `track_wkflow()` and improve examples for `track_wkflow()` and `list_fastq_files`
 
-# MiscMetabar 0.10.2 (in development)
+# MiscMetabar 0.10.2
 
 - Improve code thanks to {lintr} package
 - Add option `return_file_path` to `cutadapt_remove_primers()` in order to facilitate targets pipeline

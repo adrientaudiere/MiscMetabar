@@ -29,9 +29,9 @@ Set to number of cpus/processors to use for the clustering}
 \item{mumupath}{path to mumu. See \href{https://github.com/frederic-mahe/mumu}{mumu}
 for installation instruction}
 
-\item{verbose}{(logical) if true, print some additional messages.}
+\item{verbose}{(logical) If true, print some additional messages.}
 
-\item{clean_pq}{(logical) if true, empty samples and empty ASV are discarded
+\item{clean_pq}{(logical) If true, empty samples and empty ASV are discarded
 before clustering.}
 
 \item{keep_temporary_files}{(logical, default: FALSE) Do we keep temporary files}
