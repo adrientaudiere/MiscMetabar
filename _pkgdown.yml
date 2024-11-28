@@ -114,6 +114,12 @@ reference:
   contents:
   - build_phytree_pq
 
+- subtitle: References sequences
+  contents:
+  - plot_refseq_extremity_pq
+  - plot_refseq_pq
+  - add_dna_to_phyloseq
+
 - subtitle: Others
   contents:
   - add_dna_to_phyloseq

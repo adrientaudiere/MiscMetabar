@@ -226,6 +226,7 @@ clean_pq <- function(physeq,
 #' @param taxonomy_rank A vector of int. Define the column number of
 #'   taxonomic rank `in physeq@tax_table` to compute the number of unique value.
 #'   Default is NULL and do not compute values for any taxonomic rank
+#' @param verbose (logical) If true, print some additional messages.
 #' @param ... Other arguments passed on to [clean_pq()] function.
 #'
 #' @return The number of sequences, clusters (e.g. OTUs, ASVs) and samples for
@@ -1032,8 +1033,8 @@ read_pq <- function(path = NULL,
 #'   Set to number of cpus/processors to use for the clustering
 #' @param id (default: 0.84) id for --usearch_global.
 #' @param vsearchpath (default: vsearch) path to vsearch.
-#' @param verbose (logical) if true, print some additional messages.
-#' @param clean_pq (logical) if true, empty samples and empty ASV are discarded
+#' @param verbose (logical) If true, print some additional messages.
+#' @param clean_pq (logical) If true, empty samples and empty ASV are discarded
 #'   before clustering.
 #' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files
 #' @param ... Others args for function [lulu()]
@@ -1188,8 +1189,8 @@ lulu_pq <- function(physeq,
 #' @param vsearchpath (default: vsearch) path to vsearch.
 #' @param mumupath path to mumu. See [mumu](https://github.com/frederic-mahe/mumu)
 #'   for installation instruction
-#' @param verbose (logical) if true, print some additional messages.
-#' @param clean_pq (logical) if true, empty samples and empty ASV are discarded
+#' @param verbose (logical) If true, print some additional messages.
+#' @param clean_pq (logical) If true, empty samples and empty ASV are discarded
 #'   before clustering.
 #' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files
 #' @return a list of for object

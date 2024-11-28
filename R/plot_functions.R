@@ -1255,7 +1255,7 @@ venn_pq <-
 #'       data = ggVennDiagram::venn_setedge(res_venn),
 #'       show.legend = FALSE, linewidth = 2
 #'     ) +
-#'      scale_color_manual(values = c("red", "red","blue")) +
+#'     scale_color_manual(values = c("red", "red", "blue")) +
 #'     # 3. set label layer
 #'     geom_text(aes(X, Y, label = name),
 #'       data = ggVennDiagram::venn_setlabel(res_venn)
@@ -1343,7 +1343,7 @@ ggvenn_pq <- function(physeq = NULL,
     nb_seq <-
       c(nb_seq, sum(physeq@otu_table[physeq@sam_data[[fact]] == f, ], na.rm = TRUE))
 
-    if(type == "nb_seq") {
+    if (type == "nb_seq") {
       res[[f]] <- unlist(sapply(res[[f]], function(x) {
         paste0(x, "_", seq(1, taxa_sums(physeq)[[x]]))
       }))
@@ -4264,3 +4264,270 @@ ggaluv_pq <- function(physeq,
   return(p)
 }
 ################################################################################
+
+
+
+################################################################################
+#' Plot the nucleotide proportion at both extremity of the sequences
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#'   It is a useful function to check for the absence of unwanted patterns caused
+#'   for example by Illumina adaptator or bad removal of primers.
+#'
+#'   If `hill_scale` is not null, Hill diversity number are used to represent the distribution
+#'   of the diversity (equitability) along the sequences.
+#'
+#' @inheritParams clean_pq
+#' @param first_n (int, default 10) The number of nucleotides to plot the 5' extremity.
+#' @param last_n (int, default 10) The number of nucleotides to plot the 3' extremity.
+#' @param hill_scales (vector) A vector defining the Hill number wanted. Set to NULL if
+#'   you don't want to plot Hill diversity metrics.
+#' @param min_width (int, default 0) Select only the sequences from physeq@refseq with using a
+#'   minimum length threshold. If `first_n` is superior to the minimum length of the
+#'   references sequences, you must use min_width to filter out the narrower sequences
+#' @return A list of 4 objects
+#'  - p_start and p_last are the ggplot object representing respectively the start and
+#'   the end of the sequences.
+#'  - df_start and df_last are the data.frame corresponding to the ggplot object.
+#' @export
+#' @author Adrien Taudière
+#' @examples
+#' res1 <- plot_refseq_extremity_pq(data_fungi)
+#' names(res1)
+#' res1$plot_start
+#' res1$plot_last
+#'
+#' res2 <- plot_refseq_extremity_pq(data_fungi, first_n = 200, last_n = 100)
+#' res2$plot_start
+#' res2$plot_last
+#'
+#' plot_refseq_extremity_pq(data_fungi,
+#'   first_n = 400,
+#'   min_width = 400,
+#'   hill_scales = NULL
+#' )$plot_start +
+#'   geom_line(aes(y = value, x = seq_id, color = name), alpha = 0.4, linewidth = 0.2)
+#'
+#' plot_refseq_extremity_pq(data_fungi,
+#'   first_n = NULL,
+#'   last_n = 400,
+#'   min_width = 400,
+#'   hill_scales = c(3)
+#' )$plot_last
+plot_refseq_extremity_pq <- function(
+    physeq,
+    first_n = 10,
+    last_n = 10,
+    hill_scales = c(1, 2),
+    min_width = 0) {
+
+  if (min_width > 0) {
+    cond <- Biostrings::width(physeq@refseq) > min_width
+    names(cond) <- taxa_names(physeq)
+    physeq <- clean_pq(subset_taxa_pq(physeq, cond))
+  }
+
+  if (!is.null(first_n)) {
+    end_n <- Biostrings::width(physeq@refseq)
+    end_n[end_n < first_n] <- first_n
+
+    letters_sequences <-
+      c(strsplit(as.vector(IRanges::narrow(physeq@refseq, end = end_n)),
+      split = ""
+    ))
+    letters_sequences <- lapply(letters_sequences, `length<-`,
+                                max(lengths(letters_sequences)))
+
+    tib_interm <- t(data.frame(letters_sequences))
+    nucleotide_first_interm <- data.frame(
+      "nb_A" = colSums(tib_interm == "A", na.rm = T) / nrow(tib_interm),
+      "nb_C" = colSums(tib_interm == "C", na.rm = T) / nrow(tib_interm),
+      "nb_G" = colSums(tib_interm == "G", na.rm = T) / nrow(tib_interm),
+      "nb_T" = colSums(tib_interm == "T", na.rm = T) / nrow(tib_interm),
+      "seq_id" = 1:ncol(tib_interm)
+    ) |>
+      rowwise() |>
+      mutate("max_letter_prob" = max(across(starts_with("nb_"))))
+
+    nucleotide_first <- nucleotide_first_interm |>
+      tidyr::pivot_longer(cols = starts_with("nb_"))
+
+
+    p_start <- ggplot(nucleotide_first) +
+      geom_point(aes(x = seq_id, y = value, color = name)) +
+      xlim(c(0, first_n)) +
+      labs(subtitle = paste0(
+        "Proportion of nucleotide along the ",
+        first_n,
+        " first nucleotides \n in sequences of ",
+        ntaxa(physeq),
+        " taxa representing ",
+        sum(physeq@otu_table),
+        " sequences in ",
+        nsamples(physeq),
+        " samples."
+      ))
+
+    if (!is.null(hill_scales)) {
+      renyi_nucleotide <-
+        vegan::renyi(nucleotide_first_interm[, c("nb_A", "nb_C", "nb_G", "nb_T")],
+                                       scales = hill_scales)
+
+      if (inherits(renyi_nucleotide, "numeric")) {
+        renyi_nucleotide <- data.frame(renyi_nucleotide)
+        colnames(renyi_nucleotide) <- hill_scales
+      }
+      if (sum(hill_scales == 0) > 0) {
+        renyi_nucleotide <- renyi_nucleotide |>
+          rename("Hill 0 (Shannon)" = "0")
+      }
+      if (sum(hill_scales == 1) > 0) {
+        renyi_nucleotide <- renyi_nucleotide |>
+          rename("Hill 1 (Simpson)" = "1")
+      }
+      if (sum(hill_scales == 2) > 0) {
+        renyi_nucleotide <- renyi_nucleotide |>
+          rename("Hill 2 (Shannon)" = "2")
+      }
+
+      renyi_nucleotide <- renyi_nucleotide |>
+        tidyr::pivot_longer(cols = everything())
+
+      renyi_nucleotide$seq_id <-
+        sort(rep(1:ncol(tib_interm),
+                 times = nrow(renyi_nucleotide) / ncol(tib_interm)))
+
+      p_start <- p_start +
+        geom_line(data = renyi_nucleotide, aes(x = seq_id, y = value, color = name))
+    }
+  } else {
+    p_start <- NULL
+    nucleotide_first_interm <- NULL
+  }
+
+  if (!is.null(last_n)) {
+    tib_interm_last <- t(data.frame(letters = c(
+      strsplit(as.vector(
+        IRanges::narrow(physeq@refseq,
+                        start = Biostrings::width(physeq@refseq) - last_n)),
+        split = "")
+    )))
+
+    nucleotide_last_interm <- data.frame(
+      "nb_A" = colSums(tib_interm_last == "A") / nrow(tib_interm_last),
+      "nb_C" = colSums(tib_interm_last == "C") / nrow(tib_interm_last),
+      "nb_G" = colSums(tib_interm_last == "G") / nrow(tib_interm_last),
+      "nb_T" = colSums(tib_interm_last == "T") / nrow(tib_interm_last),
+      "seq_id" = 1:ncol(tib_interm_last)
+    )
+
+    nucleotide_last <- nucleotide_last_interm |>
+      tidyr::pivot_longer(cols = starts_with("nb_"))
+
+    p_last <- ggplot(nucleotide_last) +
+      geom_point(aes(x = seq_id, y = value, color = name)) +
+      labs(subtitle = paste0(
+        "Proportion of nucleotide along the ",
+        last_n,
+        " last nucleotides \n in sequences of ",
+        ntaxa(physeq),
+        " taxa representing ",
+        sum(physeq@otu_table),
+        " sequences in ",
+        nsamples(physeq),
+        " samples."
+      ))
+
+    if (!is.null(hill_scales)) {
+      renyi_nucleotide <-
+        vegan::renyi(nucleotide_last_interm[, c("nb_A", "nb_C", "nb_G", "nb_T")],
+          scales = hill_scales
+        )
+
+      if (inherits(renyi_nucleotide, "numeric")) {
+        renyi_nucleotide <- data.frame(renyi_nucleotide)
+        colnames(renyi_nucleotide) <- hill_scales
+      }
+      if (sum(hill_scales == 0) > 0) {
+        renyi_nucleotide <- renyi_nucleotide |>
+          rename("Hill 0 (Shannon)" = "0")
+      }
+      if (sum(hill_scales == 1) > 0) {
+        renyi_nucleotide <- renyi_nucleotide |>
+          rename("Hill 1 (Simpson)" = "1")
+      }
+      if (sum(hill_scales == 2) > 0) {
+        renyi_nucleotide <- renyi_nucleotide |>
+          rename("Hill 2 (Shannon)" = "2")
+      }
+
+      renyi_nucleotide <- renyi_nucleotide |>
+        tidyr::pivot_longer(cols = everything())
+
+      renyi_nucleotide$seq_id <-
+        sort(rep(1:ncol(tib_interm_last),
+          times = nrow(renyi_nucleotide) / ncol(tib_interm_last)
+        ))
+
+      p_last <- p_last +
+        geom_line(data = renyi_nucleotide, aes(
+          x = seq_id,
+          y = value,
+          color = name
+        ))
+    }
+  } else {
+    p_last <- NULL
+    nucleotide_last_interm <- NULL
+  }
+
+  return(list(
+    "plot_start" = p_start,
+    "plot_last" = p_last,
+    "df_start" = nucleotide_first_interm,
+    "df_end" = nucleotide_last_interm
+  ))
+}
+################################################################################
+
+
+
+
+
+################################################################################
+#' Plot the nucleotide proportion of references sequences
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#'  It is a wrapper of the function `plot_refseq_extremity_pq()`. See
+#'  ?plot_refseq_extremity_pq for more examples.
+#'
+#'   If `hill_scale` is not null, Hill diversity number are used to represent the distribution
+#'   of the diversity (equitability) along the sequences.
+#'
+#' @inheritParams clean_pq
+#' @param first_n (int, default 10) The number of nucleotides to plot the 5' extremity.
+#' @param last_n (int, default 10) The number of nucleotides to plot the 3' extremity.
+#' @param hill_scales (vector) A vector defining the Hill number wanted. Set to NULL if
+#'   you don't want to plot Hill diversity metrics.
+#' @param min_width (int, default 0) Select only the sequences from physeq@refseq with using a
+#'   minimum length threshold. If `first_n` is superior to the minimum length of the
+#'   references sequences, you must use min_width to filter out the narrower sequences
+#' @return A ggplot2 object
+#' @export
+#' @author Adrien Taudière
+#' @examples
+#' plot_refseq_pq(data_fungi)
+#' plot_refseq_pq(data_fungi, hill_scales = c(2), first_n = 300)
+#'
+plot_refseq_pq <- function(physeq, hill_scales = NULL, first_n = min(Biostrings::width(physeq@refseq)), last_n = NULL, min_width = first_n) {
+  res <- plot_refseq_extremity_pq(physeq = physeq, hill_scales = hill_scales, first_n = first_n, last_n = last_n, min_width = min_width)
+  return(res$plot_start)
+}

@@ -26,9 +26,9 @@ Set to number of cpus/processors to use for the clustering}
 
 \item{vsearchpath}{(default: vsearch) path to vsearch.}
 
-\item{verbose}{(logical) if true, print some additional messages.}
+\item{verbose}{(logical) If true, print some additional messages.}
 
-\item{clean_pq}{(logical) if true, empty samples and empty ASV are discarded
+\item{clean_pq}{(logical) If true, empty samples and empty ASV are discarded
 before clustering.}
 
 \item{keep_temporary_files}{(logical, default: FALSE) Do we keep temporary files}
