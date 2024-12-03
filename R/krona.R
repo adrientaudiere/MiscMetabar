@@ -18,7 +18,8 @@
 #' @param add_unassigned_rank (int) Add unassigned for rank
 #'   inferior to 'add_unassigned_rank' when necessary.
 #' @param name A name for intermediary files, Useful to name
-#'   your krona result files before merging using [merge_krona()]
+#'   your krona result files before merging using [merge_krona()].
+#'   Must not contain space.
 #'
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows" && MiscMetabar::is_krona_installed()
 #' data("GlobalPatterns", package = "phyloseq")
@@ -43,12 +44,6 @@ krona <-
            ranks = "All",
            add_unassigned_rank = 0,
            name = NULL) {
-    if (ranks[1] == "All") {
-      ranks <- seq_along(physeq@tax_table[1, ])
-    }
-
-    df <- data.frame(unclass(physeq@tax_table[, ranks]))
-    df$ASVs <- rownames(physeq@tax_table)
 
     if (is.null(name)) {
       if (nb_seq) {
@@ -57,6 +52,19 @@ krona <-
         name <- "Number.of.ASVs_temp"
       }
     }
+
+    if(grepl(" ", name)){
+      stop("The name parameter must not contain space")
+    }
+
+    if (ranks[1] == "All") {
+      message("All the ", ncol(physeq@tax_table)  ,
+      " taxonomic present in the tax_table will be used for krona plot!")
+      ranks <- seq_along(physeq@tax_table[1, ])
+    }
+
+    df <- data.frame(unclass(physeq@tax_table[, ranks]))
+    df$ASVs <- rownames(physeq@tax_table)
 
     if (nb_seq) {
       df$nb_seq <- taxa_sums(physeq)
