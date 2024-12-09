@@ -1,6 +1,7 @@
 # MiscMetabar 0.11 (in development)
 
-- Add functions `filt_taxa_pq()` to filter taxa based on the number of sequences/occurences
+- Add function `filt_taxa_pq()` to filter taxa based on the number of sequences/occurences
+- Add functions `no_legend()` and `hill_curves_pq()` to plot hill diversity accumulation curves for phyloseq
 
 
 # MiscMetabar 0.10.4

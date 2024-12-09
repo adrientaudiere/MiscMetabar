@@ -83,6 +83,7 @@ reference:
   - subset_taxa_tax_control
   - select_taxa
   - merge_taxa_vec
+  - filt_taxa_pq
 
 - subtitle: Subset/merge samples
   contents:
@@ -135,6 +136,7 @@ reference:
   - ggbetween_pq
   - ggscatt_pq
   - glmutli_pq
+  - hill_curves_pq
   - hill_pq
   - hill_test_rarperm_pq
   - hill_tuckey_pq
@@ -254,6 +256,7 @@ reference:
 - subtitle: Plot management
   contents:
   - multiplot
+  - no_legend
 - subtitle: Variable management
   contents:
   - diff_fct_diff_class

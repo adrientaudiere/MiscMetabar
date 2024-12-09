@@ -2613,7 +2613,7 @@ multi_biplot_pq <- function(physeq,
 #'   with NA in the `split_by` variable of the `physeq@sam_data` slot
 #' @param clean_pq (logical)
 #'   If set to TRUE, empty samples are discarded after subsetting ASV
-#' @return A ggplot2 graphic
+#' @return A ggplot2 object
 #' @export
 #' @author Adrien Taudière
 #' @seealso [tax_bar_pq()] and [multitax_bar_pq()]
@@ -2800,7 +2800,7 @@ plot_tax_pq <-
 #' @param log10trans (logical, default TRUE) If TRUE,
 #'   the number of sequences (or ASV if nb_seq = FALSE) is log10
 #'   transformed.
-#' @return A ggplot2 graphic
+#' @return A ggplot2 object
 #' @export
 #'
 #' @author Adrien Taudière
@@ -3736,7 +3736,7 @@ ridges_pq <- function(physeq,
 #'   legend of color for lvl 1
 #' @param ... Other arguments passed on to [treemapify::geom_treemap()] function.
 #'
-#' @return A ggplot2 graphic
+#' @return A ggplot2 object
 #' @export
 #'
 #' @author Adrien Taudière
@@ -4530,4 +4530,225 @@ plot_refseq_extremity_pq <- function(
 plot_refseq_pq <- function(physeq, hill_scales = NULL, first_n = min(Biostrings::width(physeq@refseq)), last_n = NULL, min_width = first_n) {
   res <- plot_refseq_extremity_pq(physeq = physeq, hill_scales = hill_scales, first_n = first_n, last_n = last_n, min_width = min_width)
   return(res$plot_start)
+}
+
+
+################################################################################
+#' Discard legend in ggplot2
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
+#' @export
+#' @return A ggplot2 object
+#' @author Adrien Taudière
+#' @examples
+#' plot_refseq_pq(data_fungi)
+#' plot_refseq_pq(data_fungi) + no_legend()
+no_legend <- function() {
+  list( theme(legend.position = "none"))
+}
+################################################################################
+
+################################################################################
+#' Hill Diversities and Corresponding Accumulation Curves for phyloseq
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#'   Basically a wrapper of [vegan::renyi()] and
+#'   [vegan::renyiaccum()] functions
+#'
+#' @inheritParams clean_pq
+#' @param merge_sample_by a vector to determine which samples to merge using 
+#'   the [merge_samples2()] function.  Need to be in `physeq@sam_data` 
+#' @param color_fac (optional): The variable to color the barplot. For ex.
+#'   same as fact. If merge_sample_by is set, color_fac must be nested in 
+#'   the merge_sample_by factor. See examples.
+#' @param hill_scales
+#' @param nperm (int Default NULL) If a integer is set to nperm, nperm 
+#'   permutation are computed to draw confidence interval for each curves.
+#'   The function use [vegan::renyi()] if nperm is NULL and 
+#'   [vegan::renyiaccum()] else.
+#' @param na_remove (logical, default FALSE) If set to TRUE, remove samples with
+#'   NA in the variables set in merge_sample_by. Not used if merge_sample_by is
+#'   NULL.
+#' @param wrap_factor (logical, default TRUE) Do the plot is wrap by the factor
+#' @param plot_legend (logical, default TRUE) If set to FALSE,
+#'   no legend are plotted.
+#' @param linewidth (int, default 2) The linewidth of lines.
+#'  
+#' @param ... Other arguments passed on to [vegan::renyi()] function or
+#'   [vegan::renyiaccum()] if nperm is not NULL.
+#' 
+#' @export
+#' @author Adrien Taudière
+#' @return A ggplot2 object
+#' @examples
+#' if (requireNamespace("vegan")) {
+#' hill_curves_pq(data_fungi_mini, merge_sample_by = "Time")
+#' hill_curves_pq(data_fungi_mini, color_fac = "Time", plot_legend=FALSE)
+#' hill_curves_pq(data_fungi_mini, color_fac = "Time", plot_legend=FALSE, 
+#'   nperm=9, size_point= 1, linewidth=0.5)
+#' 
+#' hill_curves_pq(data_fungi_mini, nperm=9, plot_legend=FALSE, size_point= 1,
+#'   linewidth=0.5)
+#' hill_curves_pq(data_fungi_mini, "Height", 
+#'   hill_scales=c(0,1,2,8), plot_legend=FALSE)
+#' hill_curves_pq(data_fungi_mini, "Height", hill_scales=c(0,0.5,1,2,4,8),
+#'   nperm=9)
+#' hill_curves_pq(data_fungi_mini, "Height", nperm=9, wrap_factor=FALSE)
+#'
+#' data_fungi_mini@sam_data$H_T <- paste0(data_fungi_mini@sam_data$Height,
+#'   "_", data_fungi_mini@sam_data$Time)
+#' merge_samples2(data_fungi_mini, "H_T") 
+#' hill_curves_pq(data_fungi_mini, "H_T", color_fac="Time", nperm=9)
+#'   }
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please make a reference to [vegan::renyi()] or
+#'   [vegan::renyiaccum()] functions
+#'
+hill_curves_pq <-  function(physeq,
+                            merge_sample_by = NULL,
+                            color_fac = NULL,
+                            hill_scales = c(0, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, Inf),
+                            nperm = NULL,
+                            na_remove = TRUE,
+                            wrap_factor = TRUE,
+                            plot_legend=TRUE,
+                            linewidth = 2,
+                            size_point = 2,
+                            ...) {
+  verify_pq(physeq)
+  
+  if (na_remove && !is.null(merge_sample_by)) {
+    new_physeq <-
+      subset_samples_pq(physeq, !is.na(physeq@sam_data[[merge_sample_by]]))
+    if (nsamples(physeq) - nsamples(new_physeq) > 0) {
+      message(
+        paste0(
+          nsamples(physeq) - nsamples(new_physeq),
+          " were discarded due to NA in variables present in formula."
+        )
+      )
+    }
+    physeq <- new_physeq
+  }
+  if (!is.null(merge_sample_by)) {
+    physeq <- merge_samples2(physeq, merge_sample_by)
+  }
+  
+  physeq <- clean_pq(
+    physeq,
+    force_taxa_as_rows = TRUE,
+    remove_empty_samples = FALSE,
+    remove_empty_taxa = FALSE,
+    clean_samples_names = FALSE
+  )
+  
+  if (!is.null(nperm)) {
+    df_hill <-
+      vegan::renyiaccum(
+        t(physeq)@otu_table,
+        scales = hill_scales,
+        permutation = nperm,
+        hill = TRUE,
+        ...
+      )
+    what = c("Collector", "mean", "Qnt 0.025", "Qnt 0.975")
+    what <- what[what %in% dimnames(df_hill)[[3]]]
+    if (any(what %in% dimnames(df_hill)[[3]])) {
+      df_hill <- df_hill[, , what, drop = FALSE]
+    }
+    dm <- dim(df_hill)
+    dnam <- dimnames(df_hill)
+    lin <- rep(dnam[[3]], each = dm[1] * dm[2])
+    alp <- factor(dnam[[2]], levels = dnam[[2]])
+    alpha <- rep(rep(alp, each = dm[1]), len = prod(dm))
+    diversity <- as.vector(df_hill)
+    
+    if (is.null(color_fac)) {
+      modality <- rep(sample_names(physeq), len = prod(dm))
+    } else {
+      modality <- rep(levels(as.factor(physeq@sam_data[, color_fac][[1]])), len = prod(dm))
+    }
+    
+    samp_names <- rep(sample_names(physeq), len = prod(dm))
+    
+    df_plot <- data.frame(
+      diversity = diversity,
+      Type = lin,
+      Modality = modality,
+      alpha_hill = alpha,
+      samp_names = samp_names
+    )
+    
+    p <- ggplot(df_plot,
+                aes(
+                  y = diversity,
+                  x = alpha_hill,
+                  color = Modality,
+                  group = samp_names
+                )) + 
+      geom_point(data = subset(df_plot, Type == "mean"), size = size_point) +
+      geom_line(
+        data = subset(df_plot, Type == "mean"),
+        linetype = 1,
+        linewidth = linewidth
+      ) +
+      geom_line(
+        data = subset(df_plot, Type == "Qnt 0.025"),
+        linetype = 2,
+        linewidth = linewidth/3
+      ) +
+      geom_line(
+        data = subset(df_plot, Type == "Qnt 0.975"),
+        linetype = 2,
+        linewidth =  linewidth/3
+      )
+    if (wrap_factor) {
+      p <- p  +
+        facet_wrap("Modality")
+    }
+    
+  } else {
+    df_hill <-
+      vegan::renyi(t(physeq)@otu_table, scales = hill_scales, hill = TRUE)
+    if (inherits(df_hill, "data.frame")) {
+      if (is.null(color_fac)) {
+        modality <- sample_names(physeq)
+      } else {
+        modality <- factor(rep(rownames(df_hill), ncol(df_hill)), levels = rownames(df_hill))
+      }
+      
+      alp <- factor(rep(colnames(df_hill), each = nrow(df_hill)), levels = colnames(df_hill))
+      div <- as.vector(as.matrix(df_hill))
+      df_plot <- data.frame(diversity = div,
+                            Modality = modality,
+                            alpha_hill = alp)
+    }      else {
+      df_plot <- data.frame(
+        diversity = x,
+        alpha = factor(names(x), levels = names(x)),
+        plot = "plot"
+      )
+      lo <- hi <- med <- NA
+    }
+    p <-  ggplot(df_plot,
+                 aes(
+                   y = diversity,
+                   x = alpha_hill,
+                   color = Modality,
+                   group = Modality
+                 )) + geom_point(size = 2) + geom_line()
+  }
+  
+  if(!plot_legend) {
+    p <- p + no_legend()
+  }
+  return(p)
 }
