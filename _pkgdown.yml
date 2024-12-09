@@ -52,9 +52,14 @@ reference:
   contents:
   - summary_plot_pq
   - tbl_sum_samdata
-  - verify_pq
+
 
 - title: Transform phyloseq object
+- subtitle: Verify and clean phyloseq object
+  contents:
+  - clean_pq
+  - verify_pq
+
 - subtitle: Taxonomy
   contents:
   - add_new_taxonomy_pq
@@ -117,15 +122,10 @@ reference:
 
 - subtitle: References sequences
   contents:
+  - add_dna_to_phyloseq
+  - plot_complexity_pq
   - plot_refseq_extremity_pq
   - plot_refseq_pq
-  - add_dna_to_phyloseq
-
-- subtitle: Others
-  contents:
-  - add_dna_to_phyloseq
-  - clean_pq
-
 
 - title: Explore phyloseq object
 - subtitle: alpha-diversity
@@ -160,6 +160,7 @@ reference:
   - ridges_pq
   - SRS_curve_pq
   - tsne_pq
+  - umap_pq
   - upset_pq
   - upset_test_pq
   - var_par_pq

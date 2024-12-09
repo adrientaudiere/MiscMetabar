@@ -4752,3 +4752,153 @@ hill_curves_pq <-  function(physeq,
   }
   return(p)
 }
+################################################################################
+
+
+################################################################################
+#' Computes a manifold approximation and projection (UMAP) for
+#' phyloseq object
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#' https://journals.asm.org/doi/full/10.1128/msystems.00691-21
+#'
+#' @inheritParams clean_pq
+#' @param pkg Which R packages to use, either "umap" or "uwot".
+#' @param ... Others arguments passed on to [umap::umap()] or 
+#'   [uwot::umap2()] function.
+#'   For example `n_neighbors` set the number of nearest neighbors (Default 15).
+#'   See [?umap:::umap.defaults()] or [?uwot::umap2for()] fo rthe list of 
+#'   parameters and default values.
+#'   
+#' @return A dataframe with samples informations and the x_umap and y_umap position
+#' @author Adrien Taudière
+#' @export
+#' @seealso [umap::umap()], [tsne_pq()], [phyloseq::plot_ordination()]
+#' @examples
+#' library("umap")
+#' df_umap<- umap_pq(data_fungi)
+#' ggplot(df_umap, aes(x=x_umap, y=y_umap, col=Height)) + geom_point(size=2)
+#'
+#' library(patchwork)
+#' physeq <- data_fungi
+#' res_tsne <- tsne_pq(data_fungi)
+#' df_umap_tsne <- df_umap
+#' df_umap_tsne$x_tsne <- res_tsne$Y[,1]
+#' df_umap_tsne$y_tsne <- res_tsne$Y[,2]
+#' ((ggplot(df_umap, aes(x=x_umap, y=y_umap, col=Height)) + geom_point(size=2)+ggtitle("UMAP")) + (plot_ordination(physeq, ordination = ordinate(physeq,method = "PCoA", distance ="bray"),color="Height"))+ggtitle("PCoA")) / ((ggplot(df_umap_tsne, aes(x=x_tsne, y=y_tsne, col=Height)) + geom_point(size=2)+ggtitle("tsne"))  + (plot_ordination(physeq, ordination = ordinate(physeq,method = "NMDS", distance ="bray"),color="Height")+ggtitle("NMDS"))) + patchwork::plot_layout(guides="collect")
+#' 
+#' df_uwot <- umap_pq(data_fungi, pkg="uwot")
+#' 
+#' (ggplot(df_umap, aes(x=x_umap, y=y_umap, col=Height)) + geom_point(size=2))/
+#' (ggplot(df_uwot, aes(x=x_umap, y=y_umap, col=Height)) + geom_point(size=2))
+#' 
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please make a reference to `umap::umap()` if you
+#'   use this function.
+
+umap_pq <- function(physeq, pkg="umap",...){
+  verify_pq(physeq)
+  physeq <- MiscMetabar::taxa_as_columns(physeq)
+
+  psm_samp <- psmelt_samples_pq(physeq)
+  if(pkg=="umap"){ 
+    res_umap <- umap::umap(as.matrix(unclass(physeq@otu_table)), ...)
+    umap_layout <- as_tibble(res_umap$layout)
+    
+  } else if (pkg=="uwot"){
+
+  res_umap <- uwot::umap2(as.matrix(unclass(physeq@otu_table)), ...)
+  umap_layout<- as_tibble(res_umap)
+  } else {
+    stop("Param pkg must be set to 'umap' or 'uwot'.")
+  }
+  umap_layout$Sample <- rownames(res_umap)
+  names(umap_layout) <- c("x_umap", "y_umap", "Sample")
+  df_umap <- full_join(umap_layout, psm_samp)
+
+  return(df_umap)
+}
+################################################################################
+
+################################################################################
+#' Plot kmer complexity of references sequences of a phyloseq object
+#'
+#'@description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#'   Basically a wrapper of [dada2::seqComplexity()] 
+#'
+#' @inheritParams clean_pq
+#' @param kmer_size: int (default 2) The size of the kmers 
+#'   (or "oligonucleotides" or "words") to use.
+#' @param window (int, default NULL) The width in nucleotides of the moving
+#'    window. If NULL the whole sequence is used.
+#' @param by (int, default 5) The step size in nucleotides between each moving
+#'    window tested.
+#' @param bins (int, default 100). The number of bins to use for the histogram.
+#' @param aggregate (logical, default FALSE) If TRUE, compute an aggregate quality profile
+#'    for all samples
+#' @param vline_random_kmer (logical, default TRUE) If TRUE, add a vertical line
+#'   at the value for random kmer (equal to 4^kmerSize)) 
+#' @param ... Arguments passed on to geom_histogram.
+#'
+#' @return A ggplot2 object
+#' @export
+#' @author Adrien Taudière
+#' @seealso [dada2::seqComplexity()], [dada2::plotComplexity()]
+#' @examples
+#' plot_complexity_pq(subset_samples(data_fungi, Height=="High"))
+#' plot_complexity_pq(subset_samples(data_fungi_mini, Height=="High"), 
+#'                    vline_random_kmer =FALSE)
+#' plot_complexity_pq(subset_samples(data_fungi, Height=="Low"),
+#'                    aggregate = FALSE, kmer_size=4)
+#' plot_complexity_pq(subset_samples(data_fungi, Height=="Low"), kmer_size=4)
+#'                    
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please make a reference to [dada2::seqComplexity()] 
+
+plot_complexity_pq <- function(physeq, 
+                               kmer_size = 2, 
+                               window = NULL, 
+                               by=5, 
+                               bins=100, 
+                               aggregate= FALSE,
+                               vline_random_kmer = TRUE, 
+                               ...) {
+  if(aggregate){
+    refseq_complex <- seqComplexity(physeq@refseq, kmerSize = kmer_size, window = window, 
+            by = by)
+  } else {
+  refseq_complex <- vector("list", length=nsamples(physeq))
+  names(refseq_complex) <- sample_names(physeq)
+  for(sam in sample_names(physeq)){
+    physeq_interm <- subset_samples_pq(physeq, sample_names(physeq)==sam)
+    refseq_complex[[sam]] <-seqComplexity(physeq_interm@refseq, kmerSize = kmer_size, window = window, 
+            by = by)
+  }
+  df <- data.frame(complexity = unlist(refseq_complex), file = rep(sample_names(physeq), 
+        times = sapply(refseq_complex, length)))
+  }
+
+  p <- ggplot(data = df, aes(x = complexity)) +
+    geom_histogram(bins = bins, 
+        na.rm = TRUE, ...) + ylab("Count") +
+    xlab("Effective Oligonucleotide Number") + 
+        theme_bw() + facet_wrap(~file) + 
+    scale_x_continuous(limits = c(0, 4^kmer_size), 
+                       breaks = seq(0, 4^kmer_size, (4^kmer_size)/4))
+  if(vline_random_kmer) {
+    p <- p + 
+    geom_vline(xintercept = 4^kmer_size, color="red")
+  }
+  return(p)
+}
+################################################################################

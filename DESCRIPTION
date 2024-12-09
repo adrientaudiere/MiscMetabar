@@ -74,6 +74,8 @@ Suggests:
     tibble,
     tidyr,
     treemapify,
+    umap,
+    uwot,
     vegan,
     venneuler,
     vctrs,

@@ -2,6 +2,8 @@
 
 - Add function `filt_taxa_pq()` to filter taxa based on the number of sequences/occurences
 - Add functions `no_legend()` and `hill_curves_pq()` to plot hill diversity accumulation curves for phyloseq
+- Add function `umap_pq()` to compute Dimensionality Reduction with UMAP
+- Add function `plot_complexity_pq()` to plot kmer complexity of references sequences of a phyloseq object
 
 
 # MiscMetabar 0.10.4
