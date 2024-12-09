@@ -18,6 +18,7 @@ if (getRversion() >= "2.15.1") {
 #'
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object with `refseq` slot and new
 #'   taxa names
+#' @author Adrien Taudière
 #' @export
 
 add_dna_to_phyloseq <- function(physeq, prefix_taxa_names = "Taxa_") {
@@ -70,6 +71,7 @@ add_dna_to_phyloseq <- function(physeq, prefix_taxa_names = "Taxa_") {
 #' @param prefix_taxa_names (default "Taxa_"): the prefix of taxa names (eg. "ASV_" or "OTU_")
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object
 #' @export
+#' @author Adrien Taudière
 clean_pq <- function(physeq,
                      remove_empty_samples = TRUE,
                      remove_empty_taxa = TRUE,
@@ -232,6 +234,7 @@ clean_pq <- function(physeq,
 #' @return The number of sequences, clusters (e.g. OTUs, ASVs) and samples for
 #'   each object.
 #' @export
+#' @author Adrien Taudière
 #' @seealso [track_wkflow_samples()]
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' data(enterotype)
@@ -945,7 +948,7 @@ save_pq <- function(physeq, path = NULL, ...) {
 #' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 #' and if present a phy_tree in Newick format. At least the otu_table.csv need to be present.
 #' @export
-#'
+#' @author Adrien Taudière
 #' @examples
 #' write_pq(data_fungi, path = paste0(tempdir(), "/phyloseq"))
 #' read_pq(path = paste0(tempdir(), "/phyloseq"))
@@ -1371,7 +1374,7 @@ mumu_pq <- function(physeq,
 #' @return Nothing if the phyloseq object is valid. An error in the other case.
 #'  Warnings if verbose = TRUE
 #' @export
-#'
+#' @author Adrien Taudière
 verify_pq <- function(physeq,
                       verbose = FALSE,
                       min_nb_seq_sample = 500,
@@ -1440,7 +1443,7 @@ verify_pq <- function(physeq,
 #' @inheritParams clean_pq
 #' @param condition A boolean vector to subset samples. Length must fit
 #'   the number of samples
-#'
+#' @author Adrien Taudière
 #' @examples
 #'
 #' cond_samp <- grepl("A1", data_fungi@sam_data[["Sample_names"]])
@@ -1510,7 +1513,7 @@ subset_samples_pq <- function(physeq, condition) {
 #'
 #' @return a new phyloseq object
 #' @export
-#'
+#' @author Adrien Taudière
 subset_taxa_pq <- function(physeq,
                            condition,
                            verbose = TRUE,
@@ -1581,6 +1584,77 @@ subset_taxa_pq <- function(physeq,
 }
 ################################################################################
 
+################################################################################
+#' Filter taxa of a phyloseq object based on the minimum number of 
+#'   sequences/samples
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' 
+#' @inheritParams clean_pq
+#' @param min_nb_seq (int default NULL) minimum number of sequences by taxa.
+#' @param min_occurence (int default NULL) minimum number of sample by taxa.
+#' @param combination Either "AND" (default) or "OR". If set to "AND" and both
+#'   min_nb_seq and min_occurence are not NULL, the taxa must match the two 
+#'   condition to passe the filter. If set to "OR", taxa matching only one 
+#'   condition are kept.  
+#' @param clean_pq (logical)
+#'   If set to TRUE, empty samples and empty taxa (ASV, OTU) are discarded
+#'   after filtering.
+#'
+#' @return a new phyloseq object
+#' @export
+#' @author Adrien Taudière
+#' @examples
+#' filt_taxa_pq(data_fungi, min_nb_seq=20)
+#' filt_taxa_pq(data_fungi, min_occurence=2)
+#' filt_taxa_pq(data_fungi, min_occurence=2, 
+#'   min_nb_seq=10, clean_pq = FALSE)
+#' filt_taxa_pq(data_fungi, min_occurence=2,
+#'   min_nb_seq=10, combination = "OR")
+
+filt_taxa_pq <- function(physeq,
+                         min_nb_seq=NULL, 
+                         min_occurence=NULL, 
+                         combination="AND",
+                         clean_pq = TRUE) {
+  new_physeq <- physeq
+  if(!is.null(min_nb_seq) && !is.null(min_occurence)) {
+stop("You must inform either min_nb_seq or min_occurence or both params!")
+  }
+  if(!is.null(min_nb_seq) && is.null(min_occurence)) {
+    new_physeq <- 
+      subset_taxa_pq(physeq, taxa_sums(physeq)>=min_nb_seq)
+  }
+  
+  if(is.null(min_nb_seq) && !is.null(min_occurence)) {
+    new_physeq <- 
+      subset_taxa_pq(new_physeq, 
+                     taxa_sums(as_binary_otu_table(new_physeq))>=min_occurence)
+  }
+  
+  if(!is.null(min_nb_seq)&& !is.null(min_occurence)) {
+    if(combination=="AND"){
+      new_physeq <- 
+        subset_taxa_pq(new_physeq, 
+                       taxa_sums(as_binary_otu_table(new_physeq))>=1 &
+                         taxa_sums((new_physeq))>=100)
+    } else if (combination=="OR"){
+      new_physeq <- 
+        subset_taxa_pq(new_physeq, 
+                       taxa_sums(as_binary_otu_table(new_physeq))>=1 | 
+                         taxa_sums((new_physeq))>=100)
+    }
+  }
+  
+  if(clean_pq) {
+   new_physeq <- clean_pq(new_physeq)
+  }
+  return(new_physeq)
+}
+  
 
 ################################################################################
 #' Select one sample from a physeq object

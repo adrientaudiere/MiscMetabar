@@ -1,4 +1,7 @@
-# MiscMetabar 0.10.5 (in development)
+# MiscMetabar 0.11 (in development)
+
+- Add functions `filt_taxa_pq()` to filter taxa based on the number of sequences/occurences
+
 
 # MiscMetabar 0.10.4
 
