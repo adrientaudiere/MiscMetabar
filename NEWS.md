@@ -4,6 +4,8 @@
 - Add functions `no_legend()` and `hill_curves_pq()` to plot hill diversity accumulation curves for phyloseq
 - Add function `umap_pq()` to compute Dimensionality Reduction with UMAP
 - Add function `plot_complexity_pq()` to plot kmer complexity of references sequences of a phyloseq object
+- Add param `type` to `ridge_pq()` to plot a cumulative version (type="ecdf") version of ridge
+- Introduce the idea of a pq-verse: some other packages will complete the MiscMetabar packages to make package maintenance easier. The [comparpq](https://github.com/adrientaudiere/comparpq) package will facilitate the comparison of phyloseq object with different taxonomy, different clustering method, different samples with same modality or different primers. 
 
 
 # MiscMetabar 0.10.4

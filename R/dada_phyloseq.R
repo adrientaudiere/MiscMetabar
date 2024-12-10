@@ -240,18 +240,21 @@ clean_pq <- function(physeq,
 #' data(enterotype)
 #' if (requireNamespace("pbapply")) {
 #'   track_wkflow(list(data_fungi, enterotype), taxonomy_rank = c(3, 5))
-#'   track_wkflow(list("data FUNGI"=data_fungi,
+#'   track_wkflow(list(
+#'     "data FUNGI" = data_fungi,
 #'     "fastq files forward" =
-#'     unlist(list_fastq_files(system.file("extdata", package = "MiscMetabar"),
-#'     paired_end = FALSE))))
+#'       unlist(list_fastq_files(system.file("extdata", package = "MiscMetabar"),
+#'         paired_end = FALSE
+#'       ))
+#'   ))
 #' }
 track_wkflow <- function(list_of_objects,
                          obj_names = NULL,
                          clean_pq = FALSE,
                          taxonomy_rank = NULL,
-                         verbose=TRUE,
+                         verbose = TRUE,
                          ...) {
-  if(verbose) {
+  if (verbose) {
     message("Compute the number of sequences")
   }
   if (!is.null(obj_names)) {
@@ -268,8 +271,8 @@ track_wkflow <- function(list_of_objects,
 
   track_nb_seq_per_obj <-
     pbapply::pblapply(list_of_objects, function(object) {
-      if(verbose) {
-      message(paste("Start object of class:", class(object), sep = " "))
+      if (verbose) {
+        message(paste("Start object of class:", class(object), sep = " "))
       }
       if (inherits(object, "phyloseq")) {
         sum(object@otu_table)
@@ -305,8 +308,8 @@ track_wkflow <- function(list_of_objects,
   message("Compute the number of clusters")
   track_nb_cluster_per_obj <-
     pbapply::pblapply(list_of_objects, function(object) {
-      if(verbose) {
-      message(paste("Start object of class:", class(object), sep = " "))
+      if (verbose) {
+        message(paste("Start object of class:", class(object), sep = " "))
       }
       if (inherits(object, "phyloseq")) {
         ntaxa(object)
@@ -333,8 +336,8 @@ track_wkflow <- function(list_of_objects,
   message("Compute the number of samples")
   track_nb_sam_per_obj <-
     pbapply::pblapply(list_of_objects, function(object) {
-      if(verbose) {
-      message(paste("Start object of class:", class(object), sep = " "))
+      if (verbose) {
+        message(paste("Start object of class:", class(object), sep = " "))
       }
       if (inherits(object, "phyloseq")) {
         nsamples(object)
@@ -364,8 +367,8 @@ track_wkflow <- function(list_of_objects,
     message("Compute the number of values in taxonomic rank")
     track_nb_tax_value_per_obj <-
       pbapply::pblapply(list_of_objects, function(object) {
-        if(verbose) {
-        message(paste("Start object of class:", class(object), sep = " "))
+        if (verbose) {
+          message(paste("Start object of class:", class(object), sep = " "))
         }
         if (inherits(object, "phyloseq")) {
           if (taxa_are_rows(object)) {
@@ -384,8 +387,8 @@ track_wkflow <- function(list_of_objects,
 
     names_taxonomic_rank <-
       pbapply::pblapply(list_of_objects, function(object) {
-        if(verbose) {
-        message(paste("Start object of class:", class(object), sep = " "))
+        if (verbose) {
+          message(paste("Start object of class:", class(object), sep = " "))
         }
         if (inherits(object, "phyloseq")) {
           if (taxa_are_rows(object)) {
@@ -1585,21 +1588,23 @@ subset_taxa_pq <- function(physeq,
 ################################################################################
 
 ################################################################################
-#' Filter taxa of a phyloseq object based on the minimum number of 
+#' Filter taxa of a phyloseq object based on the minimum number of
 #'   sequences/samples
 #'
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
-#' 
+#'
+#' Basically a wraper of [subset_taxa_pq()].
+#'
 #' @inheritParams clean_pq
 #' @param min_nb_seq (int default NULL) minimum number of sequences by taxa.
 #' @param min_occurence (int default NULL) minimum number of sample by taxa.
 #' @param combination Either "AND" (default) or "OR". If set to "AND" and both
-#'   min_nb_seq and min_occurence are not NULL, the taxa must match the two 
-#'   condition to passe the filter. If set to "OR", taxa matching only one 
-#'   condition are kept.  
+#'   min_nb_seq and min_occurence are not NULL, the taxa must match the two
+#'   condition to passe the filter. If set to "OR", taxa matching only one
+#'   condition are kept.
 #' @param clean_pq (logical)
 #'   If set to TRUE, empty samples and empty taxa (ASV, OTU) are discarded
 #'   after filtering.
@@ -1608,53 +1613,63 @@ subset_taxa_pq <- function(physeq,
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' filt_taxa_pq(data_fungi, min_nb_seq=20)
-#' filt_taxa_pq(data_fungi, min_occurence=2)
-#' filt_taxa_pq(data_fungi, min_occurence=2, 
-#'   min_nb_seq=10, clean_pq = FALSE)
-#' filt_taxa_pq(data_fungi, min_occurence=2,
-#'   min_nb_seq=10, combination = "OR")
-
+#' filt_taxa_pq(data_fungi, min_nb_seq = 20)
+#' filt_taxa_pq(data_fungi, min_occurence = 2)
+#' filt_taxa_pq(data_fungi,
+#'   min_occurence = 2,
+#'   min_nb_seq = 10, clean_pq = FALSE
+#' )
+#' filt_taxa_pq(data_fungi,
+#'   min_occurence = 2,
+#'   min_nb_seq = 10,
+#'   combination = "OR"
+#' )
 filt_taxa_pq <- function(physeq,
-                         min_nb_seq=NULL, 
-                         min_occurence=NULL, 
-                         combination="AND",
+                         min_nb_seq = NULL,
+                         min_occurence = NULL,
+                         combination = "AND",
                          clean_pq = TRUE) {
   new_physeq <- physeq
-  if(!is.null(min_nb_seq) && !is.null(min_occurence)) {
-stop("You must inform either min_nb_seq or min_occurence or both params!")
+  if (is.null(min_nb_seq) && is.null(min_occurence)) {
+    stop("You must inform either min_nb_seq or min_occurence or both params!")
   }
-  if(!is.null(min_nb_seq) && is.null(min_occurence)) {
-    new_physeq <- 
-      subset_taxa_pq(physeq, taxa_sums(physeq)>=min_nb_seq)
+  if (!is.null(min_nb_seq) && is.null(min_occurence)) {
+    new_physeq <-
+      subset_taxa_pq(physeq, taxa_sums(physeq) >= min_nb_seq)
   }
-  
-  if(is.null(min_nb_seq) && !is.null(min_occurence)) {
-    new_physeq <- 
-      subset_taxa_pq(new_physeq, 
-                     taxa_sums(as_binary_otu_table(new_physeq))>=min_occurence)
+
+  if (is.null(min_nb_seq) && !is.null(min_occurence)) {
+    new_physeq <-
+      subset_taxa_pq(
+        new_physeq,
+        taxa_sums(as_binary_otu_table(new_physeq)) >= min_occurence
+      )
   }
-  
-  if(!is.null(min_nb_seq)&& !is.null(min_occurence)) {
-    if(combination=="AND"){
-      new_physeq <- 
-        subset_taxa_pq(new_physeq, 
-                       taxa_sums(as_binary_otu_table(new_physeq))>=1 &
-                         taxa_sums((new_physeq))>=100)
-    } else if (combination=="OR"){
-      new_physeq <- 
-        subset_taxa_pq(new_physeq, 
-                       taxa_sums(as_binary_otu_table(new_physeq))>=1 | 
-                         taxa_sums((new_physeq))>=100)
+
+  if (!is.null(min_nb_seq) && !is.null(min_occurence)) {
+    if (combination == "AND") {
+      new_physeq <-
+        subset_taxa_pq(
+          new_physeq,
+          taxa_sums(as_binary_otu_table(new_physeq)) >= 1 &
+            taxa_sums((new_physeq)) >= 100
+        )
+    } else if (combination == "OR") {
+      new_physeq <-
+        subset_taxa_pq(
+          new_physeq,
+          taxa_sums(as_binary_otu_table(new_physeq)) >= 1 |
+            taxa_sums((new_physeq)) >= 100
+        )
     }
   }
-  
-  if(clean_pq) {
-   new_physeq <- clean_pq(new_physeq)
+
+  if (clean_pq) {
+    new_physeq <- clean_pq(new_physeq)
   }
   return(new_physeq)
 }
-  
+
 
 ################################################################################
 #' Select one sample from a physeq object
@@ -2494,8 +2509,7 @@ cutadapt_remove_primers <- function(path_to_fastq,
                                     nb_files = Inf,
                                     cmd_is_run = TRUE,
                                     return_file_path = FALSE,
-                                    args_before_cutadapt = "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv && "
-                                    ) {
+                                    args_before_cutadapt = "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv && ") {
   cmd <- list()
   if (!dir.exists(folder_output)) {
     dir.create(folder_output)
@@ -2587,7 +2601,7 @@ cutadapt_remove_primers <- function(path_to_fastq,
     ))
     unlink(paste0(tempdir(), "/script_cutadapt.sh"))
   }
-  if(return_file_path){
+  if (return_file_path) {
     return(normalizePath(folder_output))
   } else {
     return(cmd)
@@ -2618,20 +2632,19 @@ cutadapt_remove_primers <- function(path_to_fastq,
 #'
 #' @author Adrien Taudière
 #' @examples
-#'  data_fungi_mini_woNA4height <- subset_samples(
-#'     data_fungi_mini,
-#'     !is.na(data_fungi_mini@sam_data$Height)
-#'   )
-#'   taxa_only_in_one_level(data_fungi_mini_woNA4height, "Height", "High")
-#'   #' # Taxa present only in low height samples
-#'   suppressMessages(suppressWarnings(
-#'     taxa_only_in_one_level(data_fungi, "Height", "Low")
-#'   ))
-#'   # Number of taxa present only in sample of time equal to 15
-#'   suppressMessages(suppressWarnings(
-#'     length(taxa_only_in_one_level(data_fungi, "Time", "15"))
-#'   ))
-
+#' data_fungi_mini_woNA4height <- subset_samples(
+#'   data_fungi_mini,
+#'   !is.na(data_fungi_mini@sam_data$Height)
+#' )
+#' taxa_only_in_one_level(data_fungi_mini_woNA4height, "Height", "High")
+#' #' # Taxa present only in low height samples
+#' suppressMessages(suppressWarnings(
+#'   taxa_only_in_one_level(data_fungi, "Height", "Low")
+#' ))
+#' # Number of taxa present only in sample of time equal to 15
+#' suppressMessages(suppressWarnings(
+#'   length(taxa_only_in_one_level(data_fungi, "Time", "15"))
+#' ))
 taxa_only_in_one_level <- function(physeq,
                                    modality,
                                    level,

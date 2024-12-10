@@ -3653,6 +3653,8 @@ tax_bar_pq <-
 #'   the number of sequences (or ASV if nb_seq = FALSE) is log10
 #'   transformed.
 #' @param tax_level The taxonomic level to fill ridges
+#' @param type Either "density" (the default) or "ecdf" to plot a 
+#'   plot a cumulative version using [ggplot2::stat_ecdf()]
 #' @param ... Other params passed on to [ggridges::geom_density_ridges()]
 #'
 #' @return A \code{\link[ggplot2]{ggplot}}2 plot  with bar representing the number of sequence en each
@@ -3666,6 +3668,7 @@ tax_bar_pq <-
 #' \donttest{
 #' if (requireNamespace("ggridges")) {
 #'   ridges_pq(data_fungi_mini, "Time", alpha = 0.5, scale = 0.9)
+#'   ridges_pq(data_fungi_mini, "Time", alpha = 0.5, scale = 0.9, type="ecdf")
 #'   ridges_pq(data_fungi_mini, "Sample_names", log10trans = TRUE) + facet_wrap("~Height")
 #'
 #'   ridges_pq(data_fungi_mini,
@@ -3675,6 +3678,8 @@ tax_bar_pq <-
 #'     point_shape = "|", point_size = 3, point_alpha = 1, alpha = 0.7,
 #'     scale = 0.8
 #'   )
+#'
+#'
 #' }
 #' }
 ridges_pq <- function(physeq,
@@ -3682,30 +3687,45 @@ ridges_pq <- function(physeq,
                       nb_seq = TRUE,
                       log10trans = TRUE,
                       tax_level = "Class",
+                      type = "density",
                       ...) {
   psm <- psmelt(physeq)
-  psm <- psm %>% filter(Abundance > 0)
+  psm <- psm %>% dplyr::filter(Abundance > 0)
 
   if (log10trans) {
     psm$Abundance <- log10(psm$Abundance)
   }
   if (nb_seq) {
-    p <- ggplot(psm, aes(y = factor(.data[[fact]]), x = Abundance)) +
-      ggridges::geom_density_ridges(aes(fill = .data[[tax_level]]), ...) +
-      xlim(c(0, NA))
+    p <- ggplot(psm,
+                aes(
+                  y = factor(.data[[fact]]),
+                  x = Abundance,
+                  fill = .data[[tax_level]],
+                  color = .data[[tax_level]]
+                ))
   } else {
     psm_asv <-
       psm %>%
       group_by(.data[[fact]], OTU, .data[[tax_level]]) %>%
       summarise("count" = n())
 
-    p <-
-      ggplot(psm_asv, aes(y = factor(.data[[fact]]), x = count)) +
-      ggridges::geom_density_ridges(
-        aes(fill = .data[[tax_level]]),
-        ...
-      ) +
+    p <- ggplot(psm_asv,
+                aes(
+                  y = factor(.data[[fact]]),
+                  x = count,
+                  fill = .data[[tax_level]],
+                  color = .data[[tax_level]]
+                ))
+  }
+
+  if (type == "density") {
+    p <- p +
+      ggridges::geom_density_ridges(aes(), ...) +
       xlim(c(0, NA))
+  } else if (type == "ecdf") {
+    p <- p + stat_ecdf(aes(y=NULL)) +
+      facet_wrap(fact, ncol = 2)  +
+      theme_minimal() + ylab("Probability")
   }
   return(p)
 }
@@ -4324,7 +4344,6 @@ plot_refseq_extremity_pq <- function(
     last_n = 10,
     hill_scales = c(1, 2),
     min_width = 0) {
-
   if (min_width > 0) {
     cond <- Biostrings::width(physeq@refseq) > min_width
     names(cond) <- taxa_names(physeq)
@@ -4337,10 +4356,12 @@ plot_refseq_extremity_pq <- function(
 
     letters_sequences <-
       c(strsplit(as.vector(IRanges::narrow(physeq@refseq, end = end_n)),
-      split = ""
-    ))
-    letters_sequences <- lapply(letters_sequences, `length<-`,
-                                max(lengths(letters_sequences)))
+        split = ""
+      ))
+    letters_sequences <- lapply(
+      letters_sequences, `length<-`,
+      max(lengths(letters_sequences))
+    )
 
     tib_interm <- t(data.frame(letters_sequences))
     nucleotide_first_interm <- data.frame(
@@ -4375,7 +4396,8 @@ plot_refseq_extremity_pq <- function(
     if (!is.null(hill_scales)) {
       renyi_nucleotide <-
         vegan::renyi(nucleotide_first_interm[, c("nb_A", "nb_C", "nb_G", "nb_T")],
-                                       scales = hill_scales)
+          scales = hill_scales
+        )
 
       if (inherits(renyi_nucleotide, "numeric")) {
         renyi_nucleotide <- data.frame(renyi_nucleotide)
@@ -4399,7 +4421,8 @@ plot_refseq_extremity_pq <- function(
 
       renyi_nucleotide$seq_id <-
         sort(rep(1:ncol(tib_interm),
-                 times = nrow(renyi_nucleotide) / ncol(tib_interm)))
+          times = nrow(renyi_nucleotide) / ncol(tib_interm)
+        ))
 
       p_start <- p_start +
         geom_line(data = renyi_nucleotide, aes(x = seq_id, y = value, color = name))
@@ -4411,10 +4434,14 @@ plot_refseq_extremity_pq <- function(
 
   if (!is.null(last_n)) {
     tib_interm_last <- t(data.frame(letters = c(
-      strsplit(as.vector(
-        IRanges::narrow(physeq@refseq,
-                        start = Biostrings::width(physeq@refseq) - last_n)),
-        split = "")
+      strsplit(
+        as.vector(
+          IRanges::narrow(physeq@refseq,
+            start = Biostrings::width(physeq@refseq) - last_n
+          )
+        ),
+        split = ""
+      )
     )))
 
     nucleotide_last_interm <- data.frame(
@@ -4540,6 +4567,9 @@ plot_refseq_pq <- function(physeq, hill_scales = NULL, first_n = min(Biostrings:
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
+#'
+#'  A more memorable shortcut for theme(legend.position = "none").
+#'
 #' @export
 #' @return A ggplot2 object
 #' @author Adrien Taudière
@@ -4547,7 +4577,7 @@ plot_refseq_pq <- function(physeq, hill_scales = NULL, first_n = min(Biostrings:
 #' plot_refseq_pq(data_fungi)
 #' plot_refseq_pq(data_fungi) + no_legend()
 no_legend <- function() {
-  list( theme(legend.position = "none"))
+  list(theme(legend.position = "none"))
 }
 ################################################################################
 
@@ -4563,15 +4593,15 @@ no_legend <- function() {
 #'   [vegan::renyiaccum()] functions
 #'
 #' @inheritParams clean_pq
-#' @param merge_sample_by a vector to determine which samples to merge using 
-#'   the [merge_samples2()] function.  Need to be in `physeq@sam_data` 
+#' @param merge_sample_by a vector to determine which samples to merge using
+#'   the [merge_samples2()] function.  Need to be in `physeq@sam_data`
 #' @param color_fac (optional): The variable to color the barplot. For ex.
-#'   same as fact. If merge_sample_by is set, color_fac must be nested in 
+#'   same as fact. If merge_sample_by is set, color_fac must be nested in
 #'   the merge_sample_by factor. See examples.
-#' @param hill_scales
-#' @param nperm (int Default NULL) If a integer is set to nperm, nperm 
+#' @param hill_scales Scales of Rényi diversity.
+#' @param nperm (int Default NULL) If a integer is set to nperm, nperm
 #'   permutation are computed to draw confidence interval for each curves.
-#'   The function use [vegan::renyi()] if nperm is NULL and 
+#'   The function use [vegan::renyi()] if nperm is NULL and
 #'   [vegan::renyiaccum()] else.
 #' @param na_remove (logical, default FALSE) If set to TRUE, remove samples with
 #'   NA in the variables set in merge_sample_by. Not used if merge_sample_by is
@@ -4580,51 +4610,61 @@ no_legend <- function() {
 #' @param plot_legend (logical, default TRUE) If set to FALSE,
 #'   no legend are plotted.
 #' @param linewidth (int, default 2) The linewidth of lines.
-#'  
+#' @param size_point (int, default 1) The size of the point.
+#'
 #' @param ... Other arguments passed on to [vegan::renyi()] function or
 #'   [vegan::renyiaccum()] if nperm is not NULL.
-#' 
+#'
 #' @export
 #' @author Adrien Taudière
 #' @return A ggplot2 object
 #' @examples
 #' if (requireNamespace("vegan")) {
-#' hill_curves_pq(data_fungi_mini, merge_sample_by = "Time")
-#' hill_curves_pq(data_fungi_mini, color_fac = "Time", plot_legend=FALSE)
-#' hill_curves_pq(data_fungi_mini, color_fac = "Time", plot_legend=FALSE, 
-#'   nperm=9, size_point= 1, linewidth=0.5)
-#' 
-#' hill_curves_pq(data_fungi_mini, nperm=9, plot_legend=FALSE, size_point= 1,
-#'   linewidth=0.5)
-#' hill_curves_pq(data_fungi_mini, "Height", 
-#'   hill_scales=c(0,1,2,8), plot_legend=FALSE)
-#' hill_curves_pq(data_fungi_mini, "Height", hill_scales=c(0,0.5,1,2,4,8),
-#'   nperm=9)
-#' hill_curves_pq(data_fungi_mini, "Height", nperm=9, wrap_factor=FALSE)
+#'   hill_curves_pq(data_fungi_mini, merge_sample_by = "Time")
+#'   hill_curves_pq(data_fungi_mini, color_fac = "Time", plot_legend = FALSE)
+#'   hill_curves_pq(data_fungi_mini,
+#'     color_fac = "Time", plot_legend = FALSE,
+#'     nperm = 9, size_point = 1, linewidth = 0.5
+#'   )
 #'
-#' data_fungi_mini@sam_data$H_T <- paste0(data_fungi_mini@sam_data$Height,
-#'   "_", data_fungi_mini@sam_data$Time)
-#' merge_samples2(data_fungi_mini, "H_T") 
-#' hill_curves_pq(data_fungi_mini, "H_T", color_fac="Time", nperm=9)
-#'   }
+#'   hill_curves_pq(data_fungi_mini,
+#'     nperm = 9, plot_legend = FALSE, size_point = 1,
+#'     linewidth = 0.5
+#'   )
+#'   hill_curves_pq(data_fungi_mini, "Height",
+#'     hill_scales = c(0, 1, 2, 8), plot_legend = FALSE
+#'   )
+#'   hill_curves_pq(data_fungi_mini, "Height",
+#'     hill_scales = c(0, 0.5, 1, 2, 4, 8),
+#'     nperm = 9
+#'   )
+#'   hill_curves_pq(data_fungi_mini, "Height", nperm = 9, wrap_factor = FALSE)
+#'
+#'   data_fungi_mini@sam_data$H_T <- paste0(
+#'     data_fungi_mini@sam_data$Height,
+#'     "_", data_fungi_mini@sam_data$Time
+#'   )
+#'   merge_samples2(data_fungi_mini, "H_T")
+#'   hill_curves_pq(data_fungi_mini, "H_T", color_fac = "Time", nperm = 9)
+#' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to [vegan::renyi()] or
 #'   [vegan::renyiaccum()] functions
 #'
-hill_curves_pq <-  function(physeq,
-                            merge_sample_by = NULL,
-                            color_fac = NULL,
-                            hill_scales = c(0, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, Inf),
-                            nperm = NULL,
-                            na_remove = TRUE,
-                            wrap_factor = TRUE,
-                            plot_legend=TRUE,
-                            linewidth = 2,
-                            size_point = 2,
-                            ...) {
+hill_curves_pq <- function(physeq,
+                           merge_sample_by = NULL,
+                           color_fac = NULL,
+                           hill_scales = c(0, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, Inf),
+                           nperm = NULL,
+                           na_remove = TRUE,
+                           wrap_factor = TRUE,
+                           plot_legend = TRUE,
+                           linewidth = 2,
+                           size_point = 2,
+                           ...) {
   verify_pq(physeq)
-  
+
   if (na_remove && !is.null(merge_sample_by)) {
     new_physeq <-
       subset_samples_pq(physeq, !is.na(physeq@sam_data[[merge_sample_by]]))
@@ -4641,7 +4681,7 @@ hill_curves_pq <-  function(physeq,
   if (!is.null(merge_sample_by)) {
     physeq <- merge_samples2(physeq, merge_sample_by)
   }
-  
+
   physeq <- clean_pq(
     physeq,
     force_taxa_as_rows = TRUE,
@@ -4649,7 +4689,7 @@ hill_curves_pq <-  function(physeq,
     remove_empty_taxa = FALSE,
     clean_samples_names = FALSE
   )
-  
+
   if (!is.null(nperm)) {
     df_hill <-
       vegan::renyiaccum(
@@ -4659,7 +4699,7 @@ hill_curves_pq <-  function(physeq,
         hill = TRUE,
         ...
       )
-    what = c("Collector", "mean", "Qnt 0.025", "Qnt 0.975")
+    what <- c("Collector", "mean", "Qnt 0.025", "Qnt 0.975")
     what <- what[what %in% dimnames(df_hill)[[3]]]
     if (any(what %in% dimnames(df_hill)[[3]])) {
       df_hill <- df_hill[, , what, drop = FALSE]
@@ -4670,15 +4710,15 @@ hill_curves_pq <-  function(physeq,
     alp <- factor(dnam[[2]], levels = dnam[[2]])
     alpha <- rep(rep(alp, each = dm[1]), len = prod(dm))
     diversity <- as.vector(df_hill)
-    
+
     if (is.null(color_fac)) {
       modality <- rep(sample_names(physeq), len = prod(dm))
     } else {
       modality <- rep(levels(as.factor(physeq@sam_data[, color_fac][[1]])), len = prod(dm))
     }
-    
+
     samp_names <- rep(sample_names(physeq), len = prod(dm))
-    
+
     df_plot <- data.frame(
       diversity = diversity,
       Type = lin,
@@ -4686,14 +4726,16 @@ hill_curves_pq <-  function(physeq,
       alpha_hill = alpha,
       samp_names = samp_names
     )
-    
-    p <- ggplot(df_plot,
-                aes(
-                  y = diversity,
-                  x = alpha_hill,
-                  color = Modality,
-                  group = samp_names
-                )) + 
+
+    p <- ggplot(
+      df_plot,
+      aes(
+        y = diversity,
+        x = alpha_hill,
+        color = Modality,
+        group = samp_names
+      )
+    ) +
       geom_point(data = subset(df_plot, Type == "mean"), size = size_point) +
       geom_line(
         data = subset(df_plot, Type == "mean"),
@@ -4703,18 +4745,17 @@ hill_curves_pq <-  function(physeq,
       geom_line(
         data = subset(df_plot, Type == "Qnt 0.025"),
         linetype = 2,
-        linewidth = linewidth/3
+        linewidth = linewidth / 3
       ) +
       geom_line(
         data = subset(df_plot, Type == "Qnt 0.975"),
         linetype = 2,
-        linewidth =  linewidth/3
+        linewidth = linewidth / 3
       )
     if (wrap_factor) {
-      p <- p  +
+      p <- p +
         facet_wrap("Modality")
     }
-    
   } else {
     df_hill <-
       vegan::renyi(t(physeq)@otu_table, scales = hill_scales, hill = TRUE)
@@ -4724,13 +4765,15 @@ hill_curves_pq <-  function(physeq,
       } else {
         modality <- factor(rep(rownames(df_hill), ncol(df_hill)), levels = rownames(df_hill))
       }
-      
+
       alp <- factor(rep(colnames(df_hill), each = nrow(df_hill)), levels = colnames(df_hill))
       div <- as.vector(as.matrix(df_hill))
-      df_plot <- data.frame(diversity = div,
-                            Modality = modality,
-                            alpha_hill = alp)
-    }      else {
+      df_plot <- data.frame(
+        diversity = div,
+        Modality = modality,
+        alpha_hill = alp
+      )
+    } else {
       df_plot <- data.frame(
         diversity = x,
         alpha = factor(names(x), levels = names(x)),
@@ -4738,16 +4781,20 @@ hill_curves_pq <-  function(physeq,
       )
       lo <- hi <- med <- NA
     }
-    p <-  ggplot(df_plot,
-                 aes(
-                   y = diversity,
-                   x = alpha_hill,
-                   color = Modality,
-                   group = Modality
-                 )) + geom_point(size = 2) + geom_line()
+    p <- ggplot(
+      df_plot,
+      aes(
+        y = diversity,
+        x = alpha_hill,
+        color = Modality,
+        group = Modality
+      )
+    ) +
+      geom_point(size = 2) +
+      geom_line()
   }
-  
-  if(!plot_legend) {
+
+  if (!plot_legend) {
     p <- p + no_legend()
   }
   return(p)
@@ -4768,58 +4815,77 @@ hill_curves_pq <-  function(physeq,
 #'
 #' @inheritParams clean_pq
 #' @param pkg Which R packages to use, either "umap" or "uwot".
-#' @param ... Others arguments passed on to [umap::umap()] or 
+#' @param ... Others arguments passed on to [umap::umap()] or
 #'   [uwot::umap2()] function.
 #'   For example `n_neighbors` set the number of nearest neighbors (Default 15).
-#'   See [?umap:::umap.defaults()] or [?uwot::umap2for()] fo rthe list of 
+#'   See [umap::umap.defaults()] or [uwot::umap2()] for the list of
 #'   parameters and default values.
-#'   
+#'
 #' @return A dataframe with samples informations and the x_umap and y_umap position
 #' @author Adrien Taudière
 #' @export
 #' @seealso [umap::umap()], [tsne_pq()], [phyloseq::plot_ordination()]
 #' @examples
 #' library("umap")
-#' df_umap<- umap_pq(data_fungi)
-#' ggplot(df_umap, aes(x=x_umap, y=y_umap, col=Height)) + geom_point(size=2)
+#' df_umap <- umap_pq(data_fungi_mini)
+#' ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
+#'   geom_point(size = 2)
 #'
-#' library(patchwork)
-#' physeq <- data_fungi
-#' res_tsne <- tsne_pq(data_fungi)
-#' df_umap_tsne <- df_umap
-#' df_umap_tsne$x_tsne <- res_tsne$Y[,1]
-#' df_umap_tsne$y_tsne <- res_tsne$Y[,2]
-#' ((ggplot(df_umap, aes(x=x_umap, y=y_umap, col=Height)) + geom_point(size=2)+ggtitle("UMAP")) + (plot_ordination(physeq, ordination = ordinate(physeq,method = "PCoA", distance ="bray"),color="Height"))+ggtitle("PCoA")) / ((ggplot(df_umap_tsne, aes(x=x_tsne, y=y_tsne, col=Height)) + geom_point(size=2)+ggtitle("tsne"))  + (plot_ordination(physeq, ordination = ordinate(physeq,method = "NMDS", distance ="bray"),color="Height")+ggtitle("NMDS"))) + patchwork::plot_layout(guides="collect")
-#' 
-#' df_uwot <- umap_pq(data_fungi, pkg="uwot")
-#' 
-#' (ggplot(df_umap, aes(x=x_umap, y=y_umap, col=Height)) + geom_point(size=2))/
-#' (ggplot(df_uwot, aes(x=x_umap, y=y_umap, col=Height)) + geom_point(size=2))
-#' 
+#' #library(patchwork)
+#' #physeq <- data_fungi_mini
+#' #res_tsne <- tsne_pq(data_fungi_mini)
+#' #df_umap_tsne <- df_umap
+#' #df_umap_tsne$x_tsne <- res_tsne$Y[, 1]
+#' #df_umap_tsne$y_tsne <- res_tsne$Y[, 2]
+#' #((ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
+#' #  geom_point(size = 2) +
+#' #  ggtitle("UMAP")) + (plot_ordination(physeq,
+#' #  ordination =
+#' #    ordinate(physeq, method = "PCoA", distance = "bray"), color = "Height"
+#' #)) +
+#' #  ggtitle("PCoA")) /
+#' #  ((ggplot(df_umap_tsne, aes(x = x_tsne, y = y_tsne, col = Height)) +
+#' #    geom_point(size = 2) +
+#' #    ggtitle("tsne")) +
+#' #    (plot_ordination(physeq,
+#' #      ordination = ordinate(physeq, method = "NMDS", distance = "bray"),
+#' #      color = "Height"
+#' #    ) +
+#' #      ggtitle("NMDS"))) +
+#' #  patchwork::plot_layout(guides = "collect")
+#'
+#' df_uwot <- umap_pq(data_fungi_mini, pkg = "uwot")
+#'
+#' (ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
+#'   geom_point(size = 2) + ggtitle("umap::umap")) /
+#'   (ggplot(df_uwot, aes(x = x_umap, y = y_umap, col = Height)) +
+#'     geom_point(size = 2)+ ggtitle("uwot::umap2"))
+#'
 #' @details
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `umap::umap()` if you
 #'   use this function.
 
-umap_pq <- function(physeq, pkg="umap",...){
+umap_pq <- function(physeq, pkg = "umap", ...) {
   verify_pq(physeq)
   physeq <- MiscMetabar::taxa_as_columns(physeq)
 
   psm_samp <- psmelt_samples_pq(physeq)
-  if(pkg=="umap"){ 
+  if (pkg == "umap") {
     res_umap <- umap::umap(as.matrix(unclass(physeq@otu_table)), ...)
     umap_layout <- as_tibble(res_umap$layout)
-    
-  } else if (pkg=="uwot"){
-
-  res_umap <- uwot::umap2(as.matrix(unclass(physeq@otu_table)), ...)
-  umap_layout<- as_tibble(res_umap)
+    umap_layout$Sample <- rownames(res_umap$layout)
+    names(umap_layout) <- c("x_umap", "y_umap", "Sample")
+  } else if (pkg == "uwot") {
+    res_umap <- uwot::umap2(as.matrix(unclass(physeq@otu_table)), ...)
+    umap_layout <- as_tibble(res_umap)
+    umap_layout$Sample <- rownames(res_umap)
+    names(umap_layout) <- c("x_umap", "y_umap", "Sample")
   } else {
     stop("Param pkg must be set to 'umap' or 'uwot'.")
   }
-  umap_layout$Sample <- rownames(res_umap)
-  names(umap_layout) <- c("x_umap", "y_umap", "Sample")
-  df_umap <- full_join(umap_layout, psm_samp)
+
+  df_umap <- left_join(umap_layout, psm_samp)
 
   return(df_umap)
 }
@@ -4828,15 +4894,15 @@ umap_pq <- function(physeq, pkg="umap",...){
 ################################################################################
 #' Plot kmer complexity of references sequences of a phyloseq object
 #'
-#'@description
+#' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
-#'   Basically a wrapper of [dada2::seqComplexity()] 
+#'   Basically a wrapper of [dada2::seqComplexity()]
 #'
 #' @inheritParams clean_pq
-#' @param kmer_size: int (default 2) The size of the kmers 
+#' @param kmer_size int (default 2) The size of the kmers
 #'   (or "oligonucleotides" or "words") to use.
 #' @param window (int, default NULL) The width in nucleotides of the moving
 #'    window. If NULL the whole sequence is used.
@@ -4846,7 +4912,7 @@ umap_pq <- function(physeq, pkg="umap",...){
 #' @param aggregate (logical, default FALSE) If TRUE, compute an aggregate quality profile
 #'    for all samples
 #' @param vline_random_kmer (logical, default TRUE) If TRUE, add a vertical line
-#'   at the value for random kmer (equal to 4^kmerSize)) 
+#'   at the value for random kmer (equal to 4^kmerSize))
 #' @param ... Arguments passed on to geom_histogram.
 #'
 #' @return A ggplot2 object
@@ -4854,50 +4920,62 @@ umap_pq <- function(physeq, pkg="umap",...){
 #' @author Adrien Taudière
 #' @seealso [dada2::seqComplexity()], [dada2::plotComplexity()]
 #' @examples
-#' plot_complexity_pq(subset_samples(data_fungi, Height=="High"))
-#' plot_complexity_pq(subset_samples(data_fungi_mini, Height=="High"), 
-#'                    vline_random_kmer =FALSE)
-#' plot_complexity_pq(subset_samples(data_fungi, Height=="Low"),
-#'                    aggregate = FALSE, kmer_size=4)
-#' plot_complexity_pq(subset_samples(data_fungi, Height=="Low"), kmer_size=4)
-#'                    
+#' plot_complexity_pq(subset_samples(data_fungi_mini, Height == "High"),
+#'   vline_random_kmer = FALSE
+#' )
+#' plot_complexity_pq(subset_samples(data_fungi_mini, Height == "Low"),
+#'   aggregate = FALSE, kmer_size = 4
+#' )
+#' #plot_complexity_pq(subset_samples(data_fungi, Height == "Low"), kmer_size = 4)
+#'
 #' @details
 #' This function is mainly a wrapper of the work of others.
-#'   Please make a reference to [dada2::seqComplexity()] 
+#'   Please make a reference to [dada2::seqComplexity()]
 
-plot_complexity_pq <- function(physeq, 
-                               kmer_size = 2, 
-                               window = NULL, 
-                               by=5, 
-                               bins=100, 
-                               aggregate= FALSE,
-                               vline_random_kmer = TRUE, 
+plot_complexity_pq <- function(physeq,
+                               kmer_size = 2,
+                               window = NULL,
+                               by = 5,
+                               bins = 100,
+                               aggregate = FALSE,
+                               vline_random_kmer = TRUE,
                                ...) {
-  if(aggregate){
-    refseq_complex <- seqComplexity(physeq@refseq, kmerSize = kmer_size, window = window, 
-            by = by)
+  if (aggregate) {
+    refseq_complex <- seqComplexity(physeq@refseq,
+      kmerSize = kmer_size, window = window,
+      by = by
+    )
   } else {
-  refseq_complex <- vector("list", length=nsamples(physeq))
-  names(refseq_complex) <- sample_names(physeq)
-  for(sam in sample_names(physeq)){
-    physeq_interm <- subset_samples_pq(physeq, sample_names(physeq)==sam)
-    refseq_complex[[sam]] <-seqComplexity(physeq_interm@refseq, kmerSize = kmer_size, window = window, 
-            by = by)
-  }
-  df <- data.frame(complexity = unlist(refseq_complex), file = rep(sample_names(physeq), 
-        times = sapply(refseq_complex, length)))
+    refseq_complex <- vector("list", length = nsamples(physeq))
+    names(refseq_complex) <- sample_names(physeq)
+    for (sam in sample_names(physeq)) {
+      physeq_interm <- subset_samples_pq(physeq, sample_names(physeq) == sam)
+      refseq_complex[[sam]] <- seqComplexity(physeq_interm@refseq,
+        kmerSize = kmer_size, window = window,
+        by = by
+      )
+    }
+    df <- data.frame(complexity = unlist(refseq_complex), file = rep(sample_names(physeq),
+      times = sapply(refseq_complex, length)
+    ))
   }
 
   p <- ggplot(data = df, aes(x = complexity)) +
-    geom_histogram(bins = bins, 
-        na.rm = TRUE, ...) + ylab("Count") +
-    xlab("Effective Oligonucleotide Number") + 
-        theme_bw() + facet_wrap(~file) + 
-    scale_x_continuous(limits = c(0, 4^kmer_size), 
-                       breaks = seq(0, 4^kmer_size, (4^kmer_size)/4))
-  if(vline_random_kmer) {
-    p <- p + 
-    geom_vline(xintercept = 4^kmer_size, color="red")
+    geom_histogram(
+      bins = bins,
+      na.rm = TRUE, ...
+    ) +
+    ylab("Count") +
+    xlab("Effective Oligonucleotide Number") +
+    theme_bw() +
+    facet_wrap(~file) +
+    scale_x_continuous(
+      limits = c(0, 4^kmer_size),
+      breaks = seq(0, 4^kmer_size, (4^kmer_size) / 4)
+    )
+  if (vline_random_kmer) {
+    p <- p +
+      geom_vline(xintercept = 4^kmer_size, color = "red")
   }
   return(p)
 }

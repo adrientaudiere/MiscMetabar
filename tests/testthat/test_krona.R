@@ -17,8 +17,8 @@ if (class(krona_error_or_not) == "try-error") {
     skip_on_os("windows")
     testFolder <- tempdir()
     suppressWarnings(unlink(list.files(testFolder, full.names = TRUE), recursive = TRUE))
-    expect_silent(krona(GA, file = paste0(testFolder, "/Number.of.sequences.html")))
-    expect_silent(krona(GA, file = paste0(testFolder, "/Number.of.ASVs.html"), nb_seq = FALSE))
+    expect_message(krona(GA, file = paste0(testFolder, "/Number.of.sequences.html")))
+    expect_message(krona(GA, file = paste0(testFolder, "/Number.of.ASVs.html"), nb_seq = FALSE))
     expect_silent(merge_krona(
       c(
         paste0(testFolder, "/Number.of.sequences.html"),

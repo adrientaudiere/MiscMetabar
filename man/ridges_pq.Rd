@@ -10,6 +10,7 @@ ridges_pq(
   nb_seq = TRUE,
   log10trans = TRUE,
   tax_level = "Class",
+  type = "density",
   ...
 )
 }
@@ -29,6 +30,9 @@ the number of sequences (or ASV if nb_seq = FALSE) is log10
 transformed.}
 
 \item{tax_level}{The taxonomic level to fill ridges}
+
+\item{type}{Either "density" (the default) or "ecdf" to plot a
+plot a cumulative version using \code{\link[ggplot2:stat_ecdf]{ggplot2::stat_ecdf()}}}
 
 \item{...}{Other params passed on to \code{\link[ggridges:geom_density_ridges]{ggridges::geom_density_ridges()}}}
 }
@@ -52,6 +56,7 @@ if (requireNamespace("ggridges")) {
 \donttest{
 if (requireNamespace("ggridges")) {
   ridges_pq(data_fungi_mini, "Time", alpha = 0.5, scale = 0.9)
+  ridges_pq(data_fungi_mini, "Time", alpha = 0.5, scale = 0.9, type="ecdf")
   ridges_pq(data_fungi_mini, "Sample_names", log10trans = TRUE) + facet_wrap("~Height")
 
   ridges_pq(data_fungi_mini,
@@ -61,6 +66,8 @@ if (requireNamespace("ggridges")) {
     point_shape = "|", point_size = 3, point_alpha = 1, alpha = 0.7,
     scale = 0.8
   )
+
+
 }
 }
 }

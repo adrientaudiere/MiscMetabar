@@ -36,3 +36,6 @@ Warnings if verbose = TRUE
 
 Mostly for internal use in MiscMetabar functions.
 }
+\author{
+Adrien Taudière
+}

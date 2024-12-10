@@ -31,7 +31,8 @@ Default setting plot all the ranks (argument 'All').}
 inferior to 'add_unassigned_rank' when necessary.}
 
 \item{name}{A name for intermediary files, Useful to name
-your krona result files before merging using \code{\link[=merge_krona]{merge_krona()}}}
+your krona result files before merging using \code{\link[=merge_krona]{merge_krona()}}.
+Must not contain space.}
 }
 \value{
 A html file

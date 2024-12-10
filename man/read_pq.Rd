@@ -45,3 +45,6 @@ write_pq(data_fungi, path = paste0(tempdir(), "/phyloseq"))
 read_pq(path = paste0(tempdir(), "/phyloseq"))
 unlink(paste0(tempdir(), "/phyloseq"), recursive = TRUE)
 }
+\author{
+Adrien Taudière
+}

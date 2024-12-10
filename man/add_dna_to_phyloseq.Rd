@@ -26,3 +26,6 @@ taxa names
 
 Useful in targets bioinformatic pipeline.
 }
+\author{
+Adrien Taudière
+}

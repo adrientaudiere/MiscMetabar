@@ -42,7 +42,8 @@ Useful for targets bioinformatic pipeline.
 \examples{
 list_fastq_files(system.file("extdata", package = "MiscMetabar"))
 list_fastq_files(system.file("extdata", package = "MiscMetabar"),
-                              paired_end = FALSE, pattern_R1 = "")
+  paired_end = FALSE, pattern_R1 = ""
+)
 
 }
 \author{

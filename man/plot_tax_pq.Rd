@@ -60,7 +60,7 @@ with NA in the \code{split_by} variable of the \code{physeq@sam_data} slot}
 If set to TRUE, empty samples are discarded after subsetting ASV}
 }
 \value{
-A ggplot2 graphic
+A ggplot2 object
 }
 \description{
 \if{html}{\out{

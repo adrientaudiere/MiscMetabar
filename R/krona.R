@@ -44,7 +44,6 @@ krona <-
            ranks = "All",
            add_unassigned_rank = 0,
            name = NULL) {
-
     if (is.null(name)) {
       if (nb_seq) {
         name <- "Number.of.sequences_temp"
@@ -53,13 +52,15 @@ krona <-
       }
     }
 
-    if(grepl(" ", name)){
+    if (grepl(" ", name)) {
       stop("The name parameter must not contain space")
     }
 
     if (ranks[1] == "All") {
-      message("All the ", ncol(physeq@tax_table)  ,
-      " taxonomic present in the tax_table will be used for krona plot!")
+      message(
+        "All the ", ncol(physeq@tax_table),
+        " taxonomic present in the tax_table will be used for krona plot!"
+      )
       ranks <- seq_along(physeq@tax_table[1, ])
     }
 
