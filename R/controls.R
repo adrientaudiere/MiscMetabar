@@ -7,7 +7,8 @@
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Search for exact matching of sequences using complement,
-#' reverse and reverse-complement
+#' reverse and reverse-complement. It is useful to check for 
+#' primers issues after cutadapt step. 
 #'
 #' @inheritParams clean_pq
 #' @param seq2search A DNAStringSet object of sequences to search for.

@@ -13,7 +13,7 @@
 #'   or (ii) a character vector that will be convert to DNAstringSet using
 #'   [Biostrings::DNAStringSet()]
 #' @param path_to_fasta (required if seq2search is NULL) a path to fasta file if seq2search is est to NULL.
-#' @param vsearchpath (default: vsearch) path to vsearch
+#' @param vsearchpath (default: "vsearch") path to vsearch
 #' @param id (default: 0.8) id for the option `--usearch_global` of the vsearch software
 #' @param iddef (default: 0) iddef for the option `--usearch_global` of the vsearch software
 #' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files
@@ -351,7 +351,7 @@ swarm_clustering <- function(physeq = NULL,
 #' @param nproc (default: 1)
 #'   Set to number of cpus/processors to use for the clustering
 #' @param id (default: 0.97) level of identity to cluster
-#' @param vsearchpath (default: vsearch) path to vsearch
+#' @param vsearchpath (default: "vsearch") path to vsearch
 #' @param tax_adjust (Default 0) See the man page
 #'   of [merge_taxa_vec()] for more details.
 #'   To conserved the taxonomic rank of the most abundant ASV,
@@ -624,7 +624,7 @@ chimera_removal_vs <-
 #'  [Biostrings::DNAStringSet()]
 #' @param nb_seq (required) a numeric vector giving the number of sequences for
 #'   each DNA sequences
-#' @param vsearchpath (default: vsearch) path to vsearch
+#' @param vsearchpath (default: "vsearch") path to vsearch
 #' @param abskew (int, default 2) The abundance skew is used to distinguish in a
 #'   three way alignment which sequence is the chimera and which are the
 #'   parents. The assumption is that chimeras appear later in the PCR

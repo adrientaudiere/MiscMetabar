@@ -2943,7 +2943,7 @@ taxa_as_rows <- function(physeq) {
 #'   (in this case, reproducibly random subsampling). If set to FALSE, then no
 #'   iddling with the RNG seed is performed, and it is up to the user to
 #'   appropriately call
-#' @param verbose (logical). If TRUE, print additional informations.
+#' @param verbose (logical). If TRUE, print additional information.
 #' @export
 #' @author Adrien Taudière
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object.

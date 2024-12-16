@@ -1308,7 +1308,7 @@ var_par_pq <-
 #' @param sample.size (int) A single integer value equal to the number of
 #'   reads being simulated, also known as the depth. See
 #'   [phyloseq::rarefy_even_depth()].
-#' @param verbose (logical). If TRUE, print additional informations.
+#' @param verbose (logical). If TRUE, print additional information.
 #' @param progress_bar (logical, default TRUE) Do we print progress during
 #'   the calculation?
 #'

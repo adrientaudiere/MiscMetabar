@@ -313,7 +313,7 @@ accu_plot <-
 #' @param sample.size (int) A single integer value equal to the number of
 #'   reads being simulated, also known as the depth. See
 #'   [phyloseq::rarefy_even_depth()].
-#' @param verbose (logical). If TRUE, print additional informations.
+#' @param verbose (logical). If TRUE, print additional information.
 #' @param ... Other params for be passed on to [accu_plot()] function
 #'
 #' @export
