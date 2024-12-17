@@ -955,6 +955,16 @@ assign_sintax <- function(physeq = NULL,
     stderr = TRUE
   )
 
+  if(!file.exists("output_taxo_vs.txt")){
+      warning("No taxonomic assignation were maded.")
+      if (!keep_temporary_files) {
+    unlink(temporary_fasta_file)}
+     if (behavior == "add_to_phyloseq") {
+      return(physeq) } else {
+return(NULL)
+      }
+    
+  }
   res_sintax <- read.csv("output_taxo_vs.txt", sep = "\t", header = F)
   taxa_names <- res_sintax$V1
   res_sintax <- tibble(res_sintax$V2, taxa_names)
@@ -1014,7 +1024,7 @@ assign_sintax <- function(physeq = NULL,
 ################################################################################
 
 ################################################################################
-#' Assign taxonomy using LCA **à la** [stampa](https://github.com/frederic-mahe/stampa)
+#' Assign taxonomy using LCA *à la* [stampa](https://github.com/frederic-mahe/stampa)
 #'
 #' @description
 #'
