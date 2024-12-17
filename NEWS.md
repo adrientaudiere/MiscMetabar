@@ -6,6 +6,8 @@
 - Add function `plot_complexity_pq()` to plot kmer complexity of references sequences of a phyloseq object
 - Add param `type` to `ridge_pq()` to plot a cumulative version (type="ecdf") version of ridge
 - Introduce the idea of a pq-verse: some other packages will complete the MiscMetabar packages to make package maintenance easier. The [comparpq](https://github.com/adrientaudiere/comparpq) package will facilitate the comparison of phyloseq object with different taxonomy, different clustering method, different samples with same modality or different primers. 
+- Add functions [assign_vsearch_lca()], [assign_sintax()] and internal function [write_temp_fasta()]
+- Add param `method` to `add_new_taxonomy_pq()` to allow the use of [dada2::assign_taxonomy()] (default, precedent only method available), [assign_sintax()] or [assign_vsearch_lca()] 
 
 
 # MiscMetabar 0.10.4

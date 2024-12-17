@@ -611,7 +611,11 @@ chimera_removal_vs <-
       return(new_physeq)
     }
   }
+################################################################################
 
+
+
+################################################################################
 #' Detect for chimera taxa using [vsearch](https://github.com/torognes/vsearch)
 #'
 #' @description
@@ -748,3 +752,491 @@ chimera_detection_vs <- function(seq2search,
     )
   )
 }
+################################################################################
+
+################################################################################
+#' Write a temporary fasta file (internal use)
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#' Write a fasta file from either a biostring object seq2search or a
+#' refseq slot from a phyloseq object
+#'
+#' @inheritParams assign_sintax
+#' @param temporary_fasta_file The name of a temporary_fasta_file (default "temp.fasta")
+#' @seealso [assign_sintax()], [assign_vsearch_lca]
+#' @return Nothing, produce a fasta file
+#' @keywords internal
+#' @noRd
+#'
+
+write_temp_fasta <- function(physeq,
+                             seq2search,
+                             temporary_fasta_file = "temp.fasta",
+                             behavior = NULL,
+                             clean_pq = TRUE,
+                             verbose = TRUE) {
+  if (!is.null(physeq) && !is.null(seq2search)) {
+    stop("You must enter a single parameter from physeq and seq2search.")
+  } else if (is.null(seq2search)) {
+    verify_pq(physeq)
+    if (is.null(physeq@refseq)) {
+      stop("The phyloseq object do not contain a @refseq slot")
+    }
+    if (clean_pq) {
+      physeq <- clean_pq(physeq, silent = !verbose)
+    }
+    dna <- Biostrings::DNAStringSet(physeq@refseq)
+    Biostrings::writeXStringSet(dna, temporary_fasta_file)
+  } else if (is.null(physeq)) {
+    Biostrings::writeXStringSet(seq2search, temporary_fasta_file)
+    if (behavior == "add_to_phyloseq") {
+      stop("You can't use behavior = 'add_to_phyloseq' with seq2search param.")
+    }
+  } else if (is.null(physeq) && is.null(seq2search)) {
+    stop("You must specify either physeq or seq2search parameter.")
+  }
+}
+################################################################################
+
+################################################################################
+#' Assign Taxonomy using Sintax algorithm of Vsearch
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#' Please cite [Vsearch](https://github.com/torognes/vsearch)
+#'   if you use this function to assign taxonomy.
+#'
+#' @inheritParams clean_pq
+#' @param seq2search A DNAStringSet object of sequences to search for.
+#' @param ref_fasta (required) A link to a database in vsearch format
+#'  The reference database must contain taxonomic information in the header of
+#'  each sequence in the form of a string starting with ";tax=" and followed
+#'  by a comma-separated list of up to nine taxonomic identifiers. Each taxonomic
+#'  identifier must start with an indication of the rank by one of the letters d
+#'  (for domain) k (kingdom), p (phylum), c (class), o (order), f (family),
+#'   g (genus), s (species), or t (strain). The letter is followed by a colon
+#'    (:) and the name of that rank. Commas and semicolons are not allowed in
+#'    the name of the rank. Non-ascii characters should be avoided in the names.
+#'
+#'  Example:
+#'
+#'  \>X80725_S000004313;tax=d:Bacteria,p:Proteobacteria,c:Gammaproteobacteria,o:Enterobacteriales,f:Enterobacteriaceae,g:Escherichia/Shigella,s:Escherichia_coli,t:str._K-12_substr._MG1655
+#' @param behavior Either "return_matrix" (default), "return_cmd",
+#' or "add_to_phyloseq":
+#'
+#'  - "return_matrix" return a list of two matrix with taxonomic value in the
+#'    first element of the list and bootstrap value in the second one.
+#'
+#'  - "return_cmd" return the command to run without running it.
+#'
+#'  - "add_to_phyloseq" return a phyloseq object with amended slot `@taxtable`.
+#'    Only available if using physeq input and not seq2search input.
+#'
+#' @param vsearchpath (default: "vsearch") path to vsearch
+#' @param clean_pq (logical, default TRUE)
+#'   If set to TRUE, empty samples and empty ASV are discarded
+#'   before clustering.
+#' @param nproc (default: 1)
+#'   Set to number of cpus/processors to use
+#' @param suffix (character) The suffix to name the new columns.
+#'   If set to "" (the default), the taxo_rank algorithm is used
+#'   without suffix.
+#' @param taxo_rank A list with the name of the taxonomic rank present in
+#'   ref_fasta
+#' @param min_boostrap (Int. \[0:1\], default 0.5)
+#'   Minimum bootstrap value to inform taxonomy. For each bootstrap
+#'   below the min_boostrap value, the taxonomy information is set to NA.
+#' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files?
+#'
+#' - temporary_fasta_file (default "temp.fasta") : the fasta file from physeq
+#'   or seq2search
+#'
+#' - "output_taxo_vs.txt" : see Vsearch Manual for parameter --tabbedout
+#'
+#' @param verbose (logical). If TRUE, print additional information.
+#' @param temporary_fasta_file The name of a temporary_fasta_file (default "temp.fasta")
+#' @param cmd_args Other arguments to be passed on to vsearch sintax cmd.
+#'   By default cmd_args is equal to "--sintax_random" as recommended by
+#'   [Torognes](https://github.com/torognes/vsearch/issues/535).
+#' @return See param behavior
+#' @examplesIf MiscMetabar::is_vsearch_installed()
+#' \donttest{
+#' assign_sintax(data_fungi_mini,
+#'   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
+#'   behavior = "return_cmd"
+#' )
+#'
+#' data_fungi_mini_new <- assign_sintax(data_fungi_mini,
+#'   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
+#'   behavior = "add_to_phyloseq"
+#' )
+#'
+#' assignation_results <- assign_sintax(data_fungi_mini,
+#'   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar")
+#' )
+#'
+#' left_join(
+#'   tidyr::pivot_longer(assignation_results$taxo_value, -taxa_names),
+#'   tidyr::pivot_longer(assignation_results$taxo_boostrap, -taxa_names),
+#'   by = join_by(taxa_names, name),
+#'   suffix = c("rank", "bootstrap")
+#' ) |>
+#'   mutate(name = factor(name, levels = c("K", "P", "C", "O", "F", "G", "S"))) |>
+#'   # mutate(valuerank = forcats::fct_reorder(valuerank, as.integer(name), .desc = TRUE)) |>
+#'   ggplot(aes(valuebootstrap,
+#'     valuerank,
+#'     fill = name
+#'   )) +
+#'   geom_jitter(alpha = 0.8, aes(color = name)) +
+#'   geom_boxplot(alpha = 0.3)
+#' }
+#' @export 
+#' @author Adrien Taudière
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please cite [vsearch](https://github.com/torognes/vsearch).
+assign_sintax <- function(physeq = NULL,
+                          seq2search = NULL,
+                          ref_fasta = NULL,
+                          behavior = "return_matrix",
+                          vsearchpath = "vsearch",
+                          clean_pq = TRUE,
+                          nproc = 1,
+                          suffix = "",
+                          taxo_rank = c("K", "P", "C", "O", "F", "G", "S"),
+                          min_boostrap = 0.5,
+                          keep_temporary_files = FALSE,
+                          verbose = TRUE,
+                          temporary_fasta_file = "temp.fasta",
+                          cmd_args = "--sintax_random") {
+  write_temp_fasta(
+    physeq = physeq,
+    seq2search = seq2search,
+    temporary_fasta_file = temporary_fasta_file,
+    behavior = behavior,
+    clean_pq = clean_pq,
+    verbose = verbose
+  )
+
+  if (verbose) {
+    message("Start Vsearch sintax")
+  }
+
+  cmd_sintax <-
+    paste0(
+      " --sintax ",
+      temporary_fasta_file,
+      " --db ",
+      ref_fasta,
+      " --tabbedout output_taxo_vs.txt ",
+      " --threads ",
+      nproc,
+      " ",
+      cmd_args
+    )
+
+  if (behavior == "return_cmd") {
+    if (!keep_temporary_files) {
+      unlink(temporary_fasta_file)
+    }
+    return("sintax" = paste0(vsearchpath, " ", cmd_sintax))
+  }
+
+  system2(vsearchpath,
+    args = cmd_sintax,
+    stdout = TRUE,
+    stderr = TRUE
+  )
+
+  res_sintax <- read.csv("output_taxo_vs.txt", sep = "\t", header = F)
+  taxa_names <- res_sintax$V1
+  res_sintax <- tibble(res_sintax$V2, taxa_names)
+  res_sintax <- res_sintax |>
+    tidyr::separate_wider_delim(-taxa_names, names = paste0(taxo_rank, suffix), delim = ",") |>
+    tidyr::pivot_longer(-taxa_names) |>
+    tidyr::separate_wider_delim(
+      value,
+      names_sep = "",
+      names = c("", "_bootstrap"),
+      delim = "("
+    ) |>
+    mutate(across(value_bootstrap, ~ as.numeric(gsub(")", "", .x)))) |>
+    mutate(across(value, ~ gsub(".:", "", .x)))
+
+  res_sintax_wide_bootstrap <-
+    res_sintax |>
+    select(-value) |>
+    tidyr::pivot_wider(names_from = name, values_from = value_bootstrap)
+
+  res_sintax_wide_taxo <-
+    res_sintax |>
+    select(-value_bootstrap) |>
+    tidyr::pivot_wider(names_from = name, values_from = value)
+
+  if (!is.null(min_boostrap)) {
+    res_sintax_wide_taxo_filter <- res_sintax_wide_taxo
+    res_sintax_wide_taxo_filter[res_sintax_wide_bootstrap < min_boostrap] <- NA
+  }
+
+  if (!keep_temporary_files) {
+    unlink(temporary_fasta_file)
+    unlink("output_taxo_vs.txt")
+  }
+
+  if (behavior == "add_to_phyloseq") {
+    tax_tab <- as.data.frame(as.matrix(physeq@tax_table))
+    tax_tab$taxa_names <- taxa_names(physeq)
+
+    new_physeq <- physeq
+    new_tax_tab <- left_join(tax_tab, res_sintax_wide_taxo_filter,
+      by = join_by(taxa_names)
+    ) |>
+      dplyr::select(-taxa_names) |>
+      as.matrix()
+    new_physeq@tax_table <- tax_table(new_tax_tab)
+    taxa_names(new_physeq@tax_table) <- taxa_names(physeq)
+
+    return(new_physeq)
+  } else if (behavior == "return_matrix") {
+    return(list(
+      "taxo_value" = res_sintax_wide_taxo,
+      "taxo_boostrap" = res_sintax_wide_bootstrap
+    ))
+  }
+}
+################################################################################
+
+################################################################################
+#' Assign taxonomy using LCA **à la** [stampa](https://github.com/frederic-mahe/stampa)
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#'  Please cite [Vsearch](https://github.com/torognes/vsearch) and
+#'   [stampa](https://github.com/frederic-mahe/stampa) if you use this function
+#'   to assign taxonomy.
+#'
+#'
+#' @inheritParams clean_pq
+#' @param seq2search A DNAStringSet object of sequences to search for.
+#' @param ref_fasta (required) A link to a database in vsearch format
+#'  The reference database must contain taxonomic information in the header of
+#'  each sequence in the form of a string starting with ";tax=" and followed
+#'  by a comma-separated list of up to nine taxonomic identifiers. Each taxonomic
+#'  identifier must start with an indication of the rank by one of the letters d
+#'  (for domain) k (kingdom), p (phylum), c (class), o (order), f (family),
+#'   g (genus), s (species), or t (strain). The letter is followed by a colon
+#'    (:) and the name of that rank. Commas and semicolons are not allowed in
+#'    the name of the rank. Non-ascii characters should be avoided in the names.
+#'
+#'  Example:
+#'
+#'  \>X80725_S000004313;tax=d:Bacteria,p:Proteobacteria,c:Gammaproteobacteria,o:Enterobacteriales,f:Enterobacteriaceae,g:Escherichia/Shigella,s:Escherichia_coli,t:str._K-12_substr._MG1655
+#' @param behavior Either "return_matrix" (default), "return_cmd",
+#' or "add_to_phyloseq":
+#'
+#'  - "return_matrix" return a list of two matrix with taxonomic value in the
+#'    first element of the list and bootstrap value in the second one.
+#'
+#'  - "return_cmd" return the command to run without running it.
+#'
+#'  - "add_to_phyloseq" return a phyloseq object with amended slot `@taxtable`.
+#'    Only available if using physeq input and not seq2search input.
+#'
+#' @param vsearchpath (default: "vsearch") path to vsearch
+#' @param clean_pq (logical, default TRUE)
+#'   If set to TRUE, empty samples and empty ASV are discarded
+#'   before clustering.
+#' @param taxo_rank A list with the name of the taxonomic rank present in
+#'   ref_fasta
+#' @param nproc (int, default: 1)
+#'   Set to number of cpus/processors to use
+#' @param suffix (character) The suffix to name the new columns.
+#'   If set to "" (the default), the taxo_rank algorithm is used
+#'   without suffix.
+#' @param id (Int. \[0:1\] default 0.5). Default value is based on
+#'   [stampa](https://github.com/frederic-mahe/stampa).
+#'   See Vsearch Manual for parameter `--id`
+#' @param lca_cutoff (int, default 1). Fraction of matching hits
+#'  required for the last common ancestor (LCA) output. For example, a value
+#'  of 0.9 imply that if less than 10% of assigned species are not congruent
+#'  the taxonomy is filled.
+#'  Default value is based on [stampa](https://github.com/frederic-mahe/stampa).
+#'  See Vsearch Manual for parameter `--lca_cutoff`
+#'
+#'  Text from vsearch manual :
+#'  "Adjust the fraction of matching hits required for the last
+#'  common ancestor (LCA) output with the --lcaout option during searches.
+#'  The default value is 1.0 which requires all hits to match at each taxonomic
+#'  rank for that rank to be included. If a lower cutoff value is used,
+#'  e.g. 0.95, a small fraction of non-matching hits are allowed while that
+#'  rank will still be reported. The argument to this option must be larger
+#'  than 0.5, but not larger than 1.0"
+#' @param maxrejects (int, default: 32)
+#'   Maximum number of non-matching target sequences to consider before
+#'   stopping the search for a given query.
+#'   Default value is based on [stampa](https://github.com/frederic-mahe/stampa)
+#'   See Vsearch Manual for parameter `--maxrejects`.
+
+#' @param top_hits_only (Logical, default TRUE)
+#'  Only the top hits with an equally high percentage of identity between the query and
+#'  database sequence sets are written to the output. If you set top_hits_only
+#'  you may need to set a lower `maxaccepts` and/or `lca_cutoof`.
+#'   Default value is based on [stampa](https://github.com/frederic-mahe/stampa)
+#'   See Vsearch Manual for parameter `--top_hits_only`
+#' @param maxaccepts (int, default: 0)
+#'   Default value is based on [stampa](https://github.com/frederic-mahe/stampa).
+#'   Maximum number of matching target sequences to accept before stopping the search
+#'   for a given query.
+#'   See Vsearch Manual for parameter `--maxaccepts`
+#' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files?
+#'
+#' - temporary_fasta_file (default "temp.fasta") : the fasta file from physeq or
+#'   seq2search
+#'
+#' - "out_lca.txt" : see Vsearch Manual for parameter --lcaout
+#'
+#' - "userout.txt" : see Vsearch Manual for parameter --userout
+#'
+#' @param verbose (logical). If TRUE, print additional information.
+#' @param temporary_fasta_file Name of the temporary fasta file. Only useful
+#'   with keep_temporary_files = TRUE.
+#' @param cmd_args Other arguments to be passed on to vsearch usearch_global cmd.
+#' @return See param behavior
+#' @seealso [assign_sintax()], [add_new_taxonomy_pq()]
+#' @examplesIf MiscMetabar::is_vsearch_installed()
+#' \donttest{
+#' data_fungi_mini_new <- assign_vsearch_lca(data_fungi_mini,
+#'   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
+#'   lca_cutoff = 0.9
+#' )
+#' }
+#' @export 
+#' @author Adrien Taudière
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please cite [vsearch](https://github.com/torognes/vsearch) and
+#'   [stampa](https://github.com/frederic-mahe/stampa)
+assign_vsearch_lca <- function(physeq = NULL,
+                               seq2search = NULL,
+                               ref_fasta = NULL,
+                               behavior = "return_matrix",
+                               vsearchpath = "vsearch",
+                               clean_pq = TRUE,
+                               taxo_rank = c("K", "P", "C", "O", "F", "G", "S"),
+                               nproc = 1,
+                               suffix = "",
+                               id = 0.5,
+                               lca_cutoff = 1,
+                               maxrejects = 32,
+                               top_hits_only = TRUE,
+                               maxaccepts = 0,
+                               keep_temporary_files = FALSE,
+                               verbose = TRUE,
+                               temporary_fasta_file = "temp.fasta",
+                               cmd_args = "") {
+  write_temp_fasta(
+    physeq = physeq,
+    seq2search = seq2search,
+    temporary_fasta_file = temporary_fasta_file,
+    behavior = behavior,
+    clean_pq = clean_pq,
+    verbose = verbose
+  )
+
+  cmd_usearch <-
+    paste0(
+      " --usearch_global temp.fasta --db ",
+      ref_fasta,
+      " --lcaout out_lca.txt -id ",
+      id,
+      " --threads ",
+      nproc,
+      " --userfields query+id+target",
+      " --maxaccepts ",
+      maxaccepts,
+      " --maxrejects ",
+      maxrejects,
+      " --lca_cutoff  ",
+      lca_cutoff,
+      " --userout userout.txt ",
+      cmd_args
+    )
+
+  if (top_hits_only) {
+    cmd_usearch <-
+      paste0(cmd_usearch, " --top_hits_only")
+  }
+
+  if (behavior == "return_cmd") {
+    if (!keep_temporary_files) {
+      unlink(temporary_fasta_file)
+    }
+    return("sintax" = paste0(vsearchpath, " ", cmd_usearch))
+  }
+
+  system2(vsearchpath,
+    args = cmd_usearch,
+    stdout = TRUE,
+    stderr = TRUE
+  )
+
+  res_usearch <- read.csv("out_lca.txt", sep = "\t", header = F)
+  taxa_names <- res_usearch$V1
+  res_usearch <- tibble(res_usearch$V2, taxa_names)
+  if (sum(is.na(res_usearch)) == nrow(res_usearch)) {
+    message("None match were found using usearch global and id=", id)
+    if (behavior == "add_to_phyloseq") {
+      return(physeq)
+    } else {
+      return(NULL)
+    }
+  }
+
+  res_usearch <- res_usearch |>
+    tidyr::separate_wider_delim(-taxa_names,
+      names = paste0(taxo_rank, suffix),
+      delim = ",",
+      too_few = "align_start"
+    ) |>
+    tidyr::pivot_longer(-taxa_names) |>
+    mutate(across(value, ~ gsub(".:", "", .x)))
+
+  res_usearch_wide_taxo <-
+    res_usearch |>
+    tidyr::pivot_wider(names_from = name, values_from = value)
+
+  if (!keep_temporary_files) {
+    unlink(temporary_fasta_file)
+    unlink("out_lca.txt")
+    unlink("userout.txt")
+  }
+
+  if (behavior == "add_to_phyloseq") {
+    tax_tab <- as.data.frame(as.matrix(physeq@tax_table))
+    tax_tab$taxa_names <- taxa_names(physeq)
+
+    new_physeq <- physeq
+    new_tax_tab <- left_join(tax_tab, res_usearch_wide_taxo,
+      by = join_by(taxa_names)
+    ) |>
+      dplyr::select(-taxa_names) |>
+      as.matrix()
+    new_physeq@tax_table <- tax_table(new_tax_tab)
+    taxa_names(new_physeq@tax_table) <- taxa_names(physeq)
+
+    return(new_physeq)
+  } else if (behavior == "return_matrix") {
+    return(res_usearch_wide_taxo)
+  }
+}
+################################################################################

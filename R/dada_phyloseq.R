@@ -1749,27 +1749,45 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #' @inheritParams clean_pq
 #' @param ref_fasta (required) A link to a database.
 #'   Pass on to `dada2::assignTaxonomy`.
+#' @param method (required, default "dada2") :.add
+#'
+#' - "dada2" : [dada2::assignTaxonomy()]
+#'
+#' - "sintax" : see [assign_sintax()]
+#'
+#' - "lca" : see [assign_vsearch_lca()]
+#'
 #' @param suffix (character) The suffix to name the new columns.
 #'   If set to NULL (the default), the basename of the file reFasta
-#'   is used.
-#' @param ... Other arguments pass on to `dada2::assignTaxonomy`.
+#'   is used with the name of the method. Set suffix to "" in order
+#'   to remove any suffix.
+#' @param ... Other arguments pass on to the taxonomic assignation method.
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object with a larger slot tax_table"
-#'
+#' @seealso [dada2::assignTaxonomy()], [assign_sintax()], [assign_vsearch_lca()]
 #' @export
 #'
 #' @author Adrien Taudière
 #'
-add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, ...) {
+add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, method = "dada2", ...) {
   if (is.null(suffix)) {
-    suffix <- basename(ref_fasta)
+    suffix <- paste0(basename(ref_fasta), "_", method)
   }
-  tax_tab <-
-    dada2::assignTaxonomy(physeq@refseq, refFasta = ref_fasta, ...)
-  colnames(tax_tab) <-
-    make.unique(paste0(colnames(tax_tab), "_", suffix))
-  new_tax_tab <- tax_table(cbind(physeq@tax_table, tax_tab))
-  new_physeq <- physeq
-  tax_table(new_physeq) <- new_tax_tab
+  if (method == "dada2") {
+    tax_tab <-
+      dada2::assignTaxonomy(physeq@refseq, refFasta = ref_fasta, ...)
+    colnames(tax_tab) <-
+      make.unique(paste0(colnames(tax_tab), "_", suffix))
+    new_tax_tab <- tax_table(cbind(physeq@tax_table, tax_tab))
+    new_physeq <- physeq
+    tax_table(new_physeq) <- new_tax_tab
+  } else if (method == "sintax") {
+    new_physeq <- assign_sintax(physeq, ref_fasta = ref_fasta, suffix = suffix, ...)
+  } else if (method == "lca") {
+    new_physeq <- assign_vsearch_lca(physeq, ref_fasta = ref_fasta, suffix = suffix, ...)
+  } # else if(method=="idtaxa") {
+  # new_physeq <- assign_idtaxa(physeq, ref_fasta = ref_fasta, suffix=suffix,...)
+  # }
+
   return(new_physeq)
 }
 ################################################################################

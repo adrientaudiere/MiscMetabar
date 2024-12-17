@@ -68,6 +68,8 @@ reference:
   - blast_pq
   - blast_to_derep
   - filter_asv_blast
+  - assign_vsearch_lca
+  - assign_sintax
 
 - subtitle: Function to add information from taxonomy
   contents:
