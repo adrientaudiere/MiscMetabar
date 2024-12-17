@@ -19,7 +19,7 @@ which is used to fix a seed for reproducibly random number generation
 iddling with the RNG seed is performed, and it is up to the user to
 appropriately call}
 
-\item{verbose}{(logical). If TRUE, print additional informations.}
+\item{verbose}{(logical). If TRUE, print additional information.}
 }
 \value{
 A new \code{\link[phyloseq]{phyloseq-class}} object.

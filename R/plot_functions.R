@@ -3653,7 +3653,7 @@ tax_bar_pq <-
 #'   the number of sequences (or ASV if nb_seq = FALSE) is log10
 #'   transformed.
 #' @param tax_level The taxonomic level to fill ridges
-#' @param type Either "density" (the default) or "ecdf" to plot a 
+#' @param type Either "density" (the default) or "ecdf" to plot a
 #'   plot a cumulative version using [ggplot2::stat_ecdf()]
 #' @param ... Other params passed on to [ggridges::geom_density_ridges()]
 #'
@@ -3668,7 +3668,7 @@ tax_bar_pq <-
 #' \donttest{
 #' if (requireNamespace("ggridges")) {
 #'   ridges_pq(data_fungi_mini, "Time", alpha = 0.5, scale = 0.9)
-#'   ridges_pq(data_fungi_mini, "Time", alpha = 0.5, scale = 0.9, type="ecdf")
+#'   ridges_pq(data_fungi_mini, "Time", alpha = 0.5, scale = 0.9, type = "ecdf")
 #'   ridges_pq(data_fungi_mini, "Sample_names", log10trans = TRUE) + facet_wrap("~Height")
 #'
 #'   ridges_pq(data_fungi_mini,
@@ -3678,8 +3678,6 @@ tax_bar_pq <-
 #'     point_shape = "|", point_size = 3, point_alpha = 1, alpha = 0.7,
 #'     scale = 0.8
 #'   )
-#'
-#'
 #' }
 #' }
 ridges_pq <- function(physeq,
@@ -3696,26 +3694,30 @@ ridges_pq <- function(physeq,
     psm$Abundance <- log10(psm$Abundance)
   }
   if (nb_seq) {
-    p <- ggplot(psm,
-                aes(
-                  y = factor(.data[[fact]]),
-                  x = Abundance,
-                  fill = .data[[tax_level]],
-                  color = .data[[tax_level]]
-                ))
+    p <- ggplot(
+      psm,
+      aes(
+        y = factor(.data[[fact]]),
+        x = Abundance,
+        fill = .data[[tax_level]],
+        color = .data[[tax_level]]
+      )
+    )
   } else {
     psm_asv <-
       psm %>%
       group_by(.data[[fact]], OTU, .data[[tax_level]]) %>%
       summarise("count" = n())
 
-    p <- ggplot(psm_asv,
-                aes(
-                  y = factor(.data[[fact]]),
-                  x = count,
-                  fill = .data[[tax_level]],
-                  color = .data[[tax_level]]
-                ))
+    p <- ggplot(
+      psm_asv,
+      aes(
+        y = factor(.data[[fact]]),
+        x = count,
+        fill = .data[[tax_level]],
+        color = .data[[tax_level]]
+      )
+    )
   }
 
   if (type == "density") {
@@ -3723,8 +3725,8 @@ ridges_pq <- function(physeq,
       ggridges::geom_density_ridges(aes(), ...) +
       xlim(c(0, NA))
   } else if (type == "ecdf") {
-    p <- p + stat_ecdf(aes(y=NULL)) +
-      facet_wrap(fact, ncol = 2)  +
+    p <- p + stat_ecdf(aes(y = NULL)) +
+      facet_wrap(fact, ncol = 2) +
       theme_minimal() + ylab("Probability")
   }
   return(p)
@@ -4831,18 +4833,18 @@ hill_curves_pq <- function(physeq,
 #' ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
 #'   geom_point(size = 2)
 #'
-#' #library(patchwork)
-#' #physeq <- data_fungi_mini
-#' #res_tsne <- tsne_pq(data_fungi_mini)
-#' #df_umap_tsne <- df_umap
-#' #df_umap_tsne$x_tsne <- res_tsne$Y[, 1]
-#' #df_umap_tsne$y_tsne <- res_tsne$Y[, 2]
-#' #((ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
+#' # library(patchwork)
+#' # physeq <- data_fungi_mini
+#' # res_tsne <- tsne_pq(data_fungi_mini)
+#' # df_umap_tsne <- df_umap
+#' # df_umap_tsne$x_tsne <- res_tsne$Y[, 1]
+#' # df_umap_tsne$y_tsne <- res_tsne$Y[, 2]
+#' # ((ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
 #' #  geom_point(size = 2) +
 #' #  ggtitle("UMAP")) + (plot_ordination(physeq,
 #' #  ordination =
 #' #    ordinate(physeq, method = "PCoA", distance = "bray"), color = "Height"
-#' #)) +
+#' # )) +
 #' #  ggtitle("PCoA")) /
 #' #  ((ggplot(df_umap_tsne, aes(x = x_tsne, y = y_tsne, col = Height)) +
 #' #    geom_point(size = 2) +
@@ -4857,9 +4859,11 @@ hill_curves_pq <- function(physeq,
 #' df_uwot <- umap_pq(data_fungi_mini, pkg = "uwot")
 #'
 #' (ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
-#'   geom_point(size = 2) + ggtitle("umap::umap")) /
+#'   geom_point(size = 2) +
+#'   ggtitle("umap::umap")) /
 #'   (ggplot(df_uwot, aes(x = x_umap, y = y_umap, col = Height)) +
-#'     geom_point(size = 2)+ ggtitle("uwot::umap2"))
+#'     geom_point(size = 2) +
+#'     ggtitle("uwot::umap2"))
 #'
 #' @details
 #' This function is mainly a wrapper of the work of others.
@@ -4926,7 +4930,7 @@ umap_pq <- function(physeq, pkg = "umap", ...) {
 #' plot_complexity_pq(subset_samples(data_fungi_mini, Height == "Low"),
 #'   aggregate = FALSE, kmer_size = 4
 #' )
-#' #plot_complexity_pq(subset_samples(data_fungi, Height == "Low"), kmer_size = 4)
+#' # plot_complexity_pq(subset_samples(data_fungi, Height == "Low"), kmer_size = 4)
 #'
 #' @details
 #' This function is mainly a wrapper of the work of others.

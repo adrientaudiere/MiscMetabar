@@ -66,6 +66,8 @@
 <li>Add function <code><a href="../reference/plot_complexity_pq.html">plot_complexity_pq()</a></code> to plot kmer complexity of references sequences of a phyloseq object</li>
 <li>Add param <code>type</code> to <code>ridge_pq()</code> to plot a cumulative version (type=“ecdf”) version of ridge</li>
 <li>Introduce the idea of a pq-verse: some other packages will complete the MiscMetabar packages to make package maintenance easier. The <a href="https://github.com/adrientaudiere/comparpq" class="external-link">comparpq</a> package will facilitate the comparison of phyloseq object with different taxonomy, different clustering method, different samples with same modality or different primers.</li>
+<li>Add functions [assign_vsearch_lca()], [assign_sintax()] and internal function [write_temp_fasta()]</li>
+<li>Add param <code>method</code> to <code><a href="../reference/add_new_taxonomy_pq.html">add_new_taxonomy_pq()</a></code> to allow the use of [dada2::assign_taxonomy()] (default, precedent only method available), [assign_sintax()] or [assign_vsearch_lca()]</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.10.4" id="miscmetabar-0104">MiscMetabar 0.10.4<a class="anchor" aria-label="anchor" href="#miscmetabar-0104"></a></h2>

@@ -30,7 +30,7 @@ Set to number of cpus/processors to use for the clustering}
 
 \item{id}{(default: 0.97) level of identity to cluster}
 
-\item{vsearchpath}{(default: vsearch) path to vsearch}
+\item{vsearchpath}{(default: "vsearch") path to vsearch}
 
 \item{tax_adjust}{(Default 0) See the man page
 of \code{\link[=merge_taxa_vec]{merge_taxa_vec()}} for more details.

@@ -45,7 +45,7 @@ considered significant.}
 reads being simulated, also known as the depth. See
 \code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}}.}
 
-\item{verbose}{(logical). If TRUE, print additional informations.}
+\item{verbose}{(logical). If TRUE, print additional information.}
 
 \item{progress_bar}{(logical, default TRUE) Do we print progress during
 the calculation?}

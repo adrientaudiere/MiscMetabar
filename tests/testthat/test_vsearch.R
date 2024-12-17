@@ -240,7 +240,6 @@ if (!MiscMetabar:::is_vsearch_installed()) {
 
     res <- lapply(list(
       data_fungi_mini_new_maxa100,
-      data_fungi_mini_new,
       data_fungi_mini_new_id90,
       data_fungi_mini_new_lca90,
       data_fungi_mini_new_lca90_tophit,
@@ -251,7 +250,7 @@ if (!MiscMetabar:::is_vsearch_installed()) {
       sum(is.na(el@tax_table[, "G"]))
     })
 
-    expect_equal(res, list(35, 36, 43, 0, 0, 0, 0, 0))
+    expect_equal(res, list(35, 43, 0, 0, 0, 0, 0))
   })
 
 

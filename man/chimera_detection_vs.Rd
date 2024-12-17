@@ -21,7 +21,7 @@ chimera_detection_vs(
 \item{nb_seq}{(required) a numeric vector giving the number of sequences for
 each DNA sequences}
 
-\item{vsearchpath}{(default: vsearch) path to vsearch}
+\item{vsearchpath}{(default: "vsearch") path to vsearch}
 
 \item{abskew}{(int, default 2) The abundance skew is used to distinguish in a
 three way alignment which sequence is the chimera and which are the

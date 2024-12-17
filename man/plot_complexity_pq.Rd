@@ -61,7 +61,7 @@ plot_complexity_pq(subset_samples(data_fungi_mini, Height == "High"),
 plot_complexity_pq(subset_samples(data_fungi_mini, Height == "Low"),
   aggregate = FALSE, kmer_size = 4
 )
-#plot_complexity_pq(subset_samples(data_fungi, Height == "Low"), kmer_size = 4)
+# plot_complexity_pq(subset_samples(data_fungi, Height == "Low"), kmer_size = 4)
 
 }
 \seealso{

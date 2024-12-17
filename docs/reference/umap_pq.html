@@ -135,18 +135,18 @@ use this function.</p>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="umap_pq-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">#library(patchwork)</span></span></span>
-<span class="r-in"><span><span class="co">#physeq &lt;- data_fungi_mini</span></span></span>
-<span class="r-in"><span><span class="co">#res_tsne &lt;- tsne_pq(data_fungi_mini)</span></span></span>
-<span class="r-in"><span><span class="co">#df_umap_tsne &lt;- df_umap</span></span></span>
-<span class="r-in"><span><span class="co">#df_umap_tsne$x_tsne &lt;- res_tsne$Y[, 1]</span></span></span>
-<span class="r-in"><span><span class="co">#df_umap_tsne$y_tsne &lt;- res_tsne$Y[, 2]</span></span></span>
-<span class="r-in"><span><span class="co">#((ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +</span></span></span>
+<span class="r-in"><span><span class="co"># library(patchwork)</span></span></span>
+<span class="r-in"><span><span class="co"># physeq &lt;- data_fungi_mini</span></span></span>
+<span class="r-in"><span><span class="co"># res_tsne &lt;- tsne_pq(data_fungi_mini)</span></span></span>
+<span class="r-in"><span><span class="co"># df_umap_tsne &lt;- df_umap</span></span></span>
+<span class="r-in"><span><span class="co"># df_umap_tsne$x_tsne &lt;- res_tsne$Y[, 1]</span></span></span>
+<span class="r-in"><span><span class="co"># df_umap_tsne$y_tsne &lt;- res_tsne$Y[, 2]</span></span></span>
+<span class="r-in"><span><span class="co"># ((ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +</span></span></span>
 <span class="r-in"><span><span class="co">#  geom_point(size = 2) +</span></span></span>
 <span class="r-in"><span><span class="co">#  ggtitle("UMAP")) + (plot_ordination(physeq,</span></span></span>
 <span class="r-in"><span><span class="co">#  ordination =</span></span></span>
 <span class="r-in"><span><span class="co">#    ordinate(physeq, method = "PCoA", distance = "bray"), color = "Height"</span></span></span>
-<span class="r-in"><span><span class="co">#)) +</span></span></span>
+<span class="r-in"><span><span class="co"># )) +</span></span></span>
 <span class="r-in"><span><span class="co">#  ggtitle("PCoA")) /</span></span></span>
 <span class="r-in"><span><span class="co">#  ((ggplot(df_umap_tsne, aes(x = x_tsne, y = y_tsne, col = Height)) +</span></span></span>
 <span class="r-in"><span><span class="co">#    geom_point(size = 2) +</span></span></span>
@@ -165,9 +165,11 @@ use this function.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(Sample)`</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df_umap</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x_umap</span>, y <span class="op">=</span> <span class="va">y_umap</span>, col <span class="op">=</span> <span class="va">Height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"umap::umap"</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"umap::umap"</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span></span></span>
 <span class="r-in"><span>  <span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df_uwot</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x_umap</span>, y <span class="op">=</span> <span class="va">y_umap</span>, col <span class="op">=</span> <span class="va">Height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"uwot::umap2"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"uwot::umap2"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="umap_pq-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

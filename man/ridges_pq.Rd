@@ -56,7 +56,7 @@ if (requireNamespace("ggridges")) {
 \donttest{
 if (requireNamespace("ggridges")) {
   ridges_pq(data_fungi_mini, "Time", alpha = 0.5, scale = 0.9)
-  ridges_pq(data_fungi_mini, "Time", alpha = 0.5, scale = 0.9, type="ecdf")
+  ridges_pq(data_fungi_mini, "Time", alpha = 0.5, scale = 0.9, type = "ecdf")
   ridges_pq(data_fungi_mini, "Sample_names", log10trans = TRUE) + facet_wrap("~Height")
 
   ridges_pq(data_fungi_mini,
@@ -66,8 +66,6 @@ if (requireNamespace("ggridges")) {
     point_shape = "|", point_size = 3, point_alpha = 1, alpha = 0.7,
     scale = 0.8
   )
-
-
 }
 }
 }

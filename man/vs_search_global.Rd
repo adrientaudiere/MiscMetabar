@@ -25,7 +25,7 @@ or (ii) a character vector that will be convert to DNAstringSet using
 
 \item{path_to_fasta}{(required if seq2search is NULL) a path to fasta file if seq2search is est to NULL.}
 
-\item{vsearchpath}{(default: vsearch) path to vsearch}
+\item{vsearchpath}{(default: "vsearch") path to vsearch}
 
 \item{id}{(default: 0.8) id for the option \code{--usearch_global} of the vsearch software}
 

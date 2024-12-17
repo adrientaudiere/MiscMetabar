@@ -26,7 +26,8 @@ if (getRversion() >= "2.15.1") {
     "chim_rm", "condition", "physeq", "seq_tab_Pairs", "nb_samp", "silent",
     "X1_lim1", "X1_lim2", "aicc", "variable", "pos_letters", "alluvium",
     "na_remove", "stratum", "to_lodes_form", "clean_fastq", "clean_sam",
-    "samples_names_common", "seq_id", "alpha_hill", "Modality", "Type", "complexity"
+    "samples_names_common", "seq_id", "alpha_hill", "Modality", "Type", "complexity",
+    "value_bootstrap"
   ))
 }
 
