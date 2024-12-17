@@ -16,6 +16,8 @@ bibliography: paper/bibliography.bib
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- devtools::build_readme() -->
 
+<img src="https://repobeats.axiom.co/api/embed/82c4ce7bcc414cd0ddfeefecb32bc1fb0d51b45b.svg" title="Repobeats analytics image" alt="A panel showing some github statistics of the repositories using repobeats.axiom">
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -87,9 +89,9 @@ For developers, I also wrote an article describing some [rules of codes](https:/
 
 ```{r example}
 #| fig.alt: >
-#|   Four rectangles represent the four component of an example phyloseq 
-#|   dataset. In each rectangle, some informations about the component are 
-#|   shown. 
+#|   Four rectangles represent the four component of an example phyloseq
+#|   dataset. In each rectangle, some informations about the component are
+#|   shown.
 
 library("MiscMetabar")
 library("phyloseq")
@@ -102,8 +104,8 @@ summary_plot_pq(data_fungi)
 
 ```{r, fig.cap="Hill number 0"}
 #| fig.alt: >
-#|   Hill number 0, aka richness are plot in function of 
-#|   the height modality 
+#|   Hill number 0, aka richness are plot in function of
+#|   the height modality
 p <- MiscMetabar::hill_pq(data_fungi, fact = "Height")
 p$plot_Hill_0
 ```

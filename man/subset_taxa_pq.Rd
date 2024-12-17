@@ -59,3 +59,6 @@ subset_taxa_pq(data_fungi, grepl("mycor", data_fungi@tax_table[, "Guild"]),
 )
 
 }
+\author{
+Adrien Taudière
+}

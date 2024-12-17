@@ -38,7 +38,7 @@ the number of sequences (or ASV if nb_seq = FALSE) is log10
 transformed.}
 }
 \value{
-A ggplot2 graphic
+A ggplot2 object
 }
 \description{
 \if{html}{\out{

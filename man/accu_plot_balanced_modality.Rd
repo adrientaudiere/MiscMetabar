@@ -47,7 +47,7 @@ only use rarefy_by_sample_before_merging = TRUE}
 reads being simulated, also known as the depth. See
 \code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}}.}
 
-\item{verbose}{(logical). If TRUE, print additional informations.}
+\item{verbose}{(logical). If TRUE, print additional information.}
 
 \item{...}{Other params for be passed on to \code{\link[=accu_plot]{accu_plot()}} function}
 }

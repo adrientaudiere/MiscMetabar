@@ -4,7 +4,7 @@
 \alias{add_new_taxonomy_pq}
 \title{Add new taxonomic rank to a phyloseq object.}
 \usage{
-add_new_taxonomy_pq(physeq, ref_fasta, suffix = NULL, ...)
+add_new_taxonomy_pq(physeq, ref_fasta, suffix = NULL, method = "dada2", ...)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
@@ -15,9 +15,17 @@ Pass on to \code{dada2::assignTaxonomy}.}
 
 \item{suffix}{(character) The suffix to name the new columns.
 If set to NULL (the default), the basename of the file reFasta
-is used.}
+is used with the name of the method. Set suffix to "" in order
+to remove any suffix.}
 
-\item{...}{Other arguments pass on to \code{dada2::assignTaxonomy}.}
+\item{method}{(required, default "dada2") :.add
+\itemize{
+\item "dada2" : \code{\link[dada2:assignTaxonomy]{dada2::assignTaxonomy()}}
+\item "sintax" : see \code{\link[=assign_sintax]{assign_sintax()}}
+\item "lca" : see \code{\link[=assign_vsearch_lca]{assign_vsearch_lca()}}
+}}
+
+\item{...}{Other arguments pass on to the taxonomic assignation method.}
 }
 \value{
 A new \code{\link[phyloseq]{phyloseq-class}} object with a larger slot tax_table"
@@ -31,6 +39,9 @@ A new \code{\link[phyloseq]{phyloseq-class}} object with a larger slot tax_table
 
 One of main use of this function is to add taxonomic assignment from
 a new database.
+}
+\seealso{
+\code{\link[dada2:assignTaxonomy]{dada2::assignTaxonomy()}}, \code{\link[=assign_sintax]{assign_sintax()}}, \code{\link[=assign_vsearch_lca]{assign_vsearch_lca()}}
 }
 \author{
 Adrien Taudière

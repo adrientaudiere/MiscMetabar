@@ -26,7 +26,8 @@ the reverse sequence and the reverse-complement sequence.
 
 
 Search for exact matching of sequences using complement,
-reverse and reverse-complement
+reverse and reverse-complement. It is useful to check for
+primers issues after cutadapt step.
 }
 \examples{
 data("data_fungi")

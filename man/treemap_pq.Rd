@@ -36,7 +36,7 @@ legend of color for lvl 1}
 \item{...}{Other arguments passed on to \code{\link[treemapify:geom_treemap]{treemapify::geom_treemap()}} function.}
 }
 \value{
-A ggplot2 graphic
+A ggplot2 object
 }
 \description{
 \if{html}{\out{

@@ -18,6 +18,7 @@ if (getRversion() >= "2.15.1") {
 #'
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object with `refseq` slot and new
 #'   taxa names
+#' @author Adrien Taudière
 #' @export
 
 add_dna_to_phyloseq <- function(physeq, prefix_taxa_names = "Taxa_") {
@@ -70,6 +71,7 @@ add_dna_to_phyloseq <- function(physeq, prefix_taxa_names = "Taxa_") {
 #' @param prefix_taxa_names (default "Taxa_"): the prefix of taxa names (eg. "ASV_" or "OTU_")
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object
 #' @export
+#' @author Adrien Taudière
 clean_pq <- function(physeq,
                      remove_empty_samples = TRUE,
                      remove_empty_taxa = TRUE,
@@ -232,23 +234,27 @@ clean_pq <- function(physeq,
 #' @return The number of sequences, clusters (e.g. OTUs, ASVs) and samples for
 #'   each object.
 #' @export
+#' @author Adrien Taudière
 #' @seealso [track_wkflow_samples()]
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' data(enterotype)
 #' if (requireNamespace("pbapply")) {
 #'   track_wkflow(list(data_fungi, enterotype), taxonomy_rank = c(3, 5))
-#'   track_wkflow(list("data FUNGI"=data_fungi,
+#'   track_wkflow(list(
+#'     "data FUNGI" = data_fungi,
 #'     "fastq files forward" =
-#'     unlist(list_fastq_files(system.file("extdata", package = "MiscMetabar"),
-#'     paired_end = FALSE))))
+#'       unlist(list_fastq_files(system.file("extdata", package = "MiscMetabar"),
+#'         paired_end = FALSE
+#'       ))
+#'   ))
 #' }
 track_wkflow <- function(list_of_objects,
                          obj_names = NULL,
                          clean_pq = FALSE,
                          taxonomy_rank = NULL,
-                         verbose=TRUE,
+                         verbose = TRUE,
                          ...) {
-  if(verbose) {
+  if (verbose) {
     message("Compute the number of sequences")
   }
   if (!is.null(obj_names)) {
@@ -265,8 +271,8 @@ track_wkflow <- function(list_of_objects,
 
   track_nb_seq_per_obj <-
     pbapply::pblapply(list_of_objects, function(object) {
-      if(verbose) {
-      message(paste("Start object of class:", class(object), sep = " "))
+      if (verbose) {
+        message(paste("Start object of class:", class(object), sep = " "))
       }
       if (inherits(object, "phyloseq")) {
         sum(object@otu_table)
@@ -302,8 +308,8 @@ track_wkflow <- function(list_of_objects,
   message("Compute the number of clusters")
   track_nb_cluster_per_obj <-
     pbapply::pblapply(list_of_objects, function(object) {
-      if(verbose) {
-      message(paste("Start object of class:", class(object), sep = " "))
+      if (verbose) {
+        message(paste("Start object of class:", class(object), sep = " "))
       }
       if (inherits(object, "phyloseq")) {
         ntaxa(object)
@@ -330,8 +336,8 @@ track_wkflow <- function(list_of_objects,
   message("Compute the number of samples")
   track_nb_sam_per_obj <-
     pbapply::pblapply(list_of_objects, function(object) {
-      if(verbose) {
-      message(paste("Start object of class:", class(object), sep = " "))
+      if (verbose) {
+        message(paste("Start object of class:", class(object), sep = " "))
       }
       if (inherits(object, "phyloseq")) {
         nsamples(object)
@@ -361,8 +367,8 @@ track_wkflow <- function(list_of_objects,
     message("Compute the number of values in taxonomic rank")
     track_nb_tax_value_per_obj <-
       pbapply::pblapply(list_of_objects, function(object) {
-        if(verbose) {
-        message(paste("Start object of class:", class(object), sep = " "))
+        if (verbose) {
+          message(paste("Start object of class:", class(object), sep = " "))
         }
         if (inherits(object, "phyloseq")) {
           if (taxa_are_rows(object)) {
@@ -381,8 +387,8 @@ track_wkflow <- function(list_of_objects,
 
     names_taxonomic_rank <-
       pbapply::pblapply(list_of_objects, function(object) {
-        if(verbose) {
-        message(paste("Start object of class:", class(object), sep = " "))
+        if (verbose) {
+          message(paste("Start object of class:", class(object), sep = " "))
         }
         if (inherits(object, "phyloseq")) {
           if (taxa_are_rows(object)) {
@@ -945,7 +951,7 @@ save_pq <- function(physeq, path = NULL, ...) {
 #' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 #' and if present a phy_tree in Newick format. At least the otu_table.csv need to be present.
 #' @export
-#'
+#' @author Adrien Taudière
 #' @examples
 #' write_pq(data_fungi, path = paste0(tempdir(), "/phyloseq"))
 #' read_pq(path = paste0(tempdir(), "/phyloseq"))
@@ -1371,7 +1377,7 @@ mumu_pq <- function(physeq,
 #' @return Nothing if the phyloseq object is valid. An error in the other case.
 #'  Warnings if verbose = TRUE
 #' @export
-#'
+#' @author Adrien Taudière
 verify_pq <- function(physeq,
                       verbose = FALSE,
                       min_nb_seq_sample = 500,
@@ -1440,7 +1446,7 @@ verify_pq <- function(physeq,
 #' @inheritParams clean_pq
 #' @param condition A boolean vector to subset samples. Length must fit
 #'   the number of samples
-#'
+#' @author Adrien Taudière
 #' @examples
 #'
 #' cond_samp <- grepl("A1", data_fungi@sam_data[["Sample_names"]])
@@ -1510,7 +1516,7 @@ subset_samples_pq <- function(physeq, condition) {
 #'
 #' @return a new phyloseq object
 #' @export
-#'
+#' @author Adrien Taudière
 subset_taxa_pq <- function(physeq,
                            condition,
                            verbose = TRUE,
@@ -1580,6 +1586,89 @@ subset_taxa_pq <- function(physeq,
   return(new_physeq)
 }
 ################################################################################
+
+################################################################################
+#' Filter taxa of a phyloseq object based on the minimum number of
+#'   sequences/samples
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#' Basically a wraper of [subset_taxa_pq()].
+#'
+#' @inheritParams clean_pq
+#' @param min_nb_seq (int default NULL) minimum number of sequences by taxa.
+#' @param min_occurence (int default NULL) minimum number of sample by taxa.
+#' @param combination Either "AND" (default) or "OR". If set to "AND" and both
+#'   min_nb_seq and min_occurence are not NULL, the taxa must match the two
+#'   condition to passe the filter. If set to "OR", taxa matching only one
+#'   condition are kept.
+#' @param clean_pq (logical)
+#'   If set to TRUE, empty samples and empty taxa (ASV, OTU) are discarded
+#'   after filtering.
+#'
+#' @return a new phyloseq object
+#' @export
+#' @author Adrien Taudière
+#' @examples
+#' filt_taxa_pq(data_fungi, min_nb_seq = 20)
+#' filt_taxa_pq(data_fungi, min_occurence = 2)
+#' filt_taxa_pq(data_fungi,
+#'   min_occurence = 2,
+#'   min_nb_seq = 10, clean_pq = FALSE
+#' )
+#' filt_taxa_pq(data_fungi,
+#'   min_occurence = 2,
+#'   min_nb_seq = 10,
+#'   combination = "OR"
+#' )
+filt_taxa_pq <- function(physeq,
+                         min_nb_seq = NULL,
+                         min_occurence = NULL,
+                         combination = "AND",
+                         clean_pq = TRUE) {
+  new_physeq <- physeq
+  if (is.null(min_nb_seq) && is.null(min_occurence)) {
+    stop("You must inform either min_nb_seq or min_occurence or both params!")
+  }
+  if (!is.null(min_nb_seq) && is.null(min_occurence)) {
+    new_physeq <-
+      subset_taxa_pq(physeq, taxa_sums(physeq) >= min_nb_seq)
+  }
+
+  if (is.null(min_nb_seq) && !is.null(min_occurence)) {
+    new_physeq <-
+      subset_taxa_pq(
+        new_physeq,
+        taxa_sums(as_binary_otu_table(new_physeq)) >= min_occurence
+      )
+  }
+
+  if (!is.null(min_nb_seq) && !is.null(min_occurence)) {
+    if (combination == "AND") {
+      new_physeq <-
+        subset_taxa_pq(
+          new_physeq,
+          taxa_sums(as_binary_otu_table(new_physeq)) >= 1 &
+            taxa_sums((new_physeq)) >= 100
+        )
+    } else if (combination == "OR") {
+      new_physeq <-
+        subset_taxa_pq(
+          new_physeq,
+          taxa_sums(as_binary_otu_table(new_physeq)) >= 1 |
+            taxa_sums((new_physeq)) >= 100
+        )
+    }
+  }
+
+  if (clean_pq) {
+    new_physeq <- clean_pq(new_physeq)
+  }
+  return(new_physeq)
+}
 
 
 ################################################################################
@@ -1660,27 +1749,45 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #' @inheritParams clean_pq
 #' @param ref_fasta (required) A link to a database.
 #'   Pass on to `dada2::assignTaxonomy`.
+#' @param method (required, default "dada2") :.add
+#'
+#' - "dada2" : [dada2::assignTaxonomy()]
+#'
+#' - "sintax" : see [assign_sintax()]
+#'
+#' - "lca" : see [assign_vsearch_lca()]
+#'
 #' @param suffix (character) The suffix to name the new columns.
 #'   If set to NULL (the default), the basename of the file reFasta
-#'   is used.
-#' @param ... Other arguments pass on to `dada2::assignTaxonomy`.
+#'   is used with the name of the method. Set suffix to "" in order
+#'   to remove any suffix.
+#' @param ... Other arguments pass on to the taxonomic assignation method.
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object with a larger slot tax_table"
-#'
+#' @seealso [dada2::assignTaxonomy()], [assign_sintax()], [assign_vsearch_lca()]
 #' @export
 #'
 #' @author Adrien Taudière
 #'
-add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, ...) {
+add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, method = "dada2", ...) {
   if (is.null(suffix)) {
-    suffix <- basename(ref_fasta)
+    suffix <- paste0(basename(ref_fasta), "_", method)
   }
-  tax_tab <-
-    dada2::assignTaxonomy(physeq@refseq, refFasta = ref_fasta, ...)
-  colnames(tax_tab) <-
-    make.unique(paste0(colnames(tax_tab), "_", suffix))
-  new_tax_tab <- tax_table(cbind(physeq@tax_table, tax_tab))
-  new_physeq <- physeq
-  tax_table(new_physeq) <- new_tax_tab
+  if (method == "dada2") {
+    tax_tab <-
+      dada2::assignTaxonomy(physeq@refseq, refFasta = ref_fasta, ...)
+    colnames(tax_tab) <-
+      make.unique(paste0(colnames(tax_tab), "_", suffix))
+    new_tax_tab <- tax_table(cbind(physeq@tax_table, tax_tab))
+    new_physeq <- physeq
+    tax_table(new_physeq) <- new_tax_tab
+  } else if (method == "sintax") {
+    new_physeq <- assign_sintax(physeq, ref_fasta = ref_fasta, suffix = suffix, ...)
+  } else if (method == "lca") {
+    new_physeq <- assign_vsearch_lca(physeq, ref_fasta = ref_fasta, suffix = suffix, ...)
+  } # else if(method=="idtaxa") {
+  # new_physeq <- assign_idtaxa(physeq, ref_fasta = ref_fasta, suffix=suffix,...)
+  # }
+
   return(new_physeq)
 }
 ################################################################################
@@ -2420,8 +2527,7 @@ cutadapt_remove_primers <- function(path_to_fastq,
                                     nb_files = Inf,
                                     cmd_is_run = TRUE,
                                     return_file_path = FALSE,
-                                    args_before_cutadapt = "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv && "
-                                    ) {
+                                    args_before_cutadapt = "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv && ") {
   cmd <- list()
   if (!dir.exists(folder_output)) {
     dir.create(folder_output)
@@ -2513,7 +2619,7 @@ cutadapt_remove_primers <- function(path_to_fastq,
     ))
     unlink(paste0(tempdir(), "/script_cutadapt.sh"))
   }
-  if(return_file_path){
+  if (return_file_path) {
     return(normalizePath(folder_output))
   } else {
     return(cmd)
@@ -2544,20 +2650,19 @@ cutadapt_remove_primers <- function(path_to_fastq,
 #'
 #' @author Adrien Taudière
 #' @examples
-#'  data_fungi_mini_woNA4height <- subset_samples(
-#'     data_fungi_mini,
-#'     !is.na(data_fungi_mini@sam_data$Height)
-#'   )
-#'   taxa_only_in_one_level(data_fungi_mini_woNA4height, "Height", "High")
-#'   #' # Taxa present only in low height samples
-#'   suppressMessages(suppressWarnings(
-#'     taxa_only_in_one_level(data_fungi, "Height", "Low")
-#'   ))
-#'   # Number of taxa present only in sample of time equal to 15
-#'   suppressMessages(suppressWarnings(
-#'     length(taxa_only_in_one_level(data_fungi, "Time", "15"))
-#'   ))
-
+#' data_fungi_mini_woNA4height <- subset_samples(
+#'   data_fungi_mini,
+#'   !is.na(data_fungi_mini@sam_data$Height)
+#' )
+#' taxa_only_in_one_level(data_fungi_mini_woNA4height, "Height", "High")
+#' #' # Taxa present only in low height samples
+#' suppressMessages(suppressWarnings(
+#'   taxa_only_in_one_level(data_fungi, "Height", "Low")
+#' ))
+#' # Number of taxa present only in sample of time equal to 15
+#' suppressMessages(suppressWarnings(
+#'   length(taxa_only_in_one_level(data_fungi, "Time", "15"))
+#' ))
 taxa_only_in_one_level <- function(physeq,
                                    modality,
                                    level,
@@ -2856,7 +2961,7 @@ taxa_as_rows <- function(physeq) {
 #'   (in this case, reproducibly random subsampling). If set to FALSE, then no
 #'   iddling with the RNG seed is performed, and it is up to the user to
 #'   appropriately call
-#' @param verbose (logical). If TRUE, print additional informations.
+#' @param verbose (logical). If TRUE, print additional information.
 #' @export
 #' @author Adrien Taudière
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object.

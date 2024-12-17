@@ -52,9 +52,14 @@ reference:
   contents:
   - summary_plot_pq
   - tbl_sum_samdata
-  - verify_pq
+
 
 - title: Transform phyloseq object
+- subtitle: Verify and clean phyloseq object
+  contents:
+  - clean_pq
+  - verify_pq
+
 - subtitle: Taxonomy
   contents:
   - add_new_taxonomy_pq
@@ -63,6 +68,8 @@ reference:
   - blast_pq
   - blast_to_derep
   - filter_asv_blast
+  - assign_vsearch_lca
+  - assign_sintax
 
 - subtitle: Function to add information from taxonomy
   contents:
@@ -83,6 +90,7 @@ reference:
   - subset_taxa_tax_control
   - select_taxa
   - merge_taxa_vec
+  - filt_taxa_pq
 
 - subtitle: Subset/merge samples
   contents:
@@ -116,15 +124,10 @@ reference:
 
 - subtitle: References sequences
   contents:
+  - add_dna_to_phyloseq
+  - plot_complexity_pq
   - plot_refseq_extremity_pq
   - plot_refseq_pq
-  - add_dna_to_phyloseq
-
-- subtitle: Others
-  contents:
-  - add_dna_to_phyloseq
-  - clean_pq
-
 
 - title: Explore phyloseq object
 - subtitle: alpha-diversity
@@ -135,6 +138,7 @@ reference:
   - ggbetween_pq
   - ggscatt_pq
   - glmutli_pq
+  - hill_curves_pq
   - hill_pq
   - hill_test_rarperm_pq
   - hill_tuckey_pq
@@ -158,6 +162,7 @@ reference:
   - ridges_pq
   - SRS_curve_pq
   - tsne_pq
+  - umap_pq
   - upset_pq
   - upset_test_pq
   - var_par_pq
@@ -254,6 +259,7 @@ reference:
 - subtitle: Plot management
   contents:
   - multiplot
+  - no_legend
 - subtitle: Variable management
   contents:
   - diff_fct_diff_class

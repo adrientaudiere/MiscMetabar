@@ -56,13 +56,19 @@ clusters and samples
 data(enterotype)
 if (requireNamespace("pbapply")) {
   track_wkflow(list(data_fungi, enterotype), taxonomy_rank = c(3, 5))
-  track_wkflow(list("data FUNGI"=data_fungi,
+  track_wkflow(list(
+    "data FUNGI" = data_fungi,
     "fastq files forward" =
-    unlist(list_fastq_files(system.file("extdata", package = "MiscMetabar"),
-    paired_end = FALSE))))
+      unlist(list_fastq_files(system.file("extdata", package = "MiscMetabar"),
+        paired_end = FALSE
+      ))
+  ))
 }
 \dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=track_wkflow_samples]{track_wkflow_samples()}}
+}
+\author{
+Adrien Taudière
 }

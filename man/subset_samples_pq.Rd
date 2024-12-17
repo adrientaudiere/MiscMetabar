@@ -44,3 +44,6 @@ subset_samples_pq(data_fungi, cond_samp)
 subset_samples_pq(data_fungi, data_fungi@sam_data[["Height"]] == "Low")
 
 }
+\author{
+Adrien Taudière
+}

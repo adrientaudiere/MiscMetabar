@@ -21,7 +21,8 @@
 #' @examples
 #' list_fastq_files(system.file("extdata", package = "MiscMetabar"))
 #' list_fastq_files(system.file("extdata", package = "MiscMetabar"),
-#'                               paired_end = FALSE, pattern_R1 = "")
+#'   paired_end = FALSE, pattern_R1 = ""
+#' )
 #'
 #' @author Adrien Taudière
 
@@ -174,20 +175,28 @@ filter_trim <-
         )
         dir.create(output_rev)
         dir.create(output_fw)
-        file.rename(paste0(output_rev, "interm"),
-                    paste0(output_rev, "/", basename(rev)))
-        file.rename(paste0(output_fw, "interm"),
-                    paste0(output_fw, "/", basename(fw)))
+        file.rename(
+          paste0(output_rev, "interm"),
+          paste0(output_rev, "/", basename(rev))
+        )
+        file.rename(
+          paste0(output_fw, "interm"),
+          paste0(output_fw, "/", basename(fw))
+        )
 
         return(list("fw" = output_fw, "rv" = output_rev))
       } else {
-        dada2::filterAndTrim(filt = paste0(output_fw, "interm"),
-                             fwd = fw,
-                             ...)
+        dada2::filterAndTrim(
+          filt = paste0(output_fw, "interm"),
+          fwd = fw,
+          ...
+        )
         dir.create(output_fw)
 
-        file.rename(paste0(output_fw, "interm"),
-                    paste0(output_fw, "/", basename(fw)))
+        file.rename(
+          paste0(output_fw, "interm"),
+          paste0(output_fw, "/", basename(fw))
+        )
         return(output_fw)
       }
     } else {
@@ -291,7 +300,7 @@ rename_samples <- function(phyloseq_component,
                            names_of_samples,
                            taxa_are_rows = FALSE) {
   if (is.null(sample_names(phyloseq_component)) &&
-      inherits(phyloseq_component, "matrix")) {
+    inherits(phyloseq_component, "matrix")) {
     phyloseq_component <- otu_table(phyloseq_component, taxa_are_rows = taxa_are_rows)
   }
   if (length(names_of_samples) != length(sample_names(phyloseq_component))) {
@@ -381,20 +390,28 @@ sam_data_matching_names <- function(path_sam_data,
     rename(common_names = clean_fastq)
 
   if (sum(is.na(tib_j$raw_fastq)) > 0) {
-    message(sum(is.na(tib_j$raw_fastq)),
-            " samples in sam_data files are not present in fastq_files")
+    message(
+      sum(is.na(tib_j$raw_fastq)),
+      " samples in sam_data files are not present in fastq_files"
+    )
     if (verbose) {
-      warning(tib_j$raw_sam[is.na(tib_j$raw_fastq)],
-              "not_matching_names_from_sam_data.txt")
+      warning(
+        tib_j$raw_sam[is.na(tib_j$raw_fastq)],
+        "not_matching_names_from_sam_data.txt"
+      )
     }
   }
 
   if (sum(is.na(tib_j$raw_sam)) > 0) {
-    message(sum(is.na(tib_j$raw_sam)),
-            " samples in fastq files are not present in sam_data")
+    message(
+      sum(is.na(tib_j$raw_sam)),
+      " samples in fastq files are not present in sam_data"
+    )
     if (verbose) {
-      warning(tib_j$raw_fastq[is.na(tib_j$raw_sam)],
-              "not_matching_names_from_fastq_files.txt")
+      warning(
+        tib_j$raw_fastq[is.na(tib_j$raw_sam)],
+        "not_matching_names_from_fastq_files.txt"
+      )
     }
     if (remove_undocumented_fastq_files) {
       if (verbose) {
