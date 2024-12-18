@@ -3,6 +3,7 @@
 - Add param `suffix` to `add_blast_info()` allowing multiple use of the function on the same phyloseq object (e.g. in order to used different database)
 - Add param `return_DNAStringSet` to `write_temp_fasta()` function to return a DNAStringSet object in place of a temporary file. 
 - Add a vignette pkgnet-report.
+- Add the possibility to send fasta.gz file to `count_seq()`
 
 # MiscMetabar 0.11 
 

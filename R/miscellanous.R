@@ -232,9 +232,13 @@ count_seq <- function(file_path = NULL, folder_path = NULL, pattern = NULL) {
     stop("You need to specify either file_path or folder_path param not both!")
   } else if (!is.null(file_path) && is.null(folder_path)) {
     if (sum(get_file_extension(file_path) == "fasta") > 0) {
+      if (sum(get_file_extension(file_path) == "gz") > 0) {
+              seq_nb <- system(paste0("zcat ", file_path, " | grep -ce '^>'"),
+        intern = TRUE)
+      }else {
       seq_nb <- system(paste0("cat ", file_path, " | grep -ce '^>'"),
         intern = TRUE
-      )
+      )}
     } else if (sum(get_file_extension(file_path) == "fastq") > 0) {
       if (sum(get_file_extension(file_path) == "gz") > 0) {
         seq_nb <- system(paste0("zcat ", file_path, " | grep -ce '^+$'"),
