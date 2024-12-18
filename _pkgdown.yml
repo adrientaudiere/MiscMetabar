@@ -45,6 +45,8 @@ navbar:
     - text: "For developpers"
     - text: Rules of code
       href: articles/Rules.html
+    - text: Report pkgnet
+      href: articles/pkgnet-report.html
 
 reference:
 - title: Describe phyloseq object

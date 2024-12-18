@@ -767,8 +767,10 @@ chimera_detection_vs <- function(seq2search,
 #'
 #' @inheritParams assign_sintax
 #' @param temporary_fasta_file The name of a temporary_fasta_file (default "temp.fasta")
+#' @param return_DNAStringSet (Logical default FALSE). If true, the temporary fasta file
+#'   is removed and a DNAStringSet is return 
 #' @seealso [assign_sintax()], [assign_vsearch_lca]
-#' @return Nothing, produce a fasta file
+#' @return Nothing, produce a fasta file or return a DNAStringset if temporary_fasta_file
 #' @keywords internal
 #' @noRd
 #'
@@ -778,7 +780,8 @@ write_temp_fasta <- function(physeq,
                              temporary_fasta_file = "temp.fasta",
                              behavior = NULL,
                              clean_pq = TRUE,
-                             verbose = TRUE) {
+                             verbose = TRUE,
+                             return_DNAStringSet=FALSE) {
   if (!is.null(physeq) && !is.null(seq2search)) {
     stop("You must enter a single parameter from physeq and seq2search.")
   } else if (is.null(seq2search)) {
@@ -799,6 +802,11 @@ write_temp_fasta <- function(physeq,
   } else if (is.null(physeq) && is.null(seq2search)) {
     stop("You must specify either physeq or seq2search parameter.")
   }
+  if(return_DNAStringSet) {
+    res <- Biostrings::readDNAStringSet(temporary_fasta_file)
+    unlink(temporary_fasta_file)
+    return(res)
+    }
 }
 ################################################################################
 
