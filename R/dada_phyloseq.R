@@ -2484,7 +2484,9 @@ physeq_or_string_to_dna <- function(physeq = NULL, dna_seq = NULL) {
 #'
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' \dontrun{
-#' cutadapt_remove_primers("inst/extdata", "TTC", "GAA",
+#' cutadapt_remove_primers(system.file("extdata", package="MiscMetabar"), 
+#'   "TTC", 
+#'   "GAA",
 #'   folder_output = tempdir()
 #' )
 #'

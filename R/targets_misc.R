@@ -33,7 +33,14 @@ list_fastq_files <-
            pattern_R1 = "_R1_",
            pattern_R2 = "_R2_",
            nb_files = Inf) {
+    
+    if(length(list.files(path))==0) {
+      stop("There is no files in the folder ", path)
+    }
     list_files <- list.files(path, pattern = pattern, full.names = TRUE)
+    if(length(list_files)==0) {
+      stop("None file in the folder ", path, " match the pattern ", pattern)
+    }
     if (paired_end) {
       fnfs <- sort(list_files[grepl(list_files, pattern = pattern_R1)])
       fnrs <-
