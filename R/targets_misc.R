@@ -43,8 +43,14 @@ list_fastq_files <-
     }
     if (paired_end) {
       fnfs <- sort(list_files[grepl(list_files, pattern = pattern_R1)])
+    if(length(fnfs)==0) {
+      stop("None file in the folder ", path, " match the pattern_R1 ", pattern_R1)
+    }
       fnrs <-
         sort(list_files[grepl(list_files, pattern = pattern_R2)])
+    if(length(fnrs)==0) {
+      stop("None file in the folder ", path, " match the pattern_R2 ", pattern_R2)
+    }
       if (is.finite(nb_files)) {
         fnfs <- fnfs[seq(1, nb_files)]
         fnrs <- fnrs[seq(1, nb_files)]
@@ -403,8 +409,8 @@ sam_data_matching_names <- function(path_sam_data,
     )
     if (verbose) {
       warning(
-        tib_j$raw_sam[is.na(tib_j$raw_fastq)],
-        "not_matching_names_from_sam_data.txt"
+        paste(tib_j$raw_sam[is.na(tib_j$raw_fastq)], collapse=" "),
+        " not matching names from sam_data file."
       )
     }
   }
@@ -416,8 +422,8 @@ sam_data_matching_names <- function(path_sam_data,
     )
     if (verbose) {
       warning(
-        tib_j$raw_fastq[is.na(tib_j$raw_sam)],
-        "not_matching_names_from_fastq_files.txt"
+        paste(tib_j$raw_fastq[is.na(tib_j$raw_sam)], collapse=" "),
+        " not matching names from fastq files."
       )
     }
     if (remove_undocumented_fastq_files) {
