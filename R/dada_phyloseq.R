@@ -1768,7 +1768,9 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #'
 #' @author Adrien Taudière
 #'
-add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, method = "dada2", ...) {
+add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, method = c("dada2", "sintax", "lca"), ...) {
+  method <- match.arg(method)
+  
   if (is.null(suffix)) {
     suffix <- paste0(basename(ref_fasta), "_", method)
   }
@@ -1781,11 +1783,11 @@ add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, method = "dada
     new_physeq <- physeq
     tax_table(new_physeq) <- new_tax_tab
   } else if (method == "sintax") {
-    new_physeq <- assign_sintax(physeq, ref_fasta = ref_fasta, suffix = suffix, ...)
+    new_physeq <- assign_sintax(physeq, ref_fasta = ref_fasta, suffix = suffix, behavior="add_to_phyloseq", ...)
   } else if (method == "lca") {
-    new_physeq <- assign_vsearch_lca(physeq, ref_fasta = ref_fasta, suffix = suffix, ...)
+    new_physeq <- assign_vsearch_lca(physeq, ref_fasta = ref_fasta, suffix = suffix, behavior="add_to_phyloseq", ...)
   } # else if(method=="idtaxa") {
-  # new_physeq <- assign_idtaxa(physeq, ref_fasta = ref_fasta, suffix=suffix,...)
+  # new_physeq <- assign_idtaxa(physeq, ref_fasta = ref_fasta, suffix=suffix, ...)
   # }
 
   return(new_physeq)

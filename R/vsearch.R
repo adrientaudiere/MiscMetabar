@@ -913,7 +913,7 @@ write_temp_fasta <- function(physeq,
 assign_sintax <- function(physeq = NULL,
                           seq2search = NULL,
                           ref_fasta = NULL,
-                          behavior = "return_matrix",
+                          behavior = c("return_matrix", "add_to_phyloseq", "return_cmd"),
                           vsearchpath = "vsearch",
                           clean_pq = TRUE,
                           nproc = 1,
@@ -924,6 +924,9 @@ assign_sintax <- function(physeq = NULL,
                           verbose = TRUE,
                           temporary_fasta_file = "temp.fasta",
                           cmd_args = "--sintax_random") {
+
+  behavior <- match.arg(behavior)
+
   write_temp_fasta(
     physeq = physeq,
     seq2search = seq2search,
@@ -932,6 +935,7 @@ assign_sintax <- function(physeq = NULL,
     clean_pq = clean_pq,
     verbose = verbose
   )
+
 
   if (verbose) {
     message("Start Vsearch sintax")
@@ -1147,7 +1151,7 @@ return(NULL)
 assign_vsearch_lca <- function(physeq = NULL,
                                seq2search = NULL,
                                ref_fasta = NULL,
-                               behavior = "return_matrix",
+                               behavior = c("return_matrix", "add_to_phyloseq", "return_cmd"),
                                vsearchpath = "vsearch",
                                clean_pq = TRUE,
                                taxo_rank = c("K", "P", "C", "O", "F", "G", "S"),
@@ -1162,6 +1166,8 @@ assign_vsearch_lca <- function(physeq = NULL,
                                verbose = TRUE,
                                temporary_fasta_file = "temp.fasta",
                                cmd_args = "") {
+
+                                behavior <- match.arg(behavior)
   write_temp_fasta(
     physeq = physeq,
     seq2search = seq2search,
