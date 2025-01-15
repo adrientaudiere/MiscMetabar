@@ -4,7 +4,13 @@
 \alias{add_blast_info}
 \title{Add information from \code{\link[=blast_pq]{blast_pq()}} to the \code{tax_table} slot of a \emph{phyloseq} object}
 \usage{
-add_blast_info(physeq, fasta_for_db, silent = FALSE, ...)
+add_blast_info(
+  physeq,
+  fasta_for_db,
+  silent = FALSE,
+  suffix = "blast_info",
+  ...
+)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
@@ -13,6 +19,9 @@ using the \code{phyloseq} package.}
 \item{fasta_for_db}{path to a fasta file to make the blast database}
 
 \item{silent}{(logical) If true, no message are printing.}
+
+\item{suffix}{(character) The suffix to name the new columns.
+Set the suffix to "" in order to remove any suffix.}
 
 \item{...}{Other arguments passed on to \code{\link[=blast_pq]{blast_pq()}} function.}
 }

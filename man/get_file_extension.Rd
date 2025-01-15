@@ -19,7 +19,8 @@ The extension of a file.
 }}
 
 
-Internally used in \code{\link[=count_seq]{count_seq()}}.
+Internally used in \code{\link[=count_seq]{count_seq()}}. Warning: don't work when there is '.' in the name of the
+file before the extension
 }
 \author{
 Adrien Taudière

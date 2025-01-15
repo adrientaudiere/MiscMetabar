@@ -15,7 +15,7 @@ if you use this function to assign taxonomy."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.11.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,6 +49,7 @@ if you use this function to assign taxonomy."></head><body>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>For developpers</h6></li>
     <li><a class="dropdown-item" href="../articles/Rules.html">Rules of code</a></li>
+    <li><a class="dropdown-item" href="../articles/pkgnet-report.html">Report pkgnet</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -81,17 +82,19 @@ if you use this function to assign taxonomy.</p>
 <span>  physeq <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  seq2search <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ref_fasta <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  behavior <span class="op">=</span> <span class="st">"return_matrix"</span>,</span>
+<span>  behavior <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"return_matrix"</span>, <span class="st">"add_to_phyloseq"</span>, <span class="st">"return_cmd"</span><span class="op">)</span>,</span>
 <span>  vsearchpath <span class="op">=</span> <span class="st">"vsearch"</span>,</span>
 <span>  clean_pq <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  nproc <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  suffix <span class="op">=</span> <span class="st">""</span>,</span>
-<span>  taxo_rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"K"</span>, <span class="st">"P"</span>, <span class="st">"C"</span>, <span class="st">"O"</span>, <span class="st">"F"</span>, <span class="st">"G"</span>, <span class="st">"S"</span><span class="op">)</span>,</span>
+<span>  taxo_rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Kingdom"</span>, <span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span>, <span class="st">"Species"</span><span class="op">)</span>,</span>
 <span>  min_boostrap <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  keep_temporary_files <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  temporary_fasta_file <span class="op">=</span> <span class="st">"temp.fasta"</span>,</span>
-<span>  cmd_args <span class="op">=</span> <span class="st">"--sintax_random"</span></span>
+<span>  cmd_args <span class="op">=</span> <span class="st">"--sintax_random"</span>,</span>
+<span>  too_few <span class="op">=</span> <span class="st">"align_start"</span>,</span>
+<span>  too_many <span class="op">=</span> <span class="st">"drop"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -184,6 +187,14 @@ or seq2search</p></li>
 By default cmd_args is equal to "–sintax_random" as recommended by
 <a href="https://github.com/torognes/vsearch/issues/535" class="external-link">Torognes</a>.</p></dd>
 
+
+<dt id="arg-too-few">too_few<a class="anchor" aria-label="anchor" href="#arg-too-few"></a></dt>
+<dd><p>(default value "align_start") see <code><a href="https://tidyr.tidyverse.org/reference/separate_wider_delim.html" class="external-link">tidyr::separate_wider_delim()</a></code></p></dd>
+
+
+<dt id="arg-too-many">too_many<a class="anchor" aria-label="anchor" href="#arg-too-many"></a></dt>
+<dd><p>(default value "drop") see <code><a href="https://tidyr.tidyverse.org/reference/separate_wider_delim.html" class="external-link">tidyr::separate_wider_delim()</a></code></p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -208,7 +219,7 @@ Please cite <a href="https://github.com/torognes/vsearch" class="external-link">
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa and 0 samples.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Start Vsearch sintax</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "vsearch  --sintax temp.fasta --db /tmp/RtmpbOMt4J/temp_libpath32c49814bbb/MiscMetabar/extdata/mini_UNITE_fungi.fasta.gz --tabbedout output_taxo_vs.txt  --threads 1 --sintax_random"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "vsearch  --sintax temp.fasta --db /tmp/RtmpRFGNr7/temp_libpath4080f47fd7b7e/MiscMetabar/extdata/mini_UNITE_fungi.fasta.gz --tabbedout output_taxo_vs.txt  --threads 1 --sintax_random"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">data_fungi_mini_new</span> <span class="op">&lt;-</span> <span class="fu">assign_sintax</span><span class="op">(</span><span class="va">data_fungi_mini</span>,</span></span>
 <span class="r-in"><span>  ref_fasta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mini_UNITE_fungi.fasta.gz"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>
@@ -229,8 +240,14 @@ Please cite <a href="https://github.com/torognes/vsearch" class="external-link">
 <span class="r-in"><span>  by <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html" class="external-link">join_by</a></span><span class="op">(</span><span class="va">taxa_names</span>, <span class="va">name</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  suffix <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rank"</span>, <span class="st">"bootstrap"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">name</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"K"</span>, <span class="st">"P"</span>, <span class="st">"C"</span>, <span class="st">"O"</span>, <span class="st">"F"</span>, <span class="st">"G"</span>, <span class="st">"S"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="co"># mutate(valuerank = forcats::fct_reorder(valuerank, as.integer(name), .desc = TRUE)) |&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">name</span>,</span></span>
+<span class="r-in"><span>    levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="st">"Kingdom"</span>, <span class="st">"Phylum"</span>, <span class="st">"Class"</span>,</span></span>
+<span class="r-in"><span>      <span class="st">"Order"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span>, <span class="st">"Species"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="co"># mutate(valuerank = forcats::fct_reorder(valuerank,</span></span></span>
+<span class="r-in"><span>  <span class="co">#   as.integer(name), .desc = TRUE)) |&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">valuebootstrap</span>,</span></span>
 <span class="r-in"><span>    <span class="va">valuerank</span>,</span></span>
 <span class="r-in"><span>    fill <span class="op">=</span> <span class="va">name</span></span></span>

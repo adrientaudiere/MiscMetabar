@@ -8,17 +8,19 @@ assign_sintax(
   physeq = NULL,
   seq2search = NULL,
   ref_fasta = NULL,
-  behavior = "return_matrix",
+  behavior = c("return_matrix", "add_to_phyloseq", "return_cmd"),
   vsearchpath = "vsearch",
   clean_pq = TRUE,
   nproc = 1,
   suffix = "",
-  taxo_rank = c("K", "P", "C", "O", "F", "G", "S"),
+  taxo_rank = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
   min_boostrap = 0.5,
   keep_temporary_files = FALSE,
   verbose = TRUE,
   temporary_fasta_file = "temp.fasta",
-  cmd_args = "--sintax_random"
+  cmd_args = "--sintax_random",
+  too_few = "align_start",
+  too_many = "drop"
 )
 }
 \arguments{
@@ -85,6 +87,10 @@ or seq2search
 \item{cmd_args}{Other arguments to be passed on to vsearch sintax cmd.
 By default cmd_args is equal to "--sintax_random" as recommended by
 \href{https://github.com/torognes/vsearch/issues/535}{Torognes}.}
+
+\item{too_few}{(default value "align_start") see \code{\link[tidyr:separate_wider_delim]{tidyr::separate_wider_delim()}}}
+
+\item{too_many}{(default value "drop") see \code{\link[tidyr:separate_wider_delim]{tidyr::separate_wider_delim()}}}
 }
 \value{
 See param behavior
@@ -126,8 +132,14 @@ left_join(
   by = join_by(taxa_names, name),
   suffix = c("rank", "bootstrap")
 ) |>
-  mutate(name = factor(name, levels = c("K", "P", "C", "O", "F", "G", "S"))) |>
-  # mutate(valuerank = forcats::fct_reorder(valuerank, as.integer(name), .desc = TRUE)) |>
+  mutate(name = factor(name,
+    levels = c(
+      "Kingdom", "Phylum", "Class",
+      "Order", "Family", "Genus", "Species"
+    )
+  )) |>
+  # mutate(valuerank = forcats::fct_reorder(valuerank,
+  #   as.integer(name), .desc = TRUE)) |>
   ggplot(aes(valuebootstrap,
     valuerank,
     fill = name

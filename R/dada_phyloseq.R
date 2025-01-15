@@ -1748,47 +1748,76 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #'
 #' @inheritParams clean_pq
 #' @param ref_fasta (required) A link to a database.
-#'   Pass on to `dada2::assignTaxonomy`.
-#' @param method (required, default "dada2") :.add
+#'   passed on to `dada2::assignTaxonomy`.
+#' @param method (required, default "dada2") :
 #'
-#' - "dada2" : [dada2::assignTaxonomy()]
+#' - "dada2": [dada2::assignTaxonomy()]
 #'
-#' - "sintax" : see [assign_sintax()]
+#' - "sintax": see [assign_sintax()]
 #'
-#' - "lca" : see [assign_vsearch_lca()]
+#' - "lca": see [assign_vsearch_lca()]
+#'
+#' - "idtaxa": see [assign_idtaxa()]
 #'
 #' @param suffix (character) The suffix to name the new columns.
 #'   If set to NULL (the default), the basename of the file reFasta
 #'   is used with the name of the method. Set suffix to "" in order
 #'   to remove any suffix.
-#' @param ... Other arguments pass on to the taxonomic assignation method.
+#' @param trainingSet see [assign_idtaxa()]. Only used if method = "idtaxa".
+#'   Note that if trainingSet is not NULL, the ref_fasta is overwrite by the
+#'   trainingSet parameter. To customize learning parameters of the idtaxa
+#'   algorithm you must use trainingSet computed by the function [learn_idtaxa()].
+#' @param min_boostrap  (Int. \[0:1\])
+#' 
+#'   Minimum bootstrap value to inform taxonomy. For each bootstrap
+#'   below the min_boostrap value, the taxonomy information is set to NA.
+#' 
+#'   Correspond to parameters :
+#' 
+#'  - dada2: `minBoot`, default value = 0.5
+#'  
+#'  - sintax: `min_boostrap`, default value = 60
+#' 
+#'  - lca: `threshold`, default value = 60
+#' 
+#'  - idtaxa: `threshold`, default value = 60
+#' 
+#' @param ... Other arguments passed on to the taxonomic assignation method.
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object with a larger slot tax_table"
-#' @seealso [dada2::assignTaxonomy()], [assign_sintax()], [assign_vsearch_lca()]
+#' @seealso [dada2::assignTaxonomy()], [assign_sintax()], [assign_vsearch_lca()], [assign_sintax()]
 #' @export
 #'
 #' @author Adrien Taudière
 #'
-add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, method = c("dada2", "sintax", "lca"), ...) {
+add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, method = c("dada2", "sintax", "lca", "idtaxa"), trainingSet = NULL, min_boostrap = NULL, ...) {
   method <- match.arg(method)
-  
+
+  if(is.null(min_boostrap)){
+    min_boostrap <- ifelse(method=="idtaxa", 0.6, 0.5)
+  }
+
   if (is.null(suffix)) {
-    suffix <- paste0(basename(ref_fasta), "_", method)
+    suffix <- paste0("_", basename(ref_fasta), "_", method)
   }
   if (method == "dada2") {
     tax_tab <-
-      dada2::assignTaxonomy(physeq@refseq, refFasta = ref_fasta, ...)
+      dada2::assignTaxonomy(physeq@refseq, refFasta = ref_fasta, minBoot = 100 * min_boostrap, ...)
     colnames(tax_tab) <-
-      make.unique(paste0(colnames(tax_tab), "_", suffix))
+      make.unique(paste0(colnames(tax_tab), suffix))
     new_tax_tab <- tax_table(cbind(physeq@tax_table, tax_tab))
     new_physeq <- physeq
     tax_table(new_physeq) <- new_tax_tab
   } else if (method == "sintax") {
-    new_physeq <- assign_sintax(physeq, ref_fasta = ref_fasta, suffix = suffix, behavior="add_to_phyloseq", ...)
+    new_physeq <- assign_sintax(physeq, ref_fasta = ref_fasta, suffix = suffix, behavior = "add_to_phyloseq", min_boostrap = min_boostrap, ...)
   } else if (method == "lca") {
-    new_physeq <- assign_vsearch_lca(physeq, ref_fasta = ref_fasta, suffix = suffix, behavior="add_to_phyloseq", ...)
-  } # else if(method=="idtaxa") {
-  # new_physeq <- assign_idtaxa(physeq, ref_fasta = ref_fasta, suffix=suffix, ...)
-  # }
+    new_physeq <- assign_vsearch_lca(physeq, ref_fasta = ref_fasta, suffix = suffix, behavior = "add_to_phyloseq", ...)
+  } else if (method == "idtaxa") {
+    if (is.null(trainingSet)) {
+      new_physeq <- assign_idtaxa(physeq, seq2search = ref_fasta, suffix = suffix, threshold = 100 * min_boostrap, ...)
+    } else {
+      new_physeq <- assign_idtaxa(physeq, trainingSet = trainingSet, suffix = suffix, ...)
+    }
+  }
 
   return(new_physeq)
 }
@@ -1810,7 +1839,7 @@ add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, method = c("da
 #' @param remove_col_unique_value (logical, default TRUE) Do we remove
 #'  informative columns (categorical column with one value per samples),
 #'   e.g. samples names ?
-#' @param ... Other arguments pass on to [gtsummary::tbl_summary()].
+#' @param ... Other arguments passed on to [gtsummary::tbl_summary()].
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object with a larger slot tax_table
 #'
 #' @export
@@ -1848,6 +1877,44 @@ tbl_sum_samdata <- function(physeq, remove_col_unique_value = TRUE, ...) {
   tbl_sum <- tbl %>% gtsummary::tbl_summary(...)
   return(tbl_sum)
 }
+################################################################################
+
+################################################################################
+#' Summarize a tax_table (taxonomic slot of phyloseq object) using gtsummary
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
+#' Mainly a wrapper for the [gtsummary::tbl_summary()] function in the case
+#' of `physeq` object.
+#'
+#' @inheritParams clean_pq
+#' @param taxonomic_ranks A list of taxonomic ranks we want to summarized.
+#' @param ... Other arguments to be passed on to [gtsummary::tbl_summary()]
+#'
+#' @return A table of class c('tbl_summary', 'gtsummary')
+#' @export
+#' @author Adrien Taudière
+#'
+#' @examples
+#' tbl_sum_taxtable(data_fungi_mini)
+#' data_fungi_mini |>
+#'   filt_taxa_pq(min_occurence = 2) |>
+#'   tbl_sum_taxtable(taxonomic_rank = c("Species", "Genus"))
+tbl_sum_taxtable <- function(physeq, taxonomic_ranks = NULL, ...) {
+  taxatab <- as.data.frame(unclass(physeq@tax_table))
+
+  if (!is.null(taxonomic_ranks)) {
+    taxatab <- taxatab |>
+      select(one_of(taxonomic_ranks))
+  }
+  tbl_sum <- gtsummary::tbl_summary(taxatab, ...)
+  return(tbl_sum)
+}
+################################################################################
+
 ################################################################################
 #' Add information about Guild for FUNGI the FUNGuild databse
 #'
@@ -2486,8 +2553,8 @@ physeq_or_string_to_dna <- function(physeq = NULL, dna_seq = NULL) {
 #'
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' \dontrun{
-#' cutadapt_remove_primers(system.file("extdata", package="MiscMetabar"), 
-#'   "TTC", 
+#' cutadapt_remove_primers(system.file("extdata", package = "MiscMetabar"),
+#'   "TTC",
 #'   "GAA",
 #'   folder_output = tempdir()
 #' )
@@ -3042,4 +3109,282 @@ rarefy_sample_count_by_modality <-
 
     return(new_physeq)
   }
+################################################################################
+
+
+################################################################################
+#' A wrapper of \code{\link[DECIPHER]{IdTaxa}}
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#' This function is basically a wrapper of functions [DECIPHER::IdTaxa()] and
+#' [DECIPHER::LearnTaxa()], please cite the DECIPHER package if you use this
+#' function. Note that if you want to specify parameters for the learning step
+#' you must used the trainingSet param instead of the a fasta_for_training. The
+#' training file can be obtain using the function [learn_idtaxa()].
+#'
+#' It requires:
+#'
+#' - either a physeq or seq2search object.
+#'
+#' - either a trainingSet or a fasta_for_training
+#'
+#' @inheritParams clean_pq
+#' @param seq2search A DNAStringSet object of sequences to search for.
+#' @param trainingSet An object of class Taxa and subclass
+#'   Train compatible with the class of test.
+#' @param fasta_for_training A fasta file (can be gzip) to train the trainingSet
+#'   using the function [learn_idtaxa()]. Only used if trainingSet is NULL.
+#'
+#'   The reference database must contain
+#'   taxonomic information in the header of each sequence in the form of a string
+#'   starting with ";tax=" and followed by a comma-separated list of up to nine
+#'   taxonomic identifiers.
+#'
+#'   The only exception is if `unite=TRUE`. In that case the UNITE taxonomy is
+#'   automatically formatted.
+#' @param behavior Either "return_matrix" (default), or "add_to_phyloseq":
+#'
+#'  - "return_matrix" return a list of two objects. The first element is
+#'    the taxonomic matrix and the second element is the raw results from
+#'    DECIPHER::IdTaxa() function.
+#'
+#'  - "return_cmd" return the command to run without running it.
+#'
+#'  - "add_to_phyloseq" return a phyloseq object with amended slot `@taxtable`.
+#'    Only available if using physeq input and not seq2search input.
+#' @param column_names (vector of character) names for the column of the
+#'   taxonomy
+#' @param suffix (character) The suffix to name the new columns.
+#'   Default to "_idtaxa".
+#' @param nproc (default: 1)
+#'   Set to number of cpus/processors to use
+#' @param unite (logical, default FALSE). If set to TRUE, the fasta_for_training
+#'   file is formatted from UNITE format to sintax one, needed in
+#'   fasta_for_training. Only used if trainingSet is NULL.
+#' @param verbose (logical). If TRUE, print additional information.
+#' @param ... Additional arguments passed on to \code{\link[DECIPHER]{IdTaxa}}
+#'
+#' @seealso [assign_sintax()], [add_new_taxonomy_pq()], [assign_vsearch_lca()]
+#' @author Adrien Taudière
+#' @return Either a new phyloseq object with additional information in
+#'   the @tax_table slot or a list of two objects if behavior is "return_matrix"
+#' @export
+#' @examples
+#' \dontrun{
+#' # /!\ The value of threshold must be change for real database (recommend
+#' #  value are between 50 and 70).
+#'
+#' data_fungi_mini_new <- assign_idtaxa(data_fungi_mini,
+#'   fasta_for_training = system.file("extdata", "mini_UNITE_fungi.fasta.gz",
+#'     package = "MiscMetabar"
+#'   ), threshold = 20, behavior = "add_to_phyloseq"
+#' )
+#'
+#' result_idtaxa <- assign_idtaxa(data_fungi_mini,
+#'   fasta_for_training = system.file("extdata", "mini_UNITE_fungi.fasta.gz",
+#'     package = "MiscMetabar"
+#'   ), threshold = 20
+#' )
+#'
+#' plot(result_idtaxa$idtaxa_raw)
+#' }
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please make a reference to [DECIPHER::IdTaxa()] if you
+#'   use this function.
+assign_idtaxa <- function(physeq,
+                          seq2search = NULL,
+                          trainingSet = NULL,
+                          fasta_for_training,
+                          behavior = "return_matrix",
+                          column_names = c(
+                            "Kingdom",
+                            "Phyla",
+                            "Class",
+                            "Order",
+                            "Family",
+                            "Genus",
+                            "Species"
+                          ),
+                          suffix = "_idtaxa",
+                          nproc = 1,
+                          unite = FALSE,
+                          verbose = TRUE,
+                          ...) {
+  if (is.null(trainingSet) && !is.null(fasta_for_training)) {
+    if (verbose) {
+      message("Training using fasta_for_training file.")
+    }
+    trainingSet_idtaxa <- learn_idtaxa(fasta_for_training, unite = unite)
+  } else if (!is.null(trainingSet_idtaxa)) {
+    trainingSet_idtaxa <- trainingSet
+  }
+
+  fasta2search <- write_temp_fasta(
+    physeq = physeq,
+    seq2search = seq2search,
+    return_DNAStringSet = TRUE
+  )
+
+  fasta2search <- OrientNucleotides(RemoveGaps(fasta2search))
+
+  if (verbose) {
+    message("Classifing using training Set with IdTaxa.")
+  }
+
+  idtaxa_taxa_test <- DECIPHER::IdTaxa(
+    test = fasta2search,
+    trainingSet = trainingSet_idtaxa,
+    processors = nproc,
+    ...
+  )
+
+  idtaxa_taxa_df <- sapply(
+    idtaxa_taxa_test,
+    function(x) {
+      paste(x$taxon,
+        collapse = ";"
+      )
+    }
+  )
+
+  col2add <- max(stringr::str_count(idtaxa_taxa_df, ";")) - stringr::str_count(idtaxa_taxa_df, ";")
+  for (i in seq_along(idtaxa_taxa_df)) {
+    idtaxa_taxa_df[i] <-
+      paste0(idtaxa_taxa_df[i], paste(as.character(rep(";", each = col2add[i])), collapse = ""))
+  }
+  t_idtaxa <- tibble::tibble(data.frame(stringr::str_split_fixed(idtaxa_taxa_df, ";", max(stringr::str_count(idtaxa_taxa_df, ";")) + 1)))[, -1]
+
+  column_names <- paste0(column_names, suffix)
+  colnames(t_idtaxa) <- column_names
+  t_idtaxa$taxa_names <- names(fasta2search)
+
+  if (behavior == "return_matrix") {
+    return(list(
+      "taxo_value" = t_idtaxa,
+      "idtaxa_raw" = idtaxa_taxa_test
+    ))
+  } else if (behavior == "add_to_phyloseq") {
+    tax_tab <- as.data.frame(as.matrix(physeq@tax_table))
+    tax_tab$taxa_names <- taxa_names(physeq)
+
+    new_physeq <- physeq
+
+    new_tax_tab <- left_join(tax_tab, t_idtaxa,
+      by = join_by(taxa_names)
+    ) |>
+      dplyr::select(-taxa_names) |>
+      as.matrix()
+
+    new_physeq@tax_table <- tax_table(new_tax_tab)
+    taxa_names(new_physeq@tax_table) <- taxa_names(physeq)
+
+    return(new_physeq)
+  } else {
+    stop("Param behavior must take either 'return_matrix' or 'add_to_phyloseq' value")
+  }
+}
+################################################################################
+
+################################################################################
+#' A wrapper of [DECIPHER::LearnTaxa()]
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#' This function is basically a wrapper of functions [DECIPHER::LearnTaxa()],
+#'  please cite the DECIPHER package if you use this function.
+#'
+#' @param fasta_for_training A fasta file (can be gzip) to train the trainingSet
+#'   using the function [learn_idtaxa()]. Only used if trainingSet is NULL.
+#'
+#'   The reference database must contain
+#'   taxonomic information in the header of each sequence in the form of a string
+#'   starting with ";tax=" and followed by a comma-separated list of up to nine
+#'   taxonomic identifiers.
+#'
+#'   The only exception is if `unite=TRUE`. In that case the UNITE taxonomy is
+#'   automatically formatted.
+#' @param output_Rdata A vector naming the path to an output Rdata file. If
+#'   left to NULL, no Rdata file is written.
+#' @param output_path_only (logical, default FALSE). If TRUE, the function
+#'   return only the path to the output_Rdata file. Note that output_Rdata must
+#'   be set.
+#' @param unite (logical, default FALSE). If set to TRUE, the fasta_for_training
+#'   file is formatted from UNITE format to sintax one, needed in
+#'   fasta_for_training. Only used if trainingSet is NULL.
+#' @param ... Additional arguments passed on to [DECIPHER::LearnTaxa()]
+#'
+#' @seealso [assign_idtaxa()]
+#' @author Adrien Taudière
+#' @return Either a Taxa Train object (see [DECIPHER::LearnTaxa()]) or, if
+#'   output_path_only is TRUE, a vector indicating the path to the output
+#'   training object.
+#' @export
+#' @examples
+#' \dontrun{
+#' training_mini_UNITE_fungi <-
+#'   learn_idtaxa(fasta_for_training = system.file("extdata",
+#'     "mini_UNITE_fungi.fasta.gz",
+#'     package = "MiscMetabar"
+#'   ))
+#' plot(training_mini_UNITE_fungi)
+#'
+#' training_100sp_UNITE <-
+#'   learn_idtaxa(
+#'     fasta_for_training = system.file("extdata",
+#'       "100_sp_UNITE_sh_general_release_dynamic.fasta",
+#'       package = "MiscMetabar"
+#'     ),
+#'     unite = TRUE
+#'   )
+#'
+#' plot(training_100sp_UNITE)
+#' }
+#' @details
+#' This function is mainly a wrapper of the work of others.
+#'   Please make a reference to [DECIPHER::LearnTaxa()] if you
+#'   use this function.
+learn_idtaxa <- function(fasta_for_training, output_Rdata = NULL, output_path_only = FALSE, unite = FALSE, ...) {
+  seqs <- readDNAStringSet(fasta_for_training)
+  seqs <- RemoveGaps(seqs)
+  seqs <- OrientNucleotides(seqs)
+
+  taxo_for_learning <- names(seqs)
+  if (unite) {
+    taxo_for_learning <- gsub("(.*)(FU|reps)", "Root;", taxo_for_learning)
+    taxo_for_learning <- gsub("(.*)(FU|reps_singleton)", "Root;", taxo_for_learning)
+    taxo_for_learning <- gsub("(.*)(FU|refs_singleton)", "Root;", taxo_for_learning)
+    taxo_for_learning <- gsub("(.*)(FU|refs)", "Root;", taxo_for_learning)
+    taxo_for_learning <- gsub("|", "", taxo_for_learning, fixed = TRUE)
+  }
+  taxo_for_learning <-
+    gsub(",", ";", gsub(
+      ";tax=",
+      "Root;",
+      gsub("(.*)(;tax=)", "\\2", taxo_for_learning)
+    )) # extract the group label
+
+  taxo_for_learning[!grepl("^Root;", taxo_for_learning)] <-
+    paste0("Root;", taxo_for_learning[!grepl("^Root;", taxo_for_learning)])
+
+  train_idtaxa <- LearnTaxa(seqs, taxonomy = taxo_for_learning, ...)
+  if (!is.null(output_Rdata)) {
+    save(train_idtaxa, output_Rdata)
+  }
+  if (output_path_only) {
+    if (is.null(output_Rdata)) {
+      stop("Param output_Rdata must be fill if output_path_only is TRUE.")
+    }
+    return(output_Rdata)
+  } else {
+    return(train_idtaxa)
+  }
+}
 ################################################################################

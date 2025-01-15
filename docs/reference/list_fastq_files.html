@@ -13,7 +13,7 @@ Useful for targets bioinformatic pipeline."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.11.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,6 +47,7 @@ Useful for targets bioinformatic pipeline."></head><body>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>For developpers</h6></li>
     <li><a class="dropdown-item" href="../articles/Rules.html">Rules of code</a></li>
+    <li><a class="dropdown-item" href="../articles/pkgnet-report.html">Report pkgnet</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -126,18 +127,18 @@ files are sorted by names (default behavior of <code><a href="https://rdrr.io/r/
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">list_fastq_files</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $fnfs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpbOMt4J/temp_libpath32c49814bbb/MiscMetabar/extdata/ex_R1_001.fastq.gz"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpRFGNr7/temp_libpath4080f47fd7b7e/MiscMetabar/extdata/ex_R1_001.fastq.gz"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $fnrs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpbOMt4J/temp_libpath32c49814bbb/MiscMetabar/extdata/ex_R2_001.fastq.gz"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpRFGNr7/temp_libpath4080f47fd7b7e/MiscMetabar/extdata/ex_R2_001.fastq.gz"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">list_fastq_files</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  paired_end <span class="op">=</span> <span class="cn">FALSE</span>, pattern_R1 <span class="op">=</span> <span class="st">""</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $fnfs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpbOMt4J/temp_libpath32c49814bbb/MiscMetabar/extdata/ex.fastq"          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/tmp/RtmpbOMt4J/temp_libpath32c49814bbb/MiscMetabar/extdata/ex_R1_001.fastq.gz"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "/tmp/RtmpbOMt4J/temp_libpath32c49814bbb/MiscMetabar/extdata/ex_R2_001.fastq.gz"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpRFGNr7/temp_libpath4080f47fd7b7e/MiscMetabar/extdata/ex.fastq"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/tmp/RtmpRFGNr7/temp_libpath4080f47fd7b7e/MiscMetabar/extdata/ex_R1_001.fastq.gz"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "/tmp/RtmpRFGNr7/temp_libpath4080f47fd7b7e/MiscMetabar/extdata/ex_R2_001.fastq.gz"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

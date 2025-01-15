@@ -34,7 +34,10 @@ ex_file <- system.file("extdata", "ex_R1_001.fastq.gz",
   mustWork = TRUE
 )
 subsample_fastq(ex_file, paste0(tempdir(), "/output_fastq"))
-subsample_fastq(list_fastq_files("extdata"), paste0(tempdir(), "/output_fastq"), n = 10)
+subsample_fastq(list_fastq_files(system.file("extdata", package = "MiscMetabar")),
+  paste0(tempdir(), "/output_fastq"),
+  n = 10
+)
 unlink(paste0(tempdir(), "/output_fastq"), recursive = TRUE)
 }
 }

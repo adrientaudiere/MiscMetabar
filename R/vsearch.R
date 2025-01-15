@@ -768,7 +768,7 @@ chimera_detection_vs <- function(seq2search,
 #' @inheritParams assign_sintax
 #' @param temporary_fasta_file The name of a temporary_fasta_file (default "temp.fasta")
 #' @param return_DNAStringSet (Logical default FALSE). If true, the temporary fasta file
-#'   is removed and a DNAStringSet is return 
+#'   is removed and a DNAStringSet is return
 #' @seealso [assign_sintax()], [assign_vsearch_lca]
 #' @return Nothing, produce a fasta file or return a DNAStringset if temporary_fasta_file
 #' @keywords internal
@@ -781,7 +781,7 @@ write_temp_fasta <- function(physeq,
                              behavior = NULL,
                              clean_pq = TRUE,
                              verbose = TRUE,
-                             return_DNAStringSet=FALSE) {
+                             return_DNAStringSet = FALSE) {
   if (!is.null(physeq) && !is.null(seq2search)) {
     stop("You must enter a single parameter from physeq and seq2search.")
   } else if (is.null(seq2search)) {
@@ -802,11 +802,11 @@ write_temp_fasta <- function(physeq,
   } else if (is.null(physeq) && is.null(seq2search)) {
     stop("You must specify either physeq or seq2search parameter.")
   }
-  if(return_DNAStringSet) {
+  if (return_DNAStringSet) {
     res <- Biostrings::readDNAStringSet(temporary_fasta_file)
     unlink(temporary_fasta_file)
     return(res)
-    }
+  }
 }
 ################################################################################
 
@@ -873,6 +873,8 @@ write_temp_fasta <- function(physeq,
 #' @param cmd_args Other arguments to be passed on to vsearch sintax cmd.
 #'   By default cmd_args is equal to "--sintax_random" as recommended by
 #'   [Torognes](https://github.com/torognes/vsearch/issues/535).
+#' @param too_few (default value "align_start") see [tidyr::separate_wider_delim()]
+#' @param too_many (default value "drop") see [tidyr::separate_wider_delim()]
 #' @return See param behavior
 #' @examplesIf MiscMetabar::is_vsearch_installed()
 #' \donttest{
@@ -896,8 +898,14 @@ write_temp_fasta <- function(physeq,
 #'   by = join_by(taxa_names, name),
 #'   suffix = c("rank", "bootstrap")
 #' ) |>
-#'   mutate(name = factor(name, levels = c("K", "P", "C", "O", "F", "G", "S"))) |>
-#'   # mutate(valuerank = forcats::fct_reorder(valuerank, as.integer(name), .desc = TRUE)) |>
+#'   mutate(name = factor(name,
+#'     levels = c(
+#'       "Kingdom", "Phylum", "Class",
+#'       "Order", "Family", "Genus", "Species"
+#'     )
+#'   )) |>
+#'   # mutate(valuerank = forcats::fct_reorder(valuerank,
+#'   #   as.integer(name), .desc = TRUE)) |>
 #'   ggplot(aes(valuebootstrap,
 #'     valuerank,
 #'     fill = name
@@ -905,7 +913,7 @@ write_temp_fasta <- function(physeq,
 #'   geom_jitter(alpha = 0.8, aes(color = name)) +
 #'   geom_boxplot(alpha = 0.3)
 #' }
-#' @export 
+#' @export
 #' @author Adrien Taudière
 #' @details
 #' This function is mainly a wrapper of the work of others.
@@ -918,13 +926,14 @@ assign_sintax <- function(physeq = NULL,
                           clean_pq = TRUE,
                           nproc = 1,
                           suffix = "",
-                          taxo_rank = c("K", "P", "C", "O", "F", "G", "S"),
+                          taxo_rank = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
                           min_boostrap = 0.5,
                           keep_temporary_files = FALSE,
                           verbose = TRUE,
                           temporary_fasta_file = "temp.fasta",
-                          cmd_args = "--sintax_random") {
-
+                          cmd_args = "--sintax_random",
+                          too_few = "align_start",
+                          too_many = "drop") {
   behavior <- match.arg(behavior)
 
   write_temp_fasta(
@@ -967,27 +976,29 @@ assign_sintax <- function(physeq = NULL,
     stderr = TRUE
   )
 
-  if(!file.exists("output_taxo_vs.txt")){
-      warning("No taxonomic assignation were maded.")
-      if (!keep_temporary_files) {
-    unlink(temporary_fasta_file)}
-     if (behavior == "add_to_phyloseq") {
-      return(physeq) } else {
-return(NULL)
-      }
-    
+  if (!file.exists("output_taxo_vs.txt")) {
+    warning("No taxonomic assignation were maded.")
+    if (!keep_temporary_files) {
+      unlink(temporary_fasta_file)
+    }
+    if (behavior == "add_to_phyloseq") {
+      return(physeq)
+    } else {
+      return(NULL)
+    }
   }
   res_sintax <- read.csv("output_taxo_vs.txt", sep = "\t", header = F)
   taxa_names <- res_sintax$V1
   res_sintax <- tibble(res_sintax$V2, taxa_names)
   res_sintax <- res_sintax |>
-    tidyr::separate_wider_delim(-taxa_names, names = paste0(taxo_rank, suffix), delim = ",") |>
+    tidyr::separate_wider_delim(-taxa_names, names = paste0(taxo_rank, suffix), delim = ",", too_few = too_few) |>
     tidyr::pivot_longer(-taxa_names) |>
     tidyr::separate_wider_delim(
       value,
       names_sep = "",
       names = c("", "_bootstrap"),
-      delim = "("
+      delim = "(",
+      too_many = too_many
     ) |>
     mutate(across(value_bootstrap, ~ as.numeric(gsub(")", "", .x)))) |>
     mutate(across(value, ~ gsub(".:", "", .x)))
@@ -1133,6 +1144,7 @@ return(NULL)
 #' @param temporary_fasta_file Name of the temporary fasta file. Only useful
 #'   with keep_temporary_files = TRUE.
 #' @param cmd_args Other arguments to be passed on to vsearch usearch_global cmd.
+#' @param too_few (default value "align_start") see [tidyr::separate_wider_delim()]
 #' @return See param behavior
 #' @seealso [assign_sintax()], [add_new_taxonomy_pq()]
 #' @examplesIf MiscMetabar::is_vsearch_installed()
@@ -1142,7 +1154,7 @@ return(NULL)
 #'   lca_cutoff = 0.9
 #' )
 #' }
-#' @export 
+#' @export
 #' @author Adrien Taudière
 #' @details
 #' This function is mainly a wrapper of the work of others.
@@ -1154,7 +1166,7 @@ assign_vsearch_lca <- function(physeq = NULL,
                                behavior = c("return_matrix", "add_to_phyloseq", "return_cmd"),
                                vsearchpath = "vsearch",
                                clean_pq = TRUE,
-                               taxo_rank = c("K", "P", "C", "O", "F", "G", "S"),
+                               taxo_rank = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
                                nproc = 1,
                                suffix = "",
                                id = 0.5,
@@ -1165,9 +1177,9 @@ assign_vsearch_lca <- function(physeq = NULL,
                                keep_temporary_files = FALSE,
                                verbose = TRUE,
                                temporary_fasta_file = "temp.fasta",
-                               cmd_args = "") {
-
-                                behavior <- match.arg(behavior)
+                               cmd_args = "",
+                               too_few = "align_start") {
+  behavior <- match.arg(behavior)
   write_temp_fasta(
     physeq = physeq,
     seq2search = seq2search,
@@ -1230,7 +1242,7 @@ assign_vsearch_lca <- function(physeq = NULL,
     tidyr::separate_wider_delim(-taxa_names,
       names = paste0(taxo_rank, suffix),
       delim = ",",
-      too_few = "align_start"
+      too_few = too_few
     ) |>
     tidyr::pivot_longer(-taxa_names) |>
     mutate(across(value, ~ gsub(".:", "", .x)))

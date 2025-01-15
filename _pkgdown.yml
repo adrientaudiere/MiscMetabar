@@ -54,7 +54,7 @@ reference:
   contents:
   - summary_plot_pq
   - tbl_sum_samdata
-
+  - tbl_sum_taxtable
 
 - title: Transform phyloseq object
 - subtitle: Verify and clean phyloseq object
@@ -72,6 +72,8 @@ reference:
   - filter_asv_blast
   - assign_vsearch_lca
   - assign_sintax
+  - assign_idtaxa
+  - learn_idtaxa
 
 - subtitle: Function to add information from taxonomy
   contents:

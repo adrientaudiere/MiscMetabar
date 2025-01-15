@@ -631,9 +631,7 @@ blast_to_derep <- function(derep,
 #' @param fasta_for_db path to a fasta file to make the blast database
 #' @param silent (logical) If true, no message are printing.
 #' @param suffix (character) The suffix to name the new columns.
-#'   If set to NULL (the default), the basename of the file reFasta
-#'   is used with the name of the method. Set suffix to "" in order
-#'   to remove any suffix.
+#'   Set the suffix to "" in order to remove any suffix.
 #' @param ... Other arguments passed on to [blast_pq()] function.
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object with more information in tax_table based on a
 #'   blast on a given database
@@ -642,11 +640,8 @@ blast_to_derep <- function(derep,
 #'
 #' @author Adrien Taudière
 
-add_blast_info <- function(physeq, fasta_for_db, silent = FALSE, suffix=NULL, ...) {
+add_blast_info <- function(physeq, fasta_for_db, silent = FALSE, suffix = "blast_info", ...) {
   verify_pq(physeq)
-  if (is.null(suffix)) {
-    suffix <- paste0(basename(fasta_for_db), "_", method)
-  }
   res_blast <- blast_pq(physeq,
     fasta_for_db = fasta_for_db,
     unique_per_seq = TRUE,
@@ -655,15 +650,17 @@ add_blast_info <- function(physeq, fasta_for_db, silent = FALSE, suffix=NULL, ..
   )
   new_physeq <- physeq
 
-  new_physeq@tax_table <- tax_table(cbind(
+  new_taxtab <- cbind(
     new_physeq@tax_table,
     as.matrix(res_blast[match(
       taxa_names(new_physeq),
       res_blast$`Query name`
     ), ])
-  ))
+  )
 
-  colnames(new_physeq) <- c(colnames(physeq), paste0(colnames(), suffix))
+  # colnames(new_taxtab) <- c(colnames(new_physeq@tax_table), paste0(colnames(physeq), suffix))
+
+  new_physeq@tax_table <- tax_table(new_taxtab)
 
   verify_pq(new_physeq)
   if (!silent) {

@@ -1,3 +1,11 @@
+# MiscMetabar 0.2.0 (in development) 
+
+- Add function [assign_idtaxa()] and [learn_idtaxa()] to facilitate the taxonomic assignation using the idtaxa algorithm from the  DECIPHER R package.
+- Add option `idtaxa` to method in [add_new_taxonomy_pq()]
+- Add function [tbl_sum_taxtable()] to summarize tax_table from a phyloseq object 
+- In function [assign_sintax()], add params `too_few` (default value "align_start") and `too_many` (default "merge") to authorize db with variable numbers of rank and parenthesis in taxonomic name, 
+
+
 # MiscMetabar 0.11.1 (in development) 
 
 - Add param `suffix` to `add_blast_info()` allowing multiple use of the function on the same phyloseq object (e.g. in order to used different database)
