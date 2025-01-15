@@ -14,7 +14,7 @@ using the \code{phyloseq} package.}
 informative columns (categorical column with one value per samples),
 e.g. samples names ?}
 
-\item{...}{Other arguments pass on to \code{\link[gtsummary:tbl_summary]{gtsummary::tbl_summary()}}.}
+\item{...}{Other arguments passed on to \code{\link[gtsummary:tbl_summary]{gtsummary::tbl_summary()}}.}
 }
 \value{
 A new \code{\link[phyloseq]{phyloseq-class}} object with a larger slot tax_table

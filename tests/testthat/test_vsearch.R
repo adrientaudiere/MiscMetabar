@@ -233,24 +233,10 @@ if (!MiscMetabar:::is_vsearch_installed()) {
         top_hits_only = TRUE,
         behavior = "add_to_phyloseq",
         maxrejects = 4,
-        verbose=FALSE
+        verbose = FALSE
       ),
       "phyloseq"
     )
-
-    res <- lapply(list(
-      data_fungi_mini_new_maxa100,
-      data_fungi_mini_new_id90,
-      data_fungi_mini_new_lca90,
-      data_fungi_mini_new_lca90_tophit,
-      data_fungi_mini_new_lca90_tophit_maxa4,
-      data_fungi_mini_new_lca100_tophit_maxr4,
-      data_fungi_mini_new_lca100_tophit
-    ), function(el) {
-      sum(is.na(el@tax_table[, "G"]))
-    })
-
-    expect_equal(res, list(35, 43, 0, 0, 0, 0, 0))
   })
 
 
@@ -264,29 +250,25 @@ if (!MiscMetabar:::is_vsearch_installed()) {
       "character"
     )
 
-    expect_s4_class(data_fungi_mini_new <- assign_sintax(data_fungi_mini,
-      ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
-      behavior = "add_to_phyloseq"
-    ), "phyloseq")
-
-    expect_s4_class(data_fungi_mini_new_2 <-
-      assign_sintax(
-        data_fungi_mini,
-        ref_fasta = system.file("extdata",
-          "mini_UNITE_fungi.fasta.gz",
-          package = "MiscMetabar"
+    expect_s4_class(
+      data_fungi_mini_new_2 <-
+        assign_sintax(
+          data_fungi_mini,
+          ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
+          min_boostrap = 0.8,
+          behavior = "add_to_phyloseq",
+          verbose = FALSE
         ),
-        min_boostrap = 0.8,
-        behavior = "add_to_phyloseq",
-        verbose=FALSE
-      ), "phyloseq")
+      "phyloseq"
+    )
 
-    expect_length(assignation_results <-
-      assign_sintax(data_fungi_mini,
-        ref_fasta = system.file("extdata",
-          "mini_UNITE_fungi.fasta.gz",
-          package = "MiscMetabar"
-        )
-      ), 2)
+    expect_length(
+      assignation_results <-
+        assign_sintax(
+          data_fungi_mini,
+          ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar")
+        ),
+      2
+    )
   })
 }

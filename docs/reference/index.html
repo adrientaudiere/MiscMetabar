@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.11.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,6 +41,7 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>For developpers</h6></li>
     <li><a class="dropdown-item" href="../articles/Rules.html">Rules of code</a></li>
+    <li><a class="dropdown-item" href="../articles/pkgnet-report.html">Report pkgnet</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -86,6 +87,12 @@
 
         </dt>
         <dd>Summarize information from sample data in a table</dd>
+      </dl><dl><dt>
+
+          <code><a href="tbl_sum_taxtable.html">tbl_sum_taxtable()</a></code>
+
+        </dt>
+        <dd>Summarize a tax_table (taxonomic slot of phyloseq object) using gtsummary</dd>
       </dl></div><div class="section level2">
       <h2 id="transform-phyloseq-object">Transform phyloseq object<a class="anchor" aria-label="anchor" href="#transform-phyloseq-object"></a></h2>
 
@@ -167,13 +174,25 @@
           <code><a href="assign_vsearch_lca.html">assign_vsearch_lca()</a></code>
 
         </dt>
-        <dd>Assign taxonomy using LCA <strong>à la</strong> <a href="https://github.com/frederic-mahe/stampa" class="external-link">stampa</a></dd>
+        <dd>Assign taxonomy using LCA <em>à la</em> <a href="https://github.com/frederic-mahe/stampa" class="external-link">stampa</a></dd>
       </dl><dl><dt>
 
           <code><a href="assign_sintax.html">assign_sintax()</a></code>
 
         </dt>
         <dd>Assign Taxonomy using Sintax algorithm of Vsearch</dd>
+      </dl><dl><dt>
+
+          <code><a href="assign_idtaxa.html">assign_idtaxa()</a></code>
+
+        </dt>
+        <dd>A wrapper of <code><a href="https://rdrr.io/pkg/DECIPHER/man/IdTaxa.html" class="external-link">IdTaxa</a></code></dd>
+      </dl><dl><dt>
+
+          <code><a href="learn_idtaxa.html">learn_idtaxa()</a></code>
+
+        </dt>
+        <dd>A wrapper of <code><a href="https://rdrr.io/pkg/DECIPHER/man/LearnTaxa.html" class="external-link">DECIPHER::LearnTaxa()</a></code></dd>
       </dl></div><div class="section level2">
 
       <h3 id="function-to-add-information-from-taxonomy">Function to add information from taxonomy<a class="anchor" aria-label="anchor" href="#function-to-add-information-from-taxonomy"></a></h3>

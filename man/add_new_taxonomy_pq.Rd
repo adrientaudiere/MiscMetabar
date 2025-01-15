@@ -4,28 +4,41 @@
 \alias{add_new_taxonomy_pq}
 \title{Add new taxonomic rank to a phyloseq object.}
 \usage{
-add_new_taxonomy_pq(physeq, ref_fasta, suffix = NULL, method = "dada2", ...)
+add_new_taxonomy_pq(
+  physeq,
+  ref_fasta,
+  suffix = NULL,
+  method = c("dada2", "sintax", "lca", "idtaxa"),
+  trainingSet = NULL,
+  ...
+)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{ref_fasta}{(required) A link to a database.
-Pass on to \code{dada2::assignTaxonomy}.}
+passed on to \code{dada2::assignTaxonomy}.}
 
 \item{suffix}{(character) The suffix to name the new columns.
 If set to NULL (the default), the basename of the file reFasta
 is used with the name of the method. Set suffix to "" in order
 to remove any suffix.}
 
-\item{method}{(required, default "dada2") :.add
+\item{method}{(required, default "dada2") :
 \itemize{
-\item "dada2" : \code{\link[dada2:assignTaxonomy]{dada2::assignTaxonomy()}}
-\item "sintax" : see \code{\link[=assign_sintax]{assign_sintax()}}
-\item "lca" : see \code{\link[=assign_vsearch_lca]{assign_vsearch_lca()}}
+\item "dada2": \code{\link[dada2:assignTaxonomy]{dada2::assignTaxonomy()}}
+\item "sintax": see \code{\link[=assign_sintax]{assign_sintax()}}
+\item "lca": see \code{\link[=assign_vsearch_lca]{assign_vsearch_lca()}}
+\item "idtaxa": see \code{\link[=assign_idtaxa]{assign_idtaxa()}}
 }}
 
-\item{...}{Other arguments pass on to the taxonomic assignation method.}
+\item{trainingSet}{see \code{\link[=assign_idtaxa]{assign_idtaxa()}}. Only used if method = "idtaxa".
+Note that if trainingSet is not NULL, the ref_fasta is overwrite by the
+trainingSet parameter. To customize learning parameters of the idtaxa
+algorithm you must use trainingSet computed by the function \code{\link[=learn_idtaxa]{learn_idtaxa()}}.}
+
+\item{...}{Other arguments passed on to the taxonomic assignation method.}
 }
 \value{
 A new \code{\link[phyloseq]{phyloseq-class}} object with a larger slot tax_table"

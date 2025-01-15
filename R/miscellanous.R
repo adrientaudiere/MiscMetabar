@@ -150,13 +150,20 @@ simplify_taxo <- function(physeq, remove_space = TRUE) {
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
-#' Internally used in [count_seq()].
+#'   Internally used in [count_seq()]. Warning: don't work when there is '.' in the name of the
+#'   file before the extension
 #' @param file_path (required): path to a file
 #' @author Adrien Taudière
 #'
 #' @return The extension of a file.
 #' @export
 get_file_extension <- function(file_path) {
+  if (stringr::str_count(file_path, "\\.") == 0) {
+    stop("There is no '.' inside your file path: ", file_path)
+  }
+  if (stringr::str_count(file_path, "\\.") > 1) {
+    message("There is more than one '.' inside your file path: ", file_path)
+  }
   file_ext <- strsplit(basename(file_path), ".", fixed = TRUE)[[1]][-1]
   return(file_ext)
 }
@@ -232,9 +239,15 @@ count_seq <- function(file_path = NULL, folder_path = NULL, pattern = NULL) {
     stop("You need to specify either file_path or folder_path param not both!")
   } else if (!is.null(file_path) && is.null(folder_path)) {
     if (sum(get_file_extension(file_path) == "fasta") > 0) {
-      seq_nb <- system(paste0("cat ", file_path, " | grep -ce '^>'"),
-        intern = TRUE
-      )
+      if (sum(get_file_extension(file_path) == "gz") > 0) {
+        seq_nb <- system(paste0("zcat ", file_path, " | grep -ce '^>'"),
+          intern = TRUE
+        )
+      } else {
+        seq_nb <- system(paste0("cat ", file_path, " | grep -ce '^>'"),
+          intern = TRUE
+        )
+      }
     } else if (sum(get_file_extension(file_path) == "fastq") > 0) {
       if (sum(get_file_extension(file_path) == "gz") > 0) {
         seq_nb <- system(paste0("zcat ", file_path, " | grep -ce '^+$'"),
@@ -371,7 +384,10 @@ transp <- function(col, alpha = 0.5) {
 #'   mustWork = TRUE
 #' )
 #' subsample_fastq(ex_file, paste0(tempdir(), "/output_fastq"))
-#' subsample_fastq(list_fastq_files("extdata"), paste0(tempdir(), "/output_fastq"), n = 10)
+#' subsample_fastq(list_fastq_files(system.file("extdata", package = "MiscMetabar")),
+#'   paste0(tempdir(), "/output_fastq"),
+#'   n = 10
+#' )
 #' unlink(paste0(tempdir(), "/output_fastq"), recursive = TRUE)
 #' }
 subsample_fastq <- function(fastq_files,

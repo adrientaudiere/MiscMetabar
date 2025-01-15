@@ -27,7 +27,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.11.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,6 +63,7 @@
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>For developpers</h6></li>
     <li><a class="dropdown-item" href="../articles/Rules.html">Rules of code</a></li>
+    <li><a class="dropdown-item" href="../articles/pkgnet-report.html">Report pkgnet</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -101,8 +102,11 @@ fastq files.</p>
 <h2 id="load-the-necessary-packages">Load the necessary packages<a class="anchor" aria-label="anchor" href="#load-the-necessary-packages"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rpkgs.datanovia.com/fastqcr/index.html" class="external-link">fastqcr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/adrientaudiere/MiscMetabar" class="external-link">MiscMetabar</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rpkgs.datanovia.com/fastqcr/index.html" class="external-link">fastqcr</a></span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Error in get(paste0(generic, ".", class), envir = get_method_env()) : </span></span>
+<span><span class="co">##   object 'type_sum.accel' not found</span></span></code></pre>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/adrientaudiere/MiscMetabar" class="external-link">MiscMetabar</a></span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Loading required package: phyloseq</span></span></code></pre>
 <pre><code><span><span class="co">## Loading required package: ggplot2</span></span></code></pre>
 <pre><code><span><span class="co">## Loading required package: dada2</span></span></code></pre>
@@ -122,20 +126,20 @@ fastq files.</p>
 <h2 id="install-the-latest-version-of-fastqc-tool-on-unix-systems-mac-osx-and-linux">Install the latest version of FastQC tool on Unix systems (MAC OSX
 and Linux)<a class="anchor" aria-label="anchor" href="#install-the-latest-version-of-fastqc-tool-on-unix-systems-mac-osx-and-linux"></a>
 </h2>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/fastqcr/man/fastqc_install.html" class="external-link">fastqc_install</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="run-the-analysis">Run the analysis<a class="anchor" aria-label="anchor" href="#run-the-analysis"></a>
 </h2>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">qc.dir</span> <span class="op">&lt;-</span> <span class="st">"fastqc_results"</span></span>
 <span></span>
 <span><span class="co"># Demo QC directory containing zipped FASTQC reports</span></span>
 <span><span class="va">fastq_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/list_fastq_files.html">list_fastq_files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"/extdata"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">fastqcr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/fastqcr/man/fastqc.html" class="external-link">fastqc</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">dirname</a></span><span class="op">(</span><span class="va">fastq_dir</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, qc.dir <span class="op">=</span> <span class="va">qc.dir</span><span class="op">)</span></span>
 <span><span class="va">qc</span> <span class="op">&lt;-</span> <span class="fu">fastqcr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/fastqcr/man/qc_aggregate.html" class="external-link">qc_aggregate</a></span><span class="op">(</span><span class="va">qc.dir</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fastqcr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/fastqcr/man/qc_problems.html" class="external-link">qc_problems</a></span><span class="op">(</span><span class="va">qc</span><span class="op">)</span></span>
 <span><span class="fu">fastqcr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/fastqcr/man/qc_aggregate.html" class="external-link">qc_stats</a></span><span class="op">(</span><span class="va">qc</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">qc</span><span class="op">)</span></span></code></pre></div>
@@ -143,7 +147,7 @@ and Linux)<a class="anchor" aria-label="anchor" href="#install-the-latest-versio
 <div class="section level2">
 <h2 id="build-reports">Build reports<a class="anchor" aria-label="anchor" href="#build-reports"></a>
 </h2>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Building Multi QC Reports</span></span>
 <span><span class="fu">fastqcr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/fastqcr/man/qc_report.html" class="external-link">qc_report</a></span><span class="op">(</span><span class="va">qc.dir</span>, result.file <span class="op">=</span> <span class="st">"multi-qc-report"</span><span class="op">)</span></span>
 <span></span>

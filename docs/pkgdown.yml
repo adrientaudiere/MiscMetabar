@@ -9,12 +9,13 @@ articles:
   articles/filter: filter.html
   articles/import_export_track: import_export_track.html
   MiscMetabar: MiscMetabar.html
+  articles/pkgnet-report: pkgnet-report.html
   articles/Reclustering: Reclustering.html
   articles/Rules: Rules.html
   articles/states_of_fields_in_R: states_of_fields_in_R.html
   articles/tengeler: tengeler.html
   articles/tree_visualization: tree_visualization.html
-last_built: 2024-12-17T10:10Z
+last_built: 2025-01-15T17:47Z
 urls:
   reference: https://adrientaudiere.github.io/MiscMetabar/reference
   article: https://adrientaudiere.github.io/MiscMetabar/articles

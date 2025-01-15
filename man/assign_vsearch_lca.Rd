@@ -2,16 +2,16 @@
 % Please edit documentation in R/vsearch.R
 \name{assign_vsearch_lca}
 \alias{assign_vsearch_lca}
-\title{Assign taxonomy using LCA \strong{à la} \href{https://github.com/frederic-mahe/stampa}{stampa}}
+\title{Assign taxonomy using LCA \emph{à la} \href{https://github.com/frederic-mahe/stampa}{stampa}}
 \usage{
 assign_vsearch_lca(
   physeq = NULL,
   seq2search = NULL,
   ref_fasta = NULL,
-  behavior = "return_matrix",
+  behavior = c("return_matrix", "add_to_phyloseq", "return_cmd"),
   vsearchpath = "vsearch",
   clean_pq = TRUE,
-  taxo_rank = c("K", "P", "C", "O", "F", "G", "S"),
+  taxo_rank = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
   nproc = 1,
   suffix = "",
   id = 0.5,
@@ -22,7 +22,8 @@ assign_vsearch_lca(
   keep_temporary_files = FALSE,
   verbose = TRUE,
   temporary_fasta_file = "temp.fasta",
-  cmd_args = ""
+  cmd_args = "",
+  too_few = "align_start"
 )
 }
 \arguments{
@@ -124,6 +125,8 @@ seq2search
 with keep_temporary_files = TRUE.}
 
 \item{cmd_args}{Other arguments to be passed on to vsearch usearch_global cmd.}
+
+\item{too_few}{(default value "align_start") see \code{\link[tidyr:separate_wider_delim]{tidyr::separate_wider_delim()}}}
 }
 \value{
 See param behavior

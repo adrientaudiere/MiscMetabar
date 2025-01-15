@@ -17,6 +17,7 @@
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/articles/filter.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/articles/import_export_track.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/articles/index.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/articles/pkgnet-report.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/articles/quality_fastq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/articles/states_of_fields_in_R.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/articles/tengeler.html</loc></url>
@@ -43,6 +44,7 @@
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/ancombc_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/are_modality_even_depth.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/as_binary_otu_table.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/assign_idtaxa.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/assign_sintax.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/assign_vsearch_lca.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/bad_flush_right.html</loc></url>
@@ -96,6 +98,7 @@
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/is_swarm_installed.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/is_vsearch_installed.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/krona.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/learn_idtaxa.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/libs/datatables-binding-0.32/fastqc_report.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/list_fastq_files.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/lulu.html</loc></url>
@@ -160,6 +163,7 @@
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/taxa_as_rows.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/taxa_only_in_one_level.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/tbl_sum_samdata.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/tbl_sum_taxtable.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/track_wkflow.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/track_wkflow_samples.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/transp.html</loc></url>

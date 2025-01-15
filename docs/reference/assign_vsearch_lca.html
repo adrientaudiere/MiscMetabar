@@ -17,7 +17,7 @@ to assign taxonomy."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.11.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,6 +51,7 @@ to assign taxonomy."></head><body>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>For developpers</h6></li>
     <li><a class="dropdown-item" href="../articles/Rules.html">Rules of code</a></li>
+    <li><a class="dropdown-item" href="../articles/pkgnet-report.html">Report pkgnet</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -64,7 +65,7 @@ to assign taxonomy."></head><body>
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Assign taxonomy using LCA <strong>à la</strong> <a href="https://github.com/frederic-mahe/stampa" class="external-link">stampa</a></h1>
+      <h1>Assign taxonomy using LCA <em>à la</em> <a href="https://github.com/frederic-mahe/stampa" class="external-link">stampa</a></h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/vsearch.R" class="external-link"><code>R/vsearch.R</code></a></small>
       <div class="d-none name"><code>assign_vsearch_lca.Rd</code></div>
     </div>
@@ -84,10 +85,10 @@ to assign taxonomy.</p>
 <span>  physeq <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  seq2search <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ref_fasta <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  behavior <span class="op">=</span> <span class="st">"return_matrix"</span>,</span>
+<span>  behavior <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"return_matrix"</span>, <span class="st">"add_to_phyloseq"</span>, <span class="st">"return_cmd"</span><span class="op">)</span>,</span>
 <span>  vsearchpath <span class="op">=</span> <span class="st">"vsearch"</span>,</span>
 <span>  clean_pq <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  taxo_rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"K"</span>, <span class="st">"P"</span>, <span class="st">"C"</span>, <span class="st">"O"</span>, <span class="st">"F"</span>, <span class="st">"G"</span>, <span class="st">"S"</span><span class="op">)</span>,</span>
+<span>  taxo_rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Kingdom"</span>, <span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span>, <span class="st">"Species"</span><span class="op">)</span>,</span>
 <span>  nproc <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  suffix <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  id <span class="op">=</span> <span class="fl">0.5</span>,</span>
@@ -98,7 +99,8 @@ to assign taxonomy.</p>
 <span>  keep_temporary_files <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  temporary_fasta_file <span class="op">=</span> <span class="st">"temp.fasta"</span>,</span>
-<span>  cmd_args <span class="op">=</span> <span class="st">""</span></span>
+<span>  cmd_args <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  too_few <span class="op">=</span> <span class="st">"align_start"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -232,6 +234,10 @@ with keep_temporary_files = TRUE.</p></dd>
 
 <dt id="arg-cmd-args">cmd_args<a class="anchor" aria-label="anchor" href="#arg-cmd-args"></a></dt>
 <dd><p>Other arguments to be passed on to vsearch usearch_global cmd.</p></dd>
+
+
+<dt id="arg-too-few">too_few<a class="anchor" aria-label="anchor" href="#arg-too-few"></a></dt>
+<dd><p>(default value "align_start") see <code><a href="https://tidyr.tidyverse.org/reference/separate_wider_delim.html" class="external-link">tidyr::separate_wider_delim()</a></code></p></dd>
 
 </dl></div>
     <div class="section level2">

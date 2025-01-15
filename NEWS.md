@@ -1,11 +1,26 @@
-# MiscMetabar 0.11 (in development)
+# MiscMetabar 0.2.0 (in development) 
+
+- Add function [assign_idtaxa()] and [learn_idtaxa()] to facilitate the taxonomic assignation using the idtaxa algorithm from the  DECIPHER R package.
+- Add option `idtaxa` to method in [add_new_taxonomy_pq()]
+- Add function [tbl_sum_taxtable()] to summarize tax_table from a phyloseq object 
+- In function [assign_sintax()], add params `too_few` (default value "align_start") and `too_many` (default "merge") to authorize db with variable numbers of rank and parenthesis in taxonomic name, 
+
+
+# MiscMetabar 0.11.1 (in development) 
+
+- Add param `suffix` to `add_blast_info()` allowing multiple use of the function on the same phyloseq object (e.g. in order to used different database)
+- Add param `return_DNAStringSet` to `write_temp_fasta()` function to return a DNAStringSet object in place of a temporary file. 
+- Add a vignette pkgnet-report.
+- Add the possibility to send fasta.gz file to `count_seq()`
+
+# MiscMetabar 0.11 
 
 - Add function `filt_taxa_pq()` to filter taxa based on the number of sequences/occurences
 - Add functions `no_legend()` and `hill_curves_pq()` to plot hill diversity accumulation curves for phyloseq
 - Add function `umap_pq()` to compute Dimensionality Reduction with UMAP
 - Add function `plot_complexity_pq()` to plot kmer complexity of references sequences of a phyloseq object
 - Add param `type` to `ridge_pq()` to plot a cumulative version (type="ecdf") version of ridge
-- Introduce the idea of a pq-verse: some other packages will complete the MiscMetabar packages to make package maintenance easier. The [comparpq](https://github.com/adrientaudiere/comparpq) package will facilitate the comparison of phyloseq object with different taxonomy, different clustering method, different samples with same modality or different primers. 
+- Introduce the idea of a pq-verse: some other packages will complete the MiscMetabar packages to make package maintenance easier. The [comparpq](https://github.com/adrientaudiere/comparpq) package will facilitate the comparison of phyloseq object with different taxonomy, different clustering methods, different samples with same modality or different primers. 
 - Add functions [assign_vsearch_lca()], [assign_sintax()] and internal function [write_temp_fasta()]
 - Add param `method` to `add_new_taxonomy_pq()` to allow the use of [dada2::assign_taxonomy()] (default, precedent only method available), [assign_sintax()] or [assign_vsearch_lca()] 
 

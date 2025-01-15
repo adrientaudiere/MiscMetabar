@@ -2504,7 +2504,7 @@ biplot_pq <- function(physeq,
 #'   of couples of values
 #' @param pairs (required if pairs is NULL) the name of the factor in physeq@sam_data` slot
 #'   to make plot by pairs of samples. Each level must be present only two times.
-#'   Note that if you set pairs, you also must set fact arguments to pass on to [biplot_pq()].
+#'   Note that if you set pairs, you also must set fact arguments to passed on to [biplot_pq()].
 #' @param na_remove (logical, default TRUE) if TRUE remove all the samples
 #'   with NA in the `split_by` variable of the `physeq@sam_data` slot
 #' @param ... Other parameters passed on to [biplot_pq()]
