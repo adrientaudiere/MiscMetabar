@@ -13,7 +13,7 @@ using the \code{phyloseq} package.}
 \item{split_by}{(required if pairs is NULL) the name of the factor to make all combination
 of couples of values}
 
-\item{pairs}{(required if pairs is NULL) the name of the factor in physeq@sam_data` slot
+\item{pairs}{(required if split_by is NULL) the name of the factor in physeq@sam_data` slot
 to make plot by pairs of samples. Each level must be present only two times.
 Note that if you set pairs, you also must set fact arguments to passed on to \code{\link[=biplot_pq]{biplot_pq()}}.}
 

@@ -1767,21 +1767,22 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #'   Note that if trainingSet is not NULL, the ref_fasta is overwrite by the
 #'   trainingSet parameter. To customize learning parameters of the idtaxa
 #'   algorithm you must use trainingSet computed by the function [learn_idtaxa()].
-#' @param min_boostrap  (Int. \[0:1\])
-#' 
+#' @param min_bootstrap  (Int. \[0:1\])
+#'
 #'   Minimum bootstrap value to inform taxonomy. For each bootstrap
-#'   below the min_boostrap value, the taxonomy information is set to NA.
-#' 
+#'   below the min_bootstrap value, the taxonomy information is set to NA.
+#'
 #'   Correspond to parameters :
-#' 
+#'
 #'  - dada2: `minBoot`, default value = 0.5
-#'  
-#'  - sintax: `min_boostrap`, default value = 60
-#' 
-#'  - lca: `threshold`, default value = 60
-#' 
-#'  - idtaxa: `threshold`, default value = 60
-#' 
+#'
+#'  - sintax: `min_bootstrap`, default value = 0.5
+#'
+#'  - lca: `id`, default value = 0.5. Note in that case, the bootstrap value is different.
+#'    See the id parameter in [assign_vsearch_lca()]
+#'
+#'  - idtaxa: `threshold`, default value = 0.6
+#'
 #' @param ... Other arguments passed on to the taxonomic assignation method.
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object with a larger slot tax_table"
 #' @seealso [dada2::assignTaxonomy()], [assign_sintax()], [assign_vsearch_lca()], [assign_sintax()]
@@ -1789,11 +1790,18 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #'
 #' @author Adrien Taudière
 #'
-add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, method = c("dada2", "sintax", "lca", "idtaxa"), trainingSet = NULL, min_boostrap = NULL, ...) {
+add_new_taxonomy_pq <- function(
+    physeq,
+    ref_fasta,
+    suffix = NULL,
+    method = c("dada2", "sintax", "lca", "idtaxa"),
+    trainingSet = NULL,
+    min_bootstrap = NULL,
+    ...) {
   method <- match.arg(method)
 
-  if(is.null(min_boostrap)){
-    min_boostrap <- ifelse(method=="idtaxa", 0.6, 0.5)
+  if (is.null(min_bootstrap)) {
+    min_bootstrap <- ifelse(method == "idtaxa", 0.6, 0.5)
   }
 
   if (is.null(suffix)) {
@@ -1801,21 +1809,21 @@ add_new_taxonomy_pq <- function(physeq, ref_fasta, suffix = NULL, method = c("da
   }
   if (method == "dada2") {
     tax_tab <-
-      dada2::assignTaxonomy(physeq@refseq, refFasta = ref_fasta, minBoot = 100 * min_boostrap, ...)
+      dada2::assignTaxonomy(physeq@refseq, refFasta = ref_fasta, minBoot = 100 * min_bootstrap, ...)
     colnames(tax_tab) <-
       make.unique(paste0(colnames(tax_tab), suffix))
     new_tax_tab <- tax_table(cbind(physeq@tax_table, tax_tab))
     new_physeq <- physeq
     tax_table(new_physeq) <- new_tax_tab
   } else if (method == "sintax") {
-    new_physeq <- assign_sintax(physeq, ref_fasta = ref_fasta, suffix = suffix, behavior = "add_to_phyloseq", min_boostrap = min_boostrap, ...)
+    new_physeq <- assign_sintax(physeq, ref_fasta = ref_fasta, suffix = suffix, behavior = "add_to_phyloseq", min_bootstrap = min_bootstrap, ...)
   } else if (method == "lca") {
     new_physeq <- assign_vsearch_lca(physeq, ref_fasta = ref_fasta, suffix = suffix, behavior = "add_to_phyloseq", ...)
   } else if (method == "idtaxa") {
     if (is.null(trainingSet)) {
-      new_physeq <- assign_idtaxa(physeq, seq2search = ref_fasta, suffix = suffix, threshold = 100 * min_boostrap, ...)
+      new_physeq <- assign_idtaxa(physeq, fasta_for_training = ref_fasta, behavior = "add_to_phyloseq", suffix = suffix, threshold = 100 * min_bootstrap, ...)
     } else {
-      new_physeq <- assign_idtaxa(physeq, trainingSet = trainingSet, suffix = suffix, ...)
+      new_physeq <- assign_idtaxa(physeq, trainingSet = trainingSet, behavior = "add_to_phyloseq", suffix = suffix, threshold = 100 * min_bootstrap, ...)
     }
   }
 
@@ -1927,7 +1935,8 @@ tbl_sum_taxtable <- function(physeq, taxonomic_ranks = NULL, ...) {
 #'
 #' @inheritParams clean_pq
 #' @param taxLevels Name of the 7 columns in tax_table required by funguild
-#'
+#' @param db_url a length 1 character string giving the URL to retrieve the database
+#'     from
 #' @return A new object of class `physeq` with Guild information added to
 #'   `tax_table` slot
 #' @export
@@ -1952,7 +1961,7 @@ tbl_sum_taxtable <- function(physeq, taxonomic_ranks = NULL, ...) {
 #' @details
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `FUNGuildR` package and the associate
-#'   publication (\doi{10.1016/j.funeco.2015.06.006}) if you
+#'   publication (\doi{doi:10.1016/j.funeco.2015.06.006}) if you
 #'   use this function.
 #' @seealso [plot_guild_pq()]
 
@@ -1965,13 +1974,18 @@ add_funguild_info <- function(physeq,
                                 "Family",
                                 "Genus",
                                 "Species"
-                              )) {
+                              ),
+                              db_url = "http://www.stbates.org/funguild_db_2.php") {
   tax_tab <- physeq@tax_table
   FUNGuild_assign <-
     funguild_assign(data.frame(
       "Taxonomy" =
         apply(tax_tab[, taxLevels], 1, paste, collapse = ";")
-    ))
+    ), db_url = db_url)
+  if (is.null(FUNGuild_assign)) {
+    message("No http access to the funguild database. No information were added.")
+    return(physeq)
+  }
   tax_tab <-
     as.matrix(cbind(tax_tab, FUNGuild_assign))
   physeq@tax_table <- tax_table(tax_tab)
@@ -3156,6 +3170,11 @@ rarefy_sample_count_by_modality <-
 #'
 #'  - "add_to_phyloseq" return a phyloseq object with amended slot `@taxtable`.
 #'    Only available if using physeq input and not seq2search input.
+#' @param threshold (Int, default 60) Numeric specifying the confidence at which
+#'    to truncate the output taxonomic classifications.
+#'   Lower values of threshold will classify deeper into the taxonomic tree at
+#'   the expense of accuracy, and vise-versa for higher values of threshold. See
+#'   [DECIPHER::IdTaxa()] man page.
 #' @param column_names (vector of character) names for the column of the
 #'   taxonomy
 #' @param suffix (character) The suffix to name the new columns.
@@ -3199,11 +3218,12 @@ rarefy_sample_count_by_modality <-
 assign_idtaxa <- function(physeq,
                           seq2search = NULL,
                           trainingSet = NULL,
-                          fasta_for_training,
+                          fasta_for_training = NULL,
                           behavior = "return_matrix",
+                          threshold = 60,
                           column_names = c(
                             "Kingdom",
-                            "Phyla",
+                            "Phylum",
                             "Class",
                             "Order",
                             "Family",
@@ -3215,7 +3235,11 @@ assign_idtaxa <- function(physeq,
                           unite = FALSE,
                           verbose = TRUE,
                           ...) {
-  if (is.null(trainingSet) && !is.null(fasta_for_training)) {
+  if (!is.null(trainingSet) && !is.null(fasta_for_training)) {
+    stop("Please provide either trainingSet or fasta_for_training parameters, not both.")
+  } else if (is.null(trainingSet) && is.null(fasta_for_training)) {
+    stop("Please provide either trainingSet or fasta_for_training parameters.")
+  } else if (is.null(trainingSet) && !is.null(fasta_for_training)) {
     if (verbose) {
       message("Training using fasta_for_training file.")
     }
@@ -3230,7 +3254,7 @@ assign_idtaxa <- function(physeq,
     return_DNAStringSet = TRUE
   )
 
-  fasta2search <- OrientNucleotides(RemoveGaps(fasta2search))
+  fasta2search <- DECIPHER::OrientNucleotides(DECIPHER::RemoveGaps(fasta2search))
 
   if (verbose) {
     message("Classifing using training Set with IdTaxa.")
@@ -3240,6 +3264,7 @@ assign_idtaxa <- function(physeq,
     test = fasta2search,
     trainingSet = trainingSet_idtaxa,
     processors = nproc,
+    threshold = threshold,
     ...
   )
 
@@ -3352,9 +3377,9 @@ assign_idtaxa <- function(physeq,
 #'   Please make a reference to [DECIPHER::LearnTaxa()] if you
 #'   use this function.
 learn_idtaxa <- function(fasta_for_training, output_Rdata = NULL, output_path_only = FALSE, unite = FALSE, ...) {
-  seqs <- readDNAStringSet(fasta_for_training)
-  seqs <- RemoveGaps(seqs)
-  seqs <- OrientNucleotides(seqs)
+  seqs <- Biostrings::readDNAStringSet(fasta_for_training)
+  seqs <- DECIPHER::RemoveGaps(seqs)
+  seqs <- DECIPHER::OrientNucleotides(seqs)
 
   taxo_for_learning <- names(seqs)
   if (unite) {
@@ -3374,7 +3399,7 @@ learn_idtaxa <- function(fasta_for_training, output_Rdata = NULL, output_path_on
   taxo_for_learning[!grepl("^Root;", taxo_for_learning)] <-
     paste0("Root;", taxo_for_learning[!grepl("^Root;", taxo_for_learning)])
 
-  train_idtaxa <- LearnTaxa(seqs, taxonomy = taxo_for_learning, ...)
+  train_idtaxa <- DECIPHER::LearnTaxa(seqs, taxonomy = taxo_for_learning, ...)
   if (!is.null(output_Rdata)) {
     save(train_idtaxa, output_Rdata)
   }

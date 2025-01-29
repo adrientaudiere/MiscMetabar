@@ -255,7 +255,7 @@ if (!MiscMetabar:::is_vsearch_installed()) {
         assign_sintax(
           data_fungi_mini,
           ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
-          min_boostrap = 0.8,
+          min_bootstrap = 0.8,
           behavior = "add_to_phyloseq",
           verbose = FALSE
         ),

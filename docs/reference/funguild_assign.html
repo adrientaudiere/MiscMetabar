@@ -29,7 +29,7 @@ otu_table$Taxonomy."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,7 +101,8 @@ No attempt is made to check or correct the classification in
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">funguild_assign</span><span class="op">(</span></span>
 <span>  <span class="va">otu_table</span>,</span>
-<span>  db_funguild <span class="op">=</span> <span class="fu"><a href="get_funguild_db.html">get_funguild_db</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  db_url <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  db_funguild <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  tax_col <span class="op">=</span> <span class="st">"Taxonomy"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -120,6 +121,11 @@ Rank indicators as given by Sintax ("<code>k:</code>", "<code>p:</code>"...) or 
 "<code>p__</code>", ...) are also allowed.
 A <code>character</code> vector, representing only the taxonomic classification,
 is also accepted.</p></dd>
+
+
+<dt id="arg-db-url">db_url<a class="anchor" aria-label="anchor" href="#arg-db-url"></a></dt>
+<dd><p>a length 1 character string giving the URL to retrieve the database
+from</p></dd>
 
 
 <dt id="arg-db-funguild">db_funguild<a class="anchor" aria-label="anchor" href="#arg-db-funguild"></a></dt>

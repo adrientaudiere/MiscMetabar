@@ -858,9 +858,9 @@ write_temp_fasta <- function(physeq,
 #'   without suffix.
 #' @param taxo_rank A list with the name of the taxonomic rank present in
 #'   ref_fasta
-#' @param min_boostrap (Int. \[0:1\], default 0.5)
+#' @param min_bootstrap (Int. \[0:1\], default 0.5)
 #'   Minimum bootstrap value to inform taxonomy. For each bootstrap
-#'   below the min_boostrap value, the taxonomy information is set to NA.
+#'   below the min_bootstrap value, the taxonomy information is set to NA.
 #' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files?
 #'
 #' - temporary_fasta_file (default "temp.fasta") : the fasta file from physeq
@@ -894,7 +894,7 @@ write_temp_fasta <- function(physeq,
 #'
 #' left_join(
 #'   tidyr::pivot_longer(assignation_results$taxo_value, -taxa_names),
-#'   tidyr::pivot_longer(assignation_results$taxo_boostrap, -taxa_names),
+#'   tidyr::pivot_longer(assignation_results$taxo_bootstrap, -taxa_names),
 #'   by = join_by(taxa_names, name),
 #'   suffix = c("rank", "bootstrap")
 #' ) |>
@@ -927,7 +927,7 @@ assign_sintax <- function(physeq = NULL,
                           nproc = 1,
                           suffix = "",
                           taxo_rank = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
-                          min_boostrap = 0.5,
+                          min_bootstrap = 0.5,
                           keep_temporary_files = FALSE,
                           verbose = TRUE,
                           temporary_fasta_file = "temp.fasta",
@@ -1013,9 +1013,9 @@ assign_sintax <- function(physeq = NULL,
     select(-value_bootstrap) |>
     tidyr::pivot_wider(names_from = name, values_from = value)
 
-  if (!is.null(min_boostrap)) {
+  if (!is.null(min_bootstrap)) {
     res_sintax_wide_taxo_filter <- res_sintax_wide_taxo
-    res_sintax_wide_taxo_filter[res_sintax_wide_bootstrap < min_boostrap] <- NA
+    res_sintax_wide_taxo_filter[res_sintax_wide_bootstrap < min_bootstrap] <- NA
   }
 
   if (!keep_temporary_files) {
@@ -1040,7 +1040,7 @@ assign_sintax <- function(physeq = NULL,
   } else if (behavior == "return_matrix") {
     return(list(
       "taxo_value" = res_sintax_wide_taxo,
-      "taxo_boostrap" = res_sintax_wide_bootstrap
+      "taxo_bootstrap" = res_sintax_wide_bootstrap
     ))
   }
 }

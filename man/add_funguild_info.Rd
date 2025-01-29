@@ -6,7 +6,8 @@
 \usage{
 add_funguild_info(
   physeq,
-  taxLevels = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species")
+  taxLevels = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
+  db_url = "http://www.stbates.org/funguild_db_2.php"
 )
 }
 \arguments{
@@ -14,6 +15,9 @@ add_funguild_info(
 using the \code{phyloseq} package.}
 
 \item{taxLevels}{Name of the 7 columns in tax_table required by funguild}
+
+\item{db_url}{a length 1 character string giving the URL to retrieve the database
+from}
 }
 \value{
 A new object of class \code{physeq} with Guild information added to
@@ -31,7 +35,7 @@ Please cite Nguyen et al. 2016 (\doi{doi:10.1016/j.funeco.2015.06.006})
 \details{
 This function is mainly a wrapper of the work of others.
 Please make a reference to \code{FUNGuildR} package and the associate
-publication (\doi{10.1016/j.funeco.2015.06.006}) if you
+publication (\doi{doi:10.1016/j.funeco.2015.06.006}) if you
 use this function.
 }
 \examples{
