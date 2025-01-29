@@ -4,13 +4,22 @@
 \alias{simplify_taxo}
 \title{Simplify taxonomy by removing some unused characters such as "k__"}
 \usage{
-simplify_taxo(physeq, remove_space = TRUE)
+simplify_taxo(
+  physeq,
+  pattern_to_remove = c(".__", ".*:"),
+  remove_space = TRUE,
+  remove_NA = FALSE
+)
 }
 \arguments{
 \item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
+\item{pattern_to_remove}{(a vector of character) the pattern to remove using \code{\link[base:grep]{base::gsub()}} function.}
+
 \item{remove_space}{(logical; default TRUE): do we remove space?}
+
+\item{remove_NA}{(logical; default FALSE): do we remove NA (in majuscule)?}
 }
 \value{
 A  \code{\link[phyloseq]{phyloseq-class}} object with simplified taxonomy
@@ -23,6 +32,24 @@ A  \code{\link[phyloseq]{phyloseq-class}} object with simplified taxonomy
 
 
 Internally used in \code{\link[=clean_pq]{clean_pq()}}
+}
+\examples{
+d_fm <- data_fungi_mini
+d_fm@tax_table[, "Species"] <- paste0(rep(
+  c("s__", "s:"),
+  ntaxa(d_fm) / 2
+), d_fm@tax_table[, "Species"])
+
+# First column is the new vector of Species,
+# second column is the column before simplification
+cbind(
+  simplify_taxo(d_fm)@tax_table[, "Species"],
+  d_fm@tax_table[, "Species"]
+)
+cbind(
+  simplify_taxo(d_fm, remove_NA = TRUE)@tax_table[, "Species"],
+  d_fm@tax_table[, "Species"]
+)
 }
 \author{
 Adrien Taudière

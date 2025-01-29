@@ -13,7 +13,7 @@ https://journals.asm.org/doi/full/10.1128/msystems.00691-21"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -159,19 +159,14 @@ use this function.</p>
 <span class="r-in"><span><span class="co">#      ggtitle("NMDS"))) +</span></span></span>
 <span class="r-in"><span><span class="co">#  patchwork::plot_layout(guides = "collect")</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">df_uwot</span> <span class="op">&lt;-</span> <span class="fu">umap_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, pkg <span class="op">=</span> <span class="st">"uwot"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in rows.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(Sample)`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(Sample)`</span>
+<span class="r-in"><span><span class="co"># df_uwot &lt;- umap_pq(data_fungi_mini, pkg = "uwot")</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df_umap</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x_umap</span>, y <span class="op">=</span> <span class="va">y_umap</span>, col <span class="op">=</span> <span class="va">Height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"umap::umap"</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span></span></span>
-<span class="r-in"><span>  <span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df_uwot</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x_umap</span>, y <span class="op">=</span> <span class="va">y_umap</span>, col <span class="op">=</span> <span class="va">Height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"uwot::umap2"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="umap_pq-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co">#   (ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +</span></span></span>
+<span class="r-in"><span><span class="co">#     geom_point(size = 2) +</span></span></span>
+<span class="r-in"><span><span class="co">#    ggtitle("umap::umap")) /</span></span></span>
+<span class="r-in"><span><span class="co">#     (ggplot(df_uwot, aes(x = x_umap, y = y_umap, col = Height)) +</span></span></span>
+<span class="r-in"><span><span class="co">#       geom_point(size = 2) +</span></span></span>
+<span class="r-in"><span><span class="co">#       ggtitle("uwot::umap2"))</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

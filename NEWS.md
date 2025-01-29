@@ -1,4 +1,10 @@
-# MiscMetabar 0.2.0 (in development) 
+# MiscMetabar 0.12.1 (in development) 
+
+- Add parameter name `min_bootstrap` in [add_new_taxonomy_pq()]
+- Bug fix in [assign_idtaxa()]
+- Add parameters `pattern_to_remove` and `remove_NA` to [simplify_taxo()]
+
+# MiscMetabar 0.12.0 
 
 - Add function [assign_idtaxa()] and [learn_idtaxa()] to facilitate the taxonomic assignation using the idtaxa algorithm from the  DECIPHER R package.
 - Add option `idtaxa` to method in [add_new_taxonomy_pq()]
@@ -6,7 +12,7 @@
 - In function [assign_sintax()], add params `too_few` (default value "align_start") and `too_many` (default "merge") to authorize db with variable numbers of rank and parenthesis in taxonomic name, 
 
 
-# MiscMetabar 0.11.1 (in development) 
+# MiscMetabar 0.11.1 
 
 - Add param `suffix` to `add_blast_info()` allowing multiple use of the function on the same phyloseq object (e.g. in order to used different database)
 - Add param `return_DNAStringSet` to `write_temp_fasta()` function to return a DNAStringSet object in place of a temporary file. 

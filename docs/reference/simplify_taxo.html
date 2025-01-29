@@ -13,7 +13,7 @@ Internally used in clean_pq()"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,7 +75,12 @@ Internally used in clean_pq()"></head><body>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">simplify_taxo</span><span class="op">(</span><span class="va">physeq</span>, remove_space <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">simplify_taxo</span><span class="op">(</span></span>
+<span>  <span class="va">physeq</span>,</span>
+<span>  pattern_to_remove <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">".__"</span>, <span class="st">".*:"</span><span class="op">)</span>,</span>
+<span>  remove_space <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  remove_NA <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -87,8 +92,16 @@ Internally used in clean_pq()"></head><body>
 using the <code>phyloseq</code> package.</p></dd>
 
 
+<dt id="arg-pattern-to-remove">pattern_to_remove<a class="anchor" aria-label="anchor" href="#arg-pattern-to-remove"></a></dt>
+<dd><p>(a vector of character) the pattern to remove using <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">base::gsub()</a></code> function.</p></dd>
+
+
 <dt id="arg-remove-space">remove_space<a class="anchor" aria-label="anchor" href="#arg-remove-space"></a></dt>
 <dd><p>(logical; default TRUE): do we remove space?</p></dd>
+
+
+<dt id="arg-remove-na">remove_NA<a class="anchor" aria-label="anchor" href="#arg-remove-na"></a></dt>
+<dd><p>(logical; default FALSE): do we remove NA (in majuscule)?</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -100,6 +113,118 @@ using the <code>phyloseq</code> package.</p></dd>
     <p>Adrien Taudière</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">d_fm</span> <span class="op">&lt;-</span> <span class="va">data_fungi_mini</span></span></span>
+<span class="r-in"><span><span class="va">d_fm</span><span class="op">@</span><span class="va">tax_table</span><span class="op">[</span>, <span class="st">"Species"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"s__"</span>, <span class="st">"s:"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/ntaxa-methods.html" class="external-link">ntaxa</a></span><span class="op">(</span><span class="va">d_fm</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span></span>
+<span class="r-in"><span><span class="op">)</span>, <span class="va">d_fm</span><span class="op">@</span><span class="va">tax_table</span><span class="op">[</span>, <span class="st">"Species"</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># First column is the new vector of Species,</span></span></span>
+<span class="r-in"><span><span class="co"># second column is the column before simplification</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu">simplify_taxo</span><span class="op">(</span><span class="va">d_fm</span><span class="op">)</span><span class="op">@</span><span class="va">tax_table</span><span class="op">[</span>, <span class="st">"Species"</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span>  <span class="va">d_fm</span><span class="op">@</span><span class="va">tax_table</span><span class="op">[</span>, <span class="st">"Species"</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        Species         Species           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7   "NA"            "s__NA"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8   "ostrea"        "s:ostrea"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12  "raduloides"    "s__raduloides"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18  "ostrea"        "s:ostrea"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25  "lachnopus"     "s__lachnopus"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV26  "hirsutum"      "s:hirsutum"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV27  "brasiliensis"  "s__brasiliensis" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV29  "eyrei"         "s:eyrei"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV32  "oblongisporum" "s__oblongisporum"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV34  "NA"            "s:NA"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV35  "fomentarius"   "s__fomentarius"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV41  "renati"        "s:renati"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV42  "lachnopus"     "s__lachnopus"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV46  "pellucida"     "s:pellucida"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV47  "molaris"       "s__molaris"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV48  "caryae"        "s:caryae"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV49  "livescens"     "s__livescens"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV50  "analogum"      "s:analogum"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV53  "fomentarius"   "s__fomentarius"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV54  "NA"            "s:NA"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV58  "fomentarius"   "s__fomentarius"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV59  "roseocremeum"  "s:roseocremeum"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV61  "setigerum"     "s__setigerum"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV62  "NA"            "s:NA"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV63  "NA"            "s__NA"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV64  "versicolor"    "s:versicolor"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV67  "raduloides"    "s__raduloides"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV68  "lachnopus"     "s:lachnopus"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV71  "NA"            "s__NA"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV72  "NA"            "s:NA"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV75  "versiformis"   "s__versiformis"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV77  "lachnopus"     "s:lachnopus"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV82  "glandulosa"    "s__glandulosa"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV83  "NA"            "s:NA"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV85  "pubera"        "s__pubera"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV91  "mesenterica"   "s:mesenterica"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV93  "NA"            "s__NA"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV94  "ostrea"        "s:ostrea"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV99  "fomentarius"   "s__fomentarius"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV100 "NA"            "s:NA"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV101 "buckii"        "s__buckii"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV104 "coralloides"   "s:coralloides"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV105 "flaviporus"    "s__flaviporus"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV107 "raduloides"    "s:raduloides"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV108 "glandulosa"    "s__glandulosa"   </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu">simplify_taxo</span><span class="op">(</span><span class="va">d_fm</span>, remove_NA <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">@</span><span class="va">tax_table</span><span class="op">[</span>, <span class="st">"Species"</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span>  <span class="va">d_fm</span><span class="op">@</span><span class="va">tax_table</span><span class="op">[</span>, <span class="st">"Species"</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        Species         Species           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7   ""              "s__NA"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8   "ostrea"        "s:ostrea"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12  "raduloides"    "s__raduloides"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18  "ostrea"        "s:ostrea"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25  "lachnopus"     "s__lachnopus"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV26  "hirsutum"      "s:hirsutum"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV27  "brasiliensis"  "s__brasiliensis" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV29  "eyrei"         "s:eyrei"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV32  "oblongisporum" "s__oblongisporum"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV34  ""              "s:NA"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV35  "fomentarius"   "s__fomentarius"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV41  "renati"        "s:renati"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV42  "lachnopus"     "s__lachnopus"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV46  "pellucida"     "s:pellucida"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV47  "molaris"       "s__molaris"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV48  "caryae"        "s:caryae"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV49  "livescens"     "s__livescens"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV50  "analogum"      "s:analogum"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV53  "fomentarius"   "s__fomentarius"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV54  ""              "s:NA"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV58  "fomentarius"   "s__fomentarius"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV59  "roseocremeum"  "s:roseocremeum"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV61  "setigerum"     "s__setigerum"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV62  ""              "s:NA"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV63  ""              "s__NA"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV64  "versicolor"    "s:versicolor"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV67  "raduloides"    "s__raduloides"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV68  "lachnopus"     "s:lachnopus"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV71  ""              "s__NA"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV72  ""              "s:NA"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV75  "versiformis"   "s__versiformis"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV77  "lachnopus"     "s:lachnopus"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV82  "glandulosa"    "s__glandulosa"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV83  ""              "s:NA"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV85  "pubera"        "s__pubera"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV91  "mesenterica"   "s:mesenterica"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV93  ""              "s__NA"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV94  "ostrea"        "s:ostrea"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV99  "fomentarius"   "s__fomentarius"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV100 ""              "s:NA"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV101 "buckii"        "s__buckii"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV104 "coralloides"   "s:coralloides"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV105 "flaviporus"    "s__flaviporus"   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV107 "raduloides"    "s:raduloides"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV108 "glandulosa"    "s__glandulosa"   </span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

@@ -8,9 +8,10 @@ assign_idtaxa(
   physeq,
   seq2search = NULL,
   trainingSet = NULL,
-  fasta_for_training,
+  fasta_for_training = NULL,
   behavior = "return_matrix",
-  column_names = c("Kingdom", "Phyla", "Class", "Order", "Family", "Genus", "Species"),
+  threshold = 60,
+  column_names = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
   suffix = "_idtaxa",
   nproc = 1,
   unite = FALSE,
@@ -47,6 +48,12 @@ DECIPHER::IdTaxa() function.
 \item "add_to_phyloseq" return a phyloseq object with amended slot \verb{@taxtable}.
 Only available if using physeq input and not seq2search input.
 }}
+
+\item{threshold}{(Int, default 60) Numeric specifying the confidence at which
+to truncate the output taxonomic classifications.
+Lower values of threshold will classify deeper into the taxonomic tree at
+the expense of accuracy, and vise-versa for higher values of threshold. See
+\code{\link[DECIPHER:IdTaxa]{DECIPHER::IdTaxa()}} man page.}
 
 \item{column_names}{(vector of character) names for the column of the
 taxonomy}

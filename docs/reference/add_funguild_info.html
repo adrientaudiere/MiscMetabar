@@ -15,7 +15,7 @@ Please cite Nguyen et al. 2016 (doi:10.1016/j.funeco.2015.06.006
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,7 +80,8 @@ Please cite Nguyen et al. 2016 (doi:10.1016/j.funeco.2015.06.006
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">add_funguild_info</span><span class="op">(</span></span>
 <span>  <span class="va">physeq</span>,</span>
-<span>  taxLevels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Kingdom"</span>, <span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span>, <span class="st">"Species"</span><span class="op">)</span></span>
+<span>  taxLevels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Kingdom"</span>, <span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span>, <span class="st">"Species"</span><span class="op">)</span>,</span>
+<span>  db_url <span class="op">=</span> <span class="st">"http://www.stbates.org/funguild_db_2.php"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -95,6 +96,11 @@ using the <code>phyloseq</code> package.</p></dd>
 
 <dt id="arg-taxlevels">taxLevels<a class="anchor" aria-label="anchor" href="#arg-taxlevels"></a></dt>
 <dd><p>Name of the 7 columns in tax_table required by funguild</p></dd>
+
+
+<dt id="arg-db-url">db_url<a class="anchor" aria-label="anchor" href="#arg-db-url"></a></dt>
+<dd><p>a length 1 character string giving the URL to retrieve the database
+from</p></dd>
 
 </dl></div>
     <div class="section level2">

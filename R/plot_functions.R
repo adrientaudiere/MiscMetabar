@@ -2502,7 +2502,7 @@ biplot_pq <- function(physeq,
 #' @inheritParams clean_pq
 #' @param split_by (required if pairs is NULL) the name of the factor to make all combination
 #'   of couples of values
-#' @param pairs (required if pairs is NULL) the name of the factor in physeq@sam_data` slot
+#' @param pairs (required if split_by is NULL) the name of the factor in physeq@sam_data` slot
 #'   to make plot by pairs of samples. Each level must be present only two times.
 #'   Note that if you set pairs, you also must set fact arguments to passed on to [biplot_pq()].
 #' @param na_remove (logical, default TRUE) if TRUE remove all the samples
@@ -4856,14 +4856,14 @@ hill_curves_pq <- function(physeq,
 #' #      ggtitle("NMDS"))) +
 #' #  patchwork::plot_layout(guides = "collect")
 #'
-#' df_uwot <- umap_pq(data_fungi_mini, pkg = "uwot")
+#' # df_uwot <- umap_pq(data_fungi_mini, pkg = "uwot")
 #'
-#' (ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
-#'   geom_point(size = 2) +
-#'   ggtitle("umap::umap")) /
-#'   (ggplot(df_uwot, aes(x = x_umap, y = y_umap, col = Height)) +
-#'     geom_point(size = 2) +
-#'     ggtitle("uwot::umap2"))
+#' #   (ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
+#' #     geom_point(size = 2) +
+#' #    ggtitle("umap::umap")) /
+#' #     (ggplot(df_uwot, aes(x = x_umap, y = y_umap, col = Height)) +
+#' #       geom_point(size = 2) +
+#' #       ggtitle("uwot::umap2"))
 #'
 #' @details
 #' This function is mainly a wrapper of the work of others.

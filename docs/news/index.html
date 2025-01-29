@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,14 +60,20 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.2.0" id="miscmetabar-020-in-development">MiscMetabar 0.2.0 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-020-in-development"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.12.1" id="miscmetabar-0121-in-development">MiscMetabar 0.12.1 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-0121-in-development"></a></h2>
+<ul><li>Add parameter name <code>min_bootstrap</code> in [add_new_taxonomy_pq()]</li>
+<li>Bug fix in [assign_idtaxa()]</li>
+<li>Add parameters <code>pattern_to_remove</code> and <code>remove_NA</code> to [simplify_taxo()]</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.12.0" id="miscmetabar-0120">MiscMetabar 0.12.0<a class="anchor" aria-label="anchor" href="#miscmetabar-0120"></a></h2>
 <ul><li>Add function [assign_idtaxa()] and [learn_idtaxa()] to facilitate the taxonomic assignation using the idtaxa algorithm from the DECIPHER R package.</li>
 <li>Add option <code>idtaxa</code> to method in [add_new_taxonomy_pq()]</li>
 <li>Add function [tbl_sum_taxtable()] to summarize tax_table from a phyloseq object</li>
 <li>In function [assign_sintax()], add params <code>too_few</code> (default value “align_start”) and <code>too_many</code> (default “merge”) to authorize db with variable numbers of rank and parenthesis in taxonomic name,</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.11.1" id="miscmetabar-0111-in-development">MiscMetabar 0.11.1 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-0111-in-development"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.11.1" id="miscmetabar-0111">MiscMetabar 0.11.1<a class="anchor" aria-label="anchor" href="#miscmetabar-0111"></a></h2>
 <ul><li>Add param <code>suffix</code> to <code><a href="../reference/add_blast_info.html">add_blast_info()</a></code> allowing multiple use of the function on the same phyloseq object (e.g. in order to used different database)</li>
 <li>Add param <code>return_DNAStringSet</code> to <code>write_temp_fasta()</code> function to return a DNAStringSet object in place of a temporary file.</li>
 <li>Add a vignette pkgnet-report.</li>

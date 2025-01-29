@@ -126,18 +126,49 @@ all_object_size <- function() {
 #'
 #' Internally used in [clean_pq()]
 #' @inheritParams clean_pq
+#' @param pattern_to_remove (a vector of character) the pattern to remove using [base::gsub()] function.
 #' @param remove_space (logical; default TRUE): do we remove space?
+#' @param remove_NA (logical; default FALSE): do we remove NA (in majuscule)?
 #' @author Adrien Taudière
 #'
 #' @return A  \code{\link[phyloseq]{phyloseq-class}} object with simplified taxonomy
 #' @export
-simplify_taxo <- function(physeq, remove_space = TRUE) {
+#' @examples
+#' d_fm <- data_fungi_mini
+#' d_fm@tax_table[, "Species"] <- paste0(rep(
+#'   c("s__", "s:"),
+#'   ntaxa(d_fm) / 2
+#' ), d_fm@tax_table[, "Species"])
+#'
+#' # First column is the new vector of Species,
+#' # second column is the column before simplification
+#' cbind(
+#'   simplify_taxo(d_fm)@tax_table[, "Species"],
+#'   d_fm@tax_table[, "Species"]
+#' )
+#' cbind(
+#'   simplify_taxo(d_fm, remove_NA = TRUE)@tax_table[, "Species"],
+#'   d_fm@tax_table[, "Species"]
+#' )
+simplify_taxo <- function(
+    physeq,
+    pattern_to_remove = c(".__", ".*:"),
+    remove_space = TRUE,
+    remove_NA = FALSE) {
   taxo <- physeq@tax_table
-  taxo <- gsub(".__", "", taxo, perl = TRUE)
+  for (p in pattern_to_remove) {
+    taxo <- gsub(p, "", taxo)
+  }
+
   if (remove_space) {
     taxo <- gsub(" ", "", taxo)
     taxo <- gsub("\u00a0", "", taxo)
   }
+
+  if (remove_NA) {
+    taxo <- gsub("NA", "", taxo, ignore.case = FALSE)
+  }
+
   physeq@tax_table <- tax_table(taxo)
   return(physeq)
 }

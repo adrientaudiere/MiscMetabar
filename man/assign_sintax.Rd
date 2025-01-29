@@ -14,7 +14,7 @@ assign_sintax(
   nproc = 1,
   suffix = "",
   taxo_rank = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
-  min_boostrap = 0.5,
+  min_bootstrap = 0.5,
   keep_temporary_files = FALSE,
   verbose = TRUE,
   temporary_fasta_file = "temp.fasta",
@@ -69,9 +69,9 @@ without suffix.}
 \item{taxo_rank}{A list with the name of the taxonomic rank present in
 ref_fasta}
 
-\item{min_boostrap}{(Int. [0:1], default 0.5)
+\item{min_bootstrap}{(Int. [0:1], default 0.5)
 Minimum bootstrap value to inform taxonomy. For each bootstrap
-below the min_boostrap value, the taxonomy information is set to NA.}
+below the min_bootstrap value, the taxonomy information is set to NA.}
 
 \item{keep_temporary_files}{(logical, default: FALSE) Do we keep temporary files?
 \itemize{
@@ -128,7 +128,7 @@ assignation_results <- assign_sintax(data_fungi_mini,
 
 left_join(
   tidyr::pivot_longer(assignation_results$taxo_value, -taxa_names),
-  tidyr::pivot_longer(assignation_results$taxo_boostrap, -taxa_names),
+  tidyr::pivot_longer(assignation_results$taxo_bootstrap, -taxa_names),
   by = join_by(taxa_names, name),
   suffix = c("rank", "bootstrap")
 ) |>

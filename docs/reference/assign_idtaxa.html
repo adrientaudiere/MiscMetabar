@@ -31,7 +31,7 @@ either a trainingSet or a fasta_for_training
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,9 +103,10 @@ training file can be obtain using the function <code><a href="learn_idtaxa.html"
 <span>  <span class="va">physeq</span>,</span>
 <span>  seq2search <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  trainingSet <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">fasta_for_training</span>,</span>
+<span>  fasta_for_training <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  behavior <span class="op">=</span> <span class="st">"return_matrix"</span>,</span>
-<span>  column_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Kingdom"</span>, <span class="st">"Phyla"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span>, <span class="st">"Species"</span><span class="op">)</span>,</span>
+<span>  threshold <span class="op">=</span> <span class="fl">60</span>,</span>
+<span>  column_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Kingdom"</span>, <span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span>, <span class="st">"Species"</span><span class="op">)</span>,</span>
 <span>  suffix <span class="op">=</span> <span class="st">"_idtaxa"</span>,</span>
 <span>  nproc <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  unite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -151,6 +152,14 @@ DECIPHER::IdTaxa() function.</p></li>
 <li><p>"add_to_phyloseq" return a phyloseq object with amended slot <code>@taxtable</code>.
 Only available if using physeq input and not seq2search input.</p></li>
 </ul></dd>
+
+
+<dt id="arg-threshold">threshold<a class="anchor" aria-label="anchor" href="#arg-threshold"></a></dt>
+<dd><p>(Int, default 60) Numeric specifying the confidence at which
+to truncate the output taxonomic classifications.
+Lower values of threshold will classify deeper into the taxonomic tree at
+the expense of accuracy, and vise-versa for higher values of threshold. See
+<code><a href="https://rdrr.io/pkg/DECIPHER/man/IdTaxa.html" class="external-link">DECIPHER::IdTaxa()</a></code> man page.</p></dd>
 
 
 <dt id="arg-column-names">column_names<a class="anchor" aria-label="anchor" href="#arg-column-names"></a></dt>

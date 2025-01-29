@@ -10,7 +10,7 @@ add_new_taxonomy_pq(
   suffix = NULL,
   method = c("dada2", "sintax", "lca", "idtaxa"),
   trainingSet = NULL,
-  min_boostrap = NULL,
+  min_bootstrap = NULL,
   ...
 )
 }
@@ -39,17 +39,18 @@ Note that if trainingSet is not NULL, the ref_fasta is overwrite by the
 trainingSet parameter. To customize learning parameters of the idtaxa
 algorithm you must use trainingSet computed by the function \code{\link[=learn_idtaxa]{learn_idtaxa()}}.}
 
-\item{min_boostrap}{(Int. [0:1])
+\item{min_bootstrap}{(Int. [0:1])
 
 Minimum bootstrap value to inform taxonomy. For each bootstrap
-below the min_boostrap value, the taxonomy information is set to NA.
+below the min_bootstrap value, the taxonomy information is set to NA.
 
 Correspond to parameters :
 \itemize{
 \item dada2: \code{minBoot}, default value = 0.5
-\item sintax: \code{min_boostrap}, default value = 60
-\item lca: \code{threshold}, default value = 60
-\item idtaxa: \code{threshold}, default value = 60
+\item sintax: \code{min_bootstrap}, default value = 0.5
+\item lca: \code{id}, default value = 0.5. Note in that case, the bootstrap value is different.
+See the id parameter in \code{\link[=assign_vsearch_lca]{assign_vsearch_lca()}}
+\item idtaxa: \code{threshold}, default value = 0.6
 }}
 
 \item{...}{Other arguments passed on to the taxonomic assignation method.}

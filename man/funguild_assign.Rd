@@ -6,7 +6,8 @@
 \usage{
 funguild_assign(
   otu_table,
-  db_funguild = get_funguild_db(),
+  db_url = NULL,
+  db_funguild = NULL,
   tax_col = "Taxonomy"
 )
 }
@@ -20,6 +21,9 @@ Rank indicators as given by Sintax ("\verb{k:}", "\verb{p:}"...) or Unite ("\cod
 "\code{p__}", ...) are also allowed.
 A \code{character} vector, representing only the taxonomic classification,
 is also accepted.}
+
+\item{db_url}{a length 1 character string giving the URL to retrieve the database
+from}
 
 \item{db_funguild}{A \code{data.frame} representing the FUNGuild as returned by
 \code{\link[=get_funguild_db]{get_funguild_db()}}

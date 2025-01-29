@@ -65,14 +65,14 @@ ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
 #      ggtitle("NMDS"))) +
 #  patchwork::plot_layout(guides = "collect")
 
-df_uwot <- umap_pq(data_fungi_mini, pkg = "uwot")
+# df_uwot <- umap_pq(data_fungi_mini, pkg = "uwot")
 
-(ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
-  geom_point(size = 2) +
-  ggtitle("umap::umap")) /
-  (ggplot(df_uwot, aes(x = x_umap, y = y_umap, col = Height)) +
-    geom_point(size = 2) +
-    ggtitle("uwot::umap2"))
+#   (ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
+#     geom_point(size = 2) +
+#    ggtitle("umap::umap")) /
+#     (ggplot(df_uwot, aes(x = x_umap, y = y_umap, col = Height)) +
+#       geom_point(size = 2) +
+#       ggtitle("uwot::umap2"))
 
 }
 \seealso{
