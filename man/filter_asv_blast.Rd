@@ -62,7 +62,7 @@ The BLAST E-value is the number of expected hits of similar quality (score)
 that could be found just by chance.}
 
 \item{...}{Others options for the \code{blast_pq()} function. See \code{?blast_pq}.
-Note that params \code{unique_per_seq} must be lft to TRUE and \code{score_filter}
+Note that params \code{unique_per_seq} must be left to TRUE and \code{score_filter}
 must be left to FALSE.}
 }
 \value{

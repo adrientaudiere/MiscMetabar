@@ -45,12 +45,12 @@ if (!MiscMetabar:::is_vsearch_installed()) {
     expect_equal(dim(res), c(1420, 10))
     expect_s3_class(
       res <-
-        vs_search_global(data_fungi, sequences_ex),
+        vs_search_global(data_fungi, seq2search = sequences_ex),
       "data.frame"
     )
     expect_s3_class(
       res <-
-        vs_search_global(data_fungi, Biostrings::DNAStringSet(sequences_ex)),
+        vs_search_global(data_fungi, seq2search = Biostrings::DNAStringSet(sequences_ex)),
       "data.frame"
     )
   })

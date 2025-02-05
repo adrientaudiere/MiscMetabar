@@ -13,7 +13,7 @@ Use the blast software."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.13.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,7 +103,8 @@ using the <code>phyloseq</code> package.</p></dd>
 
 
 <dt id="arg-fasta-for-db">fasta_for_db<a class="anchor" aria-label="anchor" href="#arg-fasta-for-db"></a></dt>
-<dd><p>path to a fasta file to make the blast database</p></dd>
+<dd><p>Either a DNAStringSet object or a path to a fasta
+file to make the blast database.</p></dd>
 
 
 <dt id="arg-database">database<a class="anchor" aria-label="anchor" href="#arg-database"></a></dt>
@@ -166,6 +167,7 @@ for blastn command)</p></dd>
 <li><p>dbase list of files (output of blastn)</p></li>
 <li><p>blast_result.txt the summary result of blastn using
 <code>-outfmt "6 qseqid qlen sseqid slen length pident evalue bitscore qcovs"</code></p></li>
+<li><p>temp.fasta if fasta_for_db was a DNAStringSet object.</p></li>
 </ul></dd>
 
 </dl></div>

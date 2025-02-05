@@ -6,8 +6,8 @@
 \usage{
 assign_idtaxa(
   physeq,
-  seq2search = NULL,
   trainingSet = NULL,
+  seq2search = NULL,
   fasta_for_training = NULL,
   behavior = "return_matrix",
   threshold = 60,
@@ -23,10 +23,11 @@ assign_idtaxa(
 \item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{seq2search}{A DNAStringSet object of sequences to search for.}
-
 \item{trainingSet}{An object of class Taxa and subclass
 Train compatible with the class of test.}
+
+\item{seq2search}{A DNAStringSet object of sequences to search for. Replace
+the physeq object.}
 
 \item{fasta_for_training}{A fasta file (can be gzip) to train the trainingSet
 using the function \code{\link[=learn_idtaxa]{learn_idtaxa()}}. Only used if trainingSet is NULL.
@@ -44,7 +45,6 @@ automatically formatted.}
 \item "return_matrix" return a list of two objects. The first element is
 the taxonomic matrix and the second element is the raw results from
 DECIPHER::IdTaxa() function.
-\item "return_cmd" return the command to run without running it.
 \item "add_to_phyloseq" return a phyloseq object with amended slot \verb{@taxtable}.
 Only available if using physeq input and not seq2search input.
 }}
@@ -121,7 +121,7 @@ plot(result_idtaxa$idtaxa_raw)
 }
 }
 \seealso{
-\code{\link[=assign_sintax]{assign_sintax()}}, \code{\link[=add_new_taxonomy_pq]{add_new_taxonomy_pq()}}, \code{\link[=assign_vsearch_lca]{assign_vsearch_lca()}}
+\code{\link[=assign_sintax]{assign_sintax()}}, \code{\link[=add_new_taxonomy_pq]{add_new_taxonomy_pq()}}, \code{\link[=assign_vsearch_lca]{assign_vsearch_lca()}}, \code{\link[=assign_blastn]{assign_blastn()}}
 }
 \author{
 Adrien Taudière

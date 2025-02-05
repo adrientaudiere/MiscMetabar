@@ -7,8 +7,8 @@ sequences using \href{https://github.com/torognes/vsearch}{vsearch}}
 \usage{
 vs_search_global(
   physeq,
-  seq2search = NULL,
   path_to_fasta = NULL,
+  seq2search = NULL,
   vsearchpath = "vsearch",
   id = 0.8,
   iddef = 0,
@@ -19,11 +19,11 @@ vs_search_global(
 \item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
+\item{path_to_fasta}{(required if seq2search is NULL) a path to fasta file if seq2search is est to NULL.}
+
 \item{seq2search}{(required if path_to_fasta is NULL) Either (i) a DNAstringSet object
 or (ii) a character vector that will be convert to DNAstringSet using
 \code{\link[Biostrings:XStringSet-class]{Biostrings::DNAStringSet()}}}
-
-\item{path_to_fasta}{(required if seq2search is NULL) a path to fasta file if seq2search is est to NULL.}
 
 \item{vsearchpath}{(default: "vsearch") path to vsearch}
 
