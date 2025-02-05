@@ -12,7 +12,7 @@ using the \code{phyloseq} package.}
 
 \item{taxonomic_ranks}{A list of taxonomic ranks we want to summarized.}
 
-\item{...}{Other arguments to be passed on to \code{\link[gtsummary:tbl_summary]{gtsummary::tbl_summary()}}}
+\item{...}{Other arguments passed on to \code{\link[gtsummary:tbl_summary]{gtsummary::tbl_summary()}}}
 }
 \value{
 A table of class c('tbl_summary', 'gtsummary')

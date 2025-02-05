@@ -1,3 +1,8 @@
+# MiscMetabar 0.13.0 (in development) 
+
+- Add function [assign_blastn()] and add a method `blast` in the function [add_new_taxonomy_pq()].
+- Add function [resolve_vector_ranks()] to resolve conflict in a vector of taxonomy values
+
 # MiscMetabar 0.12.1 (in development) 
 
 - Add parameter name `min_bootstrap` in [add_new_taxonomy_pq()]

@@ -8,7 +8,7 @@ add_new_taxonomy_pq(
   physeq,
   ref_fasta,
   suffix = NULL,
-  method = c("dada2", "sintax", "lca", "idtaxa"),
+  method = c("dada2", "sintax", "lca", "idtaxa", "blastn"),
   trainingSet = NULL,
   min_bootstrap = NULL,
   ...
@@ -32,6 +32,7 @@ to remove any suffix.}
 \item "sintax": see \code{\link[=assign_sintax]{assign_sintax()}}
 \item "lca": see \code{\link[=assign_vsearch_lca]{assign_vsearch_lca()}}
 \item "idtaxa": see \code{\link[=assign_idtaxa]{assign_idtaxa()}}
+\item "blastn": see \code{\link[=assign_blastn]{assign_blastn()}}
 }}
 
 \item{trainingSet}{see \code{\link[=assign_idtaxa]{assign_idtaxa()}}. Only used if method = "idtaxa".
@@ -51,6 +52,9 @@ Correspond to parameters :
 \item lca: \code{id}, default value = 0.5. Note in that case, the bootstrap value is different.
 See the id parameter in \code{\link[=assign_vsearch_lca]{assign_vsearch_lca()}}
 \item idtaxa: \code{threshold}, default value = 0.6
+\item blastn: This method do not take different bootstrap value. You may use method="vote" with
+different \code{vote_algorithm} as well as different filters parameters
+(min_id, min_bit_score, min_cover and min_e_value)
 }}
 
 \item{...}{Other arguments passed on to the taxonomic assignation method.}

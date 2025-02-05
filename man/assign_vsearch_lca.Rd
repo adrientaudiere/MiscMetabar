@@ -6,8 +6,8 @@
 \usage{
 assign_vsearch_lca(
   physeq = NULL,
-  seq2search = NULL,
   ref_fasta = NULL,
+  seq2search = NULL,
   behavior = c("return_matrix", "add_to_phyloseq", "return_cmd"),
   vsearchpath = "vsearch",
   clean_pq = TRUE,
@@ -30,8 +30,6 @@ assign_vsearch_lca(
 \item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{seq2search}{A DNAStringSet object of sequences to search for.}
-
 \item{ref_fasta}{(required) A link to a database in vsearch format
 The reference database must contain taxonomic information in the header of
 each sequence in the form of a string starting with ";tax=" and followed
@@ -45,6 +43,9 @@ the name of the rank. Non-ascii characters should be avoided in the names.
 Example:
 
 \>X80725_S000004313;tax=d:Bacteria,p:Proteobacteria,c:Gammaproteobacteria,o:Enterobacteriales,f:Enterobacteriaceae,g:Escherichia/Shigella,s:Escherichia_coli,t:str._K-12_substr._MG1655}
+
+\item{seq2search}{A DNAStringSet object of sequences to search for. Replace
+the physeq object.}
 
 \item{behavior}{Either "return_matrix" (default), "return_cmd",
 or "add_to_phyloseq":
@@ -124,7 +125,7 @@ seq2search
 \item{temporary_fasta_file}{Name of the temporary fasta file. Only useful
 with keep_temporary_files = TRUE.}
 
-\item{cmd_args}{Other arguments to be passed on to vsearch usearch_global cmd.}
+\item{cmd_args}{Other arguments passed on to vsearch usearch_global cmd.}
 
 \item{too_few}{(default value "align_start") see \code{\link[tidyr:separate_wider_delim]{tidyr::separate_wider_delim()}}}
 }

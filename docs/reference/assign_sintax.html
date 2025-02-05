@@ -15,7 +15,7 @@ if you use this function to assign taxonomy."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.12.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.13.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,8 +80,8 @@ if you use this function to assign taxonomy.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">assign_sintax</span><span class="op">(</span></span>
 <span>  physeq <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  seq2search <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ref_fasta <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  seq2search <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  behavior <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"return_matrix"</span>, <span class="st">"add_to_phyloseq"</span>, <span class="st">"return_cmd"</span><span class="op">)</span>,</span>
 <span>  vsearchpath <span class="op">=</span> <span class="st">"vsearch"</span>,</span>
 <span>  clean_pq <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -107,10 +107,6 @@ if you use this function to assign taxonomy.</p>
 using the <code>phyloseq</code> package.</p></dd>
 
 
-<dt id="arg-seq-search">seq2search<a class="anchor" aria-label="anchor" href="#arg-seq-search"></a></dt>
-<dd><p>A DNAStringSet object of sequences to search for.</p></dd>
-
-
 <dt id="arg-ref-fasta">ref_fasta<a class="anchor" aria-label="anchor" href="#arg-ref-fasta"></a></dt>
 <dd><p>(required) A link to a database in vsearch format
 The reference database must contain taxonomic information in the header of
@@ -123,6 +119,11 @@ g (genus), s (species), or t (strain). The letter is followed by a colon
 the name of the rank. Non-ascii characters should be avoided in the names.</p>
 <p>Example:</p>
 <p>\&gt;X80725_S000004313;tax=d:Bacteria,p:Proteobacteria,c:Gammaproteobacteria,o:Enterobacteriales,f:Enterobacteriaceae,g:Escherichia/Shigella,s:Escherichia_coli,t:str._K-12_substr._MG1655</p></dd>
+
+
+<dt id="arg-seq-search">seq2search<a class="anchor" aria-label="anchor" href="#arg-seq-search"></a></dt>
+<dd><p>A DNAStringSet object of sequences to search for. Replace
+the physeq object.</p></dd>
 
 
 <dt id="arg-behavior">behavior<a class="anchor" aria-label="anchor" href="#arg-behavior"></a></dt>
@@ -183,7 +184,7 @@ or seq2search</p></li>
 
 
 <dt id="arg-cmd-args">cmd_args<a class="anchor" aria-label="anchor" href="#arg-cmd-args"></a></dt>
-<dd><p>Other arguments to be passed on to vsearch sintax cmd.
+<dd><p>Other arguments passed on to vsearch sintax cmd.
 By default cmd_args is equal to "–sintax_random" as recommended by
 <a href="https://github.com/torognes/vsearch/issues/535" class="external-link">Torognes</a>.</p></dd>
 
@@ -219,7 +220,7 @@ Please cite <a href="https://github.com/torognes/vsearch" class="external-link">
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa and 0 samples.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Start Vsearch sintax</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "vsearch  --sintax temp.fasta --db /tmp/Rtmp13PHYN/temp_libpath21df2bac988/MiscMetabar/extdata/mini_UNITE_fungi.fasta.gz --tabbedout output_taxo_vs.txt  --threads 1 --sintax_random"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "vsearch  --sintax temp.fasta --db /tmp/RtmpOWfWQm/temp_libpathca823272736b/MiscMetabar/extdata/mini_UNITE_fungi.fasta.gz --tabbedout output_taxo_vs.txt  --threads 1 --sintax_random"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">data_fungi_mini_new</span> <span class="op">&lt;-</span> <span class="fu">assign_sintax</span><span class="op">(</span><span class="va">data_fungi_mini</span>,</span></span>
 <span class="r-in"><span>  ref_fasta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mini_UNITE_fungi.fasta.gz"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>

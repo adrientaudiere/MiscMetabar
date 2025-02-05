@@ -1759,6 +1759,8 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #'
 #' - "idtaxa": see [assign_idtaxa()]
 #'
+#' - "blastn": see [assign_blastn()]
+#'
 #' @param suffix (character) The suffix to name the new columns.
 #'   If set to NULL (the default), the basename of the file reFasta
 #'   is used with the name of the method. Set suffix to "" in order
@@ -1783,6 +1785,10 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #'
 #'  - idtaxa: `threshold`, default value = 0.6
 #'
+#'  - blastn: This method do not take different bootstrap value. You may use method="vote" with
+#'    different `vote_algorithm` as well as different filters parameters
+#'    (min_id, min_bit_score, min_cover and min_e_value)
+#'
 #' @param ... Other arguments passed on to the taxonomic assignation method.
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object with a larger slot tax_table"
 #' @seealso [dada2::assignTaxonomy()], [assign_sintax()], [assign_vsearch_lca()], [assign_sintax()]
@@ -1794,7 +1800,7 @@ add_new_taxonomy_pq <- function(
     physeq,
     ref_fasta,
     suffix = NULL,
-    method = c("dada2", "sintax", "lca", "idtaxa"),
+    method = c("dada2", "sintax", "lca", "idtaxa", "blastn"),
     trainingSet = NULL,
     min_bootstrap = NULL,
     ...) {
@@ -1825,6 +1831,8 @@ add_new_taxonomy_pq <- function(
     } else {
       new_physeq <- assign_idtaxa(physeq, trainingSet = trainingSet, behavior = "add_to_phyloseq", suffix = suffix, threshold = 100 * min_bootstrap, ...)
     }
+  } else if (method == "blastn") {
+    new_physeq <- assign_blastn(physeq, ref_fasta = ref_fasta, suffix = suffix, behavior = "add_to_phyloseq", ...)
   }
 
   return(new_physeq)
@@ -1900,7 +1908,7 @@ tbl_sum_samdata <- function(physeq, remove_col_unique_value = TRUE, ...) {
 #'
 #' @inheritParams clean_pq
 #' @param taxonomic_ranks A list of taxonomic ranks we want to summarized.
-#' @param ... Other arguments to be passed on to [gtsummary::tbl_summary()]
+#' @param ... Other arguments passed on to [gtsummary::tbl_summary()]
 #'
 #' @return A table of class c('tbl_summary', 'gtsummary')
 #' @export
@@ -3147,9 +3155,10 @@ rarefy_sample_count_by_modality <-
 #' - either a trainingSet or a fasta_for_training
 #'
 #' @inheritParams clean_pq
-#' @param seq2search A DNAStringSet object of sequences to search for.
 #' @param trainingSet An object of class Taxa and subclass
 #'   Train compatible with the class of test.
+#' @param seq2search A DNAStringSet object of sequences to search for. Replace
+#'   the physeq object.
 #' @param fasta_for_training A fasta file (can be gzip) to train the trainingSet
 #'   using the function [learn_idtaxa()]. Only used if trainingSet is NULL.
 #'
@@ -3165,8 +3174,6 @@ rarefy_sample_count_by_modality <-
 #'  - "return_matrix" return a list of two objects. The first element is
 #'    the taxonomic matrix and the second element is the raw results from
 #'    DECIPHER::IdTaxa() function.
-#'
-#'  - "return_cmd" return the command to run without running it.
 #'
 #'  - "add_to_phyloseq" return a phyloseq object with amended slot `@taxtable`.
 #'    Only available if using physeq input and not seq2search input.
@@ -3187,7 +3194,7 @@ rarefy_sample_count_by_modality <-
 #' @param verbose (logical). If TRUE, print additional information.
 #' @param ... Additional arguments passed on to \code{\link[DECIPHER]{IdTaxa}}
 #'
-#' @seealso [assign_sintax()], [add_new_taxonomy_pq()], [assign_vsearch_lca()]
+#' @seealso [assign_sintax()], [add_new_taxonomy_pq()], [assign_vsearch_lca()], [assign_blastn()]
 #' @author Adrien Taudière
 #' @return Either a new phyloseq object with additional information in
 #'   the @tax_table slot or a list of two objects if behavior is "return_matrix"
@@ -3216,8 +3223,8 @@ rarefy_sample_count_by_modality <-
 #'   Please make a reference to [DECIPHER::IdTaxa()] if you
 #'   use this function.
 assign_idtaxa <- function(physeq,
-                          seq2search = NULL,
                           trainingSet = NULL,
+                          seq2search = NULL,
                           fasta_for_training = NULL,
                           behavior = "return_matrix",
                           threshold = 60,

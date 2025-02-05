@@ -9,10 +9,10 @@
 #' Use of VSEARCH software.
 #'
 #' @inheritParams clean_pq
+#' @param path_to_fasta (required if seq2search is NULL) a path to fasta file if seq2search is est to NULL.
 #' @param seq2search (required if path_to_fasta is NULL) Either (i) a DNAstringSet object
 #'   or (ii) a character vector that will be convert to DNAstringSet using
 #'   [Biostrings::DNAStringSet()]
-#' @param path_to_fasta (required if seq2search is NULL) a path to fasta file if seq2search is est to NULL.
 #' @param vsearchpath (default: "vsearch") path to vsearch
 #' @param id (default: 0.8) id for the option `--usearch_global` of the vsearch software
 #' @param iddef (default: 0) iddef for the option `--usearch_global` of the vsearch software
@@ -44,8 +44,8 @@
 #' @author Adrien Taudière
 
 vs_search_global <- function(physeq,
-                             seq2search = NULL,
                              path_to_fasta = NULL,
+                             seq2search = NULL,
                              vsearchpath = "vsearch",
                              id = 0.8,
                              iddef = 0,
@@ -822,7 +822,6 @@ write_temp_fasta <- function(physeq,
 #'   if you use this function to assign taxonomy.
 #'
 #' @inheritParams clean_pq
-#' @param seq2search A DNAStringSet object of sequences to search for.
 #' @param ref_fasta (required) A link to a database in vsearch format
 #'  The reference database must contain taxonomic information in the header of
 #'  each sequence in the form of a string starting with ";tax=" and followed
@@ -836,6 +835,8 @@ write_temp_fasta <- function(physeq,
 #'  Example:
 #'
 #'  \>X80725_S000004313;tax=d:Bacteria,p:Proteobacteria,c:Gammaproteobacteria,o:Enterobacteriales,f:Enterobacteriaceae,g:Escherichia/Shigella,s:Escherichia_coli,t:str._K-12_substr._MG1655
+#' @param seq2search A DNAStringSet object of sequences to search for. Replace
+#'   the physeq object.
 #' @param behavior Either "return_matrix" (default), "return_cmd",
 #' or "add_to_phyloseq":
 #'
@@ -870,7 +871,7 @@ write_temp_fasta <- function(physeq,
 #'
 #' @param verbose (logical). If TRUE, print additional information.
 #' @param temporary_fasta_file The name of a temporary_fasta_file (default "temp.fasta")
-#' @param cmd_args Other arguments to be passed on to vsearch sintax cmd.
+#' @param cmd_args Other arguments passed on to vsearch sintax cmd.
 #'   By default cmd_args is equal to "--sintax_random" as recommended by
 #'   [Torognes](https://github.com/torognes/vsearch/issues/535).
 #' @param too_few (default value "align_start") see [tidyr::separate_wider_delim()]
@@ -919,8 +920,8 @@ write_temp_fasta <- function(physeq,
 #' This function is mainly a wrapper of the work of others.
 #'   Please cite [vsearch](https://github.com/torognes/vsearch).
 assign_sintax <- function(physeq = NULL,
-                          seq2search = NULL,
                           ref_fasta = NULL,
+                          seq2search = NULL,
                           behavior = c("return_matrix", "add_to_phyloseq", "return_cmd"),
                           vsearchpath = "vsearch",
                           clean_pq = TRUE,
@@ -944,7 +945,6 @@ assign_sintax <- function(physeq = NULL,
     clean_pq = clean_pq,
     verbose = verbose
   )
-
 
   if (verbose) {
     message("Start Vsearch sintax")
@@ -1060,7 +1060,6 @@ assign_sintax <- function(physeq = NULL,
 #'
 #'
 #' @inheritParams clean_pq
-#' @param seq2search A DNAStringSet object of sequences to search for.
 #' @param ref_fasta (required) A link to a database in vsearch format
 #'  The reference database must contain taxonomic information in the header of
 #'  each sequence in the form of a string starting with ";tax=" and followed
@@ -1074,6 +1073,8 @@ assign_sintax <- function(physeq = NULL,
 #'  Example:
 #'
 #'  \>X80725_S000004313;tax=d:Bacteria,p:Proteobacteria,c:Gammaproteobacteria,o:Enterobacteriales,f:Enterobacteriaceae,g:Escherichia/Shigella,s:Escherichia_coli,t:str._K-12_substr._MG1655
+#' @param seq2search A DNAStringSet object of sequences to search for. Replace
+#'   the physeq object.
 #' @param behavior Either "return_matrix" (default), "return_cmd",
 #' or "add_to_phyloseq":
 #'
@@ -1143,7 +1144,7 @@ assign_sintax <- function(physeq = NULL,
 #' @param verbose (logical). If TRUE, print additional information.
 #' @param temporary_fasta_file Name of the temporary fasta file. Only useful
 #'   with keep_temporary_files = TRUE.
-#' @param cmd_args Other arguments to be passed on to vsearch usearch_global cmd.
+#' @param cmd_args Other arguments passed on to vsearch usearch_global cmd.
 #' @param too_few (default value "align_start") see [tidyr::separate_wider_delim()]
 #' @return See param behavior
 #' @seealso [assign_sintax()], [add_new_taxonomy_pq()]
@@ -1161,8 +1162,8 @@ assign_sintax <- function(physeq = NULL,
 #'   Please cite [vsearch](https://github.com/torognes/vsearch) and
 #'   [stampa](https://github.com/frederic-mahe/stampa)
 assign_vsearch_lca <- function(physeq = NULL,
-                               seq2search = NULL,
                                ref_fasta = NULL,
+                               seq2search = NULL,
                                behavior = c("return_matrix", "add_to_phyloseq", "return_cmd"),
                                vsearchpath = "vsearch",
                                clean_pq = TRUE,

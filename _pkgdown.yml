@@ -70,9 +70,11 @@ reference:
   - blast_pq
   - blast_to_derep
   - filter_asv_blast
+  - resolve_vector_ranks
   - assign_vsearch_lca
   - assign_sintax
   - assign_idtaxa
+  - assign_blastn
   - learn_idtaxa
 
 - subtitle: Function to add information from taxonomy

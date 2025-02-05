@@ -26,7 +26,8 @@ blast_pq(
 \item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{fasta_for_db}{path to a fasta file to make the blast database}
+\item{fasta_for_db}{Either a DNAStringSet object or a path to a fasta
+file to make the blast database.}
 
 \item{database}{path to a blast database}
 
@@ -67,6 +68,7 @@ for blastn command)}
 \item dbase list of files (output of blastn)
 \item blast_result.txt the summary result of blastn using
 \verb{-outfmt "6 qseqid qlen sseqid slen length pident evalue bitscore qcovs"}
+\item temp.fasta if fasta_for_db was a DNAStringSet object.
 }}
 }
 \value{
