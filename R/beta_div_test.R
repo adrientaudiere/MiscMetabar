@@ -719,7 +719,7 @@ multipatt_pq <- function(physeq,
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' if (requireNamespace("mia")) {
 #'   data_fungi_mini@tax_table <- phyloseq::tax_table(cbind(
 #'     data_fungi_mini@tax_table,
@@ -765,7 +765,7 @@ ancombc_pq <- function(physeq, fact, levels_fact = NULL, tax_level = "Class", ..
   if (!is.null(levels_fact)) {
     physeq <- subset_samples_pq(physeq, as.vector(physeq@sam_data[, fact])[[1]] %in% levels_fact)
   }
-  tse <- mia::makeTreeSummarizedExperimentFromPhyloseq(physeq)
+  tse <- mia::makeTreeSEFromPhyloseq(physeq) # mia::convertFromPhyloseq
   if (!is.null(levels_fact)) {
     SummarizedExperiment::colData(tse)[[fact]] <- factor(tse[[fact]], levels = levels_fact)
   }

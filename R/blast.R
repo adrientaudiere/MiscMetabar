@@ -175,9 +175,12 @@ blast_to_phyloseq <- function(physeq,
   }
 
   if (nrow(blast_tab) == 0) {
-    stop("No blast query match the score filters")
+    message("No blast query match the score filters")
+    return(NULL)
+  } else {
+    return(blast_tab)
   }
-  return(blast_tab)
+  
 }
 ################################################################################
 
@@ -345,9 +348,11 @@ blast_pq <- function(physeq,
   }
 
   if (nrow(blast_tab) == 0) {
-    stop("No blast query match the score filters")
+    message("No blast query match the score filters")
+    return(NULL)
+  } else {
+    return(blast_tab)
   }
-  return(blast_tab)
 }
 
 ################################################################################
@@ -620,9 +625,11 @@ blast_to_derep <- function(derep,
   }
 
   if (nrow(blast_tab) == 0) {
-    stop("No blast query match the score filters")
+    message("No blast query match the score filters")
+    return(NULL)
+  } else {
+    return(blast_tab)
   }
-  return(blast_tab)
 }
 
 
@@ -717,7 +724,7 @@ add_blast_info <- function(physeq, fasta_for_db, silent = FALSE, suffix = "blast
 #'   takes all (or `nb_voting` if `nb_voting` is not null) select assignation
 #'   and resolve the conflict using the function [resolve_vector_ranks()].
 #' @param suffix (character) The suffix to name the new columns.
-#'   If set to "" (the default), the taxo_rank algorithm is used
+#'   If set to "" (the default), the taxa_ranks algorithm is used
 #'   without suffix.
 #' @param min_id (default: 95) the identity percent to take into account
 #'   a references taxa
@@ -837,6 +844,15 @@ assign_blastn <- function(physeq,
       ...
     )
 
+    if(is.null(blast_tab_raw)) {
+      message("None blast query match the score filters")
+        if (behavior == "return_matrix") {
+          return(NULL)
+        } else {
+          return(physeq)
+        }
+    }
+
     if (is.null(nb_voting)) {
       nb_voting <- max(table(blast_tab_raw$`Query name`))
     }
@@ -903,6 +919,14 @@ assign_blastn <- function(physeq,
       e_value_cut = min_e_value,
       ...
     )
+    if(is.null(blast_tab_raw)) {
+      message("None blast query match the score filters")
+        if (behavior == "return_matrix") {
+          return(NULL)
+        } else {
+          return(physeq)
+        }
+    }
 
     blast_tab <- blast_tab_raw |>
       tidyr::separate(`Taxa name`,

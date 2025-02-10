@@ -855,9 +855,9 @@ write_temp_fasta <- function(physeq,
 #' @param nproc (default: 1)
 #'   Set to number of cpus/processors to use
 #' @param suffix (character) The suffix to name the new columns.
-#'   If set to "" (the default), the taxo_rank algorithm is used
+#'   If set to "" (the default), the taxa_ranks algorithm is used
 #'   without suffix.
-#' @param taxo_rank A list with the name of the taxonomic rank present in
+#' @param taxa_ranks A list with the name of the taxonomic rank present in
 #'   ref_fasta
 #' @param min_bootstrap (Int. \[0:1\], default 0.5)
 #'   Minimum bootstrap value to inform taxonomy. For each bootstrap
@@ -927,7 +927,7 @@ assign_sintax <- function(physeq = NULL,
                           clean_pq = TRUE,
                           nproc = 1,
                           suffix = "",
-                          taxo_rank = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
+                          taxa_ranks = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
                           min_bootstrap = 0.5,
                           keep_temporary_files = FALSE,
                           verbose = TRUE,
@@ -991,7 +991,7 @@ assign_sintax <- function(physeq = NULL,
   taxa_names <- res_sintax$V1
   res_sintax <- tibble(res_sintax$V2, taxa_names)
   res_sintax <- res_sintax |>
-    tidyr::separate_wider_delim(-taxa_names, names = paste0(taxo_rank, suffix), delim = ",", too_few = too_few) |>
+    tidyr::separate_wider_delim(-taxa_names, names = paste0(taxa_ranks, suffix), delim = ",", too_few = too_few) |>
     tidyr::pivot_longer(-taxa_names) |>
     tidyr::separate_wider_delim(
       value,
@@ -1090,12 +1090,12 @@ assign_sintax <- function(physeq = NULL,
 #' @param clean_pq (logical, default TRUE)
 #'   If set to TRUE, empty samples and empty ASV are discarded
 #'   before clustering.
-#' @param taxo_rank A list with the name of the taxonomic rank present in
+#' @param taxa_ranks A list with the name of the taxonomic rank present in
 #'   ref_fasta
 #' @param nproc (int, default: 1)
 #'   Set to number of cpus/processors to use
 #' @param suffix (character) The suffix to name the new columns.
-#'   If set to "" (the default), the taxo_rank algorithm is used
+#'   If set to "" (the default), the taxa_ranks algorithm is used
 #'   without suffix.
 #' @param id (Int. \[0:1\] default 0.5). Default value is based on
 #'   [stampa](https://github.com/frederic-mahe/stampa).
@@ -1167,7 +1167,7 @@ assign_vsearch_lca <- function(physeq = NULL,
                                behavior = c("return_matrix", "add_to_phyloseq", "return_cmd"),
                                vsearchpath = "vsearch",
                                clean_pq = TRUE,
-                               taxo_rank = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
+                               taxa_ranks = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
                                nproc = 1,
                                suffix = "",
                                id = 0.5,
@@ -1241,7 +1241,7 @@ assign_vsearch_lca <- function(physeq = NULL,
 
   res_usearch <- res_usearch |>
     tidyr::separate_wider_delim(-taxa_names,
-      names = paste0(taxo_rank, suffix),
+      names = paste0(taxa_ranks, suffix),
       delim = ",",
       too_few = too_few
     ) |>

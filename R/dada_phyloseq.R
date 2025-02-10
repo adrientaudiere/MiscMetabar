@@ -1791,9 +1791,21 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #'
 #' @param ... Other arguments passed on to the taxonomic assignation method.
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object with a larger slot tax_table"
-#' @seealso [dada2::assignTaxonomy()], [assign_sintax()], [assign_vsearch_lca()], [assign_sintax()]
+#' @seealso [dada2::assignTaxonomy()], [assign_sintax()], [assign_vsearch_lca()], [assign_sintax()],
+#'   [assign_blastn()]
 #' @export
-#'
+#' @examples
+#' \dontrun{
+#' ref_fasta <- system.file("extdata",
+#'   "mini_UNITE_fungi.fasta.gz",
+#'   package = "MiscMetabar", mustWork = TRUE
+#' )
+#' add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "dada2")
+#' add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "lca")
+#' add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "idtaxa")
+#' add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "blastn")
+#' add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "blastn", method = "top-hit")
+#' }
 #' @author Adrien Taudière
 #'
 add_new_taxonomy_pq <- function(
@@ -1814,25 +1826,39 @@ add_new_taxonomy_pq <- function(
     suffix <- paste0("_", basename(ref_fasta), "_", method)
   }
   if (method == "dada2") {
-    tax_tab <-
-      dada2::assignTaxonomy(physeq@refseq, refFasta = ref_fasta, minBoot = 100 * min_bootstrap, ...)
+    list_args <- list(seqs = physeq@refseq, refFasta = ref_fasta, minBoot = 100 * min_bootstrap, ...)
+    list_args <- list_args[names(list_args) %in% c(
+      "seqs", "refFasta", "minBoot", "tryRC", "outputBootstraps",
+      "taxLevels", "multithread", "verbose"
+    )]
+    tax_tab <- do.call(dada2::assignTaxonomy, args = list_args, envir = parent.frame())
     colnames(tax_tab) <-
       make.unique(paste0(colnames(tax_tab), suffix))
     new_tax_tab <- tax_table(cbind(physeq@tax_table, tax_tab))
     new_physeq <- physeq
     tax_table(new_physeq) <- new_tax_tab
   } else if (method == "sintax") {
-    new_physeq <- assign_sintax(physeq, ref_fasta = ref_fasta, suffix = suffix, behavior = "add_to_phyloseq", min_bootstrap = min_bootstrap, ...)
+    list_args <- list(physeq = physeq, ref_fasta = ref_fasta, suffix = suffix, behavior = "add_to_phyloseq", min_bootstrap = min_bootstrap, ...)
+    list_args <- list_args[names(list_args) %in% names(formals("assign_sintax", envir = parent.frame()))]
+    new_physeq <- do.call(assign_sintax, args = list_args, envir = parent.frame())
   } else if (method == "lca") {
-    new_physeq <- assign_vsearch_lca(physeq, ref_fasta = ref_fasta, suffix = suffix, behavior = "add_to_phyloseq", ...)
+    list_args <- list(physeq = physeq, ref_fasta = ref_fasta, suffix = suffix, behavior = "add_to_phyloseq", ...)
+    list_args <- list_args[names(list_args) %in% names(formals("assign_vsearch_lca", envir = parent.frame()))]
+    new_physeq <- do.call(assign_vsearch_lca, args = list_args, envir = parent.frame())
   } else if (method == "idtaxa") {
     if (is.null(trainingSet)) {
-      new_physeq <- assign_idtaxa(physeq, fasta_for_training = ref_fasta, behavior = "add_to_phyloseq", suffix = suffix, threshold = 100 * min_bootstrap, ...)
+      list_args <- list(physeq = physeq, fasta_for_training = ref_fasta, suffix = suffix, behavior = "add_to_phyloseq", threshold = 100 * min_bootstrap, ...)
+      list_args <- list_args[names(list_args) %in% names(formals("assign_idtaxa", envir = parent.frame()))]
+      new_physeq <- do.call(assign_idtaxa, args = list_args, envir = parent.frame())
     } else {
-      new_physeq <- assign_idtaxa(physeq, trainingSet = trainingSet, behavior = "add_to_phyloseq", suffix = suffix, threshold = 100 * min_bootstrap, ...)
+      list_args <- list(physeq = physeq, trainingSet = trainingSet, suffix = suffix, behavior = "add_to_phyloseq", threshold = 100 * min_bootstrap, ...)
+      list_args <- list_args[names(list_args) %in% names(formals("assign_idtaxa", envir = parent.frame()))]
+      new_physeq <- do.call(assign_idtaxa, args = list_args, envir = parent.frame())
     }
   } else if (method == "blastn") {
-    new_physeq <- assign_blastn(physeq, ref_fasta = ref_fasta, suffix = suffix, behavior = "add_to_phyloseq", ...)
+    list_args <- list(physeq = physeq, ref_fasta = ref_fasta, suffix = suffix, behavior = "add_to_phyloseq", ...)
+    list_args <- list_args[names(list_args) %in% names(formals("assign_blastn", envir = parent.frame()))]
+    new_physeq <- do.call(assign_blastn, args = list_args, envir = parent.frame())
   }
 
   return(new_physeq)

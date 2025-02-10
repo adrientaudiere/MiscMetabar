@@ -25,6 +25,8 @@ quiet <- function(x) {
 }
 ```
 
+In introduction, you can read the review of @zou2024, entitled ["Common Methods for Phylogenetic Tree Construction and Their Implementation in R](https://doi.org/10.3390/bioengineering11050480)".
+
 ```{r}
 library("tidytree") # first load to disable warning about phylo class
 library("MiscMetabar")
