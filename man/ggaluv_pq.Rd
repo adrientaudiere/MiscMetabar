@@ -63,7 +63,7 @@ NA in the variables set in formula.}
 
 \item{size_lab}{Size for label if use_ggfittext is FALSE}
 
-\item{...}{Other arguments passed on to \code{\link[ggalluvial:geom_flow]{ggalluvial::geom_flow()}} function.}
+\item{...}{Additional arguments passed on to \code{\link[ggalluvial:geom_flow]{ggalluvial::geom_flow()}} function.}
 }
 \value{
 A ggplot object

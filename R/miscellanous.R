@@ -50,7 +50,7 @@ as_binary_otu_table <- function(physeq, min_number = 1) {
 #' @param method (default: 'bray') the method to use internally in the vegdist
 #'   function.
 #' @param nperm (int) The number of permutations to perform.
-#' @param ... Others argument for `vegan::vegdist` function
+#' @param ... Additional arguments passed on to`vegan::vegdist` function
 #'
 #' @author Adrien Taudière
 #'
@@ -181,7 +181,8 @@ simplify_taxo <- function(
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
-#'   Internally used in [count_seq()]. Warning: don't work when there is '.' in the name of the
+#' Internally used in [count_seq()].
+#' Warning: don't work when there is '.' in the name of the
 #'   file before the extension
 #' @param file_path (required): path to a file
 #' @author Adrien Taudière

@@ -33,7 +33,7 @@ before clustering.}
 
 \item{keep_temporary_files}{(logical, default: FALSE) Do we keep temporary files}
 
-\item{...}{Others args for function \code{\link[=lulu]{lulu()}}}
+\item{...}{Additional arguments passed on to function \code{\link[=lulu]{lulu()}}}
 }
 \value{
 a list of for object

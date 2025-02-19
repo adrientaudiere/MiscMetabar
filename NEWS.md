@@ -1,9 +1,17 @@
-# MiscMetabar 0.13.0 (in development) 
+# MiscMetabar 0.14.1 (in development) 
+
+# MiscMetabar 0.14.0
+
+- Better filter of parameters in [add_new_taxonomy_pq()]. Only parameters used by the assign_* function corresponding to `method` are used.
+- Add functions [format2sintax()], [format2dada2()] and [format2dada2_species] to format fasta database in sintax, dada2 ([dada2::assignTaxonomy()]) and dada2 Species ([dada2::assignSpecies()]) format
+- Add function [assign_dada2()] to assign Taxonomy (with missing ranks if needed) and to assign species using [dada2::assignSpecies()] with only one database input. Add method `dada2_2steps` in function [add_new_taxonomy_pq()] which use [assign_dada2()] function.
+
+# MiscMetabar 0.13.0
 
 - Add function [assign_blastn()] and add a method `blast` in the function [add_new_taxonomy_pq()].
 - Add function [resolve_vector_ranks()] to resolve conflict in a vector of taxonomy values
 
-# MiscMetabar 0.12.1 (in development) 
+# MiscMetabar 0.12.1
 
 - Add parameter name `min_bootstrap` in [add_new_taxonomy_pq()]
 - Bug fix in [assign_idtaxa()]

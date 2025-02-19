@@ -64,18 +64,19 @@ reference:
 
 - subtitle: Taxonomy
   contents:
-  - add_new_taxonomy_pq
   - add_blast_info
-  - blast_to_phyloseq
+  - add_new_taxonomy_pq
+  - assign_blastn
+  - assign_dada2
+  - assign_idtaxa
+  - assign_sintax
+  - assign_vsearch_lca
   - blast_pq
   - blast_to_derep
+  - blast_to_phyloseq
   - filter_asv_blast
-  - resolve_vector_ranks
-  - assign_vsearch_lca
-  - assign_sintax
-  - assign_idtaxa
-  - assign_blastn
   - learn_idtaxa
+  - resolve_vector_ranks
 
 - subtitle: Function to add information from taxonomy
   contents:
@@ -87,16 +88,16 @@ reference:
   contents:
   - as_binary_otu_table
   - normalize_prop_pq
-  - taxa_as_rows
   - taxa_as_columns
+  - taxa_as_rows
 
 - subtitle: Subset/merge taxa
   contents:
+  - filt_taxa_pq
+  - merge_taxa_vec
+  - select_taxa
   - subset_taxa_pq
   - subset_taxa_tax_control
-  - select_taxa
-  - merge_taxa_vec
-  - filt_taxa_pq
 
 - subtitle: Subset/merge samples
   contents:
@@ -108,16 +109,16 @@ reference:
 - subtitle: (Re)clustering OTU table
   contents:
   - asv2otu
+  - lulu
+  - lulu_pq
+  - mumu_pq
   - swarm_clustering
   - vsearch_clustering
-  - lulu_pq
-  - lulu
-  - mumu_pq
 
 - subtitle: Remove chimera using vsearch
   contents:
-  - chimera_removal_vs
   - chimera_detection_vs
+  - chimera_removal_vs
 
 - subtitle: Sample data
   contents:
@@ -165,6 +166,7 @@ reference:
   - plot_LCBD_pq
   - plot_SCBD_pq
   - plot_tsne_pq
+  - plot_var_part_pq
   - ridges_pq
   - SRS_curve_pq
   - tsne_pq
@@ -173,24 +175,22 @@ reference:
   - upset_test_pq
   - var_par_pq
   - var_par_rarperm_pq
-  - plot_var_part_pq
   - venn_pq
 
 - subtitle: Differential abundance analysis
   contents:
+  - ancombc_pq
   - multipatt_pq
   - phyloseq_to_edgeR
-  - plot_edgeR_pq
-  - plot_deseq2_pq
-  - plot_mt
-  - ancombc_pq
-  - signif_ancombc
   - plot_ancombc_pq
+  - plot_deseq2_pq
+  - plot_edgeR_pq
+  - plot_mt
+  - signif_ancombc
 
 - subtitle: Taxonomy
   contents:
   - ggaluv_pq
- #- heat_tree_pq
   - krona
   - merge_krona
   - multitax_bar_pq
@@ -204,6 +204,7 @@ reference:
   - tax_datatable
   - treemap_pq
   - vs_search_global
+ #- heat_tree_pq
 
 - subtitle: Zoom on given taxa
   contents:
@@ -213,9 +214,9 @@ reference:
 - title: Improve reproducibility using [targets](https://books.ropensci.org/targets/) pipeline
 - subtitle: Processing fastq files
   contents:
-  - list_fastq_files
-  - filter_trim
   - cutadapt_remove_primers
+  - filter_trim
+  - list_fastq_files
   - subsample_fastq
 - subtitle: Import/export phyloseq object
   contents:
@@ -229,10 +230,10 @@ reference:
   - track_wkflow_samples
 - subtitle: Sample data management
   contents:
-  - rename_samples_otu_table
-  - rename_samples
-  - sample_data_with_new_names
   - psmelt_samples_pq
+  - rename_samples
+  - rename_samples_otu_table
+  - sample_data_with_new_names
 - subtitle: Taxonomy management
   contents:
   - simplify_taxo
@@ -241,16 +242,21 @@ reference:
 - title: Datasets
   contents:
   - data_fungi
-  - data_fungi_sp_known
   - data_fungi_mini
+  - data_fungi_sp_known
   - Tengeler2020_pq
 
 - title: Other utilities
 - subtitle: Color management
   contents:
-  - funky_color
   - fac2col
+  - funky_color
   - transp
+- subtitle: Fasta taxonomic database
+  contents:
+  - format2dada2
+  - format2dada2_species
+  - format2sintax
 - subtitle: File management
   contents:
   - get_file_extension
@@ -274,9 +280,9 @@ reference:
 - subtitle: Others
   contents:
   - all_object_size
+  - are_modality_even_depth
   - dist_bycol
   - dist_pos_control
-  - are_modality_even_depth
   - MiscMetabar-package
 
 - title: Deprecated
@@ -290,7 +296,6 @@ reference:
   - lulu_phyloseq
   - otu_circle
   - physeq_graph_test
-#  - physeq_heat_tree
   - plot_deseq2_phyloseq
   - plot_edgeR_phyloseq
   - read_phyloseq
@@ -298,6 +303,7 @@ reference:
   - summary_plot_phyloseq
   - venn_phyloseq
   - write_phyloseq
+#  - physeq_heat_tree
 
 
 development:

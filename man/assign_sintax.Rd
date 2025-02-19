@@ -13,7 +13,7 @@ assign_sintax(
   clean_pq = TRUE,
   nproc = 1,
   suffix = "",
-  taxo_rank = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
+  taxa_ranks = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
   min_bootstrap = 0.5,
   keep_temporary_files = FALSE,
   verbose = TRUE,
@@ -64,13 +64,13 @@ before clustering.}
 Set to number of cpus/processors to use}
 
 \item{suffix}{(character) The suffix to name the new columns.
-If set to "" (the default), the taxo_rank algorithm is used
+If set to "" (the default), the taxa_ranks algorithm is used
 without suffix.}
 
-\item{taxo_rank}{A list with the name of the taxonomic rank present in
+\item{taxa_ranks}{A list with the name of the taxonomic rank present in
 ref_fasta}
 
-\item{min_bootstrap}{(Int. [0:1], default 0.5)
+\item{min_bootstrap}{(Float [0:1], default 0.5)
 Minimum bootstrap value to inform taxonomy. For each bootstrap
 below the min_bootstrap value, the taxonomy information is set to NA.}
 
@@ -85,7 +85,7 @@ or seq2search
 
 \item{temporary_fasta_file}{The name of a temporary_fasta_file (default "temp.fasta")}
 
-\item{cmd_args}{Other arguments passed on to vsearch sintax cmd.
+\item{cmd_args}{Additional arguments passed on to vsearch sintax cmd.
 By default cmd_args is equal to "--sintax_random" as recommended by
 \href{https://github.com/torognes/vsearch/issues/535}{Torognes}.}
 

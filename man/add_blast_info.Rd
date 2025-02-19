@@ -23,7 +23,7 @@ using the \code{phyloseq} package.}
 \item{suffix}{(character) The suffix to name the new columns.
 Set the suffix to "" in order to remove any suffix.}
 
-\item{...}{Other arguments passed on to \code{\link[=blast_pq]{blast_pq()}} function.}
+\item{...}{Additional arguments passed on to \code{\link[=blast_pq]{blast_pq()}} function.}
 }
 \value{
 A new \code{\link[phyloseq]{phyloseq-class}} object with more information in tax_table based on a

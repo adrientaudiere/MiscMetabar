@@ -13,7 +13,7 @@ Graphical representation of ANCOMBC2 result."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.13.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -189,6 +189,7 @@ use this function.</p>
 <span class="r-in"><span>    filter_diff <span class="op">=</span> <span class="cn">FALSE</span>, tax_col <span class="op">=</span> <span class="st">"Family"</span>, add_label <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: mia</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Checking the input data type ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> The input data is of type: TreeSummarizedExperiment</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> PASS</span>
@@ -206,6 +207,13 @@ use this function.</p>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> A large number of taxa (&gt;50) is required for the consistent estimation of biases</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Obtaining initial estimates ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Estimating sample-specific biases ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: foreach</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘foreach’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:purrr’:</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span>     accumulate, when</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: rngtools</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Estimation of sampling fractions failed for the following samples:</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> BT-006-M_S55_MERGED.fastq.gz, C21-NV1-B_S62_MERGED.fastq.gz, CB8-019-H_S70_MERGED.fastq.gz, DY5-004-B_S96_MERGED.fastq.gz, DY5-004-H_S97_MERGED.fastq.gz, J18-004-M_S116_MERGED.fastq.gz, W26-001-B_S165_MERGED.fastq.gz, X24-009-B_S170_MERGED.fastq.gz</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> These samples may have an excessive number of zero values</span>

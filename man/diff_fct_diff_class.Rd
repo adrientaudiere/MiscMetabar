@@ -31,7 +31,7 @@ diff_fct_diff_class(
 \item more_frequent_without_equality
 }}
 
-\item{...}{Other arguments passed on to the numeric function (ex. na.rm=TRUE)}
+\item{...}{Additional arguments passed on to the numeric function (ex. na.rm=TRUE)}
 }
 \value{
 a single value

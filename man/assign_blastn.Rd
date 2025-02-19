@@ -9,7 +9,7 @@ assign_blastn(
   ref_fasta = NULL,
   database = NULL,
   blastpath = NULL,
-  behavior = "return_matrix",
+  behavior = c("return_matrix", "add_to_phyloseq"),
   method = c("vote", "top-hit"),
   suffix = "_blastn",
   min_id = 95,
@@ -56,7 +56,7 @@ takes all (or \code{nb_voting} if \code{nb_voting} is not null) select assignati
 and resolve the conflict using the function \code{\link[=resolve_vector_ranks]{resolve_vector_ranks()}}.}
 
 \item{suffix}{(character) The suffix to name the new columns.
-If set to "" (the default), the taxo_rank algorithm is used
+If set to "" (the default), the taxa_ranks algorithm is used
 without suffix.}
 
 \item{min_id}{(default: 95) the identity percent to take into account
@@ -98,7 +98,7 @@ function \code{\link[=simplify_taxo]{simplify_taxo()}} to the phyloseq object?}
 ("Query seq. length", "Taxa seq. length", "Alignment length",  "\% id. match", "e-value",
 "bit score" and "Query cover") are stored in the tax_table.}
 
-\item{...}{Other arguments passed on to \code{\link[=blast_pq]{blast_pq()}}}
+\item{...}{Additional arguments passed on to \code{\link[=blast_pq]{blast_pq()}}}
 }
 \value{
 \itemize{
@@ -110,7 +110,7 @@ raw taxonomic assignation (before vote). The second one is
 the taxonomic assignation in which conflicts are resolved
 using vote.
 }
-\item If behavior == "vote", return a new phyloseq object
+\item If behavior == "add_to_phyloseq", return a new phyloseq object
 }
 }
 \description{

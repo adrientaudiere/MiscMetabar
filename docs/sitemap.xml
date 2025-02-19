@@ -45,6 +45,7 @@
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/are_modality_even_depth.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/as_binary_otu_table.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/assign_blastn.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/assign_dada2.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/assign_idtaxa.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/assign_sintax.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/assign_vsearch_lca.html</loc></url>
@@ -73,6 +74,9 @@
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/filt_taxa_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/filter_asv_blast.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/filter_trim.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/format2dada2.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/format2dada2_species.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/format2sintax.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/formattable_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/funguild_assign.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/funky_color.html</loc></url>

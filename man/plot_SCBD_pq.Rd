@@ -23,7 +23,7 @@ using the \code{phyloseq} package.}
 \item{min_SCBD}{(default 0.01) the minimum SCBD value
 to plot the taxa}
 
-\item{...}{Other arguments passed on to \code{\link[adespatial:beta.div]{adespatial::beta.div()}} function}
+\item{...}{Additional arguments passed on to \code{\link[adespatial:beta.div]{adespatial::beta.div()}} function}
 }
 \value{
 A ggplot2 object build with the package patchwork

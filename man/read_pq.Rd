@@ -25,7 +25,7 @@ as before.}
 
 \item{sep_csv}{(default tabulation) separator for column}
 
-\item{...}{Other arguments passed on to \code{\link[utils:write.table]{utils::write.table()}} function.}
+\item{...}{Additional arguments passed on to \code{\link[utils:write.table]{utils::write.table()}} function.}
 }
 \value{
 One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)

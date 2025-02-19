@@ -126,7 +126,7 @@ graph_test_pq <- function(physeq,
 #'   if `correction_for_sample_size` is TRUE, rarefy_nb_seqs will have no
 #'   effect.
 #' @param verbose (logical, default TRUE) If TRUE, prompt some messages.
-#' @param ... Other arguments passed on to [vegan::adonis2()] function.
+#' @param ... Additional arguments passed on to [vegan::adonis2()] function.
 #'   Note that the parameter `by` is important. If by is set to NULL
 #'   (default) the p-value is computed for the entire model.
 #' 	 by = NULL will assess the overall significance of all terms together,
@@ -358,7 +358,7 @@ adonis_rarperm_pq <- function(physeq,
 #' @inheritParams clean_pq
 #'
 #' @param p_adjust_method (chr, default "BH"): the method used to adjust p-value
-#' @param ... Other arguments passed on to [adespatial::beta.div()] function
+#' @param ... Additional arguments passed on to [adespatial::beta.div()] function
 #'
 #' @return An object of class `beta.div` see [adespatial::beta.div()] function
 #'   for more information
@@ -413,7 +413,7 @@ LCBD_pq <- function(physeq,
 #'   slot to plot alongside the LCBD value
 #' @param only_plot_significant (logical, default TRUE) Do we plot all LCBD
 #'   values or only the significant ones
-#' @param ... Other arguments passed on to [adespatial::beta.div()] function
+#' @param ... Additional arguments passed on to [adespatial::beta.div()] function
 #'
 #' @return A ggplot2 object build with the package patchwork
 #' @export
@@ -562,7 +562,7 @@ plot_LCBD_pq <- function(physeq,
 #' @param min_SCBD (default 0.01) the minimum SCBD value
 #'   to plot the taxa
 
-#' @param ... Other arguments passed on to [adespatial::beta.div()] function
+#' @param ... Additional arguments passed on to [adespatial::beta.div()] function
 #'
 #' @return A ggplot2 object build with the package patchwork
 #' @export
@@ -631,7 +631,7 @@ plot_SCBD_pq <- function(physeq,
 #' @param pval (int, default 0.05): the value to determine the significance of
 #'   LCBD
 #' @param control see `?indicspecies::multipatt()`
-#' @param ... Other arguments passed on to [indicspecies::multipatt()] function
+#' @param ... Additional arguments passed on to [indicspecies::multipatt()] function
 #'
 #' @return A ggplot2 object
 #' @export
@@ -714,12 +714,12 @@ multipatt_pq <- function(physeq,
 #'   Used for reorder levels and select levels (filter out levels not present
 #'   en levels_fact)
 #' @param tax_level The taxonomic level passed on to [ANCOMBC::ancombc2()]
-#' @param ... Other arguments passed on to [ANCOMBC::ancombc2()] function.
+#' @param ... Additional arguments passed on to [ANCOMBC::ancombc2()] function.
 #' @return The result of [ANCOMBC::ancombc2()] function
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' if (requireNamespace("mia")) {
 #'   data_fungi_mini@tax_table <- phyloseq::tax_table(cbind(
 #'     data_fungi_mini@tax_table,
@@ -765,7 +765,7 @@ ancombc_pq <- function(physeq, fact, levels_fact = NULL, tax_level = "Class", ..
   if (!is.null(levels_fact)) {
     physeq <- subset_samples_pq(physeq, as.vector(physeq@sam_data[, fact])[[1]] %in% levels_fact)
   }
-  tse <- mia::makeTreeSummarizedExperimentFromPhyloseq(physeq)
+  tse <- mia::makeTreeSEFromPhyloseq(physeq) # mia::convertFromPhyloseq
   if (!is.null(levels_fact)) {
     SummarizedExperiment::colData(tse)[[fact]] <- factor(tse[[fact]], levels = levels_fact)
   }

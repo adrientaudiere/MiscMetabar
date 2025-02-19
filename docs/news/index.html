@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.13.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,12 +60,21 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.13.0" id="miscmetabar-0130-in-development">MiscMetabar 0.13.0 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-0130-in-development"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.14.1" id="miscmetabar-0141-in-development">MiscMetabar 0.14.1 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-0141-in-development"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.14.0" id="miscmetabar-0140">MiscMetabar 0.14.0<a class="anchor" aria-label="anchor" href="#miscmetabar-0140"></a></h2>
+<ul><li>Better filter of parameters in [add_new_taxonomy_pq()]. Only parameters used by the assign_* function corresponding to <code>method</code> are used.</li>
+<li>Add functions [format2sintax()], [format2dada2()] and [format2dada2_species] to format fasta database in sintax, dada2 ([dada2::assignTaxonomy()]) and dada2 Species ([dada2::assignSpecies()]) format</li>
+<li>Add function [assign_dada2()] to assign Taxonomy (with missing ranks if needed) and to assign species using [dada2::assignSpecies()] with only one database input. Add method <code>dada2_2steps</code> in function [add_new_taxonomy_pq()] which use [assign_dada2()] function.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.13.0" id="miscmetabar-0130">MiscMetabar 0.13.0<a class="anchor" aria-label="anchor" href="#miscmetabar-0130"></a></h2>
 <ul><li>Add function [assign_blastn()] and add a method <code>blast</code> in the function [add_new_taxonomy_pq()].</li>
 <li>Add function [resolve_vector_ranks()] to resolve conflict in a vector of taxonomy values</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.12.1" id="miscmetabar-0121-in-development">MiscMetabar 0.12.1 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-0121-in-development"></a></h2><p class="text-muted">CRAN release: 2025-01-29</p>
+<h2 class="pkg-version" data-toc-text="0.12.1" id="miscmetabar-0121">MiscMetabar 0.12.1<a class="anchor" aria-label="anchor" href="#miscmetabar-0121"></a></h2><p class="text-muted">CRAN release: 2025-01-29</p>
 <ul><li>Add parameter name <code>min_bootstrap</code> in [add_new_taxonomy_pq()]</li>
 <li>Bug fix in [assign_idtaxa()]</li>
 <li>Add parameters <code>pattern_to_remove</code> and <code>remove_NA</code> to [simplify_taxo()]</li>

@@ -28,7 +28,7 @@ slot to plot alongside the LCBD value}
 \item{only_plot_significant}{(logical, default TRUE) Do we plot all LCBD
 values or only the significant ones}
 
-\item{...}{Other arguments passed on to \code{\link[adespatial:beta.div]{adespatial::beta.div()}} function}
+\item{...}{Additional arguments passed on to \code{\link[adespatial:beta.div]{adespatial::beta.div()}} function}
 }
 \value{
 A ggplot2 object build with the package patchwork

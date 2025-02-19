@@ -73,7 +73,7 @@ column names are quoted if they are written. If FALSE nothing is quoted.}
 
 \item{sep_csv}{(default tabulation) separator for column}
 
-\item{...}{Other arguments passed on to \code{\link[utils:write.table]{utils::write.table()}} function.}
+\item{...}{Additional arguments passed on to \code{\link[utils:write.table]{utils::write.table()}} function.}
 }
 \value{
 Build a folder (path) containing one to four csv tables

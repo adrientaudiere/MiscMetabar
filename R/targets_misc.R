@@ -248,7 +248,7 @@ filter_trim <-
 #' @param file_path (required) a path to the sample_data file
 #' @param names_of_samples (required) a vector of sample names
 #' @param samples_order Optional numeric vector to sort sample names
-#' @param ... Other arguments passed on to [utils::read.delim()] function.
+#' @param ... Additional arguments passed on to [utils::read.delim()] function.
 #'
 #' @return A data.frame from file_path and new names
 #' @export

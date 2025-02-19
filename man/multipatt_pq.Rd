@@ -27,7 +27,7 @@ LCBD}
 
 \item{control}{see \code{?indicspecies::multipatt()}}
 
-\item{...}{Other arguments passed on to \code{\link[indicspecies:multipatt]{indicspecies::multipatt()}} function}
+\item{...}{Additional arguments passed on to \code{\link[indicspecies:multipatt]{indicspecies::multipatt()}} function}
 }
 \value{
 A ggplot2 object

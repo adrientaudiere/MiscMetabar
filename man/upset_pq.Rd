@@ -39,7 +39,7 @@ useful only for complex plot (see examples)}
 \item{rarefy_after_merging}{Rarefy each sample after merging by the
 modalities of \code{fact} parameter}
 
-\item{...}{Other arguments passed on to the \code{\link[ComplexUpset:upset]{ComplexUpset::upset()}}}
+\item{...}{Additional arguments passed on to the \code{\link[ComplexUpset:upset]{ComplexUpset::upset()}}}
 }
 \value{
 A \code{\link[ggplot2]{ggplot}}2 plot

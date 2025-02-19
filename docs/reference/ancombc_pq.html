@@ -13,7 +13,7 @@ A wrapper for the ANCOMBC::ancombc2() function"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.13.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,7 +103,7 @@ en levels_fact)</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Other arguments passed on to <code><a href="https://rdrr.io/pkg/ANCOMBC/man/ancombc2.html" class="external-link">ANCOMBC::ancombc2()</a></code> function.</p></dd>
+<dd><p>Additional arguments passed on to <code><a href="https://rdrr.io/pkg/ANCOMBC/man/ancombc2.html" class="external-link">ANCOMBC::ancombc2()</a></code> function.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -123,7 +123,7 @@ use this function.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"mia"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">data_fungi_mini</span><span class="op">@</span><span class="va">tax_table</span> <span class="op">&lt;-</span> <span class="fu">phyloseq</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/tax_table-methods.html" class="external-link">tax_table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="va">data_fungi_mini</span><span class="op">@</span><span class="va">tax_table</span>,</span></span>
@@ -159,67 +159,7 @@ use this function.</p>
 <span class="r-in"><span>    verbose <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: mia</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking the input data type ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The input data is of type: TreeSummarizedExperiment</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> PASS</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking the sample metadata ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The specified variables in the formula: Height</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The available variables in the sample metadata: X, Sample_names, Tree_name, Sample_id, Height, Diameter, Time</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> PASS</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking other arguments ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The number of groups of interest is: 2</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The group variable has &lt; 3 categories </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> The multi-group comparisons (global/pairwise/dunnet/trend) will be deactivated</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The sample size per group is: Low = 32, High = 28</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> PASS</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The number of taxa used for estimating sample-specific biases is: 11</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> A large number of taxa (&gt;50) is required for the consistent estimation of biases</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Obtaining initial estimates ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Estimating sample-specific biases ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: foreach</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘foreach’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following objects are masked from ‘package:purrr’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     accumulate, when</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: rngtools</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Estimation of sampling fractions failed for the following samples:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> B18-006-B_S19_MERGED.fastq.gz, DY5-004-B_S96_MERGED.fastq.gz, W26-001-B_S165_MERGED.fastq.gz, X24-009-B_S170_MERGED.fastq.gz, X29-004-B_S174_MERGED.fastq.gz, Y28-002-B_S178_MERGED.fastq.gz, Z29-001-H_S185_MERGED.fastq.gz</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> These samples may have an excessive number of zero values</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Conducting sensitivity analysis for pseudo-count addition to 0s ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> For taxa that are significant but do not pass the sensitivity analysis,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> please flag them and proceed with caution, as they are likely false positives.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> For detailed instructions on performing sensitivity analysis,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> please refer to the package vignette.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ANCOM-BC2 primary results ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking the input data type ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The input data is of type: TreeSummarizedExperiment</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> PASS</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking the sample metadata ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The specified variables in the formula: Time</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The available variables in the sample metadata: X, Sample_names, Tree_name, Sample_id, Height, Diameter, Time</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> PASS</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Checking other arguments ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The number of groups of interest is: 2</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The group variable has &lt; 3 categories </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> The multi-group comparisons (global/pairwise/dunnet/trend) will be deactivated</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The sample size per group is: 0 = 30, 15 = 34</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> PASS</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The number of taxa used for estimating sample-specific biases is: 9</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> A large number of taxa (&gt;50) is required for the consistent estimation of biases</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Obtaining initial estimates ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Estimating sample-specific biases ...</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Estimation of sampling fractions failed for the following samples:</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> BT-006-M_S55_MERGED.fastq.gz, C21-NV1-B_S62_MERGED.fastq.gz, CB8-019-H_S70_MERGED.fastq.gz, DY5-004-B_S96_MERGED.fastq.gz, DY5-004-H_S97_MERGED.fastq.gz, J18-004-M_S116_MERGED.fastq.gz, W26-001-B_S165_MERGED.fastq.gz, X24-009-B_S170_MERGED.fastq.gz</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> These samples may have an excessive number of zero values</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Conducting sensitivity analysis for pseudo-count addition to 0s ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> For taxa that are significant but do not pass the sensitivity analysis,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> please flag them and proceed with caution, as they are likely false positives.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> For detailed instructions on performing sensitivity analysis,</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> please refer to the package vignette.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ANCOM-BC2 primary results ...</span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

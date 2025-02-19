@@ -12,7 +12,7 @@ using the \code{phyloseq} package.}
 
 \item{path}{a path to the folder to save the phyloseq object}
 
-\item{...}{Other arguments passed on to \code{\link[=write_pq]{write_pq()}} or \code{\link[utils:write.table]{utils::write.table()}} function.}
+\item{...}{Additional arguments passed on to \code{\link[=write_pq]{write_pq()}} or \code{\link[utils:write.table]{utils::write.table()}} function.}
 }
 \value{
 Build a folder (in path) with four csv tables (\code{refseq.csv}, \code{otu_table.csv}, \code{tax_table.csv}, \code{sam_data.csv}) + one

@@ -15,7 +15,7 @@ if you use this function to assign taxonomy."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.13.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,7 +87,7 @@ if you use this function to assign taxonomy.</p>
 <span>  clean_pq <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  nproc <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  suffix <span class="op">=</span> <span class="st">""</span>,</span>
-<span>  taxo_rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Kingdom"</span>, <span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span>, <span class="st">"Species"</span><span class="op">)</span>,</span>
+<span>  taxa_ranks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Kingdom"</span>, <span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span>, <span class="st">"Species"</span><span class="op">)</span>,</span>
 <span>  min_bootstrap <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  keep_temporary_files <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -153,17 +153,17 @@ Set to number of cpus/processors to use</p></dd>
 
 <dt id="arg-suffix">suffix<a class="anchor" aria-label="anchor" href="#arg-suffix"></a></dt>
 <dd><p>(character) The suffix to name the new columns.
-If set to "" (the default), the taxo_rank algorithm is used
+If set to "" (the default), the taxa_ranks algorithm is used
 without suffix.</p></dd>
 
 
-<dt id="arg-taxo-rank">taxo_rank<a class="anchor" aria-label="anchor" href="#arg-taxo-rank"></a></dt>
+<dt id="arg-taxa-ranks">taxa_ranks<a class="anchor" aria-label="anchor" href="#arg-taxa-ranks"></a></dt>
 <dd><p>A list with the name of the taxonomic rank present in
 ref_fasta</p></dd>
 
 
 <dt id="arg-min-bootstrap">min_bootstrap<a class="anchor" aria-label="anchor" href="#arg-min-bootstrap"></a></dt>
-<dd><p>(Int. [0:1], default 0.5)
+<dd><p>(Float [0:1], default 0.5)
 Minimum bootstrap value to inform taxonomy. For each bootstrap
 below the min_bootstrap value, the taxonomy information is set to NA.</p></dd>
 
@@ -184,7 +184,7 @@ or seq2search</p></li>
 
 
 <dt id="arg-cmd-args">cmd_args<a class="anchor" aria-label="anchor" href="#arg-cmd-args"></a></dt>
-<dd><p>Other arguments passed on to vsearch sintax cmd.
+<dd><p>Additional arguments passed on to vsearch sintax cmd.
 By default cmd_args is equal to "–sintax_random" as recommended by
 <a href="https://github.com/torognes/vsearch/issues/535" class="external-link">Torognes</a>.</p></dd>
 
@@ -220,7 +220,7 @@ Please cite <a href="https://github.com/torognes/vsearch" class="external-link">
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa and 0 samples.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Start Vsearch sintax</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "vsearch  --sintax temp.fasta --db /tmp/RtmpOWfWQm/temp_libpathca823272736b/MiscMetabar/extdata/mini_UNITE_fungi.fasta.gz --tabbedout output_taxo_vs.txt  --threads 1 --sintax_random"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "vsearch  --sintax temp.fasta --db /tmp/RtmpmSdGsM/temp_libpath2bb5ea18b09/MiscMetabar/extdata/mini_UNITE_fungi.fasta.gz --tabbedout output_taxo_vs.txt  --threads 1 --sintax_random"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">data_fungi_mini_new</span> <span class="op">&lt;-</span> <span class="fu">assign_sintax</span><span class="op">(</span><span class="va">data_fungi_mini</span>,</span></span>
 <span class="r-in"><span>  ref_fasta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mini_UNITE_fungi.fasta.gz"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>

@@ -35,7 +35,7 @@ if FALSE, NA values are set to "NA"}
 \item{numeric_fonction}{(default : sum) the function for numeric vector
 useful only for complex plot (see examples)}
 
-\item{...}{Other arguments passed on to the \code{\link[ComplexUpset:upset_test]{ComplexUpset::upset_test()}}}
+\item{...}{Additional arguments passed on to the \code{\link[ComplexUpset:upset_test]{ComplexUpset::upset_test()}}}
 }
 \value{
 A \code{\link[ggplot2]{ggplot}}2 plot

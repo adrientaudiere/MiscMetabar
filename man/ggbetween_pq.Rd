@@ -19,7 +19,7 @@ plot with the three plot inside using the patchwork package.}
 \item{rarefy_by_sample}{(logical, default FALSE) If TRUE, rarefy
 samples using \code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}} function}
 
-\item{...}{Other arguments passed on to \code{\link[ggstatsplot:ggbetweenstats]{ggstatsplot::ggbetweenstats()}} function.}
+\item{...}{Additional arguments passed on to \code{\link[ggstatsplot:ggbetweenstats]{ggstatsplot::ggbetweenstats()}} function.}
 }
 \value{
 Either an unique ggplot2 object (if one_plot is TRUE) or
