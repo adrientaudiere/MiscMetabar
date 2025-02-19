@@ -33,7 +33,7 @@ samples using \code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_dept
 \item{one_plot}{(logical, default FALSE) If TRUE, return a unique
 plot with the three plot inside using the patchwork package.}
 
-\item{...}{Other arguments passed on to \code{\link[ggstatsplot:ggscatterstats]{ggstatsplot::ggscatterstats()}}
+\item{...}{Additional arguments passed on to \code{\link[ggstatsplot:ggscatterstats]{ggstatsplot::ggscatterstats()}}
 function.}
 }
 \value{

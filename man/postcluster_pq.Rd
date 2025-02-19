@@ -104,7 +104,7 @@ methods in the \href{https://github.com/torognes/swarm/blob/master/man/swarm_man
 
 \item{method_clusterize}{(default "overlap") the method for the \code{\link[DECIPHER:Clusterize]{DECIPHER::Clusterize()}} method}
 
-\item{...}{Other arguments passed on to \code{\link[DECIPHER:Clusterize]{DECIPHER::Clusterize()}}}
+\item{...}{Additional arguments passed on to \code{\link[DECIPHER:Clusterize]{DECIPHER::Clusterize()}}}
 }
 \value{
 A new object of class \code{physeq} or a list of cluster if dna_seq

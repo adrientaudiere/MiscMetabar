@@ -13,7 +13,7 @@ using the \code{phyloseq} package.}
 
 \item{pkg}{Which R packages to use, either "umap" or "uwot".}
 
-\item{...}{Others arguments passed on to \code{\link[umap:umap]{umap::umap()}} or
+\item{...}{Additional arguments passed on to \code{\link[umap:umap]{umap::umap()}} or
 \code{\link[uwot:umap2]{uwot::umap2()}} function.
 For example \code{n_neighbors} set the number of nearest neighbors (Default 15).
 See \code{\link[umap:umap.defaults]{umap::umap.defaults()}} or \code{\link[uwot:umap2]{uwot::umap2()}} for the list of

@@ -507,7 +507,7 @@ vsearch_clustering <- function(physeq = NULL,
 #' @param clean_pq (logical; default FALSE) If TRUE, return the phyloseq object
 #'   after cleaning using the default parameter of [clean_pq()] function.
 #'
-#' @param ... Other arguments passed on to [chimera_detection_vs()] function
+#' @param ... Additional arguments passed on to [chimera_detection_vs()] function
 #' @seealso [chimera_detection_vs()], [dada2::removeBimeraDenovo()]
 #' @return
 #'
@@ -859,7 +859,7 @@ write_temp_fasta <- function(physeq,
 #'   without suffix.
 #' @param taxa_ranks A list with the name of the taxonomic rank present in
 #'   ref_fasta
-#' @param min_bootstrap (Int. \[0:1\], default 0.5)
+#' @param min_bootstrap (Float \[0:1\], default 0.5)
 #'   Minimum bootstrap value to inform taxonomy. For each bootstrap
 #'   below the min_bootstrap value, the taxonomy information is set to NA.
 #' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files?
@@ -871,7 +871,7 @@ write_temp_fasta <- function(physeq,
 #'
 #' @param verbose (logical). If TRUE, print additional information.
 #' @param temporary_fasta_file The name of a temporary_fasta_file (default "temp.fasta")
-#' @param cmd_args Other arguments passed on to vsearch sintax cmd.
+#' @param cmd_args Additional arguments passed on to vsearch sintax cmd.
 #'   By default cmd_args is equal to "--sintax_random" as recommended by
 #'   [Torognes](https://github.com/torognes/vsearch/issues/535).
 #' @param too_few (default value "align_start") see [tidyr::separate_wider_delim()]
@@ -1097,7 +1097,7 @@ assign_sintax <- function(physeq = NULL,
 #' @param suffix (character) The suffix to name the new columns.
 #'   If set to "" (the default), the taxa_ranks algorithm is used
 #'   without suffix.
-#' @param id (Int. \[0:1\] default 0.5). Default value is based on
+#' @param id (Float \[0:1\] default 0.5). Default value is based on
 #'   [stampa](https://github.com/frederic-mahe/stampa).
 #'   See Vsearch Manual for parameter `--id`
 #' @param lca_cutoff (int, default 1). Fraction of matching hits
@@ -1144,7 +1144,7 @@ assign_sintax <- function(physeq = NULL,
 #' @param verbose (logical). If TRUE, print additional information.
 #' @param temporary_fasta_file Name of the temporary fasta file. Only useful
 #'   with keep_temporary_files = TRUE.
-#' @param cmd_args Other arguments passed on to vsearch usearch_global cmd.
+#' @param cmd_args Additional arguments passed on to vsearch usearch_global cmd.
 #' @param too_few (default value "align_start") see [tidyr::separate_wider_delim()]
 #' @return See param behavior
 #' @seealso [assign_sintax()], [add_new_taxonomy_pq()]

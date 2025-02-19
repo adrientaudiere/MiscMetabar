@@ -1774,7 +1774,7 @@ hill_pq <- function(physeq,
 #'   plot with the three plot inside using the patchwork package.
 #' @param rarefy_by_sample (logical, default FALSE) If TRUE, rarefy
 #'   samples using [phyloseq::rarefy_even_depth()] function
-#' @param ... Other arguments passed on to [ggstatsplot::ggbetweenstats()] function.
+#' @param ... Additional arguments passed on to [ggstatsplot::ggbetweenstats()] function.
 
 #' @return Either an unique ggplot2 object (if one_plot is TRUE) or
 #'  a list of 3 ggplot2 plot:
@@ -2915,7 +2915,7 @@ multitax_bar_pq <- function(physeq,
 #' @param dims (Int) Output dimensionality (default: 2)
 #' @param theta (Numeric) Speed/accuracy trade-off (increase for less accuracy), set to 0.0 for exact TSNE (default: 0.0 see details in the man page of `Rtsne::Rtsne`).
 #' @param perplexity (Numeric) Perplexity parameter (should not be bigger than 3 * perplexity < nrow(X) - 1, see details in the man page of `Rtsne::Rtsne`)
-#' @param ... Other arguments passed on to `Rtsne::Rtsne()`
+#' @param ... Additional arguments passed on to `Rtsne::Rtsne()`
 #'
 #' @return A list of element including the matrix Y containing the new representations for the objects.
 #'   See ?Rtsne::Rtsne() for more information
@@ -2969,7 +2969,7 @@ tsne_pq <-
 #' @param plot_dims A vector of 2 values defining the rank of dimension to plot (default: c(1,2))
 #' @param na_remove (logical, default TRUE) Does the samples with NA values in fact are removed? (default: true)
 #' @param force_factor (logical, default TRUE) Force the fact column to be a factor.
-#' @param ... Other arguments passed on to `Rtsne::Rtsne()`
+#' @param ... Additional arguments passed on to `Rtsne::Rtsne()`
 #'
 #' @return
 #' A ggplot object
@@ -3062,7 +3062,7 @@ plot_tsne_pq <- function(physeq,
 #' @inheritParams clean_pq
 #' @param clean_pq (logical): Does the phyloseq
 #'   object is cleaned using the [clean_pq()] function?
-#' @param ... Other arguments passed on to `SRS::SRScurve()`
+#' @param ... Additional arguments passed on to `SRS::SRScurve()`
 #' @return A plot
 #' @export
 #'
@@ -3180,7 +3180,7 @@ iNEXT_pq <- function(physeq,
 #'   useful only for complex plot (see examples)
 #' @param rarefy_after_merging Rarefy each sample after merging by the
 #'   modalities of `fact` parameter
-#' @param ... Other arguments passed on to the [ComplexUpset::upset()]
+#' @param ... Additional arguments passed on to the [ComplexUpset::upset()]
 #'
 #' @return A \code{\link[ggplot2]{ggplot}}2 plot
 #' @export
@@ -3377,7 +3377,7 @@ upset_pq <- function(physeq,
 #' @inheritParams upset_pq
 #' @param var_to_test (default c("OTU")) : a vector of column present in
 #'   the tax_table slot from the physeq object
-#' @param ... Other arguments passed on to the [ComplexUpset::upset_test()]
+#' @param ... Additional arguments passed on to the [ComplexUpset::upset_test()]
 #'
 #' @return A \code{\link[ggplot2]{ggplot}}2 plot
 #' @export
@@ -3463,7 +3463,7 @@ upset_test_pq <-
 #'   - unique_or_na (default)
 #'   - more_frequent
 #'   - more_frequent_without_equality
-#' @param ... Other arguments passed on to the numeric function (ex. na.rm=TRUE)
+#' @param ... Additional arguments passed on to the numeric function (ex. na.rm=TRUE)
 #' @return a single value
 #' @export
 #'
@@ -3756,7 +3756,7 @@ ridges_pq <- function(physeq,
 #'   transformed.
 #' @param plot_legend (logical, default FALSE) If TRUE, plot che
 #'   legend of color for lvl 1
-#' @param ... Other arguments passed on to [treemapify::geom_treemap()] function.
+#' @param ... Additional arguments passed on to [treemapify::geom_treemap()] function.
 #'
 #' @return A ggplot2 object
 #' @export
@@ -4074,7 +4074,7 @@ plot_var_part_pq <-
 #'   samples using [phyloseq::rarefy_even_depth()] function.
 #' @param one_plot (logical, default FALSE) If TRUE, return a unique
 #'   plot with the three plot inside using the patchwork package.
-#' @param ... Other arguments passed on to [ggstatsplot::ggscatterstats()]
+#' @param ... Additional arguments passed on to [ggstatsplot::ggscatterstats()]
 #'   function.
 #'
 #' @return Either an unique ggplot2 object (if one_plot is TRUE) or
@@ -4169,7 +4169,7 @@ ggscatt_pq <- function(physeq,
 #' @param use_ggfittext (logical, default FALSE) Do we use ggfittext to plot labels?
 #' @param use_geom_label (logical, default FALSE) Do we use geom_label to plot labels?
 #' @param size_lab Size for label if use_ggfittext is FALSE
-#' @param ... Other arguments passed on to [ggalluvial::geom_flow()] function.
+#' @param ... Additional arguments passed on to [ggalluvial::geom_flow()] function.
 #'
 #' @return A ggplot object
 #' @export
@@ -4614,7 +4614,7 @@ no_legend <- function() {
 #' @param linewidth (int, default 2) The linewidth of lines.
 #' @param size_point (int, default 1) The size of the point.
 #'
-#' @param ... Other arguments passed on to [vegan::renyi()] function or
+#' @param ... Additional arguments passed on to [vegan::renyi()] function or
 #'   [vegan::renyiaccum()] if nperm is not NULL.
 #'
 #' @export
@@ -4817,7 +4817,7 @@ hill_curves_pq <- function(physeq,
 #'
 #' @inheritParams clean_pq
 #' @param pkg Which R packages to use, either "umap" or "uwot".
-#' @param ... Others arguments passed on to [umap::umap()] or
+#' @param ... Additional arguments passed on to [umap::umap()] or
 #'   [uwot::umap2()] function.
 #'   For example `n_neighbors` set the number of nearest neighbors (Default 15).
 #'   See [umap::umap.defaults()] or [uwot::umap2()] for the list of

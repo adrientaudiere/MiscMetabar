@@ -29,7 +29,7 @@ Default is NULL and do not compute values for any taxonomic rank}
 
 \item{verbose}{(logical) If true, print some additional messages.}
 
-\item{...}{Other arguments passed on to \code{\link[=clean_pq]{clean_pq()}} function.}
+\item{...}{Additional arguments passed on to \code{\link[=clean_pq]{clean_pq()}} function.}
 }
 \value{
 The number of sequences, clusters (e.g. OTUs, ASVs) and samples for

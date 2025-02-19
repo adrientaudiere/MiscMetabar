@@ -54,7 +54,7 @@ test as significant int the \code{prop_signif} result.}
 \item "bayes"
 }}
 
-\item{...}{Other arguments passed on to \code{\link[ggstatsplot:ggbetweenstats]{ggstatsplot::ggbetweenstats()}} function}
+\item{...}{Additional arguments passed on to \code{\link[ggstatsplot:ggbetweenstats]{ggstatsplot::ggbetweenstats()}} function}
 }
 \value{
 A list of 6 components :

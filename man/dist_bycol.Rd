@@ -16,7 +16,7 @@ function.}
 
 \item{nperm}{(int) The number of permutations to perform.}
 
-\item{...}{Others argument for \code{vegan::vegdist} function}
+\item{...}{Additional arguments passed on to\code{vegan::vegdist} function}
 }
 \value{
 A list of length two : (i) a vector of observed distance ($obs) and

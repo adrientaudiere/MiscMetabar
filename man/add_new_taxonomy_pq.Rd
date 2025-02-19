@@ -8,7 +8,7 @@ add_new_taxonomy_pq(
   physeq,
   ref_fasta,
   suffix = NULL,
-  method = c("dada2", "sintax", "lca", "idtaxa", "blastn"),
+  method = c("dada2", "sintax", "lca", "idtaxa", "blastn", "dada2_2steps"),
   trainingSet = NULL,
   min_bootstrap = NULL,
   ...
@@ -29,6 +29,7 @@ to remove any suffix.}
 \item{method}{(required, default "dada2") :
 \itemize{
 \item "dada2": \code{\link[dada2:assignTaxonomy]{dada2::assignTaxonomy()}}
+\item "dada2_2step": \code{\link[=assign_dada2]{assign_dada2()}}
 \item "sintax": see \code{\link[=assign_sintax]{assign_sintax()}}
 \item "lca": see \code{\link[=assign_vsearch_lca]{assign_vsearch_lca()}}
 \item "idtaxa": see \code{\link[=assign_idtaxa]{assign_idtaxa()}}
@@ -40,14 +41,14 @@ Note that if trainingSet is not NULL, the ref_fasta is overwrite by the
 trainingSet parameter. To customize learning parameters of the idtaxa
 algorithm you must use trainingSet computed by the function \code{\link[=learn_idtaxa]{learn_idtaxa()}}.}
 
-\item{min_bootstrap}{(Int. [0:1])
+\item{min_bootstrap}{(Float [0:1])
 
 Minimum bootstrap value to inform taxonomy. For each bootstrap
 below the min_bootstrap value, the taxonomy information is set to NA.
 
 Correspond to parameters :
 \itemize{
-\item dada2: \code{minBoot}, default value = 0.5
+\item dada2 & dada2_2step: \code{minBoot}, default value = 0.5
 \item sintax: \code{min_bootstrap}, default value = 0.5
 \item lca: \code{id}, default value = 0.5. Note in that case, the bootstrap value is different.
 See the id parameter in \code{\link[=assign_vsearch_lca]{assign_vsearch_lca()}}
@@ -57,7 +58,7 @@ different \code{vote_algorithm} as well as different filters parameters
 (min_id, min_bit_score, min_cover and min_e_value)
 }}
 
-\item{...}{Other arguments passed on to the taxonomic assignation method.}
+\item{...}{Additional arguments passed on to the taxonomic assignation method.}
 }
 \value{
 A new \code{\link[phyloseq]{phyloseq-class}} object with a larger slot tax_table"
@@ -72,8 +73,22 @@ A new \code{\link[phyloseq]{phyloseq-class}} object with a larger slot tax_table
 One of main use of this function is to add taxonomic assignment from
 a new database.
 }
+\examples{
+\dontrun{
+ref_fasta <- system.file("extdata",
+  "mini_UNITE_fungi.fasta.gz",
+  package = "MiscMetabar", mustWork = TRUE
+)
+add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "dada2")
+add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "dada2_2steps")
+add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "lca")
+add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "idtaxa")
+add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "blastn")
+add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "blastn", method = "top-hit")
+}
+}
 \seealso{
-\code{\link[dada2:assignTaxonomy]{dada2::assignTaxonomy()}}, \code{\link[=assign_sintax]{assign_sintax()}}, \code{\link[=assign_vsearch_lca]{assign_vsearch_lca()}}, \code{\link[=assign_sintax]{assign_sintax()}}
+\code{\link[dada2:assignTaxonomy]{dada2::assignTaxonomy()}}, \code{\link[=assign_sintax]{assign_sintax()}}, \code{\link[=assign_vsearch_lca]{assign_vsearch_lca()}}, \code{\link[=assign_sintax]{assign_sintax()}}, \code{\link[=assign_blastn]{assign_blastn()}}, \code{\link[=assign_dada2]{assign_dada2()}}
 }
 \author{
 Adrien Taudière

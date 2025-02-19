@@ -19,7 +19,7 @@ sample_data_with_new_names(
 
 \item{samples_order}{Optional numeric vector to sort sample names}
 
-\item{...}{Other arguments passed on to \code{\link[utils:read.table]{utils::read.delim()}} function.}
+\item{...}{Additional arguments passed on to \code{\link[utils:read.table]{utils::read.delim()}} function.}
 }
 \value{
 A data.frame from file_path and new names

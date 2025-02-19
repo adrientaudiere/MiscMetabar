@@ -19,7 +19,7 @@ en levels_fact)}
 
 \item{tax_level}{The taxonomic level passed on to \code{\link[ANCOMBC:ancombc2]{ANCOMBC::ancombc2()}}}
 
-\item{...}{Other arguments passed on to \code{\link[ANCOMBC:ancombc2]{ANCOMBC::ancombc2()}} function.}
+\item{...}{Additional arguments passed on to \code{\link[ANCOMBC:ancombc2]{ANCOMBC::ancombc2()}} function.}
 }
 \value{
 The result of \code{\link[ANCOMBC:ancombc2]{ANCOMBC::ancombc2()}} function
@@ -39,7 +39,7 @@ Please make a reference to \code{ANCOMBC::ancombc2()} if you
 use this function.
 }
 \examples{
-\donttest{
+\dontrun{
 if (requireNamespace("mia")) {
   data_fungi_mini@tax_table <- phyloseq::tax_table(cbind(
     data_fungi_mini@tax_table,

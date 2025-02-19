@@ -31,8 +31,8 @@
 #'   FALSE, `id_cut`,`bit_score_cut`, `e_value_cut` and `min_cover_cut` are ignored
 #' @param list_no_output_query (logical) does the result table include
 #'   query sequences for which `blastn` does not find any correspondence?
-#' @param args_makedb Additional parameters parse to makeblastdb command
-#' @param args_blastn Additional parameters parse to blastn command
+#' @param args_makedb Additional arguments passed on to makeblastdb command
+#' @param args_blastn Additional arguments passed on to blastn command
 #' @param nproc (default: 1)
 #'   Set to number of cpus/processors to use for blast (args -num_threads
 #'   for blastn command)
@@ -180,7 +180,6 @@ blast_to_phyloseq <- function(physeq,
   } else {
     return(blast_tab)
   }
-  
 }
 ################################################################################
 
@@ -384,7 +383,7 @@ blast_pq <- function(physeq,
 #'   that could be found just by chance.
 #' @param add_info_to_taxtable (logical, default TRUE) Does the blast information
 #'   are added to the taxtable ?
-#' @param ... Others options for the `blast_pq()` function. See `?blast_pq`.
+#' @param ... Additional arguments passed on to`blast_pq()` function. See `?blast_pq`.
 #'   Note that params `unique_per_seq` must be left to TRUE and `score_filter`
 #'   must be left to FALSE.
 #' @export
@@ -651,7 +650,7 @@ blast_to_derep <- function(derep,
 #' @param silent (logical) If true, no message are printing.
 #' @param suffix (character) The suffix to name the new columns.
 #'   Set the suffix to "" in order to remove any suffix.
-#' @param ... Other arguments passed on to [blast_pq()] function.
+#' @param ... Additional arguments passed on to [blast_pq()] function.
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object with more information in tax_table based on a
 #'   blast on a given database
 #'
@@ -751,7 +750,7 @@ add_blast_info <- function(physeq, fasta_for_db, silent = FALSE, suffix = "blast
 #' @param keep_blast_metrics (Logical, default FALSE). If TRUE, the blast metrics
 #'   ("Query seq. length", "Taxa seq. length", "Alignment length",  "% id. match", "e-value",
 #'   "bit score" and "Query cover") are stored in the tax_table.
-#' @param ... Other arguments passed on to [blast_pq()]
+#' @param ... Additional arguments passed on to [blast_pq()]
 #'
 #' @returns
 #' - If behavior == "return_matrix" :
@@ -761,7 +760,7 @@ add_blast_info <- function(physeq, fasta_for_db, silent = FALSE, suffix = "blast
 #'      the taxonomic assignation in which conflicts are resolved
 #'      using vote.
 #'
-#' - If behavior == "vote", return a new phyloseq object
+#' - If behavior == "add_to_phyloseq", return a new phyloseq object
 #' @export
 #' @author Adrien Taudière
 #' @examples
@@ -798,7 +797,7 @@ assign_blastn <- function(physeq,
                           ref_fasta = NULL,
                           database = NULL,
                           blastpath = NULL,
-                          behavior = "return_matrix",
+                          behavior = c("return_matrix", "add_to_phyloseq"),
                           method = c("vote", "top-hit"),
                           suffix = "_blastn",
                           min_id = 95,
@@ -829,6 +828,7 @@ assign_blastn <- function(physeq,
                           simplify_taxo = TRUE,
                           keep_blast_metrics = FALSE,
                           ...) {
+  behavior <- match.arg(method)
   method <- match.arg(method)
   vote_algorithm <- match.arg(vote_algorithm)
   if (method == "vote") {
@@ -844,13 +844,13 @@ assign_blastn <- function(physeq,
       ...
     )
 
-    if(is.null(blast_tab_raw)) {
+    if (is.null(blast_tab_raw)) {
       message("None blast query match the score filters")
-        if (behavior == "return_matrix") {
-          return(NULL)
-        } else {
-          return(physeq)
-        }
+      if (behavior == "return_matrix") {
+        return(NULL)
+      } else {
+        return(physeq)
+      }
     }
 
     if (is.null(nb_voting)) {
@@ -919,13 +919,13 @@ assign_blastn <- function(physeq,
       e_value_cut = min_e_value,
       ...
     )
-    if(is.null(blast_tab_raw)) {
+    if (is.null(blast_tab_raw)) {
       message("None blast query match the score filters")
-        if (behavior == "return_matrix") {
-          return(NULL)
-        } else {
-          return(physeq)
-        }
+      if (behavior == "return_matrix") {
+        return(NULL)
+      } else {
+        return(physeq)
+      }
     }
 
     blast_tab <- blast_tab_raw |>
@@ -980,268 +980,5 @@ assign_blastn <- function(physeq,
   } else {
     stop("Param behavior must take either 'return_matrix' or 'add_to_phyloseq' value")
   }
-}
-################################################################################
-
-################################################################################
-#' Resolve conflict in a vector of taxonomy values
-#'
-#' @description
-#'
-#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
-#'
-#' Internaly used in the function [assign_blastn()] with method="vote"
-#' @param vec (required) A vector of (taxonomic) values
-#' @param method One of "consensus", "rel_majority", "abs_majority",
-#'   "preference" or "unanimity". See details.
-#'
-#' @param strict (logical, default FALSE). If TRUE, NA are considered as
-#'   informative in resolving conflict (i.e. NA are taking into account in vote).
-#'   See details for more informations.
-#' @param second_method One of "consensus", "rel_majority", "abs_majority",
-#'   or "unanimity". Only used if method = "preference". See details.
-#' @param nb_agree_threshold (Int, default 1) The minimum number of times a
-#'   value must arise to be selected using vote. If 2, we only kept
-#'   taxonomic value present at least 2 times in the vector.
-#' @param preference_index (Int. default NULL). Required if method="preference".
-#'   Useless for other method. The preference index is the index of the value in
-#'   vec for which we have a preference.
-#' @param collapse_string (default '/'). The character to collapse taxonomic names
-#'   when multiple assignment is done.
-#' @param replace_collapsed_rank_by_NA (logical, default FALSE). If set to TRUE,
-#'   all multiple assignments (all taxonomic rank including the 'collapse_string'
-#'   parameter) are replaced by NA.
-#'
-#' @details
-#'
-#' - `unanimity`: Only keep taxonomic value when all methods are agree
-#' 	 - By default, the value with NA are not taking into account (strict=FALSE)
-#' 	 - If `strict` , one NA in the row is sufficient to return a NA
-#'
-#' - `consensus`: Keep all taxonomic values separated by a '/' (separation can be modify using param `collapse_string`)
-#' 	 - If `strict` is TRUE, NA are also added to taxonomic vector such as 'Tiger/Cat/NA' instead of 'Tiger/Cat'
-#'
-#' - `abs_majority`: Keep the most found taxonomic value if it represent at least half of all taxonomic values.
-#' 	 - If `strict` is TRUE, NA values are also count to determine the majority. For example, a vector of taxonomic rank c("A", "A", "A", "B", NA, NA) will give a value of 'A' if `strict` is FALSE (default) but a value of NA if `strict` is TRUE.
-#'
-#' - `rel_majority`: Keep the most found taxonomic value. In case of equality, apply a consensus strategy (collapse values separated by a '/') across the most found taxonomic values.
-#' 	 - If `strict` is TRUE, NA are considered as a rank and can win the relative majority vote.  If `strict` is FALSE (default), NA are removed before ranking the taxonomic values.
-#' 	 - `nb_agree_threshold`: Only keep return value when at least x methods agreed with x is set by parameter `nb_agree_threshold`. By default, (`nb_agree_threshold` = 1): a majority of one is enough.
-#'
-#' - `preference`: Keep the value from a preferred column.
-#' 	 - when the value is NA in the preferred column, apply a second strategy (by default `consensus`) to the other column (parameter `second_method`). Note that the parameters `strict` and `nb_agree_threshold` are used for the second_method consensus.
-#' @returns a vector of length 1 (one character value)
-#'
-#' @export
-#' @author Adrien Taudière
-#'
-#' @examples
-#'
-#' resolve_vector_ranks(c("A"))
-#' resolve_vector_ranks(c("A"),
-#'   method = "preference",
-#'   preference_index = 1
-#' )
-#' resolve_vector_ranks(c("A"), method = "abs_majority")
-#' resolve_vector_ranks(c("A"), method = "rel_majority")
-#' resolve_vector_ranks(c("A"),
-#'   method = "rel_majority",
-#'   nb_agree_threshold = 2
-#' )
-#' resolve_vector_ranks(c("A"), method = "unanimity")
-#'
-#' resolve_vector_ranks(c("A", "A", "A"))
-#' resolve_vector_ranks(c("A", "A", "A"),
-#'   method = "preference",
-#'   preference_index = 1
-#' )
-#' resolve_vector_ranks(c("A", "A", "A"), method = "abs_majority")
-#' resolve_vector_ranks(c("A", "A", "A"), method = "rel_majority")
-#' resolve_vector_ranks(c("A", "A", "A"), method = "unanimity")
-#'
-#' resolve_vector_ranks(c(NA, NA, NA))
-#' resolve_vector_ranks(c(NA, NA, NA),
-#'   method = "preference",
-#'   preference_index = 1
-#' )
-#' resolve_vector_ranks(c(NA, NA, NA), method = "abs_majority")
-#' resolve_vector_ranks(c(NA, NA, NA), method = "rel_majority")
-#' resolve_vector_ranks(c(NA, NA, NA), method = "unanimity")
-#'
-#' resolve_vector_ranks(c("A", "A", NA))
-#' resolve_vector_ranks(c("A", "A", NA),
-#'   method = "preference",
-#'   preference_index = 1
-#' )
-#' resolve_vector_ranks(c("A", "A", NA), method = "rel_majority")
-#' resolve_vector_ranks(c("A", "A", NA), method = "abs_majority")
-#' resolve_vector_ranks(c("A", "A", NA, NA),
-#'   method = "abs_majority",
-#'   strict = FALSE
-#' )
-#' resolve_vector_ranks(c("A", "A", NA, NA),
-#'   method = "abs_majority",
-#'   strict = TRUE
-#' )
-#' resolve_vector_ranks(c("A", "A", NA), method = "unanimity")
-#' resolve_vector_ranks(c("A", "A", NA),
-#'   method = "unanimity",
-#'   strict = TRUE
-#' )
-#'
-#' resolve_vector_ranks(c("A", "B", NA))
-#' resolve_vector_ranks(c("A", "B", NA), strict = TRUE)
-#' resolve_vector_ranks(c("A", "B", NA),
-#'   method = "preference",
-#'   preference_index = 1
-#' )
-#' resolve_vector_ranks(c("A", "B", NA), method = "abs_majority")
-#' resolve_vector_ranks(c("A", "B", NA), method = "rel_majority")
-#' resolve_vector_ranks(c("A", "B", NA),
-#'   method = "rel_majority",
-#'   strict = TRUE
-#' )
-#' resolve_vector_ranks(c("A", "B", NA),
-#'   method = "rel_majority",
-#'   nb_agree_threshold = 2
-#' )
-#' resolve_vector_ranks(c("A", "B", NA), method = "unanimity")
-#'
-#' resolve_vector_ranks(c("A", NA, NA))
-#' resolve_vector_ranks(c("A", NA, NA), method = "rel_majority")
-#' resolve_vector_ranks(c("A", NA, NA), method = "unanimity")
-#' resolve_vector_ranks(c("A", NA, NA),
-#'   method = "preference",
-#'   preference_index = 1
-#' )
-#' resolve_vector_ranks(c("A", NA, NA),
-#'   method = "preference",
-#'   preference_index = 2
-#' )
-#' resolve_vector_ranks(c("A", NA, "B"),
-#'   method = "preference",
-#'   preference_index = 2
-#' )
-#' resolve_vector_ranks(c("A", NA, "B"),
-#'   method = "preference",
-#'   preference_index = 2, second_method = "abs_majority"
-#' )
-#'
-#' resolve_vector_ranks(c("A", "B", "B"))
-#' resolve_vector_ranks(c("A", "B", "B"),
-#'   method = "preference",
-#'   preference_index = 1
-#' )
-#' resolve_vector_ranks(c("A", "B", "B"), method = "abs_majority")
-#' resolve_vector_ranks(c("A", "B", "B"), method = "rel_majority")
-#' resolve_vector_ranks(c("A", "B", "B"), method = "unanimity")
-#'
-#'
-#' resolve_vector_ranks(c("A", "A", "A", "B", NA, NA))
-#' resolve_vector_ranks(c("A", "A", "A", "B", NA, NA),
-#'   strict = TRUE
-#' )
-#' resolve_vector_ranks(c("A", "A", "A", "B", NA, NA),
-#'   method = "abs_majority"
-#' )
-#' resolve_vector_ranks(c("A", "A", "A", "B", NA, NA),
-#'   method = "abs_majority",
-#'   strict = TRUE
-#' )
-#' resolve_vector_ranks(c("A", "A", "A", "B", NA, NA),
-#'   method = "preference", preference_index = 6, second_method = "abs_majority"
-#' )
-#' resolve_vector_ranks(c("A", "A", "A", "B", NA, NA, NA),
-#'   method = "preference", preference_index = 6, second_method = "abs_majority"
-#' )
-#' resolve_vector_ranks(c("A", "A", "A", "B", NA, NA, NA),
-#'   method = "preference", preference_index = 6, second_method = "abs_majority",
-#'   strict = TRUE
-#' )
-resolve_vector_ranks <- function(vec,
-                                 method = c(
-                                   "consensus",
-                                   "rel_majority",
-                                   "abs_majority",
-                                   "preference",
-                                   "unanimity"
-                                 ),
-                                 strict = FALSE,
-                                 second_method = c(
-                                   "consensus",
-                                   "rel_majority",
-                                   "abs_majority",
-                                   "unanimity"
-                                 ),
-                                 nb_agree_threshold = 1,
-                                 preference_index = NULL,
-                                 collapse_string = "/",
-                                 replace_collapsed_rank_by_NA = FALSE) {
-  method <- match.arg(method)
-  second_method <- match.arg(second_method)
-
-  if (sum(is.na(vec)) == length(vec)) {
-    res <- NA
-    return(res)
-  }
-
-  if (method == "consensus") {
-    if (!strict) {
-      vec <- as.vector(na.omit(vec))
-    }
-    res <- paste0(unique(vec), collapse = collapse_string)
-  } else if (method == "preference") {
-    if (is.null(preference_index)) {
-      stop("You must specify a preference_index if method = 'preference'")
-    }
-    res <- vec[preference_index]
-    if (is.na(res)) {
-      res <- resolve_vector_ranks(
-        vec[-preference_index],
-        method = second_method,
-        nb_agree_threshold = nb_agree_threshold,
-        strict = strict,
-        collapse_string = collapse_string,
-        replace_collapsed_rank_by_NA = replace_collapsed_rank_by_NA
-      )
-    }
-  } else if (method == "abs_majority") {
-    if (!strict) {
-      vec <- as.vector(na.omit(vec))
-    }
-    nval <- length(vec)
-    higher_val <- sort(table(vec), decreasing = T)[1]
-    if (higher_val / nval > 0.5) {
-      res <- names(higher_val)
-    } else {
-      res <- NA
-    }
-  } else if (method == "rel_majority") {
-    if (!strict) {
-      vec <- as.vector(na.omit(vec))
-    }
-    nval <- sum(table(vec, useNA = "ifany") == max(table(vec, useNA = "ifany")))
-    if (sum(sort(table(vec, useNA = "ifany"), decreasing = T)[1:nval]) >= nb_agree_threshold) {
-      res <- paste0(names(sort(table(vec, useNA = "ifany"), decreasing = T)[1:nval]), collapse = collapse_string)
-    } else {
-      res <- NA
-    }
-  } else if (method == "unanimity") {
-    if (!strict) {
-      vec <- as.vector(na.omit(vec))
-    }
-    if (length(unique(vec)) == 1) {
-      res <- unique(vec)
-    } else {
-      res <- NA
-    }
-  }
-  if (replace_collapsed_rank_by_NA &&
-    sum(grepl(collapse_string, res)) > 0) {
-    res <- NA
-  }
-
-  return(res)
 }
 ################################################################################

@@ -17,7 +17,7 @@ to assign taxonomy."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.13.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,7 +88,7 @@ to assign taxonomy.</p>
 <span>  behavior <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"return_matrix"</span>, <span class="st">"add_to_phyloseq"</span>, <span class="st">"return_cmd"</span><span class="op">)</span>,</span>
 <span>  vsearchpath <span class="op">=</span> <span class="st">"vsearch"</span>,</span>
 <span>  clean_pq <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  taxo_rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Kingdom"</span>, <span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span>, <span class="st">"Species"</span><span class="op">)</span>,</span>
+<span>  taxa_ranks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Kingdom"</span>, <span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span>, <span class="st">"Species"</span><span class="op">)</span>,</span>
 <span>  nproc <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  suffix <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  id <span class="op">=</span> <span class="fl">0.5</span>,</span>
@@ -152,7 +152,7 @@ If set to TRUE, empty samples and empty ASV are discarded
 before clustering.</p></dd>
 
 
-<dt id="arg-taxo-rank">taxo_rank<a class="anchor" aria-label="anchor" href="#arg-taxo-rank"></a></dt>
+<dt id="arg-taxa-ranks">taxa_ranks<a class="anchor" aria-label="anchor" href="#arg-taxa-ranks"></a></dt>
 <dd><p>A list with the name of the taxonomic rank present in
 ref_fasta</p></dd>
 
@@ -164,12 +164,12 @@ Set to number of cpus/processors to use</p></dd>
 
 <dt id="arg-suffix">suffix<a class="anchor" aria-label="anchor" href="#arg-suffix"></a></dt>
 <dd><p>(character) The suffix to name the new columns.
-If set to "" (the default), the taxo_rank algorithm is used
+If set to "" (the default), the taxa_ranks algorithm is used
 without suffix.</p></dd>
 
 
 <dt id="arg-id">id<a class="anchor" aria-label="anchor" href="#arg-id"></a></dt>
-<dd><p>(Int. [0:1] default 0.5). Default value is based on
+<dd><p>(Float [0:1] default 0.5). Default value is based on
 <a href="https://github.com/frederic-mahe/stampa" class="external-link">stampa</a>.
 See Vsearch Manual for parameter <code>--id</code></p></dd>
 
@@ -234,7 +234,7 @@ with keep_temporary_files = TRUE.</p></dd>
 
 
 <dt id="arg-cmd-args">cmd_args<a class="anchor" aria-label="anchor" href="#arg-cmd-args"></a></dt>
-<dd><p>Other arguments passed on to vsearch usearch_global cmd.</p></dd>
+<dd><p>Additional arguments passed on to vsearch usearch_global cmd.</p></dd>
 
 
 <dt id="arg-too-few">too_few<a class="anchor" aria-label="anchor" href="#arg-too-few"></a></dt>

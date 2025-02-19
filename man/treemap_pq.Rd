@@ -33,7 +33,7 @@ transformed.}
 \item{plot_legend}{(logical, default FALSE) If TRUE, plot che
 legend of color for lvl 1}
 
-\item{...}{Other arguments passed on to \code{\link[treemapify:geom_treemap]{treemapify::geom_treemap()}} function.}
+\item{...}{Additional arguments passed on to \code{\link[treemapify:geom_treemap]{treemapify::geom_treemap()}} function.}
 }
 \value{
 A ggplot2 object

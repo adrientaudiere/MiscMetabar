@@ -49,7 +49,7 @@ no legend are plotted.}
 
 \item{size_point}{(int, default 1) The size of the point.}
 
-\item{...}{Other arguments passed on to \code{\link[vegan:renyi]{vegan::renyi()}} function or
+\item{...}{Additional arguments passed on to \code{\link[vegan:renyi]{vegan::renyi()}} function or
 \code{\link[vegan:renyi]{vegan::renyiaccum()}} if nperm is not NULL.}
 }
 \value{

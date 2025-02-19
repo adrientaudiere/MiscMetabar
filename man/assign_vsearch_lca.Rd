@@ -11,7 +11,7 @@ assign_vsearch_lca(
   behavior = c("return_matrix", "add_to_phyloseq", "return_cmd"),
   vsearchpath = "vsearch",
   clean_pq = TRUE,
-  taxo_rank = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
+  taxa_ranks = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
   nproc = 1,
   suffix = "",
   id = 0.5,
@@ -63,17 +63,17 @@ Only available if using physeq input and not seq2search input.
 If set to TRUE, empty samples and empty ASV are discarded
 before clustering.}
 
-\item{taxo_rank}{A list with the name of the taxonomic rank present in
+\item{taxa_ranks}{A list with the name of the taxonomic rank present in
 ref_fasta}
 
 \item{nproc}{(int, default: 1)
 Set to number of cpus/processors to use}
 
 \item{suffix}{(character) The suffix to name the new columns.
-If set to "" (the default), the taxo_rank algorithm is used
+If set to "" (the default), the taxa_ranks algorithm is used
 without suffix.}
 
-\item{id}{(Int. [0:1] default 0.5). Default value is based on
+\item{id}{(Float [0:1] default 0.5). Default value is based on
 \href{https://github.com/frederic-mahe/stampa}{stampa}.
 See Vsearch Manual for parameter \code{--id}}
 
@@ -125,7 +125,7 @@ seq2search
 \item{temporary_fasta_file}{Name of the temporary fasta file. Only useful
 with keep_temporary_files = TRUE.}
 
-\item{cmd_args}{Other arguments passed on to vsearch usearch_global cmd.}
+\item{cmd_args}{Additional arguments passed on to vsearch usearch_global cmd.}
 
 \item{too_few}{(default value "align_start") see \code{\link[tidyr:separate_wider_delim]{tidyr::separate_wider_delim()}}}
 }

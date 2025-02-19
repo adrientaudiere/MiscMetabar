@@ -50,7 +50,7 @@ effect.}
 
 \item{verbose}{(logical, default TRUE) If TRUE, prompt some messages.}
 
-\item{...}{Other arguments passed on to \code{\link[vegan:adonis]{vegan::adonis2()}} function.
+\item{...}{Additional arguments passed on to \code{\link[vegan:adonis]{vegan::adonis2()}} function.
 Note that the parameter \code{by} is important. If by is set to NULL
 (default) the p-value is computed for the entire model.
 by = NULL will assess the overall significance of all terms together,

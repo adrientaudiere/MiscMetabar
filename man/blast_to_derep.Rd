@@ -60,9 +60,9 @@ query sequences for which \code{blastn} does not find any correspondence?}
 \code{min_length_seq} from derep before blast. Set to 0 to discard filtering
 sequences by length.}
 
-\item{args_makedb}{Additional parameters parse to makeblastdb command}
+\item{args_makedb}{Additional arguments passed on to makeblastdb command}
 
-\item{args_blastn}{Additional parameters parse to blastn command}
+\item{args_blastn}{Additional arguments passed on to blastn command}
 
 \item{nproc}{(default: 1)
 Set to number of cpus/processors to use for blast (args -num_threads

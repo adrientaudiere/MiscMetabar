@@ -1,6 +1,10 @@
-# MiscMetabar 0.13.1 (in development) 
+# MiscMetabar 0.14.1 (in development) 
+
+# MiscMetabar 0.14.0
 
 - Better filter of parameters in [add_new_taxonomy_pq()]. Only parameters used by the assign_* function corresponding to `method` are used.
+- Add functions [format2sintax()], [format2dada2()] and [format2dada2_species] to format fasta database in sintax, dada2 ([dada2::assignTaxonomy()]) and dada2 Species ([dada2::assignSpecies()]) format
+- Add function [assign_dada2()] to assign Taxonomy (with missing ranks if needed) and to assign species using [dada2::assignSpecies()] with only one database input. Add method `dada2_2steps` in function [add_new_taxonomy_pq()] which use [assign_dada2()] function.
 
 # MiscMetabar 0.13.0
 

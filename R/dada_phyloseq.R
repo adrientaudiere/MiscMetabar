@@ -229,7 +229,7 @@ clean_pq <- function(physeq,
 #'   taxonomic rank `in physeq@tax_table` to compute the number of unique value.
 #'   Default is NULL and do not compute values for any taxonomic rank
 #' @param verbose (logical) If true, print some additional messages.
-#' @param ... Other arguments passed on to [clean_pq()] function.
+#' @param ... Additional arguments passed on to [clean_pq()] function.
 #'
 #' @return The number of sequences, clusters (e.g. OTUs, ASVs) and samples for
 #'   each object.
@@ -547,7 +547,7 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #'   element defining other parameters to  passed on to swarm See other possible
 #'   methods in the [SWARM pdf manual](https://github.com/torognes/swarm/blob/master/man/swarm_manual.pdf)
 #' @param method_clusterize (default "overlap") the method for the [DECIPHER::Clusterize()] method
-#' @param ... Other arguments passed on to [DECIPHER::Clusterize()]
+#' @param ... Additional arguments passed on to [DECIPHER::Clusterize()]
 #' @details This function use the `merge_taxa_vec` function to
 #'   merge taxa into clusters. By default tax_adjust = 0. See the man page
 #'   of [merge_taxa_vec()].
@@ -707,7 +707,7 @@ asv2otu <- postcluster_pq
 #'   as the indices of columns to quote.  In both cases, row and
 #'   column names are quoted if they are written. If FALSE nothing is quoted.
 #' @param sep_csv (default tabulation) separator for column
-#' @param ... Other arguments passed on to [utils::write.table()] function.
+#' @param ... Additional arguments passed on to [utils::write.table()] function.
 #' @return Build a folder (path) containing one to four csv tables
 #'   (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 #'   and if present a phy_tree in Newick format
@@ -905,7 +905,7 @@ write_pq <- function(physeq,
 #'
 #' @inheritParams clean_pq
 #' @param path a path to the folder to save the phyloseq object
-#' @param ... Other arguments passed on to [write_pq()] or [utils::write.table()] function.
+#' @param ... Additional arguments passed on to [write_pq()] or [utils::write.table()] function.
 #' @return Build a folder (in path) with four csv tables (`refseq.csv`, `otu_table.csv`, `tax_table.csv`, `sam_data.csv`) + one
 #'   table with all tables together + a rdata file (`physeq.RData`) that can be loaded using
 #'   [base::load()] function + if present a phylogenetic tree in Newick format (`phy_tree.txt`)
@@ -947,7 +947,7 @@ save_pq <- function(physeq, path = NULL, ...) {
 #'   physeq object, you may use sam_names = "X" to rename the samples names
 #'   as before.
 #' @param sep_csv (default tabulation) separator for column
-#' @param ... Other arguments passed on to [utils::write.table()] function.
+#' @param ... Additional arguments passed on to [utils::write.table()] function.
 #' @return One to four csv tables (refseq.csv, otu_table.csv, tax_table.csv, sam_data.csv)
 #' and if present a phy_tree in Newick format. At least the otu_table.csv need to be present.
 #' @export
@@ -1043,7 +1043,7 @@ read_pq <- function(path = NULL,
 #' @param clean_pq (logical) If true, empty samples and empty ASV are discarded
 #'   before clustering.
 #' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files
-#' @param ... Others args for function [lulu()]
+#' @param ... Additional arguments passed on to function [lulu()]
 #' @return a list of for object
 #' - "new_physeq": The new phyloseq object (class physeq)
 #' - "discrepancy_vector": A vector of discrepancy showing for each taxonomic
@@ -1753,6 +1753,8 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #'
 #' - "dada2": [dada2::assignTaxonomy()]
 #'
+#' - "dada2_2step": [assign_dada2()]
+#'
 #' - "sintax": see [assign_sintax()]
 #'
 #' - "lca": see [assign_vsearch_lca()]
@@ -1769,14 +1771,14 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #'   Note that if trainingSet is not NULL, the ref_fasta is overwrite by the
 #'   trainingSet parameter. To customize learning parameters of the idtaxa
 #'   algorithm you must use trainingSet computed by the function [learn_idtaxa()].
-#' @param min_bootstrap  (Int. \[0:1\])
+#' @param min_bootstrap  (Float \[0:1\])
 #'
 #'   Minimum bootstrap value to inform taxonomy. For each bootstrap
 #'   below the min_bootstrap value, the taxonomy information is set to NA.
 #'
 #'   Correspond to parameters :
 #'
-#'  - dada2: `minBoot`, default value = 0.5
+#'  - dada2 & dada2_2step: `minBoot`, default value = 0.5
 #'
 #'  - sintax: `min_bootstrap`, default value = 0.5
 #'
@@ -1789,10 +1791,9 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #'    different `vote_algorithm` as well as different filters parameters
 #'    (min_id, min_bit_score, min_cover and min_e_value)
 #'
-#' @param ... Other arguments passed on to the taxonomic assignation method.
+#' @param ... Additional arguments passed on to the taxonomic assignation method.
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object with a larger slot tax_table"
-#' @seealso [dada2::assignTaxonomy()], [assign_sintax()], [assign_vsearch_lca()], [assign_sintax()],
-#'   [assign_blastn()]
+#' @seealso [dada2::assignTaxonomy()], [assign_sintax()], [assign_vsearch_lca()], [assign_sintax()], [assign_blastn()], [assign_dada2()]
 #' @export
 #' @examples
 #' \dontrun{
@@ -1801,6 +1802,7 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #'   package = "MiscMetabar", mustWork = TRUE
 #' )
 #' add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "dada2")
+#' add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "dada2_2steps")
 #' add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "lca")
 #' add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "idtaxa")
 #' add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "blastn")
@@ -1812,7 +1814,7 @@ add_new_taxonomy_pq <- function(
     physeq,
     ref_fasta,
     suffix = NULL,
-    method = c("dada2", "sintax", "lca", "idtaxa", "blastn"),
+    method = c("dada2", "sintax", "lca", "idtaxa", "blastn", "dada2_2steps"),
     trainingSet = NULL,
     min_bootstrap = NULL,
     ...) {
@@ -1837,6 +1839,10 @@ add_new_taxonomy_pq <- function(
     new_tax_tab <- tax_table(cbind(physeq@tax_table, tax_tab))
     new_physeq <- physeq
     tax_table(new_physeq) <- new_tax_tab
+  } else if (method == "dada2_2steps") {
+    list_args <- list(physeq = physeq, ref_fasta = ref_fasta, min_bootstrap = min_bootstrap, suffix = suffix, ...)
+    list_args <- list_args[names(list_args) %in% names(formals("assign_dada2", envir = parent.frame()))]
+    new_physeq <- do.call(assign_dada2, args = list_args, envir = parent.frame())
   } else if (method == "sintax") {
     list_args <- list(physeq = physeq, ref_fasta = ref_fasta, suffix = suffix, behavior = "add_to_phyloseq", min_bootstrap = min_bootstrap, ...)
     list_args <- list_args[names(list_args) %in% names(formals("assign_sintax", envir = parent.frame()))]
@@ -1881,7 +1887,7 @@ add_new_taxonomy_pq <- function(
 #' @param remove_col_unique_value (logical, default TRUE) Do we remove
 #'  informative columns (categorical column with one value per samples),
 #'   e.g. samples names ?
-#' @param ... Other arguments passed on to [gtsummary::tbl_summary()].
+#' @param ... Additional arguments passed on to [gtsummary::tbl_summary()].
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object with a larger slot tax_table
 #'
 #' @export
@@ -1934,7 +1940,7 @@ tbl_sum_samdata <- function(physeq, remove_col_unique_value = TRUE, ...) {
 #'
 #' @inheritParams clean_pq
 #' @param taxonomic_ranks A list of taxonomic ranks we want to summarized.
-#' @param ... Other arguments passed on to [gtsummary::tbl_summary()]
+#' @param ... Additional arguments passed on to [gtsummary::tbl_summary()]
 #'
 #' @return A table of class c('tbl_summary', 'gtsummary')
 #' @export
@@ -3443,6 +3449,160 @@ learn_idtaxa <- function(fasta_for_training, output_Rdata = NULL, output_path_on
     return(output_Rdata)
   } else {
     return(train_idtaxa)
+  }
+}
+################################################################################
+
+
+################################################################################
+
+#' Assign taxonomy with dada2 using 2 steps assignTaxonomy and assignSpecies
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#' Mainly a wrapper of [dada2::assignTaxonomy()] and [dada2::assignSpecies()]
+#'
+#' @inheritParams clean_pq
+#' @param ref_fasta (required) A link to a database in fasta.
+#' @param seq2search A DNAStringSet object of sequences to search for. Replace
+#'   the physeq object.
+#' @param min_bootstrap (Float \[0:1\], default 0.5), See [dada2::assignTaxonomy()]
+#' @param tryRC See [dada2::assignTaxonomy()]
+#' @param taxa_ranks (vector of character) names for the column of the
+#'   taxonomy
+#' @param suffix (character) The suffix to name the new columns.
+#'   Default to "_idtaxa".
+#' @param nproc (default: 1)
+#'   Set to number of cpus/processors to use
+#' @param use_assignSpecies (logical, default TRUE) Do the Species rank is
+#'   obtained using [dada2::assignSpecies()] ?
+#' @param trunc_absent_ranks (logical, default FALSE) Do ranks present in
+#'   taxa_ranks but not present in the database are removed ?
+#' @param nproc (Float \[0:1\], default 0.5)
+#' @param verbose (logical). If TRUE, print additional information.
+#' @param seq_at_one_time How many sequences are treated at one time.
+#'   See param `n` in [dada2::assignSpecies()]
+#' @param allowMultiple (logical, default FALSE). Unchanged from
+#'  [dada2::assignSpecies()].
+#'  Defines the behavior when multiple exact matches
+#'  against different species are returned. By default only unambiguous
+#'  identifications are return. If TRUE, a concatenated string of all
+#'  exactly matched species is returned. If an integer is provided,
+#'  multiple identifications up to that many are returned as
+#' a concatenated string.
+#' @param from_sintax (logical, default FALSE). Set to TRUE
+#'   if the ref_fasta database is in sintax format. See [assign_sintax()]
+#'   for more information about the sintax format.
+#'
+#' @return Either a an object of class phyloseq (if `physeq` is not NULL),
+#'   or a taxonomic table if `seq2search` is used in place of `physeq`
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' data_fungi_mini2 <- assign_dada2(data_fungi_mini,
+#'   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz",
+#'     package = "MiscMetabar"
+#'   ), suffix = "_dada2",
+#'   from_sintax = TRUE
+#' )
+#' }
+assign_dada2 <- function(physeq = NULL,
+                         ref_fasta = NULL,
+                         seq2search = NULL,
+                         min_bootstrap = 0.5,
+                         tryRC = FALSE,
+                         taxa_ranks = c(
+                           "Kingdom",
+                           "Phylum", "Class", "Order", "Family",
+                           "Genus", "Species", "taxId"
+                         ),
+                         use_assignSpecies = TRUE,
+                         trunc_absent_ranks = FALSE,
+                         nproc = 1,
+                         suffix = "",
+                         verbose = TRUE,
+                         seq_at_one_time = 2000,
+                         allowMultiple = FALSE,
+                         from_sintax = FALSE) {
+  if (is.null(physeq)) {
+    if (is.null(seq2search)) {
+      stop("You must specify either physeq or seq2search args.")
+    }
+  } else {
+    verify_pq(physeq)
+    seq2search <- physeq@refseq
+  }
+  if (from_sintax) {
+    Biostrings::writeXStringSet(format2dada2(fasta_db = ref_fasta), "temp_taxo.fasta")
+    ref_fasta_taxo <- "temp_taxo.fasta"
+  } else {
+    ref_fasta_taxo <- ref_fasta
+  }
+  taxtab <- assignTaxonomy(
+    seqs = seq2search,
+    refFasta = ref_fasta_taxo,
+    taxLevels = taxa_ranks,
+    multithread = nproc,
+    minBoot = min_bootstrap * 100,
+    tryRC = tryRC,
+    verbose = verbose,
+    outputBootstraps = FALSE
+  )
+
+  taxtab <- as.data.frame(taxtab)
+  rownames(taxtab) <- names(seq2search)
+
+  if (use_assignSpecies) {
+    Biostrings::writeXStringSet(format2dada2_species(fasta_db = ref_fasta), "temp_species.fasta")
+
+    GS <- assignSpecies(
+      seqs = seq2search,
+      refFasta = "temp_species.fasta",
+      allowMultiple = allowMultiple,
+      n = seq_at_one_time,
+      tryRC = tryRC
+    )
+
+    taxtab$Species <- as.vector(paste(GS[, 1], GS[, 2], sep = "_")) %>%
+      {
+        gsub("NA_NA", NA, .)
+      }
+
+    unlink("temp_species.fasta")
+  }
+
+  if (from_sintax) {
+    unlink("temp_taxo.fasta")
+  }
+
+  if (!trunc_absent_ranks) {
+    for (rank in taxa_ranks[!taxa_ranks %in% colnames(taxtab)]) {
+      taxtab[[rank]] <- rep(NA, nrow(taxtab))
+    }
+  }
+
+  colnames(taxtab) <- paste0(colnames(taxtab), suffix)
+  if (is.null(physeq)) {
+    return(taxtab)
+  } else {
+    tax_tab <- as.data.frame(as.matrix(physeq@tax_table))
+    tax_tab$taxa_names <- taxa_names(physeq)
+
+    taxtab$taxa_names <- rownames(taxtab)
+
+    new_physeq <- physeq
+    new_tax_tab <- left_join(tax_tab, taxtab,
+      by = join_by(taxa_names)
+    ) |>
+      dplyr::select(-taxa_names) |>
+      as.matrix()
+    new_physeq@tax_table <- tax_table(new_tax_tab)
+    taxa_names(new_physeq@tax_table) <- taxa_names(physeq)
+
+    return(new_physeq)
   }
 }
 ################################################################################
