@@ -828,7 +828,7 @@ assign_blastn <- function(physeq,
                           simplify_taxo = TRUE,
                           keep_blast_metrics = FALSE,
                           ...) {
-  behavior <- match.arg(method)
+  behavior <- match.arg(behavior)
   method <- match.arg(method)
   vote_algorithm <- match.arg(vote_algorithm)
   if (method == "vote") {

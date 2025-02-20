@@ -1,5 +1,7 @@
 # MiscMetabar 0.14.1 (in development) 
 
+- Add the possibility to use to resolve conflict using [resolve_vector_ranks()] in the [assign_sintax()] function. Add numerous parameters to [assign_sintax()], in particular `vote_algorithm` to choose the algo resolving conflict.
+
 # MiscMetabar 0.14.0
 
 - Better filter of parameters in [add_new_taxonomy_pq()]. Only parameters used by the assign_* function corresponding to `method` are used.

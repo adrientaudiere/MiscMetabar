@@ -811,7 +811,7 @@ ancombc_pq <- function(physeq, fact, levels_fact = NULL, tax_level = "Class", ..
 #' @seealso [ancombc_pq()], [plot_ancombc_pq()]
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' if (requireNamespace("mia")) {
 #'   data_fungi_mini@tax_table <- phyloseq::tax_table(cbind(
 #'     data_fungi_mini@tax_table,
@@ -898,7 +898,7 @@ signif_ancombc <- function(ancombc_res,
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' if (requireNamespace("mia")) {
 #'   data_fungi_mini@tax_table <- phyloseq::tax_table(cbind(
 #'     data_fungi_mini@tax_table,

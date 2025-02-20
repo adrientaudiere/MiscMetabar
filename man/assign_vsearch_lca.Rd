@@ -2,7 +2,7 @@
 % Please edit documentation in R/vsearch.R
 \name{assign_vsearch_lca}
 \alias{assign_vsearch_lca}
-\title{Assign taxonomy using LCA \emph{à la} \href{https://github.com/frederic-mahe/stampa}{stampa}}
+\title{Assign taxonomy using LCA}
 \usage{
 assign_vsearch_lca(
   physeq = NULL,
@@ -23,7 +23,15 @@ assign_vsearch_lca(
   verbose = TRUE,
   temporary_fasta_file = "temp.fasta",
   cmd_args = "",
-  too_few = "align_start"
+  too_few = "align_start",
+  vote_algorithm = NULL,
+  nb_voting = NULL,
+  strict = FALSE,
+  nb_agree_threshold = 1,
+  preference_index = NULL,
+  collapse_string = "/",
+  replace_collapsed_rank_by_NA = TRUE,
+  simplify_taxo = TRUE
 )
 }
 \arguments{
@@ -102,7 +110,7 @@ See Vsearch Manual for parameter \code{--maxrejects}.}
 \item{top_hits_only}{(Logical, default TRUE)
 Only the top hits with an equally high percentage of identity between the query and
 database sequence sets are written to the output. If you set top_hits_only
-you may need to set a lower \code{maxaccepts} and/or \code{lca_cutoof}.
+you may need to set a lower \code{maxaccepts} and/or \code{lca_cutoff}.
 Default value is based on \href{https://github.com/frederic-mahe/stampa}{stampa}
 See Vsearch Manual for parameter \code{--top_hits_only}}
 
@@ -128,6 +136,9 @@ with keep_temporary_files = TRUE.}
 \item{cmd_args}{Additional arguments passed on to vsearch usearch_global cmd.}
 
 \item{too_few}{(default value "align_start") see \code{\link[tidyr:separate_wider_delim]{tidyr::separate_wider_delim()}}}
+
+\item{simplify_taxo}{(logical) if TRUE, correct the taxonomy_table using the
+\code{MiscMetabar::simplify_taxo()} function}
 }
 \value{
 See param behavior
@@ -142,6 +153,10 @@ See param behavior
 Please cite \href{https://github.com/torognes/vsearch}{Vsearch} and
 \href{https://github.com/frederic-mahe/stampa}{stampa} if you use this function
 to assign taxonomy.
+\enumerate{
+\item If top_hits_only is TRUE, the algorithm is the one of \href{https://github.com/frederic-mahe/stampa}{stampa}.
+\item If top_hits_only is FALSE, you need to carefully define \code{maxaccept}, \code{id} and \code{lca_cutoff} parameters.
+}
 }
 \details{
 This function is mainly a wrapper of the work of others.

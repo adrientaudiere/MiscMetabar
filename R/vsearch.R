@@ -1047,7 +1047,7 @@ assign_sintax <- function(physeq = NULL,
 ################################################################################
 
 ################################################################################
-#' Assign taxonomy using LCA *à la* [stampa](https://github.com/frederic-mahe/stampa)
+#' Assign taxonomy using LCA
 #'
 #' @description
 #'
@@ -1058,6 +1058,16 @@ assign_sintax <- function(physeq = NULL,
 #'   [stampa](https://github.com/frederic-mahe/stampa) if you use this function
 #'   to assign taxonomy.
 #'
+#'  1. If top_hits_only is TRUE, the algorithm is the one of [stampa](https://github.com/frederic-mahe/stampa).
+#'
+#'
+#'  2. If top_hits_only is FALSE and vote_algorithm is NULL, you need to carefully define `maxaccept`, `id` and `lca_cutoff` parameters.
+#'    The algorithm is internal to vsearch using the lcaout output.
+#'
+#'  3. If top_hits_only is FALSE and vote_algorithm is not NULL, conflict among the
+#'   list of taxonomic assignations is resolve using the function [resolve_vector_ranks()].
+#'  The possible values for vote_algorithm are "consensus", "rel_majority",
+#'  "abs_majority" and "unanimity". See [resolve_vector_ranks()] for more details.
 #'
 #' @inheritParams clean_pq
 #' @param ref_fasta (required) A link to a database in vsearch format
@@ -1124,7 +1134,7 @@ assign_sintax <- function(physeq = NULL,
 #' @param top_hits_only (Logical, default TRUE)
 #'  Only the top hits with an equally high percentage of identity between the query and
 #'  database sequence sets are written to the output. If you set top_hits_only
-#'  you may need to set a lower `maxaccepts` and/or `lca_cutoof`.
+#'  you may need to set a lower `maxaccepts` and/or `lca_cutoff`.
 #'   Default value is based on [stampa](https://github.com/frederic-mahe/stampa)
 #'   See Vsearch Manual for parameter `--top_hits_only`
 #' @param maxaccepts (int, default: 0)
@@ -1146,13 +1156,37 @@ assign_sintax <- function(physeq = NULL,
 #'   with keep_temporary_files = TRUE.
 #' @param cmd_args Additional arguments passed on to vsearch usearch_global cmd.
 #' @param too_few (default value "align_start") see [tidyr::separate_wider_delim()]
+#' @param nb_voting (Int, default NULL). The number of taxa to keep before apply
+#'   a vote to resolve conflict. If NULL all taxa passing the filters (min_id,
+#'   min_bit_score, min_cover and min_e_value) are selected.
+#' @param vote_algorithm (default NULL) the method to vote among "consensus", "rel_majority",
+#'  "abs_majority" and "unanimity". See [resolve_vector_ranks()] for more details.
+#' @param strict (Logical, default FALSE). See [resolve_vector_ranks()] for more details.
+#' @param nb_agree_threshold  See [resolve_vector_ranks()] for more details.
+#' @param preference_index  See [resolve_vector_ranks()] for more details.
+#' @param collapse_string  See [resolve_vector_ranks()] for more details.
+#' @param replace_collapsed_rank_by_NA (Logical, default TRUE) See [resolve_vector_ranks()] for more details.
+#' @param simplify_taxo (logical default TRUE). Do we apply the
+#'   function [simplify_taxo()] to the phyloseq object?
+#' @param keep_vsearch_score (Logical, default FALSE). If TRUE, the mean and sd of id score 
+#'    are stored in the tax_table.
 #' @return See param behavior
 #' @seealso [assign_sintax()], [add_new_taxonomy_pq()]
 #' @examplesIf MiscMetabar::is_vsearch_installed()
 #' \donttest{
 #' data_fungi_mini_new <- assign_vsearch_lca(data_fungi_mini,
 #'   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
-#'   lca_cutoff = 0.9
+#'   lca_cutoff = 0.9, behavior = "add_to_phyloseq"
+#' )
+#'
+#' data_fungi_mini_new2 <- assign_vsearch_lca(data_fungi_mini,
+#'   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
+#'   id = 0.8, behavior = "add_to_phyloseq", top_hits_only = FALSE
+#' )
+#'
+#' data_fungi_mini_new3 <- assign_vsearch_lca(data_fungi_mini,
+#'   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
+#'   id = 0.5, behavior = "add_to_phyloseq", top_hits_only = FALSE, vote_algorithm = "rel_majority"
 #' )
 #' }
 #' @export
@@ -1169,7 +1203,7 @@ assign_vsearch_lca <- function(physeq = NULL,
                                clean_pq = TRUE,
                                taxa_ranks = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
                                nproc = 1,
-                               suffix = "",
+                               suffix = "_sintax",
                                id = 0.5,
                                lca_cutoff = 1,
                                maxrejects = 32,
@@ -1179,7 +1213,16 @@ assign_vsearch_lca <- function(physeq = NULL,
                                verbose = TRUE,
                                temporary_fasta_file = "temp.fasta",
                                cmd_args = "",
-                               too_few = "align_start") {
+                               too_few = "align_start",
+                               vote_algorithm = NULL,
+                               nb_voting = NULL,
+                               strict = FALSE,
+                               nb_agree_threshold = 1,
+                               preference_index = NULL,
+                               collapse_string = "/",
+                               replace_collapsed_rank_by_NA = TRUE,
+                               simplify_taxo = TRUE, 
+                               keep_vsearch_score = FALSE) {
   behavior <- match.arg(behavior)
   write_temp_fasta(
     physeq = physeq,
@@ -1227,36 +1270,89 @@ assign_vsearch_lca <- function(physeq = NULL,
     stderr = TRUE
   )
 
-  res_usearch <- read.csv("out_lca.txt", sep = "\t", header = F)
-  taxa_names <- res_usearch$V1
-  res_usearch <- tibble(res_usearch$V2, taxa_names)
-  if (sum(is.na(res_usearch)) == nrow(res_usearch)) {
-    message("None match were found using usearch global and id=", id)
-    if (behavior == "add_to_phyloseq") {
-      return(physeq)
-    } else {
-      return(NULL)
+  if (top_hits_only || is.null(vote_algorithm)) {
+    res_usearch <- read.csv("out_lca.txt", sep = "\t", header = F)
+
+    taxa_names <- res_usearch$V1
+    res_usearch <- tibble(res_usearch$V2, taxa_names)
+    if (sum(is.na(res_usearch)) == nrow(res_usearch)) {
+      message("None match were found using usearch global and id=", id)
+      if (behavior == "add_to_phyloseq") {
+        return(physeq)
+      } else {
+        return(NULL)
+      }
     }
+
+    res_usearch <- res_usearch |>
+      tidyr::separate_wider_delim(-taxa_names,
+        names = paste0(taxa_ranks, suffix),
+        delim = ",",
+        too_few = too_few
+      ) |>
+      tidyr::pivot_longer(-taxa_names) |>
+      mutate(across(value, ~ gsub(".:", "", .x)))
+
+    res_usearch_wide_taxo <-
+      res_usearch |>
+      tidyr::pivot_wider(names_from = name, values_from = value)
+  } else if (!is.null(vote_algorithm)) {
+    res_usearch <- read.csv("userout.txt", sep = "\t", header = F)
+
+    if (is.null(nb_voting)) {
+      nb_voting <- max(table(res_usearch$V1))
+    }
+
+    res_usearch_wide_taxo <- res_usearch |>
+      rename(taxa_names = V1) |>
+      rename(score = V2) |>
+      tidyr::separate(`V3`,
+        into = c(paste0("Taxa_name_db", suffix), "Classification"),
+        sep = ";tax="
+      ) |>
+      tidyr::separate("Classification",
+        into = paste0(taxa_ranks, suffix),
+        sep = ","
+      ) |>
+      group_by(taxa_names) |>
+      slice_head(n = nb_voting) |>
+      summarise(
+        across(
+          c(
+            paste0(taxa_ranks, suffix),
+          ),
+          ~ resolve_vector_ranks(
+            .x,
+            method = vote_algorithm,
+            strict = strict,
+            nb_agree_threshold = nb_agree_threshold,
+            collapse_string = collapse_string,
+            replace_collapsed_rank_by_NA = replace_collapsed_rank_by_NA
+          )
+        ),
+        across(
+          c(
+            "score"
+          ),
+          list(mean = mean, sd = sd),
+          .names = paste0("{.fn}_", "{.col}", suffix)
+        )
+      )
   }
-
-  res_usearch <- res_usearch |>
-    tidyr::separate_wider_delim(-taxa_names,
-      names = paste0(taxa_ranks, suffix),
-      delim = ",",
-      too_few = too_few
-    ) |>
-    tidyr::pivot_longer(-taxa_names) |>
-    mutate(across(value, ~ gsub(".:", "", .x)))
-
-  res_usearch_wide_taxo <-
-    res_usearch |>
-    tidyr::pivot_wider(names_from = name, values_from = value)
 
   if (!keep_temporary_files) {
     unlink(temporary_fasta_file)
     unlink("out_lca.txt")
     unlink("userout.txt")
   }
+
+  if (!keep_vsearch_score) {
+      res_usearch_wide_taxo <- res_usearch_wide_taxo |>
+        select(c(
+          taxa_names,
+          paste0(taxa_ranks, suffix)
+        ))
+    }
 
   if (behavior == "add_to_phyloseq") {
     tax_tab <- as.data.frame(as.matrix(physeq@tax_table))
@@ -1270,6 +1366,10 @@ assign_vsearch_lca <- function(physeq = NULL,
       as.matrix()
     new_physeq@tax_table <- tax_table(new_tax_tab)
     taxa_names(new_physeq@tax_table) <- taxa_names(physeq)
+
+    if (simplify_taxo) {
+      new_physeq <- simplify_taxo(new_physeq)
+    }
 
     return(new_physeq)
   } else if (behavior == "return_matrix") {
