@@ -55,8 +55,8 @@ Note that the parameter \code{by} is important. If by is set to NULL
 (default) the p-value is computed for the entire model.
 by = NULL will assess the overall significance of all terms together,
 by = "terms" will assess significance for each term (sequentially from first to last),
-setting by = "margin" will assess the marginal effects of the terms (each marginal term analysed in a model with all other variables),
-by = "onedf" will analyse one-degree-of-freedom contrasts sequentially. The argument is passed on to anova.cca.}
+setting by = "margin" will assess the marginal effects of the terms (each marginal term analyzed in a model with all other variables),
+by = "onedf" will analyze one-degree-of-freedom contrasts sequentially. The argument is passed on to anova.cca.}
 }
 \value{
 The function returns an anova.cca result object with a

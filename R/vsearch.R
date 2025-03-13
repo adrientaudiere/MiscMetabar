@@ -10,8 +10,8 @@
 #'
 #' @inheritParams clean_pq
 #' @param path_to_fasta (required if seq2search is NULL) a path to fasta file if seq2search is est to NULL.
-#' @param seq2search (required if path_to_fasta is NULL) Either (i) a DNAstringSet object
-#'   or (ii) a character vector that will be convert to DNAstringSet using
+#' @param seq2search (required if path_to_fasta is NULL) Either (i) a DNAStringSet object
+#'   or (ii) a character vector that will be convert to DNAStringSet using
 #'   [Biostrings::DNAStringSet()]
 #' @param vsearchpath (default: "vsearch") path to vsearch
 #' @param id (default: 0.8) id for the option `--usearch_global` of the vsearch software
@@ -930,7 +930,7 @@ assign_sintax <- function(physeq = NULL,
                           taxa_ranks = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
                           min_bootstrap = 0.5,
                           keep_temporary_files = FALSE,
-                          verbose = TRUE,
+                          verbose = FALSE,
                           temporary_fasta_file = "temp.fasta",
                           cmd_args = "--sintax_random",
                           too_few = "align_start",
@@ -1168,7 +1168,7 @@ assign_sintax <- function(physeq = NULL,
 #' @param replace_collapsed_rank_by_NA (Logical, default TRUE) See [resolve_vector_ranks()] for more details.
 #' @param simplify_taxo (logical default TRUE). Do we apply the
 #'   function [simplify_taxo()] to the phyloseq object?
-#' @param keep_vsearch_score (Logical, default FALSE). If TRUE, the mean and sd of id score 
+#' @param keep_vsearch_score (Logical, default FALSE). If TRUE, the mean and sd of id score
 #'    are stored in the tax_table.
 #' @return See param behavior
 #' @seealso [assign_sintax()], [add_new_taxonomy_pq()]
@@ -1221,7 +1221,7 @@ assign_vsearch_lca <- function(physeq = NULL,
                                preference_index = NULL,
                                collapse_string = "/",
                                replace_collapsed_rank_by_NA = TRUE,
-                               simplify_taxo = TRUE, 
+                               simplify_taxo = TRUE,
                                keep_vsearch_score = FALSE) {
   behavior <- match.arg(behavior)
   write_temp_fasta(
@@ -1319,7 +1319,7 @@ assign_vsearch_lca <- function(physeq = NULL,
       summarise(
         across(
           c(
-            paste0(taxa_ranks, suffix),
+            paste0(taxa_ranks, suffix)
           ),
           ~ resolve_vector_ranks(
             .x,
@@ -1347,12 +1347,12 @@ assign_vsearch_lca <- function(physeq = NULL,
   }
 
   if (!keep_vsearch_score) {
-      res_usearch_wide_taxo <- res_usearch_wide_taxo |>
-        select(c(
-          taxa_names,
-          paste0(taxa_ranks, suffix)
-        ))
-    }
+    res_usearch_wide_taxo <- res_usearch_wide_taxo |>
+      select(c(
+        taxa_names,
+        paste0(taxa_ranks, suffix)
+      ))
+  }
 
   if (behavior == "add_to_phyloseq") {
     tax_tab <- as.data.frame(as.matrix(physeq@tax_table))

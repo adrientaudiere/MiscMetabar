@@ -9,6 +9,7 @@ format2dada2(
   taxnames = NULL,
   output_path = NULL,
   from_sintax = TRUE,
+  pattern_to_remove = NULL,
   ...
 )
 }
@@ -20,6 +21,10 @@ format2dada2(
 \item{output_path}{(optional) A path to an output fasta files. Only used if fasta_db is set.}
 
 \item{from_sintax}{(logical, default FALSE) Is the original fasta file in sintax format?}
+
+\item{pattern_to_remove}{(a regular expression) Define a pattern to remove. For example,
+pattern_to_remove = "\\|rep.*" remove all character after '|rep' to force \code{\link[dada2:assignTaxonomy]{dada2::assignTaxonomy()}}
+to not use the database as a Unite-formated database}
 
 \item{...}{Additional arguments passed on to \code{\link[=format2sintax]{format2sintax()}} function}
 }

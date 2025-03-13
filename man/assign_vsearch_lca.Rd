@@ -13,7 +13,7 @@ assign_vsearch_lca(
   clean_pq = TRUE,
   taxa_ranks = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
   nproc = 1,
-  suffix = "",
+  suffix = "_sintax",
   id = 0.5,
   lca_cutoff = 1,
   maxrejects = 32,
@@ -31,7 +31,8 @@ assign_vsearch_lca(
   preference_index = NULL,
   collapse_string = "/",
   replace_collapsed_rank_by_NA = TRUE,
-  simplify_taxo = TRUE
+  simplify_taxo = TRUE,
+  keep_vsearch_score = FALSE
 )
 }
 \arguments{
@@ -137,8 +138,28 @@ with keep_temporary_files = TRUE.}
 
 \item{too_few}{(default value "align_start") see \code{\link[tidyr:separate_wider_delim]{tidyr::separate_wider_delim()}}}
 
-\item{simplify_taxo}{(logical) if TRUE, correct the taxonomy_table using the
-\code{MiscMetabar::simplify_taxo()} function}
+\item{vote_algorithm}{(default NULL) the method to vote among "consensus", "rel_majority",
+"abs_majority" and "unanimity". See \code{\link[=resolve_vector_ranks]{resolve_vector_ranks()}} for more details.}
+
+\item{nb_voting}{(Int, default NULL). The number of taxa to keep before apply
+a vote to resolve conflict. If NULL all taxa passing the filters (min_id,
+min_bit_score, min_cover and min_e_value) are selected.}
+
+\item{strict}{(Logical, default FALSE). See \code{\link[=resolve_vector_ranks]{resolve_vector_ranks()}} for more details.}
+
+\item{nb_agree_threshold}{See \code{\link[=resolve_vector_ranks]{resolve_vector_ranks()}} for more details.}
+
+\item{preference_index}{See \code{\link[=resolve_vector_ranks]{resolve_vector_ranks()}} for more details.}
+
+\item{collapse_string}{See \code{\link[=resolve_vector_ranks]{resolve_vector_ranks()}} for more details.}
+
+\item{replace_collapsed_rank_by_NA}{(Logical, default TRUE) See \code{\link[=resolve_vector_ranks]{resolve_vector_ranks()}} for more details.}
+
+\item{simplify_taxo}{(logical default TRUE). Do we apply the
+function \code{\link[=simplify_taxo]{simplify_taxo()}} to the phyloseq object?}
+
+\item{keep_vsearch_score}{(Logical, default FALSE). If TRUE, the mean and sd of id score
+are stored in the tax_table.}
 }
 \value{
 See param behavior
@@ -155,7 +176,12 @@ Please cite \href{https://github.com/torognes/vsearch}{Vsearch} and
 to assign taxonomy.
 \enumerate{
 \item If top_hits_only is TRUE, the algorithm is the one of \href{https://github.com/frederic-mahe/stampa}{stampa}.
-\item If top_hits_only is FALSE, you need to carefully define \code{maxaccept}, \code{id} and \code{lca_cutoff} parameters.
+\item If top_hits_only is FALSE and vote_algorithm is NULL, you need to carefully define \code{maxaccept}, \code{id} and \code{lca_cutoff} parameters.
+The algorithm is internal to vsearch using the lcaout output.
+\item If top_hits_only is FALSE and vote_algorithm is not NULL, conflict among the
+list of taxonomic assignations is resolve using the function \code{\link[=resolve_vector_ranks]{resolve_vector_ranks()}}.
+The possible values for vote_algorithm are "consensus", "rel_majority",
+"abs_majority" and "unanimity". See \code{\link[=resolve_vector_ranks]{resolve_vector_ranks()}} for more details.
 }
 }
 \details{
@@ -168,7 +194,17 @@ Please cite \href{https://github.com/torognes/vsearch}{vsearch} and
 \donttest{
 data_fungi_mini_new <- assign_vsearch_lca(data_fungi_mini,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
-  lca_cutoff = 0.9
+  lca_cutoff = 0.9, behavior = "add_to_phyloseq"
+)
+
+data_fungi_mini_new2 <- assign_vsearch_lca(data_fungi_mini,
+  ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
+  id = 0.8, behavior = "add_to_phyloseq", top_hits_only = FALSE
+)
+
+data_fungi_mini_new3 <- assign_vsearch_lca(data_fungi_mini,
+  ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
+  id = 0.5, behavior = "add_to_phyloseq", top_hits_only = FALSE, vote_algorithm = "rel_majority"
 )
 }
 \dontshow{\}) # examplesIf}

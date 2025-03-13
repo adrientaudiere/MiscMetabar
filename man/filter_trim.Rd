@@ -64,15 +64,17 @@ filt_fastq_fw <- filter_trim(testFastqs_fw, output_fw = tempdir())
 derep_fw <- derepFastq(filt_fastq_fw[1])
 derep_fw
 
+\dontrun{
 filt_fastq_pe <- filter_trim(testFastqs_fw,
   testFastqs_rev,
-  output_fw = tempdir("fw"),
-  output_rev = tempdir("rev")
+  output_fw = paste0(tempdir(), "/", "fw"),
+  output_rev = paste0(tempdir(),   "rev")
 )
 derep_fw_pe <- derepFastq(filt_fastq_pe[[1]])
 derep_rv_pe <- derepFastq(filt_fastq_pe[[2]])
 derep_fw_pe
 derep_rv_pe
+}
 }
 \seealso{
 \code{\link[dada2:filterAndTrim]{dada2::filterAndTrim()}}

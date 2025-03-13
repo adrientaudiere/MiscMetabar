@@ -194,7 +194,7 @@ get_file_extension <- function(file_path) {
     stop("There is no '.' inside your file path: ", file_path)
   }
   if (stringr::str_count(file_path, "\\.") > 1) {
-    message("There is more than one '.' inside your file path: ", file_path)
+    warning("There is more than one '.' inside your file path: ", file_path)
   }
   file_ext <- strsplit(basename(file_path), ".", fixed = TRUE)[[1]][-1]
   return(file_ext)

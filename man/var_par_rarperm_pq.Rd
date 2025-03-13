@@ -54,7 +54,7 @@ the calculation?}
 A list of class varpart with additional information in the
 \verb{$part$indfract} part. Adj.R.square is the mean across permutation.
 Adj.R.squared_quantil_min and Adj.R.squared_quantil_max represent
-the quantile values of adjuste R squared
+the quantile values of adjusted R squared
 }
 \description{
 \if{html}{\out{

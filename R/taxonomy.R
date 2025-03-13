@@ -6,8 +6,8 @@
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
-#' Internally used in the function [assign_blastn()] with method="vote"
-#'
+#'   Internally used in the function [assign_blastn()] with method="vote"
+#'   and [assign_vsearch_lca()] if `top_hits_only` is FALSE and `vote_algorithm` is not NULL.
 #' @param vec (required) A vector of (taxonomic) values
 #' @param method One of "consensus", "rel_majority", "abs_majority",
 #'   "preference" or "unanimity". See details.
@@ -369,6 +369,9 @@ format2sintax <- function(fasta_db = NULL,
 #' @param taxnames A list of names to format. You must specify either fasta_db OR taxnames, not both.
 #' @param output_path (optional) A path to an output fasta files. Only used if fasta_db is set.
 #' @param from_sintax (logical, default FALSE) Is the original fasta file in sintax format?
+#' @param pattern_to_remove (a regular expression) Define a pattern to remove. For example,
+#'   pattern_to_remove = "\\|rep.*" remove all character after '|rep' to force [dada2::assignTaxonomy()]
+#'   to not use the database as a Unite-formated database
 #' @param ... Additional arguments passed on to [format2sintax()] function
 #' @export
 #' @author Adrien Taudière
@@ -379,6 +382,7 @@ format2dada2 <- function(fasta_db = NULL,
                          taxnames = NULL,
                          output_path = NULL,
                          from_sintax = TRUE,
+                         pattern_to_remove = NULL,
                          ...) {
   if (is.null(taxnames) && is.null(fasta_db)) {
     stop("You must specify taxnames or fasta_db parameter.")
@@ -402,6 +406,11 @@ format2dada2 <- function(fasta_db = NULL,
         gsub(",", ";", .)
       }
 
+    if (!is.null(pattern_to_remove)) {
+      new_names <- new_names |>
+        stringr::str_remove(pattern_to_remove)
+    }
+
     return(new_names)
   } else if (!is.null(fasta_db)) {
     dna <- Biostrings::readDNAStringSet(fasta_db)
@@ -422,12 +431,20 @@ format2dada2 <- function(fasta_db = NULL,
         gsub(",", ";", .)
       }
 
+
+    if (!is.null(pattern_to_remove)) {
+      new_names <- new_names |>
+        stringr::str_remove(pattern_to_remove)
+    }
+
     names(dna) <- new_names
 
     if (!is.null(output_path)) {
       Biostrings::writeXStringSet(dna, filepath = output_path)
+      invisible(dna)
+    } else {
+      return(dna)
     }
-    return(dna)
   }
 }
 ################################################################################

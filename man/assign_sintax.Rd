@@ -16,7 +16,7 @@ assign_sintax(
   taxa_ranks = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
   min_bootstrap = 0.5,
   keep_temporary_files = FALSE,
-  verbose = TRUE,
+  verbose = FALSE,
   temporary_fasta_file = "temp.fasta",
   cmd_args = "--sintax_random",
   too_few = "align_start",

@@ -182,15 +182,18 @@ clean_pq <- function(physeq,
       )
     )
   } else if (!silent) {
-    message(
-      paste(
-        "Cleaning suppress",
-        ntaxa(physeq) - ntaxa(new_physeq),
-        "taxa and",
-        nsamples(physeq) - nsamples(new_physeq),
-        "samples."
+    if (ntaxa(physeq) - ntaxa(new_physeq) != 0 ||
+      nsamples(physeq) - nsamples(new_physeq) != 0) {
+      message(
+        paste(
+          "Cleaning suppress",
+          ntaxa(physeq) - ntaxa(new_physeq),
+          "taxa and",
+          nsamples(physeq) - nsamples(new_physeq),
+          "samples."
+        )
       )
-    )
+    }
   }
 
   verify_pq(new_physeq)
