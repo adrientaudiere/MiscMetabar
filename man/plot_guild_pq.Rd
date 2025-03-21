@@ -33,7 +33,7 @@ A ggplot2 object
 Graphical function.
 }
 \examples{
-\donttest{
+\dontrun{
 if (requireNamespace("httr")) {
   d_fung_mini <- add_funguild_info(data_fungi_mini,
     taxLevels = c(

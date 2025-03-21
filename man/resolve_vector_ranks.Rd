@@ -54,6 +54,7 @@ a vector of length 1 (one character value)
 
 
 Internally used in the function \code{\link[=assign_blastn]{assign_blastn()}} with method="vote"
+and \code{\link[=assign_vsearch_lca]{assign_vsearch_lca()}} if \code{top_hits_only} is FALSE and \code{vote_algorithm} is not NULL.
 }
 \details{
 \itemize{

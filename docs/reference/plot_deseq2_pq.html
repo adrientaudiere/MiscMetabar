@@ -13,7 +13,7 @@ Graphical representation of DESeq2 analysis."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -181,22 +181,22 @@ or <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="ex
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GlobalPatterns"</span>, package <span class="op">=</span> <span class="st">"phyloseq"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">GP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html" class="external-link">subset_taxa</a></span><span class="op">(</span><span class="va">GlobalPatterns</span>, <span class="va">GlobalPatterns</span><span class="op">@</span><span class="va">tax_table</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">==</span> <span class="st">"Archaea"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’ ‘tidytree’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’ ‘tidytree’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’ ‘tidytree’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’ ‘tidytree’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
 <span class="r-in"><span><span class="va">GP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html" class="external-link">subset_samples</a></span><span class="op">(</span><span class="va">GP</span>, <span class="va">SampleType</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Soil"</span>, <span class="st">"Skin"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’ ‘tidytree’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’ ‘tidytree’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’ ‘tidytree’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’ ‘tidytree’</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"DESeq2"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">DESeq2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DESeq2/man/DESeq.html" class="external-link">DESeq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq_to_deseq2.html" class="external-link">phyloseq_to_deseq2</a></span><span class="op">(</span><span class="va">GP</span>, <span class="op">~</span><span class="va">SampleType</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    test <span class="op">=</span> <span class="st">"Wald"</span>, fitType <span class="op">=</span> <span class="st">"local"</span></span></span>

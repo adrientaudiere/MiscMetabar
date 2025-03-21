@@ -13,7 +13,7 @@ First format in sintax format and then in dada2 format"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,6 +80,7 @@ First format in sintax format and then in dada2 format"></head><body>
 <span>  taxnames <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  output_path <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  from_sintax <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  pattern_to_remove <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -102,6 +103,12 @@ First format in sintax format and then in dada2 format"></head><body>
 
 <dt id="arg-from-sintax">from_sintax<a class="anchor" aria-label="anchor" href="#arg-from-sintax"></a></dt>
 <dd><p>(logical, default FALSE) Is the original fasta file in sintax format?</p></dd>
+
+
+<dt id="arg-pattern-to-remove">pattern_to_remove<a class="anchor" aria-label="anchor" href="#arg-pattern-to-remove"></a></dt>
+<dd><p>(a regular expression) Define a pattern to remove. For example,
+pattern_to_remove = "\|rep.*" remove all character after '|rep' to force <code><a href="https://rdrr.io/pkg/dada2/man/assignTaxonomy.html" class="external-link">dada2::assignTaxonomy()</a></code>
+to not use the database as a Unite-formated database</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

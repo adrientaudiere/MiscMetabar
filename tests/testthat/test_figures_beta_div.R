@@ -73,7 +73,7 @@ test_that("graph_test_pq works", {
     skip_on_cran()
     expect_silent(graph_test_pq(data_fungi_mini, fact = "Tree_name", na_remove = TRUE))
     expect_silent(graph_test_pq(data_fungi_mini, fact = "Tree_name", return_plot = FALSE))
-    expect_message(graph_test_pq(
+    expect_silent(graph_test_pq(
       subset_samples(data_fungi_mini, !is.na(data_fungi_mini@sam_data$Time)),
       fact = "Time",
       merge_sample_by = "Tree_name"

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -113,7 +113,6 @@ table with all tables together + a rdata file (<code>physeq.RData</code>) that c
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">save_pq</span><span class="op">(</span><span class="va">data_fungi</span>, path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"/phyloseq"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa and 0 samples.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(`A10-005-B_S188_MERGED.fastq.gz`,</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> `A10-005-H_S189_MERGED.fastq.gz`, `A10-005-M_S190_MERGED.fastq.gz`,</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> `A12-007_S191_MERGED.fastq.gz`, `A12-007-B_S2_MERGED.fastq.gz`,</span>
@@ -207,7 +206,6 @@ table with all tables together + a rdata file (<code>physeq.RData</code>) that c
 <span class="r-msg co"><span class="r-pr">#&gt;</span> `Y29-007-H_S182_MERGED.fastq.gz`, `Y29-007-M_S183_MERGED.fastq.gz`,</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> `Y31-ABM484-B_S184_MERGED.fastq.gz`, `Z29-001-H_S185_MERGED.fastq.gz`,</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> `Z30-002_S186_MERGED.fastq.gz`, `Z30-ABM560-M_S187_MERGED.fastq.gz`)`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa and 0 samples.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"/phyloseq"</span><span class="op">)</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>

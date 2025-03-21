@@ -70,7 +70,7 @@ Please make a reference to \code{ANCOMBC::ancombc2()} if you
 use this function.
 }
 \examples{
-\donttest{
+\dontrun{
 if (requireNamespace("mia")) {
   data_fungi_mini@tax_table <- phyloseq::tax_table(cbind(
     data_fungi_mini@tax_table,

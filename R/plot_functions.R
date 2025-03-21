@@ -2390,10 +2390,7 @@ biplot_pq <- function(physeq,
         fill = modality,
         names = OTU,
         Ab = Abundance,
-        Proportion = Proportion,
-        Family = Family,
-        Genus = Genus,
-        Species = Species
+        Proportion = Proportion
       ),
       ...
     ) +
@@ -2471,6 +2468,57 @@ biplot_pq <- function(physeq,
     )
 
   if (plotly_version) {
+    p <- mdf %>%
+      ggplot(
+        aes(
+          x = stats::reorder(OTU, Abundance),
+          y = Ab,
+          fill = modality,
+          names = OTU,
+          Ab = Abundance,
+          Proportion = Proportion,
+          Family = Family,
+          Genus = Genus,
+          Species = Species
+        ),
+        ...
+      ) +
+      geom_bar(stat = "identity", width = 0.6) +
+      annotate(
+        "rect",
+        xmin = "Samples",
+        xmax = "Samples",
+        ymin = -max(mdf$Ab),
+        ymax = max(mdf$Ab)
+      ) +
+      annotate(
+        geom = "text",
+        label = right_name,
+        x = "Samples",
+        y = ifelse(is.na(y_names), max(mdf$Ab) / 2, y_names[2]),
+        hjust = 0.5,
+        vjust = 0.5,
+        size = size_names,
+        fontface = "bold",
+        col = right_name_col
+      ) +
+      annotate(
+        geom = "text",
+        label = left_name,
+        x = "Samples",
+        y = ifelse(is.na(y_names), (min(mdf$Ab) / 2), -y_names[1]),
+        hjust = 0.5,
+        vjust = 0.5,
+        size = size_names,
+        fontface = "bold",
+        col = left_name_col
+      ) +
+      geom_hline(aes(yintercept = 0)) +
+      scale_x_discrete(limits = c(names(sort(
+        tapply(mdf$Abundance, mdf$OTU, sum)
+      )), "Samples")) +
+      ylim(min(mdf$Ab), max(mdf$Ab) * 1.1)
+
     p <- plotly::ggplotly(
       p,
       tooltip = c("OTU", "Ab", "Proportion", "Family", "Genus", "Species"),

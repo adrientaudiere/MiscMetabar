@@ -718,7 +718,7 @@ add_blast_info <- function(physeq, fasta_for_db, silent = FALSE, suffix = "blast
 #'  - "add_to_phyloseq" return a phyloseq object with amended slot `@taxtable`.
 #'    Only available if using physeq input and not seq2search input.
 #'
-#' @param method (One of "vote" or "top-hit"). If top-hit, only the
+#' @param method_algo (One of "vote" or "top-hit"). If top-hit, only the
 #'   better match is used to assign taxonomy. If vote, the algorithm
 #'   takes all (or `nb_voting` if `nb_voting` is not null) select assignation
 #'   and resolve the conflict using the function [resolve_vector_ranks()].
@@ -754,8 +754,8 @@ add_blast_info <- function(physeq, fasta_for_db, silent = FALSE, suffix = "blast
 #'
 #' @returns
 #' - If behavior == "return_matrix" :
-#'    - If method = "top-hit" a matrix of taxonomic assignation
-#'    - If method = "vote", a list of two matrix, the first is the
+#'    - If method_algo = "top-hit" a matrix of taxonomic assignation
+#'    - If method_algo = "vote", a list of two matrix, the first is the
 #'      raw taxonomic assignation (before vote). The second one is
 #'      the taxonomic assignation in which conflicts are resolved
 #'      using vote.
@@ -776,19 +776,19 @@ add_blast_info <- function(physeq, fasta_for_db, silent = FALSE, suffix = "blast
 #'
 #' mat <- assign_blastn(data_fungi_mini,
 #'   ref_fasta = ref_fasta,
-#'   method = "top-hit", min_id = 70, min_e_value = 1e-3, min_cover = 50,
+#'   method_algo = "top-hit", min_id = 70, min_e_value = 1e-3, min_cover = 50,
 #'   min_bit_score = 20
 #' )
 #' head(mat)
 #'
 #' assign_blastn(data_fungi_mini,
-#'   ref_fasta = ref_fasta, method = "vote",
+#'   ref_fasta = ref_fasta, method_algo = "vote",
 #'   vote_algorithm = "rel_majority", min_id = 90, min_cover = 50,
 #'   behavior = "add_to_phyloseq"
 #' )@tax_table
 #'
 #' assign_blastn(data_fungi_mini,
-#'   ref_fasta = ref_fasta, method = "vote",
+#'   ref_fasta = ref_fasta, method_algo = "vote",
 #'   vote_algorithm = "consensus", replace_collapsed_rank_by_NA = FALSE,
 #'   min_id = 90, min_cover = 50, behavior = "add_to_phyloseq"
 #' )@tax_table
@@ -798,7 +798,7 @@ assign_blastn <- function(physeq,
                           database = NULL,
                           blastpath = NULL,
                           behavior = c("return_matrix", "add_to_phyloseq"),
-                          method = c("vote", "top-hit"),
+                          method_algo = c("vote", "top-hit"),
                           suffix = "_blastn",
                           min_id = 95,
                           min_bit_score = 50,
@@ -828,10 +828,10 @@ assign_blastn <- function(physeq,
                           simplify_taxo = TRUE,
                           keep_blast_metrics = FALSE,
                           ...) {
-  behavior <- match.arg(method)
-  method <- match.arg(method)
+  behavior <- match.arg(behavior)
+  method_algo <- match.arg(method_algo)
   vote_algorithm <- match.arg(vote_algorithm)
-  if (method == "vote") {
+  if (method_algo == "vote") {
     blast_tab_raw <- blast_pq(
       physeq = physeq,
       fasta_for_db = ref_fasta,
@@ -907,7 +907,7 @@ assign_blastn <- function(physeq,
           paste0("Taxa_name_db", suffix)
         ))
     }
-  } else if (method == "top-hit") {
+  } else if (method_algo == "top-hit") {
     blast_tab_raw <- blast_pq(
       physeq = physeq,
       fasta_for_db = ref_fasta,
@@ -949,12 +949,12 @@ assign_blastn <- function(physeq,
     }
   }
   if (behavior == "return_matrix") {
-    if (method == "vote") {
+    if (method_algo == "vote") {
       return(list(
         "raw_blast_table" = blast_tab_raw,
         "blast_table_per_query" = blast_tab
       ))
-    } else if (method == "top-hit") {
+    } else if (method_algo == "top-hit") {
       return("blast_table_per_query" = blast_tab)
     }
   } else if (behavior == "add_to_phyloseq") {

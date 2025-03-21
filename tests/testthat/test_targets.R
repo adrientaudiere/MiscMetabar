@@ -178,14 +178,16 @@ test_that("sample_data_with_new_names function works fine", {
   )
   expect_silent(filt_fastq_fw <- filter_trim(testFastqs_fw, output_fw = tempdir()))
   expect_equal(length(derepFastq(filt_fastq_fw[1])), 2)
-  expect_silent(filt_fastq_pe <- filter_trim(
+  expect_message(filt_fastq_pe <- filter_trim(
     fw = testFastqs_fw,
     rev = testFastqs_rev,
-    output_fw = tempdir("fw"),
-    output_rev = tempdir("rev")
+    output_fw = paste0(tempdir(), "/", "fw"),
+    output_rev = paste0(tempdir(), "/", "rev")
   ))
-  expect_equal(length(derepFastq(filt_fastq_pe[[1]])), 4)
-  expect_equal(length(derepFastq(filt_fastq_pe[[2]])), 4)
+  unlink(paste0(tempdir(), "/", "rev"))
+  unlink(paste0(tempdir(), "/", "fw"))
+  expect_equal(length(derepFastq(filt_fastq_pe[[1]])), 2)
+  expect_equal(length(derepFastq(filt_fastq_pe[[2]])), 2)
 })
 
 test_that("add_info_to_sam_data function works fine with data_fungi", {
@@ -199,3 +201,6 @@ test_that("add_info_to_sam_data function works fine with data_fungi", {
   expect_equal(length(data_fungi2@sam_data$nb_seq), 185)
   expect_equal(length(data_fungi2@sam_data$nb_otu), 185)
 })
+
+unlink(paste0(tempdir(), "/", "rev"))
+unlink(paste0(tempdir(), "/", "fw"))

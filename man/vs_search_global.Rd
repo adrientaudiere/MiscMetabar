@@ -21,8 +21,8 @@ using the \code{phyloseq} package.}
 
 \item{path_to_fasta}{(required if seq2search is NULL) a path to fasta file if seq2search is est to NULL.}
 
-\item{seq2search}{(required if path_to_fasta is NULL) Either (i) a DNAstringSet object
-or (ii) a character vector that will be convert to DNAstringSet using
+\item{seq2search}{(required if path_to_fasta is NULL) Either (i) a DNAStringSet object
+or (ii) a character vector that will be convert to DNAStringSet using
 \code{\link[Biostrings:XStringSet-class]{Biostrings::DNAStringSet()}}}
 
 \item{vsearchpath}{(default: "vsearch") path to vsearch}

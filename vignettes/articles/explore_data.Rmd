@@ -1,5 +1,5 @@
 ---
-title: "Explore phyloseq data"
+title: "explore_data"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{explore_data}
@@ -7,6 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+# Explore phyloseq data
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -25,7 +26,7 @@ data(data_fungi)
 summary_plot_pq(data_fungi)
 ```
 
-### Explore samples metadata
+## Explore samples metadata
 
 ```{r}
 sam_tab <- tibble::as_tibble(unclass(data_fungi@sam_data))
@@ -36,13 +37,16 @@ sam_tab <- tibble::as_tibble(unclass(data_fungi@sam_data))
 summarytools::dfSummary(sam_tab)
 ```
 
-
 ```{r}
 datawizard::data_codebook(sam_tab)
 ```
 
 ```{r}
 pillar::glimpse(sam_tab)
+```
+
+```{r}
+report::report_sample(data_fungi@sam_data, select = c("Height", "Time"), by = "Tree_name")
 ```
 
 ```{r}
@@ -59,7 +63,7 @@ pointblank::create_informant(
 gtExtras::gt_plt_summary(sam_tab)
 ```
 
-### Explore taxonomic data
+## Explore taxonomic data
 
 ```{r}
 tax_tab <- tibble::as_tibble(unclass(data_fungi@tax_table))
@@ -99,10 +103,14 @@ taxa_names(fungi_order) <- fungi_order@tax_table[, "Order"]
 heatmap(fungi_order@otu_table)
 ```
 
+## Report Session information 
 
-
+```{r}
+report::report(sessionInfo())
+```
 
 # Session information
+
 
 ```{r}
 sessionInfo()

@@ -131,8 +131,8 @@ graph_test_pq <- function(physeq,
 #'   (default) the p-value is computed for the entire model.
 #' 	 by = NULL will assess the overall significance of all terms together,
 #'   by = "terms" will assess significance for each term (sequentially from first to last),
-#'   setting by = "margin" will assess the marginal effects of the terms (each marginal term analysed in a model with all other variables),
-#'   by = "onedf" will analyse one-degree-of-freedom contrasts sequentially. The argument is passed on to anova.cca.
+#'   setting by = "margin" will assess the marginal effects of the terms (each marginal term analyzed in a model with all other variables),
+#'   by = "onedf" will analyze one-degree-of-freedom contrasts sequentially. The argument is passed on to anova.cca.
 #' @return The function returns an anova.cca result object with a
 #'   new column for partial R^2. See help of [vegan::adonis2()] for
 #'   more information.
@@ -811,7 +811,7 @@ ancombc_pq <- function(physeq, fact, levels_fact = NULL, tax_level = "Class", ..
 #' @seealso [ancombc_pq()], [plot_ancombc_pq()]
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' if (requireNamespace("mia")) {
 #'   data_fungi_mini@tax_table <- phyloseq::tax_table(cbind(
 #'     data_fungi_mini@tax_table,
@@ -898,7 +898,7 @@ signif_ancombc <- function(ancombc_res,
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' if (requireNamespace("mia")) {
 #'   data_fungi_mini@tax_table <- phyloseq::tax_table(cbind(
 #'     data_fungi_mini@tax_table,
@@ -1315,7 +1315,7 @@ var_par_pq <-
 #' @return A list of class varpart with additional information in the
 #'  `$part$indfract` part. Adj.R.square is the mean across permutation.
 #'   Adj.R.squared_quantil_min and Adj.R.squared_quantil_max represent
-#'   the quantile values of adjuste R squared
+#'   the quantile values of adjusted R squared
 #' @export
 #' @seealso [var_par_pq()], [vegan::varpart()], [plot_var_part_pq()]
 #' @author Adrien Taudière

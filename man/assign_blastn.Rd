@@ -10,7 +10,7 @@ assign_blastn(
   database = NULL,
   blastpath = NULL,
   behavior = c("return_matrix", "add_to_phyloseq"),
-  method = c("vote", "top-hit"),
+  method_algo = c("vote", "top-hit"),
   suffix = "_blastn",
   min_id = 95,
   min_bit_score = 50,
@@ -50,7 +50,7 @@ first element of the list and bootstrap value in the second one.
 Only available if using physeq input and not seq2search input.
 }}
 
-\item{method}{(One of "vote" or "top-hit"). If top-hit, only the
+\item{method_algo}{(One of "vote" or "top-hit"). If top-hit, only the
 better match is used to assign taxonomy. If vote, the algorithm
 takes all (or \code{nb_voting} if \code{nb_voting} is not null) select assignation
 and resolve the conflict using the function \code{\link[=resolve_vector_ranks]{resolve_vector_ranks()}}.}
@@ -104,8 +104,8 @@ function \code{\link[=simplify_taxo]{simplify_taxo()}} to the phyloseq object?}
 \itemize{
 \item If behavior == "return_matrix" :
 \itemize{
-\item If method = "top-hit" a matrix of taxonomic assignation
-\item If method = "vote", a list of two matrix, the first is the
+\item If method_algo = "top-hit" a matrix of taxonomic assignation
+\item If method_algo = "vote", a list of two matrix, the first is the
 raw taxonomic assignation (before vote). The second one is
 the taxonomic assignation in which conflicts are resolved
 using vote.
@@ -135,19 +135,19 @@ ref_fasta <- Biostrings::readDNAStringSet(system.file("extdata",
 
 mat <- assign_blastn(data_fungi_mini,
   ref_fasta = ref_fasta,
-  method = "top-hit", min_id = 70, min_e_value = 1e-3, min_cover = 50,
+  method_algo = "top-hit", min_id = 70, min_e_value = 1e-3, min_cover = 50,
   min_bit_score = 20
 )
 head(mat)
 
 assign_blastn(data_fungi_mini,
-  ref_fasta = ref_fasta, method = "vote",
+  ref_fasta = ref_fasta, method_algo = "vote",
   vote_algorithm = "rel_majority", min_id = 90, min_cover = 50,
   behavior = "add_to_phyloseq"
 )@tax_table
 
 assign_blastn(data_fungi_mini,
-  ref_fasta = ref_fasta, method = "vote",
+  ref_fasta = ref_fasta, method_algo = "vote",
   vote_algorithm = "consensus", replace_collapsed_rank_by_NA = FALSE,
   min_id = 90, min_cover = 50, behavior = "add_to_phyloseq"
 )@tax_table
