@@ -25,6 +25,7 @@
 #'
 get_funguild_db <- function(db_url = "http://www.stbates.org/funguild_db_2.php") {
   if (httr::http_error(db_url)) {
+    message("error with db_url: ", db_url)
     return(NULL)
   }
 

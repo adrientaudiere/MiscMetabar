@@ -1808,19 +1808,21 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #' add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "dada2_2steps")
 #' add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "lca")
 #' add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "idtaxa")
-#' 
-#' # blastn doesn't work with fasta.gz format 
+#'
+#' # blastn doesn't work with fasta.gz format
 #' ref_fasta <- system.file("extdata",
 #'   "100_sp_UNITE_sh_general_release_dynamic_sintax.fasta",
 #'   package = "MiscMetabar", mustWork = TRUE
 #' )
-#' 
-#' dp <- add_new_taxonomy_pq(data_fungi_mini, ref_fasta, 
-#'   method = "blastn", min_id=80, min_cover=50, min_bit_score=20, 
-#'   min_e_value=1e-20) 
-#' dp_tophit <- add_new_taxonomy_pq(data_fungi_mini, ref_fasta, 
-#'   method = "blastn", min_id=80, min_cover=50, min_bit_score=20,
-#'   min_e_value=1e-20, method_algo = "top_hit") 
+#'
+#' dp <- add_new_taxonomy_pq(data_fungi_mini, ref_fasta,
+#'   method = "blastn", min_id = 80, min_cover = 50, min_bit_score = 20,
+#'   min_e_value = 1e-20
+#' )
+#' dp_tophit <- add_new_taxonomy_pq(data_fungi_mini, ref_fasta,
+#'   method = "blastn", min_id = 80, min_cover = 50, min_bit_score = 20,
+#'   min_e_value = 1e-20, method_algo = "top_hit"
+#' )
 #' }
 #' @author Adrien Taudière
 #'
@@ -1996,7 +1998,7 @@ tbl_sum_taxtable <- function(physeq, taxonomic_ranks = NULL, ...) {
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' \donttest{
+#' \dontrun{ # to avoid bug in CRAN when internet is not available
 #' if (requireNamespace("httr")) {
 #'   d_fung_mini <- add_funguild_info(data_fungi_mini,
 #'     taxLevels = c(
@@ -2030,6 +2032,11 @@ add_funguild_info <- function(physeq,
                                 "Species"
                               ),
                               db_url = "http://www.stbates.org/funguild_db_2.php") {
+  if (httr::http_error(db_url)) {
+    message("error with db_url: ", db_url)
+    return(NULL)
+  }
+
   tax_tab <- physeq@tax_table
   FUNGuild_assign <-
     funguild_assign(data.frame(
@@ -2072,7 +2079,7 @@ add_funguild_info <- function(physeq,
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' \donttest{
+#' \dontrun{ # to avoid bug in CRAN when internet is not available
 #' if (requireNamespace("httr")) {
 #'   d_fung_mini <- add_funguild_info(data_fungi_mini,
 #'     taxLevels = c(

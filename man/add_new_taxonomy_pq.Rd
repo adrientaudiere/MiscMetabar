@@ -83,8 +83,21 @@ add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "dada2")
 add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "dada2_2steps")
 add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "lca")
 add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "idtaxa")
-add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "blastn")
-add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "blastn", method = "top-hit")
+
+# blastn doesn't work with fasta.gz format
+ref_fasta <- system.file("extdata",
+  "100_sp_UNITE_sh_general_release_dynamic_sintax.fasta",
+  package = "MiscMetabar", mustWork = TRUE
+)
+
+dp <- add_new_taxonomy_pq(data_fungi_mini, ref_fasta,
+  method = "blastn", min_id = 80, min_cover = 50, min_bit_score = 20,
+  min_e_value = 1e-20
+)
+dp_tophit <- add_new_taxonomy_pq(data_fungi_mini, ref_fasta,
+  method = "blastn", min_id = 80, min_cover = 50, min_bit_score = 20,
+  min_e_value = 1e-20, method_algo = "top_hit"
+)
 }
 }
 \seealso{

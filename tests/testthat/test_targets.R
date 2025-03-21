@@ -185,7 +185,7 @@ test_that("sample_data_with_new_names function works fine", {
     output_rev = paste0(tempdir(), "/", "rev")
   ))
   unlink(paste0(tempdir(), "/", "rev"))
-  unlink(paste0(tempdir(), "/", "fw"))  
+  unlink(paste0(tempdir(), "/", "fw"))
   expect_equal(length(derepFastq(filt_fastq_pe[[1]])), 2)
   expect_equal(length(derepFastq(filt_fastq_pe[[2]])), 2)
 })
@@ -203,4 +203,4 @@ test_that("add_info_to_sam_data function works fine with data_fungi", {
 })
 
 unlink(paste0(tempdir(), "/", "rev"))
-unlink(paste0(tempdir(), "/", "fw"))  
+unlink(paste0(tempdir(), "/", "fw"))
