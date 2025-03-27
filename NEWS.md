@@ -1,4 +1,11 @@
-# MiscMetabar 0.14.1 (in development) 
+# MiscMetabar 0.14.3 (in development) 
+
+- Better message in [subset_taxa_tax_control()]
+
+# MiscMetabar 0.14.2 
+
+- Minor bug fix for CRAN resubmission
+# MiscMetabar 0.14.1 
 
 - Add the possibility to use to resolve conflict using [resolve_vector_ranks()] in the [assign_sintax()] function. Add numerous parameters to [assign_sintax()], in particular `vote_algorithm` to choose the algo resolving conflict.
 - Add param `pattern_to_remove` in [format2dada2()]
