@@ -307,20 +307,9 @@ subset_taxa_tax_control <-
         nseq_discard,
         "sequences. Note that for ",
         n_samp_discard,
-        "samples, all taxa were discarded so samples were discarded."
+        "samples, all taxa were discarded. Please run clean_pq() to remove empty samples."
         sep = " "
       )
-      } else {
-         message(
-      paste(
-        "The filtering processes discard",
-        ntaxa_discard,
-        "taxa and",
-        nseq_discard,
-        "sequences.",
-        sep = " "
-      )
-      }
    
     )
     return(new_physeq)

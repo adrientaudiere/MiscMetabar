@@ -1,6 +1,7 @@
 # MiscMetabar 0.14.3 (in development) 
 
 - Better message in [subset_taxa_tax_control()]
+- Add parameters `text_size` and `text_size_info` to expand or minimize text annotation in [summary_plot_pq()]. 
 
 # MiscMetabar 0.14.2 
 

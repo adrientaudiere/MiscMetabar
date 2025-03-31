@@ -1875,16 +1875,29 @@ ggbetween_pq <-
 #'   this number.
 #' @param clean_pq (logical): Does the phyloseq
 #'   object is cleaned using the [clean_pq()] function?
+#' @param text_size (Num, default 1) A size factor to expand or minimize
+#'   text size. 
+#' @param text_size_info (Num, default 1) A size factor to expand or minimize
+#'   text size for extra informations. 
 #' @examples
 #'
 #' summary_plot_pq(data_fungi)
 #' summary_plot_pq(data_fungi, add_info = FALSE) + scale_fill_viridis_d()
+#' if (requireNamespace("patchwork")) {
+#'   (summary_plot_pq(data_fungi, text_size = 0.5, text_size_info = 0.6) + 
+#'    summary_plot_pq(data_fungi_mini, text_size = 0.5, text_size_info = 0.6)) /
+#'   (summary_plot_pq(data_fungi_sp_known, text_size = 0.5, text_size_info = 0.6) + 
+#'  summary_plot_pq(subset_taxa(data_fungi_sp_known, Phylum=="Ascomycota"),
+#'    text_size = 0.5, text_size_info = 0.6))
+#' }
 #' @return A ggplot2 object
 #' @export
 summary_plot_pq <- function(physeq,
                             add_info = TRUE,
                             min_seq_samples = 500,
-                            clean_pq = TRUE) {
+                            clean_pq = TRUE, 
+                            text_size = 1,
+                            text_size_info=1) {
   if (clean_pq) {
     physeq <- clean_pq(physeq)
   }
@@ -1960,7 +1973,7 @@ summary_plot_pq <- function(physeq,
         y = y1 + (y2 - y1) / 1.7,
         label = nb_values
       ),
-      size = 4.5
+      size = 4.5*text_size
     ) +
     geom_text(
       data = d,
@@ -1969,14 +1982,14 @@ summary_plot_pq <- function(physeq,
         y = y1 + (y2 - y1) / 5,
         label = names
       ),
-      size = 6
+      size = 6*text_size
     ) +
     annotate(
       geom = "text",
       x = 0.65,
       y = 3,
       label = "Taxa",
-      size = 6,
+      size = 6*text_size,
       color = "#aa4c26",
       angle = 90,
       fontface = 2
@@ -1986,7 +1999,7 @@ summary_plot_pq <- function(physeq,
       x = 0.85,
       y = 3,
       label = "(OTUs, ASVs, ...)",
-      size = 5,
+      size = 5*text_size,
       color = "#aa4c26",
       angle = 90
     ) +
@@ -1995,7 +2008,7 @@ summary_plot_pq <- function(physeq,
       x = 2,
       y = 0.65,
       label = "Samples",
-      size = 6,
+      size = 6*text_size,
       fontface = 2,
       color = "khaki4"
     )
@@ -2053,7 +2066,7 @@ summary_plot_pq <- function(physeq,
           y = y1 + (y2 - y1) / 2.1,
           label = nb_values
         ),
-        size = 3.5,
+        size = 3.5*text_size_info,
         hjust = 0
       )
   }
