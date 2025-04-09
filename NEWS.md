@@ -2,6 +2,7 @@
 
 - Better message in [subset_taxa_tax_control()]
 - Add parameters `text_size` and `text_size_info` to expand or minimize text annotation in [summary_plot_pq()]. 
+- Add function [filt_taxa_wo_NA()] to filter out taxa with NA values at given taxonomic rank(s)
 
 # MiscMetabar 0.14.2 
 
