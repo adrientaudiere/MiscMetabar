@@ -419,17 +419,28 @@ format2dada2 <- function(fasta_db = NULL,
     } else {
       new_names <- format2sintax(names(dna), ...)
     }
+
+    # Add the good number of level to each line
+    new_names <- map_chr(new_names, ~ {
+      nb_char <- str_count(.x, ":")
+      diff <- max_char - nb_char - 2
+      if (diff > 0) {
+        return(paste0(.x, strrep(",", diff)))
+      } else {
+        return(.x)
+      }
+    })
+
+    
     new_names <- new_names |>
       stringr::str_split_fixed(";tax=", n = 2) |>
       as_tibble() |>
-      tidyr::unite(taxnames, c(V2, V1), sep = ";") |>
-      pull(taxnames) %>%
-      {
-        gsub(":", "__", .)
-      } %>%
-      {
-        gsub(",", ";", .)
-      }
+      tidyr::unite(taxnames, c(V2, V1), sep = "") |>
+      pull(taxnames) |>
+      paste0(";") |>
+      gsub(pattern = ":", replacement = "__") |>
+       gsub(pattern = ",", replacement = ";")
+
 
 
     if (!is.null(pattern_to_remove)) {
