@@ -968,7 +968,7 @@ plot_ancombc_pq <-
       )
 
     taxtable <- data.frame(physeq@tax_table)
-    taxtable$taxa <- taxa_names(physeq)
+    taxtable$taxon <- taxa_names(physeq)
 
     df <-
       left_join(signif_ancombc_res, taxtable, by = join_by("taxon" == "taxon"))
