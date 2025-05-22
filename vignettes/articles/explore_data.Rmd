@@ -32,9 +32,28 @@ summary_plot_pq(data_fungi)
 sam_tab <- tibble::as_tibble(unclass(data_fungi@sam_data))
 ```
 
-
 ```{r}
 summarytools::dfSummary(sam_tab)
+summarytools::descr(sam_tab)
+summarytools::freq(sam_tab)
+```
+
+```{r}
+summarytools::ctable(sam_tab$Height, sam_tab$Time, chisq = TRUE)
+```
+
+
+```{r}
+sam_tab |>  
+  explore::describe()
+
+sam_tab |> 
+   explore_all(target = Height)
+```
+
+```{r}
+sam_tab |> 
+   explain_tree(target = Height)
 ```
 
 ```{r}
@@ -44,6 +63,8 @@ datawizard::data_codebook(sam_tab)
 ```{r}
 pillar::glimpse(sam_tab)
 ```
+
+
 
 ```{r}
 report::report_sample(data_fungi@sam_data, select = c("Height", "Time"), by = "Tree_name")
@@ -73,6 +94,18 @@ tax_tab <- tibble::as_tibble(unclass(data_fungi@tax_table))
 ```{r}
 summarytools::dfSummary(tax_tab)
 ```
+
+```{r}
+summarytools::ctable(grepl("Ectomycorrhizal", tax_tab$Guild), tax_tab$Class, chisq = TRUE)
+```
+
+```{r}
+tax_tab |> 
+  select(Guild, Phylum, Class, Order) |>
+  tidyr::drop_na() |>
+   explain_forest(target = Guild)
+```
+
 
 ```{r}
 datawizard::data_codebook(tax_tab)

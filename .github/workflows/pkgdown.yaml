@@ -35,7 +35,7 @@ jobs:
         run: sudo apt-get install ncbi-blast+
 
       - name: Install R packages not in DESCRIPTION
-        run: Rscript -e 'pak::pkg_install(c("datawizard", "formattable", "ggplot2", "ComplexUpset", "ggforce", "ggtree", "gtExtras", "MicrobiotaProcess", "pillar", "pointblank", "summarytools", "svglite", "tidytree", "treeio"), ask = FALSE, upgrade=TRUE)'
+        run: Rscript -e 'pak::pkg_install(c("explore", "randomForest", "datawizard", "formattable", "ggplot2", "ComplexUpset", "ggforce", "ggtree", "gtExtras", "MicrobiotaProcess", "pillar", "pointblank", "summarytools", "svglite", "tidytree", "treeio"), ask = FALSE, upgrade=TRUE)'
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE, clean = TRUE)
