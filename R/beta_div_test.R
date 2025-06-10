@@ -168,7 +168,7 @@ adonis_pq <- function(physeq,
   if (dist_method %in% c("aitchison", "robust.aitchison")) {
     phy_dist <-
       paste0(
-        'vegan::vegdist(as.matrix(physeq@otu_table), method="',
+        'vegan::vegdist(as.matrix(unclass(physeq@otu_table)), method="',
         dist_method,
         '")'
       )
