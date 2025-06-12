@@ -3672,11 +3672,11 @@ assign_dada2 <- function(physeq = NULL,
 #'   NA_equivalent = c("-", "NULL")
 #' )
 filt_taxa_wo_NA <- function(physeq,
-                              taxa_ranks = NULL,
-                              n_NA = 0,
-                              verbose = TRUE,
-                              NA_equivalent = NULL,
-                              clean_pq = TRUE) {
+                            taxa_ranks = NULL,
+                            n_NA = 0,
+                            verbose = TRUE,
+                            NA_equivalent = NULL,
+                            clean_pq = TRUE) {
   verify_pq(physeq)
   new_physeq <- physeq
 

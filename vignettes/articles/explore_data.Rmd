@@ -3,8 +3,10 @@ title: "explore_data"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{explore_data}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 # Explore phyloseq data
@@ -44,16 +46,16 @@ summarytools::ctable(sam_tab$Height, sam_tab$Time, chisq = TRUE)
 
 
 ```{r}
-sam_tab |>  
+sam_tab |>
   explore::describe()
 
-sam_tab |> 
-   explore_all(target = Height)
+sam_tab |>
+  explore::explore_all(target = Height)
 ```
 
 ```{r}
-sam_tab |> 
-   explain_tree(target = Height)
+sam_tab |>
+  explore::explain_tree(target = Height)
 ```
 
 ```{r}
@@ -100,10 +102,10 @@ summarytools::ctable(grepl("Ectomycorrhizal", tax_tab$Guild), tax_tab$Class, chi
 ```
 
 ```{r}
-tax_tab |> 
+tax_tab |>
   select(Guild, Phylum, Class, Order) |>
   tidyr::drop_na() |>
-   explain_forest(target = Guild)
+  explore::explain_forest(target = Guild)
 ```
 
 

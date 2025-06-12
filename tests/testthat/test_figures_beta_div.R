@@ -422,7 +422,7 @@ test_that("multipatt_pq works with data_fungi_mini dataset", {
     verbose = TRUE
   ))), "list")
   expect_s3_class(res_height$bias_correct_log_table, "data.frame")
-  expect_equal(dim(res_height$res), c(6, 15))
+  expect_equal(dim(res_height$res), c(6, 17))
 
   expect_type(suppressMessages(suppressWarnings(res_time <- ancombc_pq(
     subset_taxa_pq(
@@ -436,5 +436,5 @@ test_that("multipatt_pq works with data_fungi_mini dataset", {
   ))), "list")
 
   expect_s3_class(res_time$ss_tab, "data.frame")
-  expect_equal(dim(res_time$res), c(12, 15))
+  expect_equal(dim(res_time$res), c(12, 17))
 })

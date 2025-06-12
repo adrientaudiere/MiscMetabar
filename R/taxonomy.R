@@ -431,7 +431,7 @@ format2dada2 <- function(fasta_db = NULL,
       }
     })
 
-    
+
     new_names <- new_names |>
       stringr::str_split_fixed(";tax=", n = 2) |>
       as_tibble() |>
@@ -439,7 +439,7 @@ format2dada2 <- function(fasta_db = NULL,
       pull(taxnames) |>
       paste0(";") |>
       gsub(pattern = ":", replacement = "__") |>
-       gsub(pattern = ",", replacement = ";")
+      gsub(pattern = ",", replacement = ";")
 
 
 

@@ -76,7 +76,8 @@ test_that("simplify_taxo works fine", {
 
 
 test_that("get_file_extension works fine", {
-  expect_equal(get_file_extension("inst/extdata/ex_R1_001.fastq.gz"), c("fastq", "gz"))
+  expect_warning(get_file_extension("inst/extdata/ex_R1_001.fastq.gz"), "There is more than one '.' inside your file path: inst/extdata/ex_R1_001.fastq.gz")
+  expect_equal(suppressWarnings(get_file_extension("inst/extdata/ex_R1_001.fastq.gz")), c("fastq", "gz"))
   expect_equal(get_file_extension("inst/extdata/ex.fasta"), "fasta")
 })
 
@@ -93,8 +94,8 @@ test_that("count_seq works fine", {
   skip_on_os("mac")
   skip_on_cran()
   expect_equal(count_seq(folder_path = "inst/extdata", pattern = "*.fasta"), c(1000, 3, 2))
-  expect_equal(count_seq("inst/extdata/ex_R1_001.fastq.gz"), 2500)
-  expect_equal(count_seq("inst/extdata/ex_R2_001.fastq.gz"), 2500)
+  expect_equal(suppressWarnings(count_seq("inst/extdata/ex_R1_001.fastq.gz")), 2500)
+  expect_equal(suppressWarnings(count_seq("inst/extdata/ex_R2_001.fastq.gz")), 2500)
   expect_equal(count_seq("inst/extdata/ex.fasta"), 3)
   expect_equal(count_seq("inst/extdata/ex.fastq"), 4)
   expect_error(count_seq("tests/testthat.R"), "The file extension R is not supported.")
