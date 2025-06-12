@@ -1,4 +1,9 @@
-# MiscMetabar 0.14.3 (in development) 
+# MiscMetabar 0.14.4 (in development) 
+
+- Add function [plot_seq_ratio_pq()] to explore the number of sequences per samples using difference ratio of the number of sequences per samples ordered by the number of sequences.
+
+# MiscMetabar 0.14.3 
+
 
 - Better message in [subset_taxa_tax_control()]
 - Add parameters `text_size` and `text_size_info` to expand or minimize text annotation in [summary_plot_pq()]. 

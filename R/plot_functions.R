@@ -5047,3 +5047,108 @@ plot_complexity_pq <- function(physeq,
   return(p)
 }
 ################################################################################
+
+################################################################################
+#' A diagnostic plot of the number of sequences per samples
+#'
+#' @inheritParams clean_pq
+#' @param min_nb_seq (int) The minimum number of sequences per samples to compare
+#'   the ratio. 
+#' @param annotations (logical, default TRUE). If FALSE, no annotations are 
+#'   plotted
+#'
+#' @returns
+#' @export
+#' @author Adrien Taudière
+#' @details The x axis depict the number of sequences per samples and the y 
+#'   axis depicted the ratio of the number of sequences for a given sample
+#'   divide by the number of sequences of the previous sample when ordered by
+#'   the number of sequences. A high ratio indicate an important and quick
+#'   increase of the number of sequence which may indicate that below this 
+#'   ratio, samples are suspicious.
+#'   
+#'   The general idea is to first removed all samples with definitively not 
+#'   enough sequences and then, among the kept samples, find the higher 
+#'   augmentation (ratio) to possibly detect suspicious samples.   
+#' 
+#' @examples
+#' plot_seq_ratio_pq(data_fungi, min_nb_seq = 200)
+#' data(GlobalPatterns)
+#' plot_seq_ratio_pq(GlobalPatterns, min_nb_seq = 100000)
+#' plot_seq_ratio_pq(data_fungi_mini, min_nb_seq = 10, annotations =FALSE)
+
+plot_seq_ratio_pq <- function(physeq, min_nb_seq=1000, annotations =TRUE) {
+  
+  if(min_nb_seq<min(sample_sums(physeq))) {
+    stop("You must specify a min_nb_seq below the minimum value of sample_sums in your phyloseq object.")
+  }
+ 
+  cutof_index <- sort(sample_sums(physeq)) |> 
+   as_tibble() |> 
+  mutate(diff=c(0,diff(value))) |>
+   filter(value<min_nb_seq) |>
+   pull(diff) |>
+   which.max()
+
+    n_cutoff <- cutof_index
+    
+df <- tibble("value"=sort(sample_sums(physeq)),
+             "name"=names(sort(sample_sums(physeq)))) |> 
+  mutate(diff=c(0,diff(value))) |>
+  mutate(ratio=value/dplyr::lag(value,default = 0))
+
+
+cutof_value <- df$value[-c(1:n_cutoff)][which.max(df$ratio[-c(1:n_cutoff)])]
+cutof_ratio <- max(df$ratio[-c(1:n_cutoff)])
+  
+df <- df  |>
+  mutate(color_group = case_when(value>=cutof_value~"keep", 
+                                 value>=min_nb_seq~"suspicious",
+                                 .default="discard"))
+
+p <- ggplot(df) + 
+  geom_point(aes(x=value, y=ratio, color=color_group), size=2, alpha=0.8) +
+  scale_x_log10() +
+  geom_vline(xintercept=cutof_value, alpha=0.8, color="darkgreen")+
+   geom_vline(xintercept=min_nb_seq, alpha=0.8, color="grey")+
+   geom_hline(yintercept=cutof_ratio, alpha=0.8, color="darkgreen") +
+    scale_color_manual(values=c("orange", "darkgreen","grey20")) +
+  guides(color="none") +
+  coord_cartesian(clip = "off")
+
+if(annotations) {
+  p <- p+
+  annotate(
+    geom = "segment", 
+    x = min_nb_seq, 
+    y =  1.04* cutof_ratio,
+    xend = min(df$value), 
+    yend = 1.04* cutof_ratio, 
+    arrow = arrow(length = unit(2, "mm"))
+  ) +
+  annotate(geom = "text",x = min_nb_seq, y =  1.08* cutof_ratio, label = paste0("Samples with less than \n", min_nb_seq, " sequences"), hjust = "right", size=3) +
+  annotate(
+    geom = "curve", 
+    x = 4*cutof_value, 
+    y =  1.15* cutof_ratio,
+    xend = 1.05*cutof_value, yend = 1.01* cutof_ratio, 
+    curvature = .3, arrow = arrow(length = unit(2, "mm"))
+  ) +
+  annotate(geom = "text",x = 4.1*cutof_value, y =  1.16* cutof_ratio, label = df$name[-c(1:n_cutoff)][which.max(df$ratio[-c(1:n_cutoff)])], hjust = "left", size=3) +
+  annotate(
+    geom = "segment", 
+    x = 0.98*cutof_value, 
+    y =  0.98* cutof_ratio,
+    xend = min_nb_seq, 
+    yend = 0.98* cutof_ratio, 
+    arrow = arrow(length = unit(2, "mm"))
+  ) +
+  annotate(geom = "text",x = cutof_value*0.98, y =  0.94* cutof_ratio, label = "Samples with \n suspicious ratio", hjust = "right", size=3) +
+  xlab("Number of sequences per samples (log10)")+
+  ylab("Ratio of the number of sequences with the previous sample") +
+  labs(caption = paste0("For the ratio (y-axis), a value of 2 indicate that sample i contains twice the number of sequences compared to the sample i-1 \n (samples ordered by their number of sequences). Run `subset_samples_pq(physeq, sample_sums(data_fungi)>=", cutof_value,")` to keep only green point \n or `subset_samples_pq(physeq, sample_sums(data_fungi)>=", min_nb_seq,")` to discarded only orange samples.") )
+}
+  
+return(p)
+}
+################################################################################
