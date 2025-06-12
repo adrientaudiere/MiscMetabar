@@ -94,6 +94,7 @@ reference:
 - subtitle: Subset/merge taxa
   contents:
   - filt_taxa_pq
+  - filt_taxa_wo_NA
   - merge_taxa_vec
   - select_taxa
   - subset_taxa_pq

@@ -34,6 +34,7 @@ Graphical function.
 }
 \examples{
 \dontrun{
+# to avoid bug in CRAN when internet is not available
 if (requireNamespace("httr")) {
   d_fung_mini <- add_funguild_info(data_fungi_mini,
     taxLevels = c(

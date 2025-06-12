@@ -1998,7 +1998,8 @@ tbl_sum_taxtable <- function(physeq, taxonomic_ranks = NULL, ...) {
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' \dontrun{ # to avoid bug in CRAN when internet is not available
+#' \dontrun{
+#' # to avoid bug in CRAN when internet is not available
 #' if (requireNamespace("httr")) {
 #'   d_fung_mini <- add_funguild_info(data_fungi_mini,
 #'     taxLevels = c(
@@ -2079,7 +2080,8 @@ add_funguild_info <- function(physeq,
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' \dontrun{ # to avoid bug in CRAN when internet is not available
+#' \dontrun{
+#' # to avoid bug in CRAN when internet is not available
 #' if (requireNamespace("httr")) {
 #'   d_fung_mini <- add_funguild_info(data_fungi_mini,
 #'     taxLevels = c(
@@ -3625,5 +3627,85 @@ assign_dada2 <- function(physeq = NULL,
 
     return(new_physeq)
   }
+}
+################################################################################
+
+
+################################################################################
+#' Filter taxa by cleaning taxa with NA at given taxonomic rank(s)
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#' Basically a wrapper of subset_taxa_pq()
+#'
+#' @inheritParams clean_pq
+#' @param taxa_ranks A vector of taxonomic ranks. For examples c("Family","Genus").
+#'   If taxa_ranks is NULL (default), all ranks are used, i.e. all taxa with at least 1 NA
+#'   will be filtered out. Numeric position of taxonomic ranks can also be used.
+#' @param n_NA (int default = 0). Number of allowed NA by taxa in the list of the
+#'   taxonomic ranks
+#' @param verbose (logical). If TRUE, print additional information.
+#' @param NA_equivalent (vector of character, default NULL). Exact matching of
+#'   the character listed in the vector are converted as NA before to filter out
+#'   taxa.
+#' @param clean_pq (logical, default TRUE)
+#'   If set to TRUE, empty samples are discarded after filtering. See [clean_pq()].
+#'
+#' @return An object of class phyloseq
+#'
+#' @seealso [subset_taxa_pq()]
+#' @export
+#' @author Adrien Taudière
+#'
+#' @examples
+#'
+#' data_fungi_wo_NA <- filt_taxa_wo_NA(data_fungi)
+#' filt_taxa_wo_NA(data_fungi, n_NA = 1)
+#' filt_taxa_wo_NA(data_fungi, taxa_ranks = c(1:3))
+#'
+#' filt_taxa_wo_NA(data_fungi, taxa_ranks = c("Trait", "Confidence.Ranking"))
+#' filt_taxa_wo_NA(data_fungi,
+#'   taxa_ranks = c("Trait", "Confidence.Ranking"),
+#'   NA_equivalent = c("-", "NULL")
+#' )
+filt_taxa_wo_NA <- function(physeq,
+                            taxa_ranks = NULL,
+                            n_NA = 0,
+                            verbose = TRUE,
+                            NA_equivalent = NULL,
+                            clean_pq = TRUE) {
+  verify_pq(physeq)
+  new_physeq <- physeq
+
+  if (is.null(taxa_ranks)) {
+    taxa_ranks <- c(1:ncol(physeq@tax_table))
+  }
+
+  taxtab <- data.frame(unclass(physeq@tax_table[, taxa_ranks]))
+
+  if (!is.null(NA_equivalent)) {
+    taxtab <- taxtab |>
+      mutate(across(everything(), ~ if_else(. %in% NA_equivalent, NA, .)))
+  }
+
+  cond <- rowSums(is.na(taxtab))
+  new_physeq <- subset_taxa_pq(new_physeq, cond < (n_NA + 1), clean_pq = clean_pq)
+
+  if (verbose) {
+    message(
+      "You filtered out ",
+      ntaxa(physeq) - ntaxa(new_physeq),
+      " taxa, leading to a phyloseq object including ",
+      ntaxa(new_physeq),
+      " taxa without NA in the taxonomic ranks: ",
+      paste(taxa_ranks, collapse = " "),
+      "."
+    )
+  }
+
+  return(new_physeq)
 }
 ################################################################################

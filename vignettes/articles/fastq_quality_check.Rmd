@@ -1,5 +1,5 @@
 ---
-title: "Fastq quality check"
+title: "fastq_quality_check"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{fastq_quality_check}

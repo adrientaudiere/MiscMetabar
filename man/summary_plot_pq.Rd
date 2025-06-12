@@ -8,7 +8,9 @@ summary_plot_pq(
   physeq,
   add_info = TRUE,
   min_seq_samples = 500,
-  clean_pq = TRUE
+  clean_pq = TRUE,
+  text_size = 1,
+  text_size_info = 1
 )
 }
 \arguments{
@@ -24,6 +26,12 @@ this number.}
 
 \item{clean_pq}{(logical): Does the phyloseq
 object is cleaned using the \code{\link[=clean_pq]{clean_pq()}} function?}
+
+\item{text_size}{(Num, default 1) A size factor to expand or minimize
+text size.}
+
+\item{text_size_info}{(Num, default 1) A size factor to expand or minimize
+text size for extra informations.}
 }
 \value{
 A ggplot2 object
@@ -41,4 +49,12 @@ Graphical representation of a phyloseq object.
 
 summary_plot_pq(data_fungi)
 summary_plot_pq(data_fungi, add_info = FALSE) + scale_fill_viridis_d()
+if (requireNamespace("patchwork")) {
+  (summary_plot_pq(data_fungi, text_size = 0.5, text_size_info = 0.6) +
+    summary_plot_pq(data_fungi_mini, text_size = 0.5, text_size_info = 0.6)) /
+    (summary_plot_pq(data_fungi_sp_known, text_size = 0.5, text_size_info = 0.6) +
+      summary_plot_pq(subset_taxa(data_fungi_sp_known, Phylum == "Ascomycota"),
+        text_size = 0.5, text_size_info = 0.6
+      ))
+}
 }

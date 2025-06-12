@@ -168,7 +168,7 @@ adonis_pq <- function(physeq,
   if (dist_method %in% c("aitchison", "robust.aitchison")) {
     phy_dist <-
       paste0(
-        'vegan::vegdist(as.matrix(physeq@otu_table), method="',
+        'vegan::vegdist(as.matrix(unclass(physeq@otu_table)), method="',
         dist_method,
         '")'
       )
@@ -968,7 +968,7 @@ plot_ancombc_pq <-
       )
 
     taxtable <- data.frame(physeq@tax_table)
-    taxtable$taxa <- taxa_names(physeq)
+    taxtable$taxon <- taxa_names(physeq)
 
     df <-
       left_join(signif_ancombc_res, taxtable, by = join_by("taxon" == "taxon"))

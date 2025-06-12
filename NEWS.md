@@ -1,4 +1,16 @@
-# MiscMetabar 0.14.1 (in development) 
+# MiscMetabar 0.14.3 (in development) 
+
+- Better message in [subset_taxa_tax_control()]
+- Add parameters `text_size` and `text_size_info` to expand or minimize text annotation in [summary_plot_pq()]. 
+- Add function [filt_taxa_wo_NA()] to filter out taxa with NA values at given taxonomic rank(s)
+- Fix a bug in [format2dada2()] by adding semicolons to fill all the taxonomic levels if `from_sintax` is TRUE 
+- Fix a bug in [adonis_pq()] for method `aitchison` and `robust.aitchison`.
+
+# MiscMetabar 0.14.2 
+
+- Minor bug fix for CRAN resubmission
+
+# MiscMetabar 0.14.1 
 
 - Add the possibility to use to resolve conflict using [resolve_vector_ranks()] in the [assign_sintax()] function. Add numerous parameters to [assign_sintax()], in particular `vote_algorithm` to choose the algo resolving conflict.
 - Add param `pattern_to_remove` in [format2dada2()]

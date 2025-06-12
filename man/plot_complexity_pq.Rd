@@ -58,10 +58,11 @@ Please make a reference to \code{\link[dada2:seqComplexity]{dada2::seqComplexity
 plot_complexity_pq(subset_samples(data_fungi_mini, Height == "High"),
   vline_random_kmer = FALSE
 )
-plot_complexity_pq(subset_samples(data_fungi_mini, Height == "Low"),
-  aggregate = FALSE, kmer_size = 4
-)
-# plot_complexity_pq(subset_samples(data_fungi, Height == "Low"), kmer_size = 4)
+# plot_complexity_pq(subset_samples(data_fungi_mini, Height == "Low"),
+#  aggregate = FALSE, kmer_size = 4
+# )
+# plot_complexity_pq(subset_samples(data_fungi, Height == "Low"),
+#  kmer_size = 4)
 
 }
 \seealso{

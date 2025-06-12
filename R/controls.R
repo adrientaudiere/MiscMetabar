@@ -252,9 +252,10 @@ subset_taxa_tax_control <-
 
       if (method %in% c("min", "max", "mean", "cutoff_seq")) {
         physeq_seq <- sort(as.vector(as.vector(physeq@otu_table[i, ])))
-        cutoff_seq[i] <- min(physeq_seq[physeq_seq > taxa_distri[i]])
-        if (is.infinite(cutoff_seq[i])) {
+        if (sum(physeq_seq > taxa_distri[i]) == 0) {
           cutoff_seq[i] <- taxa_distri[i]
+        } else {
+          cutoff_seq[i] <- min(physeq_seq[physeq_seq > taxa_distri[i]])
         }
       }
     }
@@ -290,18 +291,23 @@ subset_taxa_tax_control <-
         0
     }
 
+    n_samp_discard <- sum(taxa_sums(new_physeq) == 0)
+
     new_physeq <-
       prune_taxa(colSums(new_physeq@otu_table) > 0, new_physeq)
     ntaxa_discard <- ntaxa(physeq) - ntaxa(new_physeq)
     nseq_discard <-
       sum(physeq@otu_table) - sum(new_physeq@otu_table)
+
     message(
       paste(
         "The filtering processes discard",
         ntaxa_discard,
         "taxa and",
         nseq_discard,
-        "sequences",
+        "sequences. Note that for ",
+        n_samp_discard,
+        "samples, all taxa were discarded. Please run clean_pq() to remove empty samples.",
         sep = " "
       )
     )
