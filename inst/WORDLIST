@@ -28,7 +28,6 @@ Cutadapt
 DESeq
 DGEList
 DNAStringSet
-DOI
 Deseq
 Dna
 ESV
@@ -40,11 +39,11 @@ Eukaryome
 FUNGuild
 FUNGuildR
 FastQC
-Fastq
 François
 Frédéric
 Frøslev
 Furneaux
+GBIF
 Gammaproteobacteria
 GlobalEnv
 Guldberg
@@ -72,6 +71,7 @@ Mehrdad
 Menke
 Metabarcoding
 Metagenomics
+MiSeq
 MicroViz
 Microbiome
 MicrobiomeAnalystR
@@ -81,6 +81,7 @@ Mumu
 NGS
 NNI
 Newick
+Num
 OSX
 OTU
 OTUs
@@ -97,7 +98,6 @@ Raison
 Rdata
 Recluster
 Reclustering
-Reproducibility
 Rieseberg
 Rosen
 Rtsne
@@ -128,7 +128,6 @@ Vsearch
 Wiesmann
 XStringset
 abundancy
-across
 accu
 adaptator
 adonis
@@ -138,7 +137,6 @@ al
 algo
 amplicon
 amplicons
-analyzed
 ancombc
 anova
 args
@@ -174,7 +172,6 @@ clade
 clusterize
 cmd
 codecov
-coercible
 coli
 colour
 colours
@@ -188,7 +185,6 @@ cr
 cran
 csv
 curation
-customizable
 cutadapt
 cutadaptenv
 d'être
@@ -198,6 +194,7 @@ datatable
 dbase
 dbrda
 denoise
+denoised
 derep
 dereplicate
 dereplicated
@@ -221,6 +218,7 @@ fasta
 fastg
 fastq
 fastqcr
+filt
 filterAndTrim
 fo
 foliar
@@ -252,9 +250,8 @@ iddling
 identic
 identiti
 idtaxa
-init
+interoperable
 intraspecific
-jitter
 joss
 json
 kmer
@@ -319,6 +316,7 @@ physeq
 phytree
 pkgdown
 pkgnet
+plateform
 plotlist
 pq
 pval
@@ -335,8 +333,8 @@ reclustering
 reformated
 refseq
 replacte
-reproducibility
 reproducibly
+resubmission
 rl
 rotl
 roxygen
@@ -356,7 +354,6 @@ speedyseq
 ss
 stampa
 str
-subsampled
 substr
 tSNE
 tabbedout
@@ -378,6 +375,7 @@ uc
 uclust
 umap
 un
+unclustered
 usearch
 usefull
 userout
@@ -385,14 +383,13 @@ usersort
 uwot
 varpart
 vec
-vectorized
 vegdist
 venn
 vioplot
-viridis
 visite
 vizualisation
 vsearch
+wo
 wraper
 writed
 www

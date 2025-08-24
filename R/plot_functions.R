@@ -5057,7 +5057,7 @@ plot_complexity_pq <- function(physeq,
 #' @param annotations (logical, default TRUE). If FALSE, no annotations are 
 #'   plotted
 #'
-#' @returns
+#' @returns A ggplot2 object
 #' @export
 #' @author Adrien Taudière
 #' @details The x axis depict the number of sequences per samples and the y 

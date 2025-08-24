@@ -44,7 +44,9 @@ methods in the \href{https://github.com/torognes/swarm/blob/master/man/swarm_man
 
 \item{tax_adjust}{(Default 0) See the man page
 of \code{\link[=merge_taxa_vec]{merge_taxa_vec()}} for more details.
-To conserved the taxonomic rank of the most abundant ASV,}
+To conserved the taxonomic rank of the most abundant ASV,
+set tax_adjust to 0 (default). For the moment only tax_adjust = 0 is
+robust.}
 
 \item{keep_temporary_files}{(logical, default: FALSE) Do we keep temporary
 files ?
