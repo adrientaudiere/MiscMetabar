@@ -2083,7 +2083,7 @@ summary_plot_pq <- function(physeq,
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
-#'   Make a phylogenetic tree using the ASV names of a physeq object and the
+#'   Make a taxonomic tree using the ASV names of a physeq object and the
 #'   Open Tree of Life tree.
 #'
 #' @inheritParams clean_pq
