@@ -27,7 +27,7 @@ A plot
 }}
 
 
-Make a phylogenetic tree using the ASV names of a physeq object and the
+Make a taxonomic tree using the ASV names of a physeq object and the
 Open Tree of Life tree.
 }
 \details{
