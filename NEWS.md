@@ -2,6 +2,8 @@
 
 - Add function [plot_seq_ratio_pq()] to explore the number of sequences per samples using difference ratio of the number of sequences per samples ordered by the number of sequences.
 
+- Fix a bug in [subset_taxa_pq()] when the condition was TRUE only for one taxon
+
 # MiscMetabar 0.14.3 
 
 

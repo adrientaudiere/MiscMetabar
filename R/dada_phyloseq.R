@@ -1555,15 +1555,9 @@ subset_taxa_pq <- function(physeq,
 
   old_MA <-
     as(otu_table(new_physeq, taxa_are_rows = TRUE), "matrix")
-  new_MA <- old_MA[cond, ]
+  new_MA <- old_MA[cond, ,drop=FALSE]
 
-  if (is.matrix(new_MA)) {
-    new_otu_table <- otu_table(new_MA, taxa_are_rows = TRUE)
-  } else {
-    new_MA <- as.matrix(new_MA)
-    new_otu_table <- otu_table(new_MA, taxa_are_rows = TRUE)
-    sample_names(new_otu_table) <- sample_names(new_physeq)
-  }
+  new_otu_table <- otu_table(new_MA, taxa_are_rows = TRUE)
 
   otu_table(new_physeq) <- new_otu_table
 
