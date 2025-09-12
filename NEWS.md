@@ -5,6 +5,7 @@
 - Add function [filt_taxa_wo_NA()] to filter out taxa with NA values at given taxonomic rank(s)
 - Fix a bug in [format2dada2()] by adding semicolons to fill all the taxonomic levels if `from_sintax` is TRUE 
 - Fix a bug in [adonis_pq()] for method `aitchison` and `robust.aitchison`.
+- Add ggplot2 compatibility guards for ComplexUpset functions ([upset_pq()], [upset_test_pq()]) to ensure CRAN compatibility when ggplot2 >= 4.0.0. Functions now check version compatibility and provide informative error messages when incompatible. Add [is_ggplot2_compatible()] helper function.
 
 # MiscMetabar 0.14.2 
 
