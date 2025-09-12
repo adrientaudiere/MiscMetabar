@@ -3250,14 +3250,16 @@ iNEXT_pq <- function(physeq,
 #'
 #' @seealso [ggvenn_pq()]
 #' @examples
-#' if (requireNamespace("ComplexUpset")) {
+#' if (requireNamespace("ComplexUpset") && is_ggplot2_compatible()) {
 #'   upset_pq(data_fungi_mini,
 #'     fact = "Height", width_ratio = 0.2,
 #'     taxa_fill = "Class"
 #'   )
+#' } else {
+#'   message("ComplexUpset requires ggplot2 < 4.0.0 for compatibility")
 #' }
 #' \donttest{
-#' if (requireNamespace("ComplexUpset")) {
+#' if (requireNamespace("ComplexUpset") && is_ggplot2_compatible()) {
 #'   upset_pq(data_fungi_mini, fact = "Height", min_nb_seq = 1000)
 #'   upset_pq(data_fungi_mini, fact = "Height", na_remove = FALSE)
 #'
@@ -3356,6 +3358,8 @@ iNEXT_pq <- function(physeq,
 #'   data_fungi2@sam_data[["Height__Time_0"]][grepl("NA", data_fungi2@sam_data[["Height__Time_0"]])] <-
 #'     NA
 #'   upset_pq(data_fungi2, fact = "Height__Time_0", width_ratio = 0.2, min_size = 2)
+#' } else {
+#'   message("ComplexUpset requires ggplot2 < 4.0.0 for compatibility")
 #' }
 #' }
 upset_pq <- function(physeq,
@@ -3366,6 +3370,15 @@ upset_pq <- function(physeq,
                      numeric_fonction = sum,
                      rarefy_after_merging = FALSE,
                      ...) {
+  # Check ggplot2 compatibility for ComplexUpset
+  if (!requireNamespace("ComplexUpset", quietly = TRUE)) {
+    stop("ComplexUpset package is required for upset_pq(). Please install it with: install.packages('ComplexUpset')")
+  }
+  
+  if (!is_ggplot2_compatible()) {
+    stop(.get_upset_compatibility_message("upset_pq()"))
+  }
+  
   if (!is.null(min_nb_seq)) {
     physeq <- subset_taxa_pq(physeq, taxa_sums(physeq) >= min_nb_seq)
   }
@@ -3448,9 +3461,11 @@ upset_pq <- function(physeq,
 #' @seealso [upset_pq()]
 #' @examples
 #' data(data_fungi)
-#' if (requireNamespace("ComplexUpset")) {
+#' if (requireNamespace("ComplexUpset") && is_ggplot2_compatible()) {
 #'   upset_test_pq(data_fungi, "Height", var_to_test = c("OTU", "Class", "Guild"))
 #'   upset_test_pq(data_fungi, "Time")
+#' } else {
+#'   message("ComplexUpset requires ggplot2 < 4.0.0 for compatibility")
 #' }
 upset_test_pq <-
   function(physeq,
@@ -3460,6 +3475,15 @@ upset_test_pq <-
            na_remove = TRUE,
            numeric_fonction = sum,
            ...) {
+    # Check ggplot2 compatibility for ComplexUpset
+    if (!requireNamespace("ComplexUpset", quietly = TRUE)) {
+      stop("ComplexUpset package is required for upset_test_pq(). Please install it with: install.packages('ComplexUpset')")
+    }
+    
+    if (!is_ggplot2_compatible()) {
+      stop(.get_upset_compatibility_message("upset_test_pq()"))
+    }
+    
     if (!is.null(min_nb_seq)) {
       physeq <- subset_taxa_pq(physeq, taxa_sums(physeq) >= min_nb_seq)
     }

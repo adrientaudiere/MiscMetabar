@@ -2,6 +2,13 @@
 #'
 #' Functions to help analyze and visualize metabarcoding data. Mainly based on
 #' the phyloseq and dada2 packages.
+#' 
+#' @section ComplexUpset Compatibility:
+#' The ComplexUpset-based functions (\code{\link{upset_pq}}, \code{\link{upset_test_pq}}) 
+#' require ggplot2 < 4.0.0 for proper functionality. If you have ggplot2 >= 4.0.0 
+#' installed, these functions will throw an error with instructions to downgrade 
+#' ggplot2 or use alternative visualization methods.
+#' 
 #' @name MiscMetabar-package
 #' @import ggplot2 phyloseq dada2 dplyr purrr
 NULL
@@ -41,3 +48,24 @@ if (getRversion() >= "2.15.1") {
 #' @importFrom lifecycle deprecated
 ## usethis namespace: end
 NULL
+
+#' Package startup message
+#' @param libname Library name
+#' @param pkgname Package name
+#' @keywords internal
+.onAttach <- function(libname, pkgname) {
+  # Check for ComplexUpset compatibility issues
+  if (requireNamespace("ComplexUpset", quietly = TRUE) && !is_ggplot2_compatible()) {
+    ggplot2_version <- if (requireNamespace("ggplot2", quietly = TRUE)) {
+      as.character(packageVersion("ggplot2"))
+    } else {
+      "unknown"
+    }
+    
+    packageStartupMessage(
+      "Warning: ComplexUpset functions (upset_pq, upset_test_pq) may not work properly ",
+      "with ggplot2 >= 4.0.0. Current ggplot2 version: ", ggplot2_version, ". ",
+      "Consider downgrading ggplot2 or using alternative visualization methods."
+    )
+  }
+}

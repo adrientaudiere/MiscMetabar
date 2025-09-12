@@ -63,7 +63,7 @@ sankey_pq(gp, taxa = c(1:5))
 
 ### Upset plot for visualize distribution of taxa in function of samples variables
 
-```{r}
+```{r, eval = requireNamespace("ComplexUpset", quietly = TRUE) && MiscMetabar::is_ggplot2_compatible()}
 upset_pq(gp, "SampleType", taxa = "Class")
 ```
 

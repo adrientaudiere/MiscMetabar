@@ -93,7 +93,7 @@ treemap_pq(ten, lvl1 = "Order", lvl2 = "Family")
 circle_pq(ten, "patient_status")
 ```
 
-```{r}
+```{r, eval = requireNamespace("ComplexUpset", quietly = TRUE) && MiscMetabar::is_ggplot2_compatible()}
 upset_pq(ten, "patient_status_vs_cohort")
 ```
 

@@ -102,17 +102,20 @@ ggvenn_pq(data_fungi,
 ## Upset plot
 
 Venn diagram can quickly become complex to read when the number of modalities increase. One graphical solution is upset plot. MiscMetabar propose a solution based on the package [ComplexUpset](https://krassowski.github.io/complex-upset/).
-```{r}
+
+**Note:** ComplexUpset functions require ggplot2 < 4.0.0 for compatibility. If you have ggplot2 >= 4.0.0, these examples will not run.
+
+```{r, eval = requireNamespace("ComplexUpset", quietly = TRUE) && MiscMetabar::is_ggplot2_compatible()}
 upset_pq(data_fungi, fact = "Height")
 ```
 
-```{r}
+```{r, eval = requireNamespace("ComplexUpset", quietly = TRUE) && MiscMetabar::is_ggplot2_compatible()}
 upset_pq(data_fungi, fact = "Time")
 ```
 
 `ComplexUpset` package allow powerful configuration of you plot as you can see in the following figure.
 
-```{r}
+```{r, eval = requireNamespace("ComplexUpset", quietly = TRUE) && MiscMetabar::is_ggplot2_compatible()}
 upset_pq(
   data_fungi,
   fact = "Time",

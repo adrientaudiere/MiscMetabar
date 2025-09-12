@@ -254,7 +254,9 @@ test_that("ggvenn_pq works with data_fungi_mini dataset", {
 
 
 test_that("upset_pq works with data_fungi dataset", {
-  if (requireNamespace("tidyr") && requireNamespace("ComplexUpset")) {
+  skip_if_not(requireNamespace("tidyr", quietly = TRUE), "tidyr not available")
+  skip_if_not(requireNamespace("ComplexUpset", quietly = TRUE), "ComplexUpset not available")
+  skip_if_not(is_ggplot2_compatible(), "ggplot2 >= 4.0.0 not compatible with ComplexUpset")
     expect_silent(suppressMessages(upset_pq(data_fungi_mini, "Height")))
     skip_on_cran()
     expect_s3_class(upset_pq(data_fungi_mini, "Height", taxa_fill = "Class"), "ggplot")
@@ -280,11 +282,12 @@ test_that("upset_pq works with data_fungi dataset", {
     )
 
     expect_error(upset_pq(data_fungi_mini))
-  }
 })
 
 test_that("upset_test_pq works with data_fungi_mini dataset", {
-  if (requireNamespace("tidyr") && requireNamespace("ComplexUpset")) {
+  skip_if_not(requireNamespace("tidyr", quietly = TRUE), "tidyr not available")
+  skip_if_not(requireNamespace("ComplexUpset", quietly = TRUE), "ComplexUpset not available")
+  skip_if_not(is_ggplot2_compatible(), "ggplot2 >= 4.0.0 not compatible with ComplexUpset")
     expect_s3_class(upset_test_pq(data_fungi_mini, "Height"), "data.frame")
     skip_on_cran()
     expect_s3_class(upset_test_pq(data_fungi_mini, "Time"), "data.frame")
@@ -307,7 +310,6 @@ test_that("upset_test_pq works with data_fungi_mini dataset", {
     )
     expect_error(upset_test_pq(data_fungi_mini, "Height", var_to_test = "GUILDDDS"))
     expect_error(upset_test_pq(data_fungi_mini))
-  }
 })
 
 test_that("plot_LCBD_pq works with data_fungi dataset", {
