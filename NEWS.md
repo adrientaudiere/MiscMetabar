@@ -4,6 +4,8 @@
 
 - Fix a bug in [subset_taxa_pq()] when the condition was TRUE only for one taxon
 
+- Fix warnings in [graph_test_pq()] whith ggplot2 v.4.0.0
+
 # MiscMetabar 0.14.3 
 
 

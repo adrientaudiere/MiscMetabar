@@ -5,7 +5,7 @@
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
-#' A wrapper of [phyloseqGraphTest::graph_perm_test()] for quick plot with
+#' A wrapper of [phTest::graph_perm_test()] for quick plot with
 #' important statistics
 
 #' @inheritParams clean_pq
@@ -22,11 +22,11 @@
 #' @param na_remove (logical, default FALSE) If set to TRUE, remove samples with
 #'   NA in the variables set in formula.
 #' @param ... Other params for be passed on to
-#'   [phyloseqGraphTest::graph_perm_test()] function
+#'   [phTest::graph_perm_test()] function
 #'
 #' @examples
 #' \donttest{
-#' if (requireNamespace("phyloseqGraphTest")) {
+#' if (requireNamespace("phTest")) {
 #'   data(enterotype)
 #'   graph_test_pq(enterotype, fact = "SeqTech")
 #'   graph_test_pq(enterotype, fact = "Enterotype", na_remove = TRUE)
@@ -38,7 +38,7 @@
 #' and the number of permutations
 #' @details
 #' This function is mainly a wrapper of the work of others.
-#'   Please cite `phyloseqGraphTest` package.
+#'   Please cite `phTest` package.
 #' @export
 
 graph_test_pq <- function(physeq,
@@ -76,7 +76,17 @@ graph_test_pq <- function(physeq,
     ...
   )
   if (return_plot) {
-    p <- phyloseqGraphTest::plot_test_network(res_graph_test) +
+    if (res_graph_test$type == "mst"){
+       layout <- igraph::layout_(res_graph_test$net, igraph::with_kk())
+    } else {
+      layout <- igraph::layout_(res_graph_test$net, igraph::with_fr())
+    }
+     p <-ggplot(res_graph_test$net,
+      aes(x = x, y = y, xend = xend, yend = yend), layout = layout) + 
+       ggnetwork::geom_edges(aes(linetype = edgetype)) + 
+       ggnetwork::geom_nodes(aes(color = sampletype)) + 
+        scale_linetype_manual(values = c(3, 1)) + 
+       ggnetwork::theme_blank() +
       labs(
         title = title,
         subtitle = paste(
