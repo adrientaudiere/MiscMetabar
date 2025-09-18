@@ -46,7 +46,7 @@ add_dna_to_phyloseq <- function(physeq, prefix_taxa_names = "Taxa_") {
 #' (i) taxa names in refseq, taxonomy table and otu_table and between
 #' (ii) sample names in sam_data and otu_table.
 #'
-#' @param physeq (required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+#' @param physeq (required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 #'   using the `phyloseq` package.
 #' @param remove_empty_samples (logical) Do you want to remove samples
 #'   without sequences (this is done after removing empty taxa)
@@ -457,7 +457,7 @@ track_wkflow <- function(list_of_objects,
 #' Contrary to [track_wkflow()], only phyloseq object are possible.
 #' More information are available in the manual of the function [track_wkflow()]
 #'
-#' @param list_pq_obj (required): a list of object passed on to [track_wkflow()]
+#' @param list_pq_obj (required) a list of object passed on to [track_wkflow()]
 #'   Only phyloseq object will return value because information of sample is needed
 #' @param ... Other args passed on to [track_wkflow()]
 #'
@@ -2361,7 +2361,7 @@ build_phytree_pq <- function(physeq,
 #' per samples in function of the factor `fact`.
 #'
 #' @inheritParams clean_pq
-#' @param fact (required): Name of the factor to cluster samples by modalities.
+#' @param fact (required) Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}.
 #' @param boxplot (logical) Do you want to plot boxplot?
 #'
@@ -2402,7 +2402,7 @@ are_modality_even_depth <- function(physeq, fact, boxplot = FALSE) {
 #' the order of leaf in the phylogenetic tree.
 #'
 #' @inheritParams clean_pq
-#' @param names_ordered (required): Names of the taxa (must be the same
+#' @param names_ordered (required) Names of the taxa (must be the same
 #'   as taxa in `taxa_names(physeq)`) in a given order
 #' @param remove_phy_tree (logical, default FALSE) If TRUE, the phylogenetic
 #'   tree is removed. It is
@@ -3096,7 +3096,7 @@ taxa_as_rows <- function(physeq) {
 #' on diversity. Internally used in [accu_plot_balanced_modality()].
 #'
 #' @inheritParams clean_pq
-#' @param fact (required): The variable to rarefy. Must be present in
+#' @param fact (required) The variable to rarefy. Must be present in
 #'   the `sam_data` slot of the physeq object.
 #' @param rngseed	(Optional). A single integer value passed to set.seed,
 #'   which is used to fix a seed for reproducibly random number generation

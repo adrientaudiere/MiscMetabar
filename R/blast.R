@@ -9,7 +9,7 @@
 #'
 #' Use the blast software.
 #'
-#' @param physeq (required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+#' @param physeq (required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 #'   using the `phyloseq` package.
 #' @param seq2search (required) path to a fasta file defining the sequences
 #'   you want to blast against the taxa (ASV, OTU) sequences from the physeq object.

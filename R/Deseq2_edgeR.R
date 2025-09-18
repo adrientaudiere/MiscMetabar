@@ -9,10 +9,10 @@
 #' Graphical representation of edgeR result.
 #'
 #' @inheritParams clean_pq
-#' @param contrast (required):This argument specifies what comparison
+#' @param contrast (required) This argument specifies what comparison
 #'   to extract from the object to build a results table.
 #'   See \code{\link[DESeq2]{results}} man page for more details.
-#' @param pval (default: 0.05): the significance cutoff used for optimizing
+#' @param pval (default: 0.05) the significance cutoff used for optimizing
 #'   the independent filtering. If the adjusted p-value cutoff (FDR) will be a
 #'   value other than 0.05, pval should be set to that value.
 #' @param taxolev taxonomic level of interest

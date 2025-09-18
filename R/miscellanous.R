@@ -184,7 +184,7 @@ simplify_taxo <- function(
 #' Internally used in [count_seq()].
 #' Warning: don't work when there is '.' in the name of the
 #'   file before the extension
-#' @param file_path (required): path to a file
+#' @param file_path (required) path to a file
 #' @author Adrien Taudière
 #'
 #' @return The extension of a file.
@@ -212,7 +212,7 @@ get_file_extension <- function(file_path) {
 #'
 #' Mostly for internal use.
 #'
-#' @param x (required): value
+#' @param x (required) value
 #' @param y if y is set, compute the division of x by y
 #' @param accuracy number of digits (number of digits after zero)
 #' @param add_symbol if set to TRUE add the % symbol to the value
