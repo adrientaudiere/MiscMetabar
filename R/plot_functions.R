@@ -803,45 +803,52 @@ sankey_pq <-
 
     if (!add_nb_seq) {
       otu_tab[otu_tab > 0] <- 1
-      mat_interm <- matrix()
-      mat <- matrix(ncol = 3)
-      colnames(mat) <- c("Var1", "Var2", "value")
-      for (i in 1:(length(taxa) - 1)) {
+      mat_list <- vector("list", length(taxa) - 1)
+      for (i in seq_len(length(taxa) - 1)) {
         res_interm <-
           table(physeq@tax_table[, taxa[i]], physeq@tax_table[, taxa[i + 1]])
         mat_interm <- reshape2::melt(res_interm)
-        mat_interm <- mat_interm[mat_interm[, 3] > 0, ]
-        mat <- rbind(mat, mat_interm)
+        mat_list[[i]] <- mat_interm[mat_interm[, 3] > 0, ]
       }
-    } else if (add_nb_seq) {
-      mat_interm <- matrix()
-      mat <- matrix(ncol = 3)
+      mat <- do.call(rbind, mat_list)
       colnames(mat) <- c("Var1", "Var2", "value")
+    } else if (add_nb_seq) {
+      mat_list <- vector("list", length(taxa) - 1)
       tax_table_interm <-
-        physeq@tax_table[rep(seq(1, ntaxa(physeq)),
+        physeq@tax_table[rep(seq_len(ntaxa(physeq)),
           times = taxa_sums(physeq)
         )]
 
-      for (i in 1:(length(taxa) - 1)) {
+      for (i in seq_len(length(taxa) - 1)) {
         res_interm <-
           table(tax_table_interm[, taxa[i]], tax_table_interm[, taxa[i + 1]])
         mat_interm <- reshape2::melt(res_interm)
-        mat_interm <- mat_interm[mat_interm[, 3] > 0, ]
-        mat <- rbind(mat, mat_interm)
+        mat_list[[i]] <- mat_interm[mat_interm[, 3] > 0, ]
       }
+      mat <- do.call(rbind, mat_list)
+      colnames(mat) <- c("Var1", "Var2", "value")
     }
 
     if (!is.null(fact)) {
       net_matrix2links <- function(m = NULL) {
-        res <- matrix(ncol = 3)
-        for (i in seq_len(dim(m)[1])) {
-          for (j in seq_len(dim(m)[2])) {
-            if (m[i, j] > 0) {
-              res <- rbind(res, c(rownames(m)[i], colnames(m)[j], m[i, j]))
-            }
-          }
+        # Pre-calculate dimensions and non-zero positions for efficiency
+        dims <- dim(m)
+        rows <- row(m)
+        cols <- col(m)
+        mask <- m > 0
+        
+        if (!any(mask)) {
+          return(matrix(ncol = 3)[0, ])  # Return empty matrix with correct structure
         }
-        return(res)
+        
+        # Vectorized approach - much more efficient than nested loops
+        row_names <- rownames(m)[rows[mask]]
+        col_names <- colnames(m)[cols[mask]]
+        values <- m[mask]
+        
+        result <- cbind(row_names, col_names, values)
+        colnames(result) <- c("Var1", "Var2", "value")
+        return(result)
       }
 
       mat_interm <-
@@ -893,7 +900,7 @@ sankey_pq <-
       mat <- mat[mat[, 3] >= min_nb_tax, ]
     }
 
-    for (i in seq_len(length(symbol2sub))) {
+    for (i in seq_along(symbol2sub)) {
       mat <- apply(mat, 2, function(x) {
         gsub(symbol2sub[i], "", x)
       })
@@ -904,7 +911,7 @@ sankey_pq <-
       unique(c(as.vector(mat[, 1]), as.vector(mat[, 2])))
     names_nodes <- names_nodes[!is.na(names_nodes)]
     tax_sank$nodes <-
-      data.frame((seq_len(length(names_nodes))) - 1, names_nodes)
+      data.frame((seq_along(names_nodes)) - 1, names_nodes)
     names(tax_sank$nodes) <- c("code", "name")
     mat2 <- mat
     for (i in seq_len(nrow(tax_sank$nodes))) {
@@ -2650,7 +2657,7 @@ multi_biplot_pq <- function(physeq,
     names_split_by <- names(table(physeq@sam_data[[split_by]]))
     couples <- combn(names_split_by, 2)
 
-    p <- list()
+    p <- vector("list", ncol(couples))
     for (c in seq_along(ncol(couples))) {
       names_p <- paste0(couples[1, c], " - ", couples[2, c])
       new_physeq <-

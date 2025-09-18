@@ -2126,7 +2126,7 @@ plot_guild_pq <-
 
     # Number of sequences per guild
     nb_seq_by_guild <- vector("integer", length(guilds$Var1))
-    for (i in seq(1, length(guilds$Var1))) {
+    for (i in seq_along(guilds$Var1)) {
       nb_seq_by_guild[i] <-
         sum(taxa_sums(physeq@otu_table)[grepl(guilds$Var1[i], physeq@tax_table[, "guild"])])
     }
@@ -2670,7 +2670,6 @@ cutadapt_remove_primers <- function(path_to_fastq,
                                     cmd_is_run = TRUE,
                                     return_file_path = FALSE,
                                     args_before_cutadapt = "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv && ") {
-  cmd <- list()
   if (!dir.exists(folder_output)) {
     dir.create(folder_output)
   }
@@ -2685,6 +2684,8 @@ cutadapt_remove_primers <- function(path_to_fastq,
       pattern_R2 = pattern_R2,
       nb_files = nb_files
     )
+    cmd <- vector("list", length(lff$fnfs)) # pre-allocated for performance
+    names(cmd) <- lff$fnfs
     for (f in lff$fnfs) {
       cmd[[f]] <-
         paste0(
@@ -2715,6 +2716,8 @@ cutadapt_remove_primers <- function(path_to_fastq,
       pattern_R2 = pattern_R2,
       nb_files = nb_files
     )
+    cmd <- vector("list", length(lff$fnfs)) # pre-allocated for performance
+    names(cmd) <- lff$fnfs
 
     primer_fw_RC <- dada2::rc(primer_fw)
     primer_rev_RC <- dada2::rc(primer_rev)

@@ -507,7 +507,7 @@ plot_LCBD_pq <- function(physeq,
       return(p_LCBD)
     } else {
       p_heatmap <- vector("list", length(sam_variables))
-      for (i in seq_len(length(sam_variables))) {
+      for (i in seq_along(sam_variables)) {
         p_heatmap[[i]] <- ggplot(filter(resLCBD, p.adj < pval)) +
           geom_tile(inherit.aes = FALSE, aes(
             y = reorder(Sample_names, -LCBD, sum),
@@ -534,7 +534,7 @@ plot_LCBD_pq <- function(physeq,
       return(p_LCBD)
     } else {
       p_heatmap <- vector("list", length(sam_variables))
-      for (i in seq_len(length(sam_variables))) {
+      for (i in seq_along(sam_variables)) {
         p_heatmap[[i]] <- ggplot(resLCBD) +
           geom_tile(inherit.aes = FALSE, aes(
             y = reorder(Sample_names, -LCBD, sum),
