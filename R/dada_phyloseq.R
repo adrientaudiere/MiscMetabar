@@ -1604,7 +1604,7 @@ subset_taxa_pq <- function(physeq,
 #'   condition are kept.
 #' @param clean_pq (logical)
 #'   If set to TRUE, empty samples and empty taxa (ASV, OTU) are discarded
-#'   after filtering.
+#'   after filtering. 
 #'
 #' @return a new phyloseq object
 #' @export

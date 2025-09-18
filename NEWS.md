@@ -6,6 +6,15 @@
 
 - Fix warnings in [graph_test_pq()] whith ggplot2 v.4.0.0
 
+- Fix a bug in [upseq_pq()] when using `min_nb_seq` parameter.
+
+- Add params `discard_genus_alone`, `pattern_to_remove_tip` and `pattern_to_remove_node` to [rotl_pq()] to enhance the default naming of 
+nodes and tips
+
+## BREAKING CHANGE
+
+- Replace `species_colnames` by `taxonomic_ranks` in [rotl_pq()]
+
 # MiscMetabar 0.14.3 
 
 

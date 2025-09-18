@@ -2087,11 +2087,19 @@ summary_plot_pq <- function(physeq,
 #'   Open Tree of Life tree.
 #'
 #' @inheritParams clean_pq
-#' @param species_colnames (default: "Genus_species"): the name of the column
-#'   where the species binominal name is stored in `@tax_table` slot.
-#'   Can also be a vector of two columns names e.g. `c("Genus", "Species")`
+#' @param taxonomic_rank (Character)
+#'   The column(s) present in the @tax_table slot of the phyloseq object. Can
+#'   be a vector of two columns (e.g. the default c("Genus", "Species")). If only
+#'   one column is set it need to be format in this way ("Genus species" for ex. 
+#'   "Quercus robur") with a space. 
 #' @param context_name : can bue used to select only a part of the Open Tree
 #'   of Life. See `?rotl::tnrs_contexts()` for available values
+#' @param discard_genus_alone (logical) If TRUE (default), genus without
+#'   information at the species level are discarded.
+#' @param pattern_to_remove_tip (character regex string) A regex to remove
+#'   unwanted part of tip names. If set to null, tip names are left intact.
+#' @param pattern_to_remove_node (character regex string) A regex to remove
+#'   unwanted part of node names. If set to null, node names are left intact.
 #' @return A plot
 #' @export
 #' @author Adrien Taudière
@@ -2102,29 +2110,39 @@ summary_plot_pq <- function(physeq,
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' \donttest{
 #' if (requireNamespace("rotl")) {
-#'   tr <- rotl_pq(data_fungi_mini, species_colnames = "Genus_species")
+#'   tr <- rotl_pq(data_fungi_mini, pattern_to_remove_tip=NULL)
 #'   plot(tr)
 #'
-#'   tr_Asco <- rotl_pq(data_fungi, species_colnames = "Genus_species", context_name = "Ascomycetes")
+#'   tr_Asco <- rotl_pq(data_fungi, taxonomic_rank = c("Genus", "Species"), 
+#'   context_name = "Ascomycetes")
 #'   plot(tr_Asco)
 #' }
 #' }
 rotl_pq <- function(physeq,
-                    species_colnames = "Genus_species",
-                    context_name = "All life") {
-  if (length(species_colnames) == 2) {
-    physeq@tax_table <- tax_table(cbind(
-      physeq@tax_table,
-      "Genus_species" = paste(physeq@tax_table[, species_colnames[1]],
-        physeq@tax_table[, species_colnames[2]],
-        sep = "_"
-      )
-    ))
-    species_colnames <- "Genus_species"
+  taxonomic_rank= c("Genus", "Species"),
+                    context_name = "All life",
+                  discard_genus_alone= TRUE,
+                  pattern_to_remove_tip = c("ott\\d+|_ott\\d+"),
+                   pattern_to_remove_node = c("_ott.*|mrca*")
+                ) {
+  
+   if (sum(!taxonomic_rank %in% colnames(physeq@tax_table)) != 0) {
+    stop(
+      "The taxonomic_rank parameter do not fit with the @tax_table column of your phyloseq object."
+    )
   }
-  taxa_names_rotl <- physeq@tax_table[, species_colnames]
-  taxa_names_rotl <- taxa_names_rotl[!grepl("NA", taxa_names_rotl)]
-  taxa_names_rotl <- c(unclass(gsub("_", " ", taxa_names_rotl)))
+
+  taxnames <- apply(physeq@tax_table[, taxonomic_rank], 1, paste, collapse = " ")
+  taxnames <- taxnames[!is.na(taxnames)]   
+  if (discard_genus_alone) {
+    taxnames <- taxnames[grepl(pattern = " ", taxnames)]
+    taxnames <- taxnames[!grepl(pattern = "NA", taxnames)]
+  } else {
+      taxnames <- taxnames[!grepl(pattern = "NA NA", taxnames)]
+      taxnames <- gsub(" NA", "", taxnames)
+   }
+
+  taxa_names_rotl <- as.vector(unique(taxnames))
 
   resolved_names <- httr::with_config(
     httr::config(ssl_verifypeer = FALSE),
@@ -2141,6 +2159,15 @@ rotl_pq <- function(physeq,
   tr <- httr::with_config(
     httr::config(ssl_verifypeer = FALSE), rotl::tol_induced_subtree(ott_ids = rotl::ott_id(resolved_names2))
   )
+
+if(!is.null(pattern_to_remove_tip)){
+    tr$tip.label <- stringr::str_remove(tr$tip.label , pattern_to_remove_tip)
+}
+
+if(!is.null(pattern_to_remove_node)){
+    tr$node.label <- stringr::str_remove(tr$node.label, pattern_to_remove_node)
+}
+
   return(tr)
 }
 ################################################################################
@@ -3367,7 +3394,7 @@ upset_pq <- function(physeq,
                      rarefy_after_merging = FALSE,
                      ...) {
   if (!is.null(min_nb_seq)) {
-    physeq <- subset_taxa_pq(physeq, taxa_sums(physeq) >= min_nb_seq)
+    physeq@otu_table[physeq@otu_table<min_nb_seq] <- 0 
   }
 
   if (na_remove) {
