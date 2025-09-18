@@ -9,7 +9,7 @@
 #' Graphical representation of mt test.
 #'
 #' @param mt (required) Result of a mt test from the function [phyloseq::mt()].
-#' @param alpha (default: 0.05) Choose the cut off p-value to plot taxa.
+#' @param pval (default: 0.05) Choose the cut off p-value to plot taxa.
 #' @param color_tax (default: "Class") A taxonomic level to color the points.
 #' @param taxa (default: "Species") The taxonomic level you choose for x-positioning.
 #' @author Adrien Taudière
@@ -27,10 +27,10 @@
 
 plot_mt <-
   function(mt = NULL,
-           alpha = 0.05,
+           pval = 0.05,
            color_tax = "Class",
            taxa = "Species") {
-    d <- mt[mt$plower < alpha, ]
+    d <- mt[mt$plower < pval, ]
     d$tax_col <- factor(as.character(d[, color_tax]))
     d$tax_col[is.na(d$tax_col)] <- "unidentified"
     d$tax <- as.character(d[, taxa])
