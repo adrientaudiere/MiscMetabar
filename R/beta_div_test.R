@@ -1418,37 +1418,27 @@ var_par_rarperm_pq <-
     }
 
 
-    res_varpart$part$indfract$R.square <-
-      rowMeans(sapply(res_perm, function(x) {
-        (x$part$indfract$R.square)
-      }))
+    # Pre-compute sapply results for efficiency
+    r_square_matrix <- sapply(res_perm, function(x) x$part$indfract$R.square)
+    adj_r_square_matrix <- sapply(res_perm, function(x) x$part$indfract$Adj.R.square)
+
+    res_varpart$part$indfract$R.square <- rowMeans(r_square_matrix)
     res_varpart$part$indfract$R.square_quantil_max <-
-      apply(sapply(res_perm, function(x) {
-        (x$part$indfract$R.square)
-      }), 1, function(xx) {
+      apply(r_square_matrix, 1, function(xx) {
         quantile(xx, probs = quantile_prob, na.rm = TRUE)
       })
     res_varpart$part$indfract$R.square_quantil_min <-
-      apply(sapply(res_perm, function(x) {
-        (x$part$indfract$R.square)
-      }), 1, function(xx) {
+      apply(r_square_matrix, 1, function(xx) {
         quantile(xx, probs = 1 - quantile_prob, na.rm = TRUE)
       })
 
-    res_varpart$part$indfract$Adj.R.square <-
-      rowMeans(sapply(res_perm, function(x) {
-        (x$part$indfract$Adj.R.square)
-      }))
+    res_varpart$part$indfract$Adj.R.square <- rowMeans(adj_r_square_matrix)
     res_varpart$part$indfract$Adj.R.squared_quantil_max <-
-      apply(sapply(res_perm, function(x) {
-        (x$part$indfract$Adj.R.square)
-      }), 1, function(xx) {
+      apply(adj_r_square_matrix, 1, function(xx) {
         quantile(xx, probs = quantile_prob, na.rm = TRUE)
       })
     res_varpart$part$indfract$Adj.R.squared_quantil_min <-
-      apply(sapply(res_perm, function(x) {
-        (x$part$indfract$Adj.R.square)
-      }), 1, function(xx) {
+      apply(adj_r_square_matrix, 1, function(xx) {
         quantile(xx, probs = 1 - quantile_prob, na.rm = TRUE)
       })
     return(res_varpart)
