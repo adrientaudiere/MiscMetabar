@@ -13,6 +13,8 @@ nodes and tips
 
 - Improve documentation consistency following the style guide
 
+- Fix a bug in blast function by allowing value to be equal (not strictly greater) to the threshold values `id_cut`, `bit_score_cut`, `min_cover_cut` and `e_value_cut`. 
+
 ## BREAKING CHANGE
 
 - Replace `species_colnames` by `taxonomic_ranks` in [rotl_pq()]

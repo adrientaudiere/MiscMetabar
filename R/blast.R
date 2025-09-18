@@ -149,10 +149,10 @@ blast_to_phyloseq <- function(physeq,
   }
 
   if (score_filter) {
-    blast_tab <- blast_tab[blast_tab[, "bit score"] > bit_score_cut, ]
-    blast_tab <- blast_tab[blast_tab[, "% id. match"] > id_cut, ]
-    blast_tab <- blast_tab[blast_tab[, "Query cover"] > min_cover_cut, ]
-    blast_tab <- blast_tab[blast_tab[, "e-value"] < e_value_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "bit score"] >= bit_score_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "% id. match"] >= id_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "Query cover"] >= min_cover_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "e-value"] <= e_value_cut, ]
   } else {
     blast_tab <- blast_tab
   }
@@ -338,10 +338,10 @@ blast_pq <- function(physeq,
   }
 
   if (score_filter) {
-    blast_tab <- blast_tab[blast_tab[, "bit score"] > bit_score_cut, ]
-    blast_tab <- blast_tab[blast_tab[, "% id. match"] > id_cut, ]
-    blast_tab <- blast_tab[blast_tab[, "Query cover"] > min_cover_cut, ]
-    blast_tab <- blast_tab[blast_tab[, "e-value"] < e_value_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "bit score"] >= bit_score_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "% id. match"] >= id_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "Query cover"] >= min_cover_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "e-value"] <= e_value_cut, ]
   } else {
     blast_tab <- blast_tab
   }
@@ -598,10 +598,10 @@ blast_to_derep <- function(derep,
   }
 
   if (score_filter) {
-    blast_tab <- blast_tab[blast_tab[, "bit score"] > bit_score_cut, ]
-    blast_tab <- blast_tab[blast_tab[, "% id. match"] > id_cut, ]
-    blast_tab <- blast_tab[blast_tab[, "Query cover"] > min_cover_cut, ]
-    blast_tab <- blast_tab[blast_tab[, "e-value"] < e_value_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "bit score"] >= bit_score_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "% id. match"] >= id_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "Query cover"] >= min_cover_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "e-value"] <= e_value_cut, ]
   } else {
     blast_tab <- blast_tab
   }
