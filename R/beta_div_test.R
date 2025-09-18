@@ -1115,7 +1115,7 @@ taxa_only_in_one_level <- function(physeq,
 #' @inheritParams clean_pq
 #' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
 #'    different lines
-#' @param taxa_name (required): the name of the taxa
+#' @param taxa_name (required) the name of the taxa
 #' @param digits (default = 2) integer indicating the number of decimal places
 #'   to be used (see `?round` for more information)
 #'

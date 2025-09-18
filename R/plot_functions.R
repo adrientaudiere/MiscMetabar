@@ -526,7 +526,7 @@ accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
 #' @param taxa (default: 'Order') Name of the taxonomic rank of interest
 #' @param nproc (default 1)
 #'   Set to number of cpus/processors to use for parallelization
-#' @param add_nb_seq (default: TRUE) Represent the number of sequences or the
+#' @param add_nb_seq (logical, default TRUE) Represent the number of sequences or the
 #'    number of OTUs (add_nb_seq = FALSE)
 #' @param rarefy (logical) Does each samples modalities need to be rarefy in
 #'               order to compare them with the same amount of sequences?
@@ -965,9 +965,9 @@ sankey_pq <-
 #' Graphical representation of distribution of taxa across combined modality of a factor.
 #'
 #' @inheritParams clean_pq
-#' @param fact (required): Name of the factor to cluster samples by modalities.
+#' @param fact (required) Name of the factor to cluster samples by modalities.
 #' Need to be in \code{physeq@sam_data}.
-#' @param min_nb_seq (default: 0)): minimum number of sequences by OTUs by
+#' @param min_nb_seq (default: 0) minimum number of sequences by OTUs by
 #'  samples to take into count this OTUs in this sample. For example,
 #'  if min_nb_seq=2,each value of 2 or less in the OTU table
 #'  will be change into 0 for the analysis
@@ -1177,7 +1177,7 @@ venn_pq <-
 #' examples.
 #'
 #' @inheritParams clean_pq
-#' @param fact (required): Name of the factor to cluster samples by modalities.
+#' @param fact (required) Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}.
 #' @param min_nb_seq minimum number of sequences by OTUs by
 #'   samples to take into count this OTUs in this sample. For example,
@@ -1495,7 +1495,7 @@ multiplot <-
 #'   computed.
 #'
 #' @inheritParams clean_pq
-#' @param fact (required): The variable to test. Must be present in
+#' @param fact (required) The variable to test. Must be present in
 #'   the `sam_data` slot of the physeq object.
 #' @param variable : Alias for factor. Kept only for backward compatibility.
 #' @param hill_scales (a vector of integer) The list of q values to compute
@@ -1768,7 +1768,7 @@ hill_pq <- function(physeq,
 #' Basically a wrapper of function [ggstatsplot::ggbetweenstats()] for
 #' object of class phyloseq
 #' @inheritParams clean_pq
-#' @param fact (required): The variable to test. Must be present in
+#' @param fact (required) The variable to test. Must be present in
 #'   the `sam_data` slot of the physeq object.
 #' @param one_plot (logical, default FALSE) If TRUE, return a unique
 #'   plot with the three plot inside using the patchwork package.
@@ -2183,7 +2183,7 @@ if(!is.null(pattern_to_remove_node)){
 # #'  and the number of sequences under the name `nb_sequences`
 # #'
 # #'  @inheritParams clean_pq
-# #'  @param taxonomic_level (default: NULL): a vector of selected
+# #'  @param taxonomic_level (default: NULL) a vector of selected
 # #'  taxonomic level using
 # #'    their column numbers (e.g. taxonomic_level = 1:7)
 # #'  @param ... Arguments passed on to \code{\link[metacoder]{heat_tree}}
@@ -2688,7 +2688,7 @@ multi_biplot_pq <- function(physeq,
 #' @param type If "nb_seq" (default), the number of sequences is
 #'   used in plot. If "nb_taxa", the number of ASV is plotted. If both,
 #'   return a list of two plots, one for nbSeq and one for ASV.
-#' @param taxa_fill (default: 'Order'): Name of the taxonomic rank of interest
+#' @param taxa_fill (default: 'Order') Name of the taxonomic rank of interest
 #' @param print_values (logical, default TRUE): Do we print some values on plot?
 #' @param color_border color for the border
 #' @param linewidth The line width of geom_bar
@@ -3255,7 +3255,7 @@ iNEXT_pq <- function(physeq,
 #' Alternative to venn plot.
 #'
 #' @inheritParams clean_pq
-#' @param fact (required): Name of the factor to cluster samples by modalities.
+#' @param fact (required) Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}.
 #' @param min_nb_seq minimum number of sequences by OTUs by
 #'   samples to take into count this OTUs in this sample. For example,
