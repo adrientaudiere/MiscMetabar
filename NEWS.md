@@ -11,16 +11,14 @@
 - Add params `discard_genus_alone`, `pattern_to_remove_tip` and `pattern_to_remove_node` to [rotl_pq()] to enhance the default naming of 
 nodes and tips
 
-- Harmonize parameter names and documentation format for consistency:
-  - `plot_mt()`: `alpha` → `pval` (aligns with existing pval pattern in other functions)
-  - `krona()`: `file` → `file_path` (aligns with existing file_path pattern)
-  - Standardize parameter documentation format: `(required):` → `(required)` and `(default: value):` → `(default: value)`
-  - Add missing type specifications for logical parameters following style guide
+- Improve documentation consistency following the style guide
 
 ## BREAKING CHANGE
 
 - Replace `species_colnames` by `taxonomic_ranks` in [rotl_pq()]
-- Parameter name changes in `plot_mt()` and `krona()` (see harmonization list above)
+- Parameter name changes in `plot_mt()` and `krona()`
+  - `plot_mt()`: `alpha` → `pval` (aligns with existing pval pattern in other functions)
+  - `krona()`: `file` → `file_path` (aligns with existing file_path pattern)
 
 # MiscMetabar 0.14.3 
 
