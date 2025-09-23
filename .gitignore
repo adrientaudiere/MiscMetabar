@@ -7,5 +7,3 @@ inst/doc
 /Meta/
 
 /.quarto/
-# Add to .gitignore to exclude test file from commits
-test_performance_improvements.R
