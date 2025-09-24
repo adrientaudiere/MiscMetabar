@@ -8,7 +8,7 @@ distance for all samples}
 dist_pos_control(physeq, samples_names, method = "bray")
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{samples_names}{(required) a vector of names for samples with

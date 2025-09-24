@@ -16,10 +16,10 @@ upset_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{fact}{(required): Name of the factor to cluster samples by modalities.
+\item{fact}{(required) Name of the factor to cluster samples by modalities.
 Need to be in \code{physeq@sam_data}.}
 
 \item{taxa_fill}{(default NULL) fill the ASV upset using a column in

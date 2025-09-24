@@ -9,7 +9,7 @@
 #' Graphical representation of mt test.
 #'
 #' @param mt (required) Result of a mt test from the function [phyloseq::mt()].
-#' @param alpha (default: 0.05) Choose the cut off p-value to plot taxa.
+#' @param pval (default: 0.05) Choose the cut off p-value to plot taxa.
 #' @param color_tax (default: "Class") A taxonomic level to color the points.
 #' @param taxa (default: "Species") The taxonomic level you choose for x-positioning.
 #' @author Adrien Taudière
@@ -27,10 +27,10 @@
 
 plot_mt <-
   function(mt = NULL,
-           alpha = 0.05,
+           pval = 0.05,
            color_tax = "Class",
            taxa = "Species") {
-    d <- mt[mt$plower < alpha, ]
+    d <- mt[mt$plower < pval, ]
     d$tax_col <- factor(as.character(d[, color_tax]))
     d$tax_col[is.na(d$tax_col)] <- "unidentified"
     d$tax <- as.character(d[, taxa])
@@ -526,7 +526,7 @@ accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
 #' @param taxa (default: 'Order') Name of the taxonomic rank of interest
 #' @param nproc (default 1)
 #'   Set to number of cpus/processors to use for parallelization
-#' @param add_nb_seq (default: TRUE) Represent the number of sequences or the
+#' @param add_nb_seq (logical, default TRUE) Represent the number of sequences or the
 #'    number of OTUs (add_nb_seq = FALSE)
 #' @param rarefy (logical) Does each samples modalities need to be rarefy in
 #'               order to compare them with the same amount of sequences?
@@ -803,45 +803,52 @@ sankey_pq <-
 
     if (!add_nb_seq) {
       otu_tab[otu_tab > 0] <- 1
-      mat_interm <- matrix()
-      mat <- matrix(ncol = 3)
-      colnames(mat) <- c("Var1", "Var2", "value")
-      for (i in 1:(length(taxa) - 1)) {
+      mat_list <- vector("list", length(taxa) - 1)
+      for (i in seq_len(length(taxa) - 1)) {
         res_interm <-
           table(physeq@tax_table[, taxa[i]], physeq@tax_table[, taxa[i + 1]])
         mat_interm <- reshape2::melt(res_interm)
-        mat_interm <- mat_interm[mat_interm[, 3] > 0, ]
-        mat <- rbind(mat, mat_interm)
+        mat_list[[i]] <- mat_interm[mat_interm[, 3] > 0, ]
       }
-    } else if (add_nb_seq) {
-      mat_interm <- matrix()
-      mat <- matrix(ncol = 3)
+      mat <- do.call(rbind, mat_list)
       colnames(mat) <- c("Var1", "Var2", "value")
+    } else if (add_nb_seq) {
+      mat_list <- vector("list", length(taxa) - 1)
       tax_table_interm <-
-        physeq@tax_table[rep(seq(1, ntaxa(physeq)),
+        physeq@tax_table[rep(seq_len(ntaxa(physeq)),
           times = taxa_sums(physeq)
         )]
 
-      for (i in 1:(length(taxa) - 1)) {
+      for (i in seq_len(length(taxa) - 1)) {
         res_interm <-
           table(tax_table_interm[, taxa[i]], tax_table_interm[, taxa[i + 1]])
         mat_interm <- reshape2::melt(res_interm)
-        mat_interm <- mat_interm[mat_interm[, 3] > 0, ]
-        mat <- rbind(mat, mat_interm)
+        mat_list[[i]] <- mat_interm[mat_interm[, 3] > 0, ]
       }
+      mat <- do.call(rbind, mat_list)
+      colnames(mat) <- c("Var1", "Var2", "value")
     }
 
     if (!is.null(fact)) {
       net_matrix2links <- function(m = NULL) {
-        res <- matrix(ncol = 3)
-        for (i in seq_len(dim(m)[1])) {
-          for (j in seq_len(dim(m)[2])) {
-            if (m[i, j] > 0) {
-              res <- rbind(res, c(rownames(m)[i], colnames(m)[j], m[i, j]))
-            }
-          }
+        # Pre-calculate dimensions and non-zero positions for efficiency
+        dims <- dim(m)
+        rows <- row(m)
+        cols <- col(m)
+        mask <- m > 0
+
+        if (!any(mask)) {
+          return(matrix(ncol = 3)[0, ]) # Return empty matrix with correct structure
         }
-        return(res)
+
+        # Vectorized approach - much more efficient than nested loops
+        row_names <- rownames(m)[rows[mask]]
+        col_names <- colnames(m)[cols[mask]]
+        values <- m[mask]
+
+        result <- cbind(row_names, col_names, values)
+        colnames(result) <- c("Var1", "Var2", "value")
+        return(result)
       }
 
       mat_interm <-
@@ -893,7 +900,7 @@ sankey_pq <-
       mat <- mat[mat[, 3] >= min_nb_tax, ]
     }
 
-    for (i in seq_len(length(symbol2sub))) {
+    for (i in seq_along(symbol2sub)) {
       mat <- apply(mat, 2, function(x) {
         gsub(symbol2sub[i], "", x)
       })
@@ -904,7 +911,7 @@ sankey_pq <-
       unique(c(as.vector(mat[, 1]), as.vector(mat[, 2])))
     names_nodes <- names_nodes[!is.na(names_nodes)]
     tax_sank$nodes <-
-      data.frame((seq_len(length(names_nodes))) - 1, names_nodes)
+      data.frame((seq_along(names_nodes)) - 1, names_nodes)
     names(tax_sank$nodes) <- c("code", "name")
     mat2 <- mat
     for (i in seq_len(nrow(tax_sank$nodes))) {
@@ -965,9 +972,9 @@ sankey_pq <-
 #' Graphical representation of distribution of taxa across combined modality of a factor.
 #'
 #' @inheritParams clean_pq
-#' @param fact (required): Name of the factor to cluster samples by modalities.
+#' @param fact (required) Name of the factor to cluster samples by modalities.
 #' Need to be in \code{physeq@sam_data}.
-#' @param min_nb_seq (default: 0)): minimum number of sequences by OTUs by
+#' @param min_nb_seq (default: 0) minimum number of sequences by OTUs by
 #'  samples to take into count this OTUs in this sample. For example,
 #'  if min_nb_seq=2,each value of 2 or less in the OTU table
 #'  will be change into 0 for the analysis
@@ -1177,7 +1184,7 @@ venn_pq <-
 #' examples.
 #'
 #' @inheritParams clean_pq
-#' @param fact (required): Name of the factor to cluster samples by modalities.
+#' @param fact (required) Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}.
 #' @param min_nb_seq minimum number of sequences by OTUs by
 #'   samples to take into count this OTUs in this sample. For example,
@@ -1495,7 +1502,7 @@ multiplot <-
 #'   computed.
 #'
 #' @inheritParams clean_pq
-#' @param fact (required): The variable to test. Must be present in
+#' @param fact (required) The variable to test. Must be present in
 #'   the `sam_data` slot of the physeq object.
 #' @param variable : Alias for factor. Kept only for backward compatibility.
 #' @param hill_scales (a vector of integer) The list of q values to compute
@@ -1768,7 +1775,7 @@ hill_pq <- function(physeq,
 #' Basically a wrapper of function [ggstatsplot::ggbetweenstats()] for
 #' object of class phyloseq
 #' @inheritParams clean_pq
-#' @param fact (required): The variable to test. Must be present in
+#' @param fact (required) The variable to test. Must be present in
 #'   the `sam_data` slot of the physeq object.
 #' @param one_plot (logical, default FALSE) If TRUE, return a unique
 #'   plot with the three plot inside using the patchwork package.
@@ -2083,15 +2090,23 @@ summary_plot_pq <- function(physeq,
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
-#'   Make a phylogenetic tree using the ASV names of a physeq object and the
+#'   Make a taxonomic tree using the ASV names of a physeq object and the
 #'   Open Tree of Life tree.
 #'
 #' @inheritParams clean_pq
-#' @param species_colnames (default: "Genus_species"): the name of the column
-#'   where the species binominal name is stored in `@tax_table` slot.
-#'   Can also be a vector of two columns names e.g. `c("Genus", "Species")`
+#' @param taxonomic_rank (Character)
+#'   The column(s) present in the @tax_table slot of the phyloseq object. Can
+#'   be a vector of two columns (e.g. the default c("Genus", "Species")). If only
+#'   one column is set it need to be format in this way ("Genus species" for ex.
+#'   "Quercus robur") with a space.
 #' @param context_name : can bue used to select only a part of the Open Tree
 #'   of Life. See `?rotl::tnrs_contexts()` for available values
+#' @param discard_genus_alone (logical) If TRUE (default), genus without
+#'   information at the species level are discarded.
+#' @param pattern_to_remove_tip (character regex string) A regex to remove
+#'   unwanted part of tip names. If set to null, tip names are left intact.
+#' @param pattern_to_remove_node (character regex string) A regex to remove
+#'   unwanted part of node names. If set to null, node names are left intact.
 #' @return A plot
 #' @export
 #' @author Adrien Taudière
@@ -2102,29 +2117,40 @@ summary_plot_pq <- function(physeq,
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' \donttest{
 #' if (requireNamespace("rotl")) {
-#'   tr <- rotl_pq(data_fungi_mini, species_colnames = "Genus_species")
+#'   tr <- rotl_pq(data_fungi_mini, pattern_to_remove_tip = NULL)
 #'   plot(tr)
 #'
-#'   tr_Asco <- rotl_pq(data_fungi, species_colnames = "Genus_species", context_name = "Ascomycetes")
+#'   tr_Asco <- rotl_pq(data_fungi,
+#'     taxonomic_rank = c("Genus", "Species"),
+#'     context_name = "Ascomycetes"
+#'   )
 #'   plot(tr_Asco)
 #' }
 #' }
-rotl_pq <- function(physeq,
-                    species_colnames = "Genus_species",
-                    context_name = "All life") {
-  if (length(species_colnames) == 2) {
-    physeq@tax_table <- tax_table(cbind(
-      physeq@tax_table,
-      "Genus_species" = paste(physeq@tax_table[, species_colnames[1]],
-        physeq@tax_table[, species_colnames[2]],
-        sep = "_"
-      )
-    ))
-    species_colnames <- "Genus_species"
+rotl_pq <- function(
+    physeq,
+    taxonomic_rank = c("Genus", "Species"),
+    context_name = "All life",
+    discard_genus_alone = TRUE,
+    pattern_to_remove_tip = c("ott\\d+|_ott\\d+"),
+    pattern_to_remove_node = c("_ott.*|mrca*")) {
+  if (sum(!taxonomic_rank %in% colnames(physeq@tax_table)) != 0) {
+    stop(
+      "The taxonomic_rank parameter do not fit with the @tax_table column of your phyloseq object."
+    )
   }
-  taxa_names_rotl <- physeq@tax_table[, species_colnames]
-  taxa_names_rotl <- taxa_names_rotl[!grepl("NA", taxa_names_rotl)]
-  taxa_names_rotl <- c(unclass(gsub("_", " ", taxa_names_rotl)))
+
+  taxnames <- apply(physeq@tax_table[, taxonomic_rank], 1, paste, collapse = " ")
+  taxnames <- taxnames[!is.na(taxnames)]
+  if (discard_genus_alone) {
+    taxnames <- taxnames[grepl(pattern = " ", taxnames)]
+    taxnames <- taxnames[!grepl(pattern = "NA", taxnames)]
+  } else {
+    taxnames <- taxnames[!grepl(pattern = "NA NA", taxnames)]
+    taxnames <- gsub(" NA", "", taxnames)
+  }
+
+  taxa_names_rotl <- as.vector(unique(taxnames))
 
   resolved_names <- httr::with_config(
     httr::config(ssl_verifypeer = FALSE),
@@ -2141,6 +2167,15 @@ rotl_pq <- function(physeq,
   tr <- httr::with_config(
     httr::config(ssl_verifypeer = FALSE), rotl::tol_induced_subtree(ott_ids = rotl::ott_id(resolved_names2))
   )
+
+  if (!is.null(pattern_to_remove_tip)) {
+    tr$tip.label <- stringr::str_remove(tr$tip.label, pattern_to_remove_tip)
+  }
+
+  if (!is.null(pattern_to_remove_node)) {
+    tr$node.label <- stringr::str_remove(tr$node.label, pattern_to_remove_node)
+  }
+
   return(tr)
 }
 ################################################################################
@@ -2156,7 +2191,7 @@ rotl_pq <- function(physeq,
 # #'  and the number of sequences under the name `nb_sequences`
 # #'
 # #'  @inheritParams clean_pq
-# #'  @param taxonomic_level (default: NULL): a vector of selected
+# #'  @param taxonomic_level (default: NULL) a vector of selected
 # #'  taxonomic level using
 # #'    their column numbers (e.g. taxonomic_level = 1:7)
 # #'  @param ... Arguments passed on to \code{\link[metacoder]{heat_tree}}
@@ -2623,9 +2658,12 @@ multi_biplot_pq <- function(physeq,
     names_split_by <- names(table(physeq@sam_data[[split_by]]))
     couples <- combn(names_split_by, 2)
 
-    p <- list()
-    for (c in seq_along(ncol(couples))) {
-      names_p <- paste0(couples[1, c], " - ", couples[2, c])
+    p <- vector("list", ncol(couples))
+    names(p) <- apply(couples, 2, function(x) {
+      paste0(x, collapse = "-")
+    })
+    for (c in seq_len(ncol(couples))) {
+      names_p <- paste0(couples[1, c], "-", couples[2, c])
       new_physeq <-
         subset_samples_pq(physeq, physeq@sam_data[[split_by]] %in%
           c(couples[1, c], couples[2, c]))
@@ -2661,7 +2699,7 @@ multi_biplot_pq <- function(physeq,
 #' @param type If "nb_seq" (default), the number of sequences is
 #'   used in plot. If "nb_taxa", the number of ASV is plotted. If both,
 #'   return a list of two plots, one for nbSeq and one for ASV.
-#' @param taxa_fill (default: 'Order'): Name of the taxonomic rank of interest
+#' @param taxa_fill (default: 'Order') Name of the taxonomic rank of interest
 #' @param print_values (logical, default TRUE): Do we print some values on plot?
 #' @param color_border color for the border
 #' @param linewidth The line width of geom_bar
@@ -3228,7 +3266,7 @@ iNEXT_pq <- function(physeq,
 #' Alternative to venn plot.
 #'
 #' @inheritParams clean_pq
-#' @param fact (required): Name of the factor to cluster samples by modalities.
+#' @param fact (required) Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}.
 #' @param min_nb_seq minimum number of sequences by OTUs by
 #'   samples to take into count this OTUs in this sample. For example,
@@ -3367,7 +3405,7 @@ upset_pq <- function(physeq,
                      rarefy_after_merging = FALSE,
                      ...) {
   if (!is.null(min_nb_seq)) {
-    physeq <- subset_taxa_pq(physeq, taxa_sums(physeq) >= min_nb_seq)
+    physeq@otu_table[physeq@otu_table < min_nb_seq] <- 0
   }
 
   if (na_remove) {
@@ -5044,6 +5082,112 @@ plot_complexity_pq <- function(physeq,
     p <- p +
       geom_vline(xintercept = 4^kmer_size, color = "red")
   }
+  return(p)
+}
+################################################################################
+
+################################################################################
+#' A diagnostic plot of the number of sequences per samples
+#'
+#' @inheritParams clean_pq
+#' @param min_nb_seq (int) The minimum number of sequences per samples to compare
+#'   the ratio.
+#' @param annotations (logical, default TRUE). If FALSE, no annotations are
+#'   plotted
+#'
+#' @returns A ggplot2 object
+#' @export
+#' @author Adrien Taudière
+#' @details The x axis depict the number of sequences per samples and the y
+#'   axis depicted the ratio of the number of sequences for a given sample
+#'   divide by the number of sequences of the previous sample when ordered by
+#'   the number of sequences. A high ratio indicate an important and quick
+#'   increase of the number of sequence which may indicate that below this
+#'   ratio, samples are suspicious.
+#'
+#'   The general idea is to first removed all samples with definitively not
+#'   enough sequences and then, among the kept samples, find the higher
+#'   augmentation (ratio) to possibly detect suspicious samples.
+#'
+#' @examples
+#' plot_seq_ratio_pq(data_fungi, min_nb_seq = 200)
+#' data(GlobalPatterns)
+#' plot_seq_ratio_pq(GlobalPatterns, min_nb_seq = 100000)
+#' plot_seq_ratio_pq(data_fungi_mini, min_nb_seq = 10, annotations = FALSE)
+plot_seq_ratio_pq <- function(physeq, min_nb_seq = 1000, annotations = TRUE) {
+  if (min_nb_seq < min(sample_sums(physeq))) {
+    stop("You must specify a min_nb_seq below the minimum value of sample_sums in your phyloseq object.")
+  }
+
+  cutof_index <- sort(sample_sums(physeq)) |>
+    as_tibble() |>
+    mutate(diff = c(0, diff(value))) |>
+    filter(value < min_nb_seq) |>
+    pull(diff) |>
+    which.max()
+
+  n_cutoff <- cutof_index
+
+  df <- tibble(
+    "value" = sort(sample_sums(physeq)),
+    "name" = names(sort(sample_sums(physeq)))
+  ) |>
+    mutate(diff = c(0, diff(value))) |>
+    mutate(ratio = value / dplyr::lag(value, default = 0))
+
+
+  cutof_value <- df$value[-c(1:n_cutoff)][which.max(df$ratio[-c(1:n_cutoff)])]
+  cutof_ratio <- max(df$ratio[-c(1:n_cutoff)])
+
+  df <- df |>
+    mutate(color_group = case_when(value >= cutof_value ~ "keep",
+      value >= min_nb_seq ~ "suspicious",
+      .default = "discard"
+    ))
+
+  p <- ggplot(df) +
+    geom_point(aes(x = value, y = ratio, color = color_group), size = 2, alpha = 0.8) +
+    scale_x_log10() +
+    geom_vline(xintercept = cutof_value, alpha = 0.8, color = "darkgreen") +
+    geom_vline(xintercept = min_nb_seq, alpha = 0.8, color = "grey") +
+    geom_hline(yintercept = cutof_ratio, alpha = 0.8, color = "darkgreen") +
+    scale_color_manual(values = c("orange", "darkgreen", "grey20")) +
+    guides(color = "none") +
+    coord_cartesian(clip = "off")
+
+  if (annotations) {
+    p <- p +
+      annotate(
+        geom = "segment",
+        x = min_nb_seq,
+        y = 1.04 * cutof_ratio,
+        xend = min(df$value),
+        yend = 1.04 * cutof_ratio,
+        arrow = arrow(length = unit(2, "mm"))
+      ) +
+      annotate(geom = "text", x = min_nb_seq, y = 1.08 * cutof_ratio, label = paste0("Samples with less than \n", min_nb_seq, " sequences"), hjust = "right", size = 3) +
+      annotate(
+        geom = "curve",
+        x = 4 * cutof_value,
+        y = 1.15 * cutof_ratio,
+        xend = 1.05 * cutof_value, yend = 1.01 * cutof_ratio,
+        curvature = .3, arrow = arrow(length = unit(2, "mm"))
+      ) +
+      annotate(geom = "text", x = 4.1 * cutof_value, y = 1.16 * cutof_ratio, label = df$name[-c(1:n_cutoff)][which.max(df$ratio[-c(1:n_cutoff)])], hjust = "left", size = 3) +
+      annotate(
+        geom = "segment",
+        x = 0.98 * cutof_value,
+        y = 0.98 * cutof_ratio,
+        xend = min_nb_seq,
+        yend = 0.98 * cutof_ratio,
+        arrow = arrow(length = unit(2, "mm"))
+      ) +
+      annotate(geom = "text", x = cutof_value * 0.98, y = 0.94 * cutof_ratio, label = "Samples with \n suspicious ratio", hjust = "right", size = 3) +
+      xlab("Number of sequences per samples (log10)") +
+      ylab("Ratio of the number of sequences with the previous sample") +
+      labs(caption = paste0("For the ratio (y-axis), a value of 2 indicate that sample i contains twice the number of sequences compared to the sample i-1 \n (samples ordered by their number of sequences). Run `subset_samples_pq(physeq, sample_sums(data_fungi)>=", cutof_value, ")` to keep only green point \n or `subset_samples_pq(physeq, sample_sums(data_fungi)>=", min_nb_seq, ")` to discarded only orange samples."))
+  }
+
   return(p)
 }
 ################################################################################

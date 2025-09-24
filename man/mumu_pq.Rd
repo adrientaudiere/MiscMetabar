@@ -16,7 +16,7 @@ mumu_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{nproc}{(default 1)
@@ -63,7 +63,7 @@ Please cite \href{https://github.com/frederic-mahe/mumu/blob/main/CITATION.cff}{
 for your work.
 }
 \examples{
-\dontshow{if (MiscMetabar::is_mumu_installed()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (MiscMetabar::is_mumu_installed()) withAutoprint(\{ # examplesIf}
 \dontrun{
 mumu_pq(data_fungi_sp_known)
 }

@@ -36,7 +36,7 @@ assign_vsearch_lca(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{ref_fasta}{(required) A link to a database in vsearch format
@@ -190,7 +190,7 @@ Please cite \href{https://github.com/torognes/vsearch}{vsearch} and
 \href{https://github.com/frederic-mahe/stampa}{stampa}
 }
 \examples{
-\dontshow{if (MiscMetabar::is_vsearch_installed()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (MiscMetabar::is_vsearch_installed()) withAutoprint(\{ # examplesIf}
 \donttest{
 data_fungi_mini_new <- assign_vsearch_lca(data_fungi_mini,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),

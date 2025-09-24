@@ -12,7 +12,7 @@ simplify_taxo(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{pattern_to_remove}{(a vector of character) the pattern to remove using \code{\link[base:grep]{base::gsub()}} function.}

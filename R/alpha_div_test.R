@@ -175,8 +175,8 @@ hill_test_rarperm_pq <- function(physeq,
                                  type = "non-parametrique",
                                  ...) {
   verify_pq(physeq)
-  res_perm <- list() # no pre-set values because nested structure
-  p_perm <- list() # no pre-set values because nested structure
+  res_perm <- vector("list", nperm) # pre-allocated for performance
+  p_perm <- vector("list", nperm) # pre-allocated for performance
   if (progress_bar) {
     pb <- txtProgressBar(
       min = 0,

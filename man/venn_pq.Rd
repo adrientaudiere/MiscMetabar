@@ -7,13 +7,13 @@
 venn_pq(physeq, fact, min_nb_seq = 0, print_values = TRUE)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{fact}{(required): Name of the factor to cluster samples by modalities.
+\item{fact}{(required) Name of the factor to cluster samples by modalities.
 Need to be in \code{physeq@sam_data}.}
 
-\item{min_nb_seq}{(default: 0)): minimum number of sequences by OTUs by
+\item{min_nb_seq}{(default: 0) minimum number of sequences by OTUs by
 samples to take into count this OTUs in this sample. For example,
 if min_nb_seq=2,each value of 2 or less in the OTU table
 will be change into 0 for the analysis}
@@ -38,7 +38,7 @@ modalities of the argument \code{factor}
 Graphical representation of distribution of taxa across combined modality of a factor.
 }
 \examples{
-\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") withAutoprint(\{ # examplesIf}
 if (requireNamespace("venneuler")) {
   data("enterotype")
   venn_pq(enterotype, fact = "SeqTech")

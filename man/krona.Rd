@@ -6,7 +6,7 @@
 \usage{
 krona(
   physeq,
-  file = "krona.html",
+  file_path = "krona.html",
   nb_seq = TRUE,
   ranks = "All",
   add_unassigned_rank = 0,
@@ -14,10 +14,10 @@ krona(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{file}{(required) the location of the html file to save}
+\item{file_path}{(required) the location of the html file to save}
 
 \item{nb_seq}{(logical) If true, Krona set the distribution
 of sequences in the taxonomy. If False, Krona set the distribution of ASVs
@@ -52,7 +52,7 @@ Please cite \href{https://github.com/marbl/Krona}{Krona} if
 you use this function.
 }
 \examples{
-\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows" && MiscMetabar::is_krona_installed()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows" && MiscMetabar::is_krona_installed()) withAutoprint(\{ # examplesIf}
 data("GlobalPatterns", package = "phyloseq")
 GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
 \dontrun{

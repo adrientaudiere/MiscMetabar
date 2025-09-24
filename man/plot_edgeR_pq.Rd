@@ -15,14 +15,14 @@ plot_edgeR_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{contrast}{(required):This argument specifies what comparison
+\item{contrast}{(required) This argument specifies what comparison
 to extract from the object to build a results table.
 See \code{\link[DESeq2]{results}} man page for more details.}
 
-\item{pval}{(default: 0.05): the significance cutoff used for optimizing
+\item{pval}{(default: 0.05) the significance cutoff used for optimizing
 the independent filtering. If the adjusted p-value cutoff (FDR) will be a
 value other than 0.05, pval should be set to that value.}
 
@@ -50,7 +50,7 @@ A \code{\link[ggplot2]{ggplot}}2 plot representing edgeR results
 Graphical representation of edgeR result.
 }
 \examples{
-\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") withAutoprint(\{ # examplesIf}
 data("GlobalPatterns", package = "phyloseq")
 GP_archae <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 \donttest{

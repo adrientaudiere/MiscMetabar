@@ -4,12 +4,12 @@
 \alias{plot_mt}
 \title{Plot the result of a mt test \code{\link[phyloseq:mt-methods]{phyloseq::mt()}}}
 \usage{
-plot_mt(mt = NULL, alpha = 0.05, color_tax = "Class", taxa = "Species")
+plot_mt(mt = NULL, pval = 0.05, color_tax = "Class", taxa = "Species")
 }
 \arguments{
 \item{mt}{(required) Result of a mt test from the function \code{\link[phyloseq:mt-methods]{phyloseq::mt()}}.}
 
-\item{alpha}{(default: 0.05) Choose the cut off p-value to plot taxa.}
+\item{pval}{(default: 0.05) Choose the cut off p-value to plot taxa.}
 
 \item{color_tax}{(default: "Class") A taxonomic level to color the points.}
 

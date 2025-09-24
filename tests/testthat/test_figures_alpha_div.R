@@ -85,9 +85,9 @@ test_that("iNEXT_pq works with data_fungi_mini dataset", {
     )),
     "iNEXT"
   )
-  expect_s3_class(ggiNEXT(res_iNEXT), "ggplot")
-  expect_s3_class(ggiNEXT(res_iNEXT, type = 2), "ggplot")
-  expect_s3_class(ggiNEXT(res_iNEXT, type = 3), "ggplot")
+  expect_s3_class(suppressWarnings(ggiNEXT(res_iNEXT)), "ggplot")
+  expect_s3_class(suppressWarnings(ggiNEXT(res_iNEXT, type = 2)), "ggplot")
+  expect_s3_class(suppressWarnings(ggiNEXT(res_iNEXT, type = 3)), "ggplot")
 })
 
 

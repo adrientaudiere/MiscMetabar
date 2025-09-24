@@ -36,6 +36,6 @@ test_that("multiplot works fine", {
   res_venn1 <- ggvenn_pq(data_fungi_mini, "Height")
   res_venn2 <- ggvenn_pq(data_fungi_mini, "Time")
   expect_silent(multiplot(res_venn1, res_venn2))
-  expect_message(multiplot(res_venn1))
+  expect_error(multiplot(res_venn1))
   expect_type(multiplot(res_venn1, res_venn2), "NULL")
 })

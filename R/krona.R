@@ -8,7 +8,7 @@
 #' Need the installation of kronatools on the computer ([installation instruction](https://github.com/marbl/Krona/wiki/Installing)).
 #'
 #' @inheritParams clean_pq
-#' @param file (required) the location of the html file to save
+#' @param file_path (required) the location of the html file to save
 #' @param nb_seq (logical) If true, Krona set the distribution
 #'   of sequences in the taxonomy. If False, Krona set the distribution of ASVs
 #'   in the taxonomy.
@@ -39,7 +39,7 @@
 #'   you use this function.
 krona <-
   function(physeq,
-           file = "krona.html",
+           file_path = "krona.html",
            nb_seq = TRUE,
            ranks = "All",
            add_unassigned_rank = 0,
@@ -99,7 +99,7 @@ krona <-
       sep = "\t"
     )
 
-    cmd <- paste("ktImportText ", interm_txt, " -o ", file, sep = "")
+    cmd <- paste("ktImportText ", interm_txt, " -o ", file_path, sep = "")
     system(command = cmd)
     system(command = paste("rm", interm_txt))
   }

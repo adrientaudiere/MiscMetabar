@@ -7,7 +7,7 @@
 normalize_prop_pq(physeq, base_log = 2, constante = 10000, digits = 4)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{base_log}{(integer, default 2) the base for log-transformation. If

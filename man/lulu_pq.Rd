@@ -16,7 +16,7 @@ lulu_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{nproc}{(default 1)
@@ -64,7 +64,7 @@ The version of LULU is a fork of Adrien Taudière (\url{https://github.com/adrie
 from \url{https://github.com/tobiasgf/lulu}
 }
 \examples{
-\dontshow{if (MiscMetabar::is_vsearch_installed()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (MiscMetabar::is_vsearch_installed()) withAutoprint(\{ # examplesIf}
 \donttest{
 lulu_pq(data_fungi_sp_known)
 }

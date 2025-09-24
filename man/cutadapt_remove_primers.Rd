@@ -72,7 +72,7 @@ This function is mainly a wrapper of the work of others.
 Please cite cutadapt (\doi{doi:10.14806/ej.17.1.200}).
 }
 \examples{
-\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") withAutoprint(\{ # examplesIf}
 \dontrun{
 cutadapt_remove_primers(system.file("extdata", package = "MiscMetabar"),
   "TTC",

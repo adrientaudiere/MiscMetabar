@@ -1,4 +1,29 @@
-# MiscMetabar 0.14.3 (in development) 
+# MiscMetabar 0.14.4 (in development) 
+
+- Add function [plot_seq_ratio_pq()] to explore the number of sequences per samples using difference ratio of the number of sequences per samples ordered by the number of sequences.
+
+- Fix a bug in [subset_taxa_pq()] when the condition was TRUE only for one taxon
+
+- Fix warnings in [graph_test_pq()] with ggplot2 v.4.0.0
+
+- Fix a bug in [upseq_pq()] when using `min_nb_seq` parameter.
+
+- Add params `discard_genus_alone`, `pattern_to_remove_tip` and `pattern_to_remove_node` to [rotl_pq()] to enhance the default naming of 
+nodes and tips
+
+- Improve documentation consistency following the style guide
+
+- Fix a bug in blast function by allowing value to be equal (not strictly greater) to the threshold values `id_cut`, `bit_score_cut`, `min_cover_cut` and `e_value_cut`. 
+
+## BREAKING CHANGE
+
+- Replace `species_colnames` by `taxonomic_ranks` in [rotl_pq()]
+- Parameter name changes in `plot_mt()` and `krona()`
+  - `plot_mt()`: `alpha` → `pval` (aligns with existing pval pattern in other functions)
+  - `krona()`: `file` → `file_path` (aligns with existing file_path pattern)
+
+# MiscMetabar 0.14.3 
+
 
 - Better message in [subset_taxa_tax_control()]
 - Add parameters `text_size` and `text_size_info` to expand or minimize text annotation in [summary_plot_pq()]. 

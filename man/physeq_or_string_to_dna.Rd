@@ -8,7 +8,7 @@ or the \code{refseq} slot of a phyloseq-class object}
 physeq_or_string_to_dna(physeq = NULL, dna_seq = NULL)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{dna_seq}{You may directly use a character vector of DNA sequences

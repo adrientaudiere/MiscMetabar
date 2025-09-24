@@ -22,10 +22,10 @@ hill_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{fact}{(required): The variable to test. Must be present in
+\item{fact}{(required) The variable to test. Must be present in
 the \code{sam_data} slot of the physeq object.}
 
 \item{variable}{: Alias for factor. Kept only for backward compatibility.}

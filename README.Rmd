@@ -85,6 +85,7 @@ The article [filter taxa and samples](https://adrientaudiere.github.io/MiscMetab
 
 For developers, I also wrote an article describing some [rules of codes](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html). 
 
+
 ### Summarize a physeq object
 
 ```{r example}
@@ -130,6 +131,12 @@ ggvenn_pq(data_fungi, fact = "Height") +
   ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1) +
   labs(title = "Share number of ASV among Height in tree")
 ```
+
+
+## I need help, there is a bug, I want a new feature!  
+
+Most of the development work on this package has been done on a voluntary basis without payment. If you appreciate this work, please feel free to use it, cite it in your projects, let me know about any bugs you find, and contribute improvements via pull requests. Community engagement and collaboration are what make open-source projects thrive. Please use github issues if you need help. As a freelancer, I am available to work on projects related to this R package.
+
 
 ### Note for non-Linux users
 

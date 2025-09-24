@@ -12,7 +12,7 @@ subset_taxa_tax_control(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{taxa_distri}{(required) a vector of length equal to the number of

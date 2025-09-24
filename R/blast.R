@@ -9,7 +9,7 @@
 #'
 #' Use the blast software.
 #'
-#' @param physeq (required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+#' @param physeq (required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 #'   using the `phyloseq` package.
 #' @param seq2search (required) path to a fasta file defining the sequences
 #'   you want to blast against the taxa (ASV, OTU) sequences from the physeq object.
@@ -149,10 +149,10 @@ blast_to_phyloseq <- function(physeq,
   }
 
   if (score_filter) {
-    blast_tab <- blast_tab[blast_tab[, "bit score"] > bit_score_cut, ]
-    blast_tab <- blast_tab[blast_tab[, "% id. match"] > id_cut, ]
-    blast_tab <- blast_tab[blast_tab[, "Query cover"] > min_cover_cut, ]
-    blast_tab <- blast_tab[blast_tab[, "e-value"] < e_value_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "bit score"] >= bit_score_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "% id. match"] >= id_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "Query cover"] >= min_cover_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "e-value"] <= e_value_cut, ]
   } else {
     blast_tab <- blast_tab
   }
@@ -338,10 +338,10 @@ blast_pq <- function(physeq,
   }
 
   if (score_filter) {
-    blast_tab <- blast_tab[blast_tab[, "bit score"] > bit_score_cut, ]
-    blast_tab <- blast_tab[blast_tab[, "% id. match"] > id_cut, ]
-    blast_tab <- blast_tab[blast_tab[, "Query cover"] > min_cover_cut, ]
-    blast_tab <- blast_tab[blast_tab[, "e-value"] < e_value_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "bit score"] >= bit_score_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "% id. match"] >= id_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "Query cover"] >= min_cover_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "e-value"] <= e_value_cut, ]
   } else {
     blast_tab <- blast_tab
   }
@@ -598,10 +598,10 @@ blast_to_derep <- function(derep,
   }
 
   if (score_filter) {
-    blast_tab <- blast_tab[blast_tab[, "bit score"] > bit_score_cut, ]
-    blast_tab <- blast_tab[blast_tab[, "% id. match"] > id_cut, ]
-    blast_tab <- blast_tab[blast_tab[, "Query cover"] > min_cover_cut, ]
-    blast_tab <- blast_tab[blast_tab[, "e-value"] < e_value_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "bit score"] >= bit_score_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "% id. match"] >= id_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "Query cover"] >= min_cover_cut, ]
+    blast_tab <- blast_tab[blast_tab[, "e-value"] <= e_value_cut, ]
   } else {
     blast_tab <- blast_tab
   }

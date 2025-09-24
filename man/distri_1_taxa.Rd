@@ -7,13 +7,13 @@
 distri_1_taxa(physeq, fact, taxa_name, digits = 2)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{fact}{(required) Name of the factor in \code{physeq@sam_data} used to plot
 different lines}
 
-\item{taxa_name}{(required): the name of the taxa}
+\item{taxa_name}{(required) the name of the taxa}
 
 \item{digits}{(default = 2) integer indicating the number of decimal places
 to be used (see \code{?round} for more information)}

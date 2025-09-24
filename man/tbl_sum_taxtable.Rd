@@ -7,7 +7,7 @@
 tbl_sum_taxtable(physeq, taxonomic_ranks = NULL, ...)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{taxonomic_ranks}{A list of taxonomic ranks we want to summarized.}

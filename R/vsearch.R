@@ -157,6 +157,8 @@ vs_search_global <- function(physeq,
 #' @param tax_adjust (Default 0) See the man page
 #'   of [merge_taxa_vec()] for more details.
 #'   To conserved the taxonomic rank of the most abundant ASV,
+#'   set tax_adjust to 0 (default). For the moment only tax_adjust = 0 is
+#'   robust.
 #' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary
 #'   files ?
 #'   - temp.fasta (refseq in fasta or dna_seq sequences)

@@ -8,7 +8,7 @@ samples}
 LCBD_pq(physeq, p_adjust_method = "BH", ...)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{p_adjust_method}{(chr, default "BH"): the method used to adjust p-value}

@@ -28,7 +28,8 @@ if (getRversion() >= "2.15.1") {
     "na_remove", "stratum", "to_lodes_form", "clean_fastq", "clean_sam",
     "samples_names_common", "seq_id", "alpha_hill", "Modality", "Type", "complexity",
     "value_bootstrap", "LearnTaxa", "OrientNucleotides", "RemoveGaps",
-    "method", "readDNAStringSet", "Taxa name", "V1", "V2", "V3", "pattern_k"
+    "method", "readDNAStringSet", "Taxa name", "V1", "V2", "V3", "pattern_k",
+    "color_group", "ratio", "edgetype", "sampletype", "xend", "yend"
   ))
 }
 

@@ -24,7 +24,8 @@
 #'
 #' The `tax_adjust` argument controls the handling of taxonomic disagreements
 #' within groups. Setting `tax_adjust == 0` causes no adjustment; the taxonomy
-#' of the new group is set to the archetype taxon (see below). Otherwise,
+#' of the new group is set to the archetype taxon (the most abundant taxon in
+#' each group). Otherwise,
 #' disagreements within a group at a given rank cause the values at lower ranks
 #' to be set to `NA`. If `tax_adjust == 1` (the default), then a rank where all
 #' taxa in the group are already NA is not counted as a disagreement, and lower

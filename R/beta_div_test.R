@@ -76,7 +76,19 @@ graph_test_pq <- function(physeq,
     ...
   )
   if (return_plot) {
-    p <- phyloseqGraphTest::plot_test_network(res_graph_test) +
+    if (res_graph_test$type == "mst") {
+      layout <- igraph::layout_(res_graph_test$net, igraph::with_kk())
+    } else {
+      layout <- igraph::layout_(res_graph_test$net, igraph::with_fr())
+    }
+    p <- ggplot(res_graph_test$net,
+      aes(x = x, y = y, xend = xend, yend = yend),
+      layout = layout
+    ) +
+      ggnetwork::geom_edges(aes(linetype = edgetype)) +
+      ggnetwork::geom_nodes(aes(color = sampletype)) +
+      scale_linetype_manual(values = c(3, 1)) +
+      ggnetwork::theme_blank() +
       labs(
         title = title,
         subtitle = paste(
@@ -497,7 +509,7 @@ plot_LCBD_pq <- function(physeq,
       return(p_LCBD)
     } else {
       p_heatmap <- vector("list", length(sam_variables))
-      for (i in seq_len(length(sam_variables))) {
+      for (i in seq_along(sam_variables)) {
         p_heatmap[[i]] <- ggplot(filter(resLCBD, p.adj < pval)) +
           geom_tile(inherit.aes = FALSE, aes(
             y = reorder(Sample_names, -LCBD, sum),
@@ -524,7 +536,7 @@ plot_LCBD_pq <- function(physeq,
       return(p_LCBD)
     } else {
       p_heatmap <- vector("list", length(sam_variables))
-      for (i in seq_len(length(sam_variables))) {
+      for (i in seq_along(sam_variables)) {
         p_heatmap[[i]] <- ggplot(resLCBD) +
           geom_tile(inherit.aes = FALSE, aes(
             y = reorder(Sample_names, -LCBD, sum),
@@ -765,7 +777,7 @@ ancombc_pq <- function(physeq, fact, levels_fact = NULL, tax_level = "Class", ..
   if (!is.null(levels_fact)) {
     physeq <- subset_samples_pq(physeq, as.vector(physeq@sam_data[, fact])[[1]] %in% levels_fact)
   }
-  tse <- mia::makeTreeSEFromPhyloseq(physeq) # mia::convertFromPhyloseq
+  tse <- mia::makeTreeSEFromPhyloseq(physeq)
   if (!is.null(levels_fact)) {
     SummarizedExperiment::colData(tse)[[fact]] <- factor(tse[[fact]], levels = levels_fact)
   }
@@ -1105,7 +1117,7 @@ taxa_only_in_one_level <- function(physeq,
 #' @inheritParams clean_pq
 #' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
 #'    different lines
-#' @param taxa_name (required): the name of the taxa
+#' @param taxa_name (required) the name of the taxa
 #' @param digits (default = 2) integer indicating the number of decimal places
 #'   to be used (see `?round` for more information)
 #'
@@ -1408,37 +1420,27 @@ var_par_rarperm_pq <-
     }
 
 
-    res_varpart$part$indfract$R.square <-
-      rowMeans(sapply(res_perm, function(x) {
-        (x$part$indfract$R.square)
-      }))
+    # Pre-compute sapply results for efficiency
+    r_square_matrix <- sapply(res_perm, function(x) x$part$indfract$R.square)
+    adj_r_square_matrix <- sapply(res_perm, function(x) x$part$indfract$Adj.R.square)
+
+    res_varpart$part$indfract$R.square <- rowMeans(r_square_matrix)
     res_varpart$part$indfract$R.square_quantil_max <-
-      apply(sapply(res_perm, function(x) {
-        (x$part$indfract$R.square)
-      }), 1, function(xx) {
+      apply(r_square_matrix, 1, function(xx) {
         quantile(xx, probs = quantile_prob, na.rm = TRUE)
       })
     res_varpart$part$indfract$R.square_quantil_min <-
-      apply(sapply(res_perm, function(x) {
-        (x$part$indfract$R.square)
-      }), 1, function(xx) {
+      apply(r_square_matrix, 1, function(xx) {
         quantile(xx, probs = 1 - quantile_prob, na.rm = TRUE)
       })
 
-    res_varpart$part$indfract$Adj.R.square <-
-      rowMeans(sapply(res_perm, function(x) {
-        (x$part$indfract$Adj.R.square)
-      }))
+    res_varpart$part$indfract$Adj.R.square <- rowMeans(adj_r_square_matrix)
     res_varpart$part$indfract$Adj.R.squared_quantil_max <-
-      apply(sapply(res_perm, function(x) {
-        (x$part$indfract$Adj.R.square)
-      }), 1, function(xx) {
+      apply(adj_r_square_matrix, 1, function(xx) {
         quantile(xx, probs = quantile_prob, na.rm = TRUE)
       })
     res_varpart$part$indfract$Adj.R.squared_quantil_min <-
-      apply(sapply(res_perm, function(x) {
-        (x$part$indfract$Adj.R.square)
-      }), 1, function(xx) {
+      apply(adj_r_square_matrix, 1, function(xx) {
         quantile(xx, probs = 1 - quantile_prob, na.rm = TRUE)
       })
     return(res_varpart)

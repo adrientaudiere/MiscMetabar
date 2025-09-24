@@ -36,7 +36,7 @@ Please cite \href{https://github.com/marbl/Krona}{Krona} if
 you use this function.
 }
 \examples{
-\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows" && MiscMetabar::is_krona_installed()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows" && MiscMetabar::is_krona_installed()) withAutoprint(\{ # examplesIf}
 \dontrun{
 data("GlobalPatterns", package = "phyloseq")
 GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")

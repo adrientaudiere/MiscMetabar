@@ -16,7 +16,7 @@ multitax_bar_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{lvl1}{(required) Name of the first (higher) taxonomic rank of interest}

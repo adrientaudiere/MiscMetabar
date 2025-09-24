@@ -18,7 +18,7 @@ build_phytree_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{nb_bootstrap}{(default 0): If a positive number is set,
@@ -77,7 +77,7 @@ Please make a reference to \code{phangorn} package if you
 use this function.
 }
 \examples{
-\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") withAutoprint(\{ # examplesIf}
 \donttest{
 if (requireNamespace("phangorn")) {
   set.seed(22)

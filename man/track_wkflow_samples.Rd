@@ -8,7 +8,7 @@ for each sample}
 track_wkflow_samples(list_pq_obj, ...)
 }
 \arguments{
-\item{list_pq_obj}{(required): a list of object passed on to \code{\link[=track_wkflow]{track_wkflow()}}
+\item{list_pq_obj}{(required) a list of object passed on to \code{\link[=track_wkflow]{track_wkflow()}}
 Only phyloseq object will return value because information of sample is needed}
 
 \item{...}{Other args passed on to \code{\link[=track_wkflow]{track_wkflow()}}}
@@ -27,7 +27,7 @@ Contrary to \code{\link[=track_wkflow]{track_wkflow()}}, only phyloseq object ar
 More information are available in the manual of the function \code{\link[=track_wkflow]{track_wkflow()}}
 }
 \examples{
-\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") withAutoprint(\{ # examplesIf}
 tree_A10_005 <- subset_samples(data_fungi, Tree_name == "A10-005")
 if (requireNamespace("pbapply")) {
   track_wkflow_samples(tree_A10_005)

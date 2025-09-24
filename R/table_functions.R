@@ -9,7 +9,7 @@
 #' An interactive table for phyloseq taxonomy.
 #'
 #' @inheritParams clean_pq
-#' @param abundance (default: TRUE) Does the number of sequences is print
+#' @param abundance (logical, default TRUE) Does the number of sequences is print
 #' @param taxonomic_level (default: NULL) a vector of selected taxonomic
 #' level using their column numbers (e.g. taxonomic_level = 1:7)
 #' @param modality (default: NULL) A sample modality to split

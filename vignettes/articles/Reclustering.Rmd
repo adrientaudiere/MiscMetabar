@@ -31,6 +31,10 @@ Recent articles [@forster2019; @antich2021; @brandt2021] propose to use both app
 
 The goal of the function `asv2otu()` is to facilitate the reclustering of ASV into OTU, using either the `DECIPHER::Clusterize` function from R or the [vsearch](https://github.com/torognes/vsearch) software. 
 
+
+As part of the Metabarcoding Data Toolkit ([MDT](https://mdt.gbif.org/)), the Global Biodiversity Information Facility (GBIF) recommend "sharing unclustered (but denoised) amplicon sequence variants (ASVs) from e.g. the dada2 pipeline" for Illumina MiSeq plateform. They args that this approach keeps data maximally interoperable with data from other studies, compared to clustering into broader (e.g. 97% similarity) OTUs where the representative sequence of the same OTU may be picked differently between datasets and algorithms.
+
+
 ## Using decipher or Vsearch algorithm
 ```{r}
 data(data_fungi_sp_known)

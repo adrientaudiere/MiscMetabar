@@ -18,7 +18,7 @@ swarm_clustering(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{dna_seq}{NOT WORKING FOR THE MOMENT
@@ -44,7 +44,9 @@ methods in the \href{https://github.com/torognes/swarm/blob/master/man/swarm_man
 
 \item{tax_adjust}{(Default 0) See the man page
 of \code{\link[=merge_taxa_vec]{merge_taxa_vec()}} for more details.
-To conserved the taxonomic rank of the most abundant ASV,}
+To conserved the taxonomic rank of the most abundant ASV,
+set tax_adjust to 0 (default). For the moment only tax_adjust = 0 is
+robust.}
 
 \item{keep_temporary_files}{(logical, default: FALSE) Do we keep temporary
 files ?
@@ -76,7 +78,7 @@ This function is mainly a wrapper of the work of others.
 Please cite \href{https://github.com/torognes/swarm}{SWARM}.
 }
 \examples{
-\dontshow{if (MiscMetabar::is_swarm_installed()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (MiscMetabar::is_swarm_installed()) withAutoprint(\{ # examplesIf}
 summary_plot_pq(data_fungi)
 system2("swarm", "-h")
 

@@ -8,10 +8,10 @@ a factor}
 are_modality_even_depth(physeq, fact, boxplot = FALSE)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{fact}{(required): Name of the factor to cluster samples by modalities.
+\item{fact}{(required) Name of the factor to cluster samples by modalities.
 Need to be in \code{physeq@sam_data}.}
 
 \item{boxplot}{(logical) Do you want to plot boxplot?}

@@ -13,10 +13,10 @@ tax_datatable(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{abundance}{(default: TRUE) Does the number of sequences is print}
+\item{abundance}{(logical, default TRUE) Does the number of sequences is print}
 
 \item{taxonomic_level}{(default: NULL) a vector of selected taxonomic
 level using their column numbers (e.g. taxonomic_level = 1:7)}
@@ -39,7 +39,7 @@ A datatable
 An interactive table for phyloseq taxonomy.
 }
 \examples{
-\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") withAutoprint(\{ # examplesIf}
 data("GlobalPatterns", package = "phyloseq")
 if (requireNamespace("DT")) {
   tax_datatable(subset_taxa(

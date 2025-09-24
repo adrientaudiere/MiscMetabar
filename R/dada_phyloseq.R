@@ -46,7 +46,7 @@ add_dna_to_phyloseq <- function(physeq, prefix_taxa_names = "Taxa_") {
 #' (i) taxa names in refseq, taxonomy table and otu_table and between
 #' (ii) sample names in sam_data and otu_table.
 #'
-#' @param physeq (required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+#' @param physeq (required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 #'   using the `phyloseq` package.
 #' @param remove_empty_samples (logical) Do you want to remove samples
 #'   without sequences (this is done after removing empty taxa)
@@ -457,7 +457,7 @@ track_wkflow <- function(list_of_objects,
 #' Contrary to [track_wkflow()], only phyloseq object are possible.
 #' More information are available in the manual of the function [track_wkflow()]
 #'
-#' @param list_pq_obj (required): a list of object passed on to [track_wkflow()]
+#' @param list_pq_obj (required) a list of object passed on to [track_wkflow()]
 #'   Only phyloseq object will return value because information of sample is needed
 #' @param ... Other args passed on to [track_wkflow()]
 #'
@@ -1555,15 +1555,9 @@ subset_taxa_pq <- function(physeq,
 
   old_MA <-
     as(otu_table(new_physeq, taxa_are_rows = TRUE), "matrix")
-  new_MA <- old_MA[cond, ]
+  new_MA <- old_MA[cond, , drop = FALSE]
 
-  if (is.matrix(new_MA)) {
-    new_otu_table <- otu_table(new_MA, taxa_are_rows = TRUE)
-  } else {
-    new_MA <- as.matrix(new_MA)
-    new_otu_table <- otu_table(new_MA, taxa_are_rows = TRUE)
-    sample_names(new_otu_table) <- sample_names(new_physeq)
-  }
+  new_otu_table <- otu_table(new_MA, taxa_are_rows = TRUE)
 
   otu_table(new_physeq) <- new_otu_table
 
@@ -2132,7 +2126,7 @@ plot_guild_pq <-
 
     # Number of sequences per guild
     nb_seq_by_guild <- vector("integer", length(guilds$Var1))
-    for (i in seq(1, length(guilds$Var1))) {
+    for (i in seq_along(guilds$Var1)) {
       nb_seq_by_guild[i] <-
         sum(taxa_sums(physeq@otu_table)[grepl(guilds$Var1[i], physeq@tax_table[, "guild"])])
     }
@@ -2367,7 +2361,7 @@ build_phytree_pq <- function(physeq,
 #' per samples in function of the factor `fact`.
 #'
 #' @inheritParams clean_pq
-#' @param fact (required): Name of the factor to cluster samples by modalities.
+#' @param fact (required) Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}.
 #' @param boxplot (logical) Do you want to plot boxplot?
 #'
@@ -2408,7 +2402,7 @@ are_modality_even_depth <- function(physeq, fact, boxplot = FALSE) {
 #' the order of leaf in the phylogenetic tree.
 #'
 #' @inheritParams clean_pq
-#' @param names_ordered (required): Names of the taxa (must be the same
+#' @param names_ordered (required) Names of the taxa (must be the same
 #'   as taxa in `taxa_names(physeq)`) in a given order
 #' @param remove_phy_tree (logical, default FALSE) If TRUE, the phylogenetic
 #'   tree is removed. It is
@@ -2676,7 +2670,6 @@ cutadapt_remove_primers <- function(path_to_fastq,
                                     cmd_is_run = TRUE,
                                     return_file_path = FALSE,
                                     args_before_cutadapt = "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv && ") {
-  cmd <- list()
   if (!dir.exists(folder_output)) {
     dir.create(folder_output)
   }
@@ -2691,6 +2684,8 @@ cutadapt_remove_primers <- function(path_to_fastq,
       pattern_R2 = pattern_R2,
       nb_files = nb_files
     )
+    cmd <- vector("list", length(lff$fnfs)) # pre-allocated for performance
+    names(cmd) <- lff$fnfs
     for (f in lff$fnfs) {
       cmd[[f]] <-
         paste0(
@@ -2700,7 +2695,8 @@ cutadapt_remove_primers <- function(path_to_fastq,
           " --json=",
           folder_output,
           "/",
-          gsub(".fastq", "", gsub(".fastq.gz", "", basename(f))),
+          # More efficient: remove both extensions in one pass
+          sub("\\.fastq(\\.gz)?$", "", basename(f)),
           ".cutadapt.json",
           " --discard-untrimmed -g '",
           primer_fw,
@@ -2721,6 +2717,8 @@ cutadapt_remove_primers <- function(path_to_fastq,
       pattern_R2 = pattern_R2,
       nb_files = nb_files
     )
+    cmd <- vector("list", length(lff$fnfs)) # pre-allocated for performance
+    names(cmd) <- lff$fnfs
 
     primer_fw_RC <- dada2::rc(primer_fw)
     primer_rev_RC <- dada2::rc(primer_rev)
@@ -2733,7 +2731,8 @@ cutadapt_remove_primers <- function(path_to_fastq,
           " --json=",
           folder_output,
           "/",
-          gsub(".fastq", "", gsub(".fastq.gz", "", basename(f))),
+          # More efficient: remove both extensions in one pass
+          sub("\\.fastq(\\.gz)?$", "", basename(f)),
           ".cutadapt.json",
           " --discard-untrimmed -g '",
           primer_fw,
@@ -3102,7 +3101,7 @@ taxa_as_rows <- function(physeq) {
 #' on diversity. Internally used in [accu_plot_balanced_modality()].
 #'
 #' @inheritParams clean_pq
-#' @param fact (required): The variable to rarefy. Must be present in
+#' @param fact (required) The variable to rarefy. Must be present in
 #'   the `sam_data` slot of the physeq object.
 #' @param rngseed	(Optional). A single integer value passed to set.seed,
 #'   which is used to fix a seed for reproducibly random number generation

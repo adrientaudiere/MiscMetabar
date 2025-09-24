@@ -8,7 +8,7 @@ phyloseq object}
 umap_pq(physeq, pkg = "umap", ...)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{pkg}{Which R packages to use, either "umap" or "uwot".}
