@@ -7,7 +7,7 @@
 phyloseq_to_edgeR(physeq, group, method = "RLE", ...)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{group}{(required) A character vector or factor giving the experimental

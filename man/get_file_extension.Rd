@@ -7,7 +7,7 @@
 get_file_extension(file_path)
 }
 \arguments{
-\item{file_path}{(required): path to a file}
+\item{file_path}{(required) path to a file}
 }
 \value{
 The extension of a file.

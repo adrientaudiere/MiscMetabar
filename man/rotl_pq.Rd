@@ -4,18 +4,36 @@
 \alias{rotl_pq}
 \title{rotl wrapper for phyloseq data}
 \usage{
-rotl_pq(physeq, species_colnames = "Genus_species", context_name = "All life")
+rotl_pq(
+  physeq,
+  taxonomic_rank = c("Genus", "Species"),
+  context_name = "All life",
+  discard_genus_alone = TRUE,
+  pattern_to_remove_tip = c("ott\\\\d+|_ott\\\\d+"),
+  pattern_to_remove_node = c("_ott.*|mrca*")
+)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{species_colnames}{(default: "Genus_species"): the name of the column
-where the species binominal name is stored in \verb{@tax_table} slot.
-Can also be a vector of two columns names e.g. \code{c("Genus", "Species")}}
+\item{taxonomic_rank}{(Character)
+The column(s) present in the @tax_table slot of the phyloseq object. Can
+be a vector of two columns (e.g. the default c("Genus", "Species")). If only
+one column is set it need to be format in this way ("Genus species" for ex.
+"Quercus robur") with a space.}
 
 \item{context_name}{: can bue used to select only a part of the Open Tree
 of Life. See \code{?rotl::tnrs_contexts()} for available values}
+
+\item{discard_genus_alone}{(logical) If TRUE (default), genus without
+information at the species level are discarded.}
+
+\item{pattern_to_remove_tip}{(character regex string) A regex to remove
+unwanted part of tip names. If set to null, tip names are left intact.}
+
+\item{pattern_to_remove_node}{(character regex string) A regex to remove
+unwanted part of node names. If set to null, node names are left intact.}
 }
 \value{
 A plot
@@ -36,13 +54,16 @@ Please make a reference to \code{rotl} package if you
 use this function.
 }
 \examples{
-\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") withAutoprint(\{ # examplesIf}
 \donttest{
 if (requireNamespace("rotl")) {
-  tr <- rotl_pq(data_fungi_mini, species_colnames = "Genus_species")
+  tr <- rotl_pq(data_fungi_mini, pattern_to_remove_tip = NULL)
   plot(tr)
 
-  tr_Asco <- rotl_pq(data_fungi, species_colnames = "Genus_species", context_name = "Ascomycetes")
+  tr_Asco <- rotl_pq(data_fungi,
+    taxonomic_rank = c("Genus", "Species"),
+    context_name = "Ascomycetes"
+  )
   plot(tr_Asco)
 }
 }

@@ -19,7 +19,7 @@ plot_tsne_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{method}{A method to calculate distance using \code{vegan::vegdist()} function (default: "bray")}
@@ -55,7 +55,7 @@ A ggplot object
 Partially inspired by \code{phylosmith::tsne_phyloseq()} function developed by Schuyler D. Smith.
 }
 \examples{
-\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") withAutoprint(\{ # examplesIf}
 data(data_fungi)
 if (requireNamespace("Rtsne")) {
   plot_tsne_pq(data_fungi, fact = "Height", perplexity = 15)

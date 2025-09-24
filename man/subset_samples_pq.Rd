@@ -7,7 +7,7 @@
 subset_samples_pq(physeq, condition)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{condition}{A boolean vector to subset samples. Length must fit

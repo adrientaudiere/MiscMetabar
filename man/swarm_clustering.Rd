@@ -18,7 +18,7 @@ swarm_clustering(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{dna_seq}{NOT WORKING FOR THE MOMENT
@@ -78,7 +78,7 @@ This function is mainly a wrapper of the work of others.
 Please cite \href{https://github.com/torognes/swarm}{SWARM}.
 }
 \examples{
-\dontshow{if (MiscMetabar::is_swarm_installed()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (MiscMetabar::is_swarm_installed()) withAutoprint(\{ # examplesIf}
 summary_plot_pq(data_fungi)
 system2("swarm", "-h")
 

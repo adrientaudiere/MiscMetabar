@@ -1555,7 +1555,7 @@ subset_taxa_pq <- function(physeq,
 
   old_MA <-
     as(otu_table(new_physeq, taxa_are_rows = TRUE), "matrix")
-  new_MA <- old_MA[cond, ,drop=FALSE]
+  new_MA <- old_MA[cond, , drop = FALSE]
 
   new_otu_table <- otu_table(new_MA, taxa_are_rows = TRUE)
 
@@ -1604,7 +1604,7 @@ subset_taxa_pq <- function(physeq,
 #'   condition are kept.
 #' @param clean_pq (logical)
 #'   If set to TRUE, empty samples and empty taxa (ASV, OTU) are discarded
-#'   after filtering. 
+#'   after filtering.
 #'
 #' @return a new phyloseq object
 #' @export

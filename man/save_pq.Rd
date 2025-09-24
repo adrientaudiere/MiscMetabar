@@ -7,7 +7,7 @@
 save_pq(physeq, path = NULL, ...)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{path}{a path to the folder to save the phyloseq object}
@@ -37,7 +37,7 @@ Write :
 }
 }
 \examples{
-\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") withAutoprint(\{ # examplesIf}
 save_pq(data_fungi, path = paste0(tempdir(), "/phyloseq"))
 unlink(paste0(tempdir(), "/phyloseq"), recursive = TRUE)
 \dontshow{\}) # examplesIf}

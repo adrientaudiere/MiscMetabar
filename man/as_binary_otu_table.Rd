@@ -8,7 +8,7 @@
 as_binary_otu_table(physeq, min_number = 1)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{min_number}{(int) the minimum number of sequences to put

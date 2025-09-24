@@ -7,7 +7,7 @@
 perc(x, y = NULL, accuracy = 0, add_symbol = FALSE)
 }
 \arguments{
-\item{x}{(required): value}
+\item{x}{(required) value}
 
 \item{y}{if y is set, compute the division of x by y}
 

@@ -12,7 +12,7 @@ add_info_to_sam_data(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{df_info}{: A dataframe with rownames matching for sample names of the

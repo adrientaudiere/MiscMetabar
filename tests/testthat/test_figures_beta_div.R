@@ -313,30 +313,30 @@ test_that("upset_test_pq works with data_fungi_mini dataset", {
 test_that("plot_LCBD_pq works with data_fungi dataset", {
   skip_on_cran()
   expect_s3_class(
-    plot_LCBD_pq(
+    suppressWarnings(plot_LCBD_pq(
       data_fungi_mini,
       nperm = 100,
       only_plot_significant = FALSE
-    ),
+    )),
     "ggplot"
   )
   expect_s3_class(
-    plot_LCBD_pq(
+    suppressWarnings(plot_LCBD_pq(
       data_fungi_mini,
       nperm = 100,
       only_plot_significant = TRUE,
       pval = 0.2
-    ),
+    )),
     "ggplot"
   )
   expect_s3_class(
-    plot_LCBD_pq(
+    suppressWarnings(plot_LCBD_pq(
       data_fungi_mini,
       nperm = 100,
       only_plot_significant = TRUE,
       p_adjust_method = "holm",
       sam_variables = c("Time", "Height")
-    ),
+    )),
     "ggplot"
   )
 })
@@ -354,30 +354,30 @@ test_that("LCBD_pq works with data_fungi_mini dataset", {
 test_that("plot_LCBD_pq works with data_fungi_mini dataset", {
   skip_on_cran()
   expect_s3_class(
-    plot_LCBD_pq(
+    suppressWarnings(plot_LCBD_pq(
       data_fungi_mini,
       nperm = 100,
       only_plot_significant = FALSE
-    ),
+    )),
     "ggplot"
   )
   expect_s3_class(
-    plot_LCBD_pq(
+    suppressWarnings(plot_LCBD_pq(
       data_fungi_mini,
       nperm = 100,
       only_plot_significant = TRUE,
       pval = 0.2
-    ),
+    )),
     "ggplot"
   )
   expect_s3_class(
-    plot_LCBD_pq(
+    suppressWarnings(plot_LCBD_pq(
       data_fungi_mini,
       nperm = 100,
       only_plot_significant = TRUE,
       p_adjust_method = "holm",
       sam_variables = c("Time", "Height")
-    ),
+    )),
     "ggplot"
   )
 })
@@ -385,14 +385,14 @@ test_that("plot_LCBD_pq works with data_fungi_mini dataset", {
 
 test_that("plot_SCBD_pq works with data_fungi_mini dataset", {
   skip_on_cran()
-  expect_s3_class(plot_SCBD_pq(data_fungi_mini), "ggplot")
+  expect_s3_class(suppressWarnings(plot_SCBD_pq(data_fungi_mini)), "ggplot")
   expect_s3_class(
-    plot_SCBD_pq(
+    suppressWarnings(plot_SCBD_pq(
       data_fungi_mini,
       tax_level = "Class",
       tax_col = "Phylum",
       min_SCBD = 0
-    ),
+    )),
     "ggplot"
   )
 })

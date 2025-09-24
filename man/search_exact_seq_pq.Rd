@@ -7,7 +7,7 @@
 search_exact_seq_pq(physeq, seq2search)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{seq2search}{A DNAStringSet object of sequences to search for.}

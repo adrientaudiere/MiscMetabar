@@ -13,7 +13,7 @@ plot_refseq_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{hill_scales}{(vector) A vector defining the Hill number wanted. Set to NULL if

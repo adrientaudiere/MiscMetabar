@@ -16,7 +16,7 @@ vs_search_global(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{path_to_fasta}{(required if seq2search is NULL) a path to fasta file if seq2search is est to NULL.}
@@ -55,7 +55,7 @@ This function is mainly a wrapper of the work of others.
 Please cite \href{https://github.com/torognes/vsearch}{vsearch}.
 }
 \examples{
-\dontshow{if (MiscMetabar::is_vsearch_installed()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (MiscMetabar::is_vsearch_installed()) withAutoprint(\{ # examplesIf}
 \donttest{
 if (requireNamespace("seqinr")) {
   file_dna <- tempfile("dna.fa")

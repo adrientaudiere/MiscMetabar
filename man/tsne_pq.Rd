@@ -7,7 +7,7 @@
 tsne_pq(physeq, method = "bray", dims = 2, theta = 0, perplexity = 30, ...)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{method}{A method to calculate distance using \code{vegan::vegdist()} function}
@@ -28,7 +28,7 @@ See ?Rtsne::Rtsne() for more information
 Compute tSNE position of samples from a phyloseq object
 }
 \examples{
-\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") withAutoprint(\{ # examplesIf}
 if (requireNamespace("Rtsne")) {
   res_tsne <- tsne_pq(data_fungi)
 }

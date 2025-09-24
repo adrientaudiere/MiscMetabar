@@ -92,6 +92,7 @@ Pompanon
 Proteobacteria
 QAIC
 QAICc
+Quercus
 RColorBrewer
 RData
 Raison
@@ -154,7 +155,6 @@ bg
 bic
 bifactor
 bimodality
-binominal
 bioconductor
 bioinformatic
 bioinformatics
@@ -336,6 +336,7 @@ replacte
 reproducibly
 resubmission
 rl
+robur
 rotl
 roxygen
 runned
@@ -376,6 +377,7 @@ uclust
 umap
 un
 unclustered
+upseq
 usearch
 usefull
 userout

@@ -7,10 +7,10 @@
 rarefy_sample_count_by_modality(physeq, fact, rngseed = FALSE, verbose = TRUE)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{fact}{(required): The variable to rarefy. Must be present in
+\item{fact}{(required) The variable to rarefy. Must be present in
 the \code{sam_data} slot of the physeq object.}
 
 \item{rngseed}{(Optional). A single integer value passed to set.seed,

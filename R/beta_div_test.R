@@ -5,7 +5,7 @@
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
-#' A wrapper of [phTest::graph_perm_test()] for quick plot with
+#' A wrapper of [phyloseqGraphTest::graph_perm_test()] for quick plot with
 #' important statistics
 
 #' @inheritParams clean_pq
@@ -22,11 +22,11 @@
 #' @param na_remove (logical, default FALSE) If set to TRUE, remove samples with
 #'   NA in the variables set in formula.
 #' @param ... Other params for be passed on to
-#'   [phTest::graph_perm_test()] function
+#'   [phyloseqGraphTest::graph_perm_test()] function
 #'
 #' @examples
 #' \donttest{
-#' if (requireNamespace("phTest")) {
+#' if (requireNamespace("phyloseqGraphTest")) {
 #'   data(enterotype)
 #'   graph_test_pq(enterotype, fact = "SeqTech")
 #'   graph_test_pq(enterotype, fact = "Enterotype", na_remove = TRUE)
@@ -38,7 +38,7 @@
 #' and the number of permutations
 #' @details
 #' This function is mainly a wrapper of the work of others.
-#'   Please cite `phTest` package.
+#'   Please cite `phyloseqGraphTest` package.
 #' @export
 
 graph_test_pq <- function(physeq,
@@ -76,17 +76,19 @@ graph_test_pq <- function(physeq,
     ...
   )
   if (return_plot) {
-    if (res_graph_test$type == "mst"){
-       layout <- igraph::layout_(res_graph_test$net, igraph::with_kk())
+    if (res_graph_test$type == "mst") {
+      layout <- igraph::layout_(res_graph_test$net, igraph::with_kk())
     } else {
       layout <- igraph::layout_(res_graph_test$net, igraph::with_fr())
     }
-     p <-ggplot(res_graph_test$net,
-      aes(x = x, y = y, xend = xend, yend = yend), layout = layout) + 
-       ggnetwork::geom_edges(aes(linetype = edgetype)) + 
-       ggnetwork::geom_nodes(aes(color = sampletype)) + 
-        scale_linetype_manual(values = c(3, 1)) + 
-       ggnetwork::theme_blank() +
+    p <- ggplot(res_graph_test$net,
+      aes(x = x, y = y, xend = xend, yend = yend),
+      layout = layout
+    ) +
+      ggnetwork::geom_edges(aes(linetype = edgetype)) +
+      ggnetwork::geom_nodes(aes(color = sampletype)) +
+      scale_linetype_manual(values = c(3, 1)) +
+      ggnetwork::theme_blank() +
       labs(
         title = title,
         subtitle = paste(
@@ -775,7 +777,7 @@ ancombc_pq <- function(physeq, fact, levels_fact = NULL, tax_level = "Class", ..
   if (!is.null(levels_fact)) {
     physeq <- subset_samples_pq(physeq, as.vector(physeq@sam_data[, fact])[[1]] %in% levels_fact)
   }
-  tse <- mia::makeTreeSEFromPhyloseq(physeq) # mia::convertFromPhyloseq
+  tse <- mia::makeTreeSEFromPhyloseq(physeq)
   if (!is.null(levels_fact)) {
     SummarizedExperiment::colData(tse)[[fact]] <- factor(tse[[fact]], levels = levels_fact)
   }

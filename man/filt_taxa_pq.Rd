@@ -14,7 +14,7 @@ filt_taxa_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{min_nb_seq}{(int default NULL) minimum number of sequences by taxa.}

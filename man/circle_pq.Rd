@@ -22,7 +22,7 @@ circle_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{fact}{(required) Name of the factor to cluster samples by modalities.
@@ -33,7 +33,7 @@ Need to be in \code{physeq@sam_data}.}
 \item{nproc}{(default 1)
 Set to number of cpus/processors to use for parallelization}
 
-\item{add_nb_seq}{(default: TRUE) Represent the number of sequences or the
+\item{add_nb_seq}{(logical, default TRUE) Represent the number of sequences or the
 number of OTUs (add_nb_seq = FALSE)}
 
 \item{rarefy}{(logical) Does each samples modalities need to be rarefy in

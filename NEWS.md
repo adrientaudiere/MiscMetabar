@@ -4,7 +4,7 @@
 
 - Fix a bug in [subset_taxa_pq()] when the condition was TRUE only for one taxon
 
-- Fix warnings in [graph_test_pq()] whith ggplot2 v.4.0.0
+- Fix warnings in [graph_test_pq()] with ggplot2 v.4.0.0
 
 - Fix a bug in [upseq_pq()] when using `min_nb_seq` parameter.
 

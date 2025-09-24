@@ -32,6 +32,7 @@ Suggests:
     ggfittext,
     gghalves,
     ggh4x,
+    ggnetwork,
     ggstatsplot,
     ggridges,
     ggVennDiagram,
@@ -42,6 +43,7 @@ Suggests:
     gridExtra,
     here,
     httr,
+    igraph,
     iNEXT,
     indicspecies,
     IRanges,
@@ -83,7 +85,7 @@ Suggests:
     viridis,
     withr,
     spelling
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 URL: https://github.com/adrientaudiere/MiscMetabar,
     https://adrientaudiere.github.io/MiscMetabar/
 biocViews: Sequencing, Microbiome, Metagenomics,

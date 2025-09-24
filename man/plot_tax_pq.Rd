@@ -21,7 +21,7 @@ plot_tax_pq(
 )
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{fact}{(required) Name of the factor to cluster samples by modalities.
@@ -36,7 +36,7 @@ Need to be in \code{physeq@sam_data}}
 used in plot. If "nb_taxa", the number of ASV is plotted. If both,
 return a list of two plots, one for nbSeq and one for ASV.}
 
-\item{taxa_fill}{(default: 'Order'): Name of the taxonomic rank of interest}
+\item{taxa_fill}{(default: 'Order') Name of the taxonomic rank of interest}
 
 \item{print_values}{(logical, default TRUE): Do we print some values on plot?}
 

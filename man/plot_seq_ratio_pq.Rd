@@ -7,7 +7,7 @@
 plot_seq_ratio_pq(physeq, min_nb_seq = 1000, annotations = TRUE)
 }
 \arguments{
-\item{physeq}{(required): a \code{\link[phyloseq]{phyloseq-class}} object obtained
+\item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{min_nb_seq}{(int) The minimum number of sequences per samples to compare
@@ -38,7 +38,7 @@ augmentation (ratio) to possibly detect suspicious samples.
 plot_seq_ratio_pq(data_fungi, min_nb_seq = 200)
 data(GlobalPatterns)
 plot_seq_ratio_pq(GlobalPatterns, min_nb_seq = 100000)
-plot_seq_ratio_pq(data_fungi_mini, min_nb_seq = 10, annotations =FALSE)
+plot_seq_ratio_pq(data_fungi_mini, min_nb_seq = 10, annotations = FALSE)
 }
 \author{
 Adrien Taudière
