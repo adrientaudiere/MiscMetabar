@@ -13,7 +13,7 @@ Alternative to venn plot."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,12 +92,12 @@ Alternative to venn plot."></head><body>
 
 
 <dl><dt id="arg-physeq">physeq<a class="anchor" aria-label="anchor" href="#arg-physeq"></a></dt>
-<dd><p>(required): a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object obtained
+<dd><p>(required) a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object obtained
 using the <code>phyloseq</code> package.</p></dd>
 
 
 <dt id="arg-fact">fact<a class="anchor" aria-label="anchor" href="#arg-fact"></a></dt>
-<dd><p>(required): Name of the factor to cluster samples by modalities.
+<dd><p>(required) Name of the factor to cluster samples by modalities.
 Need to be in <code>physeq@sam_data</code>.</p></dd>
 
 
@@ -147,22 +147,15 @@ modalities of <code>fact</code> parameter</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ComplexUpset"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ComplexUpset"</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"ggplot2"</span><span class="op">)</span> <span class="op">&lt;</span> <span class="st">"4.0.0"</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">upset_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>,</span></span>
 <span class="r-in"><span>    fact <span class="op">=</span> <span class="st">"Height"</span>, width_ratio <span class="op">=</span> <span class="fl">0.2</span>,</span></span>
 <span class="r-in"><span>    taxa_fill <span class="op">=</span> <span class="st">"Class"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: ComplexUpset</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 45</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 45</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 137</span>
-<span class="r-plt img"><img src="upset_pq-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ComplexUpset"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ComplexUpset"</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"ggplot2"</span><span class="op">)</span> <span class="op">&lt;</span> <span class="st">"4.0.0"</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">upset_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, fact <span class="op">=</span> <span class="st">"Height"</span>, min_nb_seq <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">upset_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, fact <span class="op">=</span> <span class="st">"Height"</span>, na_remove <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -262,56 +255,6 @@ modalities of <code>fact</code> parameter</p></dd>
 <span class="r-in"><span>    <span class="cn">NA</span></span></span>
 <span class="r-in"><span>  <span class="fu">upset_pq</span><span class="op">(</span><span class="va">data_fungi2</span>, fact <span class="op">=</span> <span class="st">"Height__Time_0"</span>, width_ratio <span class="op">=</span> <span class="fl">0.2</span>, min_size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 45</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 45</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 137</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 45</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 45</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 137</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 45</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 45</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 137</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> You set `rngseed` to FALSE. Make sure you've set &amp; recorded</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  the random seed of your session for reproducibility.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> See `?set.seed`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> At least one sample name start with a zero.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     That can be a problem for some phyloseq functions such as</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     plot_bar and psmelt.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 45</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 45</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 137</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 45</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 45</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 137</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 45</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 45</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 137</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 45</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 45</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 137</span>
-<span class="r-plt img"><img src="upset_pq-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
@@ -324,7 +267,7 @@ modalities of <code>fact</code> parameter</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer></div>

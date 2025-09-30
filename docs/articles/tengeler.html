@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -104,7 +104,7 @@ et al. (2020) available in the <code>mia</code> package.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/adrientaudiere/MiscMetabar" class="external-link">"MiscMetabar"</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://patchwork.data-imaginist.com" class="external-link">"patchwork"</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="http://chao.stat.nthu.edu.tw/wordpress/software_download/" class="external-link">"iNEXT"</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://sites.google.com/view/chao-lab-website/software/inext" class="external-link">"iNEXT"</a></span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">?</span><span class="va">Tengeler2020</span></span></code></pre></div>
 </div>
@@ -130,7 +130,15 @@ et al. (2020) available in the <code>mia</code> package.</p>
 <span>    merge_sample_by <span class="op">=</span> <span class="st">"patient_status_vs_cohort"</span>,</span>
 <span>    nboot <span class="op">=</span> <span class="fl">5</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/iNEXT/man/ggiNEXT.html" class="external-link">ggiNEXT</a></span><span class="op">(</span><span class="va">res_inext</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/iNEXT/man/ggiNEXT.html" class="external-link">ggiNEXT</a></span><span class="op">(</span><span class="va">res_inext</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `aes_string()` was deprecated in ggplot2 3.0.0.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use tidy evaluation idioms with `aes()`.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> See also `vignette("ggplot2-in-packages")` for more information.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">iNEXT</span> package.</span></span>
+<span><span class="co">#&gt;   Please report the issue at <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/AnneChao/iNEXT/issues&gt;</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
 <p><img src="tengeler_files/figure-html/unnamed-chunk-6-1.png" width="960"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/accu_plot.html">accu_plot</a></span><span class="op">(</span></span>
@@ -188,12 +196,8 @@ et al. (2020) available in the <code>mia</code> package.</p>
 <span><span class="co">#&gt; observed count data have counts 1, but smallest count is 5</span></span>
 <span><span class="co">#&gt; Warning in vegan::rarefy(as.matrix(unclass(x[i, ])), n, se = TRUE): most</span></span>
 <span><span class="co">#&gt; observed count data have counts 1, but smallest count is 13</span></span>
-<span><span class="co">#&gt; Warning: A numeric `legend.position` argument in `theme()` was deprecated in ggplot2</span></span>
-<span><span class="co">#&gt; 3.5.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use the `legend.position.inside` argument of `theme()` instead.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
+<span><span class="co">#&gt; Warning: Removed 1 row containing missing values or values outside the scale range</span></span>
+<span><span class="co">#&gt; (`geom_ribbon()`).</span></span>
 <span><span class="co">#&gt; Warning: Removed 1 row containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_line()`).</span></span></code></pre></div>
 <p><img src="tengeler_files/figure-html/unnamed-chunk-7-1.png" width="960"></p>
@@ -222,7 +226,15 @@ et al. (2020) available in the <code>mia</code> package.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/circle_pq.html">circle_pq</a></span><span class="op">(</span><span class="va">ten</span>, <span class="st">"patient_status"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="tengeler_files/figure-html/unnamed-chunk-10-1.png" width="960"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/upset_pq.html">upset_pq</a></span><span class="op">(</span><span class="va">ten</span>, <span class="st">"patient_status_vs_cohort"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/upset_pq.html">upset_pq</a></span><span class="op">(</span><span class="va">ten</span>, <span class="st">"patient_status_vs_cohort"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `linewidth` instead.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">ComplexUpset</span> package.</span></span>
+<span><span class="co">#&gt;   Please report the issue at</span></span>
+<span><span class="co">#&gt;   <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/krassowski/complex-upset/issues&gt;</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
 <p><img src="tengeler_files/figure-html/unnamed-chunk-11-1.png" width="960"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/ggvenn_pq.html">ggvenn_pq</a></span><span class="op">(</span><span class="fu"><a href="../reference/clean_pq.html">clean_pq</a></span><span class="op">(</span><span class="va">ten</span>, force_taxa_as_columns <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
@@ -346,7 +358,15 @@ et al. (2020) available in the <code>mia</code> package.</p>
 <span>    <span class="st">"#00AED7"</span>,</span>
 <span>    <span class="st">"#FD9347"</span></span>
 <span>  <span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `aes_()` was deprecated in ggplot2 3.0.0.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use tidy evaluation idioms with `aes()`</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">MicrobiotaProcess</span> package.</span></span>
+<span><span class="co">#&gt;   Please report the issue at</span></span>
+<span><span class="co">#&gt;   <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/YuLab-SMU/MicrobiotaProcess/issues&gt;</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
 <p><img src="tengeler_files/figure-html/unnamed-chunk-20-1.png" width="960"></p>
 </div>
 <div class="section level2">
@@ -354,7 +374,7 @@ et al. (2020) available in the <code>mia</code> package.</p>
 </h2>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; R version 4.5.0 (2025-04-11)</span></span>
+<span><span class="co">#&gt; R version 4.5.1 (2025-06-13)</span></span>
 <span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>
 <span><span class="co">#&gt; Running under: Kali GNU/Linux Rolling</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -377,81 +397,83 @@ et al. (2020) available in the <code>mia</code> package.</p>
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt;  [1] iNEXT_3.0.1              patchwork_1.3.0          MiscMetabar_0.14.3      </span></span>
-<span><span class="co">#&gt;  [4] purrr_1.0.4              dplyr_1.1.4              dada2_1.36.0            </span></span>
-<span><span class="co">#&gt;  [7] Rcpp_1.0.14              ggplot2_3.5.2            phyloseq_1.52.0         </span></span>
-<span><span class="co">#&gt; [10] MicrobiotaProcess_1.20.1</span></span>
+<span><span class="co">#&gt;  [1] iNEXT_3.0.2              patchwork_1.3.2          MiscMetabar_0.14.4      </span></span>
+<span><span class="co">#&gt;  [4] purrr_1.1.0              dplyr_1.1.4              dada2_1.36.0            </span></span>
+<span><span class="co">#&gt;  [7] Rcpp_1.1.0               ggplot2_4.0.0            phyloseq_1.52.0         </span></span>
+<span><span class="co">#&gt; [10] MicrobiotaProcess_1.20.2</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;   [1] libcoin_1.0-10              RColorBrewer_1.1-3         </span></span>
-<span><span class="co">#&gt;   [3] shape_1.4.6.1               rstudioapi_0.17.1          </span></span>
-<span><span class="co">#&gt;   [5] jsonlite_2.0.0              magrittr_2.0.3             </span></span>
-<span><span class="co">#&gt;   [7] TH.data_1.1-3               modeltools_0.2-24          </span></span>
-<span><span class="co">#&gt;   [9] farver_2.1.2                rmarkdown_2.29             </span></span>
-<span><span class="co">#&gt;  [11] GlobalOptions_0.1.2         fs_1.6.6                   </span></span>
-<span><span class="co">#&gt;  [13] ragg_1.4.0                  vctrs_0.6.5                </span></span>
-<span><span class="co">#&gt;  [15] multtest_2.64.0             Rsamtools_2.24.0           </span></span>
-<span><span class="co">#&gt;  [17] ggtree_3.16.0               htmltools_0.5.8.1          </span></span>
-<span><span class="co">#&gt;  [19] S4Arrays_1.8.1              ComplexUpset_1.3.3         </span></span>
-<span><span class="co">#&gt;  [21] Rhdf5lib_1.30.0             SparseArray_1.8.0          </span></span>
-<span><span class="co">#&gt;  [23] rhdf5_2.52.1                gridGraphics_0.5-1         </span></span>
-<span><span class="co">#&gt;  [25] sass_0.4.10                 bslib_0.9.0                </span></span>
-<span><span class="co">#&gt;  [27] htmlwidgets_1.6.4           desc_1.4.3                 </span></span>
-<span><span class="co">#&gt;  [29] plyr_1.8.9                  sandwich_3.1-1             </span></span>
-<span><span class="co">#&gt;  [31] zoo_1.8-14                  cachem_1.1.0               </span></span>
-<span><span class="co">#&gt;  [33] ggfittext_0.10.2            GenomicAlignments_1.44.0   </span></span>
+<span><span class="co">#&gt;   [3] shape_1.4.6.1               jsonlite_2.0.0             </span></span>
+<span><span class="co">#&gt;   [5] magrittr_2.0.4              TH.data_1.1-4              </span></span>
+<span><span class="co">#&gt;   [7] modeltools_0.2-24           farver_2.1.2               </span></span>
+<span><span class="co">#&gt;   [9] rmarkdown_2.29              GlobalOptions_0.1.2        </span></span>
+<span><span class="co">#&gt;  [11] fs_1.6.6                    ragg_1.5.0                 </span></span>
+<span><span class="co">#&gt;  [13] vctrs_0.6.5                 multtest_2.64.0            </span></span>
+<span><span class="co">#&gt;  [15] Rsamtools_2.24.1            ggtree_3.16.3              </span></span>
+<span><span class="co">#&gt;  [17] htmltools_0.5.8.1           S4Arrays_1.8.1             </span></span>
+<span><span class="co">#&gt;  [19] ComplexUpset_1.3.3          Rhdf5lib_1.30.0            </span></span>
+<span><span class="co">#&gt;  [21] SparseArray_1.8.1           rhdf5_2.52.1               </span></span>
+<span><span class="co">#&gt;  [23] gridGraphics_0.5-1          sass_0.4.10                </span></span>
+<span><span class="co">#&gt;  [25] bslib_0.9.0                 htmlwidgets_1.6.4          </span></span>
+<span><span class="co">#&gt;  [27] desc_1.4.3                  plyr_1.8.9                 </span></span>
+<span><span class="co">#&gt;  [29] sandwich_3.1-1              zoo_1.8-14                 </span></span>
+<span><span class="co">#&gt;  [31] cachem_1.1.0                ggfittext_0.10.2           </span></span>
+<span><span class="co">#&gt;  [33] uuid_1.2-1                  GenomicAlignments_1.44.0   </span></span>
 <span><span class="co">#&gt;  [35] igraph_2.1.4                lifecycle_1.0.4            </span></span>
 <span><span class="co">#&gt;  [37] iterators_1.0.14            pkgconfig_2.0.3            </span></span>
-<span><span class="co">#&gt;  [39] Matrix_1.7-3                R6_2.6.1                   </span></span>
+<span><span class="co">#&gt;  [39] Matrix_1.7-4                R6_2.6.1                   </span></span>
 <span><span class="co">#&gt;  [41] fastmap_1.2.0               GenomeInfoDbData_1.2.14    </span></span>
 <span><span class="co">#&gt;  [43] MatrixGenerics_1.20.0       digest_0.6.37              </span></span>
-<span><span class="co">#&gt;  [45] aplot_0.2.5                 colorspace_2.1-1           </span></span>
-<span><span class="co">#&gt;  [47] ggnewscale_0.5.1            ShortRead_1.66.0           </span></span>
-<span><span class="co">#&gt;  [49] S4Vectors_0.46.0            DESeq2_1.48.1              </span></span>
-<span><span class="co">#&gt;  [51] textshaping_1.0.1           GenomicRanges_1.60.0       </span></span>
+<span><span class="co">#&gt;  [45] aplot_0.2.9                 colorspace_2.1-2           </span></span>
+<span><span class="co">#&gt;  [47] ggnewscale_0.5.2            ShortRead_1.66.0           </span></span>
+<span><span class="co">#&gt;  [49] S4Vectors_0.46.0            DESeq2_1.48.2              </span></span>
+<span><span class="co">#&gt;  [51] textshaping_1.0.3           GenomicRanges_1.60.0       </span></span>
 <span><span class="co">#&gt;  [53] hwriter_1.3.2.1             vegan_2.7-1                </span></span>
 <span><span class="co">#&gt;  [55] labeling_0.4.3              httr_1.4.7                 </span></span>
 <span><span class="co">#&gt;  [57] abind_1.4-8                 mgcv_1.9-3                 </span></span>
-<span><span class="co">#&gt;  [59] compiler_4.5.0              withr_3.0.2                </span></span>
-<span><span class="co">#&gt;  [61] BiocParallel_1.42.1         ggsignif_0.6.4             </span></span>
-<span><span class="co">#&gt;  [63] MASS_7.3-65                 DelayedArray_0.34.1        </span></span>
-<span><span class="co">#&gt;  [65] biomformat_1.36.0           permute_0.9-7              </span></span>
-<span><span class="co">#&gt;  [67] tools_4.5.0                 ape_5.8-1                  </span></span>
-<span><span class="co">#&gt;  [69] glue_1.8.0                  treemapify_2.5.6           </span></span>
-<span><span class="co">#&gt;  [71] nlme_3.1-168                rhdf5filters_1.20.0        </span></span>
-<span><span class="co">#&gt;  [73] grid_4.5.0                  cluster_2.1.8.1            </span></span>
-<span><span class="co">#&gt;  [75] reshape2_1.4.4              ade4_1.7-23                </span></span>
-<span><span class="co">#&gt;  [77] generics_0.1.4              gtable_0.3.6               </span></span>
-<span><span class="co">#&gt;  [79] tidyr_1.3.1                 ggVennDiagram_1.5.2        </span></span>
-<span><span class="co">#&gt;  [81] data.table_1.17.4           coin_1.4-3                 </span></span>
-<span><span class="co">#&gt;  [83] XVector_0.48.0              BiocGenerics_0.54.0        </span></span>
-<span><span class="co">#&gt;  [85] ggrepel_0.9.6               foreach_1.5.2              </span></span>
-<span><span class="co">#&gt;  [87] pillar_1.10.2               stringr_1.5.1              </span></span>
-<span><span class="co">#&gt;  [89] yulab.utils_0.2.0           circlize_0.4.16            </span></span>
-<span><span class="co">#&gt;  [91] splines_4.5.0               treeio_1.32.0              </span></span>
-<span><span class="co">#&gt;  [93] lattice_0.22-7              survival_3.8-3             </span></span>
-<span><span class="co">#&gt;  [95] deldir_2.0-4                tidyselect_1.2.1           </span></span>
-<span><span class="co">#&gt;  [97] locfit_1.5-9.12             pbapply_1.7-2              </span></span>
-<span><span class="co">#&gt;  [99] Biostrings_2.76.0           knitr_1.50                 </span></span>
-<span><span class="co">#&gt; [101] gridExtra_2.3               IRanges_2.42.0             </span></span>
-<span><span class="co">#&gt; [103] SummarizedExperiment_1.38.1 ggtreeExtra_1.18.0         </span></span>
-<span><span class="co">#&gt; [105] stats4_4.5.0                xfun_0.52                  </span></span>
-<span><span class="co">#&gt; [107] Biobase_2.68.0              matrixStats_1.5.0          </span></span>
-<span><span class="co">#&gt; [109] stringi_1.8.7               UCSC.utils_1.4.0           </span></span>
-<span><span class="co">#&gt; [111] lazyeval_0.2.2              ggfun_0.1.8                </span></span>
-<span><span class="co">#&gt; [113] yaml_2.3.10                 evaluate_1.0.3             </span></span>
-<span><span class="co">#&gt; [115] codetools_0.2-20            interp_1.1-6               </span></span>
-<span><span class="co">#&gt; [117] tibble_3.3.0                ggplotify_0.1.2            </span></span>
-<span><span class="co">#&gt; [119] cli_3.6.5                   RcppParallel_5.1.10        </span></span>
-<span><span class="co">#&gt; [121] systemfonts_1.2.3           jquerylib_0.1.4            </span></span>
-<span><span class="co">#&gt; [123] GenomeInfoDb_1.44.0         png_0.1-8                  </span></span>
-<span><span class="co">#&gt; [125] parallel_4.5.0              ggh4x_0.3.1                </span></span>
-<span><span class="co">#&gt; [127] pkgdown_2.1.2               latticeExtra_0.6-30        </span></span>
-<span><span class="co">#&gt; [129] jpeg_0.1-11                 bitops_1.0-9               </span></span>
-<span><span class="co">#&gt; [131] ggstar_1.0.4                pwalign_1.4.0              </span></span>
-<span><span class="co">#&gt; [133] mvtnorm_1.3-3               tidytree_0.4.6             </span></span>
-<span><span class="co">#&gt; [135] scales_1.4.0                crayon_1.5.3               </span></span>
-<span><span class="co">#&gt; [137] rlang_1.1.6                 multcomp_1.4-28</span></span></code></pre></div>
+<span><span class="co">#&gt;  [59] compiler_4.5.1              withr_3.0.2                </span></span>
+<span><span class="co">#&gt;  [61] S7_0.2.0                    BiocParallel_1.42.2        </span></span>
+<span><span class="co">#&gt;  [63] ggsignif_0.6.4              MASS_7.3-65                </span></span>
+<span><span class="co">#&gt;  [65] rappdirs_0.3.3              DelayedArray_0.34.1        </span></span>
+<span><span class="co">#&gt;  [67] biomformat_1.36.0           permute_0.9-8              </span></span>
+<span><span class="co">#&gt;  [69] tools_4.5.1                 ape_5.8-1                  </span></span>
+<span><span class="co">#&gt;  [71] glue_1.8.0                  treemapify_2.5.6           </span></span>
+<span><span class="co">#&gt;  [73] nlme_3.1-168                rhdf5filters_1.20.0        </span></span>
+<span><span class="co">#&gt;  [75] grid_4.5.1                  cluster_2.1.8.1            </span></span>
+<span><span class="co">#&gt;  [77] reshape2_1.4.4              ade4_1.7-23                </span></span>
+<span><span class="co">#&gt;  [79] generics_0.1.4              gtable_0.3.6               </span></span>
+<span><span class="co">#&gt;  [81] tidyr_1.3.1                 ggVennDiagram_1.5.4        </span></span>
+<span><span class="co">#&gt;  [83] data.table_1.17.8           coin_1.4-3                 </span></span>
+<span><span class="co">#&gt;  [85] XVector_0.48.0              BiocGenerics_0.54.0        </span></span>
+<span><span class="co">#&gt;  [87] ggrepel_0.9.6               foreach_1.5.2              </span></span>
+<span><span class="co">#&gt;  [89] pillar_1.11.1               stringr_1.5.2              </span></span>
+<span><span class="co">#&gt;  [91] yulab.utils_0.2.1           circlize_0.4.16            </span></span>
+<span><span class="co">#&gt;  [93] splines_4.5.1               treeio_1.32.0              </span></span>
+<span><span class="co">#&gt;  [95] lattice_0.22-7              deldir_2.0-4               </span></span>
+<span><span class="co">#&gt;  [97] survival_3.8-3              tidyselect_1.2.1           </span></span>
+<span><span class="co">#&gt;  [99] locfit_1.5-9.12             pbapply_1.7-4              </span></span>
+<span><span class="co">#&gt; [101] Biostrings_2.76.0           knitr_1.50                 </span></span>
+<span><span class="co">#&gt; [103] gridExtra_2.3               IRanges_2.42.0             </span></span>
+<span><span class="co">#&gt; [105] SummarizedExperiment_1.38.1 ggtreeExtra_1.18.1         </span></span>
+<span><span class="co">#&gt; [107] stats4_4.5.1                xfun_0.53                  </span></span>
+<span><span class="co">#&gt; [109] Biobase_2.68.0              matrixStats_1.5.0          </span></span>
+<span><span class="co">#&gt; [111] stringi_1.8.7               UCSC.utils_1.4.0           </span></span>
+<span><span class="co">#&gt; [113] lazyeval_0.2.2              ggfun_0.2.0                </span></span>
+<span><span class="co">#&gt; [115] yaml_2.3.10                 evaluate_1.0.5             </span></span>
+<span><span class="co">#&gt; [117] codetools_0.2-20            interp_1.1-6               </span></span>
+<span><span class="co">#&gt; [119] tibble_3.3.0                ggplotify_0.1.3            </span></span>
+<span><span class="co">#&gt; [121] cli_3.6.5                   RcppParallel_5.1.11-1      </span></span>
+<span><span class="co">#&gt; [123] systemfonts_1.2.3           jquerylib_0.1.4            </span></span>
+<span><span class="co">#&gt; [125] GenomeInfoDb_1.44.3         png_0.1-8                  </span></span>
+<span><span class="co">#&gt; [127] parallel_4.5.1              ggh4x_0.3.1                </span></span>
+<span><span class="co">#&gt; [129] pkgdown_2.1.3               latticeExtra_0.6-31        </span></span>
+<span><span class="co">#&gt; [131] jpeg_0.1-11                 bitops_1.0-9               </span></span>
+<span><span class="co">#&gt; [133] ggstar_1.0.6                pwalign_1.4.0              </span></span>
+<span><span class="co">#&gt; [135] mvtnorm_1.3-3               tidytree_0.4.6             </span></span>
+<span><span class="co">#&gt; [137] ggiraph_0.9.1               scales_1.4.0               </span></span>
+<span><span class="co">#&gt; [139] crayon_1.5.3                rlang_1.1.6                </span></span>
+<span><span class="co">#&gt; [141] multcomp_1.4-28</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
@@ -471,7 +493,7 @@ in mice. Microbiome 8, 44 (2020). <a href="https://microbiomejournal.biomedcentr
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
