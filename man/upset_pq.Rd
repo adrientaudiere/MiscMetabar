@@ -54,14 +54,14 @@ A \code{\link[ggplot2]{ggplot}}2 plot
 Alternative to venn plot.
 }
 \examples{
-if (requireNamespace("ComplexUpset")) {
+if (requireNamespace("ComplexUpset") && packageVersion("ggplot2") < "4.0.0") {
   upset_pq(data_fungi_mini,
     fact = "Height", width_ratio = 0.2,
     taxa_fill = "Class"
   )
 }
 \donttest{
-if (requireNamespace("ComplexUpset")) {
+if (requireNamespace("ComplexUpset") && packageVersion("ggplot2") < "4.0.0") {
   upset_pq(data_fungi_mini, fact = "Height", min_nb_seq = 1000)
   upset_pq(data_fungi_mini, fact = "Height", na_remove = FALSE)
 

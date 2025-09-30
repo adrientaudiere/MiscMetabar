@@ -3288,14 +3288,14 @@ iNEXT_pq <- function(physeq,
 #'
 #' @seealso [ggvenn_pq()]
 #' @examples
-#' if (requireNamespace("ComplexUpset")) {
+#' if (requireNamespace("ComplexUpset") && packageVersion("ggplot2") < "4.0.0") {
 #'   upset_pq(data_fungi_mini,
 #'     fact = "Height", width_ratio = 0.2,
 #'     taxa_fill = "Class"
 #'   )
 #' }
 #' \donttest{
-#' if (requireNamespace("ComplexUpset")) {
+#' if (requireNamespace("ComplexUpset") && packageVersion("ggplot2") < "4.0.0") {
 #'   upset_pq(data_fungi_mini, fact = "Height", min_nb_seq = 1000)
 #'   upset_pq(data_fungi_mini, fact = "Height", na_remove = FALSE)
 #'
@@ -3472,7 +3472,8 @@ upset_pq <- function(physeq,
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
-#' See [upset_pq()] to plot upset.
+#' See [upset_pq()] to plot upset. There is a bug with ggplot2 >= 4.0.0. See issue 
+#'  <https://github.com/krassowski/complex-upset/issues/213> for more details.
 #'
 #' @inheritParams upset_pq
 #' @param var_to_test (default c("OTU")) : a vector of column present in
