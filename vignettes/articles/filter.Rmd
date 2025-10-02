@@ -44,6 +44,18 @@ df_basidio_abundant <- subset_taxa_pq(
 )
 ```
 
+### Randomly subset taxa
+
+For testing, creating example datasets, or computational efficiency, you may want to randomly subset a specified number of taxa. The [subset_taxa_random()] function provides a succinct way to do this:
+
+```{r}
+# Randomly select 20 taxa (most succinct way)
+data_fungi_20 <- subset_taxa_random(data_fungi, 20)
+
+# With a seed for reproducibility
+data_fungi_20_repro <- subset_taxa_random(data_fungi, 20, seed = 123)
+```
+
 ### Filter taxa using blast score against a database
 
 In some cases, we want to select only a given clade of taxon. One solution is to select only taxa with information given by taxonomic assignment (e.g. using the function `dada2::assignTaxonomy()`). However, in some cases, this information lead to false positive and false negative selection. `MiscMetabar` implement an other method relying on [blast](https://blast.ncbi.nlm.nih.gov/) software (Altschul *et al.* 1990 & 1997) and database. The idea is to set a cutoff in four parameters to select only taxa which are close enough to sequences in the database : 
