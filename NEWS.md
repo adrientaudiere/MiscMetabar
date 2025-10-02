@@ -2,6 +2,8 @@
 
 - Add function [plot_seq_ratio_pq()] to explore the number of sequences per samples using difference ratio of the number of sequences per samples ordered by the number of sequences.
 
+- Add function [subset_taxa_random()] to randomly subset a specified number of taxa from a phyloseq object. This provides a succinct way to create random subsets for testing or computational efficiency.
+
 - Fix a bug in [subset_taxa_pq()] when the condition was TRUE only for one taxon
 
 - Fix warnings in [graph_test_pq()] with ggplot2 v.4.0.0

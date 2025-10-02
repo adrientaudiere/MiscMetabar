@@ -1585,6 +1585,91 @@ subset_taxa_pq <- function(physeq,
 ################################################################################
 
 ################################################################################
+#' Randomly subset a specified number of taxa from a phyloseq object
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#' A simple helper function to randomly subset a specified number of taxa
+#' from a phyloseq object. This is useful for testing, creating example
+#' datasets, or for computational efficiency when working with large datasets.
+#'
+#' @inheritParams clean_pq
+#' @param nb_taxa (integer) The number of taxa to randomly select. Must be
+#'   less than or equal to the total number of taxa in the phyloseq object.
+#' @param seed (integer, optional) Random seed for reproducibility. If NULL
+#'   (default), no seed is set.
+#' @param clean_pq (logical, default TRUE) If set to TRUE, empty samples are
+#'   discarded after subsetting taxa.
+#' @param verbose (logical, default TRUE) If TRUE, informative messages are
+#'   printed.
+#'
+#' @return A new phyloseq object with the randomly selected taxa
+#' @export
+#' @author Adrien Taudière
+#'
+#' @examples
+#' # Randomly select 20 taxa
+#' subset_taxa_random(data_fungi, nb_taxa = 20)
+#'
+#' # With a seed for reproducibility
+#' subset_taxa_random(data_fungi, nb_taxa = 20, seed = 123)
+#'
+#' # Most succinct way to get 20 random taxa
+#' subset_taxa_random(data_fungi, 20)
+#'
+#' @seealso [subset_taxa_pq()], [filt_taxa_pq()]
+subset_taxa_random <- function(physeq,
+                               nb_taxa,
+                               seed = NULL,
+                               clean_pq = TRUE,
+                               verbose = TRUE) {
+  # Input validation
+  if (!inherits(physeq, "phyloseq")) {
+    stop("physeq must be a phyloseq object")
+  }
+  
+  if (!is.numeric(nb_taxa) || nb_taxa <= 0 || nb_taxa != as.integer(nb_taxa)) {
+    stop("nb_taxa must be a positive integer")
+  }
+  
+  total_taxa <- ntaxa(physeq)
+  
+  if (nb_taxa > total_taxa) {
+    stop(paste0(
+      "nb_taxa (", nb_taxa, ") cannot be greater than the total number of taxa (",
+      total_taxa, ")"
+    ))
+  }
+  
+  # Set seed if provided
+  if (!is.null(seed)) {
+    set.seed(seed)
+  }
+  
+  # Randomly sample taxa
+  all_taxa <- taxa_names(physeq)
+  selected_taxa <- sample(all_taxa, size = nb_taxa, replace = FALSE)
+  
+  # Create a condition vector for subset_taxa_pq
+  condition <- taxa_names(physeq) %in% selected_taxa
+  names(condition) <- taxa_names(physeq)
+  
+  # Use subset_taxa_pq to do the actual subsetting
+  new_physeq <- subset_taxa_pq(
+    physeq,
+    condition,
+    verbose = verbose,
+    clean_pq = clean_pq
+  )
+  
+  return(new_physeq)
+}
+################################################################################
+
+################################################################################
 #' Filter taxa of a phyloseq object based on the minimum number of
 #'   sequences/samples
 #'
