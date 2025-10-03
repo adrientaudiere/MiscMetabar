@@ -136,6 +136,7 @@ reference:
   - plot_complexity_pq
   - plot_refseq_extremity_pq
   - plot_refseq_pq
+  - plot_seq_ratio_pq
 
 - title: Explore phyloseq object
 - subtitle: alpha-diversity

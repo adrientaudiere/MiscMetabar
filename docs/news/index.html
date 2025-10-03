@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,27 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.14.3" id="miscmetabar-0143-in-development">MiscMetabar 0.14.3 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-0143-in-development"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.14.4" id="miscmetabar-0144-in-development">MiscMetabar 0.14.4 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-0144-in-development"></a></h2>
+<ul><li><p>Add function [plot_seq_ratio_pq()] to explore the number of sequences per samples using difference ratio of the number of sequences per samples ordered by the number of sequences.</p></li>
+<li><p>Fix a bug in [subset_taxa_pq()] when the condition was TRUE only for one taxon</p></li>
+<li><p>Fix warnings in [graph_test_pq()] with ggplot2 v.4.0.0</p></li>
+<li><p>Fix a bug in [upseq_pq()] when using <code>min_nb_seq</code> parameter.</p></li>
+<li><p>Add params <code>discard_genus_alone</code>, <code>pattern_to_remove_tip</code> and <code>pattern_to_remove_node</code> to [rotl_pq()] to enhance the default naming of nodes and tips</p></li>
+<li><p>Improve documentation consistency following the style guide</p></li>
+<li><p>Fix a bug in blast function by allowing value to be equal (not strictly greater) to the threshold values <code>id_cut</code>, <code>bit_score_cut</code>, <code>min_cover_cut</code> and <code>e_value_cut</code>.</p></li>
+</ul><div class="section level3">
+<h3 id="breaking-change-0-14-4">BREAKING CHANGE<a class="anchor" aria-label="anchor" href="#breaking-change-0-14-4"></a></h3>
+<ul><li>Replace <code>species_colnames</code> by <code>taxonomic_ranks</code> in [rotl_pq()]</li>
+<li>Parameter name changes in <code><a href="../reference/plot_mt.html">plot_mt()</a></code> and <code><a href="../reference/krona.html">krona()</a></code>
+<ul><li>
+<code><a href="../reference/plot_mt.html">plot_mt()</a></code>: <code>alpha</code> → <code>pval</code> (aligns with existing pval pattern in other functions)</li>
+<li>
+<code><a href="../reference/krona.html">krona()</a></code>: <code>file</code> → <code>file_path</code> (aligns with existing file_path pattern)</li>
+</ul></li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.14.3" id="miscmetabar-0143">MiscMetabar 0.14.3<a class="anchor" aria-label="anchor" href="#miscmetabar-0143"></a></h2><p class="text-muted">CRAN release: 2025-06-21</p>
 <ul><li>Better message in [subset_taxa_tax_control()]</li>
 <li>Add parameters <code>text_size</code> and <code>text_size_info</code> to expand or minimize text annotation in [summary_plot_pq()].</li>
 <li>Add function [filt_taxa_wo_NA()] to filter out taxa with NA values at given taxonomic rank(s)</li>
@@ -457,7 +477,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer></div>

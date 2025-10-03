@@ -153,6 +153,16 @@ ggvenn_pq(data_fungi, fact = "Height") +
 
 <img src="man/figures/README-unnamed-chunk-8-1.png" alt="A venn diagram showing the number of shared ASV and the percentage of shared ASV between the three modality of Height (low, middle and high)." width="100%" />
 
+## I need help, there is a bug, I want a new feature!
+
+Most of the development work on this package has been done on a
+voluntary basis without payment. If you appreciate this work, please
+feel free to use it, cite it in your projects, let me know about any
+bugs you find, and contribute improvements via pull requests. Community
+engagement and collaboration are what make open-source projects thrive.
+Please use github issues if you need help. As a freelancer, I am
+available to work on projects related to this R package.
+
 ### Note for non-Linux users
 
 Some functions may not work on Windows (*e.g.* `track_wkflow()`,

@@ -15,7 +15,7 @@ if you use this function to assign taxonomy."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,7 +103,7 @@ if you use this function to assign taxonomy.</p>
 
 
 <dl><dt id="arg-physeq">physeq<a class="anchor" aria-label="anchor" href="#arg-physeq"></a></dt>
-<dd><p>(required): a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object obtained
+<dd><p>(required) a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object obtained
 using the <code>phyloseq</code> package.</p></dd>
 
 
@@ -218,7 +218,7 @@ Please cite <a href="https://github.com/torognes/vsearch" class="external-link">
 <span class="r-in"><span>  ref_fasta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mini_UNITE_fungi.fasta.gz"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  behavior <span class="op">=</span> <span class="st">"return_cmd"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "vsearch  --sintax temp.fasta --db /tmp/Rtmp9TMs7O/temp_libpath899d54b62ab8/MiscMetabar/extdata/mini_UNITE_fungi.fasta.gz --tabbedout output_taxo_vs.txt  --threads 1 --sintax_random"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "vsearch  --sintax temp.fasta --db /tmp/RtmpV46sfz/temp_libpath1e51304f43f9/MiscMetabar/extdata/mini_UNITE_fungi.fasta.gz --tabbedout output_taxo_vs.txt  --threads 1 --sintax_random"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">data_fungi_mini_new</span> <span class="op">&lt;-</span> <span class="fu">assign_sintax</span><span class="op">(</span><span class="va">data_fungi_mini</span>,</span></span>
 <span class="r-in"><span>  ref_fasta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mini_UNITE_fungi.fasta.gz"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>
@@ -262,7 +262,7 @@ Please cite <a href="https://github.com/torognes/vsearch" class="external-link">
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer></div>
