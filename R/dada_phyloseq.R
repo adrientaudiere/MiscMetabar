@@ -1514,6 +1514,7 @@ subset_samples_pq <- function(physeq, condition) {
 #' @examples
 #'
 #' subset_taxa_pq(data_fungi, data_fungi@tax_table[, "Phylum"] == "Ascomycota")
+#' subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 100)
 #'
 #' cond_taxa <- grepl("Endophyte", data_fungi@tax_table[, "Guild"])
 #' names(cond_taxa) <- taxa_names(data_fungi)
