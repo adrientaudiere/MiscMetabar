@@ -2576,6 +2576,8 @@ physeq_or_string_to_dna <- function(physeq = NULL, dna_seq = NULL) {
     }
   } else if (inherits(dna_seq, "character")) {
     dna <- Biostrings::DNAStringSet(dna_seq)
+  } else if (inherits(dna_seq, "DNAStringSet")) {
+    return(dna)
   } else {
     stop(
       "You must set the args physeq (object of class phyloseq) or

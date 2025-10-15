@@ -1,35 +1,41 @@
 # MiscMetabar 0.14.4 (in development) 
 
-- Add function [plot_seq_ratio_pq()] to explore the number of sequences per samples using difference ratio of the number of sequences per samples ordered by the number of sequences.
+## New features and improvements
+- Add function `plot_seq_ratio_pq()` to explore the number of sequences per samples using difference ratio of the number of sequences per samples ordered by the number of sequences.
 
-- Fix a bug in [subset_taxa_pq()] when the condition was TRUE only for one taxon
-
-- Fix warnings in [graph_test_pq()] with ggplot2 v.4.0.0
-
-- Fix a bug in [upseq_pq()] when using `min_nb_seq` parameter.
-
-- Add params `discard_genus_alone`, `pattern_to_remove_tip` and `pattern_to_remove_node` to [rotl_pq()] to enhance the default naming of 
-nodes and tips
+- Add params `discard_genus_alone`, `pattern_to_remove_tip` and `pattern_to_remove_node` to `rotl_pq()` to enhance the default naming of nodes and tips
 
 - Improve documentation consistency following the style guide
 
+- Allow `DNAStringSet` object as input of `swarm_clustering()` and `physeq_or_string_to_dna()`
+
+## Bug fixes
+- Fix a bug in `subset_taxa_pq()` when the condition was TRUE only for one taxon
+
+- Fix warnings in `graph_test_pq()` with ggplot2 v.4.0.0
+
+- Fix a bug in `upseq_pq()` when using `min_nb_seq` parameter.
+
 - Fix a bug in blast function by allowing value to be equal (not strictly greater) to the threshold values `id_cut`, `bit_score_cut`, `min_cover_cut` and `e_value_cut`. 
+
+- Fix a bug in swarm associated functions (`swarm_clustering(), add_swarms_to_pq()`) to take into account the `d` parameter. Also add a parameter fastidious that is automatically set to FALSE is d is different from 1. 
 
 ## BREAKING CHANGE
 
-- Replace `species_colnames` by `taxonomic_ranks` in [rotl_pq()]
+- Replace `species_colnames` by `taxonomic_ranks` in `rotl_pq()`
 - Parameter name changes in `plot_mt()` and `krona()`
   - `plot_mt()`: `alpha` → `pval` (aligns with existing pval pattern in other functions)
   - `krona()`: `file` → `file_path` (aligns with existing file_path pattern)
 
+
 # MiscMetabar 0.14.3 
 
 
-- Better message in [subset_taxa_tax_control()]
-- Add parameters `text_size` and `text_size_info` to expand or minimize text annotation in [summary_plot_pq()]. 
-- Add function [filt_taxa_wo_NA()] to filter out taxa with NA values at given taxonomic rank(s)
-- Fix a bug in [format2dada2()] by adding semicolons to fill all the taxonomic levels if `from_sintax` is TRUE 
-- Fix a bug in [adonis_pq()] for method `aitchison` and `robust.aitchison`.
+- Better message in `subset_taxa_tax_control()`
+- Add parameters `text_size` and `text_size_info` to expand or minimize text annotation in `summary_plot_pq()`. 
+- Add function `filt_taxa_wo_NA()` to filter out taxa with NA values at given taxonomic rank(s)
+- Fix a bug in `format2dada2()` by adding semicolons to fill all the taxonomic levels if `from_sintax` is TRUE 
+- Fix a bug in `adonis_pq()` for method `aitchison` and `robust.aitchison`.
 
 # MiscMetabar 0.14.2 
 
@@ -37,32 +43,33 @@ nodes and tips
 
 # MiscMetabar 0.14.1 
 
-- Add the possibility to use to resolve conflict using [resolve_vector_ranks()] in the [assign_sintax()] function. Add numerous parameters to [assign_sintax()], in particular `vote_algorithm` to choose the algo resolving conflict.
-- Add param `pattern_to_remove` in [format2dada2()]
+- Add the possibility to use to resolve conflict using `resolve_vector_ranks()` in the `assign_sintax()` function.
+- Add numerous parameters to `assign_sintax()`, in particular `vote_algorithm` to choose the algo resolving conflict.
+- Add param `pattern_to_remove` in `format2dada2()`
 
 # MiscMetabar 0.14.0
 
-- Better filter of parameters in [add_new_taxonomy_pq()]. Only parameters used by the assign_* function corresponding to `method` are used.
-- Add functions [format2sintax()], [format2dada2()] and [format2dada2_species] to format fasta database in sintax, dada2 ([dada2::assignTaxonomy()]) and dada2 Species ([dada2::assignSpecies()]) format
-- Add function [assign_dada2()] to assign Taxonomy (with missing ranks if needed) and to assign species using [dada2::assignSpecies()] with only one database input. Add method `dada2_2steps` in function [add_new_taxonomy_pq()] which use [assign_dada2()] function.
+- Better filter of parameters in `add_new_taxonomy_pq()`. Only parameters used by the assign_* function corresponding to `method` are used.
+- Add functions `format2sintax()`, `format2dada2()` and `format2dada2_species` to format fasta database in sintax, dada2 (`dada2::assignTaxonomy()`) and dada2 Species (`dada2::assignSpecies()`) format
+- Add function `assign_dada2()` to assign Taxonomy (with missing ranks if needed) and to assign species using `dada2::assignSpecies()` with only one database input. Add method `dada2_2steps` in function `add_new_taxonomy_pq()` which use `assign_dada2()` function.
 
 # MiscMetabar 0.13.0
 
-- Add function [assign_blastn()] and add a method `blast` in the function [add_new_taxonomy_pq()].
-- Add function [resolve_vector_ranks()] to resolve conflict in a vector of taxonomy values
+- Add function `assign_blastn()` and add a method `blast` in the function `add_new_taxonomy_pq()`.
+- Add function `resolve_vector_ranks()` to resolve conflict in a vector of taxonomy values
 
 # MiscMetabar 0.12.1
 
-- Add parameter name `min_bootstrap` in [add_new_taxonomy_pq()]
-- Bug fix in [assign_idtaxa()]
-- Add parameters `pattern_to_remove` and `remove_NA` to [simplify_taxo()]
+- Add parameter name `min_bootstrap` in `add_new_taxonomy_pq()`
+- Bug fix in `assign_idtaxa()`
+- Add parameters `pattern_to_remove` and `remove_NA` to `simplify_taxo()`
 
 # MiscMetabar 0.12.0 
 
-- Add function [assign_idtaxa()] and [learn_idtaxa()] to facilitate the taxonomic assignation using the idtaxa algorithm from the  DECIPHER R package.
-- Add option `idtaxa` to method in [add_new_taxonomy_pq()]
-- Add function [tbl_sum_taxtable()] to summarize tax_table from a phyloseq object 
-- In function [assign_sintax()], add params `too_few` (default value "align_start") and `too_many` (default "merge") to authorize db with variable numbers of rank and parenthesis in taxonomic name, 
+- Add function `assign_idtaxa()` and `learn_idtaxa()` to facilitate the taxonomic assignation using the idtaxa algorithm from the  DECIPHER R package.
+- Add option `idtaxa` to method in `add_new_taxonomy_pq()`
+- Add function `tbl_sum_taxtable()` to summarize tax_table from a phyloseq object 
+- In function `assign_sintax()`, add params `too_few` (default value "align_start") and `too_many` (default "merge") to authorize db with variable numbers of rank and parenthesis in taxonomic name, 
 
 
 # MiscMetabar 0.11.1 
@@ -79,9 +86,9 @@ nodes and tips
 - Add function `umap_pq()` to compute Dimensionality Reduction with UMAP
 - Add function `plot_complexity_pq()` to plot kmer complexity of references sequences of a phyloseq object
 - Add param `type` to `ridge_pq()` to plot a cumulative version (type="ecdf") version of ridge
-- Introduce the idea of a pq-verse: some other packages will complete the MiscMetabar packages to make package maintenance easier. The [comparpq](https://github.com/adrientaudiere/comparpq) package will facilitate the comparison of phyloseq object with different taxonomy, different clustering methods, different samples with same modality or different primers. 
-- Add functions [assign_vsearch_lca()], [assign_sintax()] and internal function [write_temp_fasta()]
-- Add param `method` to `add_new_taxonomy_pq()` to allow the use of [dada2::assign_taxonomy()] (default, precedent only method available), [assign_sintax()] or [assign_vsearch_lca()] 
+- Introduce the idea of a pq-verse: some other packages will complete the MiscMetabar packages to make package maintenance easier. The `comparpq](https://github.com/adrientaudiere/comparpq) package will facilitate the comparison of phyloseq object with different taxonomy, different clustering methods, different samples with same modality or different primers. 
+- Add functions `assign_vsearch_lca()`, `assign_sintax()` and internal function `write_temp_fasta()`
+- Add param `method` to `add_new_taxonomy_pq()` to allow the use of `dada2::assign_taxonomy()` (default, precedent only method available), `assign_sintax()` or `assign_vsearch_lca()` 
 
 
 # MiscMetabar 0.10.4
@@ -149,7 +156,7 @@ nodes and tips
 - Add function `rarefy_sample_count_by_modality()` to equalize the number of samples for each levels of a modality (factor)
 - Add function `accu_plot_balanced_modality()` to plot accumulation curves with balanced modality (same number of samples per level) and depth rarefaction (same number of sequences per sample) 
 - Add function `adonis_rarperm_pq()` to compute multiple Permanova analyses on different sample depth rarefaction.
-- Add function `ggaluv_pq()` to plot taxonomic distribution in alluvial fashion with ggplot2 (using the [ggalluvial] package)
+- Add function `ggaluv_pq()` to plot taxonomic distribution in alluvial fashion with ggplot2 (using the `ggalluvial` package)
 - Add function `glmutli_pq()` to use automated model selection and multimodel inference with (G)LMs for phyloseq object
 
 
@@ -170,7 +177,7 @@ nodes and tips
 - Add function `normalize_prop_pq()` to implement the method proposed by [McKnight et al. 2018](https://doi.org/10.5061/dryad.tn8qs35)
 - Add function `psmelt_samples_pq()` to build data frame of samples information including the number of sequences (Abundance) and Hill diversity metrics. Useful to use with the [ggstatsplot](https://indrajeetpatil.github.io/ggstatsplot/) packages (see examples).
 - Replace param `variable` by `fact` in function `ggbetween_pq()` and `hill_pq()` (keeping the variable option in `hill_pq()` for backward compatibility)
-- Fix a bug in the class of the return object of function `chimera_removal_vs()`. Now it return a matrix to be able to be parsed on to [dada2::getUniques()] 
+- Fix a bug in the class of the return object of function `chimera_removal_vs()`. Now it return a matrix to be able to be parsed on to `dada2::getUniques()` 
 
 # MiscMetabar 0.7
 

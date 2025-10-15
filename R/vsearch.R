@@ -151,14 +151,21 @@ vs_search_global <- function(physeq,
 #'   is NULL and dna_seq is provided.
 #' @param nproc (default: 1)
 #'   Set to number of cpus/processors to use for the clustering
-#' @param swarm_args (default : "--fastidious") a one length character
-#'   element defining other parameters to  passed on to swarm See other possible
+#' @param fastidious (logical, default TRUE), perform a second clustering pass 
+#' to reduce the number of small clusters (recommended option by swarm authors).
+#' Not that if d is different from 1, fastidious is automatically set to FALSE.
+#' @param swarm_args a one length character
+#'   element defining other parameters to  passed on to swarm (e.g. "--mismatch-penalty 4").
+#'   See other possible
 #'   methods in the [SWARM pdf manual](https://github.com/torognes/swarm/blob/master/man/swarm_manual.pdf)
 #' @param tax_adjust (Default 0) See the man page
 #'   of [merge_taxa_vec()] for more details.
 #'   To conserved the taxonomic rank of the most abundant ASV,
 #'   set tax_adjust to 0 (default). For the moment only tax_adjust = 0 is
 #'   robust.
+#' @param return_swarm_df (logical, default FALSE) Do we return the swarm
+#'  dataframe instead of the phyloseq object ? Default FALSE return a phyloseq 
+#'  object if physeq is provided.
 #' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary
 #'   files ?
 #'   - temp.fasta (refseq in fasta or dna_seq sequences)
@@ -168,7 +175,7 @@ vs_search_global <- function(physeq,
 #'   merge taxa into clusters. By default tax_adjust = 0. See the man page
 #'   of [merge_taxa_vec()].
 #' @return A new object of class `physeq` or a list of cluster if dna_seq
-#'   args was used.
+#'   args was used or if return_swarm_df was set to TRUE.
 #'
 #' @references
 #'   SWARM can be downloaded from
@@ -213,13 +220,23 @@ swarm_clustering <- function(physeq = NULL,
                              swarmpath = "swarm",
                              vsearch_path = "vsearch",
                              nproc = 1,
-                             swarm_args = "--fastidious",
+                             fastidious = TRUE,
+                             swarm_args = "",
                              tax_adjust = 0,
+                             return_swarm_df = FALSE,
                              keep_temporary_files = FALSE) {
   dna <- physeq_or_string_to_dna(
     physeq = physeq,
     dna_seq = dna_seq
   )
+
+  if(d != 1){
+    fastidious <- FALSE
+  }
+
+  if(fastidious){
+    swarm_args <- paste0(swarm_args, " --fastidious ")
+  }
 
   if (!is.null(physeq)) {
     nseq <- taxa_sums(physeq)
@@ -237,6 +254,8 @@ swarm_clustering <- function(physeq = NULL,
         paste0(tempdir(), "/", "temp_uclust"),
         " -t ",
         nproc,
+        " -d ",
+        d,
         " ",
         swarm_args
       ),
@@ -267,7 +286,9 @@ swarm_clustering <- function(physeq = NULL,
         paste0(tempdir(), "/", "temp_uclust"),
         " -z ",
         " -t ",
-        nproc,
+        nproc,  
+        " -d ",
+        d,
         " ",
         swarm_args
       ),
@@ -292,27 +313,6 @@ swarm_clustering <- function(physeq = NULL,
       "target"
     )
 
-  if (inherits(physeq, "phyloseq")) {
-    clusters <- pack_clusts$cluster[pack_clusts$type != "C"]
-    names(clusters) <-
-      sub("_.*$", "", pack_clusts$query[pack_clusts$type != "C"])
-
-    clusters <- clusters[match(taxa_names(physeq), names(clusters))]
-
-    new_obj <-
-      merge_taxa_vec(physeq,
-        clusters,
-        tax_adjust = tax_adjust
-      )
-  } else if (inherits(dna_seq, "character")) {
-    new_obj <- pack_clusts
-  } else {
-    stop(
-      "You must set the args physeq (object of class phyloseq) or
-      dna_seq (character vector)."
-    )
-  }
-
   if (file.exists(paste0(tempdir(), "/", "temp.fasta")) &&
     !keep_temporary_files) {
     unlink(paste0(tempdir(), "/", "temp.fasta"))
@@ -329,7 +329,32 @@ swarm_clustering <- function(physeq = NULL,
     !keep_temporary_files) {
     unlink(paste0(tempdir(), "/", "amplicon.fasta"))
   }
-  return(new_obj)
+
+  if (inherits(physeq, "phyloseq")) {
+    clusters <- pack_clusts$cluster[pack_clusts$type != "C"]
+    names(clusters) <-
+      sub("_.*$", "", pack_clusts$query[pack_clusts$type != "C"])
+
+    clusters <- clusters[match(taxa_names(physeq), names(clusters))]
+
+    new_physeq <-
+      merge_taxa_vec(physeq,
+        clusters,
+        tax_adjust = tax_adjust
+      )
+    if(return_swarm_df){
+      return(pack_clusts)
+    } else {
+      return(new_physeq)
+    }
+  } else if (inherits(dna_seq, "character") | inherits(dna_seq, "DNAStringSet")) {
+    return(pack_clusts)
+  } else {
+    stop(
+      "You must set the args physeq (object of class phyloseq) or
+      dna_seq (character vector)."
+    )
+  }
 }
 ###############################################################################
 
