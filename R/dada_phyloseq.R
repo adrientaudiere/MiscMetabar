@@ -530,6 +530,9 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #'   To conserved the taxonomic rank of the most abundant taxa (ASV, OTU,...),
 #'   set tax_adjust to 0 (default). For the moment only tax_adjust = 0 is
 #'   robust
+#' @param rank_propagation (logical, default FALSE). Do we propagate the
+#' NA value from lower taxonomic rank to upper rank?
+#' See the man page of [merge_taxa_vec()] for more details. 
 #' @param vsearch_cluster_method (default: "--cluster_size) See other possible
 #'   methods in the [vsearch manual](https://github.com/torognes/vsearch/) (e.g. `--cluster_size` or `--cluster_smallmem`)
 #'   - `--cluster_fast` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.
@@ -590,6 +593,7 @@ postcluster_pq <- function(physeq = NULL,
                            id = 0.97,
                            vsearchpath = "vsearch",
                            tax_adjust = 0,
+                           rank_propagation = FALSE,
                            vsearch_cluster_method = "--cluster_size",
                            vsearch_args = "--strand both",
                            keep_temporary_files = FALSE,
@@ -629,7 +633,7 @@ postcluster_pq <- function(physeq = NULL,
 
     if (inherits(physeq, "phyloseq")) {
       new_obj <-
-        merge_taxa_vec(physeq, clusters$cluster, tax_adjust = tax_adjust)
+        merge_taxa_vec(physeq, clusters$cluster, tax_adjust = tax_adjust, rank_propagation = rank_propagation)
     } else if (inherits(dna_seq, "character")) {
       new_obj <- clusters
     } else {
@@ -646,6 +650,7 @@ postcluster_pq <- function(physeq = NULL,
       id = id,
       vsearchpath = vsearchpath,
       tax_adjust = tax_adjust,
+      rank_propagation = rank_propagation,
       vsearch_cluster_method = vsearch_cluster_method,
       vsearch_args = vsearch_args,
       keep_temporary_files = keep_temporary_files
@@ -660,6 +665,7 @@ postcluster_pq <- function(physeq = NULL,
       nproc = nproc,
       swarm_args = swarm_args,
       tax_adjust = tax_adjust,
+      rank_propagation = rank_propagation,
       keep_temporary_files = keep_temporary_files
     )
   } else {

@@ -9,6 +9,8 @@
 
 - Allow `DNAStringSet` object as input of `swarm_clustering()` and `physeq_or_string_to_dna()`
 
+- Add param `rank_propagation` in `merge_taxa_vec()` to dissable the rank propagation of NA when merging taxa. It is useful when merging taxa with informations in the tax_table slot that do not follow a strict taxonomic hierarchical structure (e.g. functional guilds).
+
 ## Bug fixes
 - Fix a bug in `subset_taxa_pq()` when the condition was TRUE only for one taxon
 

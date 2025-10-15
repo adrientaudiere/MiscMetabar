@@ -163,6 +163,9 @@ vs_search_global <- function(physeq,
 #'   To conserved the taxonomic rank of the most abundant ASV,
 #'   set tax_adjust to 0 (default). For the moment only tax_adjust = 0 is
 #'   robust.
+#' @param rank_propagation (logical, default FALSE). Do we propagate the
+#' NA value from lower taxonomic rank to upper rank?
+#' See the man page of [merge_taxa_vec()] for more details. 
 #' @param return_swarm_df (logical, default FALSE) Do we return the swarm
 #'  dataframe instead of the phyloseq object ? Default FALSE return a phyloseq 
 #'  object if physeq is provided.
@@ -172,8 +175,8 @@ vs_search_global <- function(physeq,
 #'   - temp_output (classical output of SWARM)
 #'   - temp_uclust (clusters output of SWARM)
 #' @details This function use the `merge_taxa_vec` function to
-#'   merge taxa into clusters. By default tax_adjust = 0. See the man page
-#'   of [merge_taxa_vec()].
+#'   merge taxa into clusters. By default tax_adjust = 0 and rank_propagation = FALSE.
+#'  See the man page of [merge_taxa_vec()].
 #' @return A new object of class `physeq` or a list of cluster if dna_seq
 #'   args was used or if return_swarm_df was set to TRUE.
 #'
@@ -223,6 +226,7 @@ swarm_clustering <- function(physeq = NULL,
                              fastidious = TRUE,
                              swarm_args = "",
                              tax_adjust = 0,
+                             rank_propagation = FALSE,
                              return_swarm_df = FALSE,
                              keep_temporary_files = FALSE) {
   dna <- physeq_or_string_to_dna(
@@ -340,7 +344,9 @@ swarm_clustering <- function(physeq = NULL,
     new_physeq <-
       merge_taxa_vec(physeq,
         clusters,
-        tax_adjust = tax_adjust
+        tax_adjust = tax_adjust,
+        rank_propagation=rank_propagation
+
       )
     if(return_swarm_df){
       return(pack_clusts)
@@ -384,6 +390,9 @@ swarm_clustering <- function(physeq = NULL,
 #'   To conserved the taxonomic rank of the most abundant ASV,
 #'   set tax_adjust to 0 (default). For the moment only tax_adjust = 0 is
 #'   robust
+#' @param rank_propagation (logical, default FALSE). Do we propagate the
+#' NA value from lower taxonomic rank to upper rank?
+#' See the man page of [merge_taxa_vec()] for more details. 
 #' @param vsearch_cluster_method (default: "--cluster_size) See other possible
 #'   methods in the [vsearch manual](https://github.com/torognes/vsearch) (e.g. `--cluster_size` or `--cluster_smallmem`)
 #'   - `--cluster_fast` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.
@@ -428,6 +437,7 @@ vsearch_clustering <- function(physeq = NULL,
                                id = 0.97,
                                vsearchpath = "vsearch",
                                tax_adjust = 0,
+                               rank_propagation = FALSE,
                                vsearch_cluster_method = "--cluster_size",
                                vsearch_args = "--strand both",
                                keep_temporary_files = FALSE) {
@@ -481,7 +491,8 @@ vsearch_clustering <- function(physeq = NULL,
     new_obj <-
       merge_taxa_vec(physeq,
         clusters,
-        tax_adjust = tax_adjust
+        tax_adjust = tax_adjust,
+        rank_propagation=rank_propagation
       )
   } else if (inherits(dna_seq, "character")) {
     new_obj <- pack_clusts
