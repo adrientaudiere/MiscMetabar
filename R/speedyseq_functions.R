@@ -222,7 +222,7 @@ setMethod(
     }
     else {
             reduced_by_group |>
-        mutate(across(everything(), ~ ifelse(str_detect(.x, bad_string), NA_character_, .x))) %>%
+        mutate(across(everything(), ~ ifelse(stringr::str_detect(.x, bad_string), NA_character_, .x))) %>%
         as("matrix") %>%
         tax_table()   
     }
