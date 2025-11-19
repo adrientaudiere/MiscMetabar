@@ -60,17 +60,27 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.14.4" id="miscmetabar-0144-in-development">MiscMetabar 0.14.4 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-0144-in-development"></a></h2>
-<ul><li><p>Add function [plot_seq_ratio_pq()] to explore the number of sequences per samples using difference ratio of the number of sequences per samples ordered by the number of sequences.</p></li>
-<li><p>Fix a bug in [subset_taxa_pq()] when the condition was TRUE only for one taxon</p></li>
-<li><p>Fix warnings in [graph_test_pq()] with ggplot2 v.4.0.0</p></li>
-<li><p>Fix a bug in [upseq_pq()] when using <code>min_nb_seq</code> parameter.</p></li>
-<li><p>Add params <code>discard_genus_alone</code>, <code>pattern_to_remove_tip</code> and <code>pattern_to_remove_node</code> to [rotl_pq()] to enhance the default naming of nodes and tips</p></li>
+<h2 class="pkg-version" data-toc-text="0.14.4" id="miscmetabar-0144-in-development">MiscMetabar 0.14.4 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-0144-in-development"></a></h2><p class="text-muted">CRAN release: 2025-09-30</p>
+<div class="section level3">
+<h3 id="new-features-and-improvements-0-14-4">New features and improvements<a class="anchor" aria-label="anchor" href="#new-features-and-improvements-0-14-4"></a></h3>
+<ul><li><p>Add function <code><a href="../reference/plot_seq_ratio_pq.html">plot_seq_ratio_pq()</a></code> to explore the number of sequences per samples using difference ratio of the number of sequences per samples ordered by the number of sequences.</p></li>
+<li><p>Add params <code>discard_genus_alone</code>, <code>pattern_to_remove_tip</code> and <code>pattern_to_remove_node</code> to <code><a href="../reference/rotl_pq.html">rotl_pq()</a></code> to enhance the default naming of nodes and tips</p></li>
 <li><p>Improve documentation consistency following the style guide</p></li>
+<li><p>Allow <code>DNAStringSet</code> object as input of <code><a href="../reference/swarm_clustering.html">swarm_clustering()</a></code> and <code><a href="../reference/physeq_or_string_to_dna.html">physeq_or_string_to_dna()</a></code></p></li>
+<li><p>Add param <code>rank_propagation</code> in <code><a href="../reference/merge_taxa_vec.html">merge_taxa_vec()</a></code> to dissable the rank propagation of NA when merging taxa. It is useful when merging taxa with informations in the tax_table slot that do not follow a strict taxonomic hierarchical structure (e.g. functional guilds).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-14-4">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-14-4"></a></h3>
+<ul><li><p>Fix a bug in <code><a href="../reference/subset_taxa_pq.html">subset_taxa_pq()</a></code> when the condition was TRUE only for one taxon</p></li>
+<li><p>Fix warnings in <code><a href="../reference/graph_test_pq.html">graph_test_pq()</a></code> with ggplot2 v.4.0.0</p></li>
+<li><p>Fix a bug in <code>upseq_pq()</code> when using <code>min_nb_seq</code> parameter.</p></li>
 <li><p>Fix a bug in blast function by allowing value to be equal (not strictly greater) to the threshold values <code>id_cut</code>, <code>bit_score_cut</code>, <code>min_cover_cut</code> and <code>e_value_cut</code>.</p></li>
-</ul><div class="section level3">
+<li><p>Fix a bug in swarm associated functions (<code>swarm_clustering(), add_swarms_to_pq()</code>) to take into account the <code>d</code> parameter. Also add a parameter fastidious that is automatically set to FALSE is d is different from 1.</p></li>
+</ul></div>
+<div class="section level3">
 <h3 id="breaking-change-0-14-4">BREAKING CHANGE<a class="anchor" aria-label="anchor" href="#breaking-change-0-14-4"></a></h3>
-<ul><li>Replace <code>species_colnames</code> by <code>taxonomic_ranks</code> in [rotl_pq()]</li>
+<ul><li>Replace <code>species_colnames</code> by <code>taxonomic_ranks</code> in <code><a href="../reference/rotl_pq.html">rotl_pq()</a></code>
+</li>
 <li>Parameter name changes in <code><a href="../reference/plot_mt.html">plot_mt()</a></code> and <code><a href="../reference/krona.html">krona()</a></code>
 <ul><li>
 <code><a href="../reference/plot_mt.html">plot_mt()</a></code>: <code>alpha</code> → <code>pval</code> (aligns with existing pval pattern in other functions)</li>
@@ -81,11 +91,12 @@
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.14.3" id="miscmetabar-0143">MiscMetabar 0.14.3<a class="anchor" aria-label="anchor" href="#miscmetabar-0143"></a></h2><p class="text-muted">CRAN release: 2025-06-21</p>
-<ul><li>Better message in [subset_taxa_tax_control()]</li>
-<li>Add parameters <code>text_size</code> and <code>text_size_info</code> to expand or minimize text annotation in [summary_plot_pq()].</li>
-<li>Add function [filt_taxa_wo_NA()] to filter out taxa with NA values at given taxonomic rank(s)</li>
-<li>Fix a bug in [format2dada2()] by adding semicolons to fill all the taxonomic levels if <code>from_sintax</code> is TRUE</li>
-<li>Fix a bug in [adonis_pq()] for method <code>aitchison</code> and <code>robust.aitchison</code>.</li>
+<ul><li>Better message in <code><a href="../reference/subset_taxa_tax_control.html">subset_taxa_tax_control()</a></code>
+</li>
+<li>Add parameters <code>text_size</code> and <code>text_size_info</code> to expand or minimize text annotation in <code><a href="../reference/summary_plot_pq.html">summary_plot_pq()</a></code>.</li>
+<li>Add function <code><a href="../reference/filt_taxa_wo_NA.html">filt_taxa_wo_NA()</a></code> to filter out taxa with NA values at given taxonomic rank(s)</li>
+<li>Fix a bug in <code><a href="../reference/format2dada2.html">format2dada2()</a></code> by adding semicolons to fill all the taxonomic levels if <code>from_sintax</code> is TRUE</li>
+<li>Fix a bug in <code><a href="../reference/adonis_pq.html">adonis_pq()</a></code> for method <code>aitchison</code> and <code>robust.aitchison</code>.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.14.2" id="miscmetabar-0142">MiscMetabar 0.14.2<a class="anchor" aria-label="anchor" href="#miscmetabar-0142"></a></h2><p class="text-muted">CRAN release: 2025-03-20</p>
@@ -93,32 +104,38 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.14.1" id="miscmetabar-0141">MiscMetabar 0.14.1<a class="anchor" aria-label="anchor" href="#miscmetabar-0141"></a></h2><p class="text-muted">CRAN release: 2025-02-19</p>
-<ul><li>Add the possibility to use to resolve conflict using [resolve_vector_ranks()] in the [assign_sintax()] function. Add numerous parameters to [assign_sintax()], in particular <code>vote_algorithm</code> to choose the algo resolving conflict.</li>
-<li>Add param <code>pattern_to_remove</code> in [format2dada2()]</li>
+<ul><li>Add the possibility to use to resolve conflict using <code><a href="../reference/resolve_vector_ranks.html">resolve_vector_ranks()</a></code> in the <code><a href="../reference/assign_sintax.html">assign_sintax()</a></code> function.</li>
+<li>Add numerous parameters to <code><a href="../reference/assign_sintax.html">assign_sintax()</a></code>, in particular <code>vote_algorithm</code> to choose the algo resolving conflict.</li>
+<li>Add param <code>pattern_to_remove</code> in <code><a href="../reference/format2dada2.html">format2dada2()</a></code>
+</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.14.0" id="miscmetabar-0140">MiscMetabar 0.14.0<a class="anchor" aria-label="anchor" href="#miscmetabar-0140"></a></h2>
-<ul><li>Better filter of parameters in [add_new_taxonomy_pq()]. Only parameters used by the assign_* function corresponding to <code>method</code> are used.</li>
-<li>Add functions [format2sintax()], [format2dada2()] and [format2dada2_species] to format fasta database in sintax, dada2 ([dada2::assignTaxonomy()]) and dada2 Species ([dada2::assignSpecies()]) format</li>
-<li>Add function [assign_dada2()] to assign Taxonomy (with missing ranks if needed) and to assign species using [dada2::assignSpecies()] with only one database input. Add method <code>dada2_2steps</code> in function [add_new_taxonomy_pq()] which use [assign_dada2()] function.</li>
+<ul><li>Better filter of parameters in <code><a href="../reference/add_new_taxonomy_pq.html">add_new_taxonomy_pq()</a></code>. Only parameters used by the assign_* function corresponding to <code>method</code> are used.</li>
+<li>Add functions <code><a href="../reference/format2sintax.html">format2sintax()</a></code>, <code><a href="../reference/format2dada2.html">format2dada2()</a></code> and <code>format2dada2_species</code> to format fasta database in sintax, dada2 (<code><a href="https://rdrr.io/pkg/dada2/man/assignTaxonomy.html" class="external-link">dada2::assignTaxonomy()</a></code>) and dada2 Species (<code><a href="https://rdrr.io/pkg/dada2/man/assignSpecies.html" class="external-link">dada2::assignSpecies()</a></code>) format</li>
+<li>Add function <code><a href="../reference/assign_dada2.html">assign_dada2()</a></code> to assign Taxonomy (with missing ranks if needed) and to assign species using <code><a href="https://rdrr.io/pkg/dada2/man/assignSpecies.html" class="external-link">dada2::assignSpecies()</a></code> with only one database input. Add method <code>dada2_2steps</code> in function <code><a href="../reference/add_new_taxonomy_pq.html">add_new_taxonomy_pq()</a></code> which use <code><a href="../reference/assign_dada2.html">assign_dada2()</a></code> function.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.13.0" id="miscmetabar-0130">MiscMetabar 0.13.0<a class="anchor" aria-label="anchor" href="#miscmetabar-0130"></a></h2>
-<ul><li>Add function [assign_blastn()] and add a method <code>blast</code> in the function [add_new_taxonomy_pq()].</li>
-<li>Add function [resolve_vector_ranks()] to resolve conflict in a vector of taxonomy values</li>
+<ul><li>Add function <code><a href="../reference/assign_blastn.html">assign_blastn()</a></code> and add a method <code>blast</code> in the function <code><a href="../reference/add_new_taxonomy_pq.html">add_new_taxonomy_pq()</a></code>.</li>
+<li>Add function <code><a href="../reference/resolve_vector_ranks.html">resolve_vector_ranks()</a></code> to resolve conflict in a vector of taxonomy values</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.12.1" id="miscmetabar-0121">MiscMetabar 0.12.1<a class="anchor" aria-label="anchor" href="#miscmetabar-0121"></a></h2><p class="text-muted">CRAN release: 2025-01-29</p>
-<ul><li>Add parameter name <code>min_bootstrap</code> in [add_new_taxonomy_pq()]</li>
-<li>Bug fix in [assign_idtaxa()]</li>
-<li>Add parameters <code>pattern_to_remove</code> and <code>remove_NA</code> to [simplify_taxo()]</li>
+<ul><li>Add parameter name <code>min_bootstrap</code> in <code><a href="../reference/add_new_taxonomy_pq.html">add_new_taxonomy_pq()</a></code>
+</li>
+<li>Bug fix in <code><a href="../reference/assign_idtaxa.html">assign_idtaxa()</a></code>
+</li>
+<li>Add parameters <code>pattern_to_remove</code> and <code>remove_NA</code> to <code><a href="../reference/simplify_taxo.html">simplify_taxo()</a></code>
+</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.12.0" id="miscmetabar-0120">MiscMetabar 0.12.0<a class="anchor" aria-label="anchor" href="#miscmetabar-0120"></a></h2>
-<ul><li>Add function [assign_idtaxa()] and [learn_idtaxa()] to facilitate the taxonomic assignation using the idtaxa algorithm from the DECIPHER R package.</li>
-<li>Add option <code>idtaxa</code> to method in [add_new_taxonomy_pq()]</li>
-<li>Add function [tbl_sum_taxtable()] to summarize tax_table from a phyloseq object</li>
-<li>In function [assign_sintax()], add params <code>too_few</code> (default value “align_start”) and <code>too_many</code> (default “merge”) to authorize db with variable numbers of rank and parenthesis in taxonomic name,</li>
+<ul><li>Add function <code><a href="../reference/assign_idtaxa.html">assign_idtaxa()</a></code> and <code><a href="../reference/learn_idtaxa.html">learn_idtaxa()</a></code> to facilitate the taxonomic assignation using the idtaxa algorithm from the DECIPHER R package.</li>
+<li>Add option <code>idtaxa</code> to method in <code><a href="../reference/add_new_taxonomy_pq.html">add_new_taxonomy_pq()</a></code>
+</li>
+<li>Add function <code><a href="../reference/tbl_sum_taxtable.html">tbl_sum_taxtable()</a></code> to summarize tax_table from a phyloseq object</li>
+<li>In function <code><a href="../reference/assign_sintax.html">assign_sintax()</a></code>, add params <code>too_few</code> (default value “align_start”) and <code>too_many</code> (default “merge”) to authorize db with variable numbers of rank and parenthesis in taxonomic name,</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.11.1" id="miscmetabar-0111">MiscMetabar 0.11.1<a class="anchor" aria-label="anchor" href="#miscmetabar-0111"></a></h2>
@@ -135,9 +152,11 @@
 <li>Add function <code><a href="../reference/umap_pq.html">umap_pq()</a></code> to compute Dimensionality Reduction with UMAP</li>
 <li>Add function <code><a href="../reference/plot_complexity_pq.html">plot_complexity_pq()</a></code> to plot kmer complexity of references sequences of a phyloseq object</li>
 <li>Add param <code>type</code> to <code>ridge_pq()</code> to plot a cumulative version (type=“ecdf”) version of ridge</li>
-<li>Introduce the idea of a pq-verse: some other packages will complete the MiscMetabar packages to make package maintenance easier. The <a href="https://github.com/adrientaudiere/comparpq" class="external-link">comparpq</a> package will facilitate the comparison of phyloseq object with different taxonomy, different clustering methods, different samples with same modality or different primers.</li>
-<li>Add functions [assign_vsearch_lca()], [assign_sintax()] and internal function [write_temp_fasta()]</li>
-<li>Add param <code>method</code> to <code><a href="../reference/add_new_taxonomy_pq.html">add_new_taxonomy_pq()</a></code> to allow the use of [dada2::assign_taxonomy()] (default, precedent only method available), [assign_sintax()] or [assign_vsearch_lca()]</li>
+<li>Introduce the idea of a pq-verse: some other packages will complete the MiscMetabar packages to make package maintenance easier. The `comparpq](<a href="https://github.com/adrientaudiere/comparpq" class="external-link uri">https://github.com/adrientaudiere/comparpq</a>) package will facilitate the comparison of phyloseq object with different taxonomy, different clustering methods, different samples with same modality or different primers.</li>
+<li>Add functions <code><a href="../reference/assign_vsearch_lca.html">assign_vsearch_lca()</a></code>, <code><a href="../reference/assign_sintax.html">assign_sintax()</a></code> and internal function <code>write_temp_fasta()</code>
+</li>
+<li>Add param <code>method</code> to <code><a href="../reference/add_new_taxonomy_pq.html">add_new_taxonomy_pq()</a></code> to allow the use of <code>dada2::assign_taxonomy()</code> (default, precedent only method available), <code><a href="../reference/assign_sintax.html">assign_sintax()</a></code> or <code><a href="../reference/assign_vsearch_lca.html">assign_vsearch_lca()</a></code>
+</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.10.4" id="miscmetabar-0104">MiscMetabar 0.10.4<a class="anchor" aria-label="anchor" href="#miscmetabar-0104"></a></h2>
@@ -211,7 +230,7 @@
 <li>Add function <code><a href="../reference/rarefy_sample_count_by_modality.html">rarefy_sample_count_by_modality()</a></code> to equalize the number of samples for each levels of a modality (factor)</li>
 <li>Add function <code><a href="../reference/accu_plot_balanced_modality.html">accu_plot_balanced_modality()</a></code> to plot accumulation curves with balanced modality (same number of samples per level) and depth rarefaction (same number of sequences per sample)</li>
 <li>Add function <code><a href="../reference/adonis_rarperm_pq.html">adonis_rarperm_pq()</a></code> to compute multiple Permanova analyses on different sample depth rarefaction.</li>
-<li>Add function <code><a href="../reference/ggaluv_pq.html">ggaluv_pq()</a></code> to plot taxonomic distribution in alluvial fashion with ggplot2 (using the [ggalluvial] package)</li>
+<li>Add function <code><a href="../reference/ggaluv_pq.html">ggaluv_pq()</a></code> to plot taxonomic distribution in alluvial fashion with ggplot2 (using the <code>ggalluvial</code> package)</li>
 <li>Add function <code><a href="../reference/glmutli_pq.html">glmutli_pq()</a></code> to use automated model selection and multimodel inference with (G)LMs for phyloseq object</li>
 </ul></div>
 <div class="section level3">
@@ -233,7 +252,8 @@
 </li>
 <li>Add function <code><a href="../reference/psmelt_samples_pq.html">psmelt_samples_pq()</a></code> to build data frame of samples information including the number of sequences (Abundance) and Hill diversity metrics. Useful to use with the <a href="https://indrajeetpatil.github.io/ggstatsplot/" class="external-link">ggstatsplot</a> packages (see examples).</li>
 <li>Replace param <code>variable</code> by <code>fact</code> in function <code><a href="../reference/ggbetween_pq.html">ggbetween_pq()</a></code> and <code><a href="../reference/hill_pq.html">hill_pq()</a></code> (keeping the variable option in <code><a href="../reference/hill_pq.html">hill_pq()</a></code> for backward compatibility)</li>
-<li>Fix a bug in the class of the return object of function <code><a href="../reference/chimera_removal_vs.html">chimera_removal_vs()</a></code>. Now it return a matrix to be able to be parsed on to [dada2::getUniques()]</li>
+<li>Fix a bug in the class of the return object of function <code><a href="../reference/chimera_removal_vs.html">chimera_removal_vs()</a></code>. Now it return a matrix to be able to be parsed on to <code><a href="https://rdrr.io/pkg/dada2/man/getUniques.html" class="external-link">dada2::getUniques()</a></code>
+</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.7" id="miscmetabar-07">MiscMetabar 0.7<a class="anchor" aria-label="anchor" href="#miscmetabar-07"></a></h2>
@@ -477,7 +497,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>
