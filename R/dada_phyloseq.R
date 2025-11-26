@@ -1204,6 +1204,8 @@ lulu_pq <- function(physeq,
 #' @param vsearchpath (default: vsearch) path to vsearch.
 #' @param mumupath path to mumu. See [mumu](https://github.com/frederic-mahe/mumu)
 #'   for installation instruction
+#' @param lulu_exact (logical) If true, use the exact same algorithm as LULU 
+#'  corresponding to the --legacy option of mumu. Need mumu version >= v1.1.0
 #' @param verbose (logical) If true, print some additional messages.
 #' @param clean_pq (logical) If true, empty samples and empty ASV are discarded
 #'   before clustering.
@@ -1236,6 +1238,7 @@ mumu_pq <- function(physeq,
                     id = 0.84,
                     vsearchpath = "vsearch",
                     mumupath = "mumu",
+                    lulu_exact = FALSE,
                     verbose = FALSE,
                     clean_pq = TRUE,
                     keep_temporary_files = FALSE) {
@@ -1274,14 +1277,21 @@ mumu_pq <- function(physeq,
   )
 
   message("Mumu algorithm")
-  system2(
-    mumupath,
-    paste(
-      "--otu_table otu_table.csv",
-      "--match_list match_list.txt",
-      "--log log.txt",
-      "--new_otu_table new_OTU.tablemumu"
+
+    mumu_cmd <-
+    paste0( 
+      mumupath,
+      " --otu_table otu_table.csv ",
+      " --match_list match_list.txt ",
+      " --log log.txt ",
+      " --new_otu_table new_OTU.tablemumu "
     )
+  if (lulu_exact) {
+    mumu_cmd <- paste0(mumu_cmd, " --legacy ")
+    message("Using LULU exact mode (--legacy option in mumu)")
+  }
+  system2(
+    mumu_cmd
   )
 
   res_mumu <- read.delim("new_OTU.tablemumu")
