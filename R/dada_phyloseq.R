@@ -1280,18 +1280,17 @@ mumu_pq <- function(physeq,
 
     mumu_cmd <-
     paste0( 
-      mumupath,
       " --otu_table otu_table.csv ",
       " --match_list match_list.txt ",
       " --log log.txt ",
-      " --new_otu_table new_OTU.tablemumu "
+      " --new_otu_table new_OTU.tablemumu"
     )
   if (lulu_exact) {
     mumu_cmd <- paste0(mumu_cmd, " --legacy ")
     message("Using LULU exact mode (--legacy option in mumu)")
   }
   system2(
-    mumu_cmd
+    mumupath, args=mumu_cmd
   )
 
   res_mumu <- read.delim("new_OTU.tablemumu")
