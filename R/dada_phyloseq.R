@@ -2930,6 +2930,13 @@ normalize_prop_pq <- function(physeq,
 #'   is grouped by samples with abundance summed across OTU.
 #' @param rarefy_by_sample (logical, default FALSE) If TRUE, rarefy
 #'   samples using [phyloseq::rarefy_even_depth()] function.
+#' @param rngseed (Optional). A single integer value passed to
+#'   [phyloseq::rarefy_even_depth()], which is used to fix a seed for
+#'   reproducibly random number generation (in this case, reproducibly
+#'   random subsampling). If set to FALSE, then no fiddling with the RNG seed
+#'   is performed, and it is up to the user to appropriately call set.seed
+#'   beforehand to achieve reproducible results. Default is FALSE.
+#' @param verbose (logical). If TRUE, print additional information.
 #' @param taxa_ranks A vector of taxonomic ranks. For examples c("Family","Genus").
 #'   If taxa ranks is not set (default value = NULL), taxonomic information are not
 #'   present in the resulting tibble.
@@ -2954,10 +2961,36 @@ psmelt_samples_pq <-
            hill_scales = c(0, 1, 2),
            filter_zero = TRUE,
            rarefy_by_sample = FALSE,
+           rngseed = FALSE,
+           verbose = TRUE,
            taxa_ranks = NULL) {
     verify_pq(physeq)
     if (rarefy_by_sample) {
-      physeq <- rarefy_even_depth(physeq)
+      if (as(rngseed, "logical")) {
+        set.seed(rngseed)
+        if (verbose) {
+          message(
+            "`set.seed(",
+            rngseed,
+            ")` was used to initialize repeatable random subsampling."
+          )
+          message("Please record this for your records so others can reproduce.")
+          message("Try `set.seed(",
+            rngseed,
+            "); .Random.seed` for the full vector",
+            sep = ""
+          )
+          message("...")
+        }
+      } else if (verbose) {
+        message(
+          "You set `rngseed` to FALSE. Make sure you've set & recorded\n",
+          " the random seed of your session for reproducibility.\n",
+          "See `?set.seed`\n"
+        )
+        message("...")
+      }
+      physeq <- rarefy_even_depth(physeq, rngseed = rngseed)
     }
     psm <- psmelt(physeq)
     if (filter_zero) {
