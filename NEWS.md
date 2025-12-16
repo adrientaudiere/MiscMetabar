@@ -11,7 +11,7 @@
 
 - Add param `rank_propagation` in `merge_taxa_vec()` to dissable the rank propagation of NA when merging taxa. It is useful when merging taxa with informations in the tax_table slot that do not follow a strict taxonomic hierarchical structure (e.g. functional guilds).
 
-- Add param `lulu_exact` in `mumu_pq()` to force the use of the unmodified lulu algorithm (with possibles errors) thanks to the option --legacy in mumu software.
+- Add param `lulu_exact` in `mumu_pq()` to force the use of the unmodified lulu algorithm (with possibles errors) thanks to the option --legacy in mumu software. Add param `extra_mumu_args` to `mumu_pq()` to pass extra arguments to mumu software (`--minimum_match`, `--minimum_ratio_type`, `--minimum_ratio`, `--minimum_relative_cooccurence`, `--threads`). 
 
 ## Bug fixes
 - Fix a bug in `subset_taxa_pq()` when the condition was TRUE only for one taxon

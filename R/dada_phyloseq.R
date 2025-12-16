@@ -1210,6 +1210,10 @@ lulu_pq <- function(physeq,
 #' @param clean_pq (logical) If true, empty samples and empty ASV are discarded
 #'   before clustering.
 #' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files
+#' @param extra_mumu_args (character, default: NULL) Additional arguments passed
+#'  on to mumu command line. See `man mumu` into bash for details. Major args are
+#' `--minimum_match`, `--minimum_ratio_type`, `--minimum_ratio`, 
+#' `--minimum_relative_cooccurence` and `--threads` 
 #' @return a list of for object
 #' - "new_physeq": The new phyloseq object (class physeq)
 #' - "mumu_results": The log file of the mumu software. Run `man mumu` into
@@ -1219,7 +1223,9 @@ lulu_pq <- function(physeq,
 #' @seealso [lulu_pq()]
 #' @examplesIf MiscMetabar::is_mumu_installed()
 #' \dontrun{
-#' mumu_pq(data_fungi_sp_known)
+#' ntaxa(data_fungi_sp_known)
+#' ntaxa(mumu_pq(data_fungi_sp_known)$new_physeq)
+#' ntaxa(mumu_pq(data_fungi_sp_known, extra_mumu_args="--minimum_match 90")$new_physeq)
 #' }
 #' @author Frédéric Mahé
 #'   & Adrien Taudière \email{adrien.taudiere@@zaclys.net}
@@ -1241,7 +1247,8 @@ mumu_pq <- function(physeq,
                     lulu_exact = FALSE,
                     verbose = FALSE,
                     clean_pq = TRUE,
-                    keep_temporary_files = FALSE) {
+                    keep_temporary_files = FALSE,
+                    extra_mumu_args = NULL) {
   verify_pq(physeq)
   if (is.null(physeq@refseq)) {
     stop("The phyloseq object do not contain a @refseq slot")
@@ -1285,6 +1292,11 @@ mumu_pq <- function(physeq,
       " --log log.txt ",
       " --new_otu_table new_OTU.tablemumu"
     )
+  
+  if(!is.null(extra_mumu_args)){
+    mumu_cmd <- paste0(mumu_cmd, " ", extra_mumu_args)
+    message("mumu is runned with option(s)", extra_mumu_args)
+  }
   if (lulu_exact) {
     mumu_cmd <- paste0(mumu_cmd, " --legacy ")
     message("Using LULU exact mode (--legacy option in mumu)")
