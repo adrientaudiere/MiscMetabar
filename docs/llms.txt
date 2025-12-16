@@ -1,0 +1,915 @@
+# MiscMetabar [![MiscMetabar website](https://adrientaudiere.github.io/MiscMetabar/reference/figures/logo.png)](https://adrientaudiere.github.io/MiscMetabar/)
+
+See the pkgdown documentation site
+[here](https://adrientaudiere.github.io/MiscMetabar/) and the [package
+paper](https://doi.org/10.21105/joss.06038) in the Journal Of Open
+Softwares.
+
+Biological studies, especially in ecology, health sciences and taxonomy,
+need to describe the biological composition of samples. Over the last
+twenty years, (i) the development of DNA sequencing, (ii) reference
+databases, (iii) high-throughput sequencing (HTS), and (iv)
+bioinformatics resources have enabled the description of biological
+communities through metabarcoding. Metabarcoding involves the sequencing
+of millions (*meta*-) of short regions of specific DNA (*-barcoding*,
+Valentini, Pompanon, and Taberlet (2009)) often from environmental
+samples (eDNA, Taberlet et al. (2012)) such as human stomach contents,
+lake water, soil, and air.
+
+`MiscMetabar` aims to facilitate the **description**,
+**transformation**, **exploration** and **reproducibility** of
+metabarcoding analyses using R. The development of `MiscMetabar` relies
+heavily on the R packages
+[`dada2`](https://benjjneb.github.io/dada2/index.html) (Callahan et al.
+2016), [`phyloseq`](https://joey711.github.io/phyloseq/) (McMurdie and
+Holmes 2013) and [`targets`](https://books.ropensci.org/targets/)
+(Landau 2021).
+
+## Installation
+
+A CRAN version of MiscMetabar is available.
+
+``` r
+install.packages("MiscMetabar")
+```
+
+You may need to install required bioconductor packages (dada2 and
+phyloseq) first. See their installation pages. One other solution is to
+use the package [pak](https://pak.r-lib.org/) to install MiscMetabar. It
+comes with the benefit to check for uninstalled dependencies on your
+computer (system requirements), thank you [pak](https://pak.r-lib.org/)!
+
+``` r
+pak::pkg_install("MiscMetabar")
+```
+
+You can also install the stable development version from
+[GitHub](https://github.com/) with:
+
+``` r
+if (!require("devtools", quietly = TRUE)) {
+  install.packages("devtools")
+}
+devtools::install_github("adrientaudiere/MiscMetabar")
+```
+
+You can install the unstable development version from
+[GitHub](https://github.com/) with:
+
+``` r
+if (!require("devtools", quietly = TRUE)) {
+  install.packages("devtools")
+}
+devtools::install_github("adrientaudiere/MiscMetabar", ref = "dev")
+```
+
+## Some use of MiscMetabar
+
+See articles in the
+[MiscMetabar](https://adrientaudiere.github.io/MiscMetabar/) website for
+more examples.
+
+For an introduction to metabarcoding in R, see the [state of the
+field](https://adrientaudiere.github.io/MiscMetabar/articles/states_of_fields_in_R.html)
+article. The [import, export and
+tracking](https://adrientaudiere.github.io/MiscMetabar/articles/import_export_track.html)
+article explains how to import and export `phyloseq` objects. It also
+shows how to summarize useful information (number of sequences, samples
+and clusters) across bioinformatic pipelines. The article [explore
+data](https://adrientaudiere.github.io/MiscMetabar/articles/explore_data.html)
+takes a closer look at different ways to explore samples and taxonomic
+data from `phyloseq` object.
+
+If you are interested in ecological metrics, see the articles describing
+[alpha-diversity](https://adrientaudiere.github.io/MiscMetabar/articles/alpha-div.html)
+and
+[beta-diversity](https://adrientaudiere.github.io/MiscMetabar/articles/beta-div.html)
+analysis. The article [filter taxa and
+samples](https://adrientaudiere.github.io/MiscMetabar/articles/filter.html)
+describes some data filtering processes using MiscMetabar and the
+[reclustering](https://adrientaudiere.github.io/MiscMetabar/articles/Reclustering.html)
+tutorial introduces the different way of clustering already-clustered
+OTU/ASV. The article
+[tengeler](https://adrientaudiere.github.io/MiscMetabar/articles/tengeler.html)
+explore the dataset from Tengeler et al. (2020) using some MiscMetabar
+functions.
+
+For developers, I also wrote an article describing some [rules of
+codes](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html).
+
+### Summarize a physeq object
+
+``` r
+library("MiscMetabar")
+library("phyloseq")
+library("magrittr")
+data("data_fungi")
+summary_plot_pq(data_fungi)
+```
+
+![Four rectangles represent the four component of an example phyloseq
+dataset. In each rectangle, some informations about the component are
+shown.](reference/figures/README-example-1.png)
+
+### Alpha-diversity analysis
+
+``` r
+p <- MiscMetabar::hill_pq(data_fungi, fact = "Height")
+p$plot_Hill_0
+#> NULL
+```
+
+``` r
+p$plot_tuckey
+#> NULL
+```
+
+### Beta-diversity analysis
+
+``` r
+if (!require("ggVennDiagram", quietly = TRUE)) {
+  install.packages("ggVennDiagram")
+}
+ggvenn_pq(data_fungi, fact = "Height") +
+  ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1) +
+  labs(title = "Share number of ASV among Height in tree")
+```
+
+![A venn diagram showing the number of shared ASV and the percentage of
+shared ASV between the three modality of Height (low, middle and
+high).](reference/figures/README-unnamed-chunk-8-1.png)
+
+## I need help, there is a bug, I want a new feature!
+
+Most of the development work on this package has been done on a
+voluntary basis without payment. If you appreciate this work, please
+feel free to use it, cite it in your projects, let me know about any
+bugs you find, and contribute improvements via pull requests. Community
+engagement and collaboration are what make open-source projects thrive.
+Please use github issues if you need help. As a freelancer, I am
+available to work on projects related to this R package.
+
+### Note for non-Linux users
+
+Some functions may not work on Windows (*e.g.*
+[`track_wkflow()`](https://adrientaudiere.github.io/MiscMetabar/reference/track_wkflow.md),
+[`cutadapt_remove_primers()`](https://adrientaudiere.github.io/MiscMetabar/reference/cutadapt_remove_primers.md),
+[`krona()`](https://adrientaudiere.github.io/MiscMetabar/reference/krona.md),
+[`vsearch_clustering()`](https://adrientaudiere.github.io/MiscMetabar/reference/vsearch_clustering.md),
+…). A solution is to exploit docker container, for example the using the
+great [rocker project](https://rocker-project.org/).
+
+Here is a list of functions with some limitations or not working at all
+on Windows OS:
+
+- [`build_phytree_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/build_phytree_pq.md)
+- [`count_seq()`](https://adrientaudiere.github.io/MiscMetabar/reference/count_seq.md)
+- [`cutadapt_remove_primers()`](https://adrientaudiere.github.io/MiscMetabar/reference/cutadapt_remove_primers.md)
+- [`krona()`](https://adrientaudiere.github.io/MiscMetabar/reference/krona.md)
+- [`merge_krona()`](https://adrientaudiere.github.io/MiscMetabar/reference/merge_krona.md)
+- [`multipatt_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/multipatt_pq.md)
+- [`plot_tsne_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_tsne_pq.md)
+- [`rotl_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/rotl_pq.md)
+- [`save_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/save_pq.md)
+- [`tax_datatable()`](https://adrientaudiere.github.io/MiscMetabar/reference/tax_datatable.md)
+- [`track_wkflow()`](https://adrientaudiere.github.io/MiscMetabar/reference/track_wkflow.md)
+- [`track_wkflow_samples()`](https://adrientaudiere.github.io/MiscMetabar/reference/track_wkflow_samples.md)
+- [`tsne_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/tsne_pq.md)
+- [`venn_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/venn_pq.md)
+
+MiscMetabar is developed under Linux and the vast majority of functions
+may works on Unix system, but its functionning is not tested under iOS.
+
+### Installation of other softwares for Debian Linux distributions
+
+If you encounter any errors or have any questions about the installation
+of these softwares, please visit their dedicated websites.
+
+#### [blast+](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html#downloadblastdata)
+
+``` sh
+sudo apt-get install ncbi-blast+
+```
+
+#### [vsearch](https://github.com/torognes/vsearch)
+
+``` sh
+sudo apt-get install vsearch
+```
+
+An other possibilities is to [install
+vsearch](https://bioconda.github.io/recipes/vsearch/README.html?highlight=vsearch#package-package%20'vsearch')
+with `conda`.
+
+#### [swarm](https://github.com/torognes/swarm)
+
+``` sh
+git clone https://github.com/torognes/swarm.git
+cd swarm/
+make
+```
+
+An other possibilities is to [install
+swarm](https://bioconda.github.io/recipes/swarm/README.html?highlight=swarm#package-package%20'swarm')
+with `conda`.
+
+#### [Mumu](https://github.com/frederic-mahe/mumu)
+
+``` sh
+git clone https://github.com/frederic-mahe/mumu.git
+cd ./mumu/
+make
+make check
+make install  # as root or sudo
+```
+
+#### [cutadapt](https://cutadapt.readthedocs.io/en/stable/)
+
+``` sh
+conda create -n cutadaptenv cutadapt
+```
+
+Callahan, Benjamin J, Paul J McMurdie, Michael J Rosen, Andrew W Han,
+Amy Jo A Johnson, and Susan P Holmes. 2016. “DADA2: High-Resolution
+Sample Inference from Illumina Amplicon Data.” *Nature Methods* 13 (7):
+581–83. <https://doi.org/10.1038/nmeth.3869>.
+
+Landau, William Michael. 2021. “The Targets r Package: A Dynamic
+Make-Like Function-Oriented Pipeline Toolkit for Reproducibility and
+High-Performance Computing.” *Journal of Open Source Software* 6 (57):
+2959. <https://doi.org/10.21105/joss.02959>.
+
+McMurdie, Paul J., and Susan Holmes. 2013. “Phyloseq: An r Package for
+Reproducible Interactive Analysis and Graphics of Microbiome Census
+Data.” *PLoS ONE* 8 (4): e61217.
+<https://doi.org/10.1371/journal.pone.0061217>.
+
+Taberlet, Pierre, Eric Coissac, Mehrdad Hajibabaei, and Loren H
+Rieseberg. 2012. “Environmental Dna.” *Molecular Ecology*. Wiley Online
+Library. <https://doi.org/10.1002/(issn)2637-4943>.
+
+Valentini, Alice, François Pompanon, and Pierre Taberlet. 2009. “DNA
+Barcoding for Ecologists.” *Trends in Ecology & Evolution* 24 (2):
+110–17. <https://doi.org/10.1016/j.tree.2008.09.011>.
+
+# Package index
+
+## Describe phyloseq object
+
+### See also vignette on [exploring data](https://adrientaudiere.github.io/MiscMetabar/reference/articles/explore_data.md)
+
+- [`summary_plot_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/summary_plot_pq.md)
+  :
+
+  Summarize a
+  [`phyloseq-class`](https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html)
+  object using a plot.
+
+- [`tbl_sum_samdata()`](https://adrientaudiere.github.io/MiscMetabar/reference/tbl_sum_samdata.md)
+  : Summarize information from sample data in a table
+
+- [`tbl_sum_taxtable()`](https://adrientaudiere.github.io/MiscMetabar/reference/tbl_sum_taxtable.md)
+  : Summarize a tax_table (taxonomic slot of phyloseq object) using
+  gtsummary
+
+## Transform phyloseq object
+
+### Verify and clean phyloseq object
+
+- [`clean_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/clean_pq.md)
+  : Clean phyloseq object by removing empty samples and taxa
+- [`verify_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/verify_pq.md)
+  : Verify the validity of a phyloseq object
+
+### Taxonomy
+
+- [`add_blast_info()`](https://adrientaudiere.github.io/MiscMetabar/reference/add_blast_info.md)
+  :
+
+  Add information from
+  [`blast_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/blast_pq.md)
+  to the `tax_table` slot of a *phyloseq* object
+
+- [`add_new_taxonomy_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/add_new_taxonomy_pq.md)
+  : Add new taxonomic rank to a phyloseq object.
+
+- [`assign_blastn()`](https://adrientaudiere.github.io/MiscMetabar/reference/assign_blastn.md)
+  : Assign taxonomy using blastn algorithm and the blast software
+
+- [`assign_dada2()`](https://adrientaudiere.github.io/MiscMetabar/reference/assign_dada2.md)
+  : Assign taxonomy with dada2 using 2 steps assignTaxonomy and
+  assignSpecies
+
+- [`assign_idtaxa()`](https://adrientaudiere.github.io/MiscMetabar/reference/assign_idtaxa.md)
+  :
+
+  A wrapper of [`IdTaxa`](https://rdrr.io/pkg/DECIPHER/man/IdTaxa.html)
+
+- [`assign_sintax()`](https://adrientaudiere.github.io/MiscMetabar/reference/assign_sintax.md)
+  : Assign Taxonomy using Sintax algorithm of Vsearch
+
+- [`assign_vsearch_lca()`](https://adrientaudiere.github.io/MiscMetabar/reference/assign_vsearch_lca.md)
+  : Assign taxonomy using LCA
+
+- [`blast_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/blast_pq.md)
+  :
+
+  Blast all sequence of `refseq` slot of a
+  [`phyloseq-class`](https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html)
+  object against a custom database.
+
+- [`blast_to_derep()`](https://adrientaudiere.github.io/MiscMetabar/reference/blast_to_derep.md)
+  :
+
+  Blast some sequence against sequences from of a
+  [`derep-class`](https://rdrr.io/pkg/dada2/man/derep-class.html)
+  object.
+
+- [`blast_to_phyloseq()`](https://adrientaudiere.github.io/MiscMetabar/reference/blast_to_phyloseq.md)
+  :
+
+  Blast some sequence against `refseq` slot of a
+  [`phyloseq-class`](https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html)
+  object.
+
+- [`filter_asv_blast()`](https://adrientaudiere.github.io/MiscMetabar/reference/filter_asv_blast.md)
+  [`filter_taxa_blast()`](https://adrientaudiere.github.io/MiscMetabar/reference/filter_asv_blast.md)
+  : Filter undesirable taxa using blast against a custom database.
+
+- [`learn_idtaxa()`](https://adrientaudiere.github.io/MiscMetabar/reference/learn_idtaxa.md)
+  :
+
+  A wrapper of
+  [`DECIPHER::LearnTaxa()`](https://rdrr.io/pkg/DECIPHER/man/LearnTaxa.html)
+
+- [`resolve_vector_ranks()`](https://adrientaudiere.github.io/MiscMetabar/reference/resolve_vector_ranks.md)
+  : Resolve conflict in a vector of taxonomy values
+
+### Function to add information from taxonomy
+
+- [`add_funguild_info()`](https://adrientaudiere.github.io/MiscMetabar/reference/add_funguild_info.md)
+  : Add information about Guild for FUNGI the FUNGuild databse
+- [`funguild_assign()`](https://adrientaudiere.github.io/MiscMetabar/reference/funguild_assign.md)
+  : Assign Guilds to Organisms Based on Taxonomic Classification
+- [`get_funguild_db()`](https://adrientaudiere.github.io/MiscMetabar/reference/get_funguild_db.md)
+  : Retrieve the FUNGuild database
+
+### Transform OTU table only
+
+- [`as_binary_otu_table()`](https://adrientaudiere.github.io/MiscMetabar/reference/as_binary_otu_table.md)
+  :
+
+  Transform the otu_table of a
+  [`phyloseq-class`](https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html)
+  object into a
+  [`phyloseq-class`](https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html)
+  object with a binary otu_table.
+
+- [`normalize_prop_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/normalize_prop_pq.md)
+  : Normalize OTU table using samples depth
+
+- [`taxa_as_columns()`](https://adrientaudiere.github.io/MiscMetabar/reference/taxa_as_columns.md)
+  : Force taxa to be in columns in the otu_table of a physeq object
+
+- [`taxa_as_rows()`](https://adrientaudiere.github.io/MiscMetabar/reference/taxa_as_rows.md)
+  : Force taxa to be in columns in the otu_table of a physeq object
+
+### Subset/merge taxa
+
+- [`filt_taxa_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/filt_taxa_pq.md)
+  : Filter taxa of a phyloseq object based on the minimum number of
+  sequences/samples
+- [`filt_taxa_wo_NA()`](https://adrientaudiere.github.io/MiscMetabar/reference/filt_taxa_wo_NA.md)
+  : Filter taxa by cleaning taxa with NA at given taxonomic rank(s)
+- [`merge_taxa_vec()`](https://adrientaudiere.github.io/MiscMetabar/reference/merge_taxa_vec.md)
+  : Merge taxa in groups (vectorized version)
+- [`select_taxa()`](https://adrientaudiere.github.io/MiscMetabar/reference/select_taxa-methods.md)
+  : Select a subset of taxa in a specified order where possible
+- [`subset_taxa_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/subset_taxa_pq.md)
+  : Subset taxa using a conditional named boolean vector.
+- [`subset_taxa_tax_control()`](https://adrientaudiere.github.io/MiscMetabar/reference/subset_taxa_tax_control.md)
+  : Subset taxa using a taxa control or distribution based method
+
+### Subset/merge samples
+
+- [`merge_samples2()`](https://adrientaudiere.github.io/MiscMetabar/reference/merge_samples2.md)
+  : Merge samples by a sample variable or factor
+- [`rarefy_sample_count_by_modality()`](https://adrientaudiere.github.io/MiscMetabar/reference/rarefy_sample_count_by_modality.md)
+  : Rarefy (equalize) the number of samples per modality of a factor
+- [`select_one_sample()`](https://adrientaudiere.github.io/MiscMetabar/reference/select_one_sample.md)
+  : Select one sample from a physeq object
+- [`subset_samples_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/subset_samples_pq.md)
+  : Subset samples using a conditional boolean vector.
+
+### (Re)clustering OTU table
+
+- [`postcluster_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/postcluster_pq.md)
+  [`asv2otu()`](https://adrientaudiere.github.io/MiscMetabar/reference/postcluster_pq.md)
+  :
+
+  Recluster sequences of an object of class `physeq` or a list of DNA
+  sequences
+
+- [`lulu()`](https://adrientaudiere.github.io/MiscMetabar/reference/lulu.md)
+  : Post Clustering Curation of Amplicon Data.
+
+- [`lulu_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/lulu_pq.md)
+  :
+
+  Lulu reclustering of class `physeq`
+
+- [`mumu_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/mumu_pq.md)
+  :
+
+  MUMU reclustering of class `physeq`
+
+- [`swarm_clustering()`](https://adrientaudiere.github.io/MiscMetabar/reference/swarm_clustering.md)
+  :
+
+  Re-cluster sequences of an object of class `physeq` or cluster a list
+  of DNA sequences using SWARM
+
+- [`vsearch_clustering()`](https://adrientaudiere.github.io/MiscMetabar/reference/vsearch_clustering.md)
+  :
+
+  Recluster sequences of an object of class `physeq` or cluster a list
+  of DNA sequences using vsearch software
+
+### Remove chimera using vsearch
+
+- [`chimera_detection_vs()`](https://adrientaudiere.github.io/MiscMetabar/reference/chimera_detection_vs.md)
+  :
+
+  Detect for chimera taxa using
+  [vsearch](https://github.com/torognes/vsearch)
+
+- [`chimera_removal_vs()`](https://adrientaudiere.github.io/MiscMetabar/reference/chimera_removal_vs.md)
+  :
+
+  Search for a list of sequence in an object to remove chimera taxa
+  using [vsearch](https://github.com/torognes/vsearch)
+
+### Sample data
+
+- [`add_info_to_sam_data()`](https://adrientaudiere.github.io/MiscMetabar/reference/add_info_to_sam_data.md)
+  : Add information to sample_data slot of a phyloseq-class object
+- [`sam_data_matching_names()`](https://adrientaudiere.github.io/MiscMetabar/reference/sam_data_matching_names.md)
+  : Match sample names from sam_data and fastq files
+
+### Phylogenetic tree
+
+- [`build_phytree_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/build_phytree_pq.md)
+  : Build phylogenetic trees from refseq slot of a phyloseq object
+
+### References sequences
+
+- [`add_dna_to_phyloseq()`](https://adrientaudiere.github.io/MiscMetabar/reference/add_dna_to_phyloseq.md)
+  :
+
+  Add dna in `refseq` slot of a `physeq` object using taxa names and
+  renames taxa using prefix_taxa_names and number (default Taxa_1,
+  Taxa_2 ...)
+
+- [`plot_complexity_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_complexity_pq.md)
+  : Plot kmer complexity of references sequences of a phyloseq object
+
+- [`plot_refseq_extremity_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_refseq_extremity_pq.md)
+  : Plot the nucleotide proportion at both extremity of the sequences
+
+- [`plot_refseq_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_refseq_pq.md)
+  : Plot the nucleotide proportion of references sequences
+
+- [`plot_seq_ratio_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_seq_ratio_pq.md)
+  : A diagnostic plot of the number of sequences per samples
+
+## Explore phyloseq object
+
+### alpha-diversity
+
+- [`accu_plot()`](https://adrientaudiere.github.io/MiscMetabar/reference/accu_plot.md)
+  :
+
+  Plot accumulation curves for
+  [`phyloseq-class`](https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html)
+  object
+
+- [`accu_plot_balanced_modality()`](https://adrientaudiere.github.io/MiscMetabar/reference/accu_plot_balanced_modality.md)
+  : Plot accumulation curves with balanced modality and depth
+  rarefaction
+
+- [`accu_samp_threshold()`](https://adrientaudiere.github.io/MiscMetabar/reference/accu_samp_threshold.md)
+  : Compute the number of sequence to obtain a given proportion of ASV
+  in accumulation curves
+
+- [`ggbetween_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ggbetween_pq.md)
+  : Box/Violin plots for between-subjects comparisons of Hill Number
+
+- [`ggscatt_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ggscatt_pq.md)
+  : Scatterplot with marginal distributions and statistical results
+  against Hill diversity of phyloseq object
+
+- [`glmutli_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/glmutli_pq.md)
+  : Automated model selection and multimodel inference with (G)LMs for
+  phyloseq
+
+- [`hill_curves_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_curves_pq.md)
+  : Hill Diversities and Corresponding Accumulation Curves for phyloseq
+
+- [`hill_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_pq.md)
+  : Graphical representation of hill number 0, 1 and 2 across a factor
+
+- [`hill_test_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_test_rarperm_pq.md)
+  : Test multiple times effect of factor on Hill diversity with
+  different rarefaction even depth
+
+- [`hill_tuckey_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_tuckey_pq.md)
+  : Calculate hill number and compute Tuckey post-hoc test
+
+- [`iNEXT_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/iNEXT_pq.md)
+  : iNterpolation and EXTrapolation of Hill numbers (with iNEXT)
+
+### beta-diversity
+
+- [`adonis_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/adonis_pq.md)
+  : Permanova on a phyloseq object
+
+- [`adonis_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/adonis_rarperm_pq.md)
+  : Permanova (adonis) on permutations of rarefaction even depth
+
+- [`biplot_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/biplot_pq.md)
+  : Visualization of two samples for comparison
+
+- [`circle_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/circle_pq.md)
+  :
+
+  Plot OTU circle for
+  [`phyloseq-class`](https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html)
+  object
+
+- [`compare_pairs_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/compare_pairs_pq.md)
+  : Compare samples in pairs using diversity and number of ASV including
+  shared ASV.
+
+- [`formattable_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/formattable_pq.md)
+  : Create a visualization table to describe taxa distribution across a
+  modality
+
+- [`ggvenn_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ggvenn_pq.md)
+  :
+
+  Venn diagram of
+  [`phyloseq-class`](https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html)
+  object using
+  [`ggVennDiagram::ggVennDiagram`](https://gaospecial.github.io/ggVennDiagram/reference/ggVennDiagram.html)
+  function
+
+- [`graph_test_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/graph_test_pq.md)
+  : Performs graph-based permutation tests on phyloseq object
+
+- [`LCBD_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/LCBD_pq.md)
+  : Compute and test local contributions to beta diversity (LCBD) of
+  samples
+
+- [`multi_biplot_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/multi_biplot_pq.md)
+  : Visualization of a collection of couples of samples for comparison
+
+- [`plot_LCBD_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_LCBD_pq.md)
+  : Plot and test local contributions to beta diversity (LCBD) of
+  samples
+
+- [`plot_SCBD_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_SCBD_pq.md)
+  : Plot species contributions to beta diversity (SCBD) of samples
+
+- [`plot_tsne_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_tsne_pq.md)
+  : Plot a tsne low dimensional representation of a phyloseq object
+
+- [`plot_var_part_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_var_part_pq.md)
+  : Plot the partition the variation of a phyloseq object
+
+- [`ridges_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ridges_pq.md)
+  : Ridge plot of a phyloseq object
+
+- [`SRS_curve_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/SRS_curve_pq.md)
+  : Scaling with ranked subsampling (SRS) curve of phyloseq object
+
+- [`tsne_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/tsne_pq.md)
+  : Compute tSNE position of samples from a phyloseq object
+
+- [`umap_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/umap_pq.md)
+  : Computes a manifold approximation and projection (UMAP) for phyloseq
+  object
+
+- [`upset_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/upset_pq.md)
+  : Make upset plot for phyloseq object.
+
+- [`upset_test_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/upset_test_pq.md)
+  : Test for differences between intersections
+
+- [`var_par_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/var_par_pq.md)
+  : Partition the Variation of a phyloseq object by 2, 3, or 4
+  Explanatory Matrices
+
+- [`var_par_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/var_par_rarperm_pq.md)
+  : Partition the Variation of a phyloseq object with rarefaction
+  permutations
+
+- [`venn_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/venn_pq.md)
+  :
+
+  Venn diagram of
+  [`phyloseq-class`](https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html)
+  object
+
+### Differential abundance analysis
+
+- [`ancombc_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ancombc_pq.md)
+  : Run ANCOMBC2 on phyloseq object
+
+- [`multipatt_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/multipatt_pq.md)
+  : Test and plot multipatt result
+
+- [`phyloseq_to_edgeR()`](https://adrientaudiere.github.io/MiscMetabar/reference/phyloseq_to_edgeR.md)
+  : Convert phyloseq OTU count data into DGEList for edgeR package
+
+- [`plot_ancombc_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_ancombc_pq.md)
+  : Plot ANCOMBC2 result for phyloseq object
+
+- [`plot_deseq2_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_deseq2_pq.md)
+  : Plot DESeq2 results for a phyloseq or a DESeq2 object.
+
+- [`plot_edgeR_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_edgeR_pq.md)
+  : Plot edgeR results for a phyloseq or a edgeR object.
+
+- [`plot_mt()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_mt.md)
+  :
+
+  Plot the result of a mt test
+  [`phyloseq::mt()`](https://rdrr.io/pkg/phyloseq/man/mt-methods.html)
+
+- [`signif_ancombc()`](https://adrientaudiere.github.io/MiscMetabar/reference/signif_ancombc.md)
+  : Filter ancombc_pq results
+
+### Taxonomy
+
+- [`ggaluv_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ggaluv_pq.md)
+  : Alluvial plot for taxonomy and samples factor vizualisation
+
+- [`krona()`](https://adrientaudiere.github.io/MiscMetabar/reference/krona.md)
+  :
+
+  Make Krona files using
+  [KronaTools](https://github.com/marbl/Krona/wiki).
+
+- [`merge_krona()`](https://adrientaudiere.github.io/MiscMetabar/reference/merge_krona.md)
+  :
+
+  Merge Krona files using
+  [KronaTools](https://github.com/marbl/Krona/wiki).
+
+- [`multitax_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/multitax_bar_pq.md)
+  : Plot taxonomic distribution across 3 taxonomic levels and optionally
+  one sample factor
+
+- [`physeq_or_string_to_dna()`](https://adrientaudiere.github.io/MiscMetabar/reference/physeq_or_string_to_dna.md)
+  :
+
+  Return a DNAStringSet object from either a character vector of DNA
+  sequences or the `refseq` slot of a phyloseq-class object
+
+- [`plot_guild_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_guild_pq.md)
+  :
+
+  Plot information about Guild from tax_table slot previously created
+  with
+  [`add_funguild_info()`](https://adrientaudiere.github.io/MiscMetabar/reference/add_funguild_info.md)
+
+- [`plot_tax_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_tax_pq.md)
+  : Plot taxonomic distribution in function of a factor with stacked bar
+  in %
+
+- [`rotl_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/rotl_pq.md)
+  : rotl wrapper for phyloseq data
+
+- [`sankey_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/sankey_pq.md)
+  :
+
+  Sankey plot of
+  [`phyloseq-class`](https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html)
+  object
+
+- [`search_exact_seq_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/search_exact_seq_pq.md)
+  : Search for exact matching of sequences
+
+- [`tax_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/tax_bar_pq.md)
+  : Plot the distribution of sequences or ASV in one taxonomic levels
+
+- [`tax_datatable()`](https://adrientaudiere.github.io/MiscMetabar/reference/tax_datatable.md)
+  :
+
+  Make a datatable with the taxonomy of a
+  [`phyloseq-class`](https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html)
+  object
+
+- [`treemap_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/treemap_pq.md)
+  : Plot treemap of 2 taxonomic levels
+
+- [`vs_search_global()`](https://adrientaudiere.github.io/MiscMetabar/reference/vs_search_global.md)
+  :
+
+  Search for a list of sequence in a fasta file against physeq reference
+  sequences using [vsearch](https://github.com/torognes/vsearch)
+
+### Zoom on given taxa
+
+- [`distri_1_taxa()`](https://adrientaudiere.github.io/MiscMetabar/reference/distri_1_taxa.md)
+  : Distribution of sequences across a factor for one taxon
+- [`taxa_only_in_one_level()`](https://adrientaudiere.github.io/MiscMetabar/reference/taxa_only_in_one_level.md)
+  : Show taxa which are present in only one given level of a modality
+
+## Improve reproducibility using [targets](https://books.ropensci.org/targets/) pipeline
+
+### Processing fastq files
+
+- [`cutadapt_remove_primers()`](https://adrientaudiere.github.io/MiscMetabar/reference/cutadapt_remove_primers.md)
+  :
+
+  Remove primers using [cutadapt](https://github.com/marcelm/cutadapt/)
+
+- [`filter_trim()`](https://adrientaudiere.github.io/MiscMetabar/reference/filter_trim.md)
+  :
+
+  A wrapper of the function
+  [`dada2::filterAndTrim()`](https://rdrr.io/pkg/dada2/man/filterAndTrim.html)
+  to use in [targets](https://books.ropensci.org/targets/) pipeline
+
+- [`list_fastq_files()`](https://adrientaudiere.github.io/MiscMetabar/reference/list_fastq_files.md)
+  : List fastq files
+
+- [`subsample_fastq()`](https://adrientaudiere.github.io/MiscMetabar/reference/subsample_fastq.md)
+  : Subsample a fastq file copying the n_seq first sequences in a given
+  folder
+
+### Import/export phyloseq object
+
+- [`read_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/read_pq.md)
+  : Read phyloseq object from multiple csv tables and a phylogenetic
+  tree in Newick format.
+- [`save_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/save_pq.md)
+  : A wrapper of write_pq to save in all three possible formats
+- [`write_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/write_pq.md)
+  : Save phyloseq object in the form of multiple csv tables.
+
+### Track info along pipeline
+
+- [`count_seq()`](https://adrientaudiere.github.io/MiscMetabar/reference/count_seq.md)
+  : Count sequences in fasta or fastq file
+- [`track_wkflow()`](https://adrientaudiere.github.io/MiscMetabar/reference/track_wkflow.md)
+  : Track the number of reads (= sequences), samples and cluster (e.g.
+  ASV) from various objects including dada-class and derep-class.
+- [`track_wkflow_samples()`](https://adrientaudiere.github.io/MiscMetabar/reference/track_wkflow_samples.md)
+  : Track the number of reads (= sequences), samples and cluster (e.g.
+  ASV) for each sample
+
+### Sample data management
+
+- [`psmelt_samples_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/psmelt_samples_pq.md)
+  : Build a sample information tibble from physeq object
+- [`rename_samples()`](https://adrientaudiere.github.io/MiscMetabar/reference/rename_samples.md)
+  : Rename the samples of a phyloseq slot
+- [`rename_samples_otu_table()`](https://adrientaudiere.github.io/MiscMetabar/reference/rename_samples_otu_table.md)
+  : Rename samples of an otu_table
+- [`sample_data_with_new_names()`](https://adrientaudiere.github.io/MiscMetabar/reference/sample_data_with_new_names.md)
+  : Load sample data from file and rename samples using names of samples
+  and an optional order
+
+### Taxonomy management
+
+- [`simplify_taxo()`](https://adrientaudiere.github.io/MiscMetabar/reference/simplify_taxo.md)
+  : Simplify taxonomy by removing some unused characters such as "k\_\_"
+- [`reorder_taxa_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/reorder_taxa_pq.md)
+  : Reorder taxa in otu_table/tax_table/refseq slot of a phyloseq object
+
+## Datasets
+
+- [`data_fungi`](https://adrientaudiere.github.io/MiscMetabar/reference/data_fungi.md)
+  : Fungal OTU in phyloseq format
+
+- [`data_fungi_mini`](https://adrientaudiere.github.io/MiscMetabar/reference/data_fungi_mini.md)
+  : Fungal OTU in phyloseq format
+
+- [`data_fungi_sp_known`](https://adrientaudiere.github.io/MiscMetabar/reference/data_fungi_sp_known.md)
+  : Fungal OTU in phyloseq format
+
+- [`Tengeler2020_pq`](https://adrientaudiere.github.io/MiscMetabar/reference/Tengeler2020_pq.md)
+  :
+
+  This tutorial explores the dataset from Tengeler et al. (2020)
+  available in the `mia` package. obtained using
+  `mia::makePhyloseqFromTreeSE(Tengeler2020)`
+
+## Other utilities
+
+### Color management
+
+- [`fac2col()`](https://adrientaudiere.github.io/MiscMetabar/reference/fac2col.md)
+  : Translates a factor into colors.
+- [`funky_color()`](https://adrientaudiere.github.io/MiscMetabar/reference/funky_color.md)
+  : Funky palette color
+- [`transp()`](https://adrientaudiere.github.io/MiscMetabar/reference/transp.md)
+  : Adds transparency to a vector of colors
+
+### Fasta taxonomic database
+
+- [`format2dada2()`](https://adrientaudiere.github.io/MiscMetabar/reference/format2dada2.md)
+  : Format a fasta database in dada2 format
+- [`format2dada2_species()`](https://adrientaudiere.github.io/MiscMetabar/reference/format2dada2_species.md)
+  : Format a fasta database in dada2 format for Species assignment
+- [`format2sintax()`](https://adrientaudiere.github.io/MiscMetabar/reference/format2sintax.md)
+  : Format a fasta database in sintax format
+
+### File management
+
+- [`get_file_extension()`](https://adrientaudiere.github.io/MiscMetabar/reference/get_file_extension.md)
+  : Get the extension of a file
+
+### External software management
+
+- [`is_cutadapt_installed()`](https://adrientaudiere.github.io/MiscMetabar/reference/is_cutadapt_installed.md)
+  : Test if cutadapt is installed.
+- [`is_falco_installed()`](https://adrientaudiere.github.io/MiscMetabar/reference/is_falco_installed.md)
+  : Test if falco is installed.
+- [`is_krona_installed()`](https://adrientaudiere.github.io/MiscMetabar/reference/is_krona_installed.md)
+  : Test if krona is installed.
+- [`is_mumu_installed()`](https://adrientaudiere.github.io/MiscMetabar/reference/is_mumu_installed.md)
+  : Test if mumu is installed.
+- [`is_swarm_installed()`](https://adrientaudiere.github.io/MiscMetabar/reference/is_swarm_installed.md)
+  : Test if swarm is installed.
+- [`is_vsearch_installed()`](https://adrientaudiere.github.io/MiscMetabar/reference/is_vsearch_installed.md)
+  : Test if vsearch is installed.
+
+### Plot management
+
+- [`multiplot()`](https://adrientaudiere.github.io/MiscMetabar/reference/multiplot.md)
+  : Multiple plot function
+- [`no_legend()`](https://adrientaudiere.github.io/MiscMetabar/reference/no_legend.md)
+  : Discard legend in ggplot2
+
+### Variable management
+
+- [`diff_fct_diff_class()`](https://adrientaudiere.github.io/MiscMetabar/reference/diff_fct_diff_class.md)
+  : Compute different functions for different class of vector.
+- [`perc()`](https://adrientaudiere.github.io/MiscMetabar/reference/perc.md)
+  : Convert a value (or a fraction x/y) in percentage
+- [`unique_or_na()`](https://adrientaudiere.github.io/MiscMetabar/reference/unique_or_na.md)
+  : Get the unique value in x or NA if none
+
+### Others
+
+- [`all_object_size()`](https://adrientaudiere.github.io/MiscMetabar/reference/all_object_size.md)
+  : List the size of all objects of the GlobalEnv.
+
+- [`are_modality_even_depth()`](https://adrientaudiere.github.io/MiscMetabar/reference/are_modality_even_depth.md)
+  : Test if the mean number of sequences by samples is link to the
+  modality of a factor
+
+- [`dist_bycol()`](https://adrientaudiere.github.io/MiscMetabar/reference/dist_bycol.md)
+  : Compute paired distances among matrix (e.g. otu_table)
+
+- [`dist_pos_control()`](https://adrientaudiere.github.io/MiscMetabar/reference/dist_pos_control.md)
+  : Calculate ecological distance among positive controls vs distance
+  for all samples
+
+- [`MiscMetabar-package`](https://adrientaudiere.github.io/MiscMetabar/reference/MiscMetabar-package.md)
+  :
+
+  `MiscMetabar` package
+
+## Deprecated
+
+- [`physeq_graph_test()`](https://adrientaudiere.github.io/MiscMetabar/reference/MiscMetabar-deprecated.md)
+  : Deprecated function(s) in the MiscMetabar package
+
+# Articles
+
+### All vignettes
+
+- [alpha-div](https://adrientaudiere.github.io/MiscMetabar/articles/alpha-div.md):
+- [Beta-diversity
+  analysis](https://adrientaudiere.github.io/MiscMetabar/articles/beta-div.md):
+- [explore_data](https://adrientaudiere.github.io/MiscMetabar/articles/explore_data.md):
+- [fastq_quality_check](https://adrientaudiere.github.io/MiscMetabar/articles/fastq_quality_check.md):
+- [Filter taxa and
+  samples](https://adrientaudiere.github.io/MiscMetabar/articles/filter.md):
+- [Import/export and
+  track](https://adrientaudiere.github.io/MiscMetabar/articles/import_export_track.md):
+- [Introduction](https://adrientaudiere.github.io/MiscMetabar/articles/MiscMetabar.md):
+- [MiscMetabar Package Report, by
+  pkgnet](https://adrientaudiere.github.io/MiscMetabar/articles/pkgnet-report.md):
+- [Reclustering](https://adrientaudiere.github.io/MiscMetabar/articles/Reclustering.md):
+- [Rules](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.md):
+- [R ecosystem for
+  metabarcoding](https://adrientaudiere.github.io/MiscMetabar/articles/states_of_fields_in_R.md):
+- [Examples with published dataset:
+  Tengeler](https://adrientaudiere.github.io/MiscMetabar/articles/tengeler.md):
+- [Tree building and
+  visualization](https://adrientaudiere.github.io/MiscMetabar/articles/tree_visualization.md):
