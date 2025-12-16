@@ -137,6 +137,12 @@ graph_test_pq <- function(physeq,
 #'    `phyloseq::rarefy_even_depth()`.
 #'   if `correction_for_sample_size` is TRUE, rarefy_nb_seqs will have no
 #'   effect.
+#' @param rngseed (Optional). A single integer value passed to
+#'   [phyloseq::rarefy_even_depth()], which is used to fix a seed for
+#'   reproducibly random number generation (in this case, reproducibly
+#'   random subsampling). If set to FALSE, then no fiddling with the RNG seed
+#'   is performed, and it is up to the user to appropriately call set.seed
+#'   beforehand to achieve reproducible results. Default is FALSE.
 #' @param verbose (logical, default TRUE) If TRUE, prompt some messages.
 #' @param ... Additional arguments passed on to [vegan::adonis2()] function.
 #'   Note that the parameter `by` is important. If by is set to NULL
@@ -173,6 +179,7 @@ adonis_pq <- function(physeq,
                       na_remove = FALSE,
                       correction_for_sample_size = FALSE,
                       rarefy_nb_seqs = FALSE,
+                      rngseed = FALSE,
                       verbose = TRUE,
                       ...) {
   physeq <- taxa_as_columns(physeq)
@@ -224,7 +231,7 @@ adonis_pq <- function(physeq,
     formula <- paste0("sample_size+", formula)
     .formula <- stats::reformulate(formula, response = phy_dist)
   } else if (rarefy_nb_seqs) {
-    physeq <- rarefy_even_depth(physeq)
+    physeq <- rarefy_even_depth(physeq, rngseed = rngseed)
     physeq <- clean_pq(physeq)
   }
 
