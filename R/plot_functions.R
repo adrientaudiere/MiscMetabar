@@ -1321,6 +1321,30 @@ ggvenn_pq <- function(physeq = NULL,
   physeq <- taxa_as_columns(physeq)
 
   if (rarefy_before_merging) {
+    if (as(rngseed, "logical")) {
+      set.seed(rngseed)
+      if (verbose) {
+        message(
+          "`set.seed(",
+          rngseed,
+          ")` was used to initialize repeatable random subsampling."
+        )
+        message("Please record this for your records so others can reproduce.")
+        message("Try `set.seed(",
+          rngseed,
+          "); .Random.seed` for the full vector",
+          sep = ""
+        )
+        message("...")
+      }
+    } else if (verbose) {
+      message(
+        "You set `rngseed` to FALSE. Make sure you've set & recorded\n",
+        " the random seed of your session for reproducibility.\n",
+        "See `?set.seed`\n"
+      )
+      message("...")
+    }
     physeq <- rarefy_even_depth(physeq, rngseed = rngseed)
     physeq <- clean_pq(physeq)
   }
@@ -1329,6 +1353,30 @@ ggvenn_pq <- function(physeq = NULL,
 
   if (rarefy_after_merging) {
     physeq <- merge_samples2(physeq, fact)
+    if (as(rngseed, "logical")) {
+      set.seed(rngseed)
+      if (verbose) {
+        message(
+          "`set.seed(",
+          rngseed,
+          ")` was used to initialize repeatable random subsampling."
+        )
+        message("Please record this for your records so others can reproduce.")
+        message("Try `set.seed(",
+          rngseed,
+          "); .Random.seed` for the full vector",
+          sep = ""
+        )
+        message("...")
+      }
+    } else if (verbose) {
+      message(
+        "You set `rngseed` to FALSE. Make sure you've set & recorded\n",
+        " the random seed of your session for reproducibility.\n",
+        "See `?set.seed`\n"
+      )
+      message("...")
+    }
     physeq <- rarefy_even_depth(physeq, rngseed = rngseed)
     physeq <- clean_pq(physeq)
   }
@@ -1794,6 +1842,7 @@ hill_pq <- function(physeq,
 #'   random subsampling). If set to FALSE, then no fiddling with the RNG seed
 #'   is performed, and it is up to the user to appropriately call set.seed
 #'   beforehand to achieve reproducible results. Default is FALSE.
+#' @param verbose (logical). If TRUE, print additional information.
 #' @param ... Additional arguments passed on to [ggstatsplot::ggbetweenstats()] function.
 
 #' @return Either an unique ggplot2 object (if one_plot is TRUE) or
@@ -1826,11 +1875,36 @@ ggbetween_pq <-
            one_plot = FALSE,
            rarefy_by_sample = FALSE,
            rngseed = FALSE,
+           verbose = TRUE,
            ...) {
     verify_pq(physeq)
     physeq <- taxa_as_columns(physeq)
 
     if (rarefy_by_sample) {
+      if (as(rngseed, "logical")) {
+        set.seed(rngseed)
+        if (verbose) {
+          message(
+            "`set.seed(",
+            rngseed,
+            ")` was used to initialize repeatable random subsampling."
+          )
+          message("Please record this for your records so others can reproduce.")
+          message("Try `set.seed(",
+            rngseed,
+            "); .Random.seed` for the full vector",
+            sep = ""
+          )
+          message("...")
+        }
+      } else if (verbose) {
+        message(
+          "You set `rngseed` to FALSE. Make sure you've set & recorded\n",
+          " the random seed of your session for reproducibility.\n",
+          "See `?set.seed`\n"
+        )
+        message("...")
+      }
       physeq <- clean_pq(rarefy_even_depth(physeq, rngseed = rngseed))
     }
 
@@ -2296,6 +2370,7 @@ rotl_pq <- function(
 #'   random subsampling). If set to FALSE, then no fiddling with the RNG seed
 #'   is performed, and it is up to the user to appropriately call set.seed
 #'   beforehand to achieve reproducible results. Default is FALSE.
+#' @param verbose (logical). If TRUE, print additional information.
 #' @param inverse_side Inverse the side (put the right modality in the left side).
 #' @param left_name Name fo the left sample.
 #' @param left_name_col Color for the left name
@@ -2336,6 +2411,7 @@ biplot_pq <- function(physeq,
                       merge_sample_by = NULL,
                       rarefy_after_merging = FALSE,
                       rngseed = FALSE,
+                      verbose = TRUE,
                       inverse_side = FALSE,
                       left_name = NULL,
                       left_name_col = "#4B3E1E",
@@ -2372,6 +2448,30 @@ biplot_pq <- function(physeq,
   }
 
   if (rarefy_after_merging) {
+    if (as(rngseed, "logical")) {
+      set.seed(rngseed)
+      if (verbose) {
+        message(
+          "`set.seed(",
+          rngseed,
+          ")` was used to initialize repeatable random subsampling."
+        )
+        message("Please record this for your records so others can reproduce.")
+        message("Try `set.seed(",
+          rngseed,
+          "); .Random.seed` for the full vector",
+          sep = ""
+        )
+        message("...")
+      }
+    } else if (verbose) {
+      message(
+        "You set `rngseed` to FALSE. Make sure you've set & recorded\n",
+        " the random seed of your session for reproducibility.\n",
+        "See `?set.seed`\n"
+      )
+      message("...")
+    }
     physeq <- clean_pq(rarefy_even_depth(physeq, rngseed = rngseed))
   }
 
@@ -3307,6 +3407,7 @@ iNEXT_pq <- function(physeq,
 #'   random subsampling). If set to FALSE, then no fiddling with the RNG seed
 #'   is performed, and it is up to the user to appropriately call set.seed
 #'   beforehand to achieve reproducible results. Default is FALSE.
+#' @param verbose (logical). If TRUE, print additional information.
 #' @param ... Additional arguments passed on to the [ComplexUpset::upset()]
 #'
 #' @return A \code{\link[ggplot2]{ggplot}}2 plot
@@ -3431,6 +3532,7 @@ upset_pq <- function(physeq,
                      numeric_fonction = sum,
                      rarefy_after_merging = FALSE,
                      rngseed = FALSE,
+                     verbose = TRUE,
                      ...) {
   if (!is.null(min_nb_seq)) {
     physeq@otu_table[physeq@otu_table < min_nb_seq] <- 0
@@ -3447,6 +3549,30 @@ upset_pq <- function(physeq,
   physeq <- merge_samples2(physeq, fact)
 
   if (rarefy_after_merging) {
+    if (as(rngseed, "logical")) {
+      set.seed(rngseed)
+      if (verbose) {
+        message(
+          "`set.seed(",
+          rngseed,
+          ")` was used to initialize repeatable random subsampling."
+        )
+        message("Please record this for your records so others can reproduce.")
+        message("Try `set.seed(",
+          rngseed,
+          "); .Random.seed` for the full vector",
+          sep = ""
+        )
+        message("...")
+      }
+    } else if (verbose) {
+      message(
+        "You set `rngseed` to FALSE. Make sure you've set & recorded\n",
+        " the random seed of your session for reproducibility.\n",
+        "See `?set.seed`\n"
+      )
+      message("...")
+    }
     physeq <- clean_pq(rarefy_even_depth(physeq, rngseed = rngseed))
   }
 
@@ -4207,6 +4333,7 @@ plot_var_part_pq <-
 #'   random subsampling). If set to FALSE, then no fiddling with the RNG seed
 #'   is performed, and it is up to the user to appropriately call set.seed
 #'   beforehand to achieve reproducible results. Default is FALSE.
+#' @param verbose (logical). If TRUE, print additional information.
 #' @param one_plot (logical, default FALSE) If TRUE, return a unique
 #'   plot with the three plot inside using the patchwork package.
 #' @param ... Additional arguments passed on to [ggstatsplot::ggscatterstats()]
@@ -4236,12 +4363,37 @@ ggscatt_pq <- function(physeq,
                        hill_scales = c(0, 1, 2),
                        rarefy_by_sample = FALSE,
                        rngseed = FALSE,
+                       verbose = TRUE,
                        one_plot = TRUE,
                        ...) {
   verify_pq(physeq)
   physeq <- clean_pq(physeq, force_taxa_as_columns = TRUE)
 
   if (rarefy_by_sample) {
+    if (as(rngseed, "logical")) {
+      set.seed(rngseed)
+      if (verbose) {
+        message(
+          "`set.seed(",
+          rngseed,
+          ")` was used to initialize repeatable random subsampling."
+        )
+        message("Please record this for your records so others can reproduce.")
+        message("Try `set.seed(",
+          rngseed,
+          "); .Random.seed` for the full vector",
+          sep = ""
+        )
+        message("...")
+      }
+    } else if (verbose) {
+      message(
+        "You set `rngseed` to FALSE. Make sure you've set & recorded\n",
+        " the random seed of your session for reproducibility.\n",
+        "See `?set.seed`\n"
+      )
+      message("...")
+    }
     physeq <- clean_pq(rarefy_even_depth(physeq, rngseed = rngseed))
   }
 
@@ -4298,6 +4450,7 @@ ggscatt_pq <- function(physeq,
 #'   random subsampling). If set to FALSE, then no fiddling with the RNG seed
 #'   is performed, and it is up to the user to appropriately call set.seed
 #'   beforehand to achieve reproducible results. Default is FALSE.
+#' @param verbose (logical). If TRUE, print additional information.
 #' @param fact (required) Name of the factor in `physeq@sam_data` used to plot  the last column
 #' @param type If "nb_seq" (default), the number of sequences is
 #'   used in plot. If "nb_taxa", the number of ASV is plotted.
@@ -4345,6 +4498,7 @@ ggaluv_pq <- function(physeq,
                       by_sample = FALSE,
                       rarefy_by_sample = FALSE,
                       rngseed = FALSE,
+                      verbose = TRUE,
                       fact = NULL,
                       type = "nb_seq",
                       width = 1.2,
@@ -4356,6 +4510,30 @@ ggaluv_pq <- function(physeq,
                       ...) {
   verify_pq(physeq)
   if (rarefy_by_sample) {
+    if (as(rngseed, "logical")) {
+      set.seed(rngseed)
+      if (verbose) {
+        message(
+          "`set.seed(",
+          rngseed,
+          ")` was used to initialize repeatable random subsampling."
+        )
+        message("Please record this for your records so others can reproduce.")
+        message("Try `set.seed(",
+          rngseed,
+          "); .Random.seed` for the full vector",
+          sep = ""
+        )
+        message("...")
+      }
+    } else if (verbose) {
+      message(
+        "You set `rngseed` to FALSE. Make sure you've set & recorded\n",
+        " the random seed of your session for reproducibility.\n",
+        "See `?set.seed`\n"
+      )
+      message("...")
+    }
     physeq <- rarefy_even_depth(physeq, rngseed = rngseed)
   }
 

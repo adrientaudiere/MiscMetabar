@@ -231,6 +231,30 @@ adonis_pq <- function(physeq,
     formula <- paste0("sample_size+", formula)
     .formula <- stats::reformulate(formula, response = phy_dist)
   } else if (rarefy_nb_seqs) {
+    if (as(rngseed, "logical")) {
+      set.seed(rngseed)
+      if (verbose) {
+        message(
+          "`set.seed(",
+          rngseed,
+          ")` was used to initialize repeatable random subsampling."
+        )
+        message("Please record this for your records so others can reproduce.")
+        message("Try `set.seed(",
+          rngseed,
+          "); .Random.seed` for the full vector",
+          sep = ""
+        )
+        message("...")
+      }
+    } else if (verbose) {
+      message(
+        "You set `rngseed` to FALSE. Make sure you've set & recorded\n",
+        " the random seed of your session for reproducibility.\n",
+        "See `?set.seed`\n"
+      )
+      message("...")
+    }
     physeq <- rarefy_even_depth(physeq, rngseed = rngseed)
     physeq <- clean_pq(physeq)
   }
