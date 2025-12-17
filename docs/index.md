@@ -156,7 +156,7 @@ Some functions may not work on Windows (*e.g.*
 [`cutadapt_remove_primers()`](https://adrientaudiere.github.io/MiscMetabar/reference/cutadapt_remove_primers.md),
 [`krona()`](https://adrientaudiere.github.io/MiscMetabar/reference/krona.md),
 [`vsearch_clustering()`](https://adrientaudiere.github.io/MiscMetabar/reference/vsearch_clustering.md),
-…). A solution is to exploit docker container, for example the using the
+…). A solution is to exploit docker container, for example using the
 great [rocker project](https://rocker-project.org/).
 
 Here is a list of functions with some limitations or not working at all

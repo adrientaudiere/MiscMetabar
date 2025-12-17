@@ -126,7 +126,6 @@ vs_search_global <- function(physeq,
 ################################################################################
 
 
-
 ###############################################################################
 #' Re-cluster sequences of an object of class `physeq`
 #'   or cluster a list of DNA sequences using SWARM
@@ -151,7 +150,7 @@ vs_search_global <- function(physeq,
 #'   is NULL and dna_seq is provided.
 #' @param nproc (default: 1)
 #'   Set to number of cpus/processors to use for the clustering
-#' @param fastidious (logical, default TRUE), perform a second clustering pass 
+#' @param fastidious (logical, default TRUE), perform a second clustering pass
 #' to reduce the number of small clusters (recommended option by swarm authors).
 #' Not that if d is different from 1, fastidious is automatically set to FALSE.
 #' @param swarm_args a one length character
@@ -165,9 +164,9 @@ vs_search_global <- function(physeq,
 #'   robust.
 #' @param rank_propagation (logical, default FALSE). Do we propagate the
 #' NA value from lower taxonomic rank to upper rank?
-#' See the man page of [merge_taxa_vec()] for more details. 
+#' See the man page of [merge_taxa_vec()] for more details.
 #' @param return_swarm_df (logical, default FALSE) Do we return the swarm
-#'  dataframe instead of the phyloseq object ? Default FALSE return a phyloseq 
+#'  dataframe instead of the phyloseq object ? Default FALSE return a phyloseq
 #'  object if physeq is provided.
 #' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary
 #'   files ?
@@ -234,11 +233,11 @@ swarm_clustering <- function(physeq = NULL,
     dna_seq = dna_seq
   )
 
-  if(d != 1){
+  if (d != 1) {
     fastidious <- FALSE
   }
 
-  if(fastidious){
+  if (fastidious && !grepl("--fastidious", swarm_args)) {
     swarm_args <- paste0(swarm_args, " --fastidious ")
   }
 
@@ -290,7 +289,7 @@ swarm_clustering <- function(physeq = NULL,
         paste0(tempdir(), "/", "temp_uclust"),
         " -z ",
         " -t ",
-        nproc,  
+        nproc,
         " -d ",
         d,
         " ",
@@ -345,10 +344,9 @@ swarm_clustering <- function(physeq = NULL,
       merge_taxa_vec(physeq,
         clusters,
         tax_adjust = tax_adjust,
-        rank_propagation=rank_propagation
-
+        rank_propagation = rank_propagation
       )
-    if(return_swarm_df){
+    if (return_swarm_df) {
       return(pack_clusts)
     } else {
       return(new_physeq)
@@ -363,7 +361,6 @@ swarm_clustering <- function(physeq = NULL,
   }
 }
 ###############################################################################
-
 
 
 ###############################################################################
@@ -392,7 +389,7 @@ swarm_clustering <- function(physeq = NULL,
 #'   robust
 #' @param rank_propagation (logical, default FALSE). Do we propagate the
 #' NA value from lower taxonomic rank to upper rank?
-#' See the man page of [merge_taxa_vec()] for more details. 
+#' See the man page of [merge_taxa_vec()] for more details.
 #' @param vsearch_cluster_method (default: "--cluster_size) See other possible
 #'   methods in the [vsearch manual](https://github.com/torognes/vsearch) (e.g. `--cluster_size` or `--cluster_smallmem`)
 #'   - `--cluster_fast` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.
@@ -492,7 +489,7 @@ vsearch_clustering <- function(physeq = NULL,
       merge_taxa_vec(physeq,
         clusters,
         tax_adjust = tax_adjust,
-        rank_propagation=rank_propagation
+        rank_propagation = rank_propagation
       )
   } else if (inherits(dna_seq, "character")) {
     new_obj <- pack_clusts
@@ -650,7 +647,6 @@ chimera_removal_vs <-
     }
   }
 ################################################################################
-
 
 
 ################################################################################

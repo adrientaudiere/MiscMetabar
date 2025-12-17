@@ -16,9 +16,11 @@ mumu_pq(
   id = 0.84,
   vsearchpath = "vsearch",
   mumupath = "mumu",
+  lulu_exact = FALSE,
   verbose = FALSE,
   clean_pq = TRUE,
-  keep_temporary_files = FALSE
+  keep_temporary_files = FALSE,
+  extra_mumu_args = NULL
 )
 ```
 
@@ -47,6 +49,11 @@ mumu_pq(
   path to mumu. See [mumu](https://github.com/frederic-mahe/mumu) for
   installation instruction
 
+- lulu_exact:
+
+  (logical) If true, use the exact same algorithm as LULU corresponding
+  to the –legacy option of mumu. Need mumu version \>= v1.1.0
+
 - verbose:
 
   (logical) If true, print some additional messages.
@@ -59,6 +66,13 @@ mumu_pq(
 - keep_temporary_files:
 
   (logical, default: FALSE) Do we keep temporary files
+
+- extra_mumu_args:
+
+  (character, default: NULL) Additional arguments passed on to mumu
+  command line. See `man mumu` into bash for details. Major args are
+  `--minimum_match`, `--minimum_ratio_type`, `--minimum_ratio`,
+  `--minimum_relative_cooccurence` and `--threads`
 
 ## Value
 
@@ -94,6 +108,8 @@ Frédéric Mahé & Adrien Taudière <adrien.taudiere@zaclys.net>
 
 ``` r
 if (FALSE) { # \dontrun{
-mumu_pq(data_fungi_sp_known)
+ntaxa(data_fungi_sp_known)
+ntaxa(mumu_pq(data_fungi_sp_known)$new_physeq)
+ntaxa(mumu_pq(data_fungi_sp_known, extra_mumu_args = "--minimum_match 90")$new_physeq)
 } # }
 ```

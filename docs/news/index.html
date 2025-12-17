@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,14 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.14.4" id="miscmetabar-0144-in-development">MiscMetabar 0.14.4 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-0144-in-development"></a></h2><p class="text-muted">CRAN release: 2025-09-30</p>
+<h2 class="pkg-version" data-toc-text="0.14.5" id="miscmetabar-0145-in-development">MiscMetabar 0.14.5 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-0145-in-development"></a></h2>
+<ul><li><p>Add function <code><a href="../reference/lefser_pq.html">lefser_pq()</a></code> to run LEfSe analysis (differential analysis) from a phyloseq object using the package lefser.</p></li>
+<li><p>Add function <code><a href="../reference/aldex_pq.html">aldex_pq()</a></code> to run ALDEX2 analysis (differential analysis) from a phyloseq object using the package ALDEx2 and the default parameters gamma=0.5.</p></li>
+<li><p>Add the parameter <code>rngseed</code> in all functions which used <code><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">phyloseq::rarefy_even_depth</a></code> to set the seed for random number generator in order to increase reproducibility.</p></li>
+<li><p>Better messages (and not error) in <code>filter_asv_blast</code> when the resulting table of OTU is empty</p></li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.14.4" id="miscmetabar-0144">MiscMetabar 0.14.4<a class="anchor" aria-label="anchor" href="#miscmetabar-0144"></a></h2><p class="text-muted">CRAN release: 2025-09-30</p>
 <div class="section level3">
 <h3 id="new-features-and-improvements-0-14-4">New features and improvements<a class="anchor" aria-label="anchor" href="#new-features-and-improvements-0-14-4"></a></h3>
 <ul><li><p>Add function <code><a href="../reference/plot_seq_ratio_pq.html">plot_seq_ratio_pq()</a></code> to explore the number of sequences per samples using difference ratio of the number of sequences per samples ordered by the number of sequences.</p></li>
@@ -68,6 +75,8 @@
 <li><p>Improve documentation consistency following the style guide</p></li>
 <li><p>Allow <code>DNAStringSet</code> object as input of <code><a href="../reference/swarm_clustering.html">swarm_clustering()</a></code> and <code><a href="../reference/physeq_or_string_to_dna.html">physeq_or_string_to_dna()</a></code></p></li>
 <li><p>Add param <code>rank_propagation</code> in <code><a href="../reference/merge_taxa_vec.html">merge_taxa_vec()</a></code> to dissable the rank propagation of NA when merging taxa. It is useful when merging taxa with informations in the tax_table slot that do not follow a strict taxonomic hierarchical structure (e.g. functional guilds).</p></li>
+<li><p>Add param <code>lulu_exact</code> in <code><a href="../reference/mumu_pq.html">mumu_pq()</a></code> to force the use of the unmodified lulu algorithm (with possibles errors) thanks to the option –legacy in mumu software. Add param <code>extra_mumu_args</code> to <code><a href="../reference/mumu_pq.html">mumu_pq()</a></code> to pass extra arguments to mumu software (<code>--minimum_match</code>, <code>--minimum_ratio_type</code>, <code>--minimum_ratio</code>, <code>--minimum_relative_cooccurence</code>, <code>--threads</code>).</p></li>
+<li><p>Add function <code>plot_ordination_pq</code> to plot ordination from vegan::vegdist object (useful when using aitchison and robust aitchison distances)</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-14-4">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-14-4"></a></h3>
@@ -413,16 +422,16 @@
 <ul><li>Add function <code><a href="../reference/plot_tax_pq.html">plot_tax_pq()</a></code> to plot taxonomic distribution (nb of sequences or nb of ASV) across factor.</li>
 <li>Add option <code>add_points</code> and make better axis of <code><a href="../reference/hill_pq.html">hill_pq()</a></code> function</li>
 <li>Add function <code><a href="../reference/blast_to_derep.html">blast_to_derep()</a></code> in order to facilitate searching some fasta sequences in dereplicated sequences (obtained by <code><a href="https://rdrr.io/pkg/dada2/man/derepFastq.html" class="external-link">dada2::derepFastq</a></code>)</li>
-</ul><table class="table"><colgroup><col width="21%"><col width="45%"><col width="33%"></colgroup><thead><tr><th></th>
+</ul><table class="table"><colgroup><col width="21%"><col width="45%"><col width="33%"></colgroup><thead><tr class="header"><th></th>
 <th>Database (makeblastdb)</th>
 <th>Sequences to blast (blastn)</th>
-</tr></thead><tbody><tr><td><code><a href="../reference/blast_to_phyloseq.html">blast_to_phyloseq()</a></code></td>
+</tr></thead><tbody><tr class="odd"><td><code><a href="../reference/blast_to_phyloseq.html">blast_to_phyloseq()</a></code></td>
 <td>Built from <code>ref_seq</code> slot(physeq-class)</td>
 <td>Custom fasta file</td>
-</tr><tr><td><code><a href="../reference/blast_to_derep.html">blast_to_derep()</a></code></td>
+</tr><tr class="even"><td><code><a href="../reference/blast_to_derep.html">blast_to_derep()</a></code></td>
 <td>Built from dereplicate sequences (derep-class)</td>
 <td>Custom fasta file</td>
-</tr><tr><td><code><a href="../reference/blast_pq.html">blast_pq()</a></code></td>
+</tr><tr class="odd"><td><code><a href="../reference/blast_pq.html">blast_pq()</a></code></td>
 <td>Custom database or custom fasta file</td>
 <td>
 <code>ref_seq</code> slot of a physeq object</td>

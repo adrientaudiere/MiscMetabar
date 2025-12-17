@@ -96,4 +96,6 @@ filter_taxa_blast(
 
 A new
 [`phyloseq-class`](https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html)
-object.
+object, or NULL if no taxa matched the blast database or if no taxa
+passed the filter criteria. In either case, an informative message is
+printed.

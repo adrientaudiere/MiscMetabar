@@ -1086,7 +1086,7 @@ plot_ancombc_pq <-
 #' @param bifactor (required) The name of a column present in the `@sam_data` slot
 #'  of the physeq object. Must be a character vector or a factor.
 #' @param modalities (default NULL) A vector of modalities to keep in the analysis.
-#'  If NULL, all modalities present in classCol are kept. Note that only two
+#'  If NULL, all modalities present in bifactor are kept. Note that only two
 #'  modalities are allowed.
 #'  @param compute_relativeAb (logical, default TRUE) Do we compute relative abundance
 #'  before running LEfSe?
@@ -1101,17 +1101,17 @@ plot_ancombc_pq <-
 #' @author Adrien Taudière
 #' @examples
 #' res_lefse <- lefser_pq(data_fungi,
-#'   classCol = "Height",
+#'   bifactor = "Height",
 #'   modalities = c("Low", "High")
 #' )
 #' lefser::lefserPlot(res_lefse)
 lefser_pq <- function(physeq, bifactor = NULL, modalities = NULL, compute_relativeAb = TRUE, by_clade = FALSE, ...) {
   verify_pq(physeq)
 
-  if (is.null(classCol)) {
+  if (is.null(bifactor)) {
     stop("Please provide the name of the column in sample_data corresponding to the class variable.")
   }
-  if (!classCol %in% colnames(physeq@sam_data)) {
+  if (!bifactor %in% colnames(physeq@sam_data)) {
     stop(paste0("The column ", bifactor, " is not present in the sample_data of the phyloseq object."))
   }
 
@@ -1156,7 +1156,7 @@ lefser_pq <- function(physeq, bifactor = NULL, modalities = NULL, compute_relati
 #' @param bifactor (required) The name of a column present in the `@sam_data` slot
 #'  of the physeq object. Must be a character vector or a factor.
 #' @param modalities (default NULL) A vector of modalities to keep in the analysis.
-#'  If NULL, all modalities present in classCol are kept. Note that only two
+#'  If NULL, all modalities present in bifactor are kept. Note that only two
 #'  modalities are allowed.
 #'  @param gamma (default 0.5) The value of the Dirichlet Monte-Carlo
 #'  sampling parameter.

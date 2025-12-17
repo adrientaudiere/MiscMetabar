@@ -19,6 +19,7 @@ ggvenn_pq(
   add_nb_seq = FALSE,
   rarefy_before_merging = FALSE,
   rarefy_after_merging = FALSE,
+  rngseed = FALSE,
   return_data_for_venn = FALSE,
   verbose = TRUE,
   type = "nb_taxa",
@@ -74,6 +75,16 @@ ggvenn_pq(
 - rarefy_after_merging:
 
   Rarefy each sample after merging by the modalities of args `fact`.
+
+- rngseed:
+
+  (Optional). A single integer value passed to
+  [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html),
+  which is used to fix a seed for reproducibly random number generation
+  (in this case, reproducibly random subsampling). If set to FALSE, then
+  no fiddling with the RNG seed is performed, and it is up to the user
+  to appropriately call set.seed beforehand to achieve reproducible
+  results. Default is FALSE.
 
 - return_data_for_venn:
 
@@ -223,13 +234,21 @@ if (requireNamespace("ggVennDiagram")) {
 #>  the random seed of your session for reproducibility.
 #> See `?set.seed`
 #> ...
-#> 1145OTUs were removed because they are no longer 
+#> You set `rngseed` to FALSE. Make sure you've set & recorded
+#>  the random seed of your session for reproducibility.
+#> See `?set.seed`
+#> ...
+#> 1141OTUs were removed because they are no longer 
 #> present in any sample after random subsampling
 #> ...
-#> Cleaning suppress 162 taxa and 0 samples.
-#> Cleaning suppress 156 taxa and 0 samples.
-#> Cleaning suppress 142 taxa and 0 samples.
+#> Cleaning suppress 171 taxa and 0 samples.
+#> Cleaning suppress 146 taxa and 0 samples.
+#> Cleaning suppress 153 taxa and 0 samples.
 #> 54 were discarded due to NA in variable fact
+#> You set `rngseed` to FALSE. Make sure you've set & recorded
+#>  the random seed of your session for reproducibility.
+#> See `?set.seed`
+#> ...
 #> You set `rngseed` to FALSE. Make sure you've set & recorded
 #>  the random seed of your session for reproducibility.
 #> See `?set.seed`
@@ -237,9 +256,9 @@ if (requireNamespace("ggVennDiagram")) {
 #> 157OTUs were removed because they are no longer 
 #> present in any sample after random subsampling
 #> ...
-#> Cleaning suppress 386 taxa and 0 samples.
+#> Cleaning suppress 385 taxa and 0 samples.
 #> Cleaning suppress 342 taxa and 0 samples.
-#> Cleaning suppress 338 taxa and 0 samples.
+#> Cleaning suppress 340 taxa and 0 samples.
 #> 54 were discarded due to NA in variable fact
 #> Cleaning suppress 501 taxa and 0 samples.
 #> Cleaning suppress 457 taxa and 0 samples.

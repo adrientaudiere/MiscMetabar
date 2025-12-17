@@ -13,7 +13,7 @@ A wrapper of SWARM software."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,8 +82,11 @@ A wrapper of SWARM software."></head><body>
 <span>  swarmpath <span class="op">=</span> <span class="st">"swarm"</span>,</span>
 <span>  vsearch_path <span class="op">=</span> <span class="st">"vsearch"</span>,</span>
 <span>  nproc <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  swarm_args <span class="op">=</span> <span class="st">"--fastidious"</span>,</span>
+<span>  fastidious <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  swarm_args <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  tax_adjust <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  rank_propagation <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  return_swarm_df <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  keep_temporary_files <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -124,9 +127,16 @@ is NULL and dna_seq is provided.</p></dd>
 Set to number of cpus/processors to use for the clustering</p></dd>
 
 
+<dt id="arg-fastidious">fastidious<a class="anchor" aria-label="anchor" href="#arg-fastidious"></a></dt>
+<dd><p>(logical, default TRUE), perform a second clustering pass
+to reduce the number of small clusters (recommended option by swarm authors).
+Not that if d is different from 1, fastidious is automatically set to FALSE.</p></dd>
+
+
 <dt id="arg-swarm-args">swarm_args<a class="anchor" aria-label="anchor" href="#arg-swarm-args"></a></dt>
-<dd><p>(default : "–fastidious") a one length character
-element defining other parameters to  passed on to swarm See other possible
+<dd><p>a one length character
+element defining other parameters to  passed on to swarm (e.g. "–mismatch-penalty 4").
+See other possible
 methods in the <a href="https://github.com/torognes/swarm/blob/master/man/swarm_manual.pdf" class="external-link">SWARM pdf manual</a></p></dd>
 
 
@@ -136,6 +146,18 @@ of <code><a href="merge_taxa_vec.html">merge_taxa_vec()</a></code> for more deta
 To conserved the taxonomic rank of the most abundant ASV,
 set tax_adjust to 0 (default). For the moment only tax_adjust = 0 is
 robust.</p></dd>
+
+
+<dt id="arg-rank-propagation">rank_propagation<a class="anchor" aria-label="anchor" href="#arg-rank-propagation"></a></dt>
+<dd><p>(logical, default FALSE). Do we propagate the
+NA value from lower taxonomic rank to upper rank?
+See the man page of <code><a href="merge_taxa_vec.html">merge_taxa_vec()</a></code> for more details.</p></dd>
+
+
+<dt id="arg-return-swarm-df">return_swarm_df<a class="anchor" aria-label="anchor" href="#arg-return-swarm-df"></a></dt>
+<dd><p>(logical, default FALSE) Do we return the swarm
+dataframe instead of the phyloseq object ? Default FALSE return a phyloseq
+object if physeq is provided.</p></dd>
 
 
 <dt id="arg-keep-temporary-files">keep_temporary_files<a class="anchor" aria-label="anchor" href="#arg-keep-temporary-files"></a></dt>
@@ -149,13 +171,13 @@ files ?</p><ul><li><p>temp.fasta (refseq in fasta or dna_seq sequences)</p></li>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A new object of class <code>physeq</code> or a list of cluster if dna_seq
-args was used.</p>
+args was used or if return_swarm_df was set to TRUE.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This function use the <code>merge_taxa_vec</code> function to
-merge taxa into clusters. By default tax_adjust = 0. See the man page
-of <code><a href="merge_taxa_vec.html">merge_taxa_vec()</a></code>.</p>
+merge taxa into clusters. By default tax_adjust = 0 and rank_propagation = FALSE.
+See the man page of <code><a href="merge_taxa_vec.html">merge_taxa_vec()</a></code>.</p>
 <p>This function is mainly a wrapper of the work of others.
 Please cite <a href="https://github.com/torognes/swarm" class="external-link">SWARM</a>.</p>
     </div>
@@ -210,7 +232,7 @@ More information in the associated publications
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

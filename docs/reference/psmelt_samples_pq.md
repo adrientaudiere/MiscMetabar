@@ -19,6 +19,8 @@ psmelt_samples_pq(
   hill_scales = c(0, 1, 2),
   filter_zero = TRUE,
   rarefy_by_sample = FALSE,
+  rngseed = FALSE,
+  verbose = TRUE,
   taxa_ranks = NULL
 )
 ```
@@ -49,6 +51,20 @@ psmelt_samples_pq(
   (logical, default FALSE) If TRUE, rarefy samples using
   [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html)
   function.
+
+- rngseed:
+
+  (Optional). A single integer value passed to
+  [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html),
+  which is used to fix a seed for reproducibly random number generation
+  (in this case, reproducibly random subsampling). If set to FALSE, then
+  no fiddling with the RNG seed is performed, and it is up to the user
+  to appropriately call set.seed beforehand to achieve reproducible
+  results. Default is FALSE.
+
+- verbose:
+
+  (logical). If TRUE, print additional information.
 
 - taxa_ranks:
 

@@ -14,6 +14,7 @@ vsearch_clustering(
   id = 0.97,
   vsearchpath = "vsearch",
   tax_adjust = 0,
+  rank_propagation = FALSE,
   vsearch_cluster_method = "--cluster_size",
   vsearch_args = "--strand both",
   keep_temporary_files = FALSE
@@ -54,6 +55,13 @@ vsearch_clustering(
   for more details. To conserved the taxonomic rank of the most abundant
   ASV, set tax_adjust to 0 (default). For the moment only tax_adjust = 0
   is robust
+
+- rank_propagation:
+
+  (logical, default FALSE). Do we propagate the NA value from lower
+  taxonomic rank to upper rank? See the man page of
+  [`merge_taxa_vec()`](https://adrientaudiere.github.io/MiscMetabar/reference/merge_taxa_vec.md)
+  for more details.
 
 - vsearch_cluster_method:
 

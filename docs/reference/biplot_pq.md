@@ -12,6 +12,8 @@ biplot_pq(
   fact = NULL,
   merge_sample_by = NULL,
   rarefy_after_merging = FALSE,
+  rngseed = FALSE,
+  verbose = TRUE,
   inverse_side = FALSE,
   left_name = NULL,
   left_name_col = "#4B3E1E",
@@ -58,6 +60,20 @@ biplot_pq(
 - rarefy_after_merging:
 
   Rarefy each sample after merging by the modalities merge_sample_by
+
+- rngseed:
+
+  (Optional). A single integer value passed to
+  [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html),
+  which is used to fix a seed for reproducibly random number generation
+  (in this case, reproducibly random subsampling). If set to FALSE, then
+  no fiddling with the RNG seed is performed, and it is up to the user
+  to appropriately call set.seed beforehand to achieve reproducible
+  results. Default is FALSE.
+
+- verbose:
+
+  (logical). If TRUE, print additional information.
 
 - inverse_side:
 

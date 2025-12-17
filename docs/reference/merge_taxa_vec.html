@@ -59,7 +59,7 @@ disagreement; all ranks are set to NA after the first disagreement or NA."></hea
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -144,16 +144,34 @@ disagreement; all ranks are set to NA after the first disagreement or NA.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">merge_taxa_vec</span><span class="op">(</span><span class="va">x</span>, <span class="va">group</span>, reorder <span class="op">=</span> <span class="cn">FALSE</span>, tax_adjust <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">merge_taxa_vec</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">group</span>,</span>
+<span>  reorder <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  tax_adjust <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>  rank_propagation <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'phyloseq'</span></span>
-<span><span class="fu">merge_taxa_vec</span><span class="op">(</span><span class="va">x</span>, <span class="va">group</span>, reorder <span class="op">=</span> <span class="cn">FALSE</span>, tax_adjust <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></span>
+<span><span class="fu">merge_taxa_vec</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">group</span>,</span>
+<span>  reorder <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  tax_adjust <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>  rank_propagation <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'otu_table'</span></span>
-<span><span class="fu">merge_taxa_vec</span><span class="op">(</span><span class="va">x</span>, <span class="va">group</span>, reorder <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">merge_taxa_vec</span><span class="op">(</span><span class="va">x</span>, <span class="va">group</span>, reorder <span class="op">=</span> <span class="cn">FALSE</span>, rank_propagation <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'taxonomyTable'</span></span>
-<span><span class="fu">merge_taxa_vec</span><span class="op">(</span><span class="va">x</span>, <span class="va">group</span>, reorder <span class="op">=</span> <span class="cn">FALSE</span>, tax_adjust <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></span>
+<span><span class="fu">merge_taxa_vec</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">group</span>,</span>
+<span>  reorder <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  tax_adjust <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>  rank_propagation <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S4 method for class 'phylo'</span></span>
 <span><span class="fu">merge_taxa_vec</span><span class="op">(</span><span class="va">x</span>, <span class="va">group</span><span class="op">)</span></span>
@@ -184,6 +202,13 @@ defines the new groups. see <code><a href="https://rdrr.io/r/base/rowsum.html" c
 <dd><p>0: no adjustment; 1: phyloseq-compatible adjustment; 2:
 conservative adjustment</p></dd>
 
+
+<dt id="arg-rank-propagation">rank_propagation<a class="anchor" aria-label="anchor" href="#arg-rank-propagation"></a></dt>
+<dd><p>Logical, default TRUE specifying whether to propagate bad ranks
+on the right. If FALSE, bad ranks are not propagated to lower ranks. It is
+mainly useful when working with taxonomic tables with informations beyond
+strict hierarchical ranks (e.g. Traits, Functional annotations, etc.).</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -210,7 +235,7 @@ sam_data object depending on the class of the x param</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

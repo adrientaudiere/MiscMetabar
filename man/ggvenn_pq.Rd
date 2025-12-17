@@ -15,6 +15,7 @@ ggvenn_pq(
   add_nb_seq = FALSE,
   rarefy_before_merging = FALSE,
   rarefy_after_merging = FALSE,
+  rngseed = FALSE,
   return_data_for_venn = FALSE,
   verbose = TRUE,
   type = "nb_taxa",
@@ -52,6 +53,13 @@ modalities of args \code{fact}. Use \code{phyloseq::rarefy_even_depth()} functio
 
 \item{rarefy_after_merging}{Rarefy each sample after merging by the
 modalities of args \code{fact}.}
+
+\item{rngseed}{(Optional). A single integer value passed to
+\code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}}, which is used to fix a seed for
+reproducibly random number generation (in this case, reproducibly
+random subsampling). If set to FALSE, then no fiddling with the RNG seed
+is performed, and it is up to the user to appropriately call set.seed
+beforehand to achieve reproducible results. Default is FALSE.}
 
 \item{return_data_for_venn}{(logical, default FALSE) If TRUE, the plot is
 not returned, but the resulting dataframe to plot with ggVennDiagram package

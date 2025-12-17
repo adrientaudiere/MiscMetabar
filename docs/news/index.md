@@ -1,6 +1,26 @@
 # Changelog
 
-## MiscMetabar 0.14.4 (in development)
+## MiscMetabar 0.14.5 (in development)
+
+- Add function
+  [`lefser_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/lefser_pq.md)
+  to run LEfSe analysis (differential analysis) from a phyloseq object
+  using the package lefser.
+
+- Add function
+  [`aldex_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/aldex_pq.md)
+  to run ALDEX2 analysis (differential analysis) from a phyloseq object
+  using the package ALDEx2 and the default parameters gamma=0.5.
+
+- Add the parameter `rngseed` in all functions which used
+  [`phyloseq::rarefy_even_depth`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html)
+  to set the seed for random number generator in order to increase
+  reproducibility.
+
+- Better messages (and not error) in `filter_asv_blast` when the
+  resulting table of OTU is empty
+
+## MiscMetabar 0.14.4
 
 CRAN release: 2025-09-30
 
@@ -30,6 +50,20 @@ CRAN release: 2025-09-30
   when merging taxa with informations in the tax_table slot that do not
   follow a strict taxonomic hierarchical structure (e.g. functional
   guilds).
+
+- Add param `lulu_exact` in
+  [`mumu_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/mumu_pq.md)
+  to force the use of the unmodified lulu algorithm (with possibles
+  errors) thanks to the option –legacy in mumu software. Add param
+  `extra_mumu_args` to
+  [`mumu_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/mumu_pq.md)
+  to pass extra arguments to mumu software (`--minimum_match`,
+  `--minimum_ratio_type`, `--minimum_ratio`,
+  `--minimum_relative_cooccurence`, `--threads`).
+
+- Add function `plot_ordination_pq` to plot ordination from
+  vegan::vegdist object (useful when using aitchison and robust
+  aitchison distances)
 
 ### Bug fixes
 
@@ -792,11 +826,11 @@ CRAN release: 2024-04-28
   sequences (obtained by
   [`dada2::derepFastq`](https://rdrr.io/pkg/dada2/man/derepFastq.html))
 
-|  | Database (makeblastdb) | Sequences to blast (blastn) |
-|----|----|----|
-| [`blast_to_phyloseq()`](https://adrientaudiere.github.io/MiscMetabar/reference/blast_to_phyloseq.md) | Built from `ref_seq` slot(physeq-class) | Custom fasta file |
-| [`blast_to_derep()`](https://adrientaudiere.github.io/MiscMetabar/reference/blast_to_derep.md) | Built from dereplicate sequences (derep-class) | Custom fasta file |
-| [`blast_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/blast_pq.md) | Custom database or custom fasta file | `ref_seq` slot of a physeq object |
+|                                                                                                      | Database (makeblastdb)                         | Sequences to blast (blastn)       |
+|------------------------------------------------------------------------------------------------------|------------------------------------------------|-----------------------------------|
+| [`blast_to_phyloseq()`](https://adrientaudiere.github.io/MiscMetabar/reference/blast_to_phyloseq.md) | Built from `ref_seq` slot(physeq-class)        | Custom fasta file                 |
+| [`blast_to_derep()`](https://adrientaudiere.github.io/MiscMetabar/reference/blast_to_derep.md)       | Built from dereplicate sequences (derep-class) | Custom fasta file                 |
+| [`blast_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/blast_pq.md)                   | Custom database or custom fasta file           | `ref_seq` slot of a physeq object |
 
 - Add functions
   [`tsne_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/tsne_pq.md)

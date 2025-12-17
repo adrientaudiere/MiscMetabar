@@ -17,6 +17,7 @@ adonis_pq(
   na_remove = FALSE,
   correction_for_sample_size = FALSE,
   rarefy_nb_seqs = FALSE,
+  rngseed = FALSE,
   verbose = TRUE,
   ...
 )
@@ -63,7 +64,7 @@ adonis_pq(
   sequences by samples) is added to formula in the form
   `y~Library_Size + Biological_Effect` following recommendation of
   [Weiss et al.
-  2017](https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-017-0237-y).
+  2017](https://link.springer.com/article/10.1186/s40168-017-0237-y).
   `correction_for_sample_size` overcome `rarefy_nb_seqs` if both are
   TRUE.
 
@@ -74,6 +75,16 @@ adonis_pq(
   [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html).
   if `correction_for_sample_size` is TRUE, rarefy_nb_seqs will have no
   effect.
+
+- rngseed:
+
+  (Optional). A single integer value passed to
+  [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html),
+  which is used to fix a seed for reproducibly random number generation
+  (in this case, reproducibly random subsampling). If set to FALSE, then
+  no fiddling with the RNG seed is performed, and it is up to the user
+  to appropriately call set.seed beforehand to achieve reproducible
+  results. Default is FALSE.
 
 - verbose:
 
@@ -145,7 +156,7 @@ adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "terms")
 #>                     Df SumOfSqs      R2        F Pr(>F)    
 #> SeqTech              2   29.175 0.54055 242.2289  0.001 ***
 #> Enterotype           2    8.651 0.16028  71.8250  0.001 ***
-#> SeqTech:Enterotype   4    0.368 0.00683   1.5293  0.096 .  
+#> SeqTech:Enterotype   4    0.368 0.00683   1.5293  0.112    
 #> Residual           262   15.778 0.29234                    
 #> Total              270   53.972 1.00000                    
 #> ---
@@ -163,11 +174,11 @@ adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "onedf")
 #> vegan::adonis2(formula = .formula, data = metadata, by = "onedf")
 #>                             Df SumOfSqs       R2        F Pr(>F)    
 #> SeqTechPyro454               1   28.796  0.53353 478.1659  0.001 ***
-#> SeqTechSanger                1    0.379  0.00702   6.2918  0.002 ** 
+#> SeqTechSanger                1    0.379  0.00702   6.2918  0.001 ***
 #> Enterotype2                  1    4.282  0.07933  71.1013  0.001 ***
 #> Enterotype3                  1    4.369  0.08095  72.5487  0.001 ***
 #> SeqTechPyro454:Enterotype2   1   -0.556 -0.01030  -9.2315  1.000    
-#> SeqTechSanger:Enterotype2    1    0.232  0.00430   3.8560  0.011 *  
+#> SeqTechSanger:Enterotype2    1    0.232  0.00430   3.8560  0.015 *  
 #> SeqTechPyro454:Enterotype3   1    0.443  0.00820   7.3535  0.001 ***
 #> SeqTechSanger:Enterotype3    1    0.249  0.00462   4.1394  0.009 ** 
 #> Residual                   262   15.778  0.29234                    
@@ -185,10 +196,12 @@ adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "margin")
 #> Number of permutations: 999
 #> 
 #> vegan::adonis2(formula = .formula, data = metadata, by = "margin")
-#>                     Df SumOfSqs      R2      F Pr(>F)
-#> SeqTech:Enterotype   4    0.368 0.00683 1.5293  0.123
-#> Residual           262   15.778 0.29234              
-#> Total              270   53.972 1.00000              
+#>                     Df SumOfSqs      R2      F Pr(>F)  
+#> SeqTech:Enterotype   4    0.368 0.00683 1.5293  0.092 .
+#> Residual           262   15.778 0.29234                
+#> Total              270   53.972 1.00000                
+#> ---
+#> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 adonis_pq(enterotype, "SeqTech", dist_method = "jaccard", by = "terms")
 #> Taxa are now in columns.

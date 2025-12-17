@@ -15,7 +15,15 @@ for object of class phyloseq
 ## Usage
 
 ``` r
-ggbetween_pq(physeq, fact, one_plot = FALSE, rarefy_by_sample = FALSE, ...)
+ggbetween_pq(
+  physeq,
+  fact,
+  one_plot = FALSE,
+  rarefy_by_sample = FALSE,
+  rngseed = FALSE,
+  verbose = TRUE,
+  ...
+)
 ```
 
 ## Arguments
@@ -41,6 +49,20 @@ ggbetween_pq(physeq, fact, one_plot = FALSE, rarefy_by_sample = FALSE, ...)
   (logical, default FALSE) If TRUE, rarefy samples using
   [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html)
   function
+
+- rngseed:
+
+  (Optional). A single integer value passed to
+  [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html),
+  which is used to fix a seed for reproducibly random number generation
+  (in this case, reproducibly random subsampling). If set to FALSE, then
+  no fiddling with the RNG seed is performed, and it is up to the user
+  to appropriately call set.seed beforehand to achieve reproducible
+  results. Default is FALSE.
+
+- verbose:
+
+  (logical). If TRUE, print additional information.
 
 - ...:
 
@@ -88,7 +110,11 @@ if (requireNamespace("ggstatsplot")) {
 #>  the random seed of your session for reproducibility.
 #> See `?set.seed`
 #> ...
-#> 1015OTUs were removed because they are no longer 
+#> You set `rngseed` to FALSE. Make sure you've set & recorded
+#>  the random seed of your session for reproducibility.
+#> See `?set.seed`
+#> ...
+#> 1020OTUs were removed because they are no longer 
 #> present in any sample after random subsampling
 #> ...
 #> All modality were undoubtedly rarefy in the physeq object.

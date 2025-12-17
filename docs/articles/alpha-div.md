@@ -9,7 +9,7 @@ data(data_fungi)
 
 ##### Hill number
 
-Numerous metrics of diversity exist. Hill numbers [^1] is a kind of
+Numerous metrics of diversity exist. Hill numbers [¹](#fn1) is a kind of
 general framework for alpha diversity index.
 
 ``` r
@@ -43,7 +43,7 @@ head(renyi_res)
 One way to keep into account for difference in the number of sequences
 per samples is to use a Tukey test on a linear model with the square
 roots of the number of sequence as the first explanatory variable of the
-linear model [^2].
+linear model [²](#fn2).
 
 ``` r
 p <- MiscMetabar::hill_pq(data_fungi, fact = "Height")
@@ -95,6 +95,69 @@ clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height))) %>%
 ```
 
 ![](alpha-div_files/figure-html/unnamed-chunk-5-1.png)
+
+### Durga package to represent and compute effect size of difference in alpha diversity
+
+``` r
+library("Durga")
+psm <- psmelt_samples_pq(data_fungi) 
+
+d <- DurgaDiff(Hill_0 ~ Height, psm)
+DurgaPlot(d)
+```
+
+![](alpha-div_files/figure-html/unnamed-chunk-6-1.png)
+
+``` r
+d <- DurgaDiff(Hill_0 ~ Time==0, psm)
+DurgaPlot(d)
+```
+
+![](alpha-div_files/figure-html/unnamed-chunk-7-1.png)
+
+``` r
+durga_pq <- function(physeq, formula, plot=FALSE) {
+  verify_pq(physeq)
+  psm <- psmelt_samples_pq(physeq)
+  res_durga <- DurgaDiff(formula, psm)
+  if(plot){
+    p <-DurgaPlot(res_durga)
+    invisible(p)
+  } else{
+    return(res_durga)
+  }
+  
+}
+
+durga_pq(data_fungi, Hill_0 ~ Height, plot=TRUE)
+```
+
+![](alpha-div_files/figure-html/unnamed-chunk-8-1.png)
+
+``` r
+durga_pq(data_fungi, Hill_0 ~ Time + Height, plot=TRUE)
+```
+
+![](alpha-div_files/figure-html/unnamed-chunk-8-2.png)
+
+``` r
+
+durga_pq(data_fungi, Hill_0 ~ Time==0, plot=TRUE)
+```
+
+![](alpha-div_files/figure-html/unnamed-chunk-8-3.png)
+
+``` r
+durga_pq(data_fungi,  Hill_1 ~ Time==0, plot=TRUE)
+```
+
+![](alpha-div_files/figure-html/unnamed-chunk-8-4.png)
+
+``` r
+durga_pq(data_fungi,  Hill_2 ~ Time==0, plot=TRUE)
+```
+
+![](alpha-div_files/figure-html/unnamed-chunk-8-5.png)
 
 ### Effect of samples variables on alpha diversity using automated model selection and multimodel inference with (G)LMs
 
@@ -156,7 +219,7 @@ ggplot(data = res_glmulti, aes(x = estimates, y = variable)) +
   ylab(formula)
 ```
 
-![](alpha-div_files/figure-html/unnamed-chunk-6-1.png)
+![](alpha-div_files/figure-html/unnamed-chunk-9-1.png)
 
 ``` r
 
@@ -180,7 +243,7 @@ ggplot(data = res_glmulti, aes(
   ylab(formula)
 ```
 
-![](alpha-div_files/figure-html/unnamed-chunk-6-2.png)
+![](alpha-div_files/figure-html/unnamed-chunk-9-2.png)
 
 ``` r
 formula <- "Hill_0 ~ Abundance + Time + Height"
@@ -244,7 +307,7 @@ ggplot(data = res_glmulti_interaction, aes(x = estimates, y = variable)) +
   ylab(formula)
 ```
 
-![](alpha-div_files/figure-html/unnamed-chunk-7-1.png)
+![](alpha-div_files/figure-html/unnamed-chunk-10-1.png)
 
 ``` r
 
@@ -268,13 +331,13 @@ ggplot(data = res_glmulti_interaction, aes(
   ylab(formula)
 ```
 
-![](alpha-div_files/figure-html/unnamed-chunk-7-2.png)
+![](alpha-div_files/figure-html/unnamed-chunk-10-2.png)
 
 ## Session information
 
 ``` r
 sessionInfo()
-#> R version 4.5.1 (2025-06-13)
+#> R version 4.5.2 (2025-10-31)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Kali GNU/Linux Rolling
 #> 
@@ -298,82 +361,86 @@ sessionInfo()
 #> 
 #> other attached packages:
 #>  [1] glmulti_1.0.8            leaps_3.2                rJava_1.0-11            
-#>  [4] MicrobiotaProcess_1.20.2 MiscMetabar_0.14.4       purrr_1.1.0             
-#>  [7] dplyr_1.1.4              dada2_1.36.0             Rcpp_1.1.0              
-#> [10] ggplot2_4.0.0            phyloseq_1.52.0         
+#>  [4] Durga_2.1.0              MicrobiotaProcess_1.22.0 MiscMetabar_0.14.5      
+#>  [7] purrr_1.2.0              dplyr_1.1.4              dada2_1.38.0            
+#> [10] Rcpp_1.1.0               ggplot2_4.0.1            phyloseq_1.54.0         
 #> 
 #> loaded via a namespace (and not attached):
 #>   [1] libcoin_1.0-10              RColorBrewer_1.1-3         
 #>   [3] jsonlite_2.0.0              magrittr_2.0.4             
-#>   [5] TH.data_1.1-4               modeltools_0.2-24          
-#>   [7] farver_2.1.2                rmarkdown_2.29             
+#>   [5] TH.data_1.1-5               modeltools_0.2-24          
+#>   [7] farver_2.1.2                rmarkdown_2.30             
 #>   [9] fs_1.6.6                    ragg_1.5.0                 
-#>  [11] vctrs_0.6.5                 multtest_2.64.0            
-#>  [13] Rsamtools_2.24.1            ggtree_3.16.3              
-#>  [15] htmltools_0.5.8.1           S4Arrays_1.8.1             
-#>  [17] Rhdf5lib_1.30.0             gridGraphics_0.5-1         
-#>  [19] SparseArray_1.8.1           rhdf5_2.52.1               
+#>  [11] vctrs_0.6.5                 multtest_2.66.0            
+#>  [13] Rsamtools_2.26.0            ggtree_4.0.1               
+#>  [15] htmltools_0.5.9             S4Arrays_1.10.1            
+#>  [17] Rhdf5lib_1.32.0             gridGraphics_0.5-1         
+#>  [19] SparseArray_1.10.7          rhdf5_2.54.1               
 #>  [21] sass_0.4.10                 bslib_0.9.0                
 #>  [23] htmlwidgets_1.6.4           desc_1.4.3                 
 #>  [25] plyr_1.8.9                  sandwich_3.1-1             
-#>  [27] zoo_1.8-14                  cachem_1.1.0               
-#>  [29] uuid_1.2-1                  GenomicAlignments_1.44.0   
-#>  [31] igraph_2.1.4                lifecycle_1.0.4            
-#>  [33] iterators_1.0.14            pkgconfig_2.0.3            
-#>  [35] Matrix_1.7-4                R6_2.6.1                   
-#>  [37] fastmap_1.2.0               GenomeInfoDbData_1.2.14    
-#>  [39] MatrixGenerics_1.20.0       digest_0.6.37              
-#>  [41] aplot_0.2.9                 ggnewscale_0.5.2           
-#>  [43] ShortRead_1.66.0            patchwork_1.3.2            
-#>  [45] S4Vectors_0.46.0            textshaping_1.0.3          
-#>  [47] GenomicRanges_1.60.0        hwriter_1.3.2.1            
-#>  [49] vegan_2.7-1                 labeling_0.4.3             
-#>  [51] httr_1.4.7                  abind_1.4-8                
-#>  [53] mgcv_1.9-3                  compiler_4.5.1             
-#>  [55] withr_3.0.2                 S7_0.2.0                   
-#>  [57] BiocParallel_1.42.2         ggsignif_0.6.4             
-#>  [59] MASS_7.3-65                 rappdirs_0.3.3             
-#>  [61] DelayedArray_0.34.1         biomformat_1.36.0          
-#>  [63] permute_0.9-8               tools_4.5.1                
-#>  [65] ape_5.8-1                   glue_1.8.0                 
-#>  [67] nlme_3.1-168                rhdf5filters_1.20.0        
-#>  [69] grid_4.5.1                  cluster_2.1.8.1            
-#>  [71] reshape2_1.4.4              ade4_1.7-23                
-#>  [73] generics_0.1.4              gtable_0.3.6               
-#>  [75] tidyr_1.3.1                 data.table_1.17.8          
-#>  [77] coin_1.4-3                  XVector_0.48.0             
-#>  [79] BiocGenerics_0.54.0         ggrepel_0.9.6              
-#>  [81] foreach_1.5.2               pillar_1.11.1              
-#>  [83] stringr_1.5.2               yulab.utils_0.2.1          
-#>  [85] splines_4.5.1               treeio_1.32.0              
-#>  [87] lattice_0.22-7              survival_3.8-3             
-#>  [89] deldir_2.0-4                tidyselect_1.2.1           
-#>  [91] Biostrings_2.76.0           knitr_1.50                 
-#>  [93] gridExtra_2.3               IRanges_2.42.0             
-#>  [95] SummarizedExperiment_1.38.1 ggtreeExtra_1.18.1         
-#>  [97] stats4_4.5.1                xfun_0.53                  
-#>  [99] Biobase_2.68.0              matrixStats_1.5.0          
-#> [101] stringi_1.8.7               UCSC.utils_1.4.0           
-#> [103] lazyeval_0.2.2              ggfun_0.2.0                
-#> [105] yaml_2.3.10                 evaluate_1.0.5             
-#> [107] codetools_0.2-20            interp_1.1-6               
-#> [109] tibble_3.3.0                ggplotify_0.1.3            
-#> [111] cli_3.6.5                   RcppParallel_5.1.11-1      
-#> [113] systemfonts_1.2.3           jquerylib_0.1.4            
-#> [115] GenomeInfoDb_1.44.3         png_0.1-8                  
-#> [117] parallel_4.5.1              ggh4x_0.3.1                
-#> [119] pkgdown_2.1.3               latticeExtra_0.6-31        
-#> [121] jpeg_0.1-11                 bitops_1.0-9               
-#> [123] ggstar_1.0.6                pwalign_1.4.0              
-#> [125] viridisLite_0.4.2           mvtnorm_1.3-3              
-#> [127] tidytree_0.4.6              ggiraph_0.9.1              
-#> [129] scales_1.4.0                crayon_1.5.3               
-#> [131] rlang_1.1.6                 multcomp_1.4-28
+#>  [27] zoo_1.8-15                  cachem_1.1.0               
+#>  [29] GenomicAlignments_1.46.0    igraph_2.2.1               
+#>  [31] lifecycle_1.0.4             iterators_1.0.14           
+#>  [33] pkgconfig_2.0.3             Matrix_1.7-4               
+#>  [35] R6_2.6.1                    fastmap_1.2.0              
+#>  [37] MatrixGenerics_1.22.0       digest_0.6.39              
+#>  [39] aplot_0.2.9                 ggnewscale_0.5.2           
+#>  [41] ShortRead_1.68.0            patchwork_1.3.2            
+#>  [43] S4Vectors_0.48.0            textshaping_1.0.4          
+#>  [45] GenomicRanges_1.62.1        hwriter_1.3.2.1            
+#>  [47] vegan_2.7-2                 labeling_0.4.3             
+#>  [49] abind_1.4-8                 mgcv_1.9-4                 
+#>  [51] compiler_4.5.2              fontquiver_0.2.1           
+#>  [53] withr_3.0.2                 S7_0.2.1                   
+#>  [55] BiocParallel_1.44.0         ggsignif_0.6.4             
+#>  [57] MASS_7.3-65                 rappdirs_0.3.3             
+#>  [59] DelayedArray_0.36.0         biomformat_1.38.0          
+#>  [61] permute_0.9-8               tools_4.5.2                
+#>  [63] vipor_0.4.7                 ape_5.8-1                  
+#>  [65] glue_1.8.0                  nlme_3.1-168               
+#>  [67] rhdf5filters_1.22.0         grid_4.5.2                 
+#>  [69] cluster_2.1.8.1             reshape2_1.4.5             
+#>  [71] ade4_1.7-23                 generics_0.1.4             
+#>  [73] gtable_0.3.6                tidyr_1.3.1                
+#>  [75] data.table_1.17.8           coin_1.4-3                 
+#>  [77] XVector_0.50.0              BiocGenerics_0.56.0        
+#>  [79] ggrepel_0.9.6               foreach_1.5.2              
+#>  [81] pillar_1.11.1               stringr_1.6.0              
+#>  [83] yulab.utils_0.2.3           splines_4.5.2              
+#>  [85] treeio_1.34.0               lattice_0.22-7             
+#>  [87] survival_3.8-3              deldir_2.0-4               
+#>  [89] tidyselect_1.2.1            fontLiberation_0.1.0       
+#>  [91] Biostrings_2.78.0           knitr_1.50                 
+#>  [93] fontBitstreamVera_0.1.1     gridExtra_2.3              
+#>  [95] IRanges_2.44.0              Seqinfo_1.0.0              
+#>  [97] SummarizedExperiment_1.40.0 ggtreeExtra_1.20.0         
+#>  [99] stats4_4.5.2                xfun_0.55                  
+#> [101] Biobase_2.70.0              matrixStats_1.5.0          
+#> [103] stringi_1.8.7               boot_1.3-32                
+#> [105] lazyeval_0.2.2              ggfun_0.2.0                
+#> [107] yaml_2.3.12                 evaluate_1.0.5             
+#> [109] codetools_0.2-20            cigarillo_1.0.0            
+#> [111] interp_1.1-6                gdtools_0.4.4              
+#> [113] tibble_3.3.0                ggplotify_0.1.3            
+#> [115] cli_3.6.5                   RcppParallel_5.1.11-1      
+#> [117] systemfonts_1.3.1           jquerylib_0.1.4            
+#> [119] png_0.1-8                   parallel_4.5.2             
+#> [121] ggh4x_0.3.1                 pkgdown_2.2.0              
+#> [123] latticeExtra_0.6-31         jpeg_0.1-11                
+#> [125] bitops_1.0-9                ggstar_1.0.6               
+#> [127] pwalign_1.6.0               viridisLite_0.4.2          
+#> [129] mvtnorm_1.3-3               tidytree_0.4.6             
+#> [131] ggiraph_0.9.2               scales_1.4.0               
+#> [133] crayon_1.5.3                rlang_1.1.6                
+#> [135] multcomp_1.4-29
 ```
 
-[^1]: Hill MO. 1973. Diversity and evenness: a unifying notation and its
+------------------------------------------------------------------------
+
+1.  Hill MO. 1973. Diversity and evenness: a unifying notation and its
     consequences. Ecology 54, 427-473.
 
-[^2]: Bálint M et al. 2015. Relocation, high-latitude warming and host
+2.  Bálint M et al. 2015. Relocation, high-latitude warming and host
     genetic identity shape the foliar fungal microbiome of poplars.
     Molecular Ecology 24, 235-248. <https://doi.org/10.1111/mec.13018>

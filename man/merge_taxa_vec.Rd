@@ -9,13 +9,31 @@
 \alias{merge_taxa_vec,XStringSet-method}
 \title{Merge taxa in groups (vectorized version)}
 \usage{
-merge_taxa_vec(x, group, reorder = FALSE, tax_adjust = 1L)
+merge_taxa_vec(
+  x,
+  group,
+  reorder = FALSE,
+  tax_adjust = 1L,
+  rank_propagation = TRUE
+)
 
-\S4method{merge_taxa_vec}{phyloseq}(x, group, reorder = FALSE, tax_adjust = 1L)
+\S4method{merge_taxa_vec}{phyloseq}(
+  x,
+  group,
+  reorder = FALSE,
+  tax_adjust = 1L,
+  rank_propagation = TRUE
+)
 
-\S4method{merge_taxa_vec}{otu_table}(x, group, reorder = FALSE)
+\S4method{merge_taxa_vec}{otu_table}(x, group, reorder = FALSE, rank_propagation = TRUE)
 
-\S4method{merge_taxa_vec}{taxonomyTable}(x, group, reorder = FALSE, tax_adjust = 1L)
+\S4method{merge_taxa_vec}{taxonomyTable}(
+  x,
+  group,
+  reorder = FALSE,
+  tax_adjust = 1L,
+  rank_propagation = TRUE
+)
 
 \S4method{merge_taxa_vec}{phylo}(x, group)
 
@@ -32,6 +50,11 @@ defines the new groups. see \code{base::rowsum()}.}
 
 \item{tax_adjust}{0: no adjustment; 1: phyloseq-compatible adjustment; 2:
 conservative adjustment}
+
+\item{rank_propagation}{Logical, default TRUE specifying whether to propagate bad ranks
+on the right. If FALSE, bad ranks are not propagated to lower ranks. It is
+mainly useful when working with taxonomic tables with informations beyond
+strict hierarchical ranks (e.g. Traits, Functional annotations, etc.).}
 }
 \value{
 A new phyloseq-class, otu_table, tax_table, XStringset or

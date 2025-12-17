@@ -3,8 +3,7 @@
 ### All vignettes
 
 - [alpha-div](https://adrientaudiere.github.io/MiscMetabar/articles/alpha-div.md):
-- [Beta-diversity
-  analysis](https://adrientaudiere.github.io/MiscMetabar/articles/beta-div.md):
+- [beta-div](https://adrientaudiere.github.io/MiscMetabar/articles/beta-div.md):
 - [explore_data](https://adrientaudiere.github.io/MiscMetabar/articles/explore_data.md):
 - [fastq_quality_check](https://adrientaudiere.github.io/MiscMetabar/articles/fastq_quality_check.md):
 - [Filter taxa and

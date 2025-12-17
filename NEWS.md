@@ -1,4 +1,15 @@
-# MiscMetabar 0.14.4 (in development) 
+# MiscMetabar 0.14.5 (in development) 
+
+- Add function `lefser_pq()` to run LEfSe analysis (differential analysis) from a phyloseq object using the package lefser.
+
+- Add function `aldex_pq()` to run ALDEX2 analysis (differential analysis) from a phyloseq object using the package ALDEx2 and the default parameters gamma=0.5.
+
+- Add the parameter `rngseed` in all functions which used `phyloseq::rarefy_even_depth` 
+  to set the seed for random number generator in order to increase reproducibility.
+  
+- Better messages (and not error) in `filter_asv_blast` when the resulting table of OTU is empty
+
+# MiscMetabar 0.14.4 
 
 ## New features and improvements
 - Add function `plot_seq_ratio_pq()` to explore the number of sequences per samples using difference ratio of the number of sequences per samples ordered by the number of sequences.
@@ -13,6 +24,8 @@
 
 - Add param `lulu_exact` in `mumu_pq()` to force the use of the unmodified lulu algorithm (with possibles errors) thanks to the option --legacy in mumu software. Add param `extra_mumu_args` to `mumu_pq()` to pass extra arguments to mumu software (`--minimum_match`, `--minimum_ratio_type`, `--minimum_ratio`, `--minimum_relative_cooccurence`, `--threads`). 
 
+- Add function `plot_ordination_pq` to plot ordination from vegan::vegdist object (useful when using aitchison and robust aitchison distances)
+
 ## Bug fixes
 - Fix a bug in `subset_taxa_pq()` when the condition was TRUE only for one taxon
 
@@ -23,6 +36,8 @@
 - Fix a bug in blast function by allowing value to be equal (not strictly greater) to the threshold values `id_cut`, `bit_score_cut`, `min_cover_cut` and `e_value_cut`. 
 
 - Fix a bug in swarm associated functions (`swarm_clustering(), add_swarms_to_pq()`) to take into account the `d` parameter. Also add a parameter fastidious that is automatically set to FALSE is d is different from 1. 
+
+
 
 ## BREAKING CHANGE
 

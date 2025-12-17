@@ -50,7 +50,6 @@ search_exact_seq_pq <- function(physeq, seq2search) {
 }
 
 
-
 ################################################################################
 #' Calculate ecological distance among positive controls vs
 #'   distance for all samples
@@ -124,7 +123,6 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
   return(res)
 }
 ################################################################################
-
 
 
 ################################################################################

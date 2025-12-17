@@ -323,6 +323,9 @@
   : Plot and test local contributions to beta diversity (LCBD) of
   samples
 
+- [`plot_ordination_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_ordination_pq.md)
+  : A wrapper of plot_ordination with vegan distance matrix
+
 - [`plot_SCBD_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_SCBD_pq.md)
   : Plot species contributions to beta diversity (SCBD) of samples
 
@@ -368,8 +371,14 @@
 
 ### Differential abundance analysis
 
+- [`aldex_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/aldex_pq.md)
+  : Run Aldex on a phyloseq object
+
 - [`ancombc_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ancombc_pq.md)
   : Run ANCOMBC2 on phyloseq object
+
+- [`lefser_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/lefser_pq.md)
+  : Run LEfSe on a phyloseq object
 
 - [`multipatt_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/multipatt_pq.md)
   : Test and plot multipatt result

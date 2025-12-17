@@ -41,8 +41,8 @@
 #' @param tax_adjust 0: no adjustment; 1: phyloseq-compatible adjustment; 2:
 #' conservative adjustment
 #' @param rank_propagation Logical, default TRUE specifying whether to propagate bad ranks
-#' on the right. If FALSE, bad ranks are not propagated to lower ranks. It is 
-#' mainly useful when working with taxonomic tables with informations beyond 
+#' on the right. If FALSE, bad ranks are not propagated to lower ranks. It is
+#' mainly useful when working with taxonomic tables with informations beyond
 #' strict hierarchical ranks (e.g. Traits, Functional annotations, etc.).
 #' @export
 #' @return A new phyloseq-class, otu_table, tax_table, XStringset or
@@ -61,7 +61,7 @@ setGeneric(
            group,
            reorder = FALSE,
            tax_adjust = 1L,
-          rank_propagation=TRUE) {
+           rank_propagation = TRUE) {
     standardGeneric("merge_taxa_vec")
   }
 )
@@ -70,7 +70,7 @@ setGeneric(
 setMethod(
   "merge_taxa_vec", "phyloseq",
   function(x, group, reorder = FALSE, tax_adjust = 1L,
-          rank_propagation=TRUE) {
+           rank_propagation = TRUE) {
     stopifnot(ntaxa(x) == length(group))
     stopifnot(tax_adjust %in% c(0L, 1L, 2L))
     # Warn the user if an impossible reordering is requested
@@ -91,7 +91,7 @@ setMethod(
       tax <- merge_taxa_vec(tax_table(x), group,
         tax_adjust = tax_adjust,
         reorder = reorder,
-        rank_propagation=rank_propagation
+        rank_propagation = rank_propagation
       )
       # Taxa in `tax` are in same order as in `otu` but are named by first in
       # group instead of max and so need to be renamed
@@ -114,7 +114,7 @@ setMethod(
 setMethod(
   "merge_taxa_vec", "otu_table",
   function(x, group, reorder = FALSE,
-          rank_propagation=TRUE) {
+           rank_propagation = TRUE) {
     stopifnot(ntaxa(x) == length(group))
     # Work with taxa as rows, and remember to flip back at end if needed
     needs_flip <- !taxa_are_rows(x)
@@ -158,7 +158,7 @@ setMethod(
 setMethod(
   "merge_taxa_vec", "taxonomyTable",
   function(x, group, reorder = FALSE, tax_adjust = 1L,
-          rank_propagation=TRUE) {
+           rank_propagation = TRUE) {
     stopifnot(ntaxa(x) == length(group))
     # Temporary stopgap to avoid hidden errors if internal variable names are
     # in the tax table
@@ -214,17 +214,16 @@ setMethod(
     # If rank_propagation is FALSE, just convert bad_string -> NA
     # propagate bad ranks downwards and convert to NAs
 
-    if (rank_propagation){
+    if (rank_propagation) {
       reduced_by_group %>%
         apply(1, bad_flush_right, bad = bad_string, na_bad = na_bad, k = k) %>%
         t() %>%
         tax_table()
-    }
-    else {
-            reduced_by_group |>
+    } else {
+      reduced_by_group |>
         mutate(across(everything(), ~ ifelse(stringr::str_detect(.x, bad_string), NA_character_, .x))) %>%
         as("matrix") %>%
-        tax_table()   
+        tax_table()
     }
   }
 )
@@ -518,7 +517,6 @@ setMethod(
     x.merged %>% MiscMetabar:::sample_data_stable()
   }
 )
-
 
 
 # Helpers ---------------------------------------------------------------------

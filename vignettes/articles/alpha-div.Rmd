@@ -64,6 +64,41 @@ clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height))) %>%
 ```
 
 
+## Durga package to represent and compute effect size of difference in alpha diversity
+
+
+```{r}
+library("Durga")
+psm <- psmelt_samples_pq(data_fungi) 
+
+durga_res <- DurgaDiff(Hill_0 ~ Time==0, psm)
+DurgaPlot(durga_res)
+```
+
+```{r}
+durga_pq <- function(physeq, formula, plot=FALSE) {
+  verify_pq(physeq)
+  psm <- psmelt_samples_pq(physeq)
+  res_durga <- DurgaDiff(formula, psm)
+  if(plot){
+    p <-DurgaPlot(res_durga)
+    invisible(p)
+  } else{
+    return(res_durga)
+  }
+}
+
+durga_pq(data_fungi, Hill_0 ~ Height, plot=TRUE)
+durga_pq(data_fungi, Hill_0 ~ Time + Height, plot=TRUE)
+
+durga_pq(data_fungi, Hill_0 ~ Time==0, plot=TRUE)
+durga_pq(data_fungi,  Hill_1 ~ Time==0, plot=TRUE)
+durga_pq(data_fungi,  Hill_2 ~ Time==0, plot=TRUE)
+```
+
+
+
+
 ## Effect of samples variables on alpha diversity using automated model selection and multimodel inference with (G)LMs 
 
 From the help of glmulti package : 

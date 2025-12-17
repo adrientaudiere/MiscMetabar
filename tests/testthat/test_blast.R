@@ -88,6 +88,11 @@ if (inherits(blast_error_or_not, "try-error")) {
           filter_asv_blast(data_fungi_mini, path_db),
         "phyloseq"
       )
+      expect_error(
+        df_blast <-
+          filter_asv_blast(data_fungi_mini, path_db, id_filter = 100),
+        "No taxa passed the filter criteria"
+      )
       expect_s4_class(
         df_blast <-
           filter_asv_blast(

@@ -36,16 +36,34 @@ NA.
 ## Usage
 
 ``` r
-merge_taxa_vec(x, group, reorder = FALSE, tax_adjust = 1L)
+merge_taxa_vec(
+  x,
+  group,
+  reorder = FALSE,
+  tax_adjust = 1L,
+  rank_propagation = TRUE
+)
 
 # S4 method for class 'phyloseq'
-merge_taxa_vec(x, group, reorder = FALSE, tax_adjust = 1L)
+merge_taxa_vec(
+  x,
+  group,
+  reorder = FALSE,
+  tax_adjust = 1L,
+  rank_propagation = TRUE
+)
 
 # S4 method for class 'otu_table'
-merge_taxa_vec(x, group, reorder = FALSE)
+merge_taxa_vec(x, group, reorder = FALSE, rank_propagation = TRUE)
 
 # S4 method for class 'taxonomyTable'
-merge_taxa_vec(x, group, reorder = FALSE, tax_adjust = 1L)
+merge_taxa_vec(
+  x,
+  group,
+  reorder = FALSE,
+  tax_adjust = 1L,
+  rank_propagation = TRUE
+)
 
 # S4 method for class 'phylo'
 merge_taxa_vec(x, group)
@@ -75,6 +93,14 @@ merge_taxa_vec(x, group, reorder = FALSE)
 
   0: no adjustment; 1: phyloseq-compatible adjustment; 2: conservative
   adjustment
+
+- rank_propagation:
+
+  Logical, default TRUE specifying whether to propagate bad ranks on the
+  right. If FALSE, bad ranks are not propagated to lower ranks. It is
+  mainly useful when working with taxonomic tables with informations
+  beyond strict hierarchical ranks (e.g. Traits, Functional annotations,
+  etc.).
 
 ## Value
 

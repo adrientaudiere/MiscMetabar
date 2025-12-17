@@ -254,7 +254,7 @@ test_that("ggvenn_pq works with data_fungi_mini dataset", {
 
 
 test_that("upset_pq works with data_fungi dataset", {
-if (requireNamespace("tidyr") && requireNamespace("ComplexUpset") && packageVersion("ggplot2") < "4.0.0") {
+  if (requireNamespace("tidyr") && requireNamespace("ComplexUpset") && packageVersion("ggplot2") < "4.0.0") {
     expect_silent(suppressMessages(upset_pq(data_fungi_mini, "Height")))
     skip_on_cran()
     expect_s3_class(upset_pq(data_fungi_mini, "Height", taxa_fill = "Class"), "ggplot")

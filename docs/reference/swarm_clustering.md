@@ -14,8 +14,11 @@ swarm_clustering(
   swarmpath = "swarm",
   vsearch_path = "vsearch",
   nproc = 1,
-  swarm_args = "--fastidious",
+  fastidious = TRUE,
+  swarm_args = "",
   tax_adjust = 0,
+  rank_propagation = FALSE,
+  return_swarm_df = FALSE,
   keep_temporary_files = FALSE
 )
 ```
@@ -54,10 +57,17 @@ swarm_clustering(
   (default: 1) Set to number of cpus/processors to use for the
   clustering
 
+- fastidious:
+
+  (logical, default TRUE), perform a second clustering pass to reduce
+  the number of small clusters (recommended option by swarm authors).
+  Not that if d is different from 1, fastidious is automatically set to
+  FALSE.
+
 - swarm_args:
 
-  (default : "–fastidious") a one length character element defining
-  other parameters to passed on to swarm See other possible methods in
+  a one length character element defining other parameters to passed on
+  to swarm (e.g. "–mismatch-penalty 4"). See other possible methods in
   the [SWARM pdf
   manual](https://github.com/torognes/swarm/blob/master/man/swarm_manual.pdf)
 
@@ -68,6 +78,19 @@ swarm_clustering(
   for more details. To conserved the taxonomic rank of the most abundant
   ASV, set tax_adjust to 0 (default). For the moment only tax_adjust = 0
   is robust.
+
+- rank_propagation:
+
+  (logical, default FALSE). Do we propagate the NA value from lower
+  taxonomic rank to upper rank? See the man page of
+  [`merge_taxa_vec()`](https://adrientaudiere.github.io/MiscMetabar/reference/merge_taxa_vec.md)
+  for more details.
+
+- return_swarm_df:
+
+  (logical, default FALSE) Do we return the swarm dataframe instead of
+  the phyloseq object ? Default FALSE return a phyloseq object if physeq
+  is provided.
 
 - keep_temporary_files:
 
@@ -82,12 +105,13 @@ swarm_clustering(
 ## Value
 
 A new object of class `physeq` or a list of cluster if dna_seq args was
-used.
+used or if return_swarm_df was set to TRUE.
 
 ## Details
 
 This function use the `merge_taxa_vec` function to merge taxa into
-clusters. By default tax_adjust = 0. See the man page of
+clusters. By default tax_adjust = 0 and rank_propagation = FALSE. See
+the man page of
 [`merge_taxa_vec()`](https://adrientaudiere.github.io/MiscMetabar/reference/merge_taxa_vec.md).
 
 This function is mainly a wrapper of the work of others. Please cite

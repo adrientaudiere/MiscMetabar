@@ -12,6 +12,8 @@ upset_pq(
   na_remove = TRUE,
   numeric_fonction = sum,
   rarefy_after_merging = FALSE,
+  rngseed = FALSE,
+  verbose = TRUE,
   ...
 )
 }
@@ -38,6 +40,15 @@ useful only for complex plot (see examples)}
 
 \item{rarefy_after_merging}{Rarefy each sample after merging by the
 modalities of \code{fact} parameter}
+
+\item{rngseed}{(Optional). A single integer value passed to
+\code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}}, which is used to fix a seed for
+reproducibly random number generation (in this case, reproducibly
+random subsampling). If set to FALSE, then no fiddling with the RNG seed
+is performed, and it is up to the user to appropriately call set.seed
+beforehand to achieve reproducible results. Default is FALSE.}
+
+\item{verbose}{(logical). If TRUE, print additional information.}
 
 \item{...}{Additional arguments passed on to the \code{\link[ComplexUpset:upset]{ComplexUpset::upset()}}}
 }

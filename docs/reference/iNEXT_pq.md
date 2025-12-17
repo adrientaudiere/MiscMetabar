@@ -73,17 +73,9 @@ if (requireNamespace("iNEXT")) {
     nboot = 2
   )
   iNEXT::ggiNEXT(res_iNEXT)
-  iNEXT::ggiNEXT(res_iNEXT, type = 2)
-  iNEXT::ggiNEXT(res_iNEXT, type = 3)
+  # iNEXT::ggiNEXT(res_iNEXT, type = 2)
+  # iNEXT::ggiNEXT(res_iNEXT, type = 3)
 }
-#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
-#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
-#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
-#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
 #> Error in eval(e, x, parent.frame()): object 'GPsubset' not found
 # }
 ```

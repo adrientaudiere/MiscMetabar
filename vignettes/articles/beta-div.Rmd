@@ -1,10 +1,12 @@
 ---
-title: "Beta-diversity analysis"
+title: "beta-div"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{beta-div}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -18,6 +20,8 @@ knitr::opts_chunk$set(
 
 ```{r setup, message=FALSE}
 library(MiscMetabar)
+library(lefser)
+library(ALDEx2)
 data(data_fungi)
 ```
 
@@ -42,6 +46,43 @@ graph_test_pq(data_fungi_woNA4height, "Height")
 ```{r}
 circle_pq(data_fungi_woNA4height, "Height")
 ```
+
+
+## Ordination
+
+### PCoA
+
+```{r}
+plot_ordination_pq(data_fungi, method = "robust.aitchison", ordination_method = "PCoA", color = "Height")
+plot_ordination(data_fungi,
+  ordination =
+    ordinate(data_fungi, method = "PCoA", distance = "bray"), color = "Height"
+)
+```
+
+### NMDS
+
+```{r}
+plot_ordination_pq(data_fungi, method = "robust.aitchison", color = "Height") +
+  plot_ordination_pq(data_fungi, method = "bray", color = "Height")
+```
+
+
+### TSNE
+
+```{r}
+plot_tsne_pq(data_fungi, fact = "Height")
+```
+
+
+### UMAP
+
+```{r}
+df_umap <- umap_pq(data_fungi)
+ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
+  geom_point(size = 2)
+```
+
 
 ## Compare two (group of) samples
 
@@ -148,6 +189,8 @@ upset_pq(
 
 There is a lot of available methods. Please refer to R package [benchdamic](https://github.com/mcalgaro93/benchdamic) for a list of method and a implementation of a benchmark for your data. 
 
+See also [Gamboa-Tuz et al.](https://www.biorxiv.org/content/biorxiv/early/2025/02/17/2025.02.13.638109.full.pdf) who claimed that "[...] compositional DA methods are not beneficial but rather lack sensitivity, show increased variability in constant-abundance spike-ins, and, most surprisingly, more frequently produce paradoxical results with DA in the wrong direction for the low-diversity microbiome. Conversely, commonly used methods in microbiome literature, such as LEfSe, the Wilcoxon test, and RNA-seq-derived methods, performed best."
+
 ### Library requirement for Debian Linux OS
 
 ```sh
@@ -165,6 +208,39 @@ GP <- subset_samples(
 
 plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), pval = 0.001)
 ```
+
+
+### Using Linear discriminant analysis (LDA) Effect Size (LEfSe)
+
+```{r}
+res_lefse <- lefser_pq(data_fungi, bifactor = "Height", modalities = c("Low", "High"))
+lefser::lefserPlot(res_lefse)
+
+res_lefse_clade <- lefser_pq(data_fungi, bifactor = "Height", modalities = c("Low", "High"), by_clade = TRUE)
+lefser::lefserPlot(res_lefse_clade)
+```
+
+### Using ALDEx2 package
+
+```{r}
+res_aldex <- aldex_pq(data_fungi_mini, bifactor = "Height", modalities = c("Low", "High"))
+
+ALDEx2::aldex.plot(res_aldex, type = "volcano")
+```
+
+
+
+### Using ancombc
+
+```{r}
+res_ancombc <- ancombc_pq(
+  data_fungi_mini,
+  fact = "Height",
+  levels_fact = c("Low", "High"),
+  verbose = TRUE
+)
+```
+
 
 
 # Session information

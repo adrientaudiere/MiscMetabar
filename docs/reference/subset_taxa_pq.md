@@ -74,6 +74,18 @@ subset_taxa_pq(data_fungi, data_fungi@tax_table[, "Phylum"] == "Ascomycota")
 #> sample_data() Sample Data:       [ 185 samples by 7 sample variables ]
 #> tax_table()   Taxonomy Table:    [ 1066 taxa by 12 taxonomic ranks ]
 #> refseq()      DNAStringSet:      [ 1066 reference sequences ]
+subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 100)
+#> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).
+#> Number of non-matching ASV 0
+#> Number of matching ASV 1420
+#> Number of filtered-out ASV 342
+#> Number of kept ASV 1078
+#> Number of kept samples 185
+#> phyloseq-class experiment-level object
+#> otu_table()   OTU Table:         [ 1078 taxa and 185 samples ]
+#> sample_data() Sample Data:       [ 185 samples by 7 sample variables ]
+#> tax_table()   Taxonomy Table:    [ 1078 taxa by 12 taxonomic ranks ]
+#> refseq()      DNAStringSet:      [ 1078 reference sequences ]
 
 cond_taxa <- grepl("Endophyte", data_fungi@tax_table[, "Guild"])
 names(cond_taxa) <- taxa_names(data_fungi)

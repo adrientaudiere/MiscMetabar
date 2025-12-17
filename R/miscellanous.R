@@ -115,7 +115,6 @@ all_object_size <- function() {
 ################################################################################
 
 
-
 ################################################################################
 #' Simplify taxonomy by removing some unused characters such as "k__"
 #'
@@ -151,10 +150,11 @@ all_object_size <- function() {
 #'   d_fm@tax_table[, "Species"]
 #' )
 simplify_taxo <- function(
-    physeq,
-    pattern_to_remove = c(".__", ".*:"),
-    remove_space = TRUE,
-    remove_NA = FALSE) {
+  physeq,
+  pattern_to_remove = c(".__", ".*:"),
+  remove_space = TRUE,
+  remove_NA = FALSE
+) {
   taxo <- physeq@tax_table
   for (p in pattern_to_remove) {
     taxo <- gsub(p, "", taxo)
@@ -388,8 +388,6 @@ transp <- function(col, alpha = 0.5) {
   return(res)
 }
 ################################################################################
-
-
 
 
 ################################################################################

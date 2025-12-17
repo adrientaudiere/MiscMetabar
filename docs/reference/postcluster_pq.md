@@ -16,6 +16,7 @@ postcluster_pq(
   id = 0.97,
   vsearchpath = "vsearch",
   tax_adjust = 0,
+  rank_propagation = FALSE,
   vsearch_cluster_method = "--cluster_size",
   vsearch_args = "--strand both",
   keep_temporary_files = FALSE,
@@ -34,6 +35,7 @@ asv2otu(
   id = 0.97,
   vsearchpath = "vsearch",
   tax_adjust = 0,
+  rank_propagation = FALSE,
   vsearch_cluster_method = "--cluster_size",
   vsearch_args = "--strand both",
   keep_temporary_files = FALSE,
@@ -94,6 +96,13 @@ asv2otu(
   for more details. To conserved the taxonomic rank of the most abundant
   taxa (ASV, OTU,...), set tax_adjust to 0 (default). For the moment
   only tax_adjust = 0 is robust
+
+- rank_propagation:
+
+  (logical, default FALSE). Do we propagate the NA value from lower
+  taxonomic rank to upper rank? See the man page of
+  [`merge_taxa_vec()`](https://adrientaudiere.github.io/MiscMetabar/reference/merge_taxa_vec.md)
+  for more details.
 
 - vsearch_cluster_method:
 
@@ -189,10 +198,11 @@ Adrien Taudière
 if (requireNamespace("DECIPHER")) {
   postcluster_pq(data_fungi_mini)
 }
+#> Loading required namespace: DECIPHER
 #> Partitioning sequences by 3-mer similarity:
 #> ================================================================================
 #> 
-#> Time difference of 0.02 secs
+#> Time difference of 0.03 secs
 #> 
 #> Sorting by relatedness within 11 groups:
 #> 
@@ -203,7 +213,7 @@ iteration 1 of up to 17 (100.0% stability)
 #> Clustering sequences by 9-mer similarity:
 #> ================================================================================
 #> 
-#> Time difference of 0.07 secs
+#> Time difference of 0.08 secs
 #> 
 #> Clusters via relatedness sorting: 100% (0% exclusively)
 #> Clusters via rare 3-mers: 100% (0% exclusively)
@@ -239,7 +249,7 @@ iteration 1 of up to 17 (100.0% stability)
 #> Clustering sequences by 9-mer similarity:
 #> ================================================================================
 #> 
-#> Time difference of 0.07 secs
+#> Time difference of 0.08 secs
 #> 
 #> Clusters via relatedness sorting: 100% (0% exclusively)
 #> Clusters via rare 3-mers: 100% (0% exclusively)

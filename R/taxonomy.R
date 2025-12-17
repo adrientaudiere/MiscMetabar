@@ -354,7 +354,6 @@ format2sintax <- function(fasta_db = NULL,
 ################################################################################
 
 
-
 ################################################################################
 #' Format a fasta database in dada2 format
 #'
@@ -442,7 +441,6 @@ format2dada2 <- function(fasta_db = NULL,
       gsub(pattern = ",", replacement = ";")
 
 
-
     if (!is.null(pattern_to_remove)) {
       new_names <- new_names |>
         stringr::str_remove(pattern_to_remove)
@@ -482,11 +480,12 @@ format2dada2 <- function(fasta_db = NULL,
 #' @seealso [format2dada2_species()], [format2sintax()]
 #'
 format2dada2_species <- function(
-    fasta_db = NULL,
-    taxnames = NULL,
-    from_sintax = FALSE,
-    output_path = NULL,
-    ...) {
+  fasta_db = NULL,
+  taxnames = NULL,
+  from_sintax = FALSE,
+  output_path = NULL,
+  ...
+) {
   if (is.null(taxnames) && is.null(fasta_db)) {
     stop("You must specify taxnames or fasta_db parameter.")
   } else if (!is.null(taxnames) && !is.null(fasta_db)) {
