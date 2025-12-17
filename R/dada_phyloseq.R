@@ -33,7 +33,6 @@ add_dna_to_phyloseq <- function(physeq, prefix_taxa_names = "Taxa_") {
 ################################################################################
 
 
-
 ################################################################################
 #'  Clean phyloseq object by removing empty samples and taxa
 #'
@@ -199,10 +198,6 @@ clean_pq <- function(physeq,
   verify_pq(new_physeq)
   return(new_physeq)
 }
-
-
-
-
 
 
 ################################################################################
@@ -497,8 +492,6 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 ###########################################################################
 
 
-
-
 ################################################################################
 #' Recluster sequences of an object of class `physeq`
 #'   or a list of DNA sequences
@@ -532,7 +525,7 @@ track_wkflow_samples <- function(list_pq_obj, ...) {
 #'   robust
 #' @param rank_propagation (logical, default FALSE). Do we propagate the
 #' NA value from lower taxonomic rank to upper rank?
-#' See the man page of [merge_taxa_vec()] for more details. 
+#' See the man page of [merge_taxa_vec()] for more details.
 #' @param vsearch_cluster_method (default: "--cluster_size) See other possible
 #'   methods in the [vsearch manual](https://github.com/torognes/vsearch/) (e.g. `--cluster_size` or `--cluster_smallmem`)
 #'   - `--cluster_fast` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.
@@ -676,13 +669,11 @@ postcluster_pq <- function(physeq = NULL,
 ################################################################################
 
 
-
 ################################################################################
 #' @rdname postcluster_pq
 #' @export
 asv2otu <- postcluster_pq
 ################################################################################
-
 
 
 ################################################################################
@@ -1204,7 +1195,7 @@ lulu_pq <- function(physeq,
 #' @param vsearchpath (default: vsearch) path to vsearch.
 #' @param mumupath path to mumu. See [mumu](https://github.com/frederic-mahe/mumu)
 #'   for installation instruction
-#' @param lulu_exact (logical) If true, use the exact same algorithm as LULU 
+#' @param lulu_exact (logical) If true, use the exact same algorithm as LULU
 #'  corresponding to the --legacy option of mumu. Need mumu version >= v1.1.0
 #' @param verbose (logical) If true, print some additional messages.
 #' @param clean_pq (logical) If true, empty samples and empty ASV are discarded
@@ -1212,8 +1203,8 @@ lulu_pq <- function(physeq,
 #' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files
 #' @param extra_mumu_args (character, default: NULL) Additional arguments passed
 #'  on to mumu command line. See `man mumu` into bash for details. Major args are
-#' `--minimum_match`, `--minimum_ratio_type`, `--minimum_ratio`, 
-#' `--minimum_relative_cooccurence` and `--threads` 
+#' `--minimum_match`, `--minimum_ratio_type`, `--minimum_ratio`,
+#' `--minimum_relative_cooccurence` and `--threads`
 #' @return a list of for object
 #' - "new_physeq": The new phyloseq object (class physeq)
 #' - "mumu_results": The log file of the mumu software. Run `man mumu` into
@@ -1225,7 +1216,7 @@ lulu_pq <- function(physeq,
 #' \dontrun{
 #' ntaxa(data_fungi_sp_known)
 #' ntaxa(mumu_pq(data_fungi_sp_known)$new_physeq)
-#' ntaxa(mumu_pq(data_fungi_sp_known, extra_mumu_args="--minimum_match 90")$new_physeq)
+#' ntaxa(mumu_pq(data_fungi_sp_known, extra_mumu_args = "--minimum_match 90")$new_physeq)
 #' }
 #' @author Frédéric Mahé
 #'   & Adrien Taudière \email{adrien.taudiere@@zaclys.net}
@@ -1285,15 +1276,15 @@ mumu_pq <- function(physeq,
 
   message("Mumu algorithm")
 
-    mumu_cmd <-
-    paste0( 
+  mumu_cmd <-
+    paste0(
       " --otu_table otu_table.csv ",
       " --match_list match_list.txt ",
       " --log log.txt ",
       " --new_otu_table new_OTU.tablemumu"
     )
-  
-  if(!is.null(extra_mumu_args)){
+
+  if (!is.null(extra_mumu_args)) {
     mumu_cmd <- paste0(mumu_cmd, " ", extra_mumu_args)
     message("mumu is runned with option(s)", extra_mumu_args)
   }
@@ -1302,7 +1293,8 @@ mumu_pq <- function(physeq,
     message("Using LULU exact mode (--legacy option in mumu)")
   }
   system2(
-    mumupath, args=mumu_cmd
+    mumupath,
+    args = mumu_cmd
   )
 
   res_mumu <- read.delim("new_OTU.tablemumu")
@@ -1384,8 +1376,6 @@ mumu_pq <- function(physeq,
   return(list("new_physeq" = new_physeq, "mumu_results" = result_mumu))
 }
 ################################################################################
-
-
 
 
 ################################################################################
@@ -1849,13 +1839,14 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #' @author Adrien Taudière
 #'
 add_new_taxonomy_pq <- function(
-    physeq,
-    ref_fasta,
-    suffix = NULL,
-    method = c("dada2", "sintax", "lca", "idtaxa", "blastn", "dada2_2steps"),
-    trainingSet = NULL,
-    min_bootstrap = NULL,
-    ...) {
+  physeq,
+  ref_fasta,
+  suffix = NULL,
+  method = c("dada2", "sintax", "lca", "idtaxa", "blastn", "dada2_2steps"),
+  trainingSet = NULL,
+  min_bootstrap = NULL,
+  ...
+) {
   method <- match.arg(method)
 
   if (is.null(min_bootstrap)) {
@@ -2075,8 +2066,6 @@ add_funguild_info <- function(physeq,
   physeq@tax_table <- tax_table(tax_tab)
   return(physeq)
 }
-
-
 
 
 ################################################################################
@@ -2617,7 +2606,6 @@ physeq_or_string_to_dna <- function(physeq = NULL, dna_seq = NULL) {
 ###############################################################################
 
 
-
 ################################################################################
 #' Remove primers using [cutadapt](https://github.com/marcelm/cutadapt/)
 #'
@@ -2933,7 +2921,6 @@ normalize_prop_pq <- function(physeq,
 ################################################################################
 
 
-
 ################################################################################
 #' Build a sample information tibble from physeq object
 #'
@@ -3169,7 +3156,6 @@ rarefy_sample_count_by_modality <-
           "); .Random.seed` for the full vector",
           sep = ""
         )
-        message("...")
       }
     } else if (verbose) {
       message(

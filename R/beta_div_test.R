@@ -130,7 +130,7 @@ graph_test_pq <- function(physeq,
 #' @param correction_for_sample_size (logical, default FALSE) If set to TRUE,
 #'   the sample size (number of sequences by samples) is added to formula in
 #'   the form `y~Library_Size + Biological_Effect` following recommendation of
-#'   [Weiss et al. 2017](https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-017-0237-y).
+#'   [Weiss et al. 2017](https://link.springer.com/article/10.1186/s40168-017-0237-y).
 #'   `correction_for_sample_size` overcome `rarefy_nb_seqs` if both are TRUE.
 #' @param rarefy_nb_seqs (logical, default FALSE) Rarefy each sample
 #'   (before merging if merge_sample_by is set) using
@@ -777,7 +777,7 @@ ancombc_pq <- function(physeq, fact, levels_fact = NULL, tax_level = "Class", ..
   if (!is.null(levels_fact)) {
     physeq <- subset_samples_pq(physeq, as.vector(physeq@sam_data[, fact])[[1]] %in% levels_fact)
   }
-  tse <- mia::makeTreeSEFromPhyloseq(physeq)
+  tse <- mia::convertFromPhyloseq(physeq)
   if (!is.null(levels_fact)) {
     SummarizedExperiment::colData(tse)[[fact]] <- factor(tse[[fact]], levels = levels_fact)
   }
@@ -1039,6 +1039,139 @@ plot_ancombc_pq <-
     }
     return(p)
   }
+################################################################################
+
+
+################################################################################
+#' Run LEfSe on a phyloseq object
+#'
+#' @details
+#' It is a wrapper of the `lefser::lefser()` and `lefser::lefserClades()` functions.
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#' @inheritParams clean_pq
+#' @param bifactor (required) The name of a column present in the `@sam_data` slot
+#'  of the physeq object. Must be a character vector or a factor.
+#' @param modalities (default NULL) A vector of modalities to keep in the analysis.
+#'  If NULL, all modalities present in classCol are kept. Note that only two
+#'  modalities are allowed.
+#'  @param compute_relativeAb (logical, default TRUE) Do we compute relative abundance
+#'  before running LEfSe?
+#'  @param by_clade (logical, default FALSE) Do we use the lefserClades function
+#'  (which test for different depth in the taxonomic classification) or the
+#'  lefser function (taxa-level)?
+#'  @param ... Additional arguments passed on to `lefser::lefser()`
+#'
+#' @return The result of lefser::lefser() or lefser::lefserClades()
+#' @export
+#'
+#' @author Adrien Taudière
+#' @examples
+#' res_lefse <- lefser_pq(data_fungi,
+#'   classCol = "Height",
+#'   modalities = c("Low", "High")
+#' )
+#' lefser::lefserPlot(res_lefse)
+lefser_pq <- function(physeq, bifactor = NULL, modalities = NULL, compute_relativeAb = TRUE, by_clade = FALSE, ...) {
+  verify_pq(physeq)
+
+  if (is.null(classCol)) {
+    stop("Please provide the name of the column in sample_data corresponding to the class variable.")
+  }
+  if (!classCol %in% colnames(physeq@sam_data)) {
+    stop(paste0("The column ", bifactor, " is not present in the sample_data of the phyloseq object."))
+  }
+
+  if (!is.null(modalities)) {
+    physeq <-
+      subset_samples_pq(
+        physeq,
+        physeq@sam_data[[bifactor]] %in% modalities
+      ) |>
+      clean_pq(silent = TRUE)
+  }
+
+  if (nrow(unique(physeq@sam_data[, bifactor])) != 2) {
+    stop(paste0("The column ", bifactor, " must refer to a valid dichotomous (two-level) variable"))
+  }
+
+  physeq_ts <- mia::convertFromPhyloseq(physeq)
+  if (compute_relativeAb) {
+    physeq_rel <- relativeAb(physeq_ts)
+  }
+  if (by_clade) {
+    res_lefser <- lefser::lefserClades(physeq_rel, classCol = bifactor, ...)
+    return(res_lefser)
+  } else {
+    res_lefser <- lefser::lefser(physeq_rel, classCol = bifactor, ...)
+    return(res_lefser)
+  }
+}
+################################################################################
+
+
+################################################################################
+#' Run Aldex on a phyloseq object
+#'
+#' @details
+#' It is a wrapper of the `ALDEx2::aldex()` function with default gamma=0.5.
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#' @inheritParams clean_pq
+#' @param bifactor (required) The name of a column present in the `@sam_data` slot
+#'  of the physeq object. Must be a character vector or a factor.
+#' @param modalities (default NULL) A vector of modalities to keep in the analysis.
+#'  If NULL, all modalities present in classCol are kept. Note that only two
+#'  modalities are allowed.
+#'  @param gamma (default 0.5) The value of the Dirichlet Monte-Carlo
+#'  sampling parameter.
+#'  @param ... Additional arguments passed on to `ALDEx2::aldex()`
+#'
+#' @return The result of `ALDEx2::aldex()`
+#' @export
+#'
+#' @author Adrien Taudière
+#' @examples
+#' res_aldex <- aldex_pq(data_fungi_mini,
+#'   bifactor = "Height",
+#'   modalities = c("Low", "High")
+#' )
+#' ALDEx2::aldex.plot(res_aldex, type = "volcano")
+aldex_pq <- function(physeq, bifactor = NULL, modalities = NULL, gamma = 0.5, ...) {
+  physeq <- taxa_as_rows(physeq)
+  verify_pq(physeq)
+
+  if (is.null(bifactor)) {
+    stop("Please provide the name of the column in sample_data corresponding to the class variable.")
+  }
+  if (!bifactor %in% colnames(physeq@sam_data)) {
+    stop(paste0("The column ", bifactor, " is not present in the sample_data of the phyloseq object."))
+  }
+
+  if (!is.null(modalities)) {
+    physeq <-
+      subset_samples_pq(
+        physeq,
+        physeq@sam_data[[bifactor]] %in% modalities
+      ) |>
+      clean_pq(silent = TRUE)
+  }
+
+  if (nrow(unique(physeq@sam_data[, bifactor])) != 2) {
+    stop(paste0("The column ", bifactor, " must refer to a valid dichotomous (two-level) variable"))
+  }
+
+  res_aldex <- ALDEx2::aldex(physeq@otu_table,
+    physeq@sam_data$Height,
+    gamma = 0.5
+  )
+
+  return(res_aldex)
+}
 ################################################################################
 
 ################################################################################

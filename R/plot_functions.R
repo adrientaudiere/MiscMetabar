@@ -510,7 +510,6 @@ accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
 ################################################################################
 
 
-
 ################################################################################
 #' Plot OTU circle for \code{\link[phyloseq]{phyloseq-class}} object
 #' @description
@@ -1169,7 +1168,6 @@ venn_pq <-
 ################################################################################
 
 
-
 ################################################################################
 #' Venn diagram of \code{\link[phyloseq]{phyloseq-class}} object using
 #' `ggVennDiagram::ggVennDiagram` function
@@ -1405,8 +1403,6 @@ ggvenn_pq <- function(physeq = NULL,
   }
 }
 ################################################################################
-
-
 
 
 ################################################################################
@@ -1856,15 +1852,6 @@ ggbetween_pq <-
   }
 
 
-
-
-
-
-
-
-
-
-
 ################################################################################
 #' Summarize a \code{\link[phyloseq]{phyloseq-class}} object using a plot.
 #' @description
@@ -2128,12 +2115,13 @@ summary_plot_pq <- function(physeq,
 #' }
 #' }
 rotl_pq <- function(
-    physeq,
-    taxonomic_rank = c("Genus", "Species"),
-    context_name = "All life",
-    discard_genus_alone = TRUE,
-    pattern_to_remove_tip = c("ott\\d+|_ott\\d+"),
-    pattern_to_remove_node = c("_ott.*|mrca*")) {
+  physeq,
+  taxonomic_rank = c("Genus", "Species"),
+  context_name = "All life",
+  discard_genus_alone = TRUE,
+  pattern_to_remove_tip = c("ott\\d+|_ott\\d+"),
+  pattern_to_remove_node = c("_ott.*|mrca*")
+) {
   if (sum(!taxonomic_rank %in% colnames(physeq@tax_table)) != 0) {
     stop(
       "The taxonomic_rank parameter do not fit with the @tax_table column of your phyloseq object."
@@ -3232,8 +3220,8 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 #'     nboot = 2
 #'   )
 #'   iNEXT::ggiNEXT(res_iNEXT)
-#'   iNEXT::ggiNEXT(res_iNEXT, type = 2)
-#'   iNEXT::ggiNEXT(res_iNEXT, type = 3)
+#'   # iNEXT::ggiNEXT(res_iNEXT, type = 2)
+#'   # iNEXT::ggiNEXT(res_iNEXT, type = 3)
 #' }
 #' }
 #' @author Adrien Taudière
@@ -3472,7 +3460,7 @@ upset_pq <- function(physeq,
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
-#' See [upset_pq()] to plot upset. There is a bug with ggplot2 >= 4.0.0. See issue 
+#' See [upset_pq()] to plot upset. There is a bug with ggplot2 >= 4.0.0. See issue
 #'  <https://github.com/krassowski/complex-upset/issues/213> for more details.
 #'
 #' @inheritParams upset_pq
@@ -4229,9 +4217,6 @@ ggscatt_pq <- function(physeq,
 ################################################################################
 
 
-
-
-
 ################################################################################
 #' Alluvial plot for taxonomy and samples factor vizualisation
 #'
@@ -4389,7 +4374,6 @@ ggaluv_pq <- function(physeq,
 ################################################################################
 
 
-
 ################################################################################
 #' Plot the nucleotide proportion at both extremity of the sequences
 #'
@@ -4442,11 +4426,12 @@ ggaluv_pq <- function(physeq,
 #'   hill_scales = c(3)
 #' )$plot_last
 plot_refseq_extremity_pq <- function(
-    physeq,
-    first_n = 10,
-    last_n = 10,
-    hill_scales = c(1, 2),
-    min_width = 0) {
+  physeq,
+  first_n = 10,
+  last_n = 10,
+  hill_scales = c(1, 2),
+  min_width = 0
+) {
   if (min_width > 0) {
     cond <- Biostrings::width(physeq@refseq) > min_width
     names(cond) <- taxa_names(physeq)
@@ -4623,9 +4608,6 @@ plot_refseq_extremity_pq <- function(
   ))
 }
 ################################################################################
-
-
-
 
 
 ################################################################################
@@ -4934,38 +4916,39 @@ hill_curves_pq <- function(physeq,
 #' ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
 #'   geom_point(size = 2)
 #'
-#' # library(patchwork)
-#' # physeq <- data_fungi_mini
-#' # res_tsne <- tsne_pq(data_fungi_mini)
-#' # df_umap_tsne <- df_umap
-#' # df_umap_tsne$x_tsne <- res_tsne$Y[, 1]
-#' # df_umap_tsne$y_tsne <- res_tsne$Y[, 2]
-#' # ((ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
-#' #  geom_point(size = 2) +
-#' #  ggtitle("UMAP")) + (plot_ordination(physeq,
-#' #  ordination =
-#' #    ordinate(physeq, method = "PCoA", distance = "bray"), color = "Height"
-#' # )) +
-#' #  ggtitle("PCoA")) /
-#' #  ((ggplot(df_umap_tsne, aes(x = x_tsne, y = y_tsne, col = Height)) +
-#' #    geom_point(size = 2) +
-#' #    ggtitle("tsne")) +
-#' #    (plot_ordination(physeq,
-#' #      ordination = ordinate(physeq, method = "NMDS", distance = "bray"),
-#' #      color = "Height"
-#' #    ) +
-#' #      ggtitle("NMDS"))) +
-#' #  patchwork::plot_layout(guides = "collect")
+#' \donttest{
+#' library(patchwork)
+#' physeq <- data_fungi_mini
+#' res_tsne <- tsne_pq(data_fungi_mini)
+#' df_umap_tsne <- df_umap
+#' df_umap_tsne$x_tsne <- res_tsne$Y[, 1]
+#' df_umap_tsne$y_tsne <- res_tsne$Y[, 2]
+#' ((ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
+#'   geom_point(size = 2) +
+#'   ggtitle("UMAP")) + (plot_ordination(physeq,
+#'   ordination =
+#'     ordinate(physeq, method = "PCoA", distance = "bray"), color = "Height"
+#' )) +
+#'   ggtitle("PCoA")) /
+#'   ((ggplot(df_umap_tsne, aes(x = x_tsne, y = y_tsne, col = Height)) +
+#'     geom_point(size = 2) +
+#'     ggtitle("tsne")) +
+#'     (plot_ordination(physeq,
+#'       ordination = ordinate(physeq, method = "NMDS", distance = "bray"),
+#'       color = "Height"
+#'     ) +
+#'       ggtitle("NMDS"))) +
+#'   patchwork::plot_layout(guides = "collect")
 #'
-#' # df_uwot <- umap_pq(data_fungi_mini, pkg = "uwot")
+#' df_uwot <- umap_pq(data_fungi_mini, pkg = "uwot")
 #'
-#' #   (ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
-#' #     geom_point(size = 2) +
-#' #    ggtitle("umap::umap")) /
-#' #     (ggplot(df_uwot, aes(x = x_umap, y = y_umap, col = Height)) +
-#' #       geom_point(size = 2) +
-#' #       ggtitle("uwot::umap2"))
-#'
+#' (ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
+#'   geom_point(size = 2) +
+#'   ggtitle("umap::umap")) /
+#'   (ggplot(df_uwot, aes(x = x_umap, y = y_umap, col = Height)) +
+#'     geom_point(size = 2) +
+#'     ggtitle("uwot::umap2"))
+#' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `umap::umap()` if you
@@ -5192,3 +5175,47 @@ plot_seq_ratio_pq <- function(physeq, min_nb_seq = 1000, annotations = TRUE) {
   return(p)
 }
 ################################################################################
+
+
+################################################################################
+#' A wrapper of plot_ordination with vegan distance matrix
+#'
+#' @details
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#'   Basically a wrapper of [phyloseq::plot_ordination()] to use aitchison and
+#'  robust.aitchison distances from vegan package.
+#'
+#' @inheritParams clean_pq
+#' @param method (string, default "robust.aitchison") The distance method to use
+#'   from vegan::vegdist(). See ?vegan::vegdist for more details.
+#' @param ordination_method (string, default "NMDS") The ordination method to use
+#'   in phyloseq::ordinate(). See ?phyloseq::ordinate for more details.
+#' @param ... Additional arguments passed on to phyloseq::plot_ordination()
+#' @returns A ggplot2 object
+#' @export
+#' @author Adrien Taudière
+#'
+#' @examples
+#' library(patchwork)
+#' plot_ordination_pq(data_fungi_mini, method = "robust.aitchison", color = "Height") +
+#'   plot_ordination_pq(data_fungi_mini, method = "bray", color = "Height")
+plot_ordination_pq <- function(physeq,
+                               method = "robust.aitchison",
+                               ordination_method = "NMDS",
+                               ...) {
+  verify_pq(physeq)
+  dist_mat <- vegan::vegdist(unclass(data_fungi@otu_table), method = method)
+  attr(dist_mat, "Labels") <- sample_names(data_fungi)
+  p <- plot_ordination(data_fungi,
+    ordination =
+      ordinate(data_fungi, method = ordination_method, distance = dist_mat),
+    ...
+  ) +
+    labs(
+      title = paste(ordination_method, "ordination"),
+      subtitle = paste("Using ", method, "distance")
+    )
+  return(p)
+}
