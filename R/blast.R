@@ -387,7 +387,9 @@ blast_pq <- function(physeq,
 #'   Note that params `unique_per_seq` must be left to TRUE and `score_filter`
 #'   must be left to FALSE.
 #' @export
-#' @return A new \code{\link[phyloseq]{phyloseq-class}} object.
+#' @return A new \code{\link[phyloseq]{phyloseq-class}} object, or NULL if no
+#'   taxa matched the blast database or if no taxa passed the filter criteria.
+#'   In either case, an informative message is printed.
 
 
 filter_asv_blast <- function(physeq,
@@ -409,6 +411,11 @@ filter_asv_blast <- function(physeq,
     ...
   )
 
+  if (is.null(blast_tab)) {
+    message("No taxa matched the blast database. Returning NULL.")
+    return(NULL)
+  }
+
   condition <- blast_tab[, "Query cover"] > min_cover_filter &
     blast_tab[, "bit score"] > bit_score_filter &
     blast_tab[, "% id. match"] > id_filter &
@@ -416,13 +423,23 @@ filter_asv_blast <- function(physeq,
 
   names(condition) <- blast_tab[, "Query name"]
 
+  if (sum(condition, na.rm = TRUE) == 0) {
+    message(
+      "No taxa passed the filter criteria (id_filter=", id_filter,
+      ", bit_score_filter=", bit_score_filter,
+      ", min_cover_filter=", min_cover_filter,
+      ", e_value_filter=", e_value_filter, "). Returning NULL."
+    )
+    return(NULL)
+  }
+
   new_physeq <- subset_taxa_pq(physeq, condition, clean_pq = FALSE)
 
   if (clean_pq) {
     new_physeq <- clean_pq(new_physeq)
   }
 
-  if (add_info_to_taxtable) {
+  if (add_info_to_taxtable && ntaxa(new_physeq) > 0) {
     info_to_taxtable <- blast_tab %>%
       group_by(`Query name`) %>%
       slice(which.min(`e-value`)) %>%
