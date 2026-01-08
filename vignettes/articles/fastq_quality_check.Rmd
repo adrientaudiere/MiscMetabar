@@ -51,8 +51,10 @@ summary(qc)
 ```{r}
 library(Rsearch)
 
-qual_plots <- plot_base_quality(fastq_input = fastq_dir$fnfs, 
-                                reverse = fastq_dir$reverse)
+qual_plots <- plot_base_quality(
+  fastq_input = fastq_dir$fnfs,
+  reverse = fastq_dir$reverse
+)
 print(qual_plots)
 ```
 

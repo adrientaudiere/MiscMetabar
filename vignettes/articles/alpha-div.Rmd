@@ -69,31 +69,31 @@ clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height))) %>%
 
 ```{r}
 library("Durga")
-psm <- psmelt_samples_pq(data_fungi) 
+psm <- psmelt_samples_pq(data_fungi)
 
-durga_res <- DurgaDiff(Hill_0 ~ Time==0, psm)
+durga_res <- DurgaDiff(Hill_0 ~ Time == 0, psm)
 DurgaPlot(durga_res)
 ```
 
 ```{r}
-durga_pq <- function(physeq, formula, plot=FALSE) {
+durga_pq <- function(physeq, formula, plot = FALSE) {
   verify_pq(physeq)
   psm <- psmelt_samples_pq(physeq)
   res_durga <- DurgaDiff(formula, psm)
-  if(plot){
-    p <-DurgaPlot(res_durga)
+  if (plot) {
+    p <- DurgaPlot(res_durga)
     invisible(p)
-  } else{
+  } else {
     return(res_durga)
   }
 }
 
-durga_pq(data_fungi, Hill_0 ~ Height, plot=TRUE)
-durga_pq(data_fungi, Hill_0 ~ Time + Height, plot=TRUE)
+durga_pq(data_fungi, Hill_0 ~ Height, plot = TRUE)
+durga_pq(data_fungi, Hill_0 ~ Time + Height, plot = TRUE)
 
-durga_pq(data_fungi, Hill_0 ~ Time==0, plot=TRUE)
-durga_pq(data_fungi,  Hill_1 ~ Time==0, plot=TRUE)
-durga_pq(data_fungi,  Hill_2 ~ Time==0, plot=TRUE)
+durga_pq(data_fungi, Hill_0 ~ Time == 0, plot = TRUE)
+durga_pq(data_fungi, Hill_1 ~ Time == 0, plot = TRUE)
+durga_pq(data_fungi, Hill_2 ~ Time == 0, plot = TRUE)
 ```
 
 

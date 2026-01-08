@@ -6,7 +6,7 @@ test_that("hill_tuckey_pq works with different parameters", {
   data("GlobalPatterns", package = "phyloseq")
   GlobalPatterns@sam_data[, "Soil_logical"] <-
     ifelse(GlobalPatterns@sam_data[, "SampleType"] == "Soil", "Soil", "Not Soil")
-  
+
   expect_s3_class(suppressMessages(hill_tuckey_pq(GlobalPatterns, "Soil_logical")), "ggplot")
   skip_on_cran()
   expect_s3_class(suppressMessages(hill_tuckey_pq(GlobalPatterns, "Soil_logical",
@@ -40,9 +40,9 @@ test_that("hill_test_rarperm_pq works with data_fungi", {
 
 
 test_that("glmutli_pq works with data_fungi", {
+  skip_on_cran()
   if (requireNamespace("glmulti")) {
-    skip_on_cran()
-    result <- suppressWarnings(glmutli_pq(data_fungi_mini, 
+    result <- suppressWarnings(glmutli_pq(data_fungi_mini,
       "Hill_0 ~ Abundance + Time",
       level = 1
     ))

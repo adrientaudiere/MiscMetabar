@@ -2530,9 +2530,13 @@ add_info_to_sam_data <- function(physeq,
     if (sum(sample_names(physeq) %in% rownames(df_info)) == 0) {
       stop("Rownames of df_info must match the sample names of physeq.")
     }
-    df_info <-
-      df_info[match(sample_names(physeq), rownames(df_info)), ]
-    physeq@sam_data <- sample_data(cbind(as.data.frame(physeq@sam_data), df_info))
+    df_info_ord <-
+      df_info[match(sample_names(physeq), rownames(df_info)), , drop = FALSE]
+
+    new_sam_data <-
+      sample_data(cbind(as.data.frame(physeq@sam_data), df_info_ord))
+    colnames(new_sam_data) <- c(sample_variables(physeq), colnames(df_info_ord))
+    physeq@sam_data <- new_sam_data
   }
   return(physeq)
 }

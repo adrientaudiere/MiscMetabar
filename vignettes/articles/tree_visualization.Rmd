@@ -32,7 +32,7 @@ In introduction, you can read the review of @zou2024, entitled ["Common Methods 
 ## Build phylogenetic tree using reference sequences 
 
 ```{r}
-library("tidytree") 
+library("tidytree")
 library("MiscMetabar")
 library("phangorn")
 data(data_fungi)
@@ -69,7 +69,6 @@ ggtree(as.treedata(data_fungi_tree@phy_tree), branch.length = "none") %<+%
 ## Build taxonomic tree
 
 ```{r}
-
 ```
 
 

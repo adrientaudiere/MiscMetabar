@@ -142,7 +142,7 @@ test_that("simplify_taxo works fine", {
 
 test_that("get_file_extension works fine", {
   expect_equal(get_file_extension("test.fasta"), "fasta")
-  expect_equal(get_file_extension("test.fastq.gz"), c("fastq", "gz"))
+  expect_equal(suppressWarnings(get_file_extension("test.fastq.gz")), c("fastq", "gz"))
   skip_on_cran()
   expect_warning(get_file_extension("test.file.fasta"))
   expect_error(get_file_extension("test_without_extension"))
@@ -182,7 +182,6 @@ test_that("fac2col works fine", {
 test_that("transp works fine", {
   expect_type(transp("red"), "character")
   expect_type(transp(c("red", "blue")), "character")
-  skip_on_cran()
   expect_length(transp(c("red", "blue", "green")), 3)
   result <- transp("red", alpha = 0.5)
   expect_true(grepl("#", result))
@@ -190,20 +189,24 @@ test_that("transp works fine", {
 
 
 test_that("is_vsearch_installed works fine", {
+  skip_on_cran()
   expect_type(is_vsearch_installed(), "logical")
 })
 
 
 test_that("is_swarm_installed works fine", {
+  skip_on_cran()
   expect_type(is_swarm_installed(), "logical")
 })
 
 
 test_that("is_mumu_installed works fine", {
+  skip_on_cran()
   expect_type(is_mumu_installed(), "logical")
 })
 
 
 test_that("is_krona_installed works fine", {
+  skip_on_cran()
   expect_type(is_krona_installed(), "logical")
 })
