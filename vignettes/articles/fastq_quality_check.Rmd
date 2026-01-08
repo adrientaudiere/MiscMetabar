@@ -3,12 +3,14 @@ title: "fastq_quality_check"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{fastq_quality_check}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 bibliography: bibliography.bib
+editor_options: 
+  chunk_output_type: console
 ---
 
-The [fastqcr](https://github.com/kassambara/fastqcr) package allow to check fastq quality and build reports about multiple fastq files.
+The [fastqcr](https://github.com/kassambara/fastqcr) package allow to check fastq quality and build reports about multiple fastq files. We also present here how to plot base quality using the [Rsearch](https://cassandrahjo.github.io/Rsearch/reference/plot_base_quality.html) package.  
 
 
 ## Load the necessary packages 
@@ -41,6 +43,17 @@ qc <- fastqcr::qc_aggregate(qc.dir)
 fastqcr::qc_problems(qc)
 fastqcr::qc_stats(qc)
 summary(qc)
+```
+
+
+## Plot base quality with Rsearch package
+
+```{r}
+library(Rsearch)
+
+qual_plots <- plot_base_quality(fastq_input = fastq_dir$fnfs, 
+                                reverse = fastq_dir$reverse)
+print(qual_plots)
 ```
 
 ## Build reports
