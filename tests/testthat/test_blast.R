@@ -187,6 +187,16 @@ if (inherits(blast_error_or_not, "try-error")) {
       expect_error(blast_to_derep(derep_data, "inst/extdata/nil.fasta"))
     }
   )
+
+  test_that(
+    "filter_taxa_blast works as alias for filter_asv_blast",
+    {
+      expect_s4_class(
+        df_blast <- filter_taxa_blast(data_fungi_mini, path_db),
+        "phyloseq"
+      )
+    }
+  )
 }
 
 file.remove(list.files("tests/testthat", pattern = "dbase"))
