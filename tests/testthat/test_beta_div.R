@@ -16,6 +16,8 @@ test_that("var_par_pq works", {
     dbrda_computation = TRUE
   )
   expect_s3_class(result, "varpart")
+  expect_null(plot_var_part_pq(result)) 
+
 })
 
 test_that("var_par_rarperm_pq works", {
@@ -26,4 +28,7 @@ test_that("var_par_rarperm_pq works", {
     ), nperm = 9)
   expect_type(result, "list")
   expect_s3_class(result, "varpart")
+  expect_null(plot_var_part_pq(result), 
+              show_quantiles = TRUE,
+              show_dbrda_signif = TRUE) 
 })
