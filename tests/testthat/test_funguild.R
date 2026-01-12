@@ -1,10 +1,5 @@
 data(data_fungi)
 
-withr::local_envvar(
-  R_USER_CACHE_DIR = tempfile(),
-  .local_envir = teardown_env()
-)
-
 test_that("funguild_assign works", {
   skip_on_cran()
 data_fungi_FUNGUILD <- funguild_assign(as.data.frame(tax_table(data_fungi)),
