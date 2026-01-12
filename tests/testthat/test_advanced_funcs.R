@@ -2,8 +2,15 @@ data(data_fungi)
 
 test_that("lulu works", {
   skip_on_cran()
-  lulu_pq(data_fungi_sp_known)
-  lulu_pq(data_fungi_sp_known, verbose=TRUE, clean_pq=TRUE)
+  res1 <- lulu_pq(data_fungi_sp_known)
+  expect_equal(length(res1), 4)
+  expect_equal(ntaxa(res1$new_physeq), 549)
+  expect_equal(nsamples(res1$new_physeq), 185)
+  
+  res2 <- lulu_pq(data_fungi_sp_known, verbose=TRUE, clean_pq=TRUE)
+  expect_equal(length(res2), 4)
+  expect_equal(ntaxa(res2$new_physeq), 549)
+  expect_equal(nsamples(res2$new_physeq), 184)
 })
 
 test_that("glmutli_pq works", {
