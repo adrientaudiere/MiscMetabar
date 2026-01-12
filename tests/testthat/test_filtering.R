@@ -2,25 +2,38 @@ data(data_fungi)
 data(enterotype)
 
 test_that("filt_taxa_pq works", {
-  skip_on_cran()
-  # Filter taxa based on a simple condition
-  result <- filt_taxa_pq(data_fungi, taxa_sums(data_fungi) > 100)
+ 
+  result <- filt_taxa_pq(data_fungi, min_nb_seq = 20)
   expect_s4_class(result, "phyloseq")
-  expect_true(ntaxa(result) <= ntaxa(data_fungi))
+  expect_equal(ntaxa(result), 1388)
+ 
+  result <- filt_taxa_pq(data_fungi, min_occurence = 2)
+    expect_s4_class(result, "phyloseq")
+  expect_equal(ntaxa(result), 1214)
+
+  result <- filt_taxa_pq(data_fungi,
+  min_occurence = 2,
+  min_nb_seq = 10, clean_pq = FALSE
+)
+  expect_s4_class(result, "phyloseq")
+  expect_equal(ntaxa(result),1087)
+  
+result <- filt_taxa_pq(data_fungi,
+  min_occurence = 4,
+  min_nb_seq = 100,
+  combination = "OR"
+)
+  expect_s4_class(result, "phyloseq")
+  expect_equal(ntaxa(result), 1261)
 })
 
 test_that("filt_taxa_wo_NA works", {
-  skip_on_cran()
   result <- filt_taxa_wo_NA(data_fungi, "Phylum")
   expect_s4_class(result, "phyloseq")
-  # Check that no NAs remain in the Phylum column
-  if (ntaxa(result) > 0) {
-    expect_false(any(is.na(tax_table(result)[, "Phylum"])))
-  }
+  expect_equal(ntaxa(result), 1327)
 })
 
 test_that("distri_1_taxa works", {
-  skip_on_cran()
-  p <- distri_1_taxa(data_fungi, taxa_names(data_fungi)[1])
-  expect_s3_class(p, "ggplot")
+  result <- distri_1_taxa(data_fungi, "Height", "ASV2")
+  expect_s3_class(result, "data.frame")
 })
