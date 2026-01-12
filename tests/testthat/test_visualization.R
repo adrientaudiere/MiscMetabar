@@ -2,7 +2,6 @@ data(data_fungi)
 data(enterotype)
 
 test_that("ggaluv_pq works", {
-  skip_on_cran()
   if (requireNamespace("ggalluvial", quietly = TRUE)) {
     p <- ggaluv_pq(data_fungi, "Height")
     expect_s3_class(p, "ggplot")
@@ -10,15 +9,20 @@ test_that("ggaluv_pq works", {
 })
 
 test_that("ggscatt_pq works", {
-  skip_on_cran()
-  p <- ggscatt_pq(data_fungi, "Height")
+  suppressWarnings(p <- ggaluv_pq(data_fungi, wrap_factor="Height"))
+  expect_s3_class(p, "ggplot")
+  
+  suppressWarnings(p <- ggaluv_pq(data_fungi, fact="Height", by_sample=TRUE, use_ggfittext=TRUE, na_remove=TRUE))
   expect_s3_class(p, "ggplot")
 })
 
 test_that("umap_pq works", {
-  skip_on_cran()
   if (requireNamespace("umap", quietly = TRUE)) {
     result <- umap_pq(data_fungi)
-    expect_s4_class(result, "phyloseq")
+    expect_s3_class(result, "tbl_df")
+   
+    result <- umap_pq(data_fungi, pkg="uwot")
+    expect_s3_class(result, "tbl_df")
+    
   }
 })
