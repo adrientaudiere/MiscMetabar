@@ -11,6 +11,8 @@
 
 - Improve `ancombc_pq()` function by allowing custom names in the tax_levels parameter.
 
+- Fix a bug in `filt_taxa_pq` when using both min_nb_seq and min_nb_occurence parameters. 
+
 # MiscMetabar 0.14.4 
 
 ## New features and improvements

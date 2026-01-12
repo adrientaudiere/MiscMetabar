@@ -422,6 +422,7 @@ format2dada2 <- function(fasta_db = NULL,
     # Add the good number of level to each line
     new_names <- map_chr(new_names, ~ {
       nb_char <- str_count(.x, ":")
+      max_char <- max(stringr::str_count(new_names, ":"))
       diff <- max_char - nb_char - 2
       if (diff > 0) {
         return(paste0(.x, strrep(",", diff)))

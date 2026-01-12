@@ -1666,15 +1666,15 @@ filt_taxa_pq <- function(physeq,
       new_physeq <-
         subset_taxa_pq(
           new_physeq,
-          taxa_sums(as_binary_otu_table(new_physeq)) >= 1 &
-            taxa_sums((new_physeq)) >= 100
+          taxa_sums(as_binary_otu_table(new_physeq)) >= min_occurence &
+            taxa_sums((new_physeq)) >= min_nb_seq
         )
     } else if (combination == "OR") {
       new_physeq <-
         subset_taxa_pq(
           new_physeq,
-          taxa_sums(as_binary_otu_table(new_physeq)) >= 1 |
-            taxa_sums((new_physeq)) >= 100
+          taxa_sums(as_binary_otu_table(new_physeq)) >= min_occurence |
+            taxa_sums((new_physeq)) >= min_nb_seq
         )
     }
   }
