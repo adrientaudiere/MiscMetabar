@@ -29,7 +29,7 @@ if (getRversion() >= "2.15.1") {
     "samples_names_common", "seq_id", "alpha_hill", "Modality", "Type", "complexity",
     "value_bootstrap", "LearnTaxa", "OrientNucleotides", "RemoveGaps",
     "method", "readDNAStringSet", "Taxa name", "V1", "V2", "V3", "pattern_k",
-    "color_group", "ratio", "edgetype", "sampletype", "xend", "yend"
+    "color_group", "ratio", "edgetype", "sampletype", "xend", "yend", "data_fungi"
   ))
 }
 

@@ -10,9 +10,11 @@ mumu_pq(
   id = 0.84,
   vsearchpath = "vsearch",
   mumupath = "mumu",
+  lulu_exact = FALSE,
   verbose = FALSE,
   clean_pq = TRUE,
-  keep_temporary_files = FALSE
+  keep_temporary_files = FALSE,
+  extra_mumu_args = NULL
 )
 }
 \arguments{
@@ -29,12 +31,20 @@ Set to number of cpus/processors to use for the clustering}
 \item{mumupath}{path to mumu. See \href{https://github.com/frederic-mahe/mumu}{mumu}
 for installation instruction}
 
+\item{lulu_exact}{(logical) If true, use the exact same algorithm as LULU
+corresponding to the --legacy option of mumu. Need mumu version >= v1.1.0}
+
 \item{verbose}{(logical) If true, print some additional messages.}
 
 \item{clean_pq}{(logical) If true, empty samples and empty ASV are discarded
 before clustering.}
 
 \item{keep_temporary_files}{(logical, default: FALSE) Do we keep temporary files}
+
+\item{extra_mumu_args}{(character, default: NULL) Additional arguments passed
+on to mumu command line. See \verb{man mumu} into bash for details. Major args are
+\code{--minimum_match}, \code{--minimum_ratio_type}, \code{--minimum_ratio},
+\code{--minimum_relative_cooccurence} and \code{--threads}}
 }
 \value{
 a list of for object
@@ -65,7 +75,9 @@ for your work.
 \examples{
 \dontshow{if (MiscMetabar::is_mumu_installed()) withAutoprint(\{ # examplesIf}
 \dontrun{
-mumu_pq(data_fungi_sp_known)
+ntaxa(data_fungi_sp_known)
+ntaxa(mumu_pq(data_fungi_sp_known)$new_physeq)
+ntaxa(mumu_pq(data_fungi_sp_known, extra_mumu_args = "--minimum_match 90")$new_physeq)
 }
 \dontshow{\}) # examplesIf}
 }

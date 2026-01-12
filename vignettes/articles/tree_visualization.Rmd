@@ -3,9 +3,11 @@ title: "Tree building and visualization"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Tree visualization}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 bibliography: bibliography.bib
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r, include = FALSE}
@@ -27,8 +29,10 @@ quiet <- function(x) {
 
 In introduction, you can read the review of @zou2024, entitled ["Common Methods for Phylogenetic Tree Construction and Their Implementation in R](https://doi.org/10.3390/bioengineering11050480)".
 
+## Build phylogenetic tree using reference sequences 
+
 ```{r}
-library("tidytree") # first load to disable warning about phylo class
+library("tidytree")
 library("MiscMetabar")
 library("phangorn")
 data(data_fungi)
@@ -62,6 +66,10 @@ ggtree(as.treedata(data_fungi_tree@phy_tree), branch.length = "none") %<+%
   geom_tippoint(aes(color = Class, shape = Phylum), size = 2)
 ```
 
+## Build taxonomic tree
+
+```{r}
+```
 
 
 

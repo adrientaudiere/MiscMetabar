@@ -17,7 +17,7 @@ subset_taxa using a named boolean vector. Names must match taxa_names."></head><
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -147,6 +147,18 @@ is of class <code>tax_table</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sample_data() Sample Data:       [ 185 samples by 7 sample variables ]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> tax_table()   Taxonomy Table:    [ 1066 taxa by 12 taxonomic ranks ]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> refseq()      DNAStringSet:      [ 1066 reference sequences ]</span>
+<span class="r-in"><span><span class="fu">subset_taxa_pq</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/taxa_sums.html" class="external-link">taxa_sums</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 1420</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 342</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 1078</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 185</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phyloseq-class experiment-level object</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> otu_table()   OTU Table:         [ 1078 taxa and 185 samples ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sample_data() Sample Data:       [ 185 samples by 7 sample variables ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tax_table()   Taxonomy Table:    [ 1078 taxa by 12 taxonomic ranks ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> refseq()      DNAStringSet:      [ 1078 reference sequences ]</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">cond_taxa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"Endophyte"</span>, <span class="va">data_fungi</span><span class="op">@</span><span class="va">tax_table</span><span class="op">[</span>, <span class="st">"Guild"</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">cond_taxa</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/taxa_names-methods.html" class="external-link">taxa_names</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span></span>
@@ -189,7 +201,7 @@ is of class <code>tax_table</code>.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

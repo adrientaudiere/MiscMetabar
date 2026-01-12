@@ -31,11 +31,12 @@
 #' hill_tuckey_pq(GlobalPatterns, "Soil_logical")
 #' hill_tuckey_pq(GlobalPatterns, "Soil_logical", hill_scales = 1:2)
 hill_tuckey_pq <- function(
-    physeq,
-    modality,
-    hill_scales = c(0, 1, 2),
-    silent = TRUE,
-    correction_for_sample_size = TRUE) {
+  physeq,
+  modality,
+  hill_scales = c(0, 1, 2),
+  silent = TRUE,
+  correction_for_sample_size = TRUE
+) {
   modality_vector <-
     as.factor(as.vector(unlist(unclass(physeq@sam_data[, modality]))))
 
@@ -266,7 +267,6 @@ hill_test_rarperm_pq <- function(physeq,
   return(res)
 }
 ################################################################################
-
 
 
 ################################################################################

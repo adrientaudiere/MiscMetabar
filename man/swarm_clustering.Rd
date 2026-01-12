@@ -12,8 +12,11 @@ swarm_clustering(
   swarmpath = "swarm",
   vsearch_path = "vsearch",
   nproc = 1,
-  swarm_args = "--fastidious",
+  fastidious = TRUE,
+  swarm_args = "",
   tax_adjust = 0,
+  rank_propagation = FALSE,
+  return_swarm_df = FALSE,
   keep_temporary_files = FALSE
 )
 }
@@ -38,8 +41,13 @@ is NULL and dna_seq is provided.}
 \item{nproc}{(default: 1)
 Set to number of cpus/processors to use for the clustering}
 
-\item{swarm_args}{(default : "--fastidious") a one length character
-element defining other parameters to  passed on to swarm See other possible
+\item{fastidious}{(logical, default TRUE), perform a second clustering pass
+to reduce the number of small clusters (recommended option by swarm authors).
+Not that if d is different from 1, fastidious is automatically set to FALSE.}
+
+\item{swarm_args}{a one length character
+element defining other parameters to  passed on to swarm (e.g. "--mismatch-penalty 4").
+See other possible
 methods in the \href{https://github.com/torognes/swarm/blob/master/man/swarm_manual.pdf}{SWARM pdf manual}}
 
 \item{tax_adjust}{(Default 0) See the man page
@@ -47,6 +55,14 @@ of \code{\link[=merge_taxa_vec]{merge_taxa_vec()}} for more details.
 To conserved the taxonomic rank of the most abundant ASV,
 set tax_adjust to 0 (default). For the moment only tax_adjust = 0 is
 robust.}
+
+\item{rank_propagation}{(logical, default FALSE). Do we propagate the
+NA value from lower taxonomic rank to upper rank?
+See the man page of \code{\link[=merge_taxa_vec]{merge_taxa_vec()}} for more details.}
+
+\item{return_swarm_df}{(logical, default FALSE) Do we return the swarm
+dataframe instead of the phyloseq object ? Default FALSE return a phyloseq
+object if physeq is provided.}
 
 \item{keep_temporary_files}{(logical, default: FALSE) Do we keep temporary
 files ?
@@ -58,7 +74,7 @@ files ?
 }
 \value{
 A new object of class \code{physeq} or a list of cluster if dna_seq
-args was used.
+args was used or if return_swarm_df was set to TRUE.
 }
 \description{
 \if{html}{\out{
@@ -71,8 +87,8 @@ A wrapper of SWARM software.
 }
 \details{
 This function use the \code{merge_taxa_vec} function to
-merge taxa into clusters. By default tax_adjust = 0. See the man page
-of \code{\link[=merge_taxa_vec]{merge_taxa_vec()}}.
+merge taxa into clusters. By default tax_adjust = 0 and rank_propagation = FALSE.
+See the man page of \code{\link[=merge_taxa_vec]{merge_taxa_vec()}}.
 
 This function is mainly a wrapper of the work of others.
 Please cite \href{https://github.com/torognes/swarm}{SWARM}.

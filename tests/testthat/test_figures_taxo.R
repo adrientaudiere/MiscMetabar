@@ -303,7 +303,6 @@ test_that("rigdes_pq work with data_fungi dataset", {
 })
 
 
-
 test_that("treemap_pq work with data_fungi_sp_known dataset", {
   if (requireNamespace("treemapify")) {
     expect_s3_class(

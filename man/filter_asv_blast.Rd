@@ -66,7 +66,9 @@ Note that params \code{unique_per_seq} must be left to TRUE and \code{score_filt
 must be left to FALSE.}
 }
 \value{
-A new \code{\link[phyloseq]{phyloseq-class}} object.
+A new \code{\link[phyloseq]{phyloseq-class}} object, or NULL if no
+taxa matched the blast database or if no taxa passed the filter criteria.
+In either case, an informative message is printed.
 }
 \description{
 \if{html}{\out{

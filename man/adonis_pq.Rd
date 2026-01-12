@@ -12,6 +12,7 @@ adonis_pq(
   na_remove = FALSE,
   correction_for_sample_size = FALSE,
   rarefy_nb_seqs = FALSE,
+  rngseed = FALSE,
   verbose = TRUE,
   ...
 )
@@ -39,7 +40,7 @@ NA in the variables set in formula.}
 \item{correction_for_sample_size}{(logical, default FALSE) If set to TRUE,
 the sample size (number of sequences by samples) is added to formula in
 the form \code{y~Library_Size + Biological_Effect} following recommendation of
-\href{https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-017-0237-y}{Weiss et al. 2017}.
+\href{https://link.springer.com/article/10.1186/s40168-017-0237-y}{Weiss et al. 2017}.
 \code{correction_for_sample_size} overcome \code{rarefy_nb_seqs} if both are TRUE.}
 
 \item{rarefy_nb_seqs}{(logical, default FALSE) Rarefy each sample
@@ -47,6 +48,13 @@ the form \code{y~Library_Size + Biological_Effect} following recommendation of
 \code{phyloseq::rarefy_even_depth()}.
 if \code{correction_for_sample_size} is TRUE, rarefy_nb_seqs will have no
 effect.}
+
+\item{rngseed}{(Optional). A single integer value passed to
+\code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}}, which is used to fix a seed for
+reproducibly random number generation (in this case, reproducibly
+random subsampling). If set to FALSE, then no fiddling with the RNG seed
+is performed, and it is up to the user to appropriately call set.seed
+beforehand to achieve reproducible results. Default is FALSE.}
 
 \item{verbose}{(logical, default TRUE) If TRUE, prompt some messages.}
 

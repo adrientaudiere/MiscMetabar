@@ -13,7 +13,7 @@ A wrapper for the vegan::adonis2() function in the case of physeq object."></hea
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,6 +83,7 @@ A wrapper for the vegan::adonis2() function in the case of physeq object."></hea
 <span>  na_remove <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  correction_for_sample_size <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  rarefy_nb_seqs <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  rngseed <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -125,7 +126,7 @@ NA in the variables set in formula.</p></dd>
 <dd><p>(logical, default FALSE) If set to TRUE,
 the sample size (number of sequences by samples) is added to formula in
 the form <code>y~Library_Size + Biological_Effect</code> following recommendation of
-<a href="https://microbiomejournal.biomedcentral.com/articles/10.1186/s40168-017-0237-y" class="external-link">Weiss et al. 2017</a>.
+<a href="https://link.springer.com/article/10.1186/s40168-017-0237-y" class="external-link">Weiss et al. 2017</a>.
 <code>correction_for_sample_size</code> overcome <code>rarefy_nb_seqs</code> if both are TRUE.</p></dd>
 
 
@@ -135,6 +136,15 @@ the form <code>y~Library_Size + Biological_Effect</code> following recommendatio
 <code><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">phyloseq::rarefy_even_depth()</a></code>.
 if <code>correction_for_sample_size</code> is TRUE, rarefy_nb_seqs will have no
 effect.</p></dd>
+
+
+<dt id="arg-rngseed">rngseed<a class="anchor" aria-label="anchor" href="#arg-rngseed"></a></dt>
+<dd><p>(Optional). A single integer value passed to
+<code><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">phyloseq::rarefy_even_depth()</a></code>, which is used to fix a seed for
+reproducibly random number generation (in this case, reproducibly
+random subsampling). If set to FALSE, then no fiddling with the RNG seed
+is performed, and it is up to the user to appropriately call set.seed
+beforehand to achieve reproducible results. Default is FALSE.</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
@@ -202,7 +212,7 @@ use this function.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     Df SumOfSqs      R2        F Pr(&gt;F)    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SeqTech              2   29.175 0.54055 242.2289  0.001 ***</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Enterotype           2    8.651 0.16028  71.8250  0.001 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTech:Enterotype   4    0.368 0.00683   1.5293  0.096 .  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTech:Enterotype   4    0.368 0.00683   1.5293  0.112    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residual           262   15.778 0.29234                    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total              270   53.972 1.00000                    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
@@ -220,11 +230,11 @@ use this function.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> vegan::adonis2(formula = .formula, data = metadata, by = "onedf")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             Df SumOfSqs       R2        F Pr(&gt;F)    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SeqTechPyro454               1   28.796  0.53353 478.1659  0.001 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTechSanger                1    0.379  0.00702   6.2918  0.002 ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTechSanger                1    0.379  0.00702   6.2918  0.001 ***</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Enterotype2                  1    4.282  0.07933  71.1013  0.001 ***</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Enterotype3                  1    4.369  0.08095  72.5487  0.001 ***</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SeqTechPyro454:Enterotype2   1   -0.556 -0.01030  -9.2315  1.000    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTechSanger:Enterotype2    1    0.232  0.00430   3.8560  0.011 *  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTechSanger:Enterotype2    1    0.232  0.00430   3.8560  0.015 *  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SeqTechPyro454:Enterotype3   1    0.443  0.00820   7.3535  0.001 ***</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> SeqTechSanger:Enterotype3    1    0.249  0.00462   4.1394  0.009 ** </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residual                   262   15.778  0.29234                    </span>
@@ -242,10 +252,12 @@ use this function.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of permutations: 999</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> vegan::adonis2(formula = .formula, data = metadata, by = "margin")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     Df SumOfSqs      R2      F Pr(&gt;F)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTech:Enterotype   4    0.368 0.00683 1.5293  0.123</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual           262   15.778 0.29234              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total              270   53.972 1.00000              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     Df SumOfSqs      R2      F Pr(&gt;F)  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTech:Enterotype   4    0.368 0.00683 1.5293  0.092 .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual           262   15.778 0.29234                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total              270   53.972 1.00000                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">adonis_pq</span><span class="op">(</span><span class="va">enterotype</span>, <span class="st">"SeqTech"</span>, dist_method <span class="op">=</span> <span class="st">"jaccard"</span>, by <span class="op">=</span> <span class="st">"terms"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
@@ -287,7 +299,7 @@ use this function.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>
