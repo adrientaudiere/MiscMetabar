@@ -1059,7 +1059,7 @@ read_pq <- function(path = NULL,
 #' @seealso [mumu_pq()]
 #' @examplesIf MiscMetabar::is_vsearch_installed()
 #' \donttest{
-#' lulu_pq(data_fungi_sp_known)
+#'   lulu_pq(data_fungi_sp_known)
 #' }
 #' @author Tobias Guldberg Frøslev \email{tobiasgf@snm.ku.dk}
 #'   & Adrien Taudière \email{adrien.taudiere@@zaclys.net}

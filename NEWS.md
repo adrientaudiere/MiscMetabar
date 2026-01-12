@@ -9,6 +9,8 @@
   
 - Better messages (and not error) in `filter_asv_blast` when the resulting table of OTU is empty
 
+- Improve `ancombc_pq()` function by allowing custom names in the tax_levels parameter.
+
 # MiscMetabar 0.14.4 
 
 ## New features and improvements

@@ -324,7 +324,7 @@ hill_test_rarperm_pq <- function(physeq,
 #'   res_glmulti
 #'   res_glmulti_interaction <-
 #'     glmutli_pq(data_fungi, "Hill_0 ~ Abundance + Time + Height", level = 2)
-#'   res_glmulti
+#'   res_glmulti_interaction
 #' }
 #' }
 #' @details
