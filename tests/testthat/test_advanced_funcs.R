@@ -2,18 +2,17 @@ data(data_fungi)
 
 test_that("lulu works", {
   skip_on_cran()
-  # Create a simple match list for testing
-  data_subset <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 1000)
-  # This requires a match list which is complex to create, so we test for error handling
-  expect_error(lulu(otu_table = NULL, matchlist = NULL))
+  lulu_pq(data_fungi_sp_known)
+  lulu_pq(data_fungi_sp_known, verbose=TRUE, clean_pq=TRUE)
 })
 
 test_that("glmutli_pq works", {
-  skip_on_cran()
   if (requireNamespace("glmulti", quietly = TRUE)) {
-    data_subset <- subset_samples(data_fungi, Height %in% c("Low", "High"))
-    # Test with simple parameters
-    result <- glmutli_pq(data_subset, "shannon", c("Height", "Time"))
-    expect_type(result, "list")
+    res_glmulti <- 
+      glmutli_pq(data_fungi, "Hill_0 ~ Hill_1 + Abundance + Time + Height", level = 1)
+    expect_equal(dim(res_glmulti), c(5, 6))
+     res_glmulti_interaction <- 
+       glmutli_pq(data_fungi, "Hill_0 ~ Abundance + Time + Height", level = 2)
+    expect_equal(dim(res_glmulti_interaction), c(11, 6))
   }
 })
