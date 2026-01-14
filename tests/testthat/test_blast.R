@@ -122,19 +122,18 @@ if (inherits(blast_error_or_not, "try-error")) {
   test_that(
     "filter_asv_blast returns NULL with strict filters",
     {
-
-        expect_message(
-         res_blast <- filter_asv_blast(
-            data_fungi_mini,
-            path_db,
-            id_filter = 100,
-            e_value_filter = 0,
-            bit_score_filter = 10000,
-            min_cover_filter = 100
-          ),
-          "No taxa passed the filter criteria"
-        )
-        expect_null(res_blast)
+      expect_message(
+        res_blast <- filter_asv_blast(
+          data_fungi_mini,
+          path_db,
+          id_filter = 100,
+          e_value_filter = 0,
+          bit_score_filter = 10000,
+          min_cover_filter = 100
+        ),
+        "No taxa passed the filter criteria"
+      )
+      expect_null(res_blast)
     }
   )
 

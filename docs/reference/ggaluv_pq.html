@@ -7,7 +7,7 @@ package"><meta property="og:description" content="
 
 
 Basically a wrapper of ggalluvial
-package"></head><body>
+package"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -195,6 +195,8 @@ NA in the variables set in formula.</p></dd>
     <p>This function is mainly a wrapper of the work of others.
 Please make a reference to <code>ggalluvial</code> package if you
 use this function.</p>
+<p>When you want to add text to the plot, this function requires
+ggalluvial to be loaded with before use (<code><a href="http://corybrunson.github.io/ggalluvial/" class="external-link">library(ggalluvial)</a></code>).</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -214,16 +216,24 @@ use this function.</p>
 <span class="r-plt img"><img src="ggaluv_pq-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ggalluvial"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu">ggaluv_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, type <span class="op">=</span> <span class="st">"nb_taxa"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://corybrunson.github.io/ggalluvial/" class="external-link">ggalluvial</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">ggaluv_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="fu">ggaluv_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, wrap_factor <span class="op">=</span> <span class="st">"Height"</span>, by_sample <span class="op">=</span> <span class="cn">TRUE</span>, type <span class="op">=</span> <span class="st">"nb_taxa"</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu">ggaluv_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, type <span class="op">=</span> <span class="st">"nb_taxa"</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"stratum"</span>, size <span class="op">=</span> <span class="fl">1.8</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="fu">ggaluv_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>,</span></span>
+<span class="r-in"><span>    wrap_factor <span class="op">=</span> <span class="st">"Height"</span>,</span></span>
+<span class="r-in"><span>    by_sample <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>    type <span class="op">=</span> <span class="st">"nb_taxa"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="st">"Height"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="fu">ggaluv_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>,</span></span>
 <span class="r-in"><span>    width <span class="op">=</span> <span class="fl">0.9</span>, min.size <span class="op">=</span> <span class="fl">10</span>,</span></span>
 <span class="r-in"><span>    type <span class="op">=</span> <span class="st">"nb_taxa"</span>, taxa_ranks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html" class="external-link">scale_x_discrete</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="va">rev</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html" class="external-link">scale_x_discrete</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="va">rev</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`group` has missing values; corresponding samples will be dropped</span>
 <span class="r-plt img"><img src="ggaluv_pq-2.png" alt="" width="700" height="433"></span>

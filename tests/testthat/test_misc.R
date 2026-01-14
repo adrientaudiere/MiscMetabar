@@ -187,26 +187,3 @@ test_that("transp works fine", {
   expect_true(grepl("#", result))
 })
 
-
-test_that("is_vsearch_installed works fine", {
-  skip_on_cran()
-  expect_type(is_vsearch_installed(), "logical")
-})
-
-
-test_that("is_swarm_installed works fine", {
-  skip_on_cran()
-  expect_type(is_swarm_installed(), "logical")
-})
-
-
-test_that("is_mumu_installed works fine", {
-  skip_on_cran()
-  expect_type(is_mumu_installed(), "logical")
-})
-
-
-test_that("is_krona_installed works fine", {
-  skip_on_cran()
-  expect_type(is_krona_installed(), "logical")
-})

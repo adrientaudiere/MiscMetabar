@@ -29,8 +29,10 @@ See details for more informations.}
 or "unanimity". Only used if method = "preference". See details.}
 
 \item{nb_agree_threshold}{(Int, default 1) The minimum number of times a
-value must arise to be selected using vote. If 2, we only kept
-taxonomic value present at least 2 times in the vector.}
+value must arise to be selected using vote in method
+\code{rel_majority} and \code{abs_majority}. If 2, we only kept taxonomic
+value present at least 2 times in the vector. Note in the case of "abs_majority",
+this parameter is only useful when higher than half of the length of vec.}
 
 \item{preference_index}{(Int. default NULL). Required if method="preference".
 Useless for other method. The preference index is the index of the value in
@@ -70,6 +72,7 @@ and \code{\link[=assign_vsearch_lca]{assign_vsearch_lca()}} if \code{top_hits_on
 \item \code{abs_majority}: Keep the most found taxonomic value if it represent at least half of all taxonomic values.
 \itemize{
 \item If \code{strict} is TRUE, NA values are also count to determine the majority. For example, a vector of taxonomic rank c("A", "A", "A", "B", NA, NA) will give a value of 'A' if \code{strict} is FALSE (default) but a value of NA if \code{strict} is TRUE.
+\item \code{nb_agree_threshold}: Only keep return value when at least x methods agreed with x is set by parameter \code{nb_agree_threshold}. By default, (\code{nb_agree_threshold} = 1): a majority of one is enough.
 }
 \item \code{rel_majority}: Keep the most found taxonomic value. In case of equality, apply a consensus strategy (collapse values separated by a '/') across the most found taxonomic values.
 \itemize{

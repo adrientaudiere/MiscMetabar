@@ -185,17 +185,20 @@ setMethod(
     # ranks and making new tax table
     reduced <- x %>%
       as("matrix") %>%
-      as_tibble()
+      as_tibble(.name_repair = c("minimal"))
     reduced[, ".taxon"] <- taxa_names(x)
     reduced[, ".group"] <- factor(group, levels = unique(group))
 
-    reduced_by_group <- as_tibble(apply(
-      reduced, 2, function(xx) {
-        unlist(tapply(xx, reduced$.group, bad_or_unique,
-          bad = bad_string, simplify = FALSE
-        ))
-      }
-    ))
+    reduced_by_group <- as_tibble(
+      apply(
+        reduced, 2, function(xx) {
+          unlist(tapply(xx, reduced$.group, bad_or_unique,
+            bad = bad_string, simplify = FALSE
+          ))
+        }
+      ),
+      .name_repair = c("minimal")
+    )
 
     reduced_by_group[, ".taxon"] <-
       tapply(reduced$.taxon, reduced$.group, function(xx) {
@@ -442,7 +445,7 @@ setMethod(
       stopifnot(!".group" %in% colnames(x))
       x.merged <- x %>%
         as("matrix") %>%
-        tibble::as_tibble() %>%
+        tibble::as_tibble(.name_repair = c("minimal")) %>%
         cbind(.group = group) %>%
         group_by(.group) %>%
         summarise(across(everything(), purrr::as_mapper(fun_otu)))

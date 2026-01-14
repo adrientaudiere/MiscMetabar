@@ -5,7 +5,7 @@
 A wrapper of VSEARCH software."><meta property="og:description" content="
 
 
-A wrapper of VSEARCH software."></head><body>
+A wrapper of VSEARCH software."><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -133,10 +133,8 @@ See the man page of <code><a href="merge_taxa_vec.html">merge_taxa_vec()</a></co
 
 <dt id="arg-vsearch-cluster-method">vsearch_cluster_method<a class="anchor" aria-label="anchor" href="#arg-vsearch-cluster-method"></a></dt>
 <dd><p>(default: "–cluster_size) See other possible
-methods in the <a href="https://github.com/torognes/vsearch" class="external-link">vsearch manual</a> (e.g. <code>--cluster_size</code> or <code>--cluster_smallmem</code>)</p><ul><li><p><code>--cluster_fast</code> : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.</p></li>
+methods in the <a href="https://github.com/torognes/vsearch" class="external-link">vsearch manual</a> (e.g. <code>--cluster_size</code> or <code>--cluster_fast</code>)</p><ul><li><p><code>--cluster_fast</code> : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.</p></li>
 <li><p><code>--cluster_size</code> : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence abundance beforehand.</p></li>
-<li><p><code>--cluster_smallmem</code> : Clusterize the fasta sequences in filename without automatically modifying their order beforehand. Sequence are expected to be sorted by decreasing sequence length, unless <em>–usersort</em> is used.
-In that case you may set <code>vsearch_args</code> to vsearch_args = "–strand both –usersort"</p></li>
 </ul></dd>
 
 

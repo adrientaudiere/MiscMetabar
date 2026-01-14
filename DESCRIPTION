@@ -49,7 +49,7 @@ Suggests:
     IRanges,
     jsonlite,
     knitr,
-    lfser,
+    lefser,
     magrittr,
     methods,
     mia,

@@ -14,7 +14,7 @@ test_that("taxa_as_rows works", {
 })
 
 test_that("taxa_only_in_one_level works", {
-  result <- taxa_only_in_one_level(data_fungi, "Height", "Low")
+  suppressWarnings(result <- taxa_only_in_one_level(data_fungi, "Height", "Low"))
   expect_equal(length(result), 124)
 })
 

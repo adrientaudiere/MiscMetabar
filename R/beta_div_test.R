@@ -804,20 +804,24 @@ multipatt_pq <- function(physeq,
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `ANCOMBC::ancombc2()` if you
 #'   use this function.
-ancombc_pq <- function(physeq, 
-  fact, 
+ancombc_pq <- function(
+  physeq,
+  fact,
   levels_fact = NULL,
-   tax_level = "Class",
-    ...) {
+  tax_level = "Class",
+  ...
+) {
   if (!is.null(levels_fact)) {
-    physeq <- subset_samples_pq(physeq, 
-      as.vector(physeq@sam_data[, fact])[[1]] %in% levels_fact)
+    physeq <- subset_samples_pq(
+      physeq,
+      as.vector(physeq@sam_data[, fact])[[1]] %in% levels_fact
+    )
   }
- 
+
   all_ranks <- colnames(physeq@tax_table)
-    # Set taxonomy ranks to include custom ranks
+  # Set taxonomy ranks to include custom ranks
   mia::setTaxonomyRanks(all_ranks)
-  
+
   tse <- mia::convertFromPhyloseq(physeq)
   if (!is.null(levels_fact)) {
     SummarizedExperiment::colData(tse)[[fact]] <- factor(tse[[fact]], levels = levels_fact)
@@ -1518,9 +1522,9 @@ var_par_pq <-
 #'     nperm = 9,
 #'     dbrda_computation = TRUE
 #'   )
-#' 
+#'
 #'   plot_var_part_pq(res_var_9)
-#' 
+#'
 #'   res_var_2 <- var_par_rarperm_pq(
 #'     data_fungi_woNA,
 #'     list_component = list(
@@ -1530,8 +1534,8 @@ var_par_pq <-
 #'     nperm = 2,
 #'     dbrda_computation = TRUE
 #'   )
-#' 
-#'    plot_var_part_pq(res_var_2)
+#'
+#'   plot_var_part_pq(res_var_2)
 #' }
 #' }
 #' @details

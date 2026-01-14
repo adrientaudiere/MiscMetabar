@@ -51,3 +51,15 @@ test_that("glmutli_pq works with data_fungi", {
     expect_true("importance" %in% colnames(result))
   }
 })
+
+
+test_that("glmutli_pq works with more complex scheme", {
+  if (requireNamespace("glmulti", quietly = TRUE)) {
+    res_glmulti <-
+      glmutli_pq(data_fungi, "Hill_0 ~ Hill_1 + Abundance + Time + Height", level = 1)
+    expect_equal(dim(res_glmulti), c(5, 6))
+    res_glmulti_interaction <-
+      glmutli_pq(data_fungi, "Hill_0 ~ Abundance + Time + Height", level = 2)
+    expect_equal(dim(res_glmulti_interaction), c(11, 6))
+  }
+})

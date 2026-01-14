@@ -5,7 +5,7 @@
 See glmulti::glmulti() for more information."><meta property="og:description" content="
 
 
-See glmulti::glmulti() for more information."></head><body>
+See glmulti::glmulti() for more information."><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -13,7 +13,7 @@ See glmulti::glmulti() for more information."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -185,7 +185,7 @@ use this function.</p>
 <span class="r-in"><span>  <span class="va">res_glmulti</span></span></span>
 <span class="r-in"><span>  <span class="va">res_glmulti_interaction</span> <span class="op">&lt;-</span></span></span>
 <span class="r-in"><span>    <span class="fu">glmutli_pq</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Hill_0 ~ Abundance + Time + Height"</span>, level <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="va">res_glmulti</span></span></span>
+<span class="r-in"><span>  <span class="va">res_glmulti_interaction</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in rows.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(Sample)`</span>
@@ -204,18 +204,30 @@ use this function.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Crit= 1069.11608982306</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mean crit= 1218.19009955263</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Completed.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                estimates unconditional_interval nb_model importance</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Hill_1       3.062117997           1.868174e-01        8          1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance    0.002959644           8.478374e-08        8          1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time         0.789091999           2.443263e-01        8          1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HeightLow    6.884340946           3.444196e+01        8          1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HeightMiddle 0.339123798           3.727962e+01        8          1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     alpha     variable</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Hill_1       8.570200e-01       Hill_1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance    5.773492e-04    Abundance</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time         9.800932e-01         Time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HeightLow    1.163660e+01    HeightLow</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HeightMiddle 1.210648e+01 HeightMiddle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                            estimates unconditional_interval nb_model importance</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HeightHigh:Time         0.1004073616           4.167750e-02        8 0.04216251</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:HeightHigh    0.0001609310           8.984023e-08        8 0.09020701</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HeightLow              -0.7865687564           9.769200e+00       32 0.24714664</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HeightMiddle           -2.6419930721           2.789953e+01       32 0.24714664</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HeightLow:Time         -0.6511123699           1.599292e+00       32 0.55051517</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HeightMiddle:Time      -1.3322473025           3.078720e+00       32 0.55051517</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:Time         -0.0001068559           4.586032e-09       32 0.81587143</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:HeightLow     0.0011137659           7.957713e-07       32 0.86967993</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:HeightMiddle  0.0017155970           1.245718e-06       32 0.86967993</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance               0.0024839088           8.790126e-07       32 0.90902176</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time                    2.7869220741           2.663548e+00       32 0.92512111</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                               alpha               variable</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HeightHigh:Time        4.006348e-01        HeightHigh:Time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:HeightHigh   5.877776e-04   Abundance:HeightHigh</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HeightLow              6.171172e+00              HeightLow</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HeightMiddle           1.038989e+01           HeightMiddle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HeightLow:Time         2.491898e+00         HeightLow:Time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HeightMiddle:Time      3.449710e+00      HeightMiddle:Time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:Time         1.335247e-04         Abundance:Time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:HeightLow    1.759641e-03    Abundance:HeightLow</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:HeightMiddle 2.198334e-03 Abundance:HeightMiddle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance              1.847287e-03              Abundance</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time                   3.214276e+00                   Time</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
@@ -228,7 +240,7 @@ use this function.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

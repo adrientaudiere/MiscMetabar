@@ -391,11 +391,9 @@ swarm_clustering <- function(physeq = NULL,
 #' NA value from lower taxonomic rank to upper rank?
 #' See the man page of [merge_taxa_vec()] for more details.
 #' @param vsearch_cluster_method (default: "--cluster_size) See other possible
-#'   methods in the [vsearch manual](https://github.com/torognes/vsearch) (e.g. `--cluster_size` or `--cluster_smallmem`)
+#'   methods in the [vsearch manual](https://github.com/torognes/vsearch) (e.g. `--cluster_size` or `--cluster_fast`)
 #'   - `--cluster_fast` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.
 #'   - `--cluster_size` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence abundance beforehand.
-#'   - `--cluster_smallmem` : Clusterize the fasta sequences in filename without automatically modifying their order beforehand. Sequence are expected to be sorted by decreasing sequence length, unless *--usersort* is used.
-#'     In that case you may set `vsearch_args` to vsearch_args = "--strand both --usersort"
 #' @param vsearch_args (default : "--strand both") a one length character element defining other parameters to
 #'   passed on to vsearch.
 #' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files ?
@@ -1304,6 +1302,18 @@ assign_vsearch_lca <- function(physeq = NULL,
     stderr = TRUE
   )
 
+  if (!file.exists("out_lca.txt") || file.info("out_lca.txt")$size == 0) {
+    warning("No LCA output produced (out_lca.txt is missing or empty).")
+    if (!keep_temporary_files) {
+      unlink(temporary_fasta_file)
+    }
+    if (behavior == "add_to_phyloseq") {
+      warning("physeq object returned unchanged.")
+      return(physeq)
+    } else {
+      return(NULL)
+    }
+  }
   if (top_hits_only || is.null(vote_algorithm)) {
     res_usearch <- read.csv("out_lca.txt", sep = "\t", header = F)
 
