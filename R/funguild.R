@@ -107,11 +107,20 @@ get_funguild_db <- function(db_url = "http://www.stbates.org/funguild_db_2.php")
 #' 20:241-248.
 #' @author Brendan Furneaux (orcid: [0000-0003-3522-7363](https://orcid.org/0000-0003-3522-7363)),
 #' modified by Adrien Taudière
+#'
+#' @examples
+#' \donttest{
+#' data_fungi_FUNGUILD <- funguild_assign(as.data.frame(tax_table(data_fungi)),
+#'   db_funguild = db, tax_col = "Genus_species"
+#' )
+#' ncol(data_fungi_FUNGUILD)
+#' }
 funguild_assign <- function(
-    otu_table,
-    db_url = NULL,
-    db_funguild = NULL,
-    tax_col = "Taxonomy") {
+  otu_table,
+  db_url = NULL,
+  db_funguild = NULL,
+  tax_col = "Taxonomy"
+) {
   if (is.null(db_funguild)) {
     db_funguild <- get_funguild_db(db_url = db_url)
   }

@@ -18,8 +18,10 @@
 #' @param second_method One of "consensus", "rel_majority", "abs_majority",
 #'   or "unanimity". Only used if method = "preference". See details.
 #' @param nb_agree_threshold (Int, default 1) The minimum number of times a
-#'   value must arise to be selected using vote. If 2, we only kept
-#'   taxonomic value present at least 2 times in the vector.
+#'   value must arise to be selected using vote in method
+#'   `rel_majority` and `abs_majority`. If 2, we only kept taxonomic
+#'   value present at least 2 times in the vector. Note in the case of "abs_majority",
+#'   this parameter is only useful when higher than half of the length of vec.
 #' @param preference_index (Int. default NULL). Required if method="preference".
 #'   Useless for other method. The preference index is the index of the value in
 #'   vec for which we have a preference.
@@ -40,6 +42,7 @@
 #'
 #' - `abs_majority`: Keep the most found taxonomic value if it represent at least half of all taxonomic values.
 #' 	 - If `strict` is TRUE, NA values are also count to determine the majority. For example, a vector of taxonomic rank c("A", "A", "A", "B", NA, NA) will give a value of 'A' if `strict` is FALSE (default) but a value of NA if `strict` is TRUE.
+#'   - `nb_agree_threshold`: Only keep return value when at least x methods agreed with x is set by parameter `nb_agree_threshold`. By default, (`nb_agree_threshold` = 1): a majority of one is enough.
 #'
 #' - `rel_majority`: Keep the most found taxonomic value. In case of equality, apply a consensus strategy (collapse values separated by a '/') across the most found taxonomic values.
 #' 	 - If `strict` is TRUE, NA are considered as a rank and can win the relative majority vote.  If `strict` is FALSE (default), NA are removed before ranking the taxonomic values.
@@ -175,25 +178,27 @@
 #'   method = "preference", preference_index = 6, second_method = "abs_majority",
 #'   strict = TRUE
 #' )
-resolve_vector_ranks <- function(vec,
-                                 method = c(
-                                   "consensus",
-                                   "rel_majority",
-                                   "abs_majority",
-                                   "preference",
-                                   "unanimity"
-                                 ),
-                                 strict = FALSE,
-                                 second_method = c(
-                                   "consensus",
-                                   "rel_majority",
-                                   "abs_majority",
-                                   "unanimity"
-                                 ),
-                                 nb_agree_threshold = 1,
-                                 preference_index = NULL,
-                                 collapse_string = "/",
-                                 replace_collapsed_rank_by_NA = FALSE) {
+resolve_vector_ranks <- function(
+  vec,
+  method = c(
+    "consensus",
+    "rel_majority",
+    "abs_majority",
+    "preference",
+    "unanimity"
+  ),
+  strict = FALSE,
+  second_method = c(
+    "consensus",
+    "rel_majority",
+    "abs_majority",
+    "unanimity"
+  ),
+  nb_agree_threshold = 1,
+  preference_index = NULL,
+  collapse_string = "/",
+  replace_collapsed_rank_by_NA = FALSE
+) {
   method <- match.arg(method)
   second_method <- match.arg(second_method)
 
@@ -211,7 +216,11 @@ resolve_vector_ranks <- function(vec,
     if (is.null(preference_index)) {
       stop("You must specify a preference_index if method = 'preference'")
     }
+    if (preference_index > length(vec)) {
+      stop("preference_index is higher than length of vec")
+    }
     res <- vec[preference_index]
+
     if (is.na(res)) {
       res <- resolve_vector_ranks(
         vec[-preference_index],
@@ -228,7 +237,12 @@ resolve_vector_ranks <- function(vec,
     }
     nval <- length(vec)
     higher_val <- sort(table(vec), decreasing = T)[1]
-    if (higher_val / nval > 0.5) {
+    ratio_to_win <- ifelse(
+      nb_agree_threshold > nval / 2,
+      (nb_agree_threshold - 1) / nval ,
+      0.5
+    )
+    if (higher_val / nval > ratio_to_win) {
       res <- names(higher_val)
     } else {
       res <- NA
@@ -238,8 +252,14 @@ resolve_vector_ranks <- function(vec,
       vec <- as.vector(na.omit(vec))
     }
     nval <- sum(table(vec, useNA = "ifany") == max(table(vec, useNA = "ifany")))
-    if (sum(sort(table(vec, useNA = "ifany"), decreasing = T)[1:nval]) >= nb_agree_threshold) {
-      res <- paste0(names(sort(table(vec, useNA = "ifany"), decreasing = T)[1:nval]), collapse = collapse_string)
+    if (
+      sum(sort(table(vec, useNA = "ifany"), decreasing = T)[1:nval]) >=
+        nb_agree_threshold
+    ) {
+      res <- paste0(
+        names(sort(table(vec, useNA = "ifany"), decreasing = T)[1:nval]),
+        collapse = collapse_string
+      )
     } else {
       res <- NA
     }
@@ -253,15 +273,16 @@ resolve_vector_ranks <- function(vec,
       res <- NA
     }
   }
-  if (replace_collapsed_rank_by_NA &&
-    sum(grepl(collapse_string, res)) > 0) {
+  if (
+    replace_collapsed_rank_by_NA &&
+      sum(grepl(collapse_string, res)) > 0
+  ) {
     res <- NA
   }
 
   return(res)
 }
 ################################################################################
-
 
 ################################################################################
 #' Format a fasta database in sintax format
@@ -298,11 +319,13 @@ resolve_vector_ranks <- function(vec,
 #' @author Adrien Taudière
 #' @seealso [format2dada2_species()], [format2dada2()]
 #' @return Either an object of class DNAStringSet or a vector of reformated names
-format2sintax <- function(fasta_db = NULL,
-                          taxnames = NULL,
-                          pattern_tax = "k__",
-                          pattern_sintax = "tax=k:",
-                          output_path = NULL) {
+format2sintax <- function(
+  fasta_db = NULL,
+  taxnames = NULL,
+  pattern_tax = "k__",
+  pattern_sintax = "tax=k:",
+  output_path = NULL
+) {
   if (is.null(taxnames) && is.null(fasta_db)) {
     stop("You must specify taxnames or fasta_db parameter.")
   } else if (!is.null(taxnames) && !is.null(fasta_db)) {
@@ -353,8 +376,6 @@ format2sintax <- function(fasta_db = NULL,
 }
 ################################################################################
 
-
-
 ################################################################################
 #' Format a fasta database in dada2 format
 #'
@@ -378,12 +399,14 @@ format2sintax <- function(fasta_db = NULL,
 #' @return Either an object of class DNAStringSet or a vector of reformated names
 #' @seealso [format2dada2_species()], [format2sintax()]
 
-format2dada2 <- function(fasta_db = NULL,
-                         taxnames = NULL,
-                         output_path = NULL,
-                         from_sintax = TRUE,
-                         pattern_to_remove = NULL,
-                         ...) {
+format2dada2 <- function(
+  fasta_db = NULL,
+  taxnames = NULL,
+  output_path = NULL,
+  from_sintax = TRUE,
+  pattern_to_remove = NULL,
+  ...
+) {
   if (is.null(taxnames) && is.null(fasta_db)) {
     stop("You must specify taxnames or fasta_db parameter.")
   } else if (!is.null(taxnames) && !is.null(fasta_db)) {
@@ -396,8 +419,8 @@ format2dada2 <- function(fasta_db = NULL,
     }
     new_names <- new_names |>
       stringr::str_split_fixed(";tax=", n = 2) |>
-      as_tibble() |>
-      tidyr::unite(taxnames, c(V2, V1), sep = ";") |>
+      as_tibble(.name_repair = c("universal")) |>
+      tidyr::unite(taxnames, c(...2, ...1), sep = ";") |>
       pull(taxnames) %>%
       {
         gsub(":", "__", .)
@@ -421,27 +444,28 @@ format2dada2 <- function(fasta_db = NULL,
     }
 
     # Add the good number of level to each line
-    new_names <- map_chr(new_names, ~ {
-      nb_char <- str_count(.x, ":")
-      diff <- max_char - nb_char - 2
-      if (diff > 0) {
-        return(paste0(.x, strrep(",", diff)))
-      } else {
-        return(.x)
+    new_names <- map_chr(
+      new_names,
+      ~ {
+        nb_char <- stringr::str_count(.x, ":")
+        max_char <- max(stringr::str_count(new_names, ":"))
+        diff <- max_char - nb_char - 2
+        if (diff > 0) {
+          return(paste0(.x, strrep(",", diff)))
+        } else {
+          return(.x)
+        }
       }
-    })
-
+    )
 
     new_names <- new_names |>
       stringr::str_split_fixed(";tax=", n = 2) |>
-      as_tibble() |>
-      tidyr::unite(taxnames, c(V2, V1), sep = "") |>
+      as_tibble(.name_repair = c("universal_quiet")) |>
+      tidyr::unite(taxnames, c(...2, ...1), sep = "") |>
       pull(taxnames) |>
       paste0(";") |>
       gsub(pattern = ":", replacement = "__") |>
       gsub(pattern = ",", replacement = ";")
-
-
 
     if (!is.null(pattern_to_remove)) {
       new_names <- new_names |>
@@ -459,7 +483,6 @@ format2dada2 <- function(fasta_db = NULL,
   }
 }
 ################################################################################
-
 
 ################################################################################
 #' Format a fasta database in dada2 format for Species assignment
@@ -482,11 +505,12 @@ format2dada2 <- function(fasta_db = NULL,
 #' @seealso [format2dada2_species()], [format2sintax()]
 #'
 format2dada2_species <- function(
-    fasta_db = NULL,
-    taxnames = NULL,
-    from_sintax = FALSE,
-    output_path = NULL,
-    ...) {
+  fasta_db = NULL,
+  taxnames = NULL,
+  from_sintax = FALSE,
+  output_path = NULL,
+  ...
+) {
   if (is.null(taxnames) && is.null(fasta_db)) {
     stop("You must specify taxnames or fasta_db parameter.")
   } else if (!is.null(taxnames) && !is.null(fasta_db)) {

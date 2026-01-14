@@ -10,6 +10,8 @@ ggaluv_pq(
   wrap_factor = NULL,
   by_sample = FALSE,
   rarefy_by_sample = FALSE,
+  rngseed = FALSE,
+  verbose = TRUE,
   fact = NULL,
   type = "nb_seq",
   width = 1.2,
@@ -41,6 +43,15 @@ is automatically set to TRUE.}
 
 \item{rarefy_by_sample}{(logical, default FALSE) If TRUE, rarefy
 samples using \code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}} function.}
+
+\item{rngseed}{(Optional). A single integer value passed to
+\code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}}, which is used to fix a seed for
+reproducibly random number generation (in this case, reproducibly
+random subsampling). If set to FALSE, then no fiddling with the RNG seed
+is performed, and it is up to the user to appropriately call set.seed
+beforehand to achieve reproducible results. Default is FALSE.}
+
+\item{verbose}{(logical). If TRUE, print additional information.}
 
 \item{fact}{(required) Name of the factor in \code{physeq@sam_data} used to plot  the last column}
 
@@ -82,6 +93,9 @@ package
 This function is mainly a wrapper of the work of others.
 Please make a reference to \code{ggalluvial} package if you
 use this function.
+
+When you want to add text to the plot, this function requires
+ggalluvial to be loaded with before use (\code{library(ggalluvial)}).
 }
 \examples{
 if (requireNamespace("ggalluvial")) {
@@ -89,16 +103,24 @@ if (requireNamespace("ggalluvial")) {
 }
 \donttest{
 if (requireNamespace("ggalluvial")) {
-  ggaluv_pq(data_fungi_mini, type = "nb_taxa")
+  library(ggalluvial)
+  ggaluv_pq(data_fungi_mini)
 
-  ggaluv_pq(data_fungi_mini, wrap_factor = "Height", by_sample = TRUE, type = "nb_taxa") +
+  ggaluv_pq(data_fungi_mini, type = "nb_taxa") +
+    geom_text(stat = "stratum", size = 1.8)
+
+  ggaluv_pq(data_fungi_mini,
+    wrap_factor = "Height",
+    by_sample = TRUE,
+    type = "nb_taxa"
+  ) +
     facet_wrap("Height")
 
   ggaluv_pq(data_fungi_mini,
     width = 0.9, min.size = 10,
     type = "nb_taxa", taxa_ranks = c("Phylum", "Class", "Order", "Family", "Genus")
-  ) +
-    coord_flip() + scale_x_discrete(limits = rev)
+  ) + coord_flip() +
+    scale_x_discrete(limits = rev)
 }
 }
 }

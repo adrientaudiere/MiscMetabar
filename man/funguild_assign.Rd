@@ -55,6 +55,14 @@ In the case of multiple matches, the lowest (most specific) rank is chosen.
 No attempt is made to check or correct the classification in
 \code{otu_table$Taxonomy}.
 }
+\examples{
+\donttest{
+data_fungi_FUNGUILD <- funguild_assign(as.data.frame(tax_table(data_fungi)),
+  db_funguild = db, tax_col = "Genus_species"
+)
+ncol(data_fungi_FUNGUILD)
+}
+}
 \references{
 Nguyen NH, Song Z, Bates ST, Branco S, Tedersoo L, Menke J,
 Schilling JS, Kennedy PG. 2016. \emph{FUNGuild: An open annotation tool for

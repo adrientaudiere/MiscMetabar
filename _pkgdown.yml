@@ -6,6 +6,10 @@ template:
     fg: "#003f5f"
     primary: "#b96821"
     secondary: "#c8a734"
+  includes:
+    in_header: |
+      <script data-goatcounter="https://miscmetabar.goatcounter.com/count"
+              async src="//gc.zgo.at/count.js"></script>
 navbar:
   bg: secondary
   components:
@@ -166,6 +170,7 @@ reference:
   - LCBD_pq
   - multi_biplot_pq
   - plot_LCBD_pq
+  - plot_ordination_pq
   - plot_SCBD_pq
   - plot_tsne_pq
   - plot_var_part_pq
@@ -181,7 +186,9 @@ reference:
 
 - subtitle: Differential abundance analysis
   contents:
+  - aldex_pq
   - ancombc_pq
+  - lefser_pq
   - multipatt_pq
   - phyloseq_to_edgeR
   - plot_ancombc_pq

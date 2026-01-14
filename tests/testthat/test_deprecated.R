@@ -59,3 +59,8 @@ if (class(vsearch_error_or_not) == "try-error") {
     expect_s4_class(suppressWarnings(lulu_phyloseq(data_fungi_sp_known)$new_physeq), "phyloseq")
   })
 }
+
+test_that("clean_physeq deprecated function works", {
+  expect_warning(result <- clean_physeq(data_fungi), "deprecated")
+  expect_s4_class(result, "phyloseq")
+})

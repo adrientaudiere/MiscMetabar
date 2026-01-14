@@ -88,6 +88,11 @@ if (inherits(blast_error_or_not, "try-error")) {
           filter_asv_blast(data_fungi_mini, path_db),
         "phyloseq"
       )
+      expect_null(
+        df_blast <-
+          filter_asv_blast(data_fungi_mini, path_db, id_filter = 100),
+        "No taxa passed the filter criteria"
+      )
       expect_s4_class(
         df_blast <-
           filter_asv_blast(
@@ -110,26 +115,25 @@ if (inherits(blast_error_or_not, "try-error")) {
           ),
         "phyloseq"
       )
-      expect_error(filter_asv_blast(data_fungi_mini, "inst/extdata/nil.fasta"))
+      expect_null(filter_asv_blast(data_fungi_mini, "inst/extdata/nil.fasta"))
     }
   )
 
   test_that(
     "filter_asv_blast returns NULL with strict filters",
     {
-      expect_null(
-        expect_message(
-          filter_asv_blast(
-            data_fungi_mini,
-            path_db,
-            id_filter = 100,
-            e_value_filter = 0,
-            bit_score_filter = 10000,
-            min_cover_filter = 100
-          ),
-          "No taxa passed the filter criteria"
-        )
+      expect_message(
+        res_blast <- filter_asv_blast(
+          data_fungi_mini,
+          path_db,
+          id_filter = 100,
+          e_value_filter = 0,
+          bit_score_filter = 10000,
+          min_cover_filter = 100
+        ),
+        "No taxa passed the filter criteria"
       )
+      expect_null(res_blast)
     }
   )
 
@@ -185,6 +189,16 @@ if (inherits(blast_error_or_not, "try-error")) {
         "data.frame"
       )
       expect_error(blast_to_derep(derep_data, "inst/extdata/nil.fasta"))
+    }
+  )
+
+  test_that(
+    "filter_taxa_blast works as alias for filter_asv_blast",
+    {
+      expect_s4_class(
+        df_blast <- filter_taxa_blast(data_fungi_mini, path_db),
+        "phyloseq"
+      )
     }
   )
 }

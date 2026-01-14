@@ -26,12 +26,26 @@ if (!is_vsearch_installed()) {
 } else {
   test_that("lulu_pq works fine", {
     skip_on_cran()
-    expect_s4_class(lulu_pq(data_fungi)$new_physeq, "phyloseq")
-    expect_error(lulu_pq(enterotype)$new_physeq)
-    expect_s4_class(lulu_pq(data_fungi_sp_known, clean_pq = TRUE, verbose = TRUE)$new_physeq, "phyloseq")
-    expect_error(lulu_pq(data_fungi_sp_known, minimum_ratio_type = "avg")$new_physeq)
+    expect_s4_class(suppressWarnings(suppressMessages(lulu_pq(data_fungi)))$new_physeq, "phyloseq")
+    expect_error(suppressWarnings(suppressMessages(lulu_pq(enterotype)))$new_physeq)
+    expect_s4_class(suppressWarnings(suppressMessages(lulu_pq(data_fungi_sp_known, clean_pq = TRUE, verbose = TRUE)))$new_physeq, "phyloseq")
+    expect_error(suppressWarnings(suppressMessages(lulu_pq(data_fungi_sp_known, minimum_ratio_type = "avg")))$new_physeq)
   })
 }
+
+
+test_that("lulu works", {
+  skip_on_cran()
+  suppressWarnings(suppressMessages(res1 <- lulu_pq(data_fungi_sp_known)))
+  expect_equal(length(res1), 4)
+  expect_equal(ntaxa(res1$new_physeq), 549)
+  expect_equal(nsamples(res1$new_physeq), 185)
+
+  suppressWarnings(suppressMessages(res2 <- lulu_pq(data_fungi_sp_known, verbose = TRUE, clean_pq = TRUE)))
+  expect_equal(length(res2), 4)
+  expect_equal(ntaxa(res2$new_physeq), 549)
+  expect_equal(nsamples(res2$new_physeq), 184)
+})
 
 suppressWarnings(mumu_error_or_not <- try(system("mumu --help", intern = TRUE), silent = TRUE))
 
@@ -93,7 +107,7 @@ test_that("count_seq works fine", {
   skip_on_os("windows")
   skip_on_os("mac")
   skip_on_cran()
-  expect_equal(count_seq(folder_path = "inst/extdata", pattern = "*.fasta"), c(1000, 3, 2))
+  expect_equal(suppressWarnings(count_seq(folder_path = "inst/extdata", pattern = "*.fasta")), c(1000, 500, 3, 2, 5000, 500))
   expect_equal(suppressWarnings(count_seq("inst/extdata/ex_R1_001.fastq.gz")), 2500)
   expect_equal(suppressWarnings(count_seq("inst/extdata/ex_R2_001.fastq.gz")), 2500)
   expect_equal(count_seq("inst/extdata/ex.fasta"), 3)

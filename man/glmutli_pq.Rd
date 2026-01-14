@@ -90,7 +90,7 @@ if (requireNamespace("glmulti")) {
   res_glmulti
   res_glmulti_interaction <-
     glmutli_pq(data_fungi, "Hill_0 ~ Abundance + Time + Height", level = 2)
-  res_glmulti
+  res_glmulti_interaction
 }
 }
 }

@@ -14,6 +14,7 @@ postcluster_pq(
   id = 0.97,
   vsearchpath = "vsearch",
   tax_adjust = 0,
+  rank_propagation = FALSE,
   vsearch_cluster_method = "--cluster_size",
   vsearch_args = "--strand both",
   keep_temporary_files = FALSE,
@@ -32,6 +33,7 @@ asv2otu(
   id = 0.97,
   vsearchpath = "vsearch",
   tax_adjust = 0,
+  rank_propagation = FALSE,
   vsearch_cluster_method = "--cluster_size",
   vsearch_args = "--strand both",
   keep_temporary_files = FALSE,
@@ -73,13 +75,15 @@ To conserved the taxonomic rank of the most abundant taxa (ASV, OTU,...),
 set tax_adjust to 0 (default). For the moment only tax_adjust = 0 is
 robust}
 
+\item{rank_propagation}{(logical, default FALSE). Do we propagate the
+NA value from lower taxonomic rank to upper rank?
+See the man page of \code{\link[=merge_taxa_vec]{merge_taxa_vec()}} for more details.}
+
 \item{vsearch_cluster_method}{(default: "--cluster_size) See other possible
-methods in the \href{https://github.com/torognes/vsearch/}{vsearch manual} (e.g. \code{--cluster_size} or \code{--cluster_smallmem})
+methods in the \href{https://github.com/torognes/vsearch/}{vsearch manual} (e.g. \code{--cluster_size} or \code{--cluster_fast})
 \itemize{
 \item \code{--cluster_fast} : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence length beforehand.
 \item \code{--cluster_size} : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence abundance beforehand.
-\item \code{--cluster_smallmem} : Clusterize the fasta sequences in filename without automatically modifying their order beforehand. Sequence are expected to be sorted by decreasing sequence length, unless \emph{--usersort} is used.
-In that case you may set \code{vsearch_args} to vsearch_args = "--strand both --usersort"
 }}
 
 \item{vsearch_args}{(default : "--strand both") a one length character element defining other parameters to

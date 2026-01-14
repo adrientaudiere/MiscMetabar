@@ -1,6 +1,5 @@
 
 ![R](https://img.shields.io/badge/r-%23276DC3.svg?style=for-the-badge&logo=r&logoColor=white)
-<a href="https://zenodo.org/badge/latestdoi/268765075"><img src="https://zenodo.org/badge/268765075.svg" alt="DOI"></a>
 [![codecov](https://codecov.io/gh/adrientaudiere/MiscMetabar/graph/badge.svg?token=NXFRSIKYC0)](https://app.codecov.io/gh/adrientaudiere/MiscMetabar)
 [![Contributor
 Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](https://github.com/adrientaudiere/MiscMetabar/blob/master/CODE_OF_CONDUCT.md)
@@ -167,7 +166,7 @@ available to work on projects related to this R package.
 
 Some functions may not work on Windows (*e.g.* `track_wkflow()`,
 `cutadapt_remove_primers()`, `krona()`, `vsearch_clustering()`, …). A
-solution is to exploit docker container, for example the using the great
+solution is to exploit docker container, for example using the great
 [rocker project](https://rocker-project.org/).
 
 Here is a list of functions with some limitations or not working at all

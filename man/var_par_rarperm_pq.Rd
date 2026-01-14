@@ -85,6 +85,9 @@ if (requireNamespace("vegan")) {
     nperm = 9,
     dbrda_computation = TRUE
   )
+
+  plot_var_part_pq(res_var_9)
+
   res_var_2 <- var_par_rarperm_pq(
     data_fungi_woNA,
     list_component = list(
@@ -94,6 +97,8 @@ if (requireNamespace("vegan")) {
     nperm = 2,
     dbrda_computation = TRUE
   )
+
+  plot_var_part_pq(res_var_2)
 }
 }
 }

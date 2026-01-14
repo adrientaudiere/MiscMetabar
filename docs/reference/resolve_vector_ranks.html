@@ -7,7 +7,7 @@ and assign_vsearch_lca() if top_hits_only is FALSE and vote_algorithm is not NUL
 
 
 Internally used in the function assign_blastn() with method="vote"
-and assign_vsearch_lca() if top_hits_only is FALSE and vote_algorithm is not NULL.'></head><body>
+and assign_vsearch_lca() if top_hits_only is FALSE and vote_algorithm is not NULL.'><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -15,7 +15,7 @@ and assign_vsearch_lca() if top_hits_only is FALSE and vote_algorithm is not NUL
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -116,8 +116,10 @@ or "unanimity". Only used if method = "preference". See details.</p></dd>
 
 <dt id="arg-nb-agree-threshold">nb_agree_threshold<a class="anchor" aria-label="anchor" href="#arg-nb-agree-threshold"></a></dt>
 <dd><p>(Int, default 1) The minimum number of times a
-value must arise to be selected using vote. If 2, we only kept
-taxonomic value present at least 2 times in the vector.</p></dd>
+value must arise to be selected using vote in method
+<code>rel_majority</code> and <code>abs_majority</code>. If 2, we only kept taxonomic
+value present at least 2 times in the vector. Note in the case of "abs_majority",
+this parameter is only useful when higher than half of the length of vec.</p></dd>
 
 
 <dt id="arg-preference-index">preference_index<a class="anchor" aria-label="anchor" href="#arg-preference-index"></a></dt>
@@ -150,6 +152,7 @@ parameter) are replaced by NA.</p></dd>
 <li><p><code>consensus</code>: Keep all taxonomic values separated by a '/' (separation can be modify using param <code>collapse_string</code>)</p><ul><li><p>If <code>strict</code> is TRUE, NA are also added to taxonomic vector such as 'Tiger/Cat/NA' instead of 'Tiger/Cat'</p></li>
 </ul></li>
 <li><p><code>abs_majority</code>: Keep the most found taxonomic value if it represent at least half of all taxonomic values.</p><ul><li><p>If <code>strict</code> is TRUE, NA values are also count to determine the majority. For example, a vector of taxonomic rank c("A", "A", "A", "B", NA, NA) will give a value of 'A' if <code>strict</code> is FALSE (default) but a value of NA if <code>strict</code> is TRUE.</p></li>
+<li><p><code>nb_agree_threshold</code>: Only keep return value when at least x methods agreed with x is set by parameter <code>nb_agree_threshold</code>. By default, (<code>nb_agree_threshold</code> = 1): a majority of one is enough.</p></li>
 </ul></li>
 <li><p><code>rel_majority</code>: Keep the most found taxonomic value. In case of equality, apply a consensus strategy (collapse values separated by a '/') across the most found taxonomic values.</p><ul><li><p>If <code>strict</code> is TRUE, NA are considered as a rank and can win the relative majority vote.  If <code>strict</code> is FALSE (default), NA are removed before ranking the taxonomic values.</p></li>
 <li><p><code>nb_agree_threshold</code>: Only keep return value when at least x methods agreed with x is set by parameter <code>nb_agree_threshold</code>. By default, (<code>nb_agree_threshold</code> = 1): a majority of one is enough.</p></li>
@@ -348,7 +351,7 @@ parameter) are replaced by NA.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

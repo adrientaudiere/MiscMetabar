@@ -4,7 +4,15 @@
 \alias{ggbetween_pq}
 \title{Box/Violin plots for between-subjects comparisons of Hill Number}
 \usage{
-ggbetween_pq(physeq, fact, one_plot = FALSE, rarefy_by_sample = FALSE, ...)
+ggbetween_pq(
+  physeq,
+  fact,
+  one_plot = FALSE,
+  rarefy_by_sample = FALSE,
+  rngseed = FALSE,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
@@ -18,6 +26,15 @@ plot with the three plot inside using the patchwork package.}
 
 \item{rarefy_by_sample}{(logical, default FALSE) If TRUE, rarefy
 samples using \code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}} function}
+
+\item{rngseed}{(Optional). A single integer value passed to
+\code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}}, which is used to fix a seed for
+reproducibly random number generation (in this case, reproducibly
+random subsampling). If set to FALSE, then no fiddling with the RNG seed
+is performed, and it is up to the user to appropriately call set.seed
+beforehand to achieve reproducible results. Default is FALSE.}
+
+\item{verbose}{(logical). If TRUE, print additional information.}
 
 \item{...}{Additional arguments passed on to \code{\link[ggstatsplot:ggbetweenstats]{ggstatsplot::ggbetweenstats()}} function.}
 }
