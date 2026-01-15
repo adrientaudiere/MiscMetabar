@@ -108,19 +108,13 @@ asv2otu(
 
   (default: "–cluster_size) See other possible methods in the [vsearch
   manual](https://github.com/torognes/vsearch/) (e.g. `--cluster_size`
-  or `--cluster_smallmem`)
+  or `--cluster_fast`)
 
   - `--cluster_fast` : Clusterize the fasta sequences in filename,
     automatically sort by decreasing sequence length beforehand.
 
   - `--cluster_size` : Clusterize the fasta sequences in filename,
     automatically sort by decreasing sequence abundance beforehand.
-
-  - `--cluster_smallmem` : Clusterize the fasta sequences in filename
-    without automatically modifying their order beforehand. Sequence are
-    expected to be sorted by decreasing sequence length, unless
-    *–usersort* is used. In that case you may set `vsearch_args` to
-    vsearch_args = "–strand both –usersort"
 
 - vsearch_args:
 
@@ -198,22 +192,20 @@ Adrien Taudière
 if (requireNamespace("DECIPHER")) {
   postcluster_pq(data_fungi_mini)
 }
-#> Loading required namespace: DECIPHER
 #> Partitioning sequences by 3-mer similarity:
 #> ================================================================================
 #> 
-#> Time difference of 0.03 secs
+#> Time difference of 0.02 secs
 #> 
 #> Sorting by relatedness within 11 groups:
-#> 
-iteration 1 of up to 17 (100.0% stability) 
+#> iteration 1 of up to 17 (100.0% stability) 
 #> 
 #> Time difference of 0.01 secs
 #> 
 #> Clustering sequences by 9-mer similarity:
 #> ================================================================================
 #> 
-#> Time difference of 0.08 secs
+#> Time difference of 0.06 secs
 #> 
 #> Clusters via relatedness sorting: 100% (0% exclusively)
 #> Clusters via rare 3-mers: 100% (0% exclusively)
@@ -241,15 +233,14 @@ if (requireNamespace("DECIPHER")) {
 #> Time difference of 0.02 secs
 #> 
 #> Sorting by relatedness within 11 groups:
-#> 
-iteration 1 of up to 17 (100.0% stability) 
+#> iteration 1 of up to 17 (100.0% stability) 
 #> 
 #> Time difference of 0.01 secs
 #> 
 #> Clustering sequences by 9-mer similarity:
 #> ================================================================================
 #> 
-#> Time difference of 0.08 secs
+#> Time difference of 0.07 secs
 #> 
 #> Clusters via relatedness sorting: 100% (0% exclusively)
 #> Clusters via rare 3-mers: 100% (0% exclusively)

@@ -239,7 +239,7 @@ resolve_vector_ranks <- function(
     higher_val <- sort(table(vec), decreasing = T)[1]
     ratio_to_win <- ifelse(
       nb_agree_threshold > nval / 2,
-      (nb_agree_threshold - 1) / nval ,
+      (nb_agree_threshold - 1) / nval,
       0.5
     )
     if (higher_val / nval > ratio_to_win) {

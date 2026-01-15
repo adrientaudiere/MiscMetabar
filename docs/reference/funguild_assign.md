@@ -71,3 +71,16 @@ fungal community datasets by ecological guild*. Fungal Ecology
 Brendan Furneaux (orcid:
 [0000-0003-3522-7363](https://orcid.org/0000-0003-3522-7363)), modified
 by Adrien Taudière
+
+## Examples
+
+``` r
+# \donttest{
+db <- get_funguild_db()
+data_fungi_FUNGUILD <- funguild_assign(as.data.frame(tax_table(data_fungi)),
+  db_funguild = db, tax_col = "Genus_species"
+)
+ncol(data_fungi_FUNGUILD)
+#> [1] 23
+# }
+```

@@ -133,6 +133,10 @@ A ggplot object
 This function is mainly a wrapper of the work of others. Please make a
 reference to `ggalluvial` package if you use this function.
 
+When you want to add text to the plot, this function requires ggalluvial
+to be loaded with before use
+([`library(ggalluvial)`](http://corybrunson.github.io/ggalluvial/)).
+
 ## See also
 
 [`sankey_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/sankey_pq.md)
@@ -151,16 +155,24 @@ if (requireNamespace("ggalluvial")) {
 
 # \donttest{
 if (requireNamespace("ggalluvial")) {
-  ggaluv_pq(data_fungi_mini, type = "nb_taxa")
+  library(ggalluvial)
+  ggaluv_pq(data_fungi_mini)
 
-  ggaluv_pq(data_fungi_mini, wrap_factor = "Height", by_sample = TRUE, type = "nb_taxa") +
+  ggaluv_pq(data_fungi_mini, type = "nb_taxa") +
+    geom_text(stat = "stratum", size = 1.8)
+
+  ggaluv_pq(data_fungi_mini,
+    wrap_factor = "Height",
+    by_sample = TRUE,
+    type = "nb_taxa"
+  ) +
     facet_wrap("Height")
 
   ggaluv_pq(data_fungi_mini,
     width = 0.9, min.size = 10,
     type = "nb_taxa", taxa_ranks = c("Phylum", "Class", "Order", "Family", "Genus")
-  ) +
-    coord_flip() + scale_x_discrete(limits = rev)
+  ) + coord_flip() +
+    scale_x_discrete(limits = rev)
 }
 #> Warning: `group` has missing values; corresponding samples will be dropped
 

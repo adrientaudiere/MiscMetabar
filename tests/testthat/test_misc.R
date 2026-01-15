@@ -186,4 +186,3 @@ test_that("transp works fine", {
   result <- transp("red", alpha = 0.5)
   expect_true(grepl("#", result))
 })
-

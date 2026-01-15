@@ -110,15 +110,7 @@ accu_plot_balanced_modality(data_fungi_woNA4Time, "Time", nperm = 3)
 #> Try `set.seed(1); .Random.seed` for the full vector
 #> ...
 #> Warning: no non-missing arguments to max; returning -Inf
-#> 
-  |                                                        
-  |                                                  |   0%
-  |                                                        
-  |=================                                 |  33%
-  |                                                        
-  |=================================                 |  67%
-  |                                                        
-  |==================================================| 100%
+#>   |                                                          |                                                  |   0%  |                                                          |=================                                 |  33%  |                                                          |=================================                 |  67%  |                                                          |==================================================| 100%
 #> Warning: Removed 4 rows containing missing values or values outside the scale range
 #> (`geom_line()`).
 #> Warning: Removed 4 rows containing missing values or values outside the scale range
@@ -133,15 +125,7 @@ accu_plot_balanced_modality(data_fungi_woNA4Height, "Height", nperm = 3)
 #> Try `set.seed(1); .Random.seed` for the full vector
 #> ...
 #> Warning: no non-missing arguments to max; returning -Inf
-#> 
-  |                                                        
-  |                                                  |   0%
-  |                                                        
-  |=================                                 |  33%
-  |                                                        
-  |=================================                 |  67%
-  |                                                        
-  |==================================================| 100%
+#>   |                                                          |                                                  |   0%  |                                                          |=================                                 |  33%  |                                                          |=================================                 |  67%  |                                                          |==================================================| 100%
 #> Warning: Removed 3 rows containing missing values or values outside the scale range
 #> (`geom_line()`).
 #> Warning: Removed 3 rows containing missing values or values outside the scale range

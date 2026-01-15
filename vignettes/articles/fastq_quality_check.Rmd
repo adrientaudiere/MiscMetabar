@@ -51,6 +51,8 @@ summary(qc)
 ```{r}
 library(Rsearch)
 
+fastq_dir <- list_fastq_files(system.file("/extdata", package = "MiscMetabar"))
+
 qual_plots <- plot_base_quality(
   fastq_input = fastq_dir$fnfs,
   reverse = fastq_dir$reverse

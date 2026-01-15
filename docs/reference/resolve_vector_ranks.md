@@ -48,8 +48,10 @@ resolve_vector_ranks(
 - nb_agree_threshold:
 
   (Int, default 1) The minimum number of times a value must arise to be
-  selected using vote. If 2, we only kept taxonomic value present at
-  least 2 times in the vector.
+  selected using vote in method `rel_majority` and `abs_majority`. If 2,
+  we only kept taxonomic value present at least 2 times in the vector.
+  Note in the case of "abs_majority", this parameter is only useful when
+  higher than half of the length of vec.
 
 - preference_index:
 
@@ -94,6 +96,10 @@ a vector of length 1 (one character value)
     majority. For example, a vector of taxonomic rank c("A", "A", "A",
     "B", NA, NA) will give a value of 'A' if `strict` is FALSE (default)
     but a value of NA if `strict` is TRUE.
+
+  - `nb_agree_threshold`: Only keep return value when at least x methods
+    agreed with x is set by parameter `nb_agree_threshold`. By default,
+    (`nb_agree_threshold` = 1): a majority of one is enough.
 
 - `rel_majority`: Keep the most found taxonomic value. In case of
   equality, apply a consensus strategy (collapse values separated by a

@@ -119,9 +119,7 @@ if (requireNamespace("vegan")) {
     subset_samples(data_fungi, !is.na(Time) & !is.na(Height))
   adonis_rarperm_pq(data_fungi_woNA, "Time*Height", na_remove = TRUE, nperm = 3)
 }
-#> 
-  |                                                        
-  |                                                  |   0%
+#>   |                                                          |                                                  |   0%
 #> `set.seed(1)` was used to initialize repeatable random subsampling.
 #> Please record this for your records so others can reproduce.
 #> Try `set.seed(1); .Random.seed` for the full vector
@@ -131,9 +129,7 @@ if (requireNamespace("vegan")) {
 #> ...
 #> Time
 #> Height
-#> 
-  |                                                        
-  |=================                                 |  33%
+#>   |                                                          |=================                                 |  33%
 #> `set.seed(2)` was used to initialize repeatable random subsampling.
 #> Please record this for your records so others can reproduce.
 #> Try `set.seed(2); .Random.seed` for the full vector
@@ -143,9 +139,7 @@ if (requireNamespace("vegan")) {
 #> ...
 #> Time
 #> Height
-#> 
-  |                                                        
-  |=================================                 |  67%
+#>   |                                                          |=================================                 |  67%
 #> `set.seed(3)` was used to initialize repeatable random subsampling.
 #> Please record this for your records so others can reproduce.
 #> Try `set.seed(3); .Random.seed` for the full vector
@@ -155,9 +149,7 @@ if (requireNamespace("vegan")) {
 #> ...
 #> Time
 #> Height
-#> 
-  |                                                        
-  |==================================================| 100%
+#>   |                                                          |==================================================| 100%
 #> $mean
 #>           Df  SumOfSqs         R2        F     Pr(>F)
 #> Model      5  2.724437 0.05067775 1.121097 0.05733333

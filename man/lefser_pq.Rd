@@ -22,13 +22,16 @@ of the physeq object. Must be a character vector or a factor.}
 
 \item{modalities}{(default NULL) A vector of modalities to keep in the analysis.
 If NULL, all modalities present in bifactor are kept. Note that only two
-modalities are allowed.
-@param compute_relativeAb (logical, default TRUE) Do we compute relative abundance
-before running LEfSe?
-@param by_clade (logical, default FALSE) Do we use the lefserClades function
+modalities are allowed.}
+
+\item{compute_relativeAb}{(logical, default TRUE) Do we compute relative abundance
+before running LEfSe?}
+
+\item{by_clade}{(logical, default FALSE) Do we use the lefserClades function
 (which test for different depth in the taxonomic classification) or the
-lefser function (taxa-level)?
-@param ... Additional arguments passed on to \code{lefser::lefser()}}
+lefser function (taxa-level)?}
+
+\item{...}{Additional arguments passed on to \code{lefser::lefser()}}
 }
 \value{
 The result of lefser::lefser() or lefser::lefserClades()

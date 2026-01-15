@@ -145,17 +145,17 @@ if (requireNamespace("phangorn")) {
 #> Determining distance matrix based on shared 8-mers:
 #> ================================================================================
 #> 
-#> Time difference of 0 secs
+#> Time difference of 0.01 secs
 #> 
 #> Clustering into groups by similarity:
 #> ================================================================================
 #> 
-#> Time difference of 0.01 secs
+#> Time difference of 0 secs
 #> 
 #> Aligning Sequences:
 #> ================================================================================
 #> 
-#> Time difference of 0.16 secs
+#> Time difference of 0.15 secs
 #> 
 #> Iteration 1 of 2:
 #> 
@@ -167,12 +167,12 @@ if (requireNamespace("phangorn")) {
 #> Reclustering into groups by similarity:
 #> ================================================================================
 #> 
-#> Time difference of 0.01 secs
+#> Time difference of 0 secs
 #> 
 #> Realigning Sequences:
 #> ================================================================================
 #> 
-#> Time difference of 0.11 secs
+#> Time difference of 0.1 secs
 #> 
 #> Iteration 2 of 2:
 #> 
@@ -189,17 +189,17 @@ if (requireNamespace("phangorn")) {
 #> Realigning Sequences:
 #> ================================================================================
 #> 
-#> Time difference of 0.08 secs
+#> Time difference of 0.07 secs
 #> 
 #> Refining the alignment:
 #> ================================================================================
 #> 
 #> Time difference of 0.03 secs
 #> 
-#> optimize edge weights:  -4496.258 --> -4357.83 
-#> optimize edge weights:  -4357.83 --> -4357.827 
-#> optimize topology:  -4357.827 --> -4357.827  NNI moves:  0 
-#> optimize edge weights:  -4357.827 --> -4357.827 
+#> optimize edge weights:  -4496.259 --> -4357.83 
+#> optimize edge weights:  -4357.83 --> -4357.826 
+#> optimize topology:  -4357.826 --> -4357.826  NNI moves:  0 
+#> optimize edge weights:  -4357.826 --> -4357.826 
 #> optimize edge weights:  -4438.165 --> -4308.211 
 #> optimize edge weights:  -4308.211 --> -4308.21 
 #> optimize topology:  -4308.21 --> -4308.21  NNI moves:  0 
@@ -212,13 +212,5 @@ if (requireNamespace("phangorn")) {
 
 
 
-#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
-#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
-#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
-#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
 # }
 ```

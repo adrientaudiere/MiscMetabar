@@ -20,6 +20,13 @@
 - Better messages (and not error) in `filter_asv_blast` when the
   resulting table of OTU is empty
 
+- Improve
+  [`ancombc_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ancombc_pq.md)
+  function by allowing custom names in the tax_levels parameter.
+
+- Fix a bug in `filt_taxa_pq` when using both min_nb_seq and
+  min_nb_occurence parameters.
+
 ## MiscMetabar 0.14.4
 
 CRAN release: 2025-09-30
@@ -826,11 +833,11 @@ CRAN release: 2024-04-28
   sequences (obtained by
   [`dada2::derepFastq`](https://rdrr.io/pkg/dada2/man/derepFastq.html))
 
-|                                                                                                      | Database (makeblastdb)                         | Sequences to blast (blastn)       |
-|------------------------------------------------------------------------------------------------------|------------------------------------------------|-----------------------------------|
-| [`blast_to_phyloseq()`](https://adrientaudiere.github.io/MiscMetabar/reference/blast_to_phyloseq.md) | Built from `ref_seq` slot(physeq-class)        | Custom fasta file                 |
-| [`blast_to_derep()`](https://adrientaudiere.github.io/MiscMetabar/reference/blast_to_derep.md)       | Built from dereplicate sequences (derep-class) | Custom fasta file                 |
-| [`blast_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/blast_pq.md)                   | Custom database or custom fasta file           | `ref_seq` slot of a physeq object |
+|  | Database (makeblastdb) | Sequences to blast (blastn) |
+|----|----|----|
+| [`blast_to_phyloseq()`](https://adrientaudiere.github.io/MiscMetabar/reference/blast_to_phyloseq.md) | Built from `ref_seq` slot(physeq-class) | Custom fasta file |
+| [`blast_to_derep()`](https://adrientaudiere.github.io/MiscMetabar/reference/blast_to_derep.md) | Built from dereplicate sequences (derep-class) | Custom fasta file |
+| [`blast_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/blast_pq.md) | Custom database or custom fasta file | `ref_seq` slot of a physeq object |
 
 - Add functions
   [`tsne_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/tsne_pq.md)

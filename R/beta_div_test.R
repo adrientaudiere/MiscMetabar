@@ -1102,12 +1102,12 @@ plot_ancombc_pq <-
 #' @param modalities (default NULL) A vector of modalities to keep in the analysis.
 #'  If NULL, all modalities present in bifactor are kept. Note that only two
 #'  modalities are allowed.
-#'  @param compute_relativeAb (logical, default TRUE) Do we compute relative abundance
+#' @param compute_relativeAb (logical, default TRUE) Do we compute relative abundance
 #'  before running LEfSe?
-#'  @param by_clade (logical, default FALSE) Do we use the lefserClades function
+#' @param by_clade (logical, default FALSE) Do we use the lefserClades function
 #'  (which test for different depth in the taxonomic classification) or the
 #'  lefser function (taxa-level)?
-#'  @param ... Additional arguments passed on to `lefser::lefser()`
+#' @param ... Additional arguments passed on to `lefser::lefser()`
 #'
 #' @return The result of lefser::lefser() or lefser::lefserClades()
 #' @export
@@ -1144,7 +1144,7 @@ lefser_pq <- function(physeq, bifactor = NULL, modalities = NULL, compute_relati
 
   physeq_ts <- mia::convertFromPhyloseq(physeq)
   if (compute_relativeAb) {
-    physeq_rel <- relativeAb(physeq_ts)
+    physeq_rel <- lefser::relativeAb(physeq_ts)
   }
   if (by_clade) {
     res_lefser <- lefser::lefserClades(physeq_rel, classCol = bifactor, ...)
@@ -1172,9 +1172,9 @@ lefser_pq <- function(physeq, bifactor = NULL, modalities = NULL, compute_relati
 #' @param modalities (default NULL) A vector of modalities to keep in the analysis.
 #'  If NULL, all modalities present in bifactor are kept. Note that only two
 #'  modalities are allowed.
-#'  @param gamma (default 0.5) The value of the Dirichlet Monte-Carlo
+#' @param gamma (default 0.5) The value of the Dirichlet Monte-Carlo
 #'  sampling parameter.
-#'  @param ... Additional arguments passed on to `ALDEx2::aldex()`
+#' @param ... Additional arguments passed on to `ALDEx2::aldex()`
 #'
 #' @return The result of `ALDEx2::aldex()`
 #' @export
@@ -1186,7 +1186,13 @@ lefser_pq <- function(physeq, bifactor = NULL, modalities = NULL, compute_relati
 #'   modalities = c("Low", "High")
 #' )
 #' ALDEx2::aldex.plot(res_aldex, type = "volcano")
-aldex_pq <- function(physeq, bifactor = NULL, modalities = NULL, gamma = 0.5, ...) {
+aldex_pq <- function(
+  physeq,
+  bifactor = NULL,
+  modalities = NULL,
+  gamma = 0.5,
+  ...
+) {
   physeq <- taxa_as_rows(physeq)
   verify_pq(physeq)
 
