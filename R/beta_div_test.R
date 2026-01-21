@@ -122,6 +122,13 @@ graph_test_pq <- function(physeq,
 #'   [phyloseq::distanceMethodList()].
 #'   For aitchison and robust.aitchison distance, [vegan::vegdist()]
 #'   function is directly used.
+#' @param by (character, default "terms")  by = "terms" will assess significance
+#'   for each term (sequentially from first to last); if by = NULL ,
+#'   the p-value is computed for the entire model i.e. the overall significance
+#'   of all terms together is computed,  setting by = "margin" will assess the 
+#'   marginal effects of the terms (each marginal term analyzed in a model 
+#'   with all other variables), by = "onedf" will analyze one-degree-of-freedom 
+#'   contrasts sequentially. See `?vegan::adonis2` for more information.
 #' @param merge_sample_by a vector to determine
 #'   which samples to merge using the [merge_samples2()]
 #'   function. Need to be in `physeq@sam_data`
@@ -145,12 +152,6 @@ graph_test_pq <- function(physeq,
 #'   beforehand to achieve reproducible results. Default is FALSE.
 #' @param verbose (logical, default TRUE) If TRUE, prompt some messages.
 #' @param ... Additional arguments passed on to [vegan::adonis2()] function.
-#'   Note that the parameter `by` is important. If by is set to NULL
-#'   (default) the p-value is computed for the entire model.
-#' 	 by = NULL will assess the overall significance of all terms together,
-#'   by = "terms" will assess significance for each term (sequentially from first to last),
-#'   setting by = "margin" will assess the marginal effects of the terms (each marginal term analyzed in a model with all other variables),
-#'   by = "onedf" will analyze one-degree-of-freedom contrasts sequentially. The argument is passed on to anova.cca.
 #' @return The function returns an anova.cca result object with a
 #'   new column for partial R^2. See help of [vegan::adonis2()] for
 #'   more information.
@@ -158,12 +159,15 @@ graph_test_pq <- function(physeq,
 #' data(enterotype)
 #' \donttest{
 #' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE)
-#' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "terms")
+#' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = NULL)
 #' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "onedf")
 #' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "margin")
 #'
-#' adonis_pq(enterotype, "SeqTech", dist_method = "jaccard", by = "terms")
-#' adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison", by = "terms")
+#' adonis_pq(enterotype, "SeqTech", dist_method = "jaccard")
+#' adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison")
+#' 
+#' adonis_pq(data_fungi, "Time*Height", na_remove = TRUE, correction_for_sample_size = TRUE)
+#' 
 #' }
 #' @export
 #' @author Adrien Taudière
@@ -175,6 +179,7 @@ graph_test_pq <- function(physeq,
 adonis_pq <- function(physeq,
                       formula,
                       dist_method = "bray",
+                      by = "terms",
                       merge_sample_by = NULL,
                       na_remove = FALSE,
                       correction_for_sample_size = FALSE,
@@ -206,10 +211,10 @@ adonis_pq <- function(physeq,
     new_physeq <- physeq
     for (tl in term_lab) {
       if (verbose) {
-        message(tl)
+        message(paste0("Removing NA from ", tl))
       }
       new_physeq <-
-        subset_samples_pq(new_physeq, !is.na(physeq@sam_data[[tl]]))
+        subset_samples_pq(new_physeq, !is.na(new_physeq@sam_data[[tl]]))
     }
     if (nsamples(physeq) - nsamples(new_physeq) > 0) {
       message(

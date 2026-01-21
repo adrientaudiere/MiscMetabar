@@ -1,5 +1,9 @@
 # MiscMetabar 0.14.5 (in development) 
 
+- Fix a bug in `adonis_pq()` when using na_remove = TRUE and multiple terms in formula.
+
+- Add parameter by to `adonis_pq()` to choose how to compute p-values (overall model, sequential terms, marginal effects, one-degree-of-freedom contrasts). The default is now by = "terms" that will assess significance for each term.
+
 - Add function `lefser_pq()` to run LEfSe analysis (differential analysis) from a phyloseq object using the package lefser.
 
 - Add function `aldex_pq()` to run ALDEX2 analysis (differential analysis) from a phyloseq object using the package ALDEx2 and the default parameters gamma=0.5.
