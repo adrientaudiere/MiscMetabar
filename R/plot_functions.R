@@ -1866,6 +1866,7 @@ hill_pq <- function(
   }
 
   res <- p_list
+  names(res) <- paste0("plot_Hill_", hill_scales)
   if (plot_with_tuckey) {
     res[["tuckey"]] <- p_var
   }

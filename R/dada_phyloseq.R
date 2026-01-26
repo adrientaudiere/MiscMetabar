@@ -1356,9 +1356,8 @@ mumu_pq <- function(physeq,
     if (file.exists("temp.uc")) {
       unlink("temp.uc")
     }
-
     if (file.exists("log.txt")) {
-      unlink("temp.uc")
+      unlink("log.txt")
     }
     if (file.exists("match_list.txt")) {
       unlink("match_list.txt")
@@ -1784,7 +1783,9 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #'   Note that if trainingSet is not NULL, the ref_fasta is overwrite by the
 #'   trainingSet parameter. To customize learning parameters of the idtaxa
 #'   algorithm you must use trainingSet computed by the function [learn_idtaxa()].
-#' @param min_bootstrap  (Float \[0:1\])
+#' @param min_bootstrap  (Float \[0:1\]) If null (default), the default value
+#'  of each taxonomic assignation method is used (see after). Set to 0 to
+#'  disable any bootstrap filtering.
 #'
 #'   Minimum bootstrap value to inform taxonomy. For each bootstrap
 #'   below the min_bootstrap value, the taxonomy information is set to NA.

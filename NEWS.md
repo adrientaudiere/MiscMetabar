@@ -1,5 +1,9 @@
 # MiscMetabar 0.14.5 (in development) 
 
+- Fix a bug in the name of plot in the result of `hill_pq()` 
+
+- Fix a bug in `mumu_pq()` not deleting temporary file log.txt when `keep_temporary_files=FALSE`
+
 - Fix a bug in `adonis_pq()` when using na_remove = TRUE and multiple terms in formula.
 
 - Add parameter by to `adonis_pq()` to choose how to compute p-values (overall model, sequential terms, marginal effects, one-degree-of-freedom contrasts). The default is now by = "terms" that will assess significance for each term.
