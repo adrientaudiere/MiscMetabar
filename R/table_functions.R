@@ -204,7 +204,7 @@ compare_pairs_pq <- function(physeq = NULL,
   for (i in nmodality) {
     newphyseq <- physeq
     if (!is.null(modality)) {
-      new_DF <- newphyseq@sam_data[newphyseq@sam_data[[modality]] == i, ]
+      new_DF <- newphyseq@sam_data[newphyseq@sam_data[[modality]] == i, , drop = FALSE]
       sample_data(newphyseq) <- sample_data(new_DF)
     }
     if (nsamples(newphyseq) != 2) {

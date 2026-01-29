@@ -1426,7 +1426,7 @@ ggvenn_pq <- function(
 
   for (f in levels(physeq@sam_data[[fact]])) {
     newphyseq <- physeq
-    new_DF <- newphyseq@sam_data[newphyseq@sam_data[[fact]] == f, ]
+    new_DF <- newphyseq@sam_data[newphyseq@sam_data[[fact]] == f, , drop = FALSE]
     sample_data(newphyseq) <- sample_data(new_DF)
     newphyseq <- clean_pq(newphyseq)
     if (is.null(taxonomic_rank) || type == "nb_seq") {

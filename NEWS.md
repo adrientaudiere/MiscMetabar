@@ -2,6 +2,8 @@
 
 - Fix a bug in `aldex_pq()` and `plot_ordination_pq()`. Also fix a bug in `plot_ordination_pq()` when using phyloseq object where taxa are rows.
 
+- Fix a bug for case with only one column in slot @sam_data
+
 - Fix a bug in the name of plot in the result of `hill_pq()` 
 
 - Fix a bug in `mumu_pq()` not deleting temporary file log.txt when `keep_temporary_files=FALSE`
