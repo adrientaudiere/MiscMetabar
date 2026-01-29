@@ -61,8 +61,8 @@ add_dna_to_phyloseq <- function(physeq, prefix_taxa_names = "Taxa_") {
 #'   transpose the otu_table and set taxa_are_rows to true
 #' @param reorder_taxa (logical) if TRUE the otu_table is ordered by the number of
 #'   sequences of taxa (ASV, OTU) in descending order. Default to FALSE.
-#' @param rename_taxa (logical) if TRUE, taxa (ASV, OTU) are renamed by their position
-#'   in the OTU_table and prefix_taxa_names param (by default: Taxa_1, Taxa_2, ...).
+#' @param rename_taxa (logical, default FALSE) if TRUE, taxa (ASV, OTU) are renamed by their position
+#'   in the OTU_table and prefix_taxa_names param (Taxa_1, Taxa_2, ...).
 #'   Default to FALSE. If rename taxa (ASV, OTU) is true,
 #'   the taxa (ASV, OTU) names in verbose information can be misleading.
 #' @param simplify_taxo (logical) if TRUE, correct the taxonomy_table using the
@@ -2878,7 +2878,7 @@ taxa_only_in_one_level <- function(physeq,
 #' @param base_log (integer, default 2) the base for log-transformation. If
 #'   set to NULL or NA, no log-transformation is compute after normalization.
 #' @param constante a constante to multiply the otu_table values
-#' @param digits (default = 2) integer indicating the number of decimal places
+#' @param digits (default = 4) integer indicating the number of decimal places
 #'   to be used (see `?round` for more information)
 #'
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object with otu_table count

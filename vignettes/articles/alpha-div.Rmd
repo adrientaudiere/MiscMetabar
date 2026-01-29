@@ -64,8 +64,11 @@ clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height))) %>%
 ```
 
 
-## Durga package to represent and compute effect size of difference in alpha diversity
+## Estimation statistics framework
 
+" Estimation statistics is a simple framework that avoids the pitfalls of significance testing. It uses familiar statistical concepts: means, mean differences, and error bars. More importantly, it focuses on the effect size of one’s experiment/intervention, as opposed to a false dichotomy engendered by P values. " Citation from dabest documentation [website](https://acclab.github.io/dabestr/index.html).
+
+### Durga package
 
 ```{r}
 library("Durga")
@@ -97,7 +100,33 @@ durga_pq(data_fungi, Hill_2 ~ Time == 0, plot = TRUE)
 ```
 
 
+### dabest R package
 
+```{r}
+library("dabestr")
+psm <- psmelt_samples_pq(data_fungi)
+
+load(
+   data = psm,
+   x = Height,
+   y = Hill_2, 
+   idx=list(c("Low", "Middle", "High"))
+ ) %>%
+   mean_diff() |>
+ dabest_plot(swarm_label="Hill_2")
+```
+
+```{r}
+psm |> 
+  mutate(Time_is_0= Time==0) |>
+  load(
+   x = Time_is_0,
+   y = Hill_0, 
+   idx=list(c("TRUE", "FALSE"))
+ ) %>%
+   mean_diff() |>
+ dabest_plot(swarm_label="Hill_0")
+```
 
 ## Effect of samples variables on alpha diversity using automated model selection and multimodel inference with (G)LMs 
 

@@ -302,7 +302,7 @@ hill_test_rarperm_pq <- function(physeq,
 #'   Package leaps must then be loaded, and this can only be applied to linear models
 #'   with covariates and no interactions. If "d", a simple summary of the candidate set
 #'   is printed, including the number of candidate models.
-#' @param crit The Information Criterion to be used. Default is the small-sample corrected AIC (aicc).
+#' @param crit (character, default aicc) The Information Criterion to be used. Default is the small-sample corrected AIC (aicc).
 #'   This should be a function that accepts a fitted model as first argument.
 #'   Other provided functions are the classic AIC, the Bayes IC (bic), and QAIC/QAICc (qaic and qaicc).
 #' @param ... Additional arguments passed on to [glmulti::glmulti()] function

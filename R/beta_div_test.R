@@ -1222,7 +1222,7 @@ aldex_pq <- function(
   }
 
   res_aldex <- ALDEx2::aldex(physeq@otu_table,
-    physeq@sam_data$Height,
+    physeq@sam_data[[bifactor]],
     gamma = 0.5
   )
 
