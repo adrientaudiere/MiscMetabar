@@ -1483,7 +1483,7 @@ subset_samples_pq <- function(physeq, condition) {
     return(physeq)
   } else {
     old_DF <- as(sample_data(physeq), "data.frame")
-    new_DF <- old_DF[condition, ]
+    new_DF <- old_DF[condition, , drop = FALSE]
     if (inherits(physeq, "sample_data")) {
       return(sample_data(new_DF))
     } else {
