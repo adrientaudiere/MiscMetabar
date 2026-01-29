@@ -5745,6 +5745,7 @@ plot_ordination_pq <- function(
   ...
 ) {
   verify_pq(physeq)
+  physeq <- taxa_as_columns(physeq)
   dist_mat <- vegan::vegdist(unclass(physeq@otu_table), method = method)
   attr(dist_mat, "Labels") <- sample_names(physeq)
   p <- plot_ordination(

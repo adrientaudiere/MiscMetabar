@@ -1,6 +1,6 @@
 # MiscMetabar 0.14.5 (in development) 
 
-- Fix a bug in `aldex_pq()` and `plot_ordination_pq()`
+- Fix a bug in `aldex_pq()` and `plot_ordination_pq()`. Also fix a bug in `plot_ordination_pq()` when using phyloseq object where taxa are rows.
 
 - Fix a bug in the name of plot in the result of `hill_pq()` 
 
