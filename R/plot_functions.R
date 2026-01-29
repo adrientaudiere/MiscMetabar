@@ -5701,9 +5701,9 @@ plot_seq_ratio_pq <- function(physeq, min_nb_seq = 1000, annotations = TRUE) {
       ylab("Ratio of the number of sequences with the previous sample") +
       labs(
         caption = paste0(
-          "For the ratio (y-axis), a value of 2 indicate that sample i contains twice the number of sequences compared to the sample i-1 \n (samples ordered by their number of sequences). Run `subset_samples_pq(physeq, sample_sums(data_fungi)>=",
+          "For the ratio (y-axis), a value of 2 indicate that sample i contains twice the number of sequences compared to the sample i-1 \n (samples ordered by their number of sequences). Run `subset_samples_pq(physeq, sample_sums(physeq)>=",
           cutof_value,
-          ")` to keep only green point \n or `subset_samples_pq(physeq, sample_sums(data_fungi)>=",
+          ")` to keep only green point \n or `subset_samples_pq(physeq, sample_sums(physeq)>=",
           min_nb_seq,
           ")` to discarded only orange samples."
         )
@@ -5745,12 +5745,12 @@ plot_ordination_pq <- function(
   ...
 ) {
   verify_pq(physeq)
-  dist_mat <- vegan::vegdist(unclass(data_fungi@otu_table), method = method)
-  attr(dist_mat, "Labels") <- sample_names(data_fungi)
+  dist_mat <- vegan::vegdist(unclass(physeq@otu_table), method = method)
+  attr(dist_mat, "Labels") <- sample_names(physeq)
   p <- plot_ordination(
-    data_fungi,
+    physeq,
     ordination = ordinate(
-      data_fungi,
+      physeq,
       method = ordination_method,
       distance = dist_mat
     ),

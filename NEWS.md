@@ -1,6 +1,6 @@
 # MiscMetabar 0.14.5 (in development) 
 
-- Fix a bug in `aldex_pq()`
+- Fix a bug in `aldex_pq()` and `plot_ordination_pq()`
 
 - Fix a bug in the name of plot in the result of `hill_pq()` 
 
