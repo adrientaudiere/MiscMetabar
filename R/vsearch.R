@@ -531,7 +531,7 @@ vsearch_clustering <- function(physeq = NULL,
 #'   filtering.
 #'
 #'  - "Discard_only_chim" will only discard taxa classify as chimera by vsearch
-#'  - "Select_only_non_chim" will only select taxa classify as non-chimera by
+#'  - "Select_only_non_chim_seqlen_filtered" will only select taxa classify as non-chimera by
 #'    vsearch(after filtering taxa based on their sequence length by the
 #'    parameter `min_seq_length` from the [chimera_detection_vs()] function)
 #'  - "Select_only_chim" will only select taxa classify as chimera by
@@ -553,20 +553,35 @@ vsearch_clustering <- function(physeq = NULL,
 #'
 #' @examplesIf MiscMetabar::is_vsearch_installed()
 #' \donttest{
+#' # Adding a chimeric sequence for the example
+#' data_fungi_with_chim <- data_fungi
+#' data_fungi_with_chim@refseq["ASV1710"] <- Biostrings::xscat(
+#'   Biostrings::subseq(data_fungi_with_chim@refseq[1], start = 1, end = 150),
+#'   Biostrings::subseq(data_fungi_with_chim@refseq[4], start = 151, end = 300)
+#' )
 #' data_fungi_nochim <- chimera_removal_vs(data_fungi)
+#' 
+#' # Higher value of abskew parameter is less stringent 
 #' data_fungi_nochim_16 <- chimera_removal_vs(data_fungi,
 #'   abskew = 16,
 #'   min_seq_length = 10
 #' )
+#' 
+#' # Potential Chimeric ASVs detected by vsearch
+#' chim_asv <- taxa_names(data_fungi_with_chim)[! taxa_names(data_fungi_with_chim)%in% taxa_names(data_fungi_nochim)]
+#' "ASV1710" %in% chim_asv
+#' 
+#' track_wkflow(list(data_fungi_with_chim, data_fungi_nochim))
+#' 
 #' data_fungi_nochim2 <-
-#'   chimera_removal_vs(data_fungi, type = "Select_only_non_chim")
+#'   chimera_removal_vs(data_fungi, type = "Select_only_non_chim_seqlen_filtered")
 #' data_fungi_chimera <-
 #'   chimera_removal_vs(data_fungi, type = "Select_only_chim")
 #' }
 #' @author Adrien Taudière
 #' @details
 #' This function is mainly a wrapper of the work of others.
-#'   Please make [vsearch](https://github.com/torognes/vsearch).
+#'   Please cite [vsearch](https://github.com/torognes/vsearch).
 
 
 chimera_removal_vs <-
@@ -591,14 +606,14 @@ chimera_removal_vs <-
       if (type == "Discard_only_chim") {
         seq_tab_final <-
           object[, !colnames(object) %in% as.character(chim_detect$chimera)]
-      } else if (type == "Select_only_non_chim") {
+      } else if (type == "Select_only_non_chim_seqlen_filtered") {
         seq_tab_final <- seq_tab_Pairs[, as.character(chim_rm$non_chimera)]
       } else if (type == "Select_only_chim") {
         seq_tab_final <- seq_tab_Pairs[, as.character(chim_rm$chimera)]
       } else {
         stop(
           "Type must be set to one of 'Discard_only_chim',
-             'Select_only_non_chim', or 'Select_only_chim'"
+             'Select_only_non_chim_seqlen_filtered', or 'Select_only_chim'"
         )
       }
       seq_tab_final <- seq_tab_final
@@ -620,7 +635,7 @@ chimera_removal_vs <-
         names(cond) <- names(refseq(object))
         new_physeq <-
           subset_taxa_pq(object, condition = cond)
-      } else if (type == "Select_only_non_chim") {
+      } else if (type == "Select_only_non_chim_seqlen_filtered") {
         cond <-
           as.character(refseq(object)) %in% as.character(chim_detect$non_chimera)
         names(cond) <- names(refseq(object))
@@ -635,7 +650,7 @@ chimera_removal_vs <-
       } else {
         stop(
           "Type must be set to one of 'Discard_only_chim',
-             'Select_only_non_chim', or 'Select_only_chim'"
+             'Select_only_non_chim_seqlen_filtered', or 'Select_only_chim'"
         )
       }
       if (clean_pq) {

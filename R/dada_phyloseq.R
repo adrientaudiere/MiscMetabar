@@ -68,6 +68,8 @@ add_dna_to_phyloseq <- function(physeq, prefix_taxa_names = "Taxa_") {
 #' @param simplify_taxo (logical) if TRUE, correct the taxonomy_table using the
 #'   `MiscMetabar::simplify_taxo()` function
 #' @param prefix_taxa_names (default "Taxa_"): the prefix of taxa names (eg. "ASV_" or "OTU_")
+#' @param check_taxonomy (logical, default FALSE) If TRUE, call
+#'   [verify_tax_table()] to check for common taxonomy table issues.
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object
 #' @export
 #' @author Adrien Taudière
@@ -82,7 +84,8 @@ clean_pq <- function(physeq,
                      reorder_taxa = FALSE,
                      rename_taxa = FALSE,
                      simplify_taxo = FALSE,
-                     prefix_taxa_names = "_Taxa") {
+                     prefix_taxa_names = "_Taxa", 
+                     check_taxonomy = FALSE) {
   if (clean_samples_names) {
     if (!is.null(physeq@refseq)) {
       if (sum(!names(physeq@refseq) %in% taxa_names(physeq)) > 0) {
@@ -194,8 +197,8 @@ clean_pq <- function(physeq,
       )
     }
   }
-
-  verify_pq(new_physeq)
+ 
+  verify_pq(new_physeq, check_taxonomy=check_taxonomy)
   return(new_physeq)
 }
 
@@ -1376,6 +1379,224 @@ mumu_pq <- function(physeq,
 
 
 ################################################################################
+#' Verify the taxonomy table of a phyloseq object
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#' Check taxonomy table for common issues and send warnings/messages accordingly.
+#' This function is called by [verify_pq()] when `check_taxonomy = TRUE`.
+#'
+#' @inheritParams clean_pq
+#' @param verbose (logical, default FALSE) If TRUE, print warnings and messages
+#'   about potential taxonomy issues.
+#' @param replace_to_NA (character vector) A vector of regex patterns to identify
+#'   values that should be considered as NA. Default patterns include common
+#'   placeholders like "unclassified", "unknown", "uncultured", "incertae_sedis",
+#'   "metagenome", empty QIIME-style ranks (e.g., "k__"), etc.
+#' @param min_char (integer, default 4) Minimum number of characters for a
+#'   taxonomic value to be considered valid. Values with fewer characters
+#'   (excluding NA) will trigger a warning when verbose = TRUE.
+#'
+#' @return Nothing if the taxonomy table is valid. Warnings/messages only if
+#'   verbose = TRUE and issues are found.
+#'
+#' @export
+#' @author Adrien Taudière
+#'
+#' @examples
+#' verify_tax_table(data_fungi)
+#' verify_tax_table(data_fungi, verbose = TRUE)
+#'
+verify_tax_table <- function(
+    physeq,
+    verbose = FALSE,
+    replace_to_NA = c(
+      "^[Nn][Aa][Nn]?$", # NaN, nan, NA, na
+      "^[Nn]/[Aa]$", # N/A, n/a
+      "^[Nn]one$", # None, none
+      "^$", # empty string
+      "^\\s+$", # whitespace only
+      "[Uu]nclassified", # unclassified, Unclassified, xxx_unclassified
+      "[Uu]nknown", # unknown, Unknown, xxx_unknown
+      "[Uu]nidentified", # unidentified, Unidentified
+      "[Uu]ncultured", # uncultured, Uncultured
+      "[Ii]ncertae[_\\s]?[Ss]edis", # incertae_sedis, Incertae sedis, etc.
+      "^[Mm]etagenome$",
+      "^[Ee]nvironmental",
+      "^[kpcofgs]__$" # empty QIIME-style ranks
+    ),
+    min_char = 4) {
+  if (is.null(physeq@tax_table)) {
+    return(invisible(NULL))
+  }
+
+  if (!verbose) {
+    return(invisible(NULL))
+  }
+
+  tax_mat <- as.matrix(physeq@tax_table)
+  rank_names <- colnames(tax_mat)
+
+  # 1. Check for values matching replace_to_NA patterns
+  pattern_matches <- list()
+  for (pattern in replace_to_NA) {
+    matches <- which(grepl(pattern, tax_mat) & !is.na(tax_mat), arr.ind = TRUE)
+    if (nrow(matches) > 0) {
+      for (i in seq_len(nrow(matches))) {
+        val <- tax_mat[matches[i, 1], matches[i, 2]]
+        pattern_matches[[length(pattern_matches) + 1]] <- list(
+          value = val,
+          rank = rank_names[matches[i, 2]],
+          pattern = pattern
+        )
+      }
+    }
+  }
+
+  if (length(pattern_matches) > 0) {
+    unique_values <- unique(sapply(pattern_matches, function(x) x$value))
+    if (length(unique_values) <= 10) {
+      val_display <- paste(unique_values, collapse = ", ")
+    } else {
+      val_display <- paste(c(unique_values[1:10], "..."), collapse = ", ")
+    }
+    warning(
+      "Found ", length(pattern_matches), " taxonomic value(s) matching NA-like patterns. ",
+      "Unique values: ", val_display, ". ",
+      "Consider replacing these with NA using clean_pq(simplify_taxo = TRUE) ",
+      "or a custom replacement."
+    )
+  }
+
+  # 2. Check for ranks with only NA values
+  ranks_only_na <- character(0)
+  for (rank in rank_names) {
+    rank_values <- tax_mat[, rank]
+    # Also consider pattern matches as NA for this check
+    for (pattern in replace_to_NA) {
+      rank_values[grepl(pattern, rank_values)] <- NA
+    }
+    if (all(is.na(rank_values))) {
+      ranks_only_na <- c(ranks_only_na, rank)
+    }
+  }
+
+  if (length(ranks_only_na) > 0) {
+    warning(
+      "The following taxonomic rank(s) contain only NA values (or NA-like patterns): ",
+      paste(ranks_only_na, collapse = ", "), ". ",
+      "Consider removing these ranks from the taxonomy table."
+    )
+  }
+
+  # 3. Check for non-nested ranks (parent NA but child filled)
+  # This is only a message, not a warning, as it can be valid for storing additional info
+  non_nested_count <- 0
+  if (ncol(tax_mat) > 1) {
+    for (i in seq_len(nrow(tax_mat))) {
+      row_vals <- tax_mat[i, ]
+      # Replace pattern matches with NA for this check
+      for (pattern in replace_to_NA) {
+        row_vals[grepl(pattern, row_vals)] <- NA
+      }
+      # Find first non-NA value
+      first_filled <- which(!is.na(row_vals))[1]
+      if (!is.na(first_filled) && first_filled > 1) {
+        # There are NA values before the first filled value
+        non_nested_count <- non_nested_count + 1
+      }
+    }
+  }
+
+  if (non_nested_count > 0) {
+    message(
+      "Found ", non_nested_count, " taxa with non-nested ranks ",
+      "(i.e., higher ranks are NA while lower ranks are filled). ",
+      "This is sometimes valid for storing additional taxonomic information, ",
+      "but may also indicate assignment issues."
+    )
+  }
+
+  # 4. Check for values with less than min_char characters
+  short_values_list <- list()
+  for (rank in rank_names) {
+    rank_values <- tax_mat[, rank]
+    non_na_values <- rank_values[!is.na(rank_values)]
+    short_mask <- nchar(non_na_values) < min_char & nchar(non_na_values) > 0
+    if (any(short_mask)) {
+      short_vals <- unique(non_na_values[short_mask])
+      for (val in short_vals) {
+        short_values_list[[length(short_values_list) + 1]] <- data.frame(
+          rank = rank,
+          value = val,
+          nchar = nchar(val),
+          stringsAsFactors = FALSE
+        )
+      }
+    }
+  }
+
+  if (length(short_values_list) > 0) {
+    short_values_df <- do.call(rbind, short_values_list)
+    if (nrow(short_values_df) <= 10) {
+      val_display <- paste(
+        paste0(short_values_df$value, " (", short_values_df$rank, ")"),
+        collapse = ", "
+      )
+    } else {
+      val_display <- paste(
+        c(
+          paste0(short_values_df$value[1:10], " (", short_values_df$rank[1:10], ")"),
+          "..."
+        ),
+        collapse = ", "
+      )
+    }
+    warning(
+      "Found ", nrow(short_values_df), " unique taxonomic value(s) ",
+      "with less than ", min_char, " characters: ", val_display, ". ",
+      "These may be truncated or invalid assignments."
+    )
+  }
+
+  # 5. Check for leading/trailing whitespace
+  has_spaces <- FALSE
+  for (rank in rank_names) {
+    rank_values <- tax_mat[, rank]
+    non_na_values <- rank_values[!is.na(rank_values)]
+    if (any(grepl("^\\s|\\s$", non_na_values))) {
+      has_spaces <- TRUE
+      break
+    }
+  }
+
+  if (has_spaces) {
+    warning(
+      "Found taxonomic values with leading or trailing whitespace. ",
+      "Consider trimming these values to avoid matching issues."
+    )
+  }
+
+  # 6. Check for duplicate taxonomic paths
+  tax_paths <- apply(tax_mat, 1, function(row) paste(row, collapse = "|"))
+  dup_count <- sum(duplicated(tax_paths))
+
+  if (dup_count > 0) {
+    message(
+      "Found ", dup_count, " taxa with duplicate taxonomic paths. ",
+      "This may indicate redundant taxa or issues with taxonomic assignment."
+    )
+  }
+
+  return(invisible(NULL))
+}
+################################################################################
+
+
+################################################################################
 #' Verify the validity of a phyloseq object
 #'
 #' @description
@@ -1391,18 +1612,71 @@ mumu_pq <- function(physeq,
 #'   Minimum number of sequences per samples to not show warning.
 #' @param min_nb_seq_taxa (numeric) Only used if verbose = TRUE.
 #'   Minimum number of sequences per taxa to not show warning.
+#' @param check_taxonomy (logical, default FALSE) If TRUE, call
+#'   [verify_tax_table()] to check for common taxonomy table issues.
+#' @param ... Additional arguments passed to [verify_tax_table()] when
+#'   `check_taxonomy = TRUE`.
 #' @return Nothing if the phyloseq object is valid. An error in the other case.
-#'  Warnings if verbose = TRUE
+#'  Warnings if verbose = TRUE or check_taxonomy = TRUE
 #' @export
 #' @author Adrien Taudière
+#'
+#' @examples
+#'
+#' verify_pq(data_fungi)
+#' verify_pq(data_fungi, check_taxonomy = TRUE)
+#'
+#'
 verify_pq <- function(physeq,
                       verbose = FALSE,
                       min_nb_seq_sample = 500,
-                      min_nb_seq_taxa = 1) {
+                      min_nb_seq_taxa = 1,
+                      check_taxonomy = FALSE,
+                      ...) {
+
+  # check consistency of taxa_names between slots
+  taxa_slots <- list()
+  if (!is.null(physeq@otu_table)) {
+    taxa_slots[["otu_table"]] <- taxa_names(physeq@otu_table)
+  }
+  if (!is.null(physeq@tax_table)) {
+    taxa_slots[["tax_table"]] <- taxa_names(physeq@tax_table)
+  }
+  if (!is.null(physeq@refseq)) {
+    taxa_slots[["refseq"]] <- names(physeq@refseq)
+  }
+  if (!is.null(physeq@phy_tree)) {
+    taxa_slots[["phy_tree"]] <- phyloseq::taxa_names(physeq@phy_tree)
+  }
+
+  slot_names <- names(taxa_slots)
+  for (i in seq_along(slot_names)[-length(slot_names)]) {
+    for (j in (i + 1):length(slot_names)) {
+      if (!setequal(taxa_slots[[i]], taxa_slots[[j]])) {
+        stop(paste0(
+          "Inconsistency of taxa_names between ",
+          slot_names[i], " and ", slot_names[j], " slots. \n
+          Run taxa_names(physeq@", slot_names[i], ") to see the taxa_names of the ", slot_names[i], " slot \n
+          Run taxa_names(physeq@", slot_names[j], ") to see the taxa_names of the ", slot_names[j], " slot \n"
+        ))
+      }
+    }
+  }
+
+  # check consistency of sample_names between otu_table and sam_data
+  if (!is.null(physeq@otu_table) && !is.null(physeq@sam_data)) {
+    otu_samples <- sample_names(physeq@otu_table)
+    sam_samples <- sample_names(physeq@sam_data)
+    if (!setequal(otu_samples, sam_samples)) {
+      stop("Inconsistency of sample_names between otu_table and sam_data slots.")
+    }
+  }
+
   if (!methods::validObject(physeq) ||
     !inherits(physeq, "phyloseq")) {
     stop("The physeq argument is not a valid phyloseq object.")
   }
+
   if (verbose) {
     if (min(sample_sums(physeq)) < min_nb_seq_sample) {
       warning(
@@ -1434,6 +1708,10 @@ verify_pq <- function(physeq,
       sample_names(physeq) <- paste('samp', sample_names(physeq))"
       )
     }
+  }
+
+  if (check_taxonomy) {
+    verify_tax_table(physeq, verbose = TRUE, ...)
   }
 }
 ################################################################################
