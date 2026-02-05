@@ -1,8 +1,8 @@
 # MiscMetabar 0.14.5 (in development) 
 
-- Improve the `verify_pq()` function for cases where taxa_names or sample_names are not consistent.
+- Improve the `verify_pq()` function for cases where taxa_names or sample_names are not consistent and to test for duplicate sequences in @refseq slot.
 
-- Add a function `verify_tax_table()` to 
+- Add a function `verify_tax_table()` to verify some classic issues in tax_table.
 
 - Fix a bug in `aldex_pq()` and `plot_ordination_pq()`. Also fix a bug in `plot_ordination_pq()` when using phyloseq object where taxa are rows.
 

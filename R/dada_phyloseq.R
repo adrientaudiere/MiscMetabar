@@ -1399,9 +1399,29 @@ mumu_pq <- function(physeq,
 #' @param min_char (integer, default 4) Minimum number of characters for a
 #'   taxonomic value to be considered valid. Values with fewer characters
 #'   (excluding NA) will trigger a warning when verbose = TRUE.
+#' @param redundant_suffix (character, default "_sp") Suffix pattern to detect
+#'   redundant taxonomic information. For example, "Russula_sp" in Species
+#'   column is redundant if "Russula" is already present in the Genus column.
+#'   Set to NULL to disable this check. Other examples: "_var", "_ssp", "_cf".
+#' @param taxonomic_ranks (character vector, default NULL) Names of taxonomic
+#'   ranks in hierarchical order from highest to lowest (e.g.,
+#'   c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species")).
+#'   If NULL, uses the column names of the taxonomy table in their existing order.
+#'   Used to determine parent-child relationships for redundant suffix detection.
+#' @param modify_phyloseq (logical, default FALSE) If TRUE, replace problematic
+#'   values with NA in the taxonomy table and return the modified phyloseq object.
+#'   The following types of values are replaced:
+#'   \itemize{
+#'     \item Values matching `replace_to_NA` patterns (e.g., "unclassified", "unknown")
+#'     \item Values with fewer than `min_char` characters
+#'     \item Redundant suffix patterns (e.g., "Russula_sp" when "Russula" is in Genus)
+#'   }
+#'   Messages will indicate the number of values replaced for each type.
 #'
-#' @return Nothing if the taxonomy table is valid. Warnings/messages only if
-#'   verbose = TRUE and issues are found.
+#' @return If `modify_phyloseq = FALSE` (default): Nothing (invisible NULL).
+#'   Warnings/messages only if verbose = TRUE and issues are found.
+#'   If `modify_phyloseq = TRUE`: The modified phyloseq object with problematic
+#'   values replaced by NA, along with messages summarizing the changes.
 #'
 #' @export
 #' @author Adrien Taudière
@@ -1409,6 +1429,37 @@ mumu_pq <- function(physeq,
 #' @examples
 #' verify_tax_table(data_fungi)
 #' verify_tax_table(data_fungi, verbose = TRUE)
+#'
+#' # Check for redundant "_sp" patterns (default)
+#' data_fungi2 <- data_fungi
+#' data_fungi2@tax_table[1, "Species"] <- "Eutypa_sp"
+#' verify_tax_table(data_fungi2, verbose = TRUE, redundant_suffix = "_sp")
+#'
+#' # Automatically replace problematic values with NA
+#' # This replaces: NA-like patterns, short values, and redundant suffixes
+#' data_fungi2_cleaned <- verify_tax_table(data_fungi2,
+#'   modify_phyloseq = TRUE
+#' )
+#' # Check that the redundant value was replaced
+#' data_fungi2@tax_table[1, "Species"] # "Eutypa_sp"
+#' data_fungi2_cleaned@tax_table[1, "Species"] # NA
+#'
+#' # Combine verbose mode with modifications to see all issues
+#' data_fungi2_cleaned <- verify_tax_table(data_fungi2,
+#'   verbose = TRUE,
+#'   modify_phyloseq = TRUE
+#' )
+#'
+#' # Check for other patterns like "_var" or "_cf"
+#' verify_tax_table(data_fungi, verbose = TRUE, redundant_suffix = "_var")
+#'
+#' # Disable redundant suffix check
+#' verify_tax_table(data_fungi, verbose = TRUE, redundant_suffix = NULL)
+#'
+#' # Specify custom taxonomic rank order
+#' verify_tax_table(data_fungi, verbose = TRUE,
+#'   taxonomic_ranks = c("Class", "Order", "Family", "Genus")
+#' )
 #'
 verify_tax_table <- function(
     physeq,
@@ -1428,20 +1479,34 @@ verify_tax_table <- function(
       "^[Ee]nvironmental",
       "^[kpcofgs]__$" # empty QIIME-style ranks
     ),
-    min_char = 4) {
+    min_char = 4,
+    redundant_suffix = "_sp",
+    taxonomic_ranks = c("Domain", "Phylum", "Class", "Order",
+                        "Family", "Genus", "Species"),
+    modify_phyloseq = FALSE) {
   if (is.null(physeq@tax_table)) {
+    warning("The phyloseq object does not contain a taxonomy table (@tax_table slot).")
+    if (modify_phyloseq) {
+      return(physeq)
+    }
     return(invisible(NULL))
   }
 
-  if (!verbose) {
+  # If not verbose and not modifying, return early
+  if (!verbose && !modify_phyloseq) {
     return(invisible(NULL))
   }
 
   tax_mat <- as.matrix(physeq@tax_table)
   rank_names <- colnames(tax_mat)
 
-  # 1. Check for values matching replace_to_NA patterns
-  pattern_matches <- list()
+  # Track modifications when modify_phyloseq = TRUE
+  n_replaced_patterns <- 0
+  n_replaced_short <- 0
+  n_replaced_redundant <- 0
+
+  # 1. Check/replace values matching replace_to_NA patterns
+ pattern_matches <- list()
   for (pattern in replace_to_NA) {
     matches <- which(grepl(pattern, tax_mat) & !is.na(tax_mat), arr.ind = TRUE)
     if (nrow(matches) > 0) {
@@ -1450,6 +1515,8 @@ verify_tax_table <- function(
         pattern_matches[[length(pattern_matches) + 1]] <- list(
           value = val,
           rank = rank_names[matches[i, 2]],
+          row = matches[i, 1],
+          col = matches[i, 2],
           pattern = pattern
         )
       }
@@ -1463,132 +1530,246 @@ verify_tax_table <- function(
     } else {
       val_display <- paste(c(unique_values[1:10], "..."), collapse = ", ")
     }
-    warning(
-      "Found ", length(pattern_matches), " taxonomic value(s) matching NA-like patterns. ",
-      "Unique values: ", val_display, ". ",
-      "Consider replacing these with NA using clean_pq(simplify_taxo = TRUE) ",
-      "or a custom replacement."
-    )
+
+    if (modify_phyloseq) {
+      # Replace matching values with NA
+      for (match in pattern_matches) {
+        tax_mat[match$row, match$col] <- NA
+      }
+      n_replaced_patterns <- length(pattern_matches)
+      message(
+        "Replaced ", n_replaced_patterns, " NA-like value(s) with NA. ",
+        "Unique values: ", val_display
+      )
+    } else if (verbose) {
+      warning(
+        "Found ", length(pattern_matches), " taxonomic value(s) matching NA-like patterns. ",
+        "Unique values: ", val_display, ". ",
+        "Use modify_phyloseq = TRUE to replace these with NA."
+      )
+    }
   }
 
-  # 2. Check for ranks with only NA values
-  ranks_only_na <- character(0)
-  for (rank in rank_names) {
+  # 2. Check/replace values with less than min_char characters
+  short_matches <- list()
+  for (j in seq_along(rank_names)) {
+    rank <- rank_names[j]
     rank_values <- tax_mat[, rank]
-    # Also consider pattern matches as NA for this check
-    for (pattern in replace_to_NA) {
-      rank_values[grepl(pattern, rank_values)] <- NA
-    }
-    if (all(is.na(rank_values))) {
-      ranks_only_na <- c(ranks_only_na, rank)
-    }
-  }
-
-  if (length(ranks_only_na) > 0) {
-    warning(
-      "The following taxonomic rank(s) contain only NA values (or NA-like patterns): ",
-      paste(ranks_only_na, collapse = ", "), ". ",
-      "Consider removing these ranks from the taxonomy table."
-    )
-  }
-
-  # 3. Check for non-nested ranks (parent NA but child filled)
-  # This is only a message, not a warning, as it can be valid for storing additional info
-  non_nested_count <- 0
-  if (ncol(tax_mat) > 1) {
     for (i in seq_len(nrow(tax_mat))) {
-      row_vals <- tax_mat[i, ]
-      # Replace pattern matches with NA for this check
-      for (pattern in replace_to_NA) {
-        row_vals[grepl(pattern, row_vals)] <- NA
-      }
-      # Find first non-NA value
-      first_filled <- which(!is.na(row_vals))[1]
-      if (!is.na(first_filled) && first_filled > 1) {
-        # There are NA values before the first filled value
-        non_nested_count <- non_nested_count + 1
-      }
-    }
-  }
-
-  if (non_nested_count > 0) {
-    message(
-      "Found ", non_nested_count, " taxa with non-nested ranks ",
-      "(i.e., higher ranks are NA while lower ranks are filled). ",
-      "This is sometimes valid for storing additional taxonomic information, ",
-      "but may also indicate assignment issues."
-    )
-  }
-
-  # 4. Check for values with less than min_char characters
-  short_values_list <- list()
-  for (rank in rank_names) {
-    rank_values <- tax_mat[, rank]
-    non_na_values <- rank_values[!is.na(rank_values)]
-    short_mask <- nchar(non_na_values) < min_char & nchar(non_na_values) > 0
-    if (any(short_mask)) {
-      short_vals <- unique(non_na_values[short_mask])
-      for (val in short_vals) {
-        short_values_list[[length(short_values_list) + 1]] <- data.frame(
-          rank = rank,
+      val <- rank_values[i]
+      if (!is.na(val) && nchar(val) < min_char && nchar(val) > 0) {
+        short_matches[[length(short_matches) + 1]] <- list(
           value = val,
-          nchar = nchar(val),
-          stringsAsFactors = FALSE
+          rank = rank,
+          row = i,
+          col = j,
+          nchar = nchar(val)
         )
       }
     }
   }
 
-  if (length(short_values_list) > 0) {
-    short_values_df <- do.call(rbind, short_values_list)
-    if (nrow(short_values_df) <= 10) {
-      val_display <- paste(
-        paste0(short_values_df$value, " (", short_values_df$rank, ")"),
-        collapse = ", "
+  if (length(short_matches) > 0) {
+    unique_short <- unique(sapply(short_matches, function(x) {
+      paste0(x$value, " (", x$rank, ", ", x$nchar, " chars)")
+    }))
+    if (length(unique_short) <= 10) {
+      short_display <- paste(unique_short, collapse = ", ")
+    } else {
+      short_display <- paste(c(unique_short[1:10], "..."), collapse = ", ")
+    }
+
+    if (modify_phyloseq) {
+      # Replace short values with NA
+      for (match in short_matches) {
+        tax_mat[match$row, match$col] <- NA
+      }
+      n_replaced_short <- length(short_matches)
+      message(
+        "Replaced ", n_replaced_short, " short value(s) (< ", min_char,
+        " chars) with NA: ", short_display
+      )
+    } else if (verbose) {
+      warning(
+        "Found ", length(short_matches), " taxonomic value(s) with less than ",
+        min_char, " characters: ", short_display, ". ",
+        "Use modify_phyloseq = TRUE to replace these with NA."
+      )
+    }
+  }
+
+  # Verbose-only checks (3-6)
+  if (verbose) {
+    # 3. Check for ranks with only NA values (after potential modifications)
+    ranks_only_na <- character(0)
+    for (rank in rank_names) {
+      rank_values <- tax_mat[, rank]
+      if (all(is.na(rank_values))) {
+        ranks_only_na <- c(ranks_only_na, rank)
+      }
+    }
+
+    if (length(ranks_only_na) > 0) {
+      warning(
+        "The following taxonomic rank(s) contain only NA values: ",
+        paste(ranks_only_na, collapse = ", "), ". ",
+        "Consider removing these ranks from the taxonomy table."
+      )
+    }
+
+    # 4. Check for non-nested ranks (parent NA but child filled)
+    # This is only a message, not a warning, as it can be valid for storing additional info
+    non_nested_count <- 0
+    if (ncol(tax_mat) > 1) {
+      for (i in seq_len(nrow(tax_mat))) {
+        row_vals <- tax_mat[i, ]
+        # Find first non-NA value
+        first_filled <- which(!is.na(row_vals))[1]
+        if (!is.na(first_filled) && first_filled > 1) {
+          # There are NA values before the first filled value
+          non_nested_count <- non_nested_count + 1
+        }
+      }
+    }
+
+    if (non_nested_count > 0) {
+      message(
+        "Found ", non_nested_count, " taxa with non-nested ranks ",
+        "(i.e., higher ranks are NA while lower ranks are filled). ",
+        "This is sometimes valid for storing additional taxonomic information, ",
+        "but may also indicate assignment issues."
+      )
+    }
+
+    # 5. Check for leading/trailing whitespace
+    has_spaces <- FALSE
+    for (rank in rank_names) {
+      rank_values <- tax_mat[, rank]
+      non_na_values <- rank_values[!is.na(rank_values)]
+      if (any(grepl("^\\s|\\s$", non_na_values))) {
+        has_spaces <- TRUE
+        break
+      }
+    }
+
+    if (has_spaces) {
+      warning(
+        "Found taxonomic values with leading or trailing whitespace. ",
+        "Consider trimming these values to avoid matching issues."
+      )
+    }
+
+    # 6. Check for duplicate taxonomic paths
+    tax_paths <- apply(tax_mat, 1, function(row) paste(row, collapse = "|"))
+    dup_count <- sum(duplicated(tax_paths))
+
+    if (dup_count > 0) {
+      message(
+        "Found ", dup_count, " taxa with duplicate taxonomic paths. ",
+        "This may indicate redundant taxa or issues with taxonomic assignment."
+      )
+    }
+  } # End of verbose-only checks (1-6)
+
+  # 7. Check for redundant rank patterns (e.g., "Russula_sp" in Species
+  #    when "Russula" is already in Genus)
+  if (!is.null(redundant_suffix) && nchar(redundant_suffix) > 0) {
+    # Use provided taxonomic_ranks or default to column names
+    ranks_to_use <- if (is.null(taxonomic_ranks)) rank_names else taxonomic_ranks
+    # Keep only ranks that exist in the tax_table
+    ranks_to_use <- ranks_to_use[ranks_to_use %in% rank_names]
+
+    redundant_entries <- list()
+
+    if (length(ranks_to_use) > 1) {
+      for (i in seq_len(nrow(tax_mat))) {
+        row_vals <- tax_mat[i, ranks_to_use, drop = FALSE]
+
+        # Check each rank (starting from 2nd) for redundant patterns
+        for (j in 2:length(ranks_to_use)) {
+          current_rank <- ranks_to_use[j]
+          current_val <- row_vals[1, current_rank]
+
+          if (is.na(current_val)) next
+
+          # Check if current value ends with the redundant suffix
+          suffix_pattern <- paste0(redundant_suffix, "$")
+          if (!grepl(suffix_pattern, current_val)) next
+
+          # Extract the prefix (e.g., "Russula" from "Russula_sp")
+          prefix <- sub(suffix_pattern, "", current_val)
+
+          if (nchar(prefix) == 0) next
+
+          # Check if this prefix exists in any higher rank
+          for (k in 1:(j - 1)) {
+            parent_rank <- ranks_to_use[k]
+            parent_val <- row_vals[1, parent_rank]
+
+            if (!is.na(parent_val) && parent_val == prefix) {
+              redundant_entries[[length(redundant_entries) + 1]] <- list(
+                taxa_idx = i,
+                taxa_name = rownames(tax_mat)[i],
+                current_rank = current_rank,
+                current_val = current_val,
+                parent_rank = parent_rank,
+                parent_val = parent_val
+              )
+              break # Found redundancy, no need to check other parent ranks
+            }
+          }
+        }
+      }
+    }
+
+    if (length(redundant_entries) > 0) {
+      # Create summary for warning message
+      unique_patterns <- unique(sapply(redundant_entries, function(x) {
+        paste0(x$current_val, " (", x$current_rank, " = ", x$parent_rank, ")")
+      }))
+
+      if (length(unique_patterns) <= 10) {
+        pattern_display <- paste(unique_patterns, collapse = ", ")
+      } else {
+        pattern_display <- paste(c(unique_patterns[1:10], "..."), collapse = ", ")
+      }
+
+      if (modify_phyloseq) {
+        # Replace redundant values with NA
+        for (entry in redundant_entries) {
+          tax_mat[entry$taxa_idx, entry$current_rank] <- NA
+        }
+        n_replaced_redundant <- length(redundant_entries)
+        message(
+          "Replaced ", n_replaced_redundant, " redundant '", redundant_suffix,
+          "' value(s) with NA: ", pattern_display
+        )
+      } else if (verbose) {
+        warning(
+          "Found ", length(redundant_entries), " taxonomic value(s) with redundant ",
+          "'", redundant_suffix, "' patterns where the information is already ",
+          "present at a higher rank: ", pattern_display, ". ",
+          "Use modify_phyloseq = TRUE to replace these with NA."
+        )
+      }
+    }
+  }
+
+  # Return modified phyloseq if requested
+  if (modify_phyloseq) {
+    total_replaced <- n_replaced_patterns + n_replaced_short + n_replaced_redundant
+    if (total_replaced > 0) {
+      physeq@tax_table <- tax_table(tax_mat)
+      message(
+        "Total: replaced ", total_replaced, " value(s) with NA in the taxonomy table ",
+        "(", n_replaced_patterns, " NA-like patterns, ",
+        n_replaced_short, " short values, ",
+        n_replaced_redundant, " redundant suffixes)."
       )
     } else {
-      val_display <- paste(
-        c(
-          paste0(short_values_df$value[1:10], " (", short_values_df$rank[1:10], ")"),
-          "..."
-        ),
-        collapse = ", "
-      )
+      message("No values to replace. Returning original phyloseq object.")
     }
-    warning(
-      "Found ", nrow(short_values_df), " unique taxonomic value(s) ",
-      "with less than ", min_char, " characters: ", val_display, ". ",
-      "These may be truncated or invalid assignments."
-    )
-  }
-
-  # 5. Check for leading/trailing whitespace
-  has_spaces <- FALSE
-  for (rank in rank_names) {
-    rank_values <- tax_mat[, rank]
-    non_na_values <- rank_values[!is.na(rank_values)]
-    if (any(grepl("^\\s|\\s$", non_na_values))) {
-      has_spaces <- TRUE
-      break
-    }
-  }
-
-  if (has_spaces) {
-    warning(
-      "Found taxonomic values with leading or trailing whitespace. ",
-      "Consider trimming these values to avoid matching issues."
-    )
-  }
-
-  # 6. Check for duplicate taxonomic paths
-  tax_paths <- apply(tax_mat, 1, function(row) paste(row, collapse = "|"))
-  dup_count <- sum(duplicated(tax_paths))
-
-  if (dup_count > 0) {
-    message(
-      "Found ", dup_count, " taxa with duplicate taxonomic paths. ",
-      "This may indicate redundant taxa or issues with taxonomic assignment."
-    )
+    return(physeq)
   }
 
   return(invisible(NULL))
@@ -1660,6 +1841,13 @@ verify_pq <- function(physeq,
           Run taxa_names(physeq@", slot_names[j], ") to see the taxa_names of the ", slot_names[j], " slot \n"
         ))
       }
+    }
+  }
+
+  # check for duplicate in refseq
+  if (!is.null(physeq@refseq)) {
+    if (any(duplicated(as.character(physeq@refseq)))) {
+      stop("Duplicated references sequences found in refseq slot.")
     }
   }
 
