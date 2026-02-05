@@ -65,7 +65,7 @@ a references taxa}
 \item{min_bit_score}{(default: 50) the minimum bit score to take
 into account a references taxa}
 
-\item{min_cover}{(default: 50) cut of in query cover (\%) to keep result}
+\item{min_cover}{(default: 95) cut of in query cover (\%) to keep result}
 
 \item{min_e_value}{(default: 1e-30)  cut of in e-value (\%) to keep result
 The BLAST E-value is the number of expected hits of similar quality (score)

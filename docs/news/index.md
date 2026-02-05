@@ -2,6 +2,44 @@
 
 ## MiscMetabar 0.14.5 (in development)
 
+- Improve the
+  [`verify_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/verify_pq.md)
+  function for cases where taxa_names or sample_names are not consistent
+  and to test for duplicate sequences in
+  [@refseq](https://github.com/refseq) slot.
+
+- Add a function
+  [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/reference/verify_tax_table.md)
+  to verify some classic issues in tax_table.
+
+- Fix a bug in
+  [`aldex_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/aldex_pq.md)
+  and
+  [`plot_ordination_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_ordination_pq.md).
+  Also fix a bug in
+  [`plot_ordination_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_ordination_pq.md)
+  when using phyloseq object where taxa are rows.
+
+- Fix a bug for case with only one column in slot
+  [@sam_data](https://github.com/sam_data)
+
+- Fix a bug in the name of plot in the result of
+  [`hill_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_pq.md)
+
+- Fix a bug in
+  [`mumu_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/mumu_pq.md)
+  not deleting temporary file log.txt when `keep_temporary_files=FALSE`
+
+- Fix a bug in
+  [`adonis_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/adonis_pq.md)
+  when using na_remove = TRUE and multiple terms in formula.
+
+- Add parameter by to
+  [`adonis_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/adonis_pq.md)
+  to choose how to compute p-values (overall model, sequential terms,
+  marginal effects, one-degree-of-freedom contrasts). The default is now
+  by = “terms” that will assess significance for each term.
+
 - Add function
   [`lefser_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/lefser_pq.md)
   to run LEfSe analysis (differential analysis) from a phyloseq object

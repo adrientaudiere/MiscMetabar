@@ -107,25 +107,25 @@ library("dabestr")
 psm <- psmelt_samples_pq(data_fungi)
 
 load(
-   data = psm,
-   x = Height,
-   y = Hill_2, 
-   idx=list(c("Low", "Middle", "High"))
- ) %>%
-   mean_diff() |>
- dabest_plot(swarm_label="Hill_2")
+  data = psm,
+  x = Height,
+  y = Hill_2,
+  idx = list(c("Low", "Middle", "High"))
+) %>%
+  mean_diff() |>
+  dabest_plot(swarm_label = "Hill_2")
 ```
 
 ```{r}
-psm |> 
-  mutate(Time_is_0= Time==0) |>
+psm |>
+  mutate(Time_is_0 = Time == 0) |>
   load(
-   x = Time_is_0,
-   y = Hill_0, 
-   idx=list(c("TRUE", "FALSE"))
- ) %>%
-   mean_diff() |>
- dabest_plot(swarm_label="Hill_0")
+    x = Time_is_0,
+    y = Hill_0,
+    idx = list(c("TRUE", "FALSE"))
+  ) %>%
+  mean_diff() |>
+  dabest_plot(swarm_label = "Hill_0")
 ```
 
 ## Effect of samples variables on alpha diversity using automated model selection and multimodel inference with (G)LMs 

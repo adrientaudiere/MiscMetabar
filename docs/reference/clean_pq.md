@@ -21,7 +21,8 @@ clean_pq(
   reorder_taxa = FALSE,
   rename_taxa = FALSE,
   simplify_taxo = FALSE,
-  prefix_taxa_names = "_Taxa"
+  prefix_taxa_names = "_Taxa",
+  check_taxonomy = FALSE
 )
 ```
 
@@ -73,8 +74,8 @@ clean_pq(
 
 - rename_taxa:
 
-  (logical) if TRUE, taxa (ASV, OTU) are renamed by their position in
-  the OTU_table and prefix_taxa_names param (by default: Taxa_1, Taxa_2,
+  (logical, default FALSE) if TRUE, taxa (ASV, OTU) are renamed by their
+  position in the OTU_table and prefix_taxa_names param (Taxa_1, Taxa_2,
   ...). Default to FALSE. If rename taxa (ASV, OTU) is true, the taxa
   (ASV, OTU) names in verbose information can be misleading.
 
@@ -87,6 +88,12 @@ clean_pq(
 - prefix_taxa_names:
 
   (default "Taxa\_"): the prefix of taxa names (eg. "ASV\_" or "OTU\_")
+
+- check_taxonomy:
+
+  (logical, default FALSE) If TRUE, call
+  [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/reference/verify_tax_table.md)
+  to check for common taxonomy table issues.
 
 ## Value
 

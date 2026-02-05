@@ -15,7 +15,7 @@ set to NULL or NA, no log-transformation is compute after normalization.}
 
 \item{constante}{a constante to multiply the otu_table values}
 
-\item{digits}{(default = 2) integer indicating the number of decimal places
+\item{digits}{(default = 4) integer indicating the number of decimal places
 to be used (see \code{?round} for more information)}
 }
 \value{

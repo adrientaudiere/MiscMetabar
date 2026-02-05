@@ -116,8 +116,12 @@ shown.](reference/figures/README-example-1.png)
 ``` r
 p <- MiscMetabar::hill_pq(data_fungi, fact = "Height")
 p$plot_Hill_0
-#> NULL
 ```
+
+![Hill number 0, aka richness are plot in function of the height
+modality](reference/figures/README-unnamed-chunk-6-1.png)
+
+Hill number 0
 
 ``` r
 p$plot_tuckey

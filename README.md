@@ -131,8 +131,17 @@ summary_plot_pq(data_fungi)
 ``` r
 p <- MiscMetabar::hill_pq(data_fungi, fact = "Height")
 p$plot_Hill_0
-#> NULL
 ```
+
+<div class="figure">
+
+<img src="man/figures/README-unnamed-chunk-6-1.png" alt="Hill number 0, aka richness are plot in function of the height modality" width="100%" />
+<p class="caption">
+
+Hill number 0
+</p>
+
+</div>
 
 ``` r
 p$plot_tuckey

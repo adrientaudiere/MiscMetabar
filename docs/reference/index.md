@@ -26,6 +26,8 @@
   : Clean phyloseq object by removing empty samples and taxa
 - [`verify_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/verify_pq.md)
   : Verify the validity of a phyloseq object
+- [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/reference/verify_tax_table.md)
+  : Verify the taxonomy table of a phyloseq object
 
 ### Taxonomy
 

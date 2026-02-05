@@ -125,9 +125,9 @@ graph_test_pq <- function(physeq,
 #' @param by (character, default "terms")  by = "terms" will assess significance
 #'   for each term (sequentially from first to last); if by = NULL ,
 #'   the p-value is computed for the entire model i.e. the overall significance
-#'   of all terms together is computed,  setting by = "margin" will assess the 
-#'   marginal effects of the terms (each marginal term analyzed in a model 
-#'   with all other variables), by = "onedf" will analyze one-degree-of-freedom 
+#'   of all terms together is computed,  setting by = "margin" will assess the
+#'   marginal effects of the terms (each marginal term analyzed in a model
+#'   with all other variables), by = "onedf" will analyze one-degree-of-freedom
 #'   contrasts sequentially. See `?vegan::adonis2` for more information.
 #' @param merge_sample_by a vector to determine
 #'   which samples to merge using the [merge_samples2()]
@@ -165,9 +165,8 @@ graph_test_pq <- function(physeq,
 #'
 #' adonis_pq(enterotype, "SeqTech", dist_method = "jaccard")
 #' adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison")
-#' 
+#'
 #' adonis_pq(data_fungi, "Time*Height", na_remove = TRUE, correction_for_sample_size = TRUE)
-#' 
 #' }
 #' @export
 #' @author Adrien Taudière

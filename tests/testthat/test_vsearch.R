@@ -95,7 +95,7 @@ if (!MiscMetabar:::is_vsearch_installed()) {
     expect_true(ntaxa(data_fungi_nochim_16) %in% c(1259, 1288, 1261))
     expect_s4_class(
       data_fungi_nochim2 <-
-        chimera_removal_vs(data_fungi, type = "Select_only_non_chim"),
+        chimera_removal_vs(data_fungi, type = "Select_only_non_chim_seqlen_filtered"),
       "phyloseq"
     )
     expect_true(ntaxa(data_fungi_nochim2) %in% c(1051, 1088, 1054))

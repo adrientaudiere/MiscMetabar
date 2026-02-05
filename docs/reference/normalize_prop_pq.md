@@ -30,7 +30,7 @@ normalize_prop_pq(physeq, base_log = 2, constante = 10000, digits = 4)
 
 - digits:
 
-  (default = 2) integer indicating the number of decimal places to be
+  (default = 4) integer indicating the number of decimal places to be
   used (see [`?round`](https://rdrr.io/r/base/Round.html) for more
   information)
 

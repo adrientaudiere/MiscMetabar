@@ -91,7 +91,7 @@ assign_blastn(
 
 - min_cover:
 
-  (default: 50) cut of in query cover (%) to keep result
+  (default: 95) cut of in query cover (%) to keep result
 
 - min_e_value:
 

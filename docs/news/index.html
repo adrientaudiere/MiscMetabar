@@ -61,7 +61,15 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.14.5" id="miscmetabar-0145-in-development">MiscMetabar 0.14.5 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-0145-in-development"></a></h2>
-<ul><li><p>Add function <code><a href="../reference/lefser_pq.html">lefser_pq()</a></code> to run LEfSe analysis (differential analysis) from a phyloseq object using the package lefser.</p></li>
+<ul><li><p>Improve the <code><a href="../reference/verify_pq.html">verify_pq()</a></code> function for cases where taxa_names or sample_names are not consistent and to test for duplicate sequences in <a href="https://github.com/refseq" class="external-link">@refseq</a> slot.</p></li>
+<li><p>Add a function <code><a href="../reference/verify_tax_table.html">verify_tax_table()</a></code> to verify some classic issues in tax_table.</p></li>
+<li><p>Fix a bug in <code><a href="../reference/aldex_pq.html">aldex_pq()</a></code> and <code><a href="../reference/plot_ordination_pq.html">plot_ordination_pq()</a></code>. Also fix a bug in <code><a href="../reference/plot_ordination_pq.html">plot_ordination_pq()</a></code> when using phyloseq object where taxa are rows.</p></li>
+<li><p>Fix a bug for case with only one column in slot <a href="https://github.com/sam_data" class="external-link">@sam_data</a></p></li>
+<li><p>Fix a bug in the name of plot in the result of <code><a href="../reference/hill_pq.html">hill_pq()</a></code></p></li>
+<li><p>Fix a bug in <code><a href="../reference/mumu_pq.html">mumu_pq()</a></code> not deleting temporary file log.txt when <code>keep_temporary_files=FALSE</code></p></li>
+<li><p>Fix a bug in <code><a href="../reference/adonis_pq.html">adonis_pq()</a></code> when using na_remove = TRUE and multiple terms in formula.</p></li>
+<li><p>Add parameter by to <code><a href="../reference/adonis_pq.html">adonis_pq()</a></code> to choose how to compute p-values (overall model, sequential terms, marginal effects, one-degree-of-freedom contrasts). The default is now by = “terms” that will assess significance for each term.</p></li>
+<li><p>Add function <code><a href="../reference/lefser_pq.html">lefser_pq()</a></code> to run LEfSe analysis (differential analysis) from a phyloseq object using the package lefser.</p></li>
 <li><p>Add function <code><a href="../reference/aldex_pq.html">aldex_pq()</a></code> to run ALDEX2 analysis (differential analysis) from a phyloseq object using the package ALDEx2 and the default parameters gamma=0.5.</p></li>
 <li><p>Add the parameter <code>rngseed</code> in all functions which used <code><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">phyloseq::rarefy_even_depth</a></code> to set the seed for random number generator in order to increase reproducibility.</p></li>
 <li><p>Better messages (and not error) in <code>filter_asv_blast</code> when the resulting table of OTU is empty</p></li>

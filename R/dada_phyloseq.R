@@ -84,7 +84,7 @@ clean_pq <- function(physeq,
                      reorder_taxa = FALSE,
                      rename_taxa = FALSE,
                      simplify_taxo = FALSE,
-                     prefix_taxa_names = "_Taxa", 
+                     prefix_taxa_names = "_Taxa",
                      check_taxonomy = FALSE) {
   if (clean_samples_names) {
     if (!is.null(physeq@refseq)) {
@@ -197,8 +197,8 @@ clean_pq <- function(physeq,
       )
     }
   }
- 
-  verify_pq(new_physeq, check_taxonomy=check_taxonomy)
+
+  verify_pq(new_physeq, check_taxonomy = check_taxonomy)
   return(new_physeq)
 }
 
@@ -1415,8 +1415,18 @@ mumu_pq <- function(physeq,
 #'     \item Values matching `replace_to_NA` patterns (e.g., "unclassified", "unknown")
 #'     \item Values with fewer than `min_char` characters
 #'     \item Redundant suffix patterns (e.g., "Russula_sp" when "Russula" is in Genus)
+#'     \item Leading/trailing whitespace (if `remove_border_spaces = TRUE`)
+#'     \item Internal spaces (if `remove_all_space = TRUE`)
 #'   }
 #'   Messages will indicate the number of values replaced for each type.
+#' @param remove_border_spaces (logical, default TRUE) If TRUE and
+#'   `modify_phyloseq = TRUE`, remove leading and trailing whitespace from
+#'   taxonomic values.
+#' @param remove_all_space (logical, default FALSE) If TRUE and
+#'   `modify_phyloseq = TRUE`, replace internal spaces (spaces within taxonomic
+#'   values) with the character specified in `replace_space_with`.
+#' @param replace_space_with (character, default "_") Character to use when
+#'   replacing internal spaces. Only used when `remove_all_space = TRUE`.
 #'
 #' @return If `modify_phyloseq = FALSE` (default): Nothing (invisible NULL).
 #'   Warnings/messages only if verbose = TRUE and issues are found.
@@ -1428,6 +1438,7 @@ mumu_pq <- function(physeq,
 #'
 #' @examples
 #' verify_tax_table(data_fungi)
+#' \donttest{
 #' verify_tax_table(data_fungi, verbose = TRUE)
 #'
 #' # Check for redundant "_sp" patterns (default)
@@ -1457,33 +1468,62 @@ mumu_pq <- function(physeq,
 #' verify_tax_table(data_fungi, verbose = TRUE, redundant_suffix = NULL)
 #'
 #' # Specify custom taxonomic rank order
-#' verify_tax_table(data_fungi, verbose = TRUE,
+#' verify_tax_table(data_fungi,
+#'   verbose = TRUE,
 #'   taxonomic_ranks = c("Class", "Order", "Family", "Genus")
 #' )
 #'
+#' # Handle whitespace in taxonomic values
+#' # Create example with spaces
+#' data_fungi3 <- data_fungi
+#' data_fungi3@tax_table[1, "Genus"] <- " Russula "
+#' data_fungi3@tax_table[2, "Species"] <- "Russula emetica"
+#'
+#' # Check for spaces (verbose mode)
+#' verify_tax_table(data_fungi3, verbose = TRUE)
+#'
+#' # Remove leading/trailing whitespace (enabled by default)
+#' data_fungi3_trimmed <- verify_tax_table(data_fungi3, modify_phyloseq = TRUE)
+#' data_fungi3_trimmed@tax_table[1, "Genus"] # "Russula" (trimmed)
+#'
+#' # Also replace internal spaces with underscores
+#' data_fungi3_cleaned <- verify_tax_table(data_fungi3,
+#'   modify_phyloseq = TRUE,
+#'   remove_all_space = TRUE,
+#'   replace_space_with = "_"
+#' )
+#' data_fungi3_cleaned@tax_table[2, "Species"] # "Russula_emetica"
+#'
+#' }
 verify_tax_table <- function(
-    physeq,
-    verbose = FALSE,
-    replace_to_NA = c(
-      "^[Nn][Aa][Nn]?$", # NaN, nan, NA, na
-      "^[Nn]/[Aa]$", # N/A, n/a
-      "^[Nn]one$", # None, none
-      "^$", # empty string
-      "^\\s+$", # whitespace only
-      "[Uu]nclassified", # unclassified, Unclassified, xxx_unclassified
-      "[Uu]nknown", # unknown, Unknown, xxx_unknown
-      "[Uu]nidentified", # unidentified, Unidentified
-      "[Uu]ncultured", # uncultured, Uncultured
-      "[Ii]ncertae[_\\s]?[Ss]edis", # incertae_sedis, Incertae sedis, etc.
-      "^[Mm]etagenome$",
-      "^[Ee]nvironmental",
-      "^[kpcofgs]__$" # empty QIIME-style ranks
-    ),
-    min_char = 4,
-    redundant_suffix = "_sp",
-    taxonomic_ranks = c("Domain", "Phylum", "Class", "Order",
-                        "Family", "Genus", "Species"),
-    modify_phyloseq = FALSE) {
+  physeq,
+  verbose = FALSE,
+  replace_to_NA = c(
+    "^[Nn][Aa][Nn]?$", # NaN, nan, NA, na
+    "^[Nn]/[Aa]$", # N/A, n/a
+    "^[Nn]one$", # None, none
+    "^$", # empty string
+    "^\\s+$", # whitespace only
+    "[Uu]nclassified", # unclassified, Unclassified, xxx_unclassified
+    "[Uu]nknown", # unknown, Unknown, xxx_unknown
+    "[Uu]nidentified", # unidentified, Unidentified
+    "[Uu]ncultured", # uncultured, Uncultured
+    "[Ii]ncertae[_\\s]?[Ss]edis", # incertae_sedis, Incertae sedis, etc.
+    "^[Mm]etagenome$",
+    "^[Ee]nvironmental",
+    "^[kpcofgs]__$" # empty QIIME-style ranks
+  ),
+  min_char = 4,
+  redundant_suffix = "_sp",
+  taxonomic_ranks = c(
+    "Domain", "Phylum", "Class", "Order",
+    "Family", "Genus", "Species"
+  ),
+  modify_phyloseq = FALSE,
+  remove_border_spaces = TRUE,
+  remove_all_space = FALSE,
+  replace_space_with = "_"
+) {
   if (is.null(physeq@tax_table)) {
     warning("The phyloseq object does not contain a taxonomy table (@tax_table slot).")
     if (modify_phyloseq) {
@@ -1504,9 +1544,11 @@ verify_tax_table <- function(
   n_replaced_patterns <- 0
   n_replaced_short <- 0
   n_replaced_redundant <- 0
+  n_trimmed_spaces <- 0
+  n_replaced_internal_spaces <- 0
 
   # 1. Check/replace values matching replace_to_NA patterns
- pattern_matches <- list()
+  pattern_matches <- list()
   for (pattern in replace_to_NA) {
     matches <- which(grepl(pattern, tax_mat) & !is.na(tax_mat), arr.ind = TRUE)
     if (nrow(matches) > 0) {
@@ -1598,7 +1640,7 @@ verify_tax_table <- function(
     }
   }
 
-  # Verbose-only checks (3-6)
+  # Verbose-only checks (3-5)
   if (verbose) {
     # 3. Check for ranks with only NA values (after potential modifications)
     ranks_only_na <- character(0)
@@ -1641,25 +1683,7 @@ verify_tax_table <- function(
       )
     }
 
-    # 5. Check for leading/trailing whitespace
-    has_spaces <- FALSE
-    for (rank in rank_names) {
-      rank_values <- tax_mat[, rank]
-      non_na_values <- rank_values[!is.na(rank_values)]
-      if (any(grepl("^\\s|\\s$", non_na_values))) {
-        has_spaces <- TRUE
-        break
-      }
-    }
-
-    if (has_spaces) {
-      warning(
-        "Found taxonomic values with leading or trailing whitespace. ",
-        "Consider trimming these values to avoid matching issues."
-      )
-    }
-
-    # 6. Check for duplicate taxonomic paths
+    # 5. Check for duplicate taxonomic paths
     tax_paths <- apply(tax_mat, 1, function(row) paste(row, collapse = "|"))
     dup_count <- sum(duplicated(tax_paths))
 
@@ -1669,7 +1693,112 @@ verify_tax_table <- function(
         "This may indicate redundant taxa or issues with taxonomic assignment."
       )
     }
-  } # End of verbose-only checks (1-6)
+  } # End of verbose-only checks (3-5)
+
+  # 6. Check/handle whitespace in taxonomic values
+  # Detect border spaces (leading/trailing) and internal spaces
+  has_border_spaces <- FALSE
+  has_internal_spaces <- FALSE
+  border_space_entries <- list()
+  internal_space_entries <- list()
+
+  for (j in seq_along(rank_names)) {
+    rank <- rank_names[j]
+    rank_values <- tax_mat[, rank]
+    for (i in seq_len(nrow(tax_mat))) {
+      val <- rank_values[i]
+      if (is.na(val)) next
+
+      # Check for border spaces (leading/trailing whitespace)
+      if (grepl("^\\s|\\s$", val)) {
+        has_border_spaces <- TRUE
+        border_space_entries[[length(border_space_entries) + 1]] <- list(
+          value = val,
+          rank = rank,
+          row = i,
+          col = j
+        )
+      }
+
+      # Check for internal spaces (spaces within the value, not at borders)
+      trimmed_val <- trimws(val)
+      if (grepl("\\s", trimmed_val)) {
+        has_internal_spaces <- TRUE
+        internal_space_entries[[length(internal_space_entries) + 1]] <- list(
+          value = val,
+          rank = rank,
+          row = i,
+          col = j
+        )
+      }
+    }
+  }
+
+  # Handle border spaces
+  if (has_border_spaces) {
+    unique_border_values <- unique(sapply(border_space_entries, function(x) {
+      paste0("'", x$value, "' (", x$rank, ")")
+    }))
+    if (length(unique_border_values) <= 5) {
+      border_display <- paste(unique_border_values, collapse = ", ")
+    } else {
+      border_display <- paste(c(unique_border_values[1:5], "..."), collapse = ", ")
+    }
+
+    if (modify_phyloseq && remove_border_spaces) {
+      # Trim leading/trailing whitespace
+      for (entry in border_space_entries) {
+        tax_mat[entry$row, entry$col] <- trimws(tax_mat[entry$row, entry$col])
+      }
+      n_trimmed_spaces <- length(border_space_entries)
+      message(
+        "Trimmed leading/trailing whitespace from ",
+        n_trimmed_spaces, " value(s): ", border_display
+      )
+    } else if (verbose) {
+      warning(
+        "Found ", length(border_space_entries),
+        " taxonomic value(s) with leading or trailing whitespace: ",
+        border_display, ". ",
+        "Use modify_phyloseq = TRUE to trim these values."
+      )
+    }
+  }
+
+  # Handle internal spaces
+  if (has_internal_spaces) {
+    unique_internal_values <- unique(sapply(internal_space_entries, function(x) {
+      paste0("'", trimws(x$value), "' (", x$rank, ")")
+    }))
+    if (length(unique_internal_values) <= 5) {
+      internal_display <- paste(unique_internal_values, collapse = ", ")
+    } else {
+      internal_display <- paste(c(unique_internal_values[1:5], "..."), collapse = ", ")
+    }
+
+    if (modify_phyloseq && remove_all_space) {
+      # Replace internal spaces
+      for (entry in internal_space_entries) {
+        current_val <- tax_mat[entry$row, entry$col]
+        # First trim, then replace internal spaces
+        new_val <- gsub("\\s+", replace_space_with, trimws(current_val))
+        tax_mat[entry$row, entry$col] <- new_val
+      }
+      n_replaced_internal_spaces <- length(internal_space_entries)
+      message(
+        "Replaced internal spaces with '", replace_space_with, "' in ",
+        n_replaced_internal_spaces, " value(s): ", internal_display
+      )
+    } else if (verbose) {
+      warning(
+        "Found ", length(internal_space_entries),
+        " taxonomic value(s) with internal spaces: ",
+        internal_display, ". ",
+        "Use modify_phyloseq = TRUE and remove_all_space = TRUE to replace ",
+        "these spaces with '", replace_space_with, "'."
+      )
+    }
+  }
 
   # 7. Check for redundant rank patterns (e.g., "Russula_sp" in Species
   #    when "Russula" is already in Genus)
@@ -1757,17 +1886,43 @@ verify_tax_table <- function(
 
   # Return modified phyloseq if requested
   if (modify_phyloseq) {
-    total_replaced <- n_replaced_patterns + n_replaced_short + n_replaced_redundant
-    if (total_replaced > 0) {
+    total_replaced_na <- n_replaced_patterns + n_replaced_short + n_replaced_redundant
+    total_space_modified <- n_trimmed_spaces + n_replaced_internal_spaces
+    total_modified <- total_replaced_na + total_space_modified
+
+    if (total_modified > 0) {
       physeq@tax_table <- tax_table(tax_mat)
+      # Build summary message
+      summary_parts <- c()
+      if (total_replaced_na > 0) {
+        summary_parts <- c(
+          summary_parts,
+          paste0(
+            total_replaced_na, " value(s) replaced with NA (",
+            n_replaced_patterns, " NA-like patterns, ",
+            n_replaced_short, " short values, ",
+            n_replaced_redundant, " redundant suffixes)"
+          )
+        )
+      }
+      if (n_trimmed_spaces > 0) {
+        summary_parts <- c(
+          summary_parts,
+          paste0(n_trimmed_spaces, " value(s) trimmed of border whitespace")
+        )
+      }
+      if (n_replaced_internal_spaces > 0) {
+        summary_parts <- c(
+          summary_parts,
+          paste0(n_replaced_internal_spaces, " value(s) had internal spaces replaced")
+        )
+      }
       message(
-        "Total: replaced ", total_replaced, " value(s) with NA in the taxonomy table ",
-        "(", n_replaced_patterns, " NA-like patterns, ",
-        n_replaced_short, " short values, ",
-        n_replaced_redundant, " redundant suffixes)."
+        "Total: ", total_modified, " modification(s) in the taxonomy table: ",
+        paste(summary_parts, collapse = "; "), "."
       )
     } else {
-      message("No values to replace. Returning original phyloseq object.")
+      message("No values to modify. Returning original phyloseq object.")
     }
     return(physeq)
   }
@@ -1805,16 +1960,15 @@ verify_tax_table <- function(
 #' @examples
 #'
 #' verify_pq(data_fungi)
-#' verify_pq(data_fungi, check_taxonomy = TRUE)
-#'
-#'
+#' \donttest{
+#'   verify_pq(data_fungi, check_taxonomy = TRUE)
+#' }
 verify_pq <- function(physeq,
                       verbose = FALSE,
                       min_nb_seq_sample = 500,
                       min_nb_seq_taxa = 1,
                       check_taxonomy = FALSE,
                       ...) {
-
   # check consistency of taxa_names between slots
   taxa_slots <- list()
   if (!is.null(physeq@otu_table)) {

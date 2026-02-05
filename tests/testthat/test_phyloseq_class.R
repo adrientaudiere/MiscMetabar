@@ -81,11 +81,11 @@ test_that("verify_pq works fine", {
   expect_silent(suppressWarnings(verify_pq(data_fungi_mini, verbose = TRUE)))
 
   data_fungi2 <- data_fungi
-  taxa_names(data_fungi2@otu_table) <- paste0("New_names_",taxa_names(data_fungi) )
+  taxa_names(data_fungi2@otu_table) <- paste0("New_names_", taxa_names(data_fungi))
   expect_error(verify_pq(data_fungi2), "Inconsistency of taxa_names between otu_table and tax_table slots.")
 
   data_fungi3 <- data_fungi
-  sample_names(data_fungi3@sam_data) <- paste0("New_names_", sample_names(data_fungi) )
+  sample_names(data_fungi3@sam_data) <- paste0("New_names_", sample_names(data_fungi))
   expect_error(verify_pq(data_fungi3), "Inconsistency of sample_names between otu_table and sam_data slots.")
 })
 
@@ -100,30 +100,30 @@ test_that("verify_tax_table works fine", {
   data_unclassified <- data_fungi_mini
   data_unclassified@tax_table[1, "Genus"] <- "unclassified_Fungi"
   expect_silent(verify_tax_table(data_unclassified)) # verbose = FALSE
-  expect_warning(verify_tax_table(data_unclassified, verbose = TRUE), "NA-like patterns")
+  expect_warning(expect_message(expect_warning(expect_warning(verify_tax_table(data_unclassified, verbose = TRUE), "NA-like patterns"))))
 
   # Test with empty QIIME-style rank
   data_empty_rank <- data_fungi_mini
   data_empty_rank@tax_table[1, "Genus"] <- "g__"
-  expect_warning(verify_tax_table(data_empty_rank, verbose = TRUE), "NA-like patterns")
+  expect_warning(expect_message(expect_warning(expect_warning(verify_tax_table(data_empty_rank, verbose = TRUE), "NA-like patterns"))))
 
   # Test with short values
   data_short <- data_fungi_mini
   data_short@tax_table[1, "Genus"] <- "sp"
-  expect_warning(verify_tax_table(data_short, verbose = TRUE), "less than 4 characters")
+  expect_warning(expect_message(expect_warning(expect_warning(verify_tax_table(data_short, verbose = TRUE), "less than 4 characters"))))
 
   # Test with leading/trailing spaces
   data_spaces <- data_fungi_mini
   data_spaces@tax_table[1, "Genus"] <- " Peziza "
-  expect_warning(verify_tax_table(data_spaces, verbose = TRUE), "leading or trailing whitespace")
+  expect_warning(expect_warning(expect_message(expect_warning(expect_warning(verify_tax_table(data_spaces, verbose = TRUE), "leading or trailing whitespace")))))
 
   # Test with ranks containing only NA
   data_all_na <- data_fungi_mini
   data_all_na@tax_table[, "Species"] <- NA
-  expect_warning(verify_tax_table(data_all_na, verbose = TRUE), "only NA values")
+  expect_warning(expect_message(expect_warning(expect_warning(expect_warning(verify_tax_table(data_all_na, verbose = TRUE), "only NA values")))))
 
   # Test check_taxonomy parameter in verify_pq (implicitly sets verbose = TRUE)
-  expect_warning(verify_pq(data_unclassified, check_taxonomy = TRUE), "NA-like patterns")
+  expect_message(expect_warning(expect_warning(expect_warning(verify_pq(data_unclassified, check_taxonomy = TRUE), "NA-like patterns"))))
 })
 
 data_fungi_with__P <- data_fungi_mini

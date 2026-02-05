@@ -16,7 +16,7 @@ function \code{\link[dada2:makeSequenceTable]{dada2::makeSequenceTable()}}}
 filtering.
 \itemize{
 \item "Discard_only_chim" will only discard taxa classify as chimera by vsearch
-\item "Select_only_non_chim" will only select taxa classify as non-chimera by
+\item "Select_only_non_chim_seqlen_filtered" will only select taxa classify as non-chimera by
 vsearch(after filtering taxa based on their sequence length by the
 parameter \code{min_seq_length} from the \code{\link[=chimera_detection_vs]{chimera_detection_vs()}} function)
 \item "Select_only_chim" will only select taxa classify as chimera by
@@ -48,18 +48,35 @@ Use the VSEARCH software.
 }
 \details{
 This function is mainly a wrapper of the work of others.
-Please make \href{https://github.com/torognes/vsearch}{vsearch}.
+Please cite \href{https://github.com/torognes/vsearch}{vsearch}.
 }
 \examples{
 \dontshow{if (MiscMetabar::is_vsearch_installed()) withAutoprint(\{ # examplesIf}
 \donttest{
+# Adding a chimeric sequence for the example
+data_fungi_with_chim <- data_fungi
+data_fungi_with_chim@refseq["ASV1710"] <- Biostrings::xscat(
+  Biostrings::subseq(data_fungi_with_chim@refseq[1], start = 1, end = 150),
+  Biostrings::subseq(data_fungi_with_chim@refseq[4], start = 151, end = 300)
+)
 data_fungi_nochim <- chimera_removal_vs(data_fungi)
+
+# Higher value of abskew parameter is less stringent
 data_fungi_nochim_16 <- chimera_removal_vs(data_fungi,
   abskew = 16,
   min_seq_length = 10
 )
+
+# Potential Chimeric ASVs detected by vsearch
+chim_asv <- taxa_names(data_fungi_with_chim)[!taxa_names(data_fungi_with_chim)
+   \%in\% taxa_names(data_fungi_nochim)]
+
+"ASV1710" \%in\% chim_asv
+
+track_wkflow(list(data_fungi_with_chim, data_fungi_nochim))
+
 data_fungi_nochim2 <-
-  chimera_removal_vs(data_fungi, type = "Select_only_non_chim")
+  chimera_removal_vs(data_fungi, type = "Select_only_non_chim_seqlen_filtered")
 data_fungi_chimera <-
   chimera_removal_vs(data_fungi, type = "Select_only_chim")
 }

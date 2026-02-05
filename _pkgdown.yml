@@ -65,6 +65,7 @@ reference:
   contents:
   - clean_pq
   - verify_pq
+  - verify_tax_table
 
 - subtitle: Taxonomy
   contents:

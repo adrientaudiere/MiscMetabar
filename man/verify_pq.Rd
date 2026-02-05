@@ -8,7 +8,9 @@ verify_pq(
   physeq,
   verbose = FALSE,
   min_nb_seq_sample = 500,
-  min_nb_seq_taxa = 1
+  min_nb_seq_taxa = 1,
+  check_taxonomy = FALSE,
+  ...
 )
 }
 \arguments{
@@ -22,10 +24,16 @@ Minimum number of sequences per samples to not show warning.}
 
 \item{min_nb_seq_taxa}{(numeric) Only used if verbose = TRUE.
 Minimum number of sequences per taxa to not show warning.}
+
+\item{check_taxonomy}{(logical, default FALSE) If TRUE, call
+\code{\link[=verify_tax_table]{verify_tax_table()}} to check for common taxonomy table issues.}
+
+\item{...}{Additional arguments passed to \code{\link[=verify_tax_table]{verify_tax_table()}} when
+\code{check_taxonomy = TRUE}.}
 }
 \value{
 Nothing if the phyloseq object is valid. An error in the other case.
-Warnings if verbose = TRUE
+Warnings if verbose = TRUE or check_taxonomy = TRUE
 }
 \description{
 \if{html}{\out{
@@ -35,6 +43,13 @@ Warnings if verbose = TRUE
 
 
 Mostly for internal use in MiscMetabar functions.
+}
+\examples{
+
+verify_pq(data_fungi)
+\donttest{
+  verify_pq(data_fungi, check_taxonomy = TRUE)
+}
 }
 \author{
 Adrien Taudière

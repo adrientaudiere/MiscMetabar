@@ -560,19 +560,21 @@ vsearch_clustering <- function(physeq = NULL,
 #'   Biostrings::subseq(data_fungi_with_chim@refseq[4], start = 151, end = 300)
 #' )
 #' data_fungi_nochim <- chimera_removal_vs(data_fungi)
-#' 
-#' # Higher value of abskew parameter is less stringent 
+#'
+#' # Higher value of abskew parameter is less stringent
 #' data_fungi_nochim_16 <- chimera_removal_vs(data_fungi,
 #'   abskew = 16,
 #'   min_seq_length = 10
 #' )
-#' 
+#'
 #' # Potential Chimeric ASVs detected by vsearch
-#' chim_asv <- taxa_names(data_fungi_with_chim)[! taxa_names(data_fungi_with_chim)%in% taxa_names(data_fungi_nochim)]
+#' chim_asv <- taxa_names(data_fungi_with_chim)[!taxa_names(data_fungi_with_chim)
+#'    %in% taxa_names(data_fungi_nochim)]
+#' 
 #' "ASV1710" %in% chim_asv
-#' 
+#'
 #' track_wkflow(list(data_fungi_with_chim, data_fungi_nochim))
-#' 
+#'
 #' data_fungi_nochim2 <-
 #'   chimera_removal_vs(data_fungi, type = "Select_only_non_chim_seqlen_filtered")
 #' data_fungi_chimera <-

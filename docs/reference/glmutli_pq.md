@@ -82,10 +82,11 @@ glmutli_pq(
 
 - crit:
 
-  The Information Criterion to be used. Default is the small-sample
-  corrected AIC (aicc). This should be a function that accepts a fitted
-  model as first argument. Other provided functions are the classic AIC,
-  the Bayes IC (bic), and QAIC/QAICc (qaic and qaicc).
+  (character, default aicc) The Information Criterion to be used.
+  Default is the small-sample corrected AIC (aicc). This should be a
+  function that accepts a fitted model as first argument. Other provided
+  functions are the classic AIC, the Bayes IC (bic), and QAIC/QAICc
+  (qaic and qaicc).
 
 - ...:
 
