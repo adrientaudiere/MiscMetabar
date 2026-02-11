@@ -139,6 +139,102 @@ test_that("track_wkflow_samples function works fine with object of class matrix,
   }
 })
 
+test_that("track_wkflow_samples works with matrix input", {
+  skip_on_cran()
+  skip_on_os("windows")
+  mat <- as(data_fungi@otu_table, "matrix")
+  if (!taxa_are_rows(data_fungi)) {
+    # rows are samples already
+  } else {
+    mat <- t(mat)
+  }
+  res <- track_wkflow_samples(mat)
+  expect_type(res, "list")
+  expect_equal(length(res), nrow(mat))
+  expect_s3_class(res[[1]], "data.frame")
+})
+
+test_that("track_wkflow_samples works with single dada-class", {
+  skip_on_cran()
+  skip_on_os("windows")
+  res <- track_wkflow_samples(list("sample1" = dada_R1_001))
+  expect_type(res, "list")
+  expect_equal(length(res), 1)
+  expect_equal(names(res), "sample1")
+  expect_s3_class(res[[1]], "data.frame")
+})
+
+test_that("track_wkflow_samples works with list of dada-class", {
+  skip_on_cran()
+  skip_on_os("windows")
+  dada_list <- list("sampleA" = dada_R1_001, "sampleB" = dada_R1_001)
+  res <- track_wkflow_samples(dada_list)
+  expect_type(res, "list")
+  expect_equal(length(res), 2)
+  expect_true(all(c("sampleA", "sampleB") %in% names(res)))
+  expect_s3_class(res[[1]], "data.frame")
+})
+
+test_that("track_wkflow_samples works with single derep-class", {
+  skip_on_cran()
+  skip_on_os("windows")
+  res <- track_wkflow_samples(list("sample1" = derep_R1_001))
+  expect_type(res, "list")
+  expect_equal(length(res), 1)
+  expect_equal(names(res), "sample1")
+  expect_s3_class(res[[1]], "data.frame")
+})
+
+test_that("track_wkflow_samples works with list of derep-class", {
+  skip_on_cran()
+  skip_on_os("windows")
+  res <- track_wkflow_samples(derep_R_001)
+  expect_type(res, "list")
+  expect_equal(length(res), length(derep_R_001))
+  expect_s3_class(res[[1]], "data.frame")
+})
+
+test_that("track_wkflow_samples works with character vector (fastq paths)", {
+  skip_on_cran()
+  skip_on_os("windows")
+  fastq_paths <- c(
+    "inst/extdata/ex_R1_001.fastq.gz",
+    "inst/extdata/ex_R2_001.fastq.gz"
+  )
+  res <- track_wkflow_samples(fastq_paths)
+  expect_type(res, "list")
+  expect_equal(length(res), 2)
+  expect_equal(names(res), basename(fastq_paths))
+  expect_s3_class(res[[1]], "data.frame")
+})
+
+test_that("track_wkflow_samples works with named character vector", {
+  skip_on_cran()
+  skip_on_os("windows")
+  fastq_paths <- c(
+    "sampleX" = "inst/extdata/ex_R1_001.fastq.gz",
+    "sampleY" = "inst/extdata/ex_R2_001.fastq.gz"
+  )
+  res <- track_wkflow_samples(fastq_paths)
+  expect_type(res, "list")
+  expect_equal(length(res), 2)
+  expect_equal(names(res), c("sampleX", "sampleY"))
+})
+
+test_that("track_wkflow_samples works with mixed object types", {
+  skip_on_cran()
+  skip_on_os("windows")
+  mat <- as(data_fungi@otu_table, "matrix")
+  if (taxa_are_rows(data_fungi)) mat <- t(mat)
+  res <- track_wkflow_samples(list(
+    tree_A10_005,
+    mat
+  ))
+  expect_type(res, "list")
+  expect_true(length(res) > 0)
+  expect_s3_class(res[[1]], "data.frame")
+})
+
 test_that("select_one_sample function works fine", {
   expect_message(A8_005 <-
     select_one_sample(data_fungi, "A8-005_S4_MERGED.fastq.gz"))

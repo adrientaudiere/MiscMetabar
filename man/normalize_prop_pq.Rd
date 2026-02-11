@@ -36,6 +36,7 @@ McKnight et al. 2018 (\doi{doi:10.5061/dryad.tn8qs35})
 taxa_sums(data_fungi_mini)
 data_f_norm <- normalize_prop_pq(data_fungi_mini)
 taxa_sums(data_f_norm)
+sample_sums(data_f_norm)
 ggplot(data.frame(
   "norm" = scale(taxa_sums(data_f_norm)),
   "raw" = scale(taxa_sums(data_fungi_mini)),
@@ -43,7 +44,11 @@ ggplot(data.frame(
 )) +
   geom_point(aes(x = raw, y = norm))
 
-data_f_norm <- normalize_prop_pq(data_fungi_mini, base_log = NULL)
+data_f_norm <- normalize_prop_pq(taxa_as_columns(data_fungi_mini))
+
+data_f_norm2 <- normalize_prop_pq(data_fungi_mini, base_log = NULL)
+taxa_sums(data_f_norm2)
+sample_sums(data_f_norm2)
 }
 \author{
 Adrien Taudière

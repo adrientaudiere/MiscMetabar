@@ -452,11 +452,15 @@ track_wkflow <- function(list_of_objects,
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
-#' Contrary to [track_wkflow()], only phyloseq object are possible.
+#' Accept all input types supported by [track_wkflow()]: phyloseq objects,
+#' matrices (samples x clusters), dada-class, derep-class, lists of
+#' dada-class or derep-class, and character vectors of fastq/fastq.gz file
+#' paths.
 #' More information are available in the manual of the function [track_wkflow()]
 #'
-#' @param list_pq_obj (required) a list of object passed on to [track_wkflow()]
-#'   Only phyloseq object will return value because information of sample is needed
+#' @param list_of_objects (required) a list of objects passed on to
+#'   [track_wkflow()]. Accepts phyloseq, matrix, dada-class, derep-class,
+#'   lists of dada-class or derep-class, and character vectors of file paths.
 #' @param ... Other args passed on to [track_wkflow()]
 #'
 #' @return A list of dataframe. cf [track_wkflow()] for more information
@@ -469,26 +473,87 @@ track_wkflow <- function(list_of_objects,
 #' if (requireNamespace("pbapply")) {
 #'   track_wkflow_samples(tree_A10_005)
 #' }
-track_wkflow_samples <- function(list_pq_obj, ...) {
-  if (!inherits(list_pq_obj, "list")) {
-    list_pq_obj <- list(list_pq_obj)
+track_wkflow_samples <- function(list_of_objects, ...) {
+  if (!inherits(list_of_objects, "list")) {
+    list_of_objects <- list(list_of_objects)
   }
-  if (sum(!unlist(lapply(list_pq_obj, inherits, "phyloseq"))) != 0) {
-    stop("At least one object in your list_pq_obj is not a phyloseq obj.")
+
+  get_sample_names_from_object <- function(object, obj_name = NULL) {
+    if (inherits(object, "phyloseq")) {
+      sample_names(object)
+    } else if (inherits(object, "matrix")) {
+      rownames(object)
+    } else if (inherits(object, "dada")) {
+      obj_name
+    } else if (inherits(object, "derep")) {
+      obj_name
+    } else if (is.list(object) && length(object) > 0 &&
+      (inherits(object[[1]], "dada") || inherits(object[[1]], "derep"))) {
+      names(object)
+    } else if (is.character(object)) {
+      if (!is.null(names(object))) {
+        names(object)
+      } else {
+        basename(object)
+      }
+    } else {
+      obj_name
+    }
   }
-  sam_names <- unique(unlist(lapply(list_pq_obj, sample_names)))
+
+  subset_object_to_sample <- function(object, s) {
+    if (inherits(object, "phyloseq")) {
+      if (s %in% sample_names(object)) {
+        select_one_sample(object, sam_name = s)
+      } else {
+        matrix(0, nrow = 0, ncol = 0)
+      }
+    } else if (inherits(object, "matrix")) {
+      if (s %in% rownames(object)) {
+        object[s, , drop = FALSE]
+      } else {
+        matrix(0, nrow = 0, ncol = 0)
+      }
+    } else if (inherits(object, "dada") || inherits(object, "derep")) {
+      object
+    } else if (is.list(object) && length(object) > 0 &&
+      (inherits(object[[1]], "dada") || inherits(object[[1]], "derep"))) {
+      if (s %in% names(object)) {
+        object[[s]]
+      } else {
+        matrix(0, nrow = 0, ncol = 0)
+      }
+    } else if (is.character(object)) {
+      sample_id <- if (!is.null(names(object))) {
+        names(object)
+      } else {
+        basename(object)
+      }
+      idx <- which(sample_id == s)
+      if (length(idx) > 0) {
+        object[idx]
+      } else {
+        matrix(0, nrow = 0, ncol = 0)
+      }
+    } else {
+      matrix(0, nrow = 0, ncol = 0)
+    }
+  }
+
+  sam_names <- unique(unlist(lapply(seq_along(list_of_objects), function(i) {
+    obj_name <- names(list_of_objects)[i]
+    if (is.null(obj_name)) obj_name <- as.character(i)
+    get_sample_names_from_object(list_of_objects[[i]], obj_name)
+  })))
+
   res <- vector("list", length(sam_names))
   names(res) <- sam_names
   for (s in sam_names) {
-    list_pq_obj_samples <-
-      lapply(list_pq_obj, function(physeq) {
-        if (sum(sample_names(physeq) %in% s) == 1) {
-          select_one_sample(physeq, sam_name = s)
-        } else {
-          matrix(0, nrow = 0, ncol = 0)
-        }
+    list_obj_samples <-
+      lapply(list_of_objects, function(object) {
+        subset_object_to_sample(object, s)
       })
-    res[[s]] <- track_wkflow(list_pq_obj_samples) # ,...)
+    res[[s]] <- track_wkflow(list_obj_samples, ...)
   }
   return(res)
 }
@@ -3509,14 +3574,19 @@ taxa_only_in_one_level <- function(physeq,
 #' taxa_sums(data_fungi_mini)
 #' data_f_norm <- normalize_prop_pq(data_fungi_mini)
 #' taxa_sums(data_f_norm)
+#' sample_sums(data_f_norm)
 #' ggplot(data.frame(
 #'   "norm" = scale(taxa_sums(data_f_norm)),
 #'   "raw" = scale(taxa_sums(data_fungi_mini)),
 #'   "name_otu" = taxa_names(data_f_norm)
 #' )) +
 #'   geom_point(aes(x = raw, y = norm))
+#' 
+#' data_f_norm <- normalize_prop_pq(taxa_as_columns(data_fungi_mini))
 #'
-#' data_f_norm <- normalize_prop_pq(data_fungi_mini, base_log = NULL)
+#' data_f_norm2 <- normalize_prop_pq(data_fungi_mini, base_log = NULL)
+#' taxa_sums(data_f_norm2)
+#' sample_sums(data_f_norm2)
 normalize_prop_pq <- function(physeq,
                               base_log = 2,
                               constante = 10000,
@@ -3535,10 +3605,16 @@ normalize_prop_pq <- function(physeq,
   if (!is.null(base_log) && !is.na(base_log)) {
     new_otutab <- round(log(new_otutab + 1, base = base_log), digits = digits)
   }
-
-  new_physeq <- physeq
-  new_physeq@otu_table <- otu_table(new_otutab, taxa_are_rows = taxa_are_rows(physeq))
-
+   
+  if(taxa_are_rows(physeq)){
+ new_physeq <- physeq
+  new_physeq@otu_table <- otu_table(new_otutab, taxa_are_rows = TRUE)
+  } else {
+    new_physeq <- physeq
+    new_physeq@otu_table <- otu_table(t(new_otutab), taxa_are_rows = FALSE
+    )
+  }
+ 
   return(new_physeq)
 }
 ################################################################################

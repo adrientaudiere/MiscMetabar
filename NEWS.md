@@ -1,10 +1,14 @@
 # MiscMetabar 0.14.5 (in development) 
 
+- Bug fix in `normalize_prop_pq` when taxa_are_rows(physeq) were FALSE.
+
 - Improve the `verify_pq()` function for cases where taxa_names or sample_names are not consistent and to test for duplicate sequences in @refseq slot.
 
 - Add a function `verify_tax_table()` to verify some classic issues in tax_table.
 
 - Fix a bug in `aldex_pq()` and `plot_ordination_pq()`. Also fix a bug in `plot_ordination_pq()` when using phyloseq object where taxa are rows.
+
+- Extend `track_wkflow_samples()` to accept all input types supported by `track_wkflow()`: matrix, dada-class, derep-class, lists of dada/derep, and character vectors of fastq file paths (previously only phyloseq objects were accepted).
 
 - Fix a bug for case with only one column in slot @sam_data
 

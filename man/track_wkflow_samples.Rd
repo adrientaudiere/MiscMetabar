@@ -5,11 +5,12 @@
 \title{Track the number of reads (= sequences), samples and cluster (e.g. ASV)
 for each sample}
 \usage{
-track_wkflow_samples(list_pq_obj, ...)
+track_wkflow_samples(list_of_objects, ...)
 }
 \arguments{
-\item{list_pq_obj}{(required) a list of object passed on to \code{\link[=track_wkflow]{track_wkflow()}}
-Only phyloseq object will return value because information of sample is needed}
+\item{list_of_objects}{(required) a list of objects passed on to
+\code{\link[=track_wkflow]{track_wkflow()}}. Accepts phyloseq, matrix, dada-class, derep-class,
+lists of dada-class or derep-class, and character vectors of file paths.}
 
 \item{...}{Other args passed on to \code{\link[=track_wkflow]{track_wkflow()}}}
 }
@@ -23,7 +24,10 @@ A list of dataframe. cf \code{\link[=track_wkflow]{track_wkflow()}} for more inf
 }}
 
 
-Contrary to \code{\link[=track_wkflow]{track_wkflow()}}, only phyloseq object are possible.
+Accept all input types supported by \code{\link[=track_wkflow]{track_wkflow()}}: phyloseq objects,
+matrices (samples x clusters), dada-class, derep-class, lists of
+dada-class or derep-class, and character vectors of fastq/fastq.gz file
+paths.
 More information are available in the manual of the function \code{\link[=track_wkflow]{track_wkflow()}}
 }
 \examples{
