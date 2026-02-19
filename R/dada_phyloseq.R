@@ -863,6 +863,7 @@ write_pq <- function(physeq,
         paste0(path, "/ASV_table_allInOne.csv"),
         quote = quote,
         sep = sep_csv,
+        col.names = NA,
         ...
       )
     } else if (!is.null(physeq@otu_table) &&
@@ -903,6 +904,7 @@ write_pq <- function(physeq,
         paste0(path, "/ASV_table_allInOne.csv"),
         quote = quote,
         sep = sep_csv,
+        col.names = NA,
         ...
       )
     }
@@ -1558,7 +1560,6 @@ mumu_pq <- function(physeq,
 #'   replace_space_with = "_"
 #' )
 #' data_fungi3_cleaned@tax_table[2, "Species"] # "Russula_emetica"
-#'
 #' }
 verify_tax_table <- function(
   physeq,
@@ -2026,7 +2027,7 @@ verify_tax_table <- function(
 #'
 #' verify_pq(data_fungi)
 #' \donttest{
-#'   verify_pq(data_fungi, check_taxonomy = TRUE)
+#' verify_pq(data_fungi, check_taxonomy = TRUE)
 #' }
 verify_pq <- function(physeq,
                       verbose = FALSE,
@@ -3581,7 +3582,7 @@ taxa_only_in_one_level <- function(physeq,
 #'   "name_otu" = taxa_names(data_f_norm)
 #' )) +
 #'   geom_point(aes(x = raw, y = norm))
-#' 
+#'
 #' data_f_norm <- normalize_prop_pq(taxa_as_columns(data_fungi_mini))
 #'
 #' data_f_norm2 <- normalize_prop_pq(data_fungi_mini, base_log = NULL)
@@ -3605,16 +3606,15 @@ normalize_prop_pq <- function(physeq,
   if (!is.null(base_log) && !is.na(base_log)) {
     new_otutab <- round(log(new_otutab + 1, base = base_log), digits = digits)
   }
-   
-  if(taxa_are_rows(physeq)){
- new_physeq <- physeq
-  new_physeq@otu_table <- otu_table(new_otutab, taxa_are_rows = TRUE)
+
+  if (taxa_are_rows(physeq)) {
+    new_physeq <- physeq
+    new_physeq@otu_table <- otu_table(new_otutab, taxa_are_rows = TRUE)
   } else {
     new_physeq <- physeq
-    new_physeq@otu_table <- otu_table(t(new_otutab), taxa_are_rows = FALSE
-    )
+    new_physeq@otu_table <- otu_table(t(new_otutab), taxa_are_rows = FALSE)
   }
- 
+
   return(new_physeq)
 }
 ################################################################################
