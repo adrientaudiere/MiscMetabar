@@ -4016,8 +4016,30 @@ diff_fct_diff_class <-
 #' @param nb_seq (logical; default TRUE) If set to FALSE, only the number of ASV
 #'   is count. Concretely, physeq otu_table is transformed in a binary
 #'   otu_table (each value different from zero is set to one)
-#' @return A \code{\link[ggplot2]{ggplot}}2 plot  with bar representing the number of sequence en each
-#'   taxonomic groups
+#' @param add_ribbon (logical; default FALSE) If TRUE and `fact` is not
+#'   "Sample", add curved ribbons connecting matching taxa between
+#'   adjacent bars. Only meaningful when `fact` has more than one level.
+#' @param ribbon_alpha (numeric; default 0.3) Transparency of the ribbons.
+#' @param label_taxa (logical; default FALSE) If TRUE, replace the legend
+#'   with direct labels on the right side of the last bar. Segments are
+#'   drawn to resolve overlapping labels.
+#' @param void_theme (logical; default TRUE) If TRUE, use
+#'   [ggplot2::theme_void()] when `label_taxa` is TRUE.
+#' @param show_values (logical; default FALSE) If TRUE, display
+#'   abundance values (or percentages when `percent_bar = TRUE`) inside
+#'   bar segments that exceed `minimum_value_to_show`.
+#' @param minimum_value_to_show (numeric; default 0) When
+#'   `show_values = TRUE`, only segments with a value strictly above
+#'   this threshold get a label.
+#' @param label_size (numeric; default 3.2) Font size (in ggplot2 mm
+#'   units) for taxa labels when `label_taxa = TRUE`.
+#' @param value_size (numeric; default 3) Font size (in ggplot2 mm
+#'   units) for value labels when `show_values = TRUE`.
+#' @param bar_width (numeric; default 0 if `add_ribbon = FALSE`, 0.5 if `add_ribbon = TRUE` and `fact != "Sample"`)
+#'   Width of the bars. Set to 0 to have no visible bars and only ribbons.
+#'
+#' @return A \code{\link[ggplot2]{ggplot}}2 plot  with bar representing the
+#'   number of sequence en each taxonomic groups
 #' @export
 #'
 #' @examples
@@ -4028,6 +4050,23 @@ diff_fct_diff_class <-
 #' tax_bar_pq(data_fungi_ab, taxa = "Class")
 #' tax_bar_pq(data_fungi_ab, taxa = "Class", percent_bar = TRUE)
 #' tax_bar_pq(data_fungi_ab, taxa = "Class", fact = "Time")
+#' tax_bar_pq(data_fungi_ab,
+#'   taxa = "Class", fact = "Time",
+#'   percent_bar = TRUE, add_ribbon = TRUE
+#' )
+#' tax_bar_pq(data_fungi_ab,
+#'   taxa = "Class", fact = "Time",
+#'   percent_bar = TRUE, add_ribbon = TRUE, label_taxa = TRUE
+#' )
+#' tax_bar_pq(data_fungi_ab,
+#'   taxa = "Class", fact = "Time",
+#'   show_values = TRUE, minimum_value_to_show = 10000
+#' )
+#' tax_bar_pq(d, fact = "Type", taxa = "Class",
+#'    nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
+#'    add_ribbon = TRUE, value_size=7, ribbon_alpha = .6, show_values=TRUE, label_size = 4, top_label_size = 6,
+#'   minimum_value_to_show=0.05) |>
+#'   reorder_colors(alternate_lightness=TRUE)
 #' }
 #' @author Adrien Taudière
 #' @seealso [plot_tax_pq()] and [multitax_bar_pq()]
@@ -4038,26 +4077,251 @@ tax_bar_pq <-
     fact = "Sample",
     taxa = "Order",
     percent_bar = FALSE,
-    nb_seq = TRUE
+    nb_seq = TRUE,
+    add_ribbon = FALSE,
+    ribbon_alpha = 0.3,
+    label_taxa = FALSE,
+    void_theme = TRUE,
+    show_values = FALSE,
+    minimum_value_to_show = 0,
+    label_size = 3.2,
+    value_size = 3,
+    top_label_size = 3.2,
+    bar_width = ifelse(add_ribbon && fact != "Sample", 0.5, 0)
   ) {
     if (!nb_seq) {
       physeq <- as_binary_otu_table(physeq)
     }
     psm <- psmelt(physeq)
-    if (percent_bar) {
-      ggplot(psm) +
-        geom_bar(
-          aes(x = .data[[fact]], fill = .data[[taxa]], y = Abundance),
-          stat = "identity",
-          position = "fill"
+
+    psm[[fact]] <- factor(psm[[fact]])
+    bar_pos <- if (percent_bar) "fill" else "stack"
+
+    p <- ggplot(psm) +
+      geom_bar(
+        aes(x = .data[[fact]], fill = .data[[taxa]], y = Abundance),
+        stat = "identity",
+        position = bar_pos,
+        width = bar_width
+      )
+
+    if (add_ribbon && fact != "Sample") {
+      hw <- (bar_width %||% 0.9) / 2
+      sigmoid <- \(x) 1 / (1 + exp(-12 * (x - 0.5)))
+
+      pb <- ggplot_build(p)
+      bar_df <- pb$data[[1]]
+      taxa_chr <- as.character(psm[[taxa]])
+      taxa_chr[is.na(taxa_chr)] <- "NA"
+      bar_df$taxa_name <- taxa_chr
+
+      bar_agg <- bar_df |>
+        dplyr::group_by(x, taxa_name) |>
+        dplyr::summarise(
+          ymin = min(ymin),
+          ymax = max(ymax),
+          .groups = "drop"
         )
-    } else {
-      ggplot(psm) +
-        geom_bar(
-          aes(x = .data[[fact]], fill = .data[[taxa]], y = Abundance),
-          stat = "identity"
+
+      x_vals <- sort(unique(bar_agg$x))
+
+      ribbon_data <- do.call(
+        rbind,
+        lapply(
+          seq_len(length(x_vals) - 1),
+          \(i) {
+            left <- bar_agg[bar_agg$x == x_vals[i], ]
+            right <- bar_agg[bar_agg$x == x_vals[i + 1], ]
+            common <- intersect(left$taxa_name, right$taxa_name)
+            do.call(
+              rbind,
+              lapply(common, \(g) {
+                l <- left[left$taxa_name == g, ]
+                r <- right[right$taxa_name == g, ]
+                t_seq <- seq(0, 1, length.out = 50)
+                s <- sigmoid(t_seq)
+                x_left <- x_vals[i] + hw
+                x_right <- x_vals[i + 1] - hw
+                x_seq <- x_left + t_seq * (x_right - x_left)
+                data.frame(
+                  x = c(x_seq, rev(x_seq)),
+                  y = c(
+                    l$ymin + s * (r$ymin - l$ymin),
+                    rev(l$ymax + s * (r$ymax - l$ymax))
+                  ),
+                  taxa_fill = g,
+                  group_id = paste(i, g)
+                )
+              })
+            )
+          }
+        )
+      )
+
+      ribbon_data$taxa_fill[ribbon_data$taxa_fill == "NA"] <- NA
+
+      bar_tops <- bar_agg |>
+        dplyr::group_by(x) |>
+        dplyr::summarise(ymax = max(ymax), .groups = "drop")
+      x_labels <- pb$layout$panel_params[[1]]$x$get_labels()
+      x_labels[is.na(x_labels)] <- "NA"
+      bar_tops$label <- x_labels[bar_tops$x]
+
+      p <- p +
+        geom_polygon(
+          data = ribbon_data,
+          aes(x = x, y = y, fill = .data[["taxa_fill"]], group = group_id),
+          alpha = ribbon_alpha,
+          inherit.aes = FALSE
+        ) +
+        geom_text(
+          data = bar_tops,
+          aes(x = x, y = ymax, label = label),
+          vjust = -0.5,
+          inherit.aes = FALSE,
+          size = top_label_size
         )
     }
+
+    if (label_taxa) {
+      if (!exists("pb")) {
+        pb <- ggplot_build(p)
+      }
+      if (!exists("bar_df")) {
+        bar_df <- pb$data[[1]]
+        taxa_chr <- as.character(psm[[taxa]])
+        taxa_chr[is.na(taxa_chr)] <- "NA"
+        bar_df$taxa_name <- taxa_chr
+      }
+      if (!exists("bar_agg")) {
+        bar_agg <- bar_df |>
+          dplyr::group_by(x, taxa_name) |>
+          dplyr::summarise(
+            ymin = min(ymin),
+            ymax = max(ymax),
+            .groups = "drop"
+          )
+      }
+
+      x_max <- max(bar_agg$x)
+      last_bar <- bar_agg[bar_agg$x == x_max, ]
+      last_bar <- last_bar[last_bar$ymax - last_bar$ymin > 1e-4, ]
+      last_bar$ymid <- (last_bar$ymin + last_bar$ymax) / 2
+
+      last_bar <- last_bar[order(last_bar$ymid), ]
+
+      min_gap <- diff(range(c(last_bar$ymin, last_bar$ymax))) /
+        (nrow(last_bar) * 1.8)
+      label_y <- last_bar$ymid
+      for (j in seq_along(label_y)[-1]) {
+        if (label_y[j] - label_y[j - 1] < min_gap) {
+          label_y[j] <- label_y[j - 1] + min_gap
+        }
+      }
+      last_bar$label_y <- label_y
+
+      hw_bar <- (bar_width %||% 0.9) / 10
+      label_df <- data.frame(
+        x_bar = x_max + hw_bar,
+        x_label = x_max + hw_bar + 0.3,
+        y_bar = last_bar$ymid,
+        y_label = last_bar$label_y,
+        taxa_name = last_bar$taxa_name
+      )
+      label_df$taxa_fill <- label_df$taxa_name
+      label_df$taxa_fill[label_df$taxa_fill == "NA"] <- NA
+
+      needs_segment <- abs(label_df$y_bar - label_df$y_label) > 1e-4
+
+      p <- p +
+        geom_text(
+          data = label_df,
+          aes(
+            x = x_label,
+            y = y_label,
+            label = taxa_name,
+            color = taxa_fill
+          ),
+          hjust = 0,
+          size = label_size,
+          inherit.aes = FALSE,
+          show.legend = FALSE
+        ) +
+        scale_color_discrete(na.value = "grey50")
+
+      if (void_theme) {
+        p <- p + theme_void()
+      }
+      p <- p +
+        theme(
+          legend.position = "none",
+          plot.margin = margin(5.5, 80, 5.5, 5.5)
+        ) +
+        coord_cartesian(clip = "off")
+
+      if (any(needs_segment)) {
+        seg_df <- label_df[needs_segment, ]
+        p <- p +
+          geom_segment(
+            data = seg_df,
+            aes(
+              x = x_bar,
+              xend = x_label - 0.05,
+              y = y_bar,
+              yend = y_label,
+              color = taxa_fill
+            ),
+            linewidth = 0.3,
+            inherit.aes = FALSE,
+            show.legend = FALSE
+          )
+      }
+    } else {
+      if (void_theme) {
+        p <- p + theme_void()
+      }
+    }
+
+    if (show_values) {
+      pb_val <- ggplot_build(p)
+      val_df <- pb_val$data[[1]]
+
+      # Aggregate per bar x-position and fill group
+      val_agg <- val_df |>
+        dplyr::group_by(x, group) |>
+        dplyr::summarise(
+          ymin = min(ymin),
+          ymax = max(ymax),
+          fill = fill[1],
+          .groups = "drop"
+        )
+      val_agg$seg_value <- val_agg$ymax - val_agg$ymin
+      val_agg$ymid <- (val_agg$ymin + val_agg$ymax) / 2
+
+      if (percent_bar) {
+        val_agg$label_text <- paste0(
+          round(val_agg$seg_value * 100, 1),
+          "%"
+        )
+      } else {
+        val_agg$label_text <- as.character(round(val_agg$seg_value))
+      }
+
+      val_agg <- val_agg[val_agg$seg_value > minimum_value_to_show, ]
+
+      if (nrow(val_agg) > 0) {
+        p <- p +
+          geom_text(
+            data = val_agg,
+            aes(x = x, y = ymid, label = label_text),
+            inherit.aes = FALSE,
+            size = value_size,
+            color = "white"
+          )
+      }
+    }
+
+    p
   }
 ################################################################################
 
@@ -4184,8 +4448,9 @@ ridges_pq <- function(
 #'   is count. Concretely, physeq otu_table is transformed in a binary
 #'   otu_table (each value different from zero is set to one)
 #' @param log10trans (logical, default TRUE) If TRUE,
-#'   the number of sequences (or ASV if nb_seq = FALSE) is log10
-#'   transformed.
+#'   the number of sequences (or ASV if nb_seq = FALSE) is
+#'   log10(x + 1) transformed. The +1 ensures that taxa with a
+#'   count of 1 still have a visible tile area.
 #' @param plot_legend (logical, default FALSE) If TRUE, plot che
 #'   legend of color for lvl 1
 #' @param show_count (logical, default FALSE) If TRUE, appends the raw
@@ -4196,9 +4461,19 @@ ridges_pq <- function(
 #' @param growing_text (logical, default TRUE) If FALSE, all tile labels are
 #'   drawn at the same font size (disables per-tile text growing), which
 #'   corresponds to the smallest size that would otherwise be computed.
-#' @param text_size (numeric, default 15) Base font size for tile labels. 
-#'   Mostly useful when `growing_text = FALSE`, as it sets the size of all labels. 
-#' @param ... Additional arguments passed on to [treemapify::geom_treemap()] function.
+#' @param text_size (numeric, default 15) Base font size for tile labels.
+#'   Mostly useful when `growing_text = FALSE`, as it sets the size of all
+#'   labels.
+#' @param show_na (logical, default TRUE) If TRUE, taxa with NA values for
+#'   `lvl1` or `lvl2` are kept and displayed as a grey "NA" area. If FALSE,
+#'   they are removed (previous default behavior).
+#' @param na_label (character, default "NA") Label used to replace NA values
+#'   in `lvl1` and `lvl2` when `show_na = TRUE`.
+#' @param min_text_size (numeric, default 0) Minimum font size in points
+#'   for tile labels. Labels that would be smaller than this are hidden.
+#'   Set to 0 to always show all labels.
+#' @param ... Additional arguments passed on to
+#'   [treemapify::geom_treemap()] function.
 #'
 #' @return A ggplot2 object
 #' @export
@@ -4255,6 +4530,9 @@ treemap_pq <- function(
   facet_by = NULL,
   growing_text = TRUE,
   text_size = 15,
+  show_na = TRUE,
+  na_label = "NA",
+  min_text_size = 0,
   ...
 ) {
   if (!nb_seq) {
@@ -4274,9 +4552,16 @@ treemap_pq <- function(
     }
   }
 
-  psm <- psmelt(physeq) %>%
-    filter(!is.na(.data[[lvl2]])) %>%
-    filter(!is.na(.data[[lvl1]]))
+  psm <- psmelt(physeq)
+
+  if (show_na) {
+    psm[[lvl1]] <- ifelse(is.na(psm[[lvl1]]), na_label, psm[[lvl1]])
+    psm[[lvl2]] <- ifelse(is.na(psm[[lvl2]]), na_label, psm[[lvl2]])
+  } else {
+    psm <- psm |>
+      filter(!is.na(.data[[lvl2]])) |>
+      filter(!is.na(.data[[lvl1]]))
+  }
 
   if (!is.null(facet_by)) {
     psm2 <- psm %>%
@@ -4291,7 +4576,7 @@ treemap_pq <- function(
   psm2$raw_count <- psm2$Abundance
 
   if (log10trans) {
-    psm2$Abundance <- log10(psm2$Abundance)
+    psm2$Abundance <- log10(psm2$Abundance + 1)
   }
 
   if (show_count) {
@@ -4316,8 +4601,19 @@ treemap_pq <- function(
       colour = "white",
       place = "centre",
       size = text_size,
-      grow = growing_text
+      grow = growing_text,
+      min.size = min_text_size
     )
+
+  if (show_na && na_label %in% psm2$LVL1) {
+    lvl1_values <- unique(psm2$LVL1)
+    non_na <- setdiff(lvl1_values, na_label)
+    n_colors <- length(non_na)
+    default_colors <- scales::hue_pal()(n_colors)
+    fill_colors <- stats::setNames(default_colors, non_na)
+    fill_colors[[na_label]] <- "grey70"
+    p <- p + scale_fill_manual(values = fill_colors)
+  }
 
   if (!is.null(facet_by)) {
     p <- p + facet_wrap(vars(.data[[facet_by]]))
@@ -5765,6 +6061,195 @@ plot_seq_ratio_pq <- function(physeq, min_nb_seq = 1000, annotations = TRUE) {
   }
 
   return(p)
+}
+################################################################################
+
+################################################################################
+#' Reorder fill and color scales to maximize perceptual contrast between
+#' adjacent segments
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#' In stacked bar plots, ggplot2's default discrete palette assigns colors
+#' alphabetically, which often places perceptually similar colors next to
+#' each other. This function reassigns the **same set of colors** to factor
+#' levels so that visually adjacent segments receive maximally different
+#' colors. Both the fill and color scales are updated so that direct
+#' labels (e.g. from `label_taxa = TRUE`) stay in sync with the bars.
+#'
+#' @param p A ggplot object that uses a discrete fill aesthetic. Can be
+#'   omitted when using the `+` operator (e.g.
+#'   `p + reorder_colors()`).
+#' @param alternate_lightness (logical, default FALSE) If TRUE, darken every
+#'   other level to add a luminance alternation cue on top of hue
+#'   differences.
+#' @param lightness_amount (numeric, default 0.15) Intensity of the
+#'   lightness alternation (proportion to darken). Only used when
+#'   `alternate_lightness = TRUE`.
+#' @param colorblind (logical, default FALSE) If TRUE, compute perceptual
+#'   distances under simulated deuteranopia so that the reordering
+#'   optimizes contrast for colorblind viewers.
+#'
+#' @return A new ggplot object with [ggplot2::scale_fill_manual()] and
+#'   (if a color scale is present) [ggplot2::scale_color_manual()]
+#'   replacing the original scales. When `p` is omitted, returns an
+#'   object that can be added to a ggplot with `+`.
+#' @export
+#' @author Adrien Taudière
+#' @examples
+#' p <- tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time")
+#' reorder_colors(p)
+#' reorder_colors(p, colorblind = TRUE)
+#' p + reorder_colors(alternate_lightness = TRUE)
+reorder_colors <- function(
+  p = NULL,
+  alternate_lightness = FALSE,
+  lightness_amount = 0.15,
+  colorblind = FALSE
+) {
+  spec <- structure(
+    list(
+      alternate_lightness = alternate_lightness,
+      lightness_amount = lightness_amount,
+      colorblind = colorblind
+    ),
+    class = "reorder_colors_spec"
+  )
+  if (is.null(p)) {
+    return(spec)
+  }
+  if (!inherits(p, "gg")) {
+    stop("p must be a ggplot object")
+  }
+
+  pb <- ggplot_build(p)
+  fill_scale <- pb$plot$scales$get_scales("fill")
+  if (is.null(fill_scale) || !fill_scale$is_discrete()) {
+    stop("The plot must have a discrete fill scale")
+  }
+
+  levels <- fill_scale$get_limits()
+  n <- length(levels)
+  if (n <= 1) {
+    return(p)
+  }
+
+  na_val <- fill_scale$na.value %||% "grey50"
+  colors <- fill_scale$palette(n)
+  if (is.null(names(colors))) {
+    names(colors) <- levels
+  }
+
+  # Convert hex to sRGB matrix (rows = colors, cols = R/G/B in [0,1])
+  rgb_mat <- t(col2rgb(colors)) / 255
+
+  # Optionally simulate deuteranopia before computing distances
+  if (colorblind) {
+    # Brettel 1997 deuteranopia simulation matrix for sRGB
+    deutan_mat <- matrix(
+      c(
+        0.625,
+        0.375,
+        0.0,
+        0.7,
+        0.3,
+        0.0,
+        0.0,
+        0.3,
+        0.7
+      ),
+      nrow = 3,
+      byrow = TRUE
+    )
+    rgb_for_dist <- rgb_mat %*% t(deutan_mat)
+  } else {
+    rgb_for_dist <- rgb_mat
+  }
+
+  # Convert to CIE Lab for perceptual distance
+  lab_mat <- convertColor(rgb_for_dist, from = "sRGB", to = "Lab")
+
+  # Pairwise Euclidean distances in Lab space
+  dist_mat <- as.matrix(dist(lab_mat))
+
+  # Greedy reordering: start with the color having the largest mean distance
+  avg_dist <- rowMeans(dist_mat)
+  order_idx <- integer(n)
+  order_idx[1] <- which.max(avg_dist)
+  remaining <- setdiff(seq_len(n), order_idx[1])
+
+  for (i in 2:n) {
+    prev <- order_idx[i - 1]
+    dists_to_prev <- dist_mat[prev, remaining]
+    best <- which.max(dists_to_prev)
+    order_idx[i] <- remaining[best]
+    remaining <- setdiff(remaining, order_idx[i])
+  }
+
+  reordered_colors <- colors[order_idx]
+
+  # Optional: alternate lightness (darken even, lighten odd)
+  if (alternate_lightness) {
+    rgb_reordered <- t(col2rgb(reordered_colors)) / 255
+    for (i in seq_along(reordered_colors)) {
+      if (i %% 2 == 0) {
+        # Darken
+        rgb_reordered[i, ] <- pmax(
+          rgb_reordered[i, ] * (1 - lightness_amount),
+          0
+        )
+      } else {
+        # Lighten
+        rgb_reordered[i, ] <- pmin(
+          rgb_reordered[i, ] + (1 - rgb_reordered[i, ]) * lightness_amount,
+          1
+        )
+      }
+    }
+    reordered_colors <- rgb(
+      rgb_reordered[, 1],
+      rgb_reordered[, 2],
+      rgb_reordered[, 3]
+    )
+  }
+
+  # Build named vector: level -> reordered color
+  new_colors <- stats::setNames(reordered_colors, levels)
+
+  # Remove existing fill scale and add the new one
+  p$scales$scales <- p$scales$scales[
+    !vapply(p$scales$scales, \(s) "fill" %in% s$aesthetics, logical(1))
+  ]
+  p <- p + scale_fill_manual(values = new_colors, na.value = na_val)
+
+  # Also update the color scale if one exists
+  color_scale <- pb$plot$scales$get_scales("colour")
+  if (!is.null(color_scale) && color_scale$is_discrete()) {
+    color_na_val <- color_scale$na.value %||% "grey50"
+    p$scales$scales <- p$scales$scales[
+      !vapply(
+        p$scales$scales,
+        \(s) "colour" %in% s$aesthetics,
+        logical(1)
+      )
+    ]
+    p <- p + scale_color_manual(values = new_colors, na.value = color_na_val)
+  }
+
+  p
+}
+
+#' @exportS3Method ggplot2::ggplot_add
+ggplot_add.reorder_colors_spec <- function(object, plot, object_name) {
+  reorder_colors(
+    p = plot,
+    alternate_lightness = object$alternate_lightness,
+    lightness_amount = object$lightness_amount,
+    colorblind = object$colorblind
+  )
 }
 ################################################################################
 

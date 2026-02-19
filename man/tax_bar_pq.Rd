@@ -9,7 +9,15 @@ tax_bar_pq(
   fact = "Sample",
   taxa = "Order",
   percent_bar = FALSE,
-  nb_seq = TRUE
+  nb_seq = TRUE,
+  add_ribbon = FALSE,
+  ribbon_alpha = 0.3,
+  label_taxa = FALSE,
+  void_theme = TRUE,
+  show_values = FALSE,
+  minimum_value_to_show = 0,
+  label_size = 3.2,
+  value_size = 3
 )
 }
 \arguments{
@@ -28,10 +36,37 @@ the space between 0 and 1. It just set position = "fill" in the
 \item{nb_seq}{(logical; default TRUE) If set to FALSE, only the number of ASV
 is count. Concretely, physeq otu_table is transformed in a binary
 otu_table (each value different from zero is set to one)}
+
+\item{add_ribbon}{(logical; default FALSE) If TRUE and \code{fact} is not
+"Sample", add curved ribbons connecting matching taxa between
+adjacent bars. Only meaningful when \code{fact} has more than one level.}
+
+\item{ribbon_alpha}{(numeric; default 0.3) Transparency of the ribbons.}
+
+\item{label_taxa}{(logical; default FALSE) If TRUE, replace the legend
+with direct labels on the right side of the last bar. Segments are
+drawn to resolve overlapping labels.}
+
+\item{void_theme}{(logical; default TRUE) If TRUE, use
+\code{\link[ggplot2:ggtheme]{ggplot2::theme_void()}} when \code{label_taxa} is TRUE.}
+
+\item{show_values}{(logical; default FALSE) If TRUE, display
+abundance values (or percentages when \code{percent_bar = TRUE}) inside
+bar segments that exceed \code{minimum_value_to_show}.}
+
+\item{minimum_value_to_show}{(numeric; default 0) When
+\code{show_values = TRUE}, only segments with a value strictly above
+this threshold get a label.}
+
+\item{label_size}{(numeric; default 3.2) Font size (in ggplot2 mm
+units) for taxa labels when \code{label_taxa = TRUE}.}
+
+\item{value_size}{(numeric; default 3) Font size (in ggplot2 mm
+units) for value labels when \code{show_values = TRUE}.}
 }
 \value{
-A \code{\link[ggplot2]{ggplot}}2 plot  with bar representing the number of sequence en each
-taxonomic groups
+A \code{\link[ggplot2]{ggplot}}2 plot  with bar representing the
+number of sequence en each taxonomic groups
 }
 \description{
 \if{html}{\out{
@@ -50,6 +85,18 @@ tax_bar_pq(data_fungi_ab) + theme(legend.position = "none")
 tax_bar_pq(data_fungi_ab, taxa = "Class")
 tax_bar_pq(data_fungi_ab, taxa = "Class", percent_bar = TRUE)
 tax_bar_pq(data_fungi_ab, taxa = "Class", fact = "Time")
+tax_bar_pq(data_fungi_ab,
+  taxa = "Class", fact = "Time",
+  percent_bar = TRUE, add_ribbon = TRUE
+)
+tax_bar_pq(data_fungi_ab,
+  taxa = "Class", fact = "Time",
+  percent_bar = TRUE, add_ribbon = TRUE, label_taxa = TRUE
+)
+tax_bar_pq(data_fungi_ab,
+  taxa = "Class", fact = "Time",
+  show_values = TRUE, minimum_value_to_show = 10000
+)
 }
 }
 \seealso{

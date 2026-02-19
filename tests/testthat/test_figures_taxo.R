@@ -358,7 +358,7 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
       treemap_pq(
         clean_pq(data_fungi_mini),
         "Order", "Class",
-        facet_by = "Time", 
+        facet_by = "Time",
         log10trans = FALSE
       ),
       "ggplot"
@@ -367,7 +367,7 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
       treemap_pq(
         clean_pq(data_fungi_mini),
         "Order", "Class",
-        growing_text = FALSE, 
+        growing_text = FALSE,
         log10trans = FALSE
       ),
       "ggplot"
@@ -379,6 +379,81 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
         facet_by = "nonexistent_column"
       )
     )
+    expect_s3_class(
+      treemap_pq(
+        data_fungi_mini,
+        "Order", "Class",
+        show_na = TRUE
+      ),
+      "ggplot"
+    )
+    expect_s3_class(
+      treemap_pq(
+        data_fungi_mini,
+        "Order", "Class",
+        show_na = FALSE
+      ),
+      "ggplot"
+    )
+    expect_s3_class(
+      treemap_pq(
+        data_fungi_mini,
+        "Order", "Class",
+        show_na = TRUE,
+        na_label = "Unknown"
+      ),
+      "ggplot"
+    )
+    expect_s3_class(
+      treemap_pq(
+        data_fungi_mini,
+        "Order", "Class",
+        min_text_size = 4
+      ),
+      "ggplot"
+    )
+  }
+})
+
+test_that("treemap_pq show_na keeps NA taxa", {
+  if (requireNamespace("treemapify")) {
+    skip_on_cran()
+    p_na <- treemap_pq(
+      data_fungi_mini,
+      "Order", "Class",
+      show_na = TRUE
+    )
+    p_no_na <- treemap_pq(
+      data_fungi_mini,
+      "Order", "Class",
+      show_na = FALSE
+    )
+    df_na <- ggplot2::ggplot_build(p_na)$data[[1]]
+    df_no_na <- ggplot2::ggplot_build(p_no_na)$data[[1]]
+    expect_gte(nrow(df_na), nrow(df_no_na))
+  }
+})
+
+test_that("treemap_pq log10 transform gives nonzero area for count 1", {
+  if (requireNamespace("treemapify")) {
+    skip_on_cran()
+    otu <- matrix(c(100, 100, 1), nrow = 3, ncol = 1)
+    rownames(otu) <- paste0("ASV", 1:3)
+    colnames(otu) <- "S1"
+    tax <- matrix(c("A", "A", "B"), ncol = 1)
+    colnames(tax) <- "Genus"
+    rownames(tax) <- rownames(otu)
+    sam <- data.frame(Type = "T0", row.names = "S1")
+    ps <- phyloseq::phyloseq(
+      phyloseq::otu_table(otu, taxa_are_rows = TRUE),
+      phyloseq::tax_table(tax),
+      phyloseq::sample_data(sam)
+    )
+    p <- treemap_pq(ps, "Genus", "Genus", nb_seq = TRUE)
+    df <- ggplot2::ggplot_build(p)$data[[1]]
+    expect_equal(nrow(df), 2)
+    expect_true(all(df$xmax - df$xmin > 0))
+    expect_true(all(df$ymax - df$ymin > 0))
   }
 })
 
@@ -405,6 +480,44 @@ test_that("tax_bar_pq work with data_fungi dataset", {
     ),
     "ggplot"
   )
+  expect_s3_class(
+    tax_bar_pq(
+      data_fungi_mini,
+      taxa = "Class",
+      fact = "Time",
+      show_values = TRUE,
+      minimum_value_to_show = 500
+    ),
+    "ggplot"
+  )
+  expect_s3_class(
+    tax_bar_pq(
+      data_fungi_mini,
+      taxa = "Class",
+      fact = "Time",
+      percent_bar = TRUE,
+      show_values = TRUE
+    ),
+    "ggplot"
+  )
+})
+
+test_that("reorder_colors works on tax_bar_pq output", {
+  skip_on_cran()
+  p <- tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time")
+  expect_s3_class(reorder_colors(p), "ggplot")
+  expect_s3_class(reorder_colors(p, colorblind = TRUE), "ggplot")
+  expect_s3_class(
+    reorder_colors(p, alternate_lightness = TRUE),
+    "ggplot"
+  )
+  p2 <- reorder_colors(p)
+  built <- ggplot2::ggplot_build(p2)
+  fill_scale <- built$plot$scales$get_scales("fill")
+  expect_true(inherits(fill_scale, "ScaleDiscrete"))
+  expect_error(reorder_colors("not a plot"))
+  expect_s3_class(p + reorder_colors(), "ggplot")
+  expect_s3_class(p + reorder_colors(alternate_lightness = TRUE), "ggplot")
 })
 
 test_that("add_funguild_info and plot_guild_pq work with data_fungi_mini dataset", {

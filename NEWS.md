@@ -1,5 +1,11 @@
 # MiscMetabar 0.14.6 (in development)
 
+- Add `reorder_colors()` to reassign fill and color scales in ggplot objects so that adjacent segments have maximally different colors, with optional colorblind optimization and lightness alternation.
+
+- `tax_bar_pq()` gains `show_values` and `minimum_value_to_show` parameters to display abundance values (or percentages when `percent_bar = TRUE`) inside bar segments.
+
+- `treemap_pq()` now uses `log10(x + 1)` instead of `log10(x)` so that taxa with a count of 1 are still visible. New parameters `show_na` (default `TRUE`) to display NA taxa as a grey area, `na_label` to customize the NA label, and `min_text_size` (default `0`) to control the minimum font size for tile labels.
+
 # MiscMetabar 0.14.5
 
 - Bug fix in `normalize_prop_pq` when taxa_are_rows(physeq) were FALSE.
