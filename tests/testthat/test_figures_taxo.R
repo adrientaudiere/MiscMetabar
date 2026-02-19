@@ -346,6 +346,29 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
       ),
       "ggplot"
     )
+    expect_s3_class(
+      treemap_pq(
+        clean_pq(data_fungi_mini),
+        "Order", "Class",
+        show_count = TRUE, log10trans = FALSE
+      ),
+      "ggplot"
+    )
+    expect_s3_class(
+      treemap_pq(
+        clean_pq(data_fungi_mini),
+        "Order", "Class",
+        facet_by = "Time", log10trans = FALSE
+      ),
+      "ggplot"
+    )
+    expect_error(
+      treemap_pq(
+        clean_pq(data_fungi_mini),
+        "Order", "Class",
+        facet_by = "nonexistent_column"
+      )
+    )
   }
 })
 

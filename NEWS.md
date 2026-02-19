@@ -8,6 +8,8 @@
 
 - Fix a bug in `aldex_pq()` and `plot_ordination_pq()`. Also fix a bug in `plot_ordination_pq()` when using phyloseq object where taxa are rows.
 
+- Add parameters `show_count` and `facet_by` to `treemap_pq()`: `show_count` appends raw abundance counts to labels, and `facet_by` splits the treemap into facets by a sample metadata column.
+
 - Extend `track_wkflow_samples()` to accept all input types supported by `track_wkflow()`: matrix, dada-class, derep-class, lists of dada/derep, and character vectors of fastq file paths (previously only phyloseq objects were accepted).
 
 - Fix a bug for case with only one column in slot @sam_data

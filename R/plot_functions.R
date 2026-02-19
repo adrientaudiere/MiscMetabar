@@ -394,7 +394,7 @@ accu_plot_balanced_modality <- function(
   }
   for (i in 1:nperm) {
     if (rarefy_by_sample_before_merging) {
-      plist[, , i] <-
+      plist[,, i] <-
         as.matrix(suppressWarnings(suppressMessages(
           accu_plot(
             rarefy_sample_count_by_modality(
@@ -892,8 +892,7 @@ sankey_pq <-
           apply(mat_interm, 1, function(x) {
             tapply(
               x,
-              physeq@tax_table[
-                ,
+              physeq@tax_table[,
                 taxa[length(taxa)]
               ],
               function(x) {
@@ -906,8 +905,7 @@ sankey_pq <-
           apply(mat_interm, 1, function(x) {
             tapply(
               x,
-              physeq@tax_table[
-                ,
+              physeq@tax_table[,
                 taxa[length(taxa)]
               ],
               sum
@@ -1426,12 +1424,15 @@ ggvenn_pq <- function(
 
   for (f in levels(physeq@sam_data[[fact]])) {
     newphyseq <- physeq
-    new_DF <- newphyseq@sam_data[newphyseq@sam_data[[fact]] == f, , drop = FALSE]
+    new_DF <- newphyseq@sam_data[
+      newphyseq@sam_data[[fact]] == f,
+      ,
+      drop = FALSE
+    ]
     sample_data(newphyseq) <- sample_data(new_DF)
     newphyseq <- clean_pq(newphyseq)
     if (is.null(taxonomic_rank) || type == "nb_seq") {
-      res[[f]] <- colnames(newphyseq@otu_table[
-        ,
+      res[[f]] <- colnames(newphyseq@otu_table[,
         colSums(newphyseq@otu_table) > min_nb_seq
       ])
     } else {
@@ -4187,6 +4188,11 @@ ridges_pq <- function(
 #'   transformed.
 #' @param plot_legend (logical, default FALSE) If TRUE, plot che
 #'   legend of color for lvl 1
+#' @param show_count (logical, default FALSE) If TRUE, appends the raw
+#'   count in parentheses after each `lvl2` label, e.g. `"Agaricus (42)"`.
+#' @param facet_by (character, default NULL) Name of a column in
+#'   `sample_data(physeq)` to facet by. Each level produces its own
+#'   treemap panel via [ggplot2::facet_wrap()].
 #' @param ... Additional arguments passed on to [treemapify::geom_treemap()] function.
 #'
 #' @return A ggplot2 object
@@ -4223,6 +4229,14 @@ ridges_pq <- function(
 #'     "Order", "Class",
 #'     nb_seq = FALSE, log10trans = FALSE
 #'   )
+#'   treemap_pq(
+#'     clean_pq(subset_taxa(
+#'       data_fungi_sp_known,
+#'       Phylum == "Basidiomycota"
+#'     )),
+#'     "Order", "Class",
+#'     show_count = TRUE, log10trans = FALSE
+#'   )
 #' }
 #' }
 treemap_pq <- function(
@@ -4232,22 +4246,51 @@ treemap_pq <- function(
   nb_seq = TRUE,
   log10trans = TRUE,
   plot_legend = FALSE,
+  show_count = FALSE,
+  facet_by = NULL,
   ...
 ) {
   if (!nb_seq) {
     physeq <- as_binary_otu_table(physeq)
   }
 
+  if (!is.null(facet_by)) {
+    sam <- as.data.frame(sample_data(physeq))
+    if (!facet_by %in% colnames(sam)) {
+      stop(
+        "Column '",
+        facet_by,
+        "' not found in sample_data. ",
+        "Available: ",
+        paste(colnames(sam), collapse = ", ")
+      )
+    }
+  }
+
   psm <- psmelt(physeq) %>%
     filter(!is.na(.data[[lvl2]])) %>%
     filter(!is.na(.data[[lvl1]]))
 
-  psm2 <- psm %>%
-    group_by(.data[[lvl2]]) %>%
-    reframe(Abundance = sum(Abundance), LVL1 = unique(.data[[lvl1]]))
+  if (!is.null(facet_by)) {
+    psm2 <- psm %>%
+      group_by(.data[[lvl2]], .data[[facet_by]]) %>%
+      reframe(Abundance = sum(Abundance), LVL1 = unique(.data[[lvl1]]))
+  } else {
+    psm2 <- psm %>%
+      group_by(.data[[lvl2]]) %>%
+      reframe(Abundance = sum(Abundance), LVL1 = unique(.data[[lvl1]]))
+  }
+
+  psm2$raw_count <- psm2$Abundance
 
   if (log10trans) {
     psm2$Abundance <- log10(psm2$Abundance)
+  }
+
+  if (show_count) {
+    psm2$label <- paste0(psm2[[lvl2]], "\n(", psm2$raw_count, ")")
+  } else {
+    psm2$label <- psm2[[lvl2]]
   }
 
   p <-
@@ -4256,7 +4299,7 @@ treemap_pq <- function(
       aes(
         area = Abundance,
         fill = LVL1,
-        label = .data[[lvl2]],
+        label = label,
         subgroup = LVL1
       )
     ) +
@@ -4268,6 +4311,10 @@ treemap_pq <- function(
       size = 15,
       grow = TRUE
     )
+
+  if (!is.null(facet_by)) {
+    p <- p + facet_wrap(vars(.data[[facet_by]]))
+  }
 
   if (!plot_legend) {
     p <- p + theme(legend.position = "none")
@@ -5270,7 +5317,7 @@ hill_curves_pq <- function(
     what <- c("Collector", "mean", "Qnt 0.025", "Qnt 0.975")
     what <- what[what %in% dimnames(df_hill)[[3]]]
     if (any(what %in% dimnames(df_hill)[[3]])) {
-      df_hill <- df_hill[, , what, drop = FALSE]
+      df_hill <- df_hill[,, what, drop = FALSE]
     }
     dm <- dim(df_hill)
     dnam <- dimnames(df_hill)
