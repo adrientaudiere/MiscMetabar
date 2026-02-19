@@ -4193,6 +4193,11 @@ ridges_pq <- function(
 #' @param facet_by (character, default NULL) Name of a column in
 #'   `sample_data(physeq)` to facet by. Each level produces its own
 #'   treemap panel via [ggplot2::facet_wrap()].
+#' @param growing_text (logical, default TRUE) If FALSE, all tile labels are
+#'   drawn at the same font size (disables per-tile text growing), which
+#'   corresponds to the smallest size that would otherwise be computed.
+#' @param text_size (numeric, default 15) Base font size for tile labels. 
+#'   Mostly useful when `growing_text = FALSE`, as it sets the size of all labels. 
 #' @param ... Additional arguments passed on to [treemapify::geom_treemap()] function.
 #'
 #' @return A ggplot2 object
@@ -4248,6 +4253,8 @@ treemap_pq <- function(
   plot_legend = FALSE,
   show_count = FALSE,
   facet_by = NULL,
+  growing_text = TRUE,
+  text_size = 15,
   ...
 ) {
   if (!nb_seq) {
@@ -4308,8 +4315,8 @@ treemap_pq <- function(
     treemapify::geom_treemap_text(
       colour = "white",
       place = "centre",
-      size = 15,
-      grow = TRUE
+      size = text_size,
+      grow = growing_text
     )
 
   if (!is.null(facet_by)) {
