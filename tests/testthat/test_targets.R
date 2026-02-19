@@ -300,3 +300,36 @@ test_that("add_info_to_sam_data function works fine with data_fungi", {
 
 unlink(paste0(tempdir(), "/", "rev"))
 unlink(paste0(tempdir(), "/", "fw"))
+
+test_that("rename_samples works with phyloseq object", {
+  new_names <- paste0("S", seq_len(nsamples(data_fungi)))
+  res <- rename_samples(data_fungi, new_names)
+  expect_s4_class(res, "phyloseq")
+  expect_equal(sample_names(res), new_names)
+  expect_error(rename_samples(data_fungi, new_names[-1]))
+})
+
+test_that("rename_samples works with otu_table", {
+  otu <- data_fungi@otu_table
+  new_names <- paste0("S", seq_len(nsamples(data_fungi)))
+  res <- rename_samples(otu, new_names)
+  expect_s4_class(res, "otu_table")
+  expect_equal(sample_names(res), new_names)
+  expect_error(rename_samples(otu, new_names[-1]))
+})
+
+test_that("sam_data_matching_names returns expected structure", {
+  sam_file <- system.file("extdata", "sam_data.csv", package = "MiscMetabar")
+  extdata_path <- system.file("extdata", package = "MiscMetabar")
+  res <- suppressWarnings(suppressMessages(sam_data_matching_names(
+    sam_file,
+    sample_col_name = "X",
+    path_raw_seq = extdata_path,
+    verbose = FALSE,
+    sep = "\t"
+  )))
+  expect_type(res, "list")
+  expect_true("sam_names_matching" %in% names(res))
+  expect_true("sam_data" %in% names(res))
+  expect_s3_class(res$sam_names_matching, "tbl_df")
+})

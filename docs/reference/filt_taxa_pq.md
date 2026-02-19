@@ -87,14 +87,14 @@ filt_taxa_pq(data_fungi,
 #> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).
 #> Number of non-matching ASV 0
 #> Number of matching ASV 1420
-#> Number of filtered-out ASV 333
-#> Number of kept ASV 1087
+#> Number of filtered-out ASV 212
+#> Number of kept ASV 1208
 #> Number of kept samples 185
 #> phyloseq-class experiment-level object
-#> otu_table()   OTU Table:         [ 1087 taxa and 185 samples ]
+#> otu_table()   OTU Table:         [ 1208 taxa and 185 samples ]
 #> sample_data() Sample Data:       [ 185 samples by 7 sample variables ]
-#> tax_table()   Taxonomy Table:    [ 1087 taxa by 12 taxonomic ranks ]
-#> refseq()      DNAStringSet:      [ 1087 reference sequences ]
+#> tax_table()   Taxonomy Table:    [ 1208 taxa by 12 taxonomic ranks ]
+#> refseq()      DNAStringSet:      [ 1208 reference sequences ]
 filt_taxa_pq(data_fungi,
   min_occurence = 2,
   min_nb_seq = 10,
@@ -103,12 +103,12 @@ filt_taxa_pq(data_fungi,
 #> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).
 #> Number of non-matching ASV 0
 #> Number of matching ASV 1420
-#> Number of filtered-out ASV 0
-#> Number of kept ASV 1420
+#> Number of filtered-out ASV 9
+#> Number of kept ASV 1411
 #> Number of kept samples 185
 #> phyloseq-class experiment-level object
-#> otu_table()   OTU Table:         [ 1420 taxa and 185 samples ]
+#> otu_table()   OTU Table:         [ 1411 taxa and 185 samples ]
 #> sample_data() Sample Data:       [ 185 samples by 7 sample variables ]
-#> tax_table()   Taxonomy Table:    [ 1420 taxa by 12 taxonomic ranks ]
-#> refseq()      DNAStringSet:      [ 1420 reference sequences ]
+#> tax_table()   Taxonomy Table:    [ 1411 taxa by 12 taxonomic ranks ]
+#> refseq()      DNAStringSet:      [ 1411 reference sequences ]
 ```

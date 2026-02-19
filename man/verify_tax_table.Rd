@@ -143,7 +143,6 @@ data_fungi3_cleaned <- verify_tax_table(data_fungi3,
   replace_space_with = "_"
 )
 data_fungi3_cleaned@tax_table[2, "Species"] # "Russula_emetica"
-
 }
 }
 \author{

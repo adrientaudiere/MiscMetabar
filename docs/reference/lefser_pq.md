@@ -73,6 +73,9 @@ res_lefse <- lefser_pq(data_fungi,
   bifactor = "Height",
   modalities = c("Low", "High")
 )
+#> Registered S3 method overwritten by 'ggtree':
+#>   method         from     
+#>   fortify.igraph ggnetwork
 #> The outcome variable is specified as 'Height' and the reference category is 'High'.
 #>  See `?factor` or `?relevel` to change the reference category.
 lefser::lefserPlot(res_lefse)

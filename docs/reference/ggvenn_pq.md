@@ -238,12 +238,12 @@ if (requireNamespace("ggVennDiagram")) {
 #>  the random seed of your session for reproducibility.
 #> See `?set.seed`
 #> ...
-#> 1141OTUs were removed because they are no longer 
+#> 1145OTUs were removed because they are no longer 
 #> present in any sample after random subsampling
 #> ...
-#> Cleaning suppress 171 taxa and 0 samples.
-#> Cleaning suppress 146 taxa and 0 samples.
-#> Cleaning suppress 153 taxa and 0 samples.
+#> Cleaning suppress 166 taxa and 0 samples.
+#> Cleaning suppress 149 taxa and 0 samples.
+#> Cleaning suppress 140 taxa and 0 samples.
 #> 54 were discarded due to NA in variable fact
 #> You set `rngseed` to FALSE. Make sure you've set & recorded
 #>  the random seed of your session for reproducibility.
@@ -256,9 +256,9 @@ if (requireNamespace("ggVennDiagram")) {
 #> 157OTUs were removed because they are no longer 
 #> present in any sample after random subsampling
 #> ...
-#> Cleaning suppress 385 taxa and 0 samples.
+#> Cleaning suppress 386 taxa and 0 samples.
 #> Cleaning suppress 342 taxa and 0 samples.
-#> Cleaning suppress 340 taxa and 0 samples.
+#> Cleaning suppress 338 taxa and 0 samples.
 #> 54 were discarded due to NA in variable fact
 #> Cleaning suppress 501 taxa and 0 samples.
 #> Cleaning suppress 457 taxa and 0 samples.

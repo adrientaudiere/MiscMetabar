@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,10 +60,18 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.14.5" id="miscmetabar-0145-in-development">MiscMetabar 0.14.5 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-0145-in-development"></a></h2>
-<ul><li><p>Improve the <code><a href="../reference/verify_pq.html">verify_pq()</a></code> function for cases where taxa_names or sample_names are not consistent and to test for duplicate sequences in <a href="https://github.com/refseq" class="external-link">@refseq</a> slot.</p></li>
+<h2 class="pkg-version" data-toc-text="0.14.6" id="miscmetabar-0146-in-development">MiscMetabar 0.14.6 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-0146-in-development"></a></h2>
+<ul><li>
+<code><a href="../reference/treemap_pq.html">treemap_pq()</a></code> now uses <code>log10(x + 1)</code> instead of <code>log10(x)</code> so that taxa with a count of 1 are still visible. New parameters <code>show_na</code> (default <code>TRUE</code>) to display NA taxa as a grey area, <code>na_label</code> to customize the NA label, and <code>min_text_size</code> (default <code>0</code>) to control the minimum font size for tile labels.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.14.5" id="miscmetabar-0145">MiscMetabar 0.14.5<a class="anchor" aria-label="anchor" href="#miscmetabar-0145"></a></h2>
+<ul><li><p>Bug fix in <code>normalize_prop_pq</code> when taxa_are_rows(physeq) were FALSE.</p></li>
+<li><p>Improve the <code><a href="../reference/verify_pq.html">verify_pq()</a></code> function for cases where taxa_names or sample_names are not consistent and to test for duplicate sequences in <a href="https://github.com/refseq" class="external-link">@refseq</a> slot.</p></li>
 <li><p>Add a function <code><a href="../reference/verify_tax_table.html">verify_tax_table()</a></code> to verify some classic issues in tax_table.</p></li>
 <li><p>Fix a bug in <code><a href="../reference/aldex_pq.html">aldex_pq()</a></code> and <code><a href="../reference/plot_ordination_pq.html">plot_ordination_pq()</a></code>. Also fix a bug in <code><a href="../reference/plot_ordination_pq.html">plot_ordination_pq()</a></code> when using phyloseq object where taxa are rows.</p></li>
+<li><p>Add parameters <code>show_count</code>, <code>facet_by</code>, <code>growing_text</code> and <code>text_size</code> to <code><a href="../reference/treemap_pq.html">treemap_pq()</a></code>: <code>show_count</code> appends raw abundance counts to labels, <code>facet_by</code> splits the treemap into facets by a sample metadata column, and <code>growing_text=FALSE</code> forces all tile labels to the same font size (determined by text_size).</p></li>
+<li><p>Extend <code><a href="../reference/track_wkflow_samples.html">track_wkflow_samples()</a></code> to accept all input types supported by <code><a href="../reference/track_wkflow.html">track_wkflow()</a></code>: matrix, dada-class, derep-class, lists of dada/derep, and character vectors of fastq file paths (previously only phyloseq objects were accepted).</p></li>
 <li><p>Fix a bug for case with only one column in slot <a href="https://github.com/sam_data" class="external-link">@sam_data</a></p></li>
 <li><p>Fix a bug in the name of plot in the result of <code><a href="../reference/hill_pq.html">hill_pq()</a></code></p></li>
 <li><p>Fix a bug in <code><a href="../reference/mumu_pq.html">mumu_pq()</a></code> not deleting temporary file log.txt when <code>keep_temporary_files=FALSE</code></p></li>

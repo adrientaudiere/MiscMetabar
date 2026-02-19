@@ -68,13 +68,13 @@ limitations or not working at all on windows OS:
 sessionInfo()
 ```
 
-    ## R version 4.5.1 (2025-06-13)
+    ## R version 4.5.2 (2025-10-31)
     ## Platform: x86_64-pc-linux-gnu
-    ## Running under: Kali GNU/Linux Rolling
+    ## Running under: Pop!_OS 24.04 LTS
     ## 
     ## Matrix products: default
-    ## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
-    ## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.29.so;  LAPACK version 3.12.0
+    ## BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.12.0 
+    ## LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.12.0  LAPACK version 3.12.0
     ## 
     ## locale:
     ##  [1] LC_CTYPE=fr_FR.UTF-8       LC_NUMERIC=C              
@@ -91,10 +91,10 @@ sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] digest_0.6.37     desc_1.4.3        R6_2.6.1          fastmap_1.2.0    
-    ##  [5] xfun_0.53         cachem_1.1.0      knitr_1.50        htmltools_0.5.8.1
-    ##  [9] rmarkdown_2.29    lifecycle_1.0.4   cli_3.6.5         sass_0.4.10      
-    ## [13] pkgdown_2.1.3     textshaping_1.0.3 jquerylib_0.1.4   systemfonts_1.2.3
-    ## [17] compiler_4.5.1    tools_4.5.1       ragg_1.5.0        evaluate_1.0.5   
-    ## [21] bslib_0.9.0       yaml_2.3.10       jsonlite_2.0.0    rlang_1.1.6      
-    ## [25] fs_1.6.6          htmlwidgets_1.6.4
+    ##  [1] digest_0.6.39     desc_1.4.3        R6_2.6.1          fastmap_1.2.0    
+    ##  [5] xfun_0.56         cachem_1.1.0      knitr_1.51        htmltools_0.5.9  
+    ##  [9] rmarkdown_2.30    lifecycle_1.0.5   cli_3.6.5         sass_0.4.10      
+    ## [13] pkgdown_2.2.0     textshaping_1.0.4 jquerylib_0.1.4   systemfonts_1.3.1
+    ## [17] compiler_4.5.2    tools_4.5.2       ragg_1.5.0        bslib_0.10.0     
+    ## [21] evaluate_1.0.5    yaml_2.3.12       otel_0.2.0        jsonlite_2.0.0   
+    ## [25] rlang_1.1.7       fs_1.6.6          htmlwidgets_1.6.4

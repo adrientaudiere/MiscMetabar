@@ -1,6 +1,17 @@
 # Changelog
 
-## MiscMetabar 0.14.5 (in development)
+## MiscMetabar 0.14.6 (in development)
+
+- [`treemap_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/treemap_pq.md)
+  now uses `log10(x + 1)` instead of `log10(x)` so that taxa with a
+  count of 1 are still visible. New parameters `show_na` (default
+  `TRUE`) to display NA taxa as a grey area, `na_label` to customize the
+  NA label, and `min_text_size` (default `0`) to control the minimum
+  font size for tile labels.
+
+## MiscMetabar 0.14.5
+
+- Bug fix in `normalize_prop_pq` when taxa_are_rows(physeq) were FALSE.
 
 - Improve the
   [`verify_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/verify_pq.md)
@@ -19,6 +30,22 @@
   Also fix a bug in
   [`plot_ordination_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_ordination_pq.md)
   when using phyloseq object where taxa are rows.
+
+- Add parameters `show_count`, `facet_by`, `growing_text` and
+  `text_size` to
+  [`treemap_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/treemap_pq.md):
+  `show_count` appends raw abundance counts to labels, `facet_by` splits
+  the treemap into facets by a sample metadata column, and
+  `growing_text=FALSE` forces all tile labels to the same font size
+  (determined by text_size).
+
+- Extend
+  [`track_wkflow_samples()`](https://adrientaudiere.github.io/MiscMetabar/reference/track_wkflow_samples.md)
+  to accept all input types supported by
+  [`track_wkflow()`](https://adrientaudiere.github.io/MiscMetabar/reference/track_wkflow.md):
+  matrix, dada-class, derep-class, lists of dada/derep, and character
+  vectors of fastq file paths (previously only phyloseq objects were
+  accepted).
 
 - Fix a bug for case with only one column in slot
   [@sam_data](https://github.com/sam_data)

@@ -569,8 +569,8 @@ vsearch_clustering <- function(physeq = NULL,
 #'
 #' # Potential Chimeric ASVs detected by vsearch
 #' chim_asv <- taxa_names(data_fungi_with_chim)[!taxa_names(data_fungi_with_chim)
-#'    %in% taxa_names(data_fungi_nochim)]
-#' 
+#'   %in% taxa_names(data_fungi_nochim)]
+#'
 #' "ASV1710" %in% chim_asv
 #'
 #' track_wkflow(list(data_fungi_with_chim, data_fungi_nochim))

@@ -284,6 +284,9 @@ data_fungi_mini_new2 <- assign_vsearch_lca(data_fungi_mini,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
   id = 0.8, behavior = "add_to_phyloseq", top_hits_only = FALSE
 )
+#> Warning: running command ''vsearch'  --usearch_global temp.fasta --db /tmp/RtmpDT6YFj/temp_libpath3a2523ffa80ed/MiscMetabar/extdata/mini_UNITE_fungi.fasta.gz --lcaout out_lca.txt -id 0.8 --threads 1 --userfields query+id+target --maxaccepts 0 --maxrejects 32 --lca_cutoff  1 --userout userout.txt  2>&1' had status 139
+#> Warning: No LCA output produced (out_lca.txt is missing or empty).
+#> Warning: physeq object returned unchanged.
 
 data_fungi_mini_new3 <- assign_vsearch_lca(data_fungi_mini,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),

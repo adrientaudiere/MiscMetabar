@@ -58,17 +58,17 @@ Adrien Taudière
 ``` r
 list_fastq_files(system.file("extdata", package = "MiscMetabar"))
 #> $fnfs
-#> [1] "/tmp/RtmpV46sfz/temp_libpath1e51304f43f9/MiscMetabar/extdata/ex_R1_001.fastq.gz"
+#> [1] "/tmp/RtmpDT6YFj/temp_libpath3a2523ffa80ed/MiscMetabar/extdata/ex_R1_001.fastq.gz"
 #> 
 #> $fnrs
-#> [1] "/tmp/RtmpV46sfz/temp_libpath1e51304f43f9/MiscMetabar/extdata/ex_R2_001.fastq.gz"
+#> [1] "/tmp/RtmpDT6YFj/temp_libpath3a2523ffa80ed/MiscMetabar/extdata/ex_R2_001.fastq.gz"
 #> 
 list_fastq_files(system.file("extdata", package = "MiscMetabar"),
   paired_end = FALSE, pattern_R1 = ""
 )
 #> $fnfs
-#> [1] "/tmp/RtmpV46sfz/temp_libpath1e51304f43f9/MiscMetabar/extdata/ex.fastq"          
-#> [2] "/tmp/RtmpV46sfz/temp_libpath1e51304f43f9/MiscMetabar/extdata/ex_R1_001.fastq.gz"
-#> [3] "/tmp/RtmpV46sfz/temp_libpath1e51304f43f9/MiscMetabar/extdata/ex_R2_001.fastq.gz"
+#> [1] "/tmp/RtmpDT6YFj/temp_libpath3a2523ffa80ed/MiscMetabar/extdata/ex.fastq"          
+#> [2] "/tmp/RtmpDT6YFj/temp_libpath3a2523ffa80ed/MiscMetabar/extdata/ex_R1_001.fastq.gz"
+#> [3] "/tmp/RtmpDT6YFj/temp_libpath3a2523ffa80ed/MiscMetabar/extdata/ex_R2_001.fastq.gz"
 #> 
 ```

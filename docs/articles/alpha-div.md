@@ -398,7 +398,7 @@ sessionInfo()
 #> other attached packages:
 #>  [1] glmulti_1.0.8            leaps_3.2                rJava_1.0-14            
 #>  [4] dabestr_2025.3.15        Durga_2.1.0              MicrobiotaProcess_1.22.0
-#>  [7] MiscMetabar_0.14.5       purrr_1.2.1              dplyr_1.2.0             
+#>  [7] MiscMetabar_0.14.6       purrr_1.2.1              dplyr_1.2.0             
 #> [10] dada2_1.38.0             Rcpp_1.1.1               ggplot2_4.0.2           
 #> [13] phyloseq_1.54.0         
 #> 
@@ -434,12 +434,12 @@ sessionInfo()
 #>  [57] ggsignif_0.6.4              MASS_7.3-65                
 #>  [59] rappdirs_0.3.4              DelayedArray_0.36.0        
 #>  [61] biomformat_1.38.0           ggsci_4.2.0                
-#>  [63] permute_0.9-8               tools_4.5.2                
+#>  [63] permute_0.9-10              tools_4.5.2                
 #>  [65] vipor_0.4.7                 otel_0.2.0                 
 #>  [67] beeswarm_0.4.0              ape_5.8-1                  
 #>  [69] glue_1.8.0                  nlme_3.1-168               
 #>  [71] rhdf5filters_1.22.0         grid_4.5.2                 
-#>  [73] cluster_2.1.8.1             reshape2_1.4.5             
+#>  [73] cluster_2.1.8.2             reshape2_1.4.5             
 #>  [75] ade4_1.7-23                 generics_0.1.4             
 #>  [77] gtable_0.3.6                tidyr_1.3.2                
 #>  [79] data.table_1.18.2.1         coin_1.4-3                 
@@ -447,7 +447,7 @@ sessionInfo()
 #>  [83] ggrepel_0.9.6               foreach_1.5.2              
 #>  [85] pillar_1.11.1               stringr_1.6.0              
 #>  [87] yulab.utils_0.2.4           splines_4.5.2              
-#>  [89] treeio_1.34.0               lattice_0.22-7             
+#>  [89] treeio_1.34.0               lattice_0.22-9             
 #>  [91] survival_3.8-6              deldir_2.0-4               
 #>  [93] tidyselect_1.2.1            fontLiberation_0.1.0       
 #>  [95] Biostrings_2.78.0           knitr_1.51                 
@@ -461,7 +461,7 @@ sessionInfo()
 #> [111] yaml_2.3.12                 evaluate_1.0.5             
 #> [113] codetools_0.2-20            cigarillo_1.0.0            
 #> [115] interp_1.1-6                effsize_0.8.1              
-#> [117] gdtools_0.4.4               tibble_3.3.1               
+#> [117] gdtools_0.5.0               tibble_3.3.1               
 #> [119] ggplotify_0.1.3             cli_3.6.5                  
 #> [121] RcppParallel_5.1.11-1       systemfonts_1.3.1          
 #> [123] jquerylib_0.1.4             png_0.1-8                  
@@ -469,8 +469,8 @@ sessionInfo()
 #> [127] pkgdown_2.2.0               latticeExtra_0.6-31        
 #> [129] jpeg_0.1-11                 bitops_1.0-9               
 #> [131] ggstar_1.0.6                pwalign_1.6.0              
-#> [133] viridisLite_0.4.2           mvtnorm_1.3-3              
-#> [135] tidytree_0.4.7              ggiraph_0.9.3              
+#> [133] viridisLite_0.4.3           mvtnorm_1.3-3              
+#> [135] tidytree_0.4.7              ggiraph_0.9.4              
 #> [137] scales_1.4.0                crayon_1.5.3               
 #> [139] rlang_1.1.7                 cowplot_1.2.0              
 #> [141] multcomp_1.4-29

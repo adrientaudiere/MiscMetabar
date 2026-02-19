@@ -65,7 +65,7 @@ Adrien Taudière
 ``` r
 verify_pq(data_fungi)
 # \donttest{
-  verify_pq(data_fungi, check_taxonomy = TRUE)
+verify_pq(data_fungi, check_taxonomy = TRUE)
 #> Warning: Found 145 taxonomic value(s) matching NA-like patterns. Unique values: Pezizomycotina_cls_Incertae_sedis, Rozellomycotina_cls_Incertae_sedis, Sordariomycetes_ord_Incertae_sedis, Microbotryomycetes_ord_Incertae_sedis, Lecanoromycetes_ord_Incertae_sedis, Dothideomycetes_ord_Incertae_sedis, Cystobasidiomycetes_ord_Incertae_sedis, Pezizomycotina_ord_Incertae_sedis, Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, .... Use modify_phyloseq = TRUE to replace these with NA.
 #> Warning: Found 1432 taxonomic value(s) with less than 4 characters: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars). Use modify_phyloseq = TRUE to replace these with NA.
 #> Found 976 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.

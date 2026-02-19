@@ -5,7 +5,7 @@
 Note that lvl2need to be nested in lvl1"><meta property="og:description" content="
 
 
-Note that lvl2need to be nested in lvl1"></head><body>
+Note that lvl2need to be nested in lvl1"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -13,7 +13,7 @@ Note that lvl2need to be nested in lvl1"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,6 +82,13 @@ Note that lvl2need to be nested in lvl1"></head><body>
 <span>  nb_seq <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  log10trans <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  plot_legend <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  show_count <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  facet_by <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  growing_text <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  text_size <span class="op">=</span> <span class="fl">15</span>,</span>
+<span>  show_na <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  na_label <span class="op">=</span> <span class="st">"NA"</span>,</span>
+<span>  min_text_size <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -111,8 +118,9 @@ otu_table (each value different from zero is set to one)</p></dd>
 
 <dt id="arg-log-trans">log10trans<a class="anchor" aria-label="anchor" href="#arg-log-trans"></a></dt>
 <dd><p>(logical, default TRUE) If TRUE,
-the number of sequences (or ASV if nb_seq = FALSE) is log10
-transformed.</p></dd>
+the number of sequences (or ASV if nb_seq = FALSE) is
+log10(x + 1) transformed. The +1 ensures that taxa with a
+count of 1 still have a visible tile area.</p></dd>
 
 
 <dt id="arg-plot-legend">plot_legend<a class="anchor" aria-label="anchor" href="#arg-plot-legend"></a></dt>
@@ -120,8 +128,49 @@ transformed.</p></dd>
 legend of color for lvl 1</p></dd>
 
 
+<dt id="arg-show-count">show_count<a class="anchor" aria-label="anchor" href="#arg-show-count"></a></dt>
+<dd><p>(logical, default FALSE) If TRUE, appends the raw
+count in parentheses after each <code>lvl2</code> label, e.g. <code>"Agaricus (42)"</code>.</p></dd>
+
+
+<dt id="arg-facet-by">facet_by<a class="anchor" aria-label="anchor" href="#arg-facet-by"></a></dt>
+<dd><p>(character, default NULL) Name of a column in
+<code>sample_data(physeq)</code> to facet by. Each level produces its own
+treemap panel via <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">ggplot2::facet_wrap()</a></code>.</p></dd>
+
+
+<dt id="arg-growing-text">growing_text<a class="anchor" aria-label="anchor" href="#arg-growing-text"></a></dt>
+<dd><p>(logical, default TRUE) If FALSE, all tile labels are
+drawn at the same font size (disables per-tile text growing), which
+corresponds to the smallest size that would otherwise be computed.</p></dd>
+
+
+<dt id="arg-text-size">text_size<a class="anchor" aria-label="anchor" href="#arg-text-size"></a></dt>
+<dd><p>(numeric, default 15) Base font size for tile labels.
+Mostly useful when <code>growing_text = FALSE</code>, as it sets the size of all
+labels.</p></dd>
+
+
+<dt id="arg-show-na">show_na<a class="anchor" aria-label="anchor" href="#arg-show-na"></a></dt>
+<dd><p>(logical, default TRUE) If TRUE, taxa with NA values for
+<code>lvl1</code> or <code>lvl2</code> are kept and displayed as a grey "NA" area. If FALSE,
+they are removed (previous default behavior).</p></dd>
+
+
+<dt id="arg-na-label">na_label<a class="anchor" aria-label="anchor" href="#arg-na-label"></a></dt>
+<dd><p>(character, default "NA") Label used to replace NA values
+in <code>lvl1</code> and <code>lvl2</code> when <code>show_na = TRUE</code>.</p></dd>
+
+
+<dt id="arg-min-text-size">min_text_size<a class="anchor" aria-label="anchor" href="#arg-min-text-size"></a></dt>
+<dd><p>(numeric, default 0) Minimum font size in points
+for tile labels. Labels that would be smaller than this are hidden.
+Set to 0 to always show all labels.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments passed on to <code><a href="https://wilkox.org/treemapify/reference/geom_treemap.html" class="external-link">treemapify::geom_treemap()</a></code> function.</p></dd>
+<dd><p>Additional arguments passed on to
+<code><a href="https://wilkox.org/treemapify/reference/geom_treemap.html" class="external-link">treemapify::geom_treemap()</a></code> function.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -167,7 +216,16 @@ legend of color for lvl 1</p></dd>
 <span class="r-in"><span>    <span class="st">"Order"</span>, <span class="st">"Class"</span>,</span></span>
 <span class="r-in"><span>    nb_seq <span class="op">=</span> <span class="cn">FALSE</span>, log10trans <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">treemap_pq</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="clean_pq.html">clean_pq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_taxa-methods.html" class="external-link">subset_taxa</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="va">data_fungi_sp_known</span>,</span></span>
+<span class="r-in"><span>      <span class="va">Phylum</span> <span class="op">==</span> <span class="st">"Basidiomycota"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Order"</span>, <span class="st">"Class"</span>,</span></span>
+<span class="r-in"><span>    show_count <span class="op">=</span> <span class="cn">TRUE</span>, log10trans <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa and 5 samples.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa and 5 samples.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa and 5 samples.</span>
 <span class="r-plt img"><img src="treemap_pq-2.png" alt="" width="700" height="433"></span>
@@ -183,7 +241,7 @@ legend of color for lvl 1</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

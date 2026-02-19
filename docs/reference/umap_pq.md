@@ -98,36 +98,38 @@ df_umap_tsne$y_tsne <- res_tsne$Y[, 2]
   patchwork::plot_layout(guides = "collect")
 #> Square root transformation
 #> Wisconsin double standardization
-#> Run 0 stress 0.1842444 
-#> Run 1 stress 0.1864672 
-#> Run 2 stress 0.1816642 
+#> Run 0 stress 0.1842417 
+#> Run 1 stress 0.1830653 
 #> ... New best solution
-#> ... Procrustes: rmse 0.06035663  max resid 0.2763356 
-#> Run 3 stress 0.1805408 
+#> ... Procrustes: rmse 0.05975443  max resid 0.2477283 
+#> Run 2 stress 0.1808269 
 #> ... New best solution
-#> ... Procrustes: rmse 0.0696832  max resid 0.2635835 
-#> Run 4 stress 0.1918613 
-#> Run 5 stress 0.1837193 
-#> Run 6 stress 0.1856894 
-#> Run 7 stress 0.1854912 
-#> Run 8 stress 0.1855901 
-#> Run 9 stress 0.1828179 
-#> Run 10 stress 0.1797561 
+#> ... Procrustes: rmse 0.07519717  max resid 0.2637364 
+#> Run 3 stress 0.1802656 
 #> ... New best solution
-#> ... Procrustes: rmse 0.05144056  max resid 0.2994319 
-#> Run 11 stress 0.1861731 
-#> Run 12 stress 0.1861394 
-#> Run 13 stress 0.1881243 
-#> Run 14 stress 0.1837223 
-#> Run 15 stress 0.18591 
-#> Run 16 stress 0.1874962 
-#> Run 17 stress 0.1823433 
-#> Run 18 stress 0.1848213 
-#> Run 19 stress 0.184988 
-#> Run 20 stress 0.1831431 
+#> ... Procrustes: rmse 0.04975387  max resid 0.2982434 
+#> Run 4 stress 0.183484 
+#> Run 5 stress 0.184756 
+#> Run 6 stress 0.1847681 
+#> Run 7 stress 0.1819892 
+#> Run 8 stress 0.1820539 
+#> Run 9 stress 0.18634 
+#> Run 10 stress 0.1856027 
+#> Run 11 stress 0.1827823 
+#> Run 12 stress 0.1816633 
+#> Run 13 stress 0.1833599 
+#> Run 14 stress 0.1842722 
+#> Run 15 stress 0.1850547 
+#> Run 16 stress 0.1860664 
+#> Run 17 stress 0.1857189 
+#> Run 18 stress 0.1795345 
+#> ... New best solution
+#> ... Procrustes: rmse 0.05055477  max resid 0.2998752 
+#> Run 19 stress 0.1857847 
+#> Run 20 stress 0.1831573 
 #> *** Best solution was not repeated -- monoMDS stopping criteria:
-#>     15: no. of iterations >= maxit
-#>      5: stress ratio > sratmax
+#>     18: no. of iterations >= maxit
+#>      2: stress ratio > sratmax
 
 
 df_uwot <- umap_pq(data_fungi_mini, pkg = "uwot")

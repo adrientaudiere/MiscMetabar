@@ -114,7 +114,7 @@ if (requireNamespace("ggstatsplot")) {
 #>  the random seed of your session for reproducibility.
 #> See `?set.seed`
 #> ...
-#> 1020OTUs were removed because they are no longer 
+#> 1009OTUs were removed because they are no longer 
 #> present in any sample after random subsampling
 #> ...
 #> All modality were undoubtedly rarefy in the physeq object.

@@ -233,6 +233,5 @@ data_fungi3_cleaned@tax_table[2, "Species"] # "Russula_emetica"
 #> Taxonomy Table:     [1 taxa by 1 taxonomic ranks]:
 #>      Species          
 #> ASV6 "Russula_emetica"
-
 # }
 ```

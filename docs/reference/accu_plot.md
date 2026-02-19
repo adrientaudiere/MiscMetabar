@@ -147,7 +147,7 @@ GP <- rarefy_even_depth(subset_samples_pq(GP, sample_sums(GP) > 3000))
 #> Also defined by ‘RNeXML’
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
 #> Also defined by ‘RNeXML’
-#> 61OTUs were removed because they are no longer 
+#> 63OTUs were removed because they are no longer 
 #> present in any sample after random subsampling
 #> ...
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'

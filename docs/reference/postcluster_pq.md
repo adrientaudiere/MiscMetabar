@@ -195,7 +195,7 @@ if (requireNamespace("DECIPHER")) {
 #> Partitioning sequences by 3-mer similarity:
 #> ================================================================================
 #> 
-#> Time difference of 0.02 secs
+#> Time difference of 0.03 secs
 #> 
 #> Sorting by relatedness within 11 groups:
 #> iteration 1 of up to 17 (100.0% stability) 
@@ -205,7 +205,7 @@ if (requireNamespace("DECIPHER")) {
 #> Clustering sequences by 9-mer similarity:
 #> ================================================================================
 #> 
-#> Time difference of 0.06 secs
+#> Time difference of 0.08 secs
 #> 
 #> Clusters via relatedness sorting: 100% (0% exclusively)
 #> Clusters via rare 3-mers: 100% (0% exclusively)
@@ -240,7 +240,7 @@ if (requireNamespace("DECIPHER")) {
 #> Clustering sequences by 9-mer similarity:
 #> ================================================================================
 #> 
-#> Time difference of 0.07 secs
+#> Time difference of 0.08 secs
 #> 
 #> Clusters via relatedness sorting: 100% (0% exclusively)
 #> Clusters via rare 3-mers: 100% (0% exclusively)

@@ -145,7 +145,7 @@ if (requireNamespace("phangorn")) {
 #> Determining distance matrix based on shared 8-mers:
 #> ================================================================================
 #> 
-#> Time difference of 0.01 secs
+#> Time difference of 0 secs
 #> 
 #> Clustering into groups by similarity:
 #> ================================================================================
@@ -155,7 +155,7 @@ if (requireNamespace("phangorn")) {
 #> Aligning Sequences:
 #> ================================================================================
 #> 
-#> Time difference of 0.15 secs
+#> Time difference of 0.14 secs
 #> 
 #> Iteration 1 of 2:
 #> 
@@ -194,7 +194,7 @@ if (requireNamespace("phangorn")) {
 #> Refining the alignment:
 #> ================================================================================
 #> 
-#> Time difference of 0.03 secs
+#> Time difference of 0.04 secs
 #> 
 #> optimize edge weights:  -4496.259 --> -4357.83 
 #> optimize edge weights:  -4357.83 --> -4357.826 
@@ -212,5 +212,13 @@ if (requireNamespace("phangorn")) {
 
 
 
+#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
+#> Also defined by ‘RNeXML’
+#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
+#> Also defined by ‘RNeXML’
+#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
+#> Also defined by ‘RNeXML’
+#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
+#> Also defined by ‘RNeXML’
 # }
 ```

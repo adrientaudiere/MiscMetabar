@@ -127,8 +127,8 @@ if (requireNamespace("vegan")) {
 #> 1156OTUs were removed because they are no longer 
 #> present in any sample after random subsampling
 #> ...
-#> Time
-#> Height
+#> Removing NA from Time
+#> Removing NA from Height
 #>   |                                                          |=================                                 |  33%
 #> `set.seed(2)` was used to initialize repeatable random subsampling.
 #> Please record this for your records so others can reproduce.
@@ -137,8 +137,8 @@ if (requireNamespace("vegan")) {
 #> 1160OTUs were removed because they are no longer 
 #> present in any sample after random subsampling
 #> ...
-#> Time
-#> Height
+#> Removing NA from Time
+#> Removing NA from Height
 #>   |                                                          |=================================                 |  67%
 #> `set.seed(3)` was used to initialize repeatable random subsampling.
 #> Please record this for your records so others can reproduce.
@@ -147,8 +147,8 @@ if (requireNamespace("vegan")) {
 #> 1180OTUs were removed because they are no longer 
 #> present in any sample after random subsampling
 #> ...
-#> Time
-#> Height
+#> Removing NA from Time
+#> Removing NA from Height
 #>   |                                                          |==================================================| 100%
 #> $mean
 #>           Df  SumOfSqs         R2        F     Pr(>F)
