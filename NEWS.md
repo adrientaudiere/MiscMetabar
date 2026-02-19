@@ -1,4 +1,6 @@
-# MiscMetabar 0.14.5 (in development) 
+# MiscMetabar 0.14.6 (in development)
+
+# MiscMetabar 0.14.5
 
 - Bug fix in `normalize_prop_pq` when taxa_are_rows(physeq) were FALSE.
 
