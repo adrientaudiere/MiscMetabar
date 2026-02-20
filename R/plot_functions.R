@@ -4141,6 +4141,8 @@ diff_fct_diff_class <-
 #'   units) for taxa labels when `label_taxa = TRUE`.
 #' @param value_size (numeric; default 3) Font size (in ggplot2 mm
 #'   units) for value labels when `show_values = TRUE`.
+#' @param top_label_size (numeric; default 3.2) Font size (in ggplot2 mm
+#'   units) for the top group labels when `fact` is not "Sample".
 #' @param bar_width (numeric; default NULL set 0.9 if `add_ribbon = FALSE`, 0.5 if
 #'   `add_ribbon = TRUE` and `fact != "Sample"`, and 0.6 if fact is only a one-level
 #'   factor). Width of the bars. Set to 0 to have no visible bars 
@@ -4157,7 +4159,8 @@ diff_fct_diff_class <-
 #'
 #' @examples
 #'
-#' data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
+#' data_fungi_ab <- subset_taxa_pq(data_fungi,
+#'   taxa_sums(data_fungi) > 10000)
 #' tax_bar_pq(data_fungi_ab) + theme(legend.position = "none")
 #' \donttest{
 #' tax_bar_pq(data_fungi_ab, taxa = "Class")
@@ -6393,7 +6396,7 @@ reorder_colors <- function(
 }
 
 #' @exportS3Method ggplot2::ggplot_add
-ggplot_add.reorder_colors_spec <- function(object, plot, object_name) {
+ggplot_add.reorder_colors_spec <- function(object, plot, ...) {
   reorder_colors(
     p = plot,
     alternate_lightness = object$alternate_lightness,

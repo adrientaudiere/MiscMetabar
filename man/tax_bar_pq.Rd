@@ -19,7 +19,9 @@ tax_bar_pq(
   label_size = 3.2,
   value_size = 3,
   top_label_size = 3.2,
-  bar_width = NULL
+  bar_width = NULL,
+  bar_internal_color = NA,
+  linewidth_bar_internal = ifelse(is.na(bar_internal_color), 0, 0.5)
 )
 }
 \arguments{
@@ -66,8 +68,17 @@ units) for taxa labels when \code{label_taxa = TRUE}.}
 \item{value_size}{(numeric; default 3) Font size (in ggplot2 mm
 units) for value labels when \code{show_values = TRUE}.}
 
-\item{bar_width}{(numeric; default 0 if \code{add_ribbon = FALSE}, 0.5 if \code{add_ribbon = TRUE} and \code{fact != "Sample"})
-Width of the bars. Set to 0 to have no visible bars and only ribbons.}
+\item{bar_width}{(numeric; default NULL set 0.9 if \code{add_ribbon = FALSE}, 0.5 if
+\code{add_ribbon = TRUE} and \code{fact != "Sample"}, and 0.6 if fact is only a one-level
+factor). Width of the bars. Set to 0 to have no visible bars
+and only ribbons.}
+
+\item{bar_internal_color}{(default NA) Color of bar borders. Use \code{NA} (default)
+to remove borders, which avoids thin white lines in PDF output.
+Set to e.g. \code{"black"} or \code{"grey30"} for visible borders.}
+
+\item{linewidth_bar_internal}{(default 0 if \code{bar_internal_color} is \code{NA}, otherwise 0.5)
+Line width of bar borders.}
 }
 \value{
 A \code{\link[ggplot2]{ggplot}}2 plot  with bar representing the
@@ -103,9 +114,19 @@ tax_bar_pq(data_fungi_ab,
   show_values = TRUE, minimum_value_to_show = 10000
 )
 tax_bar_pq(data_fungi_ab, fact = "Height", taxa = "Class",
-   nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
-   add_ribbon = TRUE, value_size=7, ribbon_alpha = .6, show_values=TRUE, label_size = 4, top_label_size = 6,
+  nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
+  add_ribbon = TRUE, value_size=7, ribbon_alpha = .6, 
+  show_values=TRUE, label_size = 4, top_label_size = 6,
   minimum_value_to_show=0.05) |>
+  reorder_colors(alternate_lightness=TRUE)
+
+tax_bar_pq(data_fungi_mini, fact = "Height", taxa = "Order",
+  nb_seq = T, percent_bar = TRUE, label_taxa = TRUE,
+  add_ribbon = TRUE, value_size=5, 
+  ribbon_alpha = .6, show_values=TRUE,
+  label_size = 4, top_label_size = 8,
+  minimum_value_to_show=0.05, bar_width = NULL,
+  linewidth_bar_internal = 0.1, bar_internal_color="black") |>
   reorder_colors(alternate_lightness=TRUE)
 }
 }

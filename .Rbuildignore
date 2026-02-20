@@ -17,3 +17,5 @@
 ^cran-comments\.md$
 ^.lintr
 ^\.claude$
+^\.codefactor\.yml$
+^\.entire$
