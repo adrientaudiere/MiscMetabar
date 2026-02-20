@@ -17,12 +17,18 @@ if (!MiscMetabar:::is_swarm_installed()) {
   )
 
   test_that("swarm_clustering works fine with phyloseq object", {
-    expect_s4_class(data_fungi_swarm <- swarm_clustering(data_fungi), "phyloseq")
+    expect_s4_class(
+      data_fungi_swarm <- swarm_clustering(data_fungi),
+      "phyloseq"
+    )
     expect_equal(ntaxa(data_fungi_swarm), 1301)
   })
 
   test_that("swarm_clustering works fine with dna sequences vector", {
-    expect_s3_class(sequences_ex_swarm <- swarm_clustering(dna_seq = sequences_ex), "data.frame")
+    expect_s3_class(
+      sequences_ex_swarm <- swarm_clustering(dna_seq = sequences_ex),
+      "data.frame"
+    )
     expect_equal(dim(sequences_ex_swarm), c(12, 10))
   })
 

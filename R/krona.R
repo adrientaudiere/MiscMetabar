@@ -38,12 +38,14 @@
 #'   Please cite [Krona](https://github.com/marbl/Krona) if
 #'   you use this function.
 krona <-
-  function(physeq,
-           file_path = "krona.html",
-           nb_seq = TRUE,
-           ranks = "All",
-           add_unassigned_rank = 0,
-           name = NULL) {
+  function(
+    physeq,
+    file_path = "krona.html",
+    nb_seq = TRUE,
+    ranks = "All",
+    add_unassigned_rank = 0,
+    name = NULL
+  ) {
     if (is.null(name)) {
       if (nb_seq) {
         name <- "Number.of.sequences_temp"
@@ -58,7 +60,8 @@ krona <-
 
     if (ranks[1] == "All") {
       message(
-        "All the ", ncol(physeq@tax_table),
+        "All the ",
+        ncol(physeq@tax_table),
         " taxonomic present in the tax_table will be used for krona plot!"
       )
       ranks <- seq_along(physeq@tax_table[1, ])
@@ -91,13 +94,7 @@ krona <-
 
     interm_txt <- paste(tempdir(), "/", name, ".html", sep = "")
 
-    lapply(res,
-      cat,
-      "\n",
-      file = interm_txt,
-      append = TRUE,
-      sep = "\t"
-    )
+    lapply(res, cat, "\n", file = interm_txt, append = TRUE, sep = "\t")
 
     cmd <- paste("ktImportText ", interm_txt, " -o ", file_path, sep = "")
     system(command = cmd)
@@ -141,7 +138,8 @@ krona <-
 #'   you use this function.
 merge_krona <- function(files = NULL, output = "mergeKrona.html") {
   cmd <-
-    paste("ktImportKrona ",
+    paste(
+      "ktImportKrona ",
       paste(files, collapse = " "),
       " -o ",
       output,

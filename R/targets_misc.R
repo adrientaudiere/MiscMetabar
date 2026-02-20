@@ -27,12 +27,14 @@
 #' @author Adrien Taudière
 
 list_fastq_files <-
-  function(path,
-           paired_end = TRUE,
-           pattern = "fastq",
-           pattern_R1 = "_R1_",
-           pattern_R2 = "_R2_",
-           nb_files = Inf) {
+  function(
+    path,
+    paired_end = TRUE,
+    pattern = "fastq",
+    pattern_R1 = "_R1_",
+    pattern_R2 = "_R2_",
+    nb_files = Inf
+  ) {
     if (length(list.files(path)) == 0) {
       stop("There is no files in the folder ", path)
     }
@@ -43,12 +45,22 @@ list_fastq_files <-
     if (paired_end) {
       fnfs <- sort(list_files[grepl(list_files, pattern = pattern_R1)])
       if (length(fnfs) == 0) {
-        stop("None file in the folder ", path, " match the pattern_R1 ", pattern_R1)
+        stop(
+          "None file in the folder ",
+          path,
+          " match the pattern_R1 ",
+          pattern_R1
+        )
       }
       fnrs <-
         sort(list_files[grepl(list_files, pattern = pattern_R2)])
       if (length(fnrs) == 0) {
-        stop("None file in the folder ", path, " match the pattern_R2 ", pattern_R2)
+        stop(
+          "None file in the folder ",
+          path,
+          " match the pattern_R2 ",
+          pattern_R2
+        )
       }
       if (is.finite(nb_files)) {
         fnfs <- fnfs[seq(1, nb_files)]
@@ -64,7 +76,6 @@ list_fastq_files <-
     }
   }
 ################################################################################
-
 
 ################################################################################
 #' Rename samples of an otu_table
@@ -170,12 +181,22 @@ rename_samples_otu_table <- function(physeq, names_of_samples) {
 #'
 #' @seealso [dada2::filterAndTrim()]
 filter_trim <-
-  function(fw = NULL,
-           rev = NULL,
-           output_fw = file.path(paste(getwd(), "/output/filterAndTrim_fwd", sep = "")),
-           output_rev = file.path(paste(getwd(), "/output/filterAndTrim_rev", sep = "")),
-           return_a_vector = FALSE,
-           ...) {
+  function(
+    fw = NULL,
+    rev = NULL,
+    output_fw = file.path(paste(
+      getwd(),
+      "/output/filterAndTrim_fwd",
+      sep = ""
+    )),
+    output_rev = file.path(paste(
+      getwd(),
+      "/output/filterAndTrim_rev",
+      sep = ""
+    )),
+    return_a_vector = FALSE,
+    ...
+  ) {
     if (length(fw) == 1) {
       # This case with one file is to create a folder instead of only one file
 
@@ -235,7 +256,6 @@ filter_trim <-
   }
 ################################################################################
 
-
 ################################################################################
 #' Load sample data from file and rename samples using names of samples and an
 #'   optional order
@@ -262,10 +282,12 @@ filter_trim <-
 #' @author Adrien Taudière
 #'
 #' @seealso [rename_samples()]
-sample_data_with_new_names <- function(file_path,
-                                       names_of_samples,
-                                       samples_order = NULL,
-                                       ...) {
+sample_data_with_new_names <- function(
+  file_path,
+  names_of_samples,
+  samples_order = NULL,
+  ...
+) {
   samdata_interm <- sample_data(read.delim(file_path, ...))
   samdata_renamed <- rename_samples(samdata_interm, names_of_samples)
   if (is.null(samples_order)) {
@@ -310,12 +332,19 @@ sample_data_with_new_names <- function(file_path,
 #'   data_fungi@sam_data,
 #'   paste0("data_f", sample_names(data_fungi))
 #' )
-rename_samples <- function(phyloseq_component,
-                           names_of_samples,
-                           taxa_are_rows = FALSE) {
-  if (is.null(sample_names(phyloseq_component)) &&
-    inherits(phyloseq_component, "matrix")) {
-    phyloseq_component <- otu_table(phyloseq_component, taxa_are_rows = taxa_are_rows)
+rename_samples <- function(
+  phyloseq_component,
+  names_of_samples,
+  taxa_are_rows = FALSE
+) {
+  if (
+    is.null(sample_names(phyloseq_component)) &&
+      inherits(phyloseq_component, "matrix")
+  ) {
+    phyloseq_component <- otu_table(
+      phyloseq_component,
+      taxa_are_rows = taxa_are_rows
+    )
   }
   if (length(names_of_samples) != length(sample_names(phyloseq_component))) {
     stop("Names_of_samples must have a length equal to the number of samples.")
@@ -326,7 +355,6 @@ rename_samples <- function(phyloseq_component,
   return(new_pq_component)
 }
 ################################################################################
-
 
 ################################################################################
 #' Match sample names from sam_data and fastq files
@@ -357,15 +385,17 @@ rename_samples <- function(phyloseq_component,
 #' @importFrom utils read.csv
 #' @export
 #' @author Adrien Taudière
-sam_data_matching_names <- function(path_sam_data,
-                                    sample_col_name,
-                                    path_raw_seq,
-                                    pattern_remove_sam_data = NULL,
-                                    pattern_remove_fastq_files = NULL,
-                                    verbose = TRUE,
-                                    remove_undocumented_fastq_files = FALSE,
-                                    prefix = NULL,
-                                    ...) {
+sam_data_matching_names <- function(
+  path_sam_data,
+  sample_col_name,
+  path_raw_seq,
+  pattern_remove_sam_data = NULL,
+  pattern_remove_fastq_files = NULL,
+  verbose = TRUE,
+  remove_undocumented_fastq_files = FALSE,
+  prefix = NULL,
+  ...
+) {
   sam_d <- read.csv(path_sam_data, ...)
   names_sam_data <- sam_d[[sample_col_name]]
   names_fastq_files_fullpath <- list.files(path_raw_seq)
@@ -384,7 +414,11 @@ sam_data_matching_names <- function(path_sam_data,
   }
 
   if (!is.null(pattern_remove_fastq_files)) {
-    names_fastq_files_clean <- gsub(pattern_remove_fastq_files, "", names_fastq_files)
+    names_fastq_files_clean <- gsub(
+      pattern_remove_fastq_files,
+      "",
+      names_fastq_files
+    )
   } else {
     names_fastq_files_clean <- names_fastq_files
   }
@@ -400,7 +434,11 @@ sam_data_matching_names <- function(path_sam_data,
     raw_fastq_full_path = names_fastq_files_fullpath
   )
 
-  tib_j <- full_join(tib_fastq, tib_sam_data, by = join_by(clean_fastq == clean_sam)) |>
+  tib_j <- full_join(
+    tib_fastq,
+    tib_sam_data,
+    by = join_by(clean_fastq == clean_sam)
+  ) |>
     rename(common_names = clean_fastq)
 
   if (sum(is.na(tib_j$raw_fastq)) > 0) {
@@ -446,13 +484,24 @@ sam_data_matching_names <- function(path_sam_data,
 
   if (is.null(pattern_remove_sam_data)) {
     sam_d_new <- sam_d |>
-      dplyr::filter(.data[[sample_col_name]] %in% tib_j$raw_sam[!is.na(tib_j$raw_fastq)]) |>
-      dplyr::mutate("samples_names_common" = paste0(prefix, .data[[sample_col_name]])) |>
+      dplyr::filter(
+        .data[[sample_col_name]] %in% tib_j$raw_sam[!is.na(tib_j$raw_fastq)]
+      ) |>
+      dplyr::mutate(
+        "samples_names_common" = paste0(prefix, .data[[sample_col_name]])
+      ) |>
       relocate(samples_names_common)
   } else {
     sam_d_new <- sam_d |>
-      dplyr::filter(.data[[sample_col_name]] %in% tib_j$raw_sam[!is.na(tib_j$raw_fastq)]) |>
-      dplyr::mutate("samples_names_common" = paste0(prefix, gsub(pattern_remove_sam_data, "", .data[[sample_col_name]]))) |>
+      dplyr::filter(
+        .data[[sample_col_name]] %in% tib_j$raw_sam[!is.na(tib_j$raw_fastq)]
+      ) |>
+      dplyr::mutate(
+        "samples_names_common" = paste0(
+          prefix,
+          gsub(pattern_remove_sam_data, "", .data[[sample_col_name]])
+        )
+      ) |>
       relocate(samples_names_common)
   }
   return(list("sam_names_matching" = tib_j, "sam_data" = sam_d_new))

@@ -57,20 +57,28 @@
 #' @author Michael R. McLaren (orcid: [0000-0003-1575-473X](https://orcid.org/0000-0003-1575-473X)) modified by Adrien Taudiere
 setGeneric(
   "merge_taxa_vec",
-  function(x,
-           group,
-           reorder = FALSE,
-           tax_adjust = 1L,
-           rank_propagation = TRUE) {
+  function(
+    x,
+    group,
+    reorder = FALSE,
+    tax_adjust = 1L,
+    rank_propagation = TRUE
+  ) {
     standardGeneric("merge_taxa_vec")
   }
 )
 
 #' @rdname merge_taxa_vec
 setMethod(
-  "merge_taxa_vec", "phyloseq",
-  function(x, group, reorder = FALSE, tax_adjust = 1L,
-           rank_propagation = TRUE) {
+  "merge_taxa_vec",
+  "phyloseq",
+  function(
+    x,
+    group,
+    reorder = FALSE,
+    tax_adjust = 1L,
+    rank_propagation = TRUE
+  ) {
     stopifnot(ntaxa(x) == length(group))
     stopifnot(tax_adjust %in% c(0L, 1L, 2L))
     # Warn the user if an impossible reordering is requested
@@ -88,7 +96,9 @@ setMethod(
     otu <- merge_taxa_vec(otu_table(x), group, reorder = reorder)
     # Adjust taxonomy if necessary
     if (!is.null(x@tax_table) & tax_adjust != 0) {
-      tax <- merge_taxa_vec(tax_table(x), group,
+      tax <- merge_taxa_vec(
+        tax_table(x),
+        group,
         tax_adjust = tax_adjust,
         reorder = reorder,
         rank_propagation = rank_propagation
@@ -112,9 +122,9 @@ setMethod(
 
 #' @rdname merge_taxa_vec
 setMethod(
-  "merge_taxa_vec", "otu_table",
-  function(x, group, reorder = FALSE,
-           rank_propagation = TRUE) {
+  "merge_taxa_vec",
+  "otu_table",
+  function(x, group, reorder = FALSE, rank_propagation = TRUE) {
     stopifnot(ntaxa(x) == length(group))
     # Work with taxa as rows, and remember to flip back at end if needed
     needs_flip <- !taxa_are_rows(x)
@@ -156,14 +166,22 @@ setMethod(
 
 #' @rdname merge_taxa_vec
 setMethod(
-  "merge_taxa_vec", "taxonomyTable",
-  function(x, group, reorder = FALSE, tax_adjust = 1L,
-           rank_propagation = TRUE) {
+  "merge_taxa_vec",
+  "taxonomyTable",
+  function(
+    x,
+    group,
+    reorder = FALSE,
+    tax_adjust = 1L,
+    rank_propagation = TRUE
+  ) {
     stopifnot(ntaxa(x) == length(group))
     # Temporary stopgap to avoid hidden errors if internal variable names are
     # in the tax table
     if (any(c(".taxon", ".group") %in% rank_names(x))) {
-      stop("Currently requires that '.taxon' and '.group' are not in `rank_names(x)`")
+      stop(
+        "Currently requires that '.taxon' and '.group' are not in `rank_names(x)`"
+      )
     }
     # drop taxa with `is.na(group)`
     if (anyNA(group)) {
@@ -191,9 +209,15 @@ setMethod(
 
     reduced_by_group <- as_tibble(
       apply(
-        reduced, 2, function(xx) {
-          unlist(tapply(xx, reduced$.group, bad_or_unique,
-            bad = bad_string, simplify = FALSE
+        reduced,
+        2,
+        function(xx) {
+          unlist(tapply(
+            xx,
+            reduced$.group,
+            bad_or_unique,
+            bad = bad_string,
+            simplify = FALSE
           ))
         }
       ),
@@ -224,7 +248,10 @@ setMethod(
         tax_table()
     } else {
       reduced_by_group |>
-        mutate(across(everything(), ~ ifelse(stringr::str_detect(.x, bad_string), NA_character_, .x))) %>%
+        mutate(across(
+          everything(),
+          ~ ifelse(stringr::str_detect(.x, bad_string), NA_character_, .x)
+        )) %>%
         as("matrix") %>%
         tax_table()
     }
@@ -233,7 +260,8 @@ setMethod(
 
 #' @rdname merge_taxa_vec
 setMethod(
-  "merge_taxa_vec", "phylo",
+  "merge_taxa_vec",
+  "phylo",
   function(x, group) {
     merge_taxa_vec_pseudo(x, group)
   }
@@ -241,7 +269,8 @@ setMethod(
 
 #' @rdname merge_taxa_vec
 setMethod(
-  "merge_taxa_vec", "XStringSet",
+  "merge_taxa_vec",
+  "XStringSet",
   function(x, group, reorder = FALSE) {
     merge_taxa_vec_pseudo(x, group, reorder = reorder)
   }
@@ -371,12 +400,14 @@ bad_flush_right <- function(x, bad = "BAD", na_bad = FALSE, k = length(x)) {
 #' @author Michael R. McLaren (orcid: [0000-0003-1575-473X](https://orcid.org/0000-0003-1575-473X)) modified by Adrien Taudiere
 setGeneric(
   "merge_samples2",
-  function(x,
-           group,
-           fun_otu = sum,
-           funs = list(),
-           reorder = FALSE,
-           default_fun = unique_or_na) {
+  function(
+    x,
+    group,
+    fun_otu = sum,
+    funs = list(),
+    reorder = FALSE,
+    default_fun = unique_or_na
+  ) {
     standardGeneric("merge_samples2")
   }
 )
@@ -385,8 +416,14 @@ setGeneric(
 setMethod(
   "merge_samples2",
   signature("phyloseq"),
-  function(x, group, fun_otu = sum, funs = list(), reorder = FALSE,
-           default_fun = unique_or_na) {
+  function(
+    x,
+    group,
+    fun_otu = sum,
+    funs = list(),
+    reorder = FALSE,
+    default_fun = unique_or_na
+  ) {
     if (length(group) == 1) {
       stopifnot(group %in% sample_variables(x))
       group <- sample_data(x)[[group]]
@@ -395,17 +432,26 @@ setMethod(
     }
     # Drop samples with `is.na(group)`
     if (anyNA(group)) {
-      warning("`group` has missing values; corresponding samples will be dropped")
+      warning(
+        "`group` has missing values; corresponding samples will be dropped"
+      )
       x <- prune_samples(!is.na(group), x)
       group <- group[!is.na(group)]
     }
     # Merge
-    otu.merged <- merge_samples2(otu_table(x), group,
+    otu.merged <- merge_samples2(
+      otu_table(x),
+      group,
       fun_otu = fun_otu,
       reorder = reorder
     )
     if (!is.null(access(x, "sam_data"))) {
-      sam.merged <- merge_samples2(sample_data(x), group, funs = funs, default_fun = default_fun)
+      sam.merged <- merge_samples2(
+        sample_data(x),
+        group,
+        funs = funs,
+        default_fun = default_fun
+      )
     } else {
       sam.merged <- NULL
     }
@@ -423,8 +469,13 @@ setMethod(
 setMethod(
   "merge_samples2",
   signature("otu_table"),
-  function(x, group, fun_otu = sum, reorder = FALSE,
-           default_fun = unique_or_na) {
+  function(
+    x,
+    group,
+    fun_otu = sum,
+    reorder = FALSE,
+    default_fun = unique_or_na
+  ) {
     stopifnot(identical(length(group), nsamples(x)))
     # Work with samples as rows, and remember to flip back at end if needed
     needs_flip <- taxa_are_rows(x)
@@ -433,7 +484,9 @@ setMethod(
     }
     # Drop samples with `is.na(group)`
     if (anyNA(group)) {
-      warning("`group` has missing values; corresponding samples will be dropped")
+      warning(
+        "`group` has missing values; corresponding samples will be dropped"
+      )
       x <- x[!is.na(group), ]
       group <- group[!is.na(group)]
     }
@@ -449,7 +502,6 @@ setMethod(
         cbind(.group = group) %>%
         group_by(.group) %>%
         summarise(across(everything(), purrr::as_mapper(fun_otu)))
-
 
       if (reorder) {
         x.merged <- x.merged %>% arrange(.group)
@@ -470,8 +522,13 @@ setMethod(
 setMethod(
   "merge_samples2",
   signature("sample_data"),
-  function(x, group, funs = list(), reorder = FALSE,
-           default_fun = unique_or_na) {
+  function(
+    x,
+    group,
+    funs = list(),
+    reorder = FALSE,
+    default_fun = unique_or_na
+  ) {
     if (length(group) == 1) {
       stopifnot(group %in% sample_variables(x))
       group <- x[[group]]
@@ -480,7 +537,9 @@ setMethod(
     }
     # Drop samples with `is.na(group)`
     if (anyNA(group)) {
-      warning("`group` has missing values; corresponding samples will be dropped")
+      warning(
+        "`group` has missing values; corresponding samples will be dropped"
+      )
       x <- x[!is.na(group), ]
       group <- group[!is.na(group)]
     }
@@ -490,7 +549,8 @@ setMethod(
       rlang::set_names(. %in% names(funs), .)
     # For vars in the funs, run f through as_mapper; else, use the default f
     funs <- purrr::map2(
-      var_in_funs, names(var_in_funs),
+      var_in_funs,
+      names(var_in_funs),
       ~ if (.x) purrr::as_mapper(funs[[.y]]) else default_fun
     )
     ## Merge variable values, creating a new sample_data object with one row
@@ -504,7 +564,8 @@ setMethod(
       sort() %>%
       as.character()
     x.merged <- purrr::map2(
-      x, funs,
+      x,
+      funs,
       ~ merge_groups(.x, group = group, f = .y)
     ) %>%
       data.frame() %>%
@@ -640,7 +701,8 @@ setGeneric(
 
 #' @rdname select_taxa-methods
 setMethod(
-  "select_taxa", signature("sample_data", "character"),
+  "select_taxa",
+  signature("sample_data", "character"),
   function(x, taxa) {
     stopifnot(!anyDuplicated(taxa))
     x
@@ -649,7 +711,8 @@ setMethod(
 
 #' @rdname select_taxa-methods
 setMethod(
-  "select_taxa", signature("otu_table", "character"),
+  "select_taxa",
+  signature("otu_table", "character"),
   function(x, taxa, reorder = TRUE) {
     stopifnot(!anyDuplicated(taxa))
     stopifnot(all(taxa %in% taxa_names(x)))
@@ -666,7 +729,8 @@ setMethod(
 
 #' @rdname select_taxa-methods
 setMethod(
-  "select_taxa", signature("taxonomyTable", "character"),
+  "select_taxa",
+  signature("taxonomyTable", "character"),
   function(x, taxa, reorder = TRUE) {
     stopifnot(!anyDuplicated(taxa))
     stopifnot(all(taxa %in% taxa_names(x)))
@@ -679,7 +743,8 @@ setMethod(
 
 #' @rdname select_taxa-methods
 setMethod(
-  "select_taxa", signature("XStringSet", "character"),
+  "select_taxa",
+  signature("XStringSet", "character"),
   function(x, taxa, reorder = TRUE) {
     stopifnot(!anyDuplicated(taxa))
     stopifnot(all(taxa %in% taxa_names(x)))
@@ -692,7 +757,8 @@ setMethod(
 
 #' @rdname select_taxa-methods
 setMethod(
-  "select_taxa", signature("phylo", "character"),
+  "select_taxa",
+  signature("phylo", "character"),
   function(x, taxa) {
     # NOTE: `reorder` argument silently ignored if supplied
     stopifnot(!anyDuplicated(taxa))
@@ -703,7 +769,8 @@ setMethod(
 
 #' @rdname select_taxa-methods
 setMethod(
-  "select_taxa", signature("phyloseq", "character"),
+  "select_taxa",
+  signature("phyloseq", "character"),
   function(x, taxa, reorder = TRUE) {
     stopifnot(!anyDuplicated(taxa))
     stopifnot(all(taxa %in% taxa_names(x)))

@@ -75,7 +75,10 @@ test_that("taxa_only_in_one_level works fine", {
     taxa_only_in_one_level(data_fungi_mini_woNA4height, "Height", "Low"),
     "character"
   )
-  result <- taxa_only_in_one_level(data_fungi_mini_woNA4height, "Height", "High",
+  result <- taxa_only_in_one_level(
+    data_fungi_mini_woNA4height,
+    "Height",
+    "High",
     min_nb_seq_taxa = 100
   )
   expect_type(result, "character")
@@ -98,7 +101,10 @@ test_that("physeq_or_string_to_dna works fine", {
 
   skip_on_cran()
   # Test errors
-  expect_error(physeq_or_string_to_dna(physeq = data_fungi_mini, dna_seq = sequences_ex))
+  expect_error(physeq_or_string_to_dna(
+    physeq = data_fungi_mini,
+    dna_seq = sequences_ex
+  ))
   expect_error(physeq_or_string_to_dna())
 })
 
@@ -117,13 +123,20 @@ test_that("psmelt_samples_pq works fine", {
   expect_false("Hill_0" %in% colnames(result2))
 
   # Test with taxa_ranks
-  result3 <- psmelt_samples_pq(data_fungi_mini, taxa_ranks = c("Class", "Family"))
+  result3 <- psmelt_samples_pq(
+    data_fungi_mini,
+    taxa_ranks = c("Class", "Family")
+  )
   expect_s3_class(result3, "tbl_df")
 })
 
 
 test_that("rarefy_sample_count_by_modality works fine", {
-  result <- rarefy_sample_count_by_modality(data_fungi_mini, "Height", rngseed = 123)
+  result <- rarefy_sample_count_by_modality(
+    data_fungi_mini,
+    "Height",
+    rngseed = 123
+  )
   expect_s4_class(result, "phyloseq")
 
   skip_on_cran()

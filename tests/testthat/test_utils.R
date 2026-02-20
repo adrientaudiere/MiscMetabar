@@ -65,12 +65,29 @@ test_that("resolve_vector_ranks works with a unique value", {
   expect_equal(resolve_vector_ranks(c("A"), method = "abs_majority"), "A")
   expect_equal(resolve_vector_ranks(c("A"), method = "rel_majority"), "A")
 
-  expect_equal(resolve_vector_ranks("A", method = "abs_majority", nb_agree_threshold = 0), "A")
-  expect_true(is.na(resolve_vector_ranks("A", method = "abs_majority", nb_agree_threshold = 2)))
+  expect_equal(
+    resolve_vector_ranks("A", method = "abs_majority", nb_agree_threshold = 0),
+    "A"
+  )
+  expect_true(is.na(resolve_vector_ranks(
+    "A",
+    method = "abs_majority",
+    nb_agree_threshold = 2
+  )))
 
-  expect_equal(resolve_vector_ranks("A", method = "rel_majority", nb_agree_threshold = 0), "A")
-  expect_equal(resolve_vector_ranks("A", method = "rel_majority", nb_agree_threshold = 1), "A")
-  expect_true(is.na(resolve_vector_ranks("A", method = "rel_majority", nb_agree_threshold = 2)))
+  expect_equal(
+    resolve_vector_ranks("A", method = "rel_majority", nb_agree_threshold = 0),
+    "A"
+  )
+  expect_equal(
+    resolve_vector_ranks("A", method = "rel_majority", nb_agree_threshold = 1),
+    "A"
+  )
+  expect_true(is.na(resolve_vector_ranks(
+    "A",
+    method = "rel_majority",
+    nb_agree_threshold = 2
+  )))
 
   expect_equal(resolve_vector_ranks(c("A"), method = "unanimity"), "A")
 })
@@ -105,7 +122,11 @@ test_that("resolve_vector_ranks works with a vector of unique value", {
 test_that("resolve_vector_ranks works with a vector of NA", {
   vec <- c(NA, NA, NA)
   expect_true(is.na(resolve_vector_ranks(vec)))
-  expect_true(is.na(resolve_vector_ranks(vec, method = "preference", preference_index = 1)))
+  expect_true(is.na(resolve_vector_ranks(
+    vec,
+    method = "preference",
+    preference_index = 1
+  )))
   expect_true(is.na(resolve_vector_ranks(vec, method = "abs_majority")))
   expect_true(is.na(resolve_vector_ranks(vec, method = "rel_majority")))
   expect_true(is.na(resolve_vector_ranks(vec, method = "unanimity")))
@@ -115,11 +136,18 @@ test_that("resolve_vector_ranks works with a vector of NA", {
 test_that("resolve_vector_ranks works with a vector of 2 A and one NA", {
   vec <- c("A", "A", NA)
   expect_equal(resolve_vector_ranks(vec), "A")
-  expect_equal(resolve_vector_ranks(vec, method = "preference", preference_index = 1), "A")
+  expect_equal(
+    resolve_vector_ranks(vec, method = "preference", preference_index = 1),
+    "A"
+  )
   expect_equal(resolve_vector_ranks(vec, method = "abs_majority"), "A")
   expect_equal(resolve_vector_ranks(vec, method = "rel_majority"), "A")
   expect_equal(resolve_vector_ranks(vec, method = "unanimity"), "A")
-  expect_true(is.na(resolve_vector_ranks(vec, method = "unanimity", strict = TRUE)))
+  expect_true(is.na(resolve_vector_ranks(
+    vec,
+    method = "unanimity",
+    strict = TRUE
+  )))
 })
 
 
@@ -127,37 +155,80 @@ test_that("resolve_vector_ranks works with a vector of one A, one B and one NA",
   vec <- c("A", "B", NA)
   expect_equal(resolve_vector_ranks(vec), "A/B")
   expect_equal(resolve_vector_ranks(vec, strict = TRUE), "A/B/NA")
-  expect_equal(resolve_vector_ranks(vec, method = "preference", preference_index = 1), "A")
-  expect_equal(resolve_vector_ranks(vec, method = "preference", preference_index = 2), "B")
+  expect_equal(
+    resolve_vector_ranks(vec, method = "preference", preference_index = 1),
+    "A"
+  )
+  expect_equal(
+    resolve_vector_ranks(vec, method = "preference", preference_index = 2),
+    "B"
+  )
 
-  expect_equal(resolve_vector_ranks(vec, method = "preference", preference_index = 3), "A/B")
-  expect_equal(resolve_vector_ranks(vec, method = "preference", preference_index = 3, second_method = c("rel_majority")), "A/B")
+  expect_equal(
+    resolve_vector_ranks(vec, method = "preference", preference_index = 3),
+    "A/B"
+  )
+  expect_equal(
+    resolve_vector_ranks(
+      vec,
+      method = "preference",
+      preference_index = 3,
+      second_method = c("rel_majority")
+    ),
+    "A/B"
+  )
 
-  expect_true(is.na(resolve_vector_ranks(vec, method = "preference", preference_index = 3, second_method = c("unanimity"))))
-  expect_true(is.na(resolve_vector_ranks(vec, method = "preference", preference_index = 3, second_method = c("abs_majority"))))
+  expect_true(is.na(resolve_vector_ranks(
+    vec,
+    method = "preference",
+    preference_index = 3,
+    second_method = c("unanimity")
+  )))
+  expect_true(is.na(resolve_vector_ranks(
+    vec,
+    method = "preference",
+    preference_index = 3,
+    second_method = c("abs_majority")
+  )))
 
-  expect_error(resolve_vector_ranks(vec, method = "preference", preference_index = 4))
+  expect_error(resolve_vector_ranks(
+    vec,
+    method = "preference",
+    preference_index = 4
+  ))
 
   expect_true(is.na(resolve_vector_ranks(vec, method = "abs_majority")))
 
   expect_equal(resolve_vector_ranks(vec, method = "rel_majority"), "A/B")
   expect_true(is.na(resolve_vector_ranks(vec, method = "unanimity")))
-  expect_true(is.na(resolve_vector_ranks(vec, method = "unanimity", strict = TRUE)))
+  expect_true(is.na(resolve_vector_ranks(
+    vec,
+    method = "unanimity",
+    strict = TRUE
+  )))
 })
 
 
 test_that("resolve_vector_ranks works with a vector of one A, two B", {
   vec <- c("A", "B", "B")
   expect_equal(resolve_vector_ranks(vec), "A/B")
-  expect_equal(resolve_vector_ranks(vec,
-    method = "preference",
-    preference_index = 1
-  ), "A")
+  expect_equal(
+    resolve_vector_ranks(vec, method = "preference", preference_index = 1),
+    "A"
+  )
   expect_equal(resolve_vector_ranks(vec, method = "abs_majority"), "B")
   expect_equal(resolve_vector_ranks(vec, method = "rel_majority"), "B")
 
-  expect_true(is.na(resolve_vector_ranks(vec, method = "abs_majority", nb_agree_threshold = 3)))
-  expect_true(is.na(resolve_vector_ranks(vec, method = "rel_majority", nb_agree_threshold = 3)))
+  expect_true(is.na(resolve_vector_ranks(
+    vec,
+    method = "abs_majority",
+    nb_agree_threshold = 3
+  )))
+  expect_true(is.na(resolve_vector_ranks(
+    vec,
+    method = "rel_majority",
+    nb_agree_threshold = 3
+  )))
   expect_true(is.na(resolve_vector_ranks(vec, method = "unanimity")))
 })
 

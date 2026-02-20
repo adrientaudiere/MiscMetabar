@@ -10,14 +10,17 @@ test_that("filt_taxa_pq works", {
   expect_s4_class(result, "phyloseq")
   expect_equal(ntaxa(result), 1214)
 
-  result <- filt_taxa_pq(data_fungi,
+  result <- filt_taxa_pq(
+    data_fungi,
     min_occurence = 2,
-    min_nb_seq = 10, clean_pq = FALSE
+    min_nb_seq = 10,
+    clean_pq = FALSE
   )
   expect_s4_class(result, "phyloseq")
   expect_equal(ntaxa(result), 1208)
 
-  result <- filt_taxa_pq(data_fungi,
+  result <- filt_taxa_pq(
+    data_fungi,
     min_occurence = 4,
     min_nb_seq = 100,
     combination = "OR"

@@ -1,8 +1,10 @@
 if (FALSE) {
   # Not running test for the moment because can't fix for test-coverage.yaml github action
   if (!MiscMetabar:::is_cutadapt_installed()) {
-    message("cutadapt_remove_primers()  can't be
-    tested when cutadapt is not installed")
+    message(
+      "cutadapt_remove_primers()  can't be
+    tested when cutadapt is not installed"
+    )
   } else if (FALSE) {
     # Not running test for the moment because can't fix for test-coverage.yaml github action
     test_that("cutadapt_remove_primers works fine", {
@@ -20,9 +22,12 @@ if (FALSE) {
       expect_equal(length(res_cut), 1)
       expect_type(res_cut[[1]], "character")
 
-      expect_equal(length(list.files(
-        paste0(tempdir(), "/output_cutadapt")
-      )), 2)
+      expect_equal(
+        length(list.files(
+          paste0(tempdir(), "/output_cutadapt")
+        )),
+        2
+      )
 
       expect_silent(suppressMessages(
         res_cut2 <- cutadapt_remove_primers(
@@ -40,9 +45,12 @@ if (FALSE) {
 
       expect_type(res_cut2[[1]], "character")
 
-      expect_equal(length(list.files(
-        paste0(tempdir(), "/output_cutadapt")
-      )), 2)
+      expect_equal(
+        length(list.files(
+          paste0(tempdir(), "/output_cutadapt")
+        )),
+        2
+      )
 
       expect_silent(suppressMessages(
         res_cut3 <- cutadapt_remove_primers(
@@ -58,9 +66,12 @@ if (FALSE) {
       expect_equal(length(res_cut3), 2)
       expect_type(res_cut3[[1]], "character")
 
-      expect_equal(length(list.files(
-        paste0(tempdir(), "/output_cutadapt")
-      )), 2)
+      expect_equal(
+        length(list.files(
+          paste0(tempdir(), "/output_cutadapt")
+        )),
+        2
+      )
     })
 
     unlink(tempdir(), recursive = TRUE)

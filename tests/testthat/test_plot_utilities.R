@@ -18,10 +18,20 @@ test_that("no_legend works fine", {
 
 test_that("ridges_pq works fine", {
   if (requireNamespace("ggridges")) {
-    result <- ridges_pq(data_fungi_mini, "Time", alpha = 0.5, log10trans = FALSE)
+    result <- ridges_pq(
+      data_fungi_mini,
+      "Time",
+      alpha = 0.5,
+      log10trans = FALSE
+    )
     expect_s3_class(result, "ggplot")
     skip_on_cran()
-    result2 <- ridges_pq(data_fungi_mini, "Time", alpha = 0.5, log10trans = TRUE)
+    result2 <- ridges_pq(
+      data_fungi_mini,
+      "Time",
+      alpha = 0.5,
+      log10trans = TRUE
+    )
     expect_s3_class(result2, "ggplot")
 
     result3 <- ridges_pq(data_fungi_mini, "Time", type = "ecdf")
@@ -52,9 +62,16 @@ test_that("plot_tax_pq works fine", {
 
 
 test_that("biplot_pq works fine", {
-  data_fungi_2Height <- subset_samples(data_fungi_mini, Height %in% c("Low", "High"))
+  data_fungi_2Height <- subset_samples(
+    data_fungi_mini,
+    Height %in% c("Low", "High")
+  )
   skip_on_cran()
-  result2 <- biplot_pq(data_fungi_2Height, fact = "Height", merge_sample_by = "Height")
+  result2 <- biplot_pq(
+    data_fungi_2Height,
+    fact = "Height",
+    merge_sample_by = "Height"
+  )
   expect_s3_class(result2, "ggplot")
 })
 
@@ -64,7 +81,11 @@ test_that("hill_curves_pq works fine", {
     result <- hill_curves_pq(data_fungi_mini, merge_sample_by = "Time")
     expect_s3_class(result, "ggplot")
     skip_on_cran()
-    result2 <- hill_curves_pq(data_fungi_mini, color_fac = "Time", plot_legend = FALSE)
+    result2 <- hill_curves_pq(
+      data_fungi_mini,
+      color_fac = "Time",
+      plot_legend = FALSE
+    )
     expect_s3_class(result2, "ggplot")
   }
 })
@@ -74,7 +95,8 @@ test_that("plot_edgeR_pq works fine", {
   if (requireNamespace("edgeR")) {
     data_mini_sub <- subset_samples(data_fungi_mini, !is.na(Height))
     skip_on_cran()
-    result <- suppressWarnings(plot_edgeR_pq(data_mini_sub,
+    result <- suppressWarnings(plot_edgeR_pq(
+      data_mini_sub,
       contrast = c("Height", "Low", "High")
     ))
     expect_s3_class(result, "ggplot")

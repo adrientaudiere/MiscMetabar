@@ -77,7 +77,16 @@
 #' @author Tobias Guldberg Frøslev (orcid: [0000-0002-3530-013X](https://orcid.org/0000-0002-3530-013X)),
 #' modified by Adrien Taudière
 #' @export
-lulu <- function(otu_table, matchlist, minimum_ratio_type = "min", minimum_ratio = 1, minimum_match = 84, minimum_relative_cooccurence = 0.95, progress_bar = TRUE, log_conserved = FALSE) {
+lulu <- function(
+  otu_table,
+  matchlist,
+  minimum_ratio_type = "min",
+  minimum_ratio = 1,
+  minimum_match = 84,
+  minimum_relative_cooccurence = 0.95,
+  progress_bar = TRUE,
+  log_conserved = FALSE
+) {
   start.time <- Sys.time()
   otutable <- otu_table
   colnames(matchlist) <- c("OTUid", "hit", "match")
@@ -92,20 +101,22 @@ lulu <- function(otu_table, matchlist, minimum_ratio_type = "min", minimum_ratio
 
   # calculating spread (number of presences (samples with 1+ read) pr OTU)
   statistics_table$spread <- rowSums(otutable > 0)
-  statistics_table <- statistics_table[with(
-    statistics_table,
-    order(spread,
-      total,
-      decreasing = TRUE
-    )
-  ), ]
-  otutable <- otutable[match(
-    row.names(statistics_table),
-    row.names(otutable)
-  ), ]
+  statistics_table <- statistics_table[
+    with(
+      statistics_table,
+      order(spread, total, decreasing = TRUE)
+    ),
+  ]
+  otutable <- otutable[
+    match(
+      row.names(statistics_table),
+      row.names(otutable)
+    ),
+  ]
 
   statistics_table$parent_id <- "NA"
-  log_con <- file(paste0("lulu.log_", format(start.time, "%Y%m%d_%H%M%S")),
+  log_con <- file(
+    paste0("lulu.log_", format(start.time, "%Y%m%d_%H%M%S")),
     open = "a"
   )
   # make a progressline
@@ -121,53 +132,82 @@ lulu <- function(otu_table, matchlist, minimum_ratio_type = "min", minimum_ratio
       setTxtProgressBar(pb, line)
     }
     potential_parent_id <- row.names(otutable)[line]
-    message(paste0("\n", "####processing: ", potential_parent_id, " #####"),
+    message(
+      paste0("\n", "####processing: ", potential_parent_id, " #####"),
       file = log_con
     )
     daughter_samples <- otutable[line, ]
-    hits <- matchlist[which(matchlist$OTUid == potential_parent_id &
-      matchlist$match > minimum_match), "hit"]
+    hits <- matchlist[
+      which(
+        matchlist$OTUid == potential_parent_id &
+          matchlist$match > minimum_match
+      ),
+      "hit"
+    ]
     message(paste0("\n", "---hits: ", hits), file = log_con)
-    last_relevant_entry <- sum(statistics_table$spread >=
-      statistics_table$spread[line])
-    potential_parents <- which(row.names(otutable)[1:last_relevant_entry]
-    %in% hits)
-    message(paste0(
-      "\n", "---potential parent: ",
-      row.names(statistics_table)[potential_parents]
-    ), file = log_con)
+    last_relevant_entry <- sum(
+      statistics_table$spread >= statistics_table$spread[line]
+    )
+    potential_parents <- which(
+      row.names(otutable)[1:last_relevant_entry] %in% hits
+    )
+    message(
+      paste0(
+        "\n",
+        "---potential parent: ",
+        row.names(statistics_table)[potential_parents]
+      ),
+      file = log_con
+    )
     success <- FALSE
     if (length(potential_parents) > 0) {
       for (line2 in potential_parents) {
-        message(paste0("\n", "------checking: ", row.names(statistics_table)[line2]),
+        message(
+          paste0("\n", "------checking: ", row.names(statistics_table)[line2]),
           file = log_con
         )
         if (!success) {
           relative_cooccurence <-
             sum((daughter_samples[otutable[line2, ] > 0]) > 0) /
-              sum(daughter_samples > 0)
-          message(paste0(
-            "\n", "------relative cooccurence: ",
-            relative_cooccurence
-          ), file = log_con)
+            sum(daughter_samples > 0)
+          message(
+            paste0(
+              "\n",
+              "------relative cooccurence: ",
+              relative_cooccurence
+            ),
+            file = log_con
+          )
           if (relative_cooccurence >= minimum_relative_cooccurence) {
             message(paste0(" which is sufficient!"), file = log_con)
             if (minimum_ratio_type == "avg") {
               relative_abundance <-
-                mean(otutable[line2, ][daughter_samples > 0] /
-                  daughter_samples[daughter_samples > 0])
-              message(paste0(
-                "\n", "------mean avg abundance: ",
-                relative_abundance
-              ), file = log_con)
+                mean(
+                  otutable[line2, ][daughter_samples > 0] /
+                    daughter_samples[daughter_samples > 0]
+                )
+              message(
+                paste0(
+                  "\n",
+                  "------mean avg abundance: ",
+                  relative_abundance
+                ),
+                file = log_con
+              )
             } else {
               relative_abundance <-
-                min(otutable[line2, ][daughter_samples > 0] /
-                  daughter_samples[daughter_samples > 0])
-              message(paste0(
-                "\n", "------min avg abundance: ",
-                relative_abundance
-              ), file = log_con)
+                min(
+                  otutable[line2, ][daughter_samples > 0] /
+                    daughter_samples[daughter_samples > 0]
+                )
+              message(
+                paste0(
+                  "\n",
+                  "------min avg abundance: ",
+                  relative_abundance
+                ),
+                file = log_con
+              )
             }
             if (relative_abundance > minimum_ratio) {
               message(paste0(" which is OK!"), file = log_con)
@@ -176,22 +216,31 @@ lulu <- function(otu_table, matchlist, minimum_ratio_type = "min", minimum_ratio
                   statistics_table[row.names(otutable)[line2], "parent_id"]
                 message(
                   paste0(
-                    "\n", "SETTING ",
-                    potential_parent_id, " to be an ERROR of ",
+                    "\n",
+                    "SETTING ",
+                    potential_parent_id,
+                    " to be an ERROR of ",
                     (statistics_table[
                       row.names(otutable)[line2],
                       "parent_id"
-                    ]), "\n"
+                    ]),
+                    "\n"
                   ),
                   file = log_con
                 )
               } else {
                 statistics_table$parent_id[line] <- row.names(otutable)[line2]
-                message(paste0(
-                  "\n", "SETTING ", potential_parent_id,
-                  " to be an ERROR of ", (row.names(otutable)[line2]),
-                  "\n"
-                ), file = log_con)
+                message(
+                  paste0(
+                    "\n",
+                    "SETTING ",
+                    potential_parent_id,
+                    " to be an ERROR of ",
+                    (row.names(otutable)[line2]),
+                    "\n"
+                  ),
+                  file = log_con
+                )
               }
               success <- TRUE
             }
@@ -211,14 +260,17 @@ lulu <- function(otu_table, matchlist, minimum_ratio_type = "min", minimum_ratio
   statistics_table$curated <- "merged"
   curate_index <- row.names(statistics_table) == statistics_table$parent_id
   statistics_table$curated[curate_index] <- "parent"
-  statistics_table <- transform(statistics_table,
+  statistics_table <- transform(
+    statistics_table,
     rank = ave(total, FUN = function(x) {
       rank(-x, ties.method = "first")
     })
   )
-  curation_table <- as.data.frame(curation_table %>%
-    group_by(nOTUid) %>%
-    summarise_all(list(sum)))
+  curation_table <- as.data.frame(
+    curation_table %>%
+      group_by(nOTUid) %>%
+      summarise_all(list(sum))
+  )
   row.names(curation_table) <- as.character(curation_table$nOTUid)
   curation_table <- curation_table[, -1]
   curated_otus <- names(table(statistics_table$parent_id))

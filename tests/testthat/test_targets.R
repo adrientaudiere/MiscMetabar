@@ -11,21 +11,27 @@ test_that("list_fastq_files function works fine", {
     ),
     "list"
   )
-  expect_equal(length(unlist(
-    list_fastq_files(
-      "inst/extdata",
-      paired_end = FALSE,
-      pattern_R1 = ""
-    )
-  )), 3)
-  expect_equal(length(unlist(
-    list_fastq_files(
-      "inst/extdata",
-      paired_end = FALSE,
-      pattern_R1 = "",
-      nb_files = 2
-    )
-  )), 2)
+  expect_equal(
+    length(unlist(
+      list_fastq_files(
+        "inst/extdata",
+        paired_end = FALSE,
+        pattern_R1 = ""
+      )
+    )),
+    3
+  )
+  expect_equal(
+    length(unlist(
+      list_fastq_files(
+        "inst/extdata",
+        paired_end = FALSE,
+        pattern_R1 = "",
+        nb_files = 2
+      )
+    )),
+    2
+  )
   expect_type(list_fastq_files("inst/extdata/"), "list")
   expect_equal(length(list_fastq_files("inst/extdata/")), 2)
 })
@@ -35,19 +41,37 @@ test_that("rename_samples_otu_table function works fine when taxa_are_rows", {
     rename_samples_otu_table(data_fungi, as.character(1:nsamples(data_fungi))),
     "otu_table"
   )
-  expect_equal(nrow(rename_samples_otu_table(data_fungi, as.character(
-    1:nsamples(data_fungi)
-  ))), nsamples(data_fungi))
-  expect_equal(ncol(rename_samples_otu_table(data_fungi, as.character(
-    1:nsamples(data_fungi)
-  ))), ntaxa(data_fungi))
   expect_equal(
-    sample_names(rename_samples_otu_table(data_fungi, as.character(
-      1:nsamples(data_fungi)
-    ))),
+    nrow(rename_samples_otu_table(
+      data_fungi,
+      as.character(
+        1:nsamples(data_fungi)
+      )
+    )),
+    nsamples(data_fungi)
+  )
+  expect_equal(
+    ncol(rename_samples_otu_table(
+      data_fungi,
+      as.character(
+        1:nsamples(data_fungi)
+      )
+    )),
+    ntaxa(data_fungi)
+  )
+  expect_equal(
+    sample_names(rename_samples_otu_table(
+      data_fungi,
+      as.character(
+        1:nsamples(data_fungi)
+      )
+    )),
     as.character(1:nsamples(data_fungi))
   )
-  expect_error(rename_samples_otu_table(data_fungi, as.character(2:nsamples(data_fungi))))
+  expect_error(rename_samples_otu_table(
+    data_fungi,
+    as.character(2:nsamples(data_fungi))
+  ))
 })
 
 data_fungi_row <- clean_pq(data_fungi, force_taxa_as_rows = TRUE)
@@ -55,22 +79,37 @@ data_fungi_row <- clean_pq(data_fungi, force_taxa_as_rows = TRUE)
 test_that("rename_samples_otu_table function works fine when taxa_are_columns", {
   skip_on_cran()
   expect_s4_class(
-    rename_samples_otu_table(data_fungi_row, as.character(1:nsamples(data_fungi_row))),
+    rename_samples_otu_table(
+      data_fungi_row,
+      as.character(1:nsamples(data_fungi_row))
+    ),
     "otu_table"
   )
-  expect_equal(ncol(rename_samples_otu_table(
-    data_fungi_row, as.character(1:nsamples(data_fungi_row))
-  )), nsamples(data_fungi_row))
-  expect_equal(nrow(rename_samples_otu_table(
-    data_fungi_row, as.character(1:nsamples(data_fungi_row))
-  )), ntaxa(data_fungi_row))
+  expect_equal(
+    ncol(rename_samples_otu_table(
+      data_fungi_row,
+      as.character(1:nsamples(data_fungi_row))
+    )),
+    nsamples(data_fungi_row)
+  )
+  expect_equal(
+    nrow(rename_samples_otu_table(
+      data_fungi_row,
+      as.character(1:nsamples(data_fungi_row))
+    )),
+    ntaxa(data_fungi_row)
+  )
   expect_equal(
     sample_names(rename_samples_otu_table(
-      data_fungi_row, as.character(1:nsamples(data_fungi_row))
+      data_fungi_row,
+      as.character(1:nsamples(data_fungi_row))
     )),
     as.character(1:nsamples(data_fungi))
   )
-  expect_error(rename_samples_otu_table(data_fungi_row, as.character(2:nsamples(data_fungi_row))))
+  expect_error(rename_samples_otu_table(
+    data_fungi_row,
+    as.character(2:nsamples(data_fungi_row))
+  ))
 })
 
 data_fungi_test <- data_fungi
@@ -83,26 +122,52 @@ test_that("track_wkflow function works fine", {
   skip_on_os("windows")
   skip_on_cran()
   expect_message(track_wkflow(list(
-    unlist(list_fastq_files("inst/extdata/")), data_fungi, enterotype
+    unlist(list_fastq_files("inst/extdata/")),
+    data_fungi,
+    enterotype
   )))
-  expect_s3_class(track_wkflow(list(
-    unlist(list_fastq_files("inst/extdata/")), data_fungi, enterotype
-  )), "data.frame")
-  expect_s3_class(track_wkflow(
-    list(unlist(list_fastq_files("inst/extdata/")), data_fungi, enterotype),
-    obj_names = c("Fastq.files", "data_fungi", "Enterotype")
-  ), "data.frame")
-  expect_s3_class(track_wkflow(list(
-    unlist(list_fastq_files("inst/extdata/")), data_fungi, data_fungi_test
-  ), clean_pq = TRUE), "data.frame")
+  expect_s3_class(
+    track_wkflow(list(
+      unlist(list_fastq_files("inst/extdata/")),
+      data_fungi,
+      enterotype
+    )),
+    "data.frame"
+  )
+  expect_s3_class(
+    track_wkflow(
+      list(unlist(list_fastq_files("inst/extdata/")), data_fungi, enterotype),
+      obj_names = c("Fastq.files", "data_fungi", "Enterotype")
+    ),
+    "data.frame"
+  )
+  expect_s3_class(
+    track_wkflow(
+      list(
+        unlist(list_fastq_files("inst/extdata/")),
+        data_fungi,
+        data_fungi_test
+      ),
+      clean_pq = TRUE
+    ),
+    "data.frame"
+  )
 })
 
 test_that("track_wkflow function works fine with taxonomy_rank", {
   skip_on_cran()
-  expect_error(track_wkflow(list(
-    unlist(list_fastq_files("inst/extdata/")), data_fungi, enterotype
-  ), taxonomy_rank = c(3, 5)))
-  expect_s3_class(track_wkflow(list(data_fungi, enterotype), taxonomy_rank = c(3, 5)), "data.frame")
+  expect_error(track_wkflow(
+    list(
+      unlist(list_fastq_files("inst/extdata/")),
+      data_fungi,
+      enterotype
+    ),
+    taxonomy_rank = c(3, 5)
+  ))
+  expect_s3_class(
+    track_wkflow(list(data_fungi, enterotype), taxonomy_rank = c(3, 5)),
+    "data.frame"
+  )
 })
 
 tree_A10_005 <- subset_samples(data_fungi, Tree_name == "A10-005")
@@ -127,15 +192,18 @@ derep_R_001 <-
 test_that("track_wkflow_samples function works fine with object of class matrix, dada and derep", {
   skip_on_os("windows")
   if (requireNamespace("pbapply")) {
-    expect_s3_class(track_wkflow(
-      list(
-        data_fungi@otu_table,
-        derep_R1_001,
-        derep_R_001,
-        "inst/extdata/ex_R1_001.fastq.gz",
-        dada_R1_001
-      )
-    ), "data.frame")
+    expect_s3_class(
+      track_wkflow(
+        list(
+          data_fungi@otu_table,
+          derep_R1_001,
+          derep_R_001,
+          "inst/extdata/ex_R1_001.fastq.gz",
+          dada_R1_001
+        )
+      ),
+      "data.frame"
+    )
   }
 })
 
@@ -225,7 +293,9 @@ test_that("track_wkflow_samples works with mixed object types", {
   skip_on_cran()
   skip_on_os("windows")
   mat <- as(data_fungi@otu_table, "matrix")
-  if (taxa_are_rows(data_fungi)) mat <- t(mat)
+  if (taxa_are_rows(data_fungi)) {
+    mat <- t(mat)
+  }
   res <- track_wkflow_samples(list(
     tree_A10_005,
     mat
@@ -236,14 +306,19 @@ test_that("track_wkflow_samples works with mixed object types", {
 })
 
 test_that("select_one_sample function works fine", {
-  expect_message(A8_005 <-
-    select_one_sample(data_fungi, "A8-005_S4_MERGED.fastq.gz"))
+  expect_message(
+    A8_005 <-
+      select_one_sample(data_fungi, "A8-005_S4_MERGED.fastq.gz")
+  )
   expect_s4_class(A8_005, "phyloseq")
   expect_error(select_one_sample(data_fungi, "A8-005_S.fastq.gz"))
 })
 
 test_that("subsample_fastq function works fine", {
-  expect_silent(subsample_fastq("inst/extdata/ex_R1_001.fastq.gz", "your_path_to_output"))
+  expect_silent(subsample_fastq(
+    "inst/extdata/ex_R1_001.fastq.gz",
+    "your_path_to_output"
+  ))
   file.exists("your_path_to_output/ex_R1_001.fastq.gz")
   unlink("your_path_to_output", recursive = TRUE)
   expect_silent(subsample_fastq(
@@ -257,7 +332,12 @@ test_that("subsample_fastq function works fine", {
 
 test_that("sample_data_with_new_names function works fine", {
   sam_file <- system.file("extdata", "sam_data.csv", package = "MiscMetabar")
-  expect_silent(newdf <- sample_data_with_new_names(sam_file, paste0("Samples_", seq(1, 185))))
+  expect_silent(
+    newdf <- sample_data_with_new_names(
+      sam_file,
+      paste0("Samples_", seq(1, 185))
+    )
+  )
   expect_equal(dim(newdf)[1], 185)
   expect_equal(dim(newdf)[2], 7)
 })
@@ -272,14 +352,18 @@ test_that("sample_data_with_new_names function works fine", {
     system.file("extdata", "sam1R.fastq.gz", package = "dada2"),
     system.file("extdata", "sam2R.fastq.gz", package = "dada2")
   )
-  expect_silent(filt_fastq_fw <- filter_trim(testFastqs_fw, output_fw = tempdir()))
+  expect_silent(
+    filt_fastq_fw <- filter_trim(testFastqs_fw, output_fw = tempdir())
+  )
   expect_equal(length(derepFastq(filt_fastq_fw[1])), 2)
-  expect_message(filt_fastq_pe <- filter_trim(
-    fw = testFastqs_fw,
-    rev = testFastqs_rev,
-    output_fw = paste0(tempdir(), "/", "fw"),
-    output_rev = paste0(tempdir(), "/", "rev")
-  ))
+  expect_message(
+    filt_fastq_pe <- filter_trim(
+      fw = testFastqs_fw,
+      rev = testFastqs_rev,
+      output_fw = paste0(tempdir(), "/", "fw"),
+      output_rev = paste0(tempdir(), "/", "rev")
+    )
+  )
   unlink(paste0(tempdir(), "/", "rev"))
   unlink(paste0(tempdir(), "/", "fw"))
   expect_equal(length(derepFastq(filt_fastq_pe[[1]])), 2)

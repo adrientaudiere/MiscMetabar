@@ -3,8 +3,10 @@ data(data_fungi)
 test_that("funguild_assign works", {
   skip_on_cran()
   db <- get_funguild_db()
-  data_fungi_FUNGUILD <- funguild_assign(as.data.frame(tax_table(data_fungi)),
-    db_funguild = db, tax_col = "Genus_species"
+  data_fungi_FUNGUILD <- funguild_assign(
+    as.data.frame(tax_table(data_fungi)),
+    db_funguild = db,
+    tax_col = "Genus_species"
   )
   expect_type(data_fungi_FUNGUILD, "list")
   expect_equal(ncol(data_fungi_FUNGUILD), 23)

@@ -59,7 +59,6 @@ GPsubset <- subset_taxa(
 #   expect_s3_class(ht, "ggplot")
 # })
 
-
 test_that("plot_tax_pq works with data_fungi dataset", {
   skip_on_cran()
   expect_silent(suppressMessages(
@@ -183,7 +182,8 @@ test_that("multitax_bar_pq works with data_fungi_sp_known dataset", {
     "ggplot"
   )
   expect_s3_class(
-    multitax_bar_pq(data_fungi_mini,
+    multitax_bar_pq(
+      data_fungi_mini,
       "Phylum",
       "Class",
       "Order",
@@ -223,7 +223,8 @@ test_that("multitax_bar_pq works with GlobalPatterns dataset", {
       "ggplot"
     )
     expect_s3_class(
-      multitax_bar_pq(GP_archae,
+      multitax_bar_pq(
+        GP_archae,
         "Phylum",
         "Class",
         "Order",
@@ -242,11 +243,8 @@ test_that("multitax_bar_pq works with GlobalPatterns dataset", {
 test_that("rigdes_pq work with data_fungi dataset", {
   if (requireNamespace("ggridges")) {
     expect_s3_class(
-      ridges_pq(data_fungi_mini,
-        "Time",
-        alpha = 0.5,
-        log10trans = FALSE
-      ) + xlim(c(0, 1000)),
+      ridges_pq(data_fungi_mini, "Time", alpha = 0.5, log10trans = FALSE) +
+        xlim(c(0, 1000)),
       "ggplot"
     )
     skip_on_cran()
@@ -273,15 +271,21 @@ test_that("rigdes_pq work with data_fungi dataset", {
       "ggplot"
     )
     expect_s3_class(
-      ridges_pq(clean_pq(
-        subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")
-      ), "Time", alpha = 0.6, scale = 0.9),
+      ridges_pq(
+        clean_pq(
+          subset_taxa(data_fungi_sp_known, Phylum == "Basidiomycota")
+        ),
+        "Time",
+        alpha = 0.6,
+        scale = 0.9
+      ),
       "ggplot"
     )
     expect_s3_class(
       ridges_pq(
         clean_pq(subset_taxa(
-          data_fungi_sp_known, Phylum == "Basidiomycota"
+          data_fungi_sp_known,
+          Phylum == "Basidiomycota"
         )),
         "Time",
         jittered_points = TRUE,
@@ -310,7 +314,8 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
         clean_pq(
           data_fungi_mini
         ),
-        "Order", "Class",
+        "Order",
+        "Class",
         plot_legend = TRUE
       ),
       "ggplot"
@@ -321,7 +326,8 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
         clean_pq(
           data_fungi_mini
         ),
-        "Order", "Class",
+        "Order",
+        "Class",
         log10trans = FALSE
       ),
       "ggplot"
@@ -349,15 +355,18 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
     expect_s3_class(
       treemap_pq(
         clean_pq(data_fungi_mini),
-        "Order", "Class",
-        show_count = TRUE, log10trans = FALSE
+        "Order",
+        "Class",
+        show_count = TRUE,
+        log10trans = FALSE
       ),
       "ggplot"
     )
     expect_s3_class(
       treemap_pq(
         clean_pq(data_fungi_mini),
-        "Order", "Class",
+        "Order",
+        "Class",
         facet_by = "Time",
         log10trans = FALSE
       ),
@@ -366,7 +375,8 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
     expect_s3_class(
       treemap_pq(
         clean_pq(data_fungi_mini),
-        "Order", "Class",
+        "Order",
+        "Class",
         growing_text = FALSE,
         log10trans = FALSE
       ),
@@ -375,14 +385,16 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
     expect_error(
       treemap_pq(
         clean_pq(data_fungi_mini),
-        "Order", "Class",
+        "Order",
+        "Class",
         facet_by = "nonexistent_column"
       )
     )
     expect_s3_class(
       treemap_pq(
         data_fungi_mini,
-        "Order", "Class",
+        "Order",
+        "Class",
         show_na = TRUE
       ),
       "ggplot"
@@ -390,7 +402,8 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
     expect_s3_class(
       treemap_pq(
         data_fungi_mini,
-        "Order", "Class",
+        "Order",
+        "Class",
         show_na = FALSE
       ),
       "ggplot"
@@ -398,7 +411,8 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
     expect_s3_class(
       treemap_pq(
         data_fungi_mini,
-        "Order", "Class",
+        "Order",
+        "Class",
         show_na = TRUE,
         na_label = "Unknown"
       ),
@@ -407,7 +421,8 @@ test_that("treemap_pq work with data_fungi_sp_known dataset", {
     expect_s3_class(
       treemap_pq(
         data_fungi_mini,
-        "Order", "Class",
+        "Order",
+        "Class",
         min_text_size = 4
       ),
       "ggplot"
@@ -420,12 +435,14 @@ test_that("treemap_pq show_na keeps NA taxa", {
     skip_on_cran()
     p_na <- treemap_pq(
       data_fungi_mini,
-      "Order", "Class",
+      "Order",
+      "Class",
       show_na = TRUE
     )
     p_no_na <- treemap_pq(
       data_fungi_mini,
-      "Order", "Class",
+      "Order",
+      "Class",
       show_na = FALSE
     )
     df_na <- ggplot2::ggplot_build(p_na)$data[[1]]
@@ -460,7 +477,10 @@ test_that("treemap_pq log10 transform gives nonzero area for count 1", {
 test_that("tax_bar_pq work with data_fungi dataset", {
   skip_on_cran()
   expect_s3_class(tax_bar_pq(data_fungi_mini, taxa = "Class"), "ggplot")
-  expect_s3_class(tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time"), "ggplot")
+  expect_s3_class(
+    tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time"),
+    "ggplot"
+  )
   expect_s3_class(
     tax_bar_pq(
       data_fungi_mini,
@@ -538,17 +558,19 @@ test_that("add_funguild_info and plot_guild_pq work with data_fungi_mini dataset
       ),
     "phyloseq"
   )
-  expect_error(df <-
-    add_funguild_info(
-      subset_taxa_pq(data_fungi_mini, taxa_sums(data_fungi_mini) > 5000),
-      taxLevels = c(
-        "PHYLLUUM",
-        "Phylum",
-        "Class",
-        "Order",
-        "Family"
+  expect_error(
+    df <-
+      add_funguild_info(
+        subset_taxa_pq(data_fungi_mini, taxa_sums(data_fungi_mini) > 5000),
+        taxLevels = c(
+          "PHYLLUUM",
+          "Phylum",
+          "Class",
+          "Order",
+          "Family"
+        )
       )
-    ))
+  )
   expect_s3_class(plot_guild_pq(df, clean_pq = TRUE), "ggplot")
   expect_s3_class(plot_guild_pq(df, clean_pq = FALSE), "ggplot")
 })
@@ -558,14 +580,28 @@ test_that("build_phytree_pq work with data_fungi dataset", {
   skip_on_os("windows")
   skip_on_cran()
   df <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 19000)
-  expect_type(df_tree <- build_phytree_pq(df, nb_bootstrap = 2, rearrangement = "stochastic"), "list")
+  expect_type(
+    df_tree <- build_phytree_pq(
+      df,
+      nb_bootstrap = 2,
+      rearrangement = "stochastic"
+    ),
+    "list"
+  )
   # expect_type(df_tree <- build_phytree_pq(df, nb_bootstrap = 2, rearrangement = "ratchet"), "list")
-  expect_error(build_phytree_pq(df, nb_bootstrap = 2, rearrangement = "PRAtchet"))
+  expect_error(build_phytree_pq(
+    df,
+    nb_bootstrap = 2,
+    rearrangement = "PRAtchet"
+  ))
   expect_error(build_phytree_pq(GP, nb_bootstrap = 2))
 
   expect_type(df_tree <- build_phytree_pq(df, nb_bootstrap = 2), "list")
   expect_equal(length(df_tree), 6)
-  expect_type(df_tree_wo_bootstrap <- build_phytree_pq(df, nb_bootstrap = 0), "list")
+  expect_type(
+    df_tree_wo_bootstrap <- build_phytree_pq(df, nb_bootstrap = 0),
+    "list"
+  )
   expect_equal(length(df_tree_wo_bootstrap), 3)
   expect_s3_class(df_tree$NJ, "phylo")
   expect_s3_class(df_tree$UPGMA, "phylo")

@@ -58,20 +58,22 @@
 #'   blastpath = blastpath
 #' )
 #' }
-blast_to_phyloseq <- function(physeq,
-                              seq2search,
-                              blastpath = NULL,
-                              id_cut = 90,
-                              bit_score_cut = 50,
-                              min_cover_cut = 50,
-                              e_value_cut = 1e-30,
-                              unique_per_seq = FALSE,
-                              score_filter = TRUE,
-                              list_no_output_query = FALSE,
-                              args_makedb = NULL,
-                              args_blastn = NULL,
-                              nproc = 1,
-                              keep_temporary_files = FALSE) {
+blast_to_phyloseq <- function(
+  physeq,
+  seq2search,
+  blastpath = NULL,
+  id_cut = 90,
+  bit_score_cut = 50,
+  min_cover_cut = 50,
+  e_value_cut = 1e-30,
+  unique_per_seq = FALSE,
+  score_filter = TRUE,
+  list_no_output_query = FALSE,
+  args_makedb = NULL,
+  args_blastn = NULL,
+  nproc = 1,
+  keep_temporary_files = FALSE
+) {
   verify_pq(physeq)
   dna <- Biostrings::DNAStringSet(physeq@refseq)
   Biostrings::writeXStringSet(dna, paste0(tempdir(), "/", "db.fasta"))
@@ -107,7 +109,8 @@ blast_to_phyloseq <- function(physeq,
   )
   if (file.info(paste0(tempdir(), "/", "blast_result.txt"))$size > 0) {
     blast_tab <- utils::read.table(
-      paste0(tempdir(), "/", "blast_result.txt"), ,
+      paste0(tempdir(), "/", "blast_result.txt"),
+      ,
       sep = "\t",
       header = FALSE,
       stringsAsFactors = FALSE
@@ -162,7 +165,8 @@ blast_to_phyloseq <- function(physeq,
     seq_name <- names(fasta_file)
     no_output_query <- seq_name[!seq_name %in% blast_tab[1, ]]
     if (length(no_output_query) > 0) {
-      mat_no_output_query <- matrix(NA,
+      mat_no_output_query <- matrix(
+        NA,
         ncol = ncol(blast_tab),
         nrow = length(no_output_query)
       )
@@ -182,7 +186,6 @@ blast_to_phyloseq <- function(physeq,
   }
 }
 ################################################################################
-
 
 ################################################################################
 #' Blast all sequence of `refseq` slot of a \code{\link[phyloseq]{phyloseq-class}}
@@ -210,26 +213,34 @@ blast_to_phyloseq <- function(physeq,
 #' @return  a blast table
 #' @export
 #'
-blast_pq <- function(physeq,
-                     fasta_for_db = NULL,
-                     database = NULL,
-                     blastpath = NULL,
-                     id_cut = 90,
-                     bit_score_cut = 50,
-                     min_cover_cut = 50,
-                     e_value_cut = 1e-30,
-                     unique_per_seq = FALSE,
-                     score_filter = TRUE,
-                     nproc = 1,
-                     args_makedb = NULL,
-                     args_blastn = NULL,
-                     keep_temporary_files = FALSE) {
+blast_pq <- function(
+  physeq,
+  fasta_for_db = NULL,
+  database = NULL,
+  blastpath = NULL,
+  id_cut = 90,
+  bit_score_cut = 50,
+  min_cover_cut = 50,
+  e_value_cut = 1e-30,
+  unique_per_seq = FALSE,
+  score_filter = TRUE,
+  nproc = 1,
+  args_makedb = NULL,
+  args_blastn = NULL,
+  keep_temporary_files = FALSE
+) {
   verify_pq(physeq)
   dna <- Biostrings::DNAStringSet(physeq@refseq)
-  Biostrings::writeXStringSet(dna, paste0(tempdir(), "/", "physeq_refseq.fasta"))
+  Biostrings::writeXStringSet(
+    dna,
+    paste0(tempdir(), "/", "physeq_refseq.fasta")
+  )
 
   if (inherits(fasta_for_db, "DNAStringSet")) {
-    Biostrings::writeXStringSet(fasta_for_db, paste0(tempdir(), "/", "temp.fasta"))
+    Biostrings::writeXStringSet(
+      fasta_for_db,
+      paste0(tempdir(), "/", "temp.fasta")
+    )
     fasta_for_db <- paste0(tempdir(), "/", "temp.fasta")
   }
 
@@ -239,8 +250,10 @@ blast_pq <- function(physeq,
          `fasta_for_db` or `database` to run."
     )
   } else if (!is.null(fasta_for_db) && !is.null(database)) {
-    stop("You assign values for both `fasta_for_db` and
-         `database` args. Please use only one.")
+    stop(
+      "You assign values for both `fasta_for_db` and
+         `database` args. Please use only one."
+    )
   } else if (!is.null(fasta_for_db) && is.null(database)) {
     message("Build the database from fasta_for_db")
     system(
@@ -295,7 +308,8 @@ blast_pq <- function(physeq,
 
   if (file.info(paste0(tempdir(), "/", "blast_result.txt"))$size > 0) {
     blast_tab <- utils::read.table(
-      paste0(tempdir(), "/", "blast_result.txt"), ,
+      paste0(tempdir(), "/", "blast_result.txt"),
+      ,
       sep = "\t",
       header = FALSE,
       stringsAsFactors = FALSE
@@ -391,17 +405,18 @@ blast_pq <- function(physeq,
 #'   taxa matched the blast database or if no taxa passed the filter criteria.
 #'   In either case, an informative message is printed.
 
-
-filter_asv_blast <- function(physeq,
-                             fasta_for_db = NULL,
-                             database = NULL,
-                             clean_pq = TRUE,
-                             add_info_to_taxtable = TRUE,
-                             id_filter = 90,
-                             bit_score_filter = 50,
-                             min_cover_filter = 50,
-                             e_value_filter = 1e-30,
-                             ...) {
+filter_asv_blast <- function(
+  physeq,
+  fasta_for_db = NULL,
+  database = NULL,
+  clean_pq = TRUE,
+  add_info_to_taxtable = TRUE,
+  id_filter = 90,
+  bit_score_filter = 50,
+  min_cover_filter = 50,
+  e_value_filter = 1e-30,
+  ...
+) {
   blast_tab <- blast_pq(
     physeq = physeq,
     fasta_for_db = fasta_for_db,
@@ -425,10 +440,15 @@ filter_asv_blast <- function(physeq,
 
   if (sum(condition, na.rm = TRUE) == 0) {
     message(
-      "No taxa passed the filter criteria (id_filter=", id_filter,
-      ", bit_score_filter=", bit_score_filter,
-      ", min_cover_filter=", min_cover_filter,
-      ", e_value_filter=", e_value_filter, "). Returning NULL."
+      "No taxa passed the filter criteria (id_filter=",
+      id_filter,
+      ", bit_score_filter=",
+      bit_score_filter,
+      ", min_cover_filter=",
+      min_cover_filter,
+      ", e_value_filter=",
+      e_value_filter,
+      "). Returning NULL."
     )
     return(NULL)
   }
@@ -452,8 +472,12 @@ filter_asv_blast <- function(physeq,
           info_to_taxtable[, "Query name"]$`Query name`
         ),
         c(
-          "Query name", "Taxa name", "bit score",
-          "% id. match", "Query cover", "e-value"
+          "Query name",
+          "Taxa name",
+          "bit score",
+          "% id. match",
+          "Query cover",
+          "e-value"
         )
       ]
     )))
@@ -468,7 +492,6 @@ filter_asv_blast <- function(physeq,
 #' @export
 filter_taxa_blast <- filter_asv_blast
 ################################################################################
-
 
 #' Blast some sequence against sequences from of a \code{\link[dada2]{derep-class}}
 #'   object.
@@ -500,21 +523,23 @@ filter_taxa_blast <- filter_asv_blast
 #'   against un custom database and [MiscMetabar::blast_to_phyloseq()]  to use
 #'    `refseq` slot as a database
 #' @author Adrien Taudière
-blast_to_derep <- function(derep,
-                           seq2search,
-                           blastpath = NULL,
-                           id_cut = 90,
-                           bit_score_cut = 50,
-                           min_cover_cut = 50,
-                           e_value_cut = 1e-30,
-                           unique_per_seq = FALSE,
-                           score_filter = FALSE,
-                           list_no_output_query = FALSE,
-                           min_length_seq = 200,
-                           args_makedb = NULL,
-                           args_blastn = NULL,
-                           nproc = 1,
-                           keep_temporary_files = FALSE) {
+blast_to_derep <- function(
+  derep,
+  seq2search,
+  blastpath = NULL,
+  id_cut = 90,
+  bit_score_cut = 50,
+  min_cover_cut = 50,
+  e_value_cut = 1e-30,
+  unique_per_seq = FALSE,
+  score_filter = FALSE,
+  list_no_output_query = FALSE,
+  min_length_seq = 200,
+  args_makedb = NULL,
+  args_blastn = NULL,
+  nproc = 1,
+  keep_temporary_files = FALSE
+) {
   if (!inherits(derep[[1]], "derep")) {
     stop("derep must be an object of class derep-class")
   }
@@ -542,7 +567,8 @@ blast_to_derep <- function(derep,
     paste0(tempdir(), "/", "db.fasta"),
     " -out ",
     paste0(tempdir(), "/", "dbase"),
-    " ", args_makedb
+    " ",
+    args_makedb
   ))
 
   system(
@@ -556,16 +582,17 @@ blast_to_derep <- function(derep,
       paste0(tempdir(), "/", "blast_result.txt"),
       " -outfmt \"6 qseqid qlen sseqid slen",
       " length pident evalue bitscore qcovs\"",
-      " -num_threads ", nproc,
+      " -num_threads ",
+      nproc,
       " ",
       args_blastn
     )
   )
 
-
   if (file.info(paste0(tempdir(), "/", "blast_result.txt"))$size > 0) {
     blast_tab <- utils::read.table(
-      paste0(tempdir(), "/", "blast_result.txt"), ,
+      paste0(tempdir(), "/", "blast_result.txt"),
+      ,
       sep = "\t",
       header = FALSE,
       stringsAsFactors = FALSE
@@ -600,11 +627,10 @@ blast_to_derep <- function(derep,
     "Query cover"
   )
 
-  blast_tab$occurence <- sub("seqs\\)", "",
-    sub(".*\\(", "",
-      blast_tab$`Sample name`,
-      perl = TRUE
-    ),
+  blast_tab$occurence <- sub(
+    "seqs\\)",
+    "",
+    sub(".*\\(", "", blast_tab$`Sample name`, perl = TRUE),
     perl = TRUE
   )
 
@@ -628,7 +654,8 @@ blast_to_derep <- function(derep,
     seq_name <- names(fasta_file)
     no_output_query <- seq_name[!seq_name %in% blast_tab[1, ]]
     if (length(no_output_query) > 0) {
-      mat_no_output_query <- matrix(NA,
+      mat_no_output_query <- matrix(
+        NA,
         ncol = ncol(blast_tab),
         nrow = length(no_output_query)
       )
@@ -675,9 +702,16 @@ blast_to_derep <- function(derep,
 #'
 #' @author Adrien Taudière
 
-add_blast_info <- function(physeq, fasta_for_db, silent = FALSE, suffix = "blast_info", ...) {
+add_blast_info <- function(
+  physeq,
+  fasta_for_db,
+  silent = FALSE,
+  suffix = "blast_info",
+  ...
+) {
   verify_pq(physeq)
-  res_blast <- blast_pq(physeq,
+  res_blast <- blast_pq(
+    physeq,
     fasta_for_db = fasta_for_db,
     unique_per_seq = TRUE,
     score_filter = FALSE,
@@ -687,10 +721,12 @@ add_blast_info <- function(physeq, fasta_for_db, silent = FALSE, suffix = "blast
 
   new_taxtab <- cbind(
     new_physeq@tax_table,
-    as.matrix(res_blast[match(
-      taxa_names(new_physeq),
-      res_blast$`Query name`
-    ), ])
+    as.matrix(res_blast[
+      match(
+        taxa_names(new_physeq),
+        res_blast$`Query name`
+      ),
+    ])
   )
 
   # colnames(new_taxtab) <- c(colnames(new_physeq@tax_table), paste0(colnames(physeq), suffix))
@@ -700,14 +736,14 @@ add_blast_info <- function(physeq, fasta_for_db, silent = FALSE, suffix = "blast
   verify_pq(new_physeq)
   if (!silent) {
     message(paste0(
-      "Add ", ncol(new_physeq@tax_table) - ncol(physeq@tax_table),
+      "Add ",
+      ncol(new_physeq@tax_table) - ncol(physeq@tax_table),
       " columns to taxonomic table"
     ))
   }
   return(new_physeq)
 }
 ################################################################################
-
 
 ################################################################################
 #' Assign taxonomy using blastn algorithm and the blast software
@@ -810,41 +846,43 @@ add_blast_info <- function(physeq, fasta_for_db, silent = FALSE, suffix = "blast
 #'   min_id = 90, min_cover = 50, behavior = "add_to_phyloseq"
 #' )@tax_table
 #' }
-assign_blastn <- function(physeq,
-                          ref_fasta = NULL,
-                          database = NULL,
-                          blastpath = NULL,
-                          behavior = c("return_matrix", "add_to_phyloseq"),
-                          method_algo = c("vote", "top-hit"),
-                          suffix = "_blastn",
-                          min_id = 95,
-                          min_bit_score = 50,
-                          min_cover = 95,
-                          min_e_value = 1e-30,
-                          nb_voting = NULL,
-                          column_names = c(
-                            "Kingdom",
-                            "Phylum",
-                            "Class",
-                            "Order",
-                            "Family",
-                            "Genus",
-                            "Species"
-                          ),
-                          vote_algorithm = c(
-                            "consensus",
-                            "rel_majority",
-                            "abs_majority",
-                            "unanimity"
-                          ),
-                          strict = FALSE,
-                          nb_agree_threshold = 1,
-                          preference_index = NULL,
-                          collapse_string = "/",
-                          replace_collapsed_rank_by_NA = TRUE,
-                          simplify_taxo = TRUE,
-                          keep_blast_metrics = FALSE,
-                          ...) {
+assign_blastn <- function(
+  physeq,
+  ref_fasta = NULL,
+  database = NULL,
+  blastpath = NULL,
+  behavior = c("return_matrix", "add_to_phyloseq"),
+  method_algo = c("vote", "top-hit"),
+  suffix = "_blastn",
+  min_id = 95,
+  min_bit_score = 50,
+  min_cover = 95,
+  min_e_value = 1e-30,
+  nb_voting = NULL,
+  column_names = c(
+    "Kingdom",
+    "Phylum",
+    "Class",
+    "Order",
+    "Family",
+    "Genus",
+    "Species"
+  ),
+  vote_algorithm = c(
+    "consensus",
+    "rel_majority",
+    "abs_majority",
+    "unanimity"
+  ),
+  strict = FALSE,
+  nb_agree_threshold = 1,
+  preference_index = NULL,
+  collapse_string = "/",
+  replace_collapsed_rank_by_NA = TRUE,
+  simplify_taxo = TRUE,
+  keep_blast_metrics = FALSE,
+  ...
+) {
   behavior <- match.arg(behavior)
   method_algo <- match.arg(method_algo)
   vote_algorithm <- match.arg(vote_algorithm)
@@ -875,11 +913,13 @@ assign_blastn <- function(physeq,
     }
 
     blast_tab <- blast_tab_raw |>
-      tidyr::separate(`Taxa name`,
+      tidyr::separate(
+        `Taxa name`,
         into = c(paste0("Taxa_name_db", suffix), "Classification"),
         sep = ";tax="
       ) |>
-      tidyr::separate("Classification",
+      tidyr::separate(
+        "Classification",
         into = paste0(column_names, suffix),
         sep = ","
       ) |>
@@ -946,11 +986,13 @@ assign_blastn <- function(physeq,
     }
 
     blast_tab <- blast_tab_raw |>
-      tidyr::separate(`Taxa name`,
+      tidyr::separate(
+        `Taxa name`,
         into = c(paste0("Taxa_name_db", suffix), "Classification"),
         sep = ";tax="
       ) |>
-      tidyr::separate("Classification",
+      tidyr::separate(
+        "Classification",
         into = paste0(column_names, suffix),
         sep = ","
       ) |>
@@ -995,7 +1037,9 @@ assign_blastn <- function(physeq,
 
     return(new_physeq)
   } else {
-    stop("Param behavior must take either 'return_matrix' or 'add_to_phyloseq' value")
+    stop(
+      "Param behavior must take either 'return_matrix' or 'add_to_phyloseq' value"
+    )
   }
 }
 ################################################################################

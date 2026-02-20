@@ -32,7 +32,11 @@ test_that("psmelt_samples_pq works", {
 })
 
 test_that("rarefy_sample_count_by_modality works", {
-  result <- rarefy_sample_count_by_modality(data_fungi, fact = "Height", rngseed = 42)
+  result <- rarefy_sample_count_by_modality(
+    data_fungi,
+    fact = "Height",
+    rngseed = 42
+  )
   expect_s4_class(result, "phyloseq")
   expect_equal(sum(result@otu_table), 1065385)
 })
@@ -60,7 +64,8 @@ test_that("postcluster_pq works with method ='vsearch' and
    vsearch_cluster_method='cluster_fast'", {
   skip_on_cran()
   set.seed(42)
-  result <- postcluster_pq(data_subset,
+  result <- postcluster_pq(
+    data_subset,
     method = "vsearch",
     vsearch_cluster_method = "--cluster_fast"
   )

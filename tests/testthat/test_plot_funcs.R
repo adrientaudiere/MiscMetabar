@@ -24,6 +24,13 @@ test_that("plot_seq_ratio_pq works", {
 
 test_that("accu_plot_balanced_modality works", {
   data_subset <- subset_samples(data_fungi, Height %in% c("Low", "High"))
-  suppressWarnings(p <- accu_plot_balanced_modality(data_subset, "Height", nperm = 9, step = 10000))
+  suppressWarnings(
+    p <- accu_plot_balanced_modality(
+      data_subset,
+      "Height",
+      nperm = 9,
+      step = 10000
+    )
+  )
   expect_s3_class(p, "ggplot")
 })

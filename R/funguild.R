@@ -23,7 +23,9 @@
 #' @author Brendan Furneaux (orcid: [0000-0003-3522-7363](https://orcid.org/0000-0003-3522-7363)),
 #' modified by Adrien Taudière
 #'
-get_funguild_db <- function(db_url = "http://www.stbates.org/funguild_db_2.php") {
+get_funguild_db <- function(
+  db_url = "http://www.stbates.org/funguild_db_2.php"
+) {
   if (httr::http_error(db_url)) {
     message("error with db_url: ", db_url)
     return(NULL)
@@ -52,8 +54,16 @@ get_funguild_db <- function(db_url = "http://www.stbates.org/funguild_db_2.php")
       }
     ) %>%
     dplyr::select(
-      "taxon", "guid", "mbNumber", "taxonomicLevel", "trophicMode",
-      "guild", "confidenceRanking", "growthForm", "trait", "notes",
+      "taxon",
+      "guid",
+      "mbNumber",
+      "taxonomicLevel",
+      "trophicMode",
+      "guild",
+      "confidenceRanking",
+      "growthForm",
+      "trait",
+      "notes",
       "citationSource"
     )
 }
@@ -137,8 +147,12 @@ funguild_assign <- function(
     stop(paste0("otu_table must be a dataframe not a ", class(otu_table)))
   }
   if (!tax_col %in% colnames(otu_table)) {
-    stop(paste0("The tax_col args ", tax_col, " is not present in the colnames
-    of the otu_table dataframe."))
+    stop(paste0(
+      "The tax_col args ",
+      tax_col,
+      " is not present in the colnames
+    of the otu_table dataframe."
+    ))
   }
 
   make_taxkey <- function(x) {
@@ -166,7 +180,8 @@ funguild_assign <- function(
     dplyr::ungroup() %>%
     dplyr::mutate_all(as.character) %>%
     dplyr::left_join(otu_table, ., by = "taxkey") %>%
-    dplyr::left_join(db_funguild,
+    dplyr::left_join(
+      db_funguild,
       by = "searchkey",
       suffix = c("", ".funguild")
     ) %>%

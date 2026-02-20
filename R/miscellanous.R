@@ -31,7 +31,6 @@ as_binary_otu_table <- function(physeq, min_number = 1) {
 }
 ################################################################################
 
-
 ################################################################################
 #' Compute paired distances among matrix (e.g. otu_table)
 #'
@@ -59,16 +58,14 @@ as_binary_otu_table <- function(physeq, min_number = 1) {
 #' @export
 #' @seealso \code{\link[vegan]{vegdist}}
 
-dist_bycol <- function(x,
-                       y,
-                       method = "bray",
-                       nperm = 99,
-                       ...) {
+dist_bycol <- function(x, y, method = "bray", nperm = 99, ...) {
   x <- as.matrix(unclass(x))
   y <- as.matrix(unclass(y))
 
-  if (nrow(x) != nrow(y) ||
-    ncol(x) != ncol(y)) {
+  if (
+    nrow(x) != nrow(y) ||
+      ncol(x) != ncol(y)
+  ) {
     stop("x and y must be of the same dimension")
   }
 
@@ -93,7 +90,6 @@ dist_bycol <- function(x,
 }
 ################################################################################
 
-
 ################################################################################
 #' List the size of all objects of the GlobalEnv.
 #' @description
@@ -108,12 +104,15 @@ dist_bycol <- function(x,
 #' @return a list of size
 #' @export
 all_object_size <- function() {
-  return(sort(vapply(ls(envir = .GlobalEnv), function(x) {
-    utils::object.size(get(x))
-  }, numeric(1))))
+  return(sort(vapply(
+    ls(envir = .GlobalEnv),
+    function(x) {
+      utils::object.size(get(x))
+    },
+    numeric(1)
+  )))
 }
 ################################################################################
-
 
 ################################################################################
 #' Simplify taxonomy by removing some unused characters such as "k__"
@@ -201,7 +200,6 @@ get_file_extension <- function(file_path) {
 }
 ################################################################################
 
-
 ################################################################################
 #' Convert a value (or a fraction x/y) in percentage
 #'
@@ -235,7 +233,6 @@ perc <- function(x, y = NULL, accuracy = 0, add_symbol = FALSE) {
   return(res)
 }
 ################################################################################
-
 
 ################################################################################
 #' Count sequences in fasta or fastq file
@@ -272,21 +269,25 @@ count_seq <- function(file_path = NULL, folder_path = NULL, pattern = NULL) {
   } else if (!is.null(file_path) && is.null(folder_path)) {
     if (sum(get_file_extension(file_path) == "fasta") > 0) {
       if (sum(get_file_extension(file_path) == "gz") > 0) {
-        seq_nb <- system(paste0("zcat ", file_path, " | grep -ce '^>'"),
+        seq_nb <- system(
+          paste0("zcat ", file_path, " | grep -ce '^>'"),
           intern = TRUE
         )
       } else {
-        seq_nb <- system(paste0("cat ", file_path, " | grep -ce '^>'"),
+        seq_nb <- system(
+          paste0("cat ", file_path, " | grep -ce '^>'"),
           intern = TRUE
         )
       }
     } else if (sum(get_file_extension(file_path) == "fastq") > 0) {
       if (sum(get_file_extension(file_path) == "gz") > 0) {
-        seq_nb <- system(paste0("zcat ", file_path, " | grep -ce '^+$'"),
+        seq_nb <- system(
+          paste0("zcat ", file_path, " | grep -ce '^+$'"),
           intern = TRUE
         )
       } else {
-        seq_nb <- system(paste0("cat ", file_path, " | grep -ce '^+$'"),
+        seq_nb <- system(
+          paste0("cat ", file_path, " | grep -ce '^+$'"),
           intern = TRUE
         )
       }
@@ -302,14 +303,14 @@ count_seq <- function(file_path = NULL, folder_path = NULL, pattern = NULL) {
       list.files(folder_path, full.names = TRUE, pattern = pattern),
       function(f) {
         count_seq(file_path = f)
-      }, numeric(1)
+      },
+      numeric(1)
     )
   }
   return(as.numeric(seq_nb))
 }
 
 ################################################################################
-
 
 ################################################################################
 #' Funky palette color
@@ -349,10 +350,7 @@ funky_color <-
 #' @export
 #' @seealso The R package RColorBrewer, proposing a nice selection of color palettes. The viridis package, with many excellent palettes
 fac2col <-
-  function(x,
-           col.pal = funky_color,
-           na.col = "grey",
-           seed = NULL) {
+  function(x, col.pal = funky_color, na.col = "grey", seed = NULL) {
     x <- factor(x)
     lev <- levels(x)
     nlev <- length(lev)
@@ -369,7 +367,6 @@ fac2col <-
     return(res)
   }
 ################################################################################
-
 
 ################################################################################
 #' Adds transparency to a vector of colors
@@ -388,7 +385,6 @@ transp <- function(col, alpha = 0.5) {
   return(res)
 }
 ################################################################################
-
 
 ################################################################################
 #' Subsample a fastq file copying the n_seq first sequences in a given folder
@@ -420,17 +416,23 @@ transp <- function(col, alpha = 0.5) {
 #' )
 #' unlink(paste0(tempdir(), "/output_fastq"), recursive = TRUE)
 #' }
-subsample_fastq <- function(fastq_files,
-                            folder_output = "subsample",
-                            nb_seq = 1000) {
+subsample_fastq <- function(
+  fastq_files,
+  folder_output = "subsample",
+  nb_seq = 1000
+) {
   for (f in unlist(fastq_files)) {
     if (!dir.exists(folder_output)) {
       dir.create(folder_output)
     }
-    writeLines(readLines(f, n = nb_seq * 4), con = paste0(
-      folder_output, "/",
-      basename(f)
-    ))
+    writeLines(
+      readLines(f, n = nb_seq * 4),
+      con = paste0(
+        folder_output,
+        "/",
+        basename(f)
+      )
+    )
   }
 }
 
@@ -455,9 +457,20 @@ subsample_fastq <- function(fastq_files,
 #' MiscMetabar::is_cutadapt_installed()
 #' @author Adrien Taudière
 
-is_cutadapt_installed <- function(args_before_cutadapt = "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv && ") {
-  writeLines(paste0(args_before_cutadapt, " cutadapt -h"), paste0(tempdir(), "/script_cutadapt.sh"))
-  cutadapt_error_or_not <- try(system(paste0("bash ", tempdir(), "/script_cutadapt.sh 2>&1"), intern = TRUE), silent = T)
+is_cutadapt_installed <- function(
+  args_before_cutadapt = "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv && "
+) {
+  writeLines(
+    paste0(args_before_cutadapt, " cutadapt -h"),
+    paste0(tempdir(), "/script_cutadapt.sh")
+  )
+  cutadapt_error_or_not <- try(
+    system(
+      paste0("bash ", tempdir(), "/script_cutadapt.sh 2>&1"),
+      intern = TRUE
+    ),
+    silent = T
+  )
   unlink(paste0(tempdir(), "/script_cutadapt.sh"))
 
   return(!inherits(cutadapt_error_or_not, "try-error"))
@@ -481,9 +494,12 @@ is_cutadapt_installed <- function(args_before_cutadapt = "source ~/miniconda3/et
 #' @author Adrien Taudière
 
 is_falco_installed <- function(path = "falco") {
-  return(!inherits(try(system(paste0(path, " 2>&1"), intern = TRUE),
-    silent = TRUE
-  ), "try-error"))
+  return(
+    !inherits(
+      try(system(paste0(path, " 2>&1"), intern = TRUE), silent = TRUE),
+      "try-error"
+    )
+  )
 }
 
 #' Test if swarm is installed.
@@ -504,9 +520,12 @@ is_falco_installed <- function(path = "falco") {
 #' @author Adrien Taudière
 
 is_swarm_installed <- function(path = "swarm") {
-  return(!inherits(try(system(paste0(path, " -h 2>&1"), intern = TRUE),
-    silent = TRUE
-  ), "try-error"))
+  return(
+    !inherits(
+      try(system(paste0(path, " -h 2>&1"), intern = TRUE), silent = TRUE),
+      "try-error"
+    )
+  )
 }
 
 #' Test if vsearch is installed.
@@ -527,9 +546,12 @@ is_swarm_installed <- function(path = "swarm") {
 #' @author Adrien Taudière
 
 is_vsearch_installed <- function(path = "vsearch") {
-  return(!inherits(try(system(paste0(path, " 2>&1"), intern = TRUE),
-    silent = TRUE
-  ), "try-error"))
+  return(
+    !inherits(
+      try(system(paste0(path, " 2>&1"), intern = TRUE), silent = TRUE),
+      "try-error"
+    )
+  )
 }
 
 #' Test if mumu is installed.
@@ -550,9 +572,12 @@ is_vsearch_installed <- function(path = "vsearch") {
 #' @author Adrien Taudière
 
 is_mumu_installed <- function(path = "mumu") {
-  return(!inherits(try(system(paste0(path, " 2>&1"), intern = TRUE),
-    silent = TRUE
-  ), "try-error"))
+  return(
+    !inherits(
+      try(system(paste0(path, " 2>&1"), intern = TRUE), silent = TRUE),
+      "try-error"
+    )
+  )
 }
 
 
@@ -574,8 +599,9 @@ is_mumu_installed <- function(path = "mumu") {
 #' @author Adrien Taudière
 
 is_krona_installed <- function(path = "ktImportKrona") {
-  return(inherits(try(system(paste0(path, " 2>&1"), intern = TRUE),
-    silent = TRUE
-  ), "try-error"))
+  return(inherits(
+    try(system(paste0(path, " 2>&1"), intern = TRUE), silent = TRUE),
+    "try-error"
+  ))
 }
 ################################################################################

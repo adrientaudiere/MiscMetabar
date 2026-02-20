@@ -2,15 +2,19 @@ data(data_fungi)
 data("enterotype")
 
 test_that("dist_bycol works fine", {
-  expect_equal(length(
-    dist_bycol(
-      data_fungi@otu_table,
-      as_binary_otu_table(data_fungi)@otu_table
-    )
-  ), 2)
+  expect_equal(
+    length(
+      dist_bycol(
+        data_fungi@otu_table,
+        as_binary_otu_table(data_fungi)@otu_table
+      )
+    ),
+    2
+  )
   skip_on_cran()
   expect_error(length(dist_bycol(
-    data_fungi@otu_table, enterotype@otu_table
+    data_fungi@otu_table,
+    enterotype@otu_table
   )))
 })
 
@@ -29,11 +33,14 @@ test_that("diff_fct_diff_class works fine", {
   )
   skip_on_cran()
   expect_equal(
-    round(diff_fct_diff_class(
-      data_fungi@sam_data$Time,
-      numeric_fonction = mean,
-      na.rm = TRUE
-    ), 2),
+    round(
+      diff_fct_diff_class(
+        data_fungi@sam_data$Time,
+        numeric_fonction = mean,
+        na.rm = TRUE
+      ),
+      2
+    ),
     5.80
   )
   expect_equal(
@@ -96,18 +103,33 @@ withr::local_envvar(
 test_that("add_funguild_info works fine", {
   skip_on_cran()
   data_f <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 5000)
-  expect_silent(data_f <- add_funguild_info(data_f,
-    taxLevels = c(
-      "Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species"
+  expect_silent(
+    data_f <- add_funguild_info(
+      data_f,
+      taxLevels = c(
+        "Domain",
+        "Phylum",
+        "Class",
+        "Order",
+        "Family",
+        "Genus",
+        "Species"
+      )
     )
-  ))
+  )
   expect_equal(dim(data_f@tax_table)[2], 24)
 })
 
 
 test_that("are_modality_even_depth works fine", {
-  expect_equal(are_modality_even_depth(data_fungi, "Time")$statistic[[1]], 62.143)
-  expect_equal(are_modality_even_depth(rarefy_even_depth(data_fungi), "Time")$p.value, 1)
+  expect_equal(
+    are_modality_even_depth(data_fungi, "Time")$statistic[[1]],
+    62.143
+  )
+  expect_equal(
+    are_modality_even_depth(rarefy_even_depth(data_fungi), "Time")$p.value,
+    1
+  )
   expect_silent(are_modality_even_depth(data_fungi, "Height", boxplot = TRUE))
 })
 
@@ -126,10 +148,13 @@ test_that("as_binary_otu_table works fine", {
 
 test_that("simplify_taxo works fine", {
   d_fm <- data_fungi_mini
-  d_fm@tax_table[, "Species"] <- paste0(rep(
-    c("s__", "s:"),
-    ntaxa(d_fm) / 2
-  ), d_fm@tax_table[, "Species"])
+  d_fm@tax_table[, "Species"] <- paste0(
+    rep(
+      c("s__", "s:"),
+      ntaxa(d_fm) / 2
+    ),
+    d_fm@tax_table[, "Species"]
+  )
 
   expect_s4_class(simplify_taxo(d_fm), "phyloseq")
   skip_on_cran()
@@ -142,7 +167,10 @@ test_that("simplify_taxo works fine", {
 
 test_that("get_file_extension works fine", {
   expect_equal(get_file_extension("test.fasta"), "fasta")
-  expect_equal(suppressWarnings(get_file_extension("test.fastq.gz")), c("fastq", "gz"))
+  expect_equal(
+    suppressWarnings(get_file_extension("test.fastq.gz")),
+    c("fastq", "gz")
+  )
   skip_on_cran()
   expect_warning(get_file_extension("test.file.fasta"))
   expect_error(get_file_extension("test_without_extension"))

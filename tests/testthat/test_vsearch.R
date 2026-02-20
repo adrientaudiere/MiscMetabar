@@ -95,7 +95,10 @@ if (!MiscMetabar:::is_vsearch_installed()) {
     expect_true(ntaxa(data_fungi_nochim_16) %in% c(1259, 1288, 1261))
     expect_s4_class(
       data_fungi_nochim2 <-
-        chimera_removal_vs(data_fungi, type = "Select_only_non_chim_seqlen_filtered"),
+        chimera_removal_vs(
+          data_fungi,
+          type = "Select_only_non_chim_seqlen_filtered"
+        ),
       "phyloseq"
     )
     expect_true(ntaxa(data_fungi_nochim2) %in% c(1051, 1088, 1054))
@@ -185,30 +188,34 @@ if (!MiscMetabar:::is_vsearch_installed()) {
       "phyloseq"
     )
 
-    expect_warning(expect_warning(expect_warning(data_fungi_mini_new_id90 <- assign_vsearch_lca(
-      data_fungi_mini,
-      ref_fasta = system.file(
-        "extdata",
-        "mini_UNITE_fungi.fasta.gz",
-        package = "MiscMetabar"
-      ),
-      behavior = "add_to_phyloseq",
-      id = 0.9
-    ))))
+    expect_warning(expect_warning(expect_warning(
+      data_fungi_mini_new_id90 <- assign_vsearch_lca(
+        data_fungi_mini,
+        ref_fasta = system.file(
+          "extdata",
+          "mini_UNITE_fungi.fasta.gz",
+          package = "MiscMetabar"
+        ),
+        behavior = "add_to_phyloseq",
+        id = 0.9
+      )
+    )))
 
     expect_s4_class(data_fungi_mini_new_id90, "phyloseq")
 
-    expect_s4_class(assign_vsearch_lca(
-      data_fungi_mini,
-      ref_fasta = system.file(
-        "extdata",
-        "mini_UNITE_fungi.fasta.gz",
-        package = "MiscMetabar"
+    expect_s4_class(
+      assign_vsearch_lca(
+        data_fungi_mini,
+        ref_fasta = system.file(
+          "extdata",
+          "mini_UNITE_fungi.fasta.gz",
+          package = "MiscMetabar"
+        ),
+        behavior = "add_to_phyloseq",
+        id = 0.6
       ),
-      behavior = "add_to_phyloseq",
-      id = 0.6
-    ), "phyloseq")
-
+      "phyloseq"
+    )
 
     expect_s4_class(
       data_fungi_mini_new <- assign_vsearch_lca(
