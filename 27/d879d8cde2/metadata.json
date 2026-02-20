@@ -3,7 +3,7 @@
   "checkpoint_id": "27d879d8cde2",
   "strategy": "manual-commit",
   "branch": "dev",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
     ".codefactor.yml",
     ".lintr"
@@ -22,13 +22,20 @@
       "context": "/27/d879d8cde2/1/context.md",
       "content_hash": "/27/d879d8cde2/1/content_hash.txt",
       "prompt": "/27/d879d8cde2/1/prompt.txt"
+    },
+    {
+      "metadata": "/27/d879d8cde2/2/metadata.json",
+      "transcript": "/27/d879d8cde2/2/full.jsonl",
+      "context": "/27/d879d8cde2/2/context.md",
+      "content_hash": "/27/d879d8cde2/2/content_hash.txt",
+      "prompt": "/27/d879d8cde2/2/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 151,
-    "cache_creation_tokens": 55203,
-    "cache_read_tokens": 1538057,
-    "output_tokens": 4300,
-    "api_call_count": 49
+    "input_tokens": 229,
+    "cache_creation_tokens": 145257,
+    "cache_read_tokens": 6004438,
+    "output_tokens": 19262,
+    "api_call_count": 119
   }
 }

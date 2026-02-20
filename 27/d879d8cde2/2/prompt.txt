@@ -1,0 +1,317 @@
+Implement the following plan:
+
+# Plan: Test & fix functions with `fact` param on single-level factor
+
+## Context
+
+Many MiscMetabar functions accept a `fact` parameter but crash with cryptic errors from downstream packages when the factor has only one level (e.g. single-sample phyloseq). We use a TDD approach:
+1. Create `tests/testthat/test-fact_one_sample.R` with tests expecting proper behavior
+2. Then fix each function to pass the tests
+
+## Categories
+
+### A. Functions that SHOULD WORK with 1 level (produce valid output)
+
+These functions can meaningfully produce a (degenerate) result with a single factor level:
+
+| Function | File | Expected output |
+|---|---|---|
+| `tax_bar_pq` | `R/plot_functions.R` | Single-bar ggplot |
+| `plot_tax_pq` | `R/plot_functions.R` | Single-bar ggplot |
+| `ridges_pq` | `R/plot_functions.R` | Single-ridge ggplot |
+| `multitax_bar_pq` | `R/plot_functions.R` | Single-bar ggplot |
+| `sankey_pq` | `R/plot_functions.R` | Sankey with 1 flow |
+| `circle_pq` | `R/plot_functions.R` | Chord diagram with 1 sector |
+| `ggaluv_pq` | `R/plot_functions.R` | Alluvial with 1 stratum |
+| `distri_1_taxa` | `R/beta_div_test.R` | Data frame / table |
+| `are_modality_even_depth` | `R/dada_phyloseq.R` | Logical or message |
+| `rarefy_sample_count_by_modality` | `R/dada_phyloseq.R` | Rarefied phyloseq |
+
+Tests: `expect_no_error()` or `expect_s3_class(..., "ggplot")`
+
+### B. Functions that SHOULD GIVE INFORMATIVE ERROR with 1 level
+
+These fundamentally require >=2 groups/sets and cannot produce meaningful output:
+
+| Function | File | Reason |
+|---|---|---|
+| `hill_pq` | `R/plot_functions.R` | Kruskal/Tukey need >=2 groups |
+| `hill_test_rarperm_pq` | `R/alpha_div_test.R` | Statistical test needs >=2 groups |
+| `graph_test_pq` | `R/beta_div_test.R` | Permutation test needs >=2 groups |
+| `multipatt_pq` | `R/beta_div_test.R` | Indicator species needs >=2 groups |
+| `ancombc_pq` | `R/beta_div_test.R` | Differential abundance needs >=2 groups |
+| `ggbetween_pq` | `R/plot_functions.R` | Between-group comparison needs >=2 |
+| `venn_pq` | `R/plot_functions.R` | Venn diagram needs >=2 sets |
+| `ggvenn_pq` | `R/plot_functions.R` | Venn diagram needs >=2 sets |
+| `upset_pq` | `R/plot_functions.R` | UpSet plot needs >=2 sets |
+| `biplot_pq` | `R/plot_functions.R` | Needs exactly 2 samples (already guarded) |
+| `accu_plot` | `R/plot_functions.R` | specaccum needs >=2 samples |
+| `accu_plot_balanced_modality` | `R/plot_functions.R` | Needs multiple samples |
+| `plot_tsne_pq` | `R/plot_functions.R` | t-SNE needs >=2 samples |
+
+Tests: `expect_error(..., "at least 2")` or similar informative message pattern
+
+## Test file structure
+
+File: `tests/testthat/test-fact_one_sample.R`
+
+```r
+# Setup: single-sample phyloseq with a 1-level factor "Type"
+# Each test_that block: one function, skip_on_cran(), requireNamespace() guards
+# Category A: expect_no_error / expect_s3_class
+# Category B: expect_error with informative message
+```
+
+## Implementation order
+
+1. **Create test file** with all tests (they will mostly fail initially)
+2. **Run tests** to confirm failures
+3. **Fix functions one by one** — add early validation for category B, fix edge cases for category A
+4. **Run tests** again to confirm all pass
+
+## Files to create/modify
+
+- **Create**: `tests/testthat/test-fact_one_sample.R`
+- **Modify** (later, during fix phase): `R/plot_functions.R`, `R/beta_div_test.R`, `R/alpha_div_test.R`, `R/dada_phyloseq.R`
+
+## Verification
+
+```bash
+Rscript -e "devtools::test(filter = '^fact_one_sample')"
+```
+
+
+If you need specific details from before exiting plan mode (like exact code snippets, error messages, or content you generated), read the full transcript at: /home/adrien/.REDACTED.jsonl
+
+---
+
+<task-notification>
+<task-id>aa38d85</task-id>
+<tool-use-id>toolu_01FmkqwZX67qc7HxFcFj7mL8</tool-use-id>
+<status>completed</status>
+<summary>Agent "Explore existing test patterns and function signatures" completed</summary>
+<result>Excellent! Now let me compile a comprehensive report with all the information gathered.
+
+## Summary Report: Functions with `fact` Parameter and Single-Level Factor Issues
+
+Based on my thorough exploration of the MiscMetabar codebase, here's the complete analysis:
+
+### 1. Test Fixture Creation Pattern
+
+**Location:** `/home/adrien/Nextcloud/IdEst/Projets/MiscMetabar/tests/testthat/`
+
+Test files use two approaches:
+- Load packaged phyloseq objects: `data("enterotype")`, `data("GlobalPatterns")`, `data(data_fungi)`
+- Create subsets from existing data: `subset_samples(data_fungi, Height %in% c("Low", "High"))`
+
+**Example pattern** (from test_controls.R, test_plot_funcs.R):
+```R
+data(data_fungi)
+# or
+data("GlobalPatterns", package = "phyloseq")
+```
+
+### 2. Function Signatures and Parameters
+
+#### **plot_functions.R Functions:**
+
+1. **accu_plot** (line 109)
+   - Signature: `function(physeq, fact = NULL, add_nb_seq = TRUE, ...)`
+   - Uses: `nlevels(factor_interm)` to get factor levels
+   - Has validation: checks `nlevels(factor_interm)` for indexing
+
+2. **accu_plot_balanced_modality** (line 343)
+   - Signature: `function(physeq, fact, nperm = 99, step = 2000, ...)`
+   - Uses: `nlevels(physeq@sam_data[[fact]])` for iterations
+   - Calls: `accu_plot()` internally
+
+3. **circle_pq** (line 583)
+   - Signature: `function(physeq = NULL, fact = NULL, taxa = "Order", ...)`
+   - Uses: `tapply()` with fact variable for grouping
+   - Has validation: checks fact column exists
+
+4. **sankey_pq** (line 811)
+   - Signature: `function(physeq = NULL, fact = NULL, taxa = 1:4, ...)`
+   - Uses: fact for filtering if not NULL (line 859: `if (!is.null(fact))`)
+   - Processes network matrices
+
+5. **venn_pq** (line 1042)
+   - Signature: `function(physeq, fact, min_nb_seq = 0, print_values = TRUE)`
+   - Uses: `as.factor(unlist(unclass(physeq@sam_data[, fact])[fact]))`
+   - Has validation: checks factor length matches dimension
+
+6. **ggvenn_pq** (line 1324)
+   - Signature: `function(physeq = NULL, fact = NULL, min_nb_seq = 0, ..., na_remove = TRUE, ...)`
+   - Uses: `nlevels(physeq@sam_data[[fact]])` (line 1421)
+   - Has validation: removes NA samples if `na_remove = TRUE`
+
+7. **hill_pq** (line 1684)
+   - Signature: `function(physeq, fact = NULL, variable = NULL, hill_scales = c(0, 1, 2), ...)`
+   - Note: `fact` and `variable` are aliases
+   - Converts to factor: `physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])`
+
+8. **ggbetween_pq** (line 1941)
+   - Signature: `function(physeq, fact, one_plot = FALSE, ...)`
+   - Uses: `are_modality_even_depth(physeq, fact)` which runs Kruskal-Wallis test
+   - Critical: This test may fail with single level!
+
+9. **biplot_pq** (line 2492)
+   - Signature: `function(physeq, fact = NULL, merge_sample_by = NULL, ...)`
+   - Requires: exactly 2 samples after merging (line 2528: `if (nsamples(physeq) != 2)`)
+   - Uses: `merge_samples2(physeq, merge_sample_by)`
+
+10. **plot_tax_pq** (line 2986)
+    - Signature: `function(physeq, fact = NULL, merge_sample_by = NULL, ...)`
+    - Uses: `nlevels(as.factor(physeq@sam_data[[pairs]]))` (line 2889)
+    - Has validation: NA removal if `na_remove = TRUE`
+
+11. **multitax_bar_pq** (line 3174)
+    - Signature: `function(physeq, lvl1, lvl2, lvl3, fact = NULL, ...)`
+    - Optional fact parameter for conditional processing
+    - Note: `fact` is not strictly required
+
+12. **plot_tsne_pq** (line 3357)
+    - Signature: `function(physeq, method = "bray", ..., fact = NA, ...)`
+    - fact can be NA (optional for plotting)
+
+13. **upset_pq** (line 3674)
+    - Signature: `function(physeq, fact, taxa_fill = NULL, ...)`
+    - Uses: `merge_samples2(physeq, fact)` - requires at least 2 levels for meaningful merging
+
+14. **tax_bar_pq** (line 4074)
+    - Signature: `function(physeq, fact = "Sample", taxa = "Order", ...)`
+    - **HAS EXISTING VALIDATION** (line 4099): 
+    ```R
+    if(nlevels(psm[[fact]]) < 2) {
+      add_ribbon <- FALSE
+    }
+    ```
+
+15. **ridges_pq** (line 4387)
+    - Signature: `function(physeq, fact, nb_seq = TRUE, ...)`
+    - Uses: `factor(.data[[fact]])` in ggplot aesthetic
+    - Used in density plots with ggridges
+
+16. **ggaluv_pq** (line 5060)
+    - Signature: `function(physeq, ..., fact = NULL, ...)`
+    - Uses: `subset_samples_pq()` with fact if not null
+
+#### **beta_div_test.R Functions:**
+
+1. **graph_test_pq** (line 44)
+   - Signature: `function(physeq, fact, merge_sample_by = NULL, ...)`
+   - Uses: `phyloseqGraphTest::graph_perm_test()` with `sampletype = fact`
+   - Underlying function may require minimum levels
+
+2. **multipatt_pq** (line 706)
+   - Signature: `function(physeq, fact, p_adjust_method = "BH", ...)`
+   - Uses: `indicspecies::multipatt()` which requires groups for pattern analysis
+   - **Likely fails with single level**
+
+3. **ancombc_pq** (line 811)
+   - Signature: `function(physeq, fact, levels_fact = NULL, tax_level = "Class", ...)`
+   - Uses: `ANCOMBC::ancombc2()` with `fix_formula = fact` and `group = fact`
+   - **Likely fails with single level** (needs composition analysis between groups)
+
+4. **distri_1_taxa** (line 1326)
+   - Signature: `function(physeq, fact, taxa_name, digits = 2)`
+   - Uses: `tapply()` for grouping by fact
+   - Returns: statistics grouped by fact levels
+   - **Should work but output would be single row if one level**
+
+#### **alpha_div_test.R Functions:**
+
+1. **hill_test_rarperm_pq** (line 168)
+   - Signature: `function(physeq, fact, hill_scales = c(0, 1, 2), ...)`
+   - Uses: `psmelt_samples_pq()` with hills scales
+   - Internally does permutation tests by group
+
+#### **dada_phyloseq.R Functions:**
+
+1. **are_modality_even_depth** (line 3079)
+   - Signature: `function(physeq, fact, boxplot = FALSE)`
+   - Uses: `kruskal.test(nb_seq ~ fact)`
+   - **HAS SAFEGUARD** (line 3086-3089):
+   ```R
+   if (length(unique(tapply(nb_seq, fact, mean))) == 1) {
+     message("All modality were undoubtedly rarefy in the physeq object.")
+     res$p.value <- 1
+   }
+   ```
+
+2. **rarefy_sample_count_by_modality** (line 3872)
+   - Signature: `function(physeq, fact, rngseed = FALSE, verbose = TRUE)`
+   - Uses: `table(mod)` and loops through `levels(mod)`
+   - **Could work but meaningless with single level** (needs ≥2 levels for resampling)
+
+### 3. Existing Validation Patterns Found
+
+**Pattern 1: nlevels check with early exit** (tax_bar_pq, line 4099):
+```R
+if(nlevels(psm[[fact]]) < 2) {
+  add_ribbon <- FALSE  # disable feature that requires multiple levels
+}
+```
+
+**Pattern 2: nlevels check with error** (table_functions.R, line 188):
+```R
+if (nlevels(as.factor(physeq@sam_data[[bifactor]]) != 2)) {
+  stop("The bifactor arguments needs only two levels")
+}
+```
+
+**Pattern 3: nrow(unique()) check** (beta_div_test.R, lines 1145, 1219):
+```R
+if (nrow(unique(physeq@sam_data[, bifactor])) != 2) {
+  stop(paste0("The column ", bifactor, " must refer to a valid dichotomous (two-level) variable"))
+}
+```
+
+**Pattern 4: Special handling for edge case** (are_modality_even_depth, line 3086):
+```R
+if (length(unique(tapply(nb_seq, fact, mean))) == 1) {
+  message("All modality were undoubtedly rarefy in the physeq object.")
+  res$p.value <- 1
+}
+```
+
+### 4. Absolute File Paths
+
+Key source files:
+- `/home/adrien/Nextcloud/IdEst/Projets/MiscMetabar/R/plot_functions.R` (6324 lines)
+- `/home/adrien/Nextcloud/IdEst/Projets/MiscMetabar/R/beta_div_test.R` (1645 lines)
+- `/home/adrien/Nextcloud/IdEst/Projets/MiscMetabar/R/alpha_div_test.R` (393 lines)
+- `/home/adrien/Nextcloud/IdEst/Projets/MiscMetabar/R/dada_phyloseq.R` (4458 lines)
+
+Test directory:
+- `/home/adrien/Nextcloud/IdEst/Projets/MiscMetabar/tests/testthat/`
+
+Key test files:
+- `/home/adrien/Nextcloud/IdEst/Projets/MiscMetabar/tests/testthat/test_figures_taxo.R`
+- `/home/adrien/Nextcloud/IdEst/Projets/MiscMetabar/tests/testthat/test_figures_beta_div.R`
+- `/home/adrien/Nextcloud/IdEst/Projets/MiscMetabar/tests/testthat/test_plot_funcs.R`
+
+### 5. Summary of Functions Requiring Fixes
+
+**Critical (will fail with single level):**
+- `ggbetween_pq` - uses Kruskal-Wallis test (needs ≥2 groups)
+- `multipatt_pq` - indicator species analysis (needs ≥2 groups)
+- `ancombc_pq` - composition analysis (needs ≥2 groups)
+- `graph_test_pq` - network test (needs ≥2 groups)
+- `hill_test_rarperm_pq` - permutation tests (may fail with single group)
+
+**Moderate (output meaningless but won't crash):**
+- `upset_pq` - merge_samples2 needs meaningful grouping
+- `rarefy_sample_count_by_modality` - resampling needs ≥2 groups
+- `distri_1_taxa` - will return single-row output
+
+**Already handled:**
+- `tax_bar_pq` - gracefully disables add_ribbon feature
+- `are_modality_even_depth` - detects single level and sets p.value = 1</result>
+<usage><total_tokens>48522</total_tokens><tool_uses>53</tool_uses><duration_ms>100221</duration_ms></usage>
+</task-notification>
+Full transcript available at: REDACTED.output
+
+---
+
+commit this
