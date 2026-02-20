@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "1434127cecca",
+  "strategy": "manual-commit",
+  "branch": "dev",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "tests/testthat/Rplots.pdf"
+  ],
+  "sessions": [
+    {
+      "metadata": "/14/34127cecca/0/metadata.json",
+      "transcript": "/14/34127cecca/0/full.jsonl",
+      "context": "/14/34127cecca/0/context.md",
+      "content_hash": "/14/34127cecca/0/content_hash.txt",
+      "prompt": "/14/34127cecca/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 134,
+    "cache_creation_tokens": 34898,
+    "cache_read_tokens": 1237581,
+    "output_tokens": 2010,
+    "api_call_count": 38
+  }
+}
