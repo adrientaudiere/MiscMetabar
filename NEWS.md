@@ -8,6 +8,8 @@
 
 - `treemap_pq()` now uses `log10(x + 1)` instead of `log10(x)` so that taxa with a count of 1 are still visible. New parameters `show_na` (default `TRUE`) to display NA taxa as a grey area, `na_label` to customize the NA label, and `min_text_size` (default `0`) to control the minimum font size for tile labels.
 
+- Add two parameters to `tax_bar_pq()`, bar_internal_color to color each cells of the colored bars and linewidth_bar_internal to set the linewidth.
+
 # MiscMetabar 0.14.5
 
 - Bug fix in `normalize_prop_pq` when taxa_are_rows(physeq) were FALSE.

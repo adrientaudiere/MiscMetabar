@@ -4141,9 +4141,16 @@ diff_fct_diff_class <-
 #'   units) for taxa labels when `label_taxa = TRUE`.
 #' @param value_size (numeric; default 3) Font size (in ggplot2 mm
 #'   units) for value labels when `show_values = TRUE`.
-#' @param bar_width (numeric; default 0 if `add_ribbon = FALSE`, 0.5 if `add_ribbon = TRUE` and `fact != "Sample"`)
-#'   Width of the bars. Set to 0 to have no visible bars and only ribbons.
-#'
+#' @param bar_width (numeric; default NULL set 0.9 if `add_ribbon = FALSE`, 0.5 if
+#'   `add_ribbon = TRUE` and `fact != "Sample"`, and 0.6 if fact is only a one-level
+#'   factor). Width of the bars. Set to 0 to have no visible bars 
+#'   and only ribbons.
+#' @param bar_internal_color (default NA) Color of bar borders. Use `NA` (default)
+#'   to remove borders, which avoids thin white lines in PDF output.
+#'   Set to e.g. `"black"` or `"grey30"` for visible borders.
+#' @param linewidth_bar_internal (default 0 if `bar_internal_color` is `NA`, otherwise 0.5)
+#'  Line width of bar borders.
+#' 
 #' @return A \code{\link[ggplot2]{ggplot}}2 plot  with bar representing the
 #'   number of sequence en each taxonomic groups
 #' @export
@@ -4169,9 +4176,19 @@ diff_fct_diff_class <-
 #'   show_values = TRUE, minimum_value_to_show = 10000
 #' )
 #' tax_bar_pq(data_fungi_ab, fact = "Height", taxa = "Class",
-#'    nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
-#'    add_ribbon = TRUE, value_size=7, ribbon_alpha = .6, show_values=TRUE, label_size = 4, top_label_size = 6,
+#'   nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
+#'   add_ribbon = TRUE, value_size=7, ribbon_alpha = .6, 
+#'   show_values=TRUE, label_size = 4, top_label_size = 6,
 #'   minimum_value_to_show=0.05) |>
+#'   reorder_colors(alternate_lightness=TRUE)
+#' 
+#' tax_bar_pq(data_fungi_mini, fact = "Height", taxa = "Order",
+#'   nb_seq = T, percent_bar = TRUE, label_taxa = TRUE,
+#'   add_ribbon = TRUE, value_size=5, 
+#'   ribbon_alpha = .6, show_values=TRUE,
+#'   label_size = 4, top_label_size = 8,
+#'   minimum_value_to_show=0.05, bar_width = NULL,
+#'   linewidth_bar_internal = 0.1, bar_internal_color="black") |>
 #'   reorder_colors(alternate_lightness=TRUE)
 #' }
 #' @author Adrien Taudière
@@ -4193,7 +4210,9 @@ tax_bar_pq <-
     label_size = 3.2,
     value_size = 3,
     top_label_size = 3.2,
-    bar_width = NULL
+    bar_width = NULL,
+    bar_internal_color = NA,
+    linewidth_bar_internal = ifelse(is.na(bar_internal_color), 0, 0.5)
   ) {
     if (!nb_seq) {
       physeq <- as_binary_otu_table(physeq)
@@ -4223,7 +4242,9 @@ tax_bar_pq <-
         aes(x = .data[[fact]], fill = .data[[taxa]], y = Abundance),
         stat = "identity",
         position = bar_pos,
-        width = bar_width
+        width = bar_width,
+        color = bar_internal_color,
+        linewidth= linewidth_bar_internal
       )
 
     if (add_ribbon && fact != "Sample") {
