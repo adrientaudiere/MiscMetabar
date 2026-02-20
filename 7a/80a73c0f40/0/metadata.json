@@ -1,0 +1,32 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "7a80a73c0f40",
+  "session_id": "ec3855fc-796b-476a-8e06-0dce98036d15",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-20T12:43:16.615111411Z",
+  "branch": "dev",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "NEWS.md",
+    "R/plot_functions.R"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "6efab67b6f64",
+  "token_usage": {
+    "input_tokens": 85,
+    "cache_creation_tokens": 90286,
+    "cache_read_tokens": 4794236,
+    "output_tokens": 15049,
+    "api_call_count": 73
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-20T12:43:14.501015666Z",
+    "agent_lines": 0,
+    "human_added": 23,
+    "human_modified": 7,
+    "human_removed": 0,
+    "total_committed": 23,
+    "agent_percentage": 0
+  },
+  "transcript_path": ".claude/projects/-home-adrien-Nextcloud-IdEst-Projets-MiscMetabar/ec3855fc-796b-476a-8e06-0dce98036d15.jsonl"
+}
