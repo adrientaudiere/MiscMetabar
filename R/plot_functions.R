@@ -4951,7 +4951,7 @@ plot_var_part_pq <-
       id.size = id.size,
       Xnames = res_varpart$Xnames
     )
-    if (any(is.na(vals))) {
+    if (anyNA(vals)) {
       graphics::mtext(paste("Values <", cutoff, " not shown", sep = ""), 1)
     }
     if (
@@ -5399,11 +5399,11 @@ plot_refseq_extremity_pq <- function(
 
     tib_interm <- t(data.frame(letters_sequences))
     nucleotide_first_interm <- data.frame(
-      "nb_A" = colSums(tib_interm == "A", na.rm = T) / nrow(tib_interm),
-      "nb_C" = colSums(tib_interm == "C", na.rm = T) / nrow(tib_interm),
-      "nb_G" = colSums(tib_interm == "G", na.rm = T) / nrow(tib_interm),
-      "nb_T" = colSums(tib_interm == "T", na.rm = T) / nrow(tib_interm),
-      "seq_id" = 1:ncol(tib_interm)
+      "nb_A" = colSums(tib_interm == "A", na.rm = TRUE) / nrow(tib_interm),
+      "nb_C" = colSums(tib_interm == "C", na.rm = TRUE) / nrow(tib_interm),
+      "nb_G" = colSums(tib_interm == "G", na.rm = TRUE) / nrow(tib_interm),
+      "nb_T" = colSums(tib_interm == "T", na.rm = TRUE) / nrow(tib_interm),
+      "seq_id" = seq_len(ncol(tib_interm))
     ) |>
       rowwise() |>
       mutate("max_letter_prob" = max(across(starts_with("nb_"))))
@@ -5457,7 +5457,7 @@ plot_refseq_extremity_pq <- function(
 
       renyi_nucleotide$seq_id <-
         sort(rep(
-          1:ncol(tib_interm),
+          seq_len(ncol(tib_interm)),
           times = nrow(renyi_nucleotide) / ncol(tib_interm)
         ))
 
@@ -5492,7 +5492,7 @@ plot_refseq_extremity_pq <- function(
       "nb_C" = colSums(tib_interm_last == "C") / nrow(tib_interm_last),
       "nb_G" = colSums(tib_interm_last == "G") / nrow(tib_interm_last),
       "nb_T" = colSums(tib_interm_last == "T") / nrow(tib_interm_last),
-      "seq_id" = 1:ncol(tib_interm_last)
+      "seq_id" =  seq_len(ncol(tib_interm_last))
     )
 
     nucleotide_last <- nucleotide_last_interm |>
@@ -5543,7 +5543,7 @@ plot_refseq_extremity_pq <- function(
 
       renyi_nucleotide$seq_id <-
         sort(rep(
-          1:ncol(tib_interm_last),
+          seq_len(ncol(tib_interm_last)),
           times = nrow(renyi_nucleotide) / ncol(tib_interm_last)
         ))
 
@@ -6162,7 +6162,7 @@ plot_seq_ratio_pq <- function(physeq, min_nb_seq = 1000, annotations = TRUE) {
         y = 1.15 * cutof_ratio,
         xend = 1.05 * cutof_value,
         yend = 1.01 * cutof_ratio,
-        curvature = .3,
+        curvature = 0.3,
         arrow = arrow(length = unit(2, "mm"))
       ) +
       annotate(
