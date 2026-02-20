@@ -6074,7 +6074,8 @@ plot_seq_ratio_pq <- function(physeq, min_nb_seq = 1000, annotations = TRUE) {
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' In stacked bar plots, ggplot2's default discrete palette assigns colors
-#' alphabetically, which often places perceptually similar colors next to
+#' using level ordered (sometimes alphabetically), which often places perceptually 
+#' similar colors next to
 #' each other. This function reassigns the **same set of colors** to factor
 #' levels so that visually adjacent segments receive maximally different
 #' colors. Both the fill and color scales are updated so that direct
@@ -6104,6 +6105,13 @@ plot_seq_ratio_pq <- function(physeq, min_nb_seq = 1000, annotations = TRUE) {
 #' reorder_colors(p)
 #' reorder_colors(p, colorblind = TRUE)
 #' p + reorder_colors(alternate_lightness = TRUE)
+#' 
+#' tax_bar_pq(data_fungi_mini, fact = "Height", taxa = "Order",
+#'  nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
+#'  add_ribbon = TRUE, value_size=7, ribbon_alpha = .6,
+#'  show_values=TRUE, label_size = 4, top_label_size = 8,
+#'  minimum_value_to_show=0.05) |>
+#'  reorder_colors(alternate_lightness=TRUE)
 reorder_colors <- function(
   p = NULL,
   alternate_lightness = FALSE,
