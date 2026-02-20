@@ -4206,14 +4206,14 @@ tax_bar_pq <-
       add_ribbon <- FALSE
     }
 
-    if(is.null(bar_width)) {
+    if (is.null(bar_width)) {
       bar_width <- if (add_ribbon && fact != "Sample") {
-        0.5} else if(nlevels(psm[[fact]]) ==1){
-          0.6
-        } 
-        else {
-          0.9
-        } 
+        0.5
+      } else if (nlevels(psm[[fact]]) == 1) {
+        0.6
+      } else {
+        0.9
+      }
     }
 
     bar_pos <- if (percent_bar) "fill" else "stack"

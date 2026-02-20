@@ -17,7 +17,9 @@ tax_bar_pq(
   show_values = FALSE,
   minimum_value_to_show = 0,
   label_size = 3.2,
-  value_size = 3
+  value_size = 3,
+  top_label_size = 3.2,
+  bar_width = NULL
 )
 }
 \arguments{
@@ -63,6 +65,9 @@ units) for taxa labels when \code{label_taxa = TRUE}.}
 
 \item{value_size}{(numeric; default 3) Font size (in ggplot2 mm
 units) for value labels when \code{show_values = TRUE}.}
+
+\item{bar_width}{(numeric; default 0 if \code{add_ribbon = FALSE}, 0.5 if \code{add_ribbon = TRUE} and \code{fact != "Sample"})
+Width of the bars. Set to 0 to have no visible bars and only ribbons.}
 }
 \value{
 A \code{\link[ggplot2]{ggplot}}2 plot  with bar representing the
@@ -97,6 +102,11 @@ tax_bar_pq(data_fungi_ab,
   taxa = "Class", fact = "Time",
   show_values = TRUE, minimum_value_to_show = 10000
 )
+tax_bar_pq(data_fungi_ab, fact = "Height", taxa = "Class",
+   nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
+   add_ribbon = TRUE, value_size=7, ribbon_alpha = .6, show_values=TRUE, label_size = 4, top_label_size = 6,
+  minimum_value_to_show=0.05) |>
+  reorder_colors(alternate_lightness=TRUE)
 }
 }
 \seealso{
