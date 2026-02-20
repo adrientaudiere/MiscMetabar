@@ -3,7 +3,7 @@
   "checkpoint_id": "4c3d588cea5b",
   "strategy": "manual-commit",
   "branch": "dev",
-  "checkpoints_count": 0,
+  "checkpoints_count": 1,
   "files_touched": [
     "R/plot_functions.R",
     "man/reorder_colors.Rd",
@@ -16,13 +16,20 @@
       "context": "/4c/3d588cea5b/0/context.md",
       "content_hash": "/4c/3d588cea5b/0/content_hash.txt",
       "prompt": "/4c/3d588cea5b/0/prompt.txt"
+    },
+    {
+      "metadata": "/4c/3d588cea5b/1/metadata.json",
+      "transcript": "/4c/3d588cea5b/1/full.jsonl",
+      "context": "/4c/3d588cea5b/1/context.md",
+      "content_hash": "/4c/3d588cea5b/1/content_hash.txt",
+      "prompt": "/4c/3d588cea5b/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 4,
-    "cache_creation_tokens": 3306,
-    "cache_read_tokens": 61755,
-    "output_tokens": 131,
-    "api_call_count": 3
+    "input_tokens": 89,
+    "cache_creation_tokens": 93592,
+    "cache_read_tokens": 4855991,
+    "output_tokens": 15180,
+    "api_call_count": 76
   }
 }
