@@ -125,6 +125,15 @@ accu_plot <-
       stop("physeq must be a phyloseq object")
     }
 
+    if (!is.null(fact) && nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
+      stop(
+        "The factor '",
+        fact,
+        "' must have at least two levels for accu_plot ",
+        "(species accumulation curves require at least 2 groups)."
+      )
+    }
+
     if (!taxa_are_rows(physeq)) {
       physeq@otu_table <-
         otu_table(t(physeq@otu_table), taxa_are_rows = TRUE)
@@ -353,6 +362,16 @@ accu_plot_balanced_modality <- function(
   verbose = FALSE,
   ...
 ) {
+  if (nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
+    stop(
+      "The factor '",
+      fact,
+      "' must have at least two levels for ",
+      "accu_plot_balanced_modality (balanced accumulation curves require ",
+      "at least 2 groups)."
+    )
+  }
+
   if (rarefy_by_sample_before_merging) {
     p_for_dim <- accu_plot(
       rarefy_sample_count_by_modality(
@@ -654,6 +673,18 @@ circle_pq <-
         },
         cl = nproc
       )
+    if (!is.matrix(otu_table_ech)) {
+      otu_table_ech <- matrix(
+        otu_table_ech,
+        nrow = 1,
+        dimnames = list(
+          levels(as.factor(
+            unlist(unclass(physeq@sam_data[, fact]))
+          )),
+          names(otu_table_ech)
+        )
+      )
+    }
     if (rarefy) {
       otu_table_ech_interm <-
         vegan::rrarefy(otu_table_ech, min(rowSums(otu_table_ech)))
@@ -675,14 +706,15 @@ circle_pq <-
       otu_table_ech <- otu_table_ech_interm
     }
 
-    otu_table_ech <- otu_table_ech[, colSums(otu_table_ech) > 0]
+    otu_table_ech <- otu_table_ech[, colSums(otu_table_ech) > 0, drop = FALSE]
 
     # Keep only taxa and modalities with a sufficient proportion (min_prop_tax,
     # min_prop_mod) to plot
     o_t_e_interm <-
       otu_table_ech[
         (rowSums(otu_table_ech) / sum(otu_table_ech)) > min_prop_mod,
-        (colSums(otu_table_ech) / sum(otu_table_ech)) > min_prop_tax
+        (colSums(otu_table_ech) / sum(otu_table_ech)) > min_prop_tax,
+        drop = FALSE
       ]
     if (nrow(o_t_e_interm) != nrow(otu_table_ech)) {
       message(
@@ -886,6 +918,18 @@ sankey_pq <-
             sum
           )
         })
+      if (!is.matrix(mat_interm)) {
+        mat_interm <- matrix(
+          mat_interm,
+          nrow = 1,
+          dimnames = list(
+            levels(as.factor(
+              unlist(unclass(physeq@sam_data[, fact]))
+            )),
+            names(mat_interm)
+          )
+        )
+      }
 
       if (!add_nb_seq) {
         mat_interm <-
@@ -911,6 +955,13 @@ sankey_pq <-
               sum
             )
           })
+      }
+      if (!is.matrix(mat_interm)) {
+        mat_interm <- matrix(
+          mat_interm,
+          ncol = 1,
+          dimnames = list(names(mat_interm), colnames(mat_interm))
+        )
       }
 
       samp_links <- net_matrix2links(mat_interm)
@@ -1047,6 +1098,15 @@ venn_pq <-
 
     moda <-
       as.factor(unlist(unclass(physeq@sam_data[, fact])[fact]))
+
+    if (nlevels(moda) < 2) {
+      stop(
+        "The factor '",
+        fact,
+        "' must have at least two levels for venn_pq ",
+        "(Venn diagrams require at least 2 sets)."
+      )
+    }
     if (length(moda) != dim(physeq@otu_table)[1]) {
       data_venn <-
         t(apply(physeq@otu_table, 1, function(x) {
@@ -1340,6 +1400,15 @@ ggvenn_pq <- function(
 ) {
   if (!is.factor(physeq@sam_data[[fact]])) {
     physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
+  }
+
+  if (nlevels(physeq@sam_data[[fact]]) < 2) {
+    stop(
+      "The factor '",
+      fact,
+      "' must have at least two levels for ggvenn_pq ",
+      "(Venn diagrams require at least 2 sets)."
+    )
   }
 
   if (na_remove) {
@@ -1726,6 +1795,15 @@ hill_pq <- function(
   }
   physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
 
+  if (nlevels(physeq@sam_data[[fact]]) < 2) {
+    stop(
+      "The factor '",
+      fact,
+      "' must have at least two levels for hill_pq ",
+      "(Kruskal-Wallis and Tukey tests require at least 2 groups)."
+    )
+  }
+
   otu_hill <-
     vegan::renyi(t(physeq)@otu_table, scales = hill_scales, hill = TRUE)
   colnames(otu_hill) <- paste0("Hill_", hill_scales)
@@ -1949,6 +2027,16 @@ ggbetween_pq <-
     ...
   ) {
     verify_pq(physeq)
+
+    if (nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
+      stop(
+        "The factor '",
+        fact,
+        "' must have at least two levels for ",
+        "ggbetween_pq (between-group comparison requires at least 2 groups)."
+      )
+    }
+
     physeq <- taxa_as_columns(physeq)
 
     if (rarefy_by_sample) {
@@ -3379,6 +3467,15 @@ plot_tsne_pq <- function(
     physeq <- subset_samples_pq(physeq, !is.na(physeq@sam_data[[fact]]))
   }
 
+  if (!is.na(fact) && nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
+    stop(
+      "The factor '",
+      fact,
+      "' must have at least two levels for ",
+      "plot_tsne_pq (t-SNE visualization requires at least 2 groups)."
+    )
+  }
+
   tsne <- tsne_pq(
     physeq = physeq,
     method = method,
@@ -3683,6 +3780,15 @@ upset_pq <- function(
   verbose = TRUE,
   ...
 ) {
+  if (nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
+    stop(
+      "The factor '",
+      fact,
+      "' must have at least two levels for upset_pq ",
+      "(UpSet plots require at least 2 sets)."
+    )
+  }
+
   if (!is.null(min_nb_seq)) {
     physeq@otu_table[physeq@otu_table < min_nb_seq] <- 0
   }
@@ -4062,7 +4168,7 @@ diff_fct_diff_class <-
 #'   taxa = "Class", fact = "Time",
 #'   show_values = TRUE, minimum_value_to_show = 10000
 #' )
-#' tax_bar_pq(d, fact = "Type", taxa = "Class",
+#' tax_bar_pq(data_fungi_ab, fact = "Height", taxa = "Class",
 #'    nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
 #'    add_ribbon = TRUE, value_size=7, ribbon_alpha = .6, show_values=TRUE, label_size = 4, top_label_size = 6,
 #'   minimum_value_to_show=0.05) |>
@@ -4087,7 +4193,7 @@ tax_bar_pq <-
     label_size = 3.2,
     value_size = 3,
     top_label_size = 3.2,
-    bar_width = ifelse(add_ribbon && fact != "Sample", 0.5, 0)
+    bar_width = NULL
   ) {
     if (!nb_seq) {
       physeq <- as_binary_otu_table(physeq)
@@ -4095,6 +4201,21 @@ tax_bar_pq <-
     psm <- psmelt(physeq)
 
     psm[[fact]] <- factor(psm[[fact]])
+
+    if (nlevels(psm[[fact]]) < 2) {
+      add_ribbon <- FALSE
+    }
+
+    if(is.null(bar_width)) {
+      bar_width <- if (add_ribbon && fact != "Sample") {
+        0.5} else if(nlevels(psm[[fact]]) ==1){
+          0.6
+        } 
+        else {
+          0.9
+        } 
+    }
+
     bar_pos <- if (percent_bar) "fill" else "stack"
 
     p <- ggplot(psm) +
@@ -6074,7 +6195,7 @@ plot_seq_ratio_pq <- function(physeq, min_nb_seq = 1000, annotations = TRUE) {
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' In stacked bar plots, ggplot2's default discrete palette assigns colors
-#' using level ordered (sometimes alphabetically), which often places perceptually 
+#' using level ordered (sometimes alphabetically), which often places perceptually
 #' similar colors next to
 #' each other. This function reassigns the **same set of colors** to factor
 #' levels so that visually adjacent segments receive maximally different
@@ -6105,7 +6226,7 @@ plot_seq_ratio_pq <- function(physeq, min_nb_seq = 1000, annotations = TRUE) {
 #' reorder_colors(p)
 #' reorder_colors(p, colorblind = TRUE)
 #' p + reorder_colors(alternate_lightness = TRUE)
-#' 
+#'
 #' tax_bar_pq(data_fungi_mini, fact = "Height", taxa = "Order",
 #'  nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
 #'  add_ribbon = TRUE, value_size=7, ribbon_alpha = .6,

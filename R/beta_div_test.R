@@ -41,15 +41,26 @@
 #'   Please cite `phyloseqGraphTest` package.
 #' @export
 
-graph_test_pq <- function(physeq,
-                          fact,
-                          merge_sample_by = NULL,
-                          nperm = 999,
-                          return_plot = TRUE,
-                          title = "Graph Test",
-                          na_remove = FALSE,
-                          ...) {
+graph_test_pq <- function(
+  physeq,
+  fact,
+  merge_sample_by = NULL,
+  nperm = 999,
+  return_plot = TRUE,
+  title = "Graph Test",
+  na_remove = FALSE,
+  ...
+) {
   verify_pq(physeq)
+
+  if (nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
+    stop(
+      "The factor '",
+      fact,
+      "' must have at least two levels for ",
+      "graph_test_pq (permutation tests require at least 2 groups)."
+    )
+  }
 
   if (!is.null(merge_sample_by)) {
     physeq <- merge_samples2(physeq, merge_sample_by)
@@ -70,7 +81,8 @@ graph_test_pq <- function(physeq,
     physeq <- new_physeq
   }
 
-  res_graph_test <- phyloseqGraphTest::graph_perm_test(physeq,
+  res_graph_test <- phyloseqGraphTest::graph_perm_test(
+    physeq,
     sampletype = fact,
     nperm = nperm,
     ...
@@ -81,7 +93,8 @@ graph_test_pq <- function(physeq,
     } else {
       layout <- igraph::layout_(res_graph_test$net, igraph::with_fr())
     }
-    p <- ggplot(res_graph_test$net,
+    p <- ggplot(
+      res_graph_test$net,
       aes(x = x, y = y, xend = xend, yend = yend),
       layout = layout
     ) +
@@ -175,17 +188,19 @@ graph_test_pq <- function(physeq,
 #'   Please make a reference to `vegan::adonis2()` if you
 #'   use this function.
 
-adonis_pq <- function(physeq,
-                      formula,
-                      dist_method = "bray",
-                      by = "terms",
-                      merge_sample_by = NULL,
-                      na_remove = FALSE,
-                      correction_for_sample_size = FALSE,
-                      rarefy_nb_seqs = FALSE,
-                      rngseed = FALSE,
-                      verbose = TRUE,
-                      ...) {
+adonis_pq <- function(
+  physeq,
+  formula,
+  dist_method = "bray",
+  by = "terms",
+  merge_sample_by = NULL,
+  na_remove = FALSE,
+  correction_for_sample_size = FALSE,
+  rarefy_nb_seqs = FALSE,
+  rngseed = FALSE,
+  verbose = TRUE,
+  ...
+) {
   physeq <- taxa_as_columns(physeq)
 
   if (dist_method %in% c("aitchison", "robust.aitchison")) {
@@ -244,7 +259,8 @@ adonis_pq <- function(physeq,
           ")` was used to initialize repeatable random subsampling."
         )
         message("Please record this for your records so others can reproduce.")
-        message("Try `set.seed(",
+        message(
+          "Try `set.seed(",
           rngseed,
           "); .Random.seed` for the full vector",
           sep = ""
@@ -308,18 +324,20 @@ adonis_pq <- function(physeq,
 #'     subset_samples(data_fungi, !is.na(Time) & !is.na(Height))
 #'   adonis_rarperm_pq(data_fungi_woNA, "Time*Height", na_remove = TRUE, nperm = 3)
 #' }
-adonis_rarperm_pq <- function(physeq,
-                              formula,
-                              dist_method = "bray",
-                              merge_sample_by = NULL,
-                              na_remove = FALSE,
-                              rarefy_nb_seqs = FALSE,
-                              verbose = TRUE,
-                              nperm = 99,
-                              progress_bar = TRUE,
-                              quantile_prob = 0.975,
-                              sample.size = min(sample_sums(physeq)),
-                              ...) {
+adonis_rarperm_pq <- function(
+  physeq,
+  formula,
+  dist_method = "bray",
+  merge_sample_by = NULL,
+  na_remove = FALSE,
+  rarefy_nb_seqs = FALSE,
+  verbose = TRUE,
+  nperm = 99,
+  progress_bar = TRUE,
+  quantile_prob = 0.975,
+  sample.size = min(sample_sums(physeq)),
+  ...
+) {
   res_perm <- vector("list", nperm)
   if (progress_bar) {
     pb <- txtProgressBar(
@@ -353,20 +371,39 @@ adonis_rarperm_pq <- function(physeq,
       setTxtProgressBar(pb, i)
     }
   }
-  res_adonis <- list("mean" = NULL, "quantile_min" = NULL, "quantile_max" = NULL)
+  res_adonis <- list(
+    "mean" = NULL,
+    "quantile_min" = NULL,
+    "quantile_max" = NULL
+  )
   res_adonis[["mean"]] <-
-    apply(array(unlist(res_perm), c(dim(
-      as.data.frame(res_perm[[1]])
-    ), nperm)), c(1, 2), mean)
+    apply(
+      array(
+        unlist(res_perm),
+        c(
+          dim(
+            as.data.frame(res_perm[[1]])
+          ),
+          nperm
+        )
+      ),
+      c(1, 2),
+      mean
+    )
   colnames(res_adonis[["mean"]]) <- colnames(res_perm[[1]])
   rownames(res_adonis[["mean"]]) <- rownames(res_perm[[1]])
 
-
   res_adonis[["quantile_min"]] <-
     apply(
-      array(unlist(res_perm), c(dim(
-        as.data.frame(res_perm[[1]])
-      ), nperm)),
+      array(
+        unlist(res_perm),
+        c(
+          dim(
+            as.data.frame(res_perm[[1]])
+          ),
+          nperm
+        )
+      ),
       c(1, 2),
       quantile,
       na.rm = TRUE,
@@ -377,9 +414,15 @@ adonis_rarperm_pq <- function(physeq,
 
   res_adonis[["quantile_max"]] <-
     apply(
-      array(unlist(res_perm), c(dim(
-        as.data.frame(res_perm[[1]])
-      ), nperm)),
+      array(
+        unlist(res_perm),
+        c(
+          dim(
+            as.data.frame(res_perm[[1]])
+          ),
+          nperm
+        )
+      ),
       c(1, 2),
       quantile,
       na.rm = TRUE,
@@ -428,9 +471,7 @@ adonis_rarperm_pq <- function(physeq,
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `adespatial::beta.div()` if you
 #'   use this function.
-LCBD_pq <- function(physeq,
-                    p_adjust_method = "BH",
-                    ...) {
+LCBD_pq <- function(physeq, p_adjust_method = "BH", ...) {
   physeq <- taxa_as_columns(physeq)
 
   mat <- as.matrix(unclass(physeq@otu_table))
@@ -502,22 +543,25 @@ LCBD_pq <- function(physeq,
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `vegan::beta.div()` if you
 #'   use this function.
-plot_LCBD_pq <- function(physeq,
-                         p_adjust_method = "BH",
-                         pval = 0.05,
-                         sam_variables = NULL,
-                         only_plot_significant = TRUE,
-                         ...) {
-  resBeta <- LCBD_pq(physeq,
-    p_adjust_method = p_adjust_method,
-    ...
-  )
+plot_LCBD_pq <- function(
+  physeq,
+  p_adjust_method = "BH",
+  pval = 0.05,
+  sam_variables = NULL,
+  only_plot_significant = TRUE,
+  ...
+) {
+  resBeta <- LCBD_pq(physeq, p_adjust_method = p_adjust_method, ...)
 
   sam_data <- data.frame(physeq@sam_data)
 
-  if (sum(is.na(match(
-    rownames(sam_data), names(resBeta$LCBD)
-  ))) > 0) {
+  if (
+    sum(is.na(match(
+      rownames(sam_data),
+      names(resBeta$LCBD)
+    ))) >
+      0
+  ) {
     warning("At least one sample was removed by the beta.div function")
     sam_data <-
       sam_data[rownames(sam_data) %in% names(resBeta$LCBD), ]
@@ -546,20 +590,25 @@ plot_LCBD_pq <- function(physeq,
       p_heatmap <- vector("list", length(sam_variables))
       for (i in seq_along(sam_variables)) {
         p_heatmap[[i]] <- ggplot(filter(resLCBD, p.adj < pval)) +
-          geom_tile(inherit.aes = FALSE, aes(
-            y = reorder(Sample_names, -LCBD, sum),
-            x = i,
-            fill = .data[[sam_variables[[i]]]]
-          )) +
+          geom_tile(
+            inherit.aes = FALSE,
+            aes(
+              y = reorder(Sample_names, -LCBD, sum),
+              x = i,
+              fill = .data[[sam_variables[[i]]]]
+            )
+          ) +
           theme_void() +
           theme(axis.title.x = element_text()) +
           xlab(sam_variables[[i]])
       }
 
       p <-
-        p_LCBD + patchwork::wrap_plots(p_heatmap) + patchwork::plot_layout(
-          widths = c(3, 1), guides =
-            "collect"
+        p_LCBD +
+        patchwork::wrap_plots(p_heatmap) +
+        patchwork::plot_layout(
+          widths = c(3, 1),
+          guides = "collect"
         )
       return(p)
     }
@@ -573,20 +622,25 @@ plot_LCBD_pq <- function(physeq,
       p_heatmap <- vector("list", length(sam_variables))
       for (i in seq_along(sam_variables)) {
         p_heatmap[[i]] <- ggplot(resLCBD) +
-          geom_tile(inherit.aes = FALSE, aes(
-            y = reorder(Sample_names, -LCBD, sum),
-            x = i,
-            fill = .data[[sam_variables[[i]]]]
-          )) +
+          geom_tile(
+            inherit.aes = FALSE,
+            aes(
+              y = reorder(Sample_names, -LCBD, sum),
+              x = i,
+              fill = .data[[sam_variables[[i]]]]
+            )
+          ) +
           theme_void() +
           theme(axis.title.x = element_text()) +
           xlab(sam_variables[[i]])
       }
 
       p <-
-        p_LCBD + patchwork::wrap_plots(p_heatmap) +
+        p_LCBD +
+        patchwork::wrap_plots(p_heatmap) +
         patchwork::plot_layout(
-          widths = c(3, 1), guides = "collect"
+          widths = c(3, 1),
+          guides = "collect"
         )
       return(p)
     }
@@ -634,11 +688,13 @@ plot_LCBD_pq <- function(physeq,
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `vegan::beta.div()` if you
 #'   use this function.
-plot_SCBD_pq <- function(physeq,
-                         tax_level = "Taxa",
-                         tax_col = "Order",
-                         min_SCBD = 0.01,
-                         ...) {
+plot_SCBD_pq <- function(
+  physeq,
+  tax_level = "Taxa",
+  tax_col = "Order",
+  min_SCBD = 0.01,
+  ...
+) {
   resBeta <- LCBD_pq(physeq, nperm = 0, ...)
 
   tax_tab <- data.frame(physeq@tax_table)
@@ -652,7 +708,8 @@ plot_SCBD_pq <- function(physeq,
   p_SCBD <- ggplot(
     filter(resSCBD, SCBD > min_SCBD),
     aes(
-      x = SCBD, y = factor(.data[[tax_level]]),
+      x = SCBD,
+      y = factor(.data[[tax_level]]),
       color = .data[[tax_col]]
     )
   ) +
@@ -703,16 +760,28 @@ plot_SCBD_pq <- function(physeq,
 #'   Please make a reference to `indicspecies::multipatt()` if you
 #'   use this function.
 
-multipatt_pq <- function(physeq,
-                         fact,
-                         p_adjust_method = "BH",
-                         pval = 0.05,
-                         control = permute::how(nperm = 999),
-                         ...) {
+multipatt_pq <- function(
+  physeq,
+  fact,
+  p_adjust_method = "BH",
+  pval = 0.05,
+  control = permute::how(nperm = 999),
+  ...
+) {
+  if (nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
+    stop(
+      "The factor '",
+      fact,
+      "' must have at least two levels for ",
+      "multipatt_pq (indicator species analysis requires at least 2 groups)."
+    )
+  }
+
   physeq <- taxa_as_columns(physeq)
 
   res <-
-    indicspecies::multipatt(as.matrix(physeq@otu_table),
+    indicspecies::multipatt(
+      as.matrix(physeq@otu_table),
       physeq@sam_data[[fact]],
       control = control,
       ...
@@ -736,11 +805,13 @@ multipatt_pq <- function(physeq,
     )
   ) +
     geom_point() +
-    theme(axis.text.x = element_text(
-      angle = 90,
-      vjust = 0.5,
-      hjust = 1
-    ))
+    theme(
+      axis.text.x = element_text(
+        angle = 90,
+        vjust = 0.5,
+        hjust = 1
+      )
+    )
   return(p)
 }
 ################################################################################
@@ -815,6 +886,16 @@ ancombc_pq <- function(
   tax_level = "Class",
   ...
 ) {
+  if (nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
+    stop(
+      "The factor '",
+      fact,
+      "' must have at least two levels for ",
+      "ancombc_pq (differential abundance analysis requires at least ",
+      "2 groups)."
+    )
+  }
+
   if (!is.null(levels_fact)) {
     physeq <- subset_samples_pq(
       physeq,
@@ -828,7 +909,10 @@ ancombc_pq <- function(
 
   tse <- mia::convertFromPhyloseq(physeq)
   if (!is.null(levels_fact)) {
-    SummarizedExperiment::colData(tse)[[fact]] <- factor(tse[[fact]], levels = levels_fact)
+    SummarizedExperiment::colData(tse)[[fact]] <- factor(
+      tse[[fact]],
+      levels = levels_fact
+    )
   }
   res_ancomb <- ANCOMBC::ancombc2(
     data = tse,
@@ -841,7 +925,6 @@ ancombc_pq <- function(
   return(res_ancomb)
 }
 ################################################################################
-
 
 ################################################################################
 #' Filter ancombc_pq results
@@ -894,16 +977,24 @@ ancombc_pq <- function(
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `ANCOMBC::ancombc2()` if you
 #'   use this function.
-signif_ancombc <- function(ancombc_res,
-                           filter_passed = TRUE,
-                           filter_diff = TRUE,
-                           min_abs_lfc = 0) {
+signif_ancombc <- function(
+  ancombc_res,
+  filter_passed = TRUE,
+  filter_diff = TRUE,
+  min_abs_lfc = 0
+) {
   signif_ancombc_res <- ancombc_res$res
   clnames <- colnames(signif_ancombc_res)
 
   name_modality <-
-    gsub("passed_ss", "", clnames[grepl("passed_ss", clnames) &
-      !grepl("Intercept", clnames)])
+    gsub(
+      "passed_ss",
+      "",
+      clnames[
+        grepl("passed_ss", clnames) &
+          !grepl("Intercept", clnames)
+      ]
+    )
 
   if (filter_passed) {
     signif_ancombc_res <- signif_ancombc_res %>%
@@ -920,7 +1011,6 @@ signif_ancombc <- function(ancombc_res,
   return(signif_ancombc_res)
 }
 ################################################################################
-
 
 ################################################################################
 #' Plot ANCOMBC2 result for phyloseq object
@@ -991,18 +1081,19 @@ signif_ancombc <- function(ancombc_res,
 #'   use this function.
 #' @author Adrien Taudière
 
-
 plot_ancombc_pq <-
-  function(physeq,
-           ancombc_res,
-           filter_passed = TRUE,
-           filter_diff = TRUE,
-           min_abs_lfc = 0,
-           tax_col = "Genus",
-           tax_label = "Species",
-           add_marginal_vioplot = TRUE,
-           add_label = TRUE,
-           add_hline_cut_lfc = NULL) {
+  function(
+    physeq,
+    ancombc_res,
+    filter_passed = TRUE,
+    filter_diff = TRUE,
+    min_abs_lfc = 0,
+    tax_col = "Genus",
+    tax_label = "Species",
+    add_marginal_vioplot = TRUE,
+    add_label = TRUE,
+    add_hline_cut_lfc = NULL
+  ) {
     verify_pq(physeq)
 
     if (is.null(add_hline_cut_lfc)) {
@@ -1023,9 +1114,12 @@ plot_ancombc_pq <-
     clnames <- colnames(ancombc_res$res)
     name_modality <-
       gsub(
-        "passed_ss", "",
-        clnames[grepl("passed_ss", clnames) &
-          !grepl("Intercept", clnames)]
+        "passed_ss",
+        "",
+        clnames[
+          grepl("passed_ss", clnames) &
+            !grepl("Intercept", clnames)
+        ]
       )
 
     taxtable <- data.frame(physeq@tax_table)
@@ -1044,18 +1138,22 @@ plot_ancombc_pq <-
       )
     ) +
       geom_vline(xintercept = 0) +
-      geom_segment(aes(
-        xend = 0,
-        y = reorder(taxon, .data[[paste0("lfc", name_modality)]]),
-        yend = reorder(taxon, .data[[paste0("lfc", name_modality)]])
-      ), color = "darkgrey") +
+      geom_segment(
+        aes(
+          xend = 0,
+          y = reorder(taxon, .data[[paste0("lfc", name_modality)]]),
+          yend = reorder(taxon, .data[[paste0("lfc", name_modality)]])
+        ),
+        color = "darkgrey"
+      ) +
       geom_point(size = 3)
 
     if (add_label) {
-      p <- p + geom_label(aes(
-        label = .data[[tax_label]], x =
-          0
-      ))
+      p <- p +
+        geom_label(aes(
+          label = .data[[tax_label]],
+          x = 0
+        ))
     }
     if (add_hline_cut_lfc) {
       p <- p +
@@ -1073,23 +1171,29 @@ plot_ancombc_pq <-
 
     if (add_marginal_vioplot) {
       marg_vio <-
-        (
-          ggplot(data = ancombc_res$res, aes(x = .data[[paste0("lfc", name_modality)]], y = 1)) +
-            geom_violin(fill = transp("grey", 0.5)) +
-            geom_point(aes(color = .data[[paste0("diff", name_modality)]] &
-              .data[[paste0("passed_ss", name_modality)]]), position = position_jitter()) +
-            scale_color_manual(values = c("grey70", "grey20")) +
-            theme(legend.position = "none")
-        )
+        (ggplot(
+          data = ancombc_res$res,
+          aes(x = .data[[paste0("lfc", name_modality)]], y = 1)
+        ) +
+          geom_violin(fill = transp("grey", 0.5)) +
+          geom_point(
+            aes(
+              color = .data[[paste0("diff", name_modality)]] &
+                .data[[paste0("passed_ss", name_modality)]]
+            ),
+            position = position_jitter()
+          ) +
+          scale_color_manual(values = c("grey70", "grey20")) +
+          theme(legend.position = "none"))
 
       p <-
-        marg_vio / (p + xlim(layer_scales(marg_vio)$x$get_limits())) +
+        marg_vio /
+        (p + xlim(layer_scales(marg_vio)$x$get_limits())) +
         patchwork::plot_layout(heights = c(1, 7), axes = "collect")
     }
     return(p)
   }
 ################################################################################
-
 
 ################################################################################
 #' Run LEfSe on a phyloseq object
@@ -1123,14 +1227,27 @@ plot_ancombc_pq <-
 #'   modalities = c("Low", "High")
 #' )
 #' lefser::lefserPlot(res_lefse)
-lefser_pq <- function(physeq, bifactor = NULL, modalities = NULL, compute_relativeAb = TRUE, by_clade = FALSE, ...) {
+lefser_pq <- function(
+  physeq,
+  bifactor = NULL,
+  modalities = NULL,
+  compute_relativeAb = TRUE,
+  by_clade = FALSE,
+  ...
+) {
   verify_pq(physeq)
 
   if (is.null(bifactor)) {
-    stop("Please provide the name of the column in sample_data corresponding to the class variable.")
+    stop(
+      "Please provide the name of the column in sample_data corresponding to the class variable."
+    )
   }
   if (!bifactor %in% colnames(physeq@sam_data)) {
-    stop(paste0("The column ", bifactor, " is not present in the sample_data of the phyloseq object."))
+    stop(paste0(
+      "The column ",
+      bifactor,
+      " is not present in the sample_data of the phyloseq object."
+    ))
   }
 
   if (!is.null(modalities)) {
@@ -1143,7 +1260,11 @@ lefser_pq <- function(physeq, bifactor = NULL, modalities = NULL, compute_relati
   }
 
   if (nrow(unique(physeq@sam_data[, bifactor])) != 2) {
-    stop(paste0("The column ", bifactor, " must refer to a valid dichotomous (two-level) variable"))
+    stop(paste0(
+      "The column ",
+      bifactor,
+      " must refer to a valid dichotomous (two-level) variable"
+    ))
   }
 
   physeq_ts <- mia::convertFromPhyloseq(physeq)
@@ -1159,7 +1280,6 @@ lefser_pq <- function(physeq, bifactor = NULL, modalities = NULL, compute_relati
   }
 }
 ################################################################################
-
 
 ################################################################################
 #' Run Aldex on a phyloseq object
@@ -1201,10 +1321,16 @@ aldex_pq <- function(
   verify_pq(physeq)
 
   if (is.null(bifactor)) {
-    stop("Please provide the name of the column in sample_data corresponding to the class variable.")
+    stop(
+      "Please provide the name of the column in sample_data corresponding to the class variable."
+    )
   }
   if (!bifactor %in% colnames(physeq@sam_data)) {
-    stop(paste0("The column ", bifactor, " is not present in the sample_data of the phyloseq object."))
+    stop(paste0(
+      "The column ",
+      bifactor,
+      " is not present in the sample_data of the phyloseq object."
+    ))
   }
 
   if (!is.null(modalities)) {
@@ -1217,10 +1343,15 @@ aldex_pq <- function(
   }
 
   if (nrow(unique(physeq@sam_data[, bifactor])) != 2) {
-    stop(paste0("The column ", bifactor, " must refer to a valid dichotomous (two-level) variable"))
+    stop(paste0(
+      "The column ",
+      bifactor,
+      " must refer to a valid dichotomous (two-level) variable"
+    ))
   }
 
-  res_aldex <- ALDEx2::aldex(physeq@otu_table,
+  res_aldex <- ALDEx2::aldex(
+    physeq@otu_table,
     physeq@sam_data[[bifactor]],
     gamma = 0.5
   )
@@ -1261,11 +1392,13 @@ aldex_pq <- function(
 #' suppressMessages(suppressWarnings(
 #'   length(taxa_only_in_one_level(data_fungi, "Time", "15"))
 #' ))
-taxa_only_in_one_level <- function(physeq,
-                                   modality,
-                                   level,
-                                   min_nb_seq_taxa = 0,
-                                   min_nb_samples_taxa = 0) {
+taxa_only_in_one_level <- function(
+  physeq,
+  modality,
+  level,
+  min_nb_seq_taxa = 0,
+  min_nb_samples_taxa = 0
+) {
   if (min_nb_seq_taxa > 0) {
     physeq <-
       subset_taxa_pq(physeq, taxa_sums(physeq) >= min_nb_seq_taxa)
@@ -1281,8 +1414,10 @@ taxa_only_in_one_level <- function(physeq,
   physeq_merged <- clean_pq(merge_samples2(physeq, modality))
 
   physeq_merged_only_one_level <-
-    subset_taxa_pq(physeq_merged, taxa_sums(as_binary_otu_table(physeq_merged)) ==
-      1)
+    subset_taxa_pq(
+      physeq_merged,
+      taxa_sums(as_binary_otu_table(physeq_merged)) == 1
+    )
   physeq_merged_only_level_given <-
     clean_pq(subset_samples_pq(
       physeq_merged_only_one_level,
@@ -1329,26 +1464,34 @@ distri_1_taxa <- function(physeq, fact, taxa_name, digits = 2) {
     data.frame(
       "nb_seq" = tapply(
         as.vector(physeq@otu_table[taxa_name, ]),
-        physeq@sam_data[[fact]], sum
+        physeq@sam_data[[fact]],
+        sum
       ),
       "nb_samp" = tapply(
         as.vector(as_binary_otu_table(physeq)@otu_table[taxa_name, ]),
         physeq@sam_data[[fact]],
         sum
       ),
-      "mean_nb_seq" = round(tapply(
-        as.vector(physeq@otu_table[taxa_name, ]),
-        physeq@sam_data[[fact]], mean
-      ), digits = digits),
-      "sd_nb_seq" = round(tapply(
-        as.vector(physeq@otu_table[taxa_name, ]),
-        physeq@sam_data[[fact]], sd
-      ), digits = digits)
+      "mean_nb_seq" = round(
+        tapply(
+          as.vector(physeq@otu_table[taxa_name, ]),
+          physeq@sam_data[[fact]],
+          mean
+        ),
+        digits = digits
+      ),
+      "sd_nb_seq" = round(
+        tapply(
+          as.vector(physeq@otu_table[taxa_name, ]),
+          physeq@sam_data[[fact]],
+          sd
+        ),
+        digits = digits
+      )
     ) %>%
-    mutate("mean_nb_seq_when_present" = round(nb_seq / nb_samp,
-      digits =
-        digits
-    ))
+    mutate(
+      "mean_nb_seq_when_present" = round(nb_seq / nb_samp, digits = digits)
+    )
 
   df$nb_total_samp <- table(physeq@sam_data[[fact]])
   df$prop_samp <-
@@ -1407,17 +1550,20 @@ distri_1_taxa <- function(physeq, fact, taxa_name, digits = 2) {
 #'   Please make a reference to `vegan::varpart()` if you
 #'   use this function.
 var_par_pq <-
-  function(physeq,
-           list_component,
-           dist_method = "bray",
-           dbrda_computation = TRUE) {
+  function(
+    physeq,
+    list_component,
+    dist_method = "bray",
+    dbrda_computation = TRUE
+  ) {
     physeq <- taxa_as_columns(physeq)
 
     verify_pq(physeq)
 
     if (dist_method %in% c("robust.aitchison", "aitchison")) {
       dist_physeq <-
-        vegan::vegdist(as(otu_table(physeq, taxa_are_rows = FALSE), "matrix"),
+        vegan::vegdist(
+          as(otu_table(physeq, taxa_are_rows = FALSE), "matrix"),
           method = dist_method
         )
     } else {
@@ -1465,7 +1611,8 @@ var_par_pq <-
         res_varpart$dbrda_result[[i]] <-
           anova(vegan::dbrda(
             as.formula(paste0(
-              "dist_physeq ~ ", paste(c(list_component[[i]]), collapse = " + ")
+              "dist_physeq ~ ",
+              paste(c(list_component[[i]]), collapse = " + ")
             )),
             data = as.data.frame(unclass(
               physeq@sam_data
@@ -1477,7 +1624,6 @@ var_par_pq <-
     return(res_varpart)
   }
 ################################################################################
-
 
 ################################################################################
 #' Partition the Variation of a phyloseq object with rarefaction permutations
@@ -1553,16 +1699,18 @@ var_par_pq <-
 #'   Please make a reference to `vegan::varpart()` if you
 #'   use this function.
 var_par_rarperm_pq <-
-  function(physeq,
-           list_component,
-           dist_method = "bray",
-           nperm = 99,
-           quantile_prob = 0.975,
-           dbrda_computation = FALSE,
-           dbrda_signif_pval = 0.05,
-           sample.size = min(sample_sums(physeq)),
-           verbose = FALSE,
-           progress_bar = TRUE) {
+  function(
+    physeq,
+    list_component,
+    dist_method = "bray",
+    nperm = 99,
+    quantile_prob = 0.975,
+    dbrda_computation = FALSE,
+    dbrda_signif_pval = 0.05,
+    sample.size = min(sample_sums(physeq)),
+    verbose = FALSE,
+    progress_bar = TRUE
+  ) {
     physeq <- taxa_as_columns(physeq)
     verify_pq(physeq)
 
@@ -1580,13 +1728,12 @@ var_par_rarperm_pq <-
     for (i in 1:nperm) {
       res_perm[[i]] <-
         var_par_pq(
-          physeq =
-            rarefy_even_depth(
-              physeq,
-              rngseed = i,
-              sample.size = sample.size,
-              verbose = verbose
-            ),
+          physeq = rarefy_even_depth(
+            physeq,
+            rngseed = i,
+            sample.size = sample.size,
+            verbose = verbose
+          ),
           list_component = list_component,
           dist_method = dist_method,
           dbrda_computation = dbrda_computation
@@ -1605,17 +1752,22 @@ var_par_rarperm_pq <-
 
     if (dbrda_computation) {
       res_varpart$dbrda_result_prop_pval_signif <-
-        rowSums(sapply(res_perm, function(x) {
-          sapply(x$dbrda_result, function(xx) {
-            xx$`Pr(>F)`[[1]]
-          })
-        }) < dbrda_signif_pval) / nperm
+        rowSums(
+          sapply(res_perm, function(x) {
+            sapply(x$dbrda_result, function(xx) {
+              xx$`Pr(>F)`[[1]]
+            })
+          }) <
+            dbrda_signif_pval
+        ) /
+        nperm
     }
-
 
     # Pre-compute sapply results for efficiency
     r_square_matrix <- sapply(res_perm, function(x) x$part$indfract$R.square)
-    adj_r_square_matrix <- sapply(res_perm, function(x) x$part$indfract$Adj.R.square)
+    adj_r_square_matrix <- sapply(res_perm, function(x) {
+      x$part$indfract$Adj.R.square
+    })
 
     res_varpart$part$indfract$R.square <- rowMeans(r_square_matrix)
     res_varpart$part$indfract$R.square_quantil_max <-
@@ -1637,7 +1789,6 @@ var_par_rarperm_pq <-
         quantile(xx, probs = 1 - quantile_prob, na.rm = TRUE)
       })
     return(res_varpart)
-
 
     res_varpart$Xnames <- names(list_component)
     return(res_varpart)

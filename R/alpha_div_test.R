@@ -47,17 +47,16 @@ hill_tuckey_pq <- function(
 
   physeq <- taxa_as_rows(physeq)
   otu_hill <-
-    vegan::renyi(t(physeq@otu_table),
-      scales = hill_scales,
-      hill = TRUE
-    )
+    vegan::renyi(t(physeq@otu_table), scales = hill_scales, hill = TRUE)
 
   colnames(otu_hill) <- paste0("Hill_", hill_scales)
   tuk <- vector("list", length(hill_scales))
   for (i in seq_along(hill_scales)) {
     if (correction_for_sample_size) {
       tuk[[i]] <-
-        stats::TukeyHSD(stats::aov(lm(otu_hill[, i] ~ sqrt(read_numbers))$residuals ~ modality_vector))
+        stats::TukeyHSD(stats::aov(
+          lm(otu_hill[, i] ~ sqrt(read_numbers))$residuals ~ modality_vector
+        ))
     } else {
       tuk[[i]] <-
         stats::TukeyHSD(stats::aov(otu_hill[, i] ~ modality_vector))
@@ -65,18 +64,26 @@ hill_tuckey_pq <- function(
   }
   df <- do.call(
     "rbind",
-    sapply(tuk, function(x) {
-      data.frame(x$modality_vector)
-    }, simplify = FALSE)
+    sapply(
+      tuk,
+      function(x) {
+        data.frame(x$modality_vector)
+      },
+      simplify = FALSE
+    )
   )
   colnames(df) <- colnames(tuk[[1]]$modality_vector)
   df$x <- paste0(
     "Hill_",
     c(
-      sort(rep(hill_scales, dim(
-        tuk[[1]]$modality_vector
-      )[1]))
-    ), "__",
+      sort(rep(
+        hill_scales,
+        dim(
+          tuk[[1]]$modality_vector
+        )[1]
+      ))
+    ),
+    "__",
     rownames(tuk[[1]]$modality_vector)
   )
 
@@ -84,23 +91,20 @@ hill_tuckey_pq <- function(
 
   p <- ggplot(data = df) +
     geom_linerange(aes(ymax = upr, ymin = lwr, x = x), linewidth = 2) +
-    geom_point(aes(x = x, y = diff),
-      size = 4,
-      shape = 21,
-      fill = "white"
-    ) +
+    geom_point(aes(x = x, y = diff), size = 4, shape = 21, fill = "white") +
     coord_flip() +
     theme_gray() +
     geom_hline(yintercept = 0) +
     ylab("Differences in mean levels (value and confidence intervals at 95%)") +
     xlab("") +
-    ggtitle("Results of the Tuckey HSD testing for differences
-    in mean Hill numbers")
+    ggtitle(
+      "Results of the Tuckey HSD testing for differences
+    in mean Hill numbers"
+    )
 
   return(p)
 }
 ################################################################################
-
 
 ################################################################################
 #' Test multiple times effect of factor on Hill diversity
@@ -165,17 +169,28 @@ hill_tuckey_pq <- function(
 #'   res_para$expressions[[1]]
 #' }
 #' }
-hill_test_rarperm_pq <- function(physeq,
-                                 fact,
-                                 hill_scales = c(0, 1, 2),
-                                 nperm = 99,
-                                 sample.size = min(sample_sums(physeq)),
-                                 verbose = FALSE,
-                                 progress_bar = TRUE,
-                                 p_val_signif = 0.05,
-                                 type = "non-parametrique",
-                                 ...) {
+hill_test_rarperm_pq <- function(
+  physeq,
+  fact,
+  hill_scales = c(0, 1, 2),
+  nperm = 99,
+  sample.size = min(sample_sums(physeq)),
+  verbose = FALSE,
+  progress_bar = TRUE,
+  p_val_signif = 0.05,
+  type = "non-parametrique",
+  ...
+) {
   verify_pq(physeq)
+
+  if (nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
+    stop(
+      "The factor '",
+      fact,
+      "' must have at least two levels for ",
+      "hill_test_rarperm_pq (statistical tests require at least 2 groups)."
+    )
+  }
   res_perm <- vector("list", nperm) # pre-allocated for performance
   p_perm <- vector("list", nperm) # pre-allocated for performance
   if (progress_bar) {
@@ -215,7 +230,10 @@ hill_test_rarperm_pq <- function(physeq,
     res_perm[[i]] <- vector("list", length(hill_scales))
     for (j in seq_along(hill_scales)) {
       p_perm[[i]][[j]] <-
-        ggstatsplot::ggbetweenstats(psm, !!fact, !!paste0("Hill_", hill_scales[[j]]),
+        ggstatsplot::ggbetweenstats(
+          psm,
+          !!fact,
+          !!paste0("Hill_", hill_scales[[j]]),
           type = type,
           ...
         )
@@ -227,7 +245,11 @@ hill_test_rarperm_pq <- function(physeq,
     }
   }
 
-  method <- res_perm[[1]][[1]]$subtitle_data[, c("method", "effectsize", "conf.method")]
+  method <- res_perm[[1]][[1]]$subtitle_data[, c(
+    "method",
+    "effectsize",
+    "conf.method"
+  )]
 
   expressions <- sapply(res_perm, function(x) {
     sapply(x, function(xx) {
@@ -267,7 +289,6 @@ hill_test_rarperm_pq <- function(physeq,
   return(res)
 }
 ################################################################################
-
 
 ################################################################################
 #' Automated model selection and multimodel inference with (G)LMs for phyloseq
@@ -332,34 +353,40 @@ hill_test_rarperm_pq <- function(physeq,
 #'   Please make a reference to [glmulti::glmulti()] if you
 #'   use this function.
 glmutli_pq <-
-  function(physeq,
-           formula,
-           fitfunction = "lm",
-           hill_scales = c(0, 1, 2),
-           aic_step = 2,
-           confsetsize = 100,
-           plotty = FALSE,
-           level = 1,
-           method = "h",
-           crit = "aicc",
-           ...) {
+  function(
+    physeq,
+    formula,
+    fitfunction = "lm",
+    hill_scales = c(0, 1, 2),
+    aic_step = 2,
+    confsetsize = 100,
+    plotty = FALSE,
+    level = 1,
+    method = "h",
+    crit = "aicc",
+    ...
+  ) {
     psm_samp <- psmelt_samples_pq(physeq, hill_scales = hill_scales)
 
-    res_glmulti <- do.call(glmulti::glmulti, list(
-      y = formula(formula),
-      data = psm_samp,
-      crit = crit,
-      level = level,
-      method = method,
-      fitfunction = fitfunction,
-      confsetsize = confsetsize,
-      plotty = plotty,
-      ...
-    ))
+    res_glmulti <- do.call(
+      glmulti::glmulti,
+      list(
+        y = formula(formula),
+        data = psm_samp,
+        crit = crit,
+        level = level,
+        method = method,
+        fitfunction = fitfunction,
+        confsetsize = confsetsize,
+        plotty = plotty,
+        ...
+      )
+    )
 
     ## AICc
     top_glmulti <- glmulti::weightable(res_glmulti)
-    condition_crit <- top_glmulti[[crit]] <= (min(top_glmulti[[crit]]) + aic_step)
+    condition_crit <- top_glmulti[[crit]] <=
+      (min(top_glmulti[[crit]]) + aic_step)
     if (sum(condition_crit) == 0) {
       stop("None modele are selected. Try a aic_step lower or another crit")
     }
