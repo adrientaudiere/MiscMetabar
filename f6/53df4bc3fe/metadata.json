@@ -3,8 +3,13 @@
   "checkpoint_id": "f653df4bc3fe",
   "strategy": "manual-commit",
   "branch": "dev",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
+    "NEWS.md",
+    "R/alpha_div_test.R",
+    "R/beta_div_test.R",
+    "R/dada_phyloseq.R",
+    "R/plot_functions.R",
     "tests/testthat/test-fact_one_sample.R"
   ],
   "sessions": [
@@ -14,13 +19,20 @@
       "context": "/f6/53df4bc3fe/0/context.md",
       "content_hash": "/f6/53df4bc3fe/0/content_hash.txt",
       "prompt": "/f6/53df4bc3fe/0/prompt.txt"
+    },
+    {
+      "metadata": "/f6/53df4bc3fe/1/metadata.json",
+      "transcript": "/f6/53df4bc3fe/1/full.jsonl",
+      "context": "/f6/53df4bc3fe/1/context.md",
+      "content_hash": "/f6/53df4bc3fe/1/content_hash.txt",
+      "prompt": "/f6/53df4bc3fe/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 127,
-    "cache_creation_tokens": 30827,
-    "cache_read_tokens": 1022483,
-    "output_tokens": 1634,
-    "api_call_count": 33
+    "input_tokens": 147,
+    "cache_creation_tokens": 52701,
+    "cache_read_tokens": 1455466,
+    "output_tokens": 4025,
+    "api_call_count": 47
   }
 }
