@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "9f9beb93624f",
+  "strategy": "manual-commit",
+  "branch": "dev",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "R/plot_functions.R"
+  ],
+  "sessions": [
+    {
+      "metadata": "/9f/9beb93624f/0/metadata.json",
+      "transcript": "/9f/9beb93624f/0/full.jsonl",
+      "context": "/9f/9beb93624f/0/context.md",
+      "content_hash": "/9f/9beb93624f/0/content_hash.txt",
+      "prompt": "/9f/9beb93624f/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 26,
+    "cache_creation_tokens": 23026,
+    "cache_read_tokens": 570816,
+    "output_tokens": 1230,
+    "api_call_count": 19
+  }
+}
