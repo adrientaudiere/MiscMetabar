@@ -4127,8 +4127,10 @@ diff_fct_diff_class <-
 #'   adjacent bars. Only meaningful when `fact` has more than one level.
 #' @param ribbon_alpha (numeric; default 0.3) Transparency of the ribbons.
 #' @param label_taxa (logical; default FALSE) If TRUE, replace the legend
-#'   with direct labels on the right side of the last bar. Segments are
-#'   drawn to resolve overlapping labels.
+#'   with direct labels on the right side of the last bar. Taxa that appear
+#'   in the first bar but are absent from the last bar are additionally
+#'   labelled on the left side of the first bar. Segments are drawn to
+#'   resolve overlapping labels.
 #' @param void_theme (logical; default TRUE) If TRUE, use
 #'   [ggplot2::theme_void()] when `label_taxa` is TRUE.
 #' @param show_values (logical; default FALSE) If TRUE, display
@@ -4145,14 +4147,14 @@ diff_fct_diff_class <-
 #'   units) for the top group labels when `fact` is not "Sample".
 #' @param bar_width (numeric; default NULL set 0.9 if `add_ribbon = FALSE`, 0.5 if
 #'   `add_ribbon = TRUE` and `fact != "Sample"`, and 0.6 if fact is only a one-level
-#'   factor). Width of the bars. Set to 0 to have no visible bars 
+#'   factor). Width of the bars. Set to 0 to have no visible bars
 #'   and only ribbons.
 #' @param bar_internal_color (default NA) Color of bar borders. Use `NA` (default)
 #'   to remove borders, which avoids thin white lines in PDF output.
 #'   Set to e.g. `"black"` or `"grey30"` for visible borders.
 #' @param linewidth_bar_internal (default 0 if `bar_internal_color` is `NA`, otherwise 0.5)
 #'  Line width of bar borders.
-#' 
+#'
 #' @return A \code{\link[ggplot2]{ggplot}}2 plot  with bar representing the
 #'   number of sequence en each taxonomic groups
 #' @export
@@ -4180,14 +4182,14 @@ diff_fct_diff_class <-
 #' )
 #' tax_bar_pq(data_fungi_ab, fact = "Height", taxa = "Class",
 #'   nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
-#'   add_ribbon = TRUE, value_size=7, ribbon_alpha = .6, 
+#'   add_ribbon = TRUE, value_size=7, ribbon_alpha = .6,
 #'   show_values=TRUE, label_size = 4, top_label_size = 6,
 #'   minimum_value_to_show=0.05) |>
 #'   reorder_colors(alternate_lightness=TRUE)
-#' 
+#'
 #' tax_bar_pq(data_fungi_mini, fact = "Height", taxa = "Order",
 #'   nb_seq = T, percent_bar = TRUE, label_taxa = TRUE,
-#'   add_ribbon = TRUE, value_size=5, 
+#'   add_ribbon = TRUE, value_size=5,
 #'   ribbon_alpha = .6, show_values=TRUE,
 #'   label_size = 4, top_label_size = 8,
 #'   minimum_value_to_show=0.05, bar_width = NULL,
@@ -4247,7 +4249,7 @@ tax_bar_pq <-
         position = bar_pos,
         width = bar_width,
         color = bar_internal_color,
-        linewidth= linewidth_bar_internal
+        linewidth = linewidth_bar_internal
       )
 
     if (add_ribbon && fact != "Sample") {
@@ -4420,6 +4422,77 @@ tax_bar_pq <-
             inherit.aes = FALSE,
             show.legend = FALSE
           )
+      }
+
+      # Left-side labels for taxa in first bar but absent from last bar
+      x_min <- min(bar_agg$x)
+      if (x_min < x_max) {
+        first_bar <- bar_agg[bar_agg$x == x_min, ]
+        first_bar <- first_bar[first_bar$ymax - first_bar$ymin > 1e-4, ]
+        first_bar <- first_bar[
+          !first_bar$taxa_name %in% last_bar$taxa_name,
+        ]
+        if (nrow(first_bar) > 0) {
+          first_bar$ymid <- (first_bar$ymin + first_bar$ymax) / 2
+          first_bar <- first_bar[order(first_bar$ymid), ]
+
+          min_gap_l <- diff(range(c(first_bar$ymin, first_bar$ymax))) /
+            (nrow(first_bar) * 1.8)
+          label_y_l <- first_bar$ymid
+          for (j in seq_along(label_y_l)[-1]) {
+            if (label_y_l[j] - label_y_l[j - 1] < min_gap_l) {
+              label_y_l[j] <- label_y_l[j - 1] + min_gap_l
+            }
+          }
+          first_bar$label_y <- label_y_l
+
+          label_df_left <- data.frame(
+            x_bar = x_min - hw_bar,
+            x_label = x_min - hw_bar - 0.3,
+            y_bar = first_bar$ymid,
+            y_label = first_bar$label_y,
+            taxa_name = first_bar$taxa_name
+          )
+          label_df_left$taxa_fill <- label_df_left$taxa_name
+          label_df_left$taxa_fill[label_df_left$taxa_fill == "NA"] <- NA
+
+          needs_segment_left <-
+            abs(label_df_left$y_bar - label_df_left$y_label) > 1e-4
+
+          p <- p +
+            geom_text(
+              data = label_df_left,
+              aes(
+                x = x_label,
+                y = y_label,
+                label = taxa_name,
+                color = taxa_fill
+              ),
+              hjust = 1,
+              size = label_size,
+              inherit.aes = FALSE,
+              show.legend = FALSE
+            ) +
+            theme(plot.margin = margin(5.5, 80, 5.5, 80))
+
+          if (any(needs_segment_left)) {
+            seg_df_left <- label_df_left[needs_segment_left, ]
+            p <- p +
+              geom_segment(
+                data = seg_df_left,
+                aes(
+                  x = x_bar,
+                  xend = x_label + 0.05,
+                  y = y_bar,
+                  yend = y_label,
+                  color = taxa_fill
+                ),
+                linewidth = 0.3,
+                inherit.aes = FALSE,
+                show.legend = FALSE
+              )
+          }
+        }
       }
     } else {
       if (void_theme) {
@@ -5495,7 +5568,7 @@ plot_refseq_extremity_pq <- function(
       "nb_C" = colSums(tib_interm_last == "C") / nrow(tib_interm_last),
       "nb_G" = colSums(tib_interm_last == "G") / nrow(tib_interm_last),
       "nb_T" = colSums(tib_interm_last == "T") / nrow(tib_interm_last),
-      "seq_id" =  seq_len(ncol(tib_interm_last))
+      "seq_id" = seq_len(ncol(tib_interm_last))
     )
 
     nucleotide_last <- nucleotide_last_interm |>

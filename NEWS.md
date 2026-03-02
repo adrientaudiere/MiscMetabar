@@ -10,6 +10,8 @@
 
 - Add two parameters to `tax_bar_pq()`, bar_internal_color to color each cells of the colored bars and linewidth_bar_internal to set the linewidth.
 
+- `tax_bar_pq()` with `label_taxa = TRUE` now also draws left-side labels for taxa that appear in the first bar but are absent from the last bar, making all taxa visible when using `add_ribbon = TRUE` across a time factor.
+
 # MiscMetabar 0.14.5
 
 - Bug fix in `normalize_prop_pq` when taxa_are_rows(physeq) were FALSE.

@@ -520,6 +520,35 @@ test_that("tax_bar_pq work with data_fungi dataset", {
     ),
     "ggplot"
   )
+  expect_s3_class(
+    tax_bar_pq(
+      data_fungi_mini,
+      taxa = "Class",
+      fact = "Time",
+      add_ribbon = TRUE,
+      label_taxa = TRUE
+    ),
+    "ggplot"
+  )
+  # taxa exclusive to the first bar get left-side labels (extra layers)
+  # data_fungi_mini at Genus level: Basidiodendron, Peniophorella,
+  # Phanerochaete, Radulomyces are in Time=0 but absent from Time=15
+  p_with_exclusive <- tax_bar_pq(
+    data_fungi_mini,
+    taxa = "Genus",
+    fact = "Time",
+    add_ribbon = TRUE,
+    label_taxa = TRUE
+  )
+  # data_fungi_mini at Class level: all first-bar taxa also in last bar
+  p_no_exclusive <- tax_bar_pq(
+    data_fungi_mini,
+    taxa = "Class",
+    fact = "Time",
+    add_ribbon = TRUE,
+    label_taxa = TRUE
+  )
+  expect_gt(length(p_with_exclusive$layers), length(p_no_exclusive$layers))
 })
 
 test_that("reorder_colors works on tax_bar_pq output", {
