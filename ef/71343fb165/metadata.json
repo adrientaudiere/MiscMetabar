@@ -1,0 +1,29 @@
+{
+  "cli_version": "0.4.8",
+  "checkpoint_id": "ef71343fb165",
+  "strategy": "manual-commit",
+  "branch": "dev",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "NEWS.md",
+    "R/plot_functions.R",
+    "tests/testthat/Rplots.pdf",
+    "tests/testthat/test_figures_taxo.R"
+  ],
+  "sessions": [
+    {
+      "metadata": "/ef/71343fb165/0/metadata.json",
+      "transcript": "/ef/71343fb165/0/full.jsonl",
+      "context": "/ef/71343fb165/0/context.md",
+      "content_hash": "/ef/71343fb165/0/content_hash.txt",
+      "prompt": "/ef/71343fb165/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 37,
+    "cache_creation_tokens": 37856,
+    "cache_read_tokens": 1189322,
+    "output_tokens": 10285,
+    "api_call_count": 31
+  }
+}
