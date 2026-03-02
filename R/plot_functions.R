@@ -4493,6 +4493,30 @@ tax_bar_pq <-
               )
           }
         }
+
+        # Warn about taxa only in intermediate bars (neither first nor last)
+        all_taxa_with_data <- unique(
+          bar_agg$taxa_name[bar_agg$ymax - bar_agg$ymin > 1e-4]
+        )
+        first_taxa <- unique(
+          bar_agg$taxa_name[
+            bar_agg$x == x_min & bar_agg$ymax - bar_agg$ymin > 1e-4
+          ]
+        )
+        unlabeled <- setdiff(
+          all_taxa_with_data,
+          union(last_bar$taxa_name, first_taxa)
+        )
+        if (length(unlabeled) > 0) {
+          warning(
+            length(unlabeled),
+            " taxon/taxa only appear in intermediate levels and will not ",
+            "be labelled: ",
+            paste(unlabeled, collapse = ", "),
+            ". Consider using label_taxa = FALSE.",
+            call. = FALSE
+          )
+        }
       }
     } else {
       if (void_theme) {

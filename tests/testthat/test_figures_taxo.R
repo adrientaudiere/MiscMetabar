@@ -549,6 +549,18 @@ test_that("tax_bar_pq work with data_fungi dataset", {
     label_taxa = TRUE
   )
   expect_gt(length(p_with_exclusive$layers), length(p_no_exclusive$layers))
+  # taxa only in intermediate bars trigger a warning
+  # data_fungi_mini at Genus level: Elmerina and Exidia only appear in middle
+  expect_warning(
+    tax_bar_pq(
+      data_fungi_mini,
+      taxa = "Genus",
+      fact = "Time",
+      add_ribbon = TRUE,
+      label_taxa = TRUE
+    ),
+    "intermediate levels"
+  )
 })
 
 test_that("reorder_colors works on tax_bar_pq output", {
