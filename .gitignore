@@ -8,3 +8,4 @@ inst/doc
 
 /.quarto/
 Rplots.pdf
+tests/testthat/Rplots.pdf
