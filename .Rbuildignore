@@ -19,3 +19,4 @@
 ^\.claude$
 ^\.codefactor\.yml$
 ^\.entire$
+^Rplots\.pdf$

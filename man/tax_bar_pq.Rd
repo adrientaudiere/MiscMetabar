@@ -48,8 +48,10 @@ adjacent bars. Only meaningful when \code{fact} has more than one level.}
 \item{ribbon_alpha}{(numeric; default 0.3) Transparency of the ribbons.}
 
 \item{label_taxa}{(logical; default FALSE) If TRUE, replace the legend
-with direct labels on the right side of the last bar. Segments are
-drawn to resolve overlapping labels.}
+with direct labels on the right side of the last bar. Taxa that appear
+in the first bar but are absent from the last bar are additionally
+labelled on the left side of the first bar. Segments are drawn to
+resolve overlapping labels.}
 
 \item{void_theme}{(logical; default TRUE) If TRUE, use
 \code{\link[ggplot2:ggtheme]{ggplot2::theme_void()}} when \code{label_taxa} is TRUE.}
@@ -67,6 +69,9 @@ units) for taxa labels when \code{label_taxa = TRUE}.}
 
 \item{value_size}{(numeric; default 3) Font size (in ggplot2 mm
 units) for value labels when \code{show_values = TRUE}.}
+
+\item{top_label_size}{(numeric; default 3.2) Font size (in ggplot2 mm
+units) for the top group labels when \code{fact} is not "Sample".}
 
 \item{bar_width}{(numeric; default NULL set 0.9 if \code{add_ribbon = FALSE}, 0.5 if
 \code{add_ribbon = TRUE} and \code{fact != "Sample"}, and 0.6 if fact is only a one-level
@@ -95,7 +100,8 @@ Graphical representation of distribution of taxonomy, optionnaly across a factor
 }
 \examples{
 
-data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
+data_fungi_ab <- subset_taxa_pq(data_fungi,
+  taxa_sums(data_fungi) > 10000)
 tax_bar_pq(data_fungi_ab) + theme(legend.position = "none")
 \donttest{
 tax_bar_pq(data_fungi_ab, taxa = "Class")
@@ -115,14 +121,14 @@ tax_bar_pq(data_fungi_ab,
 )
 tax_bar_pq(data_fungi_ab, fact = "Height", taxa = "Class",
   nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
-  add_ribbon = TRUE, value_size=7, ribbon_alpha = .6, 
+  add_ribbon = TRUE, value_size=7, ribbon_alpha = .6,
   show_values=TRUE, label_size = 4, top_label_size = 6,
   minimum_value_to_show=0.05) |>
   reorder_colors(alternate_lightness=TRUE)
 
 tax_bar_pq(data_fungi_mini, fact = "Height", taxa = "Order",
-  nb_seq = T, percent_bar = TRUE, label_taxa = TRUE,
-  add_ribbon = TRUE, value_size=5, 
+  nb_seq = TRUE, percent_bar = TRUE, label_taxa = TRUE,
+  add_ribbon = TRUE, value_size=5,
   ribbon_alpha = .6, show_values=TRUE,
   label_size = 4, top_label_size = 8,
   minimum_value_to_show=0.05, bar_width = NULL,

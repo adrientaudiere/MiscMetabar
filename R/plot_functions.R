@@ -4188,7 +4188,7 @@ diff_fct_diff_class <-
 #'   reorder_colors(alternate_lightness=TRUE)
 #'
 #' tax_bar_pq(data_fungi_mini, fact = "Height", taxa = "Order",
-#'   nb_seq = T, percent_bar = TRUE, label_taxa = TRUE,
+#'   nb_seq = TRUE, percent_bar = TRUE, label_taxa = TRUE,
 #'   add_ribbon = TRUE, value_size=5,
 #'   ribbon_alpha = .6, show_values=TRUE,
 #'   label_size = 4, top_label_size = 8,
@@ -6342,6 +6342,8 @@ plot_seq_ratio_pq <- function(physeq, min_nb_seq = 1000, annotations = TRUE) {
 #'   object that can be added to a ggplot with `+`.
 #' @export
 #' @author Adrien Taudière
+#' @importFrom grDevices convertColor
+#' @importFrom stats dist
 #' @examples
 #' p <- tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time")
 #' reorder_colors(p)
