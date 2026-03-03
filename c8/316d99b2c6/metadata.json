@@ -1,0 +1,30 @@
+{
+  "cli_version": "0.4.8",
+  "checkpoint_id": "c8316d99b2c6",
+  "strategy": "manual-commit",
+  "branch": "dev",
+  "checkpoints_count": 4,
+  "files_touched": [
+    ".Rbuildignore",
+    ".gitignore",
+    "R/MiscMetabar-package.R",
+    "R/plot_functions.R",
+    "man/tax_bar_pq.Rd"
+  ],
+  "sessions": [
+    {
+      "metadata": "/c8/316d99b2c6/0/metadata.json",
+      "transcript": "/c8/316d99b2c6/0/full.jsonl",
+      "context": "/c8/316d99b2c6/0/context.md",
+      "content_hash": "/c8/316d99b2c6/0/content_hash.txt",
+      "prompt": "/c8/316d99b2c6/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 25,
+    "cache_creation_tokens": 131266,
+    "cache_read_tokens": 1007672,
+    "output_tokens": 3386,
+    "api_call_count": 17
+  }
+}

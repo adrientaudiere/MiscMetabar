@@ -1,0 +1,107 @@
+entire status
+
+---
+
+[Request interrupted by user]
+
+---
+
+in tax_bar_pq with option fact = "a_factor_for_exemple_TIME" label_taxa=TRUE and add_ribbon = TRUE, if there is taxa that are present in other level(s) than the last level, we can't see the value. Please add a way to label taxa that are not present in other level than the last one.
+
+---
+
+I want the code you use to test for this new feature
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+I want an example with taxa exclusive to the first bar get left-side labels (extra layers)
+
+---
+
+Ok still improving the tax_bar_pq. If their is taxonomic level(s) that are absent of both the right and the left side of the plot, add a warning that conseil to don't use label_taxa = TRUE
+
+---
+
+Style, document, and run R CMD check on the current R package, then propose fixes for any issues found.
+
+## Steps
+
+Run the following three commands **in sequence**, capturing all output:
+
+1. Format code:
+```r
+air format .
+```
+
+2. Regenerate documentation:
+```r
+Rscript -e "devtools::document()"
+```
+
+3. Run package check:
+```r
+Rscript -e "rcmdcheck::rcmdcheck(args = c('--no-manual', '--as-cran'))"
+```
+
+## After each step
+
+- Show a summary of what changed or was reported.
+- For every ERROR, WARNING, or NOTE produced by `rcmdcheck`, explain what it means and propose a concrete fix.
+
+## Important rules
+
+- **Never modify code, documentation, or any file without explicit user approval.**
+- Present each proposed fix clearly, show the before/after diff, and ask the user "Should I apply this fix?" before making any change.
+- Address issues one at a time, in order of severity (ERRORs first, then WARNINGs, then NOTEs).
+- If an issue requires judgment (e.g. multiple valid solutions), present the options and let the user choose.
+
+---
+
+For the note 2 how to avoid the creation of Rplots.pdf when running exemple
+
+---
+
+Yes please add
+
+---
+
+No, I did
+
+---
+
+Style, document, and run R CMD check on the current R package, then propose fixes for any issues found.
+
+## Steps
+
+Run the following three commands **in sequence**, capturing all output:
+
+1. Format code:
+```r
+air format .
+```
+
+2. Regenerate documentation:
+```r
+Rscript -e "devtools::document()"
+```
+
+3. Run package check:
+```r
+Rscript -e "rcmdcheck::rcmdcheck(args = c('--no-manual', '--as-cran'))"
+```
+
+## After each step
+
+- Show a summary of what changed or was reported.
+- For every ERROR, WARNING, or NOTE produced by `rcmdcheck`, explain what it means and propose a concrete fix.
+
+## Important rules
+
+- **Never modify code, documentation, or any file without explicit user approval.**
+- Present each proposed fix clearly, show the before/after diff, and ask the user "Should I apply this fix?" before making any change.
+- Address issues one at a time, in order of severity (ERRORs first, then WARNINGs, then NOTEs).
+- If an issue requires judgment (e.g. multiple valid solutions), present the options and let the user choose.
