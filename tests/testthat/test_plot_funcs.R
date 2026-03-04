@@ -14,7 +14,7 @@ test_that("plot_refseq_extremity_pq works", {
   p <- plot_refseq_extremity_pq(data_fungi)
   expect_s3_class(p[[1]], "ggplot")
   expect_s3_class(p[[2]], "ggplot")
-  expect_equal(length(p), 4)
+  expect_length(p, 4)
 })
 
 test_that("plot_seq_ratio_pq works", {

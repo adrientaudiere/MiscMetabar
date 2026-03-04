@@ -13,7 +13,7 @@ test_that("dist_pos_control function works fine", {
     dist_pos_control(enterotype, sam_name_factice)[[2]],
     "data.frame"
   )
-  expect_equal(length(dist_pos_control(enterotype, sam_name_factice)), 2)
+  expect_length(dist_pos_control(enterotype, sam_name_factice), 2)
 })
 
 test_that("subset_taxa_tax_control function works fine", {

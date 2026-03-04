@@ -55,14 +55,14 @@ if (!is_vsearch_installed()) {
 test_that("lulu works", {
   skip_on_cran()
   suppressWarnings(suppressMessages(res1 <- lulu_pq(data_fungi_sp_known)))
-  expect_equal(length(res1), 4)
+  expect_length(res1, 4)
   expect_equal(ntaxa(res1$new_physeq), 549)
   expect_equal(nsamples(res1$new_physeq), 185)
 
   suppressWarnings(suppressMessages(
     res2 <- lulu_pq(data_fungi_sp_known, verbose = TRUE, clean_pq = TRUE)
   ))
-  expect_equal(length(res2), 4)
+  expect_length(res2, 4)
   expect_equal(ntaxa(res2$new_physeq), 549)
   expect_equal(nsamples(res2$new_physeq), 184)
 })

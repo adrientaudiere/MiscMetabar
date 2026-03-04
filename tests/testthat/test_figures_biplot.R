@@ -62,7 +62,7 @@ test_that("multi_biplot_pq works with data_fungi dataset", {
   expect_type(p2, "list")
   expect_s3_class(p3[[1]], "ggplot")
   expect_type(p3, "list")
-  expect_equal(length(p3), 85)
+  expect_length(p3, 85)
   expect_error(multi_biplot_pq(
     data_fungi_abun,
     pairs = "Random_pairs",

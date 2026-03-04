@@ -641,12 +641,12 @@ test_that("build_phytree_pq work with data_fungi dataset", {
   expect_error(build_phytree_pq(GP, nb_bootstrap = 2))
 
   expect_type(df_tree <- build_phytree_pq(df, nb_bootstrap = 2), "list")
-  expect_equal(length(df_tree), 6)
+  expect_length(df_tree, 6)
   expect_type(
     df_tree_wo_bootstrap <- build_phytree_pq(df, nb_bootstrap = 0),
     "list"
   )
-  expect_equal(length(df_tree_wo_bootstrap), 3)
+  expect_length(df_tree_wo_bootstrap, 3)
   expect_s3_class(df_tree$NJ, "phylo")
   expect_s3_class(df_tree$UPGMA, "phylo")
   expect_s3_class(df_tree$ML, "pml")

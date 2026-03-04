@@ -17,7 +17,7 @@ test_that("taxa_only_in_one_level works", {
   suppressWarnings(
     result <- taxa_only_in_one_level(data_fungi, "Height", "Low")
   )
-  expect_equal(length(result), 124)
+  expect_length(result, 124)
 })
 
 test_that("tbl_sum_taxtable works", {

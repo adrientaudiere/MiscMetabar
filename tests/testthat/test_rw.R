@@ -73,5 +73,5 @@ test_that("save_pq function works fine with data_fungi dataset", {
   unlink(list.files(testFolder, full.names = TRUE), recursive = TRUE)
   expect_message(save_pq(data_fungi, path = testFolder, silent = TRUE))
   expect_message(save_pq(data_fungi, path = testFolder))
-  expect_equal(length(list.files(testFolder)), 6)
+  expect_length(list.files(testFolder), 6)
 })

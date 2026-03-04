@@ -11,29 +11,29 @@ test_that("list_fastq_files function works fine", {
     ),
     "list"
   )
-  expect_equal(
-    length(unlist(
+  expect_length(
+    unlist(
       list_fastq_files(
         "inst/extdata",
         paired_end = FALSE,
         pattern_R1 = ""
       )
-    )),
+    ),
     3
   )
-  expect_equal(
-    length(unlist(
+  expect_length(
+    unlist(
       list_fastq_files(
         "inst/extdata",
         paired_end = FALSE,
         pattern_R1 = "",
         nb_files = 2
       )
-    )),
+    ),
     2
   )
   expect_type(list_fastq_files("inst/extdata/"), "list")
-  expect_equal(length(list_fastq_files("inst/extdata/")), 2)
+  expect_length(list_fastq_files("inst/extdata/"), 2)
 })
 
 test_that("list_fastq_files errors on empty folder", {
@@ -197,7 +197,7 @@ tree_A10_005 <- subset_samples(data_fungi, Tree_name == "A10-005")
 test_that("track_wkflow_samples function works fine", {
   skip_on_cran()
   expect_message(track_wkflow_samples(tree_A10_005))
-  expect_equal(length(track_wkflow_samples(tree_A10_005)), 3)
+  expect_length(track_wkflow_samples(tree_A10_005), 3)
   expect_type(track_wkflow_samples(tree_A10_005), "list")
   expect_s3_class(track_wkflow_samples(tree_A10_005)[[1]], "data.frame")
 })
@@ -240,7 +240,7 @@ test_that("track_wkflow_samples works with matrix input", {
   }
   res <- track_wkflow_samples(mat)
   expect_type(res, "list")
-  expect_equal(length(res), nrow(mat))
+  expect_length(res, nrow(mat))
   expect_s3_class(res[[1]], "data.frame")
 })
 
@@ -249,7 +249,7 @@ test_that("track_wkflow_samples works with single dada-class", {
   skip_on_os("windows")
   res <- track_wkflow_samples(list("sample1" = dada_R1_001))
   expect_type(res, "list")
-  expect_equal(length(res), 1)
+  expect_length(res, 1)
   expect_equal(names(res), "sample1")
   expect_s3_class(res[[1]], "data.frame")
 })
@@ -260,7 +260,7 @@ test_that("track_wkflow_samples works with list of dada-class", {
   dada_list <- list("sampleA" = dada_R1_001, "sampleB" = dada_R1_001)
   res <- track_wkflow_samples(dada_list)
   expect_type(res, "list")
-  expect_equal(length(res), 2)
+  expect_length(res, 2)
   expect_true(all(c("sampleA", "sampleB") %in% names(res)))
   expect_s3_class(res[[1]], "data.frame")
 })
@@ -270,7 +270,7 @@ test_that("track_wkflow_samples works with single derep-class", {
   skip_on_os("windows")
   res <- track_wkflow_samples(list("sample1" = derep_R1_001))
   expect_type(res, "list")
-  expect_equal(length(res), 1)
+  expect_length(res, 1)
   expect_equal(names(res), "sample1")
   expect_s3_class(res[[1]], "data.frame")
 })
@@ -280,7 +280,7 @@ test_that("track_wkflow_samples works with list of derep-class", {
   skip_on_os("windows")
   res <- track_wkflow_samples(derep_R_001)
   expect_type(res, "list")
-  expect_equal(length(res), length(derep_R_001))
+  expect_length(res, length(derep_R_001))
   expect_s3_class(res[[1]], "data.frame")
 })
 
@@ -293,7 +293,7 @@ test_that("track_wkflow_samples works with character vector (fastq paths)", {
   )
   res <- track_wkflow_samples(fastq_paths)
   expect_type(res, "list")
-  expect_equal(length(res), 2)
+  expect_length(res, 2)
   expect_equal(names(res), basename(fastq_paths))
   expect_s3_class(res[[1]], "data.frame")
 })
@@ -307,7 +307,7 @@ test_that("track_wkflow_samples works with named character vector", {
   )
   res <- track_wkflow_samples(fastq_paths)
   expect_type(res, "list")
-  expect_equal(length(res), 2)
+  expect_length(res, 2)
   expect_equal(names(res), c("sampleX", "sampleY"))
 })
 
@@ -377,7 +377,7 @@ test_that("sample_data_with_new_names function works fine", {
   expect_silent(
     filt_fastq_fw <- filter_trim(testFastqs_fw, output_fw = tempdir())
   )
-  expect_equal(length(derepFastq(filt_fastq_fw[1])), 2)
+  expect_length(derepFastq(filt_fastq_fw[1]), 2)
   expect_message(
     filt_fastq_pe <- filter_trim(
       fw = testFastqs_fw,
@@ -388,8 +388,8 @@ test_that("sample_data_with_new_names function works fine", {
   )
   unlink(paste0(tempdir(), "/", "rev"))
   unlink(paste0(tempdir(), "/", "fw"))
-  expect_equal(length(derepFastq(filt_fastq_pe[[1]])), 2)
-  expect_equal(length(derepFastq(filt_fastq_pe[[2]])), 2)
+  expect_length(derepFastq(filt_fastq_pe[[1]]), 2)
+  expect_length(derepFastq(filt_fastq_pe[[2]]), 2)
 })
 
 test_that("add_info_to_sam_data function works fine with data_fungi", {
@@ -400,8 +400,8 @@ test_that("add_info_to_sam_data function works fine with data_fungi", {
   rownames(new_df) <- sample_names(data_fungi)
   expect_silent(data_fungi2 <- add_info_to_sam_data(data_fungi, new_df))
   expect_equal(dim(data_fungi2@sam_data)[2], 11)
-  expect_equal(length(data_fungi2@sam_data$nb_seq), 185)
-  expect_equal(length(data_fungi2@sam_data$nb_otu), 185)
+  expect_length(data_fungi2@sam_data$nb_seq, 185)
+  expect_length(data_fungi2@sam_data$nb_otu, 185)
 })
 
 unlink(paste0(tempdir(), "/", "rev"))

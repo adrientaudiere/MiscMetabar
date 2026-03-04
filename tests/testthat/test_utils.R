@@ -34,7 +34,7 @@ test_that("funky_color generates color palette", {
   expect_type(cols, "character")
   expect_length(cols, 5)
   expect_error(funky_color(NA))
-  expect_equal(length(funky_color(0)), 0)
+  expect_length(funky_color(0), 0)
 })
 
 test_that("physeq_or_string_to_dna works", {

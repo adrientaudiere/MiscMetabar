@@ -19,13 +19,13 @@ if (FALSE) {
         )
       ))
       expect_type(res_cut, "list")
-      expect_equal(length(res_cut), 1)
+      expect_length(res_cut, 1)
       expect_type(res_cut[[1]], "character")
 
-      expect_equal(
-        length(list.files(
+      expect_length(
+        list.files(
           paste0(tempdir(), "/output_cutadapt")
-        )),
+        ),
         2
       )
 
@@ -41,14 +41,14 @@ if (FALSE) {
       ))
 
       expect_type(res_cut2, "list")
-      expect_equal(length(res_cut2), 2)
+      expect_length(res_cut2, 2)
 
       expect_type(res_cut2[[1]], "character")
 
-      expect_equal(
-        length(list.files(
+      expect_length(
+        list.files(
           paste0(tempdir(), "/output_cutadapt")
-        )),
+        ),
         2
       )
 
@@ -63,13 +63,13 @@ if (FALSE) {
       ))
 
       expect_type(res_cut3, "list")
-      expect_equal(length(res_cut3), 2)
+      expect_length(res_cut3, 2)
       expect_type(res_cut3[[1]], "character")
 
-      expect_equal(
-        length(list.files(
+      expect_length(
+        list.files(
           paste0(tempdir(), "/output_cutadapt")
-        )),
+        ),
         2
       )
     })

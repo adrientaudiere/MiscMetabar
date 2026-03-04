@@ -142,7 +142,7 @@ test_that("rarefy_sample_count_by_modality works fine", {
   skip_on_cran()
   # Check that samples are evenly distributed
   result_table <- table(result@sam_data$Height)
-  expect_equal(length(unique(result_table)), 1)
+  expect_length(unique(result_table), 1)
 })
 
 
