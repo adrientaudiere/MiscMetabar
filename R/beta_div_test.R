@@ -1788,7 +1788,6 @@ var_par_rarperm_pq <-
       apply(adj_r_square_matrix, 1, function(xx) {
         quantile(xx, probs = 1 - quantile_prob, na.rm = TRUE)
       })
-    return(res_varpart)
 
     res_varpart$Xnames <- names(list_component)
     return(res_varpart)
