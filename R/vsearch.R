@@ -1062,12 +1062,35 @@ assign_sintax <- function(
     return("sintax" = paste0(vsearchpath, " ", cmd_sintax))
   }
 
-  system2(vsearchpath, args = cmd_sintax, stdout = TRUE, stderr = TRUE)
+  vsearch_output <- system2(
+    vsearchpath,
+    args = cmd_sintax,
+    stdout = TRUE,
+    stderr = TRUE
+  )
+  vsearch_status <- attr(vsearch_output, "status")
 
-  if (!file.exists(output_taxo_file)) {
-    warning("No taxonomic assignation were maded.")
+  if (!is.null(vsearch_status) && vsearch_status != 0) {
     if (!keep_temporary_files) {
       unlink(temporary_fasta_file)
+      unlink(output_taxo_file)
+    }
+    stop(
+      "Vsearch sintax failed with status ",
+      vsearch_status,
+      ".\n",
+      paste(vsearch_output, collapse = "\n")
+    )
+  }
+
+  if (
+    !file.exists(output_taxo_file) ||
+      file.info(output_taxo_file)$size == 0
+  ) {
+    warning("No taxonomic assignation were made.")
+    if (!keep_temporary_files) {
+      unlink(temporary_fasta_file)
+      unlink(output_taxo_file)
     }
     if (behavior == "add_to_phyloseq") {
       return(physeq)
@@ -1379,7 +1402,25 @@ assign_vsearch_lca <- function(
     return("sintax" = paste0(vsearchpath, " ", cmd_usearch))
   }
 
-  system2(vsearchpath, args = cmd_usearch, stdout = TRUE, stderr = TRUE)
+  vsearch_output <- system2(
+    vsearchpath,
+    args = cmd_usearch,
+    stdout = TRUE,
+    stderr = TRUE
+  )
+  vsearch_status <- attr(vsearch_output, "status")
+
+  if (!is.null(vsearch_status) && vsearch_status != 0) {
+    if (!keep_temporary_files) {
+      unlink(temporary_fasta_file)
+    }
+    stop(
+      "Vsearch usearch_global failed with status ",
+      vsearch_status,
+      ".\n",
+      paste(vsearch_output, collapse = "\n")
+    )
+  }
 
   if (!file.exists(out_lca_file) || file.info(out_lca_file)$size == 0) {
     warning("No LCA output produced (out_lca.txt is missing or empty).")
