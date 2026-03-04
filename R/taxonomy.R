@@ -203,7 +203,7 @@ resolve_vector_ranks <- function(
   second_method <- match.arg(second_method)
 
   if (sum(is.na(vec)) == length(vec)) {
-    res <- NA
+    res <- NA_character_
     return(res)
   }
 
@@ -245,7 +245,7 @@ resolve_vector_ranks <- function(
     if (higher_val / nval > ratio_to_win) {
       res <- names(higher_val)
     } else {
-      res <- NA
+      res <- NA_character_
     }
   } else if (method == "rel_majority") {
     if (!strict) {
@@ -261,7 +261,7 @@ resolve_vector_ranks <- function(
         collapse = collapse_string
       )
     } else {
-      res <- NA
+      res <- NA_character_
     }
   } else if (method == "unanimity") {
     if (!strict) {
@@ -270,14 +270,14 @@ resolve_vector_ranks <- function(
     if (length(unique(vec)) == 1) {
       res <- unique(vec)
     } else {
-      res <- NA
+      res <- NA_character_
     }
   }
   if (
     replace_collapsed_rank_by_NA &&
       sum(grepl(collapse_string, res)) > 0
   ) {
-    res <- NA
+    res <- NA_character_
   }
 
   return(res)

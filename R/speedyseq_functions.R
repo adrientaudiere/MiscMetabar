@@ -546,7 +546,7 @@ setMethod(
     ## Set the functions f used to merge each sample variable.
     # Named logical vector indicating whether each variable is in the funs
     var_in_funs <- names(x) |>
-      rlang::set_names(. %in% names(funs), .)
+      (\(nms) rlang::set_names(nms %in% names(funs), nms))()
     # For vars in the funs, run f through as_mapper; else, use the default f
     funs <- purrr::map2(
       var_in_funs,
