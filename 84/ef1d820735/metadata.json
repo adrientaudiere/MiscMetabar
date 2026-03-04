@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "84ef1d820735",
+  "strategy": "manual-commit",
+  "branch": "dev",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "R/vsearch.R",
+    "man/add_new_taxonomy_pq.Rd"
+  ],
+  "sessions": [
+    {
+      "metadata": "/84/ef1d820735/0/metadata.json",
+      "transcript": "/84/ef1d820735/0/full.jsonl",
+      "context": "/84/ef1d820735/0/context.md",
+      "content_hash": "/84/ef1d820735/0/content_hash.txt",
+      "prompt": "/84/ef1d820735/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 7,
+    "cache_creation_tokens": 12222,
+    "cache_read_tokens": 76438,
+    "output_tokens": 469,
+    "api_call_count": 4
+  }
+}
