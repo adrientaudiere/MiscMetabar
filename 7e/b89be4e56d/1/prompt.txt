@@ -1,0 +1,49 @@
+r-build
+
+---
+
+Build the pkgdown documentation website and the R package source tarball.
+
+## Steps
+
+Run the following commands **in sequence**, capturing all output:
+
+1. Rebuild README from `README.Rmd`:
+```r
+Rscript -e "devtools::build_readme()"
+```
+
+2. Regenerate documentation:
+```r
+Rscript -e "devtools::document()"
+```
+
+3. Rebuild the NEWS page:
+```r
+Rscript -e "pkgdown::build_news()"
+```
+
+4. Build the full pkgdown site (lazy — only rebuilds changed pages):
+```r
+Rscript -e "devtools::build_site(lazy=TRUE)"
+```
+
+5. Build the package source tarball:
+```r
+Rscript -e "devtools::build()"
+```
+
+6. Lint the package (CodeFactor verification):
+```r
+Rscript -e "results <- lintr::lint_package(); print(results); cat('\nTotal lint issues:', length(results), '\n')"
+```
+
+## After each step
+
+- Report success or summarise any errors/warnings.
+- If a step fails, explain the likely cause and propose a fix.
+
+## Important rules
+
+- **Never modify code, documentation, or any file without explicit user approval.**
+- Present each proposed fix with a before/after diff and ask "Should I apply this fix?" before making any change.
