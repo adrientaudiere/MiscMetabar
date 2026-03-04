@@ -33,11 +33,19 @@ test_that("resolve_vector_ranks with method='preference' works and errors correc
     "preference_index"
   )
   expect_error(
-    resolve_vector_ranks(c("a", "b"), method = "preference", preference_index = 5),
+    resolve_vector_ranks(
+      c("a", "b"),
+      method = "preference",
+      preference_index = 5
+    ),
     "preference_index is higher"
   )
   expect_equal(
-    resolve_vector_ranks(c("a", "b", "a"), method = "preference", preference_index = 1),
+    resolve_vector_ranks(
+      c("a", "b", "a"),
+      method = "preference",
+      preference_index = 1
+    ),
     "a"
   )
   expect_equal(
@@ -71,7 +79,9 @@ test_that("format2dada2 errors when both/neither taxnames and fasta_db given", {
 })
 
 test_that("format2dada2 works with taxnames (from_sintax = TRUE)", {
-  sintax_names <- c("seq1;tax=k:Fungi,p:Basidiomycota,c:Agaricomycetes,o:Agaricales")
+  sintax_names <- c(
+    "seq1;tax=k:Fungi,p:Basidiomycota,c:Agaricomycetes,o:Agaricales"
+  )
   result <- format2dada2(taxnames = sintax_names, from_sintax = TRUE)
   expect_type(result, "character")
   expect_length(result, 1)

@@ -578,7 +578,10 @@ test_that("reorder_distinct_colors works on tax_bar_pq output", {
   expect_true(inherits(fill_scale, "ScaleDiscrete"))
   expect_error(reorder_distinct_colors("not a plot"))
   expect_s3_class(p + reorder_distinct_colors(), "ggplot")
-  expect_s3_class(p + reorder_distinct_colors(alternate_lightness = TRUE), "ggplot")
+  expect_s3_class(
+    p + reorder_distinct_colors(alternate_lightness = TRUE),
+    "ggplot"
+  )
 })
 
 test_that("add_funguild_info and plot_guild_pq work with data_fungi_mini dataset", {

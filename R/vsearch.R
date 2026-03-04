@@ -753,7 +753,7 @@ chimera_detection_vs <- function(
   dna <- dna_raw[Biostrings::width(dna_raw) >= min_seq_length]
   abun <- unlist(strsplit(names(dna), split = "="))
   abun_tot <-
-    sum(as.numeric(abun[seq(2, 2 * length(abun), by = 2)]), na.rm = T)
+    sum(as.numeric(abun[seq(2, 2 * length(abun), by = 2)]), na.rm = TRUE)
 
   message(
     paste(
@@ -841,7 +841,8 @@ chimera_detection_vs <- function(
 #' refseq slot from a phyloseq object
 #'
 #' @inheritParams assign_sintax
-#' @param temporary_fasta_file The name of a temporary_fasta_file (default "temp.fasta")
+#' @param temporary_fasta_file The path of a temporary fasta file
+#'   (default in `tempdir()`)
 #' @param return_DNAStringSet (Logical default FALSE). If true, the temporary fasta file
 #'   is removed and a DNAStringSet is return
 #' @seealso [assign_sintax()], [assign_vsearch_lca]
@@ -853,7 +854,7 @@ chimera_detection_vs <- function(
 write_temp_fasta <- function(
   physeq,
   seq2search,
-  temporary_fasta_file = "temp.fasta",
+  temporary_fasta_file = paste0(tempdir(), "/temp.fasta"),
   behavior = NULL,
   clean_pq = TRUE,
   verbose = TRUE,
@@ -941,13 +942,14 @@ write_temp_fasta <- function(
 #'   below the min_bootstrap value, the taxonomy information is set to NA.
 #' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files?
 #'
-#' - temporary_fasta_file (default "temp.fasta") : the fasta file from physeq
+#' - temporary_fasta_file (default in `tempdir()`) : the fasta file from physeq
 #'   or seq2search
 #'
 #' - "output_taxo_vs.txt" : see Vsearch Manual for parameter --tabbedout
 #'
 #' @param verbose (logical). If TRUE, print additional information.
-#' @param temporary_fasta_file The name of a temporary_fasta_file (default "temp.fasta")
+#' @param temporary_fasta_file The path of a temporary fasta file
+#'   (default in `tempdir()`)
 #' @param cmd_args Additional arguments passed on to vsearch sintax cmd.
 #'   By default cmd_args is equal to "--sintax_random" as recommended by
 #'   [Torognes](https://github.com/torognes/vsearch/issues/535).
@@ -1017,12 +1019,14 @@ assign_sintax <- function(
   min_bootstrap = 0.5,
   keep_temporary_files = FALSE,
   verbose = FALSE,
-  temporary_fasta_file = "temp.fasta",
+  temporary_fasta_file = paste0(tempdir(), "/temp.fasta"),
   cmd_args = "--sintax_random",
   too_few = "align_start",
   too_many = "drop"
 ) {
   behavior <- match.arg(behavior)
+
+  output_taxo_file <- paste0(tempdir(), "/output_taxo_vs.txt")
 
   write_temp_fasta(
     physeq = physeq,
@@ -1043,7 +1047,8 @@ assign_sintax <- function(
       temporary_fasta_file,
       " --db ",
       ref_fasta,
-      " --tabbedout output_taxo_vs.txt ",
+      " --tabbedout ",
+      output_taxo_file,
       " --threads ",
       nproc,
       " ",
@@ -1059,7 +1064,7 @@ assign_sintax <- function(
 
   system2(vsearchpath, args = cmd_sintax, stdout = TRUE, stderr = TRUE)
 
-  if (!file.exists("output_taxo_vs.txt")) {
+  if (!file.exists(output_taxo_file)) {
     warning("No taxonomic assignation were maded.")
     if (!keep_temporary_files) {
       unlink(temporary_fasta_file)
@@ -1070,7 +1075,7 @@ assign_sintax <- function(
       return(NULL)
     }
   }
-  res_sintax <- read.csv("output_taxo_vs.txt", sep = "\t", header = F)
+  res_sintax <- read.csv(output_taxo_file, sep = "\t", header = FALSE)
   taxa_names <- res_sintax$V1
   res_sintax <- tibble(res_sintax$V2, taxa_names)
   res_sintax <- res_sintax |>
@@ -1108,7 +1113,7 @@ assign_sintax <- function(
 
   if (!keep_temporary_files) {
     unlink(temporary_fasta_file)
-    unlink("output_taxo_vs.txt")
+    unlink(output_taxo_file)
   }
 
   if (behavior == "add_to_phyloseq") {
@@ -1234,16 +1239,16 @@ assign_sintax <- function(
 #'   See Vsearch Manual for parameter `--maxaccepts`
 #' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files?
 #'
-#' - temporary_fasta_file (default "temp.fasta") : the fasta file from physeq or
-#'   seq2search
+#' - temporary_fasta_file (default in `tempdir()`) : the fasta file from physeq
+#'   or seq2search
 #'
 #' - "out_lca.txt" : see Vsearch Manual for parameter --lcaout
 #'
 #' - "userout.txt" : see Vsearch Manual for parameter --userout
 #'
 #' @param verbose (logical). If TRUE, print additional information.
-#' @param temporary_fasta_file Name of the temporary fasta file. Only useful
-#'   with keep_temporary_files = TRUE.
+#' @param temporary_fasta_file The path of a temporary fasta file
+#'   (default in `tempdir()`).
 #' @param cmd_args Additional arguments passed on to vsearch usearch_global cmd.
 #' @param too_few (default value "align_start") see [tidyr::separate_wider_delim()]
 #' @param nb_voting (Int, default NULL). The number of taxa to keep before apply
@@ -1310,7 +1315,7 @@ assign_vsearch_lca <- function(
   maxaccepts = 0,
   keep_temporary_files = FALSE,
   verbose = TRUE,
-  temporary_fasta_file = "temp.fasta",
+  temporary_fasta_file = paste0(tempdir(), "/temp.fasta"),
   cmd_args = "",
   too_few = "align_start",
   vote_algorithm = NULL,
@@ -1324,6 +1329,10 @@ assign_vsearch_lca <- function(
   keep_vsearch_score = FALSE
 ) {
   behavior <- match.arg(behavior)
+
+  out_lca_file <- paste0(tempdir(), "/out_lca.txt")
+  userout_file <- paste0(tempdir(), "/userout.txt")
+
   write_temp_fasta(
     physeq = physeq,
     seq2search = seq2search,
@@ -1335,9 +1344,13 @@ assign_vsearch_lca <- function(
 
   cmd_usearch <-
     paste0(
-      " --usearch_global temp.fasta --db ",
+      " --usearch_global ",
+      temporary_fasta_file,
+      " --db ",
       ref_fasta,
-      " --lcaout out_lca.txt -id ",
+      " --lcaout ",
+      out_lca_file,
+      " -id ",
       id,
       " --threads ",
       nproc,
@@ -1348,7 +1361,9 @@ assign_vsearch_lca <- function(
       maxrejects,
       " --lca_cutoff  ",
       lca_cutoff,
-      " --userout userout.txt ",
+      " --userout ",
+      userout_file,
+      " ",
       cmd_args
     )
 
@@ -1366,7 +1381,7 @@ assign_vsearch_lca <- function(
 
   system2(vsearchpath, args = cmd_usearch, stdout = TRUE, stderr = TRUE)
 
-  if (!file.exists("out_lca.txt") || file.info("out_lca.txt")$size == 0) {
+  if (!file.exists(out_lca_file) || file.info(out_lca_file)$size == 0) {
     warning("No LCA output produced (out_lca.txt is missing or empty).")
     if (!keep_temporary_files) {
       unlink(temporary_fasta_file)
@@ -1379,7 +1394,7 @@ assign_vsearch_lca <- function(
     }
   }
   if (top_hits_only || is.null(vote_algorithm)) {
-    res_usearch <- read.csv("out_lca.txt", sep = "\t", header = F)
+    res_usearch <- read.csv(out_lca_file, sep = "\t", header = FALSE)
 
     taxa_names <- res_usearch$V1
     res_usearch <- tibble(res_usearch$V2, taxa_names)
@@ -1406,7 +1421,7 @@ assign_vsearch_lca <- function(
       res_usearch |>
       tidyr::pivot_wider(names_from = name, values_from = value)
   } else if (!is.null(vote_algorithm)) {
-    res_usearch <- read.csv("userout.txt", sep = "\t", header = F)
+    res_usearch <- read.csv(userout_file, sep = "\t", header = FALSE)
 
     if (is.null(nb_voting)) {
       nb_voting <- max(table(res_usearch$V1))
@@ -1453,8 +1468,8 @@ assign_vsearch_lca <- function(
 
   if (!keep_temporary_files) {
     unlink(temporary_fasta_file)
-    unlink("out_lca.txt")
-    unlink("userout.txt")
+    unlink(out_lca_file)
+    unlink(userout_file)
   }
 
   if (!keep_vsearch_score) {

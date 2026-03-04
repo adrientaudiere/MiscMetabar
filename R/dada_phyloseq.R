@@ -1208,41 +1208,49 @@ lulu_pq <- function(
     physeq <- clean_pq(physeq)
   }
 
+  temp_fasta <- paste0(tempdir(), "/temp.fasta")
+  match_list_file <- paste0(tempdir(), "/match_list.txt")
+
   message("Start Vsearch usearch_global")
   dna <- Biostrings::DNAStringSet(physeq@refseq)
-  Biostrings::writeXStringSet(dna, "temp.fasta")
+  Biostrings::writeXStringSet(dna, temp_fasta)
   system2(
     vsearchpath,
     paste(
-      " --usearch_global temp.fasta --db temp.fasta --self --iddef 1",
+      " --usearch_global ",
+      temp_fasta,
+      " --db ",
+      temp_fasta,
+      " --self --iddef 1",
       " -userfields query+target+id --maxaccepts 0 --query_cov .9 --maxhits 10",
       " -id ",
       id,
-      "  --userout match_list.txt",
+      "  --userout ",
+      match_list_file,
       sep = ""
     ),
     stdout = TRUE,
     stderr = TRUE
   )
 
-  match_list <- utils::read.csv(file = "match_list.txt", sep = "\t")
+  match_list <- utils::read.csv(file = match_list_file, sep = "\t")
 
   message("Lulu algorithm")
   res_lulu <-
     lulu(data.frame(t(physeq@otu_table), ...), match_list)
 
   if (!keep_temporary_files) {
-    if (file.exists("temp.fasta")) {
-      unlink("temp.fasta")
+    if (file.exists(temp_fasta)) {
+      unlink(temp_fasta)
     }
-    if (file.exists("cluster.fasta")) {
-      unlink("cluster.fasta")
+    if (file.exists(paste0(tempdir(), "/cluster.fasta"))) {
+      unlink(paste0(tempdir(), "/cluster.fasta"))
     }
-    if (file.exists("temp.uc")) {
-      unlink("temp.uc")
+    if (file.exists(paste0(tempdir(), "/temp.uc"))) {
+      unlink(paste0(tempdir(), "/temp.uc"))
     }
-    if (file.exists("match_list.txt")) {
-      unlink("match_list.txt")
+    if (file.exists(match_list_file)) {
+      unlink(match_list_file)
     }
   }
   merged <- res_lulu$otu_map[res_lulu$otu_map$curated == "merged", ]
@@ -1370,17 +1378,28 @@ mumu_pq <- function(
     physeq <- clean_pq(physeq)
   }
 
+  temp_fasta <- paste0(tempdir(), "/temp.fasta")
+  match_list_file <- paste0(tempdir(), "/match_list.txt")
+  otu_table_file <- paste0(tempdir(), "/otu_table.csv")
+  log_file <- paste0(tempdir(), "/log.txt")
+  new_otu_file <- paste0(tempdir(), "/new_OTU.tablemumu")
+
   message("Start Vsearch usearch_global")
   dna <- Biostrings::DNAStringSet(physeq@refseq)
-  Biostrings::writeXStringSet(dna, "temp.fasta")
+  Biostrings::writeXStringSet(dna, temp_fasta)
   system2(
     vsearchpath,
     paste(
-      " --usearch_global temp.fasta --db temp.fasta --self --iddef 1",
+      " --usearch_global ",
+      temp_fasta,
+      " --db ",
+      temp_fasta,
+      " --self --iddef 1",
       " -userfields query+target+id --maxaccepts 0 --query_cov 0.9 --maxhits 10",
       " -id ",
       id,
-      "  --userout match_list.txt"
+      "  --userout ",
+      match_list_file
     ),
     stdout = TRUE,
     stderr = TRUE
@@ -1390,7 +1409,7 @@ mumu_pq <- function(
   otu_tab <- cbind("Taxa" = rownames(otu_tab), otu_tab)
   write.table(
     otu_tab,
-    "otu_table.csv",
+    otu_table_file,
     sep = "\t",
     row.names = FALSE,
     quote = FALSE
@@ -1400,10 +1419,14 @@ mumu_pq <- function(
 
   mumu_cmd <-
     paste0(
-      " --otu_table otu_table.csv ",
-      " --match_list match_list.txt ",
-      " --log log.txt ",
-      " --new_otu_table new_OTU.tablemumu"
+      " --otu_table ",
+      otu_table_file,
+      " --match_list ",
+      match_list_file,
+      " --log ",
+      log_file,
+      " --new_otu_table ",
+      new_otu_file
     )
 
   if (!is.null(extra_mumu_args)) {
@@ -1419,7 +1442,7 @@ mumu_pq <- function(
     args = mumu_cmd
   )
 
-  res_mumu <- read.delim("new_OTU.tablemumu")
+  res_mumu <- read.delim(new_otu_file)
   new_otu_tab <- otu_table(res_mumu[, -1], taxa_are_rows = TRUE)
   taxa_names(new_otu_tab) <- res_mumu[, 1]
 
@@ -1450,7 +1473,7 @@ mumu_pq <- function(
     )
   }
 
-  result_mumu <- read.delim("log.txt")
+  result_mumu <- read.delim(log_file)
   colnames(result_mumu) <-
     c(
       "Query_ASV",
@@ -1471,26 +1494,26 @@ mumu_pq <- function(
     )
 
   if (!keep_temporary_files) {
-    if (file.exists("temp.fasta")) {
-      unlink("temp.fasta")
+    if (file.exists(temp_fasta)) {
+      unlink(temp_fasta)
     }
-    if (file.exists("cluster.fasta")) {
-      unlink("cluster.fasta")
+    if (file.exists(paste0(tempdir(), "/cluster.fasta"))) {
+      unlink(paste0(tempdir(), "/cluster.fasta"))
     }
-    if (file.exists("temp.uc")) {
-      unlink("temp.uc")
+    if (file.exists(paste0(tempdir(), "/temp.uc"))) {
+      unlink(paste0(tempdir(), "/temp.uc"))
     }
-    if (file.exists("log.txt")) {
-      unlink("log.txt")
+    if (file.exists(log_file)) {
+      unlink(log_file)
     }
-    if (file.exists("match_list.txt")) {
-      unlink("match_list.txt")
+    if (file.exists(match_list_file)) {
+      unlink(match_list_file)
     }
-    if (file.exists("otu_table.csv")) {
-      unlink("otu_table.csv")
+    if (file.exists(otu_table_file)) {
+      unlink(otu_table_file)
     }
-    if (file.exists("new_OTU.tablemumu")) {
-      unlink("new_OTU.tablemumu")
+    if (file.exists(new_otu_file)) {
+      unlink(new_otu_file)
     }
   }
 

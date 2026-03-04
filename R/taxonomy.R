@@ -236,7 +236,7 @@ resolve_vector_ranks <- function(
       vec <- as.vector(na.omit(vec))
     }
     nval <- length(vec)
-    higher_val <- sort(table(vec), decreasing = T)[1]
+    higher_val <- sort(table(vec), decreasing = TRUE)[1]
     ratio_to_win <- ifelse(
       nb_agree_threshold > nval / 2,
       (nb_agree_threshold - 1) / nval,
@@ -253,11 +253,11 @@ resolve_vector_ranks <- function(
     }
     nval <- sum(table(vec, useNA = "ifany") == max(table(vec, useNA = "ifany")))
     if (
-      sum(sort(table(vec, useNA = "ifany"), decreasing = T)[1:nval]) >=
+      sum(sort(table(vec, useNA = "ifany"), decreasing = TRUE)[1:nval]) >=
         nb_agree_threshold
     ) {
       res <- paste0(
-        names(sort(table(vec, useNA = "ifany"), decreasing = T)[1:nval]),
+        names(sort(table(vec, useNA = "ifany"), decreasing = TRUE)[1:nval]),
         collapse = collapse_string
       )
     } else {
@@ -494,16 +494,16 @@ format2dada2_species <- function(
   } else if (!is.null(taxnames)) {
     if (from_sintax) {
       new_names <- paste(
-        stringr::str_extract(taxnames, "^(.*?);tax=", group = T),
-        stringr::str_extract(taxnames, "g:(.*?),", group = T),
-        stringr::str_extract(taxnames, "s:(.*?)$", group = T),
+        stringr::str_extract(taxnames, "^(.*?);tax=", group = TRUE),
+        stringr::str_extract(taxnames, "g:(.*?),", group = TRUE),
+        stringr::str_extract(taxnames, "s:(.*?)$", group = TRUE),
         sep = " "
       )
     } else {
       new_names <- paste(
-        stringr::str_extract(taxnames, "^(.*?)k__", group = T),
-        stringr::str_extract(taxnames, "g__(.*?);", group = T),
-        stringr::str_extract(taxnames, "s__(.*?)$", group = T),
+        stringr::str_extract(taxnames, "^(.*?)k__", group = TRUE),
+        stringr::str_extract(taxnames, "g__(.*?);", group = TRUE),
+        stringr::str_extract(taxnames, "s__(.*?)$", group = TRUE),
         sep = " "
       )
     }
@@ -512,15 +512,15 @@ format2dada2_species <- function(
     dna <- Biostrings::readDNAStringSet(fasta_db)
     taxnames <- names(dna)
     if (from_sintax) {
-      id <- stringr::str_extract(taxnames, "^(.*?);tax=", group = T)
+      id <- stringr::str_extract(taxnames, "^(.*?);tax=", group = TRUE)
       id[is.na(id)] <- taxnames[is.na(id)]
-      genus <- stringr::str_extract(taxnames, "g:(.*?),", group = T)
-      species <- stringr::str_extract(taxnames, "s:(.*?)$", group = T)
+      genus <- stringr::str_extract(taxnames, "g:(.*?),", group = TRUE)
+      species <- stringr::str_extract(taxnames, "s:(.*?)$", group = TRUE)
     } else {
-      id <- stringr::str_extract(taxnames, "^(.*?)k__", group = T)
+      id <- stringr::str_extract(taxnames, "^(.*?)k__", group = TRUE)
       id[is.na(id)] <- taxnames[is.na(id)]
-      genus <- stringr::str_extract(taxnames, "g__(.*?);", group = T)
-      species <- stringr::str_extract(taxnames, "s__(.*?)$", group = T)
+      genus <- stringr::str_extract(taxnames, "g__(.*?);", group = TRUE)
+      species <- stringr::str_extract(taxnames, "s__(.*?)$", group = TRUE)
     }
     new_names <- paste(id, genus, species, sep = " ")
 

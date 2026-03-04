@@ -469,7 +469,7 @@ is_cutadapt_installed <- function(
       paste0("bash ", tempdir(), "/script_cutadapt.sh 2>&1"),
       intern = TRUE
     ),
-    silent = T
+    silent = TRUE
   )
   unlink(paste0(tempdir(), "/script_cutadapt.sh"))
 
