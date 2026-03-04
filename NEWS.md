@@ -2,6 +2,8 @@
 
 - Many functions accepting a `fact` parameter now handle single-level factors gracefully: functions that require multiple groups (`hill_pq()`, `hill_test_rarperm_pq()`, `graph_test_pq()`, `multipatt_pq()`, `ancombc_pq()`, `ggbetween_pq()`, `venn_pq()`, `ggvenn_pq()`, `upset_pq()`, `accu_plot()`, `accu_plot_balanced_modality()`, `plot_tsne_pq()`) now emit an informative error message, while functions that can produce meaningful output with a single level (`circle_pq()`, `sankey_pq()`, `are_modality_even_depth()`) no longer crash.
 
+- Fix a bug in `format2sintax()` where the `pattern_tax` parameter was referenced by the wrong internal name (`pattern_k`), causing an error when using the `taxnames` argument.
+
 - Add `reorder_colors()` to reassign fill and color scales in ggplot objects so that adjacent segments have maximally different colors, with optional colorblind optimization and lightness alternation.
 
 - `tax_bar_pq()` gains `show_values` and `minimum_value_to_show` parameters to display abundance values (or percentages when `percent_bar = TRUE`) inside bar segments.

@@ -336,7 +336,7 @@ format2sintax <- function(
         gsub(";", ",", .)
       } %>%
       {
-        gsub(pattern_k, paste0(";", pattern_sintax), .)
+        gsub(pattern_tax, paste0(";", pattern_sintax), .)
       } %>%
       {
         gsub("__", ":", .)

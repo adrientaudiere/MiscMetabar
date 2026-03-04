@@ -25,6 +25,40 @@ test_that("merge_taxa_vec works with phyloseq objects", {
   expect_equal(ntaxa(result), 2)
 })
 
+test_that("merge_taxa_vec handles NA groups with a warning", {
+  group <- rep(c("G1", "G2"), length.out = ntaxa(data_fungi))
+  group[1] <- NA
+  expect_warning(merge_taxa_vec(data_fungi, group), "missing values")
+})
+
+test_that("merge_taxa_vec with tax_adjust=2 works", {
+  group <- rep(c("G1", "G2"), length.out = ntaxa(data_fungi))
+  result <- merge_taxa_vec(data_fungi, group, tax_adjust = 2L)
+  expect_s4_class(result, "phyloseq")
+  expect_equal(ntaxa(result), 2)
+})
+
+test_that("merge_taxa_vec with rank_propagation=FALSE works", {
+  group <- rep(c("G1", "G2"), length.out = ntaxa(data_fungi))
+  result <- merge_taxa_vec(data_fungi, group, rank_propagation = FALSE)
+  expect_s4_class(result, "phyloseq")
+  expect_equal(ntaxa(result), 2)
+})
+
+test_that("merge_samples2 handles NA group values with a warning", {
+  grp <- data_fungi@sam_data[["Height"]]
+  grp[1] <- NA
+  expect_warning(merge_samples2(data_fungi, grp), "missing values")
+})
+
+test_that("merge_samples2 works with non-sum fun_otu", {
+  result <- suppressWarnings(
+    merge_samples2(data_fungi, "Height", fun_otu = mean)
+  )
+  expect_s4_class(result, "phyloseq")
+  expect_true(nsamples(result) <= nsamples(data_fungi))
+})
+
 test_that("psmelt_samples_pq works", {
   result <- psmelt_samples_pq(data_fungi)
   expect_s3_class(result, "data.frame")

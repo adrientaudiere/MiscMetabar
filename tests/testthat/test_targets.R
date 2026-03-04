@@ -36,6 +36,28 @@ test_that("list_fastq_files function works fine", {
   expect_equal(length(list_fastq_files("inst/extdata/")), 2)
 })
 
+test_that("list_fastq_files errors on empty folder", {
+  skip_on_cran()
+  tmp <- withr::local_tempdir()
+  expect_error(list_fastq_files(tmp), "no files in the folder")
+})
+
+test_that("list_fastq_files errors when pattern matches nothing", {
+  skip_on_cran()
+  expect_error(
+    list_fastq_files("inst/extdata", pattern = "ZZZNOMATCH"),
+    "match the pattern"
+  )
+})
+
+test_that("list_fastq_files errors when pattern_R1 matches nothing (paired_end)", {
+  skip_on_cran()
+  expect_error(
+    list_fastq_files("inst/extdata", pattern_R1 = "ZZZNOMATCH_R1"),
+    "match the pattern_R1"
+  )
+})
+
 test_that("rename_samples_otu_table function works fine when taxa_are_rows", {
   expect_s4_class(
     rename_samples_otu_table(data_fungi, as.character(1:nsamples(data_fungi))),
