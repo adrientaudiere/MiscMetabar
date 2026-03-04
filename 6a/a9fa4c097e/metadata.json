@@ -1,0 +1,48 @@
+{
+  "cli_version": "0.4.8",
+  "checkpoint_id": "6aa9fa4c097e",
+  "strategy": "manual-commit",
+  "branch": "dev",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "tests/testthat/test_alpha_div.R",
+    "tests/testthat/test_assignment.R",
+    "tests/testthat/test_blast.R",
+    "tests/testthat/test_clean_pq.R",
+    "tests/testthat/test_controls.R",
+    "tests/testthat/test_dada_phyloseq.R",
+    "tests/testthat/test_data_manipulation.R",
+    "tests/testthat/test_figures_beta_div.R",
+    "tests/testthat/test_figures_taxo.R",
+    "tests/testthat/test_filtering.R",
+    "tests/testthat/test_format_conversion.R",
+    "tests/testthat/test_funguild.R",
+    "tests/testthat/test_misc.R",
+    "tests/testthat/test_phyloseq_class.R",
+    "tests/testthat/test_plot_utilities.R",
+    "tests/testthat/test_rw.R",
+    "tests/testthat/test_subset.R",
+    "tests/testthat/test_swarm.R",
+    "tests/testthat/test_table_functions.R",
+    "tests/testthat/test_targets.R",
+    "tests/testthat/test_taxonomy_utils.R",
+    "tests/testthat/test_utils.R",
+    "tests/testthat/test_vsearch.R"
+  ],
+  "sessions": [
+    {
+      "metadata": "/6a/a9fa4c097e/0/metadata.json",
+      "transcript": "/6a/a9fa4c097e/0/full.jsonl",
+      "context": "/6a/a9fa4c097e/0/context.md",
+      "content_hash": "/6a/a9fa4c097e/0/content_hash.txt",
+      "prompt": "/6a/a9fa4c097e/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 1,
+    "cache_creation_tokens": 1451,
+    "cache_read_tokens": 82145,
+    "output_tokens": 4000,
+    "api_call_count": 1
+  }
+}
