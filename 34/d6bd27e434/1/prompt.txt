@@ -1,0 +1,36 @@
+Style, document, and run R CMD check on the current R package, then propose fixes for any issues found.
+
+## Steps
+
+Run the following three commands **in sequence**, capturing all output:
+
+1. Format code:
+```r
+air format .
+```
+
+2. Regenerate documentation:
+```r
+Rscript -e "devtools::document()"
+```
+
+3. Run package check:
+```r
+Rscript -e "rcmdcheck::rcmdcheck(args = c('--no-manual', '--as-cran'))"
+```
+
+## After each step
+
+- Show a summary of what changed or was reported.
+- For every ERROR, WARNING, or NOTE produced by `rcmdcheck`, explain what it means and propose a concrete fix.
+
+## Important rules
+
+- **Never modify code, documentation, or any file without explicit user approval.**
+- Present each proposed fix clearly, show the before/after diff, and ask the user "Should I apply this fix?" before making any change.
+- Address issues one at a time, in order of severity (ERRORs first, then WARNINGs, then NOTEs).
+- If an issue requires judgment (e.g. multiple valid solutions), present the options and let the user choose.
+
+---
+
+Yes
