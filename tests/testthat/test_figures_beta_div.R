@@ -481,7 +481,7 @@ test_that("multipatt_pq works with data_fungi_mini dataset", {
     "list"
   )
   expect_s3_class(res_height$bias_correct_log_table, "data.frame")
-  expect_equal(dim(res_height$res), c(6, 17))
+  expect_identical(dim(res_height$res), c(6L, 17L))
 
   expect_type(
     suppressMessages(suppressWarnings(
@@ -500,5 +500,5 @@ test_that("multipatt_pq works with data_fungi_mini dataset", {
   )
 
   expect_s3_class(res_time$ss_tab, "data.frame")
-  expect_equal(dim(res_time$res), c(12, 17))
+  expect_identical(dim(res_time$res), c(12L, 17L))
 })

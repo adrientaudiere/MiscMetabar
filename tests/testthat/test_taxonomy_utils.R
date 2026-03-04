@@ -40,7 +40,7 @@ test_that("resolve_vector_ranks with method='preference' works and errors correc
     ),
     "preference_index is higher"
   )
-  expect_equal(
+  expect_identical(
     resolve_vector_ranks(
       c("a", "b", "a"),
       method = "preference",
@@ -48,7 +48,7 @@ test_that("resolve_vector_ranks with method='preference' works and errors correc
     ),
     "a"
   )
-  expect_equal(
+  expect_identical(
     resolve_vector_ranks(
       c(NA, "b", "b"),
       method = "preference",
@@ -97,15 +97,15 @@ test_that("format2dada2_species errors when both/neither given", {
 })
 
 test_that("resolve_vector_ranks replace_collapsed_rank_by_NA works", {
-  expect_equal(
+  expect_identical(
     resolve_vector_ranks(
       c("a", "b"),
       method = "consensus",
       replace_collapsed_rank_by_NA = TRUE
     ),
-    NA
+    NA_character_
   )
-  expect_equal(
+  expect_identical(
     resolve_vector_ranks(
       c("a", "a"),
       method = "consensus",

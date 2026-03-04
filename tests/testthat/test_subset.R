@@ -11,18 +11,18 @@ test_that("subset_taxa_pq works fine", {
     "phyloseq"
   )
   skip_on_cran()
-  expect_equal(
+  expect_identical(
     ntaxa(subset_taxa_pq(
       data_fungi,
       data_fungi@tax_table[, "Phylum"] == "Ascomycota"
     )),
-    1066
+    1066L
   )
   expect_s4_class(subset_taxa_pq(data_fungi, cond_taxa), "phyloseq")
-  expect_equal(ntaxa(subset_taxa_pq(data_fungi, cond_taxa)), 128)
-  expect_equal(
+  expect_identical(ntaxa(subset_taxa_pq(data_fungi, cond_taxa)), 128L)
+  expect_identical(
     ntaxa(subset_taxa_pq(data_fungi, cond_taxa, taxa_names_from_physeq = TRUE)),
-    128
+    128L
   )
   expect_error(subset_taxa_pq(
     data_fungi,

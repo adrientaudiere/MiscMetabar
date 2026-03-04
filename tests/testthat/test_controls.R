@@ -84,5 +84,5 @@ test_that("search_exact_seq_pq function works fine", {
       ))
     )
   )
-  expect_equal(search_primers[[1]][3, 1], "932")
+  expect_identical(search_primers[[1]][3, 1], "932")
 })

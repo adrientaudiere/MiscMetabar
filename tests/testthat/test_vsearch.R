@@ -34,7 +34,7 @@ if (!MiscMetabar:::is_vsearch_installed()) {
       "data.frame"
     )
     expect_true(sum(!d_fast@refseq == d_vs@refseq) > 0)
-    expect_equal(sum(dim(d_vs@otu_table) == dim(d_fast@otu_table)), 2)
+    expect_identical(sum(dim(d_vs@otu_table) == dim(d_fast@otu_table)), 2L)
   })
 
   test_that("vs_search_global works fine with vsearch method", {
@@ -45,7 +45,7 @@ if (!MiscMetabar:::is_vsearch_installed()) {
       ),
       "data.frame"
     )
-    expect_equal(dim(res), c(1420, 10))
+    expect_identical(dim(res), c(1420L, 10L))
     expect_s3_class(
       res <-
         vs_search_global(data_fungi, seq2search = sequences_ex),
@@ -113,7 +113,7 @@ if (!MiscMetabar:::is_vsearch_installed()) {
 
   test_that("vsearch_clustering works fine", {
     expect_s4_class(d_vs1 <- vsearch_clustering(data_fungi), "phyloseq")
-    expect_equal(ntaxa(d_vs1), 701)
+    expect_identical(ntaxa(d_vs1), 701L)
 
     expect_s4_class(
       d_vs2 <- vsearch_clustering(
@@ -123,7 +123,7 @@ if (!MiscMetabar:::is_vsearch_installed()) {
       ),
       "phyloseq"
     )
-    expect_equal(ntaxa(d_vs2), 817)
+    expect_identical(ntaxa(d_vs2), 817L)
 
     expect_s4_class(
       d_vs3 <- vsearch_clustering(
@@ -139,7 +139,7 @@ if (!MiscMetabar:::is_vsearch_installed()) {
       seq_clustered <- vsearch_clustering(dna_seq = sequences_ex),
       "list"
     )
-    expect_equal(dim(seq_clustered), c(4, 10))
+    expect_identical(dim(seq_clustered), c(4L, 10L))
   })
 
   test_that("assign_vsearch_lca works fine", {

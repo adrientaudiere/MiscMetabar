@@ -9,7 +9,7 @@ test_that("funguild_assign works", {
     tax_col = "Genus_species"
   )
   expect_type(data_fungi_FUNGUILD, "list")
-  expect_equal(ncol(data_fungi_FUNGUILD), 23)
+  expect_identical(ncol(data_fungi_FUNGUILD), 23L)
 })
 
 test_that("formattable_pq works", {

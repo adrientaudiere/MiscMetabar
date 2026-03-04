@@ -22,15 +22,15 @@ test_that("clean_pq clean empty taxa and samples", {
     "Cleaning suppress 2 taxa and 1 samples."
   )
   skip_on_cran()
-  expect_equal(
+  expect_identical(
     nrow(data_fungi_test@otu_table) -
       nrow(clean_pq(data_fungi_test)@otu_table),
-    1
+    1L
   )
-  expect_equal(
+  expect_identical(
     ncol(data_fungi_test@otu_table) -
       ncol(clean_pq(data_fungi_test)@otu_table),
-    2
+    2L
   )
 })
 

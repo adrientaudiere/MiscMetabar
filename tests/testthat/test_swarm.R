@@ -21,7 +21,7 @@ if (!MiscMetabar:::is_swarm_installed()) {
       data_fungi_swarm <- swarm_clustering(data_fungi),
       "phyloseq"
     )
-    expect_equal(ntaxa(data_fungi_swarm), 1301)
+    expect_identical(ntaxa(data_fungi_swarm), 1301L)
   })
 
   test_that("swarm_clustering works fine with dna sequences vector", {
@@ -29,7 +29,7 @@ if (!MiscMetabar:::is_swarm_installed()) {
       sequences_ex_swarm <- swarm_clustering(dna_seq = sequences_ex),
       "data.frame"
     )
-    expect_equal(dim(sequences_ex_swarm), c(12, 10))
+    expect_identical(dim(sequences_ex_swarm), c(12L, 10L))
   })
 
   test_that("asv2otu works fine with swarm method", {
@@ -39,7 +39,7 @@ if (!MiscMetabar:::is_swarm_installed()) {
       "phyloseq"
     )
 
-    expect_equal(ntaxa(d_swarm), 600)
+    expect_identical(ntaxa(d_swarm), 600L)
     expect_true(nsamples(d_swarm) == nsamples(data_fungi_sp_known))
 
     expect_s3_class(
@@ -47,6 +47,6 @@ if (!MiscMetabar:::is_swarm_installed()) {
         asv2otu(dna_seq = sequences_ex, method = "swarm"),
       "data.frame"
     )
-    expect_equal(dim(seq_swarm), c(12, 10))
+    expect_identical(dim(seq_swarm), c(12L, 10L))
   })
 }

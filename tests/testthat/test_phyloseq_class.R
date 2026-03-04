@@ -56,15 +56,15 @@ test_that("lulu works", {
   skip_on_cran()
   suppressWarnings(suppressMessages(res1 <- lulu_pq(data_fungi_sp_known)))
   expect_length(res1, 4)
-  expect_equal(ntaxa(res1$new_physeq), 549)
-  expect_equal(nsamples(res1$new_physeq), 185)
+  expect_identical(ntaxa(res1$new_physeq), 549L)
+  expect_identical(nsamples(res1$new_physeq), 185L)
 
   suppressWarnings(suppressMessages(
     res2 <- lulu_pq(data_fungi_sp_known, verbose = TRUE, clean_pq = TRUE)
   ))
   expect_length(res2, 4)
-  expect_equal(ntaxa(res2$new_physeq), 549)
-  expect_equal(nsamples(res2$new_physeq), 184)
+  expect_identical(ntaxa(res2$new_physeq), 549L)
+  expect_identical(nsamples(res2$new_physeq), 184L)
 })
 
 suppressWarnings(
@@ -97,7 +97,7 @@ taxa_names(data_fungi_taxaSeq) <- as.character(data_fungi_taxaSeq@refseq)
 data_fungi_taxaSeq@refseq <- NULL
 test_that("add_dna_to_phyloseq works fine", {
   expect_silent(data_fungi_taxaSeq <- add_dna_to_phyloseq(data_fungi_taxaSeq))
-  expect_equal(
+  expect_identical(
     taxa_names(data_fungi_taxaSeq),
     paste0("Taxa_", seq_len(length(taxa_names(data_fungi_taxaSeq))))
   )
@@ -196,14 +196,14 @@ data_fungi_with__P@tax_table[, "Phylum"] <- paste0(
   data_fungi_with__P@tax_table[, "Phylum"]
 )
 test_that("simplify_taxo works fine", {
-  expect_equal(
+  expect_identical(
     sum(
       data_fungi_with__P@tax_table[, "Phylum"] ==
         data_fungi_mini@tax_table[, "Phylum"]
     ),
-    0
+    0L
   )
-  expect_equal(
+  expect_identical(
     simplify_taxo(data_fungi_with__P)@tax_table[, "Phylum"],
     data_fungi_mini@tax_table[, "Phylum"]
   )
@@ -215,42 +215,42 @@ test_that("get_file_extension works fine", {
     get_file_extension("inst/extdata/ex_R1_001.fastq.gz"),
     "There is more than one '.' inside your file path: inst/extdata/ex_R1_001.fastq.gz"
   )
-  expect_equal(
+  expect_identical(
     suppressWarnings(get_file_extension("inst/extdata/ex_R1_001.fastq.gz")),
     c("fastq", "gz")
   )
-  expect_equal(get_file_extension("inst/extdata/ex.fasta"), "fasta")
+  expect_identical(get_file_extension("inst/extdata/ex.fasta"), "fasta")
 })
 
 
 test_that("perc works fine", {
-  expect_equal(perc(20, 200), 10)
-  expect_equal(perc(20, 200, add_symbol = TRUE), "10%")
-  expect_equal(perc(0.1), 10)
-  expect_equal(perc(0.1, add_symbol = TRUE), "10%")
+  expect_identical(perc(20, 200), 10)
+  expect_identical(perc(20, 200, add_symbol = TRUE), "10%")
+  expect_identical(perc(0.1), 10)
+  expect_identical(perc(0.1, add_symbol = TRUE), "10%")
 })
 
 test_that("count_seq works fine", {
   skip_on_os("windows")
   skip_on_os("mac")
   skip_on_cran()
-  expect_equal(
+  expect_identical(
     suppressWarnings(count_seq(
       folder_path = "inst/extdata",
       pattern = "*.fasta"
     )),
-    c(1000, 500, 3, 2, 5000, 500)
+    c(1000L, 500L, 3L, 2L, 5000L, 500L)
   )
-  expect_equal(
+  expect_identical(
     suppressWarnings(count_seq("inst/extdata/ex_R1_001.fastq.gz")),
-    2500
+    2500L
   )
-  expect_equal(
+  expect_identical(
     suppressWarnings(count_seq("inst/extdata/ex_R2_001.fastq.gz")),
-    2500
+    2500L
   )
-  expect_equal(count_seq("inst/extdata/ex.fasta"), 3)
-  expect_equal(count_seq("inst/extdata/ex.fastq"), 4)
+  expect_identical(count_seq("inst/extdata/ex.fasta"), 3L)
+  expect_identical(count_seq("inst/extdata/ex.fastq"), 4L)
   expect_error(
     count_seq("tests/testthat.R"),
     "The file extension R is not supported."
@@ -268,7 +268,7 @@ test_that("reorder_taxa_pq works fine", {
       taxa_names(data_fungi)[order(taxa_sums(data_fungi))]
     )
   )
-  expect_equal(
+  expect_identical(
     unclass(data_fungi_asc_ordered_by_abundance@tax_table[, "Genus"])[2],
     "Peziza"
   )

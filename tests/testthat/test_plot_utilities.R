@@ -12,7 +12,7 @@ test_that("no_legend works fine", {
 
   # Check that legend is removed
   built <- ggplot_build(result)
-  expect_equal(result$theme$legend.position, "none")
+  expect_identical(result$theme$legend.position, "none")
 })
 
 

@@ -45,7 +45,7 @@ if (inherits(blast_error_or_not, "try-error")) {
         blast_pq(data_fungi_mini, path_db),
       "data.frame"
     )
-    expect_equal(ncol(blast_df), 9)
+    expect_identical(ncol(blast_df), 9L)
     expect_true(nrow(blast_df) > 0)
     expect_s3_class(
       blast_df <- blast_pq(data_fungi_mini, path_db, unique_per_seq = TRUE),

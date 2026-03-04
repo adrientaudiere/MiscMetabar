@@ -180,5 +180,5 @@ test_that("reorder_taxa_pq works fine", {
   new_order <- rev(taxa_names(data_fungi_mini))
   result <- reorder_taxa_pq(data_fungi_mini, new_order)
   expect_s4_class(result, "phyloseq")
-  expect_equal(taxa_names(result), new_order)
+  expect_identical(taxa_names(result), new_order)
 })

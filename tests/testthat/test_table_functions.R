@@ -55,13 +55,13 @@ test_that("compare_pairs_pq function works fine with data_fungi dataset", {
       bifactor = "Height",
       merge_sample_by = "Height"
     )))
-    expect_equal(
+    expect_identical(
       dim(compare_pairs_pq(
         data_fungi_low_high,
         bifactor = "Height",
         merge_sample_by = "Height"
       )),
-      c(1, 13)
+      c(1L, 13L)
     )
     expect_s3_class(
       compare_pairs_pq(
@@ -90,14 +90,14 @@ test_that("compare_pairs_pq function works fine with data_fungi dataset", {
       ),
       "tbl_df"
     )
-    expect_equal(
+    expect_identical(
       dim(compare_pairs_pq(
         data_fungi_low_high_withNA,
         bifactor = "Height",
         merge_sample_by = "Height",
         modality = "Time"
       )),
-      c(4, 13)
+      c(4L, 13L)
     )
   }
 })

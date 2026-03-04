@@ -468,7 +468,7 @@ test_that("treemap_pq log10 transform gives nonzero area for count 1", {
     )
     p <- treemap_pq(ps, "Genus", "Genus", nb_seq = TRUE)
     df <- ggplot2::ggplot_build(p)$data[[1]]
-    expect_equal(nrow(df), 2)
+    expect_identical(nrow(df), 2L)
     expect_true(all(df$xmax - df$xmin > 0))
     expect_true(all(df$ymax - df$ymin > 0))
   }

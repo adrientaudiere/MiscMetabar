@@ -63,7 +63,7 @@ test_that("rename_samples_otu_table function works fine when taxa_are_rows", {
     rename_samples_otu_table(data_fungi, as.character(1:nsamples(data_fungi))),
     "otu_table"
   )
-  expect_equal(
+  expect_identical(
     nrow(rename_samples_otu_table(
       data_fungi,
       as.character(
@@ -72,7 +72,7 @@ test_that("rename_samples_otu_table function works fine when taxa_are_rows", {
     )),
     nsamples(data_fungi)
   )
-  expect_equal(
+  expect_identical(
     ncol(rename_samples_otu_table(
       data_fungi,
       as.character(
@@ -81,7 +81,7 @@ test_that("rename_samples_otu_table function works fine when taxa_are_rows", {
     )),
     ntaxa(data_fungi)
   )
-  expect_equal(
+  expect_identical(
     sample_names(rename_samples_otu_table(
       data_fungi,
       as.character(
@@ -107,21 +107,21 @@ test_that("rename_samples_otu_table function works fine when taxa_are_columns", 
     ),
     "otu_table"
   )
-  expect_equal(
+  expect_identical(
     ncol(rename_samples_otu_table(
       data_fungi_row,
       as.character(1:nsamples(data_fungi_row))
     )),
     nsamples(data_fungi_row)
   )
-  expect_equal(
+  expect_identical(
     nrow(rename_samples_otu_table(
       data_fungi_row,
       as.character(1:nsamples(data_fungi_row))
     )),
     ntaxa(data_fungi_row)
   )
-  expect_equal(
+  expect_identical(
     sample_names(rename_samples_otu_table(
       data_fungi_row,
       as.character(1:nsamples(data_fungi_row))
@@ -250,7 +250,7 @@ test_that("track_wkflow_samples works with single dada-class", {
   res <- track_wkflow_samples(list("sample1" = dada_R1_001))
   expect_type(res, "list")
   expect_length(res, 1)
-  expect_equal(names(res), "sample1")
+  expect_identical(names(res), "sample1")
   expect_s3_class(res[[1]], "data.frame")
 })
 
@@ -271,7 +271,7 @@ test_that("track_wkflow_samples works with single derep-class", {
   res <- track_wkflow_samples(list("sample1" = derep_R1_001))
   expect_type(res, "list")
   expect_length(res, 1)
-  expect_equal(names(res), "sample1")
+  expect_identical(names(res), "sample1")
   expect_s3_class(res[[1]], "data.frame")
 })
 
@@ -294,7 +294,7 @@ test_that("track_wkflow_samples works with character vector (fastq paths)", {
   res <- track_wkflow_samples(fastq_paths)
   expect_type(res, "list")
   expect_length(res, 2)
-  expect_equal(names(res), basename(fastq_paths))
+  expect_identical(names(res), basename(fastq_paths))
   expect_s3_class(res[[1]], "data.frame")
 })
 
@@ -308,7 +308,7 @@ test_that("track_wkflow_samples works with named character vector", {
   res <- track_wkflow_samples(fastq_paths)
   expect_type(res, "list")
   expect_length(res, 2)
-  expect_equal(names(res), c("sampleX", "sampleY"))
+  expect_identical(names(res), c("sampleX", "sampleY"))
 })
 
 test_that("track_wkflow_samples works with mixed object types", {
@@ -360,8 +360,8 @@ test_that("sample_data_with_new_names function works fine", {
       paste0("Samples_", seq(1, 185))
     )
   )
-  expect_equal(dim(newdf)[1], 185)
-  expect_equal(dim(newdf)[2], 7)
+  expect_identical(dim(newdf)[1], 185L)
+  expect_identical(dim(newdf)[2], 7L)
 })
 
 
@@ -399,7 +399,7 @@ test_that("add_info_to_sam_data function works fine with data_fungi", {
   )
   rownames(new_df) <- sample_names(data_fungi)
   expect_silent(data_fungi2 <- add_info_to_sam_data(data_fungi, new_df))
-  expect_equal(dim(data_fungi2@sam_data)[2], 11)
+  expect_identical(dim(data_fungi2@sam_data)[2], 11L)
   expect_length(data_fungi2@sam_data$nb_seq, 185)
   expect_length(data_fungi2@sam_data$nb_otu, 185)
 })
@@ -411,7 +411,7 @@ test_that("rename_samples works with phyloseq object", {
   new_names <- paste0("S", seq_len(nsamples(data_fungi)))
   res <- rename_samples(data_fungi, new_names)
   expect_s4_class(res, "phyloseq")
-  expect_equal(sample_names(res), new_names)
+  expect_identical(sample_names(res), new_names)
   expect_error(rename_samples(data_fungi, new_names[-1]))
 })
 
@@ -420,7 +420,7 @@ test_that("rename_samples works with otu_table", {
   new_names <- paste0("S", seq_len(nsamples(data_fungi)))
   res <- rename_samples(otu, new_names)
   expect_s4_class(res, "otu_table")
-  expect_equal(sample_names(res), new_names)
+  expect_identical(sample_names(res), new_names)
   expect_error(rename_samples(otu, new_names[-1]))
 })
 
