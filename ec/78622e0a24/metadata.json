@@ -1,0 +1,28 @@
+{
+  "cli_version": "0.4.8",
+  "checkpoint_id": "ec78622e0a24",
+  "strategy": "manual-commit",
+  "branch": "dev",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "tests/testthat/test_cutadapt.R",
+    "tests/testthat/test_misc.R",
+    "tests/testthat/test_targets.R"
+  ],
+  "sessions": [
+    {
+      "metadata": "/ec/78622e0a24/0/metadata.json",
+      "transcript": "/ec/78622e0a24/0/full.jsonl",
+      "context": "/ec/78622e0a24/0/context.md",
+      "content_hash": "/ec/78622e0a24/0/content_hash.txt",
+      "prompt": "/ec/78622e0a24/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 19,
+    "cache_creation_tokens": 16304,
+    "cache_read_tokens": 1433106,
+    "output_tokens": 6444,
+    "api_call_count": 19
+  }
+}
