@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.4.8",
+  "checkpoint_id": "34d6bd27e434",
+  "session_id": "7fcf0a8b-219a-4347-9d06-1f8d681db811",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-04T08:49:24.970602386Z",
+  "branch": "dev",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "vignettes/articles/tengeler.Rmd",
+    "vignettes/articles/tree_visualization.Rmd"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "13b14316aeed",
+  "checkpoint_transcript_start": 996,
+  "transcript_lines_at_start": 996,
+  "token_usage": {
+    "input_tokens": 13,
+    "cache_creation_tokens": 10869,
+    "cache_read_tokens": 1013623,
+    "output_tokens": 2165,
+    "api_call_count": 11
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-04T08:49:24.384428881Z",
+    "agent_lines": 4,
+    "human_added": 82,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 86,
+    "agent_percentage": 4.651162790697675
+  }
+}

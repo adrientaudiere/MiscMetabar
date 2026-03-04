@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.4.8",
+  "checkpoint_id": "34d6bd27e434",
+  "strategy": "manual-commit",
+  "branch": "dev",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "vignettes/articles/tengeler.Rmd",
+    "vignettes/articles/tree_visualization.Rmd"
+  ],
+  "sessions": [
+    {
+      "metadata": "/34/d6bd27e434/0/metadata.json",
+      "transcript": "/34/d6bd27e434/0/full.jsonl",
+      "context": "/34/d6bd27e434/0/context.md",
+      "content_hash": "/34/d6bd27e434/0/content_hash.txt",
+      "prompt": "/34/d6bd27e434/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 13,
+    "cache_creation_tokens": 10869,
+    "cache_read_tokens": 1013623,
+    "output_tokens": 2165,
+    "api_call_count": 11
+  }
+}
