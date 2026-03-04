@@ -267,8 +267,8 @@ lulu <- function(
     })
   )
   curation_table <- as.data.frame(
-    curation_table %>%
-      group_by(nOTUid) %>%
+    curation_table |>
+      group_by(nOTUid) |>
       summarise_all(list(sum))
   )
   row.names(curation_table) <- as.character(curation_table$nOTUid)

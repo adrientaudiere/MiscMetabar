@@ -460,9 +460,9 @@ filter_asv_blast <- function(
   }
 
   if (add_info_to_taxtable && ntaxa(new_physeq) > 0) {
-    info_to_taxtable <- blast_tab %>%
-      group_by(`Query name`) %>%
-      slice(which.min(`e-value`)) %>%
+    info_to_taxtable <- blast_tab |>
+      group_by(`Query name`) |>
+      slice(which.min(`e-value`)) |>
       ungroup()
     new_physeq@tax_table <- tax_table(as.matrix(cbind(
       new_physeq@tax_table,

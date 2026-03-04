@@ -143,14 +143,14 @@ setMethod(
       taxon = taxa_names(x),
       sum = taxa_sums(x),
       group = factor(group, levels = unique(group))
-    ) %>%
-      group_by(group) %>%
-      mutate(archetype = taxon[which.max(sum)]) %>%
-      group_by(group) %>%
+    ) |>
+      group_by(group) |>
+      mutate(archetype = taxon[which.max(sum)]) |>
+      group_by(group) |>
       dplyr::slice_head()
 
     if (reorder) {
-      new_names <- new_names %>% arrange(archetype)
+      new_names <- new_names |> arrange(archetype)
     }
     # Compute new table with base::rowsum(). The call to rowsum() makes the
     # rownames the group names.
@@ -201,8 +201,8 @@ setMethod(
     bad_string <- paste0("BAD", Sys.time())
     # Reduce each group to one row; sort if needed; then finish flushing bad
     # ranks and making new tax table
-    reduced <- x %>%
-      as("matrix") %>%
+    reduced <- x |>
+      as("matrix") |>
       as_tibble(.name_repair = c("minimal"))
     reduced[, ".taxon"] <- taxa_names(x)
     reduced[, ".group"] <- factor(group, levels = unique(group))
@@ -230,29 +230,29 @@ setMethod(
       })
 
     if (reorder) {
-      reduced_by_group <- reduced_by_group %>%
+      reduced_by_group <- reduced_by_group |>
         arrange(.group)
     }
 
-    reduced_by_group <- reduced_by_group %>%
-      select(-.group) %>%
+    reduced_by_group <- reduced_by_group |>
+      select(-.group) |>
       tibble::column_to_rownames(".taxon")
 
     # If rank_propagation is FALSE, just convert bad_string -> NA
     # propagate bad ranks downwards and convert to NAs
 
     if (rank_propagation) {
-      reduced_by_group %>%
-        apply(1, bad_flush_right, bad = bad_string, na_bad = na_bad, k = k) %>%
-        t() %>%
+      reduced_by_group |>
+        apply(1, bad_flush_right, bad = bad_string, na_bad = na_bad, k = k) |>
+        t() |>
         tax_table()
     } else {
       reduced_by_group |>
         mutate(across(
           everything(),
           ~ ifelse(stringr::str_detect(.x, bad_string), NA_character_, .x)
-        )) %>%
-        as("matrix") %>%
+        )) |>
+        as("matrix") |>
         tax_table()
     }
   }
@@ -298,12 +298,12 @@ merge_taxa_vec_pseudo <- function(x, group, reorder = FALSE) {
   archetypes <- tibble(
     taxon = taxa_names(x),
     group = factor(group, levels = unique(group))
-  ) %>%
-    group_by(group) %>%
+  ) |>
+    group_by(group) |>
     mutate(archetype = taxon[1])
 
   if (reorder) {
-    archetypes %>% arrange(group)
+    archetypes |> arrange(group)
   }
   select_taxa(x, archetypes$taxon, reorder = TRUE)
 }
@@ -389,14 +389,14 @@ bad_flush_right <- function(x, bad = "BAD", na_bad = FALSE, k = length(x)) {
 #'
 #' # Merge samples with the same project and clinical status
 #' ps <- enterotype
-#' sample_data(ps) <- sample_data(ps) %>%
+#' sample_data(ps) <- sample_data(ps) |>
 #'   transform(Project.ClinicalStatus = Project:ClinicalStatus)
-#' sample_data(ps) %>% head()
+#' sample_data(ps) |> head()
 #' ps0 <- merge_samples2(ps, "Project.ClinicalStatus",
 #'   fun_otu = mean,
 #'   funs = list(Age = mean)
 #' )
-#' sample_data(ps0) %>% head()
+#' sample_data(ps0) |> head()
 #' @author Michael R. McLaren (orcid: [0000-0003-1575-473X](https://orcid.org/0000-0003-1575-473X)) modified by Adrien Taudiere
 setGeneric(
   "merge_samples2",
@@ -496,21 +496,21 @@ setMethod(
       x.merged <- rowsum(x, group, reorder = reorder)
     } else {
       stopifnot(!".group" %in% colnames(x))
-      x.merged <- x %>%
-        as("matrix") %>%
-        tibble::as_tibble(.name_repair = c("minimal")) %>%
-        cbind(.group = group) %>%
-        group_by(.group) %>%
+      x.merged <- x |>
+        as("matrix") |>
+        tibble::as_tibble(.name_repair = c("minimal")) |>
+        cbind(.group = group) |>
+        group_by(.group) |>
         summarise(across(everything(), purrr::as_mapper(fun_otu)))
 
       if (reorder) {
-        x.merged <- x.merged %>% arrange(.group)
+        x.merged <- x.merged |> arrange(.group)
       }
-      x.merged <- x.merged %>%
+      x.merged <- x.merged |>
         tibble::column_to_rownames(".group")
     }
     # Return an otu_table in the proper orientation
-    x.merged <- x.merged %>% otu_table(taxa_are_rows = FALSE)
+    x.merged <- x.merged |> otu_table(taxa_are_rows = FALSE)
     if (needs_flip) {
       x.merged <- t(x.merged)
     }
@@ -545,7 +545,7 @@ setMethod(
     }
     ## Set the functions f used to merge each sample variable.
     # Named logical vector indicating whether each variable is in the funs
-    var_in_funs <- names(x) %>%
+    var_in_funs <- names(x) |>
       rlang::set_names(. %in% names(funs), .)
     # For vars in the funs, run f through as_mapper; else, use the default f
     funs <- purrr::map2(
@@ -559,26 +559,26 @@ setMethod(
     # to reduce each variable with `merge_groups()`, and then recombine into a
     # data.frame. The call to `merge_groups()` will sort by `group` values,
     # which we need to account for when setting the new sample names.
-    new_sample_names <- group %>%
-      unique() %>%
-      sort() %>%
+    new_sample_names <- group |>
+      unique() |>
+      sort() |>
       as.character()
     x.merged <- purrr::map2(
       x,
       funs,
       ~ merge_groups(.x, group = group, f = .y)
-    ) %>%
-      data.frame() %>%
+    ) |>
+      data.frame() |>
       vctrs::vec_set_names(new_sample_names)
     ## Put back in initial order
     if (!reorder) {
-      initial_order <- group %>%
-        unique() %>%
+      initial_order <- group |>
+        unique() |>
         as.character()
       x.merged <- x.merged[initial_order, , drop = FALSE]
     }
     ## Return as sample data with group names preserved
-    x.merged %>% MiscMetabar:::sample_data_stable()
+    x.merged |> MiscMetabar:::sample_data_stable()
   }
 )
 
@@ -604,7 +604,7 @@ setMethod(
 #' x <- c("a", "b", "a")
 #' unique_or_na(x[c(1, 3)])
 #' unique_or_na(x)
-#' unique_or_na(x) %>% typeof()
+#' unique_or_na(x) |> typeof()
 unique_or_na <- function(x) {
   UseMethod("unique_or_na")
 }
@@ -645,8 +645,8 @@ unique_or_na.factor <- function(x) {
 #' @author Michael R. McLaren (orcid: [0000-0003-1575-473X](https://orcid.org/0000-0003-1575-473X))
 merge_groups <- function(x, group, f = unique_or_na) {
   f <- purrr::as_mapper(f)
-  split(x, group) %>%
-    purrr::map(f) %>%
+  split(x, group) |>
+    purrr::map(f) |>
     {
       vctrs::vec_c(!!!., .name_spec = rlang::zap())
     }

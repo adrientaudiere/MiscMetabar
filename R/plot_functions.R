@@ -468,8 +468,8 @@ accu_plot_balanced_modality <- function(
 
   res_mean$factor <- p_for_dim$.id
 
-  res_mean <- res_mean %>%
-    dplyr::filter(!is.na(X1)) %>%
+  res_mean <- res_mean |>
+    dplyr::filter(!is.na(X1)) |>
     arrange(X1)
 
   p <- ggplot(res_mean, aes(x = x, y = X1, color = factor)) +
@@ -528,7 +528,7 @@ accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
   res <- vector("list", length(unique(res_accuplot$data$.id)))
   names(res) <- unique(res_accuplot$data$.id)
   for (id in unique(res_accuplot$data$.id)) {
-    data <- res_accuplot$data %>% dplyr::filter(.id == id)
+    data <- res_accuplot$data |> dplyr::filter(.id == id)
     proportion <- data$X1 / max(data$X1)
     res[[id]] <- data$x[proportion > threshold][1]
   }
@@ -1920,11 +1920,11 @@ hill_pq <- function(
 
       dt <- data.frame(variab = names(Letters), Letters = Letters)
       names(dt) <- c(var, "Letters")
-      data_letters <- p_list[[i]]$data %>%
-        group_by(!!var) %>%
+      data_letters <- p_list[[i]]$data |>
+        group_by(!!var) |>
         summarize(
           pos_letters = max(.data[[paste0("Hill_", hill_scales[[i]])]]) + 1
-        ) %>%
+        ) |>
         inner_join(dt, by = join_by(!!fact))
 
       if (!kruskal_test || kt_res[[i]]$p.value < 0.05) {
@@ -2742,7 +2742,7 @@ biplot_pq <- function(
       "%"
     )
 
-  p <- mdf %>%
+  p <- mdf |>
     ggplot(
       aes(
         x = stats::reorder(OTU, Abundance),
@@ -2836,7 +2836,7 @@ biplot_pq <- function(
     )
 
   if (plotly_version) {
-    p <- mdf %>%
+    p <- mdf |>
       ggplot(
         aes(
           x = stats::reorder(OTU, Abundance),
@@ -2897,12 +2897,12 @@ biplot_pq <- function(
       tooltip = c("OTU", "Ab", "Proportion", "Family", "Genus", "Species"),
       height = 1200,
       width = 800
-    ) %>%
+    ) |>
       plotly::layout(
         xaxis = list(autorange = TRUE),
         yaxis = list(autorange = TRUE)
-      ) %>%
-      plotly::config(locale = "fr") %>%
+      ) |>
+      plotly::config(locale = "fr") |>
       plotly::hide_legend()
   }
   return(p)
@@ -3118,7 +3118,7 @@ plot_tax_pq <-
 
     if (type %in% c("nb_seq", "both")) {
       mdf <- psmelt(physeq)
-      mdf <- mdf %>% mutate(percent = Abundance / sum(Abundance))
+      mdf <- mdf |> mutate(percent = Abundance / sum(Abundance))
 
       p_seq <-
         ggplot(
@@ -3155,7 +3155,7 @@ plot_tax_pq <-
     if (type %in% c("nb_taxa", "both")) {
       mdf <-
         psmelt(as_binary_otu_table(physeq))
-      mdf <- mdf %>% mutate(percent = Abundance / sum(Abundance))
+      mdf <- mdf |> mutate(percent = Abundance / sum(Abundance))
 
       p_taxa <-
         ggplot(
@@ -3268,15 +3268,15 @@ multitax_bar_pq <- function(
   nb_seq = TRUE,
   log10trans = TRUE
 ) {
-  psm_1 <- psmelt(physeq) %>%
-    filter(Abundance > 0) %>%
-    filter(!is.na(.data[[lvl1]])) %>%
-    filter(!is.na(.data[[lvl3]])) %>%
+  psm_1 <- psmelt(physeq) |>
+    filter(Abundance > 0) |>
+    filter(!is.na(.data[[lvl1]])) |>
+    filter(!is.na(.data[[lvl3]])) |>
     filter(!is.na(.data[[lvl2]]))
 
   if (is.null(fact)) {
-    psm_2 <- psm_1 %>%
-      group_by(OTU) %>%
+    psm_2 <- psm_1 |>
+      group_by(OTU) |>
       summarise(Abundance = sum(Abundance))
 
     psm <- inner_join(
@@ -3314,9 +3314,9 @@ multitax_bar_pq <- function(
       theme(strip.text.y.right = element_text(angle = 0)) +
       theme(legend.position = "none")
   } else {
-    psm_2 <- psm_1 %>%
-      group_by(OTU, .data[[fact]]) %>%
-      summarise(Abundance = sum(Abundance)) %>%
+    psm_2 <- psm_1 |>
+      group_by(OTU, .data[[fact]]) |>
+      summarise(Abundance = sum(Abundance)) |>
       filter(Abundance > 0)
 
     psm <- inner_join(
@@ -3835,12 +3835,12 @@ upset_pq <- function(
   psm <- psmelt(physeq)
   samp_names <- unique(psm$Sample)
   psm <-
-    psm %>%
-    mutate(val = TRUE) %>%
+    psm |>
+    mutate(val = TRUE) |>
     tidyr::pivot_wider(names_from = Sample, values_from = val)
   psm[samp_names][is.na(psm[samp_names])] <- FALSE
 
-  psm <- psm %>% filter(Abundance != 0)
+  psm <- psm |> filter(Abundance != 0)
   psm[[fact]] <- as.character(psm[[fact]])
 
   psm2 <- data.frame(lapply(psm, function(col) {
@@ -3851,7 +3851,7 @@ upset_pq <- function(
         na.rm = TRUE
       )
     })
-  })) %>%
+  })) |>
     arrange(., desc(Abundance))
 
   colnames(psm2) <- colnames(psm)
@@ -3933,12 +3933,12 @@ upset_test_pq <-
     psm <- psmelt(physeq)
     samp_names <- unique(psm$Sample)
     psm <-
-      psm %>%
-      mutate(val = TRUE) %>%
+      psm |>
+      mutate(val = TRUE) |>
       tidyr::pivot_wider(names_from = Sample, values_from = val)
     psm[samp_names][is.na(psm[samp_names])] <- FALSE
 
-    psm <- psm %>% filter(Abundance != 0)
+    psm <- psm |> filter(Abundance != 0)
     psm[[fact]] <- as.character(psm[[fact]])
 
     psm2 <- data.frame(lapply(psm, function(col) {
@@ -3949,7 +3949,7 @@ upset_test_pq <-
           na.rm = TRUE
         )
       })
-    })) %>%
+    })) |>
       arrange(., desc(Abundance))
 
     colnames(psm2) <- colnames(psm)
@@ -4185,7 +4185,7 @@ diff_fct_diff_class <-
 #'   add_ribbon = TRUE, value_size=7, ribbon_alpha = .6,
 #'   show_values=TRUE, label_size = 4, top_label_size = 6,
 #'   minimum_value_to_show=0.05) |>
-#'   reorder_colors(alternate_lightness=TRUE)
+#'   reorder_distinct_colors(alternate_lightness=TRUE)
 #'
 #' tax_bar_pq(data_fungi_mini, fact = "Height", taxa = "Order",
 #'   nb_seq = TRUE, percent_bar = TRUE, label_taxa = TRUE,
@@ -4194,7 +4194,7 @@ diff_fct_diff_class <-
 #'   label_size = 4, top_label_size = 8,
 #'   minimum_value_to_show=0.05, bar_width = NULL,
 #'   linewidth_bar_internal = 0.1, bar_internal_color="black") |>
-#'   reorder_colors(alternate_lightness=TRUE)
+#'   reorder_distinct_colors(alternate_lightness=TRUE)
 #' }
 #' @author Adrien Taudière
 #' @seealso [plot_tax_pq()] and [multitax_bar_pq()]
@@ -4624,7 +4624,7 @@ ridges_pq <- function(
   ...
 ) {
   psm <- psmelt(physeq)
-  psm <- psm %>% dplyr::filter(Abundance > 0)
+  psm <- psm |> dplyr::filter(Abundance > 0)
 
   if (log10trans) {
     psm$Abundance <- log10(psm$Abundance)
@@ -4641,8 +4641,8 @@ ridges_pq <- function(
     )
   } else {
     psm_asv <-
-      psm %>%
-      group_by(.data[[fact]], OTU, .data[[tax_level]]) %>%
+      psm |>
+      group_by(.data[[fact]], OTU, .data[[tax_level]]) |>
       summarise("count" = n())
 
     p <- ggplot(
@@ -4806,12 +4806,12 @@ treemap_pq <- function(
   }
 
   if (!is.null(facet_by)) {
-    psm2 <- psm %>%
-      group_by(.data[[lvl2]], .data[[facet_by]]) %>%
+    psm2 <- psm |>
+      group_by(.data[[lvl2]], .data[[facet_by]]) |>
       reframe(Abundance = sum(Abundance), LVL1 = unique(.data[[lvl1]]))
   } else {
-    psm2 <- psm %>%
-      group_by(.data[[lvl2]]) %>%
+    psm2 <- psm |>
+      group_by(.data[[lvl2]]) |>
       reframe(Abundance = sum(Abundance), LVL1 = unique(.data[[lvl1]]))
   }
 
@@ -6325,7 +6325,7 @@ plot_seq_ratio_pq <- function(physeq, min_nb_seq = 1000, annotations = TRUE) {
 #'
 #' @param p A ggplot object that uses a discrete fill aesthetic. Can be
 #'   omitted when using the `+` operator (e.g.
-#'   `p + reorder_colors()`).
+#'   `p + reorder_distinct_colors()`).
 #' @param alternate_lightness (logical, default FALSE) If TRUE, darken every
 #'   other level to add a luminance alternation cue on top of hue
 #'   differences.
@@ -6346,17 +6346,17 @@ plot_seq_ratio_pq <- function(physeq, min_nb_seq = 1000, annotations = TRUE) {
 #' @importFrom stats dist
 #' @examples
 #' p <- tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time")
-#' reorder_colors(p)
-#' reorder_colors(p, colorblind = TRUE)
-#' p + reorder_colors(alternate_lightness = TRUE)
+#' reorder_distinct_colors(p)
+#' reorder_distinct_colors(p, colorblind = TRUE)
+#' p + reorder_distinct_colors(alternate_lightness = TRUE)
 #'
 #' tax_bar_pq(data_fungi_mini, fact = "Height", taxa = "Order",
 #'  nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
 #'  add_ribbon = TRUE, value_size=7, ribbon_alpha = .6,
 #'  show_values=TRUE, label_size = 4, top_label_size = 8,
 #'  minimum_value_to_show=0.05) |>
-#'  reorder_colors(alternate_lightness=TRUE)
-reorder_colors <- function(
+#'  reorder_distinct_colors(alternate_lightness=TRUE)
+reorder_distinct_colors <- function(
   p = NULL,
   alternate_lightness = FALSE,
   lightness_amount = 0.15,
@@ -6368,7 +6368,7 @@ reorder_colors <- function(
       lightness_amount = lightness_amount,
       colorblind = colorblind
     ),
-    class = "reorder_colors_spec"
+    class = "reorder_distinct_colors_spec"
   )
   if (is.null(p)) {
     return(spec)
@@ -6495,8 +6495,8 @@ reorder_colors <- function(
 }
 
 #' @exportS3Method ggplot2::ggplot_add
-ggplot_add.reorder_colors_spec <- function(object, plot, ...) {
-  reorder_colors(
+ggplot_add.reorder_distinct_colors_spec <- function(object, plot, ...) {
+  reorder_distinct_colors(
     p = plot,
     alternate_lightness = object$alternate_lightness,
     lightness_amount = object$lightness_amount,

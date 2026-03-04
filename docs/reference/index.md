@@ -572,6 +572,9 @@
   : Translates a factor into colors.
 - [`funky_color()`](https://adrientaudiere.github.io/MiscMetabar/reference/funky_color.md)
   : Funky palette color
+- [`reorder_distinct_colors()`](https://adrientaudiere.github.io/MiscMetabar/reference/reorder_distinct_colors.md)
+  : Reorder fill and color scales to maximize perceptual contrast
+  between adjacent segments
 - [`transp()`](https://adrientaudiere.github.io/MiscMetabar/reference/transp.md)
   : Adds transparency to a vector of colors
 

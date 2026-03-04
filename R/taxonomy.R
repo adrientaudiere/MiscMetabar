@@ -331,41 +331,21 @@ format2sintax <- function(
   } else if (!is.null(taxnames) && !is.null(fasta_db)) {
     stop("You must specify either taxnames or fasta_db, not both.")
   } else if (!is.null(taxnames)) {
-    new_names <- taxnames %>%
-      {
-        gsub(";", ",", .)
-      } %>%
-      {
-        gsub(pattern_tax, paste0(";", pattern_sintax), .)
-      } %>%
-      {
-        gsub("__", ":", .)
-      } %>%
-      {
-        gsub(";;", ";", .)
-      } %>%
-      {
-        gsub(paste0(",", pattern_sintax), paste0(";", pattern_sintax), .)
-      }
+    new_names <- taxnames |>
+      (\(x) gsub(";", ",", x))() |>
+      (\(x) gsub(pattern_tax, paste0(";", pattern_sintax), x))() |>
+      (\(x) gsub("__", ":", x))() |>
+      (\(x) gsub(";;", ";", x))() |>
+      (\(x) gsub(paste0(",", pattern_sintax), paste0(";", pattern_sintax), x))()
     return(new_names)
   } else if (!is.null(fasta_db)) {
     dna <- Biostrings::readDNAStringSet(fasta_db)
-    new_names <- names(dna) %>%
-      {
-        gsub(";", ",", .)
-      } %>%
-      {
-        gsub(pattern_tax, paste0(";", pattern_sintax), .)
-      } %>%
-      {
-        gsub("__", ":", .)
-      } %>%
-      {
-        gsub(";;", ";", .)
-      } %>%
-      {
-        gsub(paste0(",", pattern_sintax), paste0(";", pattern_sintax), .)
-      }
+    new_names <- names(dna) |>
+      (\(x) gsub(";", ",", x))() |>
+      (\(x) gsub(pattern_tax, paste0(";", pattern_sintax), x))() |>
+      (\(x) gsub("__", ":", x))() |>
+      (\(x) gsub(";;", ";", x))() |>
+      (\(x) gsub(paste0(",", pattern_sintax), paste0(";", pattern_sintax), x))()
 
     names(dna) <- new_names
     if (!is.null(output_path)) {
@@ -421,13 +401,9 @@ format2dada2 <- function(
       stringr::str_split_fixed(";tax=", n = 2) |>
       as_tibble(.name_repair = c("universal")) |>
       tidyr::unite(taxnames, c(...2, ...1), sep = ";") |>
-      pull(taxnames) %>%
-      {
-        gsub(":", "__", .)
-      } %>%
-      {
-        gsub(",", ";", .)
-      }
+      pull(taxnames) |>
+      (\(x) gsub(":", "__", x))() |>
+      (\(x) gsub(",", ";", x))()
 
     if (!is.null(pattern_to_remove)) {
       new_names <- new_names |>

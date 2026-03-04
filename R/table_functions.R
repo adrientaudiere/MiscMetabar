@@ -72,7 +72,7 @@ tax_datatable <- function(
   }
 
   if (is.null(modality)) {
-    dt <- DT::datatable(df, ...) %>%
+    dt <- DT::datatable(df, ...) |>
       DT::formatStyle(
         "nb_seq",
         background = DT::styleColorBar(df$nb_seq, "steelblue"),
@@ -83,7 +83,7 @@ tax_datatable <- function(
   } else {
     dt <- DT::datatable(df, ...)
     for (cn in colnames(df)[grepl("nb_seq", colnames(df))]) {
-      dt <- dt %>%
+      dt <- dt |>
         DT::formatStyle(
           cn,
           background = DT::styleColorBar(df[[cn]], "steelblue"),
@@ -286,16 +286,16 @@ compare_pairs_pq <- function(
   colnames(res_df_t) <- paste0("V", seq_len(ncol(res_df_t)))
   res_df <- as_tibble(res_df_t, .name_repair = c("minimal"))
 
-  res_df <- res_df %>%
-    mutate(percent_shared_lv1 = round(100 * .data$V3 / .data$V1, 2)) %>%
-    mutate(percent_shared_lv2 = round(100 * .data$V3 / .data$V2, 2)) %>%
+  res_df <- res_df |>
+    mutate(percent_shared_lv1 = round(100 * .data$V3 / .data$V1, 2)) |>
+    mutate(percent_shared_lv2 = round(100 * .data$V3 / .data$V2, 2)) |>
     mutate(
       ratio_nb_lv1_lv2 = round(
         .data$V1 /
           .data$V2,
         3
       )
-    ) %>%
+    ) |>
     mutate(
       ratio_div_lv1_lv2 = round(
         .data$V4 /
@@ -320,8 +320,8 @@ compare_pairs_pq <- function(
   )
 
   res_df$modality <- names(res)
-  res_df <- res_df %>%
-    dplyr::filter(!is.na(nb_shared)) %>%
+  res_df <- res_df |>
+    dplyr::filter(!is.na(nb_shared)) |>
     relocate(modality)
 
   return(res_df)
@@ -518,9 +518,9 @@ formattable_pq <- function(
   psm <- psmelt(new_physeq2)
 
   if (log10trans) {
-    psm2 <- psm %>%
-      group_by_at(c(modality, "OTU", taxonomic_levels)) %>%
-      summarise(Ab = round(log10(1 + sum(Abundance)), 2)) %>%
+    psm2 <- psm |>
+      group_by_at(c(modality, "OTU", taxonomic_levels)) |>
+      summarise(Ab = round(log10(1 + sum(Abundance)), 2)) |>
       tidyr::spread(modality, Ab)
 
     psm3 <-
@@ -537,9 +537,9 @@ formattable_pq <- function(
         )
       )
   } else {
-    psm2 <- psm %>%
-      group_by_at(c(modality, "OTU", taxonomic_levels)) %>%
-      summarise(Ab = sum(Abundance)) %>%
+    psm2 <- psm |>
+      group_by_at(c(modality, "OTU", taxonomic_levels)) |>
+      summarise(Ab = sum(Abundance)) |>
       tidyr::spread(modality, Ab)
 
     psm3 <-
@@ -558,9 +558,9 @@ formattable_pq <- function(
   }
   if (!is.null(arrange_by)) {
     if (descending_order) {
-      psm3 <- psm3 %>% arrange(desc(.data[[arrange_by]]))
+      psm3 <- psm3 |> arrange(desc(.data[[arrange_by]]))
     } else {
-      psm3 <- psm3 %>% arrange(.data[[arrange_by]])
+      psm3 <- psm3 |> arrange(.data[[arrange_by]])
     }
   }
   if (void_style) {

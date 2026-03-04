@@ -4,7 +4,7 @@
 
 - Fix a bug in `format2sintax()` where the `pattern_tax` parameter was referenced by the wrong internal name (`pattern_k`), causing an error when using the `taxnames` argument.
 
-- Add `reorder_colors()` to reassign fill and color scales in ggplot objects so that adjacent segments have maximally different colors, with optional colorblind optimization and lightness alternation.
+- Add `reorder_distinct_colors()` to reassign fill and color scales in ggplot objects so that adjacent segments have maximally different colors, with optional colorblind optimization and lightness alternation.
 
 - `tax_bar_pq()` gains `show_values` and `minimum_value_to_show` parameters to display abundance values (or percentages when `percent_bar = TRUE`) inside bar segments.
 

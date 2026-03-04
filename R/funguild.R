@@ -31,16 +31,16 @@ get_funguild_db <- function(
     return(NULL)
   }
 
-  httr::GET(url = db_url) %>%
-    httr::content(as = "text") %>%
-    stringr::str_split("\n") %>%
-    unlist() %>%
-    magrittr::extract(7) %>%
-    stringr::str_replace("^\\[", "") %>%
-    stringr::str_replace("]</body>$", "") %>%
-    stringr::str_replace_all("\\} ?, ?\\{", "} \n {") %>%
-    stringr::str_split("\n") %>%
-    unlist() %>%
+  httr::GET(url = db_url) |>
+    httr::content(as = "text") |>
+    stringr::str_split("\n") |>
+    unlist() |>
+    magrittr::extract(7) |>
+    stringr::str_replace("^\\[", "") |>
+    stringr::str_replace("]</body>$", "") |>
+    stringr::str_replace_all("\\} ?, ?\\{", "} \n {") |>
+    stringr::str_split("\n") |>
+    unlist() |>
     purrr::map_dfr(
       function(record) {
         current_record <- jsonlite::fromJSON(record)
@@ -52,7 +52,7 @@ get_funguild_db <- function(
         }
         purrr::flatten(current_record)
       }
-    ) %>%
+    ) |>
     dplyr::select(
       "taxon",
       "guid",
@@ -162,28 +162,28 @@ funguild_assign <- function(
   }
 
   otu_table$taxkey <- make_taxkey(otu_table[[tax_col]])
-  all_taxkey <- unique(otu_table$taxkey) %>% na.omit()
+  all_taxkey <- unique(otu_table$taxkey) |> na.omit()
   `.` <- taxon <- taxkey <- searchkey <- taxonomicLevel <- NULL
 
   db_funguild <- dplyr::mutate(
     db_funguild,
     searchkey = paste0("@", stringr::str_replace(taxon, "[ _]", "@"), "@")
   )
-  dplyr::select(db_funguild, taxonomicLevel, searchkey) %>%
+  dplyr::select(db_funguild, taxonomicLevel, searchkey) |>
     dplyr::mutate(
       taxkey = purrr::map(searchkey, stringr::str_subset, string = all_taxkey)
-    ) %>%
-    tidyr::unnest(cols = taxkey) %>%
-    dplyr::group_by(taxkey) %>%
-    dplyr::arrange(dplyr::desc(taxonomicLevel)) %>%
-    dplyr::summarize_at("searchkey", dplyr::first) %>%
-    dplyr::ungroup() %>%
-    dplyr::mutate_all(as.character) %>%
-    dplyr::left_join(otu_table, ., by = "taxkey") %>%
+    ) |>
+    tidyr::unnest(cols = taxkey) |>
+    dplyr::group_by(taxkey) |>
+    dplyr::arrange(dplyr::desc(taxonomicLevel)) |>
+    dplyr::summarize_at("searchkey", dplyr::first) |>
+    dplyr::ungroup() |>
+    dplyr::mutate_all(as.character) |>
+    (\(x) dplyr::left_join(otu_table, x, by = "taxkey"))() |>
     dplyr::left_join(
       db_funguild,
       by = "searchkey",
       suffix = c("", ".funguild")
-    ) %>%
+    ) |>
     dplyr::select(-taxkey, -searchkey)
 }

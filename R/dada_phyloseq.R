@@ -2905,7 +2905,7 @@ tbl_sum_samdata <- function(physeq, remove_col_unique_value = TRUE, ...) {
       })
     ]
   }
-  tbl_sum <- tbl %>% gtsummary::tbl_summary(...)
+  tbl_sum <- tbl |> gtsummary::tbl_summary(...)
   return(tbl_sum)
 }
 ################################################################################
@@ -4718,10 +4718,8 @@ assign_dada2 <- function(
       tryRC = tryRC
     )
 
-    taxtab$Species <- as.vector(paste(GS[, 1], GS[, 2], sep = "_")) %>%
-      {
-        gsub("NA_NA", NA, .)
-      }
+    taxtab$Species <- as.vector(paste(GS[, 1], GS[, 2], sep = "_")) |>
+      (\(x) gsub("NA_NA", NA, x))()
 
     unlink("temp_species.fasta")
   }

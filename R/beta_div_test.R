@@ -791,8 +791,8 @@ multipatt_pq <- function(
   res_df$p.adj <- p.adjust(res_df$p.value, method = p_adjust_method)
   res_df$taxon_names <- rownames(res_df)
   res_df_signif <-
-    res_df %>%
-    filter(p.adj < pval) %>%
+    res_df |>
+    filter(p.adj < pval) |>
     tidyr::pivot_longer(cols = starts_with("s."))
 
   p <- ggplot(
@@ -997,15 +997,15 @@ signif_ancombc <- function(
     )
 
   if (filter_passed) {
-    signif_ancombc_res <- signif_ancombc_res %>%
+    signif_ancombc_res <- signif_ancombc_res |>
       filter(.data[[paste0("passed_ss", name_modality)]])
   }
 
   if (filter_diff) {
-    signif_ancombc_res <- signif_ancombc_res %>%
+    signif_ancombc_res <- signif_ancombc_res |>
       filter(.data[[paste0("diff", name_modality)]])
   }
-  signif_ancombc_res <- signif_ancombc_res %>%
+  signif_ancombc_res <- signif_ancombc_res |>
     filter(abs(.data[[paste0("lfc", name_modality)]]) > min_abs_lfc)
 
   return(signif_ancombc_res)
@@ -1488,7 +1488,7 @@ distri_1_taxa <- function(physeq, fact, taxa_name, digits = 2) {
         ),
         digits = digits
       )
-    ) %>%
+    ) |>
     mutate(
       "mean_nb_seq_when_present" = round(nb_seq / nb_samp, digits = digits)
     )

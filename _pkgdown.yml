@@ -261,7 +261,7 @@ reference:
   contents:
   - fac2col
   - funky_color
-  - reorder_colors
+  - reorder_distinct_colors
   - transp
 - subtitle: Fasta taxonomic database
   contents:

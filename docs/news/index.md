@@ -2,12 +2,62 @@
 
 ## MiscMetabar 0.14.6 (in development)
 
+- Many functions accepting a `fact` parameter now handle single-level
+  factors gracefully: functions that require multiple groups
+  ([`hill_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_pq.md),
+  [`hill_test_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_test_rarperm_pq.md),
+  [`graph_test_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/graph_test_pq.md),
+  [`multipatt_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/multipatt_pq.md),
+  [`ancombc_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ancombc_pq.md),
+  [`ggbetween_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ggbetween_pq.md),
+  [`venn_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/venn_pq.md),
+  [`ggvenn_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ggvenn_pq.md),
+  [`upset_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/upset_pq.md),
+  [`accu_plot()`](https://adrientaudiere.github.io/MiscMetabar/reference/accu_plot.md),
+  [`accu_plot_balanced_modality()`](https://adrientaudiere.github.io/MiscMetabar/reference/accu_plot_balanced_modality.md),
+  [`plot_tsne_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_tsne_pq.md))
+  now emit an informative error message, while functions that can
+  produce meaningful output with a single level
+  ([`circle_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/circle_pq.md),
+  [`sankey_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/sankey_pq.md),
+  [`are_modality_even_depth()`](https://adrientaudiere.github.io/MiscMetabar/reference/are_modality_even_depth.md))
+  no longer crash.
+
+- Fix a bug in
+  [`format2sintax()`](https://adrientaudiere.github.io/MiscMetabar/reference/format2sintax.md)
+  where the `pattern_tax` parameter was referenced by the wrong internal
+  name (`pattern_k`), causing an error when using the `taxnames`
+  argument.
+
+- Add
+  [`reorder_distinct_colors()`](https://adrientaudiere.github.io/MiscMetabar/reference/reorder_distinct_colors.md)
+  to reassign fill and color scales in ggplot objects so that adjacent
+  segments have maximally different colors, with optional colorblind
+  optimization and lightness alternation.
+
+- [`tax_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/tax_bar_pq.md)
+  gains `show_values` and `minimum_value_to_show` parameters to display
+  abundance values (or percentages when `percent_bar = TRUE`) inside bar
+  segments.
+
 - [`treemap_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/treemap_pq.md)
   now uses `log10(x + 1)` instead of `log10(x)` so that taxa with a
   count of 1 are still visible. New parameters `show_na` (default
   `TRUE`) to display NA taxa as a grey area, `na_label` to customize the
   NA label, and `min_text_size` (default `0`) to control the minimum
   font size for tile labels.
+
+- Add two parameters to
+  [`tax_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/tax_bar_pq.md),
+  bar_internal_color to color each cells of the colored bars and
+  linewidth_bar_internal to set the linewidth.
+
+- [`tax_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/tax_bar_pq.md)
+  with `label_taxa = TRUE` now also draws left-side labels for taxa that
+  appear in the first bar but are absent from the last bar, making all
+  taxa visible when using `add_ribbon = TRUE` across a time factor. A
+  warning is emitted when taxa only appear in intermediate levels and
+  cannot be labelled on either side.
 
 ## MiscMetabar 0.14.5
 

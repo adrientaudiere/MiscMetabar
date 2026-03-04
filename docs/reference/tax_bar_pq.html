@@ -80,7 +80,19 @@ Graphical representation of distribution of taxonomy, optionnaly across a factor
 <span>  fact <span class="op">=</span> <span class="st">"Sample"</span>,</span>
 <span>  taxa <span class="op">=</span> <span class="st">"Order"</span>,</span>
 <span>  percent_bar <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  nb_seq <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  nb_seq <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  add_ribbon <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  ribbon_alpha <span class="op">=</span> <span class="fl">0.3</span>,</span>
+<span>  label_taxa <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  void_theme <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  show_values <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  minimum_value_to_show <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  label_size <span class="op">=</span> <span class="fl">3.2</span>,</span>
+<span>  value_size <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  top_label_size <span class="op">=</span> <span class="fl">3.2</span>,</span>
+<span>  bar_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  bar_internal_color <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  linewidth_bar_internal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">bar_internal_color</span><span class="op">)</span>, <span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -113,11 +125,79 @@ the space between 0 and 1. It just set position = "fill" in the
 is count. Concretely, physeq otu_table is transformed in a binary
 otu_table (each value different from zero is set to one)</p></dd>
 
+
+<dt id="arg-add-ribbon">add_ribbon<a class="anchor" aria-label="anchor" href="#arg-add-ribbon"></a></dt>
+<dd><p>(logical; default FALSE) If TRUE and <code>fact</code> is not
+"Sample", add curved ribbons connecting matching taxa between
+adjacent bars. Only meaningful when <code>fact</code> has more than one level.</p></dd>
+
+
+<dt id="arg-ribbon-alpha">ribbon_alpha<a class="anchor" aria-label="anchor" href="#arg-ribbon-alpha"></a></dt>
+<dd><p>(numeric; default 0.3) Transparency of the ribbons.</p></dd>
+
+
+<dt id="arg-label-taxa">label_taxa<a class="anchor" aria-label="anchor" href="#arg-label-taxa"></a></dt>
+<dd><p>(logical; default FALSE) If TRUE, replace the legend
+with direct labels on the right side of the last bar. Taxa that appear
+in the first bar but are absent from the last bar are additionally
+labelled on the left side of the first bar. Segments are drawn to
+resolve overlapping labels.</p></dd>
+
+
+<dt id="arg-void-theme">void_theme<a class="anchor" aria-label="anchor" href="#arg-void-theme"></a></dt>
+<dd><p>(logical; default TRUE) If TRUE, use
+<code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">ggplot2::theme_void()</a></code> when <code>label_taxa</code> is TRUE.</p></dd>
+
+
+<dt id="arg-show-values">show_values<a class="anchor" aria-label="anchor" href="#arg-show-values"></a></dt>
+<dd><p>(logical; default FALSE) If TRUE, display
+abundance values (or percentages when <code>percent_bar = TRUE</code>) inside
+bar segments that exceed <code>minimum_value_to_show</code>.</p></dd>
+
+
+<dt id="arg-minimum-value-to-show">minimum_value_to_show<a class="anchor" aria-label="anchor" href="#arg-minimum-value-to-show"></a></dt>
+<dd><p>(numeric; default 0) When
+<code>show_values = TRUE</code>, only segments with a value strictly above
+this threshold get a label.</p></dd>
+
+
+<dt id="arg-label-size">label_size<a class="anchor" aria-label="anchor" href="#arg-label-size"></a></dt>
+<dd><p>(numeric; default 3.2) Font size (in ggplot2 mm
+units) for taxa labels when <code>label_taxa = TRUE</code>.</p></dd>
+
+
+<dt id="arg-value-size">value_size<a class="anchor" aria-label="anchor" href="#arg-value-size"></a></dt>
+<dd><p>(numeric; default 3) Font size (in ggplot2 mm
+units) for value labels when <code>show_values = TRUE</code>.</p></dd>
+
+
+<dt id="arg-top-label-size">top_label_size<a class="anchor" aria-label="anchor" href="#arg-top-label-size"></a></dt>
+<dd><p>(numeric; default 3.2) Font size (in ggplot2 mm
+units) for the top group labels when <code>fact</code> is not "Sample".</p></dd>
+
+
+<dt id="arg-bar-width">bar_width<a class="anchor" aria-label="anchor" href="#arg-bar-width"></a></dt>
+<dd><p>(numeric; default NULL set 0.9 if <code>add_ribbon = FALSE</code>, 0.5 if
+<code>add_ribbon = TRUE</code> and <code>fact != "Sample"</code>, and 0.6 if fact is only a one-level
+factor). Width of the bars. Set to 0 to have no visible bars
+and only ribbons.</p></dd>
+
+
+<dt id="arg-bar-internal-color">bar_internal_color<a class="anchor" aria-label="anchor" href="#arg-bar-internal-color"></a></dt>
+<dd><p>(default NA) Color of bar borders. Use <code>NA</code> (default)
+to remove borders, which avoids thin white lines in PDF output.
+Set to e.g. <code>"black"</code> or <code>"grey30"</code> for visible borders.</p></dd>
+
+
+<dt id="arg-linewidth-bar-internal">linewidth_bar_internal<a class="anchor" aria-label="anchor" href="#arg-linewidth-bar-internal"></a></dt>
+<dd><p>(default 0 if <code>bar_internal_color</code> is <code>NA</code>, otherwise 0.5)
+Line width of bar borders.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></code>2 plot  with bar representing the number of sequence en each
-taxonomic groups</p>
+    <p>A <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></code>2 plot  with bar representing the
+number of sequence en each taxonomic groups</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -131,7 +211,8 @@ taxonomic groups</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">data_fungi_ab</span> <span class="op">&lt;-</span> <span class="fu"><a href="subset_taxa_pq.html">subset_taxa_pq</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/taxa_sums.html" class="external-link">taxa_sums</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">10000</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">data_fungi_ab</span> <span class="op">&lt;-</span> <span class="fu"><a href="subset_taxa_pq.html">subset_taxa_pq</a></span><span class="op">(</span><span class="va">data_fungi</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/taxa_sums.html" class="external-link">taxa_sums</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">10000</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 15 sample(s) ( BE9-006-B_S27_MERGED.fastq.gz / C21-NV1-M_S64_MERGED.fastq.gz / DJ2-008-B_S87_MERGED.fastq.gz / DY5-004-H_S97_MERGED.fastq.gz / DY5-004-M_S98_MERGED.fastq.gz / E9-009-B_S100_MERGED.fastq.gz / E9-009-H_S101_MERGED.fastq.gz / N22-001-B_S129_MERGED.fastq.gz / O20-X-B_S139_MERGED.fastq.gz / O21-007-M_S144_MERGED.fastq.gz / R28-008-H_S159_MERGED.fastq.gz / R28-008-M_S160_MERGED.fastq.gz / W26-001-M_S167_MERGED.fastq.gz / Y29-007-H_S182_MERGED.fastq.gz / Y29-007-M_S183_MERGED.fastq.gz ).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 1420</span>
@@ -146,9 +227,40 @@ taxonomic groups</p>
 <span class="r-in"><span><span class="fu">tax_bar_pq</span><span class="op">(</span><span class="va">data_fungi_ab</span>, taxa <span class="op">=</span> <span class="st">"Class"</span>, percent_bar <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="tax_bar_pq-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu">tax_bar_pq</span><span class="op">(</span><span class="va">data_fungi_ab</span>, taxa <span class="op">=</span> <span class="st">"Class"</span>, fact <span class="op">=</span> <span class="st">"Time"</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 770 rows containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_bar()`).</span>
 <span class="r-plt img"><img src="tax_bar_pq-4.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">tax_bar_pq</span><span class="op">(</span><span class="va">data_fungi_ab</span>,</span></span>
+<span class="r-in"><span>  taxa <span class="op">=</span> <span class="st">"Class"</span>, fact <span class="op">=</span> <span class="st">"Time"</span>,</span></span>
+<span class="r-in"><span>  percent_bar <span class="op">=</span> <span class="cn">TRUE</span>, add_ribbon <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="tax_bar_pq-5.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">tax_bar_pq</span><span class="op">(</span><span class="va">data_fungi_ab</span>,</span></span>
+<span class="r-in"><span>  taxa <span class="op">=</span> <span class="st">"Class"</span>, fact <span class="op">=</span> <span class="st">"Time"</span>,</span></span>
+<span class="r-in"><span>  percent_bar <span class="op">=</span> <span class="cn">TRUE</span>, add_ribbon <span class="op">=</span> <span class="cn">TRUE</span>, label_taxa <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>1 taxon/taxa only appear in intermediate levels and will not be labelled: Atractiellomycetes. Consider using label_taxa = FALSE.</span>
+<span class="r-plt img"><img src="tax_bar_pq-6.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">tax_bar_pq</span><span class="op">(</span><span class="va">data_fungi_ab</span>,</span></span>
+<span class="r-in"><span>  taxa <span class="op">=</span> <span class="st">"Class"</span>, fact <span class="op">=</span> <span class="st">"Time"</span>,</span></span>
+<span class="r-in"><span>  show_values <span class="op">=</span> <span class="cn">TRUE</span>, minimum_value_to_show <span class="op">=</span> <span class="fl">10000</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="tax_bar_pq-7.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">tax_bar_pq</span><span class="op">(</span><span class="va">data_fungi_ab</span>, fact <span class="op">=</span> <span class="st">"Height"</span>, taxa <span class="op">=</span> <span class="st">"Class"</span>,</span></span>
+<span class="r-in"><span>  nb_seq <span class="op">=</span> <span class="cn">FALSE</span>, percent_bar <span class="op">=</span> <span class="cn">TRUE</span>, label_taxa <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  add_ribbon <span class="op">=</span> <span class="cn">TRUE</span>, value_size<span class="op">=</span><span class="fl">7</span>, ribbon_alpha <span class="op">=</span> <span class="fl">.6</span>,</span></span>
+<span class="r-in"><span>  show_values<span class="op">=</span><span class="cn">TRUE</span>, label_size <span class="op">=</span> <span class="fl">4</span>, top_label_size <span class="op">=</span> <span class="fl">6</span>,</span></span>
+<span class="r-in"><span>  minimum_value_to_show<span class="op">=</span><span class="fl">0.05</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="reorder_distinct_colors.html">reorder_distinct_colors</a></span><span class="op">(</span>alternate_lightness<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="tax_bar_pq-8.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">tax_bar_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, fact <span class="op">=</span> <span class="st">"Height"</span>, taxa <span class="op">=</span> <span class="st">"Order"</span>,</span></span>
+<span class="r-in"><span>  nb_seq <span class="op">=</span> <span class="cn">TRUE</span>, percent_bar <span class="op">=</span> <span class="cn">TRUE</span>, label_taxa <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  add_ribbon <span class="op">=</span> <span class="cn">TRUE</span>, value_size<span class="op">=</span><span class="fl">5</span>,</span></span>
+<span class="r-in"><span>  ribbon_alpha <span class="op">=</span> <span class="fl">.6</span>, show_values<span class="op">=</span><span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  label_size <span class="op">=</span> <span class="fl">4</span>, top_label_size <span class="op">=</span> <span class="fl">8</span>,</span></span>
+<span class="r-in"><span>  minimum_value_to_show<span class="op">=</span><span class="fl">0.05</span>, bar_width <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
+<span class="r-in"><span>  linewidth_bar_internal <span class="op">=</span> <span class="fl">0.1</span>, bar_internal_color<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="reorder_distinct_colors.html">reorder_distinct_colors</a></span><span class="op">(</span>alternate_lightness<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="tax_bar_pq-9.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

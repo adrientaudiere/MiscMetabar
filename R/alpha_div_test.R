@@ -404,7 +404,7 @@ glmutli_pq <-
         "alpha"
       )
     cf$variable <- rownames(cf)
-    cf <- cf %>% filter(!grepl("Intercept", variable))
+    cf <- cf |> filter(!grepl("Intercept", variable))
 
     if (fitfunction == "lm") {
       test <- vector("list", nrow(top_glmulti))
