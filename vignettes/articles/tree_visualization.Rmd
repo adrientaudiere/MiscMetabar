@@ -48,10 +48,10 @@ library("ggtree")
 
 ggtree(data_fungi_tree@phy_tree, layout = "ellipse") + geom_tiplab()
 ggtree(as.treedata(df_tree$ML), layout = "slanted")
-ggdensitree(df_tree$ML_bs, alpha = .3, colour = "steelblue") +
-  geom_tiplab(size = 3) + hexpand(.35)
+ggdensitree(df_tree$ML_bs, alpha = 0.3, colour = "steelblue") +
+  geom_tiplab(size = 3) + hexpand(0.35)
 ggtree(as.treedata(df_tree$ML)) +
-  geom_text(aes(x = branch, label = AA_subs, vjust = -.5), size = 1)
+  geom_text(aes(x = branch, label = AA_subs, vjust = -0.5), size = 1)
 ```
 
 ```{r}

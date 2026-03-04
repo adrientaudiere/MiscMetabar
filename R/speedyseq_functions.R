@@ -647,9 +647,7 @@ merge_groups <- function(x, group, f = unique_or_na) {
   f <- purrr::as_mapper(f)
   split(x, group) |>
     purrr::map(f) |>
-    {
-      vctrs::vec_c(!!!., .name_spec = rlang::zap())
-    }
+    (\(x) vctrs::vec_c(!!!x, .name_spec = rlang::zap()))()
 }
 
 

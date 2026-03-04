@@ -26,7 +26,7 @@ unique_or_na(f[1:2])
 x <- c("a", "b", "a")
 unique_or_na(x[c(1, 3)])
 unique_or_na(x)
-unique_or_na(x) \%>\% typeof()
+unique_or_na(x) |> typeof()
 }
 \author{
 Michael R. McLaren (orcid: \href{https://orcid.org/0000-0003-1575-473X}{0000-0003-1575-473X})

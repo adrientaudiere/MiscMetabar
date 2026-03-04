@@ -89,14 +89,14 @@ data(enterotype)
 
 # Merge samples with the same project and clinical status
 ps <- enterotype
-sample_data(ps) <- sample_data(ps) \%>\%
+sample_data(ps) <- sample_data(ps) |>
   transform(Project.ClinicalStatus = Project:ClinicalStatus)
-sample_data(ps) \%>\% head()
+sample_data(ps) |> head()
 ps0 <- merge_samples2(ps, "Project.ClinicalStatus",
   fun_otu = mean,
   funs = list(Age = mean)
 )
-sample_data(ps0) \%>\% head()
+sample_data(ps0) |> head()
 }
 \author{
 Michael R. McLaren (orcid: \href{https://orcid.org/0000-0003-1575-473X}{0000-0003-1575-473X}) modified by Adrien Taudiere
