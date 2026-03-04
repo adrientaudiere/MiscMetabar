@@ -83,6 +83,7 @@ ref_fasta <- system.file("extdata",
 )
 add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "dada2")
 add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "dada2_2steps")
+add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "sintax")
 add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "lca")
 add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "idtaxa")
 
