@@ -1,0 +1,31 @@
+{
+  "cli_version": "0.4.8",
+  "checkpoint_id": "34738827852e",
+  "strategy": "manual-commit",
+  "branch": "dev",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "R/dada_phyloseq.R",
+    "R/miscellanous.R",
+    "R/taxonomy.R",
+    "R/vsearch.R",
+    "tests/testthat/test_figures_taxo.R",
+    "tests/testthat/test_taxonomy_utils.R"
+  ],
+  "sessions": [
+    {
+      "metadata": "/34/738827852e/0/metadata.json",
+      "transcript": "/34/738827852e/0/full.jsonl",
+      "context": "/34/738827852e/0/context.md",
+      "content_hash": "/34/738827852e/0/content_hash.txt",
+      "prompt": "/34/738827852e/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 11,
+    "cache_creation_tokens": 6311,
+    "cache_read_tokens": 702812,
+    "output_tokens": 2829,
+    "api_call_count": 11
+  }
+}
