@@ -632,6 +632,10 @@ formattable_pq <- function(
         ),
         Genus = formattable::formatter(
           "span",
+          style = x ~ formattable::style("font-style" = "bold")
+        ),
+        Species = formattable::formatter(
+          "span",
           style = x ~ formattable::style("font-style" = "italic")
         ),
         nb_seq = formattable::formatter(
