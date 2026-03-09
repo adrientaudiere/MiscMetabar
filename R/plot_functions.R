@@ -2566,6 +2566,15 @@ rotl_pq <- function(
 #'   of ylim. If one value is set, this value is used for both limits.
 #' @param nb_samples_info (default: TRUE, logical) if TRUE and merge_sample_by is set,
 #'   add the number of samples merged for both levels.
+#' @param split_by_sample (default: FALSE, logical) if TRUE and
+#'   `merge_sample_by` is set, the bars are not merged but stacked by sample,
+#'   with borders between segments so that the distribution of sequences
+#'   across samples is visible. The border color and width are controlled by
+#'   `sample_border_col` and `sample_border_width`.
+#' @param sample_border_col (default: "white") Color of the border between
+#'   sample segments when `split_by_sample = TRUE`.
+#' @param sample_border_width (default: 0.3) Width of the border between
+#'   sample segments when `split_by_sample = TRUE`.
 #' @param plotly_version If TRUE, use [plotly::ggplotly()] to return
 #'   a interactive ggplot.
 #' @param ... Other arguments for the ggplot function
@@ -2574,6 +2583,10 @@ rotl_pq <- function(
 #' @examples
 #' data_fungi_2Height <- subset_samples(data_fungi_mini, Height %in% c("Low", "High"))
 #' biplot_pq(data_fungi_2Height, "Height", merge_sample_by = "Height")
+#' biplot_pq(data_fungi_2Height, "Height",
+#'   merge_sample_by = "Height",
+#'   split_by_sample = TRUE
+#' )
 #' @export
 #' @author Adrien Taudière
 #'
@@ -2601,6 +2614,9 @@ biplot_pq <- function(
   y_names = NA,
   ylim_modif = c(1, 1),
   nb_samples_info = TRUE,
+  split_by_sample = FALSE,
+  sample_border_col = "white",
+  sample_border_width = 0.3,
   plotly_version = FALSE,
   ...
 ) {
@@ -2609,14 +2625,22 @@ biplot_pq <- function(
       modality_1_nb <- table(physeq@sam_data[, merge_sample_by])[1]
       modality_2_nb <- table(physeq@sam_data[, merge_sample_by])[2]
     }
-    physeq <- merge_samples2(physeq, merge_sample_by)
-    physeq <- clean_pq(physeq)
+    if (!split_by_sample) {
+      physeq <- merge_samples2(physeq, merge_sample_by)
+      physeq <- clean_pq(physeq)
+    }
   }
 
-  if (nsamples(physeq) != 2) {
+  if (!split_by_sample && nsamples(physeq) != 2) {
     stop(
       "biplot_pq needs only two samples in the
     physeq object or a valid merge_sample_by parameter"
+    )
+  }
+
+  if (split_by_sample && is.null(merge_sample_by) && is.null(fact)) {
+    stop(
+      "split_by_sample requires either merge_sample_by or fact to be set"
     )
   }
 
@@ -2665,13 +2689,21 @@ biplot_pq <- function(
   }
 
   if (is.null(fact)) {
-    if (is.null(left_name)) {
-      left_name <- "A"
+    if (split_by_sample && !is.null(merge_sample_by)) {
+      fact <- merge_sample_by
+      modality <-
+        as.factor(eval(parse(
+          text = paste("physeq@sam_data$", fact, sep = "")
+        )))
+    } else {
+      if (is.null(left_name)) {
+        left_name <- "A"
+      }
+      if (is.null(right_name)) {
+        right_name <- "B"
+      }
+      modality <- factor(c(left_name, right_name))
     }
-    if (is.null(right_name)) {
-      right_name <- "B"
-    }
-    modality <- factor(c(left_name, right_name))
   } else {
     modality <-
       as.factor(eval(parse(
@@ -2720,6 +2752,26 @@ biplot_pq <- function(
     nudge_y <- mean(mdf$Abundance) * nudge_y
   }
 
+  if (split_by_sample) {
+    mdf <- mdf[order(mdf$OTU, mdf$modality, -mdf$Abundance), ]
+    mdf$.stack_order <- factor(seq_len(nrow(mdf)), levels = seq_len(nrow(mdf)))
+    if (log10trans) {
+      mdf <- do.call(
+        rbind,
+        lapply(
+          split(mdf, list(mdf$OTU, mdf$modality), drop = TRUE),
+          function(df) {
+            total_ab <- sum(df$Abundance)
+            total_height <- log10(total_ab + 1)
+            df$Ab <- (df$Abundance / total_ab) * total_height
+            df
+          }
+        )
+      )
+      rownames(mdf) <- NULL
+    }
+  }
+
   mdf$Ab[mdf$modality == levels(modality)[1]] <-
     -mdf$Ab[mdf$modality == levels(modality)[1]]
   mdf$Proportion <- paste0(
@@ -2742,31 +2794,67 @@ biplot_pq <- function(
       "%"
     )
 
-  p <- mdf |>
-    ggplot(
-      aes(
-        x = stats::reorder(OTU, Abundance),
-        y = Ab,
-        fill = modality,
-        names = OTU,
-        Ab = Abundance,
-        Proportion = Proportion
-      ),
-      ...
+  if (split_by_sample) {
+    ab_by_otu_mod <- stats::aggregate(
+      Ab ~ OTU + modality,
+      data = mdf,
+      FUN = sum
+    )
+    max_ab <- max(ab_by_otu_mod$Ab)
+    min_ab <- min(ab_by_otu_mod$Ab)
+  } else {
+    max_ab <- max(mdf$Ab)
+    min_ab <- min(mdf$Ab)
+  }
+
+  if (split_by_sample) {
+    p <- mdf |>
+      ggplot(
+        aes(
+          x = stats::reorder(OTU, Abundance),
+          y = Ab,
+          fill = modality,
+          group = .stack_order,
+          names = OTU,
+          Ab = Abundance,
+          Proportion = Proportion
+        ),
+        ...
+      )
+  } else {
+    p <- mdf |>
+      ggplot(
+        aes(
+          x = stats::reorder(OTU, Abundance),
+          y = Ab,
+          fill = modality,
+          names = OTU,
+          Ab = Abundance,
+          Proportion = Proportion
+        ),
+        ...
+      )
+  }
+
+  p <- p +
+    geom_bar(
+      stat = "identity",
+      width = 0.6,
+      color = if (split_by_sample) sample_border_col else NA,
+      linewidth = if (split_by_sample) sample_border_width else 0
     ) +
-    geom_bar(stat = "identity", width = 0.6) +
     annotate(
       "rect",
       xmin = "Samples",
       xmax = "Samples",
-      ymin = -max(mdf$Ab),
-      ymax = max(mdf$Ab)
+      ymin = -max_ab,
+      ymax = max_ab
     ) +
     annotate(
       geom = "text",
       label = right_name,
       x = "Samples",
-      y = ifelse(is.na(y_names), max(mdf$Ab) / 2, y_names[2]),
+      y = ifelse(is.na(y_names), max_ab / 2, y_names[2]),
       hjust = 0.5,
       vjust = 0.5,
       size = size_names,
@@ -2777,7 +2865,7 @@ biplot_pq <- function(
       geom = "text",
       label = left_name,
       x = "Samples",
-      y = ifelse(is.na(y_names), (min(mdf$Ab) / 2), -y_names[1]),
+      y = ifelse(is.na(y_names), (min_ab / 2), -y_names[1]),
       hjust = 0.5,
       vjust = 0.5,
       size = size_names,
@@ -2793,9 +2881,72 @@ biplot_pq <- function(
         "Samples"
       )
     ) +
-    ylim(min(mdf$Ab), max(mdf$Ab) * 1.1)
+    ylim(min_ab, max_ab * 1.1)
 
-  if (geom_label) {
+  if (split_by_sample) {
+    mdf_totals <- stats::aggregate(
+      cbind(Ab, Abundance) ~ OTU + modality,
+      data = mdf,
+      FUN = sum
+    )
+    mdf_totals$Proportion <- ""
+    mdf_totals$Proportion[mdf_totals$modality == levels(modality)[2]] <-
+      paste0(
+        round(
+          100 *
+            mdf_totals$Abundance[mdf_totals$modality == levels(modality)[2]] /
+            sum(mdf_totals$Abundance[
+              mdf_totals$modality == levels(modality)[2]
+            ]),
+          2
+        ),
+        "%"
+      )
+    mdf_totals$Proportion[mdf_totals$modality == levels(modality)[1]] <-
+      paste0(
+        round(
+          100 *
+            mdf_totals$Abundance[mdf_totals$modality == levels(modality)[1]] /
+            sum(mdf_totals$Abundance[
+              mdf_totals$modality == levels(modality)[1]
+            ]),
+          2
+        ),
+        "%"
+      )
+  }
+
+  if (split_by_sample) {
+    if (geom_label) {
+      p <- p +
+        geom_label(
+          data = mdf_totals,
+          aes(
+            x = OTU,
+            label = Abundance,
+            color = modality,
+            fill = modality,
+            alpha = 0.5,
+            y = ifelse(Ab > 0, Ab + nudge_y[2], Ab - nudge_y[1])
+          ),
+          inherit.aes = FALSE,
+          size = text_size
+        )
+    } else {
+      p <- p +
+        geom_text(
+          data = mdf_totals,
+          aes(
+            x = OTU,
+            label = Abundance,
+            color = modality,
+            y = ifelse(Ab > 0, Ab + nudge_y[2], Ab - nudge_y[1])
+          ),
+          inherit.aes = FALSE,
+          size = text_size
+        )
+    }
+  } else if (geom_label) {
     p <- p +
       geom_label(
         aes(
@@ -2803,7 +2954,7 @@ biplot_pq <- function(
           color = modality,
           fill = modality,
           alpha = 0.5,
-          y = ifelse(Ab > 0, Ab + nudge_y[2], Ab + nudge_y[1])
+          y = ifelse(Ab > 0, Ab + nudge_y[2], Ab - nudge_y[1])
         ),
         size = text_size
       )
@@ -2813,7 +2964,7 @@ biplot_pq <- function(
         aes(
           label = Abundance,
           color = modality,
-          y = ifelse(Ab > 0, Ab + nudge_y[2], Ab + nudge_y[1])
+          y = ifelse(Ab > 0, Ab + nudge_y[2], Ab - nudge_y[1])
         ),
         size = text_size
       )
@@ -2836,34 +2987,60 @@ biplot_pq <- function(
     )
 
   if (plotly_version) {
-    p <- mdf |>
-      ggplot(
-        aes(
-          x = stats::reorder(OTU, Abundance),
-          y = Ab,
-          fill = modality,
-          names = OTU,
-          Ab = Abundance,
-          Proportion = Proportion,
-          Family = Family,
-          Genus = Genus,
-          Species = Species
-        ),
-        ...
+    if (split_by_sample) {
+      p <- mdf |>
+        ggplot(
+          aes(
+            x = stats::reorder(OTU, Abundance),
+            y = Ab,
+            fill = modality,
+            group = .stack_order,
+            names = OTU,
+            Ab = Abundance,
+            Proportion = Proportion,
+            Family = Family,
+            Genus = Genus,
+            Species = Species
+          ),
+          ...
+        )
+    } else {
+      p <- mdf |>
+        ggplot(
+          aes(
+            x = stats::reorder(OTU, Abundance),
+            y = Ab,
+            fill = modality,
+            names = OTU,
+            Ab = Abundance,
+            Proportion = Proportion,
+            Family = Family,
+            Genus = Genus,
+            Species = Species
+          ),
+          ...
+        )
+    }
+
+    p <- p +
+      geom_bar(
+        stat = "identity",
+        width = 0.6,
+        color = if (split_by_sample) sample_border_col else NA,
+        linewidth = if (split_by_sample) sample_border_width else 0
       ) +
-      geom_bar(stat = "identity", width = 0.6) +
       annotate(
         "rect",
         xmin = "Samples",
         xmax = "Samples",
-        ymin = -max(mdf$Ab),
-        ymax = max(mdf$Ab)
+        ymin = -max_ab,
+        ymax = max_ab
       ) +
       annotate(
         geom = "text",
         label = right_name,
         x = "Samples",
-        y = ifelse(is.na(y_names), max(mdf$Ab) / 2, y_names[2]),
+        y = ifelse(is.na(y_names), max_ab / 2, y_names[2]),
         hjust = 0.5,
         vjust = 0.5,
         size = size_names,
@@ -2874,7 +3051,7 @@ biplot_pq <- function(
         geom = "text",
         label = left_name,
         x = "Samples",
-        y = ifelse(is.na(y_names), (min(mdf$Ab) / 2), -y_names[1]),
+        y = ifelse(is.na(y_names), (min_ab / 2), -y_names[1]),
         hjust = 0.5,
         vjust = 0.5,
         size = size_names,
@@ -2890,7 +3067,7 @@ biplot_pq <- function(
           "Samples"
         )
       ) +
-      ylim(min(mdf$Ab), max(mdf$Ab) * 1.1)
+      ylim(min_ab, max_ab * 1.1)
 
     p <- plotly::ggplotly(
       p,

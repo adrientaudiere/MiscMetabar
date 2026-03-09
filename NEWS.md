@@ -10,6 +10,8 @@
 
 - `treemap_pq()` now uses `log10(x + 1)` instead of `log10(x)` so that taxa with a count of 1 are still visible. New parameters `show_na` (default `TRUE`) to display NA taxa as a grey area, `na_label` to customize the NA label, and `min_text_size` (default `0`) to control the minimum font size for tile labels.
 
+- `biplot_pq()` gains `split_by_sample`, `sample_border_col`, and `sample_border_width` parameters. When `split_by_sample = TRUE`, bars are stacked by sample with visible borders, showing the distribution of sequences across individual samples instead of a merged total.
+
 - Add two parameters to `tax_bar_pq()`, bar_internal_color to color each cells of the colored bars and linewidth_bar_internal to set the linewidth.
 
 - `tax_bar_pq()` with `label_taxa = TRUE` now also draws left-side labels for taxa that appear in the first bar but are absent from the last bar, making all taxa visible when using `add_ribbon = TRUE` across a time factor. A warning is emitted when taxa only appear in intermediate levels and cannot be labelled on either side.

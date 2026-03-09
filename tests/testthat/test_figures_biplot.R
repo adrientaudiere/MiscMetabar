@@ -45,6 +45,25 @@ test_that("biplot_pq works", {
     "biplot_pq needs only two samples"
   )
   expect_error(biplot_pq(data_fungi_2trees, merge_sample_by = "tRREE_name"))
+  expect_s3_class(
+    biplot_pq(
+      data_fungi_2trees,
+      merge_sample_by = "Tree_name",
+      split_by_sample = TRUE
+    ),
+    "ggplot"
+  )
+  expect_s3_class(
+    biplot_pq(
+      data_fungi_2trees,
+      merge_sample_by = "Tree_name",
+      split_by_sample = TRUE,
+      sample_border_col = "black",
+      sample_border_width = 0.5
+    ),
+    "ggplot"
+  )
+  expect_error(biplot_pq(data_fungi_2trees, split_by_sample = TRUE))
 })
 
 

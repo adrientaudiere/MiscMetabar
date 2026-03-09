@@ -28,6 +28,9 @@ biplot_pq(
   y_names = NA,
   ylim_modif = c(1, 1),
   nb_samples_info = TRUE,
+  split_by_sample = FALSE,
+  sample_border_col = "white",
+  sample_border_width = 0.3,
   plotly_version = FALSE,
   ...
 )
@@ -97,6 +100,18 @@ of ylim. If one value is set, this value is used for both limits.}
 \item{nb_samples_info}{(default: TRUE, logical) if TRUE and merge_sample_by is set,
 add the number of samples merged for both levels.}
 
+\item{split_by_sample}{(default: FALSE, logical) if TRUE and
+\code{merge_sample_by} is set, the bars are not merged but stacked by sample,
+with borders between segments so that the distribution of sequences
+across samples is visible. The border color and width are controlled by
+\code{sample_border_col} and \code{sample_border_width}.}
+
+\item{sample_border_col}{(default: "white") Color of the border between
+sample segments when \code{split_by_sample = TRUE}.}
+
+\item{sample_border_width}{(default: 0.3) Width of the border between
+sample segments when \code{split_by_sample = TRUE}.}
+
 \item{plotly_version}{If TRUE, use \code{\link[plotly:ggplotly]{plotly::ggplotly()}} to return
 a interactive ggplot.}
 
@@ -117,6 +132,10 @@ Graphical representation of distribution of taxa across two samples.
 \examples{
 data_fungi_2Height <- subset_samples(data_fungi_mini, Height \%in\% c("Low", "High"))
 biplot_pq(data_fungi_2Height, "Height", merge_sample_by = "Height")
+biplot_pq(data_fungi_2Height, "Height",
+  merge_sample_by = "Height",
+  split_by_sample = TRUE
+)
 }
 \author{
 Adrien Taudière
