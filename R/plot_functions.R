@@ -2601,7 +2601,7 @@ biplot_pq <- function(
   left_name = NULL,
   left_name_col = "#4B3E1E",
   left_fill = "#4B3E1E",
-  left_col = "#f3f2d9",
+  left_col = "#4B3E1E",
   right_name = NULL,
   right_name_col = "#1d2949",
   right_fill = "#1d2949",
@@ -2615,7 +2615,7 @@ biplot_pq <- function(
   ylim_modif = c(1, 1),
   nb_samples_info = TRUE,
   split_by_sample = FALSE,
-  sample_border_col = "white",
+  sample_border_col = "#d4d0acff",
   sample_border_width = 0.3,
   plotly_version = FALSE,
   ...
@@ -2749,7 +2749,6 @@ biplot_pq <- function(
     mdf$Ab <- log10(mdf$Abundance + 1)
   } else {
     mdf$Ab <- mdf$Abundance
-    nudge_y <- mean(mdf$Abundance) * nudge_y
   }
 
   if (split_by_sample) {
@@ -2881,7 +2880,7 @@ biplot_pq <- function(
         "Samples"
       )
     ) +
-    ylim(min_ab, max_ab * 1.1)
+    ylim(min_ab * 1.1, max_ab * 1.1)
 
   if (split_by_sample) {
     mdf_totals <- stats::aggregate(
@@ -2920,52 +2919,70 @@ biplot_pq <- function(
     if (geom_label) {
       p <- p +
         geom_label(
-          data = mdf_totals,
-          aes(
-            x = OTU,
-            label = Abundance,
-            color = modality,
-            fill = modality,
-            alpha = 0.5,
-            y = ifelse(Ab > 0, Ab + nudge_y[2], Ab - nudge_y[1])
-          ),
+          data = mdf_totals[mdf_totals$Ab > 0, ],
+          aes(x = OTU, label = Abundance, fill = modality, alpha = 0.5, y = Ab),
           inherit.aes = FALSE,
+          color = right_col,
+          hjust = -0.1,
+          size = text_size
+        ) +
+        geom_label(
+          data = mdf_totals[mdf_totals$Ab < 0, ],
+          aes(x = OTU, label = Abundance, fill = modality, alpha = 0.5, y = Ab),
+          inherit.aes = FALSE,
+          color = left_col,
+          hjust = 1.1,
           size = text_size
         )
     } else {
       p <- p +
         geom_text(
-          data = mdf_totals,
-          aes(
-            x = OTU,
-            label = Abundance,
-            color = modality,
-            y = ifelse(Ab > 0, Ab + nudge_y[2], Ab - nudge_y[1])
-          ),
+          data = mdf_totals[mdf_totals$Ab > 0, ],
+          aes(x = OTU, label = Abundance, y = Ab),
           inherit.aes = FALSE,
+          color = right_col,
+          hjust = -0.1,
+          size = text_size
+        ) +
+        geom_text(
+          data = mdf_totals[mdf_totals$Ab < 0, ],
+          aes(x = OTU, label = Abundance, y = Ab),
+          inherit.aes = FALSE,
+          color = left_col,
+          hjust = 1.1,
           size = text_size
         )
     }
   } else if (geom_label) {
     p <- p +
       geom_label(
-        aes(
-          label = Abundance,
-          color = modality,
-          fill = modality,
-          alpha = 0.5,
-          y = ifelse(Ab > 0, Ab + nudge_y[2], Ab - nudge_y[1])
-        ),
+        data = mdf[mdf$Ab > 0, ],
+        aes(label = Abundance, fill = modality, alpha = 0.5, y = Ab),
+        color = right_col,
+        hjust = -0.1,
+        size = text_size
+      ) +
+      geom_label(
+        data = mdf[mdf$Ab < 0, ],
+        aes(label = Abundance, fill = modality, alpha = 0.5, y = Ab),
+        color = left_col,
+        hjust = 1.1,
         size = text_size
       )
   } else {
     p <- p +
       geom_text(
-        aes(
-          label = Abundance,
-          color = modality,
-          y = ifelse(Ab > 0, Ab + nudge_y[2], Ab - nudge_y[1])
-        ),
+        data = mdf[mdf$Ab > 0, ],
+        aes(label = Abundance, y = Ab),
+        color = right_col,
+        hjust = -0.1,
+        size = text_size
+      ) +
+      geom_text(
+        data = mdf[mdf$Ab < 0, ],
+        aes(label = Abundance, y = Ab),
+        color = left_col,
+        hjust = 1.1,
         size = text_size
       )
   }
@@ -3067,7 +3084,7 @@ biplot_pq <- function(
           "Samples"
         )
       ) +
-      ylim(min_ab, max_ab * 1.1)
+      ylim(min_ab * 1.1, max_ab * 1.1)
 
     p <- plotly::ggplotly(
       p,
