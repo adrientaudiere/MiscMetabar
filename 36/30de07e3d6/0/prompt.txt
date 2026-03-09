@@ -1,0 +1,45 @@
+I want to add a new parameter (logical, default FALSE) to biplot_pq. If true, each bar part (ie each sample sum total for the given taxa) is delimited by vertical bars. So using contour color (default white) of bar, I want to see the distribution of the number of sequences across samples using staked bar.
+
+---
+
+There is two problems. First we want that the order of samples to be sorted so the samples with low sequences be placed close to the 0 vertical line. Second, when log10trans=T, teh use fo split_by_sample=TRUE change the global aspect of the figure.
+
+---
+
+For log10 consistency, try another approch, compute the segment heights and then segment using non-log10 transformed proportion.
+
+---
+
+ok just modify the direction of the ordernig of samples.
+
+---
+
+No, I want the inverse,
+
+---
+
+No, your modification do not change this. I want the square
+
+---
+
+[Request interrupted by user]
+
+---
+
+No, your modification do not change this. I want the rectangle on each bar to be sorted from smallest to tallest with smallest near the 0.
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+Error in `geom_text()`:
+! Problem while computing aesthetics.
+ℹ Error occurred in the 6th layer.
+Caused by error:
+! objet '.stack_order' introuvable
+
+---
+
+Ok. Now I want to make better place for the number of sequences to be positionned. I Want that Abundance geom_text be placed just a little on the right for the right side (and on the left for the left side) of the bar.

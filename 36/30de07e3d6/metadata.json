@@ -1,0 +1,29 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "3630de07e3d6",
+  "strategy": "manual-commit",
+  "branch": "dev",
+  "checkpoints_count": 6,
+  "files_touched": [
+    "NEWS.md",
+    "R/plot_functions.R",
+    "man/biplot_pq.Rd",
+    "tests/testthat/test_figures_biplot.R"
+  ],
+  "sessions": [
+    {
+      "metadata": "/36/30de07e3d6/0/metadata.json",
+      "transcript": "/36/30de07e3d6/0/full.jsonl",
+      "context": "/36/30de07e3d6/0/context.md",
+      "content_hash": "/36/30de07e3d6/0/content_hash.txt",
+      "prompt": "/36/30de07e3d6/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 81,
+    "cache_creation_tokens": 53559,
+    "cache_read_tokens": 2861552,
+    "output_tokens": 25007,
+    "api_call_count": 65
+  }
+}

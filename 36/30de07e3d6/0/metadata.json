@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "3630de07e3d6",
+  "session_id": "a68d9610-d0c5-4dfd-9f7c-d19dce3f745f",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-09T14:18:47.16615312Z",
+  "branch": "dev",
+  "checkpoints_count": 6,
+  "files_touched": [
+    "NEWS.md",
+    "R/plot_functions.R",
+    "man/biplot_pq.Rd",
+    "tests/testthat/test_figures_biplot.R"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "d6129dc5bf3e",
+  "token_usage": {
+    "input_tokens": 81,
+    "cache_creation_tokens": 53559,
+    "cache_read_tokens": 2861552,
+    "output_tokens": 25007,
+    "api_call_count": 65
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-09T14:18:44.358462921Z",
+    "agent_lines": 168,
+    "human_added": 40,
+    "human_modified": 32,
+    "human_removed": 0,
+    "total_committed": 236,
+    "agent_percentage": 71.1864406779661
+  }
+}
