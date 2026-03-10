@@ -629,11 +629,11 @@ chimera_removal_vs <-
         )
       if (type == "Discard_only_chim") {
         seq_tab_final <-
-          object[, !colnames(object) %in% as.character(chim_detect$chimera)]
+          object[, !colnames(object) %in% as.character(chim_detect$chimera), drop = FALSE]
       } else if (type == "Select_only_non_chim_seqlen_filtered") {
-        seq_tab_final <- object[, as.character(chim_rm$non_chimera)]
+        seq_tab_final <- object[, as.character(chim_rm$non_chimera), drop = FALSE]
       } else if (type == "Select_only_chim") {
-        seq_tab_final <- object[, as.character(chim_rm$chimera)]
+        seq_tab_final <- object[, as.character(chim_rm$chimera), drop = FALSE]
       } else {
         stop(
           "Type must be set to one of 'Discard_only_chim',
