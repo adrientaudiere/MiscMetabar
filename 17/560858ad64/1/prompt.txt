@@ -1,0 +1,5 @@
+add usage bar to statusline
+
+---
+
+add usage bar for session and week as see in the "/usage" command to statusline
