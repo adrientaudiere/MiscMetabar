@@ -3667,6 +3667,10 @@ physeq_or_string_to_dna <- function(physeq = NULL, dna_seq = NULL) {
 #'   in targets workflow
 #' @param args_before_cutadapt (String) A one line bash command to run before
 #' to run cutadapt. For examples, "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv &&" allow to bypass the conda init which asks to restart the shell
+#' @param verbose (logical, default TRUE) If FALSE, suppresses all output from
+#'   the cutadapt command (stdout and stderr) as well as the completion message.
+#'   Note: standard R suppression functions (`suppressMessages`, `capture.output`)
+#'   cannot silence system command output; use this parameter instead.
 #'
 #' @return a list of command or if `return_file_path` is TRUE, the path to
 #'   the output folder
@@ -3720,7 +3724,8 @@ cutadapt_remove_primers <- function(
   nb_files = Inf,
   cmd_is_run = TRUE,
   return_file_path = FALSE,
-  args_before_cutadapt = "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv && "
+  args_before_cutadapt = "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv && ",
+  verbose = TRUE
 ) {
   if (!dir.exists(folder_output)) {
     dir.create(folder_output)
@@ -3810,11 +3815,20 @@ cutadapt_remove_primers <- function(
   }
   if (cmd_is_run) {
     writeLines(unlist(cmd), paste0(tempdir(), "/script_cutadapt.sh"))
-    system2("bash", paste0(tempdir(), "/script_cutadapt.sh"))
-    message(paste0(
-      "Output files are available in the folder ",
-      normalizePath(folder_output)
-    ))
+    if (verbose) {
+      system2("bash", paste0(tempdir(), "/script_cutadapt.sh"))
+      message(paste0(
+        "Output files are available in the folder ",
+        normalizePath(folder_output)
+      ))
+    } else {
+      system2(
+        "bash",
+        paste0(tempdir(), "/script_cutadapt.sh"),
+        stdout = FALSE,
+        stderr = FALSE
+      )
+    }
     unlink(paste0(tempdir(), "/script_cutadapt.sh"))
   }
   if (return_file_path) {

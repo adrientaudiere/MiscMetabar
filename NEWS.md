@@ -1,5 +1,7 @@
 # MiscMetabar 0.14.6 (in development)
 
+- `cutadapt_remove_primers()` gains a `verbose` parameter (default `TRUE`). Set `verbose = FALSE` to fully silence cutadapt stdout/stderr and the completion message — unlike `suppressMessages()` or `capture.output()`, which cannot intercept system command output.
+
 - Fix a bug in `chimera_removal_vs()` where matrix dimensions were dropped when the input had only one sample (one row), causing downstream `[, ...]` indexing to fail with "incorrect number of dimensions". All three subsetting branches now use `drop = FALSE`.
 
 - Many functions accepting a `fact` parameter now handle single-level factors gracefully: functions that require multiple groups (`hill_pq()`, `hill_test_rarperm_pq()`, `graph_test_pq()`, `multipatt_pq()`, `ancombc_pq()`, `ggbetween_pq()`, `venn_pq()`, `ggvenn_pq()`, `upset_pq()`, `accu_plot()`, `accu_plot_balanced_modality()`, `plot_tsne_pq()`) now emit an informative error message, while functions that can produce meaningful output with a single level (`circle_pq()`, `sankey_pq()`, `are_modality_even_depth()`) no longer crash.
