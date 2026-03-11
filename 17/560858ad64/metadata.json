@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "17560858ad64",
+  "strategy": "manual-commit",
+  "branch": "dev",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "NEWS.md",
+    "R/dada_phyloseq.R"
+  ],
+  "sessions": [
+    {
+      "metadata": "/17/560858ad64/0/metadata.json",
+      "transcript": "/17/560858ad64/0/full.jsonl",
+      "context": "/17/560858ad64/0/context.md",
+      "content_hash": "/17/560858ad64/0/content_hash.txt",
+      "prompt": "/17/560858ad64/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 15,
+    "cache_creation_tokens": 11179,
+    "cache_read_tokens": 252268,
+    "output_tokens": 2980,
+    "api_call_count": 13
+  }
+}

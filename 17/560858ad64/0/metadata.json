@@ -1,0 +1,31 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "17560858ad64",
+  "session_id": "77800f22-c23a-4a21-815d-7500d7f9748b",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-11T08:32:14.817894835Z",
+  "branch": "dev",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "NEWS.md",
+    "R/dada_phyloseq.R"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "7d1365484835",
+  "token_usage": {
+    "input_tokens": 15,
+    "cache_creation_tokens": 11179,
+    "cache_read_tokens": 252268,
+    "output_tokens": 2980,
+    "api_call_count": 13
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-11T08:32:14.435090732Z",
+    "agent_lines": 22,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 22,
+    "agent_percentage": 100
+  }
+}
