@@ -4046,7 +4046,7 @@ upset_pq <- function(
       )
     })
   })) |>
-    arrange(., desc(Abundance))
+    arrange(desc(Abundance))
 
   colnames(psm2) <- colnames(psm)
 
@@ -4144,7 +4144,7 @@ upset_test_pq <-
         )
       })
     })) |>
-      arrange(., desc(Abundance))
+      arrange(desc(Abundance))
 
     colnames(psm2) <- colnames(psm)
 
