@@ -1,5 +1,7 @@
 # MiscMetabar 0.14.6 (in development)
 
+- Add params `output_data_frame` to function `track_wkflow_samples()`
+
 - `cutadapt_remove_primers()` gains a `verbose` parameter (default `TRUE`). Set `verbose = FALSE` to fully silence cutadapt stdout/stderr and the completion message — unlike `suppressMessages()` or `capture.output()`, which cannot intercept system command output.
 
 - Fix a bug in `chimera_removal_vs()` where matrix dimensions were dropped when the input had only one sample (one row), causing downstream `[, ...]` indexing to fail with "incorrect number of dimensions". All three subsetting branches now use `drop = FALSE`.

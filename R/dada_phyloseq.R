@@ -488,6 +488,8 @@ track_wkflow <- function(
 #' @param list_of_objects (required) a list of objects passed on to
 #'   [track_wkflow()]. Accepts phyloseq, matrix, dada-class, derep-class,
 #'   lists of dada-class or derep-class, and character vectors of file paths.
+#' @param output_data_frame (logical, default FALSE) If TRUE, the function returns a
+#'  data frame with the number of sequences, clusters and samples for each sample.
 #' @param ... Other args passed on to [track_wkflow()]
 #'
 #' @return A list of dataframe. cf [track_wkflow()] for more information
@@ -500,7 +502,7 @@ track_wkflow <- function(
 #' if (requireNamespace("pbapply")) {
 #'   track_wkflow_samples(tree_A10_005)
 #' }
-track_wkflow_samples <- function(list_of_objects, ...) {
+track_wkflow_samples <- function(list_of_objects, output_data_frame = FALSE, ...) {
   if (!inherits(list_of_objects, "list")) {
     list_of_objects <- list(list_of_objects)
   }
@@ -589,6 +591,9 @@ track_wkflow_samples <- function(list_of_objects, ...) {
         subset_object_to_sample(object, s)
       })
     res[[s]] <- track_wkflow(list_obj_samples, ...)
+  }
+  if(output_data_frame) {
+    res <- do.call(rbind, res)
   }
   return(res)
 }
