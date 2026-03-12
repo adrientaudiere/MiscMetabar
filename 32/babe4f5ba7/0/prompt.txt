@@ -1,0 +1,28 @@
+Bug in upset_pq(data_fungi_mini,
+    fact = "Height", width_ratio = 0.2,
+    taxa_fill = "Class"
+  )
+
+
+Error in `arrange()`:
+ℹ In argument: `..1 = .`.
+Caused by error:
+! object '.' not found
+Hide Traceback
+Fix
+Explain
+     ▆
+  1. ├─MiscMetabar::upset_pq(...)
+  2. │ ├─dplyr::arrange(...)
+  3. │ └─dplyr:::arrange.data.frame(...)
+  4. │   └─dplyr:::arrange_rows(.data, dots = dots, locale = .locale)
+  5. │     ├─dplyr::mutate(data, `:=`("{name}", !!dot), .keep = "none")
+  6. │     └─dplyr:::mutate.data.frame(data, `:=`("{name}", !!dot), .keep = "none")
+  7. │       └─dplyr:::mutate_cols(.data, dplyr_quosures(...), by)
+  8. │         ├─base::withCallingHandlers(...)
+  9. │         └─dplyr:::mutate_col(dots[[i]], data, mask, new_columns)
+ 10. │           └─mask$eval_all_mutate(quo)
+ 11. │             └─dplyr (local) eval()
+ 12. └─base::.handleSimpleError(`<fn>`, "object '.' not found", base::quote(NULL))
+ 13.   └─dplyr (local) h(simpleError(msg, call))
+ 14.     └─rlang

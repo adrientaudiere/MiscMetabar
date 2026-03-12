@@ -1,0 +1,30 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "32babe4f5ba7",
+  "session_id": "6f61fb0d-21d6-4c1b-b626-16221f960248",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-12T14:45:38.335620262Z",
+  "branch": "dev",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "R/plot_functions.R"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "da84839eb179",
+  "token_usage": {
+    "input_tokens": 8,
+    "cache_creation_tokens": 17489,
+    "cache_read_tokens": 114427,
+    "output_tokens": 1073,
+    "api_call_count": 6
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-12T14:45:38.156945711Z",
+    "agent_lines": 2,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 2,
+    "agent_percentage": 100
+  }
+}
