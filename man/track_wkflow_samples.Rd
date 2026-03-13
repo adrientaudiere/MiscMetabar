@@ -5,12 +5,15 @@
 \title{Track the number of reads (= sequences), samples and cluster (e.g. ASV)
 for each sample}
 \usage{
-track_wkflow_samples(list_of_objects, ...)
+track_wkflow_samples(list_of_objects, output_data_frame = FALSE, ...)
 }
 \arguments{
 \item{list_of_objects}{(required) a list of objects passed on to
 \code{\link[=track_wkflow]{track_wkflow()}}. Accepts phyloseq, matrix, dada-class, derep-class,
 lists of dada-class or derep-class, and character vectors of file paths.}
+
+\item{output_data_frame}{(logical, default FALSE) If TRUE, the function returns a
+data frame with the number of sequences, clusters and samples for each sample.}
 
 \item{...}{Other args passed on to \code{\link[=track_wkflow]{track_wkflow()}}}
 }

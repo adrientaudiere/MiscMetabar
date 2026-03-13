@@ -176,6 +176,7 @@ reference:
   - plot_tsne_pq
   - plot_var_part_pq
   - ridges_pq
+  - ridges_sam_pq
   - SRS_curve_pq
   - tsne_pq
   - umap_pq

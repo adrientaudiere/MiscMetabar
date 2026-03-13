@@ -1,5 +1,7 @@
 # MiscMetabar 0.14.6 (in development)
 
+- Add `ridges_sam_pq()`, the sample-centric counterpart of `ridges_pq()`: each ridge represents a taxon (at a given taxonomic level) and the x-axis shows the abundance distribution across samples, colored by a sample factor.
+
 - Add params `output_data_frame` to function `track_wkflow_samples()`
 
 - `cutadapt_remove_primers()` gains a `verbose` parameter (default `TRUE`). Set `verbose = FALSE` to fully silence cutadapt stdout/stderr and the completion message — unlike `suppressMessages()` or `capture.output()`, which cannot intercept system command output.

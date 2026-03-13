@@ -4866,6 +4866,106 @@ ridges_pq <- function(
 ################################################################################
 
 ################################################################################
+#' Ridges plot of sample distribution across taxa
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#' Graphical representation of distribution of samples across taxa using ridges.
+#' This is the sample-centric counterpart of [ridges_pq()]: each ridge
+#' represents a taxon (at `tax_level`) and the x-axis shows the abundance
+#' distribution across samples, optionally colored by a sample factor.
+#'
+#' @inheritParams clean_pq
+#' @param fact (required) Name of the factor in `physeq@sam_data` used to color
+#'   the ridges
+#' @param nb_seq (logical; default TRUE) If set to FALSE, only the number of
+#'   samples is counted. Concretely, physeq `otu_table` is transformed in a
+#'   binary `otu_table` (each value different from zero is set to one)
+#' @param log10trans (logical, default TRUE) If TRUE,
+#'   the abundance is log10 transformed.
+#' @param tax_level The taxonomic level used for grouping taxa on the y-axis
+#' @param type Either "density" (the default) or "ecdf" to plot a
+#'   cumulative version using [ggplot2::stat_ecdf()]
+#' @param ... Other params passed on to [ggridges::geom_density_ridges()]
+#'
+#' @return A \code{\link[ggplot2]{ggplot}}2 plot with ridges representing the
+#'   distribution of samples for each taxon
+#' @export
+#' @author Adrien Taudière
+#' @examples
+#' if (requireNamespace("ggridges")) {
+#'   ridges_sam_pq(data_fungi_mini, "Height", alpha = 0.5,
+#'     log10trans = FALSE, tax_level = "Genus") +
+#'   xlim(c(0, 1000))
+#' }
+#' \donttest{
+#' if (requireNamespace("ggridges")) {
+#'   ridges_sam_pq(data_fungi_mini, "Height", alpha = 0.5, scale = 0.9)
+#'   ridges_sam_pq(data_fungi_mini, "Height",
+#'     alpha = 0.5, scale = 0.9,
+#'     type = "ecdf"
+#'   )
+#' }
+#' }
+ridges_sam_pq <- function(
+  physeq,
+  fact,
+  nb_seq = TRUE,
+  log10trans = TRUE,
+  tax_level = "Class",
+  type = "density",
+  ...
+) {
+  psm <- psmelt(physeq)
+  psm <- psm |> dplyr::filter(Abundance > 0)
+
+  if (log10trans) {
+    psm$Abundance <- log10(psm$Abundance)
+  }
+  if (nb_seq) {
+    p <- ggplot(
+      psm,
+      aes(
+        y = factor(.data[[tax_level]]),
+        x = Abundance,
+        fill = .data[[fact]],
+        color = .data[[fact]]
+      )
+    )
+  } else {
+    psm_sam <-
+      psm |>
+      group_by(.data[[tax_level]], Sample, .data[[fact]]) |>
+      summarise("count" = n())
+
+    p <- ggplot(
+      psm_sam,
+      aes(
+        y = factor(.data[[tax_level]]),
+        x = count,
+        fill = .data[[fact]],
+        color = .data[[fact]]
+      )
+    )
+  }
+
+  if (type == "density") {
+    p <- p +
+      ggridges::geom_density_ridges(aes(), ...) +
+      xlim(c(0, NA))
+  } else if (type == "ecdf") {
+    p <- p +
+      stat_ecdf(aes(y = NULL)) +
+      facet_wrap(tax_level, ncol = 2) +
+      theme_minimal() +
+      ylab("Probability")
+  }
+  return(p)
+}
+################################################################################
 
 ################################################################################
 #' Plot treemap of 2 taxonomic levels

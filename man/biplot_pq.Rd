@@ -15,7 +15,7 @@ biplot_pq(
   left_name = NULL,
   left_name_col = "#4B3E1E",
   left_fill = "#4B3E1E",
-  left_col = "#f3f2d9",
+  left_col = "#4B3E1E",
   right_name = NULL,
   right_name_col = "#1d2949",
   right_fill = "#1d2949",
@@ -29,7 +29,7 @@ biplot_pq(
   ylim_modif = c(1, 1),
   nb_samples_info = TRUE,
   split_by_sample = FALSE,
-  sample_border_col = "white",
+  sample_border_col = "#d4d0acff",
   sample_border_width = 0.3,
   plotly_version = FALSE,
   ...

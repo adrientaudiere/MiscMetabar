@@ -40,6 +40,33 @@ test_that("ridges_pq works fine", {
 })
 
 
+test_that("ridges_sam_pq works fine", {
+  if (requireNamespace("ggridges")) {
+    result <- ridges_sam_pq(
+      data_fungi_mini,
+      "Time",
+      alpha = 0.5,
+      log10trans = FALSE
+    )
+    expect_s3_class(result, "ggplot")
+    skip_on_cran()
+    result2 <- ridges_sam_pq(
+      data_fungi_mini,
+      "Time",
+      alpha = 0.5,
+      log10trans = TRUE
+    )
+    expect_s3_class(result2, "ggplot")
+
+    result3 <- ridges_sam_pq(data_fungi_mini, "Time", type = "ecdf")
+    expect_s3_class(result3, "ggplot")
+
+    result4 <- ridges_sam_pq(data_fungi_mini, "Time", nb_seq = FALSE)
+    expect_s3_class(result4, "ggplot")
+  }
+})
+
+
 test_that("treemap_pq works fine", {
   if (requireNamespace("treemapify")) {
     result2 <- suppressWarnings(treemap_pq(data_fungi_mini, "Class", "Order"))

@@ -17,7 +17,10 @@ different lines}
 Used for reorder levels and select levels (filter out levels not present
 en levels_fact)}
 
-\item{tax_level}{The taxonomic level passed on to \code{\link[ANCOMBC:ancombc2]{ANCOMBC::ancombc2()}}}
+\item{tax_level}{(default NULL)
+The taxonomic level passed on to \code{\link[ANCOMBC:ancombc2]{ANCOMBC::ancombc2()}}. If NULL
+do not perform agglomeration, and the ANCOM-BC2 analysis will be
+performed at the lowest taxonomic level of the input data.}
 
 \item{...}{Additional arguments passed on to \code{\link[ANCOMBC:ancombc2]{ANCOMBC::ancombc2()}} function.}
 }
