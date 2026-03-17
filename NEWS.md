@@ -1,5 +1,7 @@
 # MiscMetabar 0.14.6 (in development)
 
+- Add `find_vsearch()` and `install_vsearch()` to make vsearch-based functions work on all platforms including Windows. `install_vsearch()` downloads the vsearch binary from GitHub, and `find_vsearch()` automatically locates it. All vsearch-calling functions now default to `find_vsearch()` instead of a hard-coded `"vsearch"` path. Users can also set `options(MiscMetabar.vsearchpath = "/path/to/vsearch")` for custom installations.
+
 - Add `ridges_sam_pq()`, the sample-centric counterpart of `ridges_pq()`: each ridge represents a taxon (at a given taxonomic level) and the x-axis shows the abundance distribution across samples, colored by a sample factor.
 
 - Add params `output_data_frame` to function `track_wkflow_samples()`

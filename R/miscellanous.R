@@ -537,18 +537,22 @@ is_swarm_installed <- function(path = "swarm") {
 #' Useful for testthat and examples compilation for R CMD CHECK and
 #'   test coverage
 #'
-#' @param path (default: vsearch) Path to vsearch
+#' @param path (default: [find_vsearch()]) Path to vsearch
 #' @export
 #' @return A logical that say if vsearch is install in
 #'
 #' @examples
 #' MiscMetabar::is_vsearch_installed()
 #' @author Adrien Taudière
+#' @seealso [find_vsearch()], [install_vsearch()]
 
-is_vsearch_installed <- function(path = "vsearch") {
+is_vsearch_installed <- function(path = find_vsearch()) {
   return(
     !inherits(
-      try(system(paste0(path, " 2>&1"), intern = TRUE), silent = TRUE),
+      try(
+        system2(path, "--version", stdout = TRUE, stderr = TRUE),
+        silent = TRUE
+      ),
       "try-error"
     )
   )

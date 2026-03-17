@@ -502,7 +502,11 @@ track_wkflow <- function(
 #' if (requireNamespace("pbapply")) {
 #'   track_wkflow_samples(tree_A10_005)
 #' }
-track_wkflow_samples <- function(list_of_objects, output_data_frame = FALSE, ...) {
+track_wkflow_samples <- function(
+  list_of_objects,
+  output_data_frame = FALSE,
+  ...
+) {
   if (!inherits(list_of_objects, "list")) {
     list_of_objects <- list(list_of_objects)
   }
@@ -592,7 +596,7 @@ track_wkflow_samples <- function(list_of_objects, output_data_frame = FALSE, ...
       })
     res[[s]] <- track_wkflow(list_obj_samples, ...)
   }
-  if(output_data_frame) {
+  if (output_data_frame) {
     res <- do.call(rbind, res)
   }
   return(res)
@@ -690,7 +694,7 @@ postcluster_pq <- function(
   nproc = 1,
   method = "clusterize",
   id = 0.97,
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   tax_adjust = 0,
   rank_propagation = FALSE,
   vsearch_cluster_method = "--cluster_size",
@@ -1199,7 +1203,7 @@ lulu_pq <- function(
   physeq,
   nproc = 1,
   id = 0.84,
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   verbose = FALSE,
   clean_pq = FALSE,
   keep_temporary_files = FALSE,
@@ -1367,7 +1371,7 @@ mumu_pq <- function(
   physeq,
   nproc = 1,
   id = 0.84,
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   mumupath = "mumu",
   lulu_exact = FALSE,
   verbose = FALSE,

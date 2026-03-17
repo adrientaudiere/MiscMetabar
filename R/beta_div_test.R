@@ -831,9 +831,9 @@ multipatt_pq <- function(
 #' @param levels_fact (default NULL) The order of the level in the factor.
 #'   Used for reorder levels and select levels (filter out levels not present
 #'   en levels_fact)
-#' @param tax_level (default NULL) 
+#' @param tax_level (default NULL)
 #'   The taxonomic level passed on to [ANCOMBC::ancombc2()]. If NULL
-#'   do not perform agglomeration, and the ANCOM-BC2 analysis will be 
+#'   do not perform agglomeration, and the ANCOM-BC2 analysis will be
 #'   performed at the lowest taxonomic level of the input data.
 #' @param ... Additional arguments passed on to [ANCOMBC::ancombc2()] function.
 #' @return The result of [ANCOMBC::ancombc2()] function

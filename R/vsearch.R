@@ -1,4 +1,194 @@
 ################################################################################
+#' Find the vsearch binary
+#'
+#' @description
+#' Searches for the vsearch binary in the following order:
+#' 1. The `MiscMetabar.vsearchpath` option (if set)
+#' 2. A previously installed copy in the MiscMetabar user data directory
+#'    (via [install_vsearch()])
+#' 3. The system PATH
+#'
+#' @return A character string with the path to the vsearch binary, or
+#'   `"vsearch"` as a fallback (relying on PATH resolution).
+#' @export
+#' @examples
+#' find_vsearch()
+#' @author Adrien Taudière
+#' @seealso [install_vsearch()], [is_vsearch_installed()]
+find_vsearch <- function() {
+  # 1. User-set option
+
+  opt <- getOption("MiscMetabar.vsearchpath")
+  if (!is.null(opt) && nzchar(opt)) {
+    return(opt)
+  }
+
+  # 2. Installed copy in user data dir
+  data_dir <- tools::R_user_dir("MiscMetabar", "data")
+  bin_name <- if (.Platform$OS.type == "windows") "vsearch.exe" else "vsearch"
+  local_bin <- file.path(data_dir, "bin", bin_name)
+  if (file.exists(local_bin)) {
+    return(local_bin)
+  }
+
+  # 3. Fallback to PATH
+  "vsearch"
+}
+
+################################################################################
+#' Install vsearch binary
+#'
+#' @description
+#' Downloads and installs the vsearch binary from
+#' [GitHub](https://github.com/torognes/vsearch/releases) into the
+#' MiscMetabar user data directory. This is especially useful on Windows
+#' where vsearch is not available from a system package manager.
+#'
+#' After installation, all MiscMetabar functions that use vsearch will
+#' find the binary automatically via [find_vsearch()].
+#'
+#' @param version (default: "latest") The vsearch version to install
+#'   (e.g. `"2.30.5"`). Use `"latest"` to fetch the most recent release.
+#' @param path (default: `tools::R_user_dir("MiscMetabar", "data")`)
+#'   Directory where vsearch will be installed.
+#' @param force (default: FALSE) If `TRUE`, re-download even if vsearch
+#'   is already installed.
+#'
+#' @return The path to the installed vsearch binary (invisibly).
+#' @export
+#' @examples
+#' \dontrun{
+#' install_vsearch()
+#' install_vsearch(version = "2.30.5")
+#' }
+#' @author Adrien Taudière
+#' @seealso [find_vsearch()], [is_vsearch_installed()]
+install_vsearch <- function(
+  version = "latest",
+  path = tools::R_user_dir("MiscMetabar", "data"),
+  force = FALSE
+) {
+  bin_name <- if (.Platform$OS.type == "windows") "vsearch.exe" else "vsearch"
+  dest_bin <- file.path(path, "bin", bin_name)
+
+  if (file.exists(dest_bin) && !force) {
+    message("vsearch is already installed at ", dest_bin)
+    message("Use force = TRUE to reinstall.")
+    return(invisible(dest_bin))
+  }
+
+  os <- tolower(Sys.info()[["sysname"]])
+  arch <- Sys.info()[["machine"]]
+
+  os_tag <- switch(
+    os,
+    "linux" = "linux",
+    "darwin" = "macos",
+    "windows" = "win",
+    stop("Unsupported operating system: ", os)
+  )
+
+  arch_tag <- switch(
+    arch,
+    "x86_64" = "x86_64",
+    "x86-64" = "x86_64",
+    "amd64" = "x86_64",
+    "aarch64" = "aarch64",
+    "arm64" = "aarch64",
+    stop("Unsupported architecture: ", arch)
+  )
+
+  # macOS universal is available as a fallback
+  if (os_tag == "macos") {
+    arch_tag <- "universal"
+  }
+
+  if (version == "latest") {
+    if (!requireNamespace("jsonlite", quietly = TRUE)) {
+      stop(
+        "Package 'jsonlite' is required to fetch the latest vsearch version. ",
+        "Install it with install.packages('jsonlite') or specify a version ",
+        "number directly (e.g. version = '2.30.5')."
+      )
+    }
+    release_url <- "https://api.github.com/repos/torognes/vsearch/releases/latest"
+    json_file <- tempfile(fileext = ".json")
+    utils::download.file(release_url, json_file, mode = "wb", quiet = TRUE)
+    release_info <- jsonlite::fromJSON(json_file)
+    version <- sub("^v", "", release_info$tag_name)
+    unlink(json_file)
+  }
+
+  platform_tag <- paste0(os_tag, "-", arch_tag)
+  ext <- if (os_tag == "win") ".zip" else ".tar.gz"
+  archive_name <- paste0("vsearch-", version, "-", platform_tag, ext)
+  download_url <- paste0(
+    "https://github.com/torognes/vsearch/releases/download/v",
+    version,
+    "/",
+    archive_name
+  )
+
+  message("Downloading vsearch ", version, " for ", platform_tag, "...")
+  archive_file <- file.path(tempdir(), archive_name)
+  utils::download.file(download_url, archive_file, mode = "wb", quiet = TRUE)
+
+  # Extract
+  extract_dir <- file.path(tempdir(), "vsearch_extract")
+  if (dir.exists(extract_dir)) {
+    unlink(extract_dir, recursive = TRUE)
+  }
+  dir.create(extract_dir)
+
+  if (ext == ".zip") {
+    utils::unzip(archive_file, exdir = extract_dir)
+  } else {
+    utils::untar(archive_file, exdir = extract_dir)
+  }
+
+  # Find the binary inside the extracted archive
+  extracted_bin <- list.files(
+    extract_dir,
+    pattern = paste0("^", bin_name, "$"),
+    recursive = TRUE,
+    full.names = TRUE
+  )
+
+  if (length(extracted_bin) == 0) {
+    stop("Could not find vsearch binary in the downloaded archive.")
+  }
+
+  # Copy binary (and DLLs on Windows) to destination
+  dest_bin_dir <- file.path(path, "bin")
+  dir.create(dest_bin_dir, recursive = TRUE, showWarnings = FALSE)
+
+  file.copy(extracted_bin[[1]], dest_bin, overwrite = TRUE)
+  if (.Platform$OS.type != "windows") {
+    Sys.chmod(dest_bin, mode = "0755")
+  }
+
+  # On Windows, also copy DLLs
+
+  if (os_tag == "win") {
+    dlls <- list.files(
+      dirname(extracted_bin[[1]]),
+      pattern = "\\.dll$",
+      full.names = TRUE
+    )
+    for (dll in dlls) {
+      file.copy(dll, file.path(dest_bin_dir, basename(dll)), overwrite = TRUE)
+    }
+  }
+
+  # Cleanup
+  unlink(archive_file)
+  unlink(extract_dir, recursive = TRUE)
+
+  message("vsearch ", version, " installed at ", dest_bin)
+  invisible(dest_bin)
+}
+
+################################################################################
 #' Search for a list of sequence in a fasta file against physeq reference
 #'   sequences using [vsearch](https://github.com/torognes/vsearch)
 #'
@@ -13,7 +203,7 @@
 #' @param seq2search (required if path_to_fasta is NULL) Either (i) a DNAStringSet object
 #'   or (ii) a character vector that will be convert to DNAStringSet using
 #'   [Biostrings::DNAStringSet()]
-#' @param vsearchpath (default: "vsearch") path to vsearch
+#' @param vsearchpath (default: [find_vsearch()]) path to vsearch
 #' @param id (default: 0.8) id for the option `--usearch_global` of the vsearch software
 #' @param iddef (default: 0) iddef for the option `--usearch_global` of the vsearch software
 #' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files
@@ -47,7 +237,7 @@ vs_search_global <- function(
   physeq,
   path_to_fasta = NULL,
   seq2search = NULL,
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   id = 0.8,
   iddef = 0,
   keep_temporary_files = FALSE
@@ -225,7 +415,7 @@ swarm_clustering <- function(
   dna_seq = NULL,
   d = 1,
   swarmpath = "swarm",
-  vsearch_path = "vsearch",
+  vsearch_path = find_vsearch(),
   nproc = 1,
   fastidious = TRUE,
   swarm_args = "",
@@ -447,7 +637,7 @@ vsearch_clustering <- function(
   dna_seq = NULL,
   nproc = 1,
   id = 0.97,
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   tax_adjust = 0,
   rank_propagation = FALSE,
   vsearch_cluster_method = "--cluster_size",
@@ -629,9 +819,15 @@ chimera_removal_vs <-
         )
       if (type == "Discard_only_chim") {
         seq_tab_final <-
-          object[, !colnames(object) %in% as.character(chim_detect$chimera), drop = FALSE]
+          object[,
+            !colnames(object) %in% as.character(chim_detect$chimera),
+            drop = FALSE
+          ]
       } else if (type == "Select_only_non_chim_seqlen_filtered") {
-        seq_tab_final <- object[, as.character(chim_rm$non_chimera), drop = FALSE]
+        seq_tab_final <- object[,
+          as.character(chim_rm$non_chimera),
+          drop = FALSE
+        ]
       } else if (type == "Select_only_chim") {
         seq_tab_final <- object[, as.character(chim_rm$chimera), drop = FALSE]
       } else {
@@ -736,7 +932,7 @@ chimera_removal_vs <-
 chimera_detection_vs <- function(
   seq2search,
   nb_seq,
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   abskew = 2,
   min_seq_length = 100,
   vsearch_args = "--fasta_width 0",
@@ -1003,7 +1199,7 @@ assign_sintax <- function(
   ref_fasta = NULL,
   seq2search = NULL,
   behavior = c("return_matrix", "add_to_phyloseq", "return_cmd"),
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   clean_pq = TRUE,
   nproc = 1,
   suffix = "",
@@ -1318,7 +1514,7 @@ assign_vsearch_lca <- function(
   ref_fasta = NULL,
   seq2search = NULL,
   behavior = c("return_matrix", "add_to_phyloseq", "return_cmd"),
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   clean_pq = TRUE,
   taxa_ranks = c(
     "Kingdom",

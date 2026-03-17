@@ -274,6 +274,8 @@ reference:
   - get_file_extension
 - subtitle: External software management
   contents:
+  - find_vsearch
+  - install_vsearch
   - is_cutadapt_installed
   - is_falco_installed
   - is_krona_installed
