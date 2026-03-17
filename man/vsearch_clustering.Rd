@@ -10,7 +10,7 @@ vsearch_clustering(
   dna_seq = NULL,
   nproc = 1,
   id = 0.97,
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   tax_adjust = 0,
   rank_propagation = FALSE,
   vsearch_cluster_method = "--cluster_size",

@@ -9,7 +9,7 @@ assign_sintax(
   ref_fasta = NULL,
   seq2search = NULL,
   behavior = c("return_matrix", "add_to_phyloseq", "return_cmd"),
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   clean_pq = TRUE,
   nproc = 1,
   suffix = "",

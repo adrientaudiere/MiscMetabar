@@ -8,7 +8,7 @@ lulu_pq(
   physeq,
   nproc = 1,
   id = 0.84,
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   verbose = FALSE,
   clean_pq = FALSE,
   keep_temporary_files = FALSE,

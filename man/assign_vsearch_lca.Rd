@@ -9,7 +9,7 @@ assign_vsearch_lca(
   ref_fasta = NULL,
   seq2search = NULL,
   behavior = c("return_matrix", "add_to_phyloseq", "return_cmd"),
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   clean_pq = TRUE,
   taxa_ranks = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
   nproc = 1,
@@ -199,7 +199,7 @@ data_fungi_mini_new <- assign_vsearch_lca(data_fungi_mini,
 
 data_fungi_mini_new2 <- assign_vsearch_lca(data_fungi_mini,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
-  id = 0.8, behavior = "add_to_phyloseq", top_hits_only = FALSE
+  id = 0.6, behavior = "add_to_phyloseq", top_hits_only = FALSE
 )
 
 data_fungi_mini_new3 <- assign_vsearch_lca(data_fungi_mini,

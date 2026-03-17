@@ -338,6 +338,14 @@ adonis_rarperm_pq <- function(
   sample.size = min(sample_sums(physeq)),
   ...
 ) {
+  # Ensure .Random.seed exists before calling rarefy_even_depth(),
+
+  # which tries to save/restore it. In a fresh R session .Random.seed
+  # is absent until the first random operation.
+  if (!exists(".Random.seed", envir = globalenv(), inherits = FALSE)) {
+    sample.int(1L)
+  }
+
   res_perm <- vector("list", nperm)
   if (progress_bar) {
     pb <- txtProgressBar(
@@ -1716,6 +1724,10 @@ var_par_rarperm_pq <-
   ) {
     physeq <- taxa_as_columns(physeq)
     verify_pq(physeq)
+
+    if (!exists(".Random.seed", envir = globalenv(), inherits = FALSE)) {
+      sample.int(1L)
+    }
 
     if (progress_bar) {
       pb <- txtProgressBar(
