@@ -385,6 +385,14 @@ rename_samples <- function(
 #' @importFrom utils read.csv
 #' @export
 #' @author Adrien Taudière
+#' @examples
+#' \dontrun{
+#' sam_data_matching_names(
+#'   path_sam_data = "path/to/sample_data.csv",
+#'   sample_col_name = "SampleID",
+#'   path_raw_seq = "path/to/fastq_folder/"
+#' )
+#' }
 sam_data_matching_names <- function(
   path_sam_data,
   sample_col_name,

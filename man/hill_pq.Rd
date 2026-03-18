@@ -34,7 +34,7 @@ the \code{sam_data} slot of the physeq object.}
 
 \item{q}{(vector) Hill diversity orders to compute. Default computes
 Hill number 0 (species richness), 1 (exponential of Shannon index) and
-2 (inverse of Simpson index). Formerly \code{hill_scales}.}
+2 (inverse of Simpson index).}
 
 \item{hill_scales}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{q} instead.}
 

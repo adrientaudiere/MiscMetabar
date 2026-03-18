@@ -424,6 +424,12 @@ plot_deseq2_pq <-
 #'
 #' @param ... Additional arguments passed on to \code{\link[edgeR]{DGEList}}
 #' @export
+#' @examples
+#' \donttest{
+#' if (requireNamespace("edgeR")) {
+#'   phyloseq_to_edgeR(data_fungi_mini, group = "Height")
+#' }
+#' }
 #'
 phyloseq_to_edgeR <- function(physeq, group, method = "RLE", ...) {
   verify_pq(physeq)

@@ -6,7 +6,7 @@
 \usage{
 plot_refseq_pq(
   physeq,
-  hill_scales = NULL,
+  q = NULL,
   first_n = min(Biostrings::width(physeq@refseq)),
   last_n = NULL,
   min_width = first_n
@@ -16,7 +16,7 @@ plot_refseq_pq(
 \item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{hill_scales}{(vector) A vector defining the Hill number wanted. Set to NULL if
+\item{q}{(vector) A vector defining the Hill number wanted. Set to NULL if
 you don't want to plot Hill diversity metrics.}
 
 \item{first_n}{(int, default 10) The number of nucleotides to plot the 5' extremity.}
@@ -45,7 +45,7 @@ of the diversity (equitability) along the sequences.
 }
 \examples{
 plot_refseq_pq(data_fungi)
-plot_refseq_pq(data_fungi, hill_scales = c(2), first_n = 300)
+plot_refseq_pq(data_fungi, q = c(2), first_n = 300)
 
 }
 \author{

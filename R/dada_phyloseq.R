@@ -20,6 +20,9 @@ if (getRversion() >= "2.15.1") {
 #'   taxa names
 #' @author Adrien Taudière
 #' @export
+#' @examples
+#' #TODO create a phyloseq object without refseq and with taxa names as sequences and add dna in refseq and rename taxa
+#' 
 
 add_dna_to_phyloseq <- function(physeq, prefix_taxa_names = "Taxa_") {
   verify_pq(physeq)
@@ -72,6 +75,8 @@ add_dna_to_phyloseq <- function(physeq, prefix_taxa_names = "Taxa_") {
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object
 #' @export
 #' @author Adrien Taudière
+#' @examples
+#' clean_pq(data_fungi_mini)
 clean_pq <- function(
   physeq,
   remove_empty_samples = TRUE,
@@ -4203,6 +4208,8 @@ psmelt_samples_pq <-
 #' @author Adrien Taudière
 #' @export
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object
+#' @examples
+#' taxa_as_columns(data_fungi_mini)
 taxa_as_columns <- function(physeq) {
   physeq <- clean_pq(
     physeq,
@@ -4230,6 +4237,8 @@ taxa_as_columns <- function(physeq) {
 #' @author Adrien Taudière
 #' @export
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object
+#' @examples
+#' taxa_as_rows(data_fungi_mini)
 taxa_as_rows <- function(physeq) {
   physeq <- clean_pq(
     physeq,

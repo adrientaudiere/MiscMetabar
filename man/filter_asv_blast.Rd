@@ -79,3 +79,12 @@ In either case, an informative message is printed.
 
 Use the blast software.
 }
+\examples{
+\dontrun{
+filter_asv_blast(data_fungi_mini,
+  fasta_for_db = system.file("extdata", "mini_UNITE_fungi.fasta.gz",
+    package = "MiscMetabar"
+  )
+)
+}
+}

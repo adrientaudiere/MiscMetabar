@@ -102,6 +102,14 @@ for pair-wise sequence matching.
 \details{
 Please cite the lulu original paper: https://www.nature.com/articles/s41467-017-01312-x
 }
+\examples{
+\dontrun{
+# The matchlist is produced by an external tool (VSEARCH or BLASTN).
+# See the Details section for example commands.
+otu <- as.data.frame(otu_table(data_fungi_sp_known))
+lulu(otu, matchlist)
+}
+}
 \author{
 Tobias Guldberg Frøslev (orcid: \href{https://orcid.org/0000-0002-3530-013X}{0000-0002-3530-013X}),
 modified by Adrien Taudière

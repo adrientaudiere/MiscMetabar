@@ -37,3 +37,11 @@ A DGEList object. See \code{\link[edgeR:estimateTagwiseDisp]{edgeR::estimateTagw
 \description{
 Convert phyloseq OTU count data into DGEList for edgeR package
 }
+\examples{
+\donttest{
+if (requireNamespace("edgeR")) {
+  phyloseq_to_edgeR(data_fungi_mini, group = "Height")
+}
+}
+
+}

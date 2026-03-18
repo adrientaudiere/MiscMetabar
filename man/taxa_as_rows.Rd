@@ -22,6 +22,9 @@ A new \code{\link[phyloseq]{phyloseq-class}} object
 
 Mainly for internal use. It is a special case of clean_pq function.
 }
+\examples{
+taxa_as_rows(data_fungi_mini)
+}
 \author{
 Adrien Taudière
 }

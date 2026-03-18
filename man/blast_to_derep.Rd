@@ -89,6 +89,17 @@ A blast table
 
 Use the blast software.
 }
+\examples{
+\dontrun{
+# derep_list is the result of dada2::derepFastq()
+blast_to_derep(
+  derep_list,
+  seq2search = system.file("extdata", "ex.fasta",
+    package = "MiscMetabar"
+  )
+)
+}
+}
 \seealso{
 \code{\link[=blast_pq]{blast_pq()}} to use \code{refseq} slot as query sequences
 against un custom database and \code{\link[=blast_to_phyloseq]{blast_to_phyloseq()}}  to use

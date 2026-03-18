@@ -26,6 +26,11 @@ taxa names
 
 Useful in targets bioinformatic pipeline.
 }
+\examples{
+\donttest{
+add_dna_to_phyloseq(data_fungi_mini)
+}
+}
 \author{
 Adrien Taudière
 }

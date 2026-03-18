@@ -41,6 +41,15 @@ Basically a wrapper of \code{\link[=blast_pq]{blast_pq()}} with option \code{uni
 
 Add the information to the taxtable
 }
+\examples{
+\dontrun{
+add_blast_info(data_fungi_mini,
+  fasta_for_db = system.file("extdata", "mini_UNITE_fungi.fasta.gz",
+    package = "MiscMetabar"
+  )
+)
+}
+}
 \author{
 Adrien Taudière
 }

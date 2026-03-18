@@ -1180,8 +1180,6 @@ write_temp_fasta <- function(
 #'       "Order", "Family", "Genus", "Species"
 #'     )
 #'   )) |>
-#'   # mutate(valuerank = forcats::fct_reorder(valuerank,
-#'   #   as.integer(name), .desc = TRUE)) |>
 #'   ggplot(aes(valuebootstrap,
 #'     valuerank,
 #'     fill = name

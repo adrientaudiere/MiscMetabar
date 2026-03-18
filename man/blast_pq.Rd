@@ -83,6 +83,15 @@ a blast table
 
 Use the blast software.
 }
+\examples{
+\dontrun{
+blast_pq(data_fungi_mini,
+  fasta_for_db = system.file("extdata", "mini_UNITE_fungi.fasta.gz",
+    package = "MiscMetabar"
+  )
+)
+}
+}
 \seealso{
 \code{\link[=blast_to_phyloseq]{blast_to_phyloseq()}} to use \code{refseq}
 slot as a database

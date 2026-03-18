@@ -18,3 +18,6 @@ a list of size
 
 Code from https://tolstoy.newcastle.edu.au/R/e6/help/09/01/1121.html
 }
+\examples{
+all_object_size()
+}

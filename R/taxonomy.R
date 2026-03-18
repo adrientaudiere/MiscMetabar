@@ -319,6 +319,13 @@ resolve_vector_ranks <- function(
 #' @author Adrien Taudière
 #' @seealso [format2dada2_species()], [format2dada2()]
 #' @return Either an object of class DNAStringSet or a vector of reformated names
+#' @examples
+#' \donttest{
+#' f <- system.file("extdata", "mini_UNITE_fungi.fasta.gz",
+#'   package = "MiscMetabar"
+#' )
+#' format2sintax(fasta_db = f)
+#' }
 format2sintax <- function(
   fasta_db = NULL,
   taxnames = NULL,
@@ -378,6 +385,13 @@ format2sintax <- function(
 #' @author Adrien Taudière
 #' @return Either an object of class DNAStringSet or a vector of reformated names
 #' @seealso [format2dada2_species()], [format2sintax()]
+#' @examples
+#' \donttest{
+#' f <- system.file("extdata", "mini_UNITE_fungi.fasta.gz",
+#'   package = "MiscMetabar"
+#' )
+#' format2dada2(fasta_db = f, from_sintax = FALSE)
+#' }
 
 format2dada2 <- function(
   fasta_db = NULL,
@@ -479,6 +493,13 @@ format2dada2 <- function(
 #' @author Adrien Taudière
 #' @return Either an object of class DNAStringSet or a vector of reformated names
 #' @seealso [format2dada2_species()], [format2sintax()]
+#' @examples
+#' \donttest{
+#' f <- system.file("extdata", "mini_UNITE_fungi.fasta.gz",
+#'   package = "MiscMetabar"
+#' )
+#' format2dada2_species(fasta_db = f)
+#' }
 #'
 format2dada2_species <- function(
   fasta_db = NULL,

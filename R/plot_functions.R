@@ -1669,8 +1669,8 @@ multiplot <-
 #' @param variable : Alias for factor. Kept only for backward compatibility.
 #' @param q (vector) Hill diversity orders to compute. Default computes
 #'   Hill number 0 (species richness), 1 (exponential of Shannon index) and
-#'   2 (inverse of Simpson index). Formerly `q`.
-#' @param q `r lifecycle::badge("deprecated")` Use `q` instead.
+#'   2 (inverse of Simpson index).
+#' @param hill_scales `r lifecycle::badge("deprecated")` Use `q` instead.
 #' @param ... Additional arguments passed to [divent_hill_matrix_pq()] and
 #'   hence to [divent::div_hill()] (e.g. `estimator = "naive"`).
 #' @param color_fac (optional): The variable to color the barplot. For ex.
@@ -1756,7 +1756,7 @@ hill_pq <- function(
   fact = NULL,
   variable = NULL,
   q = c(0, 1, 2),
-  q = lifecycle::deprecated(),
+  hill_scales = lifecycle::deprecated(),
   color_fac = NA,
   letters = FALSE,
   add_points = FALSE,
@@ -1769,13 +1769,13 @@ hill_pq <- function(
   vioplot = FALSE,
   ...
 ) {
-  if (lifecycle::is_present(q)) {
+  if (lifecycle::is_present(hill_scales)) {
     lifecycle::deprecate_warn(
       "0.15.1",
-      "hill_pq(q=)",
+      "hill_pq(hill_scales=)",
       "hill_pq(q=)"
     )
-    q <- q
+    q <- hill_scales
   }
   if (!is.null(variable)) {
     if (!is.null(fact)) {
@@ -5670,7 +5670,7 @@ ggaluv_pq <- function(
   psm_samp <-
     psmelt_samples_pq(
       physeq,
-      taxa_ranks= taxa_ranks,
+      taxa_ranks = taxa_ranks,
       q = NULL,
       rarefy_by_sample = FALSE
     )

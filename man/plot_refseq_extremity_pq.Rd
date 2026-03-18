@@ -8,7 +8,7 @@ plot_refseq_extremity_pq(
   physeq,
   first_n = 10,
   last_n = 10,
-  hill_scales = c(1, 2),
+  q = c(1, 2),
   min_width = 0
 )
 }
@@ -20,7 +20,7 @@ using the \code{phyloseq} package.}
 
 \item{last_n}{(int, default 10) The number of nucleotides to plot the 3' extremity.}
 
-\item{hill_scales}{(vector) A vector defining the Hill number wanted. Set to NULL if
+\item{q}{(vector) A vector defining the Hill number wanted. Set to NULL if
 you don't want to plot Hill diversity metrics.}
 
 \item{min_width}{(int, default 0) Select only the sequences from physeq@refseq with using a
@@ -61,7 +61,7 @@ res2$plot_last
 plot_refseq_extremity_pq(data_fungi,
   first_n = 400,
   last_n = 400,
-  hill_scales = NULL
+  q = NULL
 )$plot_start +
   geom_line(aes(y = value, x = seq_id, color = name), alpha = 0.4, linewidth = 0.2)
 
@@ -69,7 +69,7 @@ plot_refseq_extremity_pq(data_fungi,
   first_n = NULL,
   last_n = 400,
   min_width = 400,
-  hill_scales = c(3)
+  q = c(3)
 )$plot_last
 }
 \author{

@@ -103,6 +103,8 @@ dist_bycol <- function(x, y, method = "bray", nperm = 99, ...) {
 #' @aliases all_object_size
 #' @return a list of size
 #' @export
+#' @examples
+#' all_object_size()
 all_object_size <- function() {
   return(sort(vapply(
     ls(envir = .GlobalEnv),
@@ -188,6 +190,8 @@ simplify_taxo <- function(
 #'
 #' @return The extension of a file.
 #' @export
+#' @examples
+#' get_file_extension("myfile.fasta")
 get_file_extension <- function(file_path) {
   if (stringr::str_count(file_path, "\\.") == 0) {
     stop("There is no '.' inside your file path: ", file_path)
@@ -220,6 +224,10 @@ get_file_extension <- function(file_path) {
 #' @return The percentage value (number or character if add_symbol
 #'   is set to TRUE)
 #' @export
+#' @examples
+#' perc(0.75)
+#' perc(3, 10)
+#' perc(0.75, add_symbol = TRUE)
 perc <- function(x, y = NULL, accuracy = 0, add_symbol = FALSE) {
   if (is.null(y)) {
     res <- round(x * 100, digits = accuracy)
@@ -376,6 +384,9 @@ fac2col <-
 #' @author Thibaut Jombart in `adegenet` package
 #' @export
 #' @seealso The R package RColorBrewer, proposing a nice selection of color palettes. The viridis package, with many excellent palettes
+#' @examples
+#' transp("red")
+#' transp(c("red", "blue"), alpha = 0.3)
 
 transp <- function(col, alpha = 0.5) {
   res <-

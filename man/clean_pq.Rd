@@ -73,6 +73,9 @@ In addition, this function check for discrepancy (and rename) between
 (i) taxa names in refseq, taxonomy table and otu_table and between
 (ii) sample names in sam_data and otu_table.
 }
+\examples{
+clean_pq(data_fungi_mini)
+}
 \author{
 Adrien Taudière
 }
