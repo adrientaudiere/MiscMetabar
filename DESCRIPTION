@@ -96,6 +96,7 @@ BugReports: https://github.com/adrientaudiere/MiscMetabar/issues
 Roxygen: list(markdown = TRUE)
 Imports:
     ape,
+    cli,
     lifecycle,
     rlang,
     stats

@@ -37,13 +37,16 @@ profile_hill_pq <- function(
   physeq <- taxa_as_columns(physeq)
   otu <- as.data.frame(otu_table(physeq))
   sample_names <- rownames(otu)
-  results <- lapply(seq_along(sample_names), \(i) {
-    abund <- as.numeric(otu[i, ])
-    abund <- abund[abund > 0]
-    res <- divent::profile_hill(abund, orders = orders, ...)
-    res$site <- sample_names[i]
-    res
-  })
+  results <- lapply(
+    cli::cli_progress_along(sample_names, name = "Computing Hill profiles"),
+    \(i) {
+      abund <- as.numeric(otu[i, ])
+      abund <- abund[abund > 0]
+      res <- divent::profile_hill(abund, orders = orders, ...)
+      res$site <- sample_names[i]
+      res
+    }
+  )
   combined <- dplyr::bind_rows(results)
   class(combined) <- c("profile", class(combined))
   ggplot2::autoplot(combined)
@@ -88,13 +91,19 @@ hill_acc_pq <- function(
   physeq <- taxa_as_columns(physeq)
   otu <- as.data.frame(otu_table(physeq))
   sample_names <- rownames(otu)
-  results <- lapply(seq_along(sample_names), \(i) {
-    abund <- as.numeric(otu[i, ])
-    abund <- abund[abund > 0]
-    res <- divent::accum_hill(abund, q = q, ...)
-    res$site <- sample_names[i]
-    res
-  })
+  results <- lapply(
+    cli::cli_progress_along(
+      sample_names,
+      name = "Computing accumulation curves"
+    ),
+    \(i) {
+      abund <- as.numeric(otu[i, ])
+      abund <- abund[abund > 0]
+      res <- divent::accum_hill(abund, q = q, ...)
+      res$site <- sample_names[i]
+      res
+    }
+  )
   combined <- dplyr::bind_rows(results)
   class(combined) <- c("accumulation", class(combined))
   ggplot2::autoplot(combined)
