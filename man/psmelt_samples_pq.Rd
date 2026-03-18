@@ -6,23 +6,21 @@
 \usage{
 psmelt_samples_pq(
   physeq,
-  hill_scales = c(0, 1, 2),
+  q = c(0, 1, 2),
+  hill_scales = lifecycle::deprecated(),
   filter_zero = TRUE,
   rarefy_by_sample = FALSE,
   rngseed = FALSE,
   verbose = TRUE,
-  taxa_ranks = NULL
+  taxa_ranks = NULL,
+  ...
 )
 }
 \arguments{
 \item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{hill_scales}{(a vector of integer) The list of q values to compute
-the hill number H^q. If Null, no hill number are computed. Default value
-compute the Hill number 0 (Species richness), the Hill number 1
-(exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
-Index).}
+\item{q}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{q} instead.}
 
 \item{filter_zero}{(logical, default TRUE) Do we filter non present OTU from
 samples ? For the moment, this has no effect on the result because the dataframe
@@ -43,11 +41,15 @@ beforehand to achieve reproducible results. Default is FALSE.}
 \item{taxa_ranks}{A vector of taxonomic ranks. For examples c("Family","Genus").
 If taxa ranks is not set (default value = NULL), taxonomic information are not
 present in the resulting tibble.}
+
+\item{...}{Additional arguments passed to \code{\link[=divent_hill_matrix_pq]{divent_hill_matrix_pq()}} and
+hence to \code{\link[divent:div_hill]{divent::div_hill()}} (e.g. \code{estimator = "naive"}). Only used
+when \code{q} is not NULL.}
 }
 \value{
 A tibble with a row for each sample. Columns provide information
 from \code{sam_data} slot as well as hill numbers, Abundance (nb of sequences),
-and Abundance_log10 (\emph{log10(1+Abundance)}).
+and Abundance_log10 (\emph{log10(1+Abundance)}).q
 }
 \description{
 \if{html}{\out{

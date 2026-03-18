@@ -4015,11 +4015,11 @@ normalize_prop_pq <- function(
 #'   You may use rarefy_by_sample = TRUE if the mean number of sequences per
 #'   samples differs among modalities.
 #' @inheritParams clean_pq
-#' @param hill_scales (a vector of integer) The list of q values to compute
-#'   the hill number H^q. If Null, no hill number are computed. Default value
-#'   compute the Hill number 0 (Species richness), the Hill number 1
-#'   (exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
-#'   Index).
+#' @param q (numeric vector) Hill diversity orders to compute. If NULL, no
+#'   Hill numbers are computed. Default computes Hill number 0 (species
+#'   richness), 1 (exponential of Shannon index) and 2 (inverse of Simpson
+#'   index). Formerly `q`.
+#' @param q `r lifecycle::badge("deprecated")` Use `q` instead.
 #' @param filter_zero (logical, default TRUE) Do we filter non present OTU from
 #'   samples ? For the moment, this has no effect on the result because the dataframe
 #'   is grouped by samples with abundance summed across OTU.
@@ -4035,11 +4035,14 @@ normalize_prop_pq <- function(
 #' @param taxa_ranks A vector of taxonomic ranks. For examples c("Family","Genus").
 #'   If taxa ranks is not set (default value = NULL), taxonomic information are not
 #'   present in the resulting tibble.
+#' @param ... Additional arguments passed to [divent_hill_matrix_pq()] and
+#'   hence to [divent::div_hill()] (e.g. `estimator = "naive"`). Only used
+#'   when `q` is not NULL.
 #' @author Adrien Taudière
 #' @export
 #' @return A tibble with a row for each sample. Columns provide information
 #'   from `sam_data` slot as well as hill numbers, Abundance (nb of sequences),
-#'   and Abundance_log10 (*log10(1+Abundance)*).
+#'   and Abundance_log10 (*log10(1+Abundance)*).q
 #' @examples
 #' if (requireNamespace("ggstatsplot")) {
 #'   psm_tib <- psmelt_samples_pq(data_fungi_mini, hill_scales = c(0, 2, 7))
@@ -4054,13 +4057,23 @@ normalize_prop_pq <- function(
 psmelt_samples_pq <-
   function(
     physeq,
-    hill_scales = c(0, 1, 2),
+    q = c(0, 1, 2),
+    hill_scales = lifecycle::deprecated(),
     filter_zero = TRUE,
     rarefy_by_sample = FALSE,
     rngseed = FALSE,
     verbose = TRUE,
-    taxa_ranks = NULL
+    taxa_ranks = NULL,
+    ...
   ) {
+    if (lifecycle::is_present(hill_scales)) {
+      lifecycle::deprecate_warn(
+        "0.15.1",
+        "psmelt_samples_pq(hill_scales=)",
+        "psmelt_samples_pq(q=)"
+      )
+      q <- hill_scales
+    }
     verify_pq(physeq)
     if (rarefy_by_sample) {
       if (as(rngseed, "logical")) {
@@ -4158,12 +4171,14 @@ psmelt_samples_pq <-
         )
     }
 
-    if (!is.null(hill_scales)) {
+    if (!is.null(q)) {
       physeq <- taxa_as_rows(physeq)
-      df_hill <-
-        vegan::renyi(t(physeq)@otu_table, scales = hill_scales, hill = TRUE)
-
-      colnames(df_hill) <- paste0("Hill_", hill_scales)
+      df_hill <- divent_hill_matrix_pq(
+        as.data.frame(t(as.matrix(physeq@otu_table))),
+        q = q,
+        ...
+      )
+      colnames(df_hill) <- paste0("Hill_", q)
       df_hill$Sample <- rownames(df_hill)
 
       psm_samp <- full_join(psm_samp, df_hill)

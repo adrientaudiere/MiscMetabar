@@ -1667,11 +1667,12 @@ multiplot <-
 #' @param fact (required) The variable to test. Must be present in
 #'   the `sam_data` slot of the physeq object.
 #' @param variable : Alias for factor. Kept only for backward compatibility.
-#' @param hill_scales (a vector of integer) The list of q values to compute
-#'   the hill number H^q. If Null, no hill number are computed. Default value
-#'   compute the Hill number 0 (Species richness), the Hill number 1
-#'   (exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
-#'   Index).
+#' @param q (vector) Hill diversity orders to compute. Default computes
+#'   Hill number 0 (species richness), 1 (exponential of Shannon index) and
+#'   2 (inverse of Simpson index). Formerly `q`.
+#' @param q `r lifecycle::badge("deprecated")` Use `q` instead.
+#' @param ... Additional arguments passed to [divent_hill_matrix_pq()] and
+#'   hence to [divent::div_hill()] (e.g. `estimator = "naive"`).
 #' @param color_fac (optional): The variable to color the barplot. For ex.
 #'   same as fact. Not very useful because ggplot2 plot colors can be
 #'   change using `scale_color_XXX()` function.
@@ -1724,7 +1725,7 @@ multiplot <-
 #' @author Adrien Taudière
 #' @examples
 #'
-#' p <- hill_pq(data_fungi_mini, "Height", hill_scales = 1:2)
+#' p <- hill_pq(data_fungi_mini, "Height", q = 1:2)
 #' p_h1 <- p[[1]] + theme(legend.position = "none")
 #' p_h2 <- p[[2]] + theme(legend.position = "none")
 #' multiplot(plotlist = list(p_h1, p_h2, p[[3]]), cols = 4)
@@ -1754,7 +1755,8 @@ hill_pq <- function(
   physeq,
   fact = NULL,
   variable = NULL,
-  hill_scales = c(0, 1, 2),
+  q = c(0, 1, 2),
+  q = lifecycle::deprecated(),
   color_fac = NA,
   letters = FALSE,
   add_points = FALSE,
@@ -1764,8 +1766,17 @@ hill_pq <- function(
   plot_with_tuckey = TRUE,
   correction_for_sample_size = TRUE,
   na_remove = TRUE,
-  vioplot = FALSE
+  vioplot = FALSE,
+  ...
 ) {
+  if (lifecycle::is_present(q)) {
+    lifecycle::deprecate_warn(
+      "0.15.1",
+      "hill_pq(q=)",
+      "hill_pq(q=)"
+    )
+    q <- q
+  }
   if (!is.null(variable)) {
     if (!is.null(fact)) {
       stop(
@@ -1804,28 +1815,32 @@ hill_pq <- function(
     )
   }
 
-  otu_hill <-
-    vegan::renyi(t(physeq)@otu_table, scales = hill_scales, hill = TRUE)
-  colnames(otu_hill) <- paste0("Hill_", hill_scales)
+  otu_hill <- divent_hill_matrix_pq(
+    as.data.frame(t(as.matrix(physeq@otu_table))),
+    q = q,
+    ...
+  )
+  colnames(otu_hill) <- paste0("Hill_", q)
 
   df_hill <- data.frame(otu_hill, physeq@sam_data)
-  df_hill[, seq_along(hill_scales)] <-
-    apply(df_hill[, seq_along(hill_scales)], 2, as.numeric)
+  df_hill[, seq_along(q)] <-
+    apply(df_hill[, seq_along(q)], 2, as.numeric)
 
   p_var <-
     hill_tuckey_pq(
       physeq,
       modality = variable_fac,
-      hill_scales = hill_scales,
-      correction_for_sample_size = correction_for_sample_size
+      q = q,
+      correction_for_sample_size = correction_for_sample_size,
+      ...
     )
-  p_list <- vector("list", length(hill_scales))
+  p_list <- vector("list", length(q))
 
   if (kruskal_test) {
-    kt_res <- vector("list", length(hill_scales))
-    for (i in seq_along(hill_scales)) {
+    kt_res <- vector("list", length(q))
+    for (i in seq_along(q)) {
       kt_res[[i]] <- kruskal.test(
-        df_hill[, paste0("Hill_", hill_scales[[i]])],
+        df_hill[, paste0("Hill_", q[[i]])],
         df_hill[, fact]
       )
     }
@@ -1848,29 +1863,29 @@ hill_pq <- function(
     }
   }
 
-  for (i in seq_along(hill_scales)) {
+  for (i in seq_along(q)) {
     if (vioplot) {
       p_list[[i]] <-
         ggplot(
           df_hill,
           aes(
-            x = .data[[paste0("Hill_", hill_scales[[i]])]],
+            x = .data[[paste0("Hill_", q[[i]])]],
             y = !!var
           )
         ) +
         geom_violin(aes(colour = as.factor(!!color_fac))) +
-        labs(x = paste0("Hill_", hill_scales[[i]]))
+        labs(x = paste0("Hill_", q[[i]]))
     } else {
       p_list[[i]] <-
         ggplot(
           df_hill,
-          aes(group = !!var, x = .data[[paste0("Hill_", hill_scales[[i]])]])
+          aes(group = !!var, x = .data[[paste0("Hill_", q[[i]])]])
         ) +
         geom_boxplot(
           outlier.size = 2,
           aes(colour = as.factor(!!color_fac), y = !!var)
         ) +
-        labs(x = paste0("Hill_", hill_scales[[i]]))
+        labs(x = paste0("Hill_", q[[i]]))
     }
 
     if (add_points) {
@@ -1897,7 +1912,7 @@ hill_pq <- function(
           "\n",
           paste0(
             " Hill ",
-            hill_scales[[i]],
+            q[[i]],
             " -- Kruskal-Wallis chi-squared =",
             round(kt_res[[i]]$statistic, 2),
             "; df = ",
@@ -1912,7 +1927,7 @@ hill_pq <- function(
 
     if (letters) {
       data_h <-
-        p_var$data[grep(paste0("Hill_", hill_scales[[i]]), p_var$data[, 5]), ]
+        p_var$data[grep(paste0("Hill_", q[[i]]), p_var$data[, 5]), ]
       data_h_pval <- data_h$`p adj`
       names(data_h_pval) <- data_h$modality
       Letters <-
@@ -1923,7 +1938,7 @@ hill_pq <- function(
       data_letters <- p_list[[i]]$data |>
         group_by(!!var) |>
         summarize(
-          pos_letters = max(.data[[paste0("Hill_", hill_scales[[i]])]]) + 1
+          pos_letters = max(.data[[paste0("Hill_", q[[i]])]]) + 1
         ) |>
         inner_join(dt, by = join_by(!!fact))
 
@@ -1945,7 +1960,7 @@ hill_pq <- function(
   }
 
   res <- p_list
-  names(res) <- paste0("plot_Hill_", hill_scales)
+  names(res) <- paste0("plot_Hill_", q)
   if (plot_with_tuckey) {
     res[["tuckey"]] <- p_var
   }
@@ -1990,10 +2005,12 @@ hill_pq <- function(
 #'   is performed, and it is up to the user to appropriately call set.seed
 #'   beforehand to achieve reproducible results. Default is FALSE.
 #' @param verbose (logical). If TRUE, print additional information.
+#' @param q (numeric vector, default `c(0, 1, 2)`) Hill diversity orders to
+#'   compute. One plot is produced per value.
 #' @param ... Additional arguments passed on to [ggstatsplot::ggbetweenstats()] function.
 
 #' @return Either an unique ggplot2 object (if one_plot is TRUE) or
-#'  a list of 3 ggplot2 plot:
+#'  a list of ggplot2 plots, one per Hill order in `q`. With default `q`:
 #' - plot_Hill_0 : the ggbetweenstats of Hill number 0 (= species richness)
 #'     against the variable fact
 #' - plot_Hill_1 : the ggbetweenstats of Hill number 1 (= Shannon index)
@@ -2024,6 +2041,7 @@ ggbetween_pq <-
     rarefy_by_sample = FALSE,
     rngseed = FALSE,
     verbose = TRUE,
+    q = c(0, 1, 2),
     ...
   ) {
     verify_pq(physeq)
@@ -2080,27 +2098,26 @@ ggbetween_pq <-
       )
     }
 
+    hill_mat <- divent_hill_matrix_pq(
+      as.data.frame(physeq@otu_table),
+      q = q
+    )
+    colnames(hill_mat) <- paste0("hill_", q)
     df <- cbind(
       "nb_taxa" = sample_sums(physeq@otu_table),
       physeq@sam_data,
-      "hill_0" = vegan::renyi(physeq@otu_table, scales = 0, hill = TRUE),
-      "hill_1" = vegan::renyi(physeq@otu_table, scales = 1, hill = TRUE),
-      "hill_2" = vegan::renyi(physeq@otu_table, scales = 2, hill = TRUE)
+      hill_mat
     )
-    fact <- sym(fact)
-    p0 <- ggstatsplot::ggbetweenstats(df, !!fact, hill_0, ...)
-    p1 <- ggstatsplot::ggbetweenstats(df, !!fact, hill_1, ...)
-    p2 <- ggstatsplot::ggbetweenstats(df, !!fact, hill_2, ...)
-
-    res <- list(
-      "plot_Hill_0" = p0,
-      "plot_Hill_1" = p1,
-      "plot_Hill_2" = p2
-    )
+    fact_sym <- sym(fact)
+    res <- lapply(q, function(qi) {
+      col_name <- paste0("hill_", qi)
+      ggstatsplot::ggbetweenstats(df, !!fact_sym, !!sym(col_name), ...)
+    })
+    names(res) <- paste0("plot_Hill_", q)
 
     if (one_plot) {
       requireNamespace("patchwork", quietly = TRUE)
-      res <- res[[1]] + res[[2]] + res[[3]]
+      res <- patchwork::wrap_plots(res)
     }
     return(res)
   }
@@ -5397,7 +5414,7 @@ plot_var_part_pq <-
 #' @inheritParams clean_pq
 #' @param num_modality (required) Name of the numeric column in
 #'   `physeq@sam_data` to plot and test against hill number
-#' @param hill_scales (a vector of integer) The list of q values to compute
+#' @param q (a vector of integer) The list of q values to compute
 #'   the hill number H^q. If Null, no hill number are computed. Default value
 #'   compute the Hill number 0 (Species richness), the Hill number 1
 #'   (exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
@@ -5416,17 +5433,17 @@ plot_var_part_pq <-
 #' @param ... Additional arguments passed on to [ggstatsplot::ggscatterstats()]
 #'   function.
 #'
-#' @return Either an unique ggplot2 object (if one_plot is TRUE) or
-#'  a list of ggplot2 plot for each hill_scales.
+#' @return Either an unique ggplot2 (when `one_plot` is TRUE) or
+#'  a list of ggplot2 plot for each q.
 #' @export
 #' @author Adrien Taudière
 #'
 #' @examples
 #' if (requireNamespace("ggstatsplot")) {
 #'   ggscatt_pq(data_fungi_mini, "Time", type = "non-parametric")
-#'   ggscatt_pq(data_fungi_mini, "Time", hill_scales = 1:4, type = "parametric")
+#'   ggscatt_pq(data_fungi_mini, "Time", q = 1:4, type = "parametric")
 #'   ggscatt_pq(data_fungi_mini, "Sample_id",
-#'     hill_scales = c(0, 0.5),
+#'     q = c(0, 0.5),
 #'     one_plot = FALSE
 #'   )
 #' }
@@ -5438,7 +5455,7 @@ plot_var_part_pq <-
 ggscatt_pq <- function(
   physeq,
   num_modality,
-  hill_scales = c(0, 1, 2),
+  q = c(0, 1, 2),
   rarefy_by_sample = FALSE,
   rngseed = FALSE,
   verbose = TRUE,
@@ -5477,13 +5494,13 @@ ggscatt_pq <- function(
     physeq <- clean_pq(rarefy_even_depth(physeq, rngseed = rngseed))
   }
 
-  p_list <- vector("list", length(hill_scales))
-  psm_res <- psmelt_samples_pq(physeq, hill_scales = hill_scales)
-  for (i in seq_along(hill_scales)) {
+  p_list <- vector("list", length(q))
+  psm_res <- psmelt_samples_pq(physeq, q = q)
+  for (i in seq_along(q)) {
     p_list[[i]] <-
       ggstatsplot::ggscatterstats(
         psm_res,
-        !!paste0("Hill_", hill_scales[[i]]),
+        !!paste0("Hill_", q[[i]]),
         !!num_modality,
         ...
       )
@@ -5653,8 +5670,8 @@ ggaluv_pq <- function(
   psm_samp <-
     psmelt_samples_pq(
       physeq,
-      taxa_ranks = taxa_ranks,
-      hill_scales = NULL,
+      taxa_ranks= taxa_ranks,
+      q = NULL,
       rarefy_by_sample = FALSE
     )
 
@@ -5729,7 +5746,7 @@ ggaluv_pq <- function(
 #' @inheritParams clean_pq
 #' @param first_n (int, default 10) The number of nucleotides to plot the 5' extremity.
 #' @param last_n (int, default 10) The number of nucleotides to plot the 3' extremity.
-#' @param hill_scales (vector) A vector defining the Hill number wanted. Set to NULL if
+#' @param q (vector) A vector defining the Hill number wanted. Set to NULL if
 #'   you don't want to plot Hill diversity metrics.
 #' @param min_width (int, default 0) Select only the sequences from physeq@refseq with using a
 #'   minimum length threshold. If `first_n` is superior to the minimum length of the
@@ -5752,8 +5769,8 @@ ggaluv_pq <- function(
 #'
 #' plot_refseq_extremity_pq(data_fungi,
 #'   first_n = 400,
-#'   min_width = 400,
-#'   hill_scales = NULL
+#'   last_n = 400,
+#'   q = NULL
 #' )$plot_start +
 #'   geom_line(aes(y = value, x = seq_id, color = name), alpha = 0.4, linewidth = 0.2)
 #'
@@ -5761,13 +5778,13 @@ ggaluv_pq <- function(
 #'   first_n = NULL,
 #'   last_n = 400,
 #'   min_width = 400,
-#'   hill_scales = c(3)
+#'   q = c(3)
 #' )$plot_last
 plot_refseq_extremity_pq <- function(
   physeq,
   first_n = 10,
   last_n = 10,
-  hill_scales = c(1, 2),
+  q = c(1, 2),
   min_width = 0
 ) {
   if (min_width > 0) {
@@ -5822,42 +5839,36 @@ plot_refseq_extremity_pq <- function(
         )
       )
 
-    if (!is.null(hill_scales)) {
-      renyi_nucleotide <-
-        vegan::renyi(
-          nucleotide_first_interm[, c("nb_A", "nb_C", "nb_G", "nb_T")],
-          scales = hill_scales
-        )
-
-      if (inherits(renyi_nucleotide, "numeric")) {
-        renyi_nucleotide <- data.frame(renyi_nucleotide)
-        colnames(renyi_nucleotide) <- hill_scales
+    if (!is.null(q)) {
+      hill_nucleotide <- divent_hill_matrix_pq(
+        nucleotide_first_interm[, c("nb_A", "nb_C", "nb_G", "nb_T")],
+        q = q
+      )
+      if (sum(q == 0) > 0) {
+        hill_nucleotide <- hill_nucleotide |>
+          rename("Hill 0 (Richness)" = "0")
       }
-      if (sum(hill_scales == 0) > 0) {
-        renyi_nucleotide <- renyi_nucleotide |>
-          rename("Hill 0 (Shannon)" = "0")
+      if (sum(q == 1) > 0) {
+        hill_nucleotide <- hill_nucleotide |>
+          rename("Hill 1 (Shannon)" = "1")
       }
-      if (sum(hill_scales == 1) > 0) {
-        renyi_nucleotide <- renyi_nucleotide |>
-          rename("Hill 1 (Simpson)" = "1")
-      }
-      if (sum(hill_scales == 2) > 0) {
-        renyi_nucleotide <- renyi_nucleotide |>
-          rename("Hill 2 (Shannon)" = "2")
+      if (sum(q == 2) > 0) {
+        hill_nucleotide <- hill_nucleotide |>
+          rename("Hill 2 (Simpson)" = "2")
       }
 
-      renyi_nucleotide <- renyi_nucleotide |>
+      hill_nucleotide <- hill_nucleotide |>
         tidyr::pivot_longer(cols = everything())
 
-      renyi_nucleotide$seq_id <-
+      hill_nucleotide$seq_id <-
         sort(rep(
           seq_len(ncol(tib_interm)),
-          times = nrow(renyi_nucleotide) / ncol(tib_interm)
+          times = nrow(hill_nucleotide) / ncol(tib_interm)
         ))
 
       p_start <- p_start +
         geom_line(
-          data = renyi_nucleotide,
+          data = hill_nucleotide,
           aes(x = seq_id, y = value, color = name)
         )
     }
@@ -5908,42 +5919,36 @@ plot_refseq_extremity_pq <- function(
         )
       )
 
-    if (!is.null(hill_scales)) {
-      renyi_nucleotide <-
-        vegan::renyi(
-          nucleotide_last_interm[, c("nb_A", "nb_C", "nb_G", "nb_T")],
-          scales = hill_scales
-        )
-
-      if (inherits(renyi_nucleotide, "numeric")) {
-        renyi_nucleotide <- data.frame(renyi_nucleotide)
-        colnames(renyi_nucleotide) <- hill_scales
+    if (!is.null(q)) {
+      hill_nucleotide <- divent_hill_matrix_pq(
+        nucleotide_last_interm[, c("nb_A", "nb_C", "nb_G", "nb_T")],
+        q = q
+      )
+      if (sum(q == 0) > 0) {
+        hill_nucleotide <- hill_nucleotide |>
+          rename("Hill 0 (Richness)" = "0")
       }
-      if (sum(hill_scales == 0) > 0) {
-        renyi_nucleotide <- renyi_nucleotide |>
-          rename("Hill 0 (Shannon)" = "0")
+      if (sum(q == 1) > 0) {
+        hill_nucleotide <- hill_nucleotide |>
+          rename("Hill 1 (Shannon)" = "1")
       }
-      if (sum(hill_scales == 1) > 0) {
-        renyi_nucleotide <- renyi_nucleotide |>
-          rename("Hill 1 (Simpson)" = "1")
-      }
-      if (sum(hill_scales == 2) > 0) {
-        renyi_nucleotide <- renyi_nucleotide |>
-          rename("Hill 2 (Shannon)" = "2")
+      if (sum(q == 2) > 0) {
+        hill_nucleotide <- hill_nucleotide |>
+          rename("Hill 2 (Simpson)" = "2")
       }
 
-      renyi_nucleotide <- renyi_nucleotide |>
+      hill_nucleotide <- hill_nucleotide |>
         tidyr::pivot_longer(cols = everything())
 
-      renyi_nucleotide$seq_id <-
+      hill_nucleotide$seq_id <-
         sort(rep(
           seq_len(ncol(tib_interm_last)),
-          times = nrow(renyi_nucleotide) / ncol(tib_interm_last)
+          times = nrow(hill_nucleotide) / ncol(tib_interm_last)
         ))
 
       p_last <- p_last +
         geom_line(
-          data = renyi_nucleotide,
+          data = hill_nucleotide,
           aes(
             x = seq_id,
             y = value,
@@ -5982,7 +5987,7 @@ plot_refseq_extremity_pq <- function(
 #' @inheritParams clean_pq
 #' @param first_n (int, default 10) The number of nucleotides to plot the 5' extremity.
 #' @param last_n (int, default 10) The number of nucleotides to plot the 3' extremity.
-#' @param hill_scales (vector) A vector defining the Hill number wanted. Set to NULL if
+#' @param q (vector) A vector defining the Hill number wanted. Set to NULL if
 #'   you don't want to plot Hill diversity metrics.
 #' @param min_width (int, default 0) Select only the sequences from physeq@refseq with using a
 #'   minimum length threshold. If `first_n` is superior to the minimum length of the
@@ -5992,18 +5997,18 @@ plot_refseq_extremity_pq <- function(
 #' @author Adrien Taudière
 #' @examples
 #' plot_refseq_pq(data_fungi)
-#' plot_refseq_pq(data_fungi, hill_scales = c(2), first_n = 300)
+#' plot_refseq_pq(data_fungi, q = c(2), first_n = 300)
 #'
 plot_refseq_pq <- function(
   physeq,
-  hill_scales = NULL,
+  q = NULL,
   first_n = min(Biostrings::width(physeq@refseq)),
   last_n = NULL,
   min_width = first_n
 ) {
   res <- plot_refseq_extremity_pq(
-    physeq = physeq,
-    hill_scales = hill_scales,
+    physeq,
+    q = q,
     first_n = first_n,
     last_n = last_n,
     min_width = min_width
@@ -6049,8 +6054,8 @@ no_legend <- function() {
 #'   the [merge_samples2()] function.  Need to be in `physeq@sam_data`
 #' @param color_fac (optional): The variable to color the barplot. For ex.
 #'   same as fact. If merge_sample_by is set, color_fac must be nested in
-#'   the merge_sample_by factor. See examples.
-#' @param hill_scales Scales of Rényi diversity.
+#'   the mq_by factor. See examples.
+#' @param q Scales of Rényi diversity.
 #' @param nperm (int Default NULL) If a integer is set to nperm, nperm
 #'   permutation are computed to draw confidence interval for each curves.
 #'   The function use [vegan::renyi()] if nperm is NULL and
@@ -6083,11 +6088,11 @@ no_legend <- function() {
 #'     nperm = 9, plot_legend = FALSE, size_point = 1,
 #'     linewidth = 0.5
 #'   )
-#'   hill_curves_pq(data_fungi_mini, "Height",
-#'     hill_scales = c(0, 1, 2, 8), plot_legend = FALSE
+#'   hiqq(data_fungi_mini, "Height",
+#'     q = c(0, 1, 2, 8), plot_legend = FALSE
 #'   )
-#'   hill_curves_pq(data_fungi_mini, "Height",
-#'     hill_scales = c(0, 0.5, 1, 2, 4, 8),
+#'   hiqq(data_fungi_mini, "Height",
+#'     q = c(0, 0.5, 1, 2, 4, 8),
 #'     nperm = 9
 #'   )
 #'   hill_curves_pq(data_fungi_mini, "Height", nperm = 9, wrap_factor = FALSE)
@@ -6108,7 +6113,7 @@ hill_curves_pq <- function(
   physeq,
   merge_sample_by = NULL,
   color_fac = NULL,
-  hill_scales = c(0, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, Inf),
+  q = c(0, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, Inf),
   nperm = NULL,
   na_remove = TRUE,
   wrap_factor = TRUE,
@@ -6148,7 +6153,7 @@ hill_curves_pq <- function(
     df_hill <-
       vegan::renyiaccum(
         t(physeq)@otu_table,
-        scales = hill_scales,
+        scales = q,
         permutation = nperm,
         hill = TRUE,
         ...
@@ -6214,8 +6219,7 @@ hill_curves_pq <- function(
         facet_wrap("Modality")
     }
   } else {
-    df_hill <-
-      vegan::renyi(t(physeq)@otu_table, scales = hill_scales, hill = TRUE)
+    df_hill <- vegan::renyi(t(physeq)@otu_table, scales = q, hill = TRUE)
     if (inherits(df_hill, "data.frame")) {
       if (is.null(color_fac)) {
         modality <- sample_names(physeq)

@@ -27,7 +27,7 @@ the \code{\link[=merge_samples2]{merge_samples2()}} function.  Need to be in \co
 
 \item{color_fac}{(optional): The variable to color the barplot. For ex.
 same as fact. If merge_sample_by is set, color_fac must be nested in
-the merge_sample_by factor. See examples.}
+the mq_by factor. See examples.}
 
 \item{hill_scales}{Scales of Rényi diversity.}
 
@@ -83,10 +83,10 @@ if (requireNamespace("vegan")) {
     nperm = 9, plot_legend = FALSE, size_point = 1,
     linewidth = 0.5
   )
-  hill_curves_pq(data_fungi_mini, "Height",
+  hiqq(data_fungi_mini, "Height",
     hill_scales = c(0, 1, 2, 8), plot_legend = FALSE
   )
-  hill_curves_pq(data_fungi_mini, "Height",
+  hiqq(data_fungi_mini, "Height",
     hill_scales = c(0, 0.5, 1, 2, 4, 8),
     nperm = 9
   )

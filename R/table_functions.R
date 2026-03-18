@@ -118,11 +118,15 @@ tax_datatable <- function(
 #'   Need to be in \code{physeq@sam_data}
 #' @param nb_min_seq minimum number of sequences per sample
 #'   to count the ASV/OTU
-#' @param veg_index (default: "shannon") index for the `vegan::diversity` function
+#' @param veg_index (default: `"shannon"`) diversity index. `"shannon"` and
+#'   `"simpson"` are computed via `divent`; other names are forwarded to
+#'   [vegan::diversity()].
 #' @param na_remove (logical, default TRUE) If set to TRUE, remove samples with
 #'   NA in the variables set in bifactor, modality and merge_sample_by.
 #'   NA in variables are well managed even if na_remove = FALSE, so na_remove may
 #'   be useless.
+#' @param ... Additional arguments passed to [divent::ent_shannon()] or
+#'   [divent::ent_simpson()] when `veg_index` is `"shannon"` or `"simpson"`.
 #' @return A tibble with information about the number of shared ASV, shared number of sequences
 #'   and diversity
 #' @importFrom rlang .data
@@ -141,7 +145,8 @@ compare_pairs_pq <- function(
   merge_sample_by = NULL,
   nb_min_seq = 0,
   veg_index = "shannon",
-  na_remove = TRUE
+  na_remove = TRUE,
+  ...
 ) {
   physeq <- taxa_as_columns(physeq)
 
@@ -241,14 +246,13 @@ compare_pairs_pq <- function(
           newphyseq@otu_table[cond2, ] > nb_min_seq
       )
 
-      div_first <- round(
-        vegan::diversity(newphyseq@otu_table, index = veg_index)[cond1],
-        2
-      )
-      div_second <- round(
-        vegan::diversity(newphyseq@otu_table, index = veg_index)[cond2],
-        2
-      )
+      all_div <- .compute_diversity_index(
+        as.data.frame(newphyseq@otu_table),
+        veg_index,
+        ...
+      )[[veg_index]]
+      div_first <- round(all_div[cond1], 2)
+      div_second <- round(all_div[cond2], 2)
 
       nb_shared_seq <- sum(newphyseq@otu_table[,
         newphyseq@otu_table[cond1, ] > nb_min_seq &

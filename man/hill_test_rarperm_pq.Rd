@@ -8,7 +8,7 @@ with different rarefaction even depth}
 hill_test_rarperm_pq(
   physeq,
   fact,
-  hill_scales = c(0, 1, 2),
+  q = c(0, 1, 2),
   nperm = 99,
   sample.size = min(sample_sums(physeq)),
   verbose = FALSE,
@@ -25,7 +25,7 @@ using the \code{phyloseq} package.}
 \item{fact}{(required) Name of the factor in \code{physeq@sam_data} used to plot
 different lines}
 
-\item{hill_scales}{(a vector of integer) The list of q values to compute
+\item{q}{(a vector of integer) The list of q values to compute
 the hill number H^q. If Null, no hill number are computed. Default value
 compute the Hill number 0 (Species richness), the Hill number 1
 (exponential of Shannon Index) and the Hill number 2 (inverse of Simpson

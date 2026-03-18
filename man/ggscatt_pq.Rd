@@ -21,7 +21,7 @@ ggscatt_pq(
 using the \code{phyloseq} package.}
 
 \item{num_modality}{(required) Name of the numeric column in
-\code{physeq@sam_data} to plot and test against hill number}
+\code{physq} to plot and test against hill number}
 
 \item{hill_scales}{(a vector of integer) The list of q values to compute
 the hill number H^q. If Null, no hill number are computed. Default value
@@ -48,7 +48,7 @@ plot with the three plot inside using the patchwork package.}
 function.}
 }
 \value{
-Either an unique ggplot2 object (if one_plot is TRUE) or
+Either an unique ggplot2 (when \code{one_plot} is TRUE) or
 a list of ggplot2 plot for each hill_scales.
 }
 \description{

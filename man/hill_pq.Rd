@@ -8,7 +8,8 @@ hill_pq(
   physeq,
   fact = NULL,
   variable = NULL,
-  hill_scales = c(0, 1, 2),
+  q = c(0, 1, 2),
+  hill_scales = lifecycle::deprecated(),
   color_fac = NA,
   letters = FALSE,
   add_points = FALSE,
@@ -18,7 +19,8 @@ hill_pq(
   plot_with_tuckey = TRUE,
   correction_for_sample_size = TRUE,
   na_remove = TRUE,
-  vioplot = FALSE
+  vioplot = FALSE,
+  ...
 )
 }
 \arguments{
@@ -30,11 +32,11 @@ the \code{sam_data} slot of the physeq object.}
 
 \item{variable}{: Alias for factor. Kept only for backward compatibility.}
 
-\item{hill_scales}{(a vector of integer) The list of q values to compute
-the hill number H^q. If Null, no hill number are computed. Default value
-compute the Hill number 0 (Species richness), the Hill number 1
-(exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
-Index).}
+\item{q}{(vector) Hill diversity orders to compute. Default computes
+Hill number 0 (species richness), 1 (exponential of Shannon index) and
+2 (inverse of Simpson index). Formerly \code{hill_scales}.}
+
+\item{hill_scales}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{q} instead.}
 
 \item{color_fac}{(optional): The variable to color the barplot. For ex.
 same as fact. Not very useful because ggplot2 plot colors can be
@@ -82,6 +84,9 @@ letters = TRUE}
 
 \item{vioplot}{(logical, default FALSE) Do we plot violin plot instead of
 boxplot ?}
+
+\item{...}{Additional arguments passed to \code{\link[=divent_hill_matrix_pq]{divent_hill_matrix_pq()}} and
+hence to \code{\link[divent:div_hill]{divent::div_hill()}} (e.g. \code{estimator = "naive"}).}
 }
 \value{
 Either an unique ggplot2 object (if one_plot is TRUE) or
@@ -118,7 +123,7 @@ computed.
 }
 \examples{
 
-p <- hill_pq(data_fungi_mini, "Height", hill_scales = 1:2)
+p <- hill_pq(data_fungi_mini, "Height", q = 1:2)
 p_h1 <- p[[1]] + theme(legend.position = "none")
 p_h2 <- p[[2]] + theme(legend.position = "none")
 multiplot(plotlist = list(p_h1, p_h2, p[[3]]), cols = 4)

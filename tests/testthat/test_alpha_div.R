@@ -20,7 +20,7 @@ test_that("hill_tuckey_pq works with different parameters", {
     suppressMessages(hill_tuckey_pq(
       GlobalPatterns,
       "Soil_logical",
-      hill_scales = 1:2
+      q = 1:2
     )),
     "ggplot"
   )

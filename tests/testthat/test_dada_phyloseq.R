@@ -118,7 +118,7 @@ test_that("psmelt_samples_pq works fine", {
 
   skip_on_cran()
   # Test without hill numbers
-  result2 <- psmelt_samples_pq(data_fungi_mini, hill_scales = NULL)
+  result2 <- psmelt_samples_pq(data_fungi_mini, q = NULL)
   expect_s3_class(result2, "tbl_df")
   expect_false("Hill_0" %in% colnames(result2))
 

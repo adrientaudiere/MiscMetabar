@@ -1,4 +1,21 @@
-# MiscMetabar 0.14.6 (in development)
+# MiscMetabar 0.15.1
+
+## Breaking changes
+
+* `compare_pairs_pq()`, `ggbetween_pq()`, `hill_pq()`, `hill_tuckey_pq()`, `plot_refseq_extremity_pq()`, and `psmelt_samples_pq()` now use `divent::div_hill()` instead of `vegan::renyi()` for Hill number computation, and `compare_pairs_pq()` uses `divent::ent_shannon()` / `divent::ent_simpson()` instead of `vegan::diversity()` for Shannon and Simpson indices. The default estimator is now `"UnveilJ"` (bias-corrected) rather than the naive plug-in estimator — diversity values will differ from previous versions. Pass `estimator = "naive"` via `...` to restore old numeric behavior.
+
+## New features
+
+* `divent_hill_matrix_pq()` new exported utility to compute Hill numbers for all samples in an OTU table using `divent::div_hill()`. Accepts `...` to forward any argument to `divent::div_hill()`.
+* `ggbetween_pq()` gains a `q` parameter (default `c(0, 1, 2)`) to control which Hill diversity orders are computed. One plot is produced per value.
+* `hill_acc_pq()` new function wrapping `divent::accum_hill() |> autoplot()` to plot Hill diversity accumulation curves from a phyloseq object.
+* `profile_hill_pq()` new function wrapping `divent::profile_hill() |> autoplot()` to visualize Hill diversity profiles across all orders for all samples in a phyloseq object.
+
+## Deprecated
+
+* The `hill_scales` parameter in `hill_pq()`, `hill_tuckey_pq()`, and `psmelt_samples_pq()` is deprecated in favour of `q`. Use `q = c(0, 1, 2)` going forward.
+
+# MiscMetabar 0.14.6
 
 - Add `find_vsearch()` and `install_vsearch()` to make vsearch-based functions work on all platforms including Windows. `install_vsearch()` downloads the vsearch binary from GitHub, and `find_vsearch()` automatically locates it. All vsearch-calling functions now default to `find_vsearch()` instead of a hard-coded `"vsearch"` path. Users can also set `options(MiscMetabar.vsearchpath = "/path/to/vsearch")` for custom installations.
 
@@ -236,7 +253,7 @@
 ## New parameters
 
 - Add param `taxa_ranks` in function `psmelt_samples_pq()` to group results by samples AND taxonomic ranks. 
-- Add param `hill_scales` in functions `hill_tuckey_pq()` and `hill_p()` to choose the level of the hill number. 
+- Add param `q` in functions `hill_tuckey_pq()` and `hill_p()` to choose the level of the hill number. 
 - Add param `na_remove` in function `hill_pq()` to remove samples with NA in the factor fact.
 
 

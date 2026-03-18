@@ -10,15 +10,18 @@
 #' @aliases hill_tuckey_pq
 #' @inheritParams clean_pq
 #' @param modality (required) the variable to test
-#' @param hill_scales (a vector of integer) The list of q values to compute
-#'   the hill number H^q. If Null, no hill number are computed. Default value
-#'   compute the Hill number 0 (Species richness), the Hill number 1
-#'   (exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
-#'   Index).
+#' @param q (numeric vector) Hill diversity orders to compute (q values).
+#'   Default computes Hill number 0 (species richness), Hill number 1
+#'   (exponential of Shannon index) and Hill number 2 (inverse of Simpson
+#'   index). Formerly `hill_scales`.
+#' @param hill_scales `r lifecycle::badge("deprecated")` Use `q` instead.
 #' @param silent (logical) If TRUE, no message are printing.
 #' @param correction_for_sample_size (logical, default TRUE) This function
 #'   use a sqrt of the read numbers in the linear model in order to
 #'   correct for uneven sampling depth.
+#' @param ... Additional arguments passed to [divent_hill_matrix_pq()] and
+#'   hence to [divent::div_hill()] (e.g. `estimator = "naive"` to match
+#'   vegan-style results).
 #' @return A ggplot2 object
 #'
 #' @export
@@ -29,14 +32,24 @@
 #' GlobalPatterns@sam_data[, "Soil_logical"] <-
 #'   ifelse(GlobalPatterns@sam_data[, "SampleType"] == "Soil", "Soil", "Not Soil")
 #' hill_tuckey_pq(GlobalPatterns, "Soil_logical")
-#' hill_tuckey_pq(GlobalPatterns, "Soil_logical", hill_scales = 1:2)
+#' hill_tuckey_pq(GlobalPatterns, "Soil_logical", q = 1:2)
 hill_tuckey_pq <- function(
   physeq,
   modality,
-  hill_scales = c(0, 1, 2),
+  q = c(0, 1, 2),
+  hill_scales = lifecycle::deprecated(),
   silent = TRUE,
-  correction_for_sample_size = TRUE
+  correction_for_sample_size = TRUE,
+  ...
 ) {
+  if (lifecycle::is_present(hill_scales)) {
+    lifecycle::deprecate_warn(
+      "0.15.1",
+      "hill_tuckey_pq(hill_scales=)",
+      "hill_tuckey_pq(q=)"
+    )
+    q <- hill_scales
+  }
   modality_vector <-
     as.factor(as.vector(unlist(unclass(physeq@sam_data[, modality]))))
 
@@ -46,12 +59,15 @@ hill_tuckey_pq <- function(
   read_numbers <- apply(physeq@otu_table, 2, sum)
 
   physeq <- taxa_as_rows(physeq)
-  otu_hill <-
-    vegan::renyi(t(physeq@otu_table), scales = hill_scales, hill = TRUE)
+  otu_hill <- divent_hill_matrix_pq(
+    as.data.frame(t(as.matrix(physeq@otu_table))),
+    q = q,
+    ...
+  )
 
-  colnames(otu_hill) <- paste0("Hill_", hill_scales)
-  tuk <- vector("list", length(hill_scales))
-  for (i in seq_along(hill_scales)) {
+  colnames(otu_hill) <- paste0("Hill_", q)
+  tuk <- vector("list", length(q))
+  for (i in seq_along(q)) {
     if (correction_for_sample_size) {
       tuk[[i]] <-
         stats::TukeyHSD(stats::aov(
@@ -77,7 +93,7 @@ hill_tuckey_pq <- function(
     "Hill_",
     c(
       sort(rep(
-        hill_scales,
+        q,
         dim(
           tuk[[1]]$modality_vector
         )[1]
@@ -118,7 +134,7 @@ hill_tuckey_pq <- function(
 #' @inheritParams clean_pq
 #' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
 #'    different lines
-#' @param hill_scales (a vector of integer) The list of q values to compute
+#' @param q (a vector of integer) The list of q values to compute
 #'   the hill number H^q. If Null, no hill number are computed. Default value
 #'   compute the Hill number 0 (Species richness), the Hill number 1
 #'   (exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
@@ -172,7 +188,7 @@ hill_tuckey_pq <- function(
 hill_test_rarperm_pq <- function(
   physeq,
   fact,
-  hill_scales = c(0, 1, 2),
+  q = c(0, 1, 2),
   nperm = 99,
   sample.size = min(sample_sums(physeq)),
   verbose = FALSE,
@@ -196,7 +212,7 @@ hill_test_rarperm_pq <- function(
   if (progress_bar) {
     pb <- txtProgressBar(
       min = 0,
-      max = nperm * length(hill_scales),
+      max = nperm * length(q),
       style = 3,
       width = 50,
       char = "="
@@ -212,7 +228,7 @@ hill_test_rarperm_pq <- function(
             sample.size = sample.size,
             verbose = verbose
           ),
-          hill_scales = hill_scales
+          q = q
         )
     } else {
       psm <-
@@ -223,17 +239,17 @@ hill_test_rarperm_pq <- function(
             sample.size = sample.size,
             verbose = verbose
           ),
-          hill_scales = hill_scales
+          q = q
         ))
     }
-    p_perm[[i]] <- vector("list", length(hill_scales))
-    res_perm[[i]] <- vector("list", length(hill_scales))
-    for (j in seq_along(hill_scales)) {
+    p_perm[[i]] <- vector("list", length(q))
+    res_perm[[i]] <- vector("list", length(q))
+    for (j in seq_along(q)) {
       p_perm[[i]][[j]] <-
         ggstatsplot::ggbetweenstats(
           psm,
           !!fact,
-          !!paste0("Hill_", hill_scales[[j]]),
+          !!paste0("Hill_", q[[j]]),
           type = type,
           ...
         )
@@ -241,7 +257,7 @@ hill_test_rarperm_pq <- function(
         ggstatsplot::extract_stats(p_perm[[i]][[j]])
     }
     if (progress_bar) {
-      setTxtProgressBar(pb, i * length(hill_scales))
+      setTxtProgressBar(pb, i * length(q))
     }
   }
 
@@ -256,7 +272,7 @@ hill_test_rarperm_pq <- function(
       xx$subtitle_data$expression
     })
   })
-  rownames(expressions) <- paste0("Hill_", hill_scales)
+  rownames(expressions) <- paste0("Hill_", q)
   colnames(expressions) <- paste0("ngseed", 1:nperm)
 
   statistics <- sapply(res_perm, function(x) {
@@ -264,7 +280,7 @@ hill_test_rarperm_pq <- function(
       xx$subtitle_data$statistic
     })
   })
-  rownames(statistics) <- paste0("Hill_", hill_scales)
+  rownames(statistics) <- paste0("Hill_", q)
   colnames(statistics) <- paste0("ngseed", 1:nperm)
 
   pvals <- sapply(res_perm, function(x) {
@@ -272,11 +288,11 @@ hill_test_rarperm_pq <- function(
       xx$subtitle_data$p.value
     })
   })
-  rownames(pvals) <- paste0("Hill_", hill_scales)
+  rownames(pvals) <- paste0("Hill_", q)
   colnames(pvals) <- paste0("ngseed_", 1:nperm)
 
   prop_signif <- rowSums(pvals < p_val_signif) / ncol(pvals)
-  names(prop_signif) <- paste0("Hill_", hill_scales)
+  names(prop_signif) <- paste0("Hill_", q)
   res <-
     list(
       "method" = method,
@@ -302,10 +318,10 @@ hill_test_rarperm_pq <- function(
 #' @inheritParams clean_pq
 #' @param formula (required) a formula for [glmulti::glmulti()]
 #'   Variables must be present in the `physeq@sam_data` slot or be one
-#'   of hill number defined in hill_scales or the variable Abundance which
+#'   of hill number defined in q or the variable Abundance which
 #'   refer to the number of sequences per sample.
 #' @param fitfunction (default "lm")
-#' @param hill_scales (a vector of integer) The list of q values to compute
+#' @param q (a vector of integer) The list of q values to compute
 #'   the hill number H^q. If Null, no hill number are computed. Default value
 #'   compute the Hill number 0 (Species richness), the Hill number 1
 #'   (exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
@@ -357,7 +373,7 @@ glmutli_pq <-
     physeq,
     formula,
     fitfunction = "lm",
-    hill_scales = c(0, 1, 2),
+    q = c(0, 1, 2),
     aic_step = 2,
     confsetsize = 100,
     plotty = FALSE,
@@ -366,7 +382,7 @@ glmutli_pq <-
     crit = "aicc",
     ...
   ) {
-    psm_samp <- psmelt_samples_pq(physeq, hill_scales = hill_scales)
+    psm_samp <- psmelt_samples_pq(physeq, q = q)
 
     res_glmulti <- do.call(
       glmulti::glmulti,

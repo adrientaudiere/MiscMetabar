@@ -149,14 +149,17 @@ reference:
   - accu_plot
   - accu_plot_balanced_modality
   - accu_samp_threshold
+  - divent_hill_matrix_pq
   - ggbetween_pq
   - ggscatt_pq
   - glmutli_pq
+  - hill_acc_pq
   - hill_curves_pq
   - hill_pq
   - hill_test_rarperm_pq
   - hill_tuckey_pq
   - iNEXT_pq
+  - profile_hill_pq
 
 - subtitle: beta-diversity
   contents:

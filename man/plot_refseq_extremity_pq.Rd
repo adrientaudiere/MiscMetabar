@@ -60,7 +60,7 @@ res2$plot_last
 
 plot_refseq_extremity_pq(data_fungi,
   first_n = 400,
-  min_width = 400,
+  last_n = 400,
   hill_scales = NULL
 )$plot_start +
   geom_line(aes(y = value, x = seq_id, color = name), alpha = 0.4, linewidth = 0.2)

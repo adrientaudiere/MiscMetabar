@@ -11,6 +11,7 @@ ggbetween_pq(
   rarefy_by_sample = FALSE,
   rngseed = FALSE,
   verbose = TRUE,
+  q = c(0, 1, 2),
   ...
 )
 }
@@ -36,11 +37,14 @@ beforehand to achieve reproducible results. Default is FALSE.}
 
 \item{verbose}{(logical). If TRUE, print additional information.}
 
+\item{q}{(numeric vector, default \code{c(0, 1, 2)}) Hill diversity orders to
+compute. One plot is produced per value.}
+
 \item{...}{Additional arguments passed on to \code{\link[ggstatsplot:ggbetweenstats]{ggstatsplot::ggbetweenstats()}} function.}
 }
 \value{
 Either an unique ggplot2 object (if one_plot is TRUE) or
-a list of 3 ggplot2 plot:
+a list of ggplot2 plots, one per Hill order in \code{q}. With default \code{q}:
 \itemize{
 \item plot_Hill_0 : the ggbetweenstats of Hill number 0 (= species richness)
 against the variable fact

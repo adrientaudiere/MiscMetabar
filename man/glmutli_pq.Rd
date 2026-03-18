@@ -8,7 +8,7 @@ glmutli_pq(
   physeq,
   formula,
   fitfunction = "lm",
-  hill_scales = c(0, 1, 2),
+  q = c(0, 1, 2),
   aic_step = 2,
   confsetsize = 100,
   plotty = FALSE,
@@ -24,12 +24,12 @@ using the \code{phyloseq} package.}
 
 \item{formula}{(required) a formula for \code{\link[glmulti:glmulti]{glmulti::glmulti()}}
 Variables must be present in the \code{physeq@sam_data} slot or be one
-of hill number defined in hill_scales or the variable Abundance which
+of hill number defined in q or the variable Abundance which
 refer to the number of sequences per sample.}
 
 \item{fitfunction}{(default "lm")}
 
-\item{hill_scales}{(a vector of integer) The list of q values to compute
+\item{q}{(a vector of integer) The list of q values to compute
 the hill number H^q. If Null, no hill number are computed. Default value
 compute the Hill number 0 (Species richness), the Hill number 1
 (exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
