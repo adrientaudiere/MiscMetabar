@@ -20,7 +20,12 @@ psmelt_samples_pq(
 \item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{q}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{q} instead.}
+\item{q}{(numeric vector) Hill diversity orders to compute. If NULL, no
+Hill numbers are computed. Default computes Hill number 0 (species
+richness), 1 (exponential of Shannon index) and 2 (inverse of Simpson
+index). Formerly \code{q}.}
+
+\item{hill_scales}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{q} instead.}
 
 \item{filter_zero}{(logical, default TRUE) Do we filter non present OTU from
 samples ? For the moment, this has no effect on the result because the dataframe

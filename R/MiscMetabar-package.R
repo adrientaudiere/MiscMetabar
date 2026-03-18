@@ -12,6 +12,7 @@ if (getRversion() >= "2.15.1") {
     "...2",
     ".group",
     ".id",
+    ".stack_order",
     "%>%",
     "Ab",
     "Abundance",

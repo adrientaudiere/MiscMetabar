@@ -420,6 +420,7 @@ plot_deseq2_pq <-
 #'
 #'  \code{c("TMM", "RLE", "upperquartile", "none")}.
 #'
+#' @param remove_na (logical) If TRUE, samples with NA values in the group variable will be removed.
 #' @return A DGEList object. See [edgeR::estimateTagwiseDisp()] for more details.
 #'
 #' @param ... Additional arguments passed on to \code{\link[edgeR]{DGEList}}
@@ -431,7 +432,13 @@ plot_deseq2_pq <-
 #' }
 #' }
 #'
-phyloseq_to_edgeR <- function(physeq, group, method = "RLE", ...) {
+phyloseq_to_edgeR <- function(
+  physeq,
+  group,
+  method = "RLE",
+  remove_na = TRUE,
+  ...
+) {
   verify_pq(physeq)
   # Enforce orientation.
   if (!taxa_are_rows(physeq)) {
@@ -440,6 +447,12 @@ phyloseq_to_edgeR <- function(physeq, group, method = "RLE", ...) {
       taxa_are_rows = TRUE
     )
   }
+
+  if (remove_na) {
+    keep <- !is.na(get_variable(physeq, group))
+    physeq <- prune_samples(keep, physeq)
+  }
+
   x <- methods::as(otu_table(physeq), "matrix")
   # Add one to protect against overflow, log(0) issues.
   x <- x + 1

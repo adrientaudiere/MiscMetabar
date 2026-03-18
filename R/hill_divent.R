@@ -36,15 +36,15 @@ profile_hill_pq <- function(
   }
   physeq <- taxa_as_columns(physeq)
   otu <- as.data.frame(otu_table(physeq))
-  otu_t <- t(otu)
-  # divent::profile_hill expects: first column = species names,
-  # subsequent columns = one community (sample) per column
+  # divent::as_abundances expects rows = communities, columns = species,
+  # with an optional "site" column for community names
   otu_df <- data.frame(
-    species = rownames(otu_t),
-    otu_t,
+    site = rownames(otu),
+    otu,
     check.names = FALSE
   )
-  result <- divent::profile_hill(otu_df, orders = orders, ...)
+  abd <- divent::as_abundances(otu_df)
+  result <- divent::profile_hill(abd, orders = orders, ...)
   ggplot2::autoplot(result)
 }
 
@@ -85,14 +85,14 @@ hill_acc_pq <- function(
   }
   physeq <- taxa_as_columns(physeq)
   otu <- as.data.frame(otu_table(physeq))
-  otu_t <- t(otu)
-  # divent::accum_hill expects: first column = species names,
-  # subsequent columns = one community (sample) per column
+  # divent::as_abundances expects rows = communities, columns = species,
+  # with an optional "site" column for community names
   otu_df <- data.frame(
-    species = rownames(otu_t),
-    otu_t,
+    site = rownames(otu),
+    otu,
     check.names = FALSE
   )
-  result <- divent::accum_hill(otu_df, q = q, ...)
+  abd <- divent::as_abundances(otu_df)
+  result <- divent::accum_hill(abd, q = q, ...)
   ggplot2::autoplot(result)
 }

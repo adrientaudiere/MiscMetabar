@@ -21,8 +21,13 @@ if (getRversion() >= "2.15.1") {
 #' @author Adrien Taudière
 #' @export
 #' @examples
-#' #TODO create a phyloseq object without refseq and with taxa names as sequences and add dna in refseq and rename taxa
-#' 
+#' pq_seq_names <- phyloseq::phyloseq(
+#'   phyloseq::otu_table(data_fungi_mini),
+#'   phyloseq::sample_data(data_fungi_mini),
+#'   phyloseq::tax_table(data_fungi_mini)
+#' )
+#' phyloseq::taxa_names(pq_seq_names) <- as.character(phyloseq::refseq(data_fungi_mini))
+#' add_dna_to_phyloseq(pq_seq_names)
 
 add_dna_to_phyloseq <- function(physeq, prefix_taxa_names = "Taxa_") {
   verify_pq(physeq)
@@ -4024,7 +4029,7 @@ normalize_prop_pq <- function(
 #'   Hill numbers are computed. Default computes Hill number 0 (species
 #'   richness), 1 (exponential of Shannon index) and 2 (inverse of Simpson
 #'   index). Formerly `q`.
-#' @param q `r lifecycle::badge("deprecated")` Use `q` instead.
+#' @param hill_scales `r lifecycle::badge("deprecated")` Use `q` instead.
 #' @param filter_zero (logical, default TRUE) Do we filter non present OTU from
 #'   samples ? For the moment, this has no effect on the result because the dataframe
 #'   is grouped by samples with abundance summed across OTU.

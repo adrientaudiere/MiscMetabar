@@ -430,7 +430,7 @@ format2dada2 <- function(
     if (from_sintax) {
       new_names <- names(dna)
     } else {
-      new_names <- format2sintax(names(dna), ...)
+      new_names <- format2sintax(taxnames = names(dna), ...)
     }
 
     # Add the good number of level to each line

@@ -6088,10 +6088,10 @@ no_legend <- function() {
 #'     nperm = 9, plot_legend = FALSE, size_point = 1,
 #'     linewidth = 0.5
 #'   )
-#'   hiqq(data_fungi_mini, "Height",
+#'   hill_curves_pq(data_fungi_mini, "Height",
 #'     q = c(0, 1, 2, 8), plot_legend = FALSE
 #'   )
-#'   hiqq(data_fungi_mini, "Height",
+#'   hill_curves_pq(data_fungi_mini, "Height",
 #'     q = c(0, 0.5, 1, 2, 4, 8),
 #'     nperm = 9
 #'   )
