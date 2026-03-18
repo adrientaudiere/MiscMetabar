@@ -14,7 +14,8 @@ Depends:
     ggplot2 (>= 3.5.0),
     dada2,
     dplyr,
-    purrr
+    purrr,
+    divent
 Suggests: 
     adespatial,
     ALDEx2,
@@ -95,7 +96,6 @@ BugReports: https://github.com/adrientaudiere/MiscMetabar/issues
 Roxygen: list(markdown = TRUE)
 Imports:
     ape,
-    divent,
     lifecycle,
     rlang,
     stats

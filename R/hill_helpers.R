@@ -46,10 +46,10 @@ divent_hill_matrix_pq <- function(comm, q, ...) {
   if (is.vector(result)) {
     result <- matrix(result, ncol = length(q))
   }
-  df <- as.data.frame(result)
-  colnames(df) <- as.character(q)
-  rownames(df) <- rownames(comm_mat)
-  df
+  out <- as.data.frame(result)
+  colnames(out) <- as.character(q)
+  rownames(out) <- rownames(comm_mat)
+  out
 }
 
 # Internal helper: compute a single diversity index for a single sample.

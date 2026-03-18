@@ -36,16 +36,17 @@ profile_hill_pq <- function(
   }
   physeq <- taxa_as_columns(physeq)
   otu <- as.data.frame(otu_table(physeq))
-  # divent::as_abundances expects rows = communities, columns = species,
-  # with an optional "site" column for community names
-  otu_df <- data.frame(
-    site = rownames(otu),
-    otu,
-    check.names = FALSE
-  )
-  abd <- divent::as_abundances(otu_df)
-  result <- divent::profile_hill(abd, orders = orders, ...)
-  ggplot2::autoplot(result)
+  sample_names <- rownames(otu)
+  results <- lapply(seq_along(sample_names), \(i) {
+    abund <- as.numeric(otu[i, ])
+    abund <- abund[abund > 0]
+    res <- divent::profile_hill(abund, orders = orders, ...)
+    res$site <- sample_names[i]
+    res
+  })
+  combined <- dplyr::bind_rows(results)
+  class(combined) <- c("profile", class(combined))
+  ggplot2::autoplot(combined)
 }
 
 ################################################################################
@@ -57,13 +58,14 @@ profile_hill_pq <- function(
 #' alt="lifecycle-experimental"></a>
 #'
 #' Wraps [divent::accum_hill()] to compute Hill diversity accumulation curves
-#' (generalised species accumulation curves) from a `phyloseq` object, and
-#' returns a ggplot2 object via [ggplot2::autoplot()].
+#' (rarefaction curves) from a `phyloseq` object, with one curve per sample
+#' (or per merged group), and returns a ggplot2 object via
+#' [ggplot2::autoplot()].
 #'
 #' @inheritParams clean_pq
 #' @param q (numeric, default 1) Hill diversity order.
 #' @param merge_sample_by (character or NULL) If not NULL, merge samples
-#'   using [merge_samples2()] before computing the curve.
+#'   using [merge_samples2()] before computing the curves.
 #' @param ... Additional arguments passed to [divent::accum_hill()].
 #'
 #' @return A ggplot2 object.
@@ -85,14 +87,15 @@ hill_acc_pq <- function(
   }
   physeq <- taxa_as_columns(physeq)
   otu <- as.data.frame(otu_table(physeq))
-  # divent::as_abundances expects rows = communities, columns = species,
-  # with an optional "site" column for community names
-  otu_df <- data.frame(
-    site = rownames(otu),
-    otu,
-    check.names = FALSE
-  )
-  abd <- divent::as_abundances(otu_df)
-  result <- divent::accum_hill(abd, q = q, ...)
-  ggplot2::autoplot(result)
+  sample_names <- rownames(otu)
+  results <- lapply(seq_along(sample_names), \(i) {
+    abund <- as.numeric(otu[i, ])
+    abund <- abund[abund > 0]
+    res <- divent::accum_hill(abund, q = q, ...)
+    res$site <- sample_names[i]
+    res
+  })
+  combined <- dplyr::bind_rows(results)
+  class(combined) <- c("accumulation", class(combined))
+  ggplot2::autoplot(combined)
 }
