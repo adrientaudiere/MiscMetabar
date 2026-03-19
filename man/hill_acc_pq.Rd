@@ -13,7 +13,7 @@ using the \code{phyloseq} package.}
 \item{q}{(numeric, default 1) Hill diversity order.}
 
 \item{merge_sample_by}{(character or NULL) If not NULL, merge samples
-using \code{\link[=merge_samples2]{merge_samples2()}} before computing the curve.}
+using \code{\link[=merge_samples2]{merge_samples2()}} before computing the curves.}
 
 \item{...}{Additional arguments passed to \code{\link[divent:accum_hill]{divent::accum_hill()}}.}
 }
@@ -29,8 +29,9 @@ alt="lifecycle-experimental"></a>
 
 
 Wraps \code{\link[divent:accum_hill]{divent::accum_hill()}} to compute Hill diversity accumulation curves
-(generalised species accumulation curves) from a \code{phyloseq} object, and
-returns a ggplot2 object via \code{\link[ggplot2:autoplot]{ggplot2::autoplot()}}.
+(rarefaction curves) from a \code{phyloseq} object, with one curve per sample
+(or per merged group), and returns a ggplot2 object via
+\code{\link[ggplot2:autoplot]{ggplot2::autoplot()}}.
 }
 \examples{
 \donttest{
