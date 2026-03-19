@@ -32,6 +32,7 @@ jobs:
 
       - name: Install vsearch via MiscMetabar
         run: |
+          library(MiscMetabar)
           MiscMetabar::install_vsearch()
           MiscMetabar::is_vsearch_installed()
         shell: Rscript {0}
