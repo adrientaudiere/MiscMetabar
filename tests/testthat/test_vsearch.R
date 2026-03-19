@@ -6,6 +6,7 @@ sequences_ex <- c(
 
 data("data_fungi", package = "MiscMetabar")
 data("data_fungi_sp_known", package = "MiscMetabar")
+data("data_fungi_mini", package = "MiscMetabar")
 df_basidio <- subset_taxa(data_fungi, Phylum == "Basidiomycota")
 df_basidio <-
   subset_taxa_pq(df_basidio, colSums(df_basidio@otu_table) > 1000)
