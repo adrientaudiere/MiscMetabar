@@ -1,0 +1,30 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "ef5a38ad4779",
+  "session_id": "2e95a93e-e4c0-4c1f-94d8-abeec35aef38",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-19T14:33:55.227838485Z",
+  "branch": "dev",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "tests/testthat/test_vsearch.R"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "7e39ba3c7ac6",
+  "token_usage": {
+    "input_tokens": 13,
+    "cache_creation_tokens": 26523,
+    "cache_read_tokens": 282673,
+    "output_tokens": 3762,
+    "api_call_count": 11
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-19T14:33:55.177418514Z",
+    "agent_lines": 1,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 1,
+    "agent_percentage": 100
+  }
+}
