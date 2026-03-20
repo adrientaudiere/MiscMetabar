@@ -74,6 +74,7 @@ reference:
   - assign_blastn
   - assign_dada2
   - assign_idtaxa
+  - assign_mmseqs2
   - assign_sintax
   - assign_vsearch_lca
   - blast_pq
@@ -117,6 +118,7 @@ reference:
   - asv2otu
   - lulu
   - lulu_pq
+  - mmseqs2_clustering
   - mumu_pq
   - swarm_clustering
   - vsearch_clustering
@@ -277,9 +279,12 @@ reference:
   - get_file_extension
 - subtitle: External software management
   contents:
+  - find_mmseqs2
   - find_vsearch
+  - install_mmseqs2
   - install_vsearch
   - is_cutadapt_installed
+  - is_mmseqs2_installed
   - is_falco_installed
   - is_krona_installed
   - is_mumu_installed

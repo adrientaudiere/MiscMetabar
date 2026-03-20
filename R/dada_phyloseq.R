@@ -636,7 +636,9 @@ track_wkflow_samples <- function(
 #'   - `vsearch` use the vsearch software (https://github.com/torognes/vsearch)
 #'     with arguments `--cluster_size` by default (see args `vsearch_cluster_method`)
 #'     and `-strand both` (see args `vsearch_args`)
-#'   - `swarm` use the swarm
+#'   - `swarm` use the swarm software (https://github.com/torognes/swarm)
+#'   - `mmseqs2` use the MMseqs2 software (https://github.com/soedinglab/MMseqs2)
+#'     with `easy-cluster` by default (see args `mmseqs2_cluster_method`)
 #' @param vsearchpath (default: vsearch) path to vsearch
 #' @param id (default: 0.97) level of identity to cluster
 #' @param tax_adjust (Default 0) See the man page
@@ -664,6 +666,11 @@ track_wkflow_samples <- function(
 #' @param swarm_args (default : "--fastidious") a one length character
 #'   element defining other parameters to  passed on to swarm See other possible
 #'   methods in the [SWARM pdf manual](https://github.com/torognes/swarm/blob/master/man/swarm_manual.pdf)
+#' @param mmseqs2path (default: [find_mmseqs2()]) path to MMseqs2
+#' @param mmseqs2_cluster_method (default: `"easy-cluster"`) Either
+#'   `"easy-cluster"` or `"easy-linclust"`. See [mmseqs2_clustering()].
+#' @param mmseqs2_args (default: `""`) Additional arguments passed to the
+#'   MMseqs2 clustering command.
 #' @param method_clusterize (default "overlap") the method for the [DECIPHER::Clusterize()] method
 #' @param ... Additional arguments passed on to [DECIPHER::Clusterize()]
 #' @details This function use the `merge_taxa_vec` function to
@@ -687,6 +694,9 @@ track_wkflow_samples <- function(
 #'   if (MiscMetabar::is_vsearch_installed()) {
 #'     d_vs <- postcluster_pq(data_fungi_mini, method = "vsearch")
 #'   }
+#'   if (MiscMetabar::is_mmseqs2_installed()) {
+#'     d_mm <- postcluster_pq(data_fungi_mini, method = "mmseqs2")
+#'   }
 #' }
 #' }
 #' @references
@@ -694,7 +704,8 @@ track_wkflow_samples <- function(
 #'   \url{https://github.com/torognes/vsearch}.
 #'   More information in the associated publication
 #'   \url{https://pubmed.ncbi.nlm.nih.gov/27781170}.
-#' @seealso [vsearch_clustering()] and [swarm_clustering()]
+#' @seealso [vsearch_clustering()], [swarm_clustering()],
+#'   and [mmseqs2_clustering()]
 #' @export
 #' @author Adrien Taudière
 
@@ -713,6 +724,9 @@ postcluster_pq <- function(
   swarmpath = "swarm",
   d = 1,
   swarm_args = "--fastidious",
+  mmseqs2path = find_mmseqs2(),
+  mmseqs2_cluster_method = "easy-cluster",
+  mmseqs2_args = "",
   method_clusterize = "overlap",
   ...
 ) {
@@ -787,8 +801,23 @@ postcluster_pq <- function(
       rank_propagation = rank_propagation,
       keep_temporary_files = keep_temporary_files
     )
+  } else if (method == "mmseqs2") {
+    new_obj <- mmseqs2_clustering(
+      physeq = physeq,
+      dna_seq = dna_seq,
+      nproc = nproc,
+      id = id,
+      mmseqs2path = mmseqs2path,
+      tax_adjust = tax_adjust,
+      rank_propagation = rank_propagation,
+      mmseqs2_cluster_method = mmseqs2_cluster_method,
+      mmseqs2_args = mmseqs2_args,
+      keep_temporary_files = keep_temporary_files
+    )
   } else {
-    stop("Method allows 2 values only : `clusterize`, `vsearch` or `swarm`")
+    stop(
+      "Method must be one of: `clusterize`, `vsearch`, `swarm` or `mmseqs2`"
+    )
   }
   return(new_obj)
 }

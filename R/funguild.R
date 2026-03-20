@@ -15,6 +15,10 @@
 #' @return a [`tibble::tibble`] containing the database, which can be passed
 #'     to the `db` argument of [funguild_assign()]
 #' @export
+#' @examples
+#' \dontrun{
+#' get_funguild_db()
+#' }
 #'
 #' @references Nguyen NH, Song Z, Bates ST, Branco S, Tedersoo L, Menke J,
 #' Schilling JS, Kennedy PG. 2016. *FUNGuild: An open annotation tool for

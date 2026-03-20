@@ -861,10 +861,6 @@ add_blast_info <- function(
 #'   package = "MiscMetabar", mustWork = TRUE
 #' ))
 #'
-#' # assign_blastn(data_fungi_mini, ref_fasta = ref_fasta) # error because not
-#' # enough sequences in db so none blast query passed the filters.
-#' # So we used low score filter hereafter.
-#'
 #' mat <- assign_blastn(data_fungi_mini,
 #'   ref_fasta = ref_fasta,
 #'   method_algo = "top-hit", min_id = 70, min_e_value = 1e-3, min_cover = 50,

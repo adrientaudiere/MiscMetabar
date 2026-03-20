@@ -57,6 +57,10 @@ as_binary_otu_table <- function(physeq, min_number = 1) {
 #'   (ii) a matrix of the distance after randomization ($null)
 #' @export
 #' @seealso \code{\link[vegan]{vegdist}}
+#' @examplesIf rlang::is_installed("vegan")
+#' m1 <- matrix(runif(9), nrow = 3)
+#' m2 <- matrix(runif(9), nrow = 3)
+#' dist_bycol(m1, m2, nperm = 9)
 
 dist_bycol <- function(x, y, method = "bray", nperm = 99, ...) {
   x <- as.matrix(unclass(x))
@@ -327,6 +331,8 @@ count_seq <- function(file_path = NULL, folder_path = NULL, pattern = NULL) {
 #' @author Thibaut Jombart in `adegenet` package
 #' @export
 #' @seealso The R package RColorBrewer, proposing a nice selection of color palettes. The viridis package, with many excellent palettes
+#' @examples
+#' funky_color(5)
 
 funky_color <-
   grDevices::colorRampPalette(
@@ -357,6 +363,8 @@ funky_color <-
 #' @author Thibaut Jombart in `adegenet` package
 #' @export
 #' @seealso The R package RColorBrewer, proposing a nice selection of color palettes. The viridis package, with many excellent palettes
+#' @examples
+#' fac2col(c("a", "b", "a", "c"))
 fac2col <-
   function(x, col.pal = funky_color, na.col = "grey", seed = NULL) {
     x <- factor(x)
