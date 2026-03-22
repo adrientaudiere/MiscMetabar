@@ -21,6 +21,9 @@ a color vector
 \description{
 Translates a factor into colors.
 }
+\examples{
+fac2col(c("a", "b", "a", "c"))
+}
 \seealso{
 The R package RColorBrewer, proposing a nice selection of color palettes. The viridis package, with many excellent palettes
 }

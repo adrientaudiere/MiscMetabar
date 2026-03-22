@@ -1,0 +1,258 @@
+---
+title: "Accumulation and rarefaction curves"
+output: rmarkdown::html_vignette
+bibliography: ../bibliography.bib
+vignette: >
+  %\VignetteIndexEntry{Accumulation and rarefaction curves}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options:
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  message = FALSE,
+  fig.width = 7,
+  fig.height = 5
+)
+```
+
+Accumulation and rarefaction curves are fundamental tools in biodiversity
+analysis. They address a key challenge: **comparing diversity across
+communities that differ in sampling effort**. This vignette covers the
+theoretical background and illustrates how to compute and plot these
+curves using MiscMetabar functions based on the
+[divent](https://ericmarcon.github.io/divent/) package.
+
+For a comprehensive theoretical treatment, see
+[Marcon (2018)](https://ericmarcon.github.io/MesuresBioDiv2/chap-Accumulation.html).
+
+## Rarefaction vs. accumulation
+
+Two distinct types of curves exist:
+
+- **Individual-based rarefaction** (or **size-based rarefaction**): plots
+  diversity as a function of the **number of individuals** (in
+  metabarcoding: the number of sequences). Given a fixed sample, it
+  estimates the expected diversity if only a subset of individuals had
+  been drawn. This allows fair comparison of communities sampled with
+  different sequencing depths.
+
+- **Sample-based accumulation** (or **species accumulation curves**, SAC):
+  plots diversity as a function of the **number of samples** (e.g.,
+  plots, sites, PCR replicates). It tracks how diversity grows as
+  more sampling units are added.
+
+## Hill numbers: a unified framework
+
+Hill numbers [@Hill73] provide a family of diversity indices parameterized
+by an order *q*:
+
+- **q = 0**: species richness (number of species), sensitive to rare species.
+- **q = 1**: the exponential of Shannon entropy, weighting species by their
+  frequency equally.
+- **q = 2**: the inverse Simpson concentration, dominated by common species.
+
+By varying *q*, one obtains a **diversity profile** that fully
+characterizes the diversity of a community. The divent package
+[@Marcon2015] implements estimation and accumulation of Hill numbers with
+proper bias correction.
+
+## Setup
+
+```{r setup}
+library(MiscMetabar)
+library(phyloseq)
+library(ggplot2)
+set.seed(42)
+data(data_fungi_mini)
+```
+
+We rarefy `data_fungi_mini` to an even sequencing depth of 500 sequences per
+sample, allowing faster computation of accumulation curves. In practice, you may want to rarefy to a higher depth or use the `hill_acc_pq()` function directly on the unrarefied data.
+
+```{r}
+dfm_rarefied <- rarefy_even_depth(
+  data_fungi,
+  rngseed = 1,
+  sample.size = 500
+)
+dfm_rarefied
+```
+
+## Individual-based rarefaction (sequences as individuals)
+
+Individual-based rarefaction curves show how estimated diversity grows with
+the number of sequences drawn. The function `hill_acc_pq()` wraps
+`divent::accum_hill()` and works directly on phyloseq objects.
+
+### Metacommunity level
+
+To compute the rarefaction curve for the entire dataset treated as a single
+metacommunity, we merge all samples into one by adding a common grouping
+variable. This represents the global diversity pool.
+
+```{r}
+# Add a dummy variable to merge all samples into a single metacommunity
+sample_data(dfm_rarefied)$metacommunity <- "all"
+```
+
+```{r, fig.cap="Individual-based rarefaction for the entire metacommunity (q = 0, species richness)"}
+p0 <-hill_acc_pq(
+  dfm_rarefied,
+  q = 0,
+  merge_sample_by = "metacommunity",
+  n_simulations = 0
+) +
+  no_legend() +
+  ggtitle("Metacommunity rarefaction (q = 0)")
+p0
+```
+
+
+### Five random samples
+
+To examine per-sample rarefaction, we draw 5 samples at random. Each
+curve shows how the diversity of a single sample grows with sequencing
+depth.
+
+```{r, fig.cap="Individual-based rarefaction for 5 random samples (q = 1)"}
+random_samples <- sample(sample_names(dfm_rarefied), 5)
+dfm_5 <- prune_samples(random_samples, dfm_rarefied)
+
+hill_acc_pq(dfm_5, q = 1, n_simulations = 0) +
+  ggtitle("Rarefaction curves for 5 random samples (q = 1)")
+```
+
+Samples that plateau early have lower diversity; samples whose curve is
+still rising at the maximum depth may harbour additional undetected species.
+
+```{r, fig.cap="Individual-based rarefaction for 5 random samples (q = 0, species richness)"}
+p5_q0 <- hill_acc_pq(dfm_5, q = 0, n_simulations = 0) +
+  ggtitle("Rarefaction curves for 5 random samples (q = 0)")
+```
+
+Changing the diversity order shifts the focus from rare to common species:
+
+```{r, fig.cap="Individual-based rarefaction for 5 random samples at different Hill orders"}
+p5_q1 <- hill_acc_pq(dfm_5, q = 1, n_simulations = 0) +
+  ggtitle("Rarefaction curves for 5 random samples (q = 0)")
+p5_q2 <- hill_acc_pq(dfm_5, q = 2, n_simulations = 0) +
+  ggtitle("Rarefaction curves for 5 random samples (q = 0)")
+
+library(patchwork)
+p5_q0 + p5_q1 + p5_q2 & no_legend()
+```
+
+At q = 0, the curve keeps rising because rare species are still being
+discovered. At higher orders, the curve saturates faster because common
+species dominate the index.
+
+
+
+### Samples merged by Height
+
+Merging samples by the `Height` factor (Low, Middle, High) aggregates
+sequences within each level, allowing comparison of diversity at the
+habitat level.
+
+```{r, fig.cap="Individual-based rarefaction by Height (q = 0)"}
+hill_acc_pq(dfm_rarefied, q = 0, merge_sample_by = "Height", n_simulations = 0) +
+  ggtitle("Rarefaction by Height (q = 0, richness)")
+```
+
+
+## Sample-based accumulation (number of samples)
+
+Sample-based accumulation curves track how diversity grows as more
+**sampling units** are added. This is fundamentally different from
+individual-based rarefaction: it captures the spatial (or temporal if samples are time points)
+turnover in species composition across samples.
+
+The function `accu_plot()` wraps `vegan::specaccum()` and supports both
+a global accumulation curve and per-factor curves.
+
+### All dataset
+
+```{r, fig.cap="Sample-based accumulation curve for the entire dataset with per-Height curves"}
+accu_plot(dfm_rarefied, fact = "Height", add_nb_seq = FALSE)
+```
+
+The black curve ("all") shows the global accumulation. Per-Height curves
+show how quickly diversity saturates within each habitat. If the
+within-habitat curves plateau well below the global curve, this indicates
+substantial beta-diversity (species turnover between habitats).
+
+### By Height with sequence information
+
+`accu_plot()` can also display the number of sequences on the x-axis
+(`add_nb_seq = TRUE`), showing accumulation as a function of sequencing
+effort.
+
+```{r, fig.cap="Sample-based accumulation by Height with number of sequences on x-axis"}
+accu_plot(dfm_rarefied, fact = "Height", add_nb_seq = TRUE, by.fact = TRUE) +
+  theme(legend.position = "bottom")
+```
+
+```{r, fig.cap="Sample-based accumulation by Height (one line per sample, colored by Height)"}
+accu_plot(dfm_rarefied, fact = "Height", add_nb_seq = TRUE) +
+  theme(legend.position = "bottom")
+```
+
+### Balanced modality
+
+When modalities have unequal sample sizes, `accu_plot_balanced_modality()`
+subsamples to the smallest group size, providing a fairer comparison.
+
+```{r, fig.cap="Balanced accumulation curves by Height"}
+data(data_fungi)
+data_fungi_woNA4Height <- subset_samples_pq(
+  data_fungi,
+  !is.na(data_fungi@sam_data$Height)
+)
+accu_plot_balanced_modality(data_fungi_woNA4Height, "Height", nperm = 3)
+```
+
+## Diversity profiles
+
+Diversity profiles complement accumulation curves by showing how the
+diversity index varies across Hill orders for a fixed sample size. The
+function `profile_hill_pq()` wraps `divent::profile_hill()`.
+
+```{r, fig.cap="Hill diversity profiles per sample"}
+profile_hill_pq(dfm_rarefied) + no_legend()
+```
+
+```{r, fig.cap="Hill diversity profiles merged by Height"}
+profile_hill_pq(dfm_rarefied, merge_sample_by = "Height", n_simulations = 10)
+```
+
+A steeply declining profile indicates an uneven community dominated by
+a few species. A flat profile indicates high evenness.
+
+```{r}
+#TODO : interpretation
+#profile_hill_pq(as_binary_otu_table(data_fungi), merge_sample_by = "Height",n_simulations=10)
+
+```
+
+## Summary
+
+| Approach | x-axis | Function | What it reveals |
+|----------|--------|----------|-----------------|
+| Individual-based rarefaction | Number of sequences | `hill_acc_pq()` | Whether sequencing depth is sufficient |
+| Sample-based accumulation | Number of samples | `accu_plot()` | Spatial turnover, beta-diversity |
+| Diversity profile | Hill order *q* | `profile_hill_pq()` | Evenness structure |
+
+## References
+
+<div id="refs"></div>
+
+## Session information
+
+```{r}
+sessionInfo()
+```

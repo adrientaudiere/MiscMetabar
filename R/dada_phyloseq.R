@@ -1584,9 +1584,10 @@ mumu_pq <- function(
 #' @param verbose (logical, default FALSE) If TRUE, print warnings and messages
 #'   about potential taxonomy issues.
 #' @param replace_to_NA (character vector) A vector of regex patterns to identify
-#'   values that should be considered as NA. Default patterns include common
-#'   placeholders like "unclassified", "unknown", "uncultured", "incertae_sedis",
-#'   "metagenome", empty QIIME-style ranks (e.g., "k__"), etc.
+#'   values that should be considered as NA. Defaults to
+#'   [unwanted_tax_patterns], a named character vector of common
+#'   placeholders like "unclassified", "unknown", "uncultured",
+#'   "incertae_sedis", "metagenome", empty QIIME-style ranks, etc.
 #' @param min_char (integer, default 4) Minimum number of characters for a
 #'   taxonomic value to be considered valid. Values with fewer characters
 #'   (excluding NA) will trigger a warning when verbose = TRUE.
@@ -1688,21 +1689,7 @@ mumu_pq <- function(
 verify_tax_table <- function(
   physeq,
   verbose = FALSE,
-  replace_to_NA = c(
-    "^[Nn][Aa][Nn]?$", # NaN, nan, NA, na
-    "^[Nn]/[Aa]$", # N/A, n/a
-    "^[Nn]one$", # None, none
-    "^$", # empty string
-    "^\\s+$", # whitespace only
-    "[Uu]nclassified", # unclassified, Unclassified, xxx_unclassified
-    "[Uu]nknown", # unknown, Unknown, xxx_unknown
-    "[Uu]nidentified", # unidentified, Unidentified
-    "[Uu]ncultured", # uncultured, Uncultured
-    "[Ii]ncertae[_\\s]?[Ss]edis", # incertae_sedis, Incertae sedis, etc.
-    "^[Mm]etagenome$",
-    "^[Ee]nvironmental",
-    "^[kpcofgs]__$" # empty QIIME-style ranks
-  ),
+  replace_to_NA = unwanted_tax_patterns,
   min_char = 4,
   redundant_suffix = "_sp",
   taxonomic_ranks = c(
@@ -2782,6 +2769,13 @@ add_new_taxonomy_pq <- function(
   if (is.null(suffix)) {
     suffix <- paste0("_", basename(ref_fasta), "_", method)
   }
+
+  # Validate ref_fasta format for methods that don't go through assign_*
+
+  if (method == "dada2") {
+    .validate_ref_format(ref_fasta, "dada2", "add_new_taxonomy_pq")
+  }
+
   if (method == "dada2") {
     list_args <- list(
       seqs = physeq@refseq,
@@ -4057,7 +4051,9 @@ normalize_prop_pq <- function(
 #' @param q (numeric vector) Hill diversity orders to compute. If NULL, no
 #'   Hill numbers are computed. Default computes Hill number 0 (species
 #'   richness), 1 (exponential of Shannon index) and 2 (inverse of Simpson
-#'   index). Formerly `q`.
+#'   index). Formerly `q`. Hill numbers are more appropriate in DNA
+#'   metabarcoding studies when `q > 0` (Alberdi & Gilbert, 2019;
+#'   Calderón-Sanou et al., 2019).
 #' @param hill_scales `r lifecycle::badge("deprecated")` Use `q` instead.
 #' @param filter_zero (logical, default TRUE) Do we filter non present OTU from
 #'   samples ? For the moment, this has no effect on the result because the dataframe
@@ -4081,7 +4077,16 @@ normalize_prop_pq <- function(
 #' @export
 #' @return A tibble with a row for each sample. Columns provide information
 #'   from `sam_data` slot as well as hill numbers, Abundance (nb of sequences),
-#'   and Abundance_log10 (*log10(1+Abundance)*).q
+#'   and Abundance_log10 (*log10(1+Abundance)*).
+#' @references
+#' Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of
+#'   Hill numbers to DNA-based diversity analyses. *Molecular Ecology Resources*.
+#'   \doi{10.1111/1755-0998.13014}
+#'
+#' Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., & Thuiller, W.
+#'   (2019). From environmental DNA sequences to ecological conclusions: How
+#'   strong is the influence of methodological choices? *Journal of Biogeography*,
+#'   47. \doi{10.1111/jbi.13681}
 #' @examples
 #' if (requireNamespace("ggstatsplot")) {
 #'   psm_tib <- psmelt_samples_pq(data_fungi_mini, hill_scales = c(0, 2, 7))
@@ -4786,6 +4791,10 @@ assign_dada2 <- function(
     verify_pq(physeq)
     seq2search <- physeq@refseq
   }
+  if (!from_sintax) {
+    .validate_ref_format(ref_fasta, "dada2", "assign_dada2")
+  }
+
   if (from_sintax) {
     Biostrings::writeXStringSet(
       format2dada2(fasta_db = ref_fasta),

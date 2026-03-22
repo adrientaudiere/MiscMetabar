@@ -1669,7 +1669,9 @@ multiplot <-
 #' @param variable : Alias for factor. Kept only for backward compatibility.
 #' @param q (vector) Hill diversity orders to compute. Default computes
 #'   Hill number 0 (species richness), 1 (exponential of Shannon index) and
-#'   2 (inverse of Simpson index).
+#'   2 (inverse of Simpson index). Hill numbers are more appropriate in DNA
+#'   metabarcoding studies when `q > 0` (Alberdi & Gilbert, 2019;
+#'   Calderón-Sanou et al., 2019).
 #' @param hill_scales `r lifecycle::badge("deprecated")` Use `q` instead.
 #' @param ... Additional arguments passed to [divent_hill_matrix_pq()] and
 #'   hence to [divent::div_hill()] (e.g. `estimator = "naive"`).
@@ -1751,6 +1753,15 @@ multiplot <-
 #' }
 #' }
 #' @seealso [psmelt_samples_pq()] and [ggbetween_pq()]
+#' @references
+#' Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of
+#'   Hill numbers to DNA-based diversity analyses. *Molecular Ecology Resources*.
+#'   \doi{10.1111/1755-0998.13014}
+#'
+#' Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., & Thuiller, W.
+#'   (2019). From environmental DNA sequences to ecological conclusions: How
+#'   strong is the influence of methodological choices? *Journal of Biogeography*,
+#'   47. \doi{10.1111/jbi.13681}
 hill_pq <- function(
   physeq,
   fact = NULL,
@@ -2006,7 +2017,9 @@ hill_pq <- function(
 #'   beforehand to achieve reproducible results. Default is FALSE.
 #' @param verbose (logical). If TRUE, print additional information.
 #' @param q (numeric vector, default `c(0, 1, 2)`) Hill diversity orders to
-#'   compute. One plot is produced per value.
+#'   compute. One plot is produced per value. Hill numbers are more appropriate
+#'   in DNA metabarcoding studies when `q > 0` (Alberdi & Gilbert, 2019;
+#'   Calderón-Sanou et al., 2019).
 #' @param ... Additional arguments passed on to [ggstatsplot::ggbetweenstats()] function.
 
 #' @return Either an unique ggplot2 object (if one_plot is TRUE) or
@@ -2032,6 +2045,15 @@ hill_pq <- function(
 #' @details This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `ggstatsplot::ggbetweenstats()` if you
 #'   use this function.
+#' @references
+#' Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of
+#'   Hill numbers to DNA-based diversity analyses. *Molecular Ecology Resources*.
+#'   \doi{10.1111/1755-0998.13014}
+#'
+#' Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., & Thuiller, W.
+#'   (2019). From environmental DNA sequences to ecological conclusions: How
+#'   strong is the influence of methodological choices? *Journal of Biogeography*,
+#'   47. \doi{10.1111/jbi.13681}
 
 ggbetween_pq <-
   function(
@@ -5418,7 +5440,8 @@ plot_var_part_pq <-
 #'   the hill number H^q. If Null, no hill number are computed. Default value
 #'   compute the Hill number 0 (Species richness), the Hill number 1
 #'   (exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
-#'   Index).
+#'   Index). Hill numbers are more appropriate in DNA metabarcoding studies
+#'   when `q > 0` (Alberdi & Gilbert, 2019; Calderón-Sanou et al., 2019).
 #' @param rarefy_by_sample (logical, default FALSE) If TRUE, rarefy
 #'   samples using [phyloseq::rarefy_even_depth()] function.
 #' @param rngseed (Optional). A single integer value passed to
@@ -5747,7 +5770,9 @@ ggaluv_pq <- function(
 #' @param first_n (int, default 10) The number of nucleotides to plot the 5' extremity.
 #' @param last_n (int, default 10) The number of nucleotides to plot the 3' extremity.
 #' @param q (vector) A vector defining the Hill number wanted. Set to NULL if
-#'   you don't want to plot Hill diversity metrics.
+#'   you don't want to plot Hill diversity metrics. Hill numbers are more
+#'   appropriate in DNA metabarcoding studies when `q > 0` (Alberdi & Gilbert,
+#'   2019; Calderón-Sanou et al., 2019).
 #' @param min_width (int, default 0) Select only the sequences from physeq@refseq with using a
 #'   minimum length threshold. If `first_n` is superior to the minimum length of the
 #'   references sequences, you must use min_width to filter out the narrower sequences
@@ -5988,7 +6013,9 @@ plot_refseq_extremity_pq <- function(
 #' @param first_n (int, default 10) The number of nucleotides to plot the 5' extremity.
 #' @param last_n (int, default 10) The number of nucleotides to plot the 3' extremity.
 #' @param q (vector) A vector defining the Hill number wanted. Set to NULL if
-#'   you don't want to plot Hill diversity metrics.
+#'   you don't want to plot Hill diversity metrics. Hill numbers are more
+#'   appropriate in DNA metabarcoding studies when `q > 0` (Alberdi & Gilbert,
+#'   2019; Calderón-Sanou et al., 2019).
 #' @param min_width (int, default 0) Select only the sequences from physeq@refseq with using a
 #'   minimum length threshold. If `first_n` is superior to the minimum length of the
 #'   references sequences, you must use min_width to filter out the narrower sequences

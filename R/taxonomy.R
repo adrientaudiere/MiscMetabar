@@ -285,6 +285,112 @@ resolve_vector_ranks <- function(
 ################################################################################
 
 ################################################################################
+# Internal: detect taxonomy format from FASTA file headers
+#
+# Reads the first `n_headers` FASTA headers and detects the taxonomy format
+# using simple pattern matching. Returns one of "sintax", "unite",
+# "greengenes2", or "unknown".
+#
+# @param file Path to a FASTA file (plain or gzipped).
+# @param n_headers Number of headers to inspect (default 20).
+# @return A single character string: the detected format.
+# @noRd
+.detect_tax_format <- function(file, n_headers = 20L) {
+  con <- if (grepl("\\.gz$", file)) gzfile(file, "r") else file(file, "r")
+  on.exit(close(con))
+
+  headers <- character(0)
+  while (length(headers) < n_headers) {
+    line <- readLines(con, n = 1L)
+    if (length(line) == 0) {
+      break
+    }
+    if (startsWith(line, ">")) {
+      headers <- c(headers, line)
+    }
+  }
+
+  if (length(headers) == 0) {
+    return("unknown")
+  }
+
+  sample_text <- paste(headers, collapse = " ")
+
+  # SINTAX: headers contain "tax=" followed by single-letter:value pairs
+  if (grepl("tax=", sample_text, fixed = TRUE)) {
+    return("sintax")
+  }
+
+  # Greengenes2: uses d__ for domain (not k__)
+  if (grepl("d__", sample_text, fixed = TRUE)) {
+    return("greengenes2")
+  }
+
+  # UNITE: uses k__ for kingdom
+  if (grepl("k__", sample_text, fixed = TRUE)) {
+    return("unite")
+  }
+
+  "unknown"
+}
+
+################################################################################
+# Internal: validate that a reference FASTA has the expected taxonomy format
+#
+# Checks the detected format against the expected one. If mismatched, stops
+# with an informative error suggesting the appropriate dbpq conversion function.
+#
+# @param ref_fasta Path to the reference FASTA file.
+# @param expected_format One of "sintax" or "dada2".
+# @param caller Name of the calling function (for error messages).
+# @return Invisible NULL (called for side effects).
+# @noRd
+.validate_ref_format <- function(ref_fasta, expected_format, caller) {
+  detected <- .detect_tax_format(ref_fasta)
+
+  if (detected == "unknown") {
+    # Cannot determine — could be dada2 positional or genuinely unknown
+    return(invisible(NULL))
+  }
+
+  if (expected_format == "dada2") {
+    # dada2 format is positional (no prefixes), so detect_tax_format returns
+    # "unknown" for it. If we detect a prefix-based format, it's wrong.
+    dbpq_call <- paste0(
+      "dbpq::format2dada2(fasta_db = \"",
+      ref_fasta,
+      "\")"
+    )
+    cli::cli_abort(c(
+      "!" = "{caller}() expects a reference database in {.strong dada2} format
+             (unprefixed, semicolon-delimited ranks).",
+      "x" = "Detected {.strong {detected}} format in {.file {ref_fasta}}.",
+      "i" = "Convert with: {.code {dbpq_call}}"
+    ))
+  }
+
+  if (expected_format == "sintax") {
+    if (detected == "sintax") {
+      return(invisible(NULL))
+    }
+    dbpq_call <- paste0(
+      "dbpq::format2sintax(fasta_db = \"",
+      ref_fasta,
+      "\")"
+    )
+    cli::cli_abort(c(
+      "!" = "{caller}() expects a reference database in {.strong SINTAX} format
+             (headers with `;tax=` followed by rank:value pairs).",
+      "x" = "Detected {.strong {detected}} format in {.file {ref_fasta}}.",
+      "i" = "Convert with: {.code {dbpq_call}}"
+    ))
+  }
+
+  invisible(NULL)
+}
+################################################################################
+
+################################################################################
 #' Format a fasta database in sintax format
 #'
 #' @description

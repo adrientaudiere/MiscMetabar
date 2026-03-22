@@ -31,6 +31,8 @@ navbar:
     - text: Diversity analysis
     - text: Alpha-diversity
       href: articles/alpha-div.html
+    - text: Accumulation and rarefaction curves
+      href: articles/accumulation-rarefaction.html
     - text: Beta-diversity
       href: articles/beta-div.html
     - text: -------
@@ -65,6 +67,7 @@ reference:
   contents:
   - clean_pq
   - verify_pq
+  - unwanted_tax_patterns
   - verify_tax_table
 
 - subtitle: Taxonomy

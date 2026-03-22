@@ -13,7 +13,9 @@
 #' @param q (numeric vector) Hill diversity orders to compute (q values).
 #'   Default computes Hill number 0 (species richness), Hill number 1
 #'   (exponential of Shannon index) and Hill number 2 (inverse of Simpson
-#'   index). Formerly `hill_scales`.
+#'   index). Formerly `hill_scales`. Hill numbers are more appropriate in DNA
+#'   metabarcoding studies when `q > 0` (Alberdi & Gilbert, 2019;
+#'   Calderón-Sanou et al., 2019).
 #' @param hill_scales `r lifecycle::badge("deprecated")` Use `q` instead.
 #' @param silent (logical) If TRUE, no message are printing.
 #' @param correction_for_sample_size (logical, default TRUE) This function
@@ -27,6 +29,15 @@
 #' @export
 #'
 #' @author Adrien Taudière
+#' @references
+#' Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of
+#'   Hill numbers to DNA-based diversity analyses. *Molecular Ecology Resources*.
+#'   \doi{10.1111/1755-0998.13014}
+#'
+#' Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., & Thuiller, W.
+#'   (2019). From environmental DNA sequences to ecological conclusions: How
+#'   strong is the influence of methodological choices? *Journal of Biogeography*,
+#'   47. \doi{10.1111/jbi.13681}
 #' @examples
 #' data("GlobalPatterns", package = "phyloseq")
 #' GlobalPatterns@sam_data[, "Soil_logical"] <-
@@ -138,7 +149,8 @@ hill_tuckey_pq <- function(
 #'   the hill number H^q. If Null, no hill number are computed. Default value
 #'   compute the Hill number 0 (Species richness), the Hill number 1
 #'   (exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
-#'   Index).
+#'   Index). Hill numbers are more appropriate in DNA metabarcoding studies
+#'   when `q > 0` (Alberdi & Gilbert, 2019; Calderón-Sanou et al., 2019).
 #' @param nperm (int) The number of permutations to perform.
 #' @param sample.size (int) A single integer value equal to the number of
 #'   reads being simulated, also known as the depth. See
@@ -169,7 +181,15 @@ hill_tuckey_pq <- function(
 #'
 #' @export
 #' @author Adrien Taudière
+#' @references
+#' Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of
+#'   Hill numbers to DNA-based diversity analyses. *Molecular Ecology Resources*.
+#'   \doi{10.1111/1755-0998.13014}
 #'
+#' Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., & Thuiller, W.
+#'   (2019). From environmental DNA sequences to ecological conclusions: How
+#'   strong is the influence of methodological choices? *Journal of Biogeography*,
+#'   47. \doi{10.1111/jbi.13681}
 #' @examples
 #' \donttest{
 #' if (requireNamespace("ggstatsplot")) {
@@ -325,7 +345,8 @@ hill_test_rarperm_pq <- function(
 #'   the hill number H^q. If Null, no hill number are computed. Default value
 #'   compute the Hill number 0 (Species richness), the Hill number 1
 #'   (exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
-#'   Index).
+#'   Index). Hill numbers are more appropriate in DNA metabarcoding studies
+#'   when `q > 0` (Alberdi & Gilbert, 2019; Calderón-Sanou et al., 2019).
 #' @param aic_step The value between AIC scores to cut for.
 #' @param confsetsize The number of models to be looked for, i.e. the size of the returned confidence set.
 #' @param plotty (logical) Whether to plot the progress of the IC profile when running.
@@ -353,6 +374,15 @@ hill_test_rarperm_pq <- function(
 #'  -alpha
 #' @export
 #' @seealso  [glmulti::glmulti()]
+#' @references
+#' Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of
+#'   Hill numbers to DNA-based diversity analyses. *Molecular Ecology Resources*.
+#'   \doi{10.1111/1755-0998.13014}
+#'
+#' Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., & Thuiller, W.
+#'   (2019). From environmental DNA sequences to ecological conclusions: How
+#'   strong is the influence of methodological choices? *Journal of Biogeography*,
+#'   47. \doi{10.1111/jbi.13681}
 #' @examples
 #' \donttest{
 #' if (requireNamespace("glmulti")) {

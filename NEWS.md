@@ -1,5 +1,9 @@
 # MiscMetabar 0.15.1
 
+## New features
+
+* `unwanted_tax_patterns` is a new exported named character vector of regex patterns for common problematic taxonomy values (NA-like strings, `"unclassified"`, `"unknown"`, `"Incertae_sedis"`, empty QIIME-style ranks, etc.). `verify_tax_table()` now uses it as the default for `replace_to_NA`, and other pqverse packages (e.g. `dbpq::count_unwanted_tax()`) can reuse it to keep patterns in sync.
+
 ## Breaking changes
 
 * `compare_pairs_pq()`, `ggbetween_pq()`, `hill_pq()`, `hill_tuckey_pq()`, `plot_refseq_extremity_pq()`, and `psmelt_samples_pq()` now use `divent::div_hill()` instead of `vegan::renyi()` for Hill number computation, and `compare_pairs_pq()` uses `divent::ent_shannon()` / `divent::ent_simpson()` instead of `vegan::diversity()` for Shannon and Simpson indices. The default estimator is now `"UnveilJ"` (bias-corrected) rather than the naive plug-in estimator — diversity values will differ from previous versions. Pass `estimator = "naive"` via `...` to restore old numeric behavior.
@@ -8,7 +12,7 @@
 
 * `divent_hill_matrix_pq()` new exported utility to compute Hill numbers for all samples in an OTU table using `divent::div_hill()`. Accepts `...` to forward any argument to `divent::div_hill()`.
 * `ggbetween_pq()` gains a `q` parameter (default `c(0, 1, 2)`) to control which Hill diversity orders are computed. One plot is produced per value.
-* `hill_acc_pq()` new function wrapping `divent::accum_hill() |> autoplot()` to plot Hill diversity accumulation curves from a phyloseq object.
+* `hill_acc_pq()` gains a `type` parameter (`"individual"` or `"sample"`). `type = "sample"` computes sample-based accumulation curves by pooling samples incrementally across random permutations using `divent::div_hill()`, with a confidence ribbon. When `merge_sample_by` is set, one curve per group is drawn on the same plot. `type = "individual"` preserves the previous individual-based behaviour.
 * `profile_hill_pq()` new function wrapping `divent::profile_hill() |> autoplot()` to visualize Hill diversity profiles across all orders for all samples in a phyloseq object.
 
 ## Deprecated

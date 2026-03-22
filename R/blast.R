@@ -920,6 +920,11 @@ assign_blastn <- function(
   behavior <- match.arg(behavior)
   method_algo <- match.arg(method_algo)
   vote_algorithm <- match.arg(vote_algorithm)
+
+  if (!is.null(ref_fasta)) {
+    .validate_ref_format(ref_fasta, "sintax", "assign_blastn")
+  }
+
   if (method_algo == "vote") {
     blast_tab_raw <- blast_pq(
       physeq = physeq,

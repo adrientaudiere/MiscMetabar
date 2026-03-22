@@ -1220,6 +1220,8 @@ assign_sintax <- function(
 ) {
   behavior <- match.arg(behavior)
 
+  .validate_ref_format(ref_fasta, "sintax", "assign_sintax")
+
   output_taxo_file <- paste0(tempdir(), "/output_taxo_vs.txt")
 
   write_temp_fasta(
@@ -1546,6 +1548,8 @@ assign_vsearch_lca <- function(
   keep_vsearch_score = FALSE
 ) {
   behavior <- match.arg(behavior)
+
+  .validate_ref_format(ref_fasta, "sintax", "assign_vsearch_lca")
 
   out_lca_file <- paste0(tempdir(), "/out_lca.txt")
   userout_file <- paste0(tempdir(), "/userout.txt")

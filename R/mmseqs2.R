@@ -488,6 +488,10 @@ assign_mmseqs2 <- function(
     )
   }
 
+  if (!is.null(ref_fasta) && is.character(ref_fasta)) {
+    .validate_ref_format(ref_fasta, "sintax", "assign_mmseqs2")
+  }
+
   # Write query sequences to temp FASTA ----------------------------------------
   temporary_fasta_file <- file.path(tempdir(), "mmseqs2_query.fasta")
   write_temp_fasta(

@@ -2,11 +2,12 @@
 % Please edit documentation in R/mmseqs2.R
 \name{assign_mmseqs2}
 \alias{assign_mmseqs2}
-\title{Assign taxonomy using MMseqs2 easy-taxonomy}
+\title{Assign taxonomy using MMseqs2}
 \usage{
 assign_mmseqs2(
-  database,
   physeq = NULL,
+  ref_fasta = NULL,
+  database = NULL,
   seq2search = NULL,
   mmseqs2path = find_mmseqs2(),
   behavior = c("return_matrix", "add_to_phyloseq"),
@@ -18,6 +19,7 @@ assign_mmseqs2(
   sensitivity = NULL,
   min_seq_id = NULL,
   e_value = NULL,
+  max_accept = 5,
   nproc = 1,
   clean_pq = TRUE,
   simplify_taxo = TRUE,
@@ -27,12 +29,16 @@ assign_mmseqs2(
 )
 }
 \arguments{
-\item{database}{Path to a pre-built MMseqs2 database with taxonomy
-information (created via \verb{mmseqs createdb} + \verb{mmseqs createtaxdb},
-or downloaded with \verb{mmseqs databases}).}
-
 \item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
+
+\item{ref_fasta}{Either a \link[Biostrings:XStringSet-class]{Biostrings::DNAStringSet} object or a path
+to a FASTA file in SINTAX format (taxonomy in headers after
+\verb{;tax=}). Only used if \code{database} is not set.
+See \code{\link[=assign_sintax]{assign_sintax()}} for the SINTAX format specification.}
+
+\item{database}{(optional) Path to a pre-built MMseqs2 database with
+NCBI taxonomy information. Only used if \code{ref_fasta} is not set.}
 
 \item{seq2search}{(optional) A \link[Biostrings:XStringSet-class]{Biostrings::DNAStringSet} object. Use
 instead of \code{physeq} to search arbitrary sequences. Cannot be used
@@ -81,8 +87,12 @@ If \code{NULL}, MMseqs2 uses its default.}
 \item{min_seq_id}{(numeric, optional) Minimum sequence identity
 (0--1). If \code{NULL}, MMseqs2 uses its default.}
 
-\item{e_value}{(numeric, optional) Maximum E-value threshold.
+\item{e_value}{(numeric, optional) Maximum E-value threshold (\code{-e}).
 If \code{NULL}, MMseqs2 uses its default.}
+
+\item{max_accept}{(integer, optional) Maximum number of hits accepted per
+query (\code{--max-accept}). Useful with \code{lca_mode = 1} or \code{4} to widen the
+hit set used for LCA (default: \code{5}).}
 
 \item{nproc}{(integer) Number of threads (default: 1).}
 
@@ -99,7 +109,7 @@ for debugging? (default: \code{FALSE}).}
 \item{verbose}{(logical) Print progress messages? (default: \code{FALSE}).}
 
 \item{cmd_args}{(character) Additional arguments appended to the
-\verb{mmseqs easy-taxonomy} call.}
+MMseqs2 command.}
 }
 \value{
 \itemize{
@@ -116,13 +126,19 @@ amended \code{tax_table}.
 }}
 
 
-Use the \href{https://github.com/soedinglab/MMseqs2}{MMseqs2} \code{easy-taxonomy}
-workflow to assign taxonomy via Lowest Common Ancestor (LCA) against a
-pre-built MMseqs2 sequence database with taxonomy information.
+Use the \href{https://github.com/soedinglab/MMseqs2}{MMseqs2} software to
+assign taxonomy to sequences.
 
-The database must be created beforehand using \verb{mmseqs createdb} +
-\verb{mmseqs createtaxdb}, or downloaded with \verb{mmseqs databases}
-(e.g. \verb{mmseqs databases SILVA silvadb tmp}). See the
+The preferred usage is to provide a reference FASTA file in SINTAX format
+via \code{ref_fasta}. The function builds a temporary MMseqs2 taxonomy database
+from the SINTAX headers and then runs \verb{mmseqs easy-taxonomy} with the
+requested \code{--lca-mode}, giving the same LCA behaviour as the \code{database}
+path.
+
+Alternatively, a pre-built MMseqs2 database with NCBI taxonomy can be
+passed via the \code{database} parameter (created via \verb{mmseqs createdb} +
+\verb{mmseqs createtaxdb}, or downloaded with \verb{mmseqs databases}). In this
+case, the MMseqs2 native \code{easy-taxonomy} LCA workflow is used. See the
 \href{https://github.com/soedinglab/MMseqs2/wiki}{MMseqs2 wiki} for details.
 }
 \details{
@@ -134,24 +150,20 @@ Bioinformatics (2021).
 }
 \examples{
 \dontrun{
-# First, create a MMseqs2 database with taxonomy:
-# mmseqs createdb ref_seqs.fasta refDB
-# mmseqs createtaxdb refDB tmp --ncbi-tax-dump taxonomy/ \
-#   --tax-mapping-file mapping.tsv
+ref_fasta <- Biostrings::readDNAStringSet(system.file("extdata",
+  "mini_UNITE_fungi.fasta.gz",
+  package = "MiscMetabar", mustWork = TRUE
+))
 
-# Or download a pre-built database:
-# mmseqs databases SILVA silvadb tmp
+# Preferred usage: provide a SINTAX-formatted FASTA file.
+# The function searches with easy-search and parses SINTAX headers.
+res <- assign_mmseqs2(data_fungi_mini, ref_fasta = ref_fasta)
+head(res)
 
-# Then assign taxonomy:
-res <- assign_mmseqs2(
-  data_fungi_mini,
-  database = "/path/to/mmseqs2db"
-)
-
-# Add to phyloseq:
+# Add taxonomy to phyloseq:
 physeq_new <- assign_mmseqs2(
   data_fungi_mini,
-  database = "/path/to/mmseqs2db",
+  ref_fasta = ref_fasta,
   behavior = "add_to_phyloseq"
 )
 }

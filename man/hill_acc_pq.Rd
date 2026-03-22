@@ -35,7 +35,9 @@ Wraps \code{\link[divent:accum_hill]{divent::accum_hill()}} to compute Hill dive
 }
 \examples{
 \donttest{
-hill_acc_pq(data_fungi_mini, q = 1)
+  hill_acc_pq(data_fungi_mini)
+  hill_acc_pq(rarefy_even_depth(data_fungi_mini, sample.size=100),
+   merge_sample_by = "Height")
 }
 }
 \seealso{

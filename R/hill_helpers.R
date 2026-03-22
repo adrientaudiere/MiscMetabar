@@ -7,7 +7,9 @@
 #'
 #' @param comm (data.frame or matrix) OTU table with samples as rows and
 #'   taxa as columns.
-#' @param q (numeric vector) Hill diversity orders to compute.
+#' @param q (numeric vector) Hill diversity orders to compute. Hill numbers are
+#'   more appropriate in DNA metabarcoding studies when `q > 0` (Alberdi &
+#'   Gilbert, 2019; Calderón-Sanou et al., 2019).
 #' @param ... Additional arguments passed to [divent::div_hill()] (e.g.
 #'   `estimator = "naive"` to reproduce vegan-equivalent results).
 #'
@@ -16,6 +18,15 @@
 #'   Row names match the input row names.
 #'
 #' @seealso [divent::div_hill()], [hill_pq()], [hill_tuckey_pq()]
+#' @references
+#' Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of
+#'   Hill numbers to DNA-based diversity analyses. *Molecular Ecology Resources*.
+#'   \doi{10.1111/1755-0998.13014}
+#'
+#' Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., & Thuiller, W.
+#'   (2019). From environmental DNA sequences to ecological conclusions: How
+#'   strong is the influence of methodological choices? *Journal of Biogeography*,
+#'   47. \doi{10.1111/jbi.13681}
 #' @export
 #' @examples
 #' data("data_fungi_mini", package = "MiscMetabar")
