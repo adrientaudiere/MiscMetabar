@@ -34,7 +34,9 @@ the \code{sam_data} slot of the physeq object.}
 
 \item{q}{(vector) Hill diversity orders to compute. Default computes
 Hill number 0 (species richness), 1 (exponential of Shannon index) and
-2 (inverse of Simpson index).}
+2 (inverse of Simpson index). Hill numbers are more appropriate in DNA
+metabarcoding studies when \code{q > 0} (Alberdi & Gilbert, 2019;
+Calderón-Sanou et al., 2019).}
 
 \item{hill_scales}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{q} instead.}
 
@@ -137,17 +139,22 @@ if (requireNamespace("multcompView")) {
   if (requireNamespace("patchwork")) {
     patchwork::wrap_plots(p2, guides = "collect")
   }
-  # Artificially modify data_fungi to force alpha-diversity effect
-  data_fungi_modif <- clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height)))
-  data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <-
-    data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] +
-    sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
-  p3 <- hill_pq(data_fungi_modif, "Height",
+  p3 <- hill_pq(data_fungi, "Height",
     letters = TRUE, vioplot = TRUE,
     add_points = TRUE
   )
 }
 }
+}
+\references{
+Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of
+Hill numbers to DNA-based diversity analyses. \emph{Molecular Ecology Resources}.
+\doi{10.1111/1755-0998.13014}
+
+Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., & Thuiller, W.
+(2019). From environmental DNA sequences to ecological conclusions: How
+strong is the influence of methodological choices? \emph{Journal of Biogeography},
+47. \doi{10.1111/jbi.13681}
 }
 \seealso{
 \code{\link[=psmelt_samples_pq]{psmelt_samples_pq()}} and \code{\link[=ggbetween_pq]{ggbetween_pq()}}

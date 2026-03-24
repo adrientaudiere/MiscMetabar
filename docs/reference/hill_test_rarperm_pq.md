@@ -11,7 +11,7 @@ an unique rarefaction.
 hill_test_rarperm_pq(
   physeq,
   fact,
-  hill_scales = c(0, 1, 2),
+  q = c(0, 1, 2),
   nperm = 99,
   sample.size = min(sample_sums(physeq)),
   verbose = FALSE,
@@ -35,12 +35,14 @@ hill_test_rarperm_pq(
   (required) Name of the factor in `physeq@sam_data` used to plot
   different lines
 
-- hill_scales:
+- q:
 
   (a vector of integer) The list of q values to compute the hill number
   H^q. If Null, no hill number are computed. Default value compute the
   Hill number 0 (Species richness), the Hill number 1 (exponential of
-  Shannon Index) and the Hill number 2 (inverse of Simpson Index).
+  Shannon Index) and the Hill number 2 (inverse of Simpson Index). Hill
+  numbers are more appropriate in DNA metabarcoding studies when `q > 0`
+  (Alberdi & Gilbert, 2019; Calderón-Sanou et al., 2019).
 
 - nperm:
 
@@ -101,6 +103,19 @@ A list of 6 components :
 
 - statistics
 
+## References
+
+Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of
+Hill numbers to DNA-based diversity analyses. *Molecular Ecology
+Resources*.
+[doi:10.1111/1755-0998.13014](https://doi.org/10.1111/1755-0998.13014)
+
+Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., & Thuiller,
+W. (2019). From environmental DNA sequences to ecological conclusions:
+How strong is the influence of methodological choices? *Journal of
+Biogeography*, 47.
+[doi:10.1111/jbi.13681](https://doi.org/10.1111/jbi.13681)
+
 ## See also
 
 [`ggstatsplot::ggbetweenstats()`](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html),
@@ -127,7 +142,7 @@ if (requireNamespace("ggstatsplot")) {
   res_para$expressions[[1]]
 }
 #>   |                                                          |                                                  |   0%  |                                                          |=========================                         |  50%  |                                                          |==================================================| 100%  |                                                          |                                                  |   0%  |                                                          |======                                            |  11%  |                                                          |===========                                       |  22%  |                                                          |=================                                 |  33%  |                                                          |======================                            |  44%  |                                                          |============================                      |  56%  |                                                          |=================================                 |  67%  |                                                          |=======================================           |  78%  |                                                          |============================================      |  89%  |                                                          |==================================================| 100%  |                                                          |                                                  |   0%  |                                                          |======                                            |  11%  |                                                          |===========                                       |  22%  |                                                          |=================                                 |  33%  |                                                          |======================                            |  44%  |                                                          |============================                      |  56%  |                                                          |=================================                 |  67%  |                                                          |=======================================           |  78%  |                                                          |============================================      |  89%  |                                                          |==================================================| 100%
-#> list(italic("F")["Welch"](2, 84.92) == "0.08", italic(p) == "0.92", 
+#> list(italic("F")["Welch"](2, 84.35) == "0.10", italic(p) == "0.90", 
 #>     widehat(omega["p"]^2) == "0.00", CI["95%"] ~ "[" * "0.00", 
 #>     "1.00" * "]", italic("n")["obs"] == "131")
 # }

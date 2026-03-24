@@ -138,3 +138,14 @@ https://www.nature.com/articles/s41467-017-01312-x
 Tobias Guldberg Frøslev (orcid:
 [0000-0002-3530-013X](https://orcid.org/0000-0002-3530-013X)), modified
 by Adrien Taudière
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+# The matchlist is produced by an external tool (VSEARCH or BLASTN).
+# See the Details section for example commands.
+otu <- as.data.frame(otu_table(data_fungi_sp_known))
+lulu(otu, matchlist)
+} # }
+```

@@ -31,7 +31,7 @@ samples are named by the values in group."><script data-goatcounter="https://mis
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -191,9 +191,9 @@ the class of the x param</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Merge samples with the same project and clinical status</span></span></span>
 <span class="r-in"><span><span class="va">ps</span> <span class="op">&lt;-</span> <span class="va">enterotype</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_data-methods.html" class="external-link">sample_data</a></span><span class="op">(</span><span class="va">ps</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_data-methods.html" class="external-link">sample_data</a></span><span class="op">(</span><span class="va">ps</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_data-methods.html" class="external-link">sample_data</a></span><span class="op">(</span><span class="va">ps</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_data-methods.html" class="external-link">sample_data</a></span><span class="op">(</span><span class="va">ps</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span>Project.ClinicalStatus <span class="op">=</span> <span class="va">Project</span><span class="op">:</span><span class="va">ClinicalStatus</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_data-methods.html" class="external-link">sample_data</a></span><span class="op">(</span><span class="va">ps</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_data-methods.html" class="external-link">sample_data</a></span><span class="op">(</span><span class="va">ps</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           Enterotype Sample_ID SeqTech  SampleID     Project Nationality Gender</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> AM.AD.1         &lt;NA&gt;   AM.AD.1  Sanger   AM.AD.1      gill06    american      F</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> AM.AD.2         &lt;NA&gt;   AM.AD.2  Sanger   AM.AD.2      gill06    american      M</span>
@@ -213,7 +213,7 @@ the class of the x param</p>
 <span class="r-in"><span>  funs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Age <span class="op">=</span> <span class="va">mean</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`group` has missing values; corresponding samples will be dropped</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_data-methods.html" class="external-link">sample_data</a></span><span class="op">(</span><span class="va">ps0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_data-methods.html" class="external-link">sample_data</a></span><span class="op">(</span><span class="va">ps0</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     Enterotype Sample_ID SeqTech SampleID     Project</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> gill06:healthy            &lt;NA&gt;      &lt;NA&gt;  Sanger     &lt;NA&gt;      gill06</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> kurokawa07:healthy        &lt;NA&gt;      &lt;NA&gt;  Sanger     &lt;NA&gt;  kurokawa07</span>

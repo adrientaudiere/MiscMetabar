@@ -346,7 +346,10 @@ resolve_vector_ranks <- function(
 # @return Invisible NULL (called for side effects).
 # @noRd
 .validate_ref_format <- function(ref_fasta, expected_format, caller) {
-  detected <- .detect_tax_format(ref_fasta)
+  if (!is.character(ref_fasta)) {
+    return(invisible(NULL))
+  }
+  detected <- .detect_tax_format(ref_fasta[[1]])
 
   if (detected == "unknown") {
     # Cannot determine — could be dada2 positional or genuinely unknown
@@ -651,8 +654,9 @@ format2dada2_species <- function(
     }
     new_names <- paste(id, genus, species, sep = " ")
 
+    bad_idx <- which(is.na(new_names))
+    new_names[bad_idx] <- taxnames[bad_idx]
     names(dna) <- new_names
-    names(dna)[is.na(names(dna))] <- taxnames[names(dna)]
 
     if (!is.null(output_path)) {
       Biostrings::writeXStringSet(dna, filepath = output_path)

@@ -13,7 +13,7 @@ Graphical representation of distribution of taxa across two samples."><script da
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,7 +86,7 @@ Graphical representation of distribution of taxa across two samples."><script da
 <span>  left_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  left_name_col <span class="op">=</span> <span class="st">"#4B3E1E"</span>,</span>
 <span>  left_fill <span class="op">=</span> <span class="st">"#4B3E1E"</span>,</span>
-<span>  left_col <span class="op">=</span> <span class="st">"#f3f2d9"</span>,</span>
+<span>  left_col <span class="op">=</span> <span class="st">"#4B3E1E"</span>,</span>
 <span>  right_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  right_name_col <span class="op">=</span> <span class="st">"#1d2949"</span>,</span>
 <span>  right_fill <span class="op">=</span> <span class="st">"#1d2949"</span>,</span>
@@ -99,6 +99,9 @@ Graphical representation of distribution of taxa across two samples."><script da
 <span>  y_names <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  ylim_modif <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
 <span>  nb_samples_info <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  split_by_sample <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  sample_border_col <span class="op">=</span> <span class="st">"#d4d0acff"</span>,</span>
+<span>  sample_border_width <span class="op">=</span> <span class="fl">0.3</span>,</span>
 <span>  plotly_version <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -218,6 +221,24 @@ of ylim. If one value is set, this value is used for both limits.</p></dd>
 add the number of samples merged for both levels.</p></dd>
 
 
+<dt id="arg-split-by-sample">split_by_sample<a class="anchor" aria-label="anchor" href="#arg-split-by-sample"></a></dt>
+<dd><p>(default: FALSE, logical) if TRUE and
+<code>merge_sample_by</code> is set, the bars are not merged but stacked by sample,
+with borders between segments so that the distribution of sequences
+across samples is visible. The border color and width are controlled by
+<code>sample_border_col</code> and <code>sample_border_width</code>.</p></dd>
+
+
+<dt id="arg-sample-border-col">sample_border_col<a class="anchor" aria-label="anchor" href="#arg-sample-border-col"></a></dt>
+<dd><p>(default: "white") Color of the border between
+sample segments when <code>split_by_sample = TRUE</code>.</p></dd>
+
+
+<dt id="arg-sample-border-width">sample_border_width<a class="anchor" aria-label="anchor" href="#arg-sample-border-width"></a></dt>
+<dd><p>(default: 0.3) Width of the border between
+sample segments when <code>split_by_sample = TRUE</code>.</p></dd>
+
+
 <dt id="arg-plotly-version">plotly_version<a class="anchor" aria-label="anchor" href="#arg-plotly-version"></a></dt>
 <dd><p>If TRUE, use <code><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html" class="external-link">plotly::ggplotly()</a></code> to return
 a interactive ggplot.</p></dd>
@@ -244,6 +265,14 @@ a interactive ggplot.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for <span style="color: #00BB00;">y</span> is already present.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Adding another scale for <span style="color: #00BB00;">y</span>, which will replace the existing scale.</span>
 <span class="r-plt img"><img src="biplot_pq-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">biplot_pq</span><span class="op">(</span><span class="va">data_fungi_2Height</span>, <span class="st">"Height"</span>,</span></span>
+<span class="r-in"><span>  merge_sample_by <span class="op">=</span> <span class="st">"Height"</span>,</span></span>
+<span class="r-in"><span>  split_by_sample <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The two modalities differ greatly (more than x2) in their number of sequences (1885 vs 10201). You may be interested by the parameter rarefy_after_merging</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for <span style="color: #00BB00;">y</span> is already present.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding another scale for <span style="color: #00BB00;">y</span>, which will replace the existing scale.</span>
+<span class="r-plt img"><img src="biplot_pq-2.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

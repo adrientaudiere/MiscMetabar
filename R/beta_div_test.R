@@ -831,7 +831,7 @@ multipatt_pq <- function(
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
-#' A wrapper for the [ANCOMBC::ancombc2()] function
+#' A wrapper for the `ancombc2()` function
 #'
 #' @inheritParams clean_pq
 #' @param fact (required) Name of the factor in `physeq@sam_data` used to plot
@@ -840,11 +840,11 @@ multipatt_pq <- function(
 #'   Used for reorder levels and select levels (filter out levels not present
 #'   en levels_fact)
 #' @param tax_level (default NULL)
-#'   The taxonomic level passed on to [ANCOMBC::ancombc2()]. If NULL
+#'   The taxonomic level passed on to `ancombc2()`. If NULL
 #'   do not perform agglomeration, and the ANCOM-BC2 analysis will be
 #'   performed at the lowest taxonomic level of the input data.
-#' @param ... Additional arguments passed on to [ANCOMBC::ancombc2()] function.
-#' @return The result of [ANCOMBC::ancombc2()] function
+#' @param ... Additional arguments passed on to `ancombc2()` function.
+#' @return The result of `ancombc2()` function
 #' @export
 #'
 #' @examples
@@ -888,7 +888,7 @@ multipatt_pq <- function(
 #' @author Adrien Taudière
 #' @details
 #' This function is mainly a wrapper of the work of others.
-#'   Please make a reference to `ANCOMBC::ancombc2()` if you
+#'   Please make a reference to `ancombc2()` if you
 #'   use this function.
 ancombc_pq <- function(
   physeq,
@@ -986,7 +986,7 @@ ancombc_pq <- function(
 #' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
-#'   Please make a reference to `ANCOMBC::ancombc2()` if you
+#'   Please make a reference to `ancombc2()` if you
 #'   use this function.
 signif_ancombc <- function(
   ancombc_res,
@@ -1088,7 +1088,7 @@ signif_ancombc <- function(
 #' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
-#'   Please make a reference to `ANCOMBC::ancombc2()` if you
+#'   Please make a reference to `ancombc2()` if you
 #'   use this function.
 #' @author Adrien Taudière
 

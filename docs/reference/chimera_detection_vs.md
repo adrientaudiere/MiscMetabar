@@ -10,7 +10,7 @@ Use the VSEARCH software.
 chimera_detection_vs(
   seq2search,
   nb_seq,
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   abskew = 2,
   min_seq_length = 100,
   vsearch_args = "--fasta_width 0",

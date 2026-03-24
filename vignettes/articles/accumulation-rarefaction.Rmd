@@ -1,7 +1,8 @@
 ---
-title: "Accumulation and rarefaction curves"
+title: "Accumulation and rarefaction curves (WORK IN PROGRESS)"
 output: rmarkdown::html_vignette
 bibliography: ../bibliography.bib
+orphan: true
 vignette: >
   %\VignetteIndexEntry{Accumulation and rarefaction curves}
   %\VignetteEncoding{UTF-8}
@@ -9,6 +10,11 @@ vignette: >
 editor_options:
   chunk_output_type: console
 ---
+
+
+/!\ (WORK IN PROGRESS) /!\
+
+
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -22,44 +28,173 @@ knitr::opts_chunk$set(
 
 Accumulation and rarefaction curves are fundamental tools in biodiversity
 analysis. They address a key challenge: **comparing diversity across
-communities that differ in sampling effort**. This vignette covers the
-theoretical background and illustrates how to compute and plot these
-curves using MiscMetabar functions based on the
-[divent](https://ericmarcon.github.io/divent/) package.
+communities that differ in sampling effort**. In metabarcoding, this
+challenge is compounded by a second, more fundamental one: the relationship
+between sequence counts and the actual biological diversity in the field.
 
-For a comprehensive theoretical treatment, see
-[Marcon (2018)](https://ericmarcon.github.io/MesuresBioDiv2/chap-Accumulation.html).
+This vignette explains the conceptual choices involved and illustrates how
+to compute and visualise these curves using `hill_acc_pq()` and
+`profile_hill_pq()`, two MiscMetabar functions built on the
+[divent](https://ericmarcon.github.io/divent/) package [@Marcon2015].
 
-## Rarefaction vs. accumulation
+## Which function should I use?
 
-Two distinct types of curves exist:
+```{r decision-tree, echo = FALSE, fig.cap = "Decision tree for choosing the appropriate diversity curve in metabarcoding."}
+DiagrammeR::grViz('
+digraph decision_tree {
 
-- **Individual-based rarefaction** (or **size-based rarefaction**): plots
-  diversity as a function of the **number of individuals** (in
-  metabarcoding: the number of sequences). Given a fixed sample, it
-  estimates the expected diversity if only a subset of individuals had
-  been drawn. This allows fair comparison of communities sampled with
-  different sequencing depths.
+  graph [rankdir = LR, fontname = Helvetica, fontsize = 11,
+         bgcolor = "#FAFAFA", pad = 0.4]
+  node  [fontname = Helvetica, fontsize = 10, margin = "0.18,0.10",
+         penwidth = 1.2]
+  edge  [fontname = Helvetica, fontsize = 9, penwidth = 1.1]
 
-- **Sample-based accumulation** (or **species accumulation curves**, SAC):
-  plots diversity as a function of the **number of samples** (e.g.,
-  plots, sites, PCR replicates). It tracks how diversity grows as
-  more sampling units are added.
+  ROOT [label = "Biological\nquestion?",
+        shape = diamond, style = filled,
+        fillcolor = "#AED6F1", color = "#2980B9"]
+
+  Q1 [label = "Is sequencing depth\nsufficient?",
+      shape = rect, style = "filled,rounded",
+      fillcolor = "#D6EAF8", color = "#2980B9"]
+
+  Q2 [label = "Does spatial / temporal\nsampling cover diversity?",
+      shape = rect, style = "filled,rounded",
+      fillcolor = "#D6EAF8", color = "#2980B9"]
+
+  Q3 [label = "What is the community\nevenness structure?",
+      shape = rect, style = "filled,rounded",
+      fillcolor = "#D6EAF8", color = "#2980B9"]
+
+  Q4 [label = "Are samples comparable\nin detection coverage?",
+      shape = rect, style = "filled,rounded",
+      fillcolor = "#D6EAF8", color = "#2980B9"]
+
+  T2 [label = "Trust read counts\nas abundance proxies?",
+      shape = diamond, style = filled,
+      fillcolor = "#FDEBD0", color = "#E67E22"]
+
+  T3 [label = "Trust read counts\nas abundance proxies?",
+      shape = diamond, style = filled,
+      fillcolor = "#FDEBD0", color = "#E67E22"]
+
+  F1 [label = "hill_acc_pq(\n  type = individual\n)\nx-axis: no. of sequences",
+      shape = rect, style = "filled,rounded",
+      fillcolor = "#A9DFBF", color = "#1E8449"]
+
+  F2a [label = "hill_acc_pq(\n  type = sample\n)\nx-axis: no. of samples",
+       shape = rect, style = "filled,rounded",
+       fillcolor = "#A9DFBF", color = "#1E8449"]
+
+  F2b [label = "as_binary_otu_table() +\nhill_acc_pq(\n  type = sample\n)\nx-axis: no. of samples",
+       shape = rect, style = "filled,rounded",
+       fillcolor = "#D5F5E3", color = "#1E8449"]
+
+  F3a [label = "profile_hill_pq()\nx-axis: Hill order q",
+       shape = rect, style = "filled,rounded",
+       fillcolor = "#A9DFBF", color = "#1E8449"]
+
+  F3b [label = "as_binary_otu_table() +\nprofile_hill_pq()\nx-axis: Hill order q",
+       shape = rect, style = "filled,rounded",
+       fillcolor = "#D5F5E3", color = "#1E8449"]
+
+  F4 [label = "iNEXT.4steps\n(see section below)\nx-axis: sample coverage",
+      shape = rect, style = "filled,rounded",
+      fillcolor = "#FAD7A0", color = "#B7770D"]
+
+  ROOT -> Q1
+  ROOT -> Q2
+  ROOT -> Q3
+  ROOT -> Q4
+
+  Q1  -> F1
+  Q2  -> T2
+  Q3  -> T3
+  Q4  -> F4
+
+  T2  -> F2a [label = "yes"]
+  T2  -> F2b [label = "no / uncertain"]
+  T3  -> F3a [label = "yes"]
+  T3  -> F3b [label = "no / uncertain"]
+}
+')
+```
+
+Read the sections below for the conceptual background behind each choice.
+The short answer on **trusting read counts**: use abundance-based approaches
+when your system is well-controlled (mock communities, microbiomes, calibrated
+protocols); prefer incidence-based when PCR biases or cross-contamination are
+likely — as is common in environmental surveys.
+
+## The eDNA challenge: sequences are not individuals
+
+In traditional ecology, rarefaction standardises samples by drawing a fixed
+number of **individuals**, each of which unambiguously represents one
+organism. In metabarcoding, the recorded entities are **DNA sequences**, not
+individuals. This creates a fundamental ambiguity: one species can be
+represented by tens of thousands of reads (high DNA concentration, efficient
+primer binding) or by a handful (low biomass, poor amplification) regardless
+of its true ecological abundance [@Alberdi2019; @Calderon2019]. Controlled
+mock-community experiments confirm this: read counts per species vary over an
+order of magnitude even at equal molar input, and correlations with true
+abundance hold only for dominant taxa [@Skelton2023; @Shelton2023].
+
+This weakens the link between sequence counts and actual species abundance,
+and has practical consequences for how we measure diversity.
+
+## Abundance-based vs. incidence-based approaches
+
+Two broad strategies exist for weighting the contribution of each OTU to
+diversity [@Alberdi2019]:
+
+- **Abundance-based approach**: uses the number of DNA sequences assigned to
+  each OTU as a proxy for its relative abundance. This is the default
+  approach in most metabarcoding workflows and is appropriate when sequence
+  counts are a reasonable proxy for relative biomass (e.g. in gut microbiome
+  studies where microbial cells are well-represented in proportion to their
+  abundance).
+
+- **Incidence-based approach**: ignores within-sample sequence counts and
+  instead uses the number of **samples** in which each OTU is detected
+  (presence/absence). Because it discards quantitative information, it is
+  less sensitive to amplification biases, cross-sample contamination, or
+  tag-jump artefacts — all of which inflate the counts of rare sequences.
+  Incidence-based Hill numbers are only meaningful at the level of the whole
+  system (pool of samples), not for individual samples.
+
+Both approaches converge at **q = 0** (species richness), because richness
+almost ignores relative abundances. They diverge for **q > 0**, where the
+abundance-based approach measures the effective number of equally *abundant*
+OTUs and the incidence-based approach measures the effective number of
+equally *frequent* (across samples) OTUs.
+
+In practice, the choice depends on the research question and the degree of
+trust in sequence counts. The two are complementary: computing both and
+comparing them reveals how much the conclusions depend on quantitative
+information.
 
 ## Hill numbers: a unified framework
 
-Hill numbers [@Hill73] provide a family of diversity indices parameterized
+Hill numbers [@Hill73] provide a family of diversity indices parameterised
 by an order *q*:
 
-- **q = 0**: species richness (number of species), sensitive to rare species.
-- **q = 1**: the exponential of Shannon entropy, weighting species by their
-  frequency equally.
-- **q = 2**: the inverse Simpson concentration, dominated by common species.
+- **q = 0**: species richness, treating all OTUs equally regardless of
+  abundance. Highly sensitive to rare OTUs, which in metabarcoding are
+  disproportionately likely to be sequencing artefacts.
+- **q = 1**: exponential of Shannon entropy, weighting OTUs proportionally
+  to their frequency. A balanced measure.
+- **q = 2**: inverse Simpson concentration, dominated by common OTUs.
+  Robust to rare artefactual sequences.
 
-By varying *q*, one obtains a **diversity profile** that fully
-characterizes the diversity of a community. The divent package
-[@Marcon2015] implements estimation and accumulation of Hill numbers with
-proper bias correction.
+An important consequence for eDNA data: **higher q values are more robust to
+data curation choices** [@Calderon2019; @Shirazi2021]. Rarefaction curves at
+q = {1, 2} typically saturate well, while curves at q = 0 rarely saturate and
+are heavily affected by data curation decisions (chimera removal, clustering
+thresholds, etc.) and PCR variability across replicates. This makes q = 1 a
+pragmatic default — it weights OTUs by their frequency without
+disproportionately favouring rare or abundant ones.
+
+For a thorough theoretical treatment of Hill Number, see
+[Marcon (2018)](https://ericmarcon.github.io/MesuresBioDiv2/chap-Accumulation.html).
 
 ## Setup
 
@@ -67,185 +202,263 @@ proper bias correction.
 library(MiscMetabar)
 library(phyloseq)
 library(ggplot2)
+library(patchwork)
 set.seed(42)
 data(data_fungi_mini)
 ```
 
 We rarefy `data_fungi_mini` to an even sequencing depth of 500 sequences per
-sample, allowing faster computation of accumulation curves. In practice, you may want to rarefy to a higher depth or use the `hill_acc_pq()` function directly on the unrarefied data.
+sample. This standardises sampling effort and is required by
+individual-based rarefaction. In practice, rarefy to a higher depth if
+possible. Recent analyses confirm that rarefaction remains the most robust
+approach for controlling uneven sequencing depth in amplicon data
+[@Schloss2024a; @Schloss2024b].
 
 ```{r}
 dfm_rarefied <- rarefy_even_depth(
-  data_fungi,
+  data_fungi_mini,
   rngseed = 1,
   sample.size = 500
-)
+) 
+dfm_rarefied <-  prune_samples(sample_names(dfm_rarefied) %in% sample(sample_names(dfm_rarefied), 25), dfm_rarefied)
 dfm_rarefied
 ```
 
-## Individual-based rarefaction (sequences as individuals)
+## Individual-based rarefaction (abundance-based)
 
-Individual-based rarefaction curves show how estimated diversity grows with
-the number of sequences drawn. The function `hill_acc_pq()` wraps
-`divent::accum_hill()` and works directly on phyloseq objects.
+Individual-based rarefaction plots Hill diversity as a function of the number
+of sequences drawn. It answers: *is sequencing depth sufficient to
+characterise diversity?* The function `hill_acc_pq()` with
+`type = "individual"` wraps `divent::accum_hill()`.
+
+Note that this is an **abundance-based** approach: the curve reflects the
+sequence count distribution within each sample.
 
 ### Metacommunity level
 
-To compute the rarefaction curve for the entire dataset treated as a single
-metacommunity, we merge all samples into one by adding a common grouping
-variable. This represents the global diversity pool.
+Merge all samples into a single community to obtain a global rarefaction
+curve:
 
 ```{r}
-# Add a dummy variable to merge all samples into a single metacommunity
 sample_data(dfm_rarefied)$metacommunity <- "all"
 ```
 
-```{r, fig.cap="Individual-based rarefaction for the entire metacommunity (q = 0, species richness)"}
-p0 <-hill_acc_pq(
+```{r, fig.cap="Individual-based rarefaction for the entire metacommunity (q = 1)"}
+hill_acc_pq(
   dfm_rarefied,
-  q = 0,
+  q = 1,
+  type = "individual",
   merge_sample_by = "metacommunity",
-  n_simulations = 0
+  n_simulations = 10
 ) +
   no_legend() +
-  ggtitle("Metacommunity rarefaction (q = 0)")
-p0
+  ggtitle("Metacommunity rarefaction (q = 1)")
 ```
 
+### Per-sample rarefaction
 
-### Five random samples
+Examining individual samples reveals heterogeneity in diversity and sampling
+completeness. Samples whose curve has not plateaued may harbour undetected
+taxa.
 
-To examine per-sample rarefaction, we draw 5 samples at random. Each
-curve shows how the diversity of a single sample grows with sequencing
-depth.
-
-```{r, fig.cap="Individual-based rarefaction for 5 random samples (q = 1)"}
+```{r, fig.cap="Individual-based rarefaction for 5 random samples at different Hill orders"}
 random_samples <- sample(sample_names(dfm_rarefied), 5)
 dfm_5 <- prune_samples(random_samples, dfm_rarefied)
 
-hill_acc_pq(dfm_5, q = 1, n_simulations = 0) +
-  ggtitle("Rarefaction curves for 5 random samples (q = 1)")
+p_q0 <- hill_acc_pq(dfm_5, q = 0, type = "individual", n_simulations = 0) +
+  ggtitle("q = 0 (richness)")
+p_q1 <- hill_acc_pq(dfm_5, q = 1, type = "individual", n_simulations = 0) +
+  ggtitle("q = 1 (Shannon)")
+p_q2 <- hill_acc_pq(dfm_5, q = 2, type = "individual", n_simulations = 0) +
+  ggtitle("q = 2 (Simpson)")
+
+(p_q0 + p_q1 + p_q2) & no_legend()
 ```
 
-Samples that plateau early have lower diversity; samples whose curve is
-still rising at the maximum depth may harbour additional undetected species.
+At q = 0, curves rarely plateau because rare OTUs (many of which may be
+artefacts) keep accumulating with additional sequences. At q = 1 and q = 2,
+curves saturate faster because dominant OTUs are detected early. This
+illustrates why q = {1, 2} provides more reliable sampling completeness
+assessments [@Calderon2019].
 
-```{r, fig.cap="Individual-based rarefaction for 5 random samples (q = 0, species richness)"}
-p5_q0 <- hill_acc_pq(dfm_5, q = 0, n_simulations = 0) +
-  ggtitle("Rarefaction curves for 5 random samples (q = 0)")
+### Rarefaction by habitat
+
+Merging samples by the `Height` variable aggregates sequences within each
+habitat, enabling comparison at the habitat scale:
+
+```{r, fig.cap="Individual-based rarefaction by Height (q = 1)"}
+hill_acc_pq(
+  dfm_rarefied,
+  q = 1,
+  type = "individual",
+  merge_sample_by = "Height",
+  n_simulations = 0
+) +
+  ggtitle("Rarefaction by Height (q = 1)")
 ```
 
-Changing the diversity order shifts the focus from rare to common species:
+## Sample-based accumulation (abundance-based)
 
-```{r, fig.cap="Individual-based rarefaction for 5 random samples at different Hill orders"}
-p5_q1 <- hill_acc_pq(dfm_5, q = 1, n_simulations = 0) +
-  ggtitle("Rarefaction curves for 5 random samples (q = 0)")
-p5_q2 <- hill_acc_pq(dfm_5, q = 2, n_simulations = 0) +
-  ggtitle("Rarefaction curves for 5 random samples (q = 0)")
+Sample-based accumulation plots Hill diversity as a function of the number
+of **samples** added. It answers: *does spatial (or temporal) sampling
+capture the full diversity?* It reflects turnover across samples
+(beta-diversity), not sequencing depth within samples.
 
-library(patchwork)
-p5_q0 + p5_q1 + p5_q2 & no_legend()
+`hill_acc_pq()` with `type = "sample"` pools samples in random order across
+`n_permutations` replicates and computes Hill diversity of the pooled
+community at each step. The shaded band shows the confidence envelope.
+
+Note: even though this approach aggregates samples, the pooled community
+is still evaluated using **sequence counts** — it remains abundance-based.
+Compare with the incidence-based approach in the next section.
+
+```{r, fig.cap="Sample-based accumulation for the entire dataset (q = 1, 50 permutations)"}
+hill_acc_pq(
+  dfm_rarefied,
+  q = 1,
+  type = "sample",
+  n_permutations = 50
+) +
+  ggtitle("Sample-based accumulation (q = 1)")
 ```
 
-At q = 0, the curve keeps rising because rare species are still being
-discovered. At higher orders, the curve saturates faster because common
-species dominate the index.
+By splitting by habitat, one can assess whether diversity saturates within
+each level and how much each level contributes to the total:
 
-
-
-### Samples merged by Height
-
-Merging samples by the `Height` factor (Low, Middle, High) aggregates
-sequences within each level, allowing comparison of diversity at the
-habitat level.
-
-```{r, fig.cap="Individual-based rarefaction by Height (q = 0)"}
-hill_acc_pq(dfm_rarefied, q = 0, merge_sample_by = "Height", n_simulations = 0) +
-  ggtitle("Rarefaction by Height (q = 0, richness)")
+```{r, fig.cap="Sample-based accumulation by Height (q = 1)"}
+hill_acc_pq(
+  dfm_rarefied,
+  q = 1,
+  type = "sample",
+  merge_sample_by = "Height",
+  n_permutations = 50
+) +
+  ggtitle("Sample-based accumulation by Height (q = 1)")
 ```
 
+## Incidence-based approach
 
-## Sample-based accumulation (number of samples)
+When sequence counts are not trusted as proxies for abundance — for instance
+due to primer binding biases or cross-contamination — an incidence-based
+approach uses only presence/absence of OTUs across samples.
+`as_binary_otu_table()` converts the OTU table to 0/1 before analysis.
 
-Sample-based accumulation curves track how diversity grows as more
-**sampling units** are added. This is fundamentally different from
-individual-based rarefaction: it captures the spatial (or temporal if samples are time points)
-turnover in species composition across samples.
+Because incidence-based Hill numbers measure the effective number of OTUs
+weighted by the fraction of samples they occur in, they are only meaningful
+at the level of the entire system and are most naturally used with
+`type = "sample"`.
 
-The function `accu_plot()` wraps `vegan::specaccum()` and supports both
-a global accumulation curve and per-factor curves.
-
-### All dataset
-
-```{r, fig.cap="Sample-based accumulation curve for the entire dataset with per-Height curves"}
-accu_plot(dfm_rarefied, fact = "Height", add_nb_seq = FALSE)
-```
-
-The black curve ("all") shows the global accumulation. Per-Height curves
-show how quickly diversity saturates within each habitat. If the
-within-habitat curves plateau well below the global curve, this indicates
-substantial beta-diversity (species turnover between habitats).
-
-### By Height with sequence information
-
-`accu_plot()` can also display the number of sequences on the x-axis
-(`add_nb_seq = TRUE`), showing accumulation as a function of sequencing
-effort.
-
-```{r, fig.cap="Sample-based accumulation by Height with number of sequences on x-axis"}
-accu_plot(dfm_rarefied, fact = "Height", add_nb_seq = TRUE, by.fact = TRUE) +
-  theme(legend.position = "bottom")
-```
-
-```{r, fig.cap="Sample-based accumulation by Height (one line per sample, colored by Height)"}
-accu_plot(dfm_rarefied, fact = "Height", add_nb_seq = TRUE) +
-  theme(legend.position = "bottom")
-```
-
-### Balanced modality
-
-When modalities have unequal sample sizes, `accu_plot_balanced_modality()`
-subsamples to the smallest group size, providing a fairer comparison.
-
-```{r, fig.cap="Balanced accumulation curves by Height"}
+```{r}
 data(data_fungi)
+dfm_binary <- as_binary_otu_table(data_fungi)
+```
+
+```{r, fig.cap="Incidence-based sample accumulation (q = 1)"}
+hill_acc_pq(
+  dfm_binary,
+  q = 1,
+  type = "sample",
+  n_permutations = 50
+) +
+  ggtitle("Incidence-based sample accumulation (q = 1)")
+```
+
+```{r, fig.cap="Incidence-based sample accumulation by Height (q = 1)"}
 data_fungi_woNA4Height <- subset_samples_pq(
   data_fungi,
   !is.na(data_fungi@sam_data$Height)
 )
-accu_plot_balanced_modality(data_fungi_woNA4Height, "Height", nperm = 3)
+dfm_binary_height <- as_binary_otu_table(data_fungi_woNA4Height)
+
+hill_acc_pq(
+  dfm_binary_height,
+  q = 1,
+  type = "sample",
+  merge_sample_by = "Height",
+  n_permutations = 50
+) +
+  ggtitle("Incidence-based sample accumulation by Height (q = 1)")
 ```
+
+Comparing the abundance-based and incidence-based accumulation curves reveals
+how much the diversity ordering among habitats depends on quantitative
+sequence information vs. simple detection patterns.
 
 ## Diversity profiles
 
-Diversity profiles complement accumulation curves by showing how the
-diversity index varies across Hill orders for a fixed sample size. The
-function `profile_hill_pq()` wraps `divent::profile_hill()`.
+Diversity profiles show how the Hill diversity index varies continuously
+across orders *q*, for a fixed dataset. `profile_hill_pq()` wraps
+`divent::profile_hill()`.
 
-```{r, fig.cap="Hill diversity profiles per sample"}
+A steeply declining profile indicates an uneven community dominated by a few
+OTUs. A flat profile indicates high evenness. The shape of the profile is
+itself informative: two communities with identical diversity at q = 1 may
+have very different profiles, revealing different abundance distributions.
+
+### Abundance-based profiles
+
+```{r, fig.cap="Abundance-based Hill diversity profiles per sample"}
 profile_hill_pq(dfm_rarefied) + no_legend()
 ```
 
-```{r, fig.cap="Hill diversity profiles merged by Height"}
+```{r, fig.cap="Abundance-based Hill diversity profiles merged by Height"}
 profile_hill_pq(dfm_rarefied, merge_sample_by = "Height", n_simulations = 10)
 ```
 
-A steeply declining profile indicates an uneven community dominated by
-a few species. A flat profile indicates high evenness.
+### Incidence-based profiles
 
-```{r}
-#TODO : interpretation
-#profile_hill_pq(as_binary_otu_table(data_fungi), merge_sample_by = "Height",n_simulations=10)
+Applying `profile_hill_pq()` to a binary OTU table yields incidence-based
+diversity profiles, where each OTU is weighted by the proportion of samples
+it occurs in rather than its sequence count:
 
+```{r, fig.cap="Incidence-based Hill diversity profiles merged by Height"}
+profile_hill_pq(
+  as_binary_otu_table(data_fungi_woNA4Height),
+  merge_sample_by = "Height",
+  n_simulations = 10
+)
 ```
+
+Contrasting the abundance-based and incidence-based profiles highlights which
+diversity patterns are robust to the quantitative interpretation of sequence
+counts and which depend on it.
+
+## Beyond size-based rarefaction: coverage-based approaches
+
+The approaches above standardise by **sample size** (number of sequences or
+number of samples). An emerging alternative standardises by **sample
+coverage** — the estimated fraction of the community already detected in a
+sample [@Chao2020]. This matters because the same sequencing depth can yield
+very different coverages depending on community evenness: a highly uneven
+community (a few dominant OTUs) achieves high coverage quickly, while an
+even one requires far more sequences.
+
+Importantly, when the treatment or environment of interest also affects
+community evenness (e.g. high land-use intensity simplifies communities),
+size-based rarefaction conflates diversity loss with coverage gain.
+@Kortmann2025 demonstrated this directly: coverage-standardised Hill numbers
+revealed a 27–44% stronger diversity decline along a land-use gradient in
+insects than size-based rarefaction suggested. The theoretical foundation
+(sample completeness profiles parameterised by *q*) is formalised in
+@Chao2020.
+
+Coverage-based rarefaction is not yet implemented in `hill_acc_pq()`, but is
+available via the [iNEXT.4steps](https://cran.r-project.org/package=iNEXT.4steps)
+package, which accepts both abundance and incidence data and produces
+rarefaction/extrapolation curves standardised by coverage for any Hill
+order *q* [@Chao2020]. It is worth running alongside the curves produced
+here whenever there is reason to suspect that sampling coverage varies across
+the samples being compared.
 
 ## Summary
 
-| Approach | x-axis | Function | What it reveals |
-|----------|--------|----------|-----------------|
-| Individual-based rarefaction | Number of sequences | `hill_acc_pq()` | Whether sequencing depth is sufficient |
-| Sample-based accumulation | Number of samples | `accu_plot()` | Spatial turnover, beta-diversity |
-| Diversity profile | Hill order *q* | `profile_hill_pq()` | Evenness structure |
+| Approach | Data | x-axis | Function | What it reveals |
+|----------|------|--------|----------|-----------------|
+| Individual-based rarefaction | Abundance | Number of sequences | `hill_acc_pq(type = "individual")` | Sequencing depth sufficiency |
+| Sample-based accumulation | Abundance | Number of samples | `hill_acc_pq(type = "sample")` | Spatial turnover, beta-diversity |
+| Incidence-based accumulation | Presence/absence | Number of samples | `as_binary_otu_table()` + `hill_acc_pq(type = "sample")` | Turnover robust to amplification biases |
+| Abundance-based profiles | Abundance | Hill order *q* | `profile_hill_pq()` | OTU abundance distribution |
+| Incidence-based profiles | Presence/absence | Hill order *q* | `as_binary_otu_table()` + `profile_hill_pq()` | OTU frequency distribution across samples |
 
 ## References
 

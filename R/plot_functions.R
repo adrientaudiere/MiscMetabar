@@ -1741,12 +1741,7 @@ multiplot <-
 #'   if (requireNamespace("patchwork")) {
 #'     patchwork::wrap_plots(p2, guides = "collect")
 #'   }
-#'   # Artificially modify data_fungi to force alpha-diversity effect
-#'   data_fungi_modif <- clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height)))
-#'   data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <-
-#'     data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] +
-#'     sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
-#'   p3 <- hill_pq(data_fungi_modif, "Height",
+#'   p3 <- hill_pq(data_fungi, "Height",
 #'     letters = TRUE, vioplot = TRUE,
 #'     add_points = TRUE
 #'   )
@@ -4275,7 +4270,7 @@ diff_fct_diff_class <-
       if (length(unique(x)) == 1) {
         return(unique(x))
       } else if (character_method == "unique_or_na") {
-        return(NA)
+        return(NA_character_)
       } else if (character_method == "more_frequent") {
         return(names(sort(table(x), decreasing = TRUE)[1]))
       } else if (character_method == "more_frequent_without_equality") {
@@ -4283,7 +4278,7 @@ diff_fct_diff_class <-
           sort(table(x), decreasing = TRUE)[1] ==
             sort(table(x), decreasing = TRUE)[2]
         ) {
-          return(NA)
+          return(NA_character_)
         } else {
           return(names(sort(table(x), decreasing = TRUE)[1]))
         }
@@ -5463,10 +5458,10 @@ plot_var_part_pq <-
 #'
 #' @examples
 #' if (requireNamespace("ggstatsplot")) {
-#'   ggscatt_pq(data_fungi_mini, "Time", type = "non-parametric")
-#'   ggscatt_pq(data_fungi_mini, "Time", q = 1:4, type = "parametric")
+#'   ggscatt_pq(data_fungi_mini, "Time", q = 0, type = "non-parametric")
+#'   ggscatt_pq(data_fungi_mini, "Time", q = 0, type = "parametric")
 #'   ggscatt_pq(data_fungi_mini, "Sample_id",
-#'     q = c(0, 0.5),
+#'     q = 0,
 #'     one_plot = FALSE
 #'   )
 #' }
@@ -5783,28 +5778,22 @@ ggaluv_pq <- function(
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' res1 <- plot_refseq_extremity_pq(data_fungi)
+#' res1 <- plot_refseq_extremity_pq(data_fungi_mini)
 #' names(res1)
 #' res1$plot_start
 #' res1$plot_last
-#'
+#' \donttest{
 #' res2 <- plot_refseq_extremity_pq(data_fungi, first_n = 200, last_n = 100)
 #' res2$plot_start
 #' res2$plot_last
 #'
 #' plot_refseq_extremity_pq(data_fungi,
-#'   first_n = 400,
-#'   last_n = 400,
-#'   q = NULL
-#' )$plot_start +
-#'   geom_line(aes(y = value, x = seq_id, color = name), alpha = 0.4, linewidth = 0.2)
-#'
-#' plot_refseq_extremity_pq(data_fungi,
 #'   first_n = NULL,
-#'   last_n = 400,
-#'   min_width = 400,
+#'   last_n = 200,
+#'   min_width = 200,
 #'   q = c(3)
 #' )$plot_last
+#' }
 plot_refseq_extremity_pq <- function(
   physeq,
   first_n = 10,

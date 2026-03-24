@@ -26,6 +26,8 @@
   : Clean phyloseq object by removing empty samples and taxa
 - [`verify_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/verify_pq.md)
   : Verify the validity of a phyloseq object
+- [`unwanted_tax_patterns`](https://adrientaudiere.github.io/MiscMetabar/reference/unwanted_tax_patterns.md)
+  : Default patterns for unwanted taxonomic values
 - [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/reference/verify_tax_table.md)
   : Verify the taxonomy table of a phyloseq object
 
@@ -52,6 +54,9 @@
   :
 
   A wrapper of [`IdTaxa`](https://rdrr.io/pkg/DECIPHER/man/IdTaxa.html)
+
+- [`assign_mmseqs2()`](https://adrientaudiere.github.io/MiscMetabar/reference/assign_mmseqs2.md)
+  : Assign taxonomy using MMseqs2
 
 - [`assign_sintax()`](https://adrientaudiere.github.io/MiscMetabar/reference/assign_sintax.md)
   : Assign Taxonomy using Sintax algorithm of Vsearch
@@ -166,6 +171,10 @@
 
   Lulu reclustering of class `physeq`
 
+- [`mmseqs2_clustering()`](https://adrientaudiere.github.io/MiscMetabar/reference/mmseqs2_clustering.md)
+  : Recluster sequences of a phyloseq object or cluster a list of DNA
+  sequences using MMseqs2 software
+
 - [`mumu_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/mumu_pq.md)
   :
 
@@ -249,6 +258,9 @@
   : Compute the number of sequence to obtain a given proportion of ASV
   in accumulation curves
 
+- [`divent_hill_matrix_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/divent_hill_matrix_pq.md)
+  : Compute Hill diversity numbers for all samples in an OTU table
+
 - [`ggbetween_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ggbetween_pq.md)
   : Box/Violin plots for between-subjects comparisons of Hill Number
 
@@ -259,6 +271,10 @@
 - [`glmutli_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/glmutli_pq.md)
   : Automated model selection and multimodel inference with (G)LMs for
   phyloseq
+
+- [`hill_acc_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_acc_pq.md)
+  : Hill diversity accumulation curve for a phyloseq object (default: q
+  = 1)
 
 - [`hill_curves_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_curves_pq.md)
   : Hill Diversities and Corresponding Accumulation Curves for phyloseq
@@ -275,6 +291,9 @@
 
 - [`iNEXT_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/iNEXT_pq.md)
   : iNterpolation and EXTrapolation of Hill numbers (with iNEXT)
+
+- [`profile_hill_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/profile_hill_pq.md)
+  : Hill diversity profile for a phyloseq object
 
 ### beta-diversity
 
@@ -339,6 +358,9 @@
 
 - [`ridges_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ridges_pq.md)
   : Ridge plot of a phyloseq object
+
+- [`ridges_sam_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ridges_sam_pq.md)
+  : Ridges plot of sample distribution across taxa
 
 - [`SRS_curve_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/SRS_curve_pq.md)
   : Scaling with ranked subsampling (SRS) curve of phyloseq object
@@ -594,8 +616,18 @@
 
 ### External software management
 
+- [`find_mmseqs2()`](https://adrientaudiere.github.io/MiscMetabar/reference/find_mmseqs2.md)
+  : Find the MMseqs2 binary
+- [`find_vsearch()`](https://adrientaudiere.github.io/MiscMetabar/reference/find_vsearch.md)
+  : Find the vsearch binary
+- [`install_mmseqs2()`](https://adrientaudiere.github.io/MiscMetabar/reference/install_mmseqs2.md)
+  : Install MMseqs2 from GitHub releases
+- [`install_vsearch()`](https://adrientaudiere.github.io/MiscMetabar/reference/install_vsearch.md)
+  : Install vsearch binary
 - [`is_cutadapt_installed()`](https://adrientaudiere.github.io/MiscMetabar/reference/is_cutadapt_installed.md)
   : Test if cutadapt is installed.
+- [`is_mmseqs2_installed()`](https://adrientaudiere.github.io/MiscMetabar/reference/is_mmseqs2_installed.md)
+  : Check whether MMseqs2 is installed and callable
 - [`is_falco_installed()`](https://adrientaudiere.github.io/MiscMetabar/reference/is_falco_installed.md)
   : Test if falco is installed.
 - [`is_krona_installed()`](https://adrientaudiere.github.io/MiscMetabar/reference/is_krona_installed.md)

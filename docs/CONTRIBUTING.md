@@ -137,24 +137,20 @@ I add some rules for the package development in the pkgdown site
 In short :
 
 - Always indicate required params (required)
-
 - Indicate default values only when (i) a set of values is possible (e.g
   “bray” for the parameter method in \[vegan::vegdist()\]) or (ii) when
   this value is well thought out and a good default value for most users
   (e.g. the number of permutation or processors, or the level of
   identity to cluster at 97%).
-
 - Indicate the type for logical and integer params.
-
 - Homogenize the params names across function.
-
 - Prefer ASVs to OTUs denomination, even thought both are almost
-  interchangeable in the MiscMetabar package. \#### Lifecycle
+  interchangeable in the MiscMetabar package.
+
+#### Lifecycle
 
 - **Experimental**: First status for a function
-
 - **Maturing**: Some tests and/or analyses make stronger these functions
-
 - **Stable**: Good level of confidence
 
 ### General workflow

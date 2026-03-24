@@ -2,9 +2,7 @@
 
 [![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
-A wrapper for the
-[`ANCOMBC::ancombc2()`](https://rdrr.io/pkg/ANCOMBC/man/ancombc2.html)
-function
+A wrapper for the `ancombc2()` function
 
 ## Usage
 
@@ -33,27 +31,22 @@ ancombc_pq(physeq, fact, levels_fact = NULL, tax_level = "Class", ...)
 
 - tax_level:
 
-  The taxonomic level passed on to
-  [`ANCOMBC::ancombc2()`](https://rdrr.io/pkg/ANCOMBC/man/ancombc2.html)
+  (default NULL) The taxonomic level passed on to `ancombc2()`. If NULL
+  do not perform agglomeration, and the ANCOM-BC2 analysis will be
+  performed at the lowest taxonomic level of the input data.
 
 - ...:
 
-  Additional arguments passed on to
-  [`ANCOMBC::ancombc2()`](https://rdrr.io/pkg/ANCOMBC/man/ancombc2.html)
-  function.
+  Additional arguments passed on to `ancombc2()` function.
 
 ## Value
 
-The result of
-[`ANCOMBC::ancombc2()`](https://rdrr.io/pkg/ANCOMBC/man/ancombc2.html)
-function
+The result of `ancombc2()` function
 
 ## Details
 
 This function is mainly a wrapper of the work of others. Please make a
-reference to
-[`ANCOMBC::ancombc2()`](https://rdrr.io/pkg/ANCOMBC/man/ancombc2.html)
-if you use this function.
+reference to `ancombc2()` if you use this function.
 
 ## Author
 

@@ -35,3 +35,14 @@ The percentage value (number or character if add_symbol is set to TRUE)
 ## Author
 
 Adrien Taudière
+
+## Examples
+
+``` r
+perc(0.75)
+#> [1] 75
+perc(3, 10)
+#> [1] 30
+perc(0.75, add_symbol = TRUE)
+#> [1] "75%"
+```

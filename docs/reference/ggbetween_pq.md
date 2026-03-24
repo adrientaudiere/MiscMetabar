@@ -22,6 +22,7 @@ ggbetween_pq(
   rarefy_by_sample = FALSE,
   rngseed = FALSE,
   verbose = TRUE,
+  q = c(0, 1, 2),
   ...
 )
 ```
@@ -64,6 +65,13 @@ ggbetween_pq(
 
   (logical). If TRUE, print additional information.
 
+- q:
+
+  (numeric vector, default `c(0, 1, 2)`) Hill diversity orders to
+  compute. One plot is produced per value. Hill numbers are more
+  appropriate in DNA metabarcoding studies when `q > 0` (Alberdi &
+  Gilbert, 2019; Calderón-Sanou et al., 2019).
+
 - ...:
 
   Additional arguments passed on to
@@ -72,8 +80,8 @@ ggbetween_pq(
 
 ## Value
 
-Either an unique ggplot2 object (if one_plot is TRUE) or a list of 3
-ggplot2 plot:
+Either an unique ggplot2 object (if one_plot is TRUE) or a list of
+ggplot2 plots, one per Hill order in `q`. With default `q`:
 
 - plot_Hill_0 : the ggbetweenstats of Hill number 0 (= species richness)
   against the variable fact
@@ -90,6 +98,19 @@ This function is mainly a wrapper of the work of others. Please make a
 reference to
 [`ggstatsplot::ggbetweenstats()`](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html)
 if you use this function.
+
+## References
+
+Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of
+Hill numbers to DNA-based diversity analyses. *Molecular Ecology
+Resources*.
+[doi:10.1111/1755-0998.13014](https://doi.org/10.1111/1755-0998.13014)
+
+Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., & Thuiller,
+W. (2019). From environmental DNA sequences to ecological conclusions:
+How strong is the influence of methodological choices? *Journal of
+Biogeography*, 47.
+[doi:10.1111/jbi.13681](https://doi.org/10.1111/jbi.13681)
 
 ## Author
 
@@ -114,10 +135,79 @@ if (requireNamespace("ggstatsplot")) {
 #>  the random seed of your session for reproducibility.
 #> See `?set.seed`
 #> ...
-#> 1009OTUs were removed because they are no longer 
+#> 1013OTUs were removed because they are no longer 
 #> present in any sample after random subsampling
 #> ...
 #> All modality were undoubtedly rarefy in the physeq object.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
 
 # }
 ```

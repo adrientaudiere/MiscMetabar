@@ -16,12 +16,14 @@ the mean number of sequences per samples differs among modalities.
 ``` r
 psmelt_samples_pq(
   physeq,
-  hill_scales = c(0, 1, 2),
+  q = c(0, 1, 2),
+  hill_scales = lifecycle::deprecated(),
   filter_zero = TRUE,
   rarefy_by_sample = FALSE,
   rngseed = FALSE,
   verbose = TRUE,
-  taxa_ranks = NULL
+  taxa_ranks = NULL,
+  ...
 )
 ```
 
@@ -33,12 +35,18 @@ psmelt_samples_pq(
   [`phyloseq-class`](https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html)
   object obtained using the `phyloseq` package.
 
+- q:
+
+  (numeric vector) Hill diversity orders to compute. If NULL, no Hill
+  numbers are computed. Default computes Hill number 0 (species
+  richness), 1 (exponential of Shannon index) and 2 (inverse of Simpson
+  index). Formerly `q`. Hill numbers are more appropriate in DNA
+  metabarcoding studies when `q > 0` (Alberdi & Gilbert, 2019;
+  Calderón-Sanou et al., 2019).
+
 - hill_scales:
 
-  (a vector of integer) The list of q values to compute the hill number
-  H^q. If Null, no hill number are computed. Default value compute the
-  Hill number 0 (Species richness), the Hill number 1 (exponential of
-  Shannon Index) and the Hill number 2 (inverse of Simpson Index).
+  **\[deprecated\]** Use `q` instead.
 
 - filter_zero:
 
@@ -72,11 +80,32 @@ psmelt_samples_pq(
   ranks is not set (default value = NULL), taxonomic information are not
   present in the resulting tibble.
 
+- ...:
+
+  Additional arguments passed to
+  [`divent_hill_matrix_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/divent_hill_matrix_pq.md)
+  and hence to
+  [`divent::div_hill()`](https://ericmarcon.github.io/divent/reference/div_hill.html)
+  (e.g. `estimator = "naive"`). Only used when `q` is not NULL.
+
 ## Value
 
 A tibble with a row for each sample. Columns provide information from
 `sam_data` slot as well as hill numbers, Abundance (nb of sequences),
 and Abundance_log10 (*log10(1+Abundance)*).
+
+## References
+
+Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of
+Hill numbers to DNA-based diversity analyses. *Molecular Ecology
+Resources*.
+[doi:10.1111/1755-0998.13014](https://doi.org/10.1111/1755-0998.13014)
+
+Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., & Thuiller,
+W. (2019). From environmental DNA sequences to ecological conclusions:
+How strong is the influence of methodological choices? *Journal of
+Biogeography*, 47.
+[doi:10.1111/jbi.13681](https://doi.org/10.1111/jbi.13681)
 
 ## Author
 
@@ -95,6 +124,21 @@ if (requireNamespace("ggstatsplot")) {
     geom_bar(stat = "identity") +
     facet_wrap(~Height)
 }
+#> Warning: The `hill_scales` argument of `psmelt_samples_pq()` is deprecated as of
+#> MiscMetabar 0.15.1.
+#> ℹ Please use the `q` argument instead.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
 #> Joining with `by = join_by(Sample)`
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
 #> Joining with `by = join_by(Sample)`
 ```

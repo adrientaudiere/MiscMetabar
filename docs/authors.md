@@ -11,13 +11,13 @@ Source:
 [`DESCRIPTION`](https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/DESCRIPTION)
 
 Taudière A (2026). *MiscMetabar: Miscellaneous Functions for
-Metabarcoding Analysis*. R package version 0.14.6,
+Metabarcoding Analysis*. R package version 0.15.1,
 <https://github.com/adrientaudiere/MiscMetabar>.
 
     @Manual{,
       title = {MiscMetabar: Miscellaneous Functions for Metabarcoding Analysis},
       author = {Adrien Taudière},
       year = {2026},
-      note = {R package version 0.14.6},
+      note = {R package version 0.15.1},
       url = {https://github.com/adrientaudiere/MiscMetabar},
     }

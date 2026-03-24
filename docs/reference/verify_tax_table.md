@@ -13,10 +13,7 @@ when `check_taxonomy = TRUE`.
 verify_tax_table(
   physeq,
   verbose = FALSE,
-  replace_to_NA = c("^[Nn][Aa][Nn]?$", "^[Nn]/[Aa]$", "^[Nn]one$", "^$", "^\\s+$",
-    "[Uu]nclassified", "[Uu]nknown", "[Uu]nidentified", "[Uu]ncultured",
-    "[Ii]ncertae[_\\s]?[Ss]edis", "^[Mm]etagenome$", "^[Ee]nvironmental",
-    "^[kpcofgs]__$"),
+  replace_to_NA = unwanted_tax_patterns,
   min_char = 4,
   redundant_suffix = "_sp",
   taxonomic_ranks = c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
@@ -43,10 +40,11 @@ verify_tax_table(
 - replace_to_NA:
 
   (character vector) A vector of regex patterns to identify values that
-  should be considered as NA. Default patterns include common
-  placeholders like "unclassified", "unknown", "uncultured",
-  "incertae_sedis", "metagenome", empty QIIME-style ranks (e.g.,
-  "k\_\_"), etc.
+  should be considered as NA. Defaults to
+  [unwanted_tax_patterns](https://adrientaudiere.github.io/MiscMetabar/reference/unwanted_tax_patterns.md),
+  a named character vector of common placeholders like "unclassified",
+  "unknown", "uncultured", "incertae_sedis", "metagenome", empty
+  QIIME-style ranks, etc.
 
 - min_char:
 

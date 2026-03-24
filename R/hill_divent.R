@@ -19,6 +19,7 @@
 #'
 #' @return A ggplot2 object.
 #' @seealso [divent::profile_hill()], [hill_curves_pq()]
+#' @importFrom divent profile_hill accum_hill div_hill ent_shannon ent_simpson
 #' @export
 #' @examples
 #' \donttest{
@@ -115,7 +116,7 @@ profile_hill_pq <- function(
 #'     n_permutations = 5,
 #'     merge_sample_by = "Height"
 #'   )
-#' 
+#'
 #'  # Sample-based accumulation curve
 #'   hill_acc_pq(data_fungi_mini, type = "sample", n_permutations = 50)
 #'   hill_acc_pq(data_fungi_mini, type = "sample", merge_sample_by = "Height")

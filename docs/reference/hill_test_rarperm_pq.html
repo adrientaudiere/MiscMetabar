@@ -13,7 +13,7 @@ This reduce the risk of a random drawing of a exceptional situation of an unique
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +78,7 @@ This reduce the risk of a random drawing of a exceptional situation of an unique
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">hill_test_rarperm_pq</span><span class="op">(</span></span>
 <span>  <span class="va">physeq</span>,</span>
 <span>  <span class="va">fact</span>,</span>
-<span>  hill_scales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>  q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  nperm <span class="op">=</span> <span class="fl">99</span>,</span>
 <span>  sample.size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_sums.html" class="external-link">sample_sums</a></span><span class="op">(</span><span class="va">physeq</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -103,12 +103,13 @@ using the <code>phyloseq</code> package.</p></dd>
 different lines</p></dd>
 
 
-<dt id="arg-hill-scales">hill_scales<a class="anchor" aria-label="anchor" href="#arg-hill-scales"></a></dt>
+<dt id="arg-q">q<a class="anchor" aria-label="anchor" href="#arg-q"></a></dt>
 <dd><p>(a vector of integer) The list of q values to compute
 the hill number H^q. If Null, no hill number are computed. Default value
 compute the Hill number 0 (Species richness), the Hill number 1
 (exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
-Index).</p></dd>
+Index). Hill numbers are more appropriate in DNA metabarcoding studies
+when <code>q &gt; 0</code> (Alberdi &amp; Gilbert, 2019; Calderón-Sanou et al., 2019).</p></dd>
 
 
 <dt id="arg-nperm">nperm<a class="anchor" aria-label="anchor" href="#arg-nperm"></a></dt>
@@ -158,6 +159,16 @@ test as significant int the <code>prop_signif</code> result.</p></dd>
 <li><p>statistics</p></li>
 </ul></div>
     <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <p>Alberdi, A., &amp; Gilbert, M. T. P. (2019). A guide to the application of
+Hill numbers to DNA-based diversity analyses. <em>Molecular Ecology Resources</em>.
+<a href="https://doi.org/10.1111/1755-0998.13014" class="external-link">doi:10.1111/1755-0998.13014</a></p>
+<p>Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., &amp; Thuiller, W.
+(2019). From environmental DNA sequences to ecological conclusions: How
+strong is the influence of methodological choices? <em>Journal of Biogeography</em>,
+47. <a href="https://doi.org/10.1111/jbi.13681" class="external-link">doi:10.1111/jbi.13681</a></p>
+    </div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html" class="external-link">ggstatsplot::ggbetweenstats()</a></code>, <code><a href="hill_pq.html">hill_pq()</a></code></p></div>
     </div>
@@ -182,7 +193,7 @@ test as significant int the <code>prop_signif</code> result.</p></dd>
 <span class="r-in"><span>  <span class="va">res_para</span><span class="op">$</span><span class="va">expressions</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                          |                                                  |   0%  |                                                          |=========================                         |  50%  |                                                          |==================================================| 100%  |                                                          |                                                  |   0%  |                                                          |======                                            |  11%  |                                                          |===========                                       |  22%  |                                                          |=================                                 |  33%  |                                                          |======================                            |  44%  |                                                          |============================                      |  56%  |                                                          |=================================                 |  67%  |                                                          |=======================================           |  78%  |                                                          |============================================      |  89%  |                                                          |==================================================| 100%  |                                                          |                                                  |   0%  |                                                          |======                                            |  11%  |                                                          |===========                                       |  22%  |                                                          |=================                                 |  33%  |                                                          |======================                            |  44%  |                                                          |============================                      |  56%  |                                                          |=================================                 |  67%  |                                                          |=======================================           |  78%  |                                                          |============================================      |  89%  |                                                          |==================================================| 100%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> list(italic("F")["Welch"](2, 84.92) == "0.08", italic(p) == "0.92", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> list(italic("F")["Welch"](2, 84.35) == "0.10", italic(p) == "0.90", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     widehat(omega["p"]^2) == "0.00", CI["95%"] ~ "[" * "0.00", </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     "1.00" * "]", italic("n")["obs"] == "131")</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>

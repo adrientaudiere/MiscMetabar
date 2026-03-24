@@ -33,7 +33,7 @@ for pair-wise sequence matching."><script data-goatcounter="https://miscmetabar.
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -207,6 +207,16 @@ Producing the match list requires a file with all the OTU sequences (centroids) 
 modified by Adrien Taudière</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># The matchlist is produced by an external tool (VSEARCH or BLASTN).</span></span></span>
+<span class="r-in"><span><span class="co"># See the Details section for example commands.</span></span></span>
+<span class="r-in"><span><span class="va">otu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/otu_table-methods.html" class="external-link">otu_table</a></span><span class="op">(</span><span class="va">data_fungi_sp_known</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">lulu</span><span class="op">(</span><span class="va">otu</span>, <span class="va">matchlist</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

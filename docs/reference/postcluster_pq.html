@@ -13,7 +13,7 @@ This function use the merge_taxa_vec function to  merge taxa into clusters."><sc
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,7 +81,7 @@ This function use the merge_taxa_vec function to  merge taxa into clusters."><sc
 <span>  nproc <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"clusterize"</span>,</span>
 <span>  id <span class="op">=</span> <span class="fl">0.97</span>,</span>
-<span>  vsearchpath <span class="op">=</span> <span class="st">"vsearch"</span>,</span>
+<span>  vsearchpath <span class="op">=</span> <span class="fu"><a href="find_vsearch.html">find_vsearch</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  tax_adjust <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  rank_propagation <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  vsearch_cluster_method <span class="op">=</span> <span class="st">"--cluster_size"</span>,</span>
@@ -90,6 +90,9 @@ This function use the merge_taxa_vec function to  merge taxa into clusters."><sc
 <span>  swarmpath <span class="op">=</span> <span class="st">"swarm"</span>,</span>
 <span>  d <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  swarm_args <span class="op">=</span> <span class="st">"--fastidious"</span>,</span>
+<span>  mmseqs2path <span class="op">=</span> <span class="fu"><a href="find_mmseqs2.html">find_mmseqs2</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  mmseqs2_cluster_method <span class="op">=</span> <span class="st">"easy-cluster"</span>,</span>
+<span>  mmseqs2_args <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  method_clusterize <span class="op">=</span> <span class="st">"overlap"</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
@@ -100,7 +103,7 @@ This function use the merge_taxa_vec function to  merge taxa into clusters."><sc
 <span>  nproc <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"clusterize"</span>,</span>
 <span>  id <span class="op">=</span> <span class="fl">0.97</span>,</span>
-<span>  vsearchpath <span class="op">=</span> <span class="st">"vsearch"</span>,</span>
+<span>  vsearchpath <span class="op">=</span> <span class="fu"><a href="find_vsearch.html">find_vsearch</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  tax_adjust <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  rank_propagation <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  vsearch_cluster_method <span class="op">=</span> <span class="st">"--cluster_size"</span>,</span>
@@ -109,6 +112,9 @@ This function use the merge_taxa_vec function to  merge taxa into clusters."><sc
 <span>  swarmpath <span class="op">=</span> <span class="st">"swarm"</span>,</span>
 <span>  d <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  swarm_args <span class="op">=</span> <span class="st">"--fastidious"</span>,</span>
+<span>  mmseqs2path <span class="op">=</span> <span class="fu"><a href="find_mmseqs2.html">find_mmseqs2</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  mmseqs2_cluster_method <span class="op">=</span> <span class="st">"easy-cluster"</span>,</span>
+<span>  mmseqs2_args <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  method_clusterize <span class="op">=</span> <span class="st">"overlap"</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -140,7 +146,9 @@ Set the clustering method.</p><ul><li><p><code>clusterize</code> use the <code><
 <li><p><code>vsearch</code> use the vsearch software (https://github.com/torognes/vsearch)
 with arguments <code>--cluster_size</code> by default (see args <code>vsearch_cluster_method</code>)
 and <code>-strand both</code> (see args <code>vsearch_args</code>)</p></li>
-<li><p><code>swarm</code> use the swarm</p></li>
+<li><p><code>swarm</code> use the swarm software (https://github.com/torognes/swarm)</p></li>
+<li><p><code>mmseqs2</code> use the MMseqs2 software (https://github.com/soedinglab/MMseqs2)
+with <code>easy-cluster</code> by default (see args <code>mmseqs2_cluster_method</code>)</p></li>
 </ul></dd>
 
 
@@ -201,6 +209,20 @@ element defining other parameters to  passed on to swarm See other possible
 methods in the <a href="https://github.com/torognes/swarm/blob/master/man/swarm_manual.pdf" class="external-link">SWARM pdf manual</a></p></dd>
 
 
+<dt id="arg-mmseqs-path">mmseqs2path<a class="anchor" aria-label="anchor" href="#arg-mmseqs-path"></a></dt>
+<dd><p>(default: <code><a href="find_mmseqs2.html">find_mmseqs2()</a></code>) path to MMseqs2</p></dd>
+
+
+<dt id="arg-mmseqs-cluster-method">mmseqs2_cluster_method<a class="anchor" aria-label="anchor" href="#arg-mmseqs-cluster-method"></a></dt>
+<dd><p>(default: <code>"easy-cluster"</code>) Either
+<code>"easy-cluster"</code> or <code>"easy-linclust"</code>. See <code><a href="mmseqs2_clustering.html">mmseqs2_clustering()</a></code>.</p></dd>
+
+
+<dt id="arg-mmseqs-args">mmseqs2_args<a class="anchor" aria-label="anchor" href="#arg-mmseqs-args"></a></dt>
+<dd><p>(default: <code>""</code>) Additional arguments passed to the
+MMseqs2 clustering command.</p></dd>
+
+
 <dt id="arg-method-clusterize">method_clusterize<a class="anchor" aria-label="anchor" href="#arg-method-clusterize"></a></dt>
 <dd><p>(default "overlap") the method for the <code><a href="https://rdrr.io/pkg/DECIPHER/man/Clusterize.html" class="external-link">DECIPHER::Clusterize()</a></code> method</p></dd>
 
@@ -229,7 +251,8 @@ More information in the associated publication
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="vsearch_clustering.html">vsearch_clustering()</a></code> and <code><a href="swarm_clustering.html">swarm_clustering()</a></code></p></div>
+    <div class="dont-index"><p><code><a href="vsearch_clustering.html">vsearch_clustering()</a></code>, <code><a href="swarm_clustering.html">swarm_clustering()</a></code>,
+and <code><a href="mmseqs2_clustering.html">mmseqs2_clustering()</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -241,10 +264,11 @@ More information in the associated publication
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"DECIPHER"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">postcluster_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: DECIPHER</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Partitioning sequences by 3-mer similarity:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.03 secs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.02 secs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sorting by relatedness within 11 groups:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> iteration 1 of up to 17 (100.0% stability) </span>
@@ -254,7 +278,7 @@ More information in the associated publication
 <span class="r-out co"><span class="r-pr">#&gt;</span> Clustering sequences by 9-mer similarity:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.08 secs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.07 secs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Clusters via relatedness sorting: 100% (0% exclusively)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Clusters via rare 3-mers: 100% (0% exclusively)</span>
@@ -275,6 +299,9 @@ More information in the associated publication
 <span class="r-in"><span>  <span class="kw">if</span> <span class="op">(</span><span class="fu">MiscMetabar</span><span class="fu">::</span><span class="fu"><a href="is_vsearch_installed.html">is_vsearch_installed</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>    <span class="va">d_vs</span> <span class="op">&lt;-</span> <span class="fu">postcluster_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, method <span class="op">=</span> <span class="st">"vsearch"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">}</span></span></span>
+<span class="r-in"><span>  <span class="kw">if</span> <span class="op">(</span><span class="fu">MiscMetabar</span><span class="fu">::</span><span class="fu"><a href="is_mmseqs2_installed.html">is_mmseqs2_installed</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="va">d_mm</span> <span class="op">&lt;-</span> <span class="fu">postcluster_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, method <span class="op">=</span> <span class="st">"mmseqs2"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">}</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Partitioning sequences by 3-mer similarity:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
@@ -289,7 +316,7 @@ More information in the associated publication
 <span class="r-out co"><span class="r-pr">#&gt;</span> Clustering sequences by 9-mer similarity:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.08 secs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.07 secs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Clusters via relatedness sorting: 100% (0% exclusively)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Clusters via rare 3-mers: 100% (0% exclusively)</span>

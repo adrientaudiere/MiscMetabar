@@ -13,7 +13,7 @@ manual of the function
 ## Usage
 
 ``` r
-track_wkflow_samples(list_of_objects, ...)
+track_wkflow_samples(list_of_objects, output_data_frame = FALSE, ...)
 ```
 
 ## Arguments
@@ -24,6 +24,11 @@ track_wkflow_samples(list_of_objects, ...)
   [`track_wkflow()`](https://adrientaudiere.github.io/MiscMetabar/reference/track_wkflow.md).
   Accepts phyloseq, matrix, dada-class, derep-class, lists of dada-class
   or derep-class, and character vectors of file paths.
+
+- output_data_frame:
+
+  (logical, default FALSE) If TRUE, the function returns a data frame
+  with the number of sequences, clusters and samples for each sample.
 
 - ...:
 

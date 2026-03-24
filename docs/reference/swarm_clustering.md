@@ -12,7 +12,7 @@ swarm_clustering(
   dna_seq = NULL,
   d = 1,
   swarmpath = "swarm",
-  vsearch_path = "vsearch",
+  vsearch_path = find_vsearch(),
   nproc = 1,
   fastidious = TRUE,
   swarm_args = "",

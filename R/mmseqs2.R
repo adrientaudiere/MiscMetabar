@@ -668,6 +668,11 @@ assign_mmseqs2 <- function(
 
   if (!is.null(lineage_col_idx)) {
     lineage_split <- strsplit(lca_raw[[lineage_col_idx]], ";", fixed = TRUE)
+    n_cols <- length(lca_ranks)
+    lineage_split <- lapply(lineage_split, \(x) {
+      length(x) <- n_cols
+      x
+    })
     lineage_mat <- do.call(rbind, lineage_split)
     colnames(lineage_mat) <- rank_col_names
     res_taxo <- data.frame(

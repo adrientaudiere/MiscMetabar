@@ -94,7 +94,7 @@
 #' Used as the default `replace_to_NA` argument in [verify_tax_table()] and
 #' can be reused by other pqverse packages (e.g. `dbpq::count_unwanted_tax()`).
 #'
-#' @format A named character vector with 13 elements:
+#' @format A named character vector with 17 elements:
 #' \describe{
 #'   \item{NA-like (NA, NaN, nan)}{`"^[Nn][Aa][Nn]?$"`}
 #'   \item{NA-like (N/A, n/a)}{`"^[Nn]/[Aa]$"`}
@@ -109,6 +109,10 @@
 #'   \item{metagenome}{`"^[Mm]etagenome$"`}
 #'   \item{environmental}{`"^[Ee]nvironmental"`}
 #'   \item{empty QIIME-style rank}{`"^[kpcofgs]__$"`}
+#'   \item{unknown species (_sp prefix)}{`"^_sp"`}
+#'   \item{unknown species (_species prefix)}{`"^_species"`}
+#'   \item{unknown cluster (MMseqs2)}{`"_uc$"`}
+#'   \item{unknown ranks (PR2 database)}{`"__X+$"`}
 #' }
 #'
 #' @export
@@ -135,8 +139,8 @@ unwanted_tax_patterns <- c(
   "metagenome" = "^[Mm]etagenome$",
   "environmental" = "^[Ee]nvironmental",
   "empty QIIME-style rank" = "^[kpcofgs]__$",
-  "unknown species names" = "^_sp",                              
-  "unknown species names" = "^_species",                         
-  "unknown cluster (MMseqs2 assignation)" = "_uc$",                              
-  "unknown ranks (PR2 database)" = "__X+$"
+  "unknown species (_sp prefix)" = "^_sp",
+  "unknown species (_species prefix)" = "^_species",
+  "unknown cluster (_uc prefix, e.g. MMseqs2 assignation)" = "_uc$",
+  "unknown ranks (_X, _XX, ... prefix e.g. PR2 database)" = "__X+$"
 )

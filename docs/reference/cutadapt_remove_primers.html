@@ -17,7 +17,7 @@ from R"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" asy
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,7 +94,8 @@ from R</p>
 <span>  cmd_is_run <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  return_file_path <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  args_before_cutadapt <span class="op">=</span></span>
-<span>    <span class="st">"source ~/miniconda3/etc/profile.d/conda.sh &amp;&amp; conda activate cutadaptenv &amp;&amp; "</span></span>
+<span>    <span class="st">"source ~/miniconda3/etc/profile.d/conda.sh &amp;&amp; conda activate cutadaptenv &amp;&amp; "</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -155,6 +156,13 @@ in targets workflow</p></dd>
 <dt id="arg-args-before-cutadapt">args_before_cutadapt<a class="anchor" aria-label="anchor" href="#arg-args-before-cutadapt"></a></dt>
 <dd><p>(String) A one line bash command to run before
 to run cutadapt. For examples, "source ~/miniconda3/etc/profile.d/conda.sh &amp;&amp; conda activate cutadaptenv &amp;&amp;" allow to bypass the conda init which asks to restart the shell</p></dd>
+
+
+<dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
+<dd><p>(logical, default TRUE) If FALSE, suppresses all output from
+the cutadapt command (stdout and stderr) as well as the completion message.
+Note: standard R suppression functions (<code>suppressMessages</code>, <code>capture.output</code>)
+cannot silence system command output; use this parameter instead.</p></dd>
 
 </dl></div>
     <div class="section level2">

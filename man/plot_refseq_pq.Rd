@@ -17,7 +17,9 @@ plot_refseq_pq(
 using the \code{phyloseq} package.}
 
 \item{q}{(vector) A vector defining the Hill number wanted. Set to NULL if
-you don't want to plot Hill diversity metrics.}
+you don't want to plot Hill diversity metrics. Hill numbers are more
+appropriate in DNA metabarcoding studies when \code{q > 0} (Alberdi & Gilbert,
+2019; Calderón-Sanou et al., 2019).}
 
 \item{first_n}{(int, default 10) The number of nucleotides to plot the 5' extremity.}
 

@@ -13,7 +13,7 @@ First format in sintax format and then in dada2 format"><script data-goatcounter
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -121,6 +121,30 @@ First format in sintax format and then in dada2 format"><script data-goatcounter
     <p>Adrien Taudière</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mini_UNITE_fungi.fasta.gz"</span>,</span></span>
+<span class="r-in"><span>  package <span class="op">=</span> <span class="st">"MiscMetabar"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">format2dada2_species</span><span class="op">(</span>fasta_db <span class="op">=</span> <span class="va">f</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DNAStringSet object of length 5000:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        width seq                                            names               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [1]   492 GGAAGGATCATTAACACTAATC...GCTTAGTCACACAAACTTTAC Fungi_sp_LR994329...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [2]   451 CGAGTTTACCACTCCAACCCCT...GTTAAACCCCAACTTCTGAAT Fusarium_oxysporu...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [3]   457 CCGAGTTTACAACTCCCAAGCC...CAGTTAACCCTAAGTTTTGAT Fungi_sp_KP861831...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [4]   490 AGAAGGGGGAAGAGCAATTCTA...GTTCAACCCCAACTTCTGAAT Fusarium_prolifer...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [5]   464 CCAGTTGCAACATACCACTTGT...GTTAAACCCCAACTTCTGAAT Fusarium_oxysporu...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    ...   ... ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4996]   622 CATTATTGAACAAAAAAATGGT...GATTTGGAGAACCAAGATAAA Amanita_pseudoscu...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4997]   609 ATGAATTGTAACGGGGGTTGAT...CTGATCTGTTCCACTTTCAAC Clavulina_sp_UDB0...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4998]   615 ATGGAATTGTAACAGGAGCTGA...AATTCTGTTCAACTTCCACCC Fungi_sp_LC482542...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4999]   606 ATGAATTGTAACAGGGGCTGAT...TGATCTGTTCCATTTTTCAAC Clavulina_sp_UDB0...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5000]   519 TTGGAGTCTGGTTGTTGCTGGC...ATTTTCATTTCATCCTTGCCA Termitomyces_sp_M...</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

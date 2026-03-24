@@ -29,7 +29,8 @@ different lines}
 the hill number H^q. If Null, no hill number are computed. Default value
 compute the Hill number 0 (Species richness), the Hill number 1
 (exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
-Index).}
+Index). Hill numbers are more appropriate in DNA metabarcoding studies
+when \code{q > 0} (Alberdi & Gilbert, 2019; Calderón-Sanou et al., 2019).}
 
 \item{nperm}{(int) The number of permutations to perform.}
 
@@ -91,6 +92,16 @@ if (requireNamespace("ggstatsplot")) {
   res_para$expressions[[1]]
 }
 }
+}
+\references{
+Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of
+Hill numbers to DNA-based diversity analyses. \emph{Molecular Ecology Resources}.
+\doi{10.1111/1755-0998.13014}
+
+Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., & Thuiller, W.
+(2019). From environmental DNA sequences to ecological conclusions: How
+strong is the influence of methodological choices? \emph{Journal of Biogeography},
+47. \doi{10.1111/jbi.13681}
 }
 \seealso{
 \code{\link[ggstatsplot:ggbetweenstats]{ggstatsplot::ggbetweenstats()}}, \code{\link[=hill_pq]{hill_pq()}}

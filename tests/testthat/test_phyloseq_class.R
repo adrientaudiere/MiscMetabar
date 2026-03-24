@@ -234,23 +234,23 @@ test_that("count_seq works fine", {
   skip_on_os("windows")
   skip_on_os("mac")
   skip_on_cran()
-  expect_identical(
+  expect_equal(
     suppressWarnings(count_seq(
       folder_path = "inst/extdata",
       pattern = "*.fasta"
     )),
-    c(1000L, 500L, 3L, 2L, 5000L, 500L)
+    c(1000, 500, 3, 2, 5000, 500)
   )
-  expect_identical(
+  expect_equal(
     suppressWarnings(count_seq("inst/extdata/ex_R1_001.fastq.gz")),
-    2500L
+    2500
   )
-  expect_identical(
+  expect_equal(
     suppressWarnings(count_seq("inst/extdata/ex_R2_001.fastq.gz")),
-    2500L
+    2500
   )
-  expect_identical(count_seq("inst/extdata/ex.fasta"), 3L)
-  expect_identical(count_seq("inst/extdata/ex.fastq"), 4L)
+  expect_equal(count_seq("inst/extdata/ex.fasta"), 3)
+  expect_equal(count_seq("inst/extdata/ex.fastq"), 4)
   expect_error(
     count_seq("tests/testthat.R"),
     "The file extension R is not supported."

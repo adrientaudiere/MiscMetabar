@@ -41,7 +41,7 @@ data(data_fungi_mini)
 dfm_rarefied <- rarefy_even_depth(data_fungi_mini, rngseed = 1, sample.size=200)
 p <-profile_hill_pq(dfm_rarefied) 
 
-p+ no legend()
+p + no_legend()
 ```
 
 ```{r, fig.cap="Hill diversity profiles merged by Height"}

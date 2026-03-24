@@ -21,7 +21,7 @@ More information are available in the manual of the function track_wkflow()"><sc
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,7 +87,7 @@ More information are available in the manual of the function <code><a href="trac
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">track_wkflow_samples</span><span class="op">(</span><span class="va">list_of_objects</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">track_wkflow_samples</span><span class="op">(</span><span class="va">list_of_objects</span>, output_data_frame <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -98,6 +98,11 @@ More information are available in the manual of the function <code><a href="trac
 <dd><p>(required) a list of objects passed on to
 <code><a href="track_wkflow.html">track_wkflow()</a></code>. Accepts phyloseq, matrix, dada-class, derep-class,
 lists of dada-class or derep-class, and character vectors of file paths.</p></dd>
+
+
+<dt id="arg-output-data-frame">output_data_frame<a class="anchor" aria-label="anchor" href="#arg-output-data-frame"></a></dt>
+<dd><p>(logical, default FALSE) If TRUE, the function returns a
+data frame with the number of sequences, clusters and samples for each sample.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

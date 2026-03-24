@@ -99,3 +99,15 @@ A new
 object, or NULL if no taxa matched the blast database or if no taxa
 passed the filter criteria. In either case, an informative message is
 printed.
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+filter_asv_blast(data_fungi_mini,
+  fasta_for_db = system.file("extdata", "mini_UNITE_fungi.fasta.gz",
+    package = "MiscMetabar"
+  )
+)
+} # }
+```

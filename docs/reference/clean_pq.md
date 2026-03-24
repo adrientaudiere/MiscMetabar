@@ -104,3 +104,14 @@ object
 ## Author
 
 Adrien Taudière
+
+## Examples
+
+``` r
+clean_pq(data_fungi_mini)
+#> phyloseq-class experiment-level object
+#> otu_table()   OTU Table:         [ 45 taxa and 137 samples ]
+#> sample_data() Sample Data:       [ 137 samples by 7 sample variables ]
+#> tax_table()   Taxonomy Table:    [ 45 taxa by 12 taxonomic ranks ]
+#> refseq()      DNAStringSet:      [ 45 reference sequences ]
+```

@@ -5,7 +5,7 @@
 \alias{unwanted_tax_patterns}
 \title{Default patterns for unwanted taxonomic values}
 \format{
-A named character vector with 13 elements:
+A named character vector with 17 elements:
 \describe{
 \item{NA-like (NA, NaN, nan)}{\code{"^[Nn][Aa][Nn]?$"}}
 \item{NA-like (N/A, n/a)}{\code{"^[Nn]/[Aa]$"}}
@@ -20,6 +20,10 @@ A named character vector with 13 elements:
 \item{metagenome}{\code{"^[Mm]etagenome$"}}
 \item{environmental}{\code{"^[Ee]nvironmental"}}
 \item{empty QIIME-style rank}{\code{"^[kpcofgs]__$"}}
+\item{unknown species (_sp prefix)}{\code{"^_sp"}}
+\item{unknown species (_species prefix)}{\code{"^_species"}}
+\item{unknown cluster (MMseqs2)}{\code{"_uc$"}}
+\item{unknown ranks (PR2 database)}{\code{"__X+$"}}
 }
 }
 \usage{

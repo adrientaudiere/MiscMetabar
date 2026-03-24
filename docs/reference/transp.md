@@ -31,3 +31,12 @@ palettes. The viridis package, with many excellent palettes
 ## Author
 
 Thibaut Jombart in `adegenet` package
+
+## Examples
+
+``` r
+transp("red")
+#> [1] "#FF000080"
+transp(c("red", "blue"), alpha = 0.3)
+#> [1] "#FF00004D" "#0000FF4D"
+```

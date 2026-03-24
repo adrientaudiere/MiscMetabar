@@ -18,14 +18,14 @@ Used for reorder levels and select levels (filter out levels not present
 en levels_fact)}
 
 \item{tax_level}{(default NULL)
-The taxonomic level passed on to \code{\link[ANCOMBC:ancombc2]{ANCOMBC::ancombc2()}}. If NULL
+The taxonomic level passed on to \code{ancombc2()}. If NULL
 do not perform agglomeration, and the ANCOM-BC2 analysis will be
 performed at the lowest taxonomic level of the input data.}
 
-\item{...}{Additional arguments passed on to \code{\link[ANCOMBC:ancombc2]{ANCOMBC::ancombc2()}} function.}
+\item{...}{Additional arguments passed on to \code{ancombc2()} function.}
 }
 \value{
-The result of \code{\link[ANCOMBC:ancombc2]{ANCOMBC::ancombc2()}} function
+The result of \code{ancombc2()} function
 }
 \description{
 \if{html}{\out{
@@ -34,11 +34,11 @@ The result of \code{\link[ANCOMBC:ancombc2]{ANCOMBC::ancombc2()}} function
 }}
 
 
-A wrapper for the \code{\link[ANCOMBC:ancombc2]{ANCOMBC::ancombc2()}} function
+A wrapper for the \code{ancombc2()} function
 }
 \details{
 This function is mainly a wrapper of the work of others.
-Please make a reference to \code{ANCOMBC::ancombc2()} if you
+Please make a reference to \code{ancombc2()} if you
 use this function.
 }
 \examples{

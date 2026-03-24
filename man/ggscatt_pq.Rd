@@ -27,7 +27,8 @@ using the \code{phyloseq} package.}
 the hill number H^q. If Null, no hill number are computed. Default value
 compute the Hill number 0 (Species richness), the Hill number 1
 (exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
-Index).}
+Index). Hill numbers are more appropriate in DNA metabarcoding studies
+when \code{q > 0} (Alberdi & Gilbert, 2019; Calderón-Sanou et al., 2019).}
 
 \item{rarefy_by_sample}{(logical, default FALSE) If TRUE, rarefy
 samples using \code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}} function.}

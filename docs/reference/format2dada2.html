@@ -13,7 +13,7 @@ First format in sintax format and then in dada2 format"><script data-goatcounter
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -128,6 +128,29 @@ to not use the database as a Unite-formated database</p></dd>
     <p>Adrien Taudière</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mini_UNITE_fungi.fasta.gz"</span>,</span></span>
+<span class="r-in"><span>  package <span class="op">=</span> <span class="st">"MiscMetabar"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">format2dada2</span><span class="op">(</span>fasta_db <span class="op">=</span> <span class="va">f</span>, from_sintax <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> DNAStringSet object of length 5000:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        width seq                                            names               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [1]   492 GGAAGGATCATTAACACTAATC...GCTTAGTCACACAAACTTTAC k__Fungi;p__Fungi...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [2]   451 CGAGTTTACCACTCCAACCCCT...GTTAAACCCCAACTTCTGAAT k__Fungi;p__Ascom...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [3]   457 CCGAGTTTACAACTCCCAAGCC...CAGTTAACCCTAAGTTTTGAT k__Fungi;p__Fungi...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [4]   490 AGAAGGGGGAAGAGCAATTCTA...GTTCAACCCCAACTTCTGAAT k__Fungi;p__Ascom...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [5]   464 CCAGTTGCAACATACCACTTGT...GTTAAACCCCAACTTCTGAAT k__Fungi;p__Ascom...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    ...   ... ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4996]   622 CATTATTGAACAAAAAAATGGT...GATTTGGAGAACCAAGATAAA k__Fungi;p__Basid...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4997]   609 ATGAATTGTAACGGGGGTTGAT...CTGATCTGTTCCACTTTCAAC k__Fungi;p__Basid...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4998]   615 ATGGAATTGTAACAGGAGCTGA...AATTCTGTTCAACTTCCACCC k__Fungi;p__Fungi...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4999]   606 ATGAATTGTAACAGGGGCTGAT...TGATCTGTTCCATTTTTCAAC k__Fungi;p__Basid...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5000]   519 TTGGAGTCTGGTTGTTGCTGGC...ATTTTCATTTCATCCTTGCCA k__Fungi;p__Basid...</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

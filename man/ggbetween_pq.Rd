@@ -38,7 +38,9 @@ beforehand to achieve reproducible results. Default is FALSE.}
 \item{verbose}{(logical). If TRUE, print additional information.}
 
 \item{q}{(numeric vector, default \code{c(0, 1, 2)}) Hill diversity orders to
-compute. One plot is produced per value.}
+compute. One plot is produced per value. Hill numbers are more appropriate
+in DNA metabarcoding studies when \code{q > 0} (Alberdi & Gilbert, 2019;
+Calderón-Sanou et al., 2019).}
 
 \item{...}{Additional arguments passed on to \code{\link[ggstatsplot:ggbetweenstats]{ggstatsplot::ggbetweenstats()}} function.}
 }
@@ -83,6 +85,16 @@ if (requireNamespace("ggstatsplot")) {
   ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE, rarefy_by_sample = TRUE)
 }
 }
+}
+\references{
+Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of
+Hill numbers to DNA-based diversity analyses. \emph{Molecular Ecology Resources}.
+\doi{10.1111/1755-0998.13014}
+
+Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., & Thuiller, W.
+(2019). From environmental DNA sequences to ecological conclusions: How
+strong is the influence of methodological choices? \emph{Journal of Biogeography},
+47. \doi{10.1111/jbi.13681}
 }
 \author{
 Adrien Taudière

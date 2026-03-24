@@ -43,7 +43,7 @@ Internally used in \code{\link[=plot_ancombc_pq]{plot_ancombc_pq()}}.
 }
 \details{
 This function is mainly a wrapper of the work of others.
-Please make a reference to \code{ANCOMBC::ancombc2()} if you
+Please make a reference to \code{ancombc2()} if you
 use this function.
 }
 \examples{

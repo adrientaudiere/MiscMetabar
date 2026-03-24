@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +66,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">phyloseq_to_edgeR</span><span class="op">(</span><span class="va">physeq</span>, <span class="va">group</span>, method <span class="op">=</span> <span class="st">"RLE"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">phyloseq_to_edgeR</span><span class="op">(</span><span class="va">physeq</span>, <span class="va">group</span>, method <span class="op">=</span> <span class="st">"RLE"</span>, remove_na <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -100,6 +100,10 @@ the following options to the <code>method</code> argument:</p>
 <p><code>c("TMM", "RLE", "upperquartile", "none")</code>.</p></dd>
 
 
+<dt id="arg-remove-na">remove_na<a class="anchor" aria-label="anchor" href="#arg-remove-na"></a></dt>
+<dd><p>(logical) If TRUE, samples with NA values in the group variable will be removed.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional arguments passed on to <code><a href="https://rdrr.io/pkg/edgeR/man/DGEList.html" class="external-link">DGEList</a></code></p></dd>
 
@@ -109,6 +113,617 @@ the following options to the <code>method</code> argument:</p>
     <p>A DGEList object. See <code><a href="https://rdrr.io/pkg/edgeR/man/estimateTagwiseDisp.html" class="external-link">edgeR::estimateTagwiseDisp()</a></code> for more details.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"edgeR"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">phyloseq_to_edgeR</span><span class="op">(</span><span class="va">data_fungi_mini</span>, group <span class="op">=</span> <span class="st">"Height"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: edgeR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> An object of class "DGEList"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $counts</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       A10-005-B_S188_MERGED.fastq.gz A10-005-H_S189_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                             768                          10188</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                             579                             10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                              1                              2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                             31                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       A10-005-M_S190_MERGED.fastq.gz A12-007-B_S2_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                             264                            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                             400                          830</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                              1                            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                              4                         1041</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              1                            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       AB29-ABMX-H_S6_MERGED.fastq.gz AD26-005-B_S9_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                               1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                               2                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                              2                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                              1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       AD26-005-H_S10_MERGED.fastq.gz AD26-005-M_S11_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                               1                              2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                               1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                              1                           1339</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       AD30-ABMX-M_S12_MERGED.fastq.gz AD32-007-M_S13_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                                1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                                2                              8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                               1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                               1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                               1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       ADABM30X-B_S14_MERGED.fastq.gz ADABM30X-H_S15_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                               1                            540</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                               3                              3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              1                              3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       ADABM30X-M_S16_MERGED.fastq.gz B18-006-B_S19_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                               1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                               1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                              1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                              1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       BA17-050-B_S21_MERGED.fastq.gz BB19-006-H_S22_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                            2885                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                               5                           9742</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                              1                          11964</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       BB6-019-M_S25_MERGED.fastq.gz BG7-010-H_S31_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                            874                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                            337                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                             1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                             8                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                             1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       BJ17-007-M_S34_MERGED.fastq.gz BL7-006-H_S37_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                               1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                               7                             3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                              7                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                              1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              2                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       BP11-001-B_S43_MERGED.fastq.gz BP11-001-H_S44_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                               1                            995</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                               2                              9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                              2                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                              1                           1846</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       BP11-001-M_S45_MERGED.fastq.gz BP12-025-B_S46_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                               7                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                               7                              2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       BQ4-018-B_S49_MERGED.fastq.gz BQ4-018-H_S50_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                              1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                              2                             2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                             1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                             1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                             1                             2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       BQ4-018-M_S51_MERGED.fastq.gz BT-006-M_S55_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                              1                            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                              1                            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                             1                            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                             1                            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                             1                            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       BV11-002-B_S57_MERGED.fastq.gz BV11-002-H_S58_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                               1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                               4                              3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                           7551                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              1                             67</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       BV11-002-M_S59_MERGED.fastq.gz C21-NV1-B_S62_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                               1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                               1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                              1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                              1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       CB8-019-B_S69_MERGED.fastq.gz CB8-019-H_S70_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                              1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                              1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                             2                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                             1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                             1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       CB8-019-M_S71_MERGED.fastq.gz D18-003-B_S78_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                              1                            40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                              1                            32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                             3                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                             1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                             1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       D18-003-M_S80_MERGED.fastq.gz D61-010-B_S82_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                              1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                              1                             6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                             2                             2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                             1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                             1                             5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       D9-027-H_S84_MERGED.fastq.gz D9-027-M_S85_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                             1                            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                             4                            2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                            1                            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                            1                            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                            1                            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       DJ2-008-H_S88_MERGED.fastq.gz DS1-ABM002-B_S91_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                              1                                1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                              1                                1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                             1                                1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                             1                                1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                             1                                1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       DS1-ABM002-H_S92_MERGED.fastq.gz DS1-ABM002-M_S93_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                                 1                                1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                                 1                                1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                                1                                1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                                1                                1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                                2                                4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       DU3-045-B_S94_MERGED.fastq.gz DY5-004-B_S96_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                             34                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                           1109                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                             8                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                             8                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                             1                             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       DY5-004-H_S97_MERGED.fastq.gz EC2-013-B_S104_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                              1                              2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                             1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                             1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                             1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       F7-015-M_S106_MERGED.fastq.gz FOMES19-H_S108_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                              1                              2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                             1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                             1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                             1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       FOMES19-M_S109_MERGED.fastq.gz H10-018-M_S110_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                               1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                               1                              2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       H24-NVABM1-H_S111_MERGED.fastq.gz J18-004-B_S114_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                                105                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                                  1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                                 3                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                                 1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                                10                              2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       J18-004-M_S116_MERGED.fastq.gz K18-002-H_S117_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                               1                             36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                               1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                              1                             34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       L19X-B_S119_MERGED.fastq.gz L19X-H_S120_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                            1                         336</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                          183                          37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                           1                           1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                           1                          10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                           1                           1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       L19X-M_S121_MERGED.fastq.gz L23-002-B_S122_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                         2801                              7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                          445                             34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                           1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                          22                             28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                           1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       L23-002-H_S123_MERGED.fastq.gz L23-002-M_S124_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                            2025                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                            2111                            152</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                            104                             38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       N19X-H_S127_MERGED.fastq.gz N19X-M_S128_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                         1484                         172</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                         2318                         282</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                           1                           1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                         167                          12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                           1                           1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       N23-002-B_S130_MERGED.fastq.gz N23-002-H_S131_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                               1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                               1                              2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              1                            437</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       NVABM-0163-H_S135_MERGED.fastq.gz NVABM0244-M_S137_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                                  1                                1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                                  1                                1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                                 1                                1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                                 1                                1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                                 1                                1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       O20-X-H_S140_MERGED.fastq.gz O20-X-M_S141_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                           102                         2111</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                            23                          883</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                         1579                            4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                            4                           70</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                            1                            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       O24-003-B_S145_MERGED.fastq.gz O26-004-B_S148_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                               1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                               3                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       O9-005-B_S152_MERGED.fastq.gz P19-023-M_S153_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                              1                              2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                              2                             27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                             2                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                             1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                             1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       P27-015-M_S154_MERGED.fastq.gz Q27-ABM003-B_S156_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                               1                                 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                             193                               472</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                              8                                 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                            277                                 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              1                                 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       T28-ABM602-B_S162_MERGED.fastq.gz W26-001-B_S165_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                                  1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                                  1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                                 1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                                 1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                                 1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       W9-025-M_S169_MERGED.fastq.gz X24-009-B_S170_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                             1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                             1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                             1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       X24-009-H_S171_MERGED.fastq.gz X24-009-M_S172_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                               2                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                               6                              8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       X29-004-B_S174_MERGED.fastq.gz X29-004-H_S175_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                               1                            108</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                               1                            113</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                              1                              2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              1                              1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       X29-004-M_S176_MERGED.fastq.gz Y21-ABM484-H_S177_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                               1                                 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                               3                                 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                              1                               250</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                              1                                 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              1                                 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       Y28-002-B_S178_MERGED.fastq.gz Y31-ABM484-B_S184_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                               1                                90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                               1                                52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                              1                               630</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                              1                                 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              1                                 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       Z29-001-H_S185_MERGED.fastq.gz Z30-ABM560-M_S187_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                               1                               277</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                               1                              9389</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                              1                                 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                              1                               130</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                              1                                 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40 more rows ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $samples</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                 group lib.size norm.factors</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A10-005-B_S188_MERGED.fastq.gz    Low     1930   0.32203429</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A10-005-H_S189_MERGED.fastq.gz   High    10246   0.06021446</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A10-005-M_S190_MERGED.fastq.gz Middle     1179   0.52759695</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> A12-007-B_S2_MERGED.fastq.gz      Low     1914   0.30630862</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AB29-ABMX-H_S6_MERGED.fastq.gz   High     1851   0.33312036</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 85 more rows ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $genes</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       Domain        Phylum          Class           Order         Family</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7   Fungi Basidiomycota Agaricomycetes      Russulales     Stereaceae</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8   Fungi Basidiomycota Agaricomycetes      Russulales     Stereaceae</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12  Fungi Basidiomycota Agaricomycetes Hymenochaetales Schizoporaceae</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18  Fungi Basidiomycota Agaricomycetes      Russulales     Stereaceae</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25  Fungi Basidiomycota Agaricomycetes      Agaricales  Lyophyllaceae</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            Genus    Species Trophic.Mode                                Guild</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7        &lt;NA&gt;       &lt;NA&gt;   Saprotroph Wood Saprotroph-Undefined Saprotroph</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8     Stereum     ostrea   Saprotroph                 Undefined Saprotroph</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12    Xylodon raduloides   Saprotroph                 Undefined Saprotroph</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18    Stereum     ostrea   Saprotroph                 Undefined Saprotroph</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25 Ossicaulis  lachnopus   Saprotroph                      Wood Saprotroph</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Trait Confidence.Ranking        Genus_species</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7       NULL           Probable                NA_NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8  White Rot           Probable       Stereum_ostrea</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12 White Rot           Probable   Xylodon_raduloides</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18 White Rot           Probable       Stereum_ostrea</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25 Brown Rot           Probable Ossicaulis_lachnopus</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40 more rows ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $common.dispersion</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3.269437</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $pseudo.counts</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       A10-005-B_S188_MERGED.fastq.gz A10-005-H_S189_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                     739.9845140                   9888.7370815</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                     557.8797556                      9.7036208</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                      0.9605827                      1.9385836</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                     29.8644385                      0.9683215</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                      0.9603193                      0.9678363</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       A10-005-M_S190_MERGED.fastq.gz A12-007-B_S2_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                     254.1481708                     1.023169</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                     385.0731375                   847.747007</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                      0.9594440                     1.023116</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                      3.8464905                  1063.167359</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                      0.9595064                     1.023198</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       AB29-ABMX-H_S6_MERGED.fastq.gz AD26-005-B_S9_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                       0.9689209                      1.023169</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                       1.9400514                      1.023180</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                      1.9397400                      1.023116</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                      0.9689180                      1.023324</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                      0.9684418                      1.023198</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       AD26-005-H_S10_MERGED.fastq.gz AD26-005-M_S11_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                        1.023085                      1.9399666</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                        1.023087                      0.9689068</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                       1.023234                   1300.5607631</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                       1.023087                      0.9684377</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                       1.023452                      0.9687233</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       AD30-ABMX-M_S12_MERGED.fastq.gz AD32-007-M_S13_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                         1.025971                      0.9682712</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                         2.050025                      7.7623786</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                        1.026152                      0.9680578</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                        1.026342                      0.9678321</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                        1.026014                      0.9681221</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       ADABM30X-B_S14_MERGED.fastq.gz ADABM30X-H_S15_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                       0.9604967                    524.1303861</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                       2.8871709                      2.9094842</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                      0.9605827                      0.9681280</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                      0.9602419                      0.9683215</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                      0.9603193                      2.9086060</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       ADABM30X-M_S16_MERGED.fastq.gz B18-006-B_S19_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                        1.020353                      1.028159</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                        1.020327                      1.028173</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                       1.020494                      1.028094</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                       1.020643                      1.028348</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                       1.020393                      1.028186</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       BA17-050-B_S21_MERGED.fastq.gz BB19-006-H_S22_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                    2800.3646390                       1.020317</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                       4.8502866                    9925.530722</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                      0.9682836                       1.020448</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                      0.9680080                   12189.387541</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                      0.9680837                       1.020640</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       BB6-019-M_S25_MERGED.fastq.gz BG7-010-H_S31_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                    848.3304311                      1.028057</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                    327.0949300                      1.028059</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                     0.9680578                      1.028238</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                     7.7614518                      1.028059</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                     0.9681221                      1.028504</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       BJ17-007-M_S34_MERGED.fastq.gz BL7-006-H_S37_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                       0.9513405                      1.028057</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                       6.6806803                      3.080174</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                      6.6795323                      1.028238</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                      0.9506736                      1.028059</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                      1.9092417                      1.028504</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       BP11-001-B_S43_MERGED.fastq.gz BP11-001-H_S44_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                        1.023169                    958.6644070</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                        2.044684                      8.6682003</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                       2.044579                      0.9603903</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                       1.023324                   1778.5974801</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                       1.023198                      0.9600293</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       BP11-001-M_S45_MERGED.fastq.gz BP12-025-B_S46_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                       6.7955611                       1.028159</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                       6.7957113                       2.054307</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                      0.9686592                       1.028094</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                      0.9684377                       1.028348</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                      0.9687233                       1.028186</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       BQ4-018-B_S49_MERGED.fastq.gz BQ4-018-H_S50_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                       1.028159                      1.023085</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                       2.054307                      2.044529</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                      1.028094                      1.023234</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                      1.028348                      1.023087</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                      1.028186                      2.045074</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       BQ4-018-M_S51_MERGED.fastq.gz BT-006-M_S55_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                       1.023126                     1.025971</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                       1.023096                     1.025938</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                      1.023287                     1.026152</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                      1.023455                     1.026342</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                      1.023168                     1.026014</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       BV11-002-B_S57_MERGED.fastq.gz BV11-002-H_S58_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                       0.9688125                      0.9689209</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                       3.8820095                      2.9111887</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                   7333.4712076                      0.9687281</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                      0.9686103                      0.9689180</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                      0.9686856                     65.0759416</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       BV11-002-M_S59_MERGED.fastq.gz C21-NV1-B_S62_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                        1.025971                      1.023169</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                        1.025938                      1.023180</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                       1.026152                      1.023116</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                       1.026342                      1.023324</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                       1.026014                      1.023198</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       CB8-019-B_S69_MERGED.fastq.gz CB8-019-H_S70_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                       1.026019                      1.025925</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                       1.026032                      1.025928</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                      2.050063                      1.026092</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                      1.026194                      1.025928</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                      1.026048                      1.026338</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       CB8-019-M_S71_MERGED.fastq.gz D18-003-B_S78_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                       1.025971                    38.5348734</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                       1.025938                    30.8270362</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                      3.074539                     0.9605827</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                      1.026342                     0.9602419</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                      1.026014                     0.9603193</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       D18-003-M_S80_MERGED.fastq.gz D61-010-B_S82_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                       1.025971                     0.9688125</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                       1.025938                     5.8242097</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                      2.050366                     1.9399871</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                      1.026342                     0.9686103</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                      1.026014                     4.8647768</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       D9-027-H_S84_MERGED.fastq.gz D9-027-M_S85_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                      1.028057                     1.028106</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                      4.106226                     2.054137</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                     1.028238                     1.028302</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                     1.028059                     1.028508</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                     1.028504                     1.028149</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       DJ2-008-H_S88_MERGED.fastq.gz DS1-ABM002-B_S91_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                       1.020317                         1.026019</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                       1.020319                         1.026032</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                      1.020448                         1.025960</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                      1.020319                         1.026194</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                      1.020640                         1.026048</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       DS1-ABM002-H_S92_MERGED.fastq.gz DS1-ABM002-M_S93_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                         0.9683244                        0.9682712</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                         0.9683218                        0.9683101</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                        0.9681280                        0.9680578</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                        0.9683215                        0.9678321</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                        1.9381709                        3.8883517</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       DU3-045-B_S94_MERGED.fastq.gz DY5-004-B_S96_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                     32.7270259                      1.023169</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                   1067.6859062                      1.023180</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                     7.6981393                      1.023116</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                     7.6971939                      1.023324</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                     0.9594583                      1.023198</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       DY5-004-H_S97_MERGED.fastq.gz EC2-013-B_S104_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                       1.025925                      0.9688125</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                       1.025928                      1.9398500</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                      1.026092                      0.9688808</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                      1.025928                      0.9686103</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                      1.026338                      0.9686856</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       F7-015-M_S106_MERGED.fastq.gz FOMES19-H_S108_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                       1.025971                       2.039187</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                       1.025938                       1.020319</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                      1.026152                       1.020448</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                      1.026342                       1.020319</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                      1.026014                       1.020640</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       FOMES19-M_S109_MERGED.fastq.gz H10-018-M_S110_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                        1.023126                       1.028106</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                        1.023096                       2.054137</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                       1.023287                       1.028302</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                       1.023455                       1.028508</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                       1.023168                       1.028149</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       H24-NVABM1-H_S111_MERGED.fastq.gz J18-004-B_S114_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                         106.981018                       1.026019</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                           1.020319                       1.026032</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                          3.058330                       1.025960</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                          1.020319                       1.026194</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                         10.190628                       2.048230</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       J18-004-M_S116_MERGED.fastq.gz K18-002-H_S117_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                        1.028106                     34.9592516</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                        1.028070                      0.9689183</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                       1.028302                      0.9687281</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                       1.028508                     33.0169042</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                       1.028149                      0.9684418</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       L19X-B_S119_MERGED.fastq.gz L19X-H_S120_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                     1.026019                 326.1238049</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                   187.400182                  35.9098544</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                    1.025960                   0.9681280</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                    1.026194                   9.7036189</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                    1.026048                   0.9678363</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       L19X-M_S121_MERGED.fastq.gz L23-002-B_S122_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                 2698.7914099                      6.7407990</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                  428.7466466                     32.7539900</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                   0.9603035                      0.9605827</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                  21.1940575                     26.9737587</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                   0.9603664                      0.9603193</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       L23-002-H_S123_MERGED.fastq.gz L23-002-M_S124_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                    1949.4596380                       1.023126</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                    2032.2538022                     155.257416</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                      0.9595327                       1.023287</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                    100.1154865                      38.812658</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                      0.9591640                       1.023168</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       N19X-H_S127_MERGED.fastq.gz N19X-M_S128_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                 1440.3991066                 166.9431303</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                 2249.9023873                 273.7107127</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                   0.9681280                   0.9680578</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                 162.0894130                  11.6441341</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                   0.9678363                   0.9681221</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       N23-002-B_S130_MERGED.fastq.gz N23-002-H_S131_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                        1.026019                       1.023085</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                        1.026032                       2.044529</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                       1.025960                       1.023234</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                       1.026194                       1.023087</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                       1.026048                     446.265835</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       NVABM-0163-H_S135_MERGED.fastq.gz NVABM0244-M_S137_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                           1.025925                         1.025971</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                           1.025928                         1.025938</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                          1.026092                         1.026152</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                          1.025928                         1.026342</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                          1.026338                         1.026014</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       O20-X-H_S140_MERGED.fastq.gz O20-X-M_S141_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                     98.190154                 2049.0165024</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                     22.138363                  857.0565881</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                  1520.257340                    3.8794388</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                     3.847720                   67.9518495</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                     0.959164                    0.9681221</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       O24-003-B_S145_MERGED.fastq.gz O26-004-B_S148_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                        1.028159                       1.023169</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                        3.080422                       1.023180</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                       1.028094                       1.023116</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                       1.028348                       1.023324</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                       1.028186                       1.023198</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       O9-005-B_S152_MERGED.fastq.gz P19-023-M_S153_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                      0.9682140                       2.044594</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                      1.9386956                      27.580317</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                     1.9388353                       1.023287</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                     0.9680080                       1.023455</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                     0.9680837                       1.023168</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       P27-015-M_S154_MERGED.fastq.gz Q27-ABM003-B_S156_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                        1.020353                          1.026019</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                      196.639498                        483.338087</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                       8.152919                          1.025960</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                     282.172711                          1.026194</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                       1.020393                          1.026048</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       T28-ABM602-B_S162_MERGED.fastq.gz W26-001-B_S165_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                           1.023169                       1.028159</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                           1.023180                       1.028173</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                          1.023116                       1.028094</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                          1.023324                       1.028348</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                          1.023198                       1.028186</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       W9-025-M_S169_MERGED.fastq.gz X24-009-B_S170_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                       1.028106                      0.9688125</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                       1.028070                      0.9687977</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                      1.028302                      0.9688808</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                      1.028508                      0.9686103</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                      1.028149                      0.9686856</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       X24-009-H_S171_MERGED.fastq.gz X24-009-M_S172_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                       1.9389054                      0.9605674</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                       5.8212488                      7.7046802</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                      0.9681280                      0.9603035</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                      0.9683215                      0.9600240</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                      0.9678363                      0.9603664</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       X29-004-B_S174_MERGED.fastq.gz X29-004-H_S175_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                        1.028159                    104.0517756</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                        1.028173                    108.8691295</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                       1.028094                      0.9603903</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                       1.028348                      1.9240643</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                       1.028186                      0.9600293</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       X29-004-M_S176_MERGED.fastq.gz Y21-ABM484-H_S177_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                        1.023126                          1.020317</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                        3.065988                          2.039190</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                       1.023287                        254.704323</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                       1.023455                          1.020319</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                       1.023168                          1.020640</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       Y28-002-B_S178_MERGED.fastq.gz Y31-ABM484-B_S184_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                        1.028159                        86.6383224</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                        1.028173                        50.0555269</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                       1.028094                       606.4994165</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                       1.028348                         2.8842769</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                       1.028186                         0.9594583</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       Z29-001-H_S185_MERGED.fastq.gz Z30-ABM560-M_S187_MERGED.fastq.gz</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7                        1.028057                       269.0126340</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8                        1.028059                      9118.4411470</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12                       1.028238                         0.9686592</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18                       1.028059                       126.2769656</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25                       1.028504                         0.9687233</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40 more rows ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $pseudo.lib.size</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 598.8289</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $AveLogCPM</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 18.85258 19.06397 17.66999 18.18946 13.84983</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40 more elements ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $prior.df</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $prior.n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1149425</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $tagwise.dispersion</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 5.655012 5.359018 5.694498 4.969208 1.650035</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40 more elements ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $span</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

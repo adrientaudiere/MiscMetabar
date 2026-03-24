@@ -19,7 +19,8 @@ hill_pq(
   physeq,
   fact = NULL,
   variable = NULL,
-  hill_scales = c(0, 1, 2),
+  q = c(0, 1, 2),
+  hill_scales = lifecycle::deprecated(),
   color_fac = NA,
   letters = FALSE,
   add_points = FALSE,
@@ -29,7 +30,8 @@ hill_pq(
   plot_with_tuckey = TRUE,
   correction_for_sample_size = TRUE,
   na_remove = TRUE,
-  vioplot = FALSE
+  vioplot = FALSE,
+  ...
 )
 ```
 
@@ -50,12 +52,17 @@ hill_pq(
 
   : Alias for factor. Kept only for backward compatibility.
 
+- q:
+
+  (vector) Hill diversity orders to compute. Default computes Hill
+  number 0 (species richness), 1 (exponential of Shannon index) and 2
+  (inverse of Simpson index). Hill numbers are more appropriate in DNA
+  metabarcoding studies when `q > 0` (Alberdi & Gilbert, 2019;
+  Calderón-Sanou et al., 2019).
+
 - hill_scales:
 
-  (a vector of integer) The list of q values to compute the hill number
-  H^q. If Null, no hill number are computed. Default value compute the
-  Hill number 0 (Species richness), the Hill number 1 (exponential of
-  Shannon Index) and the Hill number 2 (inverse of Simpson Index).
+  **\[deprecated\]** Use `q` instead.
 
 - color_fac:
 
@@ -122,6 +129,14 @@ hill_pq(
 
   (logical, default FALSE) Do we plot violin plot instead of boxplot ?
 
+- ...:
+
+  Additional arguments passed to
+  [`divent_hill_matrix_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/divent_hill_matrix_pq.md)
+  and hence to
+  [`divent::div_hill()`](https://ericmarcon.github.io/divent/reference/div_hill.html)
+  (e.g. `estimator = "naive"`).
+
 ## Value
 
 Either an unique ggplot2 object (if one_plot is TRUE) or a list of n+1
@@ -139,6 +154,19 @@ the default scale value:
 
 - plot_tuckey : plot the result of the Tuckey HSD test
 
+## References
+
+Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of
+Hill numbers to DNA-based diversity analyses. *Molecular Ecology
+Resources*.
+[doi:10.1111/1755-0998.13014](https://doi.org/10.1111/1755-0998.13014)
+
+Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., & Thuiller,
+W. (2019). From environmental DNA sequences to ecological conclusions:
+How strong is the influence of methodological choices? *Journal of
+Biogeography*, 47.
+[doi:10.1111/jbi.13681](https://doi.org/10.1111/jbi.13681)
+
 ## See also
 
 [`psmelt_samples_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/psmelt_samples_pq.md)
@@ -152,7 +180,9 @@ Adrien Taudière
 ## Examples
 
 ``` r
-p <- hill_pq(data_fungi_mini, "Height", hill_scales = 1:2)
+p <- hill_pq(data_fungi_mini, "Height", q = 1:2)
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
 #> 2 out of 2 Hill scales do not show any global trends with you factor Height. Tuckey HSD plot is not informative for those Hill scales. Letters are not printed for those Hill scales
 p_h1 <- p[[1]] + theme(legend.position = "none")
 p_h2 <- p[[2]] + theme(legend.position = "none")
@@ -168,19 +198,14 @@ if (requireNamespace("multcompView")) {
   if (requireNamespace("patchwork")) {
     patchwork::wrap_plots(p2, guides = "collect")
   }
-  # Artificially modify data_fungi to force alpha-diversity effect
-  data_fungi_modif <- clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height)))
-  data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <-
-    data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] +
-    sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
-  p3 <- hill_pq(data_fungi_modif, "Height",
+  p3 <- hill_pq(data_fungi, "Height",
     letters = TRUE, vioplot = TRUE,
     add_points = TRUE
   )
 }
 #> Taxa are now in rows.
 #> 2 out of 3 Hill scales do not show any global trends with you factor Time. Tuckey HSD plot is not informative for those Hill scales. Letters are not printed for those Hill scales
-#> Cleaning suppress 144 taxa and 0 samples.
 #> Taxa are now in rows.
+#> 3 out of 3 Hill scales do not show any global trends with you factor Height. Tuckey HSD plot is not informative for those Hill scales. Letters are not printed for those Hill scales
 # }
 ```

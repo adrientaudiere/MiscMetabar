@@ -39,11 +39,7 @@
 #'   strong is the influence of methodological choices? *Journal of Biogeography*,
 #'   47. \doi{10.1111/jbi.13681}
 #' @examples
-#' data("GlobalPatterns", package = "phyloseq")
-#' GlobalPatterns@sam_data[, "Soil_logical"] <-
-#'   ifelse(GlobalPatterns@sam_data[, "SampleType"] == "Soil", "Soil", "Not Soil")
-#' hill_tuckey_pq(GlobalPatterns, "Soil_logical")
-#' hill_tuckey_pq(GlobalPatterns, "Soil_logical", q = 1:2)
+#' hill_tuckey_pq(data_fungi_mini, "Height")
 hill_tuckey_pq <- function(
   physeq,
   modality,
@@ -64,17 +60,21 @@ hill_tuckey_pq <- function(
   modality_vector <-
     as.factor(as.vector(unlist(unclass(physeq@sam_data[, modality]))))
 
-  if (length(modality_vector) != dim(physeq@otu_table)[2]) {
-    physeq@otu_table <- t(physeq@otu_table)
-  }
-  read_numbers <- apply(physeq@otu_table, 2, sum)
-
   physeq <- taxa_as_rows(physeq)
-  otu_hill <- divent_hill_matrix_pq(
-    as.data.frame(t(as.matrix(physeq@otu_table))),
-    q = q,
-    ...
-  )
+  read_numbers <- apply(physeq@otu_table, 2, sum)
+  otu_hill <- if (silent) {
+    suppressMessages(divent_hill_matrix_pq(
+      as.data.frame(t(as.matrix(physeq@otu_table))),
+      q = q,
+      ...
+    ))
+  } else {
+    divent_hill_matrix_pq(
+      as.data.frame(t(as.matrix(physeq@otu_table))),
+      q = q,
+      ...
+    )
+  }
 
   colnames(otu_hill) <- paste0("Hill_", q)
   tuk <- vector("list", length(q))
@@ -237,6 +237,9 @@ hill_test_rarperm_pq <- function(
       width = 50,
       char = "="
     )
+  }
+  if (!exists(".Random.seed", envir = .GlobalEnv)) {
+    set.seed(NULL)
   }
   for (i in 1:nperm) {
     if (verbose) {

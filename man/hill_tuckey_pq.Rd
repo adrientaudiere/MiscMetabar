@@ -23,7 +23,9 @@ using the \code{phyloseq} package.}
 \item{q}{(numeric vector) Hill diversity orders to compute (q values).
 Default computes Hill number 0 (species richness), Hill number 1
 (exponential of Shannon index) and Hill number 2 (inverse of Simpson
-index). Formerly \code{hill_scales}.}
+index). Formerly \code{hill_scales}. Hill numbers are more appropriate in DNA
+metabarcoding studies when \code{q > 0} (Alberdi & Gilbert, 2019;
+Calderón-Sanou et al., 2019).}
 
 \item{hill_scales}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{q} instead.}
 
@@ -56,6 +58,16 @@ GlobalPatterns@sam_data[, "Soil_logical"] <-
   ifelse(GlobalPatterns@sam_data[, "SampleType"] == "Soil", "Soil", "Not Soil")
 hill_tuckey_pq(GlobalPatterns, "Soil_logical")
 hill_tuckey_pq(GlobalPatterns, "Soil_logical", q = 1:2)
+}
+\references{
+Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of
+Hill numbers to DNA-based diversity analyses. \emph{Molecular Ecology Resources}.
+\doi{10.1111/1755-0998.13014}
+
+Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., & Thuiller, W.
+(2019). From environmental DNA sequences to ecological conclusions: How
+strong is the influence of methodological choices? \emph{Journal of Biogeography},
+47. \doi{10.1111/jbi.13681}
 }
 \author{
 Adrien Taudière

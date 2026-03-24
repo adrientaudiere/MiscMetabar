@@ -12,7 +12,7 @@ glmutli_pq(
   physeq,
   formula,
   fitfunction = "lm",
-  hill_scales = c(0, 1, 2),
+  q = c(0, 1, 2),
   aic_step = 2,
   confsetsize = 100,
   plotty = FALSE,
@@ -36,19 +36,21 @@ glmutli_pq(
   (required) a formula for
   [`glmulti::glmulti()`](https://rdrr.io/pkg/glmulti/man/glmulti.html)
   Variables must be present in the `physeq@sam_data` slot or be one of
-  hill number defined in hill_scales or the variable Abundance which
-  refer to the number of sequences per sample.
+  hill number defined in q or the variable Abundance which refer to the
+  number of sequences per sample.
 
 - fitfunction:
 
   (default "lm")
 
-- hill_scales:
+- q:
 
   (a vector of integer) The list of q values to compute the hill number
   H^q. If Null, no hill number are computed. Default value compute the
   Hill number 0 (Species richness), the Hill number 1 (exponential of
-  Shannon Index) and the Hill number 2 (inverse of Simpson Index).
+  Shannon Index) and the Hill number 2 (inverse of Simpson Index). Hill
+  numbers are more appropriate in DNA metabarcoding studies when `q > 0`
+  (Alberdi & Gilbert, 2019; Calderón-Sanou et al., 2019).
 
 - aic_step:
 
@@ -107,6 +109,19 @@ reference to
 [`glmulti::glmulti()`](https://rdrr.io/pkg/glmulti/man/glmulti.html) if
 you use this function.
 
+## References
+
+Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of
+Hill numbers to DNA-based diversity analyses. *Molecular Ecology
+Resources*.
+[doi:10.1111/1755-0998.13014](https://doi.org/10.1111/1755-0998.13014)
+
+Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., & Thuiller,
+W. (2019). From environmental DNA sequences to ecological conclusions:
+How strong is the influence of methodological choices? *Journal of
+Biogeography*, 47.
+[doi:10.1111/jbi.13681](https://doi.org/10.1111/jbi.13681)
+
 ## See also
 
 [`glmulti::glmulti()`](https://rdrr.io/pkg/glmulti/man/glmulti.html)
@@ -136,33 +151,33 @@ if (requireNamespace("glmulti")) {
 #> Fitting...
 #> 
 #> After 50 models:
-#> Best model: Hill_0~1+Abundance+Time+Time:Abundance+Height:Abundance+Height:Time
-#> Crit= 1069.11608982306
-#> Mean crit= 1218.19009955263
+#> Best model: Hill_0~1+Abundance+Time+Time:Abundance+Height:Abundance
+#> Crit= 1162.46935121017
+#> Mean crit= 1326.57756179615
 #> Completed.
 #>                            estimates unconditional_interval nb_model importance
-#> HeightHigh:Time         0.1004073616           4.167750e-02        8 0.04216251
-#> Abundance:HeightHigh    0.0001609310           8.984023e-08        8 0.09020701
-#> HeightLow              -0.7865687564           9.769200e+00       32 0.24714664
-#> HeightMiddle           -2.6419930721           2.789953e+01       32 0.24714664
-#> HeightLow:Time         -0.6511123699           1.599292e+00       32 0.55051517
-#> HeightMiddle:Time      -1.3322473025           3.078720e+00       32 0.55051517
-#> Abundance:Time         -0.0001068559           4.586032e-09       32 0.81587143
-#> Abundance:HeightLow     0.0011137659           7.957713e-07       32 0.86967993
-#> Abundance:HeightMiddle  0.0017155970           1.245718e-06       32 0.86967993
-#> Abundance               0.0024839088           8.790126e-07       32 0.90902176
-#> Time                    2.7869220741           2.663548e+00       32 0.92512111
+#> HeightHigh:Time         0.0238428433           5.369345e-03        8 0.02339703
+#> Abundance:HeightHigh    0.0001567326           9.040694e-08        8 0.05936981
+#> HeightLow               1.3672307044           2.837356e+01       32 0.28630897
+#> HeightMiddle           -2.8823946528           4.305119e+01       32 0.28630897
+#> HeightLow:Time          0.6976197936           1.991032e+00       32 0.48361405
+#> HeightMiddle:Time      -0.3490561261           1.442196e+00       32 0.48361405
+#> Abundance:HeightLow     0.0009609861           1.351266e-06       32 0.52347724
+#> Abundance:HeightMiddle  0.0008434925           1.380631e-06       32 0.52347724
+#> Time                    1.9148085653           3.424966e+00       32 0.72978508
+#> Abundance:Time         -0.0001497892           9.036339e-09       32 0.86061128
+#> Abundance               0.0040684019           1.456572e-06       32 0.94026666
 #>                               alpha               variable
-#> HeightHigh:Time        4.006348e-01        HeightHigh:Time
-#> Abundance:HeightHigh   5.877776e-04   Abundance:HeightHigh
-#> HeightLow              6.171172e+00              HeightLow
-#> HeightMiddle           1.038989e+01           HeightMiddle
-#> HeightLow:Time         2.491898e+00         HeightLow:Time
-#> HeightMiddle:Time      3.449710e+00      HeightMiddle:Time
-#> Abundance:Time         1.335247e-04         Abundance:Time
-#> Abundance:HeightLow    1.759641e-03    Abundance:HeightLow
-#> Abundance:HeightMiddle 2.198334e-03 Abundance:HeightMiddle
-#> Abundance              1.847287e-03              Abundance
-#> Time                   3.214276e+00                   Time
+#> HeightHigh:Time        1.442951e-01        HeightHigh:Time
+#> Abundance:HeightHigh   5.895794e-04   Abundance:HeightHigh
+#> HeightLow              1.050820e+01              HeightLow
+#> HeightMiddle           1.292959e+01           HeightMiddle
+#> HeightLow:Time         2.778215e+00         HeightLow:Time
+#> HeightMiddle:Time      2.367383e+00      HeightMiddle:Time
+#> Abundance:HeightLow    2.286482e-03    Abundance:HeightLow
+#> Abundance:HeightMiddle 2.312397e-03 Abundance:HeightMiddle
+#> Time                   3.645902e+00                   Time
+#> Abundance:Time         1.874648e-04         Abundance:Time
+#> Abundance              2.378267e-03              Abundance
 # }
 ```

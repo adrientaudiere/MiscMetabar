@@ -1,4 +1,6 @@
 url: https://adrientaudiere.github.io/MiscMetabar/
+examples:
+  run_dont_run: false
 template:
   bootstrap: 5
   bslib:
@@ -31,8 +33,6 @@ navbar:
     - text: Diversity analysis
     - text: Alpha-diversity
       href: articles/alpha-div.html
-    - text: Accumulation and rarefaction curves
-      href: articles/accumulation-rarefaction.html
     - text: Beta-diversity
       href: articles/beta-div.html
     - text: -------

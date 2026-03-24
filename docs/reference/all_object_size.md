@@ -13,3 +13,10 @@ all_object_size()
 ## Value
 
 a list of size
+
+## Examples
+
+``` r
+all_object_size()
+#> named numeric(0)
+```

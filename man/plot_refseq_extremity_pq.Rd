@@ -21,7 +21,9 @@ using the \code{phyloseq} package.}
 \item{last_n}{(int, default 10) The number of nucleotides to plot the 3' extremity.}
 
 \item{q}{(vector) A vector defining the Hill number wanted. Set to NULL if
-you don't want to plot Hill diversity metrics.}
+you don't want to plot Hill diversity metrics. Hill numbers are more
+appropriate in DNA metabarcoding studies when \code{q > 0} (Alberdi & Gilbert,
+2019; Calderón-Sanou et al., 2019).}
 
 \item{min_width}{(int, default 0) Select only the sequences from physeq@refseq with using a
 minimum length threshold. If \code{first_n} is superior to the minimum length of the
@@ -49,28 +51,22 @@ If \code{hill_scale} is not null, Hill diversity number are used to represent th
 of the diversity (equitability) along the sequences.
 }
 \examples{
-res1 <- plot_refseq_extremity_pq(data_fungi)
+res1 <- plot_refseq_extremity_pq(data_fungi_mini)
 names(res1)
 res1$plot_start
 res1$plot_last
-
+\donttest{
 res2 <- plot_refseq_extremity_pq(data_fungi, first_n = 200, last_n = 100)
 res2$plot_start
 res2$plot_last
 
 plot_refseq_extremity_pq(data_fungi,
-  first_n = 400,
-  last_n = 400,
-  q = NULL
-)$plot_start +
-  geom_line(aes(y = value, x = seq_id, color = name), alpha = 0.4, linewidth = 0.2)
-
-plot_refseq_extremity_pq(data_fungi,
   first_n = NULL,
-  last_n = 400,
-  min_width = 400,
+  last_n = 200,
+  min_width = 200,
   q = c(3)
 )$plot_last
+}
 }
 \author{
 Adrien Taudière

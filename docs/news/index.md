@@ -1,6 +1,133 @@
 # Changelog
 
-## MiscMetabar 0.14.6 (in development)
+## MiscMetabar 0.15.1
+
+### Bug fixes
+
+- [`assign_mmseqs2()`](https://adrientaudiere.github.io/MiscMetabar/reference/assign_mmseqs2.md):
+  fixed a crash when partial taxonomic assignments produce ragged split
+  vectors; shorter vectors are now padded with `NA` before being
+  combined into a matrix.
+- [`format2dada2_species()`](https://adrientaudiere.github.io/MiscMetabar/reference/format2dada2_species.md):
+  fixed broken sequence name recovery for unmatched entries; names are
+  now correctly restored using integer indices rather than character
+  lookup.
+- `unwanted_tax_patterns`: fixed duplicate name
+  `"unknown species names"` (now `"unknown species (_sp prefix)"` and
+  `"unknown species (_species prefix)"`); corrected `@format` element
+  count from 13 to 17.
+
+### New features
+
+- `unwanted_tax_patterns` is a new exported named character vector of
+  regex patterns for common problematic taxonomy values (NA-like
+  strings, `"unclassified"`, `"unknown"`, `"Incertae_sedis"`, empty
+  QIIME-style ranks, etc.).
+  [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/reference/verify_tax_table.md)
+  now uses it as the default for `replace_to_NA`, and other pqverse
+  packages (e.g. `dbpq::count_unwanted_tax()`) can reuse it to keep
+  patterns in sync.
+
+### Breaking changes
+
+- [`compare_pairs_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/compare_pairs_pq.md),
+  [`ggbetween_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ggbetween_pq.md),
+  [`hill_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_pq.md),
+  [`hill_tuckey_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_tuckey_pq.md),
+  [`plot_refseq_extremity_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_refseq_extremity_pq.md),
+  and
+  [`psmelt_samples_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/psmelt_samples_pq.md)
+  now use
+  [`divent::div_hill()`](https://ericmarcon.github.io/divent/reference/div_hill.html)
+  instead of
+  [`vegan::renyi()`](https://vegandevs.github.io/vegan/reference/renyi.html)
+  for Hill number computation, and
+  [`compare_pairs_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/compare_pairs_pq.md)
+  uses
+  [`divent::ent_shannon()`](https://ericmarcon.github.io/divent/reference/ent_shannon.html)
+  /
+  [`divent::ent_simpson()`](https://ericmarcon.github.io/divent/reference/ent_simpson.html)
+  instead of
+  [`vegan::diversity()`](https://vegandevs.github.io/vegan/reference/diversity.html)
+  for Shannon and Simpson indices. The default estimator is now
+  `"UnveilJ"` (bias-corrected) rather than the naive plug-in estimator —
+  diversity values will differ from previous versions. Pass
+  `estimator = "naive"` via `...` to restore old numeric behavior.
+
+### New features
+
+- [`divent_hill_matrix_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/divent_hill_matrix_pq.md)
+  new exported utility to compute Hill numbers for all samples in an OTU
+  table using
+  [`divent::div_hill()`](https://ericmarcon.github.io/divent/reference/div_hill.html).
+  Accepts `...` to forward any argument to
+  [`divent::div_hill()`](https://ericmarcon.github.io/divent/reference/div_hill.html).
+- [`ggbetween_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ggbetween_pq.md)
+  gains a `q` parameter (default `c(0, 1, 2)`) to control which Hill
+  diversity orders are computed. One plot is produced per value.
+- [`hill_acc_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_acc_pq.md)
+  gains a `type` parameter (`"individual"` or `"sample"`).
+  `type = "sample"` computes sample-based accumulation curves by pooling
+  samples incrementally across random permutations using
+  [`divent::div_hill()`](https://ericmarcon.github.io/divent/reference/div_hill.html),
+  with a confidence ribbon. When `merge_sample_by` is set, one curve per
+  group is drawn on the same plot. `type = "individual"` preserves the
+  previous individual-based behaviour.
+- [`profile_hill_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/profile_hill_pq.md)
+  new function wrapping `divent::profile_hill() |> autoplot()` to
+  visualize Hill diversity profiles across all orders for all samples in
+  a phyloseq object.
+
+### Deprecated
+
+- The `hill_scales` parameter in
+  [`hill_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_pq.md),
+  [`hill_tuckey_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_tuckey_pq.md),
+  and
+  [`psmelt_samples_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/psmelt_samples_pq.md)
+  is deprecated in favour of `q`. Use `q = c(0, 1, 2)` going forward.
+
+## MiscMetabar 0.14.6
+
+- Add
+  [`find_vsearch()`](https://adrientaudiere.github.io/MiscMetabar/reference/find_vsearch.md)
+  and
+  [`install_vsearch()`](https://adrientaudiere.github.io/MiscMetabar/reference/install_vsearch.md)
+  to make vsearch-based functions work on all platforms including
+  Windows.
+  [`install_vsearch()`](https://adrientaudiere.github.io/MiscMetabar/reference/install_vsearch.md)
+  downloads the vsearch binary from GitHub, and
+  [`find_vsearch()`](https://adrientaudiere.github.io/MiscMetabar/reference/find_vsearch.md)
+  automatically locates it. All vsearch-calling functions now default to
+  [`find_vsearch()`](https://adrientaudiere.github.io/MiscMetabar/reference/find_vsearch.md)
+  instead of a hard-coded `"vsearch"` path. Users can also set
+  `options(MiscMetabar.vsearchpath = "/path/to/vsearch")` for custom
+  installations.
+
+- Add
+  [`ridges_sam_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ridges_sam_pq.md),
+  the sample-centric counterpart of
+  [`ridges_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ridges_pq.md):
+  each ridge represents a taxon (at a given taxonomic level) and the
+  x-axis shows the abundance distribution across samples, colored by a
+  sample factor.
+
+- Add params `output_data_frame` to function
+  [`track_wkflow_samples()`](https://adrientaudiere.github.io/MiscMetabar/reference/track_wkflow_samples.md)
+
+- [`cutadapt_remove_primers()`](https://adrientaudiere.github.io/MiscMetabar/reference/cutadapt_remove_primers.md)
+  gains a `verbose` parameter (default `TRUE`). Set `verbose = FALSE` to
+  fully silence cutadapt stdout/stderr and the completion message —
+  unlike [`suppressMessages()`](https://rdrr.io/r/base/message.html) or
+  [`capture.output()`](https://rdrr.io/r/utils/capture.output.html),
+  which cannot intercept system command output.
+
+- Fix a bug in
+  [`chimera_removal_vs()`](https://adrientaudiere.github.io/MiscMetabar/reference/chimera_removal_vs.md)
+  where matrix dimensions were dropped when the input had only one
+  sample (one row), causing downstream `[, ...]` indexing to fail with
+  “incorrect number of dimensions”. All three subsetting branches now
+  use `drop = FALSE`.
 
 - Many functions accepting a `fact` parameter now handle single-level
   factors gracefully: functions that require multiple groups
@@ -46,6 +173,12 @@
   `TRUE`) to display NA taxa as a grey area, `na_label` to customize the
   NA label, and `min_text_size` (default `0`) to control the minimum
   font size for tile labels.
+
+- [`biplot_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/biplot_pq.md)
+  gains `split_by_sample`, `sample_border_col`, and
+  `sample_border_width` parameters. When `split_by_sample = TRUE`, bars
+  are stacked by sample with visible borders, showing the distribution
+  of sequences across individual samples instead of a merged total.
 
 - Add two parameters to
   [`tax_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/tax_bar_pq.md),
@@ -535,7 +668,7 @@ CRAN release: 2024-04-28
 - Add param `taxa_ranks` in function
   [`psmelt_samples_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/psmelt_samples_pq.md)
   to group results by samples AND taxonomic ranks.
-- Add param `hill_scales` in functions
+- Add param `q` in functions
   [`hill_tuckey_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_tuckey_pq.md)
   and `hill_p()` to choose the level of the hill number.
 - Add param `na_remove` in function
@@ -675,9 +808,8 @@ CRAN release: 2024-04-28
 
 - Add function
   [`ancombc_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ancombc_pq.md)
-  to simplify the call to
-  [`ANCOMBC::ancombc2()`](https://rdrr.io/pkg/ANCOMBC/man/ancombc2.html)
-  : ANalysis of COmpositions of Microbiomes with Bias Correction 2
+  to simplify the call to `ancombc2()` from the ANCOMBC2 package:
+  ANalysis of COmpositions of Microbiomes with Bias Correction 2
 - Add param `taxa_names_from_physeq` (default FALSE) to
   [`subset_taxa_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/subset_taxa_pq.md)
 - Add param `rarefy_by_sample` (default FALSE) to function

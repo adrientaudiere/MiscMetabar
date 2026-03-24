@@ -15,7 +15,7 @@ This function is called by verify_pq() when check_taxonomy = TRUE."><script data
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,10 +81,7 @@ This function is called by <code><a href="verify_pq.html">verify_pq()</a></code>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">verify_tax_table</span><span class="op">(</span></span>
 <span>  <span class="va">physeq</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  replace_to_NA <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"^[Nn][Aa][Nn]?$"</span>, <span class="st">"^[Nn]/[Aa]$"</span>, <span class="st">"^[Nn]one$"</span>, <span class="st">"^$"</span>, <span class="st">"^\\s+$"</span>,</span>
-<span>    <span class="st">"[Uu]nclassified"</span>, <span class="st">"[Uu]nknown"</span>, <span class="st">"[Uu]nidentified"</span>, <span class="st">"[Uu]ncultured"</span>,</span>
-<span>    <span class="st">"[Ii]ncertae[_\\s]?[Ss]edis"</span>, <span class="st">"^[Mm]etagenome$"</span>, <span class="st">"^[Ee]nvironmental"</span>,</span>
-<span>    <span class="st">"^[kpcofgs]__$"</span><span class="op">)</span>,</span>
+<span>  replace_to_NA <span class="op">=</span> <span class="va">unwanted_tax_patterns</span>,</span>
 <span>  min_char <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  redundant_suffix <span class="op">=</span> <span class="st">"_sp"</span>,</span>
 <span>  taxonomic_ranks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Domain"</span>, <span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span>, <span class="st">"Species"</span><span class="op">)</span>,</span>
@@ -111,9 +108,10 @@ about potential taxonomy issues.</p></dd>
 
 <dt id="arg-replace-to-na">replace_to_NA<a class="anchor" aria-label="anchor" href="#arg-replace-to-na"></a></dt>
 <dd><p>(character vector) A vector of regex patterns to identify
-values that should be considered as NA. Default patterns include common
-placeholders like "unclassified", "unknown", "uncultured", "incertae_sedis",
-"metagenome", empty QIIME-style ranks (e.g., "k__"), etc.</p></dd>
+values that should be considered as NA. Defaults to
+<a href="unwanted_tax_patterns.html">unwanted_tax_patterns</a>, a named character vector of common
+placeholders like "unclassified", "unknown", "uncultured",
+"incertae_sedis", "metagenome", empty QIIME-style ranks, etc.</p></dd>
 
 
 <dt id="arg-min-char">min_char<a class="anchor" aria-label="anchor" href="#arg-min-char"></a></dt>
