@@ -185,7 +185,7 @@ clean_pq <- function(
   }
   if (remove_empty_samples) {
     if (sum(sample_sums(new_physeq) != 0) > 0) {
-      new_physeq <- subset_samples(new_physeq, sample_sums(physeq) > 0)
+      new_physeq <- prune_samples(sample_sums(new_physeq) > 0, new_physeq)
     }
   }
 
