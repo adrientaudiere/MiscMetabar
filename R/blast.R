@@ -479,23 +479,30 @@ filter_asv_blast <- function(
       group_by(`Query name`) |>
       slice(which.min(`e-value`)) |>
       ungroup()
-    new_physeq@tax_table <- tax_table(as.matrix(cbind(
-      new_physeq@tax_table,
-      info_to_taxtable[
-        match(
-          taxa_names(new_physeq),
-          info_to_taxtable[, "Query name"]$`Query name`
-        ),
-        c(
-          "Query name",
-          "Taxa name",
-          "bit score",
-          "% id. match",
-          "Query cover",
-          "e-value"
-        )
-      ]
-    )))
+    blast_mat <- as.matrix(info_to_taxtable[
+      match(
+        taxa_names(new_physeq),
+        info_to_taxtable[, "Query name"]$`Query name`
+      ),
+      c(
+        "Query name",
+        "Taxa name",
+        "bit score",
+        "% id. match",
+        "Query cover",
+        "e-value"
+      )
+    ])
+    rownames(blast_mat) <- taxa_names(new_physeq)
+    existing_tt <- tryCatch(
+      as(tax_table(new_physeq), "matrix"),
+      error = function(e) NULL
+    )
+    if (is.null(existing_tt)) {
+      new_physeq@tax_table <- tax_table(blast_mat)
+    } else {
+      new_physeq@tax_table <- tax_table(cbind(existing_tt, blast_mat))
+    }
   }
 
   return(new_physeq)
