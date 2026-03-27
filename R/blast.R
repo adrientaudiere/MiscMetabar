@@ -494,10 +494,14 @@ filter_asv_blast <- function(
       )
     ])
     rownames(blast_mat) <- taxa_names(new_physeq)
-    existing_tt <- tryCatch(
-      as(tax_table(new_physeq), "matrix"),
-      error = function(e) NULL
-    )
+    existing_tt <- if (is.null(new_physeq@tax_table)) {
+      NULL
+    } else {
+      tryCatch(
+        as(tax_table(new_physeq), "matrix"),
+        error = function(e) NULL
+      )
+    }
     if (is.null(existing_tt)) {
       new_physeq@tax_table <- tax_table(blast_mat)
     } else {

@@ -180,7 +180,7 @@ clean_pq <- function(
 
   if (remove_empty_taxa) {
     if (sum(taxa_sums(new_physeq) != 0) > 0) {
-      new_physeq <- subset_taxa(physeq, taxa_sums(physeq) > 0)
+      new_physeq <- prune_taxa(taxa_sums(physeq) > 0, physeq)
     }
   }
   if (remove_empty_samples) {
