@@ -1336,8 +1336,15 @@ assign_sintax <- function(
   }
 
   if (behavior == "add_to_phyloseq") {
-    tax_tab <- as.data.frame(as.matrix(physeq@tax_table))
-    tax_tab$taxa_names <- taxa_names(physeq)
+    if (is.null(physeq@tax_table)) {
+      tax_tab <- data.frame(
+        taxa_names = taxa_names(physeq),
+        stringsAsFactors = FALSE
+      )
+    } else {
+      tax_tab <- as.data.frame(as.matrix(physeq@tax_table))
+      tax_tab$taxa_names <- taxa_names(physeq)
+    }
 
     new_physeq <- physeq
     new_tax_tab <- left_join(
@@ -1720,8 +1727,15 @@ assign_vsearch_lca <- function(
   }
 
   if (behavior == "add_to_phyloseq") {
-    tax_tab <- as.data.frame(as.matrix(physeq@tax_table))
-    tax_tab$taxa_names <- taxa_names(physeq)
+    if (is.null(physeq@tax_table)) {
+      tax_tab <- data.frame(
+        taxa_names = taxa_names(physeq),
+        stringsAsFactors = FALSE
+      )
+    } else {
+      tax_tab <- as.data.frame(as.matrix(physeq@tax_table))
+      tax_tab$taxa_names <- taxa_names(physeq)
+    }
 
     new_physeq <- physeq
     new_tax_tab <- left_join(
