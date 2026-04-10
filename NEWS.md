@@ -1,5 +1,6 @@
 # MiscMetabar 0.15.2 (in development)
 
+* `hill_bar_pq()` new function plotting Hill diversity bar charts (mean ±SE, jittered points, Kruskal-Wallis subtitle, optional Tukey HSD compact letter display) for one or multiple Hill orders via a patchwork layout.
 * `tax_bar_pq()` gains a `show_n_samples` parameter (default `FALSE`). When `TRUE`, the number of samples per group is appended below each x-axis label as `(n=X)`.
 * New transformation/normalisation functions collected in `R/normalize_pq.R`, documented in a new article (`articles/normalization.html`).
 * `css_pq()` new function wrapping `metagenomeSeq::cumNorm()` for Cumulative Sum Scaling normalization.

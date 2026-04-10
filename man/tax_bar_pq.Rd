@@ -21,7 +21,8 @@ tax_bar_pq(
   top_label_size = 3.2,
   bar_width = NULL,
   bar_internal_color = NA,
-  linewidth_bar_internal = ifelse(is.na(bar_internal_color), 0, 0.5)
+  linewidth_bar_internal = ifelse(is.na(bar_internal_color), 0, 0.5),
+  show_n_samples = FALSE
 )
 }
 \arguments{
@@ -84,6 +85,10 @@ Set to e.g. \code{"black"} or \code{"grey30"} for visible borders.}
 
 \item{linewidth_bar_internal}{(default 0 if \code{bar_internal_color} is \code{NA}, otherwise 0.5)
 Line width of bar borders.}
+
+\item{show_n_samples}{(logical; default \code{FALSE}) If \code{TRUE}, the number of
+samples per group is displayed below the group label on the x-axis, as
+\code{"group\\n(n=X)"}.}
 }
 \value{
 A \code{\link[ggplot2]{ggplot}}2 plot  with bar representing the
@@ -103,6 +108,8 @@ Graphical representation of distribution of taxonomy, optionnaly across a factor
 data_fungi_ab <- subset_taxa_pq(data_fungi,
   taxa_sums(data_fungi) > 10000)
 tax_bar_pq(data_fungi_ab) + theme(legend.position = "none")
+tax_bar_pq(data_fungi_ab, taxa = "Class", fact = "Height",
+  show_n_samples = TRUE)
 \donttest{
 tax_bar_pq(data_fungi_ab, taxa = "Class")
 tax_bar_pq(data_fungi_ab, taxa = "Class", percent_bar = TRUE)
