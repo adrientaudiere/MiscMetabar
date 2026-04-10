@@ -54,6 +54,7 @@ Suggests:
     magrittr,
     methods,
     mia,
+    metagenomeSeq,
     mixtools,
     multcompView,
     networkD3,

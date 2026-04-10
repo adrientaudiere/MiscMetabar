@@ -31,6 +31,8 @@ biplot_pq(
   split_by_sample = FALSE,
   sample_border_col = "#d4d0acff",
   sample_border_width = 0.3,
+  color_rank = NULL,
+  taxa_names_rank = NULL,
   plotly_version = FALSE,
   ...
 )
@@ -112,6 +114,18 @@ sample segments when \code{split_by_sample = TRUE}.}
 \item{sample_border_width}{(default: 0.3) Width of the border between
 sample segments when \code{split_by_sample = TRUE}.}
 
+\item{color_rank}{(default: NULL) Name of a taxonomic rank in \code{tax_table(physeq)}
+to use for coloring bars. When NULL (default), bars are colored by sample
+modality using \code{left_fill} and \code{right_fill}. When set (e.g. \code{"Class"}),
+each bar is colored according to its taxonomic assignment at that rank
+and the \code{left_fill}/\code{right_fill} color parameters are ignored.}
+
+\item{taxa_names_rank}{(default: NULL) Name of a taxonomic rank in
+\code{tax_table(physeq)} to use as labels on the taxa axis instead of
+\code{taxa_names()}. When NULL (default), \code{taxa_names()} are used. When set
+(e.g. \code{"Genus"}), the genus name is displayed. OTUs sharing the same
+label at this rank will appear as a single merged bar.}
+
 \item{plotly_version}{If TRUE, use \code{\link[plotly:ggplotly]{plotly::ggplotly()}} to return
 a interactive ggplot.}
 
@@ -135,6 +149,11 @@ biplot_pq(data_fungi_2Height, "Height", merge_sample_by = "Height")
 biplot_pq(data_fungi_2Height, "Height",
   merge_sample_by = "Height",
   split_by_sample = TRUE
+)
+biplot_pq(data_fungi_2Height, "Height",
+  merge_sample_by = "Height",
+  color_rank = "Order",
+  taxa_names_rank = "Genus"
 )
 }
 \author{

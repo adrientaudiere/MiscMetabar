@@ -69,10 +69,10 @@ use this function.
 }
 \examples{
 if (requireNamespace("ggstatsplot")) {
-  ggscatt_pq(data_fungi_mini, "Time", type = "non-parametric")
-  ggscatt_pq(data_fungi_mini, "Time", q = 1:4, type = "parametric")
+  ggscatt_pq(data_fungi_mini, "Time", q = 0, type = "non-parametric")
+  ggscatt_pq(data_fungi_mini, "Time", q = 0, type = "parametric")
   ggscatt_pq(data_fungi_mini, "Sample_id",
-    q = c(0, 0.5),
+    q = 0,
     one_plot = FALSE
   )
 }

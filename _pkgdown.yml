@@ -25,6 +25,8 @@ navbar:
       href: articles/explore_data.html
     - text: Filter taxa and samples
       href: articles/filter.html
+    - text: Transformation and normalisation
+      href: articles/normalization.html
     - text: Reclustering
       href: articles/Reclustering.html
     - text: Tree building and visualization
@@ -93,12 +95,20 @@ reference:
   - funguild_assign
   - get_funguild_db
 
-- subtitle: Transform OTU table only
+- subtitle: Transform OTU table only. See also vignette on [transformation & normalisation](articles/normalization.html)
   contents:
   - as_binary_otu_table
+  - css_pq
+  - gmpr_pq
+  - mcknight_residuals_pq
   - normalize_prop_pq
+  - rarefy_pq
+  - srs_pq
   - taxa_as_columns
   - taxa_as_rows
+  - tmm_pq
+  - transform_pq
+  - vst_pq
 
 - subtitle: Subset/merge taxa
   contents:

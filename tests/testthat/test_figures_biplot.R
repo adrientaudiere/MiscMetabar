@@ -64,6 +64,53 @@ test_that("biplot_pq works", {
     "ggplot"
   )
   expect_error(biplot_pq(data_fungi_2trees, split_by_sample = TRUE))
+
+  # color_rank
+  expect_s3_class(
+    biplot_pq(
+      data_fungi_2trees,
+      merge_sample_by = "Tree_name",
+      color_rank = "Order"
+    ),
+    "ggplot"
+  )
+  expect_error(
+    biplot_pq(
+      data_fungi_2trees,
+      merge_sample_by = "Tree_name",
+      color_rank = "NotARank"
+    ),
+    "'color_rank' must be a column of tax_table"
+  )
+
+  # taxa_names_rank
+  expect_s3_class(
+    biplot_pq(
+      data_fungi_2trees,
+      merge_sample_by = "Tree_name",
+      taxa_names_rank = "Genus"
+    ),
+    "ggplot"
+  )
+  expect_error(
+    biplot_pq(
+      data_fungi_2trees,
+      merge_sample_by = "Tree_name",
+      taxa_names_rank = "NotARank"
+    ),
+    "'taxa_names_rank' must be a column of tax_table"
+  )
+
+  # both together
+  expect_s3_class(
+    biplot_pq(
+      data_fungi_2trees,
+      merge_sample_by = "Tree_name",
+      color_rank = "Order",
+      taxa_names_rank = "Genus"
+    ),
+    "ggplot"
+  )
 })
 
 
