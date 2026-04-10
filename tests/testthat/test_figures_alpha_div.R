@@ -186,6 +186,46 @@ test_that("accu_samp_threshold works with GlobalPatterns dataset", {
   expect_length(accu_samp_threshold(p), 5)
 })
 
+test_that("hill_bar_pq works with data_fungi_mini dataset", {
+  expect_s3_class(
+    suppressMessages(hill_bar_pq(data_fungi_mini, Height, q = 0)),
+    "ggplot"
+  )
+  skip_on_cran()
+  # multiple q returns a patchwork
+  expect_s3_class(
+    suppressMessages(hill_bar_pq(data_fungi_mini, Height, q = c(0, 2))),
+    "patchwork"
+  )
+  # letters disabled
+  expect_s3_class(
+    suppressMessages(
+      hill_bar_pq(data_fungi_mini, Height, q = 0, add_letters = FALSE)
+    ),
+    "ggplot"
+  )
+  # no global significance -> all "a" (very low threshold)
+  expect_s3_class(
+    suppressMessages(
+      hill_bar_pq(data_fungi_mini, Height, q = 0, p_threshold = 1e-10)
+    ),
+    "ggplot"
+  )
+  # show_n_samples adds scale_x_discrete layer
+  p <- suppressMessages(
+    hill_bar_pq(data_fungi_mini, Height, q = 0, show_n_samples = TRUE)
+  )
+  expect_s3_class(p, "ggplot")
+  # custom y labels
+  expect_s3_class(
+    suppressMessages(
+      hill_bar_pq(data_fungi_mini, Height, q = c(0, 2),
+        y_labs = c(Hill_0 = "Richness", Hill_2 = "Simpson"))
+    ),
+    "patchwork"
+  )
+})
+
 test_that("accu_samp_threshold works with data_fungi_mini dataset", {
   skip_on_cran()
   expect_warning(
