@@ -563,6 +563,25 @@ test_that("tax_bar_pq work with data_fungi dataset", {
   )
 })
 
+test_that("tax_bar_pq show_n_samples adds n labels above bars", {
+  # add_ribbon = FALSE (default): labels via geom_text above bars
+  p <- tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time",
+    show_n_samples = TRUE)
+  expect_s3_class(p, "ggplot")
+  label_layers <- vapply(p$layers, \(l) inherits(l$geom, "GeomText"), logical(1))
+  expect_true(any(label_layers))
+  text_data <- p$layers[[which(label_layers)[1]]]$data
+  expect_true(all(grepl("\\(n=\\d+\\)", text_data$label)))
+
+  # add_ribbon = TRUE: n appended to ribbon top labels
+  p2 <- tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time",
+    show_n_samples = TRUE, add_ribbon = TRUE)
+  expect_s3_class(p2, "ggplot")
+  label_layers2 <- vapply(p2$layers, \(l) inherits(l$geom, "GeomText"), logical(1))
+  text_data2 <- p2$layers[[which(label_layers2)[1]]]$data
+  expect_true(all(grepl("\\(n=\\d+\\)", text_data2$label)))
+})
+
 test_that("reorder_distinct_colors works on tax_bar_pq output", {
   skip_on_cran()
   p <- tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time")

@@ -1,5 +1,18 @@
 # MiscMetabar 0.15.2 (in development)
 
+* `tax_bar_pq()` gains a `show_n_samples` parameter (default `FALSE`). When `TRUE`, the number of samples per group is appended below each x-axis label as `(n=X)`.
+* New transformation/normalisation functions collected in `R/normalize_pq.R`, documented in a new article (`articles/normalization.html`).
+* `css_pq()` new function wrapping `metagenomeSeq::cumNorm()` for Cumulative Sum Scaling normalization.
+* `gmpr_pq()` new function implementing the Geometric Mean of Pairwise Ratios normalization (Chen et al. 2018) in pure R.
+* `mcknight_residuals_pq()` new function computing depth-robust alpha diversity as residuals of log-richness on log-depth (McKnight 2018; Mikryukov 2023).
+* `rarefy_pq()` new function wrapping `phyloseq::rarefy_even_depth()` with optional averaging over `n` rarefaction repetitions.
+* `srs_pq()` new function wrapping `SRS::SRS()` for Scaling with Ranked Subsampling normalization.
+* `tmm_pq()` new function wrapping `edgeR::calcNormFactors(method = "TMM")` for Trimmed Mean of M-values normalization.
+* `transform_pq()` new function providing a unified interface to common count transformations (`tss`, `hellinger`, `clr`, `rclr`, `log1p`, `z`, `pa`, `rank`) via `vegan::decostand()`.
+* `vst_pq()` new function wrapping `DESeq2::varianceStabilizingTransformation()`.
+* `biplot_pq()` gains a `color_rank` parameter (default `NULL`): when set to a taxonomic rank (e.g. `"Class"`), bars are colored by that rank instead of by sample modality, giving a taxonomic-composition view of the biplot. The fill legend is automatically titled with the rank name.
+* `biplot_pq()` gains a `taxa_names_rank` parameter (default `NULL`): when set to a taxonomic rank (e.g. `"Genus"`), the taxon axis labels display that rank instead of `taxa_names()`. Each OTU remains a separate bar regardless of shared rank values.
+* `biplot_pq()` no longer displays "Samples" on the taxon axis; the position used for the modality name annotations is now unlabeled.
 
 # MiscMetabar 0.15.1
 

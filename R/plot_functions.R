@@ -2609,6 +2609,16 @@ rotl_pq <- function(
 #'   sample segments when `split_by_sample = TRUE`.
 #' @param sample_border_width (default: 0.3) Width of the border between
 #'   sample segments when `split_by_sample = TRUE`.
+#' @param color_rank (default: NULL) Name of a taxonomic rank in `tax_table(physeq)`
+#'   to use for coloring bars. When NULL (default), bars are colored by sample
+#'   modality using `left_fill` and `right_fill`. When set (e.g. `"Class"`),
+#'   each bar is colored according to its taxonomic assignment at that rank
+#'   and the `left_fill`/`right_fill` color parameters are ignored.
+#' @param taxa_names_rank (default: NULL) Name of a taxonomic rank in
+#'   `tax_table(physeq)` to use as labels on the taxa axis instead of
+#'   `taxa_names()`. When NULL (default), `taxa_names()` are used. When set
+#'   (e.g. `"Genus"`), the genus name is displayed. OTUs sharing the same
+#'   label at this rank will appear as a single merged bar.
 #' @param plotly_version If TRUE, use [plotly::ggplotly()] to return
 #'   a interactive ggplot.
 #' @param ... Other arguments for the ggplot function
@@ -2620,6 +2630,11 @@ rotl_pq <- function(
 #' biplot_pq(data_fungi_2Height, "Height",
 #'   merge_sample_by = "Height",
 #'   split_by_sample = TRUE
+#' )
+#' biplot_pq(data_fungi_2Height, "Height",
+#'   merge_sample_by = "Height",
+#'   color_rank = "Order",
+#'   taxa_names_rank = "Genus"
 #' )
 #' @export
 #' @author Adrien Taudière
@@ -2651,6 +2666,8 @@ biplot_pq <- function(
   split_by_sample = FALSE,
   sample_border_col = "#d4d0acff",
   sample_border_width = 0.3,
+  color_rank = NULL,
+  taxa_names_rank = NULL,
   plotly_version = FALSE,
   ...
 ) {
@@ -2766,7 +2783,34 @@ biplot_pq <- function(
 
   mdf <- phyloseq::psmelt(physeq)
   mdf <- mdf[mdf$Abundance > 0, ]
-  # mdf <- dplyr::rename(mdf, Abundance = Abundance)
+
+  if (!is.null(taxa_names_rank)) {
+    if (!taxa_names_rank %in% colnames(tax_table(physeq))) {
+      stop(paste0(
+        "'taxa_names_rank' must be a column of tax_table. ",
+        "Valid ranks: ",
+        paste(colnames(tax_table(physeq)), collapse = ", ")
+      ))
+    }
+    rank_vals <- as.character(mdf[[taxa_names_rank]])
+    taxa_label_map <- setNames(rank_vals, mdf$OTU)
+    taxa_label_map <- taxa_label_map[!duplicated(names(taxa_label_map))]
+  }
+  mdf$taxa_label <- mdf$OTU
+
+  if (!is.null(color_rank)) {
+    if (!color_rank %in% colnames(tax_table(physeq))) {
+      stop(paste0(
+        "'color_rank' must be a column of tax_table. ",
+        "Valid ranks: ",
+        paste(colnames(tax_table(physeq)), collapse = ", ")
+      ))
+    }
+    mdf$fill_var <- as.factor(mdf[[color_rank]])
+  } else {
+    mdf$fill_var <- mdf$modality
+  }
+  fill_legend_name <- if (!is.null(color_rank)) color_rank else ""
 
   if (length(ylim_modif) == 1) {
     ylim_modif <- c(ylim_modif, ylim_modif)
@@ -2828,27 +2872,32 @@ biplot_pq <- function(
     )
 
   if (split_by_sample) {
-    ab_by_otu_mod <- stats::aggregate(
-      Ab ~ OTU + modality,
+    ab_by_label_mod <- stats::aggregate(
+      Ab ~ taxa_label + modality,
       data = mdf,
       FUN = sum
     )
-    max_ab <- max(ab_by_otu_mod$Ab)
-    min_ab <- min(ab_by_otu_mod$Ab)
+    max_ab <- max(ab_by_label_mod$Ab)
+    min_ab <- min(ab_by_label_mod$Ab)
   } else {
-    max_ab <- max(mdf$Ab)
-    min_ab <- min(mdf$Ab)
+    agg_for_lim <- stats::aggregate(
+      Ab ~ taxa_label + modality,
+      data = mdf,
+      FUN = sum
+    )
+    max_ab <- max(agg_for_lim$Ab)
+    min_ab <- min(agg_for_lim$Ab)
   }
 
   if (split_by_sample) {
     p <- mdf |>
       ggplot(
         aes(
-          x = stats::reorder(OTU, Abundance),
+          x = stats::reorder(taxa_label, Abundance),
           y = Ab,
-          fill = modality,
+          fill = fill_var,
           group = .stack_order,
-          names = OTU,
+          names = taxa_label,
           Ab = Abundance,
           Proportion = Proportion
         ),
@@ -2858,10 +2907,10 @@ biplot_pq <- function(
     p <- mdf |>
       ggplot(
         aes(
-          x = stats::reorder(OTU, Abundance),
+          x = stats::reorder(taxa_label, Abundance),
           y = Ab,
-          fill = modality,
-          names = OTU,
+          fill = fill_var,
+          names = taxa_label,
           Ab = Abundance,
           Proportion = Proportion
         ),
@@ -2909,16 +2958,21 @@ biplot_pq <- function(
     scale_x_discrete(
       limits = c(
         names(sort(
-          tapply(mdf$Abundance, mdf$OTU, sum)
+          tapply(mdf$Abundance, mdf$taxa_label, sum)
         )),
         "Samples"
-      )
+      ),
+      labels = if (!is.null(taxa_names_rank)) {
+        c(taxa_label_map, "Samples" = "")
+      } else {
+        c("Samples" = "")
+      }
     ) +
     ylim(min_ab * 1.1, max_ab * 1.1)
 
   if (split_by_sample) {
     mdf_totals <- stats::aggregate(
-      cbind(Ab, Abundance) ~ OTU + modality,
+      cbind(Ab, Abundance) ~ taxa_label + modality,
       data = mdf,
       FUN = sum
     )
@@ -2954,7 +3008,13 @@ biplot_pq <- function(
       p <- p +
         geom_label(
           data = mdf_totals[mdf_totals$Ab > 0, ],
-          aes(x = OTU, label = Abundance, fill = modality, alpha = 0.5, y = Ab),
+          aes(
+            x = taxa_label,
+            label = Abundance,
+            fill = fill_var,
+            alpha = 0.5,
+            y = Ab
+          ),
           inherit.aes = FALSE,
           color = right_col,
           hjust = -0.1,
@@ -2962,7 +3022,13 @@ biplot_pq <- function(
         ) +
         geom_label(
           data = mdf_totals[mdf_totals$Ab < 0, ],
-          aes(x = OTU, label = Abundance, fill = modality, alpha = 0.5, y = Ab),
+          aes(
+            x = taxa_label,
+            label = Abundance,
+            fill = fill_var,
+            alpha = 0.5,
+            y = Ab
+          ),
           inherit.aes = FALSE,
           color = left_col,
           hjust = 1.1,
@@ -2972,7 +3038,7 @@ biplot_pq <- function(
       p <- p +
         geom_text(
           data = mdf_totals[mdf_totals$Ab > 0, ],
-          aes(x = OTU, label = Abundance, y = Ab),
+          aes(x = taxa_label, label = Abundance, y = Ab),
           inherit.aes = FALSE,
           color = right_col,
           hjust = -0.1,
@@ -2980,7 +3046,7 @@ biplot_pq <- function(
         ) +
         geom_text(
           data = mdf_totals[mdf_totals$Ab < 0, ],
-          aes(x = OTU, label = Abundance, y = Ab),
+          aes(x = taxa_label, label = Abundance, y = Ab),
           inherit.aes = FALSE,
           color = left_col,
           hjust = 1.1,
@@ -2991,14 +3057,14 @@ biplot_pq <- function(
     p <- p +
       geom_label(
         data = mdf[mdf$Ab > 0, ],
-        aes(label = Abundance, fill = modality, alpha = 0.5, y = Ab),
+        aes(label = Abundance, fill = fill_var, alpha = 0.5, y = Ab),
         color = right_col,
         hjust = -0.1,
         size = text_size
       ) +
       geom_label(
         data = mdf[mdf$Ab < 0, ],
-        aes(label = Abundance, fill = modality, alpha = 0.5, y = Ab),
+        aes(label = Abundance, fill = fill_var, alpha = 0.5, y = Ab),
         color = left_col,
         hjust = 1.1,
         size = text_size
@@ -3028,7 +3094,6 @@ biplot_pq <- function(
       plot.title = element_text(hjust = 0.5),
       axis.ticks = element_blank()
     ) +
-    scale_fill_manual(values = c(left_fill, right_fill)) +
     scale_color_manual(values = c(left_col, right_col), guide = "none") +
     ylim(
       c(
@@ -3037,16 +3102,21 @@ biplot_pq <- function(
       )
     )
 
+  if (is.null(color_rank)) {
+    p <- p + scale_fill_manual(values = c(left_fill, right_fill))
+  }
+  p <- p + labs(fill = fill_legend_name)
+
   if (plotly_version) {
     if (split_by_sample) {
       p <- mdf |>
         ggplot(
           aes(
-            x = stats::reorder(OTU, Abundance),
+            x = stats::reorder(taxa_label, Abundance),
             y = Ab,
-            fill = modality,
+            fill = fill_var,
             group = .stack_order,
-            names = OTU,
+            names = taxa_label,
             Ab = Abundance,
             Proportion = Proportion,
             Family = Family,
@@ -3059,10 +3129,10 @@ biplot_pq <- function(
       p <- mdf |>
         ggplot(
           aes(
-            x = stats::reorder(OTU, Abundance),
+            x = stats::reorder(taxa_label, Abundance),
             y = Ab,
-            fill = modality,
-            names = OTU,
+            fill = fill_var,
+            names = taxa_label,
             Ab = Abundance,
             Proportion = Proportion,
             Family = Family,
@@ -3113,16 +3183,26 @@ biplot_pq <- function(
       scale_x_discrete(
         limits = c(
           names(sort(
-            tapply(mdf$Abundance, mdf$OTU, sum)
+            tapply(mdf$Abundance, mdf$taxa_label, sum)
           )),
           "Samples"
-        )
+        ),
+        labels = if (!is.null(taxa_names_rank)) {
+          c(taxa_label_map, "Samples" = "")
+        } else {
+          c("Samples" = "")
+        }
       ) +
       ylim(min_ab * 1.1, max_ab * 1.1)
 
+    if (is.null(color_rank)) {
+      p <- p + scale_fill_manual(values = c(left_fill, right_fill))
+    }
+    p <- p + labs(fill = fill_legend_name)
+
     p <- plotly::ggplotly(
       p,
-      tooltip = c("OTU", "Ab", "Proportion", "Family", "Genus", "Species"),
+      tooltip = c("names", "Ab", "Proportion", "Family", "Genus", "Species"),
       height = 1200,
       width = 800
     ) |>
@@ -4382,6 +4462,9 @@ diff_fct_diff_class <-
 #'   Set to e.g. `"black"` or `"grey30"` for visible borders.
 #' @param linewidth_bar_internal (default 0 if `bar_internal_color` is `NA`, otherwise 0.5)
 #'  Line width of bar borders.
+#' @param show_n_samples (logical; default `FALSE`) If `TRUE`, the number of
+#'   samples per group is displayed below the group label on the x-axis, as
+#'   `"group\n(n=X)"`.
 #'
 #' @return A \code{\link[ggplot2]{ggplot}}2 plot  with bar representing the
 #'   number of sequence en each taxonomic groups
@@ -4392,6 +4475,8 @@ diff_fct_diff_class <-
 #' data_fungi_ab <- subset_taxa_pq(data_fungi,
 #'   taxa_sums(data_fungi) > 10000)
 #' tax_bar_pq(data_fungi_ab) + theme(legend.position = "none")
+#' tax_bar_pq(data_fungi_ab, taxa = "Class", fact = "Height",
+#'   show_n_samples = TRUE)
 #' \donttest{
 #' tax_bar_pq(data_fungi_ab, taxa = "Class")
 #' tax_bar_pq(data_fungi_ab, taxa = "Class", percent_bar = TRUE)
@@ -4445,7 +4530,8 @@ tax_bar_pq <-
     top_label_size = 3.2,
     bar_width = NULL,
     bar_internal_color = NA,
-    linewidth_bar_internal = ifelse(is.na(bar_internal_color), 0, 0.5)
+    linewidth_bar_internal = ifelse(is.na(bar_internal_color), 0, 0.5),
+    show_n_samples = FALSE
   ) {
     if (!nb_seq) {
       physeq <- as_binary_otu_table(physeq)
@@ -4453,6 +4539,13 @@ tax_bar_pq <-
     psm <- psmelt(physeq)
 
     psm[[fact]] <- factor(psm[[fact]])
+
+    if (show_n_samples && fact != "Sample") {
+      n_per_group <- psm |>
+        dplyr::distinct(.data[[fact]], Sample) |>
+        dplyr::count(.data[[fact]])
+      n_lookup <- stats::setNames(n_per_group$n, as.character(n_per_group[[fact]]))
+    }
 
     if (nlevels(psm[[fact]]) < 2) {
       add_ribbon <- FALSE
@@ -4541,6 +4634,9 @@ tax_bar_pq <-
       x_labels <- pb$layout$panel_params[[1]]$x$get_labels()
       x_labels[is.na(x_labels)] <- "NA"
       bar_tops$label <- x_labels[bar_tops$x]
+      if (show_n_samples) {
+        bar_tops$label <- paste0(bar_tops$label, "\n(n=", n_lookup[bar_tops$label], ")")
+      }
 
       p <- p +
         geom_polygon(
@@ -4789,6 +4885,27 @@ tax_bar_pq <-
             color = "white"
           )
       }
+    }
+
+    if (show_n_samples && fact != "Sample" && !add_ribbon) {
+      pb_n <- ggplot_build(p)
+      bar_tops_n <- pb_n$data[[1]] |>
+        dplyr::group_by(x) |>
+        dplyr::summarise(ymax = max(ymax), .groups = "drop")
+      x_labs_n <- pb_n$layout$panel_params[[1]]$x$get_labels()
+      x_labs_n[is.na(x_labs_n)] <- "NA"
+      bar_tops_n$group_label <- x_labs_n[bar_tops_n$x]
+      bar_tops_n$label <- paste0(
+        bar_tops_n$group_label, "\n(n=", n_lookup[bar_tops_n$group_label], ")"
+      )
+      p <- p +
+        geom_text(
+          data = bar_tops_n,
+          aes(x = x, y = ymax, label = label),
+          vjust = -0.5,
+          inherit.aes = FALSE,
+          size = top_label_size
+        )
     }
 
     p
