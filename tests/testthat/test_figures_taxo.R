@@ -563,23 +563,32 @@ test_that("tax_bar_pq work with data_fungi dataset", {
   )
 })
 
-test_that("tax_bar_pq show_n_samples adds n labels above bars", {
-  # add_ribbon = FALSE (default): labels via geom_text above bars
-  p <- tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time",
-    show_n_samples = TRUE)
-  expect_s3_class(p, "ggplot")
-  label_layers <- vapply(p$layers, \(l) inherits(l$geom, "GeomText"), logical(1))
-  expect_true(any(label_layers))
-  text_data <- p$layers[[which(label_layers)[1]]]$data
-  expect_true(all(grepl("\\(n=\\d+\\)", text_data$label)))
+test_that("tax_bar_pq always shows modality labels above bars when add_ribbon=FALSE", {
+  has_text_layer <- \(p) any(vapply(p$layers, \(l) inherits(l$geom, "GeomText"), logical(1)))
+  get_first_text <- \(p) {
+    idx <- which(vapply(p$layers, \(l) inherits(l$geom, "GeomText"), logical(1)))[1]
+    p$layers[[idx]]$data
+  }
 
-  # add_ribbon = TRUE: n appended to ribbon top labels
+  # Default (show_n_samples=FALSE): group names appear on top, no "(n=X)"
+  p <- tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time")
+  expect_s3_class(p, "ggplot")
+  expect_true(has_text_layer(p))
+  expect_false(any(grepl("\\(n=\\d+\\)", get_first_text(p)$label)))
+
+  # show_n_samples=TRUE: group names + "(n=X)" on top
   p2 <- tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time",
-    show_n_samples = TRUE, add_ribbon = TRUE)
+    show_n_samples = TRUE)
   expect_s3_class(p2, "ggplot")
-  label_layers2 <- vapply(p2$layers, \(l) inherits(l$geom, "GeomText"), logical(1))
-  text_data2 <- p2$layers[[which(label_layers2)[1]]]$data
-  expect_true(all(grepl("\\(n=\\d+\\)", text_data2$label)))
+  expect_true(has_text_layer(p2))
+  expect_true(all(grepl("\\(n=\\d+\\)", get_first_text(p2)$label)))
+
+  # add_ribbon=TRUE with show_n_samples=TRUE: n appended to ribbon top labels
+  p3 <- tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time",
+    show_n_samples = TRUE, add_ribbon = TRUE)
+  expect_s3_class(p3, "ggplot")
+  expect_true(has_text_layer(p3))
+  expect_true(all(grepl("\\(n=\\d+\\)", get_first_text(p3)$label)))
 })
 
 test_that("reorder_distinct_colors works on tax_bar_pq output", {

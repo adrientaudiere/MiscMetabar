@@ -4887,7 +4887,7 @@ tax_bar_pq <-
       }
     }
 
-    if (show_n_samples && fact != "Sample" && !add_ribbon) {
+    if (fact != "Sample" && !add_ribbon) {
       pb_n <- ggplot_build(p)
       bar_tops_n <- pb_n$data[[1]] |>
         dplyr::group_by(x) |>
@@ -4895,9 +4895,11 @@ tax_bar_pq <-
       x_labs_n <- pb_n$layout$panel_params[[1]]$x$get_labels()
       x_labs_n[is.na(x_labs_n)] <- "NA"
       bar_tops_n$group_label <- x_labs_n[bar_tops_n$x]
-      bar_tops_n$label <- paste0(
-        bar_tops_n$group_label, "\n(n=", n_lookup[bar_tops_n$group_label], ")"
-      )
+      bar_tops_n$label <- if (show_n_samples) {
+        paste0(bar_tops_n$group_label, "\n(n=", n_lookup[bar_tops_n$group_label], ")")
+      } else {
+        bar_tops_n$group_label
+      }
       p <- p +
         geom_text(
           data = bar_tops_n,
