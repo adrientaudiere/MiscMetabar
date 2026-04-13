@@ -1,0 +1,297 @@
+---
+title: "Transformation and normalisation of phyloseq objects"
+output: rmarkdown::html_vignette
+bibliography: bibliography.bib
+vignette: >
+  %\VignetteIndexEntry{Transformation and normalisation of phyloseq objects}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+editor_options:
+  chunk_output_type: console
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  message = FALSE,
+  warning = FALSE,
+  fig.width = 7,
+  fig.height = 4.5
+)
+```
+
+```{r setup, message=FALSE}
+library(MiscMetabar)
+data(data_fungi_mini)
+```
+
+Choosing how to normalise or transform a count table is one of the most
+consequential (and discussed) decisions in metabarcoding analysis.  Unequal
+sequencing depths across samples introduce a systematic bias that can distort
+every downstream step — alpha diversity, ordination, differential abundance
+testing.  Yet every normalisation method makes its own assumptions and
+trade-offs [@mcmurdie2014rarefaction].
+
+This article surveys the methods available in **MiscMetabar**, shows their
+effect on `data_fungi_mini`, and offers a decision guide to help you pick the
+right approach.
+
+---
+
+## Why does it matter?
+
+Amplicon sequencing returns *compositional* data: only the relative
+proportions of taxa are observed, not their absolute abundances
+[@gloor2017; @quinn2018].  On top of that, libraries differ in total read
+count by one to two orders of magnitude, even within the same experiment.
+Applying diversity or ordination methods to raw counts therefore conflates
+biological signal with technical depth variation.
+
+```{r depth-variation, fig.cap="Large variation in sequencing depth across samples in 'data_fungi_mini'."}
+ggplot(data=tibble(x=sample_sums(data_fungi_mini)),aes(x=x)) + geom_histogram(color="black") + scale_x_log10() + labs(x="Number of sequences per samples")
+```
+
+---
+
+## Overview of methods
+
+| Family | Function | Key property |
+|---|---|---|
+| Presence/absence | `as_binary_otu_table()` | Ignores abundance entirely |
+| Proportions (TSS) | `transform_pq(method="tss")` | Divides by library size |
+| TSS + log | `normalize_prop_pq()` | TSS × constant, then log |
+| Hellinger | `transform_pq(method="hellinger")` | Square-root of proportions |
+| Centred log-ratio | `transform_pq(method="clr")` | Compositionally coherent |
+| Robust CLR | `transform_pq(method="rclr")` | CLR robust to zeros |
+| Log(1+x) | `transform_pq(method="log1p")` | Simple variance stabilisation |
+| Z-score | `transform_pq(method="z")` | Per-taxon standardisation |
+| Rank | `transform_pq(method="rank")` | Non-parametric, outlier robust |
+| Rarefaction | `rarefy_pq()` | Subsampling to equal depth |
+| SRS | `srs_pq()` | Rank-preserving subsampling [@heidrich2021] |
+| GMPR | `gmpr_pq()` | Pairwise ratio geometric mean [@chen2018] |
+| CSS | `css_pq()` | Cumulative sum scaling [@paulson2013] |
+| TMM | `tmm_pq()` | Trimmed mean of M-values [@robinson2010] |
+| VST | `vst_pq()` | Variance-stabilising (DESeq2) [@love2014] |
+| Depth residuals | `mcknight_residuals_pq()` | Log-log regression residuals [@mcknight2019] |
+
+---
+
+## Exploring the transformations
+
+### `transform_pq()` — a unified interface via `vegan::decostand`
+
+`transform_pq()` wraps `vegan::decostand()` and handles the `taxa_are_rows`
+orientation automatically.
+
+```{r transform-pq, examplesIf = rlang::is_installed("vegan")}
+data_tss <- transform_pq(data_fungi_mini, method = "tss")
+data_hell <- transform_pq(data_fungi_mini, method = "hellinger")
+data_clr <- transform_pq(data_fungi_mini, method = "clr")  # pseudocount = 1 by default
+data_log1p <- transform_pq(data_fungi_mini, method = "log1p")
+
+# Sample sums after TSS: all 1
+round(range(sample_sums(data_tss)), 4)
+```
+
+**Hellinger** and **CLR** are particularly recommended for ordination
+[@legendre2001; @gloor2017].  Hellinger distance on the transformed table
+equals the Hellinger distance without transformation, which behaves better
+than Bray-Curtis on sparse data.  CLR makes the data compositionally coherent
+but requires replacing zeros (vegan uses a pseudocount internally).
+
+### `normalize_prop_pq()` — TSS with log scaling (McKnight 2019)
+
+Multiplies relative abundances by a constant (default 10 000) then applies a
+log transformation.  This is the "rarefaction-free" normalisation proposed by
+@mcknight2019.
+
+```{r normalize-prop}
+data_norm <- normalize_prop_pq(data_fungi_mini)
+# All sample sums are equal after log transform
+round(range(sample_sums(data_norm)), 2)
+```
+
+### `rarefy_pq()` — rarefaction with optional averaging
+
+Rarefaction subsamples all libraries to the same depth, discarding reads.  It
+remains the most widely used method despite debates about data loss
+[@mcmurdie2014rarefaction; @mcknight2019].  `rarefy_pq()` allows averaging over `n`
+random subsamplings to reduce stochasticity.
+
+```{r rarefy}
+data_rar1 <- rarefy_pq(data_fungi_mini, seed = 1)
+data_rar10 <- rarefy_pq(data_fungi_mini, n = 10, seed = 1)
+
+# Single rarefaction: all depths equal
+unique(sample_sums(data_rar1))
+# Averaged: sample sums close but not integer
+round(range(sample_sums(data_rar10)), 1)
+```
+
+### `srs_pq()` — Scaling with Ranked Subsampling
+
+SRS [@heidrich2021] scales to a common library size while **preserving the
+rank order** of OTU abundances, avoiding the randomness of rarefaction and
+the data loss associated with it.
+
+```{r srs, eval = rlang::is_installed("SRS")}
+data_srs <- srs_pq(data_fungi_mini)
+round(range(sample_sums(data_srs)), 0)
+```
+
+### `gmpr_pq()` — Geometric Mean of Pairwise Ratios
+
+GMPR [@chen2018] estimates size factors from the geometric mean of median
+pairwise ratios between samples, making it robust to the high proportion of
+zeros in microbial OTU tables.
+
+```{r gmpr}
+data_gmpr <- gmpr_pq(data_fungi_mini)
+round(range(sample_sums(data_gmpr)), 0)
+```
+
+### `css_pq()` — Cumulative Sum Scaling
+
+CSS [@paulson2013] normalises each sample by the cumulative sum of counts up
+to a data-driven percentile, rather than the total.  It is less sensitive to
+a few very abundant OTUs.
+
+```{r css, eval = rlang::is_installed("metagenomeSeq")}
+data_css <- css_pq(data_fungi_mini)
+```
+
+### `tmm_pq()` — Trimmed Mean of M-values
+
+TMM [@robinson2010], borrowed from RNA-seq, computes library-specific
+normalisation factors by trimming the distribution of log-fold changes between
+each sample and a reference.
+
+```{r tmm, eval = rlang::is_installed("edgeR")}
+data_tmm <- tmm_pq(data_fungi_mini)
+```
+
+### `vst_pq()` — Variance Stabilising Transformation
+
+VST [@love2014] fits a negative-binomial model to stabilise the
+mean-variance relationship, making counts more suitable for methods that
+assume homoscedastic data.
+
+```{r vst, eval = rlang::is_installed("DESeq2")}
+data_vst <- vst_pq(data_fungi_mini)
+```
+
+### `mcknight_residuals_pq()` — depth-robust alpha diversity
+
+Instead of normalising the count table, this function computes residuals from
+a regression of log-richness on log-depth and stores them in `sample_data`.
+The residuals represent richness corrected for depth variation — a
+depth-robust alpha diversity metric proposed by @mcknight2019 and used in
+large-scale soil fungal surveys [@mikryukov2023].
+
+```{r mcknight}
+data_res <- mcknight_residuals_pq(data_fungi_mini)
+head(sample_data(data_res)$mcknight_residuals)
+```
+
+---
+
+## Comparing methods via ordination
+
+A PCoA on Bray-Curtis dissimilarity illustrates how strongly the choice of
+normalisation shapes the ordination landscape.
+
+```{r ordination-comparison, fig.height=10, fig.cap="PCoA (Bray-Curtis) on raw counts, TSS, Hellinger, and log1p-transformed data. Colour encodes the 'Height' variable.", eval = rlang::is_installed("vegan")}
+ord_raw <- phyloseq::ordinate(data_fungi_mini, method = "PCoA", distance = "bray")
+ord_tss <- phyloseq::ordinate(data_tss, method = "PCoA", distance = "bray")
+ord_hell <- phyloseq::ordinate(data_hell, method = "PCoA", distance = "bray")
+ord_log1p <- phyloseq::ordinate(data_log1p, method = "PCoA", distance = "bray")
+
+p_raw <- phyloseq::plot_ordination(
+  data_fungi_mini, ord_raw, color = "Height"
+) + ggplot2::ggtitle("Raw counts")
+
+p_tss <- phyloseq::plot_ordination(
+  data_tss, ord_tss, color = "Height"
+) + ggplot2::ggtitle("TSS")
+
+p_hell <- phyloseq::plot_ordination(
+  data_hell, ord_hell, color = "Height"
+) + ggplot2::ggtitle("Hellinger")
+
+p_log1p <- phyloseq::plot_ordination(
+  data_log1p, ord_log1p, color = "Height"
+) + ggplot2::ggtitle("log1p")
+
+patchwork::wrap_plots(p_raw, p_tss, p_hell, p_log1p, ncol = 2) +
+  patchwork::plot_layout(guides = "collect")
+```
+
+---
+
+## Model-level depth correction (no table transformation)
+
+Some MiscMetabar functions correct for sequencing depth **without**
+transforming the OTU table, by incorporating library size directly into the
+statistical model.  These are complementary to — not replacements for — the
+table-level normalisations above. If you transform the table, you should not use these model-level corrections (set correction_for_sample_size = FALSE).
+
+### `adonis_pq()` — PERMANOVA with library-size covariate
+
+When `correction_for_sample_size = TRUE`, `adonis_pq()` prepends
+`sample_size` (i.e. `sample_sums(physeq)`) to the PERMANOVA formula, as
+recommended by @weiss2017:
+
+```
+sample_size + Biological_Effect ~ distance_matrix
+```
+
+Library-size variation is partitioned out as the first term, so the
+remaining variance attributed to the biological factor is not confounded by
+depth.  The raw count table is used as-is; only the formula changes.
+
+### `hill_pq()` / `hill_tuckey_pq()` — alpha diversity with sqrt-depth residuals
+
+When `correction_for_sample_size = TRUE` (the default), these functions:
+
+1. Compute Hill numbers from the **raw** OTU table.
+2. Fit `lm(hill_values ~ sqrt(read_numbers))` per diversity order.
+3. Use the **residuals** as the response in Tukey ANOVA.
+
+The square-root of read count linearises the typical depth–richness
+relationship; the residuals represent diversity corrected for depth without
+discarding any data. Note that the Hill-number values **displayed** are
+always computed from raw counts — only the *statistical test* uses residuals.
+
+This is conceptually similar to `mcknight_residuals_pq()` but integrated
+into the plotting workflow rather than stored as a new column in `sam_data`.
+
+---
+
+<!--
+## Decision guide
+
+```
+Are you doing alpha diversity?
+├── Yes → mcknight_residuals_pq()  (depth-robust, no data loss)
+│         or rarefy_pq(n ≥ 10)     (classical, accounts for sampling effort)
+└── No  →
+    Are you testing differential abundance?
+    ├── Yes → vst_pq() or css_pq() or tmm_pq()
+    └── No  (ordination / clustering) →
+        Is the data very zero-inflated?
+        ├── Yes → gmpr_pq() or srs_pq() or transform_pq("rclr")
+        └── No  → transform_pq("hellinger") or transform_pq("clr")
+```
+
+**General rules of thumb**
+
+- Avoid rarefying if library sizes vary by more than ×10 and sample sizes are small; use GMPR or SRS instead.
+- CLR / rCLR are theoretically sound for compositional data but sensitive to zero-handling; prefer Hellinger when sparsity is high.
+- For model-based methods (DESeq2, edgeR) use VST or TMM rather than pre-normalising.
+- McKnight residuals are specifically designed as a replacement for rarefaction in alpha diversity estimation.
+
+---
+-->
+
+## References

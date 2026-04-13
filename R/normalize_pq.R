@@ -1,40 +1,67 @@
 ################################################################################
-#' Transform the otu_table of a \code{\link[phyloseq]{phyloseq-class}} object
-#'   using standard ecological / compositional transformations.
+#' Unified dispatcher for all OTU-table transformations and normalisations
 #'
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
-#'   Thin wrapper around [vegan::decostand()] providing the most common
-#'   transformations used on microbial count tables, plus a few convenience
-#'   methods (`"pa"` for presence/absence and `"log1p"` for a simple
-#'   \eqn{\log(1 + x)} transformation). The function takes care of the
-#'   `taxa_are_rows` orientation so the user does not have to.
+#'   Single entry-point for all count-table transformations available in
+#'   MiscMetabar.  Ecological methods (`"tss"`, `"hellinger"`, `"clr"`,
+#'   `"rclr"`, `"log1p"`, `"z"`, `"pa"`, `"rank"`) are delegated to
+#'   [vegan::decostand()].  Library-size normalisation methods (`"rarefy"`,
+#'   `"srs"`, `"gmpr"`, `"css"`, `"tmm"`, `"vst"`) and the McKnight
+#'   log-log residual method (`"mcknight_residuals"`) are delegated to
+#'   their dedicated `*_pq()` functions.  All `...` arguments are forwarded
+#'   to the underlying function.
 #'
 #' @inheritParams clean_pq
-#' @param method (character, default `"tss"`) the transformation to apply.
-#'   One of `"tss"` (total sum scaling, i.e. relative abundances),
-#'   `"hellinger"`, `"clr"` (centered log-ratio),
-#'   `"rclr"` (robust centered log-ratio),
-#'   `"log1p"` (\eqn{\log(1 + x)}), `"z"` (standardisation, via
-#'   `decostand(method = "standardize")`), `"pa"` (presence/absence) or
-#'   `"rank"`.
-#' @param ... Additional arguments passed on to [vegan::decostand()].
+#' @param method (character, default `"tss"`) transformation to apply. One of:
+#'   \describe{
+#'     \item{`"tss"`}{Total Sum Scaling — divide by library size.}
+#'     \item{`"hellinger"`}{Square-root of proportions. Good for ordination.}
+#'     \item{`"clr"`}{Centred log-ratio (adds `pseudocount` to handle zeros).}
+#'     \item{`"rclr"`}{Robust CLR (adds `pseudocount` to handle zeros).}
+#'     \item{`"log1p"`}{\eqn{\log(1 + x)} transformation.}
+#'     \item{`"z"`}{Per-taxon z-score standardisation.}
+#'     \item{`"pa"`}{Presence/absence (0/1).}
+#'     \item{`"rank"`}{Replace counts by within-sample ranks.}
+#'     \item{`"normalize_prop"`}{TSS × constant + log, via [normalize_prop_pq()].}
+#'     \item{`"rarefy"`}{Rarefaction to equal depth, via [rarefy_pq()].}
+#'     \item{`"srs"`}{Scaling with Ranked Subsampling, via [srs_pq()].
+#'       Requires the \pkg{SRS} package.}
+#'     \item{`"gmpr"`}{Geometric Mean of Pairwise Ratios, via [gmpr_pq()].}
+#'     \item{`"css"`}{Cumulative Sum Scaling, via [css_pq()].
+#'       Requires the \pkg{metagenomeSeq} package.}
+#'     \item{`"tmm"`}{Trimmed Mean of M-values, via [tmm_pq()].
+#'       Requires the \pkg{edgeR} package.}
+#'     \item{`"vst"`}{Variance Stabilising Transformation, via [vst_pq()].
+#'       Requires the \pkg{DESeq2} package.}
+#'     \item{`"mcknight_residuals"`}{Log-log depth residuals added to
+#'       `sample_data`, via [mcknight_residuals_pq()].}
+#'   }
+#' @param pseudocount (numeric, default `1`) added before `"clr"` / `"rclr"`
+#'   to avoid non-positive values.  Ignored for all other methods.
+#' @param ... Additional arguments forwarded to the underlying function
+#'   ([vegan::decostand()], [rarefy_pq()], [srs_pq()], etc.).
 #'
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object with a
-#'   transformed `otu_table`. The orientation (`taxa_are_rows`) is preserved.
+#'   transformed `otu_table` (and augmented `sample_data` for
+#'   `"mcknight_residuals"`).
 #' @export
 #' @author Adrien Taudière
-#' @seealso [vegan::decostand()], [normalize_prop_pq()], [as_binary_otu_table()]
+#' @seealso [normalize_prop_pq()], [rarefy_pq()], [srs_pq()], [gmpr_pq()],
+#'   [css_pq()], [tmm_pq()], [vst_pq()], [mcknight_residuals_pq()],
+#'   [as_binary_otu_table()], [vegan::decostand()]
 #' @examplesIf rlang::is_installed("vegan")
-#' data_f_tss <- transform_pq(data_fungi_mini, method = "tss")
+#' data_f_tss  <- transform_pq(data_fungi_mini, method = "tss")
 #' sample_sums(data_f_tss)
 #'
 #' data_f_hell <- transform_pq(data_fungi_mini, method = "hellinger")
-#' data_f_clr <- transform_pq(data_fungi_mini, method = "clr")
-#' data_f_pa <- transform_pq(data_fungi_mini, method = "pa")
+#' data_f_clr  <- transform_pq(data_fungi_mini, method = "clr")
+#' data_f_pa   <- transform_pq(data_fungi_mini, method = "pa")
+#' data_f_rar  <- transform_pq(data_fungi_mini, method = "rarefy", seed = 1)
+#' data_f_gmpr <- transform_pq(data_fungi_mini, method = "gmpr")
 transform_pq <- function(
   physeq,
   method = c(
@@ -45,14 +72,49 @@ transform_pq <- function(
     "log1p",
     "z",
     "pa",
-    "rank"
+    "rank",
+    "normalize_prop",
+    "rarefy",
+    "srs",
+    "gmpr",
+    "css",
+    "tmm",
+    "vst",
+    "mcknight_residuals"
   ),
+  pseudocount = 1,
   ...
 ) {
   verify_pq(physeq)
   method <- match.arg(method)
 
-  # Work on a samples-in-rows matrix (vegan convention)
+  # ── delegated methods ────────────────────────────────────────────────────
+  if (method == "normalize_prop") {
+    return(normalize_prop_pq(physeq, ...))
+  }
+  if (method == "rarefy") {
+    return(rarefy_pq(physeq, ...))
+  }
+  if (method == "srs") {
+    return(srs_pq(physeq, ...))
+  }
+  if (method == "gmpr") {
+    return(gmpr_pq(physeq, ...))
+  }
+  if (method == "css") {
+    return(css_pq(physeq, ...))
+  }
+  if (method == "tmm") {
+    return(tmm_pq(physeq, ...))
+  }
+  if (method == "vst") {
+    return(vst_pq(physeq, ...))
+  }
+  if (method == "mcknight_residuals") {
+    return(mcknight_residuals_pq(physeq, ...))
+  }
+
+  # ── vegan::decostand methods ─────────────────────────────────────────────
   otu <- as(physeq@otu_table, "matrix")
   if (taxa_are_rows(physeq)) {
     otu <- t(otu)
@@ -62,8 +124,8 @@ transform_pq <- function(
     method,
     tss = vegan::decostand(otu, method = "total", ...),
     hellinger = vegan::decostand(otu, method = "hellinger", ...),
-    clr = vegan::decostand(otu, method = "clr", ...),
-    rclr = vegan::decostand(otu, method = "rclr", ...),
+    clr = vegan::decostand(otu + pseudocount, method = "clr", ...),
+    rclr = vegan::decostand(otu + pseudocount, method = "rclr", ...),
     z = vegan::decostand(otu, method = "standardize", ...),
     rank = vegan::decostand(otu, method = "rank", ...),
     pa = {
@@ -221,6 +283,11 @@ rarefy_pq <- function(
       verbose = FALSE,
       ...
     ))
+  }
+
+  # Ensure .Random.seed exists before phyloseq tries to save it
+  if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)) {
+    set.seed(NULL)
   }
 
   if (n <= 1) {
