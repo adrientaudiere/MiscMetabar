@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "69f6076bab61",
+  "session_id": "4583d70b-26e7-4297-97fe-001737ded8be",
+  "strategy": "manual-commit",
+  "created_at": "2026-04-13T23:17:14.600237168Z",
+  "branch": "dev",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "NEWS.md",
+    "R/plot_functions.R",
+    "tests/testthat/Rplots.pdf",
+    "tests/testthat/test_figures_taxo.R"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "7d8b1fff3268",
+  "token_usage": {
+    "input_tokens": 66,
+    "cache_creation_tokens": 66647,
+    "cache_read_tokens": 2417367,
+    "output_tokens": 19914,
+    "api_call_count": 56
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-04-13T23:17:14.507555504Z",
+    "agent_lines": 168,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 168,
+    "agent_percentage": 100
+  }
+}
