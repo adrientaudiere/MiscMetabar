@@ -4544,7 +4544,23 @@ tax_bar_pq <-
       n_per_group <- psm |>
         dplyr::distinct(.data[[fact]], Sample) |>
         dplyr::count(.data[[fact]])
-      n_lookup <- stats::setNames(n_per_group$n, as.character(n_per_group[[fact]]))
+      n_lookup <- stats::setNames(
+        n_per_group$n,
+        as.character(n_per_group[[fact]])
+      )
+    }
+
+    # When nb_seq = FALSE and grouping by a factor other than Sample, each OTU
+    # present in multiple samples of the same modality would be counted once per
+    # sample (summing binary 1s). The intended value is the number of distinct
+    # OTUs in each taxa rank per group: first collapse to presence per OTU per
+    # group (max across samples), then sum OTUs per (group x taxa rank).
+    if (!nb_seq && fact != "Sample") {
+      psm <- psm |>
+        dplyr::group_by(.data[[fact]], OTU, .data[[taxa]]) |>
+        dplyr::summarise(Abundance = max(Abundance), .groups = "drop") |>
+        dplyr::group_by(.data[[fact]], .data[[taxa]]) |>
+        dplyr::summarise(Abundance = sum(Abundance), .groups = "drop")
     }
 
     if (nlevels(psm[[fact]]) < 2) {
@@ -4635,7 +4651,12 @@ tax_bar_pq <-
       x_labels[is.na(x_labels)] <- "NA"
       bar_tops$label <- x_labels[bar_tops$x]
       if (show_n_samples) {
-        bar_tops$label <- paste0(bar_tops$label, "\n(n=", n_lookup[bar_tops$label], ")")
+        bar_tops$label <- paste0(
+          bar_tops$label,
+          "\n(n=",
+          n_lookup[bar_tops$label],
+          ")"
+        )
       }
 
       p <- p +
@@ -4896,7 +4917,12 @@ tax_bar_pq <-
       x_labs_n[is.na(x_labs_n)] <- "NA"
       bar_tops_n$group_label <- x_labs_n[bar_tops_n$x]
       bar_tops_n$label <- if (show_n_samples) {
-        paste0(bar_tops_n$group_label, "\n(n=", n_lookup[bar_tops_n$group_label], ")")
+        paste0(
+          bar_tops_n$group_label,
+          "\n(n=",
+          n_lookup[bar_tops_n$group_label],
+          ")"
+        )
       } else {
         bar_tops_n$group_label
       }
@@ -7003,25 +7029,26 @@ plot_ordination_pq <- function(
 
 # Single-panel bar-plot engine used by hill_bar_pq() (internal)
 .hill_bar_single <- function(
-    data,
-    x_name,
-    y_name,
-    fill_name,
-    x_lab,
-    y_lab,
-    alpha,
-    point_size,
-    base_size,
-    jitter_width,
-    bar_width,
-    add_letters,
-    p_threshold,
-    letter_size,
-    letters_top_offset,
-    y_lab_size,
-    x_lab_size,
-    show_n_samples,
-    palette) {
+  data,
+  x_name,
+  y_name,
+  fill_name,
+  x_lab,
+  y_lab,
+  alpha,
+  point_size,
+  base_size,
+  jitter_width,
+  bar_width,
+  add_letters,
+  p_threshold,
+  letter_size,
+  letters_top_offset,
+  y_lab_size,
+  x_lab_size,
+  show_n_samples,
+  palette
+) {
   # --- Kruskal-Wallis test ---
   kw <- kruskal.test(reformulate(x_name, response = y_name), data = data)
   kw_subtitle <- sprintf(
@@ -7035,15 +7062,18 @@ plot_ordination_pq <- function(
   summary_data <- data |>
     dplyr::summarise(
       mean = mean(.data[[y_name]], na.rm = TRUE),
-      se   = sd(.data[[y_name]], na.rm = TRUE) / sqrt(dplyr::n()),
-      .by  = dplyr::all_of(x_name)
+      se = sd(.data[[y_name]], na.rm = TRUE) / sqrt(dplyr::n()),
+      .by = dplyr::all_of(x_name)
     )
 
   # --- Compact letter display (Tukey HSD after Kruskal-Wallis) ---
   tukey_run <- FALSE
   if (add_letters) {
     if (kw$p.value < p_threshold) {
-      tukey <- TukeyHSD(aov(reformulate(x_name, response = y_name), data = data))
+      tukey <- TukeyHSD(aov(
+        reformulate(x_name, response = y_name),
+        data = data
+      ))
       pvals <- tukey[[x_name]][, "p adj"]
       letters_vec <- multcompView::multcompLetters(pvals)$Letters
       tukey_run <- TRUE
@@ -7055,14 +7085,14 @@ plot_ordination_pq <- function(
     point_max <- data |>
       dplyr::summarise(
         max_y = max(.data[[y_name]], na.rm = TRUE),
-        .by   = dplyr::all_of(x_name)
+        .by = dplyr::all_of(x_name)
       )
     y_offset <- diff(range(data[[y_name]], na.rm = TRUE)) * letters_top_offset
 
     summary_data <- summary_data |>
       dplyr::left_join(point_max, by = x_name) |>
       dplyr::mutate(
-        letter   = letters_vec[as.character(.data[[x_name]])],
+        letter = letters_vec[as.character(.data[[x_name]])],
         letter_y = pmax(mean + se, max_y) + y_offset
       )
   }
@@ -7075,28 +7105,33 @@ plot_ordination_pq <- function(
     ggplot2::geom_col(alpha = alpha, width = bar_width) +
     ggplot2::geom_errorbar(
       ggplot2::aes(ymin = mean - se, ymax = mean + se),
-      width = 0.2, linewidth = 0.5
+      width = 0.2,
+      linewidth = 0.5
     ) +
     ggplot2::geom_jitter(
       data = data,
       ggplot2::aes(
-        x    = .data[[x_name]],
-        y    = .data[[y_name]],
+        x = .data[[x_name]],
+        y = .data[[y_name]],
         fill = .data[[fill_name]]
       ),
-      shape = 21, size = point_size, alpha = 0.85,
-      width = jitter_width, height = 0,
+      shape = 21,
+      size = point_size,
+      alpha = 0.85,
+      width = jitter_width,
+      height = 0,
       inherit.aes = FALSE
     )
 
   if (add_letters) {
-    p <- p + ggplot2::geom_text(
-      data = summary_data,
-      ggplot2::aes(x = .data[[x_name]], y = letter_y, label = letter),
-      inherit.aes = FALSE,
-      size = letter_size,
-      fontface = "bold"
-    )
+    p <- p +
+      ggplot2::geom_text(
+        data = summary_data,
+        ggplot2::aes(x = .data[[x_name]], y = letter_y, label = letter),
+        inherit.aes = FALSE,
+        size = letter_size,
+        fontface = "bold"
+      )
   }
 
   if (show_n_samples) {
@@ -7112,14 +7147,15 @@ plot_ordination_pq <- function(
   p +
     ggplot2::scale_fill_manual(values = palette) +
     ggplot2::labs(
-      x        = x_lab,
-      y        = y_lab,
+      x = x_lab,
+      y = y_lab,
       subtitle = kw_subtitle,
-      caption  = if (add_letters && tukey_run) {
+      caption = if (add_letters && tukey_run) {
         "Error bars = \u00b11 SE\nletters from Tukey HSD pairwise comparisons"
       } else if (add_letters && !tukey_run) {
         paste0(
-          "Error bars = \u00b11 SE; Kruskal-Wallis p \u2265 ", p_threshold,
+          "Error bars = \u00b11 SE; Kruskal-Wallis p \u2265 ",
+          p_threshold,
           "\nTukey HSD pairwise comparisons not run (no global significance)"
         )
       } else {
@@ -7128,26 +7164,32 @@ plot_ordination_pq <- function(
     ) +
     ggplot2::theme_bw(base_size = base_size) +
     ggplot2::theme(
-      panel.grid.major  = ggplot2::element_blank(),
-      panel.grid.minor  = ggplot2::element_blank(),
-      panel.border      = ggplot2::element_blank(),
-      axis.line.x       = ggplot2::element_line(linewidth = 0.4),
-      axis.line.y       = ggplot2::element_line(linewidth = 0.4),
-      axis.ticks        = ggplot2::element_line(linewidth = 0.3),
-      strip.background  = ggplot2::element_blank(),
-      strip.text        = ggplot2::element_text(face = "bold"),
-      legend.key        = ggplot2::element_blank(),
+      panel.grid.major = ggplot2::element_blank(),
+      panel.grid.minor = ggplot2::element_blank(),
+      panel.border = ggplot2::element_blank(),
+      axis.line.x = ggplot2::element_line(linewidth = 0.4),
+      axis.line.y = ggplot2::element_line(linewidth = 0.4),
+      axis.ticks = ggplot2::element_line(linewidth = 0.3),
+      strip.background = ggplot2::element_blank(),
+      strip.text = ggplot2::element_text(face = "bold"),
+      legend.key = ggplot2::element_blank(),
       legend.background = ggplot2::element_blank(),
-      legend.position   = "none",
-      axis.text.y       = ggplot2::element_text(
+      legend.position = "none",
+      axis.text.y = ggplot2::element_text(
         size = if (is.null(y_lab_size)) base_size else y_lab_size
       ),
-      axis.text.x       = ggplot2::element_text(
+      axis.text.x = ggplot2::element_text(
         size = if (is.null(x_lab_size)) base_size else x_lab_size
       ),
-      plot.subtitle     = ggplot2::element_text(size = base_size * 0.8, colour = "grey40"),
-      plot.caption      = ggplot2::element_text(size = base_size * 0.7, colour = "grey50"),
-      plot.margin       = ggplot2::margin(5, 5, 5, 5, "pt")
+      plot.subtitle = ggplot2::element_text(
+        size = base_size * 0.8,
+        colour = "grey40"
+      ),
+      plot.caption = ggplot2::element_text(
+        size = base_size * 0.7,
+        colour = "grey50"
+      ),
+      plot.margin = ggplot2::margin(5, 5, 5, 5, "pt")
     )
 }
 
@@ -7217,60 +7259,67 @@ plot_ordination_pq <- function(
 #'
 #' @seealso [hill_pq()], [psmelt_samples_pq()], [ggbetween_pq()]
 hill_bar_pq <- function(
-    physeq,
-    x,
-    q = c(0, 2),
-    fill,
-    x_lab = NULL,
-    y_labs = NULL,
-    ncol = NULL,
-    alpha = 0.6,
-    point_size = 3,
-    base_size = 13,
-    jitter_width = 0.15,
-    bar_width = 0.7,
-    add_letters = TRUE,
-    p_threshold = 0.05,
-    letter_size = 5,
-    letters_top_offset = 0.2,
-    y_lab_size = NULL,
-    x_lab_size = NULL,
-    show_n_samples = TRUE,
-    palette = c(
-      "#E69F00", "#56B4E9", "#009E73", "#F0E442",
-      "#0072B2", "#D55E00", "#CC79A7", "#000000"
-    ),
-    ...) {
+  physeq,
+  x,
+  q = c(0, 2),
+  fill,
+  x_lab = NULL,
+  y_labs = NULL,
+  ncol = NULL,
+  alpha = 0.6,
+  point_size = 3,
+  base_size = 13,
+  jitter_width = 0.15,
+  bar_width = 0.7,
+  add_letters = TRUE,
+  p_threshold = 0.05,
+  letter_size = 5,
+  letters_top_offset = 0.2,
+  y_lab_size = NULL,
+  x_lab_size = NULL,
+  show_n_samples = TRUE,
+  palette = c(
+    "#E69F00",
+    "#56B4E9",
+    "#009E73",
+    "#F0E442",
+    "#0072B2",
+    "#D55E00",
+    "#CC79A7",
+    "#000000"
+  ),
+  ...
+) {
   verify_pq(physeq)
 
   data <- psmelt_samples_pq(physeq, q = q, ...)
 
-  x_var     <- rlang::ensym(x)
-  fill_var  <- if (missing(fill)) x_var else rlang::ensym(fill)
-  x_name    <- rlang::as_string(x_var)
+  x_var <- rlang::ensym(x)
+  fill_var <- if (missing(fill)) x_var else rlang::ensym(fill)
+  x_name <- rlang::as_string(x_var)
   fill_name <- rlang::as_string(fill_var)
-  x_lab     <- if (is.null(x_lab)) x_name else x_lab
+  x_lab <- if (is.null(x_lab)) x_name else x_lab
 
   ys <- paste0("Hill_", q)
 
   plot_args <- list(
-    data               = data,
-    x_name             = x_name,
-    fill_name          = fill_name,
-    x_lab              = x_lab,
-    alpha              = alpha,
-    point_size         = point_size,
-    base_size          = base_size,
-    jitter_width       = jitter_width,
-    bar_width          = bar_width,
-    add_letters        = add_letters,
-    p_threshold        = p_threshold,
-    letter_size        = letter_size,
+    data = data,
+    x_name = x_name,
+    fill_name = fill_name,
+    x_lab = x_lab,
+    alpha = alpha,
+    point_size = point_size,
+    base_size = base_size,
+    jitter_width = jitter_width,
+    bar_width = bar_width,
+    add_letters = add_letters,
+    p_threshold = p_threshold,
+    letter_size = letter_size,
     letters_top_offset = letters_top_offset,
-    y_lab_size         = y_lab_size,
-    x_lab_size         = x_lab_size,
-    show_n_samples     = show_n_samples,
-    palette            = palette
+    y_lab_size = y_lab_size,
+    x_lab_size = x_lab_size,
+    show_n_samples = show_n_samples,
+    palette = palette
   )
 
   if (length(ys) == 1) {
@@ -7283,12 +7332,15 @@ hill_bar_pq <- function(
   } else {
     plots <- lapply(seq_along(ys), function(i) {
       y_name <- ys[[i]]
-      y_lab  <- if (!is.null(y_labs) && y_name %in% names(y_labs)) {
+      y_lab <- if (!is.null(y_labs) && y_name %in% names(y_labs)) {
         y_labs[[y_name]]
       } else {
         .hill_y_lab(q[[i]])
       }
-      do.call(.hill_bar_single, c(plot_args, list(y_name = y_name, y_lab = y_lab)))
+      do.call(
+        .hill_bar_single,
+        c(plot_args, list(y_name = y_name, y_lab = y_lab))
+      )
     })
     patchwork::wrap_plots(plots, ncol = ncol)
   }

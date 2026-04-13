@@ -563,6 +563,17 @@ test_that("tax_bar_pq work with data_fungi dataset", {
   )
 })
 
+test_that("tax_bar_pq nb_seq=FALSE bar height counts distinct OTUs per group", {
+  skip_on_cran()
+  p <- tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time", nb_seq = FALSE)
+  built <- ggplot2::ggplot_build(p)
+  bar_df <- built$data[[1]]
+  # Total stacked height per group = number of distinct OTUs in that group,
+  # which cannot exceed the total number of OTUs in the phyloseq object
+  max_height <- max(tapply(bar_df$y, bar_df$x, max, na.rm = TRUE))
+  expect_lte(max_height, phyloseq::ntaxa(data_fungi_mini))
+})
+
 test_that("tax_bar_pq always shows modality labels above bars when add_ribbon=FALSE", {
   has_text_layer <- \(p) any(vapply(p$layers, \(l) inherits(l$geom, "GeomText"), logical(1)))
   get_first_text <- \(p) {
