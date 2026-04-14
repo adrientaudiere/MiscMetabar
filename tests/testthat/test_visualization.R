@@ -49,7 +49,9 @@ test_that("ggscatt_pq works", {
 
 test_that("umap_pq works", {
   if (requireNamespace("umap", quietly = TRUE)) {
-    suppressWarnings(result <- umap_pq(data_fungi))
+    # Regression test for issue #134: umap branch must not emit a tibble
+    # .name_repair deprecation warning when converting the layout matrix.
+    expect_no_warning(result <- umap_pq(data_fungi))
     expect_s3_class(result, "tbl_df")
 
     suppressWarnings(result <- umap_pq(data_fungi, pkg = "uwot"))

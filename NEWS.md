@@ -1,5 +1,6 @@
 # MiscMetabar 0.15.2 (in development)
 
+* `umap_pq()` no longer emits a tibble `.name_repair` deprecation warning when using `pkg = "umap"` (fixes #134).
 * `hill_bar_pq()` new function plotting Hill diversity bar charts (mean ±SE, jittered points, Kruskal-Wallis subtitle, optional Tukey HSD compact letter display) for one or multiple Hill orders via a patchwork layout.
 * `tax_bar_pq()` fixes a bug where `nb_seq = FALSE` with a grouping `fact` would sum binary per-sample presence values across samples sharing the same modality, inflating bar heights beyond the true OTU count. Each OTU is now counted at most once per group (present in ≥1 sample of that group), so bar segments correctly show the number of distinct OTUs in each taxonomic rank per modality.
 * `tax_bar_pq()` gains a `show_n_samples` parameter (default `FALSE`). When `TRUE`, the number of samples per group is appended below each x-axis label as `(n=X)`.
