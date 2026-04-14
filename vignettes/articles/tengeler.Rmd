@@ -66,7 +66,7 @@ accu_plot(
   add_nb_seq = TRUE,
   by.fact = TRUE,
   step = 100
-) + theme(legend.position = c(.8, .6))
+) + theme(legend.position = c(0.8, 0.6))
 ```
 
 # Explore taxonomy

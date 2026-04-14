@@ -17,7 +17,7 @@ test_that("biplot_pq works", {
     biplot_pq(
       data_fungi_2trees,
       merge_sample_by = "Tree_name",
-      plotly_version  = TRUE
+      plotly_version = TRUE
     ),
     "plotly"
   )
@@ -45,6 +45,72 @@ test_that("biplot_pq works", {
     "biplot_pq needs only two samples"
   )
   expect_error(biplot_pq(data_fungi_2trees, merge_sample_by = "tRREE_name"))
+  expect_s3_class(
+    biplot_pq(
+      data_fungi_2trees,
+      merge_sample_by = "Tree_name",
+      split_by_sample = TRUE
+    ),
+    "ggplot"
+  )
+  expect_s3_class(
+    biplot_pq(
+      data_fungi_2trees,
+      merge_sample_by = "Tree_name",
+      split_by_sample = TRUE,
+      sample_border_col = "black",
+      sample_border_width = 0.5
+    ),
+    "ggplot"
+  )
+  expect_error(biplot_pq(data_fungi_2trees, split_by_sample = TRUE))
+
+  # color_rank
+  expect_s3_class(
+    biplot_pq(
+      data_fungi_2trees,
+      merge_sample_by = "Tree_name",
+      color_rank = "Order"
+    ),
+    "ggplot"
+  )
+  expect_error(
+    biplot_pq(
+      data_fungi_2trees,
+      merge_sample_by = "Tree_name",
+      color_rank = "NotARank"
+    ),
+    "'color_rank' must be a column of tax_table"
+  )
+
+  # taxa_names_rank
+  expect_s3_class(
+    biplot_pq(
+      data_fungi_2trees,
+      merge_sample_by = "Tree_name",
+      taxa_names_rank = "Genus"
+    ),
+    "ggplot"
+  )
+  expect_error(
+    biplot_pq(
+      data_fungi_2trees,
+      merge_sample_by = "Tree_name",
+      taxa_names_rank = "NotARank"
+    ),
+    "'taxa_names_rank' must be a column of tax_table"
+  )
+
+  # both together
+  expect_s3_class(
+    biplot_pq(
+      data_fungi_2trees,
+      merge_sample_by = "Tree_name",
+      color_rank = "Order",
+      taxa_names_rank = "Genus"
+    ),
+    "ggplot"
+  )
 })
 
 
@@ -54,9 +120,7 @@ test_that("multi_biplot_pq works with data_fungi dataset", {
     multi_biplot_pq(data_fungi_abun, split_by = "Time", na_remove = FALSE)
   p2 <- multi_biplot_pq(data_fungi_abun, "Height")
   data_fungi_abun@sam_data$Random_pairs <-
-    as.factor(sample(rep(1:(
-      nsamples(data_fungi_abun) / 2
-    ), 2)))
+    as.factor(sample(rep(1:(nsamples(data_fungi_abun) / 2), 2)))
   p3 <- multi_biplot_pq(data_fungi_abun, pairs = "Random_pairs")
   expect_s3_class(p1[[1]], "ggplot")
   expect_type(p1, "list")
@@ -64,8 +128,12 @@ test_that("multi_biplot_pq works with data_fungi dataset", {
   expect_type(p2, "list")
   expect_s3_class(p3[[1]], "ggplot")
   expect_type(p3, "list")
-  expect_equal(length(p3), 85)
-  expect_error(multi_biplot_pq(data_fungi_abun, pairs = "Random_pairs", split_by = "Time"))
+  expect_length(p3, 85)
+  expect_error(multi_biplot_pq(
+    data_fungi_abun,
+    pairs = "Random_pairs",
+    split_by = "Time"
+  ))
   expect_error(multi_biplot_pq(data_fungi_abun))
   expect_error(multi_biplot_pq(data_fungi_abun, pairs = "RandomPARR"))
   expect_error(multi_biplot_pq(data_fungi_abun, split_by = "TIMMEE"))

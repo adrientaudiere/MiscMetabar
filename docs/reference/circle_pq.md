@@ -127,7 +127,6 @@ if (requireNamespace("pbapply")) {
   circle_pq(GP, "SampleType", add_nb_seq = FALSE)
   circle_pq(GP, "SampleType", taxa = "Class")
 }
-#> Loading required namespace: pbapply
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
 #> Also defined by ‘RNeXML’
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'

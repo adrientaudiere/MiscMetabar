@@ -15,7 +15,7 @@ hill_curves_pq(
   physeq,
   merge_sample_by = NULL,
   color_fac = NULL,
-  hill_scales = c(0, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, Inf),
+  q = c(0, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, Inf),
   nperm = NULL,
   na_remove = TRUE,
   wrap_factor = TRUE,
@@ -43,10 +43,10 @@ hill_curves_pq(
 - color_fac:
 
   (optional): The variable to color the barplot. For ex. same as fact.
-  If merge_sample_by is set, color_fac must be nested in the
-  merge_sample_by factor. See examples.
+  If merge_sample_by is set, color_fac must be nested in the mq_by
+  factor. See examples.
 
-- hill_scales:
+- q:
 
   Scales of Rényi diversity.
 
@@ -121,10 +121,10 @@ if (requireNamespace("vegan")) {
     linewidth = 0.5
   )
   hill_curves_pq(data_fungi_mini, "Height",
-    hill_scales = c(0, 1, 2, 8), plot_legend = FALSE
+    q = c(0, 1, 2, 8), plot_legend = FALSE
   )
   hill_curves_pq(data_fungi_mini, "Height",
-    hill_scales = c(0, 0.5, 1, 2, 4, 8),
+    q = c(0, 0.5, 1, 2, 4, 8),
     nperm = 9
   )
   hill_curves_pq(data_fungi_mini, "Height", nperm = 9, wrap_factor = FALSE)

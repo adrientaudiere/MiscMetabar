@@ -16,3 +16,7 @@
 ^vignettes/articles$
 ^cran-comments\.md$
 ^.lintr
+^\.claude$
+^\.codefactor\.yml$
+^\.entire$
+^Rplots\.pdf$

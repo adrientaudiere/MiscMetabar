@@ -14,7 +14,7 @@ postcluster_pq(
   nproc = 1,
   method = "clusterize",
   id = 0.97,
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   tax_adjust = 0,
   rank_propagation = FALSE,
   vsearch_cluster_method = "--cluster_size",
@@ -23,6 +23,9 @@ postcluster_pq(
   swarmpath = "swarm",
   d = 1,
   swarm_args = "--fastidious",
+  mmseqs2path = find_mmseqs2(),
+  mmseqs2_cluster_method = "easy-cluster",
+  mmseqs2_args = "",
   method_clusterize = "overlap",
   ...
 )
@@ -33,7 +36,7 @@ asv2otu(
   nproc = 1,
   method = "clusterize",
   id = 0.97,
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   tax_adjust = 0,
   rank_propagation = FALSE,
   vsearch_cluster_method = "--cluster_size",
@@ -42,6 +45,9 @@ asv2otu(
   swarmpath = "swarm",
   d = 1,
   swarm_args = "--fastidious",
+  mmseqs2path = find_mmseqs2(),
+  mmseqs2_cluster_method = "easy-cluster",
+  mmseqs2_args = "",
   method_clusterize = "overlap",
   ...
 )
@@ -79,7 +85,11 @@ asv2otu(
     `--cluster_size` by default (see args `vsearch_cluster_method`) and
     `-strand both` (see args `vsearch_args`)
 
-  - `swarm` use the swarm
+  - `swarm` use the swarm software (https://github.com/torognes/swarm)
+
+  - `mmseqs2` use the MMseqs2 software
+    (https://github.com/soedinglab/MMseqs2) with `easy-cluster` by
+    default (see args `mmseqs2_cluster_method`)
 
 - id:
 
@@ -108,19 +118,13 @@ asv2otu(
 
   (default: "–cluster_size) See other possible methods in the [vsearch
   manual](https://github.com/torognes/vsearch/) (e.g. `--cluster_size`
-  or `--cluster_smallmem`)
+  or `--cluster_fast`)
 
   - `--cluster_fast` : Clusterize the fasta sequences in filename,
     automatically sort by decreasing sequence length beforehand.
 
   - `--cluster_size` : Clusterize the fasta sequences in filename,
     automatically sort by decreasing sequence abundance beforehand.
-
-  - `--cluster_smallmem` : Clusterize the fasta sequences in filename
-    without automatically modifying their order beforehand. Sequence are
-    expected to be sorted by decreasing sequence length, unless
-    *–usersort* is used. In that case you may set `vsearch_args` to
-    vsearch_args = "–strand both –usersort"
 
 - vsearch_args:
 
@@ -154,6 +158,23 @@ asv2otu(
   the [SWARM pdf
   manual](https://github.com/torognes/swarm/blob/master/man/swarm_manual.pdf)
 
+- mmseqs2path:
+
+  (default:
+  [`find_mmseqs2()`](https://adrientaudiere.github.io/MiscMetabar/reference/find_mmseqs2.md))
+  path to MMseqs2
+
+- mmseqs2_cluster_method:
+
+  (default: `"easy-cluster"`) Either `"easy-cluster"` or
+  `"easy-linclust"`. See
+  [`mmseqs2_clustering()`](https://adrientaudiere.github.io/MiscMetabar/reference/mmseqs2_clustering.md).
+
+- mmseqs2_args:
+
+  (default: `""`) Additional arguments passed to the MMseqs2 clustering
+  command.
+
 - method_clusterize:
 
   (default "overlap") the method for the
@@ -184,9 +205,10 @@ More information in the associated publication
 
 ## See also
 
-[`vsearch_clustering()`](https://adrientaudiere.github.io/MiscMetabar/reference/vsearch_clustering.md)
+[`vsearch_clustering()`](https://adrientaudiere.github.io/MiscMetabar/reference/vsearch_clustering.md),
+[`swarm_clustering()`](https://adrientaudiere.github.io/MiscMetabar/reference/swarm_clustering.md),
 and
-[`swarm_clustering()`](https://adrientaudiere.github.io/MiscMetabar/reference/swarm_clustering.md)
+[`mmseqs2_clustering()`](https://adrientaudiere.github.io/MiscMetabar/reference/mmseqs2_clustering.md)
 
 ## Author
 
@@ -202,18 +224,17 @@ if (requireNamespace("DECIPHER")) {
 #> Partitioning sequences by 3-mer similarity:
 #> ================================================================================
 #> 
-#> Time difference of 0.03 secs
+#> Time difference of 0.02 secs
 #> 
 #> Sorting by relatedness within 11 groups:
-#> 
-iteration 1 of up to 17 (100.0% stability) 
+#> iteration 1 of up to 17 (100.0% stability) 
 #> 
 #> Time difference of 0.01 secs
 #> 
 #> Clustering sequences by 9-mer similarity:
 #> ================================================================================
 #> 
-#> Time difference of 0.08 secs
+#> Time difference of 0.07 secs
 #> 
 #> Clusters via relatedness sorting: 100% (0% exclusively)
 #> Clusters via rare 3-mers: 100% (0% exclusively)
@@ -234,6 +255,9 @@ if (requireNamespace("DECIPHER")) {
   if (MiscMetabar::is_vsearch_installed()) {
     d_vs <- postcluster_pq(data_fungi_mini, method = "vsearch")
   }
+  if (MiscMetabar::is_mmseqs2_installed()) {
+    d_mm <- postcluster_pq(data_fungi_mini, method = "mmseqs2")
+  }
 }
 #> Partitioning sequences by 3-mer similarity:
 #> ================================================================================
@@ -241,15 +265,14 @@ if (requireNamespace("DECIPHER")) {
 #> Time difference of 0.02 secs
 #> 
 #> Sorting by relatedness within 11 groups:
-#> 
-iteration 1 of up to 17 (100.0% stability) 
+#> iteration 1 of up to 17 (100.0% stability) 
 #> 
 #> Time difference of 0.01 secs
 #> 
 #> Clustering sequences by 9-mer similarity:
 #> ================================================================================
 #> 
-#> Time difference of 0.08 secs
+#> Time difference of 0.07 secs
 #> 
 #> Clusters via relatedness sorting: 100% (0% exclusively)
 #> Clusters via rare 3-mers: 100% (0% exclusively)

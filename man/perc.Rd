@@ -28,6 +28,11 @@ is set to TRUE)
 
 Mostly for internal use.
 }
+\examples{
+perc(0.75)
+perc(3, 10)
+perc(0.75, add_symbol = TRUE)
+}
 \author{
 Adrien Taudière
 }

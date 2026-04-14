@@ -22,7 +22,8 @@ cutadapt_remove_primers(
   cmd_is_run = TRUE,
   return_file_path = FALSE,
   args_before_cutadapt =
-    "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv && "
+    "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv && ",
+  verbose = TRUE
 )
 ```
 
@@ -83,6 +84,14 @@ cutadapt_remove_primers(
   examples, "source ~/miniconda3/etc/profile.d/conda.sh && conda
   activate cutadaptenv &&" allow to bypass the conda init which asks to
   restart the shell
+
+- verbose:
+
+  (logical, default TRUE) If FALSE, suppresses all output from the
+  cutadapt command (stdout and stderr) as well as the completion
+  message. Note: standard R suppression functions (`suppressMessages`,
+  `capture.output`) cannot silence system command output; use this
+  parameter instead.
 
 ## Value
 

@@ -36,6 +36,6 @@ Nodes are functions. Edges point in the direction of dependence.
 
 ------------------------------------------------------------------------
 
-^(This report built with **pkgnet v0.5.0**.)
+^(This report built with **pkgnet v0.6.0**.)
 
 ^([**pkgnet**](https://uptakeopensource.github.io/pkgnet/) is an open-source R package, copyright © 2017-2019 Uptake, made available under the 3-Clause BSD License.)

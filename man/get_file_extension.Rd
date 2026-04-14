@@ -23,6 +23,9 @@ Internally used in \code{\link[=count_seq]{count_seq()}}.
 Warning: don't work when there is '.' in the name of the
 file before the extension
 }
+\examples{
+get_file_extension("myfile.fasta")
+}
 \author{
 Adrien Taudière
 }

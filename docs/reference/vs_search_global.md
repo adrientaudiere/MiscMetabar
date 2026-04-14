@@ -11,7 +11,7 @@ vs_search_global(
   physeq,
   path_to_fasta = NULL,
   seq2search = NULL,
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   id = 0.8,
   iddef = 0,
   keep_temporary_files = FALSE
@@ -39,7 +39,9 @@ vs_search_global(
 
 - vsearchpath:
 
-  (default: "vsearch") path to vsearch
+  (default:
+  [`find_vsearch()`](https://adrientaudiere.github.io/MiscMetabar/reference/find_vsearch.md))
+  path to vsearch
 
 - id:
 
@@ -91,6 +93,7 @@ if (requireNamespace("seqinr")) {
 
   clean_pq(subset_taxa(data_fungi, res$identity != "*"))
 }
+#> Loading required namespace: seqinr
 #> Error in eval(e, x, parent.frame()): object 'res' not found
 # }
 ```

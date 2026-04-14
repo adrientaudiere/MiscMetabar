@@ -36,6 +36,13 @@ the first column of the first matrix is compare to the first column of
 the second matrix, the second column of the first matrix is compare to the
 second column of the second matrix and so on.
 }
+\examples{
+\dontshow{if (rlang::is_installed("vegan")) withAutoprint(\{ # examplesIf}
+m1 <- matrix(runif(9), nrow = 3)
+m2 <- matrix(runif(9), nrow = 3)
+dist_bycol(m1, m2, nperm = 9)
+\dontshow{\}) # examplesIf}
+}
 \seealso{
 \code{\link[vegan]{vegdist}}
 }

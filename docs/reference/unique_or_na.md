@@ -42,6 +42,6 @@ unique_or_na(x[c(1, 3)])
 #> [1] "a"
 unique_or_na(x)
 #> [1] NA
-unique_or_na(x) %>% typeof()
+unique_or_na(x) |> typeof()
 #> [1] "character"
 ```

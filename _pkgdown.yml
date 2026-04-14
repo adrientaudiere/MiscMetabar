@@ -1,4 +1,6 @@
 url: https://adrientaudiere.github.io/MiscMetabar/
+examples:
+  run_dont_run: false
 template:
   bootstrap: 5
   bslib:
@@ -23,6 +25,8 @@ navbar:
       href: articles/explore_data.html
     - text: Filter taxa and samples
       href: articles/filter.html
+    - text: Transformation and normalisation
+      href: articles/normalization.html
     - text: Reclustering
       href: articles/Reclustering.html
     - text: Tree building and visualization
@@ -65,6 +69,8 @@ reference:
   contents:
   - clean_pq
   - verify_pq
+  - unwanted_tax_patterns
+  - verify_tax_table
 
 - subtitle: Taxonomy
   contents:
@@ -73,6 +79,7 @@ reference:
   - assign_blastn
   - assign_dada2
   - assign_idtaxa
+  - assign_mmseqs2
   - assign_sintax
   - assign_vsearch_lca
   - blast_pq
@@ -88,12 +95,20 @@ reference:
   - funguild_assign
   - get_funguild_db
 
-- subtitle: Transform OTU table only
+- subtitle: Transform OTU table only. See also vignette on [transformation & normalisation](articles/normalization.html)
   contents:
   - as_binary_otu_table
+  - css_pq
+  - gmpr_pq
+  - mcknight_residuals_pq
   - normalize_prop_pq
+  - rarefy_pq
+  - srs_pq
   - taxa_as_columns
   - taxa_as_rows
+  - tmm_pq
+  - transform_pq
+  - vst_pq
 
 - subtitle: Subset/merge taxa
   contents:
@@ -116,6 +131,7 @@ reference:
   - asv2otu
   - lulu
   - lulu_pq
+  - mmseqs2_clustering
   - mumu_pq
   - swarm_clustering
   - vsearch_clustering
@@ -148,14 +164,17 @@ reference:
   - accu_plot
   - accu_plot_balanced_modality
   - accu_samp_threshold
+  - divent_hill_matrix_pq
   - ggbetween_pq
   - ggscatt_pq
   - glmutli_pq
+  - hill_acc_pq
   - hill_curves_pq
   - hill_pq
   - hill_test_rarperm_pq
   - hill_tuckey_pq
   - iNEXT_pq
+  - profile_hill_pq
 
 - subtitle: beta-diversity
   contents:
@@ -175,6 +194,7 @@ reference:
   - plot_tsne_pq
   - plot_var_part_pq
   - ridges_pq
+  - ridges_sam_pq
   - SRS_curve_pq
   - tsne_pq
   - umap_pq
@@ -260,6 +280,7 @@ reference:
   contents:
   - fac2col
   - funky_color
+  - reorder_distinct_colors
   - transp
 - subtitle: Fasta taxonomic database
   contents:
@@ -271,7 +292,12 @@ reference:
   - get_file_extension
 - subtitle: External software management
   contents:
+  - find_mmseqs2
+  - find_vsearch
+  - install_mmseqs2
+  - install_vsearch
   - is_cutadapt_installed
+  - is_mmseqs2_installed
   - is_falco_installed
   - is_krona_installed
   - is_mumu_installed

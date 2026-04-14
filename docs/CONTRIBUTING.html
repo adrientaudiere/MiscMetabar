@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -139,15 +139,21 @@
 <div class="section level2">
 <h2 id="contributing-code">Contributing code<a class="anchor" aria-label="anchor" href="#contributing-code"></a></h2>
 <p>I add some rules for the package development in the pkgdown site <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html">here</a>. In short :</p>
-<ul><li><p>Always indicate required params (required)</p></li>
-<li><p>Indicate default values only when (i) a set of values is possible (e.g “bray” for the parameter method in [vegan::vegdist()]) or (ii) when this value is well thought out and a good default value for most users (e.g. the number of permutation or processors, or the level of identity to cluster at 97%).</p></li>
-<li><p>Indicate the type for logical and integer params.</p></li>
-<li><p>Homogenize the params names across function.</p></li>
-<li><p>Prefer ASVs to OTUs denomination, even thought both are almost interchangeable in the MiscMetabar package. #### Lifecycle</p></li>
-<li><p><strong>Experimental</strong>: First status for a function</p></li>
-<li><p><strong>Maturing</strong>: Some tests and/or analyses make stronger these functions</p></li>
-<li><p><strong>Stable</strong>: Good level of confidence</p></li>
-</ul><div class="section level3">
+<ul><li>Always indicate required params (required)</li>
+<li>Indicate default values only when (i) a set of values is possible (e.g “bray” for the parameter method in [vegan::vegdist()]) or (ii) when this value is well thought out and a good default value for most users (e.g. the number of permutation or processors, or the level of identity to cluster at 97%).</li>
+<li>Indicate the type for logical and integer params.</li>
+<li>Homogenize the params names across function.</li>
+<li>Prefer ASVs to OTUs denomination, even thought both are almost interchangeable in the MiscMetabar package.</li>
+</ul><div class="section level4">
+<h4 id="lifecycle">Lifecycle<a class="anchor" aria-label="anchor" href="#lifecycle"></a></h4>
+<ul><li>
+<strong>Experimental</strong>: First status for a function</li>
+<li>
+<strong>Maturing</strong>: Some tests and/or analyses make stronger these functions</li>
+<li>
+<strong>Stable</strong>: Good level of confidence</li>
+</ul></div>
+<div class="section level3">
 <h3 id="general-workflow">General workflow<a class="anchor" aria-label="anchor" href="#general-workflow"></a></h3>
 <p>We use the <a href="https://docs.github.com/en/get-started/quickstart/github-flow" class="external-link">GitHub flow</a> to collaborate on this project:</p>
 <ol style="list-style-type: decimal"><li>

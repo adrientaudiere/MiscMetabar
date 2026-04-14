@@ -26,6 +26,15 @@ taxa names
 
 Useful in targets bioinformatic pipeline.
 }
+\examples{
+pq_seq_names <- phyloseq::phyloseq(
+  phyloseq::otu_table(data_fungi_mini),
+  phyloseq::sample_data(data_fungi_mini),
+  phyloseq::tax_table(data_fungi_mini)
+)
+phyloseq::taxa_names(pq_seq_names) <- as.character(phyloseq::refseq(data_fungi_mini))
+add_dna_to_phyloseq(pq_seq_names)
+}
 \author{
 Adrien Taudière
 }

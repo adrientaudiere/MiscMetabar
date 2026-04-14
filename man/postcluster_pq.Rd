@@ -12,7 +12,7 @@ postcluster_pq(
   nproc = 1,
   method = "clusterize",
   id = 0.97,
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   tax_adjust = 0,
   rank_propagation = FALSE,
   vsearch_cluster_method = "--cluster_size",
@@ -21,6 +21,9 @@ postcluster_pq(
   swarmpath = "swarm",
   d = 1,
   swarm_args = "--fastidious",
+  mmseqs2path = find_mmseqs2(),
+  mmseqs2_cluster_method = "easy-cluster",
+  mmseqs2_args = "",
   method_clusterize = "overlap",
   ...
 )
@@ -31,7 +34,7 @@ asv2otu(
   nproc = 1,
   method = "clusterize",
   id = 0.97,
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   tax_adjust = 0,
   rank_propagation = FALSE,
   vsearch_cluster_method = "--cluster_size",
@@ -40,6 +43,9 @@ asv2otu(
   swarmpath = "swarm",
   d = 1,
   swarm_args = "--fastidious",
+  mmseqs2path = find_mmseqs2(),
+  mmseqs2_cluster_method = "easy-cluster",
+  mmseqs2_args = "",
   method_clusterize = "overlap",
   ...
 )
@@ -62,7 +68,9 @@ Set the clustering method.
 \item \code{vsearch} use the vsearch software (https://github.com/torognes/vsearch)
 with arguments \code{--cluster_size} by default (see args \code{vsearch_cluster_method})
 and \verb{-strand both} (see args \code{vsearch_args})
-\item \code{swarm} use the swarm
+\item \code{swarm} use the swarm software (https://github.com/torognes/swarm)
+\item \code{mmseqs2} use the MMseqs2 software (https://github.com/soedinglab/MMseqs2)
+with \code{easy-cluster} by default (see args \code{mmseqs2_cluster_method})
 }}
 
 \item{id}{(default: 0.97) level of identity to cluster}
@@ -106,6 +114,14 @@ amplicons, meaning that two amplicons will be grouped if they have \code{d}
 element defining other parameters to  passed on to swarm See other possible
 methods in the \href{https://github.com/torognes/swarm/blob/master/man/swarm_manual.pdf}{SWARM pdf manual}}
 
+\item{mmseqs2path}{(default: \code{\link[=find_mmseqs2]{find_mmseqs2()}}) path to MMseqs2}
+
+\item{mmseqs2_cluster_method}{(default: \code{"easy-cluster"}) Either
+\code{"easy-cluster"} or \code{"easy-linclust"}. See \code{\link[=mmseqs2_clustering]{mmseqs2_clustering()}}.}
+
+\item{mmseqs2_args}{(default: \code{""}) Additional arguments passed to the
+MMseqs2 clustering command.}
+
 \item{method_clusterize}{(default "overlap") the method for the \code{\link[DECIPHER:Clusterize]{DECIPHER::Clusterize()}} method}
 
 \item{...}{Additional arguments passed on to \code{\link[DECIPHER:Clusterize]{DECIPHER::Clusterize()}}}
@@ -142,6 +158,9 @@ if (requireNamespace("DECIPHER")) {
   if (MiscMetabar::is_vsearch_installed()) {
     d_vs <- postcluster_pq(data_fungi_mini, method = "vsearch")
   }
+  if (MiscMetabar::is_mmseqs2_installed()) {
+    d_mm <- postcluster_pq(data_fungi_mini, method = "mmseqs2")
+  }
 }
 }
 }
@@ -152,7 +171,8 @@ More information in the associated publication
 \url{https://pubmed.ncbi.nlm.nih.gov/27781170}.
 }
 \seealso{
-\code{\link[=vsearch_clustering]{vsearch_clustering()}} and \code{\link[=swarm_clustering]{swarm_clustering()}}
+\code{\link[=vsearch_clustering]{vsearch_clustering()}}, \code{\link[=swarm_clustering]{swarm_clustering()}},
+and \code{\link[=mmseqs2_clustering]{mmseqs2_clustering()}}
 }
 \author{
 Adrien Taudière

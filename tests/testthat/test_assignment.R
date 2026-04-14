@@ -23,7 +23,7 @@ test_that("assign_blastn works", {
     min_bit_score = 20
   )
 
-  expect_equal(dim(mat), c(41, 9))
+  expect_identical(dim(mat), c(41L, 9L))
 
   expect_error(assign_blastn(dna, database = "non_existent_db"))
 })
@@ -48,7 +48,7 @@ test_that("assign_dada2 works", {
       from_sintax = TRUE
     )
     expect_s4_class(data_fungi_mini2, "phyloseq")
-    expect_equal(ncol(data_fungi_mini2@tax_table), 20)
+    expect_identical(ncol(data_fungi_mini2@tax_table), 20L)
   }
 })
 
@@ -66,5 +66,5 @@ test_that("assign_idtaxa works", {
     )
   }
   expect_s4_class(data_fungi_mini2, "phyloseq")
-  expect_equal(ncol(data_fungi_mini2@tax_table), 16)
+  expect_identical(ncol(data_fungi_mini2@tax_table), 16L)
 })

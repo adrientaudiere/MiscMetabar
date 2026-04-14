@@ -26,6 +26,12 @@ in the \href{https://github.com/brendanf/FUNGuildR/}{FUNGuildR} package.
 
 Please cite this publication (\doi{10.1016/j.funeco.2015.06.006}).
 }
+\examples{
+\dontrun{
+get_funguild_db()
+}
+
+}
 \references{
 Nguyen NH, Song Z, Bates ST, Branco S, Tedersoo L, Menke J,
 Schilling JS, Kennedy PG. 2016. \emph{FUNGuild: An open annotation tool for

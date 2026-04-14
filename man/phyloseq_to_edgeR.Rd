@@ -4,7 +4,7 @@
 \alias{phyloseq_to_edgeR}
 \title{Convert phyloseq OTU count data into DGEList for edgeR package}
 \usage{
-phyloseq_to_edgeR(physeq, group, method = "RLE", ...)
+phyloseq_to_edgeR(physeq, group, method = "RLE", remove_na = TRUE, ...)
 }
 \arguments{
 \item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
@@ -29,6 +29,8 @@ the following options to the \code{method} argument:
 
 \code{c("TMM", "RLE", "upperquartile", "none")}.}
 
+\item{remove_na}{(logical) If TRUE, samples with NA values in the group variable will be removed.}
+
 \item{...}{Additional arguments passed on to \code{\link[edgeR]{DGEList}}}
 }
 \value{
@@ -36,4 +38,12 @@ A DGEList object. See \code{\link[edgeR:estimateTagwiseDisp]{edgeR::estimateTagw
 }
 \description{
 Convert phyloseq OTU count data into DGEList for edgeR package
+}
+\examples{
+\donttest{
+if (requireNamespace("edgeR")) {
+  phyloseq_to_edgeR(data_fungi_mini, group = "Height")
+}
+}
+
 }

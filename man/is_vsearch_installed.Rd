@@ -4,10 +4,10 @@
 \alias{is_vsearch_installed}
 \title{Test if vsearch is installed.}
 \usage{
-is_vsearch_installed(path = "vsearch")
+is_vsearch_installed(path = find_vsearch())
 }
 \arguments{
-\item{path}{(default: vsearch) Path to vsearch}
+\item{path}{(default: \code{\link[=find_vsearch]{find_vsearch()}}) Path to vsearch}
 }
 \value{
 A logical that say if vsearch is install in
@@ -24,6 +24,9 @@ test coverage
 }
 \examples{
 MiscMetabar::is_vsearch_installed()
+}
+\seealso{
+\code{\link[=find_vsearch]{find_vsearch()}}, \code{\link[=install_vsearch]{install_vsearch()}}
 }
 \author{
 Adrien Taudière

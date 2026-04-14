@@ -15,6 +15,9 @@ a color palette
 \description{
 Funky palette color
 }
+\examples{
+funky_color(5)
+}
 \seealso{
 The R package RColorBrewer, proposing a nice selection of color palettes. The viridis package, with many excellent palettes
 }

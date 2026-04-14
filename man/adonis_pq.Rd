@@ -8,6 +8,7 @@ adonis_pq(
   physeq,
   formula,
   dist_method = "bray",
+  by = "terms",
   merge_sample_by = NULL,
   na_remove = FALSE,
   correction_for_sample_size = FALSE,
@@ -29,6 +30,14 @@ Variables must be present in the \code{physeq@sam_data} slot.}
 \code{\link[phyloseq:distanceMethodList]{phyloseq::distanceMethodList()}}.
 For aitchison and robust.aitchison distance, \code{\link[vegan:vegdist]{vegan::vegdist()}}
 function is directly used.}
+
+\item{by}{(character, default "terms")  by = "terms" will assess significance
+for each term (sequentially from first to last); if by = NULL ,
+the p-value is computed for the entire model i.e. the overall significance
+of all terms together is computed,  setting by = "margin" will assess the
+marginal effects of the terms (each marginal term analyzed in a model
+with all other variables), by = "onedf" will analyze one-degree-of-freedom
+contrasts sequentially. See \code{?vegan::adonis2} for more information.}
 
 \item{merge_sample_by}{a vector to determine
 which samples to merge using the \code{\link[=merge_samples2]{merge_samples2()}}
@@ -58,13 +67,7 @@ beforehand to achieve reproducible results. Default is FALSE.}
 
 \item{verbose}{(logical, default TRUE) If TRUE, prompt some messages.}
 
-\item{...}{Additional arguments passed on to \code{\link[vegan:adonis]{vegan::adonis2()}} function.
-Note that the parameter \code{by} is important. If by is set to NULL
-(default) the p-value is computed for the entire model.
-by = NULL will assess the overall significance of all terms together,
-by = "terms" will assess significance for each term (sequentially from first to last),
-setting by = "margin" will assess the marginal effects of the terms (each marginal term analyzed in a model with all other variables),
-by = "onedf" will analyze one-degree-of-freedom contrasts sequentially. The argument is passed on to anova.cca.}
+\item{...}{Additional arguments passed on to \code{\link[vegan:adonis]{vegan::adonis2()}} function.}
 }
 \value{
 The function returns an anova.cca result object with a
@@ -89,12 +92,14 @@ use this function.
 data(enterotype)
 \donttest{
 adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE)
-adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "terms")
+adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = NULL)
 adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "onedf")
 adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "margin")
 
-adonis_pq(enterotype, "SeqTech", dist_method = "jaccard", by = "terms")
-adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison", by = "terms")
+adonis_pq(enterotype, "SeqTech", dist_method = "jaccard")
+adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison")
+
+adonis_pq(data_fungi, "Time*Height", na_remove = TRUE, correction_for_sample_size = TRUE)
 }
 }
 \author{

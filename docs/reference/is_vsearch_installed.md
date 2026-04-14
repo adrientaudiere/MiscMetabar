@@ -8,18 +8,25 @@ coverage
 ## Usage
 
 ``` r
-is_vsearch_installed(path = "vsearch")
+is_vsearch_installed(path = find_vsearch())
 ```
 
 ## Arguments
 
 - path:
 
-  (default: vsearch) Path to vsearch
+  (default:
+  [`find_vsearch()`](https://adrientaudiere.github.io/MiscMetabar/reference/find_vsearch.md))
+  Path to vsearch
 
 ## Value
 
 A logical that say if vsearch is install in
+
+## See also
+
+[`find_vsearch()`](https://adrientaudiere.github.io/MiscMetabar/reference/find_vsearch.md),
+[`install_vsearch()`](https://adrientaudiere.github.io/MiscMetabar/reference/install_vsearch.md)
 
 ## Author
 

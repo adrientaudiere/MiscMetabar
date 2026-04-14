@@ -23,7 +23,7 @@ Note that (if correction_for_sample_size is TRUE, default behavior)
 this function use a sqrt of the read numbers in the linear
 model in order to correct for uneven sampling depth. This correction
 is only done before tuckey HSD plot and do not change the hill number
-computed."></head><body>
+computed."><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -31,7 +31,7 @@ computed."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -106,7 +106,8 @@ computed.</p>
 <span>  <span class="va">physeq</span>,</span>
 <span>  fact <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  variable <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  hill_scales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>  q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>  hill_scales <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  color_fac <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  letters <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  add_points <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -116,7 +117,8 @@ computed.</p>
 <span>  plot_with_tuckey <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  correction_for_sample_size <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  na_remove <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  vioplot <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  vioplot <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -138,12 +140,16 @@ the <code>sam_data</code> slot of the physeq object.</p></dd>
 <dd><p>: Alias for factor. Kept only for backward compatibility.</p></dd>
 
 
+<dt id="arg-q">q<a class="anchor" aria-label="anchor" href="#arg-q"></a></dt>
+<dd><p>(vector) Hill diversity orders to compute. Default computes
+Hill number 0 (species richness), 1 (exponential of Shannon index) and
+2 (inverse of Simpson index). Hill numbers are more appropriate in DNA
+metabarcoding studies when <code>q &gt; 0</code> (Alberdi &amp; Gilbert, 2019;
+Calderón-Sanou et al., 2019).</p></dd>
+
+
 <dt id="arg-hill-scales">hill_scales<a class="anchor" aria-label="anchor" href="#arg-hill-scales"></a></dt>
-<dd><p>(a vector of integer) The list of q values to compute
-the hill number H^q. If Null, no hill number are computed. Default value
-compute the Hill number 0 (Species richness), the Hill number 1
-(exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
-Index).</p></dd>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> Use <code>q</code> instead.</p></dd>
 
 
 <dt id="arg-color-fac">color_fac<a class="anchor" aria-label="anchor" href="#arg-color-fac"></a></dt>
@@ -212,6 +218,11 @@ letters = TRUE</p></dd>
 <dd><p>(logical, default FALSE) Do we plot violin plot instead of
 boxplot ?</p></dd>
 
+
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>Additional arguments passed to <code><a href="divent_hill_matrix_pq.html">divent_hill_matrix_pq()</a></code> and
+hence to <code><a href="https://ericmarcon.github.io/divent/reference/div_hill.html" class="external-link">divent::div_hill()</a></code> (e.g. <code>estimator = "naive"</code>).</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -226,6 +237,16 @@ against the variable</p></li>
 <li><p>plot_tuckey : plot the result of the Tuckey HSD test</p></li>
 </ul></div>
     <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <p>Alberdi, A., &amp; Gilbert, M. T. P. (2019). A guide to the application of
+Hill numbers to DNA-based diversity analyses. <em>Molecular Ecology Resources</em>.
+<a href="https://doi.org/10.1111/1755-0998.13014" class="external-link">doi:10.1111/1755-0998.13014</a></p>
+<p>Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., &amp; Thuiller, W.
+(2019). From environmental DNA sequences to ecological conclusions: How
+strong is the influence of methodological choices? <em>Journal of Biogeography</em>,
+47. <a href="https://doi.org/10.1111/jbi.13681" class="external-link">doi:10.1111/jbi.13681</a></p>
+    </div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="psmelt_samples_pq.html">psmelt_samples_pq()</a></code> and <code><a href="ggbetween_pq.html">ggbetween_pq()</a></code></p></div>
     </div>
@@ -237,7 +258,9 @@ against the variable</p></li>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">hill_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="st">"Height"</span>, hill_scales <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">hill_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="st">"Height"</span>, q <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 2 out of 2 Hill scales do not show any global trends with you factor Height. Tuckey HSD plot is not informative for those Hill scales. Letters are not printed for those Hill scales</span>
 <span class="r-in"><span><span class="va">p_h1</span> <span class="op">&lt;-</span> <span class="va">p</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">p_h2</span> <span class="op">&lt;-</span> <span class="va">p</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></span>
@@ -253,20 +276,15 @@ against the variable</p></li>
 <span class="r-in"><span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"patchwork"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>    <span class="fu">patchwork</span><span class="fu">::</span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html" class="external-link">wrap_plots</a></span><span class="op">(</span><span class="va">p2</span>, guides <span class="op">=</span> <span class="st">"collect"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">}</span></span></span>
-<span class="r-in"><span>  <span class="co"># Artificially modify data_fungi to force alpha-diversity effect</span></span></span>
-<span class="r-in"><span>  <span class="va">data_fungi_modif</span> <span class="op">&lt;-</span> <span class="fu"><a href="clean_pq.html">clean_pq</a></span><span class="op">(</span><span class="fu"><a href="subset_samples_pq.html">subset_samples_pq</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">sam_data</span><span class="op">$</span><span class="va">Height</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="va">data_fungi_modif</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span><span class="va">data_fungi_modif</span><span class="op">@</span><span class="va">sam_data</span><span class="op">$</span><span class="va">Height</span> <span class="op">==</span> <span class="st">"High"</span>, <span class="op">]</span> <span class="op">&lt;-</span></span></span>
-<span class="r-in"><span>    <span class="va">data_fungi_modif</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span><span class="va">data_fungi_modif</span><span class="op">@</span><span class="va">sam_data</span><span class="op">$</span><span class="va">Height</span> <span class="op">==</span> <span class="st">"High"</span>, <span class="op">]</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/ntaxa-methods.html" class="external-link">ntaxa</a></span><span class="op">(</span><span class="va">data_fungi_modif</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/ntaxa-methods.html" class="external-link">ntaxa</a></span><span class="op">(</span><span class="va">data_fungi_modif</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="va">p3</span> <span class="op">&lt;-</span> <span class="fu">hill_pq</span><span class="op">(</span><span class="va">data_fungi_modif</span>, <span class="st">"Height"</span>,</span></span>
+<span class="r-in"><span>  <span class="va">p3</span> <span class="op">&lt;-</span> <span class="fu">hill_pq</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Height"</span>,</span></span>
 <span class="r-in"><span>    letters <span class="op">=</span> <span class="cn">TRUE</span>, vioplot <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>    add_points <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in rows.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 2 out of 3 Hill scales do not show any global trends with you factor Time. Tuckey HSD plot is not informative for those Hill scales. Letters are not printed for those Hill scales</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 144 taxa and 0 samples.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in rows.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 3 out of 3 Hill scales do not show any global trends with you factor Height. Tuckey HSD plot is not informative for those Hill scales. Letters are not printed for those Hill scales</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
@@ -279,7 +297,7 @@ against the variable</p></li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

@@ -125,6 +125,15 @@ accu_plot <-
       stop("physeq must be a phyloseq object")
     }
 
+    if (!is.null(fact) && nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
+      stop(
+        "The factor '",
+        fact,
+        "' must have at least two levels for accu_plot ",
+        "(species accumulation curves require at least 2 groups)."
+      )
+    }
+
     if (!taxa_are_rows(physeq)) {
       physeq@otu_table <-
         otu_table(t(physeq@otu_table), taxa_are_rows = TRUE)
@@ -353,6 +362,16 @@ accu_plot_balanced_modality <- function(
   verbose = FALSE,
   ...
 ) {
+  if (nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
+    stop(
+      "The factor '",
+      fact,
+      "' must have at least two levels for ",
+      "accu_plot_balanced_modality (balanced accumulation curves require ",
+      "at least 2 groups)."
+    )
+  }
+
   if (rarefy_by_sample_before_merging) {
     p_for_dim <- accu_plot(
       rarefy_sample_count_by_modality(
@@ -394,7 +413,7 @@ accu_plot_balanced_modality <- function(
   }
   for (i in 1:nperm) {
     if (rarefy_by_sample_before_merging) {
-      plist[, , i] <-
+      plist[,, i] <-
         as.matrix(suppressWarnings(suppressMessages(
           accu_plot(
             rarefy_sample_count_by_modality(
@@ -449,8 +468,8 @@ accu_plot_balanced_modality <- function(
 
   res_mean$factor <- p_for_dim$.id
 
-  res_mean <- res_mean %>%
-    dplyr::filter(!is.na(X1)) %>%
+  res_mean <- res_mean |>
+    dplyr::filter(!is.na(X1)) |>
     arrange(X1)
 
   p <- ggplot(res_mean, aes(x = x, y = X1, color = factor)) +
@@ -509,7 +528,7 @@ accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
   res <- vector("list", length(unique(res_accuplot$data$.id)))
   names(res) <- unique(res_accuplot$data$.id)
   for (id in unique(res_accuplot$data$.id)) {
-    data <- res_accuplot$data %>% dplyr::filter(.id == id)
+    data <- res_accuplot$data |> dplyr::filter(.id == id)
     proportion <- data$X1 / max(data$X1)
     res[[id]] <- data$x[proportion > threshold][1]
   }
@@ -654,6 +673,18 @@ circle_pq <-
         },
         cl = nproc
       )
+    if (!is.matrix(otu_table_ech)) {
+      otu_table_ech <- matrix(
+        otu_table_ech,
+        nrow = 1,
+        dimnames = list(
+          levels(as.factor(
+            unlist(unclass(physeq@sam_data[, fact]))
+          )),
+          names(otu_table_ech)
+        )
+      )
+    }
     if (rarefy) {
       otu_table_ech_interm <-
         vegan::rrarefy(otu_table_ech, min(rowSums(otu_table_ech)))
@@ -675,14 +706,15 @@ circle_pq <-
       otu_table_ech <- otu_table_ech_interm
     }
 
-    otu_table_ech <- otu_table_ech[, colSums(otu_table_ech) > 0]
+    otu_table_ech <- otu_table_ech[, colSums(otu_table_ech) > 0, drop = FALSE]
 
     # Keep only taxa and modalities with a sufficient proportion (min_prop_tax,
     # min_prop_mod) to plot
     o_t_e_interm <-
       otu_table_ech[
         (rowSums(otu_table_ech) / sum(otu_table_ech)) > min_prop_mod,
-        (colSums(otu_table_ech) / sum(otu_table_ech)) > min_prop_tax
+        (colSums(otu_table_ech) / sum(otu_table_ech)) > min_prop_tax,
+        drop = FALSE
       ]
     if (nrow(o_t_e_interm) != nrow(otu_table_ech)) {
       message(
@@ -886,14 +918,25 @@ sankey_pq <-
             sum
           )
         })
+      if (!is.matrix(mat_interm)) {
+        mat_interm <- matrix(
+          mat_interm,
+          nrow = 1,
+          dimnames = list(
+            levels(as.factor(
+              unlist(unclass(physeq@sam_data[, fact]))
+            )),
+            names(mat_interm)
+          )
+        )
+      }
 
       if (!add_nb_seq) {
         mat_interm <-
           apply(mat_interm, 1, function(x) {
             tapply(
               x,
-              physeq@tax_table[
-                ,
+              physeq@tax_table[,
                 taxa[length(taxa)]
               ],
               function(x) {
@@ -906,13 +949,19 @@ sankey_pq <-
           apply(mat_interm, 1, function(x) {
             tapply(
               x,
-              physeq@tax_table[
-                ,
+              physeq@tax_table[,
                 taxa[length(taxa)]
               ],
               sum
             )
           })
+      }
+      if (!is.matrix(mat_interm)) {
+        mat_interm <- matrix(
+          mat_interm,
+          ncol = 1,
+          dimnames = list(names(mat_interm), colnames(mat_interm))
+        )
       }
 
       samp_links <- net_matrix2links(mat_interm)
@@ -1049,6 +1098,15 @@ venn_pq <-
 
     moda <-
       as.factor(unlist(unclass(physeq@sam_data[, fact])[fact]))
+
+    if (nlevels(moda) < 2) {
+      stop(
+        "The factor '",
+        fact,
+        "' must have at least two levels for venn_pq ",
+        "(Venn diagrams require at least 2 sets)."
+      )
+    }
     if (length(moda) != dim(physeq@otu_table)[1]) {
       data_venn <-
         t(apply(physeq@otu_table, 1, function(x) {
@@ -1344,6 +1402,15 @@ ggvenn_pq <- function(
     physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
   }
 
+  if (nlevels(physeq@sam_data[[fact]]) < 2) {
+    stop(
+      "The factor '",
+      fact,
+      "' must have at least two levels for ggvenn_pq ",
+      "(Venn diagrams require at least 2 sets)."
+    )
+  }
+
   if (na_remove) {
     new_physeq <- subset_samples_pq(physeq, !is.na(physeq@sam_data[[fact]]))
     if (nsamples(physeq) - nsamples(new_physeq) > 0 && verbose) {
@@ -1426,12 +1493,15 @@ ggvenn_pq <- function(
 
   for (f in levels(physeq@sam_data[[fact]])) {
     newphyseq <- physeq
-    new_DF <- newphyseq@sam_data[newphyseq@sam_data[[fact]] == f, ]
+    new_DF <- newphyseq@sam_data[
+      newphyseq@sam_data[[fact]] == f,
+      ,
+      drop = FALSE
+    ]
     sample_data(newphyseq) <- sample_data(new_DF)
     newphyseq <- clean_pq(newphyseq)
     if (is.null(taxonomic_rank) || type == "nb_seq") {
-      res[[f]] <- colnames(newphyseq@otu_table[
-        ,
+      res[[f]] <- colnames(newphyseq@otu_table[,
         colSums(newphyseq@otu_table) > min_nb_seq
       ])
     } else {
@@ -1597,11 +1667,14 @@ multiplot <-
 #' @param fact (required) The variable to test. Must be present in
 #'   the `sam_data` slot of the physeq object.
 #' @param variable : Alias for factor. Kept only for backward compatibility.
-#' @param hill_scales (a vector of integer) The list of q values to compute
-#'   the hill number H^q. If Null, no hill number are computed. Default value
-#'   compute the Hill number 0 (Species richness), the Hill number 1
-#'   (exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
-#'   Index).
+#' @param q (vector) Hill diversity orders to compute. Default computes
+#'   Hill number 0 (species richness), 1 (exponential of Shannon index) and
+#'   2 (inverse of Simpson index). Hill numbers are more appropriate in DNA
+#'   metabarcoding studies when `q > 0` (Alberdi & Gilbert, 2019;
+#'   Calderón-Sanou et al., 2019).
+#' @param hill_scales `r lifecycle::badge("deprecated")` Use `q` instead.
+#' @param ... Additional arguments passed to [divent_hill_matrix_pq()] and
+#'   hence to [divent::div_hill()] (e.g. `estimator = "naive"`).
 #' @param color_fac (optional): The variable to color the barplot. For ex.
 #'   same as fact. Not very useful because ggplot2 plot colors can be
 #'   change using `scale_color_XXX()` function.
@@ -1654,7 +1727,7 @@ multiplot <-
 #' @author Adrien Taudière
 #' @examples
 #'
-#' p <- hill_pq(data_fungi_mini, "Height", hill_scales = 1:2)
+#' p <- hill_pq(data_fungi_mini, "Height", q = 1:2)
 #' p_h1 <- p[[1]] + theme(legend.position = "none")
 #' p_h2 <- p[[2]] + theme(legend.position = "none")
 #' multiplot(plotlist = list(p_h1, p_h2, p[[3]]), cols = 4)
@@ -1668,23 +1741,28 @@ multiplot <-
 #'   if (requireNamespace("patchwork")) {
 #'     patchwork::wrap_plots(p2, guides = "collect")
 #'   }
-#'   # Artificially modify data_fungi to force alpha-diversity effect
-#'   data_fungi_modif <- clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height)))
-#'   data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <-
-#'     data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] +
-#'     sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
-#'   p3 <- hill_pq(data_fungi_modif, "Height",
+#'   p3 <- hill_pq(data_fungi, "Height",
 #'     letters = TRUE, vioplot = TRUE,
 #'     add_points = TRUE
 #'   )
 #' }
 #' }
 #' @seealso [psmelt_samples_pq()] and [ggbetween_pq()]
+#' @references
+#' Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of
+#'   Hill numbers to DNA-based diversity analyses. *Molecular Ecology Resources*.
+#'   \doi{10.1111/1755-0998.13014}
+#'
+#' Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., & Thuiller, W.
+#'   (2019). From environmental DNA sequences to ecological conclusions: How
+#'   strong is the influence of methodological choices? *Journal of Biogeography*,
+#'   47. \doi{10.1111/jbi.13681}
 hill_pq <- function(
   physeq,
   fact = NULL,
   variable = NULL,
-  hill_scales = c(0, 1, 2),
+  q = c(0, 1, 2),
+  hill_scales = lifecycle::deprecated(),
   color_fac = NA,
   letters = FALSE,
   add_points = FALSE,
@@ -1694,8 +1772,17 @@ hill_pq <- function(
   plot_with_tuckey = TRUE,
   correction_for_sample_size = TRUE,
   na_remove = TRUE,
-  vioplot = FALSE
+  vioplot = FALSE,
+  ...
 ) {
+  if (lifecycle::is_present(hill_scales)) {
+    lifecycle::deprecate_warn(
+      "0.15.1",
+      "hill_pq(hill_scales=)",
+      "hill_pq(q=)"
+    )
+    q <- hill_scales
+  }
   if (!is.null(variable)) {
     if (!is.null(fact)) {
       stop(
@@ -1725,28 +1812,41 @@ hill_pq <- function(
   }
   physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
 
-  otu_hill <-
-    vegan::renyi(t(physeq)@otu_table, scales = hill_scales, hill = TRUE)
-  colnames(otu_hill) <- paste0("Hill_", hill_scales)
+  if (nlevels(physeq@sam_data[[fact]]) < 2) {
+    stop(
+      "The factor '",
+      fact,
+      "' must have at least two levels for hill_pq ",
+      "(Kruskal-Wallis and Tukey tests require at least 2 groups)."
+    )
+  }
+
+  otu_hill <- divent_hill_matrix_pq(
+    as.data.frame(t(as.matrix(physeq@otu_table))),
+    q = q,
+    ...
+  )
+  colnames(otu_hill) <- paste0("Hill_", q)
 
   df_hill <- data.frame(otu_hill, physeq@sam_data)
-  df_hill[, seq_along(hill_scales)] <-
-    apply(df_hill[, seq_along(hill_scales)], 2, as.numeric)
+  df_hill[, seq_along(q)] <-
+    apply(df_hill[, seq_along(q)], 2, as.numeric)
 
   p_var <-
     hill_tuckey_pq(
       physeq,
       modality = variable_fac,
-      hill_scales = hill_scales,
-      correction_for_sample_size = correction_for_sample_size
+      q = q,
+      correction_for_sample_size = correction_for_sample_size,
+      ...
     )
-  p_list <- vector("list", length(hill_scales))
+  p_list <- vector("list", length(q))
 
   if (kruskal_test) {
-    kt_res <- vector("list", length(hill_scales))
-    for (i in seq_along(hill_scales)) {
+    kt_res <- vector("list", length(q))
+    for (i in seq_along(q)) {
       kt_res[[i]] <- kruskal.test(
-        df_hill[, paste0("Hill_", hill_scales[[i]])],
+        df_hill[, paste0("Hill_", q[[i]])],
         df_hill[, fact]
       )
     }
@@ -1769,29 +1869,29 @@ hill_pq <- function(
     }
   }
 
-  for (i in seq_along(hill_scales)) {
+  for (i in seq_along(q)) {
     if (vioplot) {
       p_list[[i]] <-
         ggplot(
           df_hill,
           aes(
-            x = .data[[paste0("Hill_", hill_scales[[i]])]],
+            x = .data[[paste0("Hill_", q[[i]])]],
             y = !!var
           )
         ) +
         geom_violin(aes(colour = as.factor(!!color_fac))) +
-        labs(x = paste0("Hill_", hill_scales[[i]]))
+        labs(x = paste0("Hill_", q[[i]]))
     } else {
       p_list[[i]] <-
         ggplot(
           df_hill,
-          aes(group = !!var, x = .data[[paste0("Hill_", hill_scales[[i]])]])
+          aes(group = !!var, x = .data[[paste0("Hill_", q[[i]])]])
         ) +
         geom_boxplot(
           outlier.size = 2,
           aes(colour = as.factor(!!color_fac), y = !!var)
         ) +
-        labs(x = paste0("Hill_", hill_scales[[i]]))
+        labs(x = paste0("Hill_", q[[i]]))
     }
 
     if (add_points) {
@@ -1818,7 +1918,7 @@ hill_pq <- function(
           "\n",
           paste0(
             " Hill ",
-            hill_scales[[i]],
+            q[[i]],
             " -- Kruskal-Wallis chi-squared =",
             round(kt_res[[i]]$statistic, 2),
             "; df = ",
@@ -1833,7 +1933,7 @@ hill_pq <- function(
 
     if (letters) {
       data_h <-
-        p_var$data[grep(paste0("Hill_", hill_scales[[i]]), p_var$data[, 5]), ]
+        p_var$data[grep(paste0("Hill_", q[[i]]), p_var$data[, 5]), ]
       data_h_pval <- data_h$`p adj`
       names(data_h_pval) <- data_h$modality
       Letters <-
@@ -1841,11 +1941,11 @@ hill_pq <- function(
 
       dt <- data.frame(variab = names(Letters), Letters = Letters)
       names(dt) <- c(var, "Letters")
-      data_letters <- p_list[[i]]$data %>%
-        group_by(!!var) %>%
+      data_letters <- p_list[[i]]$data |>
+        group_by(!!var) |>
         summarize(
-          pos_letters = max(.data[[paste0("Hill_", hill_scales[[i]])]]) + 1
-        ) %>%
+          pos_letters = max(.data[[paste0("Hill_", q[[i]])]]) + 1
+        ) |>
         inner_join(dt, by = join_by(!!fact))
 
       if (!kruskal_test || kt_res[[i]]$p.value < 0.05) {
@@ -1866,6 +1966,7 @@ hill_pq <- function(
   }
 
   res <- p_list
+  names(res) <- paste0("plot_Hill_", q)
   if (plot_with_tuckey) {
     res[["tuckey"]] <- p_var
   }
@@ -1910,10 +2011,14 @@ hill_pq <- function(
 #'   is performed, and it is up to the user to appropriately call set.seed
 #'   beforehand to achieve reproducible results. Default is FALSE.
 #' @param verbose (logical). If TRUE, print additional information.
+#' @param q (numeric vector, default `c(0, 1, 2)`) Hill diversity orders to
+#'   compute. One plot is produced per value. Hill numbers are more appropriate
+#'   in DNA metabarcoding studies when `q > 0` (Alberdi & Gilbert, 2019;
+#'   Calderón-Sanou et al., 2019).
 #' @param ... Additional arguments passed on to [ggstatsplot::ggbetweenstats()] function.
 
 #' @return Either an unique ggplot2 object (if one_plot is TRUE) or
-#'  a list of 3 ggplot2 plot:
+#'  a list of ggplot2 plots, one per Hill order in `q`. With default `q`:
 #' - plot_Hill_0 : the ggbetweenstats of Hill number 0 (= species richness)
 #'     against the variable fact
 #' - plot_Hill_1 : the ggbetweenstats of Hill number 1 (= Shannon index)
@@ -1935,6 +2040,15 @@ hill_pq <- function(
 #' @details This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `ggstatsplot::ggbetweenstats()` if you
 #'   use this function.
+#' @references
+#' Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of
+#'   Hill numbers to DNA-based diversity analyses. *Molecular Ecology Resources*.
+#'   \doi{10.1111/1755-0998.13014}
+#'
+#' Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., & Thuiller, W.
+#'   (2019). From environmental DNA sequences to ecological conclusions: How
+#'   strong is the influence of methodological choices? *Journal of Biogeography*,
+#'   47. \doi{10.1111/jbi.13681}
 
 ggbetween_pq <-
   function(
@@ -1944,9 +2058,20 @@ ggbetween_pq <-
     rarefy_by_sample = FALSE,
     rngseed = FALSE,
     verbose = TRUE,
+    q = c(0, 1, 2),
     ...
   ) {
     verify_pq(physeq)
+
+    if (nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
+      stop(
+        "The factor '",
+        fact,
+        "' must have at least two levels for ",
+        "ggbetween_pq (between-group comparison requires at least 2 groups)."
+      )
+    }
+
     physeq <- taxa_as_columns(physeq)
 
     if (rarefy_by_sample) {
@@ -1990,27 +2115,26 @@ ggbetween_pq <-
       )
     }
 
+    hill_mat <- divent_hill_matrix_pq(
+      as.data.frame(physeq@otu_table),
+      q = q
+    )
+    colnames(hill_mat) <- paste0("hill_", q)
     df <- cbind(
       "nb_taxa" = sample_sums(physeq@otu_table),
       physeq@sam_data,
-      "hill_0" = vegan::renyi(physeq@otu_table, scales = 0, hill = TRUE),
-      "hill_1" = vegan::renyi(physeq@otu_table, scales = 1, hill = TRUE),
-      "hill_2" = vegan::renyi(physeq@otu_table, scales = 2, hill = TRUE)
+      hill_mat
     )
-    fact <- sym(fact)
-    p0 <- ggstatsplot::ggbetweenstats(df, !!fact, hill_0, ...)
-    p1 <- ggstatsplot::ggbetweenstats(df, !!fact, hill_1, ...)
-    p2 <- ggstatsplot::ggbetweenstats(df, !!fact, hill_2, ...)
-
-    res <- list(
-      "plot_Hill_0" = p0,
-      "plot_Hill_1" = p1,
-      "plot_Hill_2" = p2
-    )
+    fact_sym <- sym(fact)
+    res <- lapply(q, function(qi) {
+      col_name <- paste0("hill_", qi)
+      ggstatsplot::ggbetweenstats(df, !!fact_sym, !!sym(col_name), ...)
+    })
+    names(res) <- paste0("plot_Hill_", q)
 
     if (one_plot) {
       requireNamespace("patchwork", quietly = TRUE)
-      res <- res[[1]] + res[[2]] + res[[3]]
+      res <- patchwork::wrap_plots(res)
     }
     return(res)
   }
@@ -2476,6 +2600,25 @@ rotl_pq <- function(
 #'   of ylim. If one value is set, this value is used for both limits.
 #' @param nb_samples_info (default: TRUE, logical) if TRUE and merge_sample_by is set,
 #'   add the number of samples merged for both levels.
+#' @param split_by_sample (default: FALSE, logical) if TRUE and
+#'   `merge_sample_by` is set, the bars are not merged but stacked by sample,
+#'   with borders between segments so that the distribution of sequences
+#'   across samples is visible. The border color and width are controlled by
+#'   `sample_border_col` and `sample_border_width`.
+#' @param sample_border_col (default: "white") Color of the border between
+#'   sample segments when `split_by_sample = TRUE`.
+#' @param sample_border_width (default: 0.3) Width of the border between
+#'   sample segments when `split_by_sample = TRUE`.
+#' @param color_rank (default: NULL) Name of a taxonomic rank in `tax_table(physeq)`
+#'   to use for coloring bars. When NULL (default), bars are colored by sample
+#'   modality using `left_fill` and `right_fill`. When set (e.g. `"Class"`),
+#'   each bar is colored according to its taxonomic assignment at that rank
+#'   and the `left_fill`/`right_fill` color parameters are ignored.
+#' @param taxa_names_rank (default: NULL) Name of a taxonomic rank in
+#'   `tax_table(physeq)` to use as labels on the taxa axis instead of
+#'   `taxa_names()`. When NULL (default), `taxa_names()` are used. When set
+#'   (e.g. `"Genus"`), the genus name is displayed. OTUs sharing the same
+#'   label at this rank will appear as a single merged bar.
 #' @param plotly_version If TRUE, use [plotly::ggplotly()] to return
 #'   a interactive ggplot.
 #' @param ... Other arguments for the ggplot function
@@ -2484,6 +2627,15 @@ rotl_pq <- function(
 #' @examples
 #' data_fungi_2Height <- subset_samples(data_fungi_mini, Height %in% c("Low", "High"))
 #' biplot_pq(data_fungi_2Height, "Height", merge_sample_by = "Height")
+#' biplot_pq(data_fungi_2Height, "Height",
+#'   merge_sample_by = "Height",
+#'   split_by_sample = TRUE
+#' )
+#' biplot_pq(data_fungi_2Height, "Height",
+#'   merge_sample_by = "Height",
+#'   color_rank = "Order",
+#'   taxa_names_rank = "Genus"
+#' )
 #' @export
 #' @author Adrien Taudière
 #'
@@ -2498,7 +2650,7 @@ biplot_pq <- function(
   left_name = NULL,
   left_name_col = "#4B3E1E",
   left_fill = "#4B3E1E",
-  left_col = "#f3f2d9",
+  left_col = "#4B3E1E",
   right_name = NULL,
   right_name_col = "#1d2949",
   right_fill = "#1d2949",
@@ -2511,6 +2663,11 @@ biplot_pq <- function(
   y_names = NA,
   ylim_modif = c(1, 1),
   nb_samples_info = TRUE,
+  split_by_sample = FALSE,
+  sample_border_col = "#d4d0acff",
+  sample_border_width = 0.3,
+  color_rank = NULL,
+  taxa_names_rank = NULL,
   plotly_version = FALSE,
   ...
 ) {
@@ -2519,14 +2676,22 @@ biplot_pq <- function(
       modality_1_nb <- table(physeq@sam_data[, merge_sample_by])[1]
       modality_2_nb <- table(physeq@sam_data[, merge_sample_by])[2]
     }
-    physeq <- merge_samples2(physeq, merge_sample_by)
-    physeq <- clean_pq(physeq)
+    if (!split_by_sample) {
+      physeq <- merge_samples2(physeq, merge_sample_by)
+      physeq <- clean_pq(physeq)
+    }
   }
 
-  if (nsamples(physeq) != 2) {
+  if (!split_by_sample && nsamples(physeq) != 2) {
     stop(
       "biplot_pq needs only two samples in the
     physeq object or a valid merge_sample_by parameter"
+    )
+  }
+
+  if (split_by_sample && is.null(merge_sample_by) && is.null(fact)) {
+    stop(
+      "split_by_sample requires either merge_sample_by or fact to be set"
     )
   }
 
@@ -2575,13 +2740,21 @@ biplot_pq <- function(
   }
 
   if (is.null(fact)) {
-    if (is.null(left_name)) {
-      left_name <- "A"
+    if (split_by_sample && !is.null(merge_sample_by)) {
+      fact <- merge_sample_by
+      modality <-
+        as.factor(eval(parse(
+          text = paste("physeq@sam_data$", fact, sep = "")
+        )))
+    } else {
+      if (is.null(left_name)) {
+        left_name <- "A"
+      }
+      if (is.null(right_name)) {
+        right_name <- "B"
+      }
+      modality <- factor(c(left_name, right_name))
     }
-    if (is.null(right_name)) {
-      right_name <- "B"
-    }
-    modality <- factor(c(left_name, right_name))
   } else {
     modality <-
       as.factor(eval(parse(
@@ -2610,7 +2783,34 @@ biplot_pq <- function(
 
   mdf <- phyloseq::psmelt(physeq)
   mdf <- mdf[mdf$Abundance > 0, ]
-  # mdf <- dplyr::rename(mdf, Abundance = Abundance)
+
+  if (!is.null(taxa_names_rank)) {
+    if (!taxa_names_rank %in% colnames(tax_table(physeq))) {
+      stop(paste0(
+        "'taxa_names_rank' must be a column of tax_table. ",
+        "Valid ranks: ",
+        paste(colnames(tax_table(physeq)), collapse = ", ")
+      ))
+    }
+    rank_vals <- as.character(mdf[[taxa_names_rank]])
+    taxa_label_map <- setNames(rank_vals, mdf$OTU)
+    taxa_label_map <- taxa_label_map[!duplicated(names(taxa_label_map))]
+  }
+  mdf$taxa_label <- mdf$OTU
+
+  if (!is.null(color_rank)) {
+    if (!color_rank %in% colnames(tax_table(physeq))) {
+      stop(paste0(
+        "'color_rank' must be a column of tax_table. ",
+        "Valid ranks: ",
+        paste(colnames(tax_table(physeq)), collapse = ", ")
+      ))
+    }
+    mdf$fill_var <- as.factor(mdf[[color_rank]])
+  } else {
+    mdf$fill_var <- mdf$modality
+  }
+  fill_legend_name <- if (!is.null(color_rank)) color_rank else ""
 
   if (length(ylim_modif) == 1) {
     ylim_modif <- c(ylim_modif, ylim_modif)
@@ -2627,7 +2827,26 @@ biplot_pq <- function(
     mdf$Ab <- log10(mdf$Abundance + 1)
   } else {
     mdf$Ab <- mdf$Abundance
-    nudge_y <- mean(mdf$Abundance) * nudge_y
+  }
+
+  if (split_by_sample) {
+    mdf <- mdf[order(mdf$OTU, mdf$modality, -mdf$Abundance), ]
+    mdf$.stack_order <- factor(seq_len(nrow(mdf)), levels = seq_len(nrow(mdf)))
+    if (log10trans) {
+      mdf <- do.call(
+        rbind,
+        lapply(
+          split(mdf, list(mdf$OTU, mdf$modality), drop = TRUE),
+          function(df) {
+            total_ab <- sum(df$Abundance)
+            total_height <- log10(total_ab + 1)
+            df$Ab <- (df$Abundance / total_ab) * total_height
+            df
+          }
+        )
+      )
+      rownames(mdf) <- NULL
+    }
   }
 
   mdf$Ab[mdf$modality == levels(modality)[1]] <-
@@ -2652,31 +2871,72 @@ biplot_pq <- function(
       "%"
     )
 
-  p <- mdf %>%
-    ggplot(
-      aes(
-        x = stats::reorder(OTU, Abundance),
-        y = Ab,
-        fill = modality,
-        names = OTU,
-        Ab = Abundance,
-        Proportion = Proportion
-      ),
-      ...
+  if (split_by_sample) {
+    ab_by_label_mod <- stats::aggregate(
+      Ab ~ taxa_label + modality,
+      data = mdf,
+      FUN = sum
+    )
+    max_ab <- max(ab_by_label_mod$Ab)
+    min_ab <- min(ab_by_label_mod$Ab)
+  } else {
+    agg_for_lim <- stats::aggregate(
+      Ab ~ taxa_label + modality,
+      data = mdf,
+      FUN = sum
+    )
+    max_ab <- max(agg_for_lim$Ab)
+    min_ab <- min(agg_for_lim$Ab)
+  }
+
+  if (split_by_sample) {
+    p <- mdf |>
+      ggplot(
+        aes(
+          x = stats::reorder(taxa_label, Abundance),
+          y = Ab,
+          fill = fill_var,
+          group = .stack_order,
+          names = taxa_label,
+          Ab = Abundance,
+          Proportion = Proportion
+        ),
+        ...
+      )
+  } else {
+    p <- mdf |>
+      ggplot(
+        aes(
+          x = stats::reorder(taxa_label, Abundance),
+          y = Ab,
+          fill = fill_var,
+          names = taxa_label,
+          Ab = Abundance,
+          Proportion = Proportion
+        ),
+        ...
+      )
+  }
+
+  p <- p +
+    geom_bar(
+      stat = "identity",
+      width = 0.6,
+      color = if (split_by_sample) sample_border_col else NA,
+      linewidth = if (split_by_sample) sample_border_width else 0
     ) +
-    geom_bar(stat = "identity", width = 0.6) +
     annotate(
       "rect",
       xmin = "Samples",
       xmax = "Samples",
-      ymin = -max(mdf$Ab),
-      ymax = max(mdf$Ab)
+      ymin = -max_ab,
+      ymax = max_ab
     ) +
     annotate(
       geom = "text",
       label = right_name,
       x = "Samples",
-      y = ifelse(is.na(y_names), max(mdf$Ab) / 2, y_names[2]),
+      y = ifelse(is.na(y_names), max_ab / 2, y_names[2]),
       hjust = 0.5,
       vjust = 0.5,
       size = size_names,
@@ -2687,7 +2947,7 @@ biplot_pq <- function(
       geom = "text",
       label = left_name,
       x = "Samples",
-      y = ifelse(is.na(y_names), (min(mdf$Ab) / 2), -y_names[1]),
+      y = ifelse(is.na(y_names), (min_ab / 2), -y_names[1]),
       hjust = 0.5,
       vjust = 0.5,
       size = size_names,
@@ -2698,33 +2958,131 @@ biplot_pq <- function(
     scale_x_discrete(
       limits = c(
         names(sort(
-          tapply(mdf$Abundance, mdf$OTU, sum)
+          tapply(mdf$Abundance, mdf$taxa_label, sum)
         )),
         "Samples"
-      )
+      ),
+      labels = if (!is.null(taxa_names_rank)) {
+        c(taxa_label_map, "Samples" = "")
+      } else {
+        c("Samples" = "")
+      }
     ) +
-    ylim(min(mdf$Ab), max(mdf$Ab) * 1.1)
+    ylim(min_ab * 1.1, max_ab * 1.1)
 
-  if (geom_label) {
+  if (split_by_sample) {
+    mdf_totals <- stats::aggregate(
+      cbind(Ab, Abundance) ~ taxa_label + modality,
+      data = mdf,
+      FUN = sum
+    )
+    mdf_totals$Proportion <- ""
+    mdf_totals$Proportion[mdf_totals$modality == levels(modality)[2]] <-
+      paste0(
+        round(
+          100 *
+            mdf_totals$Abundance[mdf_totals$modality == levels(modality)[2]] /
+            sum(mdf_totals$Abundance[
+              mdf_totals$modality == levels(modality)[2]
+            ]),
+          2
+        ),
+        "%"
+      )
+    mdf_totals$Proportion[mdf_totals$modality == levels(modality)[1]] <-
+      paste0(
+        round(
+          100 *
+            mdf_totals$Abundance[mdf_totals$modality == levels(modality)[1]] /
+            sum(mdf_totals$Abundance[
+              mdf_totals$modality == levels(modality)[1]
+            ]),
+          2
+        ),
+        "%"
+      )
+  }
+
+  if (split_by_sample) {
+    if (geom_label) {
+      p <- p +
+        geom_label(
+          data = mdf_totals[mdf_totals$Ab > 0, ],
+          aes(
+            x = taxa_label,
+            label = Abundance,
+            fill = fill_var,
+            alpha = 0.5,
+            y = Ab
+          ),
+          inherit.aes = FALSE,
+          color = right_col,
+          hjust = -0.1,
+          size = text_size
+        ) +
+        geom_label(
+          data = mdf_totals[mdf_totals$Ab < 0, ],
+          aes(
+            x = taxa_label,
+            label = Abundance,
+            fill = fill_var,
+            alpha = 0.5,
+            y = Ab
+          ),
+          inherit.aes = FALSE,
+          color = left_col,
+          hjust = 1.1,
+          size = text_size
+        )
+    } else {
+      p <- p +
+        geom_text(
+          data = mdf_totals[mdf_totals$Ab > 0, ],
+          aes(x = taxa_label, label = Abundance, y = Ab),
+          inherit.aes = FALSE,
+          color = right_col,
+          hjust = -0.1,
+          size = text_size
+        ) +
+        geom_text(
+          data = mdf_totals[mdf_totals$Ab < 0, ],
+          aes(x = taxa_label, label = Abundance, y = Ab),
+          inherit.aes = FALSE,
+          color = left_col,
+          hjust = 1.1,
+          size = text_size
+        )
+    }
+  } else if (geom_label) {
     p <- p +
       geom_label(
-        aes(
-          label = Abundance,
-          color = modality,
-          fill = modality,
-          alpha = 0.5,
-          y = ifelse(Ab > 0, Ab + nudge_y[2], Ab + nudge_y[1])
-        ),
+        data = mdf[mdf$Ab > 0, ],
+        aes(label = Abundance, fill = fill_var, alpha = 0.5, y = Ab),
+        color = right_col,
+        hjust = -0.1,
+        size = text_size
+      ) +
+      geom_label(
+        data = mdf[mdf$Ab < 0, ],
+        aes(label = Abundance, fill = fill_var, alpha = 0.5, y = Ab),
+        color = left_col,
+        hjust = 1.1,
         size = text_size
       )
   } else {
     p <- p +
       geom_text(
-        aes(
-          label = Abundance,
-          color = modality,
-          y = ifelse(Ab > 0, Ab + nudge_y[2], Ab + nudge_y[1])
-        ),
+        data = mdf[mdf$Ab > 0, ],
+        aes(label = Abundance, y = Ab),
+        color = right_col,
+        hjust = -0.1,
+        size = text_size
+      ) +
+      geom_text(
+        data = mdf[mdf$Ab < 0, ],
+        aes(label = Abundance, y = Ab),
+        color = left_col,
+        hjust = 1.1,
         size = text_size
       )
   }
@@ -2736,7 +3094,6 @@ biplot_pq <- function(
       plot.title = element_text(hjust = 0.5),
       axis.ticks = element_blank()
     ) +
-    scale_fill_manual(values = c(left_fill, right_fill)) +
     scale_color_manual(values = c(left_col, right_col), guide = "none") +
     ylim(
       c(
@@ -2745,35 +3102,66 @@ biplot_pq <- function(
       )
     )
 
+  if (is.null(color_rank)) {
+    p <- p + scale_fill_manual(values = c(left_fill, right_fill))
+  }
+  p <- p + labs(fill = fill_legend_name)
+
   if (plotly_version) {
-    p <- mdf %>%
-      ggplot(
-        aes(
-          x = stats::reorder(OTU, Abundance),
-          y = Ab,
-          fill = modality,
-          names = OTU,
-          Ab = Abundance,
-          Proportion = Proportion,
-          Family = Family,
-          Genus = Genus,
-          Species = Species
-        ),
-        ...
+    if (split_by_sample) {
+      p <- mdf |>
+        ggplot(
+          aes(
+            x = stats::reorder(taxa_label, Abundance),
+            y = Ab,
+            fill = fill_var,
+            group = .stack_order,
+            names = taxa_label,
+            Ab = Abundance,
+            Proportion = Proportion,
+            Family = Family,
+            Genus = Genus,
+            Species = Species
+          ),
+          ...
+        )
+    } else {
+      p <- mdf |>
+        ggplot(
+          aes(
+            x = stats::reorder(taxa_label, Abundance),
+            y = Ab,
+            fill = fill_var,
+            names = taxa_label,
+            Ab = Abundance,
+            Proportion = Proportion,
+            Family = Family,
+            Genus = Genus,
+            Species = Species
+          ),
+          ...
+        )
+    }
+
+    p <- p +
+      geom_bar(
+        stat = "identity",
+        width = 0.6,
+        color = if (split_by_sample) sample_border_col else NA,
+        linewidth = if (split_by_sample) sample_border_width else 0
       ) +
-      geom_bar(stat = "identity", width = 0.6) +
       annotate(
         "rect",
         xmin = "Samples",
         xmax = "Samples",
-        ymin = -max(mdf$Ab),
-        ymax = max(mdf$Ab)
+        ymin = -max_ab,
+        ymax = max_ab
       ) +
       annotate(
         geom = "text",
         label = right_name,
         x = "Samples",
-        y = ifelse(is.na(y_names), max(mdf$Ab) / 2, y_names[2]),
+        y = ifelse(is.na(y_names), max_ab / 2, y_names[2]),
         hjust = 0.5,
         vjust = 0.5,
         size = size_names,
@@ -2784,7 +3172,7 @@ biplot_pq <- function(
         geom = "text",
         label = left_name,
         x = "Samples",
-        y = ifelse(is.na(y_names), (min(mdf$Ab) / 2), -y_names[1]),
+        y = ifelse(is.na(y_names), (min_ab / 2), -y_names[1]),
         hjust = 0.5,
         vjust = 0.5,
         size = size_names,
@@ -2795,24 +3183,34 @@ biplot_pq <- function(
       scale_x_discrete(
         limits = c(
           names(sort(
-            tapply(mdf$Abundance, mdf$OTU, sum)
+            tapply(mdf$Abundance, mdf$taxa_label, sum)
           )),
           "Samples"
-        )
+        ),
+        labels = if (!is.null(taxa_names_rank)) {
+          c(taxa_label_map, "Samples" = "")
+        } else {
+          c("Samples" = "")
+        }
       ) +
-      ylim(min(mdf$Ab), max(mdf$Ab) * 1.1)
+      ylim(min_ab * 1.1, max_ab * 1.1)
+
+    if (is.null(color_rank)) {
+      p <- p + scale_fill_manual(values = c(left_fill, right_fill))
+    }
+    p <- p + labs(fill = fill_legend_name)
 
     p <- plotly::ggplotly(
       p,
-      tooltip = c("OTU", "Ab", "Proportion", "Family", "Genus", "Species"),
+      tooltip = c("names", "Ab", "Proportion", "Family", "Genus", "Species"),
       height = 1200,
       width = 800
-    ) %>%
+    ) |>
       plotly::layout(
         xaxis = list(autorange = TRUE),
         yaxis = list(autorange = TRUE)
-      ) %>%
-      plotly::config(locale = "fr") %>%
+      ) |>
+      plotly::config(locale = "fr") |>
       plotly::hide_legend()
   }
   return(p)
@@ -3028,7 +3426,7 @@ plot_tax_pq <-
 
     if (type %in% c("nb_seq", "both")) {
       mdf <- psmelt(physeq)
-      mdf <- mdf %>% mutate(percent = Abundance / sum(Abundance))
+      mdf <- mdf |> mutate(percent = Abundance / sum(Abundance))
 
       p_seq <-
         ggplot(
@@ -3065,7 +3463,7 @@ plot_tax_pq <-
     if (type %in% c("nb_taxa", "both")) {
       mdf <-
         psmelt(as_binary_otu_table(physeq))
-      mdf <- mdf %>% mutate(percent = Abundance / sum(Abundance))
+      mdf <- mdf |> mutate(percent = Abundance / sum(Abundance))
 
       p_taxa <-
         ggplot(
@@ -3178,15 +3576,15 @@ multitax_bar_pq <- function(
   nb_seq = TRUE,
   log10trans = TRUE
 ) {
-  psm_1 <- psmelt(physeq) %>%
-    filter(Abundance > 0) %>%
-    filter(!is.na(.data[[lvl1]])) %>%
-    filter(!is.na(.data[[lvl3]])) %>%
+  psm_1 <- psmelt(physeq) |>
+    filter(Abundance > 0) |>
+    filter(!is.na(.data[[lvl1]])) |>
+    filter(!is.na(.data[[lvl3]])) |>
     filter(!is.na(.data[[lvl2]]))
 
   if (is.null(fact)) {
-    psm_2 <- psm_1 %>%
-      group_by(OTU) %>%
+    psm_2 <- psm_1 |>
+      group_by(OTU) |>
       summarise(Abundance = sum(Abundance))
 
     psm <- inner_join(
@@ -3224,9 +3622,9 @@ multitax_bar_pq <- function(
       theme(strip.text.y.right = element_text(angle = 0)) +
       theme(legend.position = "none")
   } else {
-    psm_2 <- psm_1 %>%
-      group_by(OTU, .data[[fact]]) %>%
-      summarise(Abundance = sum(Abundance)) %>%
+    psm_2 <- psm_1 |>
+      group_by(OTU, .data[[fact]]) |>
+      summarise(Abundance = sum(Abundance)) |>
       filter(Abundance > 0)
 
     psm <- inner_join(
@@ -3375,6 +3773,15 @@ plot_tsne_pq <- function(
 
   if (na_remove && !is.na(fact)) {
     physeq <- subset_samples_pq(physeq, !is.na(physeq@sam_data[[fact]]))
+  }
+
+  if (!is.na(fact) && nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
+    stop(
+      "The factor '",
+      fact,
+      "' must have at least two levels for ",
+      "plot_tsne_pq (t-SNE visualization requires at least 2 groups)."
+    )
   }
 
   tsne <- tsne_pq(
@@ -3681,6 +4088,15 @@ upset_pq <- function(
   verbose = TRUE,
   ...
 ) {
+  if (nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
+    stop(
+      "The factor '",
+      fact,
+      "' must have at least two levels for upset_pq ",
+      "(UpSet plots require at least 2 sets)."
+    )
+  }
+
   if (!is.null(min_nb_seq)) {
     physeq@otu_table[physeq@otu_table < min_nb_seq] <- 0
   }
@@ -3727,12 +4143,12 @@ upset_pq <- function(
   psm <- psmelt(physeq)
   samp_names <- unique(psm$Sample)
   psm <-
-    psm %>%
-    mutate(val = TRUE) %>%
+    psm |>
+    mutate(val = TRUE) |>
     tidyr::pivot_wider(names_from = Sample, values_from = val)
   psm[samp_names][is.na(psm[samp_names])] <- FALSE
 
-  psm <- psm %>% filter(Abundance != 0)
+  psm <- psm |> filter(Abundance != 0)
   psm[[fact]] <- as.character(psm[[fact]])
 
   psm2 <- data.frame(lapply(psm, function(col) {
@@ -3743,8 +4159,8 @@ upset_pq <- function(
         na.rm = TRUE
       )
     })
-  })) %>%
-    arrange(., desc(Abundance))
+  })) |>
+    arrange(desc(Abundance))
 
   colnames(psm2) <- colnames(psm)
 
@@ -3825,12 +4241,12 @@ upset_test_pq <-
     psm <- psmelt(physeq)
     samp_names <- unique(psm$Sample)
     psm <-
-      psm %>%
-      mutate(val = TRUE) %>%
+      psm |>
+      mutate(val = TRUE) |>
       tidyr::pivot_wider(names_from = Sample, values_from = val)
     psm[samp_names][is.na(psm[samp_names])] <- FALSE
 
-    psm <- psm %>% filter(Abundance != 0)
+    psm <- psm |> filter(Abundance != 0)
     psm[[fact]] <- as.character(psm[[fact]])
 
     psm2 <- data.frame(lapply(psm, function(col) {
@@ -3841,8 +4257,8 @@ upset_test_pq <-
           na.rm = TRUE
         )
       })
-    })) %>%
-      arrange(., desc(Abundance))
+    })) |>
+      arrange(desc(Abundance))
 
     colnames(psm2) <- colnames(psm)
 
@@ -3934,7 +4350,7 @@ diff_fct_diff_class <-
       if (length(unique(x)) == 1) {
         return(unique(x))
       } else if (character_method == "unique_or_na") {
-        return(NA)
+        return(NA_character_)
       } else if (character_method == "more_frequent") {
         return(names(sort(table(x), decreasing = TRUE)[1]))
       } else if (character_method == "more_frequent_without_equality") {
@@ -3942,7 +4358,7 @@ diff_fct_diff_class <-
           sort(table(x), decreasing = TRUE)[1] ==
             sort(table(x), decreasing = TRUE)[2]
         ) {
-          return(NA)
+          return(NA_character_)
         } else {
           return(names(sort(table(x), decreasing = TRUE)[1]))
         }
@@ -4014,18 +4430,84 @@ diff_fct_diff_class <-
 #' @param nb_seq (logical; default TRUE) If set to FALSE, only the number of ASV
 #'   is count. Concretely, physeq otu_table is transformed in a binary
 #'   otu_table (each value different from zero is set to one)
-#' @return A \code{\link[ggplot2]{ggplot}}2 plot  with bar representing the number of sequence en each
-#'   taxonomic groups
+#' @param add_ribbon (logical; default FALSE) If TRUE and `fact` is not
+#'   "Sample", add curved ribbons connecting matching taxa between
+#'   adjacent bars. Only meaningful when `fact` has more than one level.
+#' @param ribbon_alpha (numeric; default 0.3) Transparency of the ribbons.
+#' @param label_taxa (logical; default FALSE) If TRUE, replace the legend
+#'   with direct labels on the right side of the last bar. Taxa that appear
+#'   in the first bar but are absent from the last bar are additionally
+#'   labelled on the left side of the first bar. Segments are drawn to
+#'   resolve overlapping labels.
+#' @param void_theme (logical; default TRUE) If TRUE, use
+#'   [ggplot2::theme_void()] when `label_taxa` is TRUE.
+#' @param show_values (logical; default FALSE) If TRUE, display
+#'   abundance values (or percentages when `percent_bar = TRUE`) inside
+#'   bar segments that exceed `minimum_value_to_show`.
+#' @param minimum_value_to_show (numeric; default 0) When
+#'   `show_values = TRUE`, only segments with a value strictly above
+#'   this threshold get a label.
+#' @param label_size (numeric; default 3.2) Font size (in ggplot2 mm
+#'   units) for taxa labels when `label_taxa = TRUE`.
+#' @param value_size (numeric; default 3) Font size (in ggplot2 mm
+#'   units) for value labels when `show_values = TRUE`.
+#' @param top_label_size (numeric; default 3.2) Font size (in ggplot2 mm
+#'   units) for the top group labels when `fact` is not "Sample".
+#' @param bar_width (numeric; default NULL set 0.9 if `add_ribbon = FALSE`, 0.5 if
+#'   `add_ribbon = TRUE` and `fact != "Sample"`, and 0.6 if fact is only a one-level
+#'   factor). Width of the bars. Set to 0 to have no visible bars
+#'   and only ribbons.
+#' @param bar_internal_color (default NA) Color of bar borders. Use `NA` (default)
+#'   to remove borders, which avoids thin white lines in PDF output.
+#'   Set to e.g. `"black"` or `"grey30"` for visible borders.
+#' @param linewidth_bar_internal (default 0 if `bar_internal_color` is `NA`, otherwise 0.5)
+#'  Line width of bar borders.
+#' @param show_n_samples (logical; default `FALSE`) If `TRUE`, the number of
+#'   samples per group is displayed below the group label on the x-axis, as
+#'   `"group\n(n=X)"`.
+#'
+#' @return A \code{\link[ggplot2]{ggplot}}2 plot  with bar representing the
+#'   number of sequence en each taxonomic groups
 #' @export
 #'
 #' @examples
 #'
-#' data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
+#' data_fungi_ab <- subset_taxa_pq(data_fungi,
+#'   taxa_sums(data_fungi) > 10000)
 #' tax_bar_pq(data_fungi_ab) + theme(legend.position = "none")
+#' tax_bar_pq(data_fungi_ab, taxa = "Class", fact = "Height",
+#'   show_n_samples = TRUE)
 #' \donttest{
 #' tax_bar_pq(data_fungi_ab, taxa = "Class")
 #' tax_bar_pq(data_fungi_ab, taxa = "Class", percent_bar = TRUE)
 #' tax_bar_pq(data_fungi_ab, taxa = "Class", fact = "Time")
+#' tax_bar_pq(data_fungi_ab,
+#'   taxa = "Class", fact = "Time",
+#'   percent_bar = TRUE, add_ribbon = TRUE
+#' )
+#' tax_bar_pq(data_fungi_ab,
+#'   taxa = "Class", fact = "Time",
+#'   percent_bar = TRUE, add_ribbon = TRUE, label_taxa = TRUE
+#' )
+#' tax_bar_pq(data_fungi_ab,
+#'   taxa = "Class", fact = "Time",
+#'   show_values = TRUE, minimum_value_to_show = 10000
+#' )
+#' tax_bar_pq(data_fungi_ab, fact = "Height", taxa = "Class",
+#'   nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
+#'   add_ribbon = TRUE, value_size=7, ribbon_alpha = .6,
+#'   show_values=TRUE, label_size = 4, top_label_size = 6,
+#'   minimum_value_to_show=0.05) |>
+#'   reorder_distinct_colors(alternate_lightness=TRUE)
+#'
+#' tax_bar_pq(data_fungi_mini, fact = "Height", taxa = "Order",
+#'   nb_seq = TRUE, percent_bar = TRUE, label_taxa = TRUE,
+#'   add_ribbon = TRUE, value_size=5,
+#'   ribbon_alpha = .6, show_values=TRUE,
+#'   label_size = 4, top_label_size = 8,
+#'   minimum_value_to_show=0.05, bar_width = NULL,
+#'   linewidth_bar_internal = 0.1, bar_internal_color="black") |>
+#'   reorder_distinct_colors(alternate_lightness=TRUE)
 #' }
 #' @author Adrien Taudière
 #' @seealso [plot_tax_pq()] and [multitax_bar_pq()]
@@ -4036,26 +4518,425 @@ tax_bar_pq <-
     fact = "Sample",
     taxa = "Order",
     percent_bar = FALSE,
-    nb_seq = TRUE
+    nb_seq = TRUE,
+    add_ribbon = FALSE,
+    ribbon_alpha = 0.3,
+    label_taxa = FALSE,
+    void_theme = TRUE,
+    show_values = FALSE,
+    minimum_value_to_show = 0,
+    label_size = 3.2,
+    value_size = 3,
+    top_label_size = 3.2,
+    bar_width = NULL,
+    bar_internal_color = NA,
+    linewidth_bar_internal = ifelse(is.na(bar_internal_color), 0, 0.5),
+    show_n_samples = FALSE
   ) {
     if (!nb_seq) {
       physeq <- as_binary_otu_table(physeq)
     }
     psm <- psmelt(physeq)
-    if (percent_bar) {
-      ggplot(psm) +
-        geom_bar(
-          aes(x = .data[[fact]], fill = .data[[taxa]], y = Abundance),
-          stat = "identity",
-          position = "fill"
+
+    psm[[fact]] <- factor(psm[[fact]])
+
+    if (show_n_samples && fact != "Sample") {
+      n_per_group <- psm |>
+        dplyr::distinct(.data[[fact]], Sample) |>
+        dplyr::count(.data[[fact]])
+      n_lookup <- stats::setNames(
+        n_per_group$n,
+        as.character(n_per_group[[fact]])
+      )
+    }
+
+    # When nb_seq = FALSE and grouping by a factor other than Sample, each OTU
+    # present in multiple samples of the same modality would be counted once per
+    # sample (summing binary 1s). The intended value is the number of distinct
+    # OTUs in each taxa rank per group: first collapse to presence per OTU per
+    # group (max across samples), then sum OTUs per (group x taxa rank).
+    if (!nb_seq && fact != "Sample") {
+      psm <- psm |>
+        dplyr::group_by(.data[[fact]], OTU, .data[[taxa]]) |>
+        dplyr::summarise(Abundance = max(Abundance), .groups = "drop") |>
+        dplyr::group_by(.data[[fact]], .data[[taxa]]) |>
+        dplyr::summarise(Abundance = sum(Abundance), .groups = "drop")
+    }
+
+    if (nlevels(psm[[fact]]) < 2) {
+      add_ribbon <- FALSE
+    }
+
+    if (is.null(bar_width)) {
+      bar_width <- if (add_ribbon && fact != "Sample") {
+        0.5
+      } else if (nlevels(psm[[fact]]) == 1) {
+        0.6
+      } else {
+        0.9
+      }
+    }
+
+    bar_pos <- if (percent_bar) "fill" else "stack"
+
+    p <- ggplot(psm) +
+      geom_bar(
+        aes(x = .data[[fact]], fill = .data[[taxa]], y = Abundance),
+        stat = "identity",
+        position = bar_pos,
+        width = bar_width,
+        color = bar_internal_color,
+        linewidth = linewidth_bar_internal
+      )
+
+    if (add_ribbon && fact != "Sample") {
+      hw <- (bar_width %||% 0.9) / 2
+      sigmoid <- \(x) 1 / (1 + exp(-12 * (x - 0.5)))
+
+      pb <- ggplot_build(p)
+      bar_df <- pb$data[[1]]
+      taxa_chr <- as.character(psm[[taxa]])
+      taxa_chr[is.na(taxa_chr)] <- "NA"
+      bar_df$taxa_name <- taxa_chr
+
+      bar_agg <- bar_df |>
+        dplyr::group_by(x, taxa_name) |>
+        dplyr::summarise(
+          ymin = min(ymin),
+          ymax = max(ymax),
+          .groups = "drop"
         )
-    } else {
-      ggplot(psm) +
-        geom_bar(
-          aes(x = .data[[fact]], fill = .data[[taxa]], y = Abundance),
-          stat = "identity"
+
+      x_vals <- sort(unique(bar_agg$x))
+
+      ribbon_data <- do.call(
+        rbind,
+        lapply(
+          seq_len(length(x_vals) - 1),
+          \(i) {
+            left <- bar_agg[bar_agg$x == x_vals[i], ]
+            right <- bar_agg[bar_agg$x == x_vals[i + 1], ]
+            common <- intersect(left$taxa_name, right$taxa_name)
+            do.call(
+              rbind,
+              lapply(common, \(g) {
+                l <- left[left$taxa_name == g, ]
+                r <- right[right$taxa_name == g, ]
+                t_seq <- seq(0, 1, length.out = 50)
+                s <- sigmoid(t_seq)
+                x_left <- x_vals[i] + hw
+                x_right <- x_vals[i + 1] - hw
+                x_seq <- x_left + t_seq * (x_right - x_left)
+                data.frame(
+                  x = c(x_seq, rev(x_seq)),
+                  y = c(
+                    l$ymin + s * (r$ymin - l$ymin),
+                    rev(l$ymax + s * (r$ymax - l$ymax))
+                  ),
+                  taxa_fill = g,
+                  group_id = paste(i, g)
+                )
+              })
+            )
+          }
+        )
+      )
+
+      ribbon_data$taxa_fill[ribbon_data$taxa_fill == "NA"] <- NA
+
+      bar_tops <- bar_agg |>
+        dplyr::group_by(x) |>
+        dplyr::summarise(ymax = max(ymax), .groups = "drop")
+      x_labels <- pb$layout$panel_params[[1]]$x$get_labels()
+      x_labels[is.na(x_labels)] <- "NA"
+      bar_tops$label <- x_labels[bar_tops$x]
+      if (show_n_samples) {
+        bar_tops$label <- paste0(
+          bar_tops$label,
+          "\n(n=",
+          n_lookup[bar_tops$label],
+          ")"
+        )
+      }
+
+      p <- p +
+        geom_polygon(
+          data = ribbon_data,
+          aes(x = x, y = y, fill = .data[["taxa_fill"]], group = group_id),
+          alpha = ribbon_alpha,
+          inherit.aes = FALSE
+        ) +
+        geom_text(
+          data = bar_tops,
+          aes(x = x, y = ymax, label = label),
+          vjust = -0.5,
+          inherit.aes = FALSE,
+          size = top_label_size
         )
     }
+
+    if (label_taxa) {
+      if (!exists("pb")) {
+        pb <- ggplot_build(p)
+      }
+      if (!exists("bar_df")) {
+        bar_df <- pb$data[[1]]
+        taxa_chr <- as.character(psm[[taxa]])
+        taxa_chr[is.na(taxa_chr)] <- "NA"
+        bar_df$taxa_name <- taxa_chr
+      }
+      if (!exists("bar_agg")) {
+        bar_agg <- bar_df |>
+          dplyr::group_by(x, taxa_name) |>
+          dplyr::summarise(
+            ymin = min(ymin),
+            ymax = max(ymax),
+            .groups = "drop"
+          )
+      }
+
+      x_max <- max(bar_agg$x)
+      last_bar <- bar_agg[bar_agg$x == x_max, ]
+      last_bar <- last_bar[last_bar$ymax - last_bar$ymin > 1e-4, ]
+      last_bar$ymid <- (last_bar$ymin + last_bar$ymax) / 2
+
+      last_bar <- last_bar[order(last_bar$ymid), ]
+
+      min_gap <- diff(range(c(last_bar$ymin, last_bar$ymax))) /
+        (nrow(last_bar) * 1.8)
+      label_y <- last_bar$ymid
+      for (j in seq_along(label_y)[-1]) {
+        if (label_y[j] - label_y[j - 1] < min_gap) {
+          label_y[j] <- label_y[j - 1] + min_gap
+        }
+      }
+      last_bar$label_y <- label_y
+
+      hw_bar <- (bar_width %||% 0.9) / 10
+      label_df <- data.frame(
+        x_bar = x_max + hw_bar,
+        x_label = x_max + hw_bar + 0.3,
+        y_bar = last_bar$ymid,
+        y_label = last_bar$label_y,
+        taxa_name = last_bar$taxa_name
+      )
+      label_df$taxa_fill <- label_df$taxa_name
+      label_df$taxa_fill[label_df$taxa_fill == "NA"] <- NA
+
+      needs_segment <- abs(label_df$y_bar - label_df$y_label) > 1e-4
+
+      p <- p +
+        geom_text(
+          data = label_df,
+          aes(
+            x = x_label,
+            y = y_label,
+            label = taxa_name,
+            color = taxa_fill
+          ),
+          hjust = 0,
+          size = label_size,
+          inherit.aes = FALSE,
+          show.legend = FALSE
+        ) +
+        scale_color_discrete(na.value = "grey50")
+
+      if (void_theme) {
+        p <- p + theme_void()
+      }
+      p <- p +
+        theme(
+          legend.position = "none",
+          plot.margin = margin(5.5, 80, 5.5, 5.5)
+        ) +
+        coord_cartesian(clip = "off")
+
+      if (any(needs_segment)) {
+        seg_df <- label_df[needs_segment, ]
+        p <- p +
+          geom_segment(
+            data = seg_df,
+            aes(
+              x = x_bar,
+              xend = x_label - 0.05,
+              y = y_bar,
+              yend = y_label,
+              color = taxa_fill
+            ),
+            linewidth = 0.3,
+            inherit.aes = FALSE,
+            show.legend = FALSE
+          )
+      }
+
+      # Left-side labels for taxa in first bar but absent from last bar
+      x_min <- min(bar_agg$x)
+      if (x_min < x_max) {
+        first_bar <- bar_agg[bar_agg$x == x_min, ]
+        first_bar <- first_bar[first_bar$ymax - first_bar$ymin > 1e-4, ]
+        first_bar <- first_bar[
+          !first_bar$taxa_name %in% last_bar$taxa_name,
+        ]
+        if (nrow(first_bar) > 0) {
+          first_bar$ymid <- (first_bar$ymin + first_bar$ymax) / 2
+          first_bar <- first_bar[order(first_bar$ymid), ]
+
+          min_gap_l <- diff(range(c(first_bar$ymin, first_bar$ymax))) /
+            (nrow(first_bar) * 1.8)
+          label_y_l <- first_bar$ymid
+          for (j in seq_along(label_y_l)[-1]) {
+            if (label_y_l[j] - label_y_l[j - 1] < min_gap_l) {
+              label_y_l[j] <- label_y_l[j - 1] + min_gap_l
+            }
+          }
+          first_bar$label_y <- label_y_l
+
+          label_df_left <- data.frame(
+            x_bar = x_min - hw_bar,
+            x_label = x_min - hw_bar - 0.3,
+            y_bar = first_bar$ymid,
+            y_label = first_bar$label_y,
+            taxa_name = first_bar$taxa_name
+          )
+          label_df_left$taxa_fill <- label_df_left$taxa_name
+          label_df_left$taxa_fill[label_df_left$taxa_fill == "NA"] <- NA
+
+          needs_segment_left <-
+            abs(label_df_left$y_bar - label_df_left$y_label) > 1e-4
+
+          p <- p +
+            geom_text(
+              data = label_df_left,
+              aes(
+                x = x_label,
+                y = y_label,
+                label = taxa_name,
+                color = taxa_fill
+              ),
+              hjust = 1,
+              size = label_size,
+              inherit.aes = FALSE,
+              show.legend = FALSE
+            ) +
+            theme(plot.margin = margin(5.5, 80, 5.5, 80))
+
+          if (any(needs_segment_left)) {
+            seg_df_left <- label_df_left[needs_segment_left, ]
+            p <- p +
+              geom_segment(
+                data = seg_df_left,
+                aes(
+                  x = x_bar,
+                  xend = x_label + 0.05,
+                  y = y_bar,
+                  yend = y_label,
+                  color = taxa_fill
+                ),
+                linewidth = 0.3,
+                inherit.aes = FALSE,
+                show.legend = FALSE
+              )
+          }
+        }
+
+        # Warn about taxa only in intermediate bars (neither first nor last)
+        all_taxa_with_data <- unique(
+          bar_agg$taxa_name[bar_agg$ymax - bar_agg$ymin > 1e-4]
+        )
+        first_taxa <- unique(
+          bar_agg$taxa_name[
+            bar_agg$x == x_min & bar_agg$ymax - bar_agg$ymin > 1e-4
+          ]
+        )
+        unlabeled <- setdiff(
+          all_taxa_with_data,
+          union(last_bar$taxa_name, first_taxa)
+        )
+        if (length(unlabeled) > 0) {
+          warning(
+            length(unlabeled),
+            " taxon/taxa only appear in intermediate levels and will not ",
+            "be labelled: ",
+            paste(unlabeled, collapse = ", "),
+            ". Consider using label_taxa = FALSE.",
+            call. = FALSE
+          )
+        }
+      }
+    } else {
+      if (void_theme) {
+        p <- p + theme_void()
+      }
+    }
+
+    if (show_values) {
+      pb_val <- ggplot_build(p)
+      val_df <- pb_val$data[[1]]
+
+      # Aggregate per bar x-position and fill group
+      val_agg <- val_df |>
+        dplyr::group_by(x, group) |>
+        dplyr::summarise(
+          ymin = min(ymin),
+          ymax = max(ymax),
+          fill = fill[1],
+          .groups = "drop"
+        )
+      val_agg$seg_value <- val_agg$ymax - val_agg$ymin
+      val_agg$ymid <- (val_agg$ymin + val_agg$ymax) / 2
+
+      if (percent_bar) {
+        val_agg$label_text <- paste0(
+          round(val_agg$seg_value * 100, 1),
+          "%"
+        )
+      } else {
+        val_agg$label_text <- as.character(round(val_agg$seg_value))
+      }
+
+      val_agg <- val_agg[val_agg$seg_value > minimum_value_to_show, ]
+
+      if (nrow(val_agg) > 0) {
+        p <- p +
+          geom_text(
+            data = val_agg,
+            aes(x = x, y = ymid, label = label_text),
+            inherit.aes = FALSE,
+            size = value_size,
+            color = "white"
+          )
+      }
+    }
+
+    if (fact != "Sample" && !add_ribbon) {
+      pb_n <- ggplot_build(p)
+      bar_tops_n <- pb_n$data[[1]] |>
+        dplyr::group_by(x) |>
+        dplyr::summarise(ymax = max(ymax), .groups = "drop")
+      x_labs_n <- pb_n$layout$panel_params[[1]]$x$get_labels()
+      x_labs_n[is.na(x_labs_n)] <- "NA"
+      bar_tops_n$group_label <- x_labs_n[bar_tops_n$x]
+      bar_tops_n$label <- if (show_n_samples) {
+        paste0(
+          bar_tops_n$group_label,
+          "\n(n=",
+          n_lookup[bar_tops_n$group_label],
+          ")"
+        )
+      } else {
+        bar_tops_n$group_label
+      }
+      p <- p +
+        geom_text(
+          data = bar_tops_n,
+          aes(x = x, y = ymax, label = label),
+          vjust = -0.5,
+          inherit.aes = FALSE,
+          size = top_label_size
+        )
+    }
+
+    p
   }
 ################################################################################
 
@@ -4116,7 +4997,7 @@ ridges_pq <- function(
   ...
 ) {
   psm <- psmelt(physeq)
-  psm <- psm %>% dplyr::filter(Abundance > 0)
+  psm <- psm |> dplyr::filter(Abundance > 0)
 
   if (log10trans) {
     psm$Abundance <- log10(psm$Abundance)
@@ -4133,8 +5014,8 @@ ridges_pq <- function(
     )
   } else {
     psm_asv <-
-      psm %>%
-      group_by(.data[[fact]], OTU, .data[[tax_level]]) %>%
+      psm |>
+      group_by(.data[[fact]], OTU, .data[[tax_level]]) |>
       summarise("count" = n())
 
     p <- ggplot(
@@ -4164,6 +5045,106 @@ ridges_pq <- function(
 ################################################################################
 
 ################################################################################
+#' Ridges plot of sample distribution across taxa
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#' Graphical representation of distribution of samples across taxa using ridges.
+#' This is the sample-centric counterpart of [ridges_pq()]: each ridge
+#' represents a taxon (at `tax_level`) and the x-axis shows the abundance
+#' distribution across samples, optionally colored by a sample factor.
+#'
+#' @inheritParams clean_pq
+#' @param fact (required) Name of the factor in `physeq@sam_data` used to color
+#'   the ridges
+#' @param nb_seq (logical; default TRUE) If set to FALSE, only the number of
+#'   samples is counted. Concretely, physeq `otu_table` is transformed in a
+#'   binary `otu_table` (each value different from zero is set to one)
+#' @param log10trans (logical, default TRUE) If TRUE,
+#'   the abundance is log10 transformed.
+#' @param tax_level The taxonomic level used for grouping taxa on the y-axis
+#' @param type Either "density" (the default) or "ecdf" to plot a
+#'   cumulative version using [ggplot2::stat_ecdf()]
+#' @param ... Other params passed on to [ggridges::geom_density_ridges()]
+#'
+#' @return A \code{\link[ggplot2]{ggplot}}2 plot with ridges representing the
+#'   distribution of samples for each taxon
+#' @export
+#' @author Adrien Taudière
+#' @examples
+#' if (requireNamespace("ggridges")) {
+#'   ridges_sam_pq(data_fungi_mini, "Height", alpha = 0.5,
+#'     log10trans = FALSE, tax_level = "Genus") +
+#'   xlim(c(0, 1000))
+#' }
+#' \donttest{
+#' if (requireNamespace("ggridges")) {
+#'   ridges_sam_pq(data_fungi_mini, "Height", alpha = 0.5, scale = 0.9)
+#'   ridges_sam_pq(data_fungi_mini, "Height",
+#'     alpha = 0.5, scale = 0.9,
+#'     type = "ecdf"
+#'   )
+#' }
+#' }
+ridges_sam_pq <- function(
+  physeq,
+  fact,
+  nb_seq = TRUE,
+  log10trans = TRUE,
+  tax_level = "Class",
+  type = "density",
+  ...
+) {
+  psm <- psmelt(physeq)
+  psm <- psm |> dplyr::filter(Abundance > 0)
+
+  if (log10trans) {
+    psm$Abundance <- log10(psm$Abundance)
+  }
+  if (nb_seq) {
+    p <- ggplot(
+      psm,
+      aes(
+        y = factor(.data[[tax_level]]),
+        x = Abundance,
+        fill = .data[[fact]],
+        color = .data[[fact]]
+      )
+    )
+  } else {
+    psm_sam <-
+      psm |>
+      group_by(.data[[tax_level]], Sample, .data[[fact]]) |>
+      summarise("count" = n())
+
+    p <- ggplot(
+      psm_sam,
+      aes(
+        y = factor(.data[[tax_level]]),
+        x = count,
+        fill = .data[[fact]],
+        color = .data[[fact]]
+      )
+    )
+  }
+
+  if (type == "density") {
+    p <- p +
+      ggridges::geom_density_ridges(aes(), ...) +
+      xlim(c(0, NA))
+  } else if (type == "ecdf") {
+    p <- p +
+      stat_ecdf(aes(y = NULL)) +
+      facet_wrap(tax_level, ncol = 2) +
+      theme_minimal() +
+      ylab("Probability")
+  }
+  return(p)
+}
+################################################################################
 
 ################################################################################
 #' Plot treemap of 2 taxonomic levels
@@ -4182,11 +5163,32 @@ ridges_pq <- function(
 #'   is count. Concretely, physeq otu_table is transformed in a binary
 #'   otu_table (each value different from zero is set to one)
 #' @param log10trans (logical, default TRUE) If TRUE,
-#'   the number of sequences (or ASV if nb_seq = FALSE) is log10
-#'   transformed.
+#'   the number of sequences (or ASV if nb_seq = FALSE) is
+#'   log10(x + 1) transformed. The +1 ensures that taxa with a
+#'   count of 1 still have a visible tile area.
 #' @param plot_legend (logical, default FALSE) If TRUE, plot che
 #'   legend of color for lvl 1
-#' @param ... Additional arguments passed on to [treemapify::geom_treemap()] function.
+#' @param show_count (logical, default FALSE) If TRUE, appends the raw
+#'   count in parentheses after each `lvl2` label, e.g. `"Agaricus (42)"`.
+#' @param facet_by (character, default NULL) Name of a column in
+#'   `sample_data(physeq)` to facet by. Each level produces its own
+#'   treemap panel via [ggplot2::facet_wrap()].
+#' @param growing_text (logical, default TRUE) If FALSE, all tile labels are
+#'   drawn at the same font size (disables per-tile text growing), which
+#'   corresponds to the smallest size that would otherwise be computed.
+#' @param text_size (numeric, default 15) Base font size for tile labels.
+#'   Mostly useful when `growing_text = FALSE`, as it sets the size of all
+#'   labels.
+#' @param show_na (logical, default TRUE) If TRUE, taxa with NA values for
+#'   `lvl1` or `lvl2` are kept and displayed as a grey "NA" area. If FALSE,
+#'   they are removed (previous default behavior).
+#' @param na_label (character, default "NA") Label used to replace NA values
+#'   in `lvl1` and `lvl2` when `show_na = TRUE`.
+#' @param min_text_size (numeric, default 0) Minimum font size in points
+#'   for tile labels. Labels that would be smaller than this are hidden.
+#'   Set to 0 to always show all labels.
+#' @param ... Additional arguments passed on to
+#'   [treemapify::geom_treemap()] function.
 #'
 #' @return A ggplot2 object
 #' @export
@@ -4222,6 +5224,14 @@ ridges_pq <- function(
 #'     "Order", "Class",
 #'     nb_seq = FALSE, log10trans = FALSE
 #'   )
+#'   treemap_pq(
+#'     clean_pq(subset_taxa(
+#'       data_fungi_sp_known,
+#'       Phylum == "Basidiomycota"
+#'     )),
+#'     "Order", "Class",
+#'     show_count = TRUE, log10trans = FALSE
+#'   )
 #' }
 #' }
 treemap_pq <- function(
@@ -4231,22 +5241,63 @@ treemap_pq <- function(
   nb_seq = TRUE,
   log10trans = TRUE,
   plot_legend = FALSE,
+  show_count = FALSE,
+  facet_by = NULL,
+  growing_text = TRUE,
+  text_size = 15,
+  show_na = TRUE,
+  na_label = "NA",
+  min_text_size = 0,
   ...
 ) {
   if (!nb_seq) {
     physeq <- as_binary_otu_table(physeq)
   }
 
-  psm <- psmelt(physeq) %>%
-    filter(!is.na(.data[[lvl2]])) %>%
-    filter(!is.na(.data[[lvl1]]))
+  if (!is.null(facet_by)) {
+    sam <- as.data.frame(sample_data(physeq))
+    if (!facet_by %in% colnames(sam)) {
+      stop(
+        "Column '",
+        facet_by,
+        "' not found in sample_data. ",
+        "Available: ",
+        paste(colnames(sam), collapse = ", ")
+      )
+    }
+  }
 
-  psm2 <- psm %>%
-    group_by(.data[[lvl2]]) %>%
-    reframe(Abundance = sum(Abundance), LVL1 = unique(.data[[lvl1]]))
+  psm <- psmelt(physeq)
+
+  if (show_na) {
+    psm[[lvl1]] <- ifelse(is.na(psm[[lvl1]]), na_label, psm[[lvl1]])
+    psm[[lvl2]] <- ifelse(is.na(psm[[lvl2]]), na_label, psm[[lvl2]])
+  } else {
+    psm <- psm |>
+      filter(!is.na(.data[[lvl2]])) |>
+      filter(!is.na(.data[[lvl1]]))
+  }
+
+  if (!is.null(facet_by)) {
+    psm2 <- psm |>
+      group_by(.data[[lvl2]], .data[[facet_by]]) |>
+      reframe(Abundance = sum(Abundance), LVL1 = unique(.data[[lvl1]]))
+  } else {
+    psm2 <- psm |>
+      group_by(.data[[lvl2]]) |>
+      reframe(Abundance = sum(Abundance), LVL1 = unique(.data[[lvl1]]))
+  }
+
+  psm2$raw_count <- psm2$Abundance
 
   if (log10trans) {
-    psm2$Abundance <- log10(psm2$Abundance)
+    psm2$Abundance <- log10(psm2$Abundance + 1)
+  }
+
+  if (show_count) {
+    psm2$label <- paste0(psm2[[lvl2]], "\n(", psm2$raw_count, ")")
+  } else {
+    psm2$label <- psm2[[lvl2]]
   }
 
   p <-
@@ -4255,7 +5306,7 @@ treemap_pq <- function(
       aes(
         area = Abundance,
         fill = LVL1,
-        label = .data[[lvl2]],
+        label = label,
         subgroup = LVL1
       )
     ) +
@@ -4264,9 +5315,24 @@ treemap_pq <- function(
     treemapify::geom_treemap_text(
       colour = "white",
       place = "centre",
-      size = 15,
-      grow = TRUE
+      size = text_size,
+      grow = growing_text,
+      min.size = min_text_size
     )
+
+  if (show_na && na_label %in% psm2$LVL1) {
+    lvl1_values <- unique(psm2$LVL1)
+    non_na <- setdiff(lvl1_values, na_label)
+    n_colors <- length(non_na)
+    default_colors <- scales::hue_pal()(n_colors)
+    fill_colors <- stats::setNames(default_colors, non_na)
+    fill_colors[[na_label]] <- "grey70"
+    p <- p + scale_fill_manual(values = fill_colors)
+  }
+
+  if (!is.null(facet_by)) {
+    p <- p + facet_wrap(vars(.data[[facet_by]]))
+  }
 
   if (!plot_legend) {
     p <- p + theme(legend.position = "none")
@@ -4458,7 +5524,7 @@ plot_var_part_pq <-
       id.size = id.size,
       Xnames = res_varpart$Xnames
     )
-    if (any(is.na(vals))) {
+    if (anyNA(vals)) {
       graphics::mtext(paste("Values <", cutoff, " not shown", sep = ""), 1)
     }
     if (
@@ -4510,11 +5576,12 @@ plot_var_part_pq <-
 #' @inheritParams clean_pq
 #' @param num_modality (required) Name of the numeric column in
 #'   `physeq@sam_data` to plot and test against hill number
-#' @param hill_scales (a vector of integer) The list of q values to compute
+#' @param q (a vector of integer) The list of q values to compute
 #'   the hill number H^q. If Null, no hill number are computed. Default value
 #'   compute the Hill number 0 (Species richness), the Hill number 1
 #'   (exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
-#'   Index).
+#'   Index). Hill numbers are more appropriate in DNA metabarcoding studies
+#'   when `q > 0` (Alberdi & Gilbert, 2019; Calderón-Sanou et al., 2019).
 #' @param rarefy_by_sample (logical, default FALSE) If TRUE, rarefy
 #'   samples using [phyloseq::rarefy_even_depth()] function.
 #' @param rngseed (Optional). A single integer value passed to
@@ -4529,17 +5596,17 @@ plot_var_part_pq <-
 #' @param ... Additional arguments passed on to [ggstatsplot::ggscatterstats()]
 #'   function.
 #'
-#' @return Either an unique ggplot2 object (if one_plot is TRUE) or
-#'  a list of ggplot2 plot for each hill_scales.
+#' @return Either an unique ggplot2 (when `one_plot` is TRUE) or
+#'  a list of ggplot2 plot for each q.
 #' @export
 #' @author Adrien Taudière
 #'
 #' @examples
 #' if (requireNamespace("ggstatsplot")) {
-#'   ggscatt_pq(data_fungi_mini, "Time", type = "non-parametric")
-#'   ggscatt_pq(data_fungi_mini, "Time", hill_scales = 1:4, type = "parametric")
+#'   ggscatt_pq(data_fungi_mini, "Time", q = 0, type = "non-parametric")
+#'   ggscatt_pq(data_fungi_mini, "Time", q = 0, type = "parametric")
 #'   ggscatt_pq(data_fungi_mini, "Sample_id",
-#'     hill_scales = c(0, 0.5),
+#'     q = 0,
 #'     one_plot = FALSE
 #'   )
 #' }
@@ -4551,7 +5618,7 @@ plot_var_part_pq <-
 ggscatt_pq <- function(
   physeq,
   num_modality,
-  hill_scales = c(0, 1, 2),
+  q = c(0, 1, 2),
   rarefy_by_sample = FALSE,
   rngseed = FALSE,
   verbose = TRUE,
@@ -4590,13 +5657,13 @@ ggscatt_pq <- function(
     physeq <- clean_pq(rarefy_even_depth(physeq, rngseed = rngseed))
   }
 
-  p_list <- vector("list", length(hill_scales))
-  psm_res <- psmelt_samples_pq(physeq, hill_scales = hill_scales)
-  for (i in seq_along(hill_scales)) {
+  p_list <- vector("list", length(q))
+  psm_res <- psmelt_samples_pq(physeq, q = q)
+  for (i in seq_along(q)) {
     p_list[[i]] <-
       ggstatsplot::ggscatterstats(
         psm_res,
-        !!paste0("Hill_", hill_scales[[i]]),
+        !!paste0("Hill_", q[[i]]),
         !!num_modality,
         ...
       )
@@ -4767,7 +5834,7 @@ ggaluv_pq <- function(
     psmelt_samples_pq(
       physeq,
       taxa_ranks = taxa_ranks,
-      hill_scales = NULL,
+      q = NULL,
       rarefy_by_sample = FALSE
     )
 
@@ -4842,8 +5909,10 @@ ggaluv_pq <- function(
 #' @inheritParams clean_pq
 #' @param first_n (int, default 10) The number of nucleotides to plot the 5' extremity.
 #' @param last_n (int, default 10) The number of nucleotides to plot the 3' extremity.
-#' @param hill_scales (vector) A vector defining the Hill number wanted. Set to NULL if
-#'   you don't want to plot Hill diversity metrics.
+#' @param q (vector) A vector defining the Hill number wanted. Set to NULL if
+#'   you don't want to plot Hill diversity metrics. Hill numbers are more
+#'   appropriate in DNA metabarcoding studies when `q > 0` (Alberdi & Gilbert,
+#'   2019; Calderón-Sanou et al., 2019).
 #' @param min_width (int, default 0) Select only the sequences from physeq@refseq with using a
 #'   minimum length threshold. If `first_n` is superior to the minimum length of the
 #'   references sequences, you must use min_width to filter out the narrower sequences
@@ -4854,33 +5923,27 @@ ggaluv_pq <- function(
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' res1 <- plot_refseq_extremity_pq(data_fungi)
+#' res1 <- plot_refseq_extremity_pq(data_fungi_mini)
 #' names(res1)
 #' res1$plot_start
 #' res1$plot_last
-#'
+#' \donttest{
 #' res2 <- plot_refseq_extremity_pq(data_fungi, first_n = 200, last_n = 100)
 #' res2$plot_start
 #' res2$plot_last
 #'
 #' plot_refseq_extremity_pq(data_fungi,
-#'   first_n = 400,
-#'   min_width = 400,
-#'   hill_scales = NULL
-#' )$plot_start +
-#'   geom_line(aes(y = value, x = seq_id, color = name), alpha = 0.4, linewidth = 0.2)
-#'
-#' plot_refseq_extremity_pq(data_fungi,
 #'   first_n = NULL,
-#'   last_n = 400,
-#'   min_width = 400,
-#'   hill_scales = c(3)
+#'   last_n = 200,
+#'   min_width = 200,
+#'   q = c(3)
 #' )$plot_last
+#' }
 plot_refseq_extremity_pq <- function(
   physeq,
   first_n = 10,
   last_n = 10,
-  hill_scales = c(1, 2),
+  q = c(1, 2),
   min_width = 0
 ) {
   if (min_width > 0) {
@@ -4906,11 +5969,11 @@ plot_refseq_extremity_pq <- function(
 
     tib_interm <- t(data.frame(letters_sequences))
     nucleotide_first_interm <- data.frame(
-      "nb_A" = colSums(tib_interm == "A", na.rm = T) / nrow(tib_interm),
-      "nb_C" = colSums(tib_interm == "C", na.rm = T) / nrow(tib_interm),
-      "nb_G" = colSums(tib_interm == "G", na.rm = T) / nrow(tib_interm),
-      "nb_T" = colSums(tib_interm == "T", na.rm = T) / nrow(tib_interm),
-      "seq_id" = 1:ncol(tib_interm)
+      "nb_A" = colSums(tib_interm == "A", na.rm = TRUE) / nrow(tib_interm),
+      "nb_C" = colSums(tib_interm == "C", na.rm = TRUE) / nrow(tib_interm),
+      "nb_G" = colSums(tib_interm == "G", na.rm = TRUE) / nrow(tib_interm),
+      "nb_T" = colSums(tib_interm == "T", na.rm = TRUE) / nrow(tib_interm),
+      "seq_id" = seq_len(ncol(tib_interm))
     ) |>
       rowwise() |>
       mutate("max_letter_prob" = max(across(starts_with("nb_"))))
@@ -4935,42 +5998,36 @@ plot_refseq_extremity_pq <- function(
         )
       )
 
-    if (!is.null(hill_scales)) {
-      renyi_nucleotide <-
-        vegan::renyi(
-          nucleotide_first_interm[, c("nb_A", "nb_C", "nb_G", "nb_T")],
-          scales = hill_scales
-        )
-
-      if (inherits(renyi_nucleotide, "numeric")) {
-        renyi_nucleotide <- data.frame(renyi_nucleotide)
-        colnames(renyi_nucleotide) <- hill_scales
+    if (!is.null(q)) {
+      hill_nucleotide <- divent_hill_matrix_pq(
+        nucleotide_first_interm[, c("nb_A", "nb_C", "nb_G", "nb_T")],
+        q = q
+      )
+      if (sum(q == 0) > 0) {
+        hill_nucleotide <- hill_nucleotide |>
+          rename("Hill 0 (Richness)" = "0")
       }
-      if (sum(hill_scales == 0) > 0) {
-        renyi_nucleotide <- renyi_nucleotide |>
-          rename("Hill 0 (Shannon)" = "0")
+      if (sum(q == 1) > 0) {
+        hill_nucleotide <- hill_nucleotide |>
+          rename("Hill 1 (Shannon)" = "1")
       }
-      if (sum(hill_scales == 1) > 0) {
-        renyi_nucleotide <- renyi_nucleotide |>
-          rename("Hill 1 (Simpson)" = "1")
-      }
-      if (sum(hill_scales == 2) > 0) {
-        renyi_nucleotide <- renyi_nucleotide |>
-          rename("Hill 2 (Shannon)" = "2")
+      if (sum(q == 2) > 0) {
+        hill_nucleotide <- hill_nucleotide |>
+          rename("Hill 2 (Simpson)" = "2")
       }
 
-      renyi_nucleotide <- renyi_nucleotide |>
+      hill_nucleotide <- hill_nucleotide |>
         tidyr::pivot_longer(cols = everything())
 
-      renyi_nucleotide$seq_id <-
+      hill_nucleotide$seq_id <-
         sort(rep(
-          1:ncol(tib_interm),
-          times = nrow(renyi_nucleotide) / ncol(tib_interm)
+          seq_len(ncol(tib_interm)),
+          times = nrow(hill_nucleotide) / ncol(tib_interm)
         ))
 
       p_start <- p_start +
         geom_line(
-          data = renyi_nucleotide,
+          data = hill_nucleotide,
           aes(x = seq_id, y = value, color = name)
         )
     }
@@ -4999,7 +6056,7 @@ plot_refseq_extremity_pq <- function(
       "nb_C" = colSums(tib_interm_last == "C") / nrow(tib_interm_last),
       "nb_G" = colSums(tib_interm_last == "G") / nrow(tib_interm_last),
       "nb_T" = colSums(tib_interm_last == "T") / nrow(tib_interm_last),
-      "seq_id" = 1:ncol(tib_interm_last)
+      "seq_id" = seq_len(ncol(tib_interm_last))
     )
 
     nucleotide_last <- nucleotide_last_interm |>
@@ -5021,42 +6078,36 @@ plot_refseq_extremity_pq <- function(
         )
       )
 
-    if (!is.null(hill_scales)) {
-      renyi_nucleotide <-
-        vegan::renyi(
-          nucleotide_last_interm[, c("nb_A", "nb_C", "nb_G", "nb_T")],
-          scales = hill_scales
-        )
-
-      if (inherits(renyi_nucleotide, "numeric")) {
-        renyi_nucleotide <- data.frame(renyi_nucleotide)
-        colnames(renyi_nucleotide) <- hill_scales
+    if (!is.null(q)) {
+      hill_nucleotide <- divent_hill_matrix_pq(
+        nucleotide_last_interm[, c("nb_A", "nb_C", "nb_G", "nb_T")],
+        q = q
+      )
+      if (sum(q == 0) > 0) {
+        hill_nucleotide <- hill_nucleotide |>
+          rename("Hill 0 (Richness)" = "0")
       }
-      if (sum(hill_scales == 0) > 0) {
-        renyi_nucleotide <- renyi_nucleotide |>
-          rename("Hill 0 (Shannon)" = "0")
+      if (sum(q == 1) > 0) {
+        hill_nucleotide <- hill_nucleotide |>
+          rename("Hill 1 (Shannon)" = "1")
       }
-      if (sum(hill_scales == 1) > 0) {
-        renyi_nucleotide <- renyi_nucleotide |>
-          rename("Hill 1 (Simpson)" = "1")
-      }
-      if (sum(hill_scales == 2) > 0) {
-        renyi_nucleotide <- renyi_nucleotide |>
-          rename("Hill 2 (Shannon)" = "2")
+      if (sum(q == 2) > 0) {
+        hill_nucleotide <- hill_nucleotide |>
+          rename("Hill 2 (Simpson)" = "2")
       }
 
-      renyi_nucleotide <- renyi_nucleotide |>
+      hill_nucleotide <- hill_nucleotide |>
         tidyr::pivot_longer(cols = everything())
 
-      renyi_nucleotide$seq_id <-
+      hill_nucleotide$seq_id <-
         sort(rep(
-          1:ncol(tib_interm_last),
-          times = nrow(renyi_nucleotide) / ncol(tib_interm_last)
+          seq_len(ncol(tib_interm_last)),
+          times = nrow(hill_nucleotide) / ncol(tib_interm_last)
         ))
 
       p_last <- p_last +
         geom_line(
-          data = renyi_nucleotide,
+          data = hill_nucleotide,
           aes(
             x = seq_id,
             y = value,
@@ -5095,8 +6146,10 @@ plot_refseq_extremity_pq <- function(
 #' @inheritParams clean_pq
 #' @param first_n (int, default 10) The number of nucleotides to plot the 5' extremity.
 #' @param last_n (int, default 10) The number of nucleotides to plot the 3' extremity.
-#' @param hill_scales (vector) A vector defining the Hill number wanted. Set to NULL if
-#'   you don't want to plot Hill diversity metrics.
+#' @param q (vector) A vector defining the Hill number wanted. Set to NULL if
+#'   you don't want to plot Hill diversity metrics. Hill numbers are more
+#'   appropriate in DNA metabarcoding studies when `q > 0` (Alberdi & Gilbert,
+#'   2019; Calderón-Sanou et al., 2019).
 #' @param min_width (int, default 0) Select only the sequences from physeq@refseq with using a
 #'   minimum length threshold. If `first_n` is superior to the minimum length of the
 #'   references sequences, you must use min_width to filter out the narrower sequences
@@ -5105,18 +6158,18 @@ plot_refseq_extremity_pq <- function(
 #' @author Adrien Taudière
 #' @examples
 #' plot_refseq_pq(data_fungi)
-#' plot_refseq_pq(data_fungi, hill_scales = c(2), first_n = 300)
+#' plot_refseq_pq(data_fungi, q = c(2), first_n = 300)
 #'
 plot_refseq_pq <- function(
   physeq,
-  hill_scales = NULL,
+  q = NULL,
   first_n = min(Biostrings::width(physeq@refseq)),
   last_n = NULL,
   min_width = first_n
 ) {
   res <- plot_refseq_extremity_pq(
-    physeq = physeq,
-    hill_scales = hill_scales,
+    physeq,
+    q = q,
     first_n = first_n,
     last_n = last_n,
     min_width = min_width
@@ -5162,8 +6215,8 @@ no_legend <- function() {
 #'   the [merge_samples2()] function.  Need to be in `physeq@sam_data`
 #' @param color_fac (optional): The variable to color the barplot. For ex.
 #'   same as fact. If merge_sample_by is set, color_fac must be nested in
-#'   the merge_sample_by factor. See examples.
-#' @param hill_scales Scales of Rényi diversity.
+#'   the mq_by factor. See examples.
+#' @param q Scales of Rényi diversity.
 #' @param nperm (int Default NULL) If a integer is set to nperm, nperm
 #'   permutation are computed to draw confidence interval for each curves.
 #'   The function use [vegan::renyi()] if nperm is NULL and
@@ -5197,10 +6250,10 @@ no_legend <- function() {
 #'     linewidth = 0.5
 #'   )
 #'   hill_curves_pq(data_fungi_mini, "Height",
-#'     hill_scales = c(0, 1, 2, 8), plot_legend = FALSE
+#'     q = c(0, 1, 2, 8), plot_legend = FALSE
 #'   )
 #'   hill_curves_pq(data_fungi_mini, "Height",
-#'     hill_scales = c(0, 0.5, 1, 2, 4, 8),
+#'     q = c(0, 0.5, 1, 2, 4, 8),
 #'     nperm = 9
 #'   )
 #'   hill_curves_pq(data_fungi_mini, "Height", nperm = 9, wrap_factor = FALSE)
@@ -5221,7 +6274,7 @@ hill_curves_pq <- function(
   physeq,
   merge_sample_by = NULL,
   color_fac = NULL,
-  hill_scales = c(0, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, Inf),
+  q = c(0, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, Inf),
   nperm = NULL,
   na_remove = TRUE,
   wrap_factor = TRUE,
@@ -5261,7 +6314,7 @@ hill_curves_pq <- function(
     df_hill <-
       vegan::renyiaccum(
         t(physeq)@otu_table,
-        scales = hill_scales,
+        scales = q,
         permutation = nperm,
         hill = TRUE,
         ...
@@ -5269,7 +6322,7 @@ hill_curves_pq <- function(
     what <- c("Collector", "mean", "Qnt 0.025", "Qnt 0.975")
     what <- what[what %in% dimnames(df_hill)[[3]]]
     if (any(what %in% dimnames(df_hill)[[3]])) {
-      df_hill <- df_hill[, , what, drop = FALSE]
+      df_hill <- df_hill[,, what, drop = FALSE]
     }
     dm <- dim(df_hill)
     dnam <- dimnames(df_hill)
@@ -5327,8 +6380,7 @@ hill_curves_pq <- function(
         facet_wrap("Modality")
     }
   } else {
-    df_hill <-
-      vegan::renyi(t(physeq)@otu_table, scales = hill_scales, hill = TRUE)
+    df_hill <- vegan::renyi(t(physeq)@otu_table, scales = q, hill = TRUE)
     if (inherits(df_hill, "data.frame")) {
       if (is.null(color_fac)) {
         modality <- sample_names(physeq)
@@ -5669,7 +6721,7 @@ plot_seq_ratio_pq <- function(physeq, min_nb_seq = 1000, annotations = TRUE) {
         y = 1.15 * cutof_ratio,
         xend = 1.05 * cutof_value,
         yend = 1.01 * cutof_ratio,
-        curvature = .3,
+        curvature = 0.3,
         arrow = arrow(length = unit(2, "mm"))
       ) +
       annotate(
@@ -5700,9 +6752,9 @@ plot_seq_ratio_pq <- function(physeq, min_nb_seq = 1000, annotations = TRUE) {
       ylab("Ratio of the number of sequences with the previous sample") +
       labs(
         caption = paste0(
-          "For the ratio (y-axis), a value of 2 indicate that sample i contains twice the number of sequences compared to the sample i-1 \n (samples ordered by their number of sequences). Run `subset_samples_pq(physeq, sample_sums(data_fungi)>=",
+          "For the ratio (y-axis), a value of 2 indicate that sample i contains twice the number of sequences compared to the sample i-1 \n (samples ordered by their number of sequences). Run `subset_samples_pq(physeq, sample_sums(physeq)>=",
           cutof_value,
-          ")` to keep only green point \n or `subset_samples_pq(physeq, sample_sums(data_fungi)>=",
+          ")` to keep only green point \n or `subset_samples_pq(physeq, sample_sums(physeq)>=",
           min_nb_seq,
           ")` to discarded only orange samples."
         )
@@ -5710,6 +6762,205 @@ plot_seq_ratio_pq <- function(physeq, min_nb_seq = 1000, annotations = TRUE) {
   }
 
   return(p)
+}
+################################################################################
+
+################################################################################
+#' Reorder fill and color scales to maximize perceptual contrast between
+#' adjacent segments
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#' In stacked bar plots, ggplot2's default discrete palette assigns colors
+#' using level ordered (sometimes alphabetically), which often places perceptually
+#' similar colors next to
+#' each other. This function reassigns the **same set of colors** to factor
+#' levels so that visually adjacent segments receive maximally different
+#' colors. Both the fill and color scales are updated so that direct
+#' labels (e.g. from `label_taxa = TRUE`) stay in sync with the bars.
+#'
+#' @param p A ggplot object that uses a discrete fill aesthetic. Can be
+#'   omitted when using the `+` operator (e.g.
+#'   `p + reorder_distinct_colors()`).
+#' @param alternate_lightness (logical, default FALSE) If TRUE, darken every
+#'   other level to add a luminance alternation cue on top of hue
+#'   differences.
+#' @param lightness_amount (numeric, default 0.15) Intensity of the
+#'   lightness alternation (proportion to darken). Only used when
+#'   `alternate_lightness = TRUE`.
+#' @param colorblind (logical, default FALSE) If TRUE, compute perceptual
+#'   distances under simulated deuteranopia so that the reordering
+#'   optimizes contrast for colorblind viewers.
+#'
+#' @return A new ggplot object with [ggplot2::scale_fill_manual()] and
+#'   (if a color scale is present) [ggplot2::scale_color_manual()]
+#'   replacing the original scales. When `p` is omitted, returns an
+#'   object that can be added to a ggplot with `+`.
+#' @export
+#' @author Adrien Taudière
+#' @importFrom grDevices convertColor
+#' @importFrom stats dist
+#' @examples
+#' p <- tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time")
+#' reorder_distinct_colors(p)
+#' reorder_distinct_colors(p, colorblind = TRUE)
+#' p + reorder_distinct_colors(alternate_lightness = TRUE)
+#'
+#' tax_bar_pq(data_fungi_mini, fact = "Height", taxa = "Order",
+#'  nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
+#'  add_ribbon = TRUE, value_size=7, ribbon_alpha = .6,
+#'  show_values=TRUE, label_size = 4, top_label_size = 8,
+#'  minimum_value_to_show=0.05) |>
+#'  reorder_distinct_colors(alternate_lightness=TRUE)
+reorder_distinct_colors <- function(
+  p = NULL,
+  alternate_lightness = FALSE,
+  lightness_amount = 0.15,
+  colorblind = FALSE
+) {
+  spec <- structure(
+    list(
+      alternate_lightness = alternate_lightness,
+      lightness_amount = lightness_amount,
+      colorblind = colorblind
+    ),
+    class = "reorder_distinct_colors_spec"
+  )
+  if (is.null(p)) {
+    return(spec)
+  }
+  if (!inherits(p, "gg")) {
+    stop("p must be a ggplot object")
+  }
+
+  pb <- ggplot_build(p)
+  fill_scale <- pb$plot$scales$get_scales("fill")
+  if (is.null(fill_scale) || !fill_scale$is_discrete()) {
+    stop("The plot must have a discrete fill scale")
+  }
+
+  levels <- fill_scale$get_limits()
+  n <- length(levels)
+  if (n <= 1) {
+    return(p)
+  }
+
+  na_val <- fill_scale$na.value %||% "grey50"
+  colors <- fill_scale$palette(n)
+  if (is.null(names(colors))) {
+    names(colors) <- levels
+  }
+
+  # Convert hex to sRGB matrix (rows = colors, cols = R/G/B in [0,1])
+  rgb_mat <- t(col2rgb(colors)) / 255
+
+  # Optionally simulate deuteranopia before computing distances
+  if (colorblind) {
+    # Brettel 1997 deuteranopia simulation matrix for sRGB
+    deutan_mat <- matrix(
+      c(
+        0.625,
+        0.375,
+        0.0,
+        0.7,
+        0.3,
+        0.0,
+        0.0,
+        0.3,
+        0.7
+      ),
+      nrow = 3,
+      byrow = TRUE
+    )
+    rgb_for_dist <- rgb_mat %*% t(deutan_mat)
+  } else {
+    rgb_for_dist <- rgb_mat
+  }
+
+  # Convert to CIE Lab for perceptual distance
+  lab_mat <- convertColor(rgb_for_dist, from = "sRGB", to = "Lab")
+
+  # Pairwise Euclidean distances in Lab space
+  dist_mat <- as.matrix(dist(lab_mat))
+
+  # Greedy reordering: start with the color having the largest mean distance
+  avg_dist <- rowMeans(dist_mat)
+  order_idx <- integer(n)
+  order_idx[1] <- which.max(avg_dist)
+  remaining <- setdiff(seq_len(n), order_idx[1])
+
+  for (i in 2:n) {
+    prev <- order_idx[i - 1]
+    dists_to_prev <- dist_mat[prev, remaining]
+    best <- which.max(dists_to_prev)
+    order_idx[i] <- remaining[best]
+    remaining <- setdiff(remaining, order_idx[i])
+  }
+
+  reordered_colors <- colors[order_idx]
+
+  # Optional: alternate lightness (darken even, lighten odd)
+  if (alternate_lightness) {
+    rgb_reordered <- t(col2rgb(reordered_colors)) / 255
+    for (i in seq_along(reordered_colors)) {
+      if (i %% 2 == 0) {
+        # Darken
+        rgb_reordered[i, ] <- pmax(
+          rgb_reordered[i, ] * (1 - lightness_amount),
+          0
+        )
+      } else {
+        # Lighten
+        rgb_reordered[i, ] <- pmin(
+          rgb_reordered[i, ] + (1 - rgb_reordered[i, ]) * lightness_amount,
+          1
+        )
+      }
+    }
+    reordered_colors <- rgb(
+      rgb_reordered[, 1],
+      rgb_reordered[, 2],
+      rgb_reordered[, 3]
+    )
+  }
+
+  # Build named vector: level -> reordered color
+  new_colors <- stats::setNames(reordered_colors, levels)
+
+  # Remove existing fill scale and add the new one
+  p$scales$scales <- p$scales$scales[
+    !vapply(p$scales$scales, \(s) "fill" %in% s$aesthetics, logical(1))
+  ]
+  p <- p + scale_fill_manual(values = new_colors, na.value = na_val)
+
+  # Also update the color scale if one exists
+  color_scale <- pb$plot$scales$get_scales("colour")
+  if (!is.null(color_scale) && color_scale$is_discrete()) {
+    color_na_val <- color_scale$na.value %||% "grey50"
+    p$scales$scales <- p$scales$scales[
+      !vapply(
+        p$scales$scales,
+        \(s) "colour" %in% s$aesthetics,
+        logical(1)
+      )
+    ]
+    p <- p + scale_color_manual(values = new_colors, na.value = color_na_val)
+  }
+
+  p
+}
+
+#' @exportS3Method ggplot2::ggplot_add
+ggplot_add.reorder_distinct_colors_spec <- function(object, plot, ...) {
+  reorder_distinct_colors(
+    p = plot,
+    alternate_lightness = object$alternate_lightness,
+    lightness_amount = object$lightness_amount,
+    colorblind = object$colorblind
+  )
 }
 ################################################################################
 
@@ -5744,12 +6995,13 @@ plot_ordination_pq <- function(
   ...
 ) {
   verify_pq(physeq)
-  dist_mat <- vegan::vegdist(unclass(data_fungi@otu_table), method = method)
-  attr(dist_mat, "Labels") <- sample_names(data_fungi)
+  physeq <- taxa_as_columns(physeq)
+  dist_mat <- vegan::vegdist(unclass(physeq@otu_table), method = method)
+  attr(dist_mat, "Labels") <- sample_names(physeq)
   p <- plot_ordination(
-    data_fungi,
+    physeq,
     ordination = ordinate(
-      data_fungi,
+      physeq,
       method = ordination_method,
       distance = dist_mat
     ),
@@ -5761,3 +7013,336 @@ plot_ordination_pq <- function(
     )
   return(p)
 }
+################################################################################
+
+################################################################################
+# Default y-axis labels for common Hill orders (internal)
+.hill_y_lab <- function(q) {
+  labs <- c(
+    "0" = "Richness (Hill q=0)",
+    "1" = "Shannon diversity (Hill q=1)",
+    "2" = "Simpson diversity (Hill q=2)"
+  )
+  lab <- labs[as.character(q)]
+  if (is.na(lab)) paste0("Hill index (q=", q, ")") else unname(lab)
+}
+
+# Single-panel bar-plot engine used by hill_bar_pq() (internal)
+.hill_bar_single <- function(
+  data,
+  x_name,
+  y_name,
+  fill_name,
+  x_lab,
+  y_lab,
+  alpha,
+  point_size,
+  base_size,
+  jitter_width,
+  bar_width,
+  add_letters,
+  p_threshold,
+  letter_size,
+  letters_top_offset,
+  y_lab_size,
+  x_lab_size,
+  show_n_samples,
+  palette
+) {
+  # --- Kruskal-Wallis test ---
+  kw <- kruskal.test(reformulate(x_name, response = y_name), data = data)
+  kw_subtitle <- sprintf(
+    "Kruskal-Wallis: \u03c7\u00b2(%d) = %.2f, p = %s",
+    kw$parameter,
+    kw$statistic,
+    format.pval(kw$p.value, digits = 3, eps = 0.001)
+  )
+
+  # --- Summary stats ---
+  summary_data <- data |>
+    dplyr::summarise(
+      mean = mean(.data[[y_name]], na.rm = TRUE),
+      se = sd(.data[[y_name]], na.rm = TRUE) / sqrt(dplyr::n()),
+      .by = dplyr::all_of(x_name)
+    )
+
+  # --- Compact letter display (Tukey HSD after Kruskal-Wallis) ---
+  tukey_run <- FALSE
+  if (add_letters) {
+    if (kw$p.value < p_threshold) {
+      tukey <- TukeyHSD(aov(
+        reformulate(x_name, response = y_name),
+        data = data
+      ))
+      pvals <- tukey[[x_name]][, "p adj"]
+      letters_vec <- multcompView::multcompLetters(pvals)$Letters
+      tukey_run <- TRUE
+    } else {
+      groups <- as.character(unique(data[[x_name]]))
+      letters_vec <- stats::setNames(rep("a", length(groups)), groups)
+    }
+
+    point_max <- data |>
+      dplyr::summarise(
+        max_y = max(.data[[y_name]], na.rm = TRUE),
+        .by = dplyr::all_of(x_name)
+      )
+    y_offset <- diff(range(data[[y_name]], na.rm = TRUE)) * letters_top_offset
+
+    summary_data <- summary_data |>
+      dplyr::left_join(point_max, by = x_name) |>
+      dplyr::mutate(
+        letter = letters_vec[as.character(.data[[x_name]])],
+        letter_y = pmax(mean + se, max_y) + y_offset
+      )
+  }
+
+  # --- Base plot ---
+  p <- ggplot2::ggplot(
+    summary_data,
+    ggplot2::aes(x = .data[[x_name]], y = mean, fill = .data[[fill_name]])
+  ) +
+    ggplot2::geom_col(alpha = alpha, width = bar_width) +
+    ggplot2::geom_errorbar(
+      ggplot2::aes(ymin = mean - se, ymax = mean + se),
+      width = 0.2,
+      linewidth = 0.5
+    ) +
+    ggplot2::geom_jitter(
+      data = data,
+      ggplot2::aes(
+        x = .data[[x_name]],
+        y = .data[[y_name]],
+        fill = .data[[fill_name]]
+      ),
+      shape = 21,
+      size = point_size,
+      alpha = 0.85,
+      width = jitter_width,
+      height = 0,
+      inherit.aes = FALSE
+    )
+
+  if (add_letters) {
+    p <- p +
+      ggplot2::geom_text(
+        data = summary_data,
+        ggplot2::aes(x = .data[[x_name]], y = letter_y, label = letter),
+        inherit.aes = FALSE,
+        size = letter_size,
+        fontface = "bold"
+      )
+  }
+
+  if (show_n_samples) {
+    n_per_group <- data |>
+      dplyr::summarise(n = dplyr::n(), .by = dplyr::all_of(x_name))
+    x_labels <- stats::setNames(
+      paste0(n_per_group[[x_name]], "\n(n=", n_per_group$n, ")"),
+      n_per_group[[x_name]]
+    )
+    p <- p + ggplot2::scale_x_discrete(labels = x_labels)
+  }
+
+  p +
+    ggplot2::scale_fill_manual(values = palette) +
+    ggplot2::labs(
+      x = x_lab,
+      y = y_lab,
+      subtitle = kw_subtitle,
+      caption = if (add_letters && tukey_run) {
+        "Error bars = \u00b11 SE\nletters from Tukey HSD pairwise comparisons"
+      } else if (add_letters && !tukey_run) {
+        paste0(
+          "Error bars = \u00b11 SE; Kruskal-Wallis p \u2265 ",
+          p_threshold,
+          "\nTukey HSD pairwise comparisons not run (no global significance)"
+        )
+      } else {
+        "Error bars = \u00b11 SE"
+      }
+    ) +
+    ggplot2::theme_bw(base_size = base_size) +
+    ggplot2::theme(
+      panel.grid.major = ggplot2::element_blank(),
+      panel.grid.minor = ggplot2::element_blank(),
+      panel.border = ggplot2::element_blank(),
+      axis.line.x = ggplot2::element_line(linewidth = 0.4),
+      axis.line.y = ggplot2::element_line(linewidth = 0.4),
+      axis.ticks = ggplot2::element_line(linewidth = 0.3),
+      strip.background = ggplot2::element_blank(),
+      strip.text = ggplot2::element_text(face = "bold"),
+      legend.key = ggplot2::element_blank(),
+      legend.background = ggplot2::element_blank(),
+      legend.position = "none",
+      axis.text.y = ggplot2::element_text(
+        size = if (is.null(y_lab_size)) base_size else y_lab_size
+      ),
+      axis.text.x = ggplot2::element_text(
+        size = if (is.null(x_lab_size)) base_size else x_lab_size
+      ),
+      plot.subtitle = ggplot2::element_text(
+        size = base_size * 0.8,
+        colour = "grey40"
+      ),
+      plot.caption = ggplot2::element_text(
+        size = base_size * 0.7,
+        colour = "grey50"
+      ),
+      plot.margin = ggplot2::margin(5, 5, 5, 5, "pt")
+    )
+}
+
+################################################################################
+#' Bar plot of Hill diversity with SE, jittered points, and Kruskal-Wallis test
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#' For each Hill diversity order in `q`, draws a bar at the group mean (±1 SE)
+#' with jittered individual points. A Kruskal-Wallis test is reported in the
+#' subtitle; when the global effect is significant, Tukey HSD pairwise
+#' comparisons produce compact letter displays above the bars. Multiple values
+#' of `q` are assembled into a [patchwork] layout automatically.
+#'
+#' @inheritParams clean_pq
+#' @param x Name (unquoted) of the grouping variable in `sam_data` (x-axis).
+#' @param q Numeric vector of Hill diversity orders to plot. The corresponding
+#'   `Hill_<q>` columns are computed by [psmelt_samples_pq()].
+#'   Default `c(0, 2)`.
+#' @param fill Name (unquoted) of the fill aesthetic column. Defaults to `x`.
+#' @param x_lab Label for the x-axis. Defaults to the column name of `x`.
+#' @param y_labs Named character vector of y-axis labels keyed by `Hill_<q>`
+#'   column name (e.g. `c(Hill_0 = "Richness")`). Unspecified orders receive
+#'   a default label.
+#' @param ncol Number of columns in the patchwork layout when `length(q) > 1`.
+#'   Default `NULL` (automatic).
+#' @param alpha Transparency of bars. Default `0.6`.
+#' @param point_size Size of jittered points. Default `3`.
+#' @param base_size Base font size in pts. Default `13`.
+#' @param jitter_width Horizontal jitter width. Default `0.15`.
+#' @param bar_width Width of bars. Default `0.7`.
+#' @param add_letters Logical. Add compact letter display above bars.
+#'   Requires the \pkg{multcompView} package. Default `TRUE`.
+#' @param p_threshold Significance threshold for the Kruskal-Wallis test.
+#'   Below this value, Tukey HSD pairwise comparisons are run and letters
+#'   assigned; above it all groups receive `"a"`. Default `0.05`.
+#' @param letter_size Size of letter labels in ggplot2 units. Default `5`.
+#' @param letters_top_offset Fraction of the y-range added above the highest
+#'   point / error-bar to position letters. Default `0.2`.
+#' @param y_lab_size Size of y-axis tick labels in pts. Defaults to `base_size`.
+#' @param x_lab_size Size of x-axis tick labels in pts. Defaults to `base_size`.
+#' @param show_n_samples Logical. If `TRUE`, the number of samples per group is
+#'   appended below each x-axis tick label as `(n=X)`. Default `TRUE`.
+#' @param palette Character vector of fill colours. Defaults to the Okabe-Ito
+#'   palette.
+#' @param ... Additional arguments passed to [psmelt_samples_pq()] and hence
+#'   to [divent::div_hill()] (e.g. `estimator = "naive"`).
+#'
+#' @return A `ggplot` object when `length(q) == 1`, or a `patchwork` object
+#'   when `length(q) > 1`.
+#'
+#' @export
+#' @author Adrien Taudière
+#'
+#' @examples
+#' hill_bar_pq(data_fungi_mini, Height)
+#' \donttest{
+#' hill_bar_pq(data_fungi_mini, Height, q = 0)
+#' hill_bar_pq(data_fungi_mini, Height, q = c(0, 1, 2), ncol = 1)
+#' hill_bar_pq(data_fungi_mini, Height, q = c(0, 2),
+#'   y_labs = c(Hill_0 = "Richness", Hill_2 = "Simpson diversity"))
+#' hill_bar_pq(data_fungi_mini, Height, add_letters = FALSE)
+#' }
+#'
+#' @seealso [hill_pq()], [psmelt_samples_pq()], [ggbetween_pq()]
+hill_bar_pq <- function(
+  physeq,
+  x,
+  q = c(0, 2),
+  fill,
+  x_lab = NULL,
+  y_labs = NULL,
+  ncol = NULL,
+  alpha = 0.6,
+  point_size = 3,
+  base_size = 13,
+  jitter_width = 0.15,
+  bar_width = 0.7,
+  add_letters = TRUE,
+  p_threshold = 0.05,
+  letter_size = 5,
+  letters_top_offset = 0.2,
+  y_lab_size = NULL,
+  x_lab_size = NULL,
+  show_n_samples = TRUE,
+  palette = c(
+    "#E69F00",
+    "#56B4E9",
+    "#009E73",
+    "#F0E442",
+    "#0072B2",
+    "#D55E00",
+    "#CC79A7",
+    "#000000"
+  ),
+  ...
+) {
+  verify_pq(physeq)
+
+  data <- psmelt_samples_pq(physeq, q = q, ...)
+
+  x_var <- rlang::ensym(x)
+  fill_var <- if (missing(fill)) x_var else rlang::ensym(fill)
+  x_name <- rlang::as_string(x_var)
+  fill_name <- rlang::as_string(fill_var)
+  x_lab <- if (is.null(x_lab)) x_name else x_lab
+
+  ys <- paste0("Hill_", q)
+
+  plot_args <- list(
+    data = data,
+    x_name = x_name,
+    fill_name = fill_name,
+    x_lab = x_lab,
+    alpha = alpha,
+    point_size = point_size,
+    base_size = base_size,
+    jitter_width = jitter_width,
+    bar_width = bar_width,
+    add_letters = add_letters,
+    p_threshold = p_threshold,
+    letter_size = letter_size,
+    letters_top_offset = letters_top_offset,
+    y_lab_size = y_lab_size,
+    x_lab_size = x_lab_size,
+    show_n_samples = show_n_samples,
+    palette = palette
+  )
+
+  if (length(ys) == 1) {
+    y_lab <- if (!is.null(y_labs) && ys %in% names(y_labs)) {
+      y_labs[[ys]]
+    } else {
+      .hill_y_lab(q)
+    }
+    do.call(.hill_bar_single, c(plot_args, list(y_name = ys, y_lab = y_lab)))
+  } else {
+    plots <- lapply(seq_along(ys), function(i) {
+      y_name <- ys[[i]]
+      y_lab <- if (!is.null(y_labs) && y_name %in% names(y_labs)) {
+        y_labs[[y_name]]
+      } else {
+        .hill_y_lab(q[[i]])
+      }
+      do.call(
+        .hill_bar_single,
+        c(plot_args, list(y_name = y_name, y_lab = y_lab))
+      )
+    })
+    patchwork::wrap_plots(plots, ncol = ncol)
+  }
+}
+################################################################################

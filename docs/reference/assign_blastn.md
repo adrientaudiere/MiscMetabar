@@ -91,7 +91,7 @@ assign_blastn(
 
 - min_cover:
 
-  (default: 50) cut of in query cover (%) to keep result
+  (default: 95) cut of in query cover (%) to keep result
 
 - min_e_value:
 
@@ -188,10 +188,6 @@ ref_fasta <- Biostrings::readDNAStringSet(system.file("extdata",
   "mini_UNITE_fungi.fasta.gz",
   package = "MiscMetabar", mustWork = TRUE
 ))
-
-# assign_blastn(data_fungi_mini, ref_fasta = ref_fasta) # error because not
-# enough sequences in db so none blast query passed the filters.
-# So we used low score filter hereafter.
 
 mat <- assign_blastn(data_fungi_mini,
   ref_fasta = ref_fasta,

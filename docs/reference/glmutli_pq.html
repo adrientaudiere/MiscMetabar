@@ -13,7 +13,7 @@ See glmulti::glmulti() for more information."><script data-goatcounter="https://
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,7 +79,7 @@ See glmulti::glmulti() for more information."><script data-goatcounter="https://
 <span>  <span class="va">physeq</span>,</span>
 <span>  <span class="va">formula</span>,</span>
 <span>  fitfunction <span class="op">=</span> <span class="st">"lm"</span>,</span>
-<span>  hill_scales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>  q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>  aic_step <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  confsetsize <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  plotty <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -102,7 +102,7 @@ using the <code>phyloseq</code> package.</p></dd>
 <dt id="arg-formula">formula<a class="anchor" aria-label="anchor" href="#arg-formula"></a></dt>
 <dd><p>(required) a formula for <code><a href="https://rdrr.io/pkg/glmulti/man/glmulti.html" class="external-link">glmulti::glmulti()</a></code>
 Variables must be present in the <code>physeq@sam_data</code> slot or be one
-of hill number defined in hill_scales or the variable Abundance which
+of hill number defined in q or the variable Abundance which
 refer to the number of sequences per sample.</p></dd>
 
 
@@ -110,12 +110,13 @@ refer to the number of sequences per sample.</p></dd>
 <dd><p>(default "lm")</p></dd>
 
 
-<dt id="arg-hill-scales">hill_scales<a class="anchor" aria-label="anchor" href="#arg-hill-scales"></a></dt>
+<dt id="arg-q">q<a class="anchor" aria-label="anchor" href="#arg-q"></a></dt>
 <dd><p>(a vector of integer) The list of q values to compute
 the hill number H^q. If Null, no hill number are computed. Default value
 compute the Hill number 0 (Species richness), the Hill number 1
 (exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
-Index).</p></dd>
+Index). Hill numbers are more appropriate in DNA metabarcoding studies
+when <code>q &gt; 0</code> (Alberdi &amp; Gilbert, 2019; Calderón-Sanou et al., 2019).</p></dd>
 
 
 <dt id="arg-aic-step">aic_step<a class="anchor" aria-label="anchor" href="#arg-aic-step"></a></dt>
@@ -147,7 +148,7 @@ is printed, including the number of candidate models.</p></dd>
 
 
 <dt id="arg-crit">crit<a class="anchor" aria-label="anchor" href="#arg-crit"></a></dt>
-<dd><p>The Information Criterion to be used. Default is the small-sample corrected AIC (aicc).
+<dd><p>(character, default aicc) The Information Criterion to be used. Default is the small-sample corrected AIC (aicc).
 This should be a function that accepts a fitted model as first argument.
 Other provided functions are the classic AIC, the Bayes IC (bic), and QAIC/QAICc (qaic and qaicc).</p></dd>
 
@@ -170,6 +171,16 @@ Other provided functions are the classic AIC, the Bayes IC (bic), and QAIC/QAICc
     <p>This function is mainly a wrapper of the work of others.
 Please make a reference to <code><a href="https://rdrr.io/pkg/glmulti/man/glmulti.html" class="external-link">glmulti::glmulti()</a></code> if you
 use this function.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <p>Alberdi, A., &amp; Gilbert, M. T. P. (2019). A guide to the application of
+Hill numbers to DNA-based diversity analyses. <em>Molecular Ecology Resources</em>.
+<a href="https://doi.org/10.1111/1755-0998.13014" class="external-link">doi:10.1111/1755-0998.13014</a></p>
+<p>Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., &amp; Thuiller, W.
+(2019). From environmental DNA sequences to ecological conclusions: How
+strong is the influence of methodological choices? <em>Journal of Biogeography</em>,
+47. <a href="https://doi.org/10.1111/jbi.13681" class="external-link">doi:10.1111/jbi.13681</a></p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -200,34 +211,34 @@ use this function.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fitting...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> After 50 models:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Best model: Hill_0~1+Abundance+Time+Time:Abundance+Height:Abundance+Height:Time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Crit= 1069.11608982306</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mean crit= 1218.19009955263</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Best model: Hill_0~1+Abundance+Time+Time:Abundance+Height:Abundance</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Crit= 1162.46935121017</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mean crit= 1326.57756179615</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Completed.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                            estimates unconditional_interval nb_model importance</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HeightHigh:Time         0.1004073616           4.167750e-02        8 0.04216251</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:HeightHigh    0.0001609310           8.984023e-08        8 0.09020701</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HeightLow              -0.7865687564           9.769200e+00       32 0.24714664</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HeightMiddle           -2.6419930721           2.789953e+01       32 0.24714664</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HeightLow:Time         -0.6511123699           1.599292e+00       32 0.55051517</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HeightMiddle:Time      -1.3322473025           3.078720e+00       32 0.55051517</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:Time         -0.0001068559           4.586032e-09       32 0.81587143</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:HeightLow     0.0011137659           7.957713e-07       32 0.86967993</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:HeightMiddle  0.0017155970           1.245718e-06       32 0.86967993</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance               0.0024839088           8.790126e-07       32 0.90902176</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time                    2.7869220741           2.663548e+00       32 0.92512111</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HeightHigh:Time         0.0238428433           5.369345e-03        8 0.02339703</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:HeightHigh    0.0001567326           9.040694e-08        8 0.05936981</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HeightLow               1.3672307044           2.837356e+01       32 0.28630897</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HeightMiddle           -2.8823946528           4.305119e+01       32 0.28630897</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HeightLow:Time          0.6976197936           1.991032e+00       32 0.48361405</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HeightMiddle:Time      -0.3490561261           1.442196e+00       32 0.48361405</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:HeightLow     0.0009609861           1.351266e-06       32 0.52347724</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:HeightMiddle  0.0008434925           1.380631e-06       32 0.52347724</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time                    1.9148085653           3.424966e+00       32 0.72978508</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:Time         -0.0001497892           9.036339e-09       32 0.86061128</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance               0.0040684019           1.456572e-06       32 0.94026666</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                               alpha               variable</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HeightHigh:Time        4.006348e-01        HeightHigh:Time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:HeightHigh   5.877776e-04   Abundance:HeightHigh</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HeightLow              6.171172e+00              HeightLow</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HeightMiddle           1.038989e+01           HeightMiddle</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HeightLow:Time         2.491898e+00         HeightLow:Time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HeightMiddle:Time      3.449710e+00      HeightMiddle:Time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:Time         1.335247e-04         Abundance:Time</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:HeightLow    1.759641e-03    Abundance:HeightLow</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:HeightMiddle 2.198334e-03 Abundance:HeightMiddle</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance              1.847287e-03              Abundance</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time                   3.214276e+00                   Time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HeightHigh:Time        1.442951e-01        HeightHigh:Time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:HeightHigh   5.895794e-04   Abundance:HeightHigh</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HeightLow              1.050820e+01              HeightLow</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HeightMiddle           1.292959e+01           HeightMiddle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HeightLow:Time         2.778215e+00         HeightLow:Time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HeightMiddle:Time      2.367383e+00      HeightMiddle:Time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:HeightLow    2.286482e-03    Abundance:HeightLow</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:HeightMiddle 2.312397e-03 Abundance:HeightMiddle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time                   3.645902e+00                   Time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance:Time         1.874648e-04         Abundance:Time</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Abundance              2.378267e-03              Abundance</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

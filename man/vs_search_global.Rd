@@ -9,7 +9,7 @@ vs_search_global(
   physeq,
   path_to_fasta = NULL,
   seq2search = NULL,
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   id = 0.8,
   iddef = 0,
   keep_temporary_files = FALSE
@@ -25,7 +25,7 @@ using the \code{phyloseq} package.}
 or (ii) a character vector that will be convert to DNAStringSet using
 \code{\link[Biostrings:XStringSet-class]{Biostrings::DNAStringSet()}}}
 
-\item{vsearchpath}{(default: "vsearch") path to vsearch}
+\item{vsearchpath}{(default: \code{\link[=find_vsearch]{find_vsearch()}}) path to vsearch}
 
 \item{id}{(default: 0.8) id for the option \code{--usearch_global} of the vsearch software}
 

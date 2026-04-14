@@ -5,7 +5,7 @@
 A wrapper for the vegan::adonis2() function in the case of physeq object."><meta property="og:description" content="
 
 
-A wrapper for the vegan::adonis2() function in the case of physeq object."></head><body>
+A wrapper for the vegan::adonis2() function in the case of physeq object."><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -13,7 +13,7 @@ A wrapper for the vegan::adonis2() function in the case of physeq object."></hea
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,6 +79,7 @@ A wrapper for the vegan::adonis2() function in the case of physeq object."></hea
 <span>  <span class="va">physeq</span>,</span>
 <span>  <span class="va">formula</span>,</span>
 <span>  dist_method <span class="op">=</span> <span class="st">"bray"</span>,</span>
+<span>  by <span class="op">=</span> <span class="st">"terms"</span>,</span>
 <span>  merge_sample_by <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  na_remove <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  correction_for_sample_size <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -109,6 +110,16 @@ Variables must be present in the <code>physeq@sam_data</code> slot.</p></dd>
 <code><a href="https://rdrr.io/pkg/phyloseq/man/distanceMethodList.html" class="external-link">phyloseq::distanceMethodList()</a></code>.
 For aitchison and robust.aitchison distance, <code><a href="https://vegandevs.github.io/vegan/reference/vegdist.html" class="external-link">vegan::vegdist()</a></code>
 function is directly used.</p></dd>
+
+
+<dt id="arg-by">by<a class="anchor" aria-label="anchor" href="#arg-by"></a></dt>
+<dd><p>(character, default "terms")  by = "terms" will assess significance
+for each term (sequentially from first to last); if by = NULL ,
+the p-value is computed for the entire model i.e. the overall significance
+of all terms together is computed,  setting by = "margin" will assess the
+marginal effects of the terms (each marginal term analyzed in a model
+with all other variables), by = "onedf" will analyze one-degree-of-freedom
+contrasts sequentially. See <code><a href="https://vegandevs.github.io/vegan/reference/adonis.html" class="external-link">?vegan::adonis2</a></code> for more information.</p></dd>
 
 
 <dt id="arg-merge-sample-by">merge_sample_by<a class="anchor" aria-label="anchor" href="#arg-merge-sample-by"></a></dt>
@@ -152,13 +163,7 @@ beforehand to achieve reproducible results. Default is FALSE.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments passed on to <code><a href="https://vegandevs.github.io/vegan/reference/vegan-defunct.html" class="external-link">vegan::adonis2()</a></code> function.
-Note that the parameter <code>by</code> is important. If by is set to NULL
-(default) the p-value is computed for the entire model.
-by = NULL will assess the overall significance of all terms together,
-by = "terms" will assess significance for each term (sequentially from first to last),
-setting by = "margin" will assess the marginal effects of the terms (each marginal term analyzed in a model with all other variables),
-by = "onedf" will analyze one-degree-of-freedom contrasts sequentially. The argument is passed on to anova.cca.</p></dd>
+<dd><p>Additional arguments passed on to <code><a href="https://vegandevs.github.io/vegan/reference/vegan-defunct.html" class="external-link">vegan::adonis2()</a></code> function.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -184,8 +189,8 @@ use this function.</p>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">adonis_pq</span><span class="op">(</span><span class="va">enterotype</span>, <span class="st">"SeqTech*Enterotype"</span>, na_remove <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> SeqTech</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Enterotype</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Removing NA from SeqTech</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Removing NA from Enterotype</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 9 were discarded due to NA in variables present in formula.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Permutation test for adonis under reduced model</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Permutation: free</span>
@@ -198,93 +203,95 @@ use this function.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total    270   53.972 1.00000                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
-<span class="r-in"><span><span class="fu">adonis_pq</span><span class="op">(</span><span class="va">enterotype</span>, <span class="st">"SeqTech*Enterotype"</span>, na_remove <span class="op">=</span> <span class="cn">TRUE</span>, by <span class="op">=</span> <span class="st">"terms"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">adonis_pq</span><span class="op">(</span><span class="va">enterotype</span>, <span class="st">"SeqTech*Enterotype"</span>, na_remove <span class="op">=</span> <span class="cn">TRUE</span>, by <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> SeqTech</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Enterotype</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Removing NA from SeqTech</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Removing NA from Enterotype</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 9 were discarded due to NA in variables present in formula.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Permutation test for adonis under reduced model</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Terms added sequentially (first to last)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Permutation: free</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of permutations: 999</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> vegan::adonis2(formula = .formula, data = metadata, by = "terms")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     Df SumOfSqs      R2        F Pr(&gt;F)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTech              2   29.175 0.54055 242.2289  0.001 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Enterotype           2    8.651 0.16028  71.8250  0.001 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTech:Enterotype   4    0.368 0.00683   1.5293  0.112    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual           262   15.778 0.29234                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total              270   53.972 1.00000                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> vegan::adonis2(formula = .formula, data = metadata)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Df SumOfSqs      R2      F Pr(&gt;F)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model      8   38.194 0.70766 79.278  0.001 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual 262   15.778 0.29234                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total    270   53.972 1.00000                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-in"><span><span class="fu">adonis_pq</span><span class="op">(</span><span class="va">enterotype</span>, <span class="st">"SeqTech*Enterotype"</span>, na_remove <span class="op">=</span> <span class="cn">TRUE</span>, by <span class="op">=</span> <span class="st">"onedf"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> SeqTech</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Enterotype</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Removing NA from SeqTech</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Removing NA from Enterotype</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 9 were discarded due to NA in variables present in formula.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Permutation test for adonis under reduced model</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Sequential test for contrasts</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Permutation: free</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of permutations: 999</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> vegan::adonis2(formula = .formula, data = metadata, by = "onedf")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                             Df SumOfSqs       R2        F Pr(&gt;F)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTechPyro454               1   28.796  0.53353 478.1659  0.001 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTechSanger                1    0.379  0.00702   6.2918  0.001 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Enterotype2                  1    4.282  0.07933  71.1013  0.001 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Enterotype3                  1    4.369  0.08095  72.5487  0.001 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTechPyro454:Enterotype2   1   -0.556 -0.01030  -9.2315  1.000    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTechSanger:Enterotype2    1    0.232  0.00430   3.8560  0.015 *  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTechPyro454:Enterotype3   1    0.443  0.00820   7.3535  0.001 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTechSanger:Enterotype3    1    0.249  0.00462   4.1394  0.009 ** </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual                   262   15.778  0.29234                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total                      270   53.972  1.00000                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> vegan::adonis2(formula = .formula, data = metadata)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Df SumOfSqs      R2      F Pr(&gt;F)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model      8   38.194 0.70766 79.278  0.001 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual 262   15.778 0.29234                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total    270   53.972 1.00000                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-in"><span><span class="fu">adonis_pq</span><span class="op">(</span><span class="va">enterotype</span>, <span class="st">"SeqTech*Enterotype"</span>, na_remove <span class="op">=</span> <span class="cn">TRUE</span>, by <span class="op">=</span> <span class="st">"margin"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> SeqTech</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Enterotype</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Removing NA from SeqTech</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Removing NA from Enterotype</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 9 were discarded due to NA in variables present in formula.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Permutation test for adonis under reduced model</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Marginal effects of terms</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Permutation: free</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of permutations: 999</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> vegan::adonis2(formula = .formula, data = metadata, by = "margin")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     Df SumOfSqs      R2      F Pr(&gt;F)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTech:Enterotype   4    0.368 0.00683 1.5293  0.092 .</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual           262   15.778 0.29234                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total              270   53.972 1.00000                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> vegan::adonis2(formula = .formula, data = metadata)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Df SumOfSqs      R2      F Pr(&gt;F)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model      8   38.194 0.70766 79.278  0.001 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual 262   15.778 0.29234                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total    270   53.972 1.00000                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">adonis_pq</span><span class="op">(</span><span class="va">enterotype</span>, <span class="st">"SeqTech"</span>, dist_method <span class="op">=</span> <span class="st">"jaccard"</span>, by <span class="op">=</span> <span class="st">"terms"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">adonis_pq</span><span class="op">(</span><span class="va">enterotype</span>, <span class="st">"SeqTech"</span>, dist_method <span class="op">=</span> <span class="st">"jaccard"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Permutation test for adonis under reduced model</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Terms added sequentially (first to last)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Permutation: free</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of permutations: 999</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> vegan::adonis2(formula = .formula, data = metadata, by = "terms")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> vegan::adonis2(formula = .formula, data = metadata)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           Df SumOfSqs      R2      F Pr(&gt;F)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTech    2   31.330 0.40211 93.147  0.001 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model      2   31.330 0.40211 93.147  0.001 ***</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residual 277   46.585 0.59789                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total    279   77.915 1.00000                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
-<span class="r-in"><span><span class="fu">adonis_pq</span><span class="op">(</span><span class="va">enterotype</span>, <span class="st">"SeqTech"</span>, dist_method <span class="op">=</span> <span class="st">"robust.aitchison"</span>, by <span class="op">=</span> <span class="st">"terms"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">adonis_pq</span><span class="op">(</span><span class="va">enterotype</span>, <span class="st">"SeqTech"</span>, dist_method <span class="op">=</span> <span class="st">"robust.aitchison"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Permutation test for adonis under reduced model</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Terms added sequentially (first to last)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Permutation: free</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of permutations: 999</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> vegan::adonis2(formula = .formula, data = metadata, by = "terms")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> vegan::adonis2(formula = .formula, data = metadata)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           Df SumOfSqs      R2    F Pr(&gt;F)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTech    2   121403 0.95598 3008  0.001 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model      2   121403 0.95598 3008  0.001 ***</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Residual 277     5590 0.04402                </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total    279   126992 1.00000                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">adonis_pq</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Time*Height"</span>, na_remove <span class="op">=</span> <span class="cn">TRUE</span>, correction_for_sample_size <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Removing NA from Time</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Removing NA from Height</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 74 were discarded due to NA in variables present in formula.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Permutation test for adonis under reduced model</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Permutation: free</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of permutations: 999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> vegan::adonis2(formula = .formula, data = metadata)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Df SumOfSqs      R2      F Pr(&gt;F)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model      6    4.136 0.07793 1.4649  0.001 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual 104   48.934 0.92207                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total    110   53.069 1.00000                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>

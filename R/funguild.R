@@ -15,6 +15,10 @@
 #' @return a [`tibble::tibble`] containing the database, which can be passed
 #'     to the `db` argument of [funguild_assign()]
 #' @export
+#' @examples
+#' \dontrun{
+#' get_funguild_db()
+#' }
 #'
 #' @references Nguyen NH, Song Z, Bates ST, Branco S, Tedersoo L, Menke J,
 #' Schilling JS, Kennedy PG. 2016. *FUNGuild: An open annotation tool for
@@ -23,22 +27,24 @@
 #' @author Brendan Furneaux (orcid: [0000-0003-3522-7363](https://orcid.org/0000-0003-3522-7363)),
 #' modified by Adrien Taudière
 #'
-get_funguild_db <- function(db_url = "http://www.stbates.org/funguild_db_2.php") {
+get_funguild_db <- function(
+  db_url = "http://www.stbates.org/funguild_db_2.php"
+) {
   if (httr::http_error(db_url)) {
     message("error with db_url: ", db_url)
     return(NULL)
   }
 
-  httr::GET(url = db_url) %>%
-    httr::content(as = "text") %>%
-    stringr::str_split("\n") %>%
-    unlist() %>%
-    magrittr::extract(7) %>%
-    stringr::str_replace("^\\[", "") %>%
-    stringr::str_replace("]</body>$", "") %>%
-    stringr::str_replace_all("\\} ?, ?\\{", "} \n {") %>%
-    stringr::str_split("\n") %>%
-    unlist() %>%
+  httr::GET(url = db_url) |>
+    httr::content(as = "text") |>
+    stringr::str_split("\n") |>
+    unlist() |>
+    magrittr::extract(7) |>
+    stringr::str_replace("^\\[", "") |>
+    stringr::str_replace("]</body>$", "") |>
+    stringr::str_replace_all("\\} ?, ?\\{", "} \n {") |>
+    stringr::str_split("\n") |>
+    unlist() |>
     purrr::map_dfr(
       function(record) {
         current_record <- jsonlite::fromJSON(record)
@@ -50,10 +56,18 @@ get_funguild_db <- function(db_url = "http://www.stbates.org/funguild_db_2.php")
         }
         purrr::flatten(current_record)
       }
-    ) %>%
+    ) |>
     dplyr::select(
-      "taxon", "guid", "mbNumber", "taxonomicLevel", "trophicMode",
-      "guild", "confidenceRanking", "growthForm", "trait", "notes",
+      "taxon",
+      "guid",
+      "mbNumber",
+      "taxonomicLevel",
+      "trophicMode",
+      "guild",
+      "confidenceRanking",
+      "growthForm",
+      "trait",
+      "notes",
       "citationSource"
     )
 }
@@ -110,6 +124,7 @@ get_funguild_db <- function(db_url = "http://www.stbates.org/funguild_db_2.php")
 #'
 #' @examples
 #' \donttest{
+#' db <- get_funguild_db()
 #' data_fungi_FUNGUILD <- funguild_assign(as.data.frame(tax_table(data_fungi)),
 #'   db_funguild = db, tax_col = "Genus_species"
 #' )
@@ -136,8 +151,12 @@ funguild_assign <- function(
     stop(paste0("otu_table must be a dataframe not a ", class(otu_table)))
   }
   if (!tax_col %in% colnames(otu_table)) {
-    stop(paste0("The tax_col args ", tax_col, " is not present in the colnames
-    of the otu_table dataframe."))
+    stop(paste0(
+      "The tax_col args ",
+      tax_col,
+      " is not present in the colnames
+    of the otu_table dataframe."
+    ))
   }
 
   make_taxkey <- function(x) {
@@ -147,27 +166,28 @@ funguild_assign <- function(
   }
 
   otu_table$taxkey <- make_taxkey(otu_table[[tax_col]])
-  all_taxkey <- unique(otu_table$taxkey) %>% na.omit()
+  all_taxkey <- unique(otu_table$taxkey) |> na.omit()
   `.` <- taxon <- taxkey <- searchkey <- taxonomicLevel <- NULL
 
   db_funguild <- dplyr::mutate(
     db_funguild,
     searchkey = paste0("@", stringr::str_replace(taxon, "[ _]", "@"), "@")
   )
-  dplyr::select(db_funguild, taxonomicLevel, searchkey) %>%
+  dplyr::select(db_funguild, taxonomicLevel, searchkey) |>
     dplyr::mutate(
       taxkey = purrr::map(searchkey, stringr::str_subset, string = all_taxkey)
-    ) %>%
-    tidyr::unnest(cols = taxkey) %>%
-    dplyr::group_by(taxkey) %>%
-    dplyr::arrange(dplyr::desc(taxonomicLevel)) %>%
-    dplyr::summarize_at("searchkey", dplyr::first) %>%
-    dplyr::ungroup() %>%
-    dplyr::mutate_all(as.character) %>%
-    dplyr::left_join(otu_table, ., by = "taxkey") %>%
-    dplyr::left_join(db_funguild,
+    ) |>
+    tidyr::unnest(cols = taxkey) |>
+    dplyr::group_by(taxkey) |>
+    dplyr::arrange(dplyr::desc(taxonomicLevel)) |>
+    dplyr::summarize_at("searchkey", dplyr::first) |>
+    dplyr::ungroup() |>
+    dplyr::mutate_all(as.character) |>
+    (\(x) dplyr::left_join(otu_table, x, by = "taxkey"))() |>
+    dplyr::left_join(
+      db_funguild,
       by = "searchkey",
       suffix = c("", ".funguild")
-    ) %>%
+    ) |>
     dplyr::select(-taxkey, -searchkey)
 }

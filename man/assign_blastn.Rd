@@ -65,7 +65,7 @@ a references taxa}
 \item{min_bit_score}{(default: 50) the minimum bit score to take
 into account a references taxa}
 
-\item{min_cover}{(default: 50) cut of in query cover (\%) to keep result}
+\item{min_cover}{(default: 95) cut of in query cover (\%) to keep result}
 
 \item{min_e_value}{(default: 1e-30)  cut of in e-value (\%) to keep result
 The BLAST E-value is the number of expected hits of similar quality (score)
@@ -128,10 +128,6 @@ ref_fasta <- Biostrings::readDNAStringSet(system.file("extdata",
   "mini_UNITE_fungi.fasta.gz",
   package = "MiscMetabar", mustWork = TRUE
 ))
-
-# assign_blastn(data_fungi_mini, ref_fasta = ref_fasta) # error because not
-# enough sequences in db so none blast query passed the filters.
-# So we used low score filter hereafter.
 
 mat <- assign_blastn(data_fungi_mini,
   ref_fasta = ref_fasta,

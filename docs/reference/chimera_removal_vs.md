@@ -25,9 +25,9 @@ chimera_removal_vs(object, type = "Discard_only_chim", clean_pq = FALSE, ...)
   - "Discard_only_chim" will only discard taxa classify as chimera by
     vsearch
 
-  - "Select_only_non_chim" will only select taxa classify as non-chimera
-    by vsearch(after filtering taxa based on their sequence length by
-    the parameter `min_seq_length` from the
+  - "Select_only_non_chim_seqlen_filtered" will only select taxa
+    classify as non-chimera by vsearch(after filtering taxa based on
+    their sequence length by the parameter `min_seq_length` from the
     [`chimera_detection_vs()`](https://adrientaudiere.github.io/MiscMetabar/reference/chimera_detection_vs.md)
     function)
 
@@ -60,7 +60,7 @@ chimera_removal_vs(object, type = "Discard_only_chim", clean_pq = FALSE, ...)
 
 ## Details
 
-This function is mainly a wrapper of the work of others. Please make
+This function is mainly a wrapper of the work of others. Please cite
 [vsearch](https://github.com/torognes/vsearch).
 
 ## See also
@@ -76,6 +76,12 @@ Adrien Taudière
 
 ``` r
 # \donttest{
+# Adding a chimeric sequence for the example
+data_fungi_with_chim <- data_fungi
+data_fungi_with_chim@refseq["ASV1710"] <- Biostrings::xscat(
+  Biostrings::subseq(data_fungi_with_chim@refseq[1], start = 1, end = 150),
+  Biostrings::subseq(data_fungi_with_chim@refseq[4], start = 151, end = 300)
+)
 data_fungi_nochim <- chimera_removal_vs(data_fungi)
 #> Filtering for sequences under 100 bp remove a total of 0 ( 0 %) unique sequences for a total of 0 sequences removed ( 0 %)
 #> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).
@@ -84,6 +90,8 @@ data_fungi_nochim <- chimera_removal_vs(data_fungi)
 #> Number of filtered-out ASV 240
 #> Number of kept ASV 1180
 #> Number of kept samples 185
+
+# Higher value of abskew parameter is less stringent
 data_fungi_nochim_16 <- chimera_removal_vs(data_fungi,
   abskew = 16,
   min_seq_length = 10
@@ -95,8 +103,30 @@ data_fungi_nochim_16 <- chimera_removal_vs(data_fungi,
 #> Number of filtered-out ASV 159
 #> Number of kept ASV 1261
 #> Number of kept samples 185
+
+# Potential Chimeric ASVs detected by vsearch
+chim_asv <- taxa_names(data_fungi_with_chim)[!taxa_names(data_fungi_with_chim)
+  %in% taxa_names(data_fungi_nochim)]
+
+"ASV1710" %in% chim_asv
+#> [1] FALSE
+
+track_wkflow(list(data_fungi_with_chim, data_fungi_nochim))
+#> Compute the number of sequences
+#> Start object of class: phyloseq
+#> Start object of class: phyloseq
+#> Compute the number of clusters
+#> Start object of class: phyloseq
+#> Start object of class: phyloseq
+#> Compute the number of samples
+#> Start object of class: phyloseq
+#> Start object of class: phyloseq
+#>   nb_sequences nb_clusters nb_samples
+#> 1      1839124        1420        185
+#> 2      1789481        1180        185
+
 data_fungi_nochim2 <-
-  chimera_removal_vs(data_fungi, type = "Select_only_non_chim")
+  chimera_removal_vs(data_fungi, type = "Select_only_non_chim_seqlen_filtered")
 #> Filtering for sequences under 100 bp remove a total of 0 ( 0 %) unique sequences for a total of 0 sequences removed ( 0 %)
 #> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).
 #> Number of non-matching ASV 0

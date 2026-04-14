@@ -8,7 +8,7 @@ Hill diversity of phyloseq object}
 ggscatt_pq(
   physeq,
   num_modality,
-  hill_scales = c(0, 1, 2),
+  q = c(0, 1, 2),
   rarefy_by_sample = FALSE,
   rngseed = FALSE,
   verbose = TRUE,
@@ -23,11 +23,12 @@ using the \code{phyloseq} package.}
 \item{num_modality}{(required) Name of the numeric column in
 \code{physeq@sam_data} to plot and test against hill number}
 
-\item{hill_scales}{(a vector of integer) The list of q values to compute
+\item{q}{(a vector of integer) The list of q values to compute
 the hill number H^q. If Null, no hill number are computed. Default value
 compute the Hill number 0 (Species richness), the Hill number 1
 (exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
-Index).}
+Index). Hill numbers are more appropriate in DNA metabarcoding studies
+when \code{q > 0} (Alberdi & Gilbert, 2019; Calderón-Sanou et al., 2019).}
 
 \item{rarefy_by_sample}{(logical, default FALSE) If TRUE, rarefy
 samples using \code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}} function.}
@@ -48,8 +49,8 @@ plot with the three plot inside using the patchwork package.}
 function.}
 }
 \value{
-Either an unique ggplot2 object (if one_plot is TRUE) or
-a list of ggplot2 plot for each hill_scales.
+Either an unique ggplot2 (when \code{one_plot} is TRUE) or
+a list of ggplot2 plot for each q.
 }
 \description{
 \if{html}{\out{
@@ -68,10 +69,10 @@ use this function.
 }
 \examples{
 if (requireNamespace("ggstatsplot")) {
-  ggscatt_pq(data_fungi_mini, "Time", type = "non-parametric")
-  ggscatt_pq(data_fungi_mini, "Time", hill_scales = 1:4, type = "parametric")
+  ggscatt_pq(data_fungi_mini, "Time", q = 0, type = "non-parametric")
+  ggscatt_pq(data_fungi_mini, "Time", q = 0, type = "parametric")
   ggscatt_pq(data_fungi_mini, "Sample_id",
-    hill_scales = c(0, 0.5),
+    q = 0,
     one_plot = FALSE
   )
 }

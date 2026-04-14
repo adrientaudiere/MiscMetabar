@@ -17,6 +17,7 @@
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="alpha-div">
+<script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -26,7 +27,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -106,30 +107,58 @@
 <p>Numerous metrics of diversity exist. Hill numbers <a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Hill MO. 1973. Diversity and evenness: a unifying
 notation and its consequences. Ecology 54, 427-473.&lt;/p&gt;"><sup>1</sup></a> is a kind of general
 framework for alpha diversity index.</p>
+</div>
+<div class="section level5">
+<h5 id="diversity-profiles">Diversity profiles<a class="anchor" aria-label="anchor" href="#diversity-profiles"></a>
+</h5>
+<p><code><a href="../reference/profile_hill_pq.html">profile_hill_pq()</a></code> plots the Hill diversity profile
+(diversity as a function of the order <em>q</em>) for each sample, or
+for groups of samples merged via <code>merge_sample_by</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">renyi_res</span> <span class="op">&lt;-</span> <span class="fu">vegan</span><span class="fu">::</span><span class="fu"><a href="https://vegandevs.github.io/vegan/reference/renyi.html" class="external-link">renyi</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">renyi_res</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                                       0     0.25      0.5         1         2</span></span>
-<span><span class="co">#&gt; A10-005-B_S188_MERGED.fastq.gz 4.204693 3.615323 3.044244 2.0754183 1.1561862</span></span>
-<span><span class="co">#&gt; A10-005-H_S189_MERGED.fastq.gz 4.248495 3.150337 2.063712 0.9938545 0.6464533</span></span>
-<span><span class="co">#&gt; A10-005-M_S190_MERGED.fastq.gz 3.988984 3.607773 3.308361 2.9304156 2.5781603</span></span>
-<span><span class="co">#&gt; A12-007_S191_MERGED.fastq.gz   5.036953 4.423283 3.751946 2.6309045 1.8468497</span></span>
-<span><span class="co">#&gt; A12-007-B_S2_MERGED.fastq.gz   3.850148 3.349461 2.874269 2.1881145 1.6533262</span></span>
-<span><span class="co">#&gt; A15-004_S3_MERGED.fastq.gz     4.025352 3.890614 3.747555 3.4533352 2.9618789</span></span>
-<span><span class="co">#&gt;                                        4         8        16        32</span></span>
-<span><span class="co">#&gt; A10-005-B_S188_MERGED.fastq.gz 0.8007816 0.6864775 0.6407124 0.6200442</span></span>
-<span><span class="co">#&gt; A10-005-H_S189_MERGED.fastq.gz 0.5146170 0.4469617 0.4172228 0.4037640</span></span>
-<span><span class="co">#&gt; A10-005-M_S190_MERGED.fastq.gz 2.3022639 2.1015018 1.9744485 1.9110311</span></span>
-<span><span class="co">#&gt; A12-007_S191_MERGED.fastq.gz   1.5920328 1.4947479 1.4421368 1.4109287</span></span>
-<span><span class="co">#&gt; A12-007-B_S2_MERGED.fastq.gz   1.3979355 1.2774402 1.2106906 1.1733049</span></span>
-<span><span class="co">#&gt; A15-004_S3_MERGED.fastq.gz     2.4997916 2.2378349 2.1045646 2.0377518</span></span>
-<span><span class="co">#&gt;                                       64       Inf</span></span>
-<span><span class="co">#&gt; A10-005-B_S188_MERGED.fastq.gz 0.6102022 0.6006678</span></span>
-<span><span class="co">#&gt; A10-005-H_S189_MERGED.fastq.gz 0.3973550 0.3911464</span></span>
-<span><span class="co">#&gt; A10-005-M_S190_MERGED.fastq.gz 1.8806976 1.8513117</span></span>
-<span><span class="co">#&gt; A12-007_S191_MERGED.fastq.gz   1.3916365 1.3700776</span></span>
-<span><span class="co">#&gt; A12-007-B_S2_MERGED.fastq.gz   1.1547034 1.1366612</span></span>
-<span><span class="co">#&gt; A15-004_S3_MERGED.fastq.gz     2.0054156 1.9740810</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span></span>
+<span><span class="va">dfm_rarefied</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">rarefy_even_depth</a></span><span class="op">(</span><span class="va">data_fungi_mini</span>, rngseed <span class="op">=</span> <span class="fl">1</span>, sample.size<span class="op">=</span><span class="fl">200</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span><span class="fu"><a href="../reference/profile_hill_pq.html">profile_hill_pq</a></span><span class="op">(</span><span class="va">dfm_rarefied</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/no_legend.html">no_legend</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="alpha-div_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="Hill diversity profiles per sample (data_fungi_mini)" width="700"><p class="caption">
+Hill diversity profiles per sample (data_fungi_mini)
+</p>
+</div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/profile_hill_pq.html">profile_hill_pq</a></span><span class="op">(</span><span class="va">dfm_rarefied</span>, merge_sample_by <span class="op">=</span> <span class="st">"Height"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in merge_samples2(physeq, merge_sample_by): `group` has missing values;</span></span>
+<span><span class="co">#&gt; corresponding samples will be dropped</span></span></code></pre></div>
+<div class="figure">
+<img src="alpha-div_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="Hill diversity profiles merged by Height" width="700"><p class="caption">
+Hill diversity profiles merged by Height
+</p>
+</div>
+</div>
+<div class="section level5">
+<h5 id="rarefaction-curves">Rarefaction curves<a class="anchor" aria-label="anchor" href="#rarefaction-curves"></a>
+</h5>
+<p><code><a href="../reference/hill_acc_pq.html">hill_acc_pq()</a></code> plots Hill diversity accumulation
+(rarefaction) curves — one per sample or per merged group — showing how
+estimated diversity grows with sequencing depth.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/hill_acc_pq.html">hill_acc_pq</a></span><span class="op">(</span><span class="va">dfm_rarefied</span>, q <span class="op">=</span> <span class="fl">1</span>, n_simulations<span class="op">=</span><span class="fl">20</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="../reference/no_legend.html">no_legend</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: This manual palette can handle a maximum of 13 values. You have</span></span>
+<span><span class="co">#&gt; supplied 89</span></span></code></pre></div>
+<div class="figure">
+<img src="alpha-div_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="Rarefaction curves per sample (Hill order q = 1)" width="700"><p class="caption">
+Rarefaction curves per sample (Hill order q = 1)
+</p>
+</div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/hill_acc_pq.html">hill_acc_pq</a></span><span class="op">(</span><span class="va">dfm_rarefied</span>, q <span class="op">=</span> <span class="fl">0</span>, merge_sample_by <span class="op">=</span> <span class="st">"Height"</span>, n_simulations<span class="op">=</span><span class="fl">20</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in merge_samples2(physeq, merge_sample_by): `group` has missing values;</span></span>
+<span><span class="co">#&gt; corresponding samples will be dropped</span></span></code></pre></div>
+<div class="figure">
+<img src="alpha-div_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="Rarefaction curves merged by Height (Hill order q = 0)" width="700"><p class="caption">
+Rarefaction curves merged by Height (Hill order q = 0)
+</p>
+</div>
 </div>
 <div class="section level5">
 <h5 id="test-for-difference-in-diversity-hill-number">Test for difference in diversity (hill number)<a class="anchor" aria-label="anchor" href="#test-for-difference-in-diversity-hill-number"></a>
@@ -140,11 +169,15 @@ square roots of the number of sequence as the first explanatory variable
 of the linear model <a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;Bálint M et al. 2015. Relocation, high-latitude warming
 and host genetic identity shape the foliar fungal microbiome of poplars.
 Molecular Ecology 24, 235-248. &lt;a href="https://doi.org/10.1111/mec.13018" class="external-link uri"&gt;https://doi.org/10.1111/mec.13018&lt;/a&gt;&lt;/p&gt;'><sup>2</sup></a>.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">MiscMetabar</span><span class="fu">::</span><span class="fu"><a href="../reference/hill_pq.html">hill_pq</a></span><span class="op">(</span><span class="va">data_fungi</span>, fact <span class="op">=</span> <span class="st">"Height"</span><span class="op">)</span></span>
-<span><span class="va">p</span><span class="op">$</span><span class="va">plot_Hill_0</span></span>
-<span><span class="co">#&gt; NULL</span></span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<span><span class="va">p</span><span class="op">$</span><span class="va">plot_Hill_0</span></span></code></pre></div>
+<div class="figure">
+<img src="alpha-div_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="Hill number 1" width="700"><p class="caption">
+Hill number 1
+</p>
+</div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span><span class="op">$</span><span class="va">plot_tuckey</span></span>
 <span><span class="co">#&gt; NULL</span></span></code></pre></div>
 <p>See also the <a href="https://microbiome.github.io/tutorials/Alphadiversity.html" class="external-link">tutorial</a>
@@ -156,7 +189,7 @@ covariates.</p>
 <div class="section level3">
 <h3 id="alpha-diversity-using-package-microbiotaprocess">Alpha diversity using package <code>MicrobiotaProcess</code><a class="anchor" aria-label="anchor" href="#alpha-diversity-using-package-microbiotaprocess"></a>
 </h3>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/YuLab-SMU/MicrobiotaProcess/" class="external-link">"MicrobiotaProcess"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/clean_pq.html">clean_pq</a></span><span class="op">(</span><span class="fu"><a href="../reference/subset_samples_pq.html">subset_samples_pq</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">sam_data</span><span class="op">$</span><span class="va">Height</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/MicrobiotaProcess/man/as.MPSE.html" class="external-link">as.MPSE</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -168,7 +201,7 @@ covariates.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">MicrobiotaProcess</span> package.</span></span>
 <span><span class="co">#&gt;   Please report the issue at</span></span>
 <span><span class="co">#&gt;   <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/YuLab-SMU/MicrobiotaProcess/issues&gt;</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once per session.</span></span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
 <span><span class="co">#&gt; Warning in wilcox.test.default(c(4, 4, 5, 5, 4, 4, 3, 6, 3, 4, 3, 2, 3, :</span></span>
@@ -183,52 +216,84 @@ covariates.</p>
 <span><span class="co">#&gt; 0.867563228481461, : cannot compute exact p-value with ties</span></span>
 <span><span class="co">#&gt; Warning in wilcox.test.default(c(0.867563228481461, 1.32966134885476,</span></span>
 <span><span class="co">#&gt; 0.867563228481461, : cannot compute exact p-value with ties</span></span></code></pre></div>
-<p><img src="alpha-div_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" width="700"></p>
+<p><img src="alpha-div_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="700"></p>
 </div>
 <div class="section level3">
-<h3 id="durga-package-to-represent-and-compute-effect-size-of-difference-in-alpha-diversity">Durga package to represent and compute effect size of difference in
-alpha diversity<a class="anchor" aria-label="anchor" href="#durga-package-to-represent-and-compute-effect-size-of-difference-in-alpha-diversity"></a>
+<h3 id="estimation-statistics-framework">Estimation statistics framework<a class="anchor" aria-label="anchor" href="#estimation-statistics-framework"></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<p>” Estimation statistics is a simple framework that avoids the
+pitfalls of significance testing. It uses familiar statistical concepts:
+means, mean differences, and error bars. More importantly, it focuses on
+the effect size of one’s experiment/intervention, as opposed to a false
+dichotomy engendered by P values. ” Citation from dabest documentation
+<a href="https://acclab.github.io/dabestr/index.html" class="external-link">website</a>.</p>
+<div class="section level4">
+<h4 id="durga-package">Durga package<a class="anchor" aria-label="anchor" href="#durga-package"></a>
+</h4>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/KhanKawsar/EstimationPlot" class="external-link">"Durga"</a></span><span class="op">)</span></span>
-<span><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psmelt_samples_pq.html">psmelt_samples_pq</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span> </span>
+<span><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psmelt_samples_pq.html">psmelt_samples_pq</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Durga/man/DurgaDiff.html" class="external-link">DurgaDiff</a></span><span class="op">(</span><span class="va">Hill_0</span> <span class="op">~</span> <span class="va">Height</span>, <span class="va">psm</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/Durga/man/DurgaPlot.html" class="external-link">DurgaPlot</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span></span></code></pre></div>
-<p><img src="alpha-div_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" width="700"></p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Durga/man/DurgaDiff.html" class="external-link">DurgaDiff</a></span><span class="op">(</span><span class="va">Hill_0</span> <span class="op">~</span> <span class="va">Time</span><span class="op">==</span><span class="fl">0</span>, <span class="va">psm</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/Durga/man/DurgaPlot.html" class="external-link">DurgaPlot</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span></span></code></pre></div>
-<p><img src="alpha-div_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" width="700"></p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">durga_pq</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">physeq</span>, <span class="va">formula</span>, <span class="va">plot</span><span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span><span class="va">durga_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Durga/man/DurgaDiff.html" class="external-link">DurgaDiff</a></span><span class="op">(</span><span class="va">Hill_0</span> <span class="op">~</span> <span class="va">Time</span> <span class="op">==</span> <span class="fl">0</span>, <span class="va">psm</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/Durga/man/DurgaPlot.html" class="external-link">DurgaPlot</a></span><span class="op">(</span><span class="va">durga_res</span><span class="op">)</span></span></code></pre></div>
+<p><img src="alpha-div_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">durga_pq</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">physeq</span>, <span class="va">formula</span>, <span class="va">plot</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="../reference/verify_pq.html">verify_pq</a></span><span class="op">(</span><span class="va">physeq</span><span class="op">)</span></span>
 <span>  <span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psmelt_samples_pq.html">psmelt_samples_pq</a></span><span class="op">(</span><span class="va">physeq</span><span class="op">)</span></span>
 <span>  <span class="va">res_durga</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Durga/man/DurgaDiff.html" class="external-link">DurgaDiff</a></span><span class="op">(</span><span class="va">formula</span>, <span class="va">psm</span><span class="op">)</span></span>
-<span>  <span class="kw">if</span><span class="op">(</span><span class="va">plot</span><span class="op">)</span><span class="op">{</span></span>
-<span>    <span class="va">p</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/pkg/Durga/man/DurgaPlot.html" class="external-link">DurgaPlot</a></span><span class="op">(</span><span class="va">res_durga</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">plot</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Durga/man/DurgaPlot.html" class="external-link">DurgaPlot</a></span><span class="op">(</span><span class="va">res_durga</span><span class="op">)</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
-<span>  <span class="op">}</span> <span class="kw">else</span><span class="op">{</span></span>
+<span>  <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
 <span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">res_durga</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
-<span>  </span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="fu">durga_pq</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="va">Hill_0</span> <span class="op">~</span> <span class="va">Height</span>, plot<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="alpha-div_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" width="700"></p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">durga_pq</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="va">Hill_0</span> <span class="op">~</span> <span class="va">Time</span> <span class="op">+</span> <span class="va">Height</span>, plot<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="alpha-div_files/figure-html/unnamed-chunk-8-2.png" class="r-plt" width="700"></p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="fu">durga_pq</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="va">Hill_0</span> <span class="op">~</span> <span class="va">Time</span><span class="op">==</span><span class="fl">0</span>, plot<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="alpha-div_files/figure-html/unnamed-chunk-8-3.png" class="r-plt" width="700"></p>
+<span><span class="fu">durga_pq</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="va">Hill_0</span> <span class="op">~</span> <span class="va">Height</span>, plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="alpha-div_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="700"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">durga_pq</span><span class="op">(</span><span class="va">data_fungi</span>,  <span class="va">Hill_1</span> <span class="op">~</span> <span class="va">Time</span><span class="op">==</span><span class="fl">0</span>, plot<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="alpha-div_files/figure-html/unnamed-chunk-8-4.png" class="r-plt" width="700"></p>
+<code class="sourceCode R"><span><span class="fu">durga_pq</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="va">Hill_0</span> <span class="op">~</span> <span class="va">Time</span> <span class="op">+</span> <span class="va">Height</span>, plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="alpha-div_files/figure-html/unnamed-chunk-10-2.png" class="r-plt" alt="" width="700"></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">durga_pq</span><span class="op">(</span><span class="va">data_fungi</span>,  <span class="va">Hill_2</span> <span class="op">~</span> <span class="va">Time</span><span class="op">==</span><span class="fl">0</span>, plot<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="alpha-div_files/figure-html/unnamed-chunk-8-5.png" class="r-plt" width="700"></p>
+<code class="sourceCode R"><span></span>
+<span><span class="fu">durga_pq</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="va">Hill_0</span> <span class="op">~</span> <span class="va">Time</span> <span class="op">==</span> <span class="fl">0</span>, plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="alpha-div_files/figure-html/unnamed-chunk-10-3.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">durga_pq</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="va">Hill_1</span> <span class="op">~</span> <span class="va">Time</span> <span class="op">==</span> <span class="fl">0</span>, plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="alpha-div_files/figure-html/unnamed-chunk-10-4.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">durga_pq</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="va">Hill_2</span> <span class="op">~</span> <span class="va">Time</span> <span class="op">==</span> <span class="fl">0</span>, plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="alpha-div_files/figure-html/unnamed-chunk-10-5.png" class="r-plt" alt="" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="dabest-r-package">dabest R package<a class="anchor" aria-label="anchor" href="#dabest-r-package"></a>
+</h4>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/ACCLAB/dabestr" class="external-link">"dabestr"</a></span><span class="op">)</span></span>
+<span><span class="va">psm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/psmelt_samples_pq.html">psmelt_samples_pq</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://acclab.github.io/dabestr/reference/load.html" class="external-link">load</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">psm</span>,</span>
+<span>  x <span class="op">=</span> <span class="va">Height</span>,</span>
+<span>  y <span class="op">=</span> <span class="va">Hill_2</span>,</span>
+<span>  idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Low"</span>, <span class="st">"Middle"</span>, <span class="st">"High"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://acclab.github.io/dabestr/reference/effect_size.html" class="external-link">mean_diff</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://acclab.github.io/dabestr/reference/dabest_plot.html" class="external-link">dabest_plot</a></span><span class="op">(</span>swarm_label <span class="op">=</span> <span class="st">"Hill_2"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="alpha-div_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">psm</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Time_is_0 <span class="op">=</span> <span class="va">Time</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://acclab.github.io/dabestr/reference/load.html" class="external-link">load</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="va">Time_is_0</span>,</span>
+<span>    y <span class="op">=</span> <span class="va">Hill_0</span>,</span>
+<span>    idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TRUE"</span>, <span class="st">"FALSE"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://acclab.github.io/dabestr/reference/effect_size.html" class="external-link">mean_diff</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://acclab.github.io/dabestr/reference/dabest_plot.html" class="external-link">dabest_plot</a></span><span class="op">(</span>swarm_label <span class="op">=</span> <span class="st">"Hill_0"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="alpha-div_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="700"></p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="effect-of-samples-variables-on-alpha-diversity-using-automated-model-selection-and-multimodel-inference-with-glms">Effect of samples variables on alpha diversity using automated model
@@ -245,7 +310,7 @@ screening of the candidates, or using a genetic algorithm, which allows
 very large candidate sets to be addressed. The output can be used for
 model selection, variable selection, and multimodel inference.</p>
 </blockquote>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"glmulti"</span><span class="op">)</span></span>
 <span><span class="va">formula</span> <span class="op">&lt;-</span> <span class="st">"Hill_0 ~ Hill_1 + Abundance + Time + Height"</span></span>
 <span><span class="va">res_glmulti</span> <span class="op">&lt;-</span></span>
@@ -255,18 +320,18 @@ model selection, variable selection, and multimodel inference.</p>
 <span><span class="co">#&gt; Fitting...</span></span>
 <span><span class="co">#&gt; Completed.</span></span>
 <span><span class="va">res_glmulti</span></span>
-<span><span class="co">#&gt;                estimates unconditional_interval nb_model importance</span></span>
-<span><span class="co">#&gt; Hill_1       3.062117997           1.868174e-01        8          1</span></span>
-<span><span class="co">#&gt; Abundance    0.002959644           8.478374e-08        8          1</span></span>
-<span><span class="co">#&gt; Time         0.789091999           2.443263e-01        8          1</span></span>
-<span><span class="co">#&gt; HeightLow    6.884340946           3.444196e+01        8          1</span></span>
-<span><span class="co">#&gt; HeightMiddle 0.339123798           3.727962e+01        8          1</span></span>
+<span><span class="co">#&gt;                 estimates unconditional_interval nb_model importance</span></span>
+<span><span class="co">#&gt; Hill_1        2.900951522           4.275367e-01        8  0.9997782</span></span>
+<span><span class="co">#&gt; Abundance     0.003998598           2.385948e-07        8  1.0000000</span></span>
+<span><span class="co">#&gt; Time          0.726115314           6.769683e-01        8  1.0000000</span></span>
+<span><span class="co">#&gt; HeightLow    15.419649831           9.548706e+01        8  1.0000000</span></span>
+<span><span class="co">#&gt; HeightMiddle -0.782365837           1.030841e+02        8  1.0000000</span></span>
 <span><span class="co">#&gt;                     alpha     variable</span></span>
-<span><span class="co">#&gt; Hill_1       8.570200e-01       Hill_1</span></span>
-<span><span class="co">#&gt; Abundance    5.773492e-04    Abundance</span></span>
-<span><span class="co">#&gt; Time         9.800932e-01         Time</span></span>
-<span><span class="co">#&gt; HeightLow    1.163660e+01    HeightLow</span></span>
-<span><span class="co">#&gt; HeightMiddle 1.210648e+01 HeightMiddle</span></span>
+<span><span class="co">#&gt; Hill_1       1.296475e+00       Hill_1</span></span>
+<span><span class="co">#&gt; Abundance    9.685283e-04    Abundance</span></span>
+<span><span class="co">#&gt; Time         1.631422e+00         Time</span></span>
+<span><span class="co">#&gt; HeightLow    1.937557e+01    HeightLow</span></span>
+<span><span class="co">#&gt; HeightMiddle 2.013159e+01 HeightMiddle</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">res_glmulti</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">estimates</span>, y <span class="op">=</span> <span class="va">variable</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span></span>
@@ -289,8 +354,8 @@ model selection, variable selection, and multimodel inference.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_label</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">nb_model</span><span class="op">)</span>, nudge_y <span class="op">=</span> <span class="fl">0.3</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Standardized estimates"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="va">formula</span><span class="op">)</span></span></code></pre></div>
-<p><img src="alpha-div_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" width="700"></p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<p><img src="alpha-div_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">res_glmulti</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="va">importance</span>,</span>
@@ -310,8 +375,8 @@ model selection, variable selection, and multimodel inference.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_fill_viridis_b</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Importance"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="va">formula</span><span class="op">)</span></span></code></pre></div>
-<p><img src="alpha-div_files/figure-html/unnamed-chunk-9-2.png" class="r-plt" width="700"></p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<p><img src="alpha-div_files/figure-html/unnamed-chunk-13-2.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">formula</span> <span class="op">&lt;-</span> <span class="st">"Hill_0 ~ Abundance + Time + Height"</span></span>
 <span><span class="va">res_glmulti_interaction</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="../reference/glmutli_pq.html">glmutli_pq</a></span><span class="op">(</span><span class="va">data_fungi</span>, formula <span class="op">=</span> <span class="va">formula</span>, level <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
@@ -320,35 +385,35 @@ model selection, variable selection, and multimodel inference.</p>
 <span><span class="co">#&gt; Fitting...</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; After 50 models:</span></span>
-<span><span class="co">#&gt; Best model: Hill_0~1+Abundance+Time+Time:Abundance+Height:Abundance+Height:Time</span></span>
-<span><span class="co">#&gt; Crit= 1069.11608982306</span></span>
-<span><span class="co">#&gt; Mean crit= 1218.19009955263</span></span>
+<span><span class="co">#&gt; Best model: Hill_0~1+Abundance+Time+Time:Abundance+Height:Abundance</span></span>
+<span><span class="co">#&gt; Crit= 1162.46935121017</span></span>
+<span><span class="co">#&gt; Mean crit= 1326.57756179615</span></span>
 <span><span class="co">#&gt; Completed.</span></span>
 <span><span class="va">res_glmulti_interaction</span></span>
 <span><span class="co">#&gt;                            estimates unconditional_interval nb_model importance</span></span>
-<span><span class="co">#&gt; HeightHigh:Time         0.1004073616           4.167750e-02        8 0.04216251</span></span>
-<span><span class="co">#&gt; Abundance:HeightHigh    0.0001609310           8.984023e-08        8 0.09020701</span></span>
-<span><span class="co">#&gt; HeightLow              -0.7865687564           9.769200e+00       32 0.24714664</span></span>
-<span><span class="co">#&gt; HeightMiddle           -2.6419930721           2.789953e+01       32 0.24714664</span></span>
-<span><span class="co">#&gt; HeightLow:Time         -0.6511123699           1.599292e+00       32 0.55051517</span></span>
-<span><span class="co">#&gt; HeightMiddle:Time      -1.3322473025           3.078720e+00       32 0.55051517</span></span>
-<span><span class="co">#&gt; Abundance:Time         -0.0001068559           4.586032e-09       32 0.81587143</span></span>
-<span><span class="co">#&gt; Abundance:HeightLow     0.0011137659           7.957713e-07       32 0.86967993</span></span>
-<span><span class="co">#&gt; Abundance:HeightMiddle  0.0017155970           1.245718e-06       32 0.86967993</span></span>
-<span><span class="co">#&gt; Abundance               0.0024839088           8.790126e-07       32 0.90902176</span></span>
-<span><span class="co">#&gt; Time                    2.7869220741           2.663548e+00       32 0.92512111</span></span>
+<span><span class="co">#&gt; HeightHigh:Time         0.0238428433           5.369345e-03        8 0.02339703</span></span>
+<span><span class="co">#&gt; Abundance:HeightHigh    0.0001567326           9.040694e-08        8 0.05936981</span></span>
+<span><span class="co">#&gt; HeightLow               1.3672307044           2.837356e+01       32 0.28630897</span></span>
+<span><span class="co">#&gt; HeightMiddle           -2.8823946528           4.305119e+01       32 0.28630897</span></span>
+<span><span class="co">#&gt; HeightLow:Time          0.6976197936           1.991032e+00       32 0.48361405</span></span>
+<span><span class="co">#&gt; HeightMiddle:Time      -0.3490561261           1.442196e+00       32 0.48361405</span></span>
+<span><span class="co">#&gt; Abundance:HeightLow     0.0009609861           1.351266e-06       32 0.52347724</span></span>
+<span><span class="co">#&gt; Abundance:HeightMiddle  0.0008434925           1.380631e-06       32 0.52347724</span></span>
+<span><span class="co">#&gt; Time                    1.9148085653           3.424966e+00       32 0.72978508</span></span>
+<span><span class="co">#&gt; Abundance:Time         -0.0001497892           9.036339e-09       32 0.86061128</span></span>
+<span><span class="co">#&gt; Abundance               0.0040684019           1.456572e-06       32 0.94026666</span></span>
 <span><span class="co">#&gt;                               alpha               variable</span></span>
-<span><span class="co">#&gt; HeightHigh:Time        4.006348e-01        HeightHigh:Time</span></span>
-<span><span class="co">#&gt; Abundance:HeightHigh   5.877776e-04   Abundance:HeightHigh</span></span>
-<span><span class="co">#&gt; HeightLow              6.171172e+00              HeightLow</span></span>
-<span><span class="co">#&gt; HeightMiddle           1.038989e+01           HeightMiddle</span></span>
-<span><span class="co">#&gt; HeightLow:Time         2.491898e+00         HeightLow:Time</span></span>
-<span><span class="co">#&gt; HeightMiddle:Time      3.449710e+00      HeightMiddle:Time</span></span>
-<span><span class="co">#&gt; Abundance:Time         1.335247e-04         Abundance:Time</span></span>
-<span><span class="co">#&gt; Abundance:HeightLow    1.759641e-03    Abundance:HeightLow</span></span>
-<span><span class="co">#&gt; Abundance:HeightMiddle 2.198334e-03 Abundance:HeightMiddle</span></span>
-<span><span class="co">#&gt; Abundance              1.847287e-03              Abundance</span></span>
-<span><span class="co">#&gt; Time                   3.214276e+00                   Time</span></span>
+<span><span class="co">#&gt; HeightHigh:Time        1.442951e-01        HeightHigh:Time</span></span>
+<span><span class="co">#&gt; Abundance:HeightHigh   5.895794e-04   Abundance:HeightHigh</span></span>
+<span><span class="co">#&gt; HeightLow              1.050820e+01              HeightLow</span></span>
+<span><span class="co">#&gt; HeightMiddle           1.292959e+01           HeightMiddle</span></span>
+<span><span class="co">#&gt; HeightLow:Time         2.778215e+00         HeightLow:Time</span></span>
+<span><span class="co">#&gt; HeightMiddle:Time      2.367383e+00      HeightMiddle:Time</span></span>
+<span><span class="co">#&gt; Abundance:HeightLow    2.286482e-03    Abundance:HeightLow</span></span>
+<span><span class="co">#&gt; Abundance:HeightMiddle 2.312397e-03 Abundance:HeightMiddle</span></span>
+<span><span class="co">#&gt; Time                   3.645902e+00                   Time</span></span>
+<span><span class="co">#&gt; Abundance:Time         1.874648e-04         Abundance:Time</span></span>
+<span><span class="co">#&gt; Abundance              2.378267e-03              Abundance</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">res_glmulti_interaction</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">estimates</span>, y <span class="op">=</span> <span class="va">variable</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span></span>
@@ -371,8 +436,8 @@ model selection, variable selection, and multimodel inference.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_label</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">nb_model</span><span class="op">)</span>, nudge_y <span class="op">=</span> <span class="fl">0.3</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Standardized estimates"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="va">formula</span><span class="op">)</span></span></code></pre></div>
-<p><img src="alpha-div_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" width="700"></p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<p><img src="alpha-div_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">res_glmulti_interaction</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="va">importance</span>,</span>
@@ -392,28 +457,28 @@ model selection, variable selection, and multimodel inference.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_fill_viridis_b</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Importance"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="va">formula</span><span class="op">)</span></span></code></pre></div>
-<p><img src="alpha-div_files/figure-html/unnamed-chunk-10-2.png" class="r-plt" width="700"></p>
+<p><img src="alpha-div_files/figure-html/unnamed-chunk-14-2.png" class="r-plt" alt="" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
 </h2>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; R version 4.5.2 (2025-10-31)</span></span>
 <span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>
-<span><span class="co">#&gt; Running under: Kali GNU/Linux Rolling</span></span>
+<span><span class="co">#&gt; Running under: Pop!_OS 24.04 LTS</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Matrix products: default</span></span>
-<span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
-<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.29.so;  LAPACK version 3.12.0</span></span>
+<span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.12.0 </span></span>
+<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.12.0  LAPACK version 3.12.0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; locale:</span></span>
-<span><span class="co">#&gt;  [1] LC_CTYPE=fr_FR.UTF-8          LC_NUMERIC=C                 </span></span>
-<span><span class="co">#&gt;  [3] LC_TIME=fr_FR.UTF-8           LC_COLLATE=fr_FR.UTF-8       </span></span>
-<span><span class="co">#&gt;  [5] LC_MONETARY=fr_FR.UTF-8       LC_MESSAGES=fr_FR.UTF-8      </span></span>
-<span><span class="co">#&gt;  [7] LC_PAPER=fr_FR.UTF-8          LC_NAME=fr_FR.UTF-8          </span></span>
-<span><span class="co">#&gt;  [9] LC_ADDRESS=fr_FR.UTF-8        LC_TELEPHONE=fr_FR.UTF-8     </span></span>
-<span><span class="co">#&gt; [11] LC_MEASUREMENT=fr_FR.UTF-8    LC_IDENTIFICATION=fr_FR.UTF-8</span></span>
+<span><span class="co">#&gt;  [1] LC_CTYPE=en_US.UTF-8          LC_NUMERIC=C                 </span></span>
+<span><span class="co">#&gt;  [3] LC_TIME=en_US.UTF-8           LC_COLLATE=en_US.UTF-8       </span></span>
+<span><span class="co">#&gt;  [5] LC_MONETARY=en_US.UTF-8       LC_MESSAGES=en_US.UTF-8      </span></span>
+<span><span class="co">#&gt;  [7] LC_PAPER=en_US.UTF-8          LC_NAME=en_US.UTF-8          </span></span>
+<span><span class="co">#&gt;  [9] LC_ADDRESS=en_US.UTF-8        LC_TELEPHONE=en_US.UTF-8     </span></span>
+<span><span class="co">#&gt; [11] LC_MEASUREMENT=en_US.UTF-8    LC_IDENTIFICATION=en_US.UTF-8</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; time zone: Europe/Paris</span></span>
 <span><span class="co">#&gt; tzcode source: system (glibc)</span></span>
@@ -422,80 +487,85 @@ model selection, variable selection, and multimodel inference.</p>
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt;  [1] glmulti_1.0.8            leaps_3.2                rJava_1.0-11            </span></span>
-<span><span class="co">#&gt;  [4] Durga_2.1.0              MicrobiotaProcess_1.22.0 MiscMetabar_0.14.5      </span></span>
-<span><span class="co">#&gt;  [7] purrr_1.2.0              dplyr_1.1.4              dada2_1.38.0            </span></span>
-<span><span class="co">#&gt; [10] Rcpp_1.1.0               ggplot2_4.0.1            phyloseq_1.54.0         </span></span>
+<span><span class="co">#&gt;  [1] glmulti_1.0.8            leaps_3.2                rJava_1.0-16            </span></span>
+<span><span class="co">#&gt;  [4] dabestr_2025.3.15        Durga_2.1.0              MicrobiotaProcess_1.22.0</span></span>
+<span><span class="co">#&gt;  [7] MiscMetabar_0.15.1       divent_0.5-3             purrr_1.2.1             </span></span>
+<span><span class="co">#&gt; [10] dplyr_1.2.0              dada2_1.38.0             Rcpp_1.1.1              </span></span>
+<span><span class="co">#&gt; [13] ggplot2_4.0.2            phyloseq_1.54.2         </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;   [1] libcoin_1.0-10              RColorBrewer_1.1-3         </span></span>
-<span><span class="co">#&gt;   [3] jsonlite_2.0.0              magrittr_2.0.4             </span></span>
-<span><span class="co">#&gt;   [5] TH.data_1.1-5               modeltools_0.2-24          </span></span>
-<span><span class="co">#&gt;   [7] farver_2.1.2                rmarkdown_2.30             </span></span>
-<span><span class="co">#&gt;   [9] fs_1.6.6                    ragg_1.5.0                 </span></span>
-<span><span class="co">#&gt;  [11] vctrs_0.6.5                 multtest_2.66.0            </span></span>
-<span><span class="co">#&gt;  [13] Rsamtools_2.26.0            ggtree_4.0.1               </span></span>
-<span><span class="co">#&gt;  [15] htmltools_0.5.9             S4Arrays_1.10.1            </span></span>
-<span><span class="co">#&gt;  [17] Rhdf5lib_1.32.0             gridGraphics_0.5-1         </span></span>
-<span><span class="co">#&gt;  [19] SparseArray_1.10.7          rhdf5_2.54.1               </span></span>
-<span><span class="co">#&gt;  [21] sass_0.4.10                 bslib_0.9.0                </span></span>
-<span><span class="co">#&gt;  [23] htmlwidgets_1.6.4           desc_1.4.3                 </span></span>
-<span><span class="co">#&gt;  [25] plyr_1.8.9                  sandwich_3.1-1             </span></span>
-<span><span class="co">#&gt;  [27] zoo_1.8-15                  cachem_1.1.0               </span></span>
-<span><span class="co">#&gt;  [29] GenomicAlignments_1.46.0    igraph_2.2.1               </span></span>
-<span><span class="co">#&gt;  [31] lifecycle_1.0.4             iterators_1.0.14           </span></span>
-<span><span class="co">#&gt;  [33] pkgconfig_2.0.3             Matrix_1.7-4               </span></span>
-<span><span class="co">#&gt;  [35] R6_2.6.1                    fastmap_1.2.0              </span></span>
-<span><span class="co">#&gt;  [37] MatrixGenerics_1.22.0       digest_0.6.39              </span></span>
-<span><span class="co">#&gt;  [39] aplot_0.2.9                 ggnewscale_0.5.2           </span></span>
-<span><span class="co">#&gt;  [41] ShortRead_1.68.0            patchwork_1.3.2            </span></span>
-<span><span class="co">#&gt;  [43] S4Vectors_0.48.0            textshaping_1.0.4          </span></span>
-<span><span class="co">#&gt;  [45] GenomicRanges_1.62.1        hwriter_1.3.2.1            </span></span>
-<span><span class="co">#&gt;  [47] vegan_2.7-2                 labeling_0.4.3             </span></span>
-<span><span class="co">#&gt;  [49] abind_1.4-8                 mgcv_1.9-4                 </span></span>
-<span><span class="co">#&gt;  [51] compiler_4.5.2              fontquiver_0.2.1           </span></span>
-<span><span class="co">#&gt;  [53] withr_3.0.2                 S7_0.2.1                   </span></span>
-<span><span class="co">#&gt;  [55] BiocParallel_1.44.0         ggsignif_0.6.4             </span></span>
-<span><span class="co">#&gt;  [57] MASS_7.3-65                 rappdirs_0.3.3             </span></span>
-<span><span class="co">#&gt;  [59] DelayedArray_0.36.0         biomformat_1.38.0          </span></span>
-<span><span class="co">#&gt;  [61] permute_0.9-8               tools_4.5.2                </span></span>
-<span><span class="co">#&gt;  [63] vipor_0.4.7                 ape_5.8-1                  </span></span>
-<span><span class="co">#&gt;  [65] glue_1.8.0                  nlme_3.1-168               </span></span>
-<span><span class="co">#&gt;  [67] rhdf5filters_1.22.0         grid_4.5.2                 </span></span>
-<span><span class="co">#&gt;  [69] cluster_2.1.8.1             reshape2_1.4.5             </span></span>
-<span><span class="co">#&gt;  [71] ade4_1.7-23                 generics_0.1.4             </span></span>
-<span><span class="co">#&gt;  [73] gtable_0.3.6                tidyr_1.3.1                </span></span>
-<span><span class="co">#&gt;  [75] data.table_1.17.8           coin_1.4-3                 </span></span>
-<span><span class="co">#&gt;  [77] XVector_0.50.0              BiocGenerics_0.56.0        </span></span>
-<span><span class="co">#&gt;  [79] ggrepel_0.9.6               foreach_1.5.2              </span></span>
-<span><span class="co">#&gt;  [81] pillar_1.11.1               stringr_1.6.0              </span></span>
-<span><span class="co">#&gt;  [83] yulab.utils_0.2.3           splines_4.5.2              </span></span>
-<span><span class="co">#&gt;  [85] treeio_1.34.0               lattice_0.22-7             </span></span>
-<span><span class="co">#&gt;  [87] survival_3.8-3              deldir_2.0-4               </span></span>
-<span><span class="co">#&gt;  [89] tidyselect_1.2.1            fontLiberation_0.1.0       </span></span>
-<span><span class="co">#&gt;  [91] Biostrings_2.78.0           knitr_1.50                 </span></span>
-<span><span class="co">#&gt;  [93] fontBitstreamVera_0.1.1     gridExtra_2.3              </span></span>
-<span><span class="co">#&gt;  [95] IRanges_2.44.0              Seqinfo_1.0.0              </span></span>
-<span><span class="co">#&gt;  [97] SummarizedExperiment_1.40.0 ggtreeExtra_1.20.0         </span></span>
-<span><span class="co">#&gt;  [99] stats4_4.5.2                xfun_0.55                  </span></span>
-<span><span class="co">#&gt; [101] Biobase_2.70.0              matrixStats_1.5.0          </span></span>
-<span><span class="co">#&gt; [103] stringi_1.8.7               boot_1.3-32                </span></span>
-<span><span class="co">#&gt; [105] lazyeval_0.2.2              ggfun_0.2.0                </span></span>
-<span><span class="co">#&gt; [107] yaml_2.3.12                 evaluate_1.0.5             </span></span>
-<span><span class="co">#&gt; [109] codetools_0.2-20            cigarillo_1.0.0            </span></span>
-<span><span class="co">#&gt; [111] interp_1.1-6                gdtools_0.4.4              </span></span>
-<span><span class="co">#&gt; [113] tibble_3.3.0                ggplotify_0.1.3            </span></span>
-<span><span class="co">#&gt; [115] cli_3.6.5                   RcppParallel_5.1.11-1      </span></span>
-<span><span class="co">#&gt; [117] systemfonts_1.3.1           jquerylib_0.1.4            </span></span>
-<span><span class="co">#&gt; [119] png_0.1-8                   parallel_4.5.2             </span></span>
-<span><span class="co">#&gt; [121] ggh4x_0.3.1                 pkgdown_2.2.0              </span></span>
-<span><span class="co">#&gt; [123] latticeExtra_0.6-31         jpeg_0.1-11                </span></span>
-<span><span class="co">#&gt; [125] bitops_1.0-9                ggstar_1.0.6               </span></span>
-<span><span class="co">#&gt; [127] pwalign_1.6.0               viridisLite_0.4.2          </span></span>
-<span><span class="co">#&gt; [129] mvtnorm_1.3-3               tidytree_0.4.6             </span></span>
-<span><span class="co">#&gt; [131] ggiraph_0.9.2               scales_1.4.0               </span></span>
-<span><span class="co">#&gt; [133] crayon_1.5.3                rlang_1.1.6                </span></span>
-<span><span class="co">#&gt; [135] multcomp_1.4-29</span></span></code></pre></div>
+<span><span class="co">#&gt;   [1] splines_4.5.2               bitops_1.0-9               </span></span>
+<span><span class="co">#&gt;   [3] ggplotify_0.1.3             tibble_3.3.1               </span></span>
+<span><span class="co">#&gt;   [5] lifecycle_1.0.5             pwalign_1.6.0              </span></span>
+<span><span class="co">#&gt;   [7] Rdpack_2.6.6                lattice_0.22-9             </span></span>
+<span><span class="co">#&gt;   [9] MASS_7.3-65                 magrittr_2.0.4             </span></span>
+<span><span class="co">#&gt;  [11] sass_0.4.10                 rmarkdown_2.30             </span></span>
+<span><span class="co">#&gt;  [13] jquerylib_0.1.4             yaml_2.3.12                </span></span>
+<span><span class="co">#&gt;  [15] otel_0.2.0                  cowplot_1.2.0              </span></span>
+<span><span class="co">#&gt;  [17] RColorBrewer_1.1-3          ade4_1.7-23                </span></span>
+<span><span class="co">#&gt;  [19] multcomp_1.4-30             abind_1.4-8                </span></span>
+<span><span class="co">#&gt;  [21] ShortRead_1.68.0            GenomicRanges_1.62.1       </span></span>
+<span><span class="co">#&gt;  [23] BiocGenerics_0.56.0         yulab.utils_0.2.4          </span></span>
+<span><span class="co">#&gt;  [25] TH.data_1.1-5               rappdirs_0.3.4             </span></span>
+<span><span class="co">#&gt;  [27] sandwich_3.1-1              gdtools_0.5.0              </span></span>
+<span><span class="co">#&gt;  [29] IRanges_2.44.0              S4Vectors_0.48.0           </span></span>
+<span><span class="co">#&gt;  [31] ggrepel_0.9.8               tidytree_0.4.7             </span></span>
+<span><span class="co">#&gt;  [33] vegan_2.7-3                 pkgdown_2.2.0              </span></span>
+<span><span class="co">#&gt;  [35] permute_0.9-10              codetools_0.2-20           </span></span>
+<span><span class="co">#&gt;  [37] coin_1.4-3                  DelayedArray_0.36.0        </span></span>
+<span><span class="co">#&gt;  [39] tidyselect_1.2.1            aplot_0.2.9                </span></span>
+<span><span class="co">#&gt;  [41] farver_2.1.2                matrixStats_1.5.0          </span></span>
+<span><span class="co">#&gt;  [43] stats4_4.5.2                Seqinfo_1.0.0              </span></span>
+<span><span class="co">#&gt;  [45] GenomicAlignments_1.46.0    jsonlite_2.0.0             </span></span>
+<span><span class="co">#&gt;  [47] ggtreeExtra_1.21.0          multtest_2.66.0            </span></span>
+<span><span class="co">#&gt;  [49] survival_3.8-6              iterators_1.0.14           </span></span>
+<span><span class="co">#&gt;  [51] systemfonts_1.3.2           foreach_1.5.2              </span></span>
+<span><span class="co">#&gt;  [53] tools_4.5.2                 ggnewscale_0.5.2           </span></span>
+<span><span class="co">#&gt;  [55] treeio_1.34.0               ragg_1.5.1                 </span></span>
+<span><span class="co">#&gt;  [57] ggstar_1.0.6                glue_1.8.0                 </span></span>
+<span><span class="co">#&gt;  [59] gridExtra_2.3               SparseArray_1.10.9         </span></span>
+<span><span class="co">#&gt;  [61] xfun_0.56                   mgcv_1.9-4                 </span></span>
+<span><span class="co">#&gt;  [63] MatrixGenerics_1.22.0       withr_3.0.2                </span></span>
+<span><span class="co">#&gt;  [65] fastmap_1.2.0               ggh4x_0.3.1                </span></span>
+<span><span class="co">#&gt;  [67] latticeExtra_0.6-31         boot_1.3-32                </span></span>
+<span><span class="co">#&gt;  [69] rhdf5filters_1.22.0         digest_0.6.39              </span></span>
+<span><span class="co">#&gt;  [71] R6_2.6.1                    gridGraphics_0.5-1         </span></span>
+<span><span class="co">#&gt;  [73] textshaping_1.0.5           effsize_0.8.1              </span></span>
+<span><span class="co">#&gt;  [75] jpeg_0.1-11                 cigarillo_1.0.0            </span></span>
+<span><span class="co">#&gt;  [77] tidyr_1.3.2                 generics_0.1.4             </span></span>
+<span><span class="co">#&gt;  [79] ggsci_4.2.0                 fontLiberation_0.1.0       </span></span>
+<span><span class="co">#&gt;  [81] data.table_1.18.2.1         htmlwidgets_1.6.4          </span></span>
+<span><span class="co">#&gt;  [83] S4Arrays_1.10.1             pkgconfig_2.0.3            </span></span>
+<span><span class="co">#&gt;  [85] gtable_0.3.6                modeltools_0.2-24          </span></span>
+<span><span class="co">#&gt;  [87] S7_0.2.1                    hwriter_1.3.2.1            </span></span>
+<span><span class="co">#&gt;  [89] XVector_0.50.0              htmltools_0.5.9            </span></span>
+<span><span class="co">#&gt;  [91] fontBitstreamVera_0.1.1     biomformat_1.38.3          </span></span>
+<span><span class="co">#&gt;  [93] scales_1.4.0                Biobase_2.70.0             </span></span>
+<span><span class="co">#&gt;  [95] png_0.1-9                   ggfun_0.2.0                </span></span>
+<span><span class="co">#&gt;  [97] knitr_1.51                  reshape2_1.4.5             </span></span>
+<span><span class="co">#&gt;  [99] nlme_3.1-168                cachem_1.1.0               </span></span>
+<span><span class="co">#&gt; [101] zoo_1.8-15                  rhdf5_2.54.1               </span></span>
+<span><span class="co">#&gt; [103] stringr_1.6.0               parallel_4.5.2             </span></span>
+<span><span class="co">#&gt; [105] vipor_0.4.7                 libcoin_1.0-12             </span></span>
+<span><span class="co">#&gt; [107] desc_1.4.3                  pillar_1.11.1              </span></span>
+<span><span class="co">#&gt; [109] grid_4.5.2                  vctrs_0.7.2                </span></span>
+<span><span class="co">#&gt; [111] cluster_2.1.8.2             beeswarm_0.4.0             </span></span>
+<span><span class="co">#&gt; [113] evaluate_1.0.5              mvtnorm_1.3-6              </span></span>
+<span><span class="co">#&gt; [115] cli_3.6.5                   compiler_4.5.2             </span></span>
+<span><span class="co">#&gt; [117] Rsamtools_2.26.0            rlang_1.1.7                </span></span>
+<span><span class="co">#&gt; [119] crayon_1.5.3                ggsignif_0.6.4             </span></span>
+<span><span class="co">#&gt; [121] labeling_0.4.3              interp_1.1-6               </span></span>
+<span><span class="co">#&gt; [123] plyr_1.8.9                  fs_1.6.7                   </span></span>
+<span><span class="co">#&gt; [125] ggbeeswarm_0.7.3            ggiraph_0.9.6              </span></span>
+<span><span class="co">#&gt; [127] stringi_1.8.7               viridisLite_0.4.3          </span></span>
+<span><span class="co">#&gt; [129] deldir_2.0-4                BiocParallel_1.44.0        </span></span>
+<span><span class="co">#&gt; [131] Biostrings_2.78.0           lazyeval_0.2.2             </span></span>
+<span><span class="co">#&gt; [133] fontquiver_0.2.1            Matrix_1.7-4               </span></span>
+<span><span class="co">#&gt; [135] patchwork_1.3.2             Rhdf5lib_1.32.0            </span></span>
+<span><span class="co">#&gt; [137] SummarizedExperiment_1.40.0 rbibutils_2.4.1            </span></span>
+<span><span class="co">#&gt; [139] igraph_2.2.2                RcppParallel_5.1.11-2      </span></span>
+<span><span class="co">#&gt; [141] bslib_0.10.0                ggtree_4.0.4               </span></span>
+<span><span class="co">#&gt; [143] ape_5.8-1</span></span></code></pre></div>
 </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

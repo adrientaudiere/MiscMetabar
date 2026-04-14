@@ -6,23 +6,28 @@
 \usage{
 psmelt_samples_pq(
   physeq,
-  hill_scales = c(0, 1, 2),
+  q = c(0, 1, 2),
+  hill_scales = lifecycle::deprecated(),
   filter_zero = TRUE,
   rarefy_by_sample = FALSE,
   rngseed = FALSE,
   verbose = TRUE,
-  taxa_ranks = NULL
+  taxa_ranks = NULL,
+  ...
 )
 }
 \arguments{
 \item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{hill_scales}{(a vector of integer) The list of q values to compute
-the hill number H^q. If Null, no hill number are computed. Default value
-compute the Hill number 0 (Species richness), the Hill number 1
-(exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
-Index).}
+\item{q}{(numeric vector) Hill diversity orders to compute. If NULL, no
+Hill numbers are computed. Default computes Hill number 0 (species
+richness), 1 (exponential of Shannon index) and 2 (inverse of Simpson
+index). Formerly \code{q}. Hill numbers are more appropriate in DNA
+metabarcoding studies when \code{q > 0} (Alberdi & Gilbert, 2019;
+Calderón-Sanou et al., 2019).}
+
+\item{hill_scales}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{q} instead.}
 
 \item{filter_zero}{(logical, default TRUE) Do we filter non present OTU from
 samples ? For the moment, this has no effect on the result because the dataframe
@@ -43,6 +48,10 @@ beforehand to achieve reproducible results. Default is FALSE.}
 \item{taxa_ranks}{A vector of taxonomic ranks. For examples c("Family","Genus").
 If taxa ranks is not set (default value = NULL), taxonomic information are not
 present in the resulting tibble.}
+
+\item{...}{Additional arguments passed to \code{\link[=divent_hill_matrix_pq]{divent_hill_matrix_pq()}} and
+hence to \code{\link[divent:div_hill]{divent::div_hill()}} (e.g. \code{estimator = "naive"}). Only used
+when \code{q} is not NULL.}
 }
 \value{
 A tibble with a row for each sample. Columns provide information
@@ -75,6 +84,16 @@ if (requireNamespace("ggstatsplot")) {
     geom_bar(stat = "identity") +
     facet_wrap(~Height)
 }
+}
+\references{
+Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of
+Hill numbers to DNA-based diversity analyses. \emph{Molecular Ecology Resources}.
+\doi{10.1111/1755-0998.13014}
+
+Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., & Thuiller, W.
+(2019). From environmental DNA sequences to ecological conclusions: How
+strong is the influence of methodological choices? \emph{Journal of Biogeography},
+47. \doi{10.1111/jbi.13681}
 }
 \author{
 Adrien Taudière

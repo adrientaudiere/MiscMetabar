@@ -17,6 +17,10 @@ a color vector
 \description{
 Adds transparency to a vector of colors
 }
+\examples{
+transp("red")
+transp(c("red", "blue"), alpha = 0.3)
+}
 \seealso{
 The R package RColorBrewer, proposing a nice selection of color palettes. The viridis package, with many excellent palettes
 }

@@ -85,9 +85,7 @@ of plot made using
 ## Details
 
 This function is mainly a wrapper of the work of others. Please make a
-reference to
-[`ANCOMBC::ancombc2()`](https://rdrr.io/pkg/ANCOMBC/man/ancombc2.html)
-if you use this function.
+reference to `ancombc2()` if you use this function.
 
 ## Author
 

@@ -25,9 +25,16 @@ aldex_pq(physeq, bifactor = NULL, modalities = NULL, gamma = 0.5, ...)
 
   (default NULL) A vector of modalities to keep in the analysis. If
   NULL, all modalities present in bifactor are kept. Note that only two
-  modalities are allowed. @param gamma (default 0.5) The value of the
-  Dirichlet Monte-Carlo sampling parameter. @param ... Additional
-  arguments passed on to
+  modalities are allowed.
+
+- gamma:
+
+  (default 0.5) The value of the Dirichlet Monte-Carlo sampling
+  parameter.
+
+- ...:
+
+  Additional arguments passed on to
   [`ALDEx2::aldex()`](https://rdrr.io/pkg/ALDEx2/man/aldex.html)
 
 ## Value

@@ -114,3 +114,15 @@ a blast table
 
 [`blast_to_phyloseq()`](https://adrientaudiere.github.io/MiscMetabar/reference/blast_to_phyloseq.md)
 to use `refseq` slot as a database
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+blast_pq(data_fungi_mini,
+  fasta_for_db = system.file("extdata", "mini_UNITE_fungi.fasta.gz",
+    package = "MiscMetabar"
+  )
+)
+} # }
+```

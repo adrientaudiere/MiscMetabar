@@ -79,13 +79,13 @@ Adrien Taudière
 data("GlobalPatterns", package = "phyloseq")
 GP_archae <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
+#> Also defined by ‘RNeXML’ ‘tidytree’
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
+#> Also defined by ‘RNeXML’ ‘tidytree’
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
+#> Also defined by ‘RNeXML’ ‘tidytree’
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
+#> Also defined by ‘RNeXML’ ‘tidytree’
 # \donttest{
 if (requireNamespace("edgeR")) {
   plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
@@ -98,11 +98,11 @@ if (requireNamespace("edgeR")) {
 }
 #> Conversion to edgeR format
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
+#> Also defined by ‘RNeXML’ ‘tidytree’
 #> Perform edgeR binary test
 #> Conversion to edgeR format
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
+#> Also defined by ‘RNeXML’ ‘tidytree’
 #> Perform edgeR binary test
 
 # }

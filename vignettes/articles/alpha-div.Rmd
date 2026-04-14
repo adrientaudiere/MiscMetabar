@@ -31,9 +31,33 @@ Hill numbers [^Hill73] is a kind of general framework for alpha diversity index.
 
 [^Hill73]: Hill MO. 1973. Diversity and evenness: a unifying notation and its consequences. Ecology 54, 427-473.
 
-```{r}
-renyi_res <- vegan::renyi(data_fungi@otu_table)
-head(renyi_res)
+
+#### Diversity profiles
+
+`profile_hill_pq()` plots the Hill diversity profile (diversity as a function of the order *q*) for each sample, or for groups of samples merged via `merge_sample_by`.
+
+```{r, fig.cap="Hill diversity profiles per sample (data_fungi_mini)"}
+data(data_fungi_mini)
+dfm_rarefied <- rarefy_even_depth(data_fungi_mini, rngseed = 1, sample.size=200)
+p <-profile_hill_pq(dfm_rarefied) 
+
+p + no_legend()
+```
+
+```{r, fig.cap="Hill diversity profiles merged by Height"}
+profile_hill_pq(dfm_rarefied, merge_sample_by = "Height")
+```
+
+#### Rarefaction curves
+
+`hill_acc_pq()` plots Hill diversity accumulation (rarefaction) curves — one per sample or per merged group — showing how estimated diversity grows with sequencing depth.
+
+```{r, fig.cap="Rarefaction curves per sample (Hill order q = 1)"}
+hill_acc_pq(dfm_rarefied, q = 1, n_simulations=20) + no_legend()
+```
+
+```{r, fig.cap="Rarefaction curves merged by Height (Hill order q = 0)"}
+hill_acc_pq(dfm_rarefied, q = 0, merge_sample_by = "Height", n_simulations=20)
 ```
 
 #### Test for difference in diversity (hill number)
@@ -64,8 +88,11 @@ clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height))) %>%
 ```
 
 
-## Durga package to represent and compute effect size of difference in alpha diversity
+## Estimation statistics framework
 
+" Estimation statistics is a simple framework that avoids the pitfalls of significance testing. It uses familiar statistical concepts: means, mean differences, and error bars. More importantly, it focuses on the effect size of one’s experiment/intervention, as opposed to a false dichotomy engendered by P values. " Citation from dabest documentation [website](https://acclab.github.io/dabestr/index.html).
+
+### Durga package
 
 ```{r}
 library("Durga")
@@ -97,7 +124,33 @@ durga_pq(data_fungi, Hill_2 ~ Time == 0, plot = TRUE)
 ```
 
 
+### dabest R package
 
+```{r}
+library("dabestr")
+psm <- psmelt_samples_pq(data_fungi)
+
+load(
+  data = psm,
+  x = Height,
+  y = Hill_2,
+  idx = list(c("Low", "Middle", "High"))
+) %>%
+  mean_diff() |>
+  dabest_plot(swarm_label = "Hill_2")
+```
+
+```{r}
+psm |>
+  mutate(Time_is_0 = Time == 0) |>
+  load(
+    x = Time_is_0,
+    y = Hill_0,
+    idx = list(c("TRUE", "FALSE"))
+  ) %>%
+  mean_diff() |>
+  dabest_plot(swarm_label = "Hill_0")
+```
 
 ## Effect of samples variables on alpha diversity using automated model selection and multimodel inference with (G)LMs 
 

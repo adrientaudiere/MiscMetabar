@@ -109,9 +109,9 @@ data(enterotype)
 
 # Merge samples with the same project and clinical status
 ps <- enterotype
-sample_data(ps) <- sample_data(ps) %>%
+sample_data(ps) <- sample_data(ps) |>
   transform(Project.ClinicalStatus = Project:ClinicalStatus)
-sample_data(ps) %>% head()
+sample_data(ps) |> head()
 #>           Enterotype Sample_ID SeqTech  SampleID     Project Nationality Gender
 #> AM.AD.1         <NA>   AM.AD.1  Sanger   AM.AD.1      gill06    american      F
 #> AM.AD.2         <NA>   AM.AD.2  Sanger   AM.AD.2      gill06    american      M
@@ -131,7 +131,7 @@ ps0 <- merge_samples2(ps, "Project.ClinicalStatus",
   funs = list(Age = mean)
 )
 #> Warning: `group` has missing values; corresponding samples will be dropped
-sample_data(ps0) %>% head()
+sample_data(ps0) |> head()
 #>                     Enterotype Sample_ID SeqTech SampleID     Project
 #> gill06:healthy            <NA>      <NA>  Sanger     <NA>      gill06
 #> kurokawa07:healthy        <NA>      <NA>  Sanger     <NA>  kurokawa07

@@ -40,6 +40,14 @@ Either an object of class DNAStringSet or a vector of reformated names
 
 First format in sintax format and then in dada2 format
 }
+\examples{
+\donttest{
+f <- system.file("extdata", "mini_UNITE_fungi.fasta.gz",
+  package = "MiscMetabar"
+)
+format2dada2(fasta_db = f, from_sintax = FALSE)
+}
+}
 \seealso{
 \code{\link[=format2dada2_species]{format2dada2_species()}}, \code{\link[=format2sintax]{format2sintax()}}
 }

@@ -14,7 +14,8 @@ compare_pairs_pq(
   merge_sample_by = NULL,
   nb_min_seq = 0,
   veg_index = "shannon",
-  na_remove = TRUE
+  na_remove = TRUE,
+  ...
 )
 ```
 
@@ -48,9 +49,9 @@ compare_pairs_pq(
 
 - veg_index:
 
-  (default: "shannon") index for the
-  [`vegan::diversity`](https://vegandevs.github.io/vegan/reference/diversity.html)
-  function
+  (default: `"shannon"`) diversity index. `"shannon"` and `"simpson"`
+  are computed via `divent`; other names are forwarded to
+  [`vegan::diversity()`](https://vegandevs.github.io/vegan/reference/diversity.html).
 
 - na_remove:
 
@@ -58,6 +59,14 @@ compare_pairs_pq(
   variables set in bifactor, modality and merge_sample_by. NA in
   variables are well managed even if na_remove = FALSE, so na_remove may
   be useless.
+
+- ...:
+
+  Additional arguments passed to
+  [`divent::ent_shannon()`](https://ericmarcon.github.io/divent/reference/ent_shannon.html)
+  or
+  [`divent::ent_simpson()`](https://ericmarcon.github.io/divent/reference/ent_simpson.html)
+  when `veg_index` is `"shannon"` or `"simpson"`.
 
 ## Value
 
@@ -73,7 +82,7 @@ compare_pairs_pq(data_fungi_low_high, bifactor = "Height", merge_sample_by = "He
 #> # A tibble: 1 × 13
 #>   modality nb_ASV_High nb_ASV_Low nb_shared_ASV div_High div_Low nb_shared_seq
 #>   <chr>          <dbl>      <dbl>         <dbl>    <dbl>   <dbl>         <dbl>
-#> 1 Height           919        963           718     4.53    4.46        671081
+#> 1 Height           919        963           718     4.54    4.47        671081
 #> # ℹ 6 more variables: percent_shared_seq_High <dbl>,
 #> #   percent_shared_seq_Low <dbl>, percent_shared_ASV_High <dbl>,
 #> #   percent_shared_ASV_Low <dbl>, ratio_nb_High_Low <dbl>,
@@ -87,9 +96,9 @@ compare_pairs_pq(data_fungi_low_high,
 #> # A tibble: 4 × 13
 #>   modality nb_ASV_High nb_ASV_Low nb_shared_ASV div_High div_Low nb_shared_seq
 #>   <chr>          <dbl>      <dbl>         <dbl>    <dbl>   <dbl>         <dbl>
-#> 1 0                324        383           188     3.44    3.11         92766
+#> 1 0                324        383           188     3.44    3.12         92766
 #> 2 5                488        444           224     3.86    3.73        138450
-#> 3 10               239        359           138     2.85    3.35         67475
+#> 3 10               239        359           138     2.86    3.35         67475
 #> 4 15               365        490           217     3.03    3.46        195794
 #> # ℹ 6 more variables: percent_shared_seq_High <dbl>,
 #> #   percent_shared_seq_Low <dbl>, percent_shared_ASV_High <dbl>,

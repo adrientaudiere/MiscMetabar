@@ -8,7 +8,7 @@ glmutli_pq(
   physeq,
   formula,
   fitfunction = "lm",
-  hill_scales = c(0, 1, 2),
+  q = c(0, 1, 2),
   aic_step = 2,
   confsetsize = 100,
   plotty = FALSE,
@@ -24,16 +24,17 @@ using the \code{phyloseq} package.}
 
 \item{formula}{(required) a formula for \code{\link[glmulti:glmulti]{glmulti::glmulti()}}
 Variables must be present in the \code{physeq@sam_data} slot or be one
-of hill number defined in hill_scales or the variable Abundance which
+of hill number defined in q or the variable Abundance which
 refer to the number of sequences per sample.}
 
 \item{fitfunction}{(default "lm")}
 
-\item{hill_scales}{(a vector of integer) The list of q values to compute
+\item{q}{(a vector of integer) The list of q values to compute
 the hill number H^q. If Null, no hill number are computed. Default value
 compute the Hill number 0 (Species richness), the Hill number 1
 (exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
-Index).}
+Index). Hill numbers are more appropriate in DNA metabarcoding studies
+when \code{q > 0} (Alberdi & Gilbert, 2019; Calderón-Sanou et al., 2019).}
 
 \item{aic_step}{The value between AIC scores to cut for.}
 
@@ -53,7 +54,7 @@ Package leaps must then be loaded, and this can only be applied to linear models
 with covariates and no interactions. If "d", a simple summary of the candidate set
 is printed, including the number of candidate models.}
 
-\item{crit}{The Information Criterion to be used. Default is the small-sample corrected AIC (aicc).
+\item{crit}{(character, default aicc) The Information Criterion to be used. Default is the small-sample corrected AIC (aicc).
 This should be a function that accepts a fitted model as first argument.
 Other provided functions are the classic AIC, the Bayes IC (bic), and QAIC/QAICc (qaic and qaicc).}
 
@@ -93,6 +94,16 @@ if (requireNamespace("glmulti")) {
   res_glmulti_interaction
 }
 }
+}
+\references{
+Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of
+Hill numbers to DNA-based diversity analyses. \emph{Molecular Ecology Resources}.
+\doi{10.1111/1755-0998.13014}
+
+Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., & Thuiller, W.
+(2019). From environmental DNA sequences to ecological conclusions: How
+strong is the influence of methodological choices? \emph{Journal of Biogeography},
+47. \doi{10.1111/jbi.13681}
 }
 \seealso{
 \code{\link[glmulti:glmulti]{glmulti::glmulti()}}

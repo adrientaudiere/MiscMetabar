@@ -7,3 +7,5 @@ inst/doc
 /Meta/
 
 /.quarto/
+Rplots.pdf
+tests/testthat/Rplots.pdf

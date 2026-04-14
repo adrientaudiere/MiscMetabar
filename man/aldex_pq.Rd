@@ -15,10 +15,12 @@ of the physeq object. Must be a character vector or a factor.}
 
 \item{modalities}{(default NULL) A vector of modalities to keep in the analysis.
 If NULL, all modalities present in bifactor are kept. Note that only two
-modalities are allowed.
-@param gamma (default 0.5) The value of the Dirichlet Monte-Carlo
-sampling parameter.
-@param ... Additional arguments passed on to \code{ALDEx2::aldex()}}
+modalities are allowed.}
+
+\item{gamma}{(default 0.5) The value of the Dirichlet Monte-Carlo
+sampling parameter.}
+
+\item{...}{Additional arguments passed on to \code{ALDEx2::aldex()}}
 }
 \value{
 The result of \code{ALDEx2::aldex()}

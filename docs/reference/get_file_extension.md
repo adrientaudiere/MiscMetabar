@@ -26,3 +26,10 @@ The extension of a file.
 ## Author
 
 Adrien Taudière
+
+## Examples
+
+``` r
+get_file_extension("myfile.fasta")
+#> [1] "fasta"
+```

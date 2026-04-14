@@ -72,7 +72,9 @@ add_new_taxonomy_pq(
 
 - min_bootstrap:
 
-  (Float \[0:1\])
+  (Float \[0:1\]) If null (default), the default value of each taxonomic
+  assignation method is used (see after). Set to 0 to disable any
+  bootstrap filtering.
 
   Minimum bootstrap value to inform taxonomy. For each bootstrap below
   the min_bootstrap value, the taxonomy information is set to NA.
@@ -127,6 +129,7 @@ ref_fasta <- system.file("extdata",
 )
 add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "dada2")
 add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "dada2_2steps")
+add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "sintax")
 add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "lca")
 add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "idtaxa")
 

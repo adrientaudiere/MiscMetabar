@@ -32,12 +32,22 @@ lefser_pq(
 
   (default NULL) A vector of modalities to keep in the analysis. If
   NULL, all modalities present in bifactor are kept. Note that only two
-  modalities are allowed. @param compute_relativeAb (logical, default
-  TRUE) Do we compute relative abundance before running LEfSe? @param
-  by_clade (logical, default FALSE) Do we use the lefserClades function
-  (which test for different depth in the taxonomic classification) or
-  the lefser function (taxa-level)? @param ... Additional arguments
-  passed on to
+  modalities are allowed.
+
+- compute_relativeAb:
+
+  (logical, default TRUE) Do we compute relative abundance before
+  running LEfSe?
+
+- by_clade:
+
+  (logical, default FALSE) Do we use the lefserClades function (which
+  test for different depth in the taxonomic classification) or the
+  lefser function (taxa-level)?
+
+- ...:
+
+  Additional arguments passed on to
   [`lefser::lefser()`](https://rdrr.io/pkg/lefser/man/lefser.html)
 
 ## Value
@@ -63,7 +73,11 @@ res_lefse <- lefser_pq(data_fungi,
   bifactor = "Height",
   modalities = c("Low", "High")
 )
-#> Error in relativeAb(physeq_ts): could not find function "relativeAb"
+#> Registered S3 method overwritten by 'ggtree':
+#>   method         from     
+#>   fortify.igraph ggnetwork
+#> The outcome variable is specified as 'Height' and the reference category is 'High'.
+#>  See `?factor` or `?relevel` to change the reference category.
 lefser::lefserPlot(res_lefse)
-#> Error: object 'res_lefse' not found
+#> Warning: Ignoring unknown parameters: `size`
 ```

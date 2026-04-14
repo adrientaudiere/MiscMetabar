@@ -2,26 +2,33 @@
 
 [![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
-Contrary to
-[`track_wkflow()`](https://adrientaudiere.github.io/MiscMetabar/reference/track_wkflow.md),
-only phyloseq object are possible. More information are available in the
+Accept all input types supported by
+[`track_wkflow()`](https://adrientaudiere.github.io/MiscMetabar/reference/track_wkflow.md):
+phyloseq objects, matrices (samples x clusters), dada-class,
+derep-class, lists of dada-class or derep-class, and character vectors
+of fastq/fastq.gz file paths. More information are available in the
 manual of the function
 [`track_wkflow()`](https://adrientaudiere.github.io/MiscMetabar/reference/track_wkflow.md)
 
 ## Usage
 
 ``` r
-track_wkflow_samples(list_pq_obj, ...)
+track_wkflow_samples(list_of_objects, output_data_frame = FALSE, ...)
 ```
 
 ## Arguments
 
-- list_pq_obj:
+- list_of_objects:
 
-  (required) a list of object passed on to
-  [`track_wkflow()`](https://adrientaudiere.github.io/MiscMetabar/reference/track_wkflow.md)
-  Only phyloseq object will return value because information of sample
-  is needed
+  (required) a list of objects passed on to
+  [`track_wkflow()`](https://adrientaudiere.github.io/MiscMetabar/reference/track_wkflow.md).
+  Accepts phyloseq, matrix, dada-class, derep-class, lists of dada-class
+  or derep-class, and character vectors of file paths.
+
+- output_data_frame:
+
+  (logical, default FALSE) If TRUE, the function returns a data frame
+  with the number of sequences, clusters and samples for each sample.
 
 - ...:
 

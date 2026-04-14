@@ -57,3 +57,15 @@ database
 ## Author
 
 Adrien Taudière
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+add_blast_info(data_fungi_mini,
+  fasta_for_db = system.file("extdata", "mini_UNITE_fungi.fasta.gz",
+    package = "MiscMetabar"
+  )
+)
+} # }
+```

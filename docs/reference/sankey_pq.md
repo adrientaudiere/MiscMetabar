@@ -90,13 +90,13 @@ Adrien Taudière
 data("GlobalPatterns", package = "phyloseq")
 GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
+#> Also defined by ‘RNeXML’ ‘tidytree’
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
+#> Also defined by ‘RNeXML’ ‘tidytree’
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
+#> Also defined by ‘RNeXML’ ‘tidytree’
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
+#> Also defined by ‘RNeXML’ ‘tidytree’
 if (requireNamespace("networkD3")) {
   sankey_pq(GP, fact = "SampleType")
 }

@@ -1,4 +1,93 @@
-# MiscMetabar 0.14.5 (in development) 
+# MiscMetabar 0.15.2 (in development)
+
+* `hill_bar_pq()` new function plotting Hill diversity bar charts (mean ±SE, jittered points, Kruskal-Wallis subtitle, optional Tukey HSD compact letter display) for one or multiple Hill orders via a patchwork layout.
+* `tax_bar_pq()` fixes a bug where `nb_seq = FALSE` with a grouping `fact` would sum binary per-sample presence values across samples sharing the same modality, inflating bar heights beyond the true OTU count. Each OTU is now counted at most once per group (present in ≥1 sample of that group), so bar segments correctly show the number of distinct OTUs in each taxonomic rank per modality.
+* `tax_bar_pq()` gains a `show_n_samples` parameter (default `FALSE`). When `TRUE`, the number of samples per group is appended below each x-axis label as `(n=X)`.
+* New transformation/normalisation functions collected in `R/normalize_pq.R`, documented in a new article (`articles/normalization.html`).
+* `css_pq()` new function wrapping `metagenomeSeq::cumNorm()` for Cumulative Sum Scaling normalization.
+* `gmpr_pq()` new function implementing the Geometric Mean of Pairwise Ratios normalization (Chen et al. 2018) in pure R.
+* `mcknight_residuals_pq()` new function computing depth-robust alpha diversity as residuals of log-richness on log-depth (McKnight 2018; Mikryukov 2023).
+* `rarefy_pq()` new function wrapping `phyloseq::rarefy_even_depth()` with optional averaging over `n` rarefaction repetitions.
+* `srs_pq()` new function wrapping `SRS::SRS()` for Scaling with Ranked Subsampling normalization.
+* `tmm_pq()` new function wrapping `edgeR::calcNormFactors(method = "TMM")` for Trimmed Mean of M-values normalization.
+* `transform_pq()` new function providing a unified interface to common count transformations (`tss`, `hellinger`, `clr`, `rclr`, `log1p`, `z`, `pa`, `rank`) via `vegan::decostand()`.
+* `vst_pq()` new function wrapping `DESeq2::varianceStabilizingTransformation()`.
+* `biplot_pq()` gains a `color_rank` parameter (default `NULL`): when set to a taxonomic rank (e.g. `"Class"`), bars are colored by that rank instead of by sample modality, giving a taxonomic-composition view of the biplot. The fill legend is automatically titled with the rank name.
+* `biplot_pq()` gains a `taxa_names_rank` parameter (default `NULL`): when set to a taxonomic rank (e.g. `"Genus"`), the taxon axis labels display that rank instead of `taxa_names()`. Each OTU remains a separate bar regardless of shared rank values.
+* `biplot_pq()` no longer displays "Samples" on the taxon axis; the position used for the modality name annotations is now unlabeled.
+
+# MiscMetabar 0.15.1
+
+## New features
+
+* `unwanted_tax_patterns` is a new exported named character vector of regex patterns for common problematic taxonomy values (NA-like strings, `"unclassified"`, `"unknown"`, `"Incertae_sedis"`, empty QIIME-style ranks, etc.). `verify_tax_table()` now uses it as the default for `replace_to_NA`, and other pqverse packages (e.g. `dbpq::count_unwanted_tax()`) can reuse it to keep patterns in sync.
+
+## Breaking changes
+
+* `compare_pairs_pq()`, `ggbetween_pq()`, `hill_pq()`, `hill_tuckey_pq()`, `plot_refseq_extremity_pq()`, and `psmelt_samples_pq()` now use `divent::div_hill()` instead of `vegan::renyi()` for Hill number computation, and `compare_pairs_pq()` uses `divent::ent_shannon()` / `divent::ent_simpson()` instead of `vegan::diversity()` for Shannon and Simpson indices. The default estimator is now `"UnveilJ"` (bias-corrected) rather than the naive plug-in estimator — diversity values will differ from previous versions. Pass `estimator = "naive"` via `...` to restore old numeric behavior.
+
+## New features
+
+* `divent_hill_matrix_pq()` new exported utility to compute Hill numbers for all samples in an OTU table using `divent::div_hill()`. Accepts `...` to forward any argument to `divent::div_hill()`.
+* `ggbetween_pq()` gains a `q` parameter (default `c(0, 1, 2)`) to control which Hill diversity orders are computed. One plot is produced per value.
+* `hill_acc_pq()` gains a `type` parameter (`"individual"` or `"sample"`). `type = "sample"` computes sample-based accumulation curves by pooling samples incrementally across random permutations using `divent::div_hill()`, with a confidence ribbon. When `merge_sample_by` is set, one curve per group is drawn on the same plot. `type = "individual"` preserves the previous individual-based behaviour.
+* `profile_hill_pq()` new function wrapping `divent::profile_hill() |> autoplot()` to visualize Hill diversity profiles across all orders for all samples in a phyloseq object.
+
+## Deprecated
+
+* The `hill_scales` parameter in `hill_pq()`, `hill_tuckey_pq()`, and `psmelt_samples_pq()` is deprecated in favour of `q`. Use `q = c(0, 1, 2)` going forward.
+
+# MiscMetabar 0.14.6
+
+- Add `find_vsearch()` and `install_vsearch()` to make vsearch-based functions work on all platforms including Windows. `install_vsearch()` downloads the vsearch binary from GitHub, and `find_vsearch()` automatically locates it. All vsearch-calling functions now default to `find_vsearch()` instead of a hard-coded `"vsearch"` path. Users can also set `options(MiscMetabar.vsearchpath = "/path/to/vsearch")` for custom installations.
+
+- Add `ridges_sam_pq()`, the sample-centric counterpart of `ridges_pq()`: each ridge represents a taxon (at a given taxonomic level) and the x-axis shows the abundance distribution across samples, colored by a sample factor.
+
+- Add params `output_data_frame` to function `track_wkflow_samples()`
+
+- `cutadapt_remove_primers()` gains a `verbose` parameter (default `TRUE`). Set `verbose = FALSE` to fully silence cutadapt stdout/stderr and the completion message — unlike `suppressMessages()` or `capture.output()`, which cannot intercept system command output.
+
+- Fix a bug in `chimera_removal_vs()` where matrix dimensions were dropped when the input had only one sample (one row), causing downstream `[, ...]` indexing to fail with "incorrect number of dimensions". All three subsetting branches now use `drop = FALSE`.
+
+- Many functions accepting a `fact` parameter now handle single-level factors gracefully: functions that require multiple groups (`hill_pq()`, `hill_test_rarperm_pq()`, `graph_test_pq()`, `multipatt_pq()`, `ancombc_pq()`, `ggbetween_pq()`, `venn_pq()`, `ggvenn_pq()`, `upset_pq()`, `accu_plot()`, `accu_plot_balanced_modality()`, `plot_tsne_pq()`) now emit an informative error message, while functions that can produce meaningful output with a single level (`circle_pq()`, `sankey_pq()`, `are_modality_even_depth()`) no longer crash.
+
+- Fix a bug in `format2sintax()` where the `pattern_tax` parameter was referenced by the wrong internal name (`pattern_k`), causing an error when using the `taxnames` argument.
+
+- Add `reorder_distinct_colors()` to reassign fill and color scales in ggplot objects so that adjacent segments have maximally different colors, with optional colorblind optimization and lightness alternation.
+
+- `tax_bar_pq()` gains `show_values` and `minimum_value_to_show` parameters to display abundance values (or percentages when `percent_bar = TRUE`) inside bar segments.
+
+- `treemap_pq()` now uses `log10(x + 1)` instead of `log10(x)` so that taxa with a count of 1 are still visible. New parameters `show_na` (default `TRUE`) to display NA taxa as a grey area, `na_label` to customize the NA label, and `min_text_size` (default `0`) to control the minimum font size for tile labels.
+
+- `biplot_pq()` gains `split_by_sample`, `sample_border_col`, and `sample_border_width` parameters. When `split_by_sample = TRUE`, bars are stacked by sample with visible borders, showing the distribution of sequences across individual samples instead of a merged total.
+
+- Add two parameters to `tax_bar_pq()`, bar_internal_color to color each cells of the colored bars and linewidth_bar_internal to set the linewidth.
+
+- `tax_bar_pq()` with `label_taxa = TRUE` now also draws left-side labels for taxa that appear in the first bar but are absent from the last bar, making all taxa visible when using `add_ribbon = TRUE` across a time factor. A warning is emitted when taxa only appear in intermediate levels and cannot be labelled on either side.
+
+# MiscMetabar 0.14.5
+
+- Bug fix in `normalize_prop_pq` when taxa_are_rows(physeq) were FALSE.
+
+- Improve the `verify_pq()` function for cases where taxa_names or sample_names are not consistent and to test for duplicate sequences in @refseq slot.
+
+- Add a function `verify_tax_table()` to verify some classic issues in tax_table.
+
+- Fix a bug in `aldex_pq()` and `plot_ordination_pq()`. Also fix a bug in `plot_ordination_pq()` when using phyloseq object where taxa are rows.
+
+- Add parameters `show_count`, `facet_by`, `growing_text` and `text_size` to `treemap_pq()`: `show_count` appends raw abundance counts to labels, `facet_by` splits the treemap into facets by a sample metadata column, and `growing_text=FALSE` forces all tile labels to the same font size (determined by text_size).
+
+- Extend `track_wkflow_samples()` to accept all input types supported by `track_wkflow()`: matrix, dada-class, derep-class, lists of dada/derep, and character vectors of fastq file paths (previously only phyloseq objects were accepted).
+
+- Fix a bug for case with only one column in slot @sam_data
+
+- Fix a bug in the name of plot in the result of `hill_pq()` 
+
+- Fix a bug in `mumu_pq()` not deleting temporary file log.txt when `keep_temporary_files=FALSE`
+
+- Fix a bug in `adonis_pq()` when using na_remove = TRUE and multiple terms in formula.
+
+- Add parameter by to `adonis_pq()` to choose how to compute p-values (overall model, sequential terms, marginal effects, one-degree-of-freedom contrasts). The default is now by = "terms" that will assess significance for each term.
 
 - Add function `lefser_pq()` to run LEfSe analysis (differential analysis) from a phyloseq object using the package lefser.
 
@@ -186,7 +275,7 @@
 ## New parameters
 
 - Add param `taxa_ranks` in function `psmelt_samples_pq()` to group results by samples AND taxonomic ranks. 
-- Add param `hill_scales` in functions `hill_tuckey_pq()` and `hill_p()` to choose the level of the hill number. 
+- Add param `q` in functions `hill_tuckey_pq()` and `hill_p()` to choose the level of the hill number. 
 - Add param `na_remove` in function `hill_pq()` to remove samples with NA in the factor fact.
 
 

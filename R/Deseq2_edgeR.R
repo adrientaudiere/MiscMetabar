@@ -46,13 +46,15 @@
 #' @seealso \code{\link{plot_deseq2_pq}}
 
 plot_edgeR_pq <-
-  function(physeq,
-           contrast = NULL,
-           pval = 0.05,
-           taxolev = "Genus",
-           color_tax = "Phylum",
-           verbose = TRUE,
-           ...) {
+  function(
+    physeq,
+    contrast = NULL,
+    pval = 0.05,
+    taxolev = "Genus",
+    color_tax = "Phylum",
+    verbose = TRUE,
+    ...
+  ) {
     if (!inherits(physeq, "phyloseq")) {
       stop("data must be an object of class 'phyloseq'")
     }
@@ -99,11 +101,13 @@ plot_edgeR_pq <-
     p <-
       ggplot(sigtabgen, aes(x = tax, y = logFC, color = col_tax), ...) +
       geom_point(size = 6) +
-      theme(axis.text.x = element_text(
-        angle = -90,
-        hjust = 0,
-        vjust = 0.5
-      )) +
+      theme(
+        axis.text.x = element_text(
+          angle = -90,
+          hjust = 0,
+          vjust = 0.5
+        )
+      ) +
       labs(
         title = paste(
           "Change in abundance for ",
@@ -197,17 +201,19 @@ plot_edgeR_pq <-
 #' @seealso \code{\link{plot_edgeR_pq}}
 
 plot_deseq2_pq <-
-  function(data,
-           contrast = NULL,
-           tax_table = NULL,
-           pval = 0.05,
-           taxolev = "Genus",
-           select_taxa = NULL,
-           color_tax = "Phylum",
-           tax_depth = NULL,
-           verbose = TRUE,
-           jitter_width = 0.1,
-           ...) {
+  function(
+    data,
+    contrast = NULL,
+    tax_table = NULL,
+    pval = 0.05,
+    taxolev = "Genus",
+    select_taxa = NULL,
+    color_tax = "Phylum",
+    tax_depth = NULL,
+    verbose = TRUE,
+    jitter_width = 0.1,
+    ...
+  ) {
     if (!inherits(data, "phyloseq")) {
       if (!inherits(data, "DESeqDataSet")) {
         stop("data must be an object of class 'phyloseq' or 'DESeqDataSet'")
@@ -221,20 +227,25 @@ plot_deseq2_pq <-
             apply(data@otu_table, 2, function(x) {
               tapply(
                 x,
-                data@tax_table[, tax_depth], sum
+                data@tax_table[, tax_depth],
+                sum
               )
             }),
             taxa_are_rows = TRUE
           )
         data_tax@tax_table <-
           tax_table(apply(
-            data@tax_table[, 1:match(
-              tax_depth,
-              colnames(data@tax_table)
-            )],
-            2, function(x) {
+            data@tax_table[,
+              1:match(
+                tax_depth,
+                colnames(data@tax_table)
+              )
+            ],
+            2,
+            function(x) {
               tapply(
-                x, data@tax_table[, tax_depth],
+                x,
+                data@tax_table[, tax_depth],
                 function(xx) {
                   xx[1]
                 }
@@ -281,13 +292,20 @@ plot_deseq2_pq <-
     d <- res[which(res$padj < pval), ]
 
     if (dim(d)[1] == 0) {
-      message("None taxa present significant distribution pattern through
-              contrast.")
-      return("None taxa present significant distribution pattern through
-             contrast.")
+      message(
+        "None taxa present significant distribution pattern through
+              contrast."
+      )
+      return(
+        "None taxa present significant distribution pattern through
+             contrast."
+      )
     }
     d <-
-      cbind(methods::as(d, "data.frame"), methods::as(tax_table[rownames(d), ], "matrix"))
+      cbind(
+        methods::as(d, "data.frame"),
+        methods::as(tax_table[rownames(d), ], "matrix")
+      )
 
     # Compute colors
     are_colors <- function(x) {
@@ -326,11 +344,13 @@ plot_deseq2_pq <-
           size = 6,
           position = position_jitter(width = jitter_width, height = 0)
         ) +
-        theme(axis.text.x = element_text(
-          angle = -90,
-          hjust = 0,
-          vjust = 0.5
-        )) +
+        theme(
+          axis.text.x = element_text(
+            angle = -90,
+            hjust = 0,
+            vjust = 0.5
+          )
+        ) +
         labs(
           title = paste(
             "Change in abundance for ",
@@ -347,14 +367,17 @@ plot_deseq2_pq <-
       p <-
         ggplot(d, aes(x = tax, y = log2FoldChange), ...) +
         geom_point(
-          size = 6, color = d$col_tax,
+          size = 6,
+          color = d$col_tax,
           position = position_jitter(width = jitter_width, height = 0)
         ) +
-        theme(axis.text.x = element_text(
-          angle = -90,
-          hjust = 0,
-          vjust = 0.5
-        )) +
+        theme(
+          axis.text.x = element_text(
+            angle = -90,
+            hjust = 0,
+            vjust = 0.5
+          )
+        ) +
         labs(
           title = paste(
             "Change in abundance for ",
@@ -372,7 +395,6 @@ plot_deseq2_pq <-
     return(p)
   }
 ################################################################################
-
 
 ################################################################################
 #' Convert phyloseq OTU count data into DGEList for edgeR package
@@ -398,25 +420,47 @@ plot_deseq2_pq <-
 #'
 #'  \code{c("TMM", "RLE", "upperquartile", "none")}.
 #'
+#' @param remove_na (logical) If TRUE, samples with NA values in the group variable will be removed.
 #' @return A DGEList object. See [edgeR::estimateTagwiseDisp()] for more details.
 #'
 #' @param ... Additional arguments passed on to \code{\link[edgeR]{DGEList}}
 #' @export
+#' @examples
+#' \donttest{
+#' if (requireNamespace("edgeR")) {
+#'   phyloseq_to_edgeR(data_fungi_mini, group = "Height")
+#' }
+#' }
 #'
-phyloseq_to_edgeR <- function(physeq, group, method = "RLE", ...) {
+phyloseq_to_edgeR <- function(
+  physeq,
+  group,
+  method = "RLE",
+  remove_na = TRUE,
+  ...
+) {
   verify_pq(physeq)
   # Enforce orientation.
   if (!taxa_are_rows(physeq)) {
-    otu_table(physeq) <- otu_table(t(as.matrix(unclass(physeq@otu_table))),
+    otu_table(physeq) <- otu_table(
+      t(as.matrix(unclass(physeq@otu_table))),
       taxa_are_rows = TRUE
     )
   }
+
+  if (remove_na) {
+    keep <- !is.na(get_variable(physeq, group))
+    physeq <- prune_samples(keep, physeq)
+  }
+
   x <- methods::as(otu_table(physeq), "matrix")
   # Add one to protect against overflow, log(0) issues.
   x <- x + 1
   # Check `group` argument
-  if (identical(all.equal(length(group), 1), TRUE) &&
-    nsamples(physeq) > 1) {
+  if (
+    identical(all.equal(length(group), 1), TRUE) &&
+      nsamples(physeq) > 1
+  ) {
     # Assume that group was a sample variable name (must be categorical)
     group <- get_variable(physeq, group)
   }

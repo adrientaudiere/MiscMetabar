@@ -18,7 +18,7 @@ biplot_pq(
   left_name = NULL,
   left_name_col = "#4B3E1E",
   left_fill = "#4B3E1E",
-  left_col = "#f3f2d9",
+  left_col = "#4B3E1E",
   right_name = NULL,
   right_name_col = "#1d2949",
   right_fill = "#1d2949",
@@ -31,6 +31,9 @@ biplot_pq(
   y_names = NA,
   ylim_modif = c(1, 1),
   nb_samples_info = TRUE,
+  split_by_sample = FALSE,
+  sample_border_col = "#d4d0acff",
+  sample_border_width = 0.3,
   plotly_version = FALSE,
   ...
 )
@@ -153,6 +156,24 @@ biplot_pq(
   (default: TRUE, logical) if TRUE and merge_sample_by is set, add the
   number of samples merged for both levels.
 
+- split_by_sample:
+
+  (default: FALSE, logical) if TRUE and `merge_sample_by` is set, the
+  bars are not merged but stacked by sample, with borders between
+  segments so that the distribution of sequences across samples is
+  visible. The border color and width are controlled by
+  `sample_border_col` and `sample_border_width`.
+
+- sample_border_col:
+
+  (default: "white") Color of the border between sample segments when
+  `split_by_sample = TRUE`.
+
+- sample_border_width:
+
+  (default: 0.3) Width of the border between sample segments when
+  `split_by_sample = TRUE`.
+
 - plotly_version:
 
   If TRUE, use
@@ -177,6 +198,14 @@ Adrien Taudière
 data_fungi_2Height <- subset_samples(data_fungi_mini, Height %in% c("Low", "High"))
 biplot_pq(data_fungi_2Height, "Height", merge_sample_by = "Height")
 #> Cleaning suppress 5 taxa and 0 samples.
+#> Scale for y is already present.
+#> Adding another scale for y, which will replace the existing scale.
+
+biplot_pq(data_fungi_2Height, "Height",
+  merge_sample_by = "Height",
+  split_by_sample = TRUE
+)
+#> The two modalities differ greatly (more than x2) in their number of sequences (1885 vs 10201). You may be interested by the parameter rarefy_after_merging
 #> Scale for y is already present.
 #> Adding another scale for y, which will replace the existing scale.
 ```

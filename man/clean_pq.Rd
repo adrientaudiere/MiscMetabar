@@ -16,7 +16,8 @@ clean_pq(
   reorder_taxa = FALSE,
   rename_taxa = FALSE,
   simplify_taxo = FALSE,
-  prefix_taxa_names = "_Taxa"
+  prefix_taxa_names = "_Taxa",
+  check_taxonomy = FALSE
 )
 }
 \arguments{
@@ -45,8 +46,8 @@ transpose the otu_table and set taxa_are_rows to true}
 \item{reorder_taxa}{(logical) if TRUE the otu_table is ordered by the number of
 sequences of taxa (ASV, OTU) in descending order. Default to FALSE.}
 
-\item{rename_taxa}{(logical) if TRUE, taxa (ASV, OTU) are renamed by their position
-in the OTU_table and prefix_taxa_names param (by default: Taxa_1, Taxa_2, ...).
+\item{rename_taxa}{(logical, default FALSE) if TRUE, taxa (ASV, OTU) are renamed by their position
+in the OTU_table and prefix_taxa_names param (Taxa_1, Taxa_2, ...).
 Default to FALSE. If rename taxa (ASV, OTU) is true,
 the taxa (ASV, OTU) names in verbose information can be misleading.}
 
@@ -54,6 +55,9 @@ the taxa (ASV, OTU) names in verbose information can be misleading.}
 \code{MiscMetabar::simplify_taxo()} function}
 
 \item{prefix_taxa_names}{(default "Taxa_"): the prefix of taxa names (eg. "ASV_" or "OTU_")}
+
+\item{check_taxonomy}{(logical, default FALSE) If TRUE, call
+\code{\link[=verify_tax_table]{verify_tax_table()}} to check for common taxonomy table issues.}
 }
 \value{
 A new \code{\link[phyloseq]{phyloseq-class}} object
@@ -68,6 +72,9 @@ A new \code{\link[phyloseq]{phyloseq-class}} object
 In addition, this function check for discrepancy (and rename) between
 (i) taxa names in refseq, taxonomy table and otu_table and between
 (ii) sample names in sam_data and otu_table.
+}
+\examples{
+clean_pq(data_fungi_mini)
 }
 \author{
 Adrien Taudière

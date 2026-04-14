@@ -12,7 +12,8 @@ compare_pairs_pq(
   merge_sample_by = NULL,
   nb_min_seq = 0,
   veg_index = "shannon",
-  na_remove = TRUE
+  na_remove = TRUE,
+  ...
 )
 }
 \arguments{
@@ -33,12 +34,17 @@ Need to be in \code{physeq@sam_data}}
 \item{nb_min_seq}{minimum number of sequences per sample
 to count the ASV/OTU}
 
-\item{veg_index}{(default: "shannon") index for the \code{vegan::diversity} function}
+\item{veg_index}{(default: \code{"shannon"}) diversity index. \code{"shannon"} and
+\code{"simpson"} are computed via \code{divent}; other names are forwarded to
+\code{\link[vegan:diversity]{vegan::diversity()}}.}
 
 \item{na_remove}{(logical, default TRUE) If set to TRUE, remove samples with
 NA in the variables set in bifactor, modality and merge_sample_by.
 NA in variables are well managed even if na_remove = FALSE, so na_remove may
 be useless.}
+
+\item{...}{Additional arguments passed to \code{\link[divent:ent_shannon]{divent::ent_shannon()}} or
+\code{\link[divent:ent_simpson]{divent::ent_simpson()}} when \code{veg_index} is \code{"shannon"} or \code{"simpson"}.}
 }
 \value{
 A tibble with information about the number of shared ASV, shared number of sequences
@@ -54,9 +60,9 @@ and diversity
 For the moment refseq slot need to be not Null.
 }
 \examples{
-data_fungi_low_high <- subset_samples(data_fungi, Height \%in\% c("Low", "High"))
-compare_pairs_pq(data_fungi_low_high, bifactor = "Height", merge_sample_by = "Height")
-compare_pairs_pq(data_fungi_low_high,
+data_fungi_mini_lh <- subset_samples(data_fungi_mini, Height \%in\% c("Low", "High"))
+compare_pairs_pq(data_fungi_mini_lh, bifactor = "Height", merge_sample_by = "Height")
+compare_pairs_pq(data_fungi_mini_lh,
   bifactor = "Height",
   merge_sample_by = "Height", modality = "Time"
 )

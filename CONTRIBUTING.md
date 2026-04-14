@@ -120,6 +120,7 @@ I add some rules for the package development in the pkgdown site [here](https://
 -  Indicate the type for logical and integer params.
 - Homogenize the params names across function.
 - Prefer ASVs to OTUs denomination, even thought both are almost interchangeable in the MiscMetabar package.
+
 #### Lifecycle
 
 - **Experimental**: First status for a function

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,8 +60,72 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.14.5" id="miscmetabar-0145-in-development">MiscMetabar 0.14.5 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-0145-in-development"></a></h2>
-<ul><li><p>Add function <code><a href="../reference/lefser_pq.html">lefser_pq()</a></code> to run LEfSe analysis (differential analysis) from a phyloseq object using the package lefser.</p></li>
+<h2 class="pkg-version" data-toc-text="0.15.1" id="miscmetabar-0151">MiscMetabar 0.15.1<a class="anchor" aria-label="anchor" href="#miscmetabar-0151"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-0-15-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-15-1"></a></h3>
+<ul><li>
+<code><a href="../reference/assign_mmseqs2.html">assign_mmseqs2()</a></code>: fixed a crash when partial taxonomic assignments produce ragged split vectors; shorter vectors are now padded with <code>NA</code> before being combined into a matrix.</li>
+<li>
+<code><a href="../reference/format2dada2_species.html">format2dada2_species()</a></code>: fixed broken sequence name recovery for unmatched entries; names are now correctly restored using integer indices rather than character lookup.</li>
+<li>
+<code>unwanted_tax_patterns</code>: fixed duplicate name <code>"unknown species names"</code> (now <code>"unknown species (_sp prefix)"</code> and <code>"unknown species (_species prefix)"</code>); corrected <code>@format</code> element count from 13 to 17.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="new-features-0-15-1">New features<a class="anchor" aria-label="anchor" href="#new-features-0-15-1"></a></h3>
+<ul><li>
+<code>unwanted_tax_patterns</code> is a new exported named character vector of regex patterns for common problematic taxonomy values (NA-like strings, <code>"unclassified"</code>, <code>"unknown"</code>, <code>"Incertae_sedis"</code>, empty QIIME-style ranks, etc.). <code><a href="../reference/verify_tax_table.html">verify_tax_table()</a></code> now uses it as the default for <code>replace_to_NA</code>, and other pqverse packages (e.g. <code>dbpq::count_unwanted_tax()</code>) can reuse it to keep patterns in sync.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="breaking-changes-0-15-1">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-15-1"></a></h3>
+<ul><li>
+<code><a href="../reference/compare_pairs_pq.html">compare_pairs_pq()</a></code>, <code><a href="../reference/ggbetween_pq.html">ggbetween_pq()</a></code>, <code><a href="../reference/hill_pq.html">hill_pq()</a></code>, <code><a href="../reference/hill_tuckey_pq.html">hill_tuckey_pq()</a></code>, <code><a href="../reference/plot_refseq_extremity_pq.html">plot_refseq_extremity_pq()</a></code>, and <code><a href="../reference/psmelt_samples_pq.html">psmelt_samples_pq()</a></code> now use <code><a href="https://ericmarcon.github.io/divent/reference/div_hill.html" class="external-link">divent::div_hill()</a></code> instead of <code><a href="https://vegandevs.github.io/vegan/reference/renyi.html" class="external-link">vegan::renyi()</a></code> for Hill number computation, and <code><a href="../reference/compare_pairs_pq.html">compare_pairs_pq()</a></code> uses <code><a href="https://ericmarcon.github.io/divent/reference/ent_shannon.html" class="external-link">divent::ent_shannon()</a></code> / <code><a href="https://ericmarcon.github.io/divent/reference/ent_simpson.html" class="external-link">divent::ent_simpson()</a></code> instead of <code><a href="https://vegandevs.github.io/vegan/reference/diversity.html" class="external-link">vegan::diversity()</a></code> for Shannon and Simpson indices. The default estimator is now <code>"UnveilJ"</code> (bias-corrected) rather than the naive plug-in estimator — diversity values will differ from previous versions. Pass <code>estimator = "naive"</code> via <code>...</code> to restore old numeric behavior.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="new-features-0-15-1-1">New features<a class="anchor" aria-label="anchor" href="#new-features-0-15-1-1"></a></h3>
+<ul><li>
+<code><a href="../reference/divent_hill_matrix_pq.html">divent_hill_matrix_pq()</a></code> new exported utility to compute Hill numbers for all samples in an OTU table using <code><a href="https://ericmarcon.github.io/divent/reference/div_hill.html" class="external-link">divent::div_hill()</a></code>. Accepts <code>...</code> to forward any argument to <code><a href="https://ericmarcon.github.io/divent/reference/div_hill.html" class="external-link">divent::div_hill()</a></code>.</li>
+<li>
+<code><a href="../reference/ggbetween_pq.html">ggbetween_pq()</a></code> gains a <code>q</code> parameter (default <code>c(0, 1, 2)</code>) to control which Hill diversity orders are computed. One plot is produced per value.</li>
+<li>
+<code><a href="../reference/hill_acc_pq.html">hill_acc_pq()</a></code> gains a <code>type</code> parameter (<code>"individual"</code> or <code>"sample"</code>). <code>type = "sample"</code> computes sample-based accumulation curves by pooling samples incrementally across random permutations using <code><a href="https://ericmarcon.github.io/divent/reference/div_hill.html" class="external-link">divent::div_hill()</a></code>, with a confidence ribbon. When <code>merge_sample_by</code> is set, one curve per group is drawn on the same plot. <code>type = "individual"</code> preserves the previous individual-based behaviour.</li>
+<li>
+<code><a href="../reference/profile_hill_pq.html">profile_hill_pq()</a></code> new function wrapping <code>divent::profile_hill() |&gt; autoplot()</code> to visualize Hill diversity profiles across all orders for all samples in a phyloseq object.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="deprecated-0-15-1">Deprecated<a class="anchor" aria-label="anchor" href="#deprecated-0-15-1"></a></h3>
+<ul><li>The <code>hill_scales</code> parameter in <code><a href="../reference/hill_pq.html">hill_pq()</a></code>, <code><a href="../reference/hill_tuckey_pq.html">hill_tuckey_pq()</a></code>, and <code><a href="../reference/psmelt_samples_pq.html">psmelt_samples_pq()</a></code> is deprecated in favour of <code>q</code>. Use <code>q = c(0, 1, 2)</code> going forward.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.14.6" id="miscmetabar-0146">MiscMetabar 0.14.6<a class="anchor" aria-label="anchor" href="#miscmetabar-0146"></a></h2>
+<ul><li><p>Add <code><a href="../reference/find_vsearch.html">find_vsearch()</a></code> and <code><a href="../reference/install_vsearch.html">install_vsearch()</a></code> to make vsearch-based functions work on all platforms including Windows. <code><a href="../reference/install_vsearch.html">install_vsearch()</a></code> downloads the vsearch binary from GitHub, and <code><a href="../reference/find_vsearch.html">find_vsearch()</a></code> automatically locates it. All vsearch-calling functions now default to <code><a href="../reference/find_vsearch.html">find_vsearch()</a></code> instead of a hard-coded <code>"vsearch"</code> path. Users can also set <code>options(MiscMetabar.vsearchpath = "/path/to/vsearch")</code> for custom installations.</p></li>
+<li><p>Add <code><a href="../reference/ridges_sam_pq.html">ridges_sam_pq()</a></code>, the sample-centric counterpart of <code><a href="../reference/ridges_pq.html">ridges_pq()</a></code>: each ridge represents a taxon (at a given taxonomic level) and the x-axis shows the abundance distribution across samples, colored by a sample factor.</p></li>
+<li><p>Add params <code>output_data_frame</code> to function <code><a href="../reference/track_wkflow_samples.html">track_wkflow_samples()</a></code></p></li>
+<li><p><code><a href="../reference/cutadapt_remove_primers.html">cutadapt_remove_primers()</a></code> gains a <code>verbose</code> parameter (default <code>TRUE</code>). Set <code>verbose = FALSE</code> to fully silence cutadapt stdout/stderr and the completion message — unlike <code><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages()</a></code> or <code><a href="https://rdrr.io/r/utils/capture.output.html" class="external-link">capture.output()</a></code>, which cannot intercept system command output.</p></li>
+<li><p>Fix a bug in <code><a href="../reference/chimera_removal_vs.html">chimera_removal_vs()</a></code> where matrix dimensions were dropped when the input had only one sample (one row), causing downstream <code>[, ...]</code> indexing to fail with “incorrect number of dimensions”. All three subsetting branches now use <code>drop = FALSE</code>.</p></li>
+<li><p>Many functions accepting a <code>fact</code> parameter now handle single-level factors gracefully: functions that require multiple groups (<code><a href="../reference/hill_pq.html">hill_pq()</a></code>, <code><a href="../reference/hill_test_rarperm_pq.html">hill_test_rarperm_pq()</a></code>, <code><a href="../reference/graph_test_pq.html">graph_test_pq()</a></code>, <code><a href="../reference/multipatt_pq.html">multipatt_pq()</a></code>, <code><a href="../reference/ancombc_pq.html">ancombc_pq()</a></code>, <code><a href="../reference/ggbetween_pq.html">ggbetween_pq()</a></code>, <code><a href="../reference/venn_pq.html">venn_pq()</a></code>, <code><a href="../reference/ggvenn_pq.html">ggvenn_pq()</a></code>, <code><a href="../reference/upset_pq.html">upset_pq()</a></code>, <code><a href="../reference/accu_plot.html">accu_plot()</a></code>, <code><a href="../reference/accu_plot_balanced_modality.html">accu_plot_balanced_modality()</a></code>, <code><a href="../reference/plot_tsne_pq.html">plot_tsne_pq()</a></code>) now emit an informative error message, while functions that can produce meaningful output with a single level (<code><a href="../reference/circle_pq.html">circle_pq()</a></code>, <code><a href="../reference/sankey_pq.html">sankey_pq()</a></code>, <code><a href="../reference/are_modality_even_depth.html">are_modality_even_depth()</a></code>) no longer crash.</p></li>
+<li><p>Fix a bug in <code><a href="../reference/format2sintax.html">format2sintax()</a></code> where the <code>pattern_tax</code> parameter was referenced by the wrong internal name (<code>pattern_k</code>), causing an error when using the <code>taxnames</code> argument.</p></li>
+<li><p>Add <code><a href="../reference/reorder_distinct_colors.html">reorder_distinct_colors()</a></code> to reassign fill and color scales in ggplot objects so that adjacent segments have maximally different colors, with optional colorblind optimization and lightness alternation.</p></li>
+<li><p><code><a href="../reference/tax_bar_pq.html">tax_bar_pq()</a></code> gains <code>show_values</code> and <code>minimum_value_to_show</code> parameters to display abundance values (or percentages when <code>percent_bar = TRUE</code>) inside bar segments.</p></li>
+<li><p><code><a href="../reference/treemap_pq.html">treemap_pq()</a></code> now uses <code>log10(x + 1)</code> instead of <code>log10(x)</code> so that taxa with a count of 1 are still visible. New parameters <code>show_na</code> (default <code>TRUE</code>) to display NA taxa as a grey area, <code>na_label</code> to customize the NA label, and <code>min_text_size</code> (default <code>0</code>) to control the minimum font size for tile labels.</p></li>
+<li><p><code><a href="../reference/biplot_pq.html">biplot_pq()</a></code> gains <code>split_by_sample</code>, <code>sample_border_col</code>, and <code>sample_border_width</code> parameters. When <code>split_by_sample = TRUE</code>, bars are stacked by sample with visible borders, showing the distribution of sequences across individual samples instead of a merged total.</p></li>
+<li><p>Add two parameters to <code><a href="../reference/tax_bar_pq.html">tax_bar_pq()</a></code>, bar_internal_color to color each cells of the colored bars and linewidth_bar_internal to set the linewidth.</p></li>
+<li><p><code><a href="../reference/tax_bar_pq.html">tax_bar_pq()</a></code> with <code>label_taxa = TRUE</code> now also draws left-side labels for taxa that appear in the first bar but are absent from the last bar, making all taxa visible when using <code>add_ribbon = TRUE</code> across a time factor. A warning is emitted when taxa only appear in intermediate levels and cannot be labelled on either side.</p></li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.14.5" id="miscmetabar-0145">MiscMetabar 0.14.5<a class="anchor" aria-label="anchor" href="#miscmetabar-0145"></a></h2>
+<ul><li><p>Bug fix in <code>normalize_prop_pq</code> when taxa_are_rows(physeq) were FALSE.</p></li>
+<li><p>Improve the <code><a href="../reference/verify_pq.html">verify_pq()</a></code> function for cases where taxa_names or sample_names are not consistent and to test for duplicate sequences in <a href="https://github.com/refseq" class="external-link">@refseq</a> slot.</p></li>
+<li><p>Add a function <code><a href="../reference/verify_tax_table.html">verify_tax_table()</a></code> to verify some classic issues in tax_table.</p></li>
+<li><p>Fix a bug in <code><a href="../reference/aldex_pq.html">aldex_pq()</a></code> and <code><a href="../reference/plot_ordination_pq.html">plot_ordination_pq()</a></code>. Also fix a bug in <code><a href="../reference/plot_ordination_pq.html">plot_ordination_pq()</a></code> when using phyloseq object where taxa are rows.</p></li>
+<li><p>Add parameters <code>show_count</code>, <code>facet_by</code>, <code>growing_text</code> and <code>text_size</code> to <code><a href="../reference/treemap_pq.html">treemap_pq()</a></code>: <code>show_count</code> appends raw abundance counts to labels, <code>facet_by</code> splits the treemap into facets by a sample metadata column, and <code>growing_text=FALSE</code> forces all tile labels to the same font size (determined by text_size).</p></li>
+<li><p>Extend <code><a href="../reference/track_wkflow_samples.html">track_wkflow_samples()</a></code> to accept all input types supported by <code><a href="../reference/track_wkflow.html">track_wkflow()</a></code>: matrix, dada-class, derep-class, lists of dada/derep, and character vectors of fastq file paths (previously only phyloseq objects were accepted).</p></li>
+<li><p>Fix a bug for case with only one column in slot <a href="https://github.com/sam_data" class="external-link">@sam_data</a></p></li>
+<li><p>Fix a bug in the name of plot in the result of <code><a href="../reference/hill_pq.html">hill_pq()</a></code></p></li>
+<li><p>Fix a bug in <code><a href="../reference/mumu_pq.html">mumu_pq()</a></code> not deleting temporary file log.txt when <code>keep_temporary_files=FALSE</code></p></li>
+<li><p>Fix a bug in <code><a href="../reference/adonis_pq.html">adonis_pq()</a></code> when using na_remove = TRUE and multiple terms in formula.</p></li>
+<li><p>Add parameter by to <code><a href="../reference/adonis_pq.html">adonis_pq()</a></code> to choose how to compute p-values (overall model, sequential terms, marginal effects, one-degree-of-freedom contrasts). The default is now by = “terms” that will assess significance for each term.</p></li>
+<li><p>Add function <code><a href="../reference/lefser_pq.html">lefser_pq()</a></code> to run LEfSe analysis (differential analysis) from a phyloseq object using the package lefser.</p></li>
 <li><p>Add function <code><a href="../reference/aldex_pq.html">aldex_pq()</a></code> to run ALDEX2 analysis (differential analysis) from a phyloseq object using the package ALDEx2 and the default parameters gamma=0.5.</p></li>
 <li><p>Add the parameter <code>rngseed</code> in all functions which used <code><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">phyloseq::rarefy_even_depth</a></code> to set the seed for random number generator in order to increase reproducibility.</p></li>
 <li><p>Better messages (and not error) in <code>filter_asv_blast</code> when the resulting table of OTU is empty</p></li>
@@ -247,7 +311,7 @@
 <div class="section level3">
 <h3 id="new-parameters-0-9-1">New parameters<a class="anchor" aria-label="anchor" href="#new-parameters-0-9-1"></a></h3>
 <ul><li>Add param <code>taxa_ranks</code> in function <code><a href="../reference/psmelt_samples_pq.html">psmelt_samples_pq()</a></code> to group results by samples AND taxonomic ranks.</li>
-<li>Add param <code>hill_scales</code> in functions <code><a href="../reference/hill_tuckey_pq.html">hill_tuckey_pq()</a></code> and <code>hill_p()</code> to choose the level of the hill number.</li>
+<li>Add param <code>q</code> in functions <code><a href="../reference/hill_tuckey_pq.html">hill_tuckey_pq()</a></code> and <code>hill_p()</code> to choose the level of the hill number.</li>
 <li>Add param <code>na_remove</code> in function <code><a href="../reference/hill_pq.html">hill_pq()</a></code> to remove samples with NA in the factor fact.</li>
 </ul></div>
 </div>
@@ -315,7 +379,7 @@
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.6.0" id="miscmetabar-060">MiscMetabar 0.6.0<a class="anchor" aria-label="anchor" href="#miscmetabar-060"></a></h2>
-<ul><li>Add function <code><a href="../reference/ancombc_pq.html">ancombc_pq()</a></code> to simplify the call to <code><a href="https://rdrr.io/pkg/ANCOMBC/man/ancombc2.html" class="external-link">ANCOMBC::ancombc2()</a></code> : ANalysis of COmpositions of Microbiomes with Bias Correction 2</li>
+<ul><li>Add function <code><a href="../reference/ancombc_pq.html">ancombc_pq()</a></code> to simplify the call to <code>ancombc2()</code> from the ANCOMBC2 package: ANalysis of COmpositions of Microbiomes with Bias Correction 2</li>
 <li>Add param <code>taxa_names_from_physeq</code> (default FALSE) to <code><a href="../reference/subset_taxa_pq.html">subset_taxa_pq()</a></code>
 </li>
 <li>Add param <code>rarefy_by_sample</code> (default FALSE) to function <code><a href="../reference/ggbetween_pq.html">ggbetween_pq()</a></code>

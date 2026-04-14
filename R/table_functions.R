@@ -33,11 +33,13 @@
 #'     modality = GlobalPatterns@sam_data$SampleType
 #'   )
 #' }
-tax_datatable <- function(physeq,
-                          abundance = TRUE,
-                          taxonomic_level = NULL,
-                          modality = NULL,
-                          ...) {
+tax_datatable <- function(
+  physeq,
+  abundance = TRUE,
+  taxonomic_level = NULL,
+  modality = NULL,
+  ...
+) {
   df <- as.data.frame(unclass(physeq@tax_table))
 
   if (!is.null(taxonomic_level)) {
@@ -70,17 +72,18 @@ tax_datatable <- function(physeq,
   }
 
   if (is.null(modality)) {
-    dt <- DT::datatable(df, ...) %>% DT::formatStyle(
-      "nb_seq",
-      background = DT::styleColorBar(df$nb_seq, "steelblue"),
-      backgroundSize = "100% 90%",
-      backgroundRepeat = "no-repeat",
-      backgroundPosition = "center"
-    )
+    dt <- DT::datatable(df, ...) |>
+      DT::formatStyle(
+        "nb_seq",
+        background = DT::styleColorBar(df$nb_seq, "steelblue"),
+        backgroundSize = "100% 90%",
+        backgroundRepeat = "no-repeat",
+        backgroundPosition = "center"
+      )
   } else {
     dt <- DT::datatable(df, ...)
     for (cn in colnames(df)[grepl("nb_seq", colnames(df))]) {
-      dt <- dt %>%
+      dt <- dt |>
         DT::formatStyle(
           cn,
           background = DT::styleColorBar(df[[cn]], "steelblue"),
@@ -115,29 +118,36 @@ tax_datatable <- function(physeq,
 #'   Need to be in \code{physeq@sam_data}
 #' @param nb_min_seq minimum number of sequences per sample
 #'   to count the ASV/OTU
-#' @param veg_index (default: "shannon") index for the `vegan::diversity` function
+#' @param veg_index (default: `"shannon"`) diversity index. `"shannon"` and
+#'   `"simpson"` are computed via `divent`; other names are forwarded to
+#'   [vegan::diversity()].
 #' @param na_remove (logical, default TRUE) If set to TRUE, remove samples with
 #'   NA in the variables set in bifactor, modality and merge_sample_by.
 #'   NA in variables are well managed even if na_remove = FALSE, so na_remove may
 #'   be useless.
+#' @param ... Additional arguments passed to [divent::ent_shannon()] or
+#'   [divent::ent_simpson()] when `veg_index` is `"shannon"` or `"simpson"`.
 #' @return A tibble with information about the number of shared ASV, shared number of sequences
 #'   and diversity
 #' @importFrom rlang .data
 #' @export
 #' @examples
-#' data_fungi_low_high <- subset_samples(data_fungi, Height %in% c("Low", "High"))
-#' compare_pairs_pq(data_fungi_low_high, bifactor = "Height", merge_sample_by = "Height")
-#' compare_pairs_pq(data_fungi_low_high,
+#' data_fungi_mini_lh <- subset_samples(data_fungi_mini, Height %in% c("Low", "High"))
+#' compare_pairs_pq(data_fungi_mini_lh, bifactor = "Height", merge_sample_by = "Height")
+#' compare_pairs_pq(data_fungi_mini_lh,
 #'   bifactor = "Height",
 #'   merge_sample_by = "Height", modality = "Time"
 #' )
-compare_pairs_pq <- function(physeq = NULL,
-                             bifactor = NULL,
-                             modality = NULL,
-                             merge_sample_by = NULL,
-                             nb_min_seq = 0,
-                             veg_index = "shannon",
-                             na_remove = TRUE) {
+compare_pairs_pq <- function(
+  physeq = NULL,
+  bifactor = NULL,
+  modality = NULL,
+  merge_sample_by = NULL,
+  nb_min_seq = 0,
+  veg_index = "shannon",
+  na_remove = TRUE,
+  ...
+) {
   physeq <- taxa_as_columns(physeq)
 
   if (na_remove) {
@@ -150,7 +160,10 @@ compare_pairs_pq <- function(physeq = NULL,
     }
     physeq <- new_physeq
     if (!is.null(merge_sample_by)) {
-      new_physeq <- subset_samples_pq(physeq, !is.na(physeq@sam_data[[merge_sample_by]]))
+      new_physeq <- subset_samples_pq(
+        physeq,
+        !is.na(physeq@sam_data[[merge_sample_by]])
+      )
       if (nsamples(physeq) - nsamples(new_physeq) > 0) {
         message(paste0(
           nsamples(physeq) - nsamples(new_physeq),
@@ -161,7 +174,10 @@ compare_pairs_pq <- function(physeq = NULL,
     }
 
     if (!is.null(modality)) {
-      new_physeq <- subset_samples_pq(physeq, !is.na(physeq@sam_data[[modality]]))
+      new_physeq <- subset_samples_pq(
+        physeq,
+        !is.na(physeq@sam_data[[modality]])
+      )
       if (nsamples(physeq) - nsamples(new_physeq) > 0) {
         message(paste0(
           nsamples(physeq) - nsamples(new_physeq),
@@ -176,7 +192,11 @@ compare_pairs_pq <- function(physeq = NULL,
     if (is.null(modality)) {
       physeq <- merge_samples2(physeq, merge_sample_by)
     } else {
-      physeq@sam_data[["merge_sample_by___modality"]] <- paste0(physeq@sam_data[[merge_sample_by]], " - ", physeq@sam_data[[modality]])
+      physeq@sam_data[["merge_sample_by___modality"]] <- paste0(
+        physeq@sam_data[[merge_sample_by]],
+        " - ",
+        physeq@sam_data[[modality]]
+      )
       physeq <- merge_samples2(physeq, "merge_sample_by___modality")
     }
     physeq <- clean_pq(physeq)
@@ -204,35 +224,65 @@ compare_pairs_pq <- function(physeq = NULL,
   for (i in nmodality) {
     newphyseq <- physeq
     if (!is.null(modality)) {
-      new_DF <- newphyseq@sam_data[newphyseq@sam_data[[modality]] == i, ]
+      new_DF <- newphyseq@sam_data[
+        newphyseq@sam_data[[modality]] == i,
+        ,
+        drop = FALSE
+      ]
       sample_data(newphyseq) <- sample_data(new_DF)
     }
     if (nsamples(newphyseq) != 2) {
       res[[i]] <- rep(NA, 8)
-      warning("At least one case do not contain 2 samples, so NA were introduced.")
+      warning(
+        "At least one case do not contain 2 samples, so NA were introduced."
+      )
     } else {
       cond1 <- newphyseq@sam_data[[bifactor]] == lev1
       cond2 <- newphyseq@sam_data[[bifactor]] == lev2
       nb_first <- rowSums(newphyseq@otu_table[cond1, ] > nb_min_seq)
       nb_second <- rowSums(newphyseq@otu_table[cond2, ] > nb_min_seq)
-      nb_shared <- rowSums(newphyseq@otu_table[cond1, ] > nb_min_seq &
-        newphyseq@otu_table[cond2, ] > nb_min_seq)
+      nb_shared <- rowSums(
+        newphyseq@otu_table[cond1, ] > nb_min_seq &
+          newphyseq@otu_table[cond2, ] > nb_min_seq
+      )
 
-      div_first <- round(vegan::diversity(newphyseq@otu_table,
-        index = veg_index
-      )[cond1], 2)
-      div_second <- round(vegan::diversity(newphyseq@otu_table,
-        index = veg_index
-      )[cond2], 2)
+      all_div <- .compute_diversity_index(
+        as.data.frame(newphyseq@otu_table),
+        veg_index,
+        ...
+      )[[veg_index]]
+      div_first <- round(all_div[cond1], 2)
+      div_second <- round(all_div[cond2], 2)
 
-      nb_shared_seq <- sum(newphyseq@otu_table[, newphyseq@otu_table[cond1, ] > nb_min_seq &
-        newphyseq@otu_table[cond2, ] > nb_min_seq])
+      nb_shared_seq <- sum(newphyseq@otu_table[,
+        newphyseq@otu_table[cond1, ] > nb_min_seq &
+          newphyseq@otu_table[cond2, ] > nb_min_seq
+      ])
 
-      perc_seq_shared_lv1 <- round(100 * nb_shared_seq / sum(newphyseq@otu_table[, newphyseq@otu_table[cond1, ] > nb_min_seq]), 2)
+      perc_seq_shared_lv1 <- round(
+        100 *
+          nb_shared_seq /
+          sum(newphyseq@otu_table[, newphyseq@otu_table[cond1, ] > nb_min_seq]),
+        2
+      )
 
-      perc_seq_shared_lv2 <- round(100 * nb_shared_seq / sum(newphyseq@otu_table[, newphyseq@otu_table[cond2, ] > nb_min_seq]), 2)
+      perc_seq_shared_lv2 <- round(
+        100 *
+          nb_shared_seq /
+          sum(newphyseq@otu_table[, newphyseq@otu_table[cond2, ] > nb_min_seq]),
+        2
+      )
 
-      res[[i]] <- c(nb_first, nb_second, nb_shared, div_first, div_second, nb_shared_seq, perc_seq_shared_lv1, perc_seq_shared_lv2)
+      res[[i]] <- c(
+        nb_first,
+        nb_second,
+        nb_shared,
+        div_first,
+        div_second,
+        nb_shared_seq,
+        perc_seq_shared_lv1,
+        perc_seq_shared_lv2
+      )
     }
   }
 
@@ -240,15 +290,23 @@ compare_pairs_pq <- function(physeq = NULL,
   colnames(res_df_t) <- paste0("V", seq_len(ncol(res_df_t)))
   res_df <- as_tibble(res_df_t, .name_repair = c("minimal"))
 
-  res_df <- res_df %>%
-    mutate(percent_shared_lv1 = round(100 * .data$V3 /
-      .data$V1, 2)) %>%
-    mutate(percent_shared_lv2 = round(100 * .data$V3 /
-      .data$V2, 2)) %>%
-    mutate(ratio_nb_lv1_lv2 = round(.data$V1 /
-      .data$V2, 3)) %>%
-    mutate(ratio_div_lv1_lv2 = round(.data$V4 /
-      .data$V5, 3))
+  res_df <- res_df |>
+    mutate(percent_shared_lv1 = round(100 * .data$V3 / .data$V1, 2)) |>
+    mutate(percent_shared_lv2 = round(100 * .data$V3 / .data$V2, 2)) |>
+    mutate(
+      ratio_nb_lv1_lv2 = round(
+        .data$V1 /
+          .data$V2,
+        3
+      )
+    ) |>
+    mutate(
+      ratio_div_lv1_lv2 = round(
+        .data$V4 /
+          .data$V5,
+        3
+      )
+    )
 
   colnames(res_df) <- c(
     paste0("nb_ASV_", lev1),
@@ -266,14 +324,13 @@ compare_pairs_pq <- function(physeq = NULL,
   )
 
   res_df$modality <- names(res)
-  res_df <- res_df %>%
-    dplyr::filter(!is.na(nb_shared)) %>%
+  res_df <- res_df |>
+    dplyr::filter(!is.na(nb_shared)) |>
     relocate(modality)
 
   return(res_df)
 }
 ################################################################################
-
 
 ################################################################################
 #' Create a visualization table to describe taxa distribution across a modality
@@ -431,17 +488,19 @@ compare_pairs_pq <- function(physeq = NULL,
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `formattable::formattable()` if you
 #'   use this function.
-formattable_pq <- function(physeq,
-                           modality,
-                           taxonomic_levels = c("Phylum", "Order", "Family", "Genus"),
-                           min_nb_seq_taxa = 1000,
-                           log10trans = FALSE,
-                           void_style = FALSE,
-                           lev_col_taxa = "Phylum",
-                           arrange_by = "nb_seq",
-                           descending_order = TRUE,
-                           na_remove = TRUE,
-                           formattable_args = NULL) {
+formattable_pq <- function(
+  physeq,
+  modality,
+  taxonomic_levels = c("Phylum", "Order", "Family", "Genus"),
+  min_nb_seq_taxa = 1000,
+  log10trans = FALSE,
+  void_style = FALSE,
+  lev_col_taxa = "Phylum",
+  arrange_by = "nb_seq",
+  descending_order = TRUE,
+  na_remove = TRUE,
+  formattable_args = NULL
+) {
   verify_pq(physeq)
 
   if (na_remove) {
@@ -455,14 +514,17 @@ formattable_pq <- function(physeq,
     }
   }
   new_physeq2 <-
-    clean_pq(subset_taxa_pq(new_physeq, taxa_sums(new_physeq) > min_nb_seq_taxa))
+    clean_pq(subset_taxa_pq(
+      new_physeq,
+      taxa_sums(new_physeq) > min_nb_seq_taxa
+    ))
 
   psm <- psmelt(new_physeq2)
 
   if (log10trans) {
-    psm2 <- psm %>%
-      group_by_at(c(modality, "OTU", taxonomic_levels)) %>%
-      summarise(Ab = round(log10(1 + sum(Abundance)), 2)) %>%
+    psm2 <- psm |>
+      group_by_at(c(modality, "OTU", taxonomic_levels)) |>
+      summarise(Ab = round(log10(1 + sum(Abundance)), 2)) |>
       tidyr::spread(modality, Ab)
 
     psm3 <-
@@ -479,9 +541,9 @@ formattable_pq <- function(physeq,
         )
       )
   } else {
-    psm2 <- psm %>%
-      group_by_at(c(modality, "OTU", taxonomic_levels)) %>%
-      summarise(Ab = sum(Abundance)) %>%
+    psm2 <- psm |>
+      group_by_at(c(modality, "OTU", taxonomic_levels)) |>
+      summarise(Ab = sum(Abundance)) |>
       tidyr::spread(modality, Ab)
 
     psm3 <-
@@ -500,9 +562,9 @@ formattable_pq <- function(physeq,
   }
   if (!is.null(arrange_by)) {
     if (descending_order) {
-      psm3 <- psm3 %>% arrange(desc(.data[[arrange_by]]))
+      psm3 <- psm3 |> arrange(desc(.data[[arrange_by]]))
     } else {
-      psm3 <- psm3 %>% arrange(.data[[arrange_by]])
+      psm3 <- psm3 |> arrange(.data[[arrange_by]])
     }
   }
   if (void_style) {
@@ -522,9 +584,11 @@ formattable_pq <- function(physeq,
           ),
           `padding-right` = "2px"
         ),
-        formattable::area(col = levels(as.factor(
-          new_physeq2@sam_data[[modality]]
-        ))) ~ formattable::formatter(
+        formattable::area(
+          col = levels(as.factor(
+            new_physeq2@sam_data[[modality]]
+          ))
+        ) ~ formattable::formatter(
           "span",
           style = x ~ formattable::style(
             "font-size" = "80%",
@@ -532,10 +596,21 @@ formattable_pq <- function(physeq,
             direction = "rtl",
             `border-radius` = "0px",
             `padding-right` = "2px",
-            `background-color` = ifelse(x == 0, "white", formattable::csscolor(
-              formattable::gradient(as.numeric(x), transp("#1a9641ff"), "#1a9641ff")
-            )),
-            width = formattable::percent(formattable::proportion(as.numeric(x), na.rm = TRUE))
+            `background-color` = ifelse(
+              x == 0,
+              "white",
+              formattable::csscolor(
+                formattable::gradient(
+                  as.numeric(x),
+                  transp("#1a9641ff"),
+                  "#1a9641ff"
+                )
+              )
+            ),
+            width = formattable::percent(formattable::proportion(
+              as.numeric(x),
+              na.rm = TRUE
+            ))
           )
         ),
         Family = formattable::formatter(
@@ -552,11 +627,21 @@ formattable_pq <- function(physeq,
           style = ~ formattable::style(
             "display" = "block",
             `border-radius` = "5px",
-            `background-color` = formattable::csscolor(transp(fac2col(Order, col.pal = viridis::viridis_pal()), 0.7))
+            `background-color` = formattable::csscolor(transp(
+              fac2col(Order, col.pal = viridis::viridis_pal()),
+              0.7
+            ))
           ),
           `padding-right` = "2px"
         ),
-        Genus = formattable::formatter("span", style = x ~ formattable::style("font-style" = "italic")),
+        Genus = formattable::formatter(
+          "span",
+          style = x ~ formattable::style("font-style" = "bold")
+        ),
+        Species = formattable::formatter(
+          "span",
+          style = x ~ formattable::style("font-style" = "italic")
+        ),
         nb_seq = formattable::formatter(
           "span",
           style = x ~ formattable::style(
@@ -565,10 +650,21 @@ formattable_pq <- function(physeq,
             direction = "rtl",
             `border-radius` = "0px",
             `padding-right` = "5px",
-            `background-color` = ifelse(x == 0, "white", formattable::csscolor(
-              formattable::gradient(as.numeric(x), transp("#4d4888ff"), "#4d4888ff")
-            )),
-            width = formattable::percent(formattable::proportion(as.numeric(x), na.rm = TRUE))
+            `background-color` = ifelse(
+              x == 0,
+              "white",
+              formattable::csscolor(
+                formattable::gradient(
+                  as.numeric(x),
+                  transp("#4d4888ff"),
+                  "#4d4888ff"
+                )
+              )
+            ),
+            width = formattable::percent(formattable::proportion(
+              as.numeric(x),
+              na.rm = TRUE
+            ))
           )
         ),
         proportion_samp = formattable::formatter(
@@ -579,9 +675,17 @@ formattable_pq <- function(physeq,
             direction = "rtl",
             `border-radius` = "0px",
             `padding-right` = "5px",
-            `background-color` = ifelse(x == 0, "white", formattable::csscolor(
-              formattable::gradient(as.numeric(x), transp("#1f78b4ff"), "#1f78b4ff")
-            )),
+            `background-color` = ifelse(
+              x == 0,
+              "white",
+              formattable::csscolor(
+                formattable::gradient(
+                  as.numeric(x),
+                  transp("#1f78b4ff"),
+                  "#1f78b4ff"
+                )
+              )
+            ),
             width = formattable::percent(as.numeric(x))
           )
         ),

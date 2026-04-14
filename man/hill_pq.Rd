@@ -8,7 +8,8 @@ hill_pq(
   physeq,
   fact = NULL,
   variable = NULL,
-  hill_scales = c(0, 1, 2),
+  q = c(0, 1, 2),
+  hill_scales = lifecycle::deprecated(),
   color_fac = NA,
   letters = FALSE,
   add_points = FALSE,
@@ -18,7 +19,8 @@ hill_pq(
   plot_with_tuckey = TRUE,
   correction_for_sample_size = TRUE,
   na_remove = TRUE,
-  vioplot = FALSE
+  vioplot = FALSE,
+  ...
 )
 }
 \arguments{
@@ -30,11 +32,13 @@ the \code{sam_data} slot of the physeq object.}
 
 \item{variable}{: Alias for factor. Kept only for backward compatibility.}
 
-\item{hill_scales}{(a vector of integer) The list of q values to compute
-the hill number H^q. If Null, no hill number are computed. Default value
-compute the Hill number 0 (Species richness), the Hill number 1
-(exponential of Shannon Index) and the Hill number 2 (inverse of Simpson
-Index).}
+\item{q}{(vector) Hill diversity orders to compute. Default computes
+Hill number 0 (species richness), 1 (exponential of Shannon index) and
+2 (inverse of Simpson index). Hill numbers are more appropriate in DNA
+metabarcoding studies when \code{q > 0} (Alberdi & Gilbert, 2019;
+Calderón-Sanou et al., 2019).}
+
+\item{hill_scales}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{q} instead.}
 
 \item{color_fac}{(optional): The variable to color the barplot. For ex.
 same as fact. Not very useful because ggplot2 plot colors can be
@@ -82,6 +86,9 @@ letters = TRUE}
 
 \item{vioplot}{(logical, default FALSE) Do we plot violin plot instead of
 boxplot ?}
+
+\item{...}{Additional arguments passed to \code{\link[=divent_hill_matrix_pq]{divent_hill_matrix_pq()}} and
+hence to \code{\link[divent:div_hill]{divent::div_hill()}} (e.g. \code{estimator = "naive"}).}
 }
 \value{
 Either an unique ggplot2 object (if one_plot is TRUE) or
@@ -118,7 +125,7 @@ computed.
 }
 \examples{
 
-p <- hill_pq(data_fungi_mini, "Height", hill_scales = 1:2)
+p <- hill_pq(data_fungi_mini, "Height", q = 1:2)
 p_h1 <- p[[1]] + theme(legend.position = "none")
 p_h2 <- p[[2]] + theme(legend.position = "none")
 multiplot(plotlist = list(p_h1, p_h2, p[[3]]), cols = 4)
@@ -132,17 +139,22 @@ if (requireNamespace("multcompView")) {
   if (requireNamespace("patchwork")) {
     patchwork::wrap_plots(p2, guides = "collect")
   }
-  # Artificially modify data_fungi to force alpha-diversity effect
-  data_fungi_modif <- clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height)))
-  data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] <-
-    data_fungi_modif@otu_table[data_fungi_modif@sam_data$Height == "High", ] +
-    sample(c(rep(0, ntaxa(data_fungi_modif) / 2), rep(100, ntaxa(data_fungi_modif) / 2)))
-  p3 <- hill_pq(data_fungi_modif, "Height",
+  p3 <- hill_pq(data_fungi, "Height",
     letters = TRUE, vioplot = TRUE,
     add_points = TRUE
   )
 }
 }
+}
+\references{
+Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of
+Hill numbers to DNA-based diversity analyses. \emph{Molecular Ecology Resources}.
+\doi{10.1111/1755-0998.13014}
+
+Calderón-Sanou, I., Münkemüller, T., Boyer, F., Zinger, L., & Thuiller, W.
+(2019). From environmental DNA sequences to ecological conclusions: How
+strong is the influence of methodological choices? \emph{Journal of Biogeography},
+47. \doi{10.1111/jbi.13681}
 }
 \seealso{
 \code{\link[=psmelt_samples_pq]{psmelt_samples_pq()}} and \code{\link[=ggbetween_pq]{ggbetween_pq()}}

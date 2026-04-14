@@ -1,0 +1,47 @@
+# Verify that vsearch functions work on Windows via install_vsearch()
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'R/vsearch.R'
+      - 'tests/testthat/test_vsearch.R'
+
+name: test-vsearch-windows
+
+jobs:
+  test-vsearch-windows:
+    runs-on: windows-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::testthat, any::jsonlite
+          needs: check
+
+      - name: Install MiscMetabar
+        run: pak::local_install(".", upgrade = FALSE)
+        shell: Rscript {0}
+
+      - name: Install vsearch via MiscMetabar
+        run: |
+          library(MiscMetabar)
+          MiscMetabar::install_vsearch()
+          MiscMetabar::is_vsearch_installed()
+        shell: Rscript {0}
+
+      - name: Run vsearch tests
+        run: |
+          testthat::test_file(
+            "tests/testthat/test_vsearch.R",
+            package = "MiscMetabar",
+            reporter = testthat::ProgressReporter$new(show_praise = FALSE)
+          )
+        shell: Rscript {0}

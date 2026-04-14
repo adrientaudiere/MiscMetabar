@@ -9,7 +9,7 @@ assign_vsearch_lca(
   ref_fasta = NULL,
   seq2search = NULL,
   behavior = c("return_matrix", "add_to_phyloseq", "return_cmd"),
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   clean_pq = TRUE,
   taxa_ranks = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
   nproc = 1,
@@ -21,7 +21,7 @@ assign_vsearch_lca(
   maxaccepts = 0,
   keep_temporary_files = FALSE,
   verbose = TRUE,
-  temporary_fasta_file = "temp.fasta",
+  temporary_fasta_file = paste0(tempdir(), "/temp.fasta"),
   cmd_args = "",
   too_few = "align_start",
   vote_algorithm = NULL,
@@ -123,16 +123,16 @@ See Vsearch Manual for parameter \code{--maxaccepts}}
 
 \item{keep_temporary_files}{(logical, default: FALSE) Do we keep temporary files?
 \itemize{
-\item temporary_fasta_file (default "temp.fasta") : the fasta file from physeq or
-seq2search
+\item temporary_fasta_file (default in \code{tempdir()}) : the fasta file from physeq
+or seq2search
 \item "out_lca.txt" : see Vsearch Manual for parameter --lcaout
 \item "userout.txt" : see Vsearch Manual for parameter --userout
 }}
 
 \item{verbose}{(logical). If TRUE, print additional information.}
 
-\item{temporary_fasta_file}{Name of the temporary fasta file. Only useful
-with keep_temporary_files = TRUE.}
+\item{temporary_fasta_file}{The path of a temporary fasta file
+(default in \code{tempdir()}).}
 
 \item{cmd_args}{Additional arguments passed on to vsearch usearch_global cmd.}
 
@@ -199,7 +199,7 @@ data_fungi_mini_new <- assign_vsearch_lca(data_fungi_mini,
 
 data_fungi_mini_new2 <- assign_vsearch_lca(data_fungi_mini,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
-  id = 0.8, behavior = "add_to_phyloseq", top_hits_only = FALSE
+  id = 0.6, behavior = "add_to_phyloseq", top_hits_only = FALSE
 )
 
 data_fungi_mini_new3 <- assign_vsearch_lca(data_fungi_mini,

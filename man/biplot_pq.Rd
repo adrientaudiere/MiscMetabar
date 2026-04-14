@@ -15,7 +15,7 @@ biplot_pq(
   left_name = NULL,
   left_name_col = "#4B3E1E",
   left_fill = "#4B3E1E",
-  left_col = "#f3f2d9",
+  left_col = "#4B3E1E",
   right_name = NULL,
   right_name_col = "#1d2949",
   right_fill = "#1d2949",
@@ -28,6 +28,11 @@ biplot_pq(
   y_names = NA,
   ylim_modif = c(1, 1),
   nb_samples_info = TRUE,
+  split_by_sample = FALSE,
+  sample_border_col = "#d4d0acff",
+  sample_border_width = 0.3,
+  color_rank = NULL,
+  taxa_names_rank = NULL,
   plotly_version = FALSE,
   ...
 )
@@ -97,6 +102,30 @@ of ylim. If one value is set, this value is used for both limits.}
 \item{nb_samples_info}{(default: TRUE, logical) if TRUE and merge_sample_by is set,
 add the number of samples merged for both levels.}
 
+\item{split_by_sample}{(default: FALSE, logical) if TRUE and
+\code{merge_sample_by} is set, the bars are not merged but stacked by sample,
+with borders between segments so that the distribution of sequences
+across samples is visible. The border color and width are controlled by
+\code{sample_border_col} and \code{sample_border_width}.}
+
+\item{sample_border_col}{(default: "white") Color of the border between
+sample segments when \code{split_by_sample = TRUE}.}
+
+\item{sample_border_width}{(default: 0.3) Width of the border between
+sample segments when \code{split_by_sample = TRUE}.}
+
+\item{color_rank}{(default: NULL) Name of a taxonomic rank in \code{tax_table(physeq)}
+to use for coloring bars. When NULL (default), bars are colored by sample
+modality using \code{left_fill} and \code{right_fill}. When set (e.g. \code{"Class"}),
+each bar is colored according to its taxonomic assignment at that rank
+and the \code{left_fill}/\code{right_fill} color parameters are ignored.}
+
+\item{taxa_names_rank}{(default: NULL) Name of a taxonomic rank in
+\code{tax_table(physeq)} to use as labels on the taxa axis instead of
+\code{taxa_names()}. When NULL (default), \code{taxa_names()} are used. When set
+(e.g. \code{"Genus"}), the genus name is displayed. OTUs sharing the same
+label at this rank will appear as a single merged bar.}
+
 \item{plotly_version}{If TRUE, use \code{\link[plotly:ggplotly]{plotly::ggplotly()}} to return
 a interactive ggplot.}
 
@@ -117,6 +146,15 @@ Graphical representation of distribution of taxa across two samples.
 \examples{
 data_fungi_2Height <- subset_samples(data_fungi_mini, Height \%in\% c("Low", "High"))
 biplot_pq(data_fungi_2Height, "Height", merge_sample_by = "Height")
+biplot_pq(data_fungi_2Height, "Height",
+  merge_sample_by = "Height",
+  split_by_sample = TRUE
+)
+biplot_pq(data_fungi_2Height, "Height",
+  merge_sample_by = "Height",
+  color_rank = "Order",
+  taxa_names_rank = "Genus"
+)
 }
 \author{
 Adrien Taudière

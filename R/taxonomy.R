@@ -203,7 +203,7 @@ resolve_vector_ranks <- function(
   second_method <- match.arg(second_method)
 
   if (sum(is.na(vec)) == length(vec)) {
-    res <- NA
+    res <- NA_character_
     return(res)
   }
 
@@ -236,16 +236,16 @@ resolve_vector_ranks <- function(
       vec <- as.vector(na.omit(vec))
     }
     nval <- length(vec)
-    higher_val <- sort(table(vec), decreasing = T)[1]
+    higher_val <- sort(table(vec), decreasing = TRUE)[1]
     ratio_to_win <- ifelse(
       nb_agree_threshold > nval / 2,
-      (nb_agree_threshold - 1) / nval ,
+      (nb_agree_threshold - 1) / nval,
       0.5
     )
     if (higher_val / nval > ratio_to_win) {
       res <- names(higher_val)
     } else {
-      res <- NA
+      res <- NA_character_
     }
   } else if (method == "rel_majority") {
     if (!strict) {
@@ -253,15 +253,15 @@ resolve_vector_ranks <- function(
     }
     nval <- sum(table(vec, useNA = "ifany") == max(table(vec, useNA = "ifany")))
     if (
-      sum(sort(table(vec, useNA = "ifany"), decreasing = T)[1:nval]) >=
+      sum(sort(table(vec, useNA = "ifany"), decreasing = TRUE)[1:nval]) >=
         nb_agree_threshold
     ) {
       res <- paste0(
-        names(sort(table(vec, useNA = "ifany"), decreasing = T)[1:nval]),
+        names(sort(table(vec, useNA = "ifany"), decreasing = TRUE)[1:nval]),
         collapse = collapse_string
       )
     } else {
-      res <- NA
+      res <- NA_character_
     }
   } else if (method == "unanimity") {
     if (!strict) {
@@ -270,17 +270,126 @@ resolve_vector_ranks <- function(
     if (length(unique(vec)) == 1) {
       res <- unique(vec)
     } else {
-      res <- NA
+      res <- NA_character_
     }
   }
   if (
     replace_collapsed_rank_by_NA &&
       sum(grepl(collapse_string, res)) > 0
   ) {
-    res <- NA
+    res <- NA_character_
   }
 
   return(res)
+}
+################################################################################
+
+################################################################################
+# Internal: detect taxonomy format from FASTA file headers
+#
+# Reads the first `n_headers` FASTA headers and detects the taxonomy format
+# using simple pattern matching. Returns one of "sintax", "unite",
+# "greengenes2", or "unknown".
+#
+# @param file Path to a FASTA file (plain or gzipped).
+# @param n_headers Number of headers to inspect (default 20).
+# @return A single character string: the detected format.
+# @noRd
+.detect_tax_format <- function(file, n_headers = 20L) {
+  con <- if (grepl("\\.gz$", file)) gzfile(file, "r") else file(file, "r")
+  on.exit(close(con))
+
+  headers <- character(0)
+  while (length(headers) < n_headers) {
+    line <- readLines(con, n = 1L)
+    if (length(line) == 0) {
+      break
+    }
+    if (startsWith(line, ">")) {
+      headers <- c(headers, line)
+    }
+  }
+
+  if (length(headers) == 0) {
+    return("unknown")
+  }
+
+  sample_text <- paste(headers, collapse = " ")
+
+  # SINTAX: headers contain "tax=" followed by single-letter:value pairs
+  if (grepl("tax=", sample_text, fixed = TRUE)) {
+    return("sintax")
+  }
+
+  # Greengenes2: uses d__ for domain (not k__)
+  if (grepl("d__", sample_text, fixed = TRUE)) {
+    return("greengenes2")
+  }
+
+  # UNITE: uses k__ for kingdom
+  if (grepl("k__", sample_text, fixed = TRUE)) {
+    return("unite")
+  }
+
+  "unknown"
+}
+
+################################################################################
+# Internal: validate that a reference FASTA has the expected taxonomy format
+#
+# Checks the detected format against the expected one. If mismatched, stops
+# with an informative error suggesting the appropriate dbpq conversion function.
+#
+# @param ref_fasta Path to the reference FASTA file.
+# @param expected_format One of "sintax" or "dada2".
+# @param caller Name of the calling function (for error messages).
+# @return Invisible NULL (called for side effects).
+# @noRd
+.validate_ref_format <- function(ref_fasta, expected_format, caller) {
+  if (!is.character(ref_fasta)) {
+    return(invisible(NULL))
+  }
+  detected <- .detect_tax_format(ref_fasta[[1]])
+
+  if (detected == "unknown") {
+    # Cannot determine — could be dada2 positional or genuinely unknown
+    return(invisible(NULL))
+  }
+
+  if (expected_format == "dada2") {
+    # dada2 format is positional (no prefixes), so detect_tax_format returns
+    # "unknown" for it. If we detect a prefix-based format, it's wrong.
+    dbpq_call <- paste0(
+      "dbpq::format2dada2(fasta_db = \"",
+      ref_fasta,
+      "\")"
+    )
+    cli::cli_abort(c(
+      "!" = "{caller}() expects a reference database in {.strong dada2} format
+             (unprefixed, semicolon-delimited ranks).",
+      "x" = "Detected {.strong {detected}} format in {.file {ref_fasta}}.",
+      "i" = "Convert with: {.code {dbpq_call}}"
+    ))
+  }
+
+  if (expected_format == "sintax") {
+    if (detected == "sintax") {
+      return(invisible(NULL))
+    }
+    dbpq_call <- paste0(
+      "dbpq::format2sintax(fasta_db = \"",
+      ref_fasta,
+      "\")"
+    )
+    cli::cli_abort(c(
+      "!" = "{caller}() expects a reference database in {.strong SINTAX} format
+             (headers with `;tax=` followed by rank:value pairs).",
+      "x" = "Detected {.strong {detected}} format in {.file {ref_fasta}}.",
+      "i" = "Convert with: {.code {dbpq_call}}"
+    ))
+  }
+
+  invisible(NULL)
 }
 ################################################################################
 
@@ -319,6 +428,13 @@ resolve_vector_ranks <- function(
 #' @author Adrien Taudière
 #' @seealso [format2dada2_species()], [format2dada2()]
 #' @return Either an object of class DNAStringSet or a vector of reformated names
+#' @examples
+#' \donttest{
+#' f <- system.file("extdata", "mini_UNITE_fungi.fasta.gz",
+#'   package = "MiscMetabar"
+#' )
+#' format2sintax(fasta_db = f)
+#' }
 format2sintax <- function(
   fasta_db = NULL,
   taxnames = NULL,
@@ -331,41 +447,21 @@ format2sintax <- function(
   } else if (!is.null(taxnames) && !is.null(fasta_db)) {
     stop("You must specify either taxnames or fasta_db, not both.")
   } else if (!is.null(taxnames)) {
-    new_names <- taxnames %>%
-      {
-        gsub(";", ",", .)
-      } %>%
-      {
-        gsub(pattern_k, paste0(";", pattern_sintax), .)
-      } %>%
-      {
-        gsub("__", ":", .)
-      } %>%
-      {
-        gsub(";;", ";", .)
-      } %>%
-      {
-        gsub(paste0(",", pattern_sintax), paste0(";", pattern_sintax), .)
-      }
+    new_names <- taxnames |>
+      (\(x) gsub(";", ",", x))() |>
+      (\(x) gsub(pattern_tax, paste0(";", pattern_sintax), x))() |>
+      (\(x) gsub("__", ":", x))() |>
+      (\(x) gsub(";;", ";", x))() |>
+      (\(x) gsub(paste0(",", pattern_sintax), paste0(";", pattern_sintax), x))()
     return(new_names)
   } else if (!is.null(fasta_db)) {
     dna <- Biostrings::readDNAStringSet(fasta_db)
-    new_names <- names(dna) %>%
-      {
-        gsub(";", ",", .)
-      } %>%
-      {
-        gsub(pattern_tax, paste0(";", pattern_sintax), .)
-      } %>%
-      {
-        gsub("__", ":", .)
-      } %>%
-      {
-        gsub(";;", ";", .)
-      } %>%
-      {
-        gsub(paste0(",", pattern_sintax), paste0(";", pattern_sintax), .)
-      }
+    new_names <- names(dna) |>
+      (\(x) gsub(";", ",", x))() |>
+      (\(x) gsub(pattern_tax, paste0(";", pattern_sintax), x))() |>
+      (\(x) gsub("__", ":", x))() |>
+      (\(x) gsub(";;", ";", x))() |>
+      (\(x) gsub(paste0(",", pattern_sintax), paste0(";", pattern_sintax), x))()
 
     names(dna) <- new_names
     if (!is.null(output_path)) {
@@ -398,6 +494,13 @@ format2sintax <- function(
 #' @author Adrien Taudière
 #' @return Either an object of class DNAStringSet or a vector of reformated names
 #' @seealso [format2dada2_species()], [format2sintax()]
+#' @examples
+#' \donttest{
+#' f <- system.file("extdata", "mini_UNITE_fungi.fasta.gz",
+#'   package = "MiscMetabar"
+#' )
+#' format2dada2(fasta_db = f, from_sintax = FALSE)
+#' }
 
 format2dada2 <- function(
   fasta_db = NULL,
@@ -421,13 +524,9 @@ format2dada2 <- function(
       stringr::str_split_fixed(";tax=", n = 2) |>
       as_tibble(.name_repair = c("universal")) |>
       tidyr::unite(taxnames, c(...2, ...1), sep = ";") |>
-      pull(taxnames) %>%
-      {
-        gsub(":", "__", .)
-      } %>%
-      {
-        gsub(",", ";", .)
-      }
+      pull(taxnames) |>
+      (\(x) gsub(":", "__", x))() |>
+      (\(x) gsub(",", ";", x))()
 
     if (!is.null(pattern_to_remove)) {
       new_names <- new_names |>
@@ -440,7 +539,7 @@ format2dada2 <- function(
     if (from_sintax) {
       new_names <- names(dna)
     } else {
-      new_names <- format2sintax(names(dna), ...)
+      new_names <- format2sintax(taxnames = names(dna), ...)
     }
 
     # Add the good number of level to each line
@@ -503,6 +602,13 @@ format2dada2 <- function(
 #' @author Adrien Taudière
 #' @return Either an object of class DNAStringSet or a vector of reformated names
 #' @seealso [format2dada2_species()], [format2sintax()]
+#' @examples
+#' \donttest{
+#' f <- system.file("extdata", "mini_UNITE_fungi.fasta.gz",
+#'   package = "MiscMetabar"
+#' )
+#' format2dada2_species(fasta_db = f)
+#' }
 #'
 format2dada2_species <- function(
   fasta_db = NULL,
@@ -518,16 +624,16 @@ format2dada2_species <- function(
   } else if (!is.null(taxnames)) {
     if (from_sintax) {
       new_names <- paste(
-        stringr::str_extract(taxnames, "^(.*?);tax=", group = T),
-        stringr::str_extract(taxnames, "g:(.*?),", group = T),
-        stringr::str_extract(taxnames, "s:(.*?)$", group = T),
+        stringr::str_extract(taxnames, "^(.*?);tax=", group = TRUE),
+        stringr::str_extract(taxnames, "g:(.*?),", group = TRUE),
+        stringr::str_extract(taxnames, "s:(.*?)$", group = TRUE),
         sep = " "
       )
     } else {
       new_names <- paste(
-        stringr::str_extract(taxnames, "^(.*?)k__", group = T),
-        stringr::str_extract(taxnames, "g__(.*?);", group = T),
-        stringr::str_extract(taxnames, "s__(.*?)$", group = T),
+        stringr::str_extract(taxnames, "^(.*?)k__", group = TRUE),
+        stringr::str_extract(taxnames, "g__(.*?);", group = TRUE),
+        stringr::str_extract(taxnames, "s__(.*?)$", group = TRUE),
         sep = " "
       )
     }
@@ -536,20 +642,21 @@ format2dada2_species <- function(
     dna <- Biostrings::readDNAStringSet(fasta_db)
     taxnames <- names(dna)
     if (from_sintax) {
-      id <- stringr::str_extract(taxnames, "^(.*?);tax=", group = T)
+      id <- stringr::str_extract(taxnames, "^(.*?);tax=", group = TRUE)
       id[is.na(id)] <- taxnames[is.na(id)]
-      genus <- stringr::str_extract(taxnames, "g:(.*?),", group = T)
-      species <- stringr::str_extract(taxnames, "s:(.*?)$", group = T)
+      genus <- stringr::str_extract(taxnames, "g:(.*?),", group = TRUE)
+      species <- stringr::str_extract(taxnames, "s:(.*?)$", group = TRUE)
     } else {
-      id <- stringr::str_extract(taxnames, "^(.*?)k__", group = T)
+      id <- stringr::str_extract(taxnames, "^(.*?)k__", group = TRUE)
       id[is.na(id)] <- taxnames[is.na(id)]
-      genus <- stringr::str_extract(taxnames, "g__(.*?);", group = T)
-      species <- stringr::str_extract(taxnames, "s__(.*?)$", group = T)
+      genus <- stringr::str_extract(taxnames, "g__(.*?);", group = TRUE)
+      species <- stringr::str_extract(taxnames, "s__(.*?)$", group = TRUE)
     }
     new_names <- paste(id, genus, species, sep = " ")
 
+    bad_idx <- which(is.na(new_names))
+    new_names[bad_idx] <- taxnames[bad_idx]
     names(dna) <- new_names
-    names(dna)[is.na(names(dna))] <- taxnames[names(dna)]
 
     if (!is.null(output_path)) {
       Biostrings::writeXStringSet(dna, filepath = output_path)

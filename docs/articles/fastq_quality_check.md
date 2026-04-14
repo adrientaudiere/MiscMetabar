@@ -1,7 +1,10 @@
 # fastq_quality_check
 
 The [fastqcr](https://github.com/kassambara/fastqcr) package allow to
-check fastq quality and build reports about multiple fastq files.
+check fastq quality and build reports about multiple fastq files. We
+also present here how to plot base quality using the
+[Rsearch](https://cassandrahjo.github.io/Rsearch/reference/plot_base_quality.html)
+package.
 
 ## Load the necessary packages
 
@@ -55,6 +58,22 @@ fastqcr::qc_problems(qc)
 fastqcr::qc_stats(qc)
 summary(qc)
 ```
+
+## Plot base quality with Rsearch package
+
+``` r
+library(Rsearch)
+
+fastq_dir <- list_fastq_files(system.file("/extdata", package = "MiscMetabar"))
+
+qual_plots <- plot_base_quality(
+  fastq_input = fastq_dir$fnfs,
+  reverse = fastq_dir$reverse
+)
+print(qual_plots)
+```
+
+![](fastq_quality_check_files/figure-html/unnamed-chunk-5-1.png)
 
 ## Build reports
 

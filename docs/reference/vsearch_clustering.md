@@ -12,7 +12,7 @@ vsearch_clustering(
   dna_seq = NULL,
   nproc = 1,
   id = 0.97,
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   tax_adjust = 0,
   rank_propagation = FALSE,
   vsearch_cluster_method = "--cluster_size",
@@ -67,19 +67,13 @@ vsearch_clustering(
 
   (default: "–cluster_size) See other possible methods in the [vsearch
   manual](https://github.com/torognes/vsearch) (e.g. `--cluster_size` or
-  `--cluster_smallmem`)
+  `--cluster_fast`)
 
   - `--cluster_fast` : Clusterize the fasta sequences in filename,
     automatically sort by decreasing sequence length beforehand.
 
   - `--cluster_size` : Clusterize the fasta sequences in filename,
     automatically sort by decreasing sequence abundance beforehand.
-
-  - `--cluster_smallmem` : Clusterize the fasta sequences in filename
-    without automatically modifying their order beforehand. Sequence are
-    expected to be sorted by decreasing sequence length, unless
-    *–usersort* is used. In that case you may set `vsearch_args` to
-    vsearch_args = "–strand both –usersort"
 
 - vsearch_args:
 

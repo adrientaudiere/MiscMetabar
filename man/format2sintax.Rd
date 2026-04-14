@@ -51,6 +51,14 @@ Example:
 
 \>X80725_S000004313;tax=d:Bacteria,p:Proteobacteria,c:Gammaproteobacteria,o:Enterobacteriales,f:Enterobacteriaceae,g:Escherichia/Shigella,s:Escherichia_coli,t:str._K-12_substr._MG1655
 }
+\examples{
+\donttest{
+f <- system.file("extdata", "mini_UNITE_fungi.fasta.gz",
+  package = "MiscMetabar"
+)
+format2sintax(fasta_db = f)
+}
+}
 \seealso{
 \code{\link[=format2dada2_species]{format2dada2_species()}}, \code{\link[=format2dada2]{format2dada2()}}
 }

@@ -9,7 +9,7 @@ assign_sintax(
   ref_fasta = NULL,
   seq2search = NULL,
   behavior = c("return_matrix", "add_to_phyloseq", "return_cmd"),
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   clean_pq = TRUE,
   nproc = 1,
   suffix = "",
@@ -17,7 +17,7 @@ assign_sintax(
   min_bootstrap = 0.5,
   keep_temporary_files = FALSE,
   verbose = FALSE,
-  temporary_fasta_file = "temp.fasta",
+  temporary_fasta_file = paste0(tempdir(), "/temp.fasta"),
   cmd_args = "--sintax_random",
   too_few = "align_start",
   too_many = "drop"
@@ -76,14 +76,15 @@ below the min_bootstrap value, the taxonomy information is set to NA.}
 
 \item{keep_temporary_files}{(logical, default: FALSE) Do we keep temporary files?
 \itemize{
-\item temporary_fasta_file (default "temp.fasta") : the fasta file from physeq
+\item temporary_fasta_file (default in \code{tempdir()}) : the fasta file from physeq
 or seq2search
 \item "output_taxo_vs.txt" : see Vsearch Manual for parameter --tabbedout
 }}
 
 \item{verbose}{(logical). If TRUE, print additional information.}
 
-\item{temporary_fasta_file}{The name of a temporary_fasta_file (default "temp.fasta")}
+\item{temporary_fasta_file}{The path of a temporary fasta file
+(default in \code{tempdir()})}
 
 \item{cmd_args}{Additional arguments passed on to vsearch sintax cmd.
 By default cmd_args is equal to "--sintax_random" as recommended by
@@ -139,8 +140,6 @@ left_join(
       "Order", "Family", "Genus", "Species"
     )
   )) |>
-  # mutate(valuerank = forcats::fct_reorder(valuerank,
-  #   as.integer(name), .desc = TRUE)) |>
   ggplot(aes(valuebootstrap,
     valuerank,
     fill = name

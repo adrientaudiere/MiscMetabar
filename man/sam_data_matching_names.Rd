@@ -55,6 +55,15 @@ A list of two objects :
 
 Useful for targets bioinformatic pipeline.
 }
+\examples{
+\dontrun{
+sam_data_matching_names(
+  path_sam_data = "path/to/sample_data.csv",
+  sample_col_name = "SampleID",
+  path_raw_seq = "path/to/fastq_folder/"
+)
+}
+}
 \author{
 Adrien Taudière
 }

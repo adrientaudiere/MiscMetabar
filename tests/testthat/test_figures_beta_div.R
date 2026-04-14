@@ -71,15 +71,27 @@ test_that("graph_test_pq works", {
   if (requireNamespace("phyloseqGraphTest")) {
     expect_silent(graph_test_pq(data_fungi_mini, fact = "Tree_name"))
     skip_on_cran()
-    expect_silent(graph_test_pq(data_fungi_mini, fact = "Tree_name", na_remove = TRUE))
-    expect_silent(graph_test_pq(data_fungi_mini, fact = "Tree_name", return_plot = FALSE))
+    expect_silent(graph_test_pq(
+      data_fungi_mini,
+      fact = "Tree_name",
+      na_remove = TRUE
+    ))
+    expect_silent(graph_test_pq(
+      data_fungi_mini,
+      fact = "Tree_name",
+      return_plot = FALSE
+    ))
     expect_silent(graph_test_pq(
       subset_samples(data_fungi_mini, !is.na(data_fungi_mini@sam_data$Time)),
       fact = "Time",
       merge_sample_by = "Tree_name"
     ))
     expect_error(graph_test_pq(data_fungi_mini, fact = "Height"))
-    expect_message(graph_test_pq(data_fungi_mini, fact = "Height", na_remove = TRUE))
+    expect_message(graph_test_pq(
+      data_fungi_mini,
+      fact = "Height",
+      na_remove = TRUE
+    ))
     expect_error(graph_test_pq(enterotype, fact = "Enterotype"))
     expect_error(graph_test_pq(data_fungi_mini, fact = "tRREE_name"))
   }
@@ -90,10 +102,14 @@ test_that("plot_mt works", {
   expect_s3_class(res_mt, "data.frame")
   expect_s3_class(suppressWarnings(plot_mt(res_mt)), "ggplot")
   skip_on_cran()
-  expect_s3_class(suppressWarnings(plot_mt(
-    res_mt,
-    taxa = "Genus", color_tax = "Order"
-  )), "ggplot")
+  expect_s3_class(
+    suppressWarnings(plot_mt(
+      res_mt,
+      taxa = "Genus",
+      color_tax = "Order"
+    )),
+    "ggplot"
+  )
 })
 
 test_that("sankey_pq works with GlobalPatterns dataset", {
@@ -117,7 +133,8 @@ test_that("sankey_pq works with GlobalPatterns dataset", {
     ))
     expect_silent(suppressWarnings(sankey_pq(
       GP_archae,
-      fact = "SampleType", add_nb_seq = TRUE
+      fact = "SampleType",
+      add_nb_seq = TRUE
     )))
     expect_silent(
       sankey_pq(
@@ -219,10 +236,14 @@ test_that("venn_pq works with data_fungi_mini dataset", {
   )))
   expect_silent(venn_pq(data_fungi_mini, "Height", min_nb_seq = 10))
   expect_silent(venn_pq(data_fungi_mini, "Height", print_values = FALSE))
-  expect_silent(venn_pq(data_fungi_mini, "Height", print_values = FALSE) +
-    scale_fill_hue())
-  expect_silent(venn_pq(data_fungi_mini, "Height", print_values = TRUE) +
-    scale_fill_hue())
+  expect_silent(
+    venn_pq(data_fungi_mini, "Height", print_values = FALSE) +
+      scale_fill_hue()
+  )
+  expect_silent(
+    venn_pq(data_fungi_mini, "Height", print_values = TRUE) +
+      scale_fill_hue()
+  )
   expect_error(venn_pq(data_fungi_mini))
   expect_error(venn_pq(data_fungi_mini@otu_table, "Height"))
   expect_type(
@@ -239,25 +260,51 @@ test_that("ggvenn_pq works with data_fungi_mini dataset", {
   if (requireNamespace("ggVennDiagram")) {
     expect_message(ggvenn_pq(data_fungi_mini, "Height"))
     skip_on_cran()
-    expect_message(ggvenn_pq(data_fungi_mini, "Height", rarefy_before_merging = TRUE))
-    expect_message(suppressWarnings(ggvenn_pq(data_fungi_mini, "Height", rarefy_after_merging = TRUE)))
+    expect_message(ggvenn_pq(
+      data_fungi_mini,
+      "Height",
+      rarefy_before_merging = TRUE
+    ))
+    expect_message(suppressWarnings(ggvenn_pq(
+      data_fungi_mini,
+      "Height",
+      rarefy_after_merging = TRUE
+    )))
     expect_message(ggvenn_pq(data_fungi_mini, "Height", add_nb_seq = TRUE))
-    expect_silent(suppressMessages(ggvenn_pq(data_fungi_mini, "Height", rarefy_nb_seqs = TRUE)))
+    expect_silent(suppressMessages(ggvenn_pq(
+      data_fungi_mini,
+      "Height",
+      rarefy_nb_seqs = TRUE
+    )))
     expect_message(ggvenn_pq(data_fungi_mini, "Height", min_nb_seq = 2))
     expect_message(ggvenn_pq(data_fungi_mini, "Height", taxonomic_rank = 4))
-    expect_silent(suppressMessages(ggvenn_pq(data_fungi_mini, "Height", split_by = "Time")))
+    expect_silent(suppressMessages(ggvenn_pq(
+      data_fungi_mini,
+      "Height",
+      split_by = "Time"
+    )))
     expect_error(ggvenn_pq(data_fungi_mini))
-    expect_s3_class(suppressMessages(ggvenn_pq(data_fungi_mini, "Height")), "ggplot")
+    expect_s3_class(
+      suppressMessages(ggvenn_pq(data_fungi_mini, "Height")),
+      "ggplot"
+    )
     expect_error(ggvenn_pq(data_fungi_mini@otu_table, "Height"))
   }
 })
 
 
 test_that("upset_pq works with data_fungi dataset", {
-  if (requireNamespace("tidyr") && requireNamespace("ComplexUpset") && packageVersion("ggplot2") < "4.0.0") {
+  if (
+    requireNamespace("tidyr") &&
+      requireNamespace("ComplexUpset") &&
+      packageVersion("ggplot2") < "4.0.0"
+  ) {
     expect_silent(suppressMessages(upset_pq(data_fungi_mini, "Height")))
     skip_on_cran()
-    expect_s3_class(upset_pq(data_fungi_mini, "Height", taxa_fill = "Class"), "ggplot")
+    expect_s3_class(
+      upset_pq(data_fungi_mini, "Height", taxa_fill = "Class"),
+      "ggplot"
+    )
     expect_s3_class(upset_pq(data_fungi_mini, "Height"), "ggplot")
     expect_s3_class(
       upset_pq(
@@ -270,9 +317,14 @@ test_that("upset_pq works with data_fungi dataset", {
     )
 
     expect_s3_class(upset_pq(data_fungi_mini, "Time"), "ggplot")
-    expect_s3_class(upset_pq(data_fungi_mini, "Time", min_nb_seq = 10), "ggplot")
     expect_s3_class(
-      upset_pq(data_fungi_mini, "Time",
+      upset_pq(data_fungi_mini, "Time", min_nb_seq = 10),
+      "ggplot"
+    )
+    expect_s3_class(
+      upset_pq(
+        data_fungi_mini,
+        "Time",
         numeric_fonction = mean,
         na_remove = FALSE
       ),
@@ -305,7 +357,11 @@ test_that("upset_test_pq works with data_fungi_mini dataset", {
       ),
       "data.frame"
     )
-    expect_error(upset_test_pq(data_fungi_mini, "Height", var_to_test = "GUILDDDS"))
+    expect_error(upset_test_pq(
+      data_fungi_mini,
+      "Height",
+      var_to_test = "GUILDDDS"
+    ))
     expect_error(upset_test_pq(data_fungi_mini))
   }
 })
@@ -401,9 +457,7 @@ test_that("multipatt_pq works with data_fungi_mini dataset", {
   skip_on_os("windows")
   skip_on_cran()
   expect_s3_class(
-    multipatt_pq(subset_samples(data_fungi_mini, !is.na(Time)),
-      fact = "Time"
-    ),
+    multipatt_pq(subset_samples(data_fungi_mini, !is.na(Time)), fact = "Time"),
     "ggplot"
   )
   expect_error(multipatt_pq(data_fungi_mini, fact = "Time"))
@@ -412,29 +466,39 @@ test_that("multipatt_pq works with data_fungi_mini dataset", {
 test_that("multipatt_pq works with data_fungi_mini dataset", {
   skip_on_os("windows")
   skip_on_cran()
-  expect_type(suppressMessages(suppressWarnings(res_height <- ancombc_pq(
-    subset_taxa_pq(
-      data_fungi_sp_known,
-      taxa_sums(data_fungi_sp_known) > 5000
-    ),
-    fact = "Height",
-    levels_fact = c("Low", "High"),
-    verbose = TRUE
-  ))), "list")
+  expect_type(
+    suppressMessages(suppressWarnings(
+      res_height <- ancombc_pq(
+        subset_taxa_pq(
+          data_fungi_sp_known,
+          taxa_sums(data_fungi_sp_known) > 5000
+        ),
+        fact = "Height",
+        levels_fact = c("Low", "High"),
+        verbose = TRUE
+      )
+    )),
+    "list"
+  )
   expect_s3_class(res_height$bias_correct_log_table, "data.frame")
-  expect_equal(dim(res_height$res), c(6, 17))
+  expect_identical(dim(res_height$res), c(6L, 17L))
 
-  expect_type(suppressMessages(suppressWarnings(res_time <- ancombc_pq(
-    subset_taxa_pq(
-      data_fungi_sp_known,
-      taxa_sums(data_fungi_sp_known) > 5000
-    ),
-    fact = "Time",
-    levels_fact = c("0", "15"),
-    tax_level = "Family",
-    verbose = TRUE
-  ))), "list")
+  expect_type(
+    suppressMessages(suppressWarnings(
+      res_time <- ancombc_pq(
+        subset_taxa_pq(
+          data_fungi_sp_known,
+          taxa_sums(data_fungi_sp_known) > 5000
+        ),
+        fact = "Time",
+        levels_fact = c("0", "15"),
+        tax_level = "Family",
+        verbose = TRUE
+      )
+    )),
+    "list"
+  )
 
   expect_s3_class(res_time$ss_tab, "data.frame")
-  expect_equal(dim(res_time$res), c(12, 17))
+  expect_identical(dim(res_time$res), c(12L, 17L))
 })

@@ -11,6 +11,13 @@ treemap_pq(
   nb_seq = TRUE,
   log10trans = TRUE,
   plot_legend = FALSE,
+  show_count = FALSE,
+  facet_by = NULL,
+  growing_text = TRUE,
+  text_size = 15,
+  show_na = TRUE,
+  na_label = "NA",
+  min_text_size = 0,
   ...
 )
 }
@@ -27,13 +34,41 @@ is count. Concretely, physeq otu_table is transformed in a binary
 otu_table (each value different from zero is set to one)}
 
 \item{log10trans}{(logical, default TRUE) If TRUE,
-the number of sequences (or ASV if nb_seq = FALSE) is log10
-transformed.}
+the number of sequences (or ASV if nb_seq = FALSE) is
+log10(x + 1) transformed. The +1 ensures that taxa with a
+count of 1 still have a visible tile area.}
 
 \item{plot_legend}{(logical, default FALSE) If TRUE, plot che
 legend of color for lvl 1}
 
-\item{...}{Additional arguments passed on to \code{\link[treemapify:geom_treemap]{treemapify::geom_treemap()}} function.}
+\item{show_count}{(logical, default FALSE) If TRUE, appends the raw
+count in parentheses after each \code{lvl2} label, e.g. \code{"Agaricus (42)"}.}
+
+\item{facet_by}{(character, default NULL) Name of a column in
+\code{sample_data(physeq)} to facet by. Each level produces its own
+treemap panel via \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}.}
+
+\item{growing_text}{(logical, default TRUE) If FALSE, all tile labels are
+drawn at the same font size (disables per-tile text growing), which
+corresponds to the smallest size that would otherwise be computed.}
+
+\item{text_size}{(numeric, default 15) Base font size for tile labels.
+Mostly useful when \code{growing_text = FALSE}, as it sets the size of all
+labels.}
+
+\item{show_na}{(logical, default TRUE) If TRUE, taxa with NA values for
+\code{lvl1} or \code{lvl2} are kept and displayed as a grey "NA" area. If FALSE,
+they are removed (previous default behavior).}
+
+\item{na_label}{(character, default "NA") Label used to replace NA values
+in \code{lvl1} and \code{lvl2} when \code{show_na = TRUE}.}
+
+\item{min_text_size}{(numeric, default 0) Minimum font size in points
+for tile labels. Labels that would be smaller than this are hidden.
+Set to 0 to always show all labels.}
+
+\item{...}{Additional arguments passed on to
+\code{\link[treemapify:geom_treemap]{treemapify::geom_treemap()}} function.}
 }
 \value{
 A ggplot2 object
@@ -76,6 +111,14 @@ if (requireNamespace("treemapify")) {
     )),
     "Order", "Class",
     nb_seq = FALSE, log10trans = FALSE
+  )
+  treemap_pq(
+    clean_pq(subset_taxa(
+      data_fungi_sp_known,
+      Phylum == "Basidiomycota"
+    )),
+    "Order", "Class",
+    show_count = TRUE, log10trans = FALSE
   )
 }
 }

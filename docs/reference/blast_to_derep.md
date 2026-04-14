@@ -125,3 +125,22 @@ to use `refseq` slot as a database
 ## Author
 
 Adrien Taudière
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+# derep_list is the result of dada2::derepFastq()
+derep_list <- list(dada2::derepFastq(
+ system.file("extdata", "ex.fastq",
+   package = "MiscMetabar", mustWork = TRUE
+ )
+))
+blast_to_derep(
+  derep = derep_list,
+  seq2search = system.file("extdata", "ex.fasta",
+    package = "MiscMetabar"
+  )
+)
+} # }
+```

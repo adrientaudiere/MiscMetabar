@@ -14,7 +14,7 @@ mumu_pq(
   physeq,
   nproc = 1,
   id = 0.84,
-  vsearchpath = "vsearch",
+  vsearchpath = find_vsearch(),
   mumupath = "mumu",
   lulu_exact = FALSE,
   verbose = FALSE,

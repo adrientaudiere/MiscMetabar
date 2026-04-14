@@ -43,3 +43,10 @@ palettes. The viridis package, with many excellent palettes
 ## Author
 
 Thibaut Jombart in `adegenet` package
+
+## Examples
+
+``` r
+fac2col(c("a", "b", "a", "c"))
+#> [1] "#A6CEE3" "#F06C45" "#A6CEE3" "#B15928"
+```

@@ -31,3 +31,20 @@ object with `refseq` slot and new taxa names
 ## Author
 
 Adrien Taudière
+
+## Examples
+
+``` r
+pq_seq_names <- phyloseq::phyloseq(
+  phyloseq::otu_table(data_fungi_mini),
+  phyloseq::sample_data(data_fungi_mini),
+  phyloseq::tax_table(data_fungi_mini)
+)
+phyloseq::taxa_names(pq_seq_names) <- as.character(phyloseq::refseq(data_fungi_mini))
+add_dna_to_phyloseq(pq_seq_names)
+#> phyloseq-class experiment-level object
+#> otu_table()   OTU Table:         [ 45 taxa and 137 samples ]
+#> sample_data() Sample Data:       [ 137 samples by 7 sample variables ]
+#> tax_table()   Taxonomy Table:    [ 45 taxa by 12 taxonomic ranks ]
+#> refseq()      DNAStringSet:      [ 45 reference sequences ]
+```
