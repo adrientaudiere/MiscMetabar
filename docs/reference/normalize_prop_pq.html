@@ -17,7 +17,7 @@ McKnight et al. 2018 (doi:10.5061/dryad.tn8qs35
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,6 +33,7 @@ McKnight et al. 2018 (doi:10.5061/dryad.tn8qs35
     <li><a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a></li>
     <li><a class="dropdown-item" href="../articles/explore_data.html">Explore phyloseq data</a></li>
     <li><a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a></li>
+    <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -66,7 +67,7 @@ McKnight et al. 2018 (doi:10.5061/dryad.tn8qs35
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Normalize OTU table using samples depth</h1>
-      <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/dada_phyloseq.R" class="external-link"><code>R/dada_phyloseq.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/normalize_pq.R" class="external-link"><code>R/normalize_pq.R</code></a></small>
       <div class="d-none name"><code>normalize_prop_pq.Rd</code></div>
     </div>
 
@@ -119,7 +120,7 @@ normalize and log transformed (if base_log is an integer)</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/taxa_sums.html" class="external-link">taxa_sums</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">taxa_sums</span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ASV7   ASV8  ASV12  ASV18  ASV25  ASV26  ASV27  ASV29  ASV32  ASV34  ASV35 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  47410  46857  38237  27368  21522  20660  20584  19661  16933  15804  15298 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  ASV41  ASV42  ASV46  ASV47  ASV48  ASV49  ASV50  ASV53  ASV54  ASV58  ASV59 </span>
@@ -131,7 +132,7 @@ normalize and log transformed (if base_log is an integer)</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ASV108 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   5137 </span>
 <span class="r-in"><span><span class="va">data_f_norm</span> <span class="op">&lt;-</span> <span class="fu">normalize_prop_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/taxa_sums.html" class="external-link">taxa_sums</a></span><span class="op">(</span><span class="va">data_f_norm</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">taxa_sums</span><span class="op">(</span><span class="va">data_f_norm</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ASV7     ASV8    ASV12    ASV18    ASV25    ASV26    ASV27    ASV29 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 414.6046 644.1998 249.0031 259.4578 114.5518 118.3969  39.8368 103.1480 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    ASV32    ASV34    ASV35    ASV41    ASV42    ASV46    ASV47    ASV48 </span>
@@ -144,7 +145,7 @@ normalize and log transformed (if base_log is an integer)</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  22.2811 177.5237  68.8903  71.8991  15.5826 234.0406  33.1109  19.7700 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ASV101   ASV104   ASV105   ASV107   ASV108 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  43.5813  49.3524  27.2813 100.0606  11.9978 </span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_sums.html" class="external-link">sample_sums</a></span><span class="op">(</span><span class="va">data_f_norm</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">sample_sums</span><span class="op">(</span><span class="va">data_f_norm</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    A10-005-B_S188_MERGED.fastq.gz    A10-005-H_S189_MERGED.fastq.gz </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                           56.4639                           20.5319 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    A10-005-M_S190_MERGED.fastq.gz      A12-007_S191_MERGED.fastq.gz </span>
@@ -283,19 +284,19 @@ normalize and log transformed (if base_log is an integer)</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                           56.2590                           24.4062 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Z30-ABM560-M_S187_MERGED.fastq.gz </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                           35.9945 </span>
-<span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="st">"norm"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/taxa_sums.html" class="external-link">taxa_sums</a></span><span class="op">(</span><span class="va">data_f_norm</span><span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  <span class="st">"raw"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/taxa_sums.html" class="external-link">taxa_sums</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  <span class="st">"name_otu"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/taxa_names-methods.html" class="external-link">taxa_names</a></span><span class="op">(</span><span class="va">data_f_norm</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ggplot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">"norm"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="fu">taxa_sums</span><span class="op">(</span><span class="va">data_f_norm</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"raw"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="fu">taxa_sums</span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"name_otu"</span> <span class="op">=</span> <span class="fu">taxa_names</span><span class="op">(</span><span class="va">data_f_norm</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">raw</span>, y <span class="op">=</span> <span class="va">norm</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">raw</span>, y <span class="op">=</span> <span class="va">norm</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="normalize_prop_pq-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">data_f_norm</span> <span class="op">&lt;-</span> <span class="fu">normalize_prop_pq</span><span class="op">(</span><span class="fu"><a href="taxa_as_columns.html">taxa_as_columns</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">data_f_norm2</span> <span class="op">&lt;-</span> <span class="fu">normalize_prop_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, base_log <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/taxa_sums.html" class="external-link">taxa_sums</a></span><span class="op">(</span><span class="va">data_f_norm2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">taxa_sums</span><span class="op">(</span><span class="va">data_f_norm2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       ASV7       ASV8      ASV12      ASV18      ASV25      ASV26      ASV27 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 122882.103 211168.629 100283.124  47121.139  45244.227  38079.149  18656.710 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      ASV29      ASV32      ASV34      ASV35      ASV41      ASV42      ASV46 </span>
@@ -310,7 +311,7 @@ normalize and log transformed (if base_log is an integer)</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  31281.214   3511.832  15667.432   6316.609   9500.050  27400.953  16502.328 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ASV105     ASV107     ASV108 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   9457.149  35090.372   4088.666 </span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_sums.html" class="external-link">sample_sums</a></span><span class="op">(</span><span class="va">data_f_norm2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">sample_sums</span><span class="op">(</span><span class="va">data_f_norm2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    A10-005-B_S188_MERGED.fastq.gz    A10-005-H_S189_MERGED.fastq.gz </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             10000                             10000 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    A10-005-M_S190_MERGED.fastq.gz      A12-007_S191_MERGED.fastq.gz </span>

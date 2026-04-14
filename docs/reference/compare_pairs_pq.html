@@ -13,7 +13,7 @@ For the moment refseq slot need to be not Null."><script data-goatcounter="https
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,6 +29,7 @@ For the moment refseq slot need to be not Null."><script data-goatcounter="https
     <li><a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a></li>
     <li><a class="dropdown-item" href="../articles/explore_data.html">Explore phyloseq data</a></li>
     <li><a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a></li>
+    <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -144,30 +145,32 @@ and diversity</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">data_fungi_low_high</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html" class="external-link">subset_samples</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="va">Height</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Low"</span>, <span class="st">"High"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">compare_pairs_pq</span><span class="op">(</span><span class="va">data_fungi_low_high</span>, bifactor <span class="op">=</span> <span class="st">"Height"</span>, merge_sample_by <span class="op">=</span> <span class="st">"Height"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 256 taxa and 0 samples.</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">data_fungi_mini_lh</span> <span class="op">&lt;-</span> <span class="fu">subset_samples</span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="va">Height</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Low"</span>, <span class="st">"High"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">compare_pairs_pq</span><span class="op">(</span><span class="va">data_fungi_mini_lh</span>, bifactor <span class="op">=</span> <span class="st">"Height"</span>, merge_sample_by <span class="op">=</span> <span class="st">"Height"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 5 taxa and 0 samples.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 13</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   modality nb_ASV_High nb_ASV_Low nb_shared_ASV div_High div_Low nb_shared_seq</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Height           919        963           718     4.54    4.47        <span style="text-decoration: underline;">671</span>081</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Height            34         34            28     2.56    2.54        <span style="text-decoration: underline;">151</span>756</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 6 more variables: percent_shared_seq_High &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   percent_shared_seq_Low &lt;dbl&gt;, percent_shared_ASV_High &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   percent_shared_ASV_Low &lt;dbl&gt;, ratio_nb_High_Low &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ratio_div_High_Low &lt;dbl&gt;</span></span>
-<span class="r-in"><span><span class="fu">compare_pairs_pq</span><span class="op">(</span><span class="va">data_fungi_low_high</span>,</span></span>
+<span class="r-in"><span><span class="fu">compare_pairs_pq</span><span class="op">(</span><span class="va">data_fungi_mini_lh</span>,</span></span>
 <span class="r-in"><span>  bifactor <span class="op">=</span> <span class="st">"Height"</span>,</span></span>
 <span class="r-in"><span>  merge_sample_by <span class="op">=</span> <span class="st">"Height"</span>, modality <span class="op">=</span> <span class="st">"Time"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 11 samples were discarded due to NA in variable modality.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 293 taxa and 0 samples.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 7 samples were discarded due to NA in variable modality.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 5 taxa and 0 samples.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 13</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   modality nb_ASV_High nb_ASV_Low nb_shared_ASV div_High div_Low nb_shared_seq</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 0                324        383           188     3.44    3.12         <span style="text-decoration: underline;">92</span>766</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 5                488        444           224     3.86    3.73        <span style="text-decoration: underline;">138</span>450</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 10               239        359           138     2.86    3.35         <span style="text-decoration: underline;">67</span>475</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 15               365        490           217     3.03    3.46        <span style="text-decoration: underline;">195</span>794</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 0                 13         17             9     1.6     0.74         <span style="text-decoration: underline;">22</span>914</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 5                 16         20             7     2.1     1.93         <span style="text-decoration: underline;">15</span>648</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 10                11         13             8     1.34    1.27         <span style="text-decoration: underline;">11</span>519</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 15                15         16            10     1.68    1.49         <span style="text-decoration: underline;">60</span>059</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 6 more variables: percent_shared_seq_High &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   percent_shared_seq_Low &lt;dbl&gt;, percent_shared_ASV_High &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   percent_shared_ASV_Low &lt;dbl&gt;, ratio_nb_High_Low &lt;dbl&gt;,</span></span>

@@ -169,6 +169,7 @@ reference:
   - ggscatt_pq
   - glmutli_pq
   - hill_acc_pq
+  - hill_bar_pq
   - hill_curves_pq
   - hill_pq
   - hill_test_rarperm_pq

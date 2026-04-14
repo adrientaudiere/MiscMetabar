@@ -85,10 +85,5 @@ Adrien Taudière
 ## Examples
 
 ``` r
-data("GlobalPatterns", package = "phyloseq")
-GlobalPatterns@sam_data[, "Soil_logical"] <-
-  ifelse(GlobalPatterns@sam_data[, "SampleType"] == "Soil", "Soil", "Not Soil")
-hill_tuckey_pq(GlobalPatterns, "Soil_logical")
-
-hill_tuckey_pq(GlobalPatterns, "Soil_logical", q = 1:2)
+hill_tuckey_pq(data_fungi_mini, "Height")
 ```

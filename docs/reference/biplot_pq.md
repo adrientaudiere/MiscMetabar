@@ -34,6 +34,8 @@ biplot_pq(
   split_by_sample = FALSE,
   sample_border_col = "#d4d0acff",
   sample_border_width = 0.3,
+  color_rank = NULL,
+  taxa_names_rank = NULL,
   plotly_version = FALSE,
   ...
 )
@@ -174,6 +176,23 @@ biplot_pq(
   (default: 0.3) Width of the border between sample segments when
   `split_by_sample = TRUE`.
 
+- color_rank:
+
+  (default: NULL) Name of a taxonomic rank in `tax_table(physeq)` to use
+  for coloring bars. When NULL (default), bars are colored by sample
+  modality using `left_fill` and `right_fill`. When set (e.g.
+  `"Class"`), each bar is colored according to its taxonomic assignment
+  at that rank and the `left_fill`/`right_fill` color parameters are
+  ignored.
+
+- taxa_names_rank:
+
+  (default: NULL) Name of a taxonomic rank in `tax_table(physeq)` to use
+  as labels on the taxa axis instead of `taxa_names()`. When NULL
+  (default), `taxa_names()` are used. When set (e.g. `"Genus"`), the
+  genus name is displayed. OTUs sharing the same label at this rank will
+  appear as a single merged bar.
+
 - plotly_version:
 
   If TRUE, use
@@ -206,6 +225,15 @@ biplot_pq(data_fungi_2Height, "Height",
   split_by_sample = TRUE
 )
 #> The two modalities differ greatly (more than x2) in their number of sequences (1885 vs 10201). You may be interested by the parameter rarefy_after_merging
+#> Scale for y is already present.
+#> Adding another scale for y, which will replace the existing scale.
+
+biplot_pq(data_fungi_2Height, "Height",
+  merge_sample_by = "Height",
+  color_rank = "Order",
+  taxa_names_rank = "Genus"
+)
+#> Cleaning suppress 5 taxa and 0 samples.
 #> Scale for y is already present.
 #> Adding another scale for y, which will replace the existing scale.
 ```

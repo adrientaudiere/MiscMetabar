@@ -20,12 +20,22 @@ hill_bar_pq(
   add_letters = TRUE,
   p_threshold = 0.05,
   letter_size = 5,
-  letters_top_offset = 0.2,
+  letters_top_offset = 0.05,
   y_lab_size = NULL,
   x_lab_size = NULL,
   show_n_samples = TRUE,
   palette = c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00",
     "#CC79A7", "#000000"),
+  error_fun = function(x) {
+     m <- mean(x, na.rm = TRUE)
+     se <- sd(x, na.rm =
+    TRUE)/sqrt(sum(!is.na(x)))
+     c(lower = m - se, upper = m + se)
+ },
+  error_fun_lab = "mean ± SE",
+  error_bar_alpha = 0.35,
+  point_alpha = 0.5,
+  letters_below_bar = FALSE,
   ...
 )
 }
@@ -70,7 +80,7 @@ assigned; above it all groups receive \code{"a"}. Default \code{0.05}.}
 \item{letter_size}{Size of letter labels in ggplot2 units. Default \code{5}.}
 
 \item{letters_top_offset}{Fraction of the y-range added above the highest
-point / error-bar to position letters. Default \code{0.2}.}
+point / error-bar to position letters. Default \code{0.05}.}
 
 \item{y_lab_size}{Size of y-axis tick labels in pts. Defaults to \code{base_size}.}
 
@@ -81,6 +91,28 @@ appended below each x-axis tick label as \code{(n=X)}. Default \code{TRUE}.}
 
 \item{palette}{Character vector of fill colours. Defaults to the Okabe-Ito
 palette.}
+
+\item{error_fun}{Function taking a numeric vector and returning a 2-element
+numeric vector \code{c(lower, upper)} with the actual y-axis bounds of the
+error bar (not offsets from the mean). The first element is the lower
+bound, the second is the upper bound. This allows asymmetric intervals
+such as quantile ranges. Default computes mean ± SE. Example for a 95\%
+quantile interval: \code{function(x) quantile(x, c(0.025, 0.975), na.rm = TRUE)}.}
+
+\item{error_fun_lab}{Label for the error bar used in the plot caption.
+Default \code{"mean ± SE"}.}
+
+\item{error_bar_alpha}{Transparency of the secondary top-half error bar
+drawn over the jittered points to hint at the upper extent without
+obscuring data. Default \code{0.35}.}
+
+\item{point_alpha}{Transparency of the jittered data points. Default \code{0.5}.}
+
+\item{letters_below_bar}{Logical. When \code{TRUE}, compact letters are placed
+below the x-axis (at \code{y = -letters_top_offset * y_range}), giving a clean
+fixed position independent of data spread. When \code{FALSE} (default), letters
+are placed above whichever is higher: the error bar top or the highest
+data point.}
 
 \item{...}{Additional arguments passed to \code{\link[=psmelt_samples_pq]{psmelt_samples_pq()}} and hence
 to \code{\link[divent:div_hill]{divent::div_hill()}} (e.g. \code{estimator = "naive"}).}

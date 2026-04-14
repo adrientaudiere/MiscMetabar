@@ -15,7 +15,7 @@ model in order to correct for uneven sampling depth."><script data-goatcounter="
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,6 +31,7 @@ model in order to correct for uneven sampling depth."><script data-goatcounter="
     <li><a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a></li>
     <li><a class="dropdown-item" href="../articles/explore_data.html">Explore phyloseq data</a></li>
     <li><a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a></li>
+    <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -152,13 +153,8 @@ strong is the influence of methodological choices? <em>Journal of Biogeography</
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"GlobalPatterns"</span>, package <span class="op">=</span> <span class="st">"phyloseq"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">GlobalPatterns</span><span class="op">@</span><span class="va">sam_data</span><span class="op">[</span>, <span class="st">"Soil_logical"</span><span class="op">]</span> <span class="op">&lt;-</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">GlobalPatterns</span><span class="op">@</span><span class="va">sam_data</span><span class="op">[</span>, <span class="st">"SampleType"</span><span class="op">]</span> <span class="op">==</span> <span class="st">"Soil"</span>, <span class="st">"Soil"</span>, <span class="st">"Not Soil"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">hill_tuckey_pq</span><span class="op">(</span><span class="va">GlobalPatterns</span>, <span class="st">"Soil_logical"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">hill_tuckey_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="st">"Height"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="hill_tuckey_pq-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">hill_tuckey_pq</span><span class="op">(</span><span class="va">GlobalPatterns</span>, <span class="st">"Soil_logical"</span>, q <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="hill_tuckey_pq-2.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -76,30 +76,32 @@ of sequences and diversity
 ## Examples
 
 ``` r
-data_fungi_low_high <- subset_samples(data_fungi, Height %in% c("Low", "High"))
-compare_pairs_pq(data_fungi_low_high, bifactor = "Height", merge_sample_by = "Height")
-#> Cleaning suppress 256 taxa and 0 samples.
+data_fungi_mini_lh <- subset_samples(data_fungi_mini, Height %in% c("Low", "High"))
+compare_pairs_pq(data_fungi_mini_lh, bifactor = "Height", merge_sample_by = "Height")
+#> Taxa are now in columns.
+#> Cleaning suppress 5 taxa and 0 samples.
 #> # A tibble: 1 × 13
 #>   modality nb_ASV_High nb_ASV_Low nb_shared_ASV div_High div_Low nb_shared_seq
 #>   <chr>          <dbl>      <dbl>         <dbl>    <dbl>   <dbl>         <dbl>
-#> 1 Height           919        963           718     4.54    4.47        671081
+#> 1 Height            34         34            28     2.56    2.54        151756
 #> # ℹ 6 more variables: percent_shared_seq_High <dbl>,
 #> #   percent_shared_seq_Low <dbl>, percent_shared_ASV_High <dbl>,
 #> #   percent_shared_ASV_Low <dbl>, ratio_nb_High_Low <dbl>,
 #> #   ratio_div_High_Low <dbl>
-compare_pairs_pq(data_fungi_low_high,
+compare_pairs_pq(data_fungi_mini_lh,
   bifactor = "Height",
   merge_sample_by = "Height", modality = "Time"
 )
-#> 11 samples were discarded due to NA in variable modality.
-#> Cleaning suppress 293 taxa and 0 samples.
+#> Taxa are now in columns.
+#> 7 samples were discarded due to NA in variable modality.
+#> Cleaning suppress 5 taxa and 0 samples.
 #> # A tibble: 4 × 13
 #>   modality nb_ASV_High nb_ASV_Low nb_shared_ASV div_High div_Low nb_shared_seq
 #>   <chr>          <dbl>      <dbl>         <dbl>    <dbl>   <dbl>         <dbl>
-#> 1 0                324        383           188     3.44    3.12         92766
-#> 2 5                488        444           224     3.86    3.73        138450
-#> 3 10               239        359           138     2.86    3.35         67475
-#> 4 15               365        490           217     3.03    3.46        195794
+#> 1 0                 13         17             9     1.6     0.74         22914
+#> 2 5                 16         20             7     2.1     1.93         15648
+#> 3 10                11         13             8     1.34    1.27         11519
+#> 4 15                15         16            10     1.68    1.49         60059
 #> # ℹ 6 more variables: percent_shared_seq_High <dbl>,
 #> #   percent_shared_seq_Low <dbl>, percent_shared_ASV_High <dbl>,
 #> #   percent_shared_ASV_Low <dbl>, ratio_nb_High_Low <dbl>,

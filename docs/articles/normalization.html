@@ -122,18 +122,10 @@ of magnitude, even within the same experiment. Applying diversity or
 ordination methods to raw counts therefore conflates biological signal
 with technical depth variation.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html" class="external-link">barplot</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_sums.html" class="external-link">sample_sums</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  xlab <span class="op">=</span> <span class="st">"Samples (sorted)"</span>,</span>
-<span>  ylab <span class="op">=</span> <span class="st">"Total reads"</span>,</span>
-<span>  col <span class="op">=</span> <span class="st">"#b96821"</span>,</span>
-<span>  border <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  main <span class="op">=</span> <span class="st">"Sequencing depth per sample"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data<span class="op">=</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_sums.html" class="external-link">sample_sums</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span><span class="op">)</span>,<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span>color<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x<span class="op">=</span><span class="st">"Number of sequences per samples"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="normalization_files/figure-html/depth-variation-1.png" class="r-plt" alt="Large variation in sequencing depth across samples in `data_fungi_mini`." width="672"><p class="caption">
-Large variation in sequencing depth across samples in
-<code>data_fungi_mini</code>.
+<img src="normalization_files/figure-html/depth-variation-1.png" class="r-plt" alt="Large variation in sequencing depth across samples in 'data_fungi_mini'." width="672"><p class="caption">
+Large variation in sequencing depth across samples in ‘data_fungi_mini’.
 </p>
 </div>
 <hr>
@@ -419,9 +411,9 @@ choice of normalisation shapes the ordination landscape.</p>
 <span><span class="fu">patchwork</span><span class="fu">::</span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html" class="external-link">wrap_plots</a></span><span class="op">(</span><span class="va">p_raw</span>, <span class="va">p_tss</span>, <span class="va">p_hell</span>, <span class="va">p_log1p</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">patchwork</span><span class="fu">::</span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html" class="external-link">plot_layout</a></span><span class="op">(</span>guides <span class="op">=</span> <span class="st">"collect"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="normalization_files/figure-html/ordination-comparison-1.png" class="r-plt" alt="PCoA (Bray-Curtis) on raw counts, TSS, Hellinger, and log1p-transformed data.  Colour encodes the `Height` variable." width="672"><p class="caption">
+<img src="normalization_files/figure-html/ordination-comparison-1.png" class="r-plt" alt="PCoA (Bray-Curtis) on raw counts, TSS, Hellinger, and log1p-transformed data. Colour encodes the 'Height' variable." width="672"><p class="caption">
 PCoA (Bray-Curtis) on raw counts, TSS, Hellinger, and log1p-transformed
-data. Colour encodes the <code>Height</code> variable.
+data. Colour encodes the ‘Height’ variable.
 </p>
 </div>
 <hr>
@@ -433,7 +425,8 @@ data. Colour encodes the <code>Height</code> variable.
 <strong>without</strong> transforming the OTU table, by incorporating
 library size directly into the statistical model. These are
 complementary to — not replacements for — the table-level normalisations
-above.</p>
+above. If you transform the table, you should not use these model-level
+corrections (set correction_for_sample_size = FALSE).</p>
 <div class="section level3">
 <h3 id="adonis_pq-permanova-with-library-size-covariate">
 <code>adonis_pq()</code> — PERMANOVA with library-size
@@ -472,12 +465,11 @@ the <em>statistical test</em> uses residuals.</p>
 but integrated into the plotting workflow rather than stored as a new
 column in <code>sam_data</code>.</p>
 <hr>
-</div>
-</div>
-<div class="section level2">
-<h2 id="decision-guide">Decision guide<a class="anchor" aria-label="anchor" href="#decision-guide"></a>
-</h2>
-<pre><code>Are you doing alpha diversity?
+<!--
+## Decision guide
+
+```
+Are you doing alpha diversity?
 ├── Yes → mcknight_residuals_pq()  (depth-robust, no data loss)
 │         or rarefy_pq(n ≥ 10)     (classical, accounts for sampling effort)
 └── No  →
@@ -486,19 +478,19 @@ column in <code>sam_data</code>.</p>
     └── No  (ordination / clustering) →
         Is the data very zero-inflated?
         ├── Yes → gmpr_pq() or srs_pq() or transform_pq("rclr")
-        └── No  → transform_pq("hellinger") or transform_pq("clr")</code></pre>
-<p><strong>General rules of thumb</strong></p>
-<ul>
-<li>Avoid rarefying if library sizes vary by more than ×10 and sample
-sizes are small; use GMPR or SRS instead.</li>
-<li>CLR / rCLR are theoretically sound for compositional data but
-sensitive to zero-handling; prefer Hellinger when sparsity is high.</li>
-<li>For model-based methods (DESeq2, edgeR) use VST or TMM rather than
-pre-normalising.</li>
-<li>McKnight residuals are specifically designed as a replacement for
-rarefaction in alpha diversity estimation.</li>
-</ul>
-<hr>
+        └── No  → transform_pq("hellinger") or transform_pq("clr")
+```
+
+**General rules of thumb**
+
+- Avoid rarefying if library sizes vary by more than ×10 and sample sizes are small; use GMPR or SRS instead.
+- CLR / rCLR are theoretically sound for compositional data but sensitive to zero-handling; prefer Hellinger when sparsity is high.
+- For model-based methods (DESeq2, edgeR) use VST or TMM rather than pre-normalising.
+- McKnight residuals are specifically designed as a replacement for rarefaction in alpha diversity estimation.
+
+---
+-->
+</div>
 </div>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>

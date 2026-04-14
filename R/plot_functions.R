@@ -4894,7 +4894,7 @@ tax_bar_pq <-
         val_agg$label_text <- as.character(round(val_agg$seg_value))
       }
 
-      val_agg <- val_agg[val_agg$seg_value > minimum_value_to_show, ]
+      val_agg <- val_agg[val_agg$seg_value >= minimum_value_to_show, ]
 
       if (nrow(val_agg) > 0) {
         p <- p +

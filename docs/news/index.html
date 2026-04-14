@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,6 +23,7 @@
     <li><a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a></li>
     <li><a class="dropdown-item" href="../articles/explore_data.html">Explore phyloseq data</a></li>
     <li><a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a></li>
+    <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -60,16 +61,41 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.15.1" id="miscmetabar-0151">MiscMetabar 0.15.1<a class="anchor" aria-label="anchor" href="#miscmetabar-0151"></a></h2>
-<div class="section level3">
-<h3 id="bug-fixes-0-15-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-15-1"></a></h3>
+<h2 class="pkg-version" data-toc-text="0.15.2" id="miscmetabar-0152-in-development">MiscMetabar 0.15.2 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-0152-in-development"></a></h2>
 <ul><li>
-<code><a href="../reference/assign_mmseqs2.html">assign_mmseqs2()</a></code>: fixed a crash when partial taxonomic assignments produce ragged split vectors; shorter vectors are now padded with <code>NA</code> before being combined into a matrix.</li>
+<code><a href="../reference/hill_bar_pq.html">hill_bar_pq()</a></code> gains five parameters: <code>error_fun</code> (a function returning <code>c(lower, upper)</code> bounds, enabling asymmetric intervals such as quantile ranges; default mean ± SE), <code>error_fun_lab</code> (caption label; default <code>"mean ± SE"</code>), <code>error_bar_alpha</code> (transparency of the secondary top-half error bar drawn over jittered points; default <code>0.35</code>), <code>point_alpha</code> (transparency of jittered data points; default <code>0.7</code>), and <code>letters_below_bar</code> (when <code>TRUE</code>, compact letters are placed below the x-axis at a fixed position, giving a clean layout independent of data spread; default <code>FALSE</code>). Groups with <code>NA</code> values in the grouping variable now receive <code>"n.d."</code> letters when Tukey HSD is run, instead of being silently dropped.</li>
 <li>
-<code><a href="../reference/format2dada2_species.html">format2dada2_species()</a></code>: fixed broken sequence name recovery for unmatched entries; names are now correctly restored using integer indices rather than character lookup.</li>
+<code><a href="../reference/hill_bar_pq.html">hill_bar_pq()</a></code> new function plotting Hill diversity bar charts (mean ±SE, jittered points, Kruskal-Wallis subtitle, optional Tukey HSD compact letter display) for one or multiple Hill orders via a patchwork layout.</li>
 <li>
-<code>unwanted_tax_patterns</code>: fixed duplicate name <code>"unknown species names"</code> (now <code>"unknown species (_sp prefix)"</code> and <code>"unknown species (_species prefix)"</code>); corrected <code>@format</code> element count from 13 to 17.</li>
+<code><a href="../reference/tax_bar_pq.html">tax_bar_pq()</a></code> fixes a bug where <code>nb_seq = FALSE</code> with a grouping <code>fact</code> would sum binary per-sample presence values across samples sharing the same modality, inflating bar heights beyond the true OTU count. Each OTU is now counted at most once per group (present in ≥1 sample of that group), so bar segments correctly show the number of distinct OTUs in each taxonomic rank per modality.</li>
+<li>
+<code><a href="../reference/tax_bar_pq.html">tax_bar_pq()</a></code> gains a <code>show_n_samples</code> parameter (default <code>FALSE</code>). When <code>TRUE</code>, the number of samples per group is appended below each x-axis label as <code>(n=X)</code>.</li>
+<li>New transformation/normalisation functions collected in <code>R/normalize_pq.R</code>, documented in a new article (<code>articles/normalization.html</code>).</li>
+<li>
+<code><a href="../reference/css_pq.html">css_pq()</a></code> new function wrapping <code><a href="https://rdrr.io/pkg/metagenomeSeq/man/cumNorm.html" class="external-link">metagenomeSeq::cumNorm()</a></code> for Cumulative Sum Scaling normalization.</li>
+<li>
+<code><a href="../reference/gmpr_pq.html">gmpr_pq()</a></code> new function implementing the Geometric Mean of Pairwise Ratios normalization (Chen et al. 2018) in pure R.</li>
+<li>
+<code><a href="../reference/mcknight_residuals_pq.html">mcknight_residuals_pq()</a></code> new function computing depth-robust alpha diversity as residuals of log-richness on log-depth (McKnight 2018; Mikryukov 2023).</li>
+<li>
+<code><a href="../reference/rarefy_pq.html">rarefy_pq()</a></code> new function wrapping <code><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">phyloseq::rarefy_even_depth()</a></code> with optional averaging over <code>n</code> rarefaction repetitions.</li>
+<li>
+<code><a href="../reference/srs_pq.html">srs_pq()</a></code> new function wrapping <code><a href="https://rdrr.io/pkg/SRS/man/SRS.html" class="external-link">SRS::SRS()</a></code> for Scaling with Ranked Subsampling normalization.</li>
+<li>
+<code><a href="../reference/tmm_pq.html">tmm_pq()</a></code> new function wrapping <code>edgeR::calcNormFactors(method = "TMM")</code> for Trimmed Mean of M-values normalization.</li>
+<li>
+<code><a href="../reference/transform_pq.html">transform_pq()</a></code> new function providing a unified interface to common count transformations (<code>tss</code>, <code>hellinger</code>, <code>clr</code>, <code>rclr</code>, <code>log1p</code>, <code>z</code>, <code>pa</code>, <code>rank</code>) via <code><a href="https://vegandevs.github.io/vegan/reference/decostand.html" class="external-link">vegan::decostand()</a></code>.</li>
+<li>
+<code><a href="../reference/vst_pq.html">vst_pq()</a></code> new function wrapping <code><a href="https://rdrr.io/pkg/DESeq2/man/varianceStabilizingTransformation.html" class="external-link">DESeq2::varianceStabilizingTransformation()</a></code>.</li>
+<li>
+<code><a href="../reference/biplot_pq.html">biplot_pq()</a></code> gains a <code>color_rank</code> parameter (default <code>NULL</code>): when set to a taxonomic rank (e.g. <code>"Class"</code>), bars are colored by that rank instead of by sample modality, giving a taxonomic-composition view of the biplot. The fill legend is automatically titled with the rank name.</li>
+<li>
+<code><a href="../reference/biplot_pq.html">biplot_pq()</a></code> gains a <code>taxa_names_rank</code> parameter (default <code>NULL</code>): when set to a taxonomic rank (e.g. <code>"Genus"</code>), the taxon axis labels display that rank instead of <code><a href="https://rdrr.io/pkg/phyloseq/man/taxa_names-methods.html" class="external-link">taxa_names()</a></code>. Each OTU remains a separate bar regardless of shared rank values.</li>
+<li>
+<code><a href="../reference/biplot_pq.html">biplot_pq()</a></code> no longer displays “Samples” on the taxon axis; the position used for the modality name annotations is now unlabeled.</li>
 </ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.15.1" id="miscmetabar-0151">MiscMetabar 0.15.1<a class="anchor" aria-label="anchor" href="#miscmetabar-0151"></a></h2>
 <div class="section level3">
 <h3 id="new-features-0-15-1">New features<a class="anchor" aria-label="anchor" href="#new-features-0-15-1"></a></h3>
 <ul><li>
@@ -379,7 +405,7 @@
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.6.0" id="miscmetabar-060">MiscMetabar 0.6.0<a class="anchor" aria-label="anchor" href="#miscmetabar-060"></a></h2>
-<ul><li>Add function <code><a href="../reference/ancombc_pq.html">ancombc_pq()</a></code> to simplify the call to <code>ancombc2()</code> from the ANCOMBC2 package: ANalysis of COmpositions of Microbiomes with Bias Correction 2</li>
+<ul><li>Add function <code><a href="../reference/ancombc_pq.html">ancombc_pq()</a></code> to simplify the call to <code><a href="https://rdrr.io/pkg/ANCOMBC/man/ancombc2.html" class="external-link">ANCOMBC::ancombc2()</a></code> : ANalysis of COmpositions of Microbiomes with Bias Correction 2</li>
 <li>Add param <code>taxa_names_from_physeq</code> (default FALSE) to <code><a href="../reference/subset_taxa_pq.html">subset_taxa_pq()</a></code>
 </li>
 <li>Add param <code>rarefy_by_sample</code> (default FALSE) to function <code><a href="../reference/ggbetween_pq.html">ggbetween_pq()</a></code>
@@ -396,7 +422,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.52" id="miscmetabar-052">MiscMetabar 0.52<a class="anchor" aria-label="anchor" href="#miscmetabar-052"></a></h2>
-<ul><li>Add function <code><a href="../reference/ggbetween_pq.html">ggbetween_pq()</a></code> to facilitate comparison of hill number using the power of <code><a href="https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html" class="external-link">ggstatsplot::ggbetweenstats()</a></code>
+<ul><li>Add function <code><a href="../reference/ggbetween_pq.html">ggbetween_pq()</a></code> to facilitate comparison of hill number using the power of <code><a href="https://www.indrapatil.com/ggstatsplot/reference/ggbetweenstats.html" class="external-link">ggstatsplot::ggbetweenstats()</a></code>
 </li>
 <li>Add function <code><a href="../reference/plot_SCBD_pq.html">plot_SCBD_pq()</a></code> to plot species contributions to beta diversity (SCBD) of samples</li>
 </ul></div>

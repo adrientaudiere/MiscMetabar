@@ -1,21 +1,82 @@
 # Changelog
 
+## MiscMetabar 0.15.2 (in development)
+
+- [`hill_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_bar_pq.md)
+  gains five parameters: `error_fun` (a function returning
+  `c(lower, upper)` bounds, enabling asymmetric intervals such as
+  quantile ranges; default mean ± SE), `error_fun_lab` (caption label;
+  default `"mean ± SE"`), `error_bar_alpha` (transparency of the
+  secondary top-half error bar drawn over jittered points; default
+  `0.35`), `point_alpha` (transparency of jittered data points; default
+  `0.7`), and `letters_below_bar` (when `TRUE`, compact letters are
+  placed below the x-axis at a fixed position, giving a clean layout
+  independent of data spread; default `FALSE`). Groups with `NA` values
+  in the grouping variable now receive `"n.d."` letters when Tukey HSD
+  is run, instead of being silently dropped.
+- [`hill_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_bar_pq.md)
+  new function plotting Hill diversity bar charts (mean ±SE, jittered
+  points, Kruskal-Wallis subtitle, optional Tukey HSD compact letter
+  display) for one or multiple Hill orders via a patchwork layout.
+- [`tax_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/tax_bar_pq.md)
+  fixes a bug where `nb_seq = FALSE` with a grouping `fact` would sum
+  binary per-sample presence values across samples sharing the same
+  modality, inflating bar heights beyond the true OTU count. Each OTU is
+  now counted at most once per group (present in ≥1 sample of that
+  group), so bar segments correctly show the number of distinct OTUs in
+  each taxonomic rank per modality.
+- [`tax_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/tax_bar_pq.md)
+  gains a `show_n_samples` parameter (default `FALSE`). When `TRUE`, the
+  number of samples per group is appended below each x-axis label as
+  `(n=X)`.
+- New transformation/normalisation functions collected in
+  `R/normalize_pq.R`, documented in a new article
+  (`articles/normalization.html`).
+- [`css_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/css_pq.md)
+  new function wrapping
+  [`metagenomeSeq::cumNorm()`](https://rdrr.io/pkg/metagenomeSeq/man/cumNorm.html)
+  for Cumulative Sum Scaling normalization.
+- [`gmpr_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/gmpr_pq.md)
+  new function implementing the Geometric Mean of Pairwise Ratios
+  normalization (Chen et al. 2018) in pure R.
+- [`mcknight_residuals_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/mcknight_residuals_pq.md)
+  new function computing depth-robust alpha diversity as residuals of
+  log-richness on log-depth (McKnight 2018; Mikryukov 2023).
+- [`rarefy_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/rarefy_pq.md)
+  new function wrapping
+  [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html)
+  with optional averaging over `n` rarefaction repetitions.
+- [`srs_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/srs_pq.md)
+  new function wrapping
+  [`SRS::SRS()`](https://rdrr.io/pkg/SRS/man/SRS.html) for Scaling with
+  Ranked Subsampling normalization.
+- [`tmm_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/tmm_pq.md)
+  new function wrapping `edgeR::calcNormFactors(method = "TMM")` for
+  Trimmed Mean of M-values normalization.
+- [`transform_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/transform_pq.md)
+  new function providing a unified interface to common count
+  transformations (`tss`, `hellinger`, `clr`, `rclr`, `log1p`, `z`,
+  `pa`, `rank`) via
+  [`vegan::decostand()`](https://vegandevs.github.io/vegan/reference/decostand.html).
+- [`vst_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/vst_pq.md)
+  new function wrapping
+  [`DESeq2::varianceStabilizingTransformation()`](https://rdrr.io/pkg/DESeq2/man/varianceStabilizingTransformation.html).
+- [`biplot_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/biplot_pq.md)
+  gains a `color_rank` parameter (default `NULL`): when set to a
+  taxonomic rank (e.g. `"Class"`), bars are colored by that rank instead
+  of by sample modality, giving a taxonomic-composition view of the
+  biplot. The fill legend is automatically titled with the rank name.
+- [`biplot_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/biplot_pq.md)
+  gains a `taxa_names_rank` parameter (default `NULL`): when set to a
+  taxonomic rank (e.g. `"Genus"`), the taxon axis labels display that
+  rank instead of
+  [`taxa_names()`](https://rdrr.io/pkg/phyloseq/man/taxa_names-methods.html).
+  Each OTU remains a separate bar regardless of shared rank values.
+- [`biplot_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/biplot_pq.md)
+  no longer displays “Samples” on the taxon axis; the position used for
+  the modality name annotations is now unlabeled.
+
 ## MiscMetabar 0.15.1
-
-### Bug fixes
-
-- [`assign_mmseqs2()`](https://adrientaudiere.github.io/MiscMetabar/reference/assign_mmseqs2.md):
-  fixed a crash when partial taxonomic assignments produce ragged split
-  vectors; shorter vectors are now padded with `NA` before being
-  combined into a matrix.
-- [`format2dada2_species()`](https://adrientaudiere.github.io/MiscMetabar/reference/format2dada2_species.md):
-  fixed broken sequence name recovery for unmatched entries; names are
-  now correctly restored using integer indices rather than character
-  lookup.
-- `unwanted_tax_patterns`: fixed duplicate name
-  `"unknown species names"` (now `"unknown species (_sp prefix)"` and
-  `"unknown species (_species prefix)"`); corrected `@format` element
-  count from 13 to 17.
 
 ### New features
 
@@ -808,8 +869,9 @@ CRAN release: 2024-04-28
 
 - Add function
   [`ancombc_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ancombc_pq.md)
-  to simplify the call to `ancombc2()` from the ANCOMBC2 package:
-  ANalysis of COmpositions of Microbiomes with Bias Correction 2
+  to simplify the call to
+  [`ANCOMBC::ancombc2()`](https://rdrr.io/pkg/ANCOMBC/man/ancombc2.html)
+  : ANalysis of COmpositions of Microbiomes with Bias Correction 2
 - Add param `taxa_names_from_physeq` (default FALSE) to
   [`subset_taxa_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/subset_taxa_pq.md)
 - Add param `rarefy_by_sample` (default FALSE) to function
@@ -852,7 +914,7 @@ CRAN release: 2024-04-28
 - Add function
   [`ggbetween_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ggbetween_pq.md)
   to facilitate comparison of hill number using the power of
-  [`ggstatsplot::ggbetweenstats()`](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html)
+  [`ggstatsplot::ggbetweenstats()`](https://www.indrapatil.com/ggstatsplot/reference/ggbetweenstats.html)
 - Add function
   [`plot_SCBD_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_SCBD_pq.md)
   to plot species contributions to beta diversity (SCBD) of samples

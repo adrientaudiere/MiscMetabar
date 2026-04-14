@@ -13,6 +13,8 @@
 - [Import/export and
   track](https://adrientaudiere.github.io/MiscMetabar/articles/import_export_track.md):
 - [Introduction](https://adrientaudiere.github.io/MiscMetabar/articles/MiscMetabar.md):
+- [Transformation and normalisation of phyloseq
+  objects](https://adrientaudiere.github.io/MiscMetabar/articles/normalization.md):
 - [MiscMetabar Package Report, by
   pkgnet](https://adrientaudiere.github.io/MiscMetabar/articles/pkgnet-report.md):
 - [Reclustering](https://adrientaudiere.github.io/MiscMetabar/articles/Reclustering.md):

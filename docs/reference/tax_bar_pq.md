@@ -25,7 +25,8 @@ tax_bar_pq(
   top_label_size = 3.2,
   bar_width = NULL,
   bar_internal_color = NA,
-  linewidth_bar_internal = ifelse(is.na(bar_internal_color), 0, 0.5)
+  linewidth_bar_internal = ifelse(is.na(bar_internal_color), 0, 0.5),
+  show_n_samples = FALSE
 )
 ```
 
@@ -127,6 +128,11 @@ tax_bar_pq(
   (default 0 if `bar_internal_color` is `NA`, otherwise 0.5) Line width
   of bar borders.
 
+- show_n_samples:
+
+  (logical; default `FALSE`) If `TRUE`, the number of samples per group
+  is displayed below the group label on the x-axis, as `"group\n(n=X)"`.
+
 ## Value
 
 A [`ggplot`](https://ggplot2.tidyverse.org/reference/ggplot.html)2 plot
@@ -154,6 +160,9 @@ data_fungi_ab <- subset_taxa_pq(data_fungi,
 #> Number of kept ASV 35
 #> Number of kept samples 170
 tax_bar_pq(data_fungi_ab) + theme(legend.position = "none")
+
+tax_bar_pq(data_fungi_ab, taxa = "Class", fact = "Height",
+  show_n_samples = TRUE)
 
 # \donttest{
 tax_bar_pq(data_fungi_ab, taxa = "Class")

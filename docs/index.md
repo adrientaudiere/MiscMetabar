@@ -29,7 +29,7 @@ Holmes 2013) and [`targets`](https://books.ropensci.org/targets/)
 
 A CRAN version of MiscMetabar is available.
 
-``` r
+``` R
 install.packages("MiscMetabar")
 ```
 
@@ -39,14 +39,14 @@ use the package [pak](https://pak.r-lib.org/) to install MiscMetabar. It
 comes with the benefit to check for uninstalled dependencies on your
 computer (system requirements), thank you [pak](https://pak.r-lib.org/)!
 
-``` r
+``` R
 pak::pkg_install("MiscMetabar")
 ```
 
 You can also install the stable development version from
 [GitHub](https://github.com/) with:
 
-``` r
+``` R
 if (!require("devtools", quietly = TRUE)) {
   install.packages("devtools")
 }
@@ -56,7 +56,7 @@ devtools::install_github("adrientaudiere/MiscMetabar")
 You can install the unstable development version from
 [GitHub](https://github.com/) with:
 
-``` r
+``` R
 if (!require("devtools", quietly = TRUE)) {
   install.packages("devtools")
 }
@@ -99,7 +99,7 @@ codes](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html).
 
 ### Summarize a physeq object
 
-``` r
+``` R
 library("MiscMetabar")
 library("phyloseq")
 library("magrittr")
@@ -113,7 +113,7 @@ shown.](reference/figures/README-example-1.png)
 
 ### Alpha-diversity analysis
 
-``` r
+``` R
 p <- MiscMetabar::hill_pq(data_fungi, fact = "Height")
 p$plot_Hill_0
 ```
@@ -123,14 +123,14 @@ modality](reference/figures/README-unnamed-chunk-6-1.png)
 
 Hill number 0
 
-``` r
+``` R
 p$plot_tuckey
 #> NULL
 ```
 
 ### Beta-diversity analysis
 
-``` r
+``` R
 if (!require("ggVennDiagram", quietly = TRUE)) {
   install.packages("ggVennDiagram")
 }
@@ -191,13 +191,13 @@ of these softwares, please visit their dedicated websites.
 
 #### [blast+](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html#downloadblastdata)
 
-``` sh
+``` R
 sudo apt-get install ncbi-blast+
 ```
 
 #### [vsearch](https://github.com/torognes/vsearch)
 
-``` sh
+``` R
 sudo apt-get install vsearch
 ```
 
@@ -207,7 +207,7 @@ with `conda`.
 
 #### [swarm](https://github.com/torognes/swarm)
 
-``` sh
+``` R
 git clone https://github.com/torognes/swarm.git
 cd swarm/
 make
@@ -219,7 +219,7 @@ with `conda`.
 
 #### [Mumu](https://github.com/frederic-mahe/mumu)
 
-``` sh
+``` R
 git clone https://github.com/frederic-mahe/mumu.git
 cd ./mumu/
 make
@@ -229,7 +229,7 @@ make install  # as root or sudo
 
 #### [cutadapt](https://cutadapt.readthedocs.io/en/stable/)
 
-``` sh
+``` R
 conda create -n cutadaptenv cutadapt
 ```
 

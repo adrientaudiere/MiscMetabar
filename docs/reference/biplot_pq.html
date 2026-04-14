@@ -13,7 +13,7 @@ Graphical representation of distribution of taxa across two samples."><script da
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,6 +29,7 @@ Graphical representation of distribution of taxa across two samples."><script da
     <li><a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a></li>
     <li><a class="dropdown-item" href="../articles/explore_data.html">Explore phyloseq data</a></li>
     <li><a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a></li>
+    <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -102,6 +103,8 @@ Graphical representation of distribution of taxa across two samples."><script da
 <span>  split_by_sample <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  sample_border_col <span class="op">=</span> <span class="st">"#d4d0acff"</span>,</span>
 <span>  sample_border_width <span class="op">=</span> <span class="fl">0.3</span>,</span>
+<span>  color_rank <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  taxa_names_rank <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  plotly_version <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -239,6 +242,22 @@ sample segments when <code>split_by_sample = TRUE</code>.</p></dd>
 sample segments when <code>split_by_sample = TRUE</code>.</p></dd>
 
 
+<dt id="arg-color-rank">color_rank<a class="anchor" aria-label="anchor" href="#arg-color-rank"></a></dt>
+<dd><p>(default: NULL) Name of a taxonomic rank in <code>tax_table(physeq)</code>
+to use for coloring bars. When NULL (default), bars are colored by sample
+modality using <code>left_fill</code> and <code>right_fill</code>. When set (e.g. <code>"Class"</code>),
+each bar is colored according to its taxonomic assignment at that rank
+and the <code>left_fill</code>/<code>right_fill</code> color parameters are ignored.</p></dd>
+
+
+<dt id="arg-taxa-names-rank">taxa_names_rank<a class="anchor" aria-label="anchor" href="#arg-taxa-names-rank"></a></dt>
+<dd><p>(default: NULL) Name of a taxonomic rank in
+<code>tax_table(physeq)</code> to use as labels on the taxa axis instead of
+<code>taxa_names()</code>. When NULL (default), <code>taxa_names()</code> are used. When set
+(e.g. <code>"Genus"</code>), the genus name is displayed. OTUs sharing the same
+label at this rank will appear as a single merged bar.</p></dd>
+
+
 <dt id="arg-plotly-version">plotly_version<a class="anchor" aria-label="anchor" href="#arg-plotly-version"></a></dt>
 <dd><p>If TRUE, use <code><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html" class="external-link">plotly::ggplotly()</a></code> to return
 a interactive ggplot.</p></dd>
@@ -259,7 +278,7 @@ a interactive ggplot.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">data_fungi_2Height</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html" class="external-link">subset_samples</a></span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="va">Height</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Low"</span>, <span class="st">"High"</span><span class="op">)</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">data_fungi_2Height</span> <span class="op">&lt;-</span> <span class="fu">subset_samples</span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="va">Height</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Low"</span>, <span class="st">"High"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">biplot_pq</span><span class="op">(</span><span class="va">data_fungi_2Height</span>, <span class="st">"Height"</span>, merge_sample_by <span class="op">=</span> <span class="st">"Height"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 5 taxa and 0 samples.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for <span style="color: #00BB00;">y</span> is already present.</span>
@@ -273,6 +292,15 @@ a interactive ggplot.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for <span style="color: #00BB00;">y</span> is already present.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Adding another scale for <span style="color: #00BB00;">y</span>, which will replace the existing scale.</span>
 <span class="r-plt img"><img src="biplot_pq-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">biplot_pq</span><span class="op">(</span><span class="va">data_fungi_2Height</span>, <span class="st">"Height"</span>,</span></span>
+<span class="r-in"><span>  merge_sample_by <span class="op">=</span> <span class="st">"Height"</span>,</span></span>
+<span class="r-in"><span>  color_rank <span class="op">=</span> <span class="st">"Order"</span>,</span></span>
+<span class="r-in"><span>  taxa_names_rank <span class="op">=</span> <span class="st">"Genus"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 5 taxa and 0 samples.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for <span style="color: #00BB00;">y</span> is already present.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding another scale for <span style="color: #00BB00;">y</span>, which will replace the existing scale.</span>
+<span class="r-plt img"><img src="biplot_pq-3.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

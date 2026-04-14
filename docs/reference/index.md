@@ -107,7 +107,7 @@
 - [`get_funguild_db()`](https://adrientaudiere.github.io/MiscMetabar/reference/get_funguild_db.md)
   : Retrieve the FUNGuild database
 
-### Transform OTU table only
+### Transform OTU table only. See also vignette on [transformation & normalisation](https://adrientaudiere.github.io/MiscMetabar/reference/articles/normalization.md)
 
 - [`as_binary_otu_table()`](https://adrientaudiere.github.io/MiscMetabar/reference/as_binary_otu_table.md)
   :
@@ -118,14 +118,41 @@
   [`phyloseq-class`](https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html)
   object with a binary otu_table.
 
+- [`css_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/css_pq.md)
+  : Cumulative Sum Scaling (CSS) normalization of a phyloseq object
+
+- [`gmpr_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/gmpr_pq.md)
+  : Geometric Mean of Pairwise Ratios (GMPR) normalization of a phyloseq
+  object
+
+- [`mcknight_residuals_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/mcknight_residuals_pq.md)
+  : Depth-robust alpha diversity residuals (McKnight / Mikryukov)
+
 - [`normalize_prop_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/normalize_prop_pq.md)
   : Normalize OTU table using samples depth
+
+- [`rarefy_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/rarefy_pq.md)
+  : Rarefy a phyloseq object, optionally averaging over repetitions
+
+- [`srs_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/srs_pq.md)
+  : Scaling with Ranked Subsampling (SRS) normalization of a phyloseq
+  object
 
 - [`taxa_as_columns()`](https://adrientaudiere.github.io/MiscMetabar/reference/taxa_as_columns.md)
   : Force taxa to be in columns in the otu_table of a physeq object
 
 - [`taxa_as_rows()`](https://adrientaudiere.github.io/MiscMetabar/reference/taxa_as_rows.md)
   : Force taxa to be in columns in the otu_table of a physeq object
+
+- [`tmm_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/tmm_pq.md)
+  : Trimmed Mean of M-values (TMM) normalization of a phyloseq object
+
+- [`transform_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/transform_pq.md)
+  : Unified dispatcher for all OTU-table transformations and
+  normalisations
+
+- [`vst_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/vst_pq.md)
+  : Variance Stabilizing Transformation of a phyloseq object (DESeq2)
 
 ### Subset/merge taxa
 
@@ -275,6 +302,10 @@
 - [`hill_acc_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_acc_pq.md)
   : Hill diversity accumulation curve for a phyloseq object (default: q
   = 1)
+
+- [`hill_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_bar_pq.md)
+  : Bar plot of Hill diversity with SE, jittered points, and
+  Kruskal-Wallis test
 
 - [`hill_curves_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_curves_pq.md)
   : Hill Diversities and Corresponding Accumulation Curves for phyloseq

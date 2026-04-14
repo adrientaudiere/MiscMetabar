@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,6 +23,7 @@
     <li><a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a></li>
     <li><a class="dropdown-item" href="../articles/explore_data.html">Explore phyloseq data</a></li>
     <li><a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a></li>
+    <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -274,7 +275,7 @@
         <dd>Retrieve the FUNGuild database</dd>
       </dl></div><div class="section level2">
 
-      <h3 id="transform-otu-table-only">Transform OTU table only<a class="anchor" aria-label="anchor" href="#transform-otu-table-only"></a></h3>
+      <h3 id="transform-otu-table-only-see-also-vignette-on-transformation-normalisation-articles-normalization-html-">Transform OTU table only. See also vignette on <a href="articles/normalization.html">transformation &amp; normalisation</a><a class="anchor" aria-label="anchor" href="#transform-otu-table-only-see-also-vignette-on-transformation-normalisation-articles-normalization-html-"></a></h3>
 
 
       <dl></dl></div><div class="section level2">
@@ -291,10 +292,45 @@
 
         <dt>
 
+          <code><a href="css_pq.html">css_pq()</a></code>
+
+        </dt>
+        <dd>Cumulative Sum Scaling (CSS) normalization of a phyloseq object</dd>
+
+        <dt>
+
+          <code><a href="gmpr_pq.html">gmpr_pq()</a></code>
+
+        </dt>
+        <dd>Geometric Mean of Pairwise Ratios (GMPR) normalization of a phyloseq object</dd>
+
+        <dt>
+
+          <code><a href="mcknight_residuals_pq.html">mcknight_residuals_pq()</a></code>
+
+        </dt>
+        <dd>Depth-robust alpha diversity residuals (McKnight / Mikryukov)</dd>
+
+        <dt>
+
           <code><a href="normalize_prop_pq.html">normalize_prop_pq()</a></code>
 
         </dt>
         <dd>Normalize OTU table using samples depth</dd>
+
+        <dt>
+
+          <code><a href="rarefy_pq.html">rarefy_pq()</a></code>
+
+        </dt>
+        <dd>Rarefy a phyloseq object, optionally averaging over repetitions</dd>
+
+        <dt>
+
+          <code><a href="srs_pq.html">srs_pq()</a></code>
+
+        </dt>
+        <dd>Scaling with Ranked Subsampling (SRS) normalization of a phyloseq object</dd>
 
         <dt>
 
@@ -309,6 +345,27 @@
 
         </dt>
         <dd>Force taxa to be in columns in the otu_table of a physeq object</dd>
+
+        <dt>
+
+          <code><a href="tmm_pq.html">tmm_pq()</a></code>
+
+        </dt>
+        <dd>Trimmed Mean of M-values (TMM) normalization of a phyloseq object</dd>
+
+        <dt>
+
+          <code><a href="transform_pq.html">transform_pq()</a></code>
+
+        </dt>
+        <dd>Unified dispatcher for all OTU-table transformations and normalisations</dd>
+
+        <dt>
+
+          <code><a href="vst_pq.html">vst_pq()</a></code>
+
+        </dt>
+        <dd>Variance Stabilizing Transformation of a phyloseq object (DESeq2)</dd>
       </dl></div><div class="section level2">
 
       <h3 id="subset-merge-taxa">Subset/merge taxa<a class="anchor" aria-label="anchor" href="#subset-merge-taxa"></a></h3>
@@ -631,6 +688,13 @@
 
         </dt>
         <dd>Hill diversity accumulation curve for a phyloseq object (default: q = 1)</dd>
+
+        <dt>
+
+          <code><a href="hill_bar_pq.html">hill_bar_pq()</a></code>
+
+        </dt>
+        <dd>Bar plot of Hill diversity with SE, jittered points, and Kruskal-Wallis test</dd>
 
         <dt>
 

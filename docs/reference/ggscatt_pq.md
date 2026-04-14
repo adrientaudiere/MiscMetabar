@@ -3,7 +3,7 @@
 [![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 Basically a wrapper of function
-[`ggstatsplot::ggscatterstats()`](https://indrajeetpatil.github.io/ggstatsplot/reference/ggscatterstats.html)
+[`ggstatsplot::ggscatterstats()`](https://www.indrapatil.com/ggstatsplot/reference/ggscatterstats.html)
 for object of class phyloseq and Hill number.
 
 ## Usage
@@ -71,7 +71,7 @@ ggscatt_pq(
 - ...:
 
   Additional arguments passed on to
-  [`ggstatsplot::ggscatterstats()`](https://indrajeetpatil.github.io/ggstatsplot/reference/ggscatterstats.html)
+  [`ggstatsplot::ggscatterstats()`](https://www.indrapatil.com/ggstatsplot/reference/ggscatterstats.html)
   function.
 
 ## Value
@@ -83,7 +83,7 @@ plot for each q.
 
 This function is mainly a wrapper of the work of others. Please make a
 reference to
-[`ggstatsplot::ggscatterstats()`](https://indrajeetpatil.github.io/ggstatsplot/reference/ggscatterstats.html)
+[`ggstatsplot::ggscatterstats()`](https://www.indrapatil.com/ggstatsplot/reference/ggscatterstats.html)
 if you use this function.
 
 ## See also
@@ -98,10 +98,10 @@ Adrien Taudière
 
 ``` r
 if (requireNamespace("ggstatsplot")) {
-  ggscatt_pq(data_fungi_mini, "Time", type = "non-parametric")
-  ggscatt_pq(data_fungi_mini, "Time", q = 1:4, type = "parametric")
+  ggscatt_pq(data_fungi_mini, "Time", q = 0, type = "non-parametric")
+  ggscatt_pq(data_fungi_mini, "Time", q = 0, type = "parametric")
   ggscatt_pq(data_fungi_mini, "Sample_id",
-    q = c(0, 0.5),
+    q = 0,
     one_plot = FALSE
   )
 }
@@ -109,35 +109,18 @@ if (requireNamespace("ggstatsplot")) {
 #> Taxa are now in rows.
 #> ! Sample coverage is 0, most estimators will return `NaN`.
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
 #> Joining with `by = join_by(Sample)`
 #> Taxa are now in columns.
 #> Taxa are now in rows.
 #> ! Sample coverage is 0, most estimators will return `NaN`.
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
 #> Joining with `by = join_by(Sample)`
 #> Taxa are now in columns.
 #> Taxa are now in rows.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
 #> ! Sample coverage is 0, most estimators will return `NaN`.
 #> ! Sample coverage is 0, most estimators will return `NaN`.
 #> Joining with `by = join_by(Sample)`
 #> [[1]]
-#> `stat_xsidebin()` using `bins = 30`. Pick better value `binwidth`.
-#> `stat_ysidebin()` using `bins = 30`. Pick better value `binwidth`.
-
-#> 
-#> [[2]]
 #> `stat_xsidebin()` using `bins = 30`. Pick better value `binwidth`.
 #> `stat_ysidebin()` using `bins = 30`. Pick better value `binwidth`.
 

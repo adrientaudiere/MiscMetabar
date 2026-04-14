@@ -2,12 +2,13 @@
 % Please edit documentation in R/normalize_pq.R
 \name{transform_pq}
 \alias{transform_pq}
-\title{Transform the otu_table of a \code{\link[phyloseq]{phyloseq-class}} object
-using standard ecological / compositional transformations.}
+\title{Unified dispatcher for all OTU-table transformations and normalisations}
 \usage{
 transform_pq(
   physeq,
-  method = c("tss", "hellinger", "clr", "rclr", "log1p", "z", "pa", "rank"),
+  method = c("tss", "hellinger", "clr", "rclr", "log1p", "z", "pa", "rank",
+    "normalize_prop", "rarefy", "srs", "gmpr", "css", "tmm", "vst", "mcknight_residuals"),
+  pseudocount = 1,
   ...
 )
 }
@@ -15,19 +16,41 @@ transform_pq(
 \item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{method}{(character, default \code{"tss"}) the transformation to apply.
-One of \code{"tss"} (total sum scaling, i.e. relative abundances),
-\code{"hellinger"}, \code{"clr"} (centered log-ratio),
-\code{"rclr"} (robust centered log-ratio),
-\code{"log1p"} (\eqn{\log(1 + x)}), \code{"z"} (standardisation, via
-\code{decostand(method = "standardize")}), \code{"pa"} (presence/absence) or
-\code{"rank"}.}
+\item{method}{(character, default \code{"tss"}) transformation to apply. One of:
+\describe{
+\item{\code{"tss"}}{Total Sum Scaling — divide by library size.}
+\item{\code{"hellinger"}}{Square-root of proportions. Good for ordination.}
+\item{\code{"clr"}}{Centred log-ratio (adds \code{pseudocount} to handle zeros).}
+\item{\code{"rclr"}}{Robust CLR (adds \code{pseudocount} to handle zeros).}
+\item{\code{"log1p"}}{\eqn{\log(1 + x)} transformation.}
+\item{\code{"z"}}{Per-taxon z-score standardisation.}
+\item{\code{"pa"}}{Presence/absence (0/1).}
+\item{\code{"rank"}}{Replace counts by within-sample ranks.}
+\item{\code{"normalize_prop"}}{TSS × constant + log, via \code{\link[=normalize_prop_pq]{normalize_prop_pq()}}.}
+\item{\code{"rarefy"}}{Rarefaction to equal depth, via \code{\link[=rarefy_pq]{rarefy_pq()}}.}
+\item{\code{"srs"}}{Scaling with Ranked Subsampling, via \code{\link[=srs_pq]{srs_pq()}}.
+Requires the \pkg{SRS} package.}
+\item{\code{"gmpr"}}{Geometric Mean of Pairwise Ratios, via \code{\link[=gmpr_pq]{gmpr_pq()}}.}
+\item{\code{"css"}}{Cumulative Sum Scaling, via \code{\link[=css_pq]{css_pq()}}.
+Requires the \pkg{metagenomeSeq} package.}
+\item{\code{"tmm"}}{Trimmed Mean of M-values, via \code{\link[=tmm_pq]{tmm_pq()}}.
+Requires the \pkg{edgeR} package.}
+\item{\code{"vst"}}{Variance Stabilising Transformation, via \code{\link[=vst_pq]{vst_pq()}}.
+Requires the \pkg{DESeq2} package.}
+\item{\code{"mcknight_residuals"}}{Log-log depth residuals added to
+\code{sample_data}, via \code{\link[=mcknight_residuals_pq]{mcknight_residuals_pq()}}.}
+}}
 
-\item{...}{Additional arguments passed on to \code{\link[vegan:decostand]{vegan::decostand()}}.}
+\item{pseudocount}{(numeric, default \code{1}) added before \code{"clr"} / \code{"rclr"}
+to avoid non-positive values.  Ignored for all other methods.}
+
+\item{...}{Additional arguments forwarded to the underlying function
+(\code{\link[vegan:decostand]{vegan::decostand()}}, \code{\link[=rarefy_pq]{rarefy_pq()}}, \code{\link[=srs_pq]{srs_pq()}}, etc.).}
 }
 \value{
 A new \code{\link[phyloseq]{phyloseq-class}} object with a
-transformed \code{otu_table}. The orientation (\code{taxa_are_rows}) is preserved.
+transformed \code{otu_table} (and augmented \code{sample_data} for
+\code{"mcknight_residuals"}).
 }
 \description{
 \if{html}{\out{
@@ -36,24 +59,43 @@ transformed \code{otu_table}. The orientation (\code{taxa_are_rows}) is preserve
 }}
 
 
-Thin wrapper around \code{\link[vegan:decostand]{vegan::decostand()}} providing the most common
-transformations used on microbial count tables, plus a few convenience
-methods (\code{"pa"} for presence/absence and \code{"log1p"} for a simple
-\eqn{\log(1 + x)} transformation). The function takes care of the
-\code{taxa_are_rows} orientation so the user does not have to.
+Single entry-point for all count-table transformations available in
+MiscMetabar.  Ecological methods (\code{"tss"}, \code{"hellinger"}, \code{"clr"},
+\code{"rclr"}, \code{"log1p"}, \code{"z"}, \code{"pa"}, \code{"rank"}) are delegated to
+\code{\link[vegan:decostand]{vegan::decostand()}}.  Library-size normalisation methods (\code{"rarefy"},
+\code{"srs"}, \code{"gmpr"}, \code{"css"}, \code{"tmm"}, \code{"vst"}) and the McKnight
+log-log residual method (\code{"mcknight_residuals"}) are delegated to
+their dedicated \verb{*_pq()} functions.  All \code{...} arguments are forwarded
+to the underlying function.
 }
 \examples{
 \dontshow{if (rlang::is_installed("vegan")) withAutoprint(\{ # examplesIf}
-data_f_tss <- transform_pq(data_fungi_mini, method = "tss")
+data_f_tss  <- transform_pq(data_fungi_mini, method = "tss")
 sample_sums(data_f_tss)
 
-data_f_hell <- transform_pq(data_fungi_mini, method = "hellinger")
-data_f_clr <- transform_pq(data_fungi_mini, method = "clr")
-data_f_pa <- transform_pq(data_fungi_mini, method = "pa")
+data_f_hell <- transform_pq(data_fungi, method = "hellinger")
+data_f_clr  <- transform_pq(data_fungi, method = "clr")
+data_f_rclr <- transform_pq(data_fungi, method = "rclr")
+data_f_log1p <- transform_pq(data_fungi, method = "log1p")
+data_f_z    <- transform_pq(data_fungi, method = "z")
+data_f_pa   <- transform_pq(data_fungi, method = "pa")
+data_f_rank <- transform_pq(data_fungi, method = "rank")
+data_f_norm_prop_log10 <- transform_pq(data_fungi, method = "normalize_prop", base_log = 10)
+data_f_norm_prop_no_log <- transform_pq(data_fungi, method = "normalize_prop", base_log = NULL)
+data_f_norm_prop_log2 <- transform_pq(data_fungi, method = "normalize_prop", base_log = 2)
+data_rarefy   <- transform_pq(data_fungi, method = "rarefy", seed = 1)
+data_f_srs     <- transform_pq(data_fungi, method = "srs", seed = 1)
+data_f_gmpr    <- transform_pq(data_fungi, method = "gmpr")
+data_f_css     <- transform_pq(data_fungi, method = "css")
+data_f_tmm     <- transform_pq(data_fungi, method = "tmm")
+data_f_vst     <- transform_pq(data_fungi, method = "vst")
+data_f_mcknight <- transform_pq(data_fungi, method = "mcknight_residuals")
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[vegan:decostand]{vegan::decostand()}}, \code{\link[=normalize_prop_pq]{normalize_prop_pq()}}, \code{\link[=as_binary_otu_table]{as_binary_otu_table()}}
+\code{\link[=normalize_prop_pq]{normalize_prop_pq()}}, \code{\link[=rarefy_pq]{rarefy_pq()}}, \code{\link[=srs_pq]{srs_pq()}}, \code{\link[=gmpr_pq]{gmpr_pq()}},
+\code{\link[=css_pq]{css_pq()}}, \code{\link[=tmm_pq]{tmm_pq()}}, \code{\link[=vst_pq]{vst_pq()}}, \code{\link[=mcknight_residuals_pq]{mcknight_residuals_pq()}},
+\code{\link[=as_binary_otu_table]{as_binary_otu_table()}}, \code{\link[vegan:decostand]{vegan::decostand()}}
 }
 \author{
 Adrien Taudière
