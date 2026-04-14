@@ -7047,7 +7047,12 @@ plot_ordination_pq <- function(
   y_lab_size,
   x_lab_size,
   show_n_samples,
-  palette
+  palette,
+  error_fun,
+  error_fun_lab,
+  error_bar_alpha,
+  point_alpha,
+  letters_below_bar
 ) {
   # --- Kruskal-Wallis test ---
   kw <- kruskal.test(reformulate(x_name, response = y_name), data = data)
@@ -7060,13 +7065,17 @@ plot_ordination_pq <- function(
 
   # --- Summary stats ---
   summary_data <- data |>
-    dplyr::summarise(
+    dplyr::reframe(
       mean = mean(.data[[y_name]], na.rm = TRUE),
-      se = sd(.data[[y_name]], na.rm = TRUE) / sqrt(dplyr::n()),
+      lower = error_fun(.data[[y_name]])[[1L]],
+      upper = error_fun(.data[[y_name]])[[2L]],
       .by = dplyr::all_of(x_name)
     )
 
   # --- Compact letter display (Tukey HSD after Kruskal-Wallis) ---
+  # NA groups are excluded from statistical comparisons; they receive "n.d."
+  .grp_chr <- function(x) ifelse(is.na(x), "<NA>", as.character(x))
+
   tukey_run <- FALSE
   if (add_letters) {
     if (kw$p.value < p_threshold) {
@@ -7078,8 +7087,15 @@ plot_ordination_pq <- function(
       letters_vec <- multcompView::multcompLetters(pvals)$Letters
       tukey_run <- TRUE
     } else {
-      groups <- as.character(unique(data[[x_name]]))
+      groups <- unique(.grp_chr(data[[x_name]]))
       letters_vec <- stats::setNames(rep("a", length(groups)), groups)
+    }
+
+    # Assign "n.d." to any group absent from the letters (e.g. NA groups)
+    all_groups <- unique(.grp_chr(data[[x_name]]))
+    missing <- setdiff(all_groups, names(letters_vec))
+    if (length(missing) > 0L) {
+      letters_vec[missing] <- "n.d."
     }
 
     point_max <- data |>
@@ -7092,8 +7108,12 @@ plot_ordination_pq <- function(
     summary_data <- summary_data |>
       dplyr::left_join(point_max, by = x_name) |>
       dplyr::mutate(
-        letter = letters_vec[as.character(.data[[x_name]])],
-        letter_y = pmax(mean + se, max_y) + y_offset
+        letter = letters_vec[.grp_chr(.data[[x_name]])],
+        letter_y = if (letters_below_bar) {
+          -y_offset
+        } else {
+          pmax(upper, max_y) + y_offset
+        }
       )
   }
 
@@ -7104,9 +7124,9 @@ plot_ordination_pq <- function(
   ) +
     ggplot2::geom_col(alpha = alpha, width = bar_width) +
     ggplot2::geom_errorbar(
-      ggplot2::aes(ymin = mean - se, ymax = mean + se),
+      ggplot2::aes(ymin = lower, ymax = upper),
       width = 0.2,
-      linewidth = 0.5
+      linewidth = 0.8
     ) +
     ggplot2::geom_jitter(
       data = data,
@@ -7117,10 +7137,16 @@ plot_ordination_pq <- function(
       ),
       shape = 21,
       size = point_size,
-      alpha = 0.85,
+      alpha = point_alpha,
       width = jitter_width,
       height = 0,
       inherit.aes = FALSE
+    ) +
+    ggplot2::geom_errorbar(
+      ggplot2::aes(ymin = mean, ymax = upper),
+      width = 0.2,
+      linewidth = 0.8,
+      alpha = error_bar_alpha
     )
 
   if (add_letters) {
@@ -7151,15 +7177,21 @@ plot_ordination_pq <- function(
       y = y_lab,
       subtitle = kw_subtitle,
       caption = if (add_letters && tukey_run) {
-        "Error bars = \u00b11 SE\nletters from Tukey HSD pairwise comparisons"
+        paste0(
+          "Error bars: ",
+          error_fun_lab,
+          "\nletters from Tukey HSD pairwise comparisons"
+        )
       } else if (add_letters && !tukey_run) {
         paste0(
-          "Error bars = \u00b11 SE; Kruskal-Wallis p \u2265 ",
+          "Error bars: ",
+          error_fun_lab,
+          "; Kruskal-Wallis p \u2265 ",
           p_threshold,
           "\nTukey HSD pairwise comparisons not run (no global significance)"
         )
       } else {
-        "Error bars = \u00b11 SE"
+        paste0("Error bars: ", error_fun_lab)
       }
     ) +
     ggplot2::theme_bw(base_size = base_size) +
@@ -7231,13 +7263,31 @@ plot_ordination_pq <- function(
 #'   assigned; above it all groups receive `"a"`. Default `0.05`.
 #' @param letter_size Size of letter labels in ggplot2 units. Default `5`.
 #' @param letters_top_offset Fraction of the y-range added above the highest
-#'   point / error-bar to position letters. Default `0.2`.
+#'   point / error-bar to position letters. Default `0.05`.
 #' @param y_lab_size Size of y-axis tick labels in pts. Defaults to `base_size`.
 #' @param x_lab_size Size of x-axis tick labels in pts. Defaults to `base_size`.
 #' @param show_n_samples Logical. If `TRUE`, the number of samples per group is
 #'   appended below each x-axis tick label as `(n=X)`. Default `TRUE`.
 #' @param palette Character vector of fill colours. Defaults to the Okabe-Ito
 #'   palette.
+#' @param error_fun Function taking a numeric vector and returning a 2-element
+#'   numeric vector `c(lower, upper)` with the actual y-axis bounds of the
+#'   error bar (not offsets from the mean). The first element is the lower
+#'   bound, the second is the upper bound. This allows asymmetric intervals
+#'   such as quantile ranges. Default computes mean ± SE. Example for a 95%
+#'   quantile interval: `function(x) quantile(x, c(0.025, 0.975),
+#'   na.rm = TRUE)`.
+#' @param error_fun_lab Label for the error bar used in the plot caption.
+#'   Default `"mean ± SE"`.
+#' @param error_bar_alpha Transparency of the secondary top-half error bar
+#'   drawn over the jittered points to hint at the upper extent without
+#'   obscuring data. Default `0.35`.
+#' @param point_alpha Transparency of the jittered data points. Default `0.5`.
+#' @param letters_below_bar Logical. When `TRUE`, compact letters are placed
+#'   below the x-axis (at `y = -letters_top_offset * y_range`), giving a clean
+#'   fixed position independent of data spread. When `FALSE` (default), letters
+#'   are placed above whichever is higher: the error bar top or the highest
+#'   data point.
 #' @param ... Additional arguments passed to [psmelt_samples_pq()] and hence
 #'   to [divent::div_hill()] (e.g. `estimator = "naive"`).
 #'
@@ -7274,7 +7324,7 @@ hill_bar_pq <- function(
   add_letters = TRUE,
   p_threshold = 0.05,
   letter_size = 5,
-  letters_top_offset = 0.2,
+  letters_top_offset = 0.05,
   y_lab_size = NULL,
   x_lab_size = NULL,
   show_n_samples = TRUE,
@@ -7288,6 +7338,15 @@ hill_bar_pq <- function(
     "#CC79A7",
     "#000000"
   ),
+  error_fun = function(x) {
+    m <- mean(x, na.rm = TRUE)
+    se <- sd(x, na.rm = TRUE) / sqrt(sum(!is.na(x)))
+    c(lower = m - se, upper = m + se)
+  },
+  error_fun_lab = "mean \u00b1 SE",
+  error_bar_alpha = 0.35,
+  point_alpha = 0.5,
+  letters_below_bar = FALSE,
   ...
 ) {
   verify_pq(physeq)
@@ -7319,7 +7378,12 @@ hill_bar_pq <- function(
     y_lab_size = y_lab_size,
     x_lab_size = x_lab_size,
     show_n_samples = show_n_samples,
-    palette = palette
+    palette = palette,
+    error_fun = error_fun,
+    error_fun_lab = error_fun_lab,
+    error_bar_alpha = error_bar_alpha,
+    point_alpha = point_alpha,
+    letters_below_bar = letters_below_bar
   )
 
   if (length(ys) == 1) {
