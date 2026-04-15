@@ -565,7 +565,12 @@ test_that("tax_bar_pq work with data_fungi dataset", {
 
 test_that("tax_bar_pq nb_seq=FALSE bar height counts distinct OTUs per group", {
   skip_on_cran()
-  p <- tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time", nb_seq = FALSE)
+  p <- tax_bar_pq(
+    data_fungi_mini,
+    taxa = "Class",
+    fact = "Time",
+    nb_seq = FALSE
+  )
   built <- ggplot2::ggplot_build(p)
   bar_df <- built$data[[1]]
   # Total stacked height per group = number of distinct OTUs in that group,
@@ -575,28 +580,41 @@ test_that("tax_bar_pq nb_seq=FALSE bar height counts distinct OTUs per group", {
 })
 
 test_that("tax_bar_pq always shows modality labels above bars when add_ribbon=FALSE", {
-  has_text_layer <- \(p) any(vapply(p$layers, \(l) inherits(l$geom, "GeomText"), logical(1)))
+  has_text_layer <- \(p) {
+    any(vapply(p$layers, \(l) inherits(l$geom, "GeomText"), logical(1)))
+  }
   get_first_text <- \(p) {
-    idx <- which(vapply(p$layers, \(l) inherits(l$geom, "GeomText"), logical(1)))[1]
+    idx <- which(vapply(
+      p$layers,
+      \(l) inherits(l$geom, "GeomText"),
+      logical(1)
+    ))[1]
     p$layers[[idx]]$data
   }
 
-  # Default (show_n_samples=FALSE): group names appear on top, no "(n=X)"
-  p <- tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time")
+  # Default (show_n_samples=TRUE): group names appear on top, no "(n=X)"
+  p <- tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time", show_n_samples = FALSE)
   expect_s3_class(p, "ggplot")
   expect_true(has_text_layer(p))
   expect_false(any(grepl("\\(n=\\d+\\)", get_first_text(p)$label)))
 
   # show_n_samples=TRUE: group names + "(n=X)" on top
-  p2 <- tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time",
-    show_n_samples = TRUE)
+  p2 <- tax_bar_pq(
+    data_fungi_mini,
+    taxa = "Class",
+    fact = "Time"
+  )
   expect_s3_class(p2, "ggplot")
   expect_true(has_text_layer(p2))
   expect_true(all(grepl("\\(n=\\d+\\)", get_first_text(p2)$label)))
 
   # add_ribbon=TRUE with show_n_samples=TRUE: n appended to ribbon top labels
-  p3 <- tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time",
-    show_n_samples = TRUE, add_ribbon = TRUE)
+  p3 <- tax_bar_pq(
+    data_fungi_mini,
+    taxa = "Class",
+    fact = "Time",
+    add_ribbon = TRUE
+  )
   expect_s3_class(p3, "ggplot")
   expect_true(has_text_layer(p3))
   expect_true(all(grepl("\\(n=\\d+\\)", get_first_text(p3)$label)))

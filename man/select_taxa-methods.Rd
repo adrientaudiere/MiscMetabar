@@ -32,6 +32,9 @@ select_taxa(x, taxa, reorder = TRUE)
 \item{reorder}{Logical specifying whether to use the order in \code{taxa} (TRUE)
 or keep the order in \code{taxa_names(x)} (FALSE)}
 }
+\value{
+An object of the same class as \code{x}, subsetted to the specified taxa.
+}
 \description{
 Select (a subset of) taxa; if \code{x} allows taxa to be reordered, then taxa are
 given in the specified order.

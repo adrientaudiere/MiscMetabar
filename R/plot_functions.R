@@ -4462,7 +4462,7 @@ diff_fct_diff_class <-
 #'   Set to e.g. `"black"` or `"grey30"` for visible borders.
 #' @param linewidth_bar_internal (default 0 if `bar_internal_color` is `NA`, otherwise 0.5)
 #'  Line width of bar borders.
-#' @param show_n_samples (logical; default `FALSE`) If `TRUE`, the number of
+#' @param show_n_samples (logical; default `TRUE`) If `TRUE`, the number of
 #'   samples per group is displayed below the group label on the x-axis, as
 #'   `"group\n(n=X)"`.
 #'
@@ -4531,7 +4531,7 @@ tax_bar_pq <-
     bar_width = NULL,
     bar_internal_color = NA,
     linewidth_bar_internal = ifelse(is.na(bar_internal_color), 0, 0.5),
-    show_n_samples = FALSE
+    show_n_samples = TRUE
   ) {
     if (!nb_seq) {
       physeq <- as_binary_otu_table(physeq)
@@ -7055,9 +7055,10 @@ plot_ordination_pq <- function(
   letters_below_bar
 ) {
   # --- Kruskal-Wallis test ---
+  data[[x_name]] <- as.factor(data[[x_name]])
   kw <- kruskal.test(reformulate(x_name, response = y_name), data = data)
   kw_subtitle <- sprintf(
-    "Kruskal-Wallis: \u03c7\u00b2(%d) = %.2f, p = %s",
+    "Kruskal-Wallis: X-squared(%d) = %.2f, p = %s",
     kw$parameter,
     kw$statistic,
     format.pval(kw$p.value, digits = 3, eps = 0.001)

@@ -769,8 +769,8 @@ CRAN release: 2024-04-28
   [`psmelt_samples_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/psmelt_samples_pq.md)
   to build data frame of samples information including the number of
   sequences (Abundance) and Hill diversity metrics. Useful to use with
-  the [ggstatsplot](https://indrajeetpatil.github.io/ggstatsplot/)
-  packages (see examples).
+  the [ggstatsplot](https://www.indrapatil.com/ggstatsplot/) packages
+  (see examples).
 - Replace param `variable` by `fact` in function
   [`ggbetween_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ggbetween_pq.md)
   and

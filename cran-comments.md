@@ -1,13 +1,13 @@
 ## Resubmission
 
-This is a resubmission. Changes in this version (0.15.1):
+This is a resubmission. Changes in this version (0.15.2):
 
-* Added `@examples` to all exported functions that were missing examples.
-* Fixed commented-out code in `assign_sintax()` examples.
-* Quoted 'R' in the DESCRIPTION field.
-* Fixed `hill_tuckey_pq()` double-transpose bug causing "variable lengths differ" errors.
-* Fixed `plot_refseq_extremity_pq()` example (replaced large dataset with smaller one).
-* Added `divent` to NAMESPACE imports.
+* Fixed `\donttest{` spacing in `transform_pq()` examples that caused an Rd parse warning.
+* Removed commented-out code from `transform_pq()` examples.
+* Added `@return` documentation to `select_taxa` generic.
+* Added new normalisation functions: `css_pq()`, `gmpr_pq()`, `mcknight_residuals_pq()`, `rarefy_pq()`, `srs_pq()`, `tmm_pq()`, `transform_pq()`, `vst_pq()`.
+* Improved `hill_bar_pq()` with new parameters for error bars, point transparency, and letter placement.
+* Fixed `tax_bar_pq()` OTU counting bug when using `nb_seq = FALSE` with a grouping factor.
 
 ## Test environments
 

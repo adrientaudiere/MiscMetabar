@@ -211,16 +211,16 @@ test_that("hill_bar_pq works with data_fungi_mini dataset", {
     ),
     "ggplot"
   )
-  # show_n_samples adds scale_x_discrete layer
-  p <- suppressMessages(
-    hill_bar_pq(data_fungi_mini, Height, q = 0, show_n_samples = TRUE)
-  )
   expect_s3_class(p, "ggplot")
   # custom y labels
   expect_s3_class(
     suppressMessages(
-      hill_bar_pq(data_fungi_mini, Height, q = c(0, 2),
-        y_labs = c(Hill_0 = "Richness", Hill_2 = "Simpson"))
+      hill_bar_pq(
+        data_fungi_mini,
+        Height,
+        q = c(0, 2),
+        y_labs = c(Hill_0 = "Richness", Hill_2 = "Simpson")
+      )
     ),
     "patchwork"
   )

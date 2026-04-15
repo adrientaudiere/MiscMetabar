@@ -4114,7 +4114,7 @@ psmelt_samples_pq <-
               !Abundance,
             ~ mean(.x, na.rm = TRUE)
           ),
-          across(where(is.character), ~ .x[1])
+          across(where(is.character) | where(is.factor), ~ as.character(.x[1]))
         )
     } else {
       psm_temp <- psm |>
@@ -4134,7 +4134,7 @@ psmelt_samples_pq <-
               !Abundance,
             ~ mean(.x, na.rm = TRUE)
           ),
-          across(where(is.character), ~ .x[1]),
+          across(where(is.character) | where(is.factor), ~ as.character(.x[1])),
           .groups = "drop"
         )
     }

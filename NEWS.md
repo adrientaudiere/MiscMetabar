@@ -288,7 +288,7 @@
 - Add functions `signif_ancombc()` and `plot_ancombc_pq()` to plot significant results from `ancombc_pq()` function
 - Add function `distri_1_taxa()` to summarize the distribution of one given taxa across level of a modality
 - Add function `normalize_prop_pq()` to implement the method proposed by [McKnight et al. 2018](https://doi.org/10.5061/dryad.tn8qs35)
-- Add function `psmelt_samples_pq()` to build data frame of samples information including the number of sequences (Abundance) and Hill diversity metrics. Useful to use with the [ggstatsplot](https://indrajeetpatil.github.io/ggstatsplot/) packages (see examples).
+- Add function `psmelt_samples_pq()` to build data frame of samples information including the number of sequences (Abundance) and Hill diversity metrics. Useful to use with the [ggstatsplot](https://www.indrapatil.com/ggstatsplot/) packages (see examples).
 - Replace param `variable` by `fact` in function `ggbetween_pq()` and `hill_pq()` (keeping the variable option in `hill_pq()` for backward compatibility)
 - Fix a bug in the class of the return object of function `chimera_removal_vs()`. Now it return a matrix to be able to be parsed on to `dada2::getUniques()` 
 

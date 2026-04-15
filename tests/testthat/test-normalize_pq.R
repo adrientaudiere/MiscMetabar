@@ -84,8 +84,9 @@ test_that("gmpr_pq handles taxa-as-columns orientation", {
 test_that("gmpr_pq with low ct_min produces valid size factors", {
   expect_warning(
     res <- gmpr_pq(dfm, ct_min = 1, intersect_no = 2),
-    regexp = NA  # no warning expected with relaxed params on data_fungi_mini
-  ) |> tryCatch(error = \(e) NULL)
+    regexp = NA # no warning expected with relaxed params on data_fungi_mini
+  ) |>
+    tryCatch(error = \(e) NULL)
   res <- suppressWarnings(gmpr_pq(dfm))
   expect_true(is_pq(res))
 })

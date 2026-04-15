@@ -42,6 +42,10 @@ select_taxa(x, taxa, reorder = TRUE)
   Logical specifying whether to use the order in `taxa` (TRUE) or keep
   the order in `taxa_names(x)` (FALSE)
 
+## Value
+
+An object of the same class as `x`, subsetted to the specified taxa.
+
 ## Details
 
 This is a simple selector function that is like `prune_taxa(taxa, x)`

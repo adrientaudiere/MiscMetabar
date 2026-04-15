@@ -690,6 +690,7 @@ sample_data_stable <- function(object) {
 #' @param taxa Character vector of taxa to select, in requested order
 #' @param reorder Logical specifying whether to use the order in `taxa` (TRUE)
 #'   or keep the order in `taxa_names(x)` (FALSE)
+#' @return An object of the same class as `x`, subsetted to the specified taxa.
 #' @author Michael R. McLaren (orcid: [0000-0003-1575-473X](https://orcid.org/0000-0003-1575-473X))
 #' @rdname select_taxa-methods
 setGeneric(
