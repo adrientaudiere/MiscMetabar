@@ -7086,8 +7086,13 @@ plot_ordination_pq <- function(
       ))
       tuk_mat <- tukey[[x_name]]
       pvals <- stats::setNames(tuk_mat[, "p adj"], rownames(tuk_mat))
-      letters_vec <- multcompView::multcompLetters(pvals)$Letters
-      tukey_run <- TRUE
+      if (!is.null(names(pvals)) && length(pvals) > 0L) {
+        letters_vec <- multcompView::multcompLetters(pvals)$Letters
+        tukey_run <- TRUE
+      } else {
+        groups <- unique(.grp_chr(data[[x_name]]))
+        letters_vec <- stats::setNames(rep("a", length(groups)), groups)
+      }
     } else {
       groups <- unique(.grp_chr(data[[x_name]]))
       letters_vec <- stats::setNames(rep("a", length(groups)), groups)
