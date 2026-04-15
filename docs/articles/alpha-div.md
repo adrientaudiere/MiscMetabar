@@ -430,10 +430,10 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#>  [1] glmulti_1.0.8            leaps_3.2                rJava_1.0-16            
-#>  [4] dabestr_2025.3.15        Durga_2.1.0              MicrobiotaProcess_1.22.0
-#>  [7] MiscMetabar_0.15.1       divent_0.5-3             purrr_1.2.1             
-#> [10] dplyr_1.2.0              dada2_1.38.0             Rcpp_1.1.1              
+#>  [1] glmulti_1.0.8            leaps_3.2                rJava_1.0-18            
+#>  [4] dabestr_2025.3.15        Durga_2.1.0              MicrobiotaProcess_1.22.1
+#>  [7] MiscMetabar_0.15.2       divent_0.5-3             purrr_1.2.2             
+#> [10] dplyr_1.2.1              dada2_1.38.0             Rcpp_1.1.1              
 #> [13] ggplot2_4.0.2            phyloseq_1.54.2         
 #> 
 #> loaded via a namespace (and not attached):
@@ -441,21 +441,21 @@ sessionInfo()
 #>   [3] ggplotify_0.1.3             tibble_3.3.1               
 #>   [5] lifecycle_1.0.5             pwalign_1.6.0              
 #>   [7] Rdpack_2.6.6                lattice_0.22-9             
-#>   [9] MASS_7.3-65                 magrittr_2.0.4             
-#>  [11] sass_0.4.10                 rmarkdown_2.30             
+#>   [9] MASS_7.3-65                 magrittr_2.0.5             
+#>  [11] sass_0.4.10                 rmarkdown_2.31             
 #>  [13] jquerylib_0.1.4             yaml_2.3.12                
 #>  [15] otel_0.2.0                  cowplot_1.2.0              
-#>  [17] RColorBrewer_1.1-3          ade4_1.7-23                
+#>  [17] RColorBrewer_1.1-3          ade4_1.7-24                
 #>  [19] multcomp_1.4-30             abind_1.4-8                
 #>  [21] ShortRead_1.68.0            GenomicRanges_1.62.1       
 #>  [23] BiocGenerics_0.56.0         yulab.utils_0.2.4          
 #>  [25] TH.data_1.1-5               rappdirs_0.3.4             
 #>  [27] sandwich_3.1-1              gdtools_0.5.0              
-#>  [29] IRanges_2.44.0              S4Vectors_0.48.0           
+#>  [29] IRanges_2.44.0              S4Vectors_0.48.1           
 #>  [31] ggrepel_0.9.8               tidytree_0.4.7             
 #>  [33] vegan_2.7-3                 pkgdown_2.2.0              
 #>  [35] permute_0.9-10              codetools_0.2-20           
-#>  [37] coin_1.4-3                  DelayedArray_0.36.0        
+#>  [37] coin_1.4-3                  DelayedArray_0.36.1        
 #>  [39] tidyselect_1.2.1            aplot_0.2.9                
 #>  [41] farver_2.1.2                matrixStats_1.5.0          
 #>  [43] stats4_4.5.2                Seqinfo_1.0.0              
@@ -464,10 +464,10 @@ sessionInfo()
 #>  [49] survival_3.8-6              iterators_1.0.14           
 #>  [51] systemfonts_1.3.2           foreach_1.5.2              
 #>  [53] tools_4.5.2                 ggnewscale_0.5.2           
-#>  [55] treeio_1.34.0               ragg_1.5.1                 
+#>  [55] treeio_1.34.0               ragg_1.5.2                 
 #>  [57] ggstar_1.0.6                glue_1.8.0                 
-#>  [59] gridExtra_2.3               SparseArray_1.10.9         
-#>  [61] xfun_0.56                   mgcv_1.9-4                 
+#>  [59] gridExtra_2.3               SparseArray_1.10.10        
+#>  [61] xfun_0.57                   mgcv_1.9-4                 
 #>  [63] MatrixGenerics_1.22.0       withr_3.0.2                
 #>  [65] fastmap_1.2.0               ggh4x_0.3.1                
 #>  [67] latticeExtra_0.6-31         boot_1.3-32                
@@ -476,7 +476,7 @@ sessionInfo()
 #>  [73] textshaping_1.0.5           effsize_0.8.1              
 #>  [75] jpeg_0.1-11                 cigarillo_1.0.0            
 #>  [77] tidyr_1.3.2                 generics_0.1.4             
-#>  [79] ggsci_4.2.0                 fontLiberation_0.1.0       
+#>  [79] ggsci_4.3.0                 fontLiberation_0.1.0       
 #>  [81] data.table_1.18.2.1         htmlwidgets_1.6.4          
 #>  [83] S4Arrays_1.10.1             pkgconfig_2.0.3            
 #>  [85] gtable_0.3.6                modeltools_0.2-24          
@@ -491,23 +491,23 @@ sessionInfo()
 #> [103] stringr_1.6.0               parallel_4.5.2             
 #> [105] vipor_0.4.7                 libcoin_1.0-12             
 #> [107] desc_1.4.3                  pillar_1.11.1              
-#> [109] grid_4.5.2                  vctrs_0.7.2                
+#> [109] grid_4.5.2                  vctrs_0.7.3                
 #> [111] cluster_2.1.8.2             beeswarm_0.4.0             
 #> [113] evaluate_1.0.5              mvtnorm_1.3-6              
-#> [115] cli_3.6.5                   compiler_4.5.2             
-#> [117] Rsamtools_2.26.0            rlang_1.1.7                
+#> [115] cli_3.6.6                   compiler_4.5.2             
+#> [117] Rsamtools_2.26.0            rlang_1.2.0                
 #> [119] crayon_1.5.3                ggsignif_0.6.4             
 #> [121] labeling_0.4.3              interp_1.1-6               
-#> [123] plyr_1.8.9                  fs_1.6.7                   
+#> [123] plyr_1.8.9                  fs_2.0.1                   
 #> [125] ggbeeswarm_0.7.3            ggiraph_0.9.6              
 #> [127] stringi_1.8.7               viridisLite_0.4.3          
 #> [129] deldir_2.0-4                BiocParallel_1.44.0        
-#> [131] Biostrings_2.78.0           lazyeval_0.2.2             
+#> [131] Biostrings_2.78.0           lazyeval_0.2.3             
 #> [133] fontquiver_0.2.1            Matrix_1.7-4               
 #> [135] patchwork_1.3.2             Rhdf5lib_1.32.0            
 #> [137] SummarizedExperiment_1.40.0 rbibutils_2.4.1            
-#> [139] igraph_2.2.2                RcppParallel_5.1.11-2      
-#> [141] bslib_0.10.0                ggtree_4.0.4               
+#> [139] igraph_2.2.3                RcppParallel_5.1.11-2      
+#> [141] bslib_0.10.0                ggtree_4.0.5               
 #> [143] ape_5.8-1
 ```
 

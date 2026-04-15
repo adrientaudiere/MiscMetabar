@@ -22,7 +22,8 @@ tax_bar_pq(
   bar_width = NULL,
   bar_internal_color = NA,
   linewidth_bar_internal = ifelse(is.na(bar_internal_color), 0, 0.5),
-  show_n_samples = FALSE
+  show_n_samples = TRUE,
+  n_sample_text_size = 2
 )
 }
 \arguments{
@@ -86,9 +87,12 @@ Set to e.g. \code{"black"} or \code{"grey30"} for visible borders.}
 \item{linewidth_bar_internal}{(default 0 if \code{bar_internal_color} is \code{NA}, otherwise 0.5)
 Line width of bar borders.}
 
-\item{show_n_samples}{(logical; default \code{FALSE}) If \code{TRUE}, the number of
-samples per group is displayed below the group label on the x-axis, as
-\code{"group\\n(n=X)"}.}
+\item{show_n_samples}{(logical; default \code{TRUE}) If \code{TRUE}, the number of
+samples per group is displayed below each bar as \code{"(n=X)"}.}
+
+\item{n_sample_text_size}{(numeric; default \code{2}) Font size (in ggplot2 mm
+units) for the \code{(n=X)} label displayed below each bar when
+\code{show_n_samples = TRUE}.}
 }
 \value{
 A \code{\link[ggplot2]{ggplot}}2 plot  with bar representing the

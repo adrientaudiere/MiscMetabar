@@ -9,7 +9,7 @@ sequences per samples/modalities. You may use rarefy_by_sample = TRUE if
 the mean number of sequences per samples differs among modalities.
 
 Basically a wrapper of function
-[`ggstatsplot::ggbetweenstats()`](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html)
+[`ggstatsplot::ggbetweenstats()`](https://www.indrapatil.com/ggstatsplot/reference/ggbetweenstats.html)
 for object of class phyloseq
 
 ## Usage
@@ -75,7 +75,7 @@ ggbetween_pq(
 - ...:
 
   Additional arguments passed on to
-  [`ggstatsplot::ggbetweenstats()`](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html)
+  [`ggstatsplot::ggbetweenstats()`](https://www.indrapatil.com/ggstatsplot/reference/ggbetweenstats.html)
   function.
 
 ## Value
@@ -96,7 +96,7 @@ ggplot2 plots, one per Hill order in `q`. With default `q`:
 
 This function is mainly a wrapper of the work of others. Please make a
 reference to
-[`ggstatsplot::ggbetweenstats()`](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html)
+[`ggstatsplot::ggbetweenstats()`](https://www.indrapatil.com/ggstatsplot/reference/ggbetweenstats.html)
 if you use this function.
 
 ## References

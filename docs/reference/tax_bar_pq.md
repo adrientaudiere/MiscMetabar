@@ -26,7 +26,7 @@ tax_bar_pq(
   bar_width = NULL,
   bar_internal_color = NA,
   linewidth_bar_internal = ifelse(is.na(bar_internal_color), 0, 0.5),
-  show_n_samples = FALSE
+  show_n_samples = TRUE
 )
 ```
 
@@ -130,7 +130,7 @@ tax_bar_pq(
 
 - show_n_samples:
 
-  (logical; default `FALSE`) If `TRUE`, the number of samples per group
+  (logical; default `TRUE`) If `TRUE`, the number of samples per group
   is displayed below the group label on the x-axis, as `"group\n(n=X)"`.
 
 ## Value

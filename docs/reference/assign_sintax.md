@@ -155,7 +155,7 @@ assign_sintax(data_fungi_mini,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
   behavior = "return_cmd"
 )
-#> [1] "vsearch  --sintax /tmp/RtmpHWi4nI/temp.fasta --db /tmp/RtmpEMklq1/temp_libpath3cedfaa14842/MiscMetabar/extdata/mini_UNITE_fungi.fasta.gz --tabbedout /tmp/RtmpHWi4nI/output_taxo_vs.txt --threads 1 --sintax_random"
+#> [1] "vsearch  --sintax /tmp/RtmpokfTkP/temp.fasta --db /tmp/Rtmpp1drud/temp_libpath2a300791a8f53/MiscMetabar/extdata/mini_UNITE_fungi.fasta.gz --tabbedout /tmp/RtmpokfTkP/output_taxo_vs.txt --threads 1 --sintax_random"
 
 data_fungi_mini_new <- assign_sintax(data_fungi_mini,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),

@@ -320,36 +320,36 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#>  [1] iNEXT_3.0.2              patchwork_1.3.2          MiscMetabar_0.15.1      
-#>  [4] divent_0.5-3             purrr_1.2.1              dplyr_1.2.0             
+#>  [1] iNEXT_3.0.2              patchwork_1.3.2          MiscMetabar_0.15.2      
+#>  [4] divent_0.5-3             purrr_1.2.2              dplyr_1.2.1             
 #>  [7] dada2_1.38.0             Rcpp_1.1.1               ggplot2_4.0.2           
-#> [10] phyloseq_1.54.2          MicrobiotaProcess_1.22.0
+#> [10] phyloseq_1.54.2          MicrobiotaProcess_1.22.1
 #> 
 #> loaded via a namespace (and not attached):
 #>   [1] libcoin_1.0-12              RColorBrewer_1.1-3         
 #>   [3] shape_1.4.6.1               jsonlite_2.0.0             
-#>   [5] magrittr_2.0.4              TH.data_1.1-5              
+#>   [5] magrittr_2.0.5              TH.data_1.1-5              
 #>   [7] modeltools_0.2-24           farver_2.1.2               
-#>   [9] rmarkdown_2.30              GlobalOptions_0.1.3        
-#>  [11] fs_1.6.7                    ragg_1.5.1                 
-#>  [13] vctrs_0.7.2                 multtest_2.66.0            
-#>  [15] Rsamtools_2.26.0            ggtree_4.0.4               
+#>   [9] rmarkdown_2.31              GlobalOptions_0.1.4        
+#>  [11] fs_2.0.1                    ragg_1.5.2                 
+#>  [13] vctrs_0.7.3                 multtest_2.66.0            
+#>  [15] Rsamtools_2.26.0            ggtree_4.0.5               
 #>  [17] htmltools_0.5.9             S4Arrays_1.10.1            
 #>  [19] ComplexUpset_1.3.3          Rhdf5lib_1.32.0            
-#>  [21] SparseArray_1.10.9          rhdf5_2.54.1               
+#>  [21] SparseArray_1.10.10         rhdf5_2.54.1               
 #>  [23] gridGraphics_0.5-1          sass_0.4.10                
 #>  [25] bslib_0.10.0                htmlwidgets_1.6.4          
 #>  [27] desc_1.4.3                  plyr_1.8.9                 
 #>  [29] sandwich_3.1-1              zoo_1.8-15                 
 #>  [31] cachem_1.1.0                ggfittext_0.10.3           
-#>  [33] GenomicAlignments_1.46.0    igraph_2.2.2               
+#>  [33] GenomicAlignments_1.46.0    igraph_2.2.3               
 #>  [35] lifecycle_1.0.5             iterators_1.0.14           
 #>  [37] pkgconfig_2.0.3             Matrix_1.7-4               
 #>  [39] R6_2.6.1                    fastmap_1.2.0              
 #>  [41] rbibutils_2.4.1             MatrixGenerics_1.22.0      
 #>  [43] digest_0.6.39               aplot_0.2.9                
 #>  [45] colorspace_2.1-2            ggnewscale_0.5.2           
-#>  [47] ShortRead_1.68.0            S4Vectors_0.48.0           
+#>  [47] ShortRead_1.68.0            S4Vectors_0.48.1           
 #>  [49] DESeq2_1.50.2               textshaping_1.0.5          
 #>  [51] GenomicRanges_1.62.1        hwriter_1.3.2.1            
 #>  [53] vegan_2.7-3                 labeling_0.4.3             
@@ -358,20 +358,20 @@ sessionInfo()
 #>  [59] withr_3.0.2                 S7_0.2.1                   
 #>  [61] BiocParallel_1.44.0         ggsignif_0.6.4             
 #>  [63] MASS_7.3-65                 rappdirs_0.3.4             
-#>  [65] DelayedArray_0.36.0         biomformat_1.38.3          
+#>  [65] DelayedArray_0.36.1         biomformat_1.38.3          
 #>  [67] permute_0.9-10              tools_4.5.2                
 #>  [69] otel_0.2.0                  ape_5.8-1                  
 #>  [71] glue_1.8.0                  treemapify_2.6.0           
 #>  [73] nlme_3.1-168                rhdf5filters_1.22.0        
 #>  [75] grid_4.5.2                  cluster_2.1.8.2            
-#>  [77] reshape2_1.4.5              ade4_1.7-23                
+#>  [77] reshape2_1.4.5              ade4_1.7-24                
 #>  [79] generics_0.1.4              gtable_0.3.6               
 #>  [81] tidyr_1.3.2                 ggVennDiagram_1.5.7        
 #>  [83] data.table_1.18.2.1         coin_1.4-3                 
 #>  [85] XVector_0.50.0              BiocGenerics_0.56.0        
 #>  [87] ggrepel_0.9.8               foreach_1.5.2              
 #>  [89] pillar_1.11.1               stringr_1.6.0              
-#>  [91] yulab.utils_0.2.4           circlize_0.4.17            
+#>  [91] yulab.utils_0.2.4           circlize_0.4.18            
 #>  [93] splines_4.5.2               treeio_1.34.0              
 #>  [95] lattice_0.22-9              deldir_2.0-4               
 #>  [97] survival_3.8-6              tidyselect_1.2.1           
@@ -381,14 +381,14 @@ sessionInfo()
 #> [105] gridExtra_2.3               IRanges_2.44.0             
 #> [107] Seqinfo_1.0.0               SummarizedExperiment_1.40.0
 #> [109] svglite_2.2.2               ggtreeExtra_1.21.0         
-#> [111] stats4_4.5.2                xfun_0.56                  
+#> [111] stats4_4.5.2                xfun_0.57                  
 #> [113] Biobase_2.70.0              matrixStats_1.5.0          
-#> [115] stringi_1.8.7               lazyeval_0.2.2             
+#> [115] stringi_1.8.7               lazyeval_0.2.3             
 #> [117] ggfun_0.2.0                 yaml_2.3.12                
 #> [119] evaluate_1.0.5              codetools_0.2-20           
 #> [121] cigarillo_1.0.0             interp_1.1-6               
 #> [123] gdtools_0.5.0               tibble_3.3.1               
-#> [125] ggplotify_0.1.3             cli_3.6.5                  
+#> [125] ggplotify_0.1.3             cli_3.6.6                  
 #> [127] RcppParallel_5.1.11-2       Rdpack_2.6.6               
 #> [129] systemfonts_1.3.2           jquerylib_0.1.4            
 #> [131] png_0.1-9                   parallel_4.5.2             
@@ -398,7 +398,7 @@ sessionInfo()
 #> [139] pwalign_1.6.0               mvtnorm_1.3-6              
 #> [141] tidytree_0.4.7              ggiraph_0.9.6              
 #> [143] scales_1.4.0                crayon_1.5.3               
-#> [145] rlang_1.1.7                 multcomp_1.4-30
+#> [145] rlang_1.2.0                 multcomp_1.4-30
 ```
 
 ## References

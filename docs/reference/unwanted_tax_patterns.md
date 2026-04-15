@@ -127,7 +127,7 @@ unwanted_tax_patterns
 #>                                            "^_species" 
 #> unknown cluster (_uc prefix, e.g. MMseqs2 assignation) 
 #>                                                 "_uc$" 
-#>                           unknown ranks (PR2 database) 
+#>  unknown ranks (_X, _XX, ... prefix e.g. PR2 database) 
 #>                                                "__X+$" 
 # Use with grepl to check a value
 any(vapply(

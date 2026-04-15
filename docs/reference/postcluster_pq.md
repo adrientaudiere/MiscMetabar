@@ -234,7 +234,7 @@ if (requireNamespace("DECIPHER")) {
 #> Clustering sequences by 9-mer similarity:
 #> ================================================================================
 #> 
-#> Time difference of 0.07 secs
+#> Time difference of 0.06 secs
 #> 
 #> Clusters via relatedness sorting: 100% (0% exclusively)
 #> Clusters via rare 3-mers: 100% (0% exclusively)
@@ -272,7 +272,7 @@ if (requireNamespace("DECIPHER")) {
 #> Clustering sequences by 9-mer similarity:
 #> ================================================================================
 #> 
-#> Time difference of 0.07 secs
+#> Time difference of 0.06 secs
 #> 
 #> Clusters via relatedness sorting: 100% (0% exclusively)
 #> Clusters via rare 3-mers: 100% (0% exclusively)

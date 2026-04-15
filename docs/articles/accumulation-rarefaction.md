@@ -526,27 +526,27 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] patchwork_1.3.2    MiscMetabar_0.15.1 divent_0.5-3       purrr_1.2.1       
-#> [5] dplyr_1.2.0        dada2_1.38.0       Rcpp_1.1.1         ggplot2_4.0.2     
+#> [1] patchwork_1.3.2    MiscMetabar_0.15.2 divent_0.5-3       purrr_1.2.2       
+#> [5] dplyr_1.2.1        dada2_1.38.0       Rcpp_1.1.1         ggplot2_4.0.2     
 #> [9] phyloseq_1.54.2   
 #> 
 #> loaded via a namespace (and not attached):
 #>   [1] Rdpack_2.6.6                bitops_1.0-9               
 #>   [3] deldir_2.0-4                permute_0.9-10             
-#>   [5] rlang_1.1.7                 magrittr_2.0.4             
-#>   [7] ade4_1.7-23                 otel_0.2.0                 
+#>   [5] rlang_1.2.0                 magrittr_2.0.5             
+#>   [7] ade4_1.7-24                 otel_0.2.0                 
 #>   [9] matrixStats_1.5.0           compiler_4.5.2             
 #>  [11] mgcv_1.9-4                  png_0.1-9                  
-#>  [13] systemfonts_1.3.2           vctrs_0.7.2                
+#>  [13] systemfonts_1.3.2           vctrs_0.7.3                
 #>  [15] reshape2_1.4.5              stringr_1.6.0              
 #>  [17] pwalign_1.6.0               pkgconfig_2.0.3            
 #>  [19] crayon_1.5.3                fastmap_1.2.0              
 #>  [21] XVector_0.50.0              labeling_0.4.3             
-#>  [23] Rsamtools_2.26.0            rmarkdown_2.30             
-#>  [25] ragg_1.5.1                  xfun_0.56                  
+#>  [23] Rsamtools_2.26.0            rmarkdown_2.31             
+#>  [25] ragg_1.5.2                  xfun_0.57                  
 #>  [27] cachem_1.1.0                cigarillo_1.0.0            
 #>  [29] jsonlite_2.0.0              biomformat_1.38.3          
-#>  [31] rhdf5filters_1.22.0         DelayedArray_0.36.0        
+#>  [31] rhdf5filters_1.22.0         DelayedArray_0.36.1        
 #>  [33] Rhdf5lib_1.32.0             BiocParallel_1.44.0        
 #>  [35] jpeg_0.1-11                 parallel_4.5.2             
 #>  [37] cluster_2.1.8.2             R6_2.6.1                   
@@ -556,7 +556,7 @@ sessionInfo()
 #>  [45] SummarizedExperiment_1.40.0 iterators_1.0.14           
 #>  [47] knitr_1.51                  IRanges_2.44.0             
 #>  [49] Matrix_1.7-4                splines_4.5.2              
-#>  [51] igraph_2.2.2                tidyselect_1.2.1           
+#>  [51] igraph_2.2.3                tidyselect_1.2.1           
 #>  [53] rstudioapi_0.18.0           abind_1.4-8                
 #>  [55] yaml_2.3.12                 vegan_2.7-3                
 #>  [57] codetools_0.2-20            hwriter_1.3.2.1            
@@ -569,18 +569,18 @@ sessionInfo()
 #>  [71] pillar_1.11.1               MatrixGenerics_1.22.0      
 #>  [73] DiagrammeR_1.0.11           foreach_1.5.2              
 #>  [75] stats4_4.5.2                generics_0.1.4             
-#>  [77] S4Vectors_0.48.0            scales_1.4.0               
+#>  [77] S4Vectors_0.48.1            scales_1.4.0               
 #>  [79] glue_1.8.0                  tools_4.5.2                
 #>  [81] interp_1.1-6                data.table_1.18.2.1        
-#>  [83] GenomicAlignments_1.46.0    fs_1.6.7                   
+#>  [83] GenomicAlignments_1.46.0    fs_2.0.1                   
 #>  [85] visNetwork_2.1.4            rhdf5_2.54.1               
 #>  [87] grid_4.5.2                  ape_5.8-1                  
 #>  [89] rbibutils_2.4.1             latticeExtra_0.6-31        
-#>  [91] nlme_3.1-168                cli_3.6.5                  
+#>  [91] nlme_3.1-168                cli_3.6.6                  
 #>  [93] textshaping_1.0.5           S4Arrays_1.10.1            
 #>  [95] gtable_0.3.6                sass_0.4.10                
 #>  [97] digest_0.6.39               BiocGenerics_0.56.0        
-#>  [99] SparseArray_1.10.9          htmlwidgets_1.6.4          
+#>  [99] SparseArray_1.10.10         htmlwidgets_1.6.4          
 #> [101] farver_2.1.2                htmltools_0.5.9            
 #> [103] pkgdown_2.2.0               multtest_2.66.0            
 #> [105] lifecycle_1.0.5             MASS_7.3-65

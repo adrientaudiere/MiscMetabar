@@ -93,31 +93,31 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#>  [1] ggtree_4.0.4       treeio_1.34.0      phangorn_2.12.1    ape_5.8-1         
-#>  [5] MiscMetabar_0.15.1 divent_0.5-3       purrr_1.2.1        dplyr_1.2.0       
+#>  [1] ggtree_4.0.5       treeio_1.34.0      phangorn_2.12.1    ape_5.8-1         
+#>  [5] MiscMetabar_0.15.2 divent_0.5-3       purrr_1.2.2        dplyr_1.2.1       
 #>  [9] dada2_1.38.0       Rcpp_1.1.1         ggplot2_4.0.2      phyloseq_1.54.2   
 #> [13] tidytree_0.4.7    
 #> 
 #> loaded via a namespace (and not attached):
 #>   [1] RColorBrewer_1.1-3          jsonlite_2.0.0             
-#>   [3] magrittr_2.0.4              farver_2.1.2               
-#>   [5] rmarkdown_2.30              fs_1.6.7                   
-#>   [7] ragg_1.5.1                  vctrs_0.7.2                
+#>   [3] magrittr_2.0.5              farver_2.1.2               
+#>   [5] rmarkdown_2.31              fs_2.0.1                   
+#>   [7] ragg_1.5.2                  vctrs_0.7.3                
 #>   [9] multtest_2.66.0             Rsamtools_2.26.0           
 #>  [11] htmltools_0.5.9             S4Arrays_1.10.1            
-#>  [13] Rhdf5lib_1.32.0             SparseArray_1.10.9         
+#>  [13] Rhdf5lib_1.32.0             SparseArray_1.10.10        
 #>  [15] rhdf5_2.54.1                gridGraphics_0.5-1         
 #>  [17] sass_0.4.10                 bslib_0.10.0               
 #>  [19] htmlwidgets_1.6.4           desc_1.4.3                 
 #>  [21] plyr_1.8.9                  DECIPHER_3.6.0             
 #>  [23] cachem_1.1.0                GenomicAlignments_1.46.0   
-#>  [25] igraph_2.2.2                lifecycle_1.0.5            
+#>  [25] igraph_2.2.3                lifecycle_1.0.5            
 #>  [27] iterators_1.0.14            pkgconfig_2.0.3            
 #>  [29] Matrix_1.7-4                R6_2.6.1                   
 #>  [31] fastmap_1.2.0               rbibutils_2.4.1            
 #>  [33] MatrixGenerics_1.22.0       digest_0.6.39              
 #>  [35] aplot_0.2.9                 ShortRead_1.68.0           
-#>  [37] patchwork_1.3.2             S4Vectors_0.48.0           
+#>  [37] patchwork_1.3.2             S4Vectors_0.48.1           
 #>  [39] textshaping_1.0.5           GenomicRanges_1.62.1       
 #>  [41] hwriter_1.3.2.1             vegan_2.7-3                
 #>  [43] labeling_0.4.3              abind_1.4-8                
@@ -125,13 +125,13 @@ sessionInfo()
 #>  [47] fontquiver_0.2.1            withr_3.0.2                
 #>  [49] S7_0.2.1                    BiocParallel_1.44.0        
 #>  [51] DBI_1.3.0                   MASS_7.3-65                
-#>  [53] rappdirs_0.3.4              DelayedArray_0.36.0        
+#>  [53] rappdirs_0.3.4              DelayedArray_0.36.1        
 #>  [55] biomformat_1.38.3           permute_0.9-10             
 #>  [57] tools_4.5.2                 otel_0.2.0                 
 #>  [59] glue_1.8.0                  quadprog_1.5-8             
 #>  [61] nlme_3.1-168                rhdf5filters_1.22.0        
 #>  [63] grid_4.5.2                  cluster_2.1.8.2            
-#>  [65] reshape2_1.4.5              ade4_1.7-23                
+#>  [65] reshape2_1.4.5              ade4_1.7-24                
 #>  [67] generics_0.1.4              gtable_0.3.6               
 #>  [69] tidyr_1.3.2                 data.table_1.18.2.1        
 #>  [71] XVector_0.50.0              BiocGenerics_0.56.0        
@@ -143,14 +143,14 @@ sessionInfo()
 #>  [83] Biostrings_2.78.0           knitr_1.51                 
 #>  [85] fontBitstreamVera_0.1.1     IRanges_2.44.0             
 #>  [87] Seqinfo_1.0.0               SummarizedExperiment_1.40.0
-#>  [89] stats4_4.5.2                xfun_0.56                  
+#>  [89] stats4_4.5.2                xfun_0.57                  
 #>  [91] Biobase_2.70.0              matrixStats_1.5.0          
-#>  [93] stringi_1.8.7               lazyeval_0.2.2             
+#>  [93] stringi_1.8.7               lazyeval_0.2.3             
 #>  [95] ggfun_0.2.0                 yaml_2.3.12                
 #>  [97] evaluate_1.0.5              codetools_0.2-20           
 #>  [99] cigarillo_1.0.0             interp_1.1-6               
 #> [101] gdtools_0.5.0               tibble_3.3.1               
-#> [103] ggplotify_0.1.3             cli_3.6.5                  
+#> [103] ggplotify_0.1.3             cli_3.6.6                  
 #> [105] RcppParallel_5.1.11-2       systemfonts_1.3.2          
 #> [107] Rdpack_2.6.6                jquerylib_0.1.4            
 #> [109] png_0.1-9                   parallel_4.5.2             
@@ -158,7 +158,7 @@ sessionInfo()
 #> [113] jpeg_0.1-11                 bitops_1.0-9               
 #> [115] pwalign_1.6.0               ggiraph_0.9.6              
 #> [117] scales_1.4.0                crayon_1.5.3               
-#> [119] rlang_1.1.7                 fastmatch_1.1-8
+#> [119] rlang_1.2.0                 fastmatch_1.1-8
 ```
 
 Zou, Yue, Zixuan Zhang, Yujie Zeng, Hanyue Hu, Youjin Hao, Sheng Huang,

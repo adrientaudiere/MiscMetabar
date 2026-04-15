@@ -53,92 +53,92 @@ A ggplot2 object.
 # \donttest{
 profile_hill_pq(data_fungi_mini)
 #> Taxa are now in columns.
-#> Computing Hill profiles ■■■■■■■■                          23% | ETA:  8s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■                          23% | ETA:  8s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■                          23% | ETA:  8s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■                          23% | ETA:  8s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■                          23% | ETA:  8s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■                          23% | ETA:  8s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■                          23% | ETA:  8s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■                          23% | ETA:  8s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■                          23% | ETA:  8s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■                          23% | ETA:  8s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■                          23% | ETA:  8s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■                          23% | ETA:  8s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■                          23% | ETA:  8s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■                          23% | ETA:  8s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■                          23% | ETA:  8s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■                          23% | ETA:  8s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■                          23% | ETA:  8s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■                          23% | ETA:  8s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■                          23% | ETA:  8s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■                          23% | ETA:  8s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■                          23% | ETA:  8s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■                          23% | ETA:  8s
-#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  1s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  1s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  1s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  1s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  1s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  1s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  1s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  1s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  1s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  1s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  1s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  1s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  1s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  1s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  1s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  1s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  1s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  1s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  1s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  1s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  1s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
 #> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% | ETA:  1s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■                   45% | ETA:  5s
+#> Computing Hill profiles ■■■■■■■■■■■■■■■■■■■■■■■           73% | ETA:  4s
 
 # }
 ```

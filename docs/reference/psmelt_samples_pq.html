@@ -23,7 +23,7 @@ samples differs among modalities."><script data-goatcounter="https://miscmetabar
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,6 +39,7 @@ samples differs among modalities."><script data-goatcounter="https://miscmetabar
     <li><a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a></li>
     <li><a class="dropdown-item" href="../articles/explore_data.html">Explore phyloseq data</a></li>
     <li><a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a></li>
+    <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -186,8 +187,8 @@ strong is the influence of methodological choices? <em>Journal of Biogeography</
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ggstatsplot"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">psm_tib</span> <span class="op">&lt;-</span> <span class="fu">psmelt_samples_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, hill_scales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">ggstatsplot</span><span class="fu">::</span><span class="fu"><a href="https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html" class="external-link">ggbetweenstats</a></span><span class="op">(</span><span class="va">psm_tib</span>, <span class="va">Height</span>, <span class="va">Hill_0</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">ggstatsplot</span><span class="fu">::</span><span class="fu"><a href="https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html" class="external-link">ggbetweenstats</a></span><span class="op">(</span><span class="va">psm_tib</span>, <span class="va">Height</span>, <span class="va">Hill_7</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">ggstatsplot</span><span class="fu">::</span><span class="fu"><a href="https://www.indrapatil.com/ggstatsplot/reference/ggbetweenstats.html" class="external-link">ggbetweenstats</a></span><span class="op">(</span><span class="va">psm_tib</span>, <span class="va">Height</span>, <span class="va">Hill_0</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">ggstatsplot</span><span class="fu">::</span><span class="fu"><a href="https://www.indrapatil.com/ggstatsplot/reference/ggbetweenstats.html" class="external-link">ggbetweenstats</a></span><span class="op">(</span><span class="va">psm_tib</span>, <span class="va">Height</span>, <span class="va">Hill_7</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>  <span class="va">psm_tib_tax</span> <span class="op">&lt;-</span> <span class="fu">psmelt_samples_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, taxa_ranks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Class"</span>, <span class="st">"Family"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">psm_tib_tax</span>, <span class="va">Abundance</span> <span class="op">&gt;</span> <span class="fl">2000</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">Family</span>, x <span class="op">=</span> <span class="va">Abundance</span>, fill <span class="op">=</span> <span class="va">Time</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>

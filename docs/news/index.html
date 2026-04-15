@@ -61,15 +61,17 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.15.2" id="miscmetabar-0152-in-development">MiscMetabar 0.15.2 (in development)<a class="anchor" aria-label="anchor" href="#miscmetabar-0152-in-development"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.15.2" id="miscmetabar-0152-cran">MiscMetabar 0.15.2 [CRAN]<a class="anchor" aria-label="anchor" href="#miscmetabar-0152-cran"></a></h2>
 <ul><li>
 <code><a href="../reference/hill_bar_pq.html">hill_bar_pq()</a></code> gains five parameters: <code>error_fun</code> (a function returning <code>c(lower, upper)</code> bounds, enabling asymmetric intervals such as quantile ranges; default mean ± SE), <code>error_fun_lab</code> (caption label; default <code>"mean ± SE"</code>), <code>error_bar_alpha</code> (transparency of the secondary top-half error bar drawn over jittered points; default <code>0.35</code>), <code>point_alpha</code> (transparency of jittered data points; default <code>0.7</code>), and <code>letters_below_bar</code> (when <code>TRUE</code>, compact letters are placed below the x-axis at a fixed position, giving a clean layout independent of data spread; default <code>FALSE</code>). Groups with <code>NA</code> values in the grouping variable now receive <code>"n.d."</code> letters when Tukey HSD is run, instead of being silently dropped.</li>
+<li>
+<code><a href="../reference/umap_pq.html">umap_pq()</a></code> no longer emits a tibble <code>.name_repair</code> deprecation warning when using <code>pkg = "umap"</code> (fixes <a href="https://github.com/adrientaudiere/MiscMetabar/issues/134" class="external-link">#134</a>).</li>
 <li>
 <code><a href="../reference/hill_bar_pq.html">hill_bar_pq()</a></code> new function plotting Hill diversity bar charts (mean ±SE, jittered points, Kruskal-Wallis subtitle, optional Tukey HSD compact letter display) for one or multiple Hill orders via a patchwork layout.</li>
 <li>
 <code><a href="../reference/tax_bar_pq.html">tax_bar_pq()</a></code> fixes a bug where <code>nb_seq = FALSE</code> with a grouping <code>fact</code> would sum binary per-sample presence values across samples sharing the same modality, inflating bar heights beyond the true OTU count. Each OTU is now counted at most once per group (present in ≥1 sample of that group), so bar segments correctly show the number of distinct OTUs in each taxonomic rank per modality.</li>
 <li>
-<code><a href="../reference/tax_bar_pq.html">tax_bar_pq()</a></code> gains a <code>show_n_samples</code> parameter (default <code>FALSE</code>). When <code>TRUE</code>, the number of samples per group is appended below each x-axis label as <code>(n=X)</code>.</li>
+<code><a href="../reference/tax_bar_pq.html">tax_bar_pq()</a></code> gains a <code>n_sample_text_size</code> parameter (default <code>2</code>) controlling the font size of the per-group sample count label. The <code>(n=X)</code> annotation is now displayed below each bar rather than appended to the group x-axis label.</li>
 <li>New transformation/normalisation functions collected in <code>R/normalize_pq.R</code>, documented in a new article (<code>articles/normalization.html</code>).</li>
 <li>
 <code><a href="../reference/css_pq.html">css_pq()</a></code> new function wrapping <code><a href="https://rdrr.io/pkg/metagenomeSeq/man/cumNorm.html" class="external-link">metagenomeSeq::cumNorm()</a></code> for Cumulative Sum Scaling normalization.</li>

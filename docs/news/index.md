@@ -1,6 +1,6 @@
 # Changelog
 
-## MiscMetabar 0.15.2 (in development)
+## MiscMetabar 0.15.2 \[CRAN\]
 
 - [`hill_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_bar_pq.md)
   gains five parameters: `error_fun` (a function returning
@@ -14,6 +14,10 @@
   independent of data spread; default `FALSE`). Groups with `NA` values
   in the grouping variable now receive `"n.d."` letters when Tukey HSD
   is run, instead of being silently dropped.
+- [`umap_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/umap_pq.md)
+  no longer emits a tibble `.name_repair` deprecation warning when using
+  `pkg = "umap"` (fixes
+  [\#134](https://github.com/adrientaudiere/MiscMetabar/issues/134)).
 - [`hill_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_bar_pq.md)
   new function plotting Hill diversity bar charts (mean ±SE, jittered
   points, Kruskal-Wallis subtitle, optional Tukey HSD compact letter
@@ -26,9 +30,10 @@
   group), so bar segments correctly show the number of distinct OTUs in
   each taxonomic rank per modality.
 - [`tax_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/tax_bar_pq.md)
-  gains a `show_n_samples` parameter (default `FALSE`). When `TRUE`, the
-  number of samples per group is appended below each x-axis label as
-  `(n=X)`.
+  gains a `n_sample_text_size` parameter (default `2`) controlling the
+  font size of the per-group sample count label. The `(n=X)` annotation
+  is now displayed below each bar rather than appended to the group
+  x-axis label.
 - New transformation/normalisation functions collected in
   `R/normalize_pq.R`, documented in a new article
   (`articles/normalization.html`).

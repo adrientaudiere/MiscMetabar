@@ -27,7 +27,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,6 +45,7 @@
     <li><a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a></li>
     <li><a class="dropdown-item" href="../articles/explore_data.html">Explore phyloseq data</a></li>
     <li><a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a></li>
+    <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
     <li><hr class="dropdown-divider"></li>
@@ -670,27 +671,27 @@ Species.”</span> <em>Environmental DNA</em> 5 (5): 1092–1104. <a href="https
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] patchwork_1.3.2    MiscMetabar_0.15.1 divent_0.5-3       purrr_1.2.1       </span></span>
-<span><span class="co">#&gt; [5] dplyr_1.2.0        dada2_1.38.0       Rcpp_1.1.1         ggplot2_4.0.2     </span></span>
+<span><span class="co">#&gt; [1] patchwork_1.3.2    MiscMetabar_0.15.2 divent_0.5-3       purrr_1.2.2       </span></span>
+<span><span class="co">#&gt; [5] dplyr_1.2.1        dada2_1.38.0       Rcpp_1.1.1         ggplot2_4.0.2     </span></span>
 <span><span class="co">#&gt; [9] phyloseq_1.54.2   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;   [1] Rdpack_2.6.6                bitops_1.0-9               </span></span>
 <span><span class="co">#&gt;   [3] deldir_2.0-4                permute_0.9-10             </span></span>
-<span><span class="co">#&gt;   [5] rlang_1.1.7                 magrittr_2.0.4             </span></span>
-<span><span class="co">#&gt;   [7] ade4_1.7-23                 otel_0.2.0                 </span></span>
+<span><span class="co">#&gt;   [5] rlang_1.2.0                 magrittr_2.0.5             </span></span>
+<span><span class="co">#&gt;   [7] ade4_1.7-24                 otel_0.2.0                 </span></span>
 <span><span class="co">#&gt;   [9] matrixStats_1.5.0           compiler_4.5.2             </span></span>
 <span><span class="co">#&gt;  [11] mgcv_1.9-4                  png_0.1-9                  </span></span>
-<span><span class="co">#&gt;  [13] systemfonts_1.3.2           vctrs_0.7.2                </span></span>
+<span><span class="co">#&gt;  [13] systemfonts_1.3.2           vctrs_0.7.3                </span></span>
 <span><span class="co">#&gt;  [15] reshape2_1.4.5              stringr_1.6.0              </span></span>
 <span><span class="co">#&gt;  [17] pwalign_1.6.0               pkgconfig_2.0.3            </span></span>
 <span><span class="co">#&gt;  [19] crayon_1.5.3                fastmap_1.2.0              </span></span>
 <span><span class="co">#&gt;  [21] XVector_0.50.0              labeling_0.4.3             </span></span>
-<span><span class="co">#&gt;  [23] Rsamtools_2.26.0            rmarkdown_2.30             </span></span>
-<span><span class="co">#&gt;  [25] ragg_1.5.1                  xfun_0.56                  </span></span>
+<span><span class="co">#&gt;  [23] Rsamtools_2.26.0            rmarkdown_2.31             </span></span>
+<span><span class="co">#&gt;  [25] ragg_1.5.2                  xfun_0.57                  </span></span>
 <span><span class="co">#&gt;  [27] cachem_1.1.0                cigarillo_1.0.0            </span></span>
 <span><span class="co">#&gt;  [29] jsonlite_2.0.0              biomformat_1.38.3          </span></span>
-<span><span class="co">#&gt;  [31] rhdf5filters_1.22.0         DelayedArray_0.36.0        </span></span>
+<span><span class="co">#&gt;  [31] rhdf5filters_1.22.0         DelayedArray_0.36.1        </span></span>
 <span><span class="co">#&gt;  [33] Rhdf5lib_1.32.0             BiocParallel_1.44.0        </span></span>
 <span><span class="co">#&gt;  [35] jpeg_0.1-11                 parallel_4.5.2             </span></span>
 <span><span class="co">#&gt;  [37] cluster_2.1.8.2             R6_2.6.1                   </span></span>
@@ -700,7 +701,7 @@ Species.”</span> <em>Environmental DNA</em> 5 (5): 1092–1104. <a href="https
 <span><span class="co">#&gt;  [45] SummarizedExperiment_1.40.0 iterators_1.0.14           </span></span>
 <span><span class="co">#&gt;  [47] knitr_1.51                  IRanges_2.44.0             </span></span>
 <span><span class="co">#&gt;  [49] Matrix_1.7-4                splines_4.5.2              </span></span>
-<span><span class="co">#&gt;  [51] igraph_2.2.2                tidyselect_1.2.1           </span></span>
+<span><span class="co">#&gt;  [51] igraph_2.2.3                tidyselect_1.2.1           </span></span>
 <span><span class="co">#&gt;  [53] rstudioapi_0.18.0           abind_1.4-8                </span></span>
 <span><span class="co">#&gt;  [55] yaml_2.3.12                 vegan_2.7-3                </span></span>
 <span><span class="co">#&gt;  [57] codetools_0.2-20            hwriter_1.3.2.1            </span></span>
@@ -713,18 +714,18 @@ Species.”</span> <em>Environmental DNA</em> 5 (5): 1092–1104. <a href="https
 <span><span class="co">#&gt;  [71] pillar_1.11.1               MatrixGenerics_1.22.0      </span></span>
 <span><span class="co">#&gt;  [73] DiagrammeR_1.0.11           foreach_1.5.2              </span></span>
 <span><span class="co">#&gt;  [75] stats4_4.5.2                generics_0.1.4             </span></span>
-<span><span class="co">#&gt;  [77] S4Vectors_0.48.0            scales_1.4.0               </span></span>
+<span><span class="co">#&gt;  [77] S4Vectors_0.48.1            scales_1.4.0               </span></span>
 <span><span class="co">#&gt;  [79] glue_1.8.0                  tools_4.5.2                </span></span>
 <span><span class="co">#&gt;  [81] interp_1.1-6                data.table_1.18.2.1        </span></span>
-<span><span class="co">#&gt;  [83] GenomicAlignments_1.46.0    fs_1.6.7                   </span></span>
+<span><span class="co">#&gt;  [83] GenomicAlignments_1.46.0    fs_2.0.1                   </span></span>
 <span><span class="co">#&gt;  [85] visNetwork_2.1.4            rhdf5_2.54.1               </span></span>
 <span><span class="co">#&gt;  [87] grid_4.5.2                  ape_5.8-1                  </span></span>
 <span><span class="co">#&gt;  [89] rbibutils_2.4.1             latticeExtra_0.6-31        </span></span>
-<span><span class="co">#&gt;  [91] nlme_3.1-168                cli_3.6.5                  </span></span>
+<span><span class="co">#&gt;  [91] nlme_3.1-168                cli_3.6.6                  </span></span>
 <span><span class="co">#&gt;  [93] textshaping_1.0.5           S4Arrays_1.10.1            </span></span>
 <span><span class="co">#&gt;  [95] gtable_0.3.6                sass_0.4.10                </span></span>
 <span><span class="co">#&gt;  [97] digest_0.6.39               BiocGenerics_0.56.0        </span></span>
-<span><span class="co">#&gt;  [99] SparseArray_1.10.9          htmlwidgets_1.6.4          </span></span>
+<span><span class="co">#&gt;  [99] SparseArray_1.10.10         htmlwidgets_1.6.4          </span></span>
 <span><span class="co">#&gt; [101] farver_2.1.2                htmltools_0.5.9            </span></span>
 <span><span class="co">#&gt; [103] pkgdown_2.2.0               multtest_2.66.0            </span></span>
 <span><span class="co">#&gt; [105] lifecycle_1.0.5             MASS_7.3-65</span></span></code></pre></div>

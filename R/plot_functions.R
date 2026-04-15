@@ -4463,8 +4463,10 @@ diff_fct_diff_class <-
 #' @param linewidth_bar_internal (default 0 if `bar_internal_color` is `NA`, otherwise 0.5)
 #'  Line width of bar borders.
 #' @param show_n_samples (logical; default `TRUE`) If `TRUE`, the number of
-#'   samples per group is displayed below the group label on the x-axis, as
-#'   `"group\n(n=X)"`.
+#'   samples per group is displayed below each bar as `"(n=X)"`.
+#' @param n_sample_text_size (numeric; default `3`) Font size (in ggplot2 mm
+#'   units) for the `(n=X)` label displayed below each bar when
+#'   `show_n_samples = TRUE`.
 #'
 #' @return A \code{\link[ggplot2]{ggplot}}2 plot  with bar representing the
 #'   number of sequence en each taxonomic groups
@@ -4531,7 +4533,8 @@ tax_bar_pq <-
     bar_width = NULL,
     bar_internal_color = NA,
     linewidth_bar_internal = ifelse(is.na(bar_internal_color), 0, 0.5),
-    show_n_samples = TRUE
+    show_n_samples = TRUE,
+    n_sample_text_size = 3
   ) {
     if (!nb_seq) {
       physeq <- as_binary_otu_table(physeq)
@@ -4650,14 +4653,6 @@ tax_bar_pq <-
       x_labels <- pb$layout$panel_params[[1]]$x$get_labels()
       x_labels[is.na(x_labels)] <- "NA"
       bar_tops$label <- x_labels[bar_tops$x]
-      if (show_n_samples) {
-        bar_tops$label <- paste0(
-          bar_tops$label,
-          "\n(n=",
-          n_lookup[bar_tops$label],
-          ")"
-        )
-      }
 
       p <- p +
         geom_polygon(
@@ -4673,6 +4668,23 @@ tax_bar_pq <-
           inherit.aes = FALSE,
           size = top_label_size
         )
+      if (show_n_samples) {
+        n_vals_ribbon <- n_lookup[bar_tops$label]
+        n_label_ribbon <- data.frame(
+          x = bar_tops$x[!is.na(n_vals_ribbon)],
+          label = paste0("(n=", n_vals_ribbon[!is.na(n_vals_ribbon)], ")")
+        )
+        if (nrow(n_label_ribbon) > 0) {
+          p <- p +
+            geom_text(
+              data = n_label_ribbon,
+              aes(x = x, y = 0, label = label),
+              vjust = 1.5,
+              inherit.aes = FALSE,
+              size = n_sample_text_size
+            )
+        }
+      }
     }
 
     if (label_taxa) {
@@ -4916,16 +4928,7 @@ tax_bar_pq <-
       x_labs_n <- pb_n$layout$panel_params[[1]]$x$get_labels()
       x_labs_n[is.na(x_labs_n)] <- "NA"
       bar_tops_n$group_label <- x_labs_n[bar_tops_n$x]
-      bar_tops_n$label <- if (show_n_samples) {
-        paste0(
-          bar_tops_n$group_label,
-          "\n(n=",
-          n_lookup[bar_tops_n$group_label],
-          ")"
-        )
-      } else {
-        bar_tops_n$group_label
-      }
+      bar_tops_n$label <- bar_tops_n$group_label
       p <- p +
         geom_text(
           data = bar_tops_n,
@@ -4934,6 +4937,23 @@ tax_bar_pq <-
           inherit.aes = FALSE,
           size = top_label_size
         )
+      if (show_n_samples) {
+        n_vals_n <- n_lookup[bar_tops_n$group_label]
+        n_label_n <- data.frame(
+          x = bar_tops_n$x[!is.na(n_vals_n)],
+          label = paste0("(n=", n_vals_n[!is.na(n_vals_n)], ")")
+        )
+        if (nrow(n_label_n) > 0) {
+          p <- p +
+            geom_text(
+              data = n_label_n,
+              aes(x = x, y = 0, label = label),
+              vjust = 1.5,
+              inherit.aes = FALSE,
+              size = n_sample_text_size
+            )
+        }
+      }
     }
 
     p

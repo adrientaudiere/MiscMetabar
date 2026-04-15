@@ -70,7 +70,7 @@ hill_test_rarperm_pq(
 - type:
 
   A character specifying the type of statistical approach (See
-  [`ggstatsplot::ggbetweenstats()`](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html)
+  [`ggstatsplot::ggbetweenstats()`](https://www.indrapatil.com/ggstatsplot/reference/ggbetweenstats.html)
   for more details):
 
   - "parametric"
@@ -84,7 +84,7 @@ hill_test_rarperm_pq(
 - ...:
 
   Additional arguments passed on to
-  [`ggstatsplot::ggbetweenstats()`](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html)
+  [`ggstatsplot::ggbetweenstats()`](https://www.indrapatil.com/ggstatsplot/reference/ggbetweenstats.html)
   function
 
 ## Value
@@ -118,7 +118,7 @@ Biogeography*, 47.
 
 ## See also
 
-[`ggstatsplot::ggbetweenstats()`](https://indrajeetpatil.github.io/ggstatsplot/reference/ggbetweenstats.html),
+[`ggstatsplot::ggbetweenstats()`](https://www.indrapatil.com/ggstatsplot/reference/ggbetweenstats.html),
 [`hill_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_pq.md)
 
 ## Author
