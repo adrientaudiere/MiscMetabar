@@ -6503,7 +6503,7 @@ umap_pq <- function(physeq, pkg = "umap", ...) {
   psm_samp <- psmelt_samples_pq(physeq)
   if (pkg == "umap") {
     res_umap <- umap::umap(as.matrix(unclass(physeq@otu_table)), ...)
-    umap_layout <- as_tibble(res_umap$layout)
+    umap_layout <- as_tibble(res_umap$layout, .name_repair = "minimal")
     umap_layout$Sample <- rownames(res_umap$layout)
     names(umap_layout) <- c("x_umap", "y_umap", "Sample")
   } else if (pkg == "uwot") {
