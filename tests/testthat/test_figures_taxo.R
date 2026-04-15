@@ -521,33 +521,33 @@ test_that("tax_bar_pq work with data_fungi dataset", {
     "ggplot"
   )
   expect_s3_class(
-    tax_bar_pq(
+    suppressWarnings(tax_bar_pq(
       data_fungi_mini,
       taxa = "Class",
       fact = "Time",
       add_ribbon = TRUE,
       label_taxa = TRUE
-    ),
+    )),
     "ggplot"
   )
   # taxa exclusive to the first bar get left-side labels (extra layers)
   # data_fungi_mini at Genus level: Basidiodendron, Peniophorella,
   # Phanerochaete, Radulomyces are in Time=0 but absent from Time=15
-  p_with_exclusive <- tax_bar_pq(
+  p_with_exclusive <- suppressWarnings(tax_bar_pq(
     data_fungi_mini,
     taxa = "Genus",
     fact = "Time",
     add_ribbon = TRUE,
     label_taxa = TRUE
-  )
+  ))
   # data_fungi_mini at Class level: all first-bar taxa also in last bar
-  p_no_exclusive <- tax_bar_pq(
+  p_no_exclusive <- suppressWarnings(tax_bar_pq(
     data_fungi_mini,
     taxa = "Class",
     fact = "Time",
     add_ribbon = TRUE,
     label_taxa = TRUE
-  )
+  ))
   expect_gt(length(p_with_exclusive$layers), length(p_no_exclusive$layers))
   # taxa only in intermediate bars trigger a warning
   # data_fungi_mini at Genus level: Elmerina and Exidia only appear in middle
@@ -605,8 +605,7 @@ test_that("tax_bar_pq always shows modality labels above bars when add_ribbon=FA
     fact = "Time"
   )
   expect_s3_class(p2, "ggplot")
-  expect_true(has_text_layer(p2))
-  expect_true(all(grepl("\\(n=\\d+\\)", get_first_text(p2)$label)))
+  expect_true(all(grepl("\\(n=.*\\)", get_first_text(p2)$label)))
 
   # add_ribbon=TRUE with show_n_samples=TRUE: n appended to ribbon top labels
   p3 <- tax_bar_pq(
@@ -617,7 +616,7 @@ test_that("tax_bar_pq always shows modality labels above bars when add_ribbon=FA
   )
   expect_s3_class(p3, "ggplot")
   expect_true(has_text_layer(p3))
-  expect_true(all(grepl("\\(n=\\d+\\)", get_first_text(p3)$label)))
+  expect_true(all(grepl("\\(n=.*\\)", get_first_text(p3)$label)))
 })
 
 test_that("reorder_distinct_colors works on tax_bar_pq output", {

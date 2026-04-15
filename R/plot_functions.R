@@ -7084,7 +7084,8 @@ plot_ordination_pq <- function(
         reformulate(x_name, response = y_name),
         data = data
       ))
-      pvals <- tukey[[x_name]][, "p adj"]
+      tuk_mat <- tukey[[x_name]]
+      pvals <- stats::setNames(tuk_mat[, "p adj"], rownames(tuk_mat))
       letters_vec <- multcompView::multcompLetters(pvals)$Letters
       tukey_run <- TRUE
     } else {
