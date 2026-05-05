@@ -1,5 +1,7 @@
 # MiscMetabar 0.16.0
 
+* `cutadapt_remove_primers()` gains a `cutadapt_args` parameter (default `""`) to pass additional arguments directly to cutadapt, such as `"-e 0.01"` to lower the maximum error rate from the cutadapt default of 10% to 1%.
+
 # MiscMetabar 0.15.2 [CRAN]
 * `hill_bar_pq()` gains five parameters: `error_fun` (a function returning `c(lower, upper)` bounds, enabling asymmetric intervals such as quantile ranges; default mean ± SE), `error_fun_lab` (caption label; default `"mean ± SE"`), `error_bar_alpha` (transparency of the secondary top-half error bar drawn over jittered points; default `0.35`), `point_alpha` (transparency of jittered data points; default `0.7`), and `letters_below_bar` (when `TRUE`, compact letters are placed below the x-axis at a fixed position, giving a clean layout independent of data spread; default `FALSE`). Groups with `NA` values in the grouping variable now receive `"n.d."` letters when Tukey HSD is run, instead of being silently dropped.
 * `umap_pq()` no longer emits a tibble `.name_repair` deprecation warning when using `pkg = "umap"` (fixes #134).

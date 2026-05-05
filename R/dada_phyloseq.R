@@ -3707,6 +3707,11 @@ physeq_or_string_to_dna <- function(physeq = NULL, dna_seq = NULL) {
 #' @param return_file_path (logical, default FALSE) If true, the function
 #'   return the path of the output folder (param `folder_output`). Useful
 #'   in targets workflow
+#' @param cutadapt_args (default: "") A character string of additional arguments
+#'   passed directly to cutadapt. For example, use `"-e 0.01"` to set the
+#'   maximum error rate to 1% (the cutadapt default is 10%). See the
+#'   [cutadapt search parameters documentation](https://cutadapt.readthedocs.io/en/stable/guide.html#search-parameters)
+#'   for available options.
 #' @param args_before_cutadapt (String) A one line bash command to run before
 #' to run cutadapt. For examples, "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv &&" allow to bypass the conda init which asks to restart the shell
 #' @param verbose (logical, default TRUE) If FALSE, suppresses all output from
@@ -3748,6 +3753,16 @@ physeq_or_string_to_dna <- function(physeq = NULL, dna_seq = NULL) {
 #'   cmd_is_run = FALSE
 #' )
 #'
+#' # Use a stricter error rate (1%) instead of the cutadapt default (10%)
+#' cutadapt_remove_primers(
+#'   system.file("extdata", package = "MiscMetabar"),
+#'   "TTC",
+#'   "GAA",
+#'   folder_output = tempdir(),
+#'   cutadapt_args = "-e 0.01",
+#'   cmd_is_run = FALSE
+#' )
+#'
 #' unlink(tempdir(), recursive = TRUE)
 #' }
 #' @details
@@ -3766,6 +3781,7 @@ cutadapt_remove_primers <- function(
   nb_files = Inf,
   cmd_is_run = TRUE,
   return_file_path = FALSE,
+  cutadapt_args = "",
   args_before_cutadapt = "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv && ",
   verbose = TRUE
 ) {
@@ -3790,6 +3806,8 @@ cutadapt_remove_primers <- function(
           args_before_cutadapt,
           "cutadapt --cores=",
           nproc,
+          " ",
+          cutadapt_args,
           " --json=",
           folder_output,
           "/",
@@ -3826,6 +3844,8 @@ cutadapt_remove_primers <- function(
           args_before_cutadapt,
           "cutadapt -n 2 --cores=",
           nproc,
+          " ",
+          cutadapt_args,
           " --json=",
           folder_output,
           "/",
