@@ -925,7 +925,7 @@ write_pq <- function(
       df_physeq_interm <- cbind(
         physeq@otu_table,
         physeq@tax_table,
-        as.vector(physeq@refseq)
+        as.character(physeq@refseq)
       )
       colnames(df_physeq_interm) <-
         c(

@@ -5978,7 +5978,7 @@ plot_refseq_extremity_pq <- function(
 
     letters_sequences <-
       c(strsplit(
-        as.vector(IRanges::narrow(physeq@refseq, end = end_n)),
+        as.character(IRanges::narrow(physeq@refseq, end = end_n)),
         split = ""
       ))
     letters_sequences <- lapply(
