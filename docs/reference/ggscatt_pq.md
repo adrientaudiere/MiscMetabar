@@ -99,6 +99,17 @@ Adrien Taudière
 ``` r
 if (requireNamespace("ggstatsplot")) {
   ggscatt_pq(data_fungi_mini, "Time", q = 0, type = "non-parametric")
+}
+#> Taxa are now in columns.
+#> Taxa are now in rows.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> Joining with `by = join_by(Sample)`
+#> `stat_xsidebin()` using `bins = 30`. Pick better value `binwidth`.
+#> `stat_ysidebin()` using `bins = 30`. Pick better value `binwidth`.
+
+# \donttest{
+if (requireNamespace("ggstatsplot")) {
   ggscatt_pq(data_fungi_mini, "Time", q = 0, type = "parametric")
   ggscatt_pq(data_fungi_mini, "Sample_id",
     q = 0,
@@ -115,14 +126,10 @@ if (requireNamespace("ggstatsplot")) {
 #> ! Sample coverage is 0, most estimators will return `NaN`.
 #> ! Sample coverage is 0, most estimators will return `NaN`.
 #> Joining with `by = join_by(Sample)`
-#> Taxa are now in columns.
-#> Taxa are now in rows.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Joining with `by = join_by(Sample)`
 #> [[1]]
 #> `stat_xsidebin()` using `bins = 30`. Pick better value `binwidth`.
 #> `stat_ysidebin()` using `bins = 30`. Pick better value `binwidth`.
 
 #> 
+# }
 ```

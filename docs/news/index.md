@@ -1,5 +1,12 @@
 # Changelog
 
+## MiscMetabar 0.16.0
+
+- [`cutadapt_remove_primers()`](https://adrientaudiere.github.io/MiscMetabar/reference/cutadapt_remove_primers.md)
+  gains a `cutadapt_args` parameter (default `""`) to pass additional
+  arguments directly to cutadapt, such as `"-e 0.01"` to lower the
+  maximum error rate from the cutadapt default of 10% to 1%.
+
 ## MiscMetabar 0.15.2 \[CRAN\]
 
 - [`hill_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_bar_pq.md)

@@ -21,6 +21,7 @@ cutadapt_remove_primers(
   nb_files = Inf,
   cmd_is_run = TRUE,
   return_file_path = FALSE,
+  cutadapt_args = "",
   args_before_cutadapt =
     "source ~/miniconda3/etc/profile.d/conda.sh && conda activate cutadaptenv && ",
   verbose = TRUE
@@ -77,6 +78,15 @@ cutadapt_remove_primers(
 
   (logical, default FALSE) If true, the function return the path of the
   output folder (param `folder_output`). Useful in targets workflow
+
+- cutadapt_args:
+
+  (default: "") A character string of additional arguments passed
+  directly to cutadapt. For example, use `"-e 0.01"` to set the maximum
+  error rate to 1% (the cutadapt default is 10%). See the [cutadapt
+  search parameters
+  documentation](https://cutadapt.readthedocs.io/en/stable/guide.html#search-parameters)
+  for available options.
 
 - args_before_cutadapt:
 
@@ -136,6 +146,16 @@ cutadapt_remove_primers(
   pattern_R1 = "F.fastq.gz",
   primer_fw = "TTC",
   folder_output = tempdir(),
+  cmd_is_run = FALSE
+)
+
+# Use a stricter error rate (1%) instead of the cutadapt default (10%)
+cutadapt_remove_primers(
+  system.file("extdata", package = "MiscMetabar"),
+  "TTC",
+  "GAA",
+  folder_output = tempdir(),
+  cutadapt_args = "-e 0.01",
   cmd_is_run = FALSE
 )
 

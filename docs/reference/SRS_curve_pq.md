@@ -42,7 +42,6 @@ if (requireNamespace("SRS")) {
     max.sample.size = 200,
     rarefy.comparison = TRUE, rarefy.repeats = 3
   )
-  SRS_curve_pq(data_fungi_mini, max.sample.size = 500, metric = "shannon")
 }
 #> Warning: function should be used for observed counts, but smallest count is 6
 #> Warning: function should be used for observed counts, but smallest count is 6
@@ -852,4 +851,10 @@ if (requireNamespace("SRS")) {
 #> Warning: function should be used for observed counts, but smallest count is 129
 #> Warning: function should be used for observed counts, but smallest count is 129
 
+# \donttest{
+if (requireNamespace("SRS")) {
+  SRS_curve_pq(data_fungi_mini, max.sample.size = 500, metric = "shannon")
+}
+
+# }
 ```

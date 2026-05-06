@@ -17,7 +17,7 @@ from R"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" asy
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,6 +94,7 @@ from R</p>
 <span>  nb_files <span class="op">=</span> <span class="cn">Inf</span>,</span>
 <span>  cmd_is_run <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  return_file_path <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  cutadapt_args <span class="op">=</span> <span class="st">""</span>,</span>
 <span>  args_before_cutadapt <span class="op">=</span></span>
 <span>    <span class="st">"source ~/miniconda3/etc/profile.d/conda.sh &amp;&amp; conda activate cutadaptenv &amp;&amp; "</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
@@ -154,6 +155,14 @@ return the path of the output folder (param <code>folder_output</code>). Useful
 in targets workflow</p></dd>
 
 
+<dt id="arg-cutadapt-args">cutadapt_args<a class="anchor" aria-label="anchor" href="#arg-cutadapt-args"></a></dt>
+<dd><p>(default: "") A character string of additional arguments
+passed directly to cutadapt. For example, use <code>"-e 0.01"</code> to set the
+maximum error rate to 1% (the cutadapt default is 10%). See the
+<a href="https://cutadapt.readthedocs.io/en/stable/guide.html#search-parameters" class="external-link">cutadapt search parameters documentation</a>
+for available options.</p></dd>
+
+
 <dt id="arg-args-before-cutadapt">args_before_cutadapt<a class="anchor" aria-label="anchor" href="#arg-args-before-cutadapt"></a></dt>
 <dd><p>(String) A one line bash command to run before
 to run cutadapt. For examples, "source ~/miniconda3/etc/profile.d/conda.sh &amp;&amp; conda activate cutadaptenv &amp;&amp;" allow to bypass the conda init which asks to restart the shell</p></dd>
@@ -209,6 +218,16 @@ Please cite cutadapt (<a href="https://doi.org/10.14806/ej.17.1.200" class="exte
 <span class="r-in"><span>  pattern_R1 <span class="op">=</span> <span class="st">"F.fastq.gz"</span>,</span></span>
 <span class="r-in"><span>  primer_fw <span class="op">=</span> <span class="st">"TTC"</span>,</span></span>
 <span class="r-in"><span>  folder_output <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  cmd_is_run <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Use a stricter error rate (1%) instead of the cutadapt default (10%)</span></span></span>
+<span class="r-in"><span><span class="fu">cutadapt_remove_primers</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"TTC"</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"GAA"</span>,</span></span>
+<span class="r-in"><span>  folder_output <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  cutadapt_args <span class="op">=</span> <span class="st">"-e 0.01"</span>,</span></span>
 <span class="r-in"><span>  cmd_is_run <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>

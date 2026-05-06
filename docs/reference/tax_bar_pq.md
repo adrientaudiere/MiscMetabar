@@ -26,7 +26,8 @@ tax_bar_pq(
   bar_width = NULL,
   bar_internal_color = NA,
   linewidth_bar_internal = ifelse(is.na(bar_internal_color), 0, 0.5),
-  show_n_samples = TRUE
+  show_n_samples = TRUE,
+  n_sample_text_size = 3
 )
 ```
 
@@ -131,7 +132,12 @@ tax_bar_pq(
 - show_n_samples:
 
   (logical; default `TRUE`) If `TRUE`, the number of samples per group
-  is displayed below the group label on the x-axis, as `"group\n(n=X)"`.
+  is displayed below each bar as `"(n=X)"`.
+
+- n_sample_text_size:
+
+  (numeric; default `3`) Font size (in ggplot2 mm units) for the `(n=X)`
+  label displayed below each bar when `show_n_samples = TRUE`.
 
 ## Value
 

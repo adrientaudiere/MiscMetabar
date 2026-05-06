@@ -514,6 +514,7 @@ res1 <- plot_refseq_extremity_pq(data_fungi_mini)
 #> ! The estimator can't be applied to non-integer values.
 names(res1)
 #> [1] "plot_start" "plot_last"  "df_start"   "df_end"    
+# \donttest{
 res1$plot_start
 #> Warning: Removed 1508 rows containing missing values or values outside the scale range
 #> (`geom_point()`).
@@ -522,7 +523,7 @@ res1$plot_start
 
 res1$plot_last
 
-# \donttest{
+
 res2 <- plot_refseq_extremity_pq(data_fungi, first_n = 200, last_n = 100)
 #> ! Entropy estimators can't apply to probability data.
 #> → `estimator` forced to 'naive'.

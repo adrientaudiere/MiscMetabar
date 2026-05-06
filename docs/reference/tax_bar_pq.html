@@ -13,7 +13,7 @@ Graphical representation of distribution of taxonomy, optionnaly across a factor
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,7 +94,8 @@ Graphical representation of distribution of taxonomy, optionnaly across a factor
 <span>  bar_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bar_internal_color <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  linewidth_bar_internal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">bar_internal_color</span><span class="op">)</span>, <span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span>  show_n_samples <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  show_n_samples <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  n_sample_text_size <span class="op">=</span> <span class="fl">3</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -198,8 +199,13 @@ Line width of bar borders.</p></dd>
 
 <dt id="arg-show-n-samples">show_n_samples<a class="anchor" aria-label="anchor" href="#arg-show-n-samples"></a></dt>
 <dd><p>(logical; default <code>TRUE</code>) If <code>TRUE</code>, the number of
-samples per group is displayed below the group label on the x-axis, as
-<code>"group\n(n=X)"</code>.</p></dd>
+samples per group is displayed below each bar as <code>"(n=X)"</code>.</p></dd>
+
+
+<dt id="arg-n-sample-text-size">n_sample_text_size<a class="anchor" aria-label="anchor" href="#arg-n-sample-text-size"></a></dt>
+<dd><p>(numeric; default <code>3</code>) Font size (in ggplot2 mm
+units) for the <code>(n=X)</code> label displayed below each bar when
+<code>show_n_samples = TRUE</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
