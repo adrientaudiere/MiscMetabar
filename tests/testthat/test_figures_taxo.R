@@ -593,7 +593,12 @@ test_that("tax_bar_pq always shows modality labels above bars when add_ribbon=FA
   }
 
   # Default (show_n_samples=TRUE): group names appear on top, no "(n=X)"
-  p <- tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time", show_n_samples = FALSE)
+  p <- tax_bar_pq(
+    data_fungi_mini,
+    taxa = "Class",
+    fact = "Time",
+    show_n_samples = FALSE
+  )
   expect_s3_class(p, "ggplot")
   expect_true(has_text_layer(p))
   expect_false(any(grepl("\\(n=\\d+\\)", get_first_text(p)$label)))

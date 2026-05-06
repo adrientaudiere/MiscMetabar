@@ -3849,7 +3849,11 @@ plot_tsne_pq <- function(
 #'     max.sample.size = 200,
 #'     rarefy.comparison = TRUE, rarefy.repeats = 3
 #'   )
+#' }
+#' \donttest{
+#' if (requireNamespace("SRS")) {
 #'   SRS_curve_pq(data_fungi_mini, max.sample.size = 500, metric = "shannon")
+#' }
 #' }
 SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
   if (clean_pq) {
@@ -5624,11 +5628,15 @@ plot_var_part_pq <-
 #' @examples
 #' if (requireNamespace("ggstatsplot")) {
 #'   ggscatt_pq(data_fungi_mini, "Time", q = 0, type = "non-parametric")
+#' }
+#' \donttest{
+#' if (requireNamespace("ggstatsplot")) {
 #'   ggscatt_pq(data_fungi_mini, "Time", q = 0, type = "parametric")
 #'   ggscatt_pq(data_fungi_mini, "Sample_id",
 #'     q = 0,
 #'     one_plot = FALSE
 #'   )
+#' }
 #' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
@@ -5945,9 +5953,10 @@ ggaluv_pq <- function(
 #' @examples
 #' res1 <- plot_refseq_extremity_pq(data_fungi_mini)
 #' names(res1)
+#' \donttest{
 #' res1$plot_start
 #' res1$plot_last
-#' \donttest{
+#'
 #' res2 <- plot_refseq_extremity_pq(data_fungi, first_n = 200, last_n = 100)
 #' res2$plot_start
 #' res2$plot_last

@@ -53,9 +53,10 @@ of the diversity (equitability) along the sequences.
 \examples{
 res1 <- plot_refseq_extremity_pq(data_fungi_mini)
 names(res1)
+\donttest{
 res1$plot_start
 res1$plot_last
-\donttest{
+
 res2 <- plot_refseq_extremity_pq(data_fungi, first_n = 200, last_n = 100)
 res2$plot_start
 res2$plot_last

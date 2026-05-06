@@ -23,7 +23,7 @@ tax_bar_pq(
   bar_internal_color = NA,
   linewidth_bar_internal = ifelse(is.na(bar_internal_color), 0, 0.5),
   show_n_samples = TRUE,
-  n_sample_text_size = 2
+  n_sample_text_size = 3
 )
 }
 \arguments{
@@ -90,7 +90,7 @@ Line width of bar borders.}
 \item{show_n_samples}{(logical; default \code{TRUE}) If \code{TRUE}, the number of
 samples per group is displayed below each bar as \code{"(n=X)"}.}
 
-\item{n_sample_text_size}{(numeric; default \code{2}) Font size (in ggplot2 mm
+\item{n_sample_text_size}{(numeric; default \code{3}) Font size (in ggplot2 mm
 units) for the \code{(n=X)} label displayed below each bar when
 \code{show_n_samples = TRUE}.}
 }
