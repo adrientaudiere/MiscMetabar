@@ -1020,7 +1020,7 @@ write_pq <- function(
     }
     if (!is.null(physeq@refseq)) {
       utils::write.table(
-        physeq@refseq,
+        as.character(physeq@refseq),
         paste0(path, "/refseq.csv"),
         quote = quote,
         sep = sep_csv,
