@@ -26,6 +26,14 @@
 #' @author Adrien Taudière
 
 search_exact_seq_pq <- function(physeq, seq2search) {
+  if (is.character(seq2search)) {
+    cli::cli_abort(
+      c(
+        "{.arg seq2search} must be a {.cls DNAStringSet}, not a character vector.",
+        "i" = "Wrap it: {.code Biostrings::DNAStringSet(seq2search)}"
+      )
+    )
+  }
   sequences <- seq2search
   res <- vector("list", length(sequences))
   for (i in seq_along(sequences)) {
