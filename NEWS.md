@@ -1,5 +1,4 @@
-# MiscMetabar 0.16.0
-
+# MiscMetabar 0.16.1 [CRAN]
 * `cutadapt_remove_primers()` gains a `cutadapt_args` parameter (default `""`) to pass additional arguments directly to cutadapt, such as `"-e 0.01"` to lower the maximum error rate from the cutadapt default of 10% to 1%.
 
 # MiscMetabar 0.15.2 [CRAN]
