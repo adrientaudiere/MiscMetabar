@@ -1,4 +1,4 @@
-# MiscMetabar (development version)
+# MiscMetabar 0.16.3
 
 # MiscMetabar 0.16.2
 
