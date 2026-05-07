@@ -20,3 +20,4 @@
 ^\.codefactor\.yml$
 ^\.entire$
 ^Rplots\.pdf$
+^CRAN-SUBMISSION$
