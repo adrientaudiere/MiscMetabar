@@ -1,0 +1,54 @@
+# Rename the samples of a phyloseq slot
+
+[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+
+Useful for targets bioinformatic pipeline.
+
+## Usage
+
+``` r
+rename_samples(phyloseq_component, names_of_samples, taxa_are_rows = FALSE)
+```
+
+## Arguments
+
+- phyloseq_component:
+
+  (required) one of otu_table or sam_data slot of a phyloseq-class
+  object
+
+- names_of_samples:
+
+  (required) A vector of samples names
+
+- taxa_are_rows:
+
+  (default to FALSE) see ?phyloseq for details
+
+## Value
+
+The otu_table or the sam_data slot with new samples names
+
+## Author
+
+Adrien Taudière
+
+## Examples
+
+``` r
+otutab <- rename_samples(
+  data_fungi@otu_table,
+  paste0("data_f", sample_names(data_fungi))
+)
+otutab2 <- rename_samples(
+  clean_pq(data_fungi,
+    force_taxa_as_rows = TRUE
+  )@otu_table,
+  paste0("data_f", sample_names(data_fungi))
+)
+#> Taxa are now in rows.
+samda <- rename_samples(
+  data_fungi@sam_data,
+  paste0("data_f", sample_names(data_fungi))
+)
+```

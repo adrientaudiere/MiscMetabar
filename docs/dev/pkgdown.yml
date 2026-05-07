@@ -1,0 +1,23 @@
+pandoc: 3.6.3
+pkgdown: 2.2.0
+pkgdown_sha: ~
+articles:
+  articles/accumulation-rarefaction: accumulation-rarefaction.html
+  articles/alpha-div: alpha-div.html
+  articles/beta-div: beta-div.html
+  articles/explore_data: explore_data.html
+  articles/fastq_quality_check: fastq_quality_check.html
+  articles/filter: filter.html
+  articles/import_export_track: import_export_track.html
+  MiscMetabar: MiscMetabar.html
+  articles/normalization: normalization.html
+  articles/pkgnet-report: pkgnet-report.html
+  articles/Reclustering: Reclustering.html
+  articles/Rules: Rules.html
+  articles/states_of_fields_in_R: states_of_fields_in_R.html
+  articles/tengeler: tengeler.html
+  articles/tree_visualization: tree_visualization.html
+last_built: 2026-05-07T11:17Z
+urls:
+  reference: https://adrientaudiere.github.io/MiscMetabar/reference
+  article: https://adrientaudiere.github.io/MiscMetabar/articles

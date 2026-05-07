@@ -60,7 +60,11 @@ hill_tuckey_pq <- function(
   modality_vector <-
     as.factor(as.vector(unlist(unclass(physeq@sam_data[, modality]))))
 
-  physeq <- taxa_as_rows(physeq)
+  physeq <- if (silent) {
+    suppressMessages(taxa_as_rows(physeq))
+  } else {
+    taxa_as_rows(physeq)
+  }
   read_numbers <- apply(physeq@otu_table, 2, sum)
   otu_hill <- if (silent) {
     suppressMessages(divent_hill_matrix_pq(

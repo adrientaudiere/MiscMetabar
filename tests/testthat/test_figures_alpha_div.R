@@ -211,7 +211,6 @@ test_that("hill_bar_pq works with data_fungi_mini dataset", {
     ),
     "ggplot"
   )
-  expect_s3_class(p, "ggplot")
   # custom y labels
   expect_s3_class(
     suppressMessages(

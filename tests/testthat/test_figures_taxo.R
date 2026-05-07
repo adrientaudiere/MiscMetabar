@@ -580,19 +580,40 @@ test_that("tax_bar_pq nb_seq=FALSE bar height counts distinct OTUs per group", {
 })
 
 test_that("tax_bar_pq always shows modality labels above bars when add_ribbon=FALSE", {
-  has_text_layer <- \(p) {
-    any(vapply(p$layers, \(l) inherits(l$geom, "GeomText"), logical(1)))
+  has_text_layer <- function(p) {
+    any(vapply(
+      p$layers,
+      function(l) {
+        inherits(l$geom, "GeomText")
+      },
+      logical(1)
+    ))
   }
-  get_first_text <- \(p) {
+  get_first_text <- function(p) {
     idx <- which(vapply(
       p$layers,
-      \(l) inherits(l$geom, "GeomText"),
+      function(l) {
+        inherits(l$geom, "GeomText")
+      },
       logical(1)
     ))[1]
     p$layers[[idx]]$data
   }
+  get_n_text <- function(p) {
+    for (l in p$layers) {
+      if (inherits(l$geom, "GeomText")) {
+        d <- l$data
+        if (
+          !is.null(d) && "label" %in% names(d) && any(grepl("\\(n=", d$label))
+        ) {
+          return(d)
+        }
+      }
+    }
+    NULL
+  }
 
-  # Default (show_n_samples=TRUE): group names appear on top, no "(n=X)"
+  # Default (show_n_samples=FALSE): group names appear on top, no "(n=X)"
   p <- tax_bar_pq(
     data_fungi_mini,
     taxa = "Class",
@@ -603,16 +624,16 @@ test_that("tax_bar_pq always shows modality labels above bars when add_ribbon=FA
   expect_true(has_text_layer(p))
   expect_false(any(grepl("\\(n=\\d+\\)", get_first_text(p)$label)))
 
-  # show_n_samples=TRUE: group names + "(n=X)" on top
+  # show_n_samples=TRUE: group names on top, "(n=X)" in a separate layer below bars
   p2 <- tax_bar_pq(
     data_fungi_mini,
     taxa = "Class",
     fact = "Time"
   )
   expect_s3_class(p2, "ggplot")
-  expect_true(all(grepl("\\(n=.*\\)", get_first_text(p2)$label)))
+  expect_true(all(grepl("\\(n=.*\\)", get_n_text(p2)$label)))
 
-  # add_ribbon=TRUE with show_n_samples=TRUE: n appended to ribbon top labels
+  # add_ribbon=TRUE with show_n_samples=TRUE: "(n=X)" in a separate layer below bars
   p3 <- tax_bar_pq(
     data_fungi_mini,
     taxa = "Class",
@@ -621,7 +642,7 @@ test_that("tax_bar_pq always shows modality labels above bars when add_ribbon=FA
   )
   expect_s3_class(p3, "ggplot")
   expect_true(has_text_layer(p3))
-  expect_true(all(grepl("\\(n=.*\\)", get_first_text(p3)$label)))
+  expect_true(all(grepl("\\(n=.*\\)", get_n_text(p3)$label)))
 })
 
 test_that("reorder_distinct_colors works on tax_bar_pq output", {
