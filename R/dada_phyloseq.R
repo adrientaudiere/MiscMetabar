@@ -77,11 +77,40 @@ add_dna_to_phyloseq <- function(physeq, prefix_taxa_names = "Taxa_") {
 #' @param prefix_taxa_names (default "Taxa_"): the prefix of taxa names (eg. "ASV_" or "OTU_")
 #' @param check_taxonomy (logical, default FALSE) If TRUE, call
 #'   [verify_tax_table()] to check for common taxonomy table issues.
+#' @param tax_remove_border_spaces (logical, default FALSE) If TRUE, trim
+#'   leading/trailing whitespace from values in the `tax_table` slot
+#'   (passed to [verify_tax_table()] with `modify_phyloseq = TRUE`). Handles
+#'   both ASCII whitespace and Unicode separators such as NBSP (U+00A0).
+#' @param tax_remove_all_space (logical, default FALSE) If TRUE, replace
+#'   internal whitespace (ASCII or Unicode separator) in `tax_table` values
+#'   with `replace_space_with`.
+#' @param tax_replace_invisible_chars (logical, default FALSE) If TRUE,
+#'   strip invisible / unusual characters (control chars, zero-width space,
+#'   NBSP inside values, ...) from `tax_table` values. See
+#'   [verify_tax_table()]'s `replace_invisible_chars` for the exact pattern.
+#' @param tax_replace_to_NA (logical or character, default FALSE) If TRUE,
+#'   replace `tax_table` values matching the default [unwanted_tax_patterns]
+#'   with `NA`. A character vector of regex patterns can be supplied to
+#'   override the defaults.
+#' @param tax_redundant_suffix (logical or character, default FALSE) If TRUE,
+#'   replace redundant `"_sp"` values with `NA` (e.g. `Russula_sp` at Species
+#'   when `Russula` is already at Genus). A character string supplies a
+#'   custom suffix.
+#' @param tax_replace_space_with (character, default `"_"`) Replacement for
+#'   internal whitespace when `tax_remove_all_space = TRUE`.
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object
 #' @export
 #' @author Adrien Taudière
 #' @examples
 #' clean_pq(data_fungi_mini)
+#' \donttest{
+#' # Trim leading/trailing whitespace in tax_table values
+#' clean_pq(data_fungi_mini, tax_remove_border_spaces = TRUE)
+#' # Replace NA-like values (e.g. "unidentified", "NA") with NA
+#' clean_pq(data_fungi_mini, tax_replace_to_NA = TRUE)
+#' # Drop redundant "_sp" tips
+#' clean_pq(data_fungi_mini, tax_redundant_suffix = TRUE)
+#' }
 clean_pq <- function(
   physeq,
   remove_empty_samples = TRUE,
@@ -95,7 +124,13 @@ clean_pq <- function(
   rename_taxa = FALSE,
   simplify_taxo = FALSE,
   prefix_taxa_names = "_Taxa",
-  check_taxonomy = FALSE
+  check_taxonomy = FALSE,
+  tax_remove_border_spaces = FALSE,
+  tax_remove_all_space = FALSE,
+  tax_replace_to_NA = FALSE,
+  tax_redundant_suffix = FALSE,
+  tax_replace_space_with = "_",
+  tax_replace_invisible_chars = FALSE
 ) {
   if (clean_samples_names) {
     if (!is.null(physeq@refseq)) {
@@ -218,6 +253,42 @@ clean_pq <- function(
         )
       )
     }
+  }
+
+  do_tax_modif <- isTRUE(tax_remove_border_spaces) ||
+    isTRUE(tax_remove_all_space) ||
+    !isFALSE(tax_replace_to_NA) ||
+    !isFALSE(tax_redundant_suffix) ||
+    isTRUE(tax_replace_invisible_chars)
+
+  if (do_tax_modif && !is.null(new_physeq@tax_table)) {
+    patterns_arg <- if (isTRUE(tax_replace_to_NA)) {
+      unwanted_tax_patterns
+    } else if (isFALSE(tax_replace_to_NA)) {
+      character(0)
+    } else {
+      tax_replace_to_NA
+    }
+    suffix_arg <- if (isTRUE(tax_redundant_suffix)) {
+      "_sp"
+    } else if (isFALSE(tax_redundant_suffix)) {
+      NULL
+    } else {
+      tax_redundant_suffix
+    }
+    new_physeq <- verify_tax_table(
+      new_physeq,
+      verbose = verbose,
+      modify_phyloseq = TRUE,
+      replace_to_NA = patterns_arg,
+      min_char = 0,
+      redundant_suffix = suffix_arg,
+      remove_border_spaces = isTRUE(tax_remove_border_spaces),
+      remove_all_space = isTRUE(tax_remove_all_space),
+      replace_space_with = tax_replace_space_with,
+      detect_invisible_chars = isTRUE(tax_replace_invisible_chars),
+      replace_invisible_chars = isTRUE(tax_replace_invisible_chars)
+    )
   }
 
   verify_pq(new_physeq, check_taxonomy = check_taxonomy)
@@ -1581,7 +1652,7 @@ mumu_pq <- function(
 #' This function is called by [verify_pq()] when `check_taxonomy = TRUE`.
 #'
 #' @inheritParams clean_pq
-#' @param verbose (logical, default FALSE) If TRUE, print warnings and messages
+#' @param verbose (logical, default TRUE) If TRUE, print warnings and messages
 #'   about potential taxonomy issues.
 #' @param replace_to_NA (character vector) A vector of regex patterns to identify
 #'   values that should be considered as NA. Defaults to
@@ -1607,18 +1678,40 @@ mumu_pq <- function(
 #'     \item Values matching `replace_to_NA` patterns (e.g., "unclassified", "unknown")
 #'     \item Values with fewer than `min_char` characters
 #'     \item Redundant suffix patterns (e.g., "Russula_sp" when "Russula" is in Genus)
-#'     \item Leading/trailing whitespace (if `remove_border_spaces = TRUE`)
-#'     \item Internal spaces (if `remove_all_space = TRUE`)
+#'     \item Leading/trailing whitespace, including non-breaking space
+#'           U+00A0 and other Unicode separators (if
+#'           `remove_border_spaces = TRUE`)
+#'     \item Internal spaces, including Unicode separators (if
+#'           `remove_all_space = TRUE`)
+#'     \item Invisible / unusual characters such as control chars, zero-width
+#'           space U+200B or non-breaking space U+00A0 inside values (if
+#'           `replace_invisible_chars = TRUE`)
 #'   }
 #'   Messages will indicate the number of values replaced for each type.
 #' @param remove_border_spaces (logical, default TRUE) If TRUE and
 #'   `modify_phyloseq = TRUE`, remove leading and trailing whitespace from
-#'   taxonomic values.
+#'   taxonomic values. Matches both ASCII whitespace and Unicode separators
+#'   (NBSP, em space, ideographic space, ...) — `trimws()` alone only handles
+#'   `[ \\t\\r\\n]` and would silently leave NBSP in place.
 #' @param remove_all_space (logical, default FALSE) If TRUE and
-#'   `modify_phyloseq = TRUE`, replace internal spaces (spaces within taxonomic
-#'   values) with the character specified in `replace_space_with`.
+#'   `modify_phyloseq = TRUE`, replace internal whitespace (ASCII or Unicode
+#'   separator) with the character specified in `replace_space_with`.
 #' @param replace_space_with (character, default "_") Character to use when
 #'   replacing internal spaces. Only used when `remove_all_space = TRUE`.
+#' @param detect_invisible_chars (logical, default TRUE) If TRUE, scan
+#'   taxonomic values for invisible / unusual characters: anything in
+#'   Unicode category `\\p{C}` (control / format / surrogate / private use /
+#'   unassigned) or any `\\p{Z}` separator other than a plain ASCII space or
+#'   tab. Typical offenders include non-breaking space (U+00A0), zero-width
+#'   space (U+200B), zero-width joiner (U+200D), and control characters.
+#'   Letters with diacritics, digits and punctuation are NOT flagged.
+#' @param replace_invisible_chars (logical, default FALSE) If TRUE and
+#'   `modify_phyloseq = TRUE`, strip the characters detected by
+#'   `detect_invisible_chars` from taxonomic values (replacement is
+#'   `invisible_chars_replacement`, default empty string). Values that become
+#'   empty after stripping are turned into `NA`.
+#' @param invisible_chars_replacement (character, default `""`) Replacement
+#'   string for `replace_invisible_chars = TRUE`.
 #'
 #' @return If `modify_phyloseq = FALSE` (default): Nothing (invisible NULL).
 #'   Warnings/messages only if verbose = TRUE and issues are found.
@@ -1688,7 +1781,7 @@ mumu_pq <- function(
 #' }
 verify_tax_table <- function(
   physeq,
-  verbose = FALSE,
+  verbose = TRUE,
   replace_to_NA = unwanted_tax_patterns,
   min_char = 4,
   redundant_suffix = "_sp",
@@ -1704,7 +1797,10 @@ verify_tax_table <- function(
   modify_phyloseq = FALSE,
   remove_border_spaces = TRUE,
   remove_all_space = FALSE,
-  replace_space_with = "_"
+  replace_space_with = "_",
+  detect_invisible_chars = TRUE,
+  replace_invisible_chars = FALSE,
+  invisible_chars_replacement = ""
 ) {
   if (is.null(physeq@tax_table)) {
     warning(
@@ -1712,12 +1808,17 @@ verify_tax_table <- function(
     )
     if (modify_phyloseq) {
       return(physeq)
+    } else {
+        return(invisible(NULL))
+      }
     }
-    return(invisible(NULL))
-  }
 
   # If not verbose and not modifying, return early
   if (!verbose && !modify_phyloseq) {
+    message(
+      "No checks performed on taxonomy table because verbose = FALSE and modify_phyloseq = FALSE. ",
+      "Set verbose = TRUE to see potential issues or modify_phyloseq = TRUE to automatically replace problematic values with NA."
+    )
     return(invisible(NULL))
   }
 
@@ -1730,6 +1831,7 @@ verify_tax_table <- function(
   n_replaced_redundant <- 0
   n_trimmed_spaces <- 0
   n_replaced_internal_spaces <- 0
+  n_replaced_invisible <- 0
 
   # 1. Check/replace values matching replace_to_NA patterns
   pattern_matches <- list()
@@ -1916,8 +2018,11 @@ verify_tax_table <- function(
         next
       }
 
-      # Check for border spaces (leading/trailing whitespace)
-      if (grepl("^\\s|\\s$", val)) {
+      # Check for border whitespace. We use a PCRE pattern that matches both
+      # ASCII whitespace (\s) and every Unicode separator (\p{Z}, e.g. NBSP
+      # U+00A0, em space, ideographic space), because base R's \s in TRE mode
+      # and trimws() default to ASCII-only and would miss NBSP-padded values.
+      if (grepl("^[\\s\\p{Z}]|[\\s\\p{Z}]$", val, perl = TRUE)) {
         has_border_spaces <- TRUE
         border_space_entries[[length(border_space_entries) + 1]] <- list(
           value = val,
@@ -1927,9 +2032,14 @@ verify_tax_table <- function(
         )
       }
 
-      # Check for internal spaces (spaces within the value, not at borders)
-      trimmed_val <- trimws(val)
-      if (grepl("\\s", trimmed_val)) {
+      # Check for internal spaces (within the value, not at borders).
+      trimmed_val <- gsub(
+        "^[\\s\\p{Z}]+|[\\s\\p{Z}]+$",
+        "",
+        val,
+        perl = TRUE
+      )
+      if (grepl("[\\s\\p{Z}]", trimmed_val, perl = TRUE)) {
         has_internal_spaces <- TRUE
         internal_space_entries[[length(internal_space_entries) + 1]] <- list(
           value = val,
@@ -1956,9 +2066,15 @@ verify_tax_table <- function(
     }
 
     if (modify_phyloseq && remove_border_spaces) {
-      # Trim leading/trailing whitespace
+      # Trim leading/trailing whitespace, including Unicode separators
+      # (NBSP, em space, etc.) that trimws() does not strip by default.
       for (entry in border_space_entries) {
-        tax_mat[entry$row, entry$col] <- trimws(tax_mat[entry$row, entry$col])
+        tax_mat[entry$row, entry$col] <- gsub(
+          "^[\\s\\p{Z}]+|[\\s\\p{Z}]+$",
+          "",
+          tax_mat[entry$row, entry$col],
+          perl = TRUE
+        )
       }
       n_trimmed_spaces <- length(border_space_entries)
       message(
@@ -1997,11 +2113,18 @@ verify_tax_table <- function(
     }
 
     if (modify_phyloseq && remove_all_space) {
-      # Replace internal spaces
+      # Replace internal spaces (any \s or Unicode separator). First strip
+      # border whitespace (including NBSP), then collapse any run of inner
+      # whitespace into `replace_space_with`.
       for (entry in internal_space_entries) {
         current_val <- tax_mat[entry$row, entry$col]
-        # First trim, then replace internal spaces
-        new_val <- gsub("\\s+", replace_space_with, trimws(current_val))
+        trimmed <- gsub(
+          "^[\\s\\p{Z}]+|[\\s\\p{Z}]+$",
+          "",
+          current_val,
+          perl = TRUE
+        )
+        new_val <- gsub("[\\s\\p{Z}]+", replace_space_with, trimmed, perl = TRUE)
         tax_mat[entry$row, entry$col] <- new_val
       }
       n_replaced_internal_spaces <- length(internal_space_entries)
@@ -2028,7 +2151,112 @@ verify_tax_table <- function(
     }
   }
 
-  # 7. Check for redundant rank patterns (e.g., "Russula_sp" in Species
+  # 7. Detect invisible / unusual characters (control chars, zero-width
+  #    spaces, NBSP, em space, etc.). Letters with diacritics (\p{L}),
+  #    digits and punctuation are NOT flagged. ASCII space and tab are not
+  #    flagged either (they are already covered by the whitespace checks
+  #    above). Pattern: \p{C} (any "Other" category: control / format /
+  #    surrogate / private use / unassigned) OR a \p{Z} separator that is
+  #    not a plain space / tab.
+  invisible_pattern <- "[\\p{C}]|[\\p{Z}](?<! )(?<!\\t)"
+  invisible_entries <- list()
+  if (isTRUE(detect_invisible_chars)) {
+    for (j in seq_along(rank_names)) {
+      rank <- rank_names[j]
+      rank_values <- tax_mat[, rank]
+      for (i in seq_len(nrow(tax_mat))) {
+        val <- rank_values[i]
+        if (is.na(val)) {
+          next
+        }
+        if (grepl(invisible_pattern, val, perl = TRUE)) {
+          invisible_entries[[length(invisible_entries) + 1]] <- list(
+            value = val,
+            rank = rank,
+            row = i,
+            col = j
+          )
+        }
+      }
+    }
+  }
+
+  if (length(invisible_entries) > 0) {
+    describe_invisible <- function(x) {
+      # Show the value with each offending char rendered as its hex code
+      # point so the user can see what's hiding inside the string.
+      chars <- strsplit(x$value, "", fixed = TRUE)[[1]]
+      offenders <- vapply(
+        chars,
+        function(ch) {
+          if (grepl(invisible_pattern, ch, perl = TRUE)) {
+            sprintf("U+%04X", utf8ToInt(ch))
+          } else {
+            ""
+          }
+        },
+        character(1)
+      )
+      codes <- paste(offenders[nchar(offenders) > 0], collapse = ",")
+      paste0("'", x$value, "' (", x$rank, "; ", codes, ")")
+    }
+    unique_invisible <- unique(vapply(
+      invisible_entries,
+      describe_invisible,
+      character(1)
+    ))
+    if (length(unique_invisible) <= 5) {
+      invisible_display <- paste(unique_invisible, collapse = ", ")
+    } else {
+      invisible_display <- paste(
+        c(unique_invisible[1:5], "..."),
+        collapse = ", "
+      )
+    }
+
+    if (modify_phyloseq && isTRUE(replace_invisible_chars)) {
+      for (entry in invisible_entries) {
+        current_val <- tax_mat[entry$row, entry$col]
+        new_val <- gsub(
+          invisible_pattern,
+          invisible_chars_replacement,
+          current_val,
+          perl = TRUE
+        )
+        # Re-trim border whitespace in case the replacement created any
+        new_val <- gsub(
+          "^[\\s\\p{Z}]+|[\\s\\p{Z}]+$",
+          "",
+          new_val,
+          perl = TRUE
+        )
+        if (nchar(new_val) == 0) {
+          new_val <- NA_character_
+        }
+        tax_mat[entry$row, entry$col] <- new_val
+      }
+      n_replaced_invisible <- length(invisible_entries)
+      message(
+        "Replaced invisible/unusual character(s) in ",
+        n_replaced_invisible,
+        " value(s): ",
+        invisible_display
+      )
+    } else if (verbose) {
+      warning(
+        "Found ",
+        length(invisible_entries),
+        " taxonomic value(s) with invisible or unusual characters ",
+        "(e.g. NBSP U+00A0, zero-width space U+200B, control chars). ",
+        "Code points shown after each value: ",
+        invisible_display,
+        ". Use modify_phyloseq = TRUE and replace_invisible_chars = TRUE ",
+        "to strip them."
+      )
+    }
+  }
+
+  # 8. Check for redundant rank patterns (e.g., "Russula_sp" in Species
   #    when "Russula" is already in Genus)
   if (!is.null(redundant_suffix) && nchar(redundant_suffix) > 0) {
     # Use provided taxonomic_ranks or default to column names
@@ -2141,7 +2369,9 @@ verify_tax_table <- function(
       n_replaced_short +
       n_replaced_redundant
     total_space_modified <- n_trimmed_spaces + n_replaced_internal_spaces
-    total_modified <- total_replaced_na + total_space_modified
+    total_modified <- total_replaced_na +
+      total_space_modified +
+      n_replaced_invisible
 
     if (total_modified > 0) {
       physeq@tax_table <- tax_table(tax_mat)
@@ -2174,6 +2404,15 @@ verify_tax_table <- function(
           paste0(
             n_replaced_internal_spaces,
             " value(s) had internal spaces replaced"
+          )
+        )
+      }
+      if (n_replaced_invisible > 0) {
+        summary_parts <- c(
+          summary_parts,
+          paste0(
+            n_replaced_invisible,
+            " value(s) had invisible/unusual characters stripped"
           )
         )
       }

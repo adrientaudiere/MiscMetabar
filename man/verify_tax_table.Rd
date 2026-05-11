@@ -6,7 +6,7 @@
 \usage{
 verify_tax_table(
   physeq,
-  verbose = FALSE,
+  verbose = TRUE,
   replace_to_NA = unwanted_tax_patterns,
   min_char = 4,
   redundant_suffix = "_sp",
@@ -21,7 +21,7 @@ verify_tax_table(
 \item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{verbose}{(logical, default FALSE) If TRUE, print warnings and messages
+\item{verbose}{(logical, default TRUE) If TRUE, print warnings and messages
 about potential taxonomy issues.}
 
 \item{replace_to_NA}{(character vector) A vector of regex patterns to identify
