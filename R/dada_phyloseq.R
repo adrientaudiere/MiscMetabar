@@ -1809,9 +1809,9 @@ verify_tax_table <- function(
     if (modify_phyloseq) {
       return(physeq)
     } else {
-        return(invisible(NULL))
-      }
+      return(invisible(NULL))
     }
+  }
 
   # If not verbose and not modifying, return early
   if (!verbose && !modify_phyloseq) {
@@ -2124,7 +2124,12 @@ verify_tax_table <- function(
           current_val,
           perl = TRUE
         )
-        new_val <- gsub("[\\s\\p{Z}]+", replace_space_with, trimmed, perl = TRUE)
+        new_val <- gsub(
+          "[\\s\\p{Z}]+",
+          replace_space_with,
+          trimmed,
+          perl = TRUE
+        )
         tax_mat[entry$row, entry$col] <- new_val
       }
       n_replaced_internal_spaces <- length(internal_space_entries)
