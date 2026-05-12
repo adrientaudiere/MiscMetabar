@@ -129,31 +129,31 @@ test_that("clean_pq tax_table toggles are FALSE by default and leave tax_table u
   )
 })
 
-test_that("clean_pq remove_border_spaces trims tax_table values", {
+test_that("clean_pq tax_remove_border_spaces trims tax_table values", {
   res <- suppressMessages(
-    clean_pq(data_fungi_tax, remove_border_spaces = TRUE)
+    clean_pq(data_fungi_tax, tax_remove_border_spaces = TRUE)
   )
   expect_identical(as.character(res@tax_table[1, "Genus"]), "Russula")
   expect_identical(as.character(res@tax_table[2, "Species"]), "uncultured")
 })
 
-test_that("clean_pq replace_to_NA replaces NA-like patterns", {
-  res <- suppressMessages(clean_pq(data_fungi_tax, replace_to_NA = TRUE))
+test_that("clean_pq tax_replace_to_NA replaces NA-like patterns", {
+  res <- suppressMessages(clean_pq(data_fungi_tax, tax_replace_to_NA = TRUE))
   expect_true(is.na(res@tax_table[2, "Species"]))
 })
 
-test_that("clean_pq redundant_suffix drops redundant '_sp' tips", {
+test_that("clean_pq tax_redundant_suffix drops redundant '_sp' tips", {
   pq <- data_fungi_mini
   pq@tax_table[1, "Genus"] <- "Russula"
   pq@tax_table[1, "Species"] <- "Russula_sp"
-  res <- suppressMessages(clean_pq(pq, redundant_suffix = TRUE))
+  res <- suppressMessages(clean_pq(pq, tax_redundant_suffix = TRUE))
   expect_true(is.na(res@tax_table[1, "Species"]))
 })
 
-test_that("clean_pq redundant_suffix accepts a custom suffix", {
+test_that("clean_pq tax_redundant_suffix accepts a custom suffix", {
   pq <- data_fungi_mini
   pq@tax_table[1, "Genus"] <- "Russula"
   pq@tax_table[1, "Species"] <- "Russula_var"
-  res <- suppressMessages(clean_pq(pq, redundant_suffix = "_var"))
+  res <- suppressMessages(clean_pq(pq, tax_redundant_suffix = "_var"))
   expect_true(is.na(res@tax_table[1, "Species"]))
 })
