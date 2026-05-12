@@ -100,7 +100,8 @@ Imports:
     cli,
     lifecycle,
     rlang,
-    stats
+    stats,
+    XVector
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 VignetteBuilder: knitr
