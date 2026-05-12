@@ -16,12 +16,11 @@ Depends:
     dplyr,
     purrr,
     divent
-Suggests: 
+Suggests:
     adespatial,
     ALDEx2,
     ANCOMBC,
     BiocManager,
-    Biostrings,
     circlize,
     ComplexUpset,
     DECIPHER,
@@ -97,6 +96,7 @@ BugReports: https://github.com/adrientaudiere/MiscMetabar/issues
 Roxygen: list(markdown = TRUE)
 Imports:
     ape,
+    Biostrings,
     cli,
     lifecycle,
     rlang,

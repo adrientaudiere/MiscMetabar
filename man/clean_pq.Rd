@@ -17,7 +17,13 @@ clean_pq(
   rename_taxa = FALSE,
   simplify_taxo = FALSE,
   prefix_taxa_names = "_Taxa",
-  check_taxonomy = FALSE
+  check_taxonomy = FALSE,
+  tax_remove_border_spaces = FALSE,
+  tax_remove_all_space = FALSE,
+  tax_replace_to_NA = FALSE,
+  tax_redundant_suffix = FALSE,
+  tax_replace_space_with = "_",
+  tax_replace_invisible_chars = FALSE
 )
 }
 \arguments{
@@ -58,6 +64,33 @@ the taxa (ASV, OTU) names in verbose information can be misleading.}
 
 \item{check_taxonomy}{(logical, default FALSE) If TRUE, call
 \code{\link[=verify_tax_table]{verify_tax_table()}} to check for common taxonomy table issues.}
+
+\item{tax_remove_border_spaces}{(logical, default FALSE) If TRUE, trim
+leading/trailing whitespace from values in the \code{tax_table} slot
+(passed to \code{\link[=verify_tax_table]{verify_tax_table()}} with \code{modify_phyloseq = TRUE}). Handles
+both ASCII whitespace and Unicode separators such as NBSP (U+00A0).}
+
+\item{tax_remove_all_space}{(logical, default FALSE) If TRUE, replace
+internal whitespace (ASCII or Unicode separator) in \code{tax_table} values
+with \code{replace_space_with}.}
+
+\item{tax_replace_to_NA}{(logical or character, default FALSE) If TRUE,
+replace \code{tax_table} values matching the default \link{unwanted_tax_patterns}
+with \code{NA}. A character vector of regex patterns can be supplied to
+override the defaults.}
+
+\item{tax_redundant_suffix}{(logical or character, default FALSE) If TRUE,
+replace redundant \code{"_sp"} values with \code{NA} (e.g. \code{Russula_sp} at Species
+when \code{Russula} is already at Genus). A character string supplies a
+custom suffix.}
+
+\item{tax_replace_space_with}{(character, default \code{"_"}) Replacement for
+internal whitespace when \code{tax_remove_all_space = TRUE}.}
+
+\item{tax_replace_invisible_chars}{(logical, default FALSE) If TRUE,
+strip invisible / unusual characters (control chars, zero-width space,
+NBSP inside values, ...) from \code{tax_table} values. See
+\code{\link[=verify_tax_table]{verify_tax_table()}}'s \code{replace_invisible_chars} for the exact pattern.}
 }
 \value{
 A new \code{\link[phyloseq]{phyloseq-class}} object
@@ -75,6 +108,14 @@ In addition, this function check for discrepancy (and rename) between
 }
 \examples{
 clean_pq(data_fungi_mini)
+\donttest{
+# Trim leading/trailing whitespace in tax_table values
+clean_pq(data_fungi_mini, tax_remove_border_spaces = TRUE)
+# Replace NA-like values (e.g. "unidentified", "NA") with NA
+clean_pq(data_fungi_mini, tax_replace_to_NA = TRUE)
+# Drop redundant "_sp" tips
+clean_pq(data_fungi_mini, tax_redundant_suffix = TRUE)
+}
 }
 \author{
 Adrien Taudière

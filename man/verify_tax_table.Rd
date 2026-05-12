@@ -6,7 +6,7 @@
 \usage{
 verify_tax_table(
   physeq,
-  verbose = FALSE,
+  verbose = TRUE,
   replace_to_NA = unwanted_tax_patterns,
   min_char = 4,
   redundant_suffix = "_sp",
@@ -14,14 +14,17 @@ verify_tax_table(
   modify_phyloseq = FALSE,
   remove_border_spaces = TRUE,
   remove_all_space = FALSE,
-  replace_space_with = "_"
+  replace_space_with = "_",
+  detect_invisible_chars = TRUE,
+  replace_invisible_chars = FALSE,
+  invisible_chars_replacement = ""
 )
 }
 \arguments{
 \item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{verbose}{(logical, default FALSE) If TRUE, print warnings and messages
+\item{verbose}{(logical, default TRUE) If TRUE, print warnings and messages
 about potential taxonomy issues.}
 
 \item{replace_to_NA}{(character vector) A vector of regex patterns to identify
@@ -52,21 +55,46 @@ The following types of values are replaced:
 \item Values matching \code{replace_to_NA} patterns (e.g., "unclassified", "unknown")
 \item Values with fewer than \code{min_char} characters
 \item Redundant suffix patterns (e.g., "Russula_sp" when "Russula" is in Genus)
-\item Leading/trailing whitespace (if \code{remove_border_spaces = TRUE})
-\item Internal spaces (if \code{remove_all_space = TRUE})
+\item Leading/trailing whitespace, including non-breaking space
+U+00A0 and other Unicode separators (if
+\code{remove_border_spaces = TRUE})
+\item Internal spaces, including Unicode separators (if
+\code{remove_all_space = TRUE})
+\item Invisible / unusual characters such as control chars, zero-width
+space U+200B or non-breaking space U+00A0 inside values (if
+\code{replace_invisible_chars = TRUE})
 }
 Messages will indicate the number of values replaced for each type.}
 
 \item{remove_border_spaces}{(logical, default TRUE) If TRUE and
 \code{modify_phyloseq = TRUE}, remove leading and trailing whitespace from
-taxonomic values.}
+taxonomic values. Matches both ASCII whitespace and Unicode separators
+(NBSP, em space, ideographic space, ...) — \code{trimws()} alone only handles
+\verb{[ \\\\t\\\\r\\\\n]} and would silently leave NBSP in place.}
 
 \item{remove_all_space}{(logical, default FALSE) If TRUE and
-\code{modify_phyloseq = TRUE}, replace internal spaces (spaces within taxonomic
-values) with the character specified in \code{replace_space_with}.}
+\code{modify_phyloseq = TRUE}, replace internal whitespace (ASCII or Unicode
+separator) with the character specified in \code{replace_space_with}.}
 
 \item{replace_space_with}{(character, default "_") Character to use when
 replacing internal spaces. Only used when \code{remove_all_space = TRUE}.}
+
+\item{detect_invisible_chars}{(logical, default TRUE) If TRUE, scan
+taxonomic values for invisible / unusual characters: anything in
+Unicode category \verb{\\\\p\{C\}} (control / format / surrogate / private use /
+unassigned) or any \verb{\\\\p\{Z\}} separator other than a plain ASCII space or
+tab. Typical offenders include non-breaking space (U+00A0), zero-width
+space (U+200B), zero-width joiner (U+200D), and control characters.
+Letters with diacritics, digits and punctuation are NOT flagged.}
+
+\item{replace_invisible_chars}{(logical, default FALSE) If TRUE and
+\code{modify_phyloseq = TRUE}, strip the characters detected by
+\code{detect_invisible_chars} from taxonomic values (replacement is
+\code{invisible_chars_replacement}, default empty string). Values that become
+empty after stripping are turned into \code{NA}.}
+
+\item{invisible_chars_replacement}{(character, default \code{""}) Replacement
+string for \code{replace_invisible_chars = TRUE}.}
 }
 \value{
 If \code{modify_phyloseq = FALSE} (default): Nothing (invisible NULL).

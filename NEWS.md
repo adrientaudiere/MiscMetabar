@@ -2,6 +2,44 @@
 
 # MiscMetabar 0.16.3
 
+* `verify_tax_table()` now recognises **non-breaking space (U+00A0)** and other
+  Unicode separators (em space, ideographic space, ...) as border / internal
+  whitespace. Previously the detection regex `^\s|\s$` (TRE) and the stripping
+  call `trimws()` only handled ASCII `[ \t\r\n]`, so taxonomic values padded
+  with NBSP — common in spreadsheet- or copy-paste-derived metadata — were
+  silently kept as e.g. `"Archaeospora "`, causing duplicate genera and
+  broken grouping downstream. Detection now uses
+  `grepl("^[\\s\\p{Z}]|[\\s\\p{Z}]$", val, perl = TRUE)` and stripping uses
+  `gsub("^[\\s\\p{Z}]+|[\\s\\p{Z}]+$", "", val, perl = TRUE)`. Both
+  `clean_pq(..., tax_remove_border_spaces = TRUE)` and
+  `clean_pq(..., tax_remove_all_space = TRUE)` benefit from the fix.
+* `verify_tax_table()` gains a new check for **invisible / unusual characters**
+  in taxonomic values: anything in Unicode category `\p{C}` (control / format /
+  surrogate / private use / unassigned) or any `\p{Z}` separator other than
+  plain ASCII space or tab. Typical offenders are NBSP (U+00A0), zero-width
+  space (U+200B), zero-width joiner (U+200D) and C0 control characters.
+  Three new parameters drive the check: `detect_invisible_chars` (default
+  `TRUE`, warns when `verbose = TRUE`), `replace_invisible_chars` (default
+  `FALSE`, requires `modify_phyloseq = TRUE` to strip), and
+  `invisible_chars_replacement` (default `""`). Warnings/messages report each
+  offending value with the hexadecimal code points of the offending characters
+  so the user can see what is hiding inside the string.
+* `clean_pq()` gains `tax_replace_invisible_chars` (default `FALSE`) which
+  forwards to `verify_tax_table()` and strips invisible characters from the
+  cleaned `tax_table`.
+* CRAN resubmission. Fixes the incoming-checks failure reported for 0.16.2:
+  `write_pq()` no longer passes a `DNAStringSet` `refseq` slot directly to
+  `utils::write.table()` — sequences are now coerced via `as.character()`
+  first. This avoids dispatching to `as.data.frame,XStringSet-method` from
+  R-devel's `data.frame()`, which now forwards an internal `validRN = FALSE`
+  argument that the XStringSet method's `.local` does not accept.
+* `Biostrings` is now an `Imports` (moved from `Suggests`), so that the
+  `XVector` classes stored in `data/data_fungi*.rda` are covered by
+  `MiscMetabar`'s recursive strong dependency graph.
+* Replaced an unreachable `ggstatsplot` link in `NEWS.md`
+  (`www.indrapatil.com`) with the CRAN page.
+* `clean_pq()` gains four FALSE-by-default toggles to apply `verify_tax_table()` modifications on the cleaned `tax_table`: `remove_border_spaces` (trim leading/trailing whitespace), `remove_all_space` (replace internal whitespace via `replace_space_with`, default `"_"`), `replace_to_NA` (set values matching `unwanted_tax_patterns` to `NA`; accepts a custom pattern vector), and `redundant_suffix` (drop redundant `"_sp"` tips where the genus is already filled; accepts a custom suffix string such as `"_var"`). Toggles can be enabled independently or combined in a single call; each modification emits a message and nothing fires when all toggles are `FALSE`.
+
 # MiscMetabar 0.16.2
 
 # MiscMetabar 0.16.1 [CRAN]
@@ -300,7 +338,7 @@
 - Add functions `signif_ancombc()` and `plot_ancombc_pq()` to plot significant results from `ancombc_pq()` function
 - Add function `distri_1_taxa()` to summarize the distribution of one given taxa across level of a modality
 - Add function `normalize_prop_pq()` to implement the method proposed by [McKnight et al. 2018](https://doi.org/10.5061/dryad.tn8qs35)
-- Add function `psmelt_samples_pq()` to build data frame of samples information including the number of sequences (Abundance) and Hill diversity metrics. Useful to use with the [ggstatsplot](https://www.indrapatil.com/ggstatsplot/) packages (see examples).
+- Add function `psmelt_samples_pq()` to build data frame of samples information including the number of sequences (Abundance) and Hill diversity metrics. Useful to use with the [ggstatsplot](https://cran.r-project.org/package=ggstatsplot) packages (see examples).
 - Replace param `variable` by `fact` in function `ggbetween_pq()` and `hill_pq()` (keeping the variable option in `hill_pq()` for backward compatibility)
 - Fix a bug in the class of the return object of function `chimera_removal_vs()`. Now it return a matrix to be able to be parsed on to `dada2::getUniques()` 
 

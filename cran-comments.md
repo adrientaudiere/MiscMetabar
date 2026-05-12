@@ -1,39 +1,41 @@
 ## Submission
 
-This is a resubmission. Changes since last CRAN version (0.15.2):
+This is a resubmission of MiscMetabar following the failure of the
+incoming-checks for 0.16.2:
 
-### New functions
-* `css_pq()`, `gmpr_pq()`, `mcknight_residuals_pq()`, `rarefy_pq()`, `srs_pq()`,
-  `tmm_pq()`, `transform_pq()`, `vst_pq()` — normalisation and transformation helpers.
-* `hill_bar_pq()` — Hill diversity bar charts with error bars and compact letter display.
-* `profile_hill_pq()` — Hill diversity profiles via `divent::profile_hill()`.
-* `ridges_sam_pq()` — sample-centric ridge plots.
-* `divent_hill_matrix_pq()` — Hill numbers for all samples via `divent::div_hill()`.
-* `find_vsearch()`, `install_vsearch()` — cross-platform vsearch discovery and install.
-* `unwanted_tax_patterns` — exported named character vector of regex patterns for
-  common problematic taxonomy values; used as default in `verify_tax_table()`.
+> Status: 2 ERRORs, 1 WARNING (Windows); 2 ERRORs (Debian)
+>
+>   Error in .local(x, row.names, optional, ...) :
+>     unused argument (validRN = FALSE)
+>   Calls: write_pq ... as.data.frame.Vector -> as.data.frame -> as.data.frame
 
-### Enhancements
-* `hill_pq()`, `hill_tuckey_pq()`, `ggbetween_pq()`, `compare_pairs_pq()`,
-  `psmelt_samples_pq()`, `hill_acc_pq()` — switched to `divent::div_hill()` for
-  Hill numbers; default estimator is now `"UnveilJ"` (bias-corrected).
-* `tax_bar_pq()` — OTU counting bug fixed for `nb_seq = FALSE` with a grouping
-  factor; `(n=X)` sample-count label now displayed below bars in a separate layer;
-  gains `n_sample_text_size` parameter.
-* `cutadapt_remove_primers()` — gains `cutadapt_args` and `verbose` parameters.
-* `biplot_pq()` — gains `color_rank` and `taxa_names_rank` parameters.
-* `search_exact_seq_pq()` — now emits a clear error when a plain character vector
-  is passed instead of a `DNAStringSet`.
-* Many functions accepting `fact` now handle single-level factors gracefully.
+Changes since 0.16.2:
 
-### Bug fixes
-* `chimera_removal_vs()` — fixed matrix dimension drop with single-sample input.
-* `format2sintax()` — fixed wrong internal name for `pattern_tax` parameter.
-* `umap_pq()` — no longer emits a tibble `.name_repair` deprecation warning.
+* `write_pq()` no longer passes the raw `DNAStringSet` `refseq` slot to
+  `utils::write.table()`. It is now coerced to plain `character` via
+  `as.character()` first. R-devel's `data.frame()` forwards an internal
+  `validRN = FALSE` argument when converting its inputs; the
+  `as.data.frame,XStringSet-method` defined in `Biostrings` re-dispatches
+  through a `.local()` closure whose fixed signature does not accept
+  `validRN`, which produced the example/test failure on win-builder.
+
+* `Biostrings` moved from `Suggests` to `Imports`, so the `XVector` S4
+  classes stored inside `data/data_fungi*.rda` are now in the package's
+  recursive strong-dependency graph. This addresses the WARNING:
+
+  > Data files with namespace references not in the recursive strong
+  > package dependencies: data/data_fungi.rda: XVector …
+
+* `NEWS.md` link to `https://www.indrapatil.com/ggstatsplot/` (which
+  fails SSL handshake) replaced with the CRAN URL for `ggstatsplot`.
+
+* Plus the minor `clean_pq()` enhancement listed in `NEWS.md`.
 
 ## Test environments
 
-* Local Linux (Pop!_OS 24.04), R 4.5.2
+* Local Linux (Pop!_OS 24.04), R 4.5.2 — 0 errors, 0 warnings, 0 notes
+* Local reproduction of R-devel's `data.frame(validRN = FALSE)` path,
+  exercising `write_pq()` / `save_pq()` / `read_pq()` — passes.
 
 ## Method References
 
