@@ -1,5 +1,4 @@
-# MiscMetabar (development version)
-
+# MiscMetabar 0.16.4 [CRAN]
 # MiscMetabar 0.16.3
 
 * `verify_tax_table()` now recognises **non-breaking space (U+00A0)** and other
