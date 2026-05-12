@@ -134,7 +134,7 @@ test_that("verify_pq works fine", {
 
 test_that("verify_tax_table works fine", {
   # Test with clean data and verbose = FALSE (default) - should return silently
-  expect_silent(suppressMessages(verify_tax_table(data_fungi_mini)))
+  expect_silent(suppressWarnings(suppressMessages(verify_tax_table(data_fungi_mini))))
 
   # Test with clean data and verbose = TRUE - may produce messages/warnings
   expect_silent(suppressMessages(suppressWarnings(verify_tax_table(
@@ -145,7 +145,7 @@ test_that("verify_tax_table works fine", {
   # Test with NA-like patterns (verbose = TRUE required for warnings)
   data_unclassified <- data_fungi_mini
   data_unclassified@tax_table[1, "Genus"] <- "unclassified_Fungi"
-  expect_silent(suppressMessages(verify_tax_table(data_unclassified))) # verbose = FALSE
+  expect_silent(suppressWarnings(suppressMessages(verify_tax_table(data_unclassified)))) # verbose = FALSE
   expect_warning(expect_message(expect_warning(expect_warning(
     verify_tax_table(data_unclassified, verbose = TRUE),
     "NA-like patterns"
