@@ -1,41 +1,45 @@
 ## Submission
 
-This is a resubmission of MiscMetabar following the failure of the
-incoming-checks for 0.16.2:
+This is a routine patch release of MiscMetabar following the CRAN release
+of 0.16.4. It fixes example failures triggered by network-dependent
+`\donttest{}` blocks and slow example timings, and removes an unused
+`Imports` declaration. No user-visible API changes.
 
-> Status: 2 ERRORs, 1 WARNING (Windows); 2 ERRORs (Debian)
->
->   Error in .local(x, row.names, optional, ...) :
->     unused argument (validRN = FALSE)
->   Calls: write_pq ... as.data.frame.Vector -> as.data.frame -> as.data.frame
+Changes since 0.16.4 (also in `NEWS.md`):
 
-Changes since 0.16.2:
+* `funguild_assign()` and `rotl_pq()` examples now use `\dontrun{}`
+  instead of `\donttest{}`. Both examples call external APIs
+  (`www.stbates.org` and the Open Tree of Life respectively) that are not
+  always reachable under CRAN's `--run-donttest`, which produced spurious
+  ERRORs in `R CMD check --as-cran`.
 
-* `write_pq()` no longer passes the raw `DNAStringSet` `refseq` slot to
-  `utils::write.table()`. It is now coerced to plain `character` via
-  `as.character()` first. R-devel's `data.frame()` forwards an internal
-  `validRN = FALSE` argument when converting its inputs; the
-  `as.data.frame,XStringSet-method` defined in `Biostrings` re-dispatches
-  through a `.local()` closure whose fixed signature does not accept
-  `validRN`, which produced the example/test failure on win-builder.
+* `verify_tax_table()`'s introductory example was moved inside the
+  existing `\donttest{}` block. The call against the full `data_fungi`
+  dataset ran for ~70 s and triggered the "examples > 5 s" NOTE.
 
-* `Biostrings` moved from `Suggests` to `Imports`, so the `XVector` S4
-  classes stored inside `data/data_fungi*.rda` are now in the package's
-  recursive strong-dependency graph. This addresses the WARNING:
+* `XVector` was removed from `DESCRIPTION` `Imports`. It was declared but
+  never imported in `NAMESPACE` or used directly; `Biostrings` already
+  loads it transitively. This resolves the CRAN NOTE "Namespace in
+  Imports field not imported from: 'XVector'".
 
-  > Data files with namespace references not in the recursive strong
-  > package dependencies: data/data_fungi.rda: XVector …
-
-* `NEWS.md` link to `https://www.indrapatil.com/ggstatsplot/` (which
-  fails SSL handshake) replaced with the CRAN URL for `ggstatsplot`.
-
-* Plus the minor `clean_pq()` enhancement listed in `NEWS.md`.
+* Corrected the DOI for Taberlet et al. (2012) "Environmental DNA" in
+  the `paper/` and `vignettes/` `.bib` files (was the journal ISSN
+  landing, now the paper DOI).
 
 ## Test environments
 
-* Local Linux (Pop!_OS 24.04), R 4.5.2 — 0 errors, 0 warnings, 0 notes
-* Local reproduction of R-devel's `data.frame(validRN = FALSE)` path,
-  exercising `write_pq()` / `save_pq()` / `read_pq()` — passes.
+* Local Linux (Pop!_OS 24.04), R 4.5.2 — 0 errors, 0 warnings, 3 NOTEs.
+  The three notes are the expected "Version contains large components"
+  (resolved by this submission), "unable to verify current time" (local
+  NTP), and a 70 s example for `verify_tax_table` which is now wrapped
+  in `\donttest{}` and so no longer fires on `--as-cran` without
+  `--run-donttest`.
+
+* Test suite: 1088 tests, 0 failures, 31 warnings (concentrated in
+  `test-normalize_pq.R` and pre-existing on the previous release),
+  2 skipped.
+
+* Package coverage (`covr`): 46.88 %.
 
 ## Method References
 
