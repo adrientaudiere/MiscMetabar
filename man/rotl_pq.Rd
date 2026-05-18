@@ -54,8 +54,7 @@ Please make a reference to \code{rotl} package if you
 use this function.
 }
 \examples{
-\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") withAutoprint(\{ # examplesIf}
-\donttest{
+\dontrun{
 if (requireNamespace("rotl")) {
   tr <- rotl_pq(data_fungi_mini, pattern_to_remove_tip = NULL)
   plot(tr)
@@ -67,7 +66,6 @@ if (requireNamespace("rotl")) {
   plot(tr_Asco)
 }
 }
-\dontshow{\}) # examplesIf}
 }
 \author{
 Adrien Taudière

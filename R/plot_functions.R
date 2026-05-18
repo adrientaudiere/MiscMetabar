@@ -2400,8 +2400,8 @@ summary_plot_pq <- function(
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `rotl` package if you
 #'   use this function.
-#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
-#' \donttest{
+#' @examples
+#' \dontrun{
 #' if (requireNamespace("rotl")) {
 #'   tr <- rotl_pq(data_fungi_mini, pattern_to_remove_tip = NULL)
 #'   plot(tr)

@@ -1722,8 +1722,8 @@ mumu_pq <- function(
 #' @author Adrien Taudière
 #'
 #' @examples
-#' verify_tax_table(data_fungi)
 #' \donttest{
+#' verify_tax_table(data_fungi)
 #' verify_tax_table(data_fungi, verbose = TRUE)
 #'
 #' # Check for redundant "_sp" patterns (default)

@@ -250,7 +250,7 @@ Data.” *PLoS ONE* 8 (4): e61217.
 
 Taberlet, Pierre, Eric Coissac, Mehrdad Hajibabaei, and Loren H
 Rieseberg. 2012. “Environmental Dna.” *Molecular Ecology*. Wiley Online
-Library. <https://doi.org/10.1002/(issn)2637-4943>.
+Library. <https://doi.org/10.1111/j.1365-294X.2012.05542.x>.
 
 Valentini, Alice, François Pompanon, and Pierre Taberlet. 2009. “DNA
 Barcoding for Ecologists.” *Trends in Ecology & Evolution* 24 (2):

@@ -113,8 +113,8 @@ Check taxonomy table for common issues and send warnings/messages accordingly.
 This function is called by \code{\link[=verify_pq]{verify_pq()}} when \code{check_taxonomy = TRUE}.
 }
 \examples{
-verify_tax_table(data_fungi)
 \donttest{
+verify_tax_table(data_fungi)
 verify_tax_table(data_fungi, verbose = TRUE)
 
 # Check for redundant "_sp" patterns (default)
