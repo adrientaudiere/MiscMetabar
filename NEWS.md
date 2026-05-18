@@ -1,3 +1,5 @@
+# MiscMetabar (development version)
+
 # MiscMetabar 0.16.5 [CRAN]
 * `funguild_assign()` and `rotl_pq()` examples now use `\dontrun{}` instead of
   `\donttest{}`. Both examples call external APIs (`www.stbates.org` and the
