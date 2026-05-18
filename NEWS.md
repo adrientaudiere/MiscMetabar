@@ -1,4 +1,21 @@
-# MiscMetabar (development version)
+# MiscMetabar 0.16.5 [CRAN]
+* `funguild_assign()` and `rotl_pq()` examples now use `\dontrun{}` instead of
+  `\donttest{}`. Both examples call external APIs (`www.stbates.org` and the
+  Open Tree of Life respectively) that are not always reachable during CRAN's
+  `--run-donttest` check, causing spurious ERRORs.
+* `verify_tax_table()`'s introductory example was moved inside the existing
+  `\donttest{}` block. The call against the full `data_fungi` dataset took
+  ~70 s, which triggered the CRAN "examples > 5 s" NOTE on every check.
+* `XVector` removed from `DESCRIPTION` `Imports`. It was declared but never
+  imported in `NAMESPACE` or used directly; `Biostrings` already loads it
+  transitively. CRAN flagged this as "Namespace in Imports field not imported
+  from".
+* Bibliography: corrected the DOI for Taberlet et al. (2012) "Environmental
+  DNA" in `paper/bibliography.bib`, `paper/paper.bib`, and the two
+  `vignettes/*.bib` files (was the journal ISSN landing
+  `10.1002/(issn)2637-4943`, now the paper DOI
+  `10.1111/j.1365-294X.2012.05542.x`). `README.md` and the pkgdown site
+  regenerate accordingly.
 
 # MiscMetabar 0.16.4 [CRAN]
 # MiscMetabar 0.16.3
