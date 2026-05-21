@@ -49,14 +49,13 @@ Please make a reference to \code{vegan::beta.div()} if you
 use this function.
 }
 \examples{
-data(data_fungi)
+\donttest{
 if (requireNamespace("adespatial")) {
   plot_LCBD_pq(data_fungi_mini,
     nperm = 100, only_plot_significant = FALSE,
     pval = 0.2
   )
 }
-\donttest{
 if (requireNamespace("adespatial")) {
   plot_LCBD_pq(data_fungi_mini,
     nperm = 100, only_plot_significant = TRUE,

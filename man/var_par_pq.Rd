@@ -55,7 +55,7 @@ use this function.
 \donttest{
 if (requireNamespace("vegan")) {
   data_fungi_woNA <-
-    subset_samples(data_fungi, !is.na(Time) & !is.na(Height))
+    subset_samples(data_fungi_mini, !is.na(Time) & !is.na(Height))
   res_var <- var_par_pq(data_fungi_woNA,
     list_component = list(
       "Time" = c("Time"),

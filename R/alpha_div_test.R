@@ -195,14 +195,16 @@ hill_tuckey_pq <- function(
 #'   strong is the influence of methodological choices? *Journal of Biogeography*,
 #'   47. \doi{10.1111/jbi.13681}
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' if (requireNamespace("ggstatsplot")) {
-#'   hill_test_rarperm_pq(data_fungi, "Time", nperm = 2)
-#'   res <- hill_test_rarperm_pq(data_fungi, "Height", nperm = 9, p_val_signif = 0.9)
+#'   hill_test_rarperm_pq(data_fungi, "Time", nperm = 3)
+#'   res <- hill_test_rarperm_pq(data_fungi, "Height", nperm = 3,
+#'     p_val_signif = 0.9)
 #'   patchwork::wrap_plots(res$plots[[1]])
 #'   res$plots[[1]][[1]] + res$plots[[2]][[1]] + res$plots[[3]][[1]]
 #'   res$prop_signif
-#'   res_para <- hill_test_rarperm_pq(data_fungi, "Height", nperm = 9, type = "parametric")
+#'   res_para <- hill_test_rarperm_pq(data_fungi, "Height", nperm = 3,
+#'     type = "parametric")
 #'   res_para$plots[[1]][[1]] + res_para$plots[[2]][[1]] + res_para$plots[[3]][[1]]
 #'   res_para$pvals
 #'   res_para$method
@@ -394,10 +396,12 @@ hill_test_rarperm_pq <- function(
 #' \donttest{
 #' if (requireNamespace("glmulti")) {
 #'   res_glmulti <-
-#'     glmutli_pq(data_fungi, "Hill_0 ~ Hill_1 + Abundance + Time + Height", level = 1)
+#'     glmutli_pq(data_fungi_mini,
+#'       "Hill_0 ~ Hill_1 + Abundance + Time + Height", level = 1)
 #'   res_glmulti
 #'   res_glmulti_interaction <-
-#'     glmutli_pq(data_fungi, "Hill_0 ~ Abundance + Time + Height", level = 2)
+#'     glmutli_pq(data_fungi_mini,
+#'       "Hill_0 ~ Abundance + Time + Height", level = 2)
 #'   res_glmulti_interaction
 #' }
 #' }

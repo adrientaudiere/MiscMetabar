@@ -46,11 +46,15 @@ It is a wrapper of the \code{lefser::lefser()} and \code{lefser::lefserClades()}
 }}
 }
 \examples{
-res_lefse <- lefser_pq(data_fungi,
-  bifactor = "Height",
-  modalities = c("Low", "High")
-)
-lefser::lefserPlot(res_lefse)
+\donttest{
+if (requireNamespace("lefser") && requireNamespace("mia")) {
+  res_lefse <- lefser_pq(data_fungi_mini,
+    bifactor = "Height",
+    modalities = c("Low", "High")
+  )
+  lefser::lefserPlot(res_lefse)
+}
+}
 }
 \author{
 Adrien Taudière

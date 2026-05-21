@@ -109,8 +109,8 @@ Graphical representation of distribution of taxonomy, optionnaly across a factor
 }
 \examples{
 
-data_fungi_ab <- subset_taxa_pq(data_fungi,
-  taxa_sums(data_fungi) > 10000)
+data_fungi_ab <- subset_taxa_pq(data_fungi_mini,
+  taxa_sums(data_fungi_mini) > 1000)
 tax_bar_pq(data_fungi_ab) + theme(legend.position = "none")
 tax_bar_pq(data_fungi_ab, taxa = "Class", fact = "Height",
   show_n_samples = TRUE)

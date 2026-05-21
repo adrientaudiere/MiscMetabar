@@ -46,8 +46,8 @@ If \code{hill_scale} is not null, Hill diversity number are used to represent th
 of the diversity (equitability) along the sequences.
 }
 \examples{
-plot_refseq_pq(data_fungi)
-plot_refseq_pq(data_fungi, q = c(2), first_n = 300)
+plot_refseq_pq(data_fungi_mini)
+plot_refseq_pq(data_fungi_mini, q = c(2), first_n = 300)
 
 }
 \author{

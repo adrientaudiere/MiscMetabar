@@ -69,12 +69,13 @@ nperm values, results must be identical.
 \examples{
 \donttest{
 data_fungi_woNA4Time <-
-  subset_samples(data_fungi, !is.na(Time))
-data_fungi_woNA4Time@sam_data$Time <- paste0("time-", data_fungi_woNA4Time@sam_data$Time)
+  subset_samples(data_fungi_mini, !is.na(Time))
+data_fungi_woNA4Time@sam_data$Time <-
+  paste0("time-", data_fungi_woNA4Time@sam_data$Time)
 accu_plot_balanced_modality(data_fungi_woNA4Time, "Time", nperm = 3)
 
 data_fungi_woNA4Height <-
-  subset_samples(data_fungi, !is.na(Height))
+  subset_samples(data_fungi_mini, !is.na(Height))
 accu_plot_balanced_modality(data_fungi_woNA4Height, "Height", nperm = 3)
 }
 }

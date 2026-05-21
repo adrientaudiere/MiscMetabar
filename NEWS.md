@@ -1,5 +1,29 @@
 # MiscMetabar (development version)
 
+* Reduced `R CMD check` time to keep CRAN's 10-minute budget. Examples for
+  `verify_tax_table()`, `adonis_pq()`, `plot_SCBD_pq()`, `multipatt_pq()`,
+  `hill_pq()`, `plot_tsne_pq()`, `upset_test_pq()`, `summary_plot_pq()`,
+  `ggvenn_pq()`, `plot_refseq_pq()`, `plot_seq_ratio_pq()`,
+  `plot_refseq_extremity_pq()`, `glmutli_pq()`, `adonis_rarperm_pq()`,
+  `lefser_pq()`, `var_par_pq()`, `var_par_rarperm_pq()`,
+  `taxa_only_in_one_level()`, `distri_1_taxa()`, `accu_plot_balanced_modality()`,
+  `multi_biplot_pq()`, `tax_bar_pq()`, `plot_var_part_pq()`, `track_wkflow()`,
+  `reorder_taxa_pq()` and `transform_pq()` now use `data_fungi_mini`
+  (137 × 45) instead of the full `data_fungi` (185 × 1420), keeping behaviour
+  identical but much faster.
+* `hill_acc_pq()`, `iNEXT_pq()`, `format2dada2()` and `hill_test_rarperm_pq()`
+  examples moved from `\donttest{}` to `\dontrun{}`. These functions are
+  inherently CPU-bound (sample-based accumulation, fasta reformatting,
+  permutation × rarefaction × q-loop) and were the largest individual
+  contributors to the 10-min CRAN budget. Their behaviour is documented in
+  the corresponding vignettes.
+* `verify_pq()` example switched from `data_fungi` to `data_fungi_mini`
+  (82 s → < 5 s).
+* Tests: `plot_LCBD_pq()` / `LCBD_pq()` smoke tests in
+  `tests/testthat/test_figures_beta_div.R` lowered `nperm` from 100 to 9
+  (they only assert return class, not numeric stability).
+* Function defaults (`nperm`, `n_permutations`) are unchanged.
+
 # MiscMetabar 0.16.5 [CRAN]
 * `funguild_assign()` and `rotl_pq()` examples now use `\dontrun{}` instead of
   `\donttest{}`. Both examples call external APIs (`www.stbates.org` and the

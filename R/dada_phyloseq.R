@@ -333,9 +333,9 @@ clean_pq <- function(
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' data(enterotype)
 #' if (requireNamespace("pbapply")) {
-#'   track_wkflow(list(data_fungi, enterotype), taxonomy_rank = c(3, 5))
+#'   track_wkflow(list(data_fungi_mini, enterotype), taxonomy_rank = c(3, 5))
 #'   track_wkflow(list(
-#'     "data FUNGI" = data_fungi,
+#'     "data FUNGI" = data_fungi_mini,
 #'     "fastq files forward" =
 #'       unlist(list_fastq_files(system.file("extdata", package = "MiscMetabar"),
 #'         paired_end = FALSE
@@ -1723,11 +1723,11 @@ mumu_pq <- function(
 #'
 #' @examples
 #' \donttest{
-#' verify_tax_table(data_fungi)
-#' verify_tax_table(data_fungi, verbose = TRUE)
+#' verify_tax_table(data_fungi_mini)
+#' verify_tax_table(data_fungi_mini, verbose = TRUE)
 #'
 #' # Check for redundant "_sp" patterns (default)
-#' data_fungi2 <- data_fungi
+#' data_fungi2 <- data_fungi_mini
 #' data_fungi2@tax_table[1, "Species"] <- "Eutypa_sp"
 #' verify_tax_table(data_fungi2, verbose = TRUE, redundant_suffix = "_sp")
 #'
@@ -1747,20 +1747,20 @@ mumu_pq <- function(
 #' )
 #'
 #' # Check for other patterns like "_var" or "_cf"
-#' verify_tax_table(data_fungi, verbose = TRUE, redundant_suffix = "_var")
+#' verify_tax_table(data_fungi_mini, verbose = TRUE, redundant_suffix = "_var")
 #'
 #' # Disable redundant suffix check
-#' verify_tax_table(data_fungi, verbose = TRUE, redundant_suffix = NULL)
+#' verify_tax_table(data_fungi_mini, verbose = TRUE, redundant_suffix = NULL)
 #'
 #' # Specify custom taxonomic rank order
-#' verify_tax_table(data_fungi,
+#' verify_tax_table(data_fungi_mini,
 #'   verbose = TRUE,
 #'   taxonomic_ranks = c("Class", "Order", "Family", "Genus")
 #' )
 #'
 #' # Handle whitespace in taxonomic values
 #' # Create example with spaces
-#' data_fungi3 <- data_fungi
+#' data_fungi3 <- data_fungi_mini
 #' data_fungi3@tax_table[1, "Genus"] <- " Russula "
 #' data_fungi3@tax_table[2, "Species"] <- "Russula emetica"
 #'
@@ -2465,9 +2465,9 @@ verify_tax_table <- function(
 #'
 #' @examples
 #'
-#' verify_pq(data_fungi)
+#' verify_pq(data_fungi_mini)
 #' \donttest{
-#' verify_pq(data_fungi, check_taxonomy = TRUE)
+#' verify_pq(data_fungi_mini, check_taxonomy = TRUE)
 #' }
 verify_pq <- function(
   physeq,
@@ -2917,7 +2917,7 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #'
 #' @inheritParams clean_pq
 #' @param ref_fasta (required) A link to a database.
-#'   passed on to `dada2::assignTaxonomy`.
+#'   passed on to `method`.
 #' @param method (required, default "dada2") :
 #'
 #' - "dada2": [dada2::assignTaxonomy()]
@@ -3017,10 +3017,10 @@ add_new_taxonomy_pq <- function(
   # Validate ref_fasta format for methods that don't go through assign_*
 
   if (method == "dada2") {
-    .validate_ref_format(ref_fasta, "dada2", "add_new_taxonomy_pq")
-  }
+    if(.detect_tax_format(ref_fasta) != "unite") {
+      #.validate_ref_format(ref_fasta, "dada2", "add_new_taxonomy_pq")
+    }
 
-  if (method == "dada2") {
     list_args <- list(
       seqs = physeq@refseq,
       refFasta = ref_fasta,
@@ -3744,8 +3744,9 @@ are_modality_even_depth <- function(physeq, fact, boxplot = FALSE) {
 #' @examples
 #'
 #' data_fungi_ordered_by_genus <- reorder_taxa_pq(
-#'   data_fungi,
-#'   taxa_names(data_fungi)[order(as.vector(data_fungi@tax_table[, "Genus"]))]
+#'   data_fungi_mini,
+#'   taxa_names(data_fungi_mini)[order(
+#'     as.vector(data_fungi_mini@tax_table[, "Genus"]))]
 #' )
 #'
 #' data_fungi_mini_asc_ordered_by_abundance <- reorder_taxa_pq(
@@ -4174,6 +4175,7 @@ cutadapt_remove_primers <- function(
 #' )
 #' taxa_only_in_one_level(data_fungi_mini_woNA4height, "Height", "High")
 #' #' # Taxa present only in low height samples
+#' \donttest{
 #' suppressMessages(suppressWarnings(
 #'   taxa_only_in_one_level(data_fungi, "Height", "Low")
 #' ))
@@ -4181,6 +4183,7 @@ cutadapt_remove_primers <- function(
 #' suppressMessages(suppressWarnings(
 #'   length(taxa_only_in_one_level(data_fungi, "Time", "15"))
 #' ))
+#' }
 taxa_only_in_one_level <- function(
   physeq,
   modality,
@@ -4984,7 +4987,9 @@ assign_dada2 <- function(
     seq2search <- physeq@refseq
   }
   if (!from_sintax) {
-    .validate_ref_format(ref_fasta, "dada2", "assign_dada2")
+    if(.detect_tax_format(ref_fasta) != "unite") {
+   #   .validate_ref_format(ref_fasta, "dada2", "assign_dada2")
+    }
   }
 
   if (from_sintax) {

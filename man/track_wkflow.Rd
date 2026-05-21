@@ -55,9 +55,9 @@ clusters and samples
 \dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") withAutoprint(\{ # examplesIf}
 data(enterotype)
 if (requireNamespace("pbapply")) {
-  track_wkflow(list(data_fungi, enterotype), taxonomy_rank = c(3, 5))
+  track_wkflow(list(data_fungi_mini, enterotype), taxonomy_rank = c(3, 5))
   track_wkflow(list(
-    "data FUNGI" = data_fungi,
+    "data FUNGI" = data_fungi_mini,
     "fastq files forward" =
       unlist(list_fastq_files(system.file("extdata", package = "MiscMetabar"),
         paired_end = FALSE

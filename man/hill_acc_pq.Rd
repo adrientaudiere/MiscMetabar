@@ -73,17 +73,19 @@ number of samples.
 }
 }
 \examples{
-\donttest{
+\dontrun{
  # Individual (sequence-based) accumulation curves
-  hill_acc_pq(rarefy_even_depth (data_fungi_mini, sample.size = 500)) + no_legend()
   hill_acc_pq(rarefy_even_depth(data_fungi_mini, sample.size = 500),
-    n_permutations = 5,
+    n_permutations = 3) + no_legend()
+  hill_acc_pq(rarefy_even_depth(data_fungi_mini, sample.size = 500),
+    n_permutations = 3,
     merge_sample_by = "Height"
   )
 
  # Sample-based accumulation curve
-  hill_acc_pq(data_fungi_mini, type = "sample", n_permutations = 50)
-  hill_acc_pq(data_fungi_mini, type = "sample", merge_sample_by = "Height")
+  hill_acc_pq(data_fungi_mini, type = "sample", n_permutations = 3)
+  hill_acc_pq(data_fungi_mini, type = "sample", merge_sample_by = "Height",
+    n_permutations = 3)
 }
 }
 \references{

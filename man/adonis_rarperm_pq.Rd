@@ -77,10 +77,12 @@ seed.number. This reduce the risk of a random drawing of a exceptional
 situation of an unique rarefaction.
 }
 \examples{
+\donttest{
 if (requireNamespace("vegan")) {
   data_fungi_woNA <-
-    subset_samples(data_fungi, !is.na(Time) & !is.na(Height))
+    subset_samples(data_fungi_mini, !is.na(Time) & !is.na(Height))
   adonis_rarperm_pq(data_fungi_woNA, "Time*Height", na_remove = TRUE, nperm = 3)
+}
 }
 }
 \seealso{

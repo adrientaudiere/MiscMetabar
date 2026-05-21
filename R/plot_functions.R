@@ -341,12 +341,13 @@ accu_plot <-
 #' @examples
 #' \donttest{
 #' data_fungi_woNA4Time <-
-#'   subset_samples(data_fungi, !is.na(Time))
-#' data_fungi_woNA4Time@sam_data$Time <- paste0("time-", data_fungi_woNA4Time@sam_data$Time)
+#'   subset_samples(data_fungi_mini, !is.na(Time))
+#' data_fungi_woNA4Time@sam_data$Time <-
+#'   paste0("time-", data_fungi_woNA4Time@sam_data$Time)
 #' accu_plot_balanced_modality(data_fungi_woNA4Time, "Time", nperm = 3)
 #'
 #' data_fungi_woNA4Height <-
-#'   subset_samples(data_fungi, !is.na(Height))
+#'   subset_samples(data_fungi_mini, !is.na(Height))
 #' accu_plot_balanced_modality(data_fungi_woNA4Height, "Height", nperm = 3)
 #' }
 accu_plot_balanced_modality <- function(
@@ -1321,13 +1322,13 @@ venn_pq <-
 #' @seealso [upset_pq()]
 #' @examples
 #' if (requireNamespace("ggVennDiagram")) {
-#'   ggvenn_pq(data_fungi, fact = "Height")
+#'   ggvenn_pq(data_fungi_mini, fact = "Height")
 #' }
 #' \donttest{
 #' if (requireNamespace("ggVennDiagram")) {
-#'   ggvenn_pq(data_fungi, fact = "Height") +
+#'   ggvenn_pq(data_fungi_mini, fact = "Height") +
 #'     ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
-#'   pl <- ggvenn_pq(data_fungi, fact = "Height", split_by = "Time")
+#'   pl <- ggvenn_pq(data_fungi_mini, fact = "Height", split_by = "Time")
 #'   for (i in seq_along(pl)) {
 #'     p <- pl[[i]] +
 #'       scale_fill_distiller(palette = "BuPu", direction = 1) +
@@ -1335,21 +1336,23 @@ venn_pq <-
 #'     print(p)
 #'   }
 #'
-#'   data_fungi2 <- subset_samples(data_fungi, data_fungi@sam_data$Tree_name == "A10-005" |
-#'     data_fungi@sam_data$Height %in% c("Low", "High"))
+#'   data_fungi2 <- subset_samples(data_fungi_mini,
+#'     data_fungi_mini@sam_data$Tree_name == "A10-005" |
+#'     data_fungi_mini@sam_data$Height %in% c("Low", "High"))
 #'   ggvenn_pq(data_fungi2, fact = "Height")
 #'
 #'   ggvenn_pq(data_fungi2, fact = "Height", type = "nb_seq")
 #'
-#'   ggvenn_pq(data_fungi, fact = "Height", add_nb_seq = TRUE, set_size = 4)
-#'   ggvenn_pq(data_fungi, fact = "Height", rarefy_before_merging = TRUE)
-#'   ggvenn_pq(data_fungi, fact = "Height", rarefy_after_merging = TRUE) +
+#'   ggvenn_pq(data_fungi_mini, fact = "Height", add_nb_seq = TRUE, set_size = 4)
+#'   ggvenn_pq(data_fungi_mini, fact = "Height", rarefy_before_merging = TRUE)
+#'   ggvenn_pq(data_fungi_mini, fact = "Height", rarefy_after_merging = TRUE) +
 #'     scale_x_continuous(expand = expansion(mult = 0.5))
 #'
 #'   # For more flexibility, you can save the dataset for more precise construction
 #'   # with ggplot2 and ggVennDiagramm
 #'   # (https://gaospecial.github.io/ggVennDiagram/articles/fully-customed.html)
-#'   res_venn <- ggvenn_pq(data_fungi, fact = "Height", return_data_for_venn = TRUE)
+#'   res_venn <- ggvenn_pq(data_fungi_mini, fact = "Height",
+#'     return_data_for_venn = TRUE)
 #'
 #'   ggplot() +
 #'     # 1. region count layer
@@ -1733,7 +1736,7 @@ multiplot <-
 #' multiplot(plotlist = list(p_h1, p_h2, p[[3]]), cols = 4)
 #' \donttest{
 #' if (requireNamespace("multcompView")) {
-#'   p2 <- hill_pq(data_fungi, "Time",
+#'   p2 <- hill_pq(data_fungi_mini, "Time",
 #'     correction_for_sample_size = FALSE,
 #'     letters = TRUE, add_points = TRUE,
 #'     plot_with_tuckey = FALSE
@@ -1741,7 +1744,7 @@ multiplot <-
 #'   if (requireNamespace("patchwork")) {
 #'     patchwork::wrap_plots(p2, guides = "collect")
 #'   }
-#'   p3 <- hill_pq(data_fungi, "Height",
+#'   p3 <- hill_pq(data_fungi_mini, "Height",
 #'     letters = TRUE, vioplot = TRUE,
 #'     add_points = TRUE
 #'   )
@@ -2033,7 +2036,8 @@ hill_pq <- function(
 #'   p <- ggbetween_pq(data_fungi, fact = "Time", p.adjust.method = "BH")
 #'   p[[1]]
 #'   ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE)
-#'   ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE, rarefy_by_sample = TRUE)
+#'   ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE,
+#'     rarefy_by_sample = TRUE)
 #' }
 #' }
 #' @author Adrien Taudière
@@ -2163,8 +2167,9 @@ ggbetween_pq <-
 #'   text size for extra informations.
 #' @examples
 #'
-#' summary_plot_pq(data_fungi)
-#' summary_plot_pq(data_fungi, add_info = FALSE) + scale_fill_viridis_d()
+#' summary_plot_pq(data_fungi_mini)
+#' summary_plot_pq(data_fungi_mini, add_info = FALSE) + scale_fill_viridis_d()
+#' \donttest{
 #' if (requireNamespace("patchwork")) {
 #'   (summary_plot_pq(data_fungi, text_size = 0.5, text_size_info = 0.6) +
 #'     summary_plot_pq(data_fungi_mini, text_size = 0.5, text_size_info = 0.6)) /
@@ -2172,6 +2177,7 @@ ggbetween_pq <-
 #'       summary_plot_pq(subset_taxa(data_fungi_sp_known, Phylum == "Ascomycota"),
 #'         text_size = 0.5, text_size_info = 0.6
 #'       ))
+#' }
 #' }
 #' @return A ggplot2 object
 #' @export
@@ -3242,7 +3248,8 @@ biplot_pq <- function(
 #'
 #' @examples
 #' \donttest{
-#' data_fungi_abun <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
+#' data_fungi_abun <- subset_taxa_pq(data_fungi_mini,
+#'   taxa_sums(data_fungi_mini) > 1000)
 #' p <- multi_biplot_pq(data_fungi_abun, "Height")
 #' lapply(p, print)
 #' }
@@ -3683,7 +3690,7 @@ multitax_bar_pq <- function(
 #'
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' if (requireNamespace("Rtsne")) {
-#'   res_tsne <- tsne_pq(data_fungi)
+#'   res_tsne <- tsne_pq(data_fungi_mini)
 #' }
 tsne_pq <-
   function(
@@ -3739,14 +3746,15 @@ tsne_pq <-
 #' @author Adrien Taudière
 #'
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
-#' data(data_fungi)
 #' if (requireNamespace("Rtsne")) {
-#'   plot_tsne_pq(data_fungi, fact = "Height", perplexity = 15)
+#'   plot_tsne_pq(data_fungi_mini, fact = "Height", perplexity = 15)
 #' }
 #' \donttest{
 #' if (requireNamespace("Rtsne")) {
-#'   plot_tsne_pq(data_fungi, fact = "Time") + geom_label(aes(label = Sample_id, fill = Time))
-#'   plot_tsne_pq(data_fungi, fact = "Time", na_remove = FALSE, force_factor = FALSE)
+#'   plot_tsne_pq(data_fungi_mini, fact = "Time") +
+#'     geom_label(aes(label = Sample_id, fill = Time))
+#'   plot_tsne_pq(data_fungi_mini, fact = "Time", na_remove = FALSE,
+#'     force_factor = FALSE)
 #' }
 #' }
 #'
@@ -3887,7 +3895,7 @@ SRS_curve_pq <- function(physeq, clean_pq = FALSE, ...) {
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' if (requireNamespace("iNEXT")) {
 #'   data("GlobalPatterns", package = "phyloseq")
 #'   GPsubset <- subset_taxa(
@@ -4213,10 +4221,10 @@ upset_pq <- function(
 #'
 #' @seealso [upset_pq()]
 #' @examples
-#' data(data_fungi)
 #' if (requireNamespace("ComplexUpset")) {
-#'   upset_test_pq(data_fungi, "Height", var_to_test = c("OTU", "Class", "Guild"))
-#'   upset_test_pq(data_fungi, "Time")
+#'   upset_test_pq(data_fungi_mini, "Height",
+#'     var_to_test = c("OTU", "Class", "Guild"))
+#'   upset_test_pq(data_fungi_mini, "Time")
 #' }
 upset_test_pq <-
   function(
@@ -4478,8 +4486,8 @@ diff_fct_diff_class <-
 #'
 #' @examples
 #'
-#' data_fungi_ab <- subset_taxa_pq(data_fungi,
-#'   taxa_sums(data_fungi) > 10000)
+#' data_fungi_ab <- subset_taxa_pq(data_fungi_mini,
+#'   taxa_sums(data_fungi_mini) > 1000)
 #' tax_bar_pq(data_fungi_ab) + theme(legend.position = "none")
 #' tax_bar_pq(data_fungi_ab, taxa = "Class", fact = "Height",
 #'   show_n_samples = TRUE)
@@ -5427,7 +5435,8 @@ treemap_pq <- function(
 #' @examples
 #' \donttest{
 #' if (requireNamespace("vegan")) {
-#'   data_fungi_woNA <- subset_samples(data_fungi, !is.na(Time) & !is.na(Height))
+#'   data_fungi_woNA <- subset_samples(data_fungi_mini,
+#'     !is.na(Time) & !is.na(Height))
 #'   res_var_9 <- var_par_rarperm_pq(
 #'     data_fungi_woNA,
 #'     list_component = list(
@@ -5957,11 +5966,11 @@ ggaluv_pq <- function(
 #' res1$plot_start
 #' res1$plot_last
 #'
-#' res2 <- plot_refseq_extremity_pq(data_fungi, first_n = 200, last_n = 100)
+#' res2 <- plot_refseq_extremity_pq(data_fungi_mini, first_n = 200, last_n = 100)
 #' res2$plot_start
 #' res2$plot_last
 #'
-#' plot_refseq_extremity_pq(data_fungi,
+#' plot_refseq_extremity_pq(data_fungi_mini,
 #'   first_n = NULL,
 #'   last_n = 200,
 #'   min_width = 200,
@@ -6186,8 +6195,8 @@ plot_refseq_extremity_pq <- function(
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' plot_refseq_pq(data_fungi)
-#' plot_refseq_pq(data_fungi, q = c(2), first_n = 300)
+#' plot_refseq_pq(data_fungi_mini)
+#' plot_refseq_pq(data_fungi_mini, q = c(2), first_n = 300)
 #'
 plot_refseq_pq <- function(
   physeq,
@@ -6221,8 +6230,8 @@ plot_refseq_pq <- function(
 #' @return A ggplot2 object
 #' @author Adrien Taudière
 #' @examples
-#' plot_refseq_pq(data_fungi)
-#' plot_refseq_pq(data_fungi) + no_legend()
+#' plot_refseq_pq(data_fungi_mini)
+#' plot_refseq_pq(data_fungi_mini) + no_legend()
 no_legend <- function() {
   list(theme(legend.position = "none"))
 }
@@ -6266,6 +6275,7 @@ no_legend <- function() {
 #' @author Adrien Taudière
 #' @return A ggplot2 object
 #' @examples
+#' \donttest{
 #' if (requireNamespace("vegan")) {
 #'   hill_curves_pq(data_fungi_mini, merge_sample_by = "Time")
 #'   hill_curves_pq(data_fungi_mini, color_fac = "Time", plot_legend = FALSE)
@@ -6293,6 +6303,7 @@ no_legend <- function() {
 #'   )
 #'   merge_samples2(data_fungi_mini, "H_T")
 #'   hill_curves_pq(data_fungi_mini, "H_T", color_fac = "Time", nperm = 9)
+#' }
 #' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
@@ -6673,10 +6684,12 @@ plot_complexity_pq <- function(
 #'   augmentation (ratio) to possibly detect suspicious samples.
 #'
 #' @examples
+#' plot_seq_ratio_pq(data_fungi_mini, min_nb_seq = 10, annotations = FALSE)
+#' \donttest{
 #' plot_seq_ratio_pq(data_fungi, min_nb_seq = 200)
 #' data(GlobalPatterns)
 #' plot_seq_ratio_pq(GlobalPatterns, min_nb_seq = 100000)
-#' plot_seq_ratio_pq(data_fungi_mini, min_nb_seq = 10, annotations = FALSE)
+#' }
 plot_seq_ratio_pq <- function(physeq, min_nb_seq = 1000, annotations = TRUE) {
   if (min_nb_seq < min(sample_sums(physeq))) {
     stop(

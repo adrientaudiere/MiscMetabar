@@ -57,11 +57,11 @@ names(res1)
 res1$plot_start
 res1$plot_last
 
-res2 <- plot_refseq_extremity_pq(data_fungi, first_n = 200, last_n = 100)
+res2 <- plot_refseq_extremity_pq(data_fungi_mini, first_n = 200, last_n = 100)
 res2$plot_start
 res2$plot_last
 
-plot_refseq_extremity_pq(data_fungi,
+plot_refseq_extremity_pq(data_fungi_mini,
   first_n = NULL,
   last_n = 200,
   min_width = 200,

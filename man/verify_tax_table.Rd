@@ -114,11 +114,11 @@ This function is called by \code{\link[=verify_pq]{verify_pq()}} when \code{chec
 }
 \examples{
 \donttest{
-verify_tax_table(data_fungi)
-verify_tax_table(data_fungi, verbose = TRUE)
+verify_tax_table(data_fungi_mini)
+verify_tax_table(data_fungi_mini, verbose = TRUE)
 
 # Check for redundant "_sp" patterns (default)
-data_fungi2 <- data_fungi
+data_fungi2 <- data_fungi_mini
 data_fungi2@tax_table[1, "Species"] <- "Eutypa_sp"
 verify_tax_table(data_fungi2, verbose = TRUE, redundant_suffix = "_sp")
 
@@ -138,20 +138,20 @@ data_fungi2_cleaned <- verify_tax_table(data_fungi2,
 )
 
 # Check for other patterns like "_var" or "_cf"
-verify_tax_table(data_fungi, verbose = TRUE, redundant_suffix = "_var")
+verify_tax_table(data_fungi_mini, verbose = TRUE, redundant_suffix = "_var")
 
 # Disable redundant suffix check
-verify_tax_table(data_fungi, verbose = TRUE, redundant_suffix = NULL)
+verify_tax_table(data_fungi_mini, verbose = TRUE, redundant_suffix = NULL)
 
 # Specify custom taxonomic rank order
-verify_tax_table(data_fungi,
+verify_tax_table(data_fungi_mini,
   verbose = TRUE,
   taxonomic_ranks = c("Class", "Order", "Family", "Genus")
 )
 
 # Handle whitespace in taxonomic values
 # Create example with spaces
-data_fungi3 <- data_fungi
+data_fungi3 <- data_fungi_mini
 data_fungi3@tax_table[1, "Genus"] <- " Russula "
 data_fungi3@tax_table[2, "Species"] <- "Russula emetica"
 

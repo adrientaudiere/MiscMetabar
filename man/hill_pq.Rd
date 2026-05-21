@@ -131,7 +131,7 @@ p_h2 <- p[[2]] + theme(legend.position = "none")
 multiplot(plotlist = list(p_h1, p_h2, p[[3]]), cols = 4)
 \donttest{
 if (requireNamespace("multcompView")) {
-  p2 <- hill_pq(data_fungi, "Time",
+  p2 <- hill_pq(data_fungi_mini, "Time",
     correction_for_sample_size = FALSE,
     letters = TRUE, add_points = TRUE,
     plot_with_tuckey = FALSE
@@ -139,7 +139,7 @@ if (requireNamespace("multcompView")) {
   if (requireNamespace("patchwork")) {
     patchwork::wrap_plots(p2, guides = "collect")
   }
-  p3 <- hill_pq(data_fungi, "Height",
+  p3 <- hill_pq(data_fungi_mini, "Height",
     letters = TRUE, vioplot = TRUE,
     add_points = TRUE
   )

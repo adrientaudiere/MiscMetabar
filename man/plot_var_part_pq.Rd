@@ -70,7 +70,8 @@ use this function.
 \examples{
 \donttest{
 if (requireNamespace("vegan")) {
-  data_fungi_woNA <- subset_samples(data_fungi, !is.na(Time) & !is.na(Height))
+  data_fungi_woNA <- subset_samples(data_fungi_mini,
+    !is.na(Time) & !is.na(Height))
   res_var_9 <- var_par_rarperm_pq(
     data_fungi_woNA,
     list_component = list(

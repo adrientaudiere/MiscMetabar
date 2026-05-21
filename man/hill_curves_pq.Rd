@@ -71,6 +71,7 @@ Please make a reference to \code{\link[vegan:renyi]{vegan::renyi()}} or
 \code{\link[vegan:renyi]{vegan::renyiaccum()}} functions
 }
 \examples{
+\donttest{
 if (requireNamespace("vegan")) {
   hill_curves_pq(data_fungi_mini, merge_sample_by = "Time")
   hill_curves_pq(data_fungi_mini, color_fac = "Time", plot_legend = FALSE)
@@ -98,6 +99,7 @@ if (requireNamespace("vegan")) {
   )
   merge_samples2(data_fungi_mini, "H_T")
   hill_curves_pq(data_fungi_mini, "H_T", color_fac = "Time", nperm = 9)
+}
 }
 }
 \author{

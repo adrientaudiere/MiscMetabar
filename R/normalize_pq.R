@@ -58,23 +58,26 @@
 #' data_f_tss  <- transform_pq(data_fungi_mini, method = "tss")
 #' sample_sums(data_f_tss)
 #' \donttest{
-#' data_f_hell <- transform_pq(data_fungi, method = "hellinger")
-#' data_f_clr  <- transform_pq(data_fungi, method = "clr")
-#' data_f_rclr <- transform_pq(data_fungi, method = "rclr")
-#' data_f_log1p <- transform_pq(data_fungi, method = "log1p")
-#' data_f_z    <- transform_pq(data_fungi, method = "z")
-#' data_f_pa   <- transform_pq(data_fungi, method = "pa")
-#' data_f_rank <- transform_pq(data_fungi, method = "rank")
-#' data_f_norm_prop_log10 <- transform_pq(data_fungi, method = "normalize_prop", base_log = 10)
-#' data_f_norm_prop_no_log <- transform_pq(data_fungi, method = "normalize_prop", base_log = NULL)
-#' data_f_norm_prop_log2 <- transform_pq(data_fungi, method = "normalize_prop", base_log = 2)
-#' data_f_rarefy   <- transform_pq(data_fungi, method = "rarefy", seed = 1)
-#' data_f_srs     <- transform_pq(data_fungi, method = "srs", seed = 1)
-#' data_f_gmpr    <- transform_pq(data_fungi, method = "gmpr")
-#' data_f_css     <- transform_pq(data_fungi, method = "css")
-#' data_f_tmm     <- transform_pq(data_fungi, method = "tmm")
-#' data_f_vst     <- transform_pq(data_fungi, method = "vst")
-#' data_f_mcknight <- transform_pq(data_fungi, method = "mcknight_residuals")
+#' data_f_hell <- transform_pq(data_fungi_mini, method = "hellinger")
+#' data_f_clr  <- transform_pq(data_fungi_mini, method = "clr")
+#' data_f_rclr <- transform_pq(data_fungi_mini, method = "rclr")
+#' data_f_log1p <- transform_pq(data_fungi_mini, method = "log1p")
+#' data_f_z    <- transform_pq(data_fungi_mini, method = "z")
+#' data_f_pa   <- transform_pq(data_fungi_mini, method = "pa")
+#' data_f_rank <- transform_pq(data_fungi_mini, method = "rank")
+#' data_f_norm_prop_log10 <- transform_pq(data_fungi_mini,
+#'   method = "normalize_prop", base_log = 10)
+#' data_f_norm_prop_no_log <- transform_pq(data_fungi_mini,
+#'   method = "normalize_prop", base_log = NULL)
+#' data_f_norm_prop_log2 <- transform_pq(data_fungi_mini,
+#'   method = "normalize_prop", base_log = 2)
+#' data_f_rarefy   <- transform_pq(data_fungi_mini, method = "rarefy", seed = 1)
+#' data_f_srs     <- transform_pq(data_fungi_mini, method = "srs", seed = 1)
+#' data_f_gmpr    <- transform_pq(data_fungi_mini, method = "gmpr")
+#' data_f_css     <- transform_pq(data_fungi_mini, method = "css")
+#' data_f_tmm     <- transform_pq(data_fungi_mini, method = "tmm")
+#' data_f_vst     <- transform_pq(data_fungi_mini, method = "vst")
+#' data_f_mcknight <- transform_pq(data_fungi_mini, method = "mcknight_residuals")
 #'
 #' otu_list <- list(
 #'   hell  = unclass(data_f_hell@otu_table),

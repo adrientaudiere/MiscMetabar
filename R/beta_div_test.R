@@ -179,7 +179,8 @@ graph_test_pq <- function(
 #' adonis_pq(enterotype, "SeqTech", dist_method = "jaccard")
 #' adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison")
 #'
-#' adonis_pq(data_fungi, "Time*Height", na_remove = TRUE, correction_for_sample_size = TRUE)
+#' adonis_pq(data_fungi_mini, "Time*Height", na_remove = TRUE,
+#'   correction_for_sample_size = TRUE)
 #' }
 #' @export
 #' @author Adrien Taudière
@@ -319,10 +320,12 @@ adonis_pq <- function(
 #' @author Adrien Taudière
 #' @seealso [adonis_pq()]
 #' @examples
+#' \donttest{
 #' if (requireNamespace("vegan")) {
 #'   data_fungi_woNA <-
-#'     subset_samples(data_fungi, !is.na(Time) & !is.na(Height))
+#'     subset_samples(data_fungi_mini, !is.na(Time) & !is.na(Height))
 #'   adonis_rarperm_pq(data_fungi_woNA, "Time*Height", na_remove = TRUE, nperm = 3)
+#' }
 #' }
 adonis_rarperm_pq <- function(
   physeq,
@@ -516,14 +519,13 @@ LCBD_pq <- function(physeq, p_adjust_method = "BH", ...) {
 #' @seealso [LCBD_pq], [adespatial::beta.div()]
 #'
 #' @examples
-#' data(data_fungi)
+#' \donttest{
 #' if (requireNamespace("adespatial")) {
 #'   plot_LCBD_pq(data_fungi_mini,
 #'     nperm = 100, only_plot_significant = FALSE,
 #'     pval = 0.2
 #'   )
 #' }
-#' \donttest{
 #' if (requireNamespace("adespatial")) {
 #'   plot_LCBD_pq(data_fungi_mini,
 #'     nperm = 100, only_plot_significant = TRUE,
@@ -678,15 +680,15 @@ plot_LCBD_pq <- function(
 #' @seealso [LCBD_pq], [adespatial::beta.div()]
 #'
 #' @examples
-#' data(data_fungi)
+#' \donttest{
 #' if (requireNamespace("adespatial")) {
-#'   plot_SCBD_pq(data_fungi) +
+#'   plot_SCBD_pq(data_fungi_mini) +
 #'     geom_text(aes(label = paste(Genus, Species)), hjust = 1, vjust = 2) +
 #'     xlim(c(0, NA))
 #' }
-#' \donttest{
 #' if (requireNamespace("adespatial")) {
-#'   plot_SCBD_pq(data_fungi, tax_level = "Class", tax_col = "Phylum", min_SCBD = 0) +
+#'   plot_SCBD_pq(data_fungi_mini, tax_level = "Class", tax_col = "Phylum",
+#'     min_SCBD = 0) +
 #'     geom_jitter()
 #' }
 #' }
@@ -747,15 +749,12 @@ plot_SCBD_pq <- function(
 #'
 #' @return A ggplot2 object
 #' @export
-#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
-#' if (requireNamespace("indicspecies")) {
-#'   data(data_fungi)
-#'   data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
-#'   multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)), fact = "Time")
-#' }
+#' @examples
 #' \donttest{
 #' if (requireNamespace("indicspecies")) {
-#'   multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)),
+#'   multipatt_pq(subset_samples(data_fungi_mini, !is.na(Time)),
+#'     fact = "Time", control = permute::how(nperm = 99))
+#'   multipatt_pq(subset_samples(data_fungi_mini, !is.na(Time)),
 #'     fact = "Time",
 #'     max.order = 1, control = permute::how(nperm = 99)
 #'   )
@@ -1233,11 +1232,15 @@ plot_ancombc_pq <-
 #'
 #' @author Adrien Taudière
 #' @examples
-#' res_lefse <- lefser_pq(data_fungi,
-#'   bifactor = "Height",
-#'   modalities = c("Low", "High")
-#' )
-#' lefser::lefserPlot(res_lefse)
+#' \donttest{
+#' if (requireNamespace("lefser") && requireNamespace("mia")) {
+#'   res_lefse <- lefser_pq(data_fungi_mini,
+#'     bifactor = "Height",
+#'     modalities = c("Low", "High")
+#'   )
+#'   lefser::lefserPlot(res_lefse)
+#' }
+#' }
 lefser_pq <- function(
   physeq,
   bifactor = NULL,
@@ -1316,11 +1319,15 @@ lefser_pq <- function(
 #'
 #' @author Adrien Taudière
 #' @examples
-#' res_aldex <- aldex_pq(data_fungi_mini,
-#'   bifactor = "Height",
-#'   modalities = c("Low", "High")
-#' )
-#' ALDEx2::aldex.plot(res_aldex, type = "volcano")
+#' \donttest{
+#' if (requireNamespace("ALDEx2")) {
+#'   res_aldex <- aldex_pq(data_fungi_mini,
+#'     bifactor = "Height",
+#'     modalities = c("Low", "High")
+#'   )
+#'   ALDEx2::aldex.plot(res_aldex, type = "volcano")
+#' }
+#' }
 aldex_pq <- function(
   physeq,
   bifactor = NULL,
@@ -1395,6 +1402,7 @@ aldex_pq <- function(
 #'   !is.na(data_fungi_mini@sam_data$Height)
 #' )
 #' taxa_only_in_one_level(data_fungi_mini_woNA4height, "Height", "High")
+#' \donttest{
 #' #' # Taxa present only in low height samples
 #' suppressMessages(suppressWarnings(
 #'   taxa_only_in_one_level(data_fungi, "Height", "Low")
@@ -1403,6 +1411,7 @@ aldex_pq <- function(
 #' suppressMessages(suppressWarnings(
 #'   length(taxa_only_in_one_level(data_fungi, "Time", "15"))
 #' ))
+#' }
 taxa_only_in_one_level <- function(
   physeq,
   modality,
@@ -1466,8 +1475,10 @@ taxa_only_in_one_level <- function(
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' distri_1_taxa(data_fungi, "Height", "ASV2")
+#' distri_1_taxa(data_fungi_mini, "Height", "ASV7")
+#' \donttest{
 #' distri_1_taxa(data_fungi, "Time", "ASV81", digits = 1)
+#' }
 #' @importFrom stats sd
 distri_1_taxa <- function(physeq, fact, taxa_name, digits = 2) {
   physeq <- taxa_as_rows(physeq)
@@ -1546,7 +1557,7 @@ distri_1_taxa <- function(physeq, fact, taxa_name, digits = 2) {
 #' \donttest{
 #' if (requireNamespace("vegan")) {
 #'   data_fungi_woNA <-
-#'     subset_samples(data_fungi, !is.na(Time) & !is.na(Height))
+#'     subset_samples(data_fungi_mini, !is.na(Time) & !is.na(Height))
 #'   res_var <- var_par_pq(data_fungi_woNA,
 #'     list_component = list(
 #'       "Time" = c("Time"),
@@ -1679,7 +1690,8 @@ var_par_pq <-
 #' @examples
 #' \donttest{
 #' if (requireNamespace("vegan")) {
-#'   data_fungi_woNA <- subset_samples(data_fungi, !is.na(Time) & !is.na(Height))
+#'   data_fungi_woNA <- subset_samples(data_fungi_mini,
+#'     !is.na(Time) & !is.na(Height))
 #'   res_var_9 <- var_par_rarperm_pq(
 #'     data_fungi_woNA,
 #'     list_component = list(

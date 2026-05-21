@@ -19,8 +19,8 @@ A ggplot2 object
 A more memorable shortcut for theme(legend.position = "none").
 }
 \examples{
-plot_refseq_pq(data_fungi)
-plot_refseq_pq(data_fungi) + no_legend()
+plot_refseq_pq(data_fungi_mini)
+plot_refseq_pq(data_fungi_mini) + no_legend()
 }
 \author{
 Adrien Taudière

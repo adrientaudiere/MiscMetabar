@@ -165,6 +165,21 @@ test_that(".validate_ref_format errors when dada2 expected but Greengenes2 detec
   unlink(tmp)
 })
 
+test_that(".validate_ref_format accepts UNITE format when dada2 expected", {
+  tmp <- tempfile(fileext = ".fasta")
+  writeLines(
+    c(
+      ">seq1;k__Fungi;p__Ascomycota",
+      "ATCGATCG"
+    ),
+    tmp
+  )
+  expect_no_error(
+    MiscMetabar:::.validate_ref_format(tmp, "dada2", "test_func")
+  )
+  unlink(tmp)
+})
+
 test_that(".validate_ref_format error message suggests dbpq conversion", {
   tmp <- tempfile(fileext = ".fasta")
   writeLines(
@@ -178,11 +193,21 @@ test_that(".validate_ref_format error message suggests dbpq conversion", {
     MiscMetabar:::.validate_ref_format(tmp, "sintax", "test_func"),
     "dbpq::format2sintax"
   )
+  unlink(tmp)
+  # SINTAX format should still error for dada2 expected
+  tmp2 <- tempfile(fileext = ".fasta")
+  writeLines(
+    c(
+      ">seq1;tax=k:Fungi,p:Ascomycota",
+      "ATCGATCG"
+    ),
+    tmp2
+  )
   expect_error(
-    MiscMetabar:::.validate_ref_format(tmp, "dada2", "test_func"),
+    MiscMetabar:::.validate_ref_format(tmp2, "dada2", "test_func"),
     "dbpq::format2dada2"
   )
-  unlink(tmp)
+  unlink(tmp2)
 })
 
 # Format validation in assign_* functions -----------------------------------

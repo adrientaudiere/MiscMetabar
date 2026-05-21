@@ -35,11 +35,15 @@ It is a wrapper of the \code{ALDEx2::aldex()} function with default gamma=0.5.\i
 }}
 }
 \examples{
-res_aldex <- aldex_pq(data_fungi_mini,
-  bifactor = "Height",
-  modalities = c("Low", "High")
-)
-ALDEx2::aldex.plot(res_aldex, type = "volcano")
+\donttest{
+if (requireNamespace("ALDEx2")) {
+  res_aldex <- aldex_pq(data_fungi_mini,
+    bifactor = "Height",
+    modalities = c("Low", "High")
+  )
+  ALDEx2::aldex.plot(res_aldex, type = "volcano")
+}
+}
 }
 \author{
 Adrien Taudière

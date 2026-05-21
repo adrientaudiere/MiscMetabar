@@ -48,21 +48,17 @@ Please make a reference to \code{indicspecies::multipatt()} if you
 use this function.
 }
 \examples{
-\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") withAutoprint(\{ # examplesIf}
-if (requireNamespace("indicspecies")) {
-  data(data_fungi)
-  data_fungi_ab <- subset_taxa_pq(data_fungi, taxa_sums(data_fungi) > 10000)
-  multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)), fact = "Time")
-}
 \donttest{
 if (requireNamespace("indicspecies")) {
-  multipatt_pq(subset_samples(data_fungi_ab, !is.na(Time)),
+  multipatt_pq(subset_samples(data_fungi_mini, !is.na(Time)),
+    fact = "Time", control = permute::how(nperm = 99))
+  multipatt_pq(subset_samples(data_fungi_mini, !is.na(Time)),
     fact = "Time",
     max.order = 1, control = permute::how(nperm = 99)
   )
 }
 }
-\dontshow{\}) # examplesIf}
+
 }
 \author{
 Adrien Taudière

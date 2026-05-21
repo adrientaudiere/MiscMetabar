@@ -41,7 +41,7 @@ Either an object of class DNAStringSet or a vector of reformated names
 First format in sintax format and then in dada2 format
 }
 \examples{
-\donttest{
+\dontrun{
 f <- system.file("extdata", "mini_UNITE_fungi.fasta.gz",
   package = "MiscMetabar"
 )

@@ -371,7 +371,7 @@ test_that("plot_LCBD_pq works with data_fungi dataset", {
   expect_s3_class(
     suppressWarnings(plot_LCBD_pq(
       data_fungi_mini,
-      nperm = 100,
+      nperm = 9,
       only_plot_significant = FALSE
     )),
     "ggplot"
@@ -379,7 +379,7 @@ test_that("plot_LCBD_pq works with data_fungi dataset", {
   expect_s3_class(
     suppressWarnings(plot_LCBD_pq(
       data_fungi_mini,
-      nperm = 100,
+      nperm = 9,
       only_plot_significant = TRUE,
       pval = 0.2
     )),
@@ -388,7 +388,7 @@ test_that("plot_LCBD_pq works with data_fungi dataset", {
   expect_s3_class(
     suppressWarnings(plot_LCBD_pq(
       data_fungi_mini,
-      nperm = 100,
+      nperm = 9,
       only_plot_significant = TRUE,
       p_adjust_method = "holm",
       sam_variables = c("Time", "Height")
@@ -400,9 +400,9 @@ test_that("plot_LCBD_pq works with data_fungi dataset", {
 
 test_that("LCBD_pq works with data_fungi_mini dataset", {
   skip_on_cran()
-  expect_s3_class(LCBD_pq(data_fungi_mini, nperm = 100), "beta.div")
+  expect_s3_class(LCBD_pq(data_fungi_mini, nperm = 9), "beta.div")
   expect_s3_class(
-    LCBD_pq(data_fungi_mini, nperm = 100, method = "jaccard"),
+    LCBD_pq(data_fungi_mini, nperm = 9, method = "jaccard"),
     "beta.div"
   )
 })
@@ -412,7 +412,7 @@ test_that("plot_LCBD_pq works with data_fungi_mini dataset", {
   expect_s3_class(
     suppressWarnings(plot_LCBD_pq(
       data_fungi_mini,
-      nperm = 100,
+      nperm = 9,
       only_plot_significant = FALSE
     )),
     "ggplot"
@@ -420,7 +420,7 @@ test_that("plot_LCBD_pq works with data_fungi_mini dataset", {
   expect_s3_class(
     suppressWarnings(plot_LCBD_pq(
       data_fungi_mini,
-      nperm = 100,
+      nperm = 9,
       only_plot_significant = TRUE,
       pval = 0.2
     )),
@@ -429,7 +429,7 @@ test_that("plot_LCBD_pq works with data_fungi_mini dataset", {
   expect_s3_class(
     suppressWarnings(plot_LCBD_pq(
       data_fungi_mini,
-      nperm = 100,
+      nperm = 9,
       only_plot_significant = TRUE,
       p_adjust_method = "holm",
       sam_variables = c("Time", "Height")

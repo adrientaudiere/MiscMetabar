@@ -59,6 +59,7 @@ data_fungi_mini_woNA4height <- subset_samples(
   !is.na(data_fungi_mini@sam_data$Height)
 )
 taxa_only_in_one_level(data_fungi_mini_woNA4height, "Height", "High")
+\donttest{
 #' # Taxa present only in low height samples
 suppressMessages(suppressWarnings(
   taxa_only_in_one_level(data_fungi, "Height", "Low")
@@ -67,12 +68,14 @@ suppressMessages(suppressWarnings(
 suppressMessages(suppressWarnings(
   length(taxa_only_in_one_level(data_fungi, "Time", "15"))
 ))
+}
 data_fungi_mini_woNA4height <- subset_samples(
   data_fungi_mini,
   !is.na(data_fungi_mini@sam_data$Height)
 )
 taxa_only_in_one_level(data_fungi_mini_woNA4height, "Height", "High")
 #' # Taxa present only in low height samples
+\donttest{
 suppressMessages(suppressWarnings(
   taxa_only_in_one_level(data_fungi, "Height", "Low")
 ))
@@ -80,6 +83,7 @@ suppressMessages(suppressWarnings(
 suppressMessages(suppressWarnings(
   length(taxa_only_in_one_level(data_fungi, "Time", "15"))
 ))
+}
 }
 \author{
 Adrien Taudière

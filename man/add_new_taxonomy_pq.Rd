@@ -19,7 +19,7 @@ add_new_taxonomy_pq(
 using the \code{phyloseq} package.}
 
 \item{ref_fasta}{(required) A link to a database.
-passed on to \code{dada2::assignTaxonomy}.}
+passed on to \code{method}.}
 
 \item{suffix}{(character) The suffix to name the new columns.
 If set to NULL (the default), the basename of the file reFasta

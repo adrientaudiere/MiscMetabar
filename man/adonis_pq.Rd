@@ -99,7 +99,8 @@ adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "margin")
 adonis_pq(enterotype, "SeqTech", dist_method = "jaccard")
 adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison")
 
-adonis_pq(data_fungi, "Time*Height", na_remove = TRUE, correction_for_sample_size = TRUE)
+adonis_pq(data_fungi_mini, "Time*Height", na_remove = TRUE,
+  correction_for_sample_size = TRUE)
 }
 }
 \author{

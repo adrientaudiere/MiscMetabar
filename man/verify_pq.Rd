@@ -46,9 +46,9 @@ Mostly for internal use in MiscMetabar functions.
 }
 \examples{
 
-verify_pq(data_fungi)
+verify_pq(data_fungi_mini)
 \donttest{
-verify_pq(data_fungi, check_taxonomy = TRUE)
+verify_pq(data_fungi_mini, check_taxonomy = TRUE)
 }
 }
 \author{

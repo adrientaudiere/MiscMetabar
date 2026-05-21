@@ -44,15 +44,15 @@ Please make a reference to \code{vegan::beta.div()} if you
 use this function.
 }
 \examples{
-data(data_fungi)
+\donttest{
 if (requireNamespace("adespatial")) {
-  plot_SCBD_pq(data_fungi) +
+  plot_SCBD_pq(data_fungi_mini) +
     geom_text(aes(label = paste(Genus, Species)), hjust = 1, vjust = 2) +
     xlim(c(0, NA))
 }
-\donttest{
 if (requireNamespace("adespatial")) {
-  plot_SCBD_pq(data_fungi, tax_level = "Class", tax_col = "Phylum", min_SCBD = 0) +
+  plot_SCBD_pq(data_fungi_mini, tax_level = "Class", tax_col = "Phylum",
+    min_SCBD = 0) +
     geom_jitter()
 }
 }

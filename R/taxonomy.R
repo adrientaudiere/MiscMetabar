@@ -358,7 +358,11 @@ resolve_vector_ranks <- function(
 
   if (expected_format == "dada2") {
     # dada2 format is positional (no prefixes), so detect_tax_format returns
-    # "unknown" for it. If we detect a prefix-based format, it's wrong.
+    # "unknown" for it. assignTaxonomy() also accepts UNITE format (k__
+    # prefixed) natively, so we only reject formats it cannot read.
+    if (detected == "unite") {
+      return(invisible(NULL))
+    }
     dbpq_call <- paste0(
       "dbpq::format2dada2(fasta_db = \"",
       ref_fasta,
@@ -495,7 +499,7 @@ format2sintax <- function(
 #' @return Either an object of class DNAStringSet or a vector of reformated names
 #' @seealso [format2dada2_species()], [format2sintax()]
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' f <- system.file("extdata", "mini_UNITE_fungi.fasta.gz",
 #'   package = "MiscMetabar"
 #' )

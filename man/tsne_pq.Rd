@@ -30,7 +30,7 @@ Compute tSNE position of samples from a phyloseq object
 \examples{
 \dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") withAutoprint(\{ # examplesIf}
 if (requireNamespace("Rtsne")) {
-  res_tsne <- tsne_pq(data_fungi)
+  res_tsne <- tsne_pq(data_fungi_mini)
 }
 \dontshow{\}) # examplesIf}
 }

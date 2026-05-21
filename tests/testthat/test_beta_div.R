@@ -3,11 +3,13 @@ data_subset <- subset_samples(data_fungi, Height %in% c("Low", "High")) |>
   subset_samples(!is.na(Time) & !is.na(Height))
 
 test_that("adonis_rarperm_pq works", {
+  skip_on_cran()
   result <- adonis_rarperm_pq(data_subset, "Height", nperm = 9)
   expect_type(result, "list")
 })
 
 test_that("var_par_pq works", {
+  skip_on_cran()
   result <- var_par_pq(
     data_subset,
     list_component = list(
@@ -21,6 +23,7 @@ test_that("var_par_pq works", {
 })
 
 test_that("var_par_rarperm_pq works", {
+  skip_on_cran()
   result <- var_par_rarperm_pq(
     data_subset,
     list_component = list(

@@ -30,7 +30,7 @@ see \code{\link[iNEXT:iNEXT]{iNEXT::iNEXT()}} documentation
 Note that this function is quite time-consuming due to high dimensionality in metabarcoding community matrix.
 }
 \examples{
-\donttest{
+\dontrun{
 if (requireNamespace("iNEXT")) {
   data("GlobalPatterns", package = "phyloseq")
   GPsubset <- subset_taxa(

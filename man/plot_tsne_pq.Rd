@@ -56,14 +56,15 @@ Partially inspired by \code{phylosmith::tsne_phyloseq()} function developed by S
 }
 \examples{
 \dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") withAutoprint(\{ # examplesIf}
-data(data_fungi)
 if (requireNamespace("Rtsne")) {
-  plot_tsne_pq(data_fungi, fact = "Height", perplexity = 15)
+  plot_tsne_pq(data_fungi_mini, fact = "Height", perplexity = 15)
 }
 \donttest{
 if (requireNamespace("Rtsne")) {
-  plot_tsne_pq(data_fungi, fact = "Time") + geom_label(aes(label = Sample_id, fill = Time))
-  plot_tsne_pq(data_fungi, fact = "Time", na_remove = FALSE, force_factor = FALSE)
+  plot_tsne_pq(data_fungi_mini, fact = "Time") +
+    geom_label(aes(label = Sample_id, fill = Time))
+  plot_tsne_pq(data_fungi_mini, fact = "Time", na_remove = FALSE,
+    force_factor = FALSE)
 }
 }
 \dontshow{\}) # examplesIf}

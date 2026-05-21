@@ -39,8 +39,10 @@ a dataframe with levels as rows and information as column :
 Focus on one taxon and one factor.
 }
 \examples{
-distri_1_taxa(data_fungi, "Height", "ASV2")
+distri_1_taxa(data_fungi_mini, "Height", "ASV7")
+\donttest{
 distri_1_taxa(data_fungi, "Time", "ASV81", digits = 1)
+}
 }
 \author{
 Adrien Taudière
