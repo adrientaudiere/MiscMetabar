@@ -3,7 +3,7 @@
   "checkpoint_id": "0031a02c8981",
   "strategy": "manual-commit",
   "branch": "dev",
-  "checkpoints_count": 15,
+  "checkpoints_count": 16,
   "files_touched": [
     ".claude/scheduled_tasks.lock",
     "NEWS.md",
@@ -65,13 +65,20 @@
       "context": "/00/31a02c8981/0/context.md",
       "content_hash": "/00/31a02c8981/0/content_hash.txt",
       "prompt": "/00/31a02c8981/0/prompt.txt"
+    },
+    {
+      "metadata": "/00/31a02c8981/1/metadata.json",
+      "transcript": "/00/31a02c8981/1/full.jsonl",
+      "context": "/00/31a02c8981/1/context.md",
+      "content_hash": "/00/31a02c8981/1/content_hash.txt",
+      "prompt": "/00/31a02c8981/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 269,
-    "cache_creation_tokens": 1046541,
-    "cache_read_tokens": 29418631,
-    "output_tokens": 129315,
-    "api_call_count": 169
+    "input_tokens": 901,
+    "cache_creation_tokens": 1183317,
+    "cache_read_tokens": 36471128,
+    "output_tokens": 166020,
+    "api_call_count": 249
   }
 }
