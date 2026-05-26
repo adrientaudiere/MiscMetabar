@@ -1,0 +1,44 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "7b30a3c716e1",
+  "session_id": "2702aaf4-f46a-4330-b85c-de0d7eefddfc",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-26T12:20:43.368629604Z",
+  "branch": "dev",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".claude/scheduled_tasks.lock",
+    "NEWS.md",
+    "R/beta_div_test.R",
+    "R/dada_phyloseq.R",
+    "R/hill_divent.R",
+    "R/taxonomy.R",
+    "_pkgdown.yml",
+    "inst/benchmark/function_timings.R",
+    "inst/benchmark/function_timings.csv",
+    "tests/testthat/Rplots.pdf",
+    "vignettes/articles/accumulation-rarefaction.Rmd",
+    "vignettes/articles/alpha-div.Rmd",
+    "vignettes/articles/timing.Rmd"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "7b2fdaa357c0",
+  "checkpoint_transcript_start": 1192,
+  "transcript_lines_at_start": 1192,
+  "token_usage": {
+    "input_tokens": 168,
+    "cache_creation_tokens": 191699,
+    "cache_read_tokens": 15446237,
+    "output_tokens": 74092,
+    "api_call_count": 114
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-26T12:20:42.514999069Z",
+    "agent_lines": 488,
+    "human_added": 0,
+    "human_modified": 13,
+    "human_removed": 54,
+    "total_committed": 501,
+    "agent_percentage": 97.40518962075848
+  }
+}
