@@ -245,8 +245,12 @@ hill_acc_pq <- function(
     name = "Computing sample-based accumulation curves"
   )) {
     perm <- sample.int(n_samples)
+    pooled_mat <- apply(otu_mat[perm, , drop = FALSE], 2, cumsum)
+    if (n_samples == 1L) {
+      pooled_mat <- matrix(pooled_mat, nrow = 1L)
+    }
     for (k in seq_len(n_samples)) {
-      pooled <- colSums(otu_mat[perm[seq_len(k)], , drop = FALSE])
+      pooled <- pooled_mat[k, ]
       pooled <- pooled[pooled > 0]
       div_matrix[p, k] <- divent::div_hill(
         pooled,

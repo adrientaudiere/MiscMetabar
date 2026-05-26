@@ -31,6 +31,8 @@ navbar:
       href: articles/Reclustering.html
     - text: Tree building and visualization
       href: articles/tree_visualization.html
+    - text: Function timing
+      href: articles/timing.html
     - text: -------
     - text: Diversity analysis
     - text: Alpha-diversity

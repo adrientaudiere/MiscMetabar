@@ -53,11 +53,11 @@ profile_hill_pq(dfm_rarefied, merge_sample_by = "Height")
 `hill_acc_pq()` plots Hill diversity accumulation (rarefaction) curves — one per sample or per merged group — showing how estimated diversity grows with sequencing depth.
 
 ```{r, fig.cap="Rarefaction curves per sample (Hill order q = 1)"}
-hill_acc_pq(dfm_rarefied, q = 1, n_simulations=20) + no_legend()
+hill_acc_pq(dfm_rarefied, q = 1, n_simulations = 5) + no_legend()
 ```
 
 ```{r, fig.cap="Rarefaction curves merged by Height (Hill order q = 0)"}
-hill_acc_pq(dfm_rarefied, q = 0, merge_sample_by = "Height", n_simulations=20)
+hill_acc_pq(dfm_rarefied, q = 0, merge_sample_by = "Height", n_simulations = 5)
 ```
 
 #### Test for difference in diversity (hill number)
@@ -162,7 +162,7 @@ From the help of glmulti package :
 library("glmulti")
 formula <- "Hill_0 ~ Hill_1 + Abundance + Time + Height"
 res_glmulti <-
-  glmutli_pq(data_fungi, formula = formula, level = 1)
+  glmutli_pq(data_fungi_mini, formula = formula, level = 1)
 res_glmulti
 
 ggplot(data = res_glmulti, aes(x = estimates, y = variable)) +
@@ -211,7 +211,7 @@ ggplot(data = res_glmulti, aes(
 ```{r}
 formula <- "Hill_0 ~ Abundance + Time + Height"
 res_glmulti_interaction <-
-  glmutli_pq(data_fungi, formula = formula, level = 2)
+  glmutli_pq(data_fungi_mini, formula = formula, level = 2)
 res_glmulti_interaction
 
 ggplot(data = res_glmulti_interaction, aes(x = estimates, y = variable)) +

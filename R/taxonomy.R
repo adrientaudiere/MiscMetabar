@@ -547,19 +547,10 @@ format2dada2 <- function(
     }
 
     # Add the good number of level to each line
-    new_names <- map_chr(
-      new_names,
-      ~ {
-        nb_char <- stringr::str_count(.x, ":")
-        max_char <- max(stringr::str_count(new_names, ":"))
-        diff <- max_char - nb_char - 2
-        if (diff > 0) {
-          return(paste0(.x, strrep(",", diff)))
-        } else {
-          return(.x)
-        }
-      }
-    )
+    nb_char_vec <- stringr::str_count(new_names, ":")
+    max_char <- max(nb_char_vec)
+    diff_vec <- max_char - nb_char_vec - 2
+    new_names <- paste0(new_names, strrep(",", pmax(diff_vec, 0)))
 
     new_names <- new_names |>
       stringr::str_split_fixed(";tax=", n = 2) |>

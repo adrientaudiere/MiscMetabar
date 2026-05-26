@@ -1,5 +1,11 @@
 # MiscMetabar (development version)
 
+* `verify_tax_table()` is now ~10× faster on full-size taxonomy tables.
+* `format2dada2(fasta_db = …)`, `hill_acc_pq(type = "sample")`, `adonis_rarperm_pq()` are also faster.
+* New pkgdown article: `vignettes/articles/timing.Rmd` documents
+  wall-clock cost of the main functions on `data_fungi` and
+  `data_fungi_mini`, with a CSV refreshed by `inst/benchmark/function_timings.R`.
+* Pkgdown articles use fewer permutations / simulations to keep the site build under a few minutes.
 * Reduced `R CMD check` time to keep CRAN's 10-minute budget. Examples for
   `verify_tax_table()`, `adonis_pq()`, `plot_SCBD_pq()`, `multipatt_pq()`,
   `hill_pq()`, `plot_tsne_pq()`, `upset_test_pq()`, `summary_plot_pq()`,

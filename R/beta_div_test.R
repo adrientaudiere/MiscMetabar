@@ -382,65 +382,33 @@ adonis_rarperm_pq <- function(
       setTxtProgressBar(pb, i)
     }
   }
-  res_adonis <- list(
-    "mean" = NULL,
-    "quantile_min" = NULL,
-    "quantile_max" = NULL
-  )
-  res_adonis[["mean"]] <-
-    apply(
-      array(
-        unlist(res_perm),
-        c(
-          dim(
-            as.data.frame(res_perm[[1]])
-          ),
-          nperm
-        )
-      ),
-      c(1, 2),
-      mean
-    )
-  colnames(res_adonis[["mean"]]) <- colnames(res_perm[[1]])
-  rownames(res_adonis[["mean"]]) <- rownames(res_perm[[1]])
 
-  res_adonis[["quantile_min"]] <-
-    apply(
-      array(
-        unlist(res_perm),
-        c(
-          dim(
-            as.data.frame(res_perm[[1]])
-          ),
-          nperm
-        )
-      ),
+  res_dim <- dim(as.data.frame(res_perm[[1]]))
+  res_arr <- array(unlist(res_perm), c(res_dim, nperm))
+  res_rownames <- rownames(res_perm[[1]])
+  res_colnames <- colnames(res_perm[[1]])
+
+  res_adonis <- list(
+    "mean" = apply(res_arr, c(1, 2), mean),
+    "quantile_min" = apply(
+      res_arr,
       c(1, 2),
       quantile,
       na.rm = TRUE,
       probs = 1 - quantile_prob
-    )
-  colnames(res_adonis[["quantile_min"]]) <- colnames(res_perm[[1]])
-  rownames(res_adonis[["quantile_min"]]) <- rownames(res_perm[[1]])
-
-  res_adonis[["quantile_max"]] <-
-    apply(
-      array(
-        unlist(res_perm),
-        c(
-          dim(
-            as.data.frame(res_perm[[1]])
-          ),
-          nperm
-        )
-      ),
+    ),
+    "quantile_max" = apply(
+      res_arr,
       c(1, 2),
       quantile,
       na.rm = TRUE,
       probs = quantile_prob
     )
-  colnames(res_adonis[["quantile_max"]]) <- colnames(res_perm[[1]])
-  rownames(res_adonis[["quantile_max"]]) <- rownames(res_perm[[1]])
+  )
+  for (slot in c("mean", "quantile_min", "quantile_max")) {
+    rownames(res_adonis[[slot]]) <- res_rownames
+    colnames(res_adonis[[slot]]) <- res_colnames
+  }
 
   return(res_adonis)
 }

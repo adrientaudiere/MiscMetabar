@@ -1885,23 +1885,22 @@ verify_tax_table <- function(
     }
   }
 
-  # 2. Check/replace values with less than min_char characters
-  short_matches <- list()
-  for (j in seq_along(rank_names)) {
-    rank <- rank_names[j]
-    rank_values <- tax_mat[, rank]
-    for (i in seq_len(nrow(tax_mat))) {
-      val <- rank_values[i]
-      if (!is.na(val) && nchar(val) < min_char && nchar(val) > 0) {
-        short_matches[[length(short_matches) + 1]] <- list(
-          value = val,
-          rank = rank,
-          row = i,
-          col = j,
-          nchar = nchar(val)
-        )
-      }
-    }
+  # 2. Check/replace values with less than min_char characters.
+  nchar_mat <- nchar(tax_mat)
+  short_mask <- !is.na(tax_mat) & nchar_mat < min_char & nchar_mat > 0
+  short_idx <- which(short_mask, arr.ind = TRUE)
+  if (nrow(short_idx) > 0) {
+    short_matches <- lapply(seq_len(nrow(short_idx)), function(k) {
+      list(
+        value = tax_mat[short_idx[k, 1], short_idx[k, 2]],
+        rank = rank_names[short_idx[k, 2]],
+        row = short_idx[k, 1],
+        col = short_idx[k, 2],
+        nchar = nchar_mat[short_idx[k, 1], short_idx[k, 2]]
+      )
+    })
+  } else {
+    short_matches <- list()
   }
 
   if (length(short_matches) > 0) {
@@ -1944,14 +1943,10 @@ verify_tax_table <- function(
 
   # Verbose-only checks (3-5)
   if (verbose) {
+    notna_mat_verbose <- !is.na(tax_mat)
+
     # 3. Check for ranks with only NA values (after potential modifications)
-    ranks_only_na <- character(0)
-    for (rank in rank_names) {
-      rank_values <- tax_mat[, rank]
-      if (all(is.na(rank_values))) {
-        ranks_only_na <- c(ranks_only_na, rank)
-      }
-    }
+    ranks_only_na <- rank_names[colSums(notna_mat_verbose) == 0]
 
     if (length(ranks_only_na) > 0) {
       warning(
@@ -1962,19 +1957,13 @@ verify_tax_table <- function(
       )
     }
 
-    # 4. Check for non-nested ranks (parent NA but child filled)
-    # This is only a message, not a warning, as it can be valid for storing additional info
+    # 4. Check for non-nested ranks (parent NA but child filled). Only a
+    # message, not a warning, since it can be valid for storing extra info.
     non_nested_count <- 0
     if (ncol(tax_mat) > 1) {
-      for (i in seq_len(nrow(tax_mat))) {
-        row_vals <- tax_mat[i, ]
-        # Find first non-NA value
-        first_filled <- which(!is.na(row_vals))[1]
-        if (!is.na(first_filled) && first_filled > 1) {
-          # There are NA values before the first filled value
-          non_nested_count <- non_nested_count + 1
-        }
-      }
+      any_notna <- rowSums(notna_mat_verbose) > 0
+      first_filled <- max.col(notna_mat_verbose, ties.method = "first")
+      non_nested_count <- sum(any_notna & first_filled > 1)
     }
 
     if (non_nested_count > 0) {
@@ -1988,8 +1977,11 @@ verify_tax_table <- function(
       )
     }
 
-    # 5. Check for duplicate taxonomic paths
-    tax_paths <- apply(tax_mat, 1, function(row) paste(row, collapse = "|"))
+    # 5. Check for duplicate taxonomic paths.
+    tax_paths <- do.call(
+      paste,
+      c(lapply(seq_len(ncol(tax_mat)), function(j) tax_mat[, j]), sep = "|")
+    )
     dup_count <- sum(duplicated(tax_paths))
 
     if (dup_count > 0) {
@@ -2002,53 +1994,55 @@ verify_tax_table <- function(
     }
   } # End of verbose-only checks (3-5)
 
-  # 6. Check/handle whitespace in taxonomic values
-  # Detect border spaces (leading/trailing) and internal spaces
-  has_border_spaces <- FALSE
-  has_internal_spaces <- FALSE
+  # 6. Check/handle whitespace in taxonomic values. We use a PCRE pattern that matches both
+  # ASCII whitespace (\s) and every Unicode separator (\p{Z}, e.g. NBSP
+  # U+00A0, em space, ideographic space), because base R's \s in TRE mode
+  # and trimws() default to ASCII-only and would miss NBSP-padded values.
   border_space_entries <- list()
   internal_space_entries <- list()
+  notna_mat <- !is.na(tax_mat)
 
-  for (j in seq_along(rank_names)) {
-    rank <- rank_names[j]
-    rank_values <- tax_mat[, rank]
-    for (i in seq_len(nrow(tax_mat))) {
-      val <- rank_values[i]
-      if (is.na(val)) {
-        next
-      }
-
-      # Check for border whitespace. We use a PCRE pattern that matches both
-      # ASCII whitespace (\s) and every Unicode separator (\p{Z}, e.g. NBSP
-      # U+00A0, em space, ideographic space), because base R's \s in TRE mode
-      # and trimws() default to ASCII-only and would miss NBSP-padded values.
-      if (grepl("^[\\s\\p{Z}]|[\\s\\p{Z}]$", val, perl = TRUE)) {
-        has_border_spaces <- TRUE
-        border_space_entries[[length(border_space_entries) + 1]] <- list(
-          value = val,
-          rank = rank,
-          row = i,
-          col = j
-        )
-      }
-
-      # Check for internal spaces (within the value, not at borders).
-      trimmed_val <- gsub(
-        "^[\\s\\p{Z}]+|[\\s\\p{Z}]+$",
-        "",
-        val,
-        perl = TRUE
+  border_logical <- grepl(
+    "^[\\s\\p{Z}]|[\\s\\p{Z}]$",
+    tax_mat,
+    perl = TRUE
+  )
+  dim(border_logical) <- dim(tax_mat)
+  border_mask <- border_logical & notna_mat
+  has_border_spaces <- any(border_mask)
+  if (has_border_spaces) {
+    border_idx <- which(border_mask, arr.ind = TRUE)
+    border_space_entries <- lapply(seq_len(nrow(border_idx)), function(k) {
+      list(
+        value = tax_mat[border_idx[k, 1], border_idx[k, 2]],
+        rank = rank_names[border_idx[k, 2]],
+        row = border_idx[k, 1],
+        col = border_idx[k, 2]
       )
-      if (grepl("[\\s\\p{Z}]", trimmed_val, perl = TRUE)) {
-        has_internal_spaces <- TRUE
-        internal_space_entries[[length(internal_space_entries) + 1]] <- list(
-          value = val,
-          rank = rank,
-          row = i,
-          col = j
-        )
-      }
-    }
+    })
+  }
+
+  trimmed_mat <- gsub(
+    "^[\\s\\p{Z}]+|[\\s\\p{Z}]+$",
+    "",
+    tax_mat,
+    perl = TRUE
+  )
+  dim(trimmed_mat) <- dim(tax_mat)
+  internal_logical <- grepl("[\\s\\p{Z}]", trimmed_mat, perl = TRUE)
+  dim(internal_logical) <- dim(tax_mat)
+  internal_mask <- internal_logical & notna_mat
+  has_internal_spaces <- any(internal_mask)
+  if (has_internal_spaces) {
+    internal_idx <- which(internal_mask, arr.ind = TRUE)
+    internal_space_entries <- lapply(seq_len(nrow(internal_idx)), function(k) {
+      list(
+        value = tax_mat[internal_idx[k, 1], internal_idx[k, 2]],
+        rank = rank_names[internal_idx[k, 2]],
+        row = internal_idx[k, 1],
+        col = internal_idx[k, 2]
+      )
+    })
   }
 
   # Handle border spaces
@@ -2166,23 +2160,22 @@ verify_tax_table <- function(
   invisible_pattern <- "[\\p{C}]|[\\p{Z}](?<! )(?<!\\t)"
   invisible_entries <- list()
   if (isTRUE(detect_invisible_chars)) {
-    for (j in seq_along(rank_names)) {
-      rank <- rank_names[j]
-      rank_values <- tax_mat[, rank]
-      for (i in seq_len(nrow(tax_mat))) {
-        val <- rank_values[i]
-        if (is.na(val)) {
-          next
-        }
-        if (grepl(invisible_pattern, val, perl = TRUE)) {
-          invisible_entries[[length(invisible_entries) + 1]] <- list(
-            value = val,
-            rank = rank,
-            row = i,
-            col = j
+    invisible_logical <- grepl(invisible_pattern, tax_mat, perl = TRUE)
+    dim(invisible_logical) <- dim(tax_mat)
+    invisible_mask <- invisible_logical & notna_mat
+    if (any(invisible_mask)) {
+      invisible_idx <- which(invisible_mask, arr.ind = TRUE)
+      invisible_entries <- lapply(
+        seq_len(nrow(invisible_idx)),
+        function(k) {
+          list(
+            value = tax_mat[invisible_idx[k, 1], invisible_idx[k, 2]],
+            rank = rank_names[invisible_idx[k, 2]],
+            row = invisible_idx[k, 1],
+            col = invisible_idx[k, 2]
           )
         }
-      }
+      )
     }
   }
 
@@ -2276,47 +2269,56 @@ verify_tax_table <- function(
     redundant_entries <- list()
 
     if (length(ranks_to_use) > 1) {
-      for (i in seq_len(nrow(tax_mat))) {
-        row_vals <- tax_mat[i, ranks_to_use, drop = FALSE]
+      # Vectorised: for each child rank j, find rows whose value ends
+      # with `redundant_suffix`, extract the prefix as a vector, and
+      # check parent ranks (k < j) column-by-column for an exact match.
+      # Equivalent to the previous nested-row/rank/parent loop but does
+      # one `grepl` / `sub` / column comparison per rank pair instead of
+      # one per cell.
+      suffix_pattern <- paste0(redundant_suffix, "$")
+      n_rows <- nrow(tax_mat)
+      taxa_name_vec <- rownames(tax_mat)
+      for (j in 2:length(ranks_to_use)) {
+        current_rank <- ranks_to_use[j]
+        current_col <- tax_mat[, current_rank]
 
-        # Check each rank (starting from 2nd) for redundant patterns
-        for (j in 2:length(ranks_to_use)) {
-          current_rank <- ranks_to_use[j]
-          current_val <- row_vals[1, current_rank]
+        is_suffix <- !is.na(current_col) & grepl(suffix_pattern, current_col)
+        if (!any(is_suffix)) {
+          next
+        }
+        prefix_vec <- sub(suffix_pattern, "", current_col)
+        has_prefix <- is_suffix & nchar(prefix_vec) > 0
+        if (!any(has_prefix)) {
+          next
+        }
 
-          if (is.na(current_val)) {
-            next
+        matched <- logical(n_rows)
+        parent_match_rank <- character(n_rows)
+        parent_match_val <- character(n_rows)
+        for (k in 1:(j - 1)) {
+          parent_rank <- ranks_to_use[k]
+          parent_col <- tax_mat[, parent_rank]
+          new_match <- has_prefix &
+            !matched &
+            !is.na(parent_col) &
+            parent_col == prefix_vec
+          if (any(new_match)) {
+            parent_match_rank[new_match] <- parent_rank
+            parent_match_val[new_match] <- parent_col[new_match]
+            matched <- matched | new_match
           }
+        }
 
-          # Check if current value ends with the redundant suffix
-          suffix_pattern <- paste0(redundant_suffix, "$")
-          if (!grepl(suffix_pattern, current_val)) {
-            next
-          }
-
-          # Extract the prefix (e.g., "Russula" from "Russula_sp")
-          prefix <- sub(suffix_pattern, "", current_val)
-
-          if (nchar(prefix) == 0) {
-            next
-          }
-
-          # Check if this prefix exists in any higher rank
-          for (k in 1:(j - 1)) {
-            parent_rank <- ranks_to_use[k]
-            parent_val <- row_vals[1, parent_rank]
-
-            if (!is.na(parent_val) && parent_val == prefix) {
-              redundant_entries[[length(redundant_entries) + 1]] <- list(
-                taxa_idx = i,
-                taxa_name = rownames(tax_mat)[i],
-                current_rank = current_rank,
-                current_val = current_val,
-                parent_rank = parent_rank,
-                parent_val = parent_val
-              )
-              break # Found redundancy, no need to check other parent ranks
-            }
+        if (any(matched)) {
+          for (ii in which(matched)) {
+            redundant_entries[[length(redundant_entries) + 1]] <- list(
+              taxa_idx = ii,
+              taxa_name = taxa_name_vec[ii],
+              current_rank = current_rank,
+              current_val = current_col[ii],
+              parent_rank = parent_match_rank[ii],
+              parent_val = parent_match_val[ii]
+            )
           }
         }
       }
