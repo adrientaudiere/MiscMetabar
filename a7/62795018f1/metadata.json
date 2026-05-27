@@ -1,0 +1,32 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "a762795018f1",
+  "strategy": "manual-commit",
+  "branch": "dev",
+  "checkpoints_count": 7,
+  "files_touched": [
+    ".claude/scheduled_tasks.lock",
+    "NEWS.md",
+    "R/hill_helpers.R",
+    "R/plot_functions.R",
+    "inst/benchmark/function_timings.csv",
+    "tests/testthat/Rplots.pdf",
+    "tests/testthat/temp_taxo.fasta"
+  ],
+  "sessions": [
+    {
+      "metadata": "/a7/62795018f1/0/metadata.json",
+      "transcript": "/a7/62795018f1/0/full.jsonl",
+      "context": "/a7/62795018f1/0/context.md",
+      "content_hash": "/a7/62795018f1/0/content_hash.txt",
+      "prompt": "/a7/62795018f1/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 137,
+    "cache_creation_tokens": 857019,
+    "cache_read_tokens": 25185750,
+    "output_tokens": 55894,
+    "api_call_count": 97
+  }
+}
