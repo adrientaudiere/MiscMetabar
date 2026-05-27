@@ -190,13 +190,7 @@ if (!MiscMetabar:::is_vsearch_installed()) {
       "phyloseq"
     )
 
-    # vsearch --lcaout segfaults with high id thresholds (>= 0.7) due to an
-    # upstream vsearch bug (confirmed in v2.30.2 and v2.30.5).
-    # See https://github.com/torognes/vsearch/issues/XXX
-    tryCatch(
-      {
-        expect_warning(expect_warning(expect_warning(
-          data_fungi_mini_new_id90 <- assign_vsearch_lca(
+         data_fungi_mini_new_id90 <- assign_vsearch_lca(
             data_fungi_mini,
             ref_fasta = system.file(
               "extdata",
@@ -206,17 +200,9 @@ if (!MiscMetabar:::is_vsearch_installed()) {
             behavior = "add_to_phyloseq",
             id = 0.9
           )
-        )))
+        
         expect_s4_class(data_fungi_mini_new_id90, "phyloseq")
-      },
-      error = function(e) {
-        if (grepl("status 139", e$message)) {
-          skip("vsearch segfault with --lcaout at high id (upstream bug)")
-        } else {
-          stop(e)
-        }
-      }
-    )
+   
 
     expect_s4_class(
       assign_vsearch_lca(

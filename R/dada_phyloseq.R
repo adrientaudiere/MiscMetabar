@@ -3020,7 +3020,7 @@ add_new_taxonomy_pq <- function(
 
   if (method == "dada2") {
     if(.detect_tax_format(ref_fasta) != "unite") {
-      #.validate_ref_format(ref_fasta, "dada2", "add_new_taxonomy_pq")
+      .validate_ref_format(ref_fasta, "dada2", "add_new_taxonomy_pq")
     }
 
     list_args <- list(
@@ -4990,7 +4990,7 @@ assign_dada2 <- function(
   }
   if (!from_sintax) {
     if(.detect_tax_format(ref_fasta) != "unite") {
-   #   .validate_ref_format(ref_fasta, "dada2", "assign_dada2")
+      .validate_ref_format(ref_fasta, "dada2", "assign_dada2")
     }
   }
 
