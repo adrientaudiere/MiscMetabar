@@ -644,36 +644,23 @@ circle_pq <-
       )
     }
 
-    otu_table_tax <-
-      pbapply::pbapply(
-        otu_tab,
-        2,
-        function(x) {
-          pbapply::pbtapply(
-            x,
-            physeq@tax_table[, taxcol],
-            function(xx) {
-              sum(xx, na.rm = TRUE)
-            }
-          )
-        },
-        cl = nproc
-      )
-    otu_table_ech <-
-      pbapply::pbapply(
-        otu_table_tax,
-        1,
-        function(x) {
-          pbapply::pbtapply(
-            x,
-            physeq@sam_data[, taxsamp],
-            function(xx) {
-              sum(xx, na.rm = TRUE)
-            }
-          )
-        },
-        cl = nproc
-      )
+    tax_groups <- as.character(physeq@tax_table[, taxcol])
+    tax_groups[is.na(tax_groups)] <- "NA"
+    otu_table_tax <- rowsum(
+      as.matrix(otu_tab),
+      group = tax_groups,
+      na.rm = TRUE,
+      reorder = TRUE
+    )
+
+    sam_groups <- as.character(unlist(physeq@sam_data[, taxsamp]))
+    sam_groups[is.na(sam_groups)] <- "NA"
+    otu_table_ech <- rowsum(
+      t(otu_table_tax),
+      group = sam_groups,
+      na.rm = TRUE,
+      reorder = TRUE
+    )
     if (!is.matrix(otu_table_ech)) {
       otu_table_ech <- matrix(
         otu_table_ech,

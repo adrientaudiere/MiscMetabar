@@ -36,26 +36,28 @@
 #' divent_hill_matrix_pq(otu, q = c(0, 1, 2))
 divent_hill_matrix_pq <- function(comm, q, ...) {
   comm_mat <- as.matrix(comm)
-  result <- vapply(
-    q,
-    function(q_val) {
+   result_raw <- vapply(
+    seq_len(nrow(comm_mat)),
+    function(i) {
+      x <- comm_mat[i, ]
+      x <- x[x > 0]
+      if (length(x) == 0) {
+        return(rep(NA_real_, length(q)))
+      }
       vapply(
-        seq_len(nrow(comm_mat)),
-        function(i) {
-          x <- comm_mat[i, ]
-          x <- x[x > 0]
-          if (length(x) == 0) {
-            return(NA_real_)
-          }
+        q,
+        function(q_val) {
           divent::div_hill(x, q = q_val, as_numeric = TRUE, ...)
         },
         numeric(1)
       )
     },
-    numeric(nrow(comm_mat))
+    numeric(length(q))
   )
-  if (is.vector(result)) {
-    result <- matrix(result, ncol = length(q))
+  if (length(q) == 1L) {
+    result <- matrix(result_raw, ncol = 1L)
+  } else {
+    result <- t(result_raw)
   }
   out <- as.data.frame(result)
   colnames(out) <- as.character(q)

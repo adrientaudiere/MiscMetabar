@@ -1,6 +1,18 @@
 # MiscMetabar (development version)
 
 * `verify_tax_table()` is now ~10× faster on full-size taxonomy tables.
+* `divent_hill_matrix_pq()` no longer recomputes the per-sample
+  positive-subset (`x <- x[x > 0]`) once per Hill order. The loop is
+  now sample-outer / q-inner, so each row is sliced once. Numeric
+  output is bitwise-identical. Speeds up every Hill-diversity
+  computation in the package: `hill_pq()`, `hill_bar_pq()`,
+  `hill_tuckey_pq()`, `profile_hill_pq()`, `psmelt_samples_pq()`,
+  `plot_refseq_extremity_pq()`, and the `*_rarperm_pq` family.
+* `circle_pq()` replaces a nested
+  `pbapply(., 2, pbtapply(., group, sum))` over the OTU table with
+  two `rowsum()` calls. On `data_fungi` (1420 taxa × 185 samples)
+  the example dropped from ~18 s to ~1.8 s (≈ 10× faster). Output
+  unchanged.
 * `format2dada2(fasta_db = …)`, `hill_acc_pq(type = "sample")`, `adonis_rarperm_pq()` are also faster.
 * New pkgdown article: `vignettes/articles/timing.Rmd` documents
   wall-clock cost of the main functions on `data_fungi` and
