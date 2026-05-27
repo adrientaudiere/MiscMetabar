@@ -1,0 +1,330 @@
+Base directory for this skill: /home/adrien/.claude/skills/r-pkg-release
+
+Orchestrate an R-package release pipeline. Two modes: **interactive** (default — gated between stages, asks the user before mutating anything) and **`--auto`** (autonomous — runs end-to-end, applies a fixed set of safe deterministic fixes silently, only stops for issues that need human judgment).
+
+## Arguments
+
+`` may contain, in any order:
+
+- A package name (e.g. `MiscMetabar`). If absent, read `Package:` from `DESCRIPTION` in the current working directory.
+- `--auto` — autonomous mode. Skips per-stage confirmation for non-destructive stages. Stages 8 and 9 (version bump, merge/push) are still gated.
+- `--with-coverage` — include the coverage stage. Off by default (covr is slow).
+- `--with-audit` — include the `r-audit` stage. Off by default (slow; produces a TODO file under `audits/`).
+- `--with-examples` — also run the slow `rcmdcheck_examples` stage (full `--as-cran` with examples + vignettes). Off by default — the fast `rcmdcheck` stage uses `--no-examples --no-vignettes --no-tests`. Required for a green pre-CRAN verdict.
+- `--with-remote-checks` — include `winbuilder` and `rhub`. Off by default (~30 min remote runs; pause-and-resume).
+- `--resume` — read the existing state file and pick up at `current_stage`. Useful after a `--with-remote-checks` pause or a Ctrl-C.
+- `--no-cache` — force every stage to re-run, ignoring source-hash cache hits.
+
+When invoked from the pqverse workspace and only a package name is given, resolve `pqverse_pkg/{name}/`.
+
+## State file
+
+Path: `<workspace>/audits/{pkg}_release-state.json`. Schema: `~/.claude/skills/r-pkg-release/state-schema.json`. Helpers: `~/.claude/skills/r-pkg-release/state.sh`.
+
+`status ∈ {PENDING, RUNNING, DONE, FAILED, SKIPPED, AWAITING_REMOTE}`.
+
+Initialize at the start of a run (unless `--resume`):
+
+```bash
+bash ~/.claude/skills/r-pkg-release/state.sh init \
+  "$WORKSPACE/audits/${PKG}_release-state.json" \
+  "$PKG" "$PKG_DIR" "$VERSION" auto \
+  "$WITH_COVERAGE" "$WITH_AUDIT" "$WITH_REMOTE_CHECKS" \
+  "$WITH_EXAMPLES" "$NO_CACHE"
+```
+
+`--resume` reads the existing file and skips ahead to `current_stage`.
+
+## Stage cache (CRITICAL — read this first)
+
+Long stages (`tests`, `coverage`, `audit`, `rcmdcheck`, `rcmdcheck_examples`) run for minutes-to-tens-of-minutes against real pqverse packages. Re-running them on every invocation defeats the purpose of `--auto`.
+
+**Cache layout:** `<workspace>/audits/.release-cache/{pkg}/{stage}/`
+
+Per stage:
+- `<ts>.log` — full stdout+stderr capture (the agent **must** Read this file rather than re-running the command).
+- `<ts>.rds` — R result object (rcmdcheck or testthat).
+- `<ts>.classified.json` (rcmdcheck) or `<ts>.summary.json` (tests) — parser output.
+- `<ts>.signature` — sha256 over the relevant source files for that stage.
+- `latest` — text file holding the newest `<ts>`.
+
+**Cache hit policy** (source-hash based):
+
+```bash
+. ~/.claude/skills/r-pkg-release/cache.sh
+if [[ "$NO_CACHE" != "true" ]] && cache_is_fresh "$PKG" "$PKG_DIR" "$STAGE"; then
+  ts="$(cache_latest "$PKG" "$STAGE")"
+  log="$(cache_path_for "$PKG" "$STAGE" "$ts" log)"
+  json="$(cache_path_for "$PKG" "$STAGE" "$ts" classified.json)"  # or summary.json
+  # Mark stage DONE from cache; the agent reads $log / $json directly.
+fi
+```
+
+`cache_is_fresh` is true iff:
+1. A `latest` pointer exists for this stage, AND
+2. The cached `.signature` matches the current source signature, AND
+3. The corresponding `.log` file is on disk.
+
+Source signatures use different file globs per stage (see `cache.sh:_cache_globs_for_stage`):
+- `format`: `R/**/*.R`
+- `document`: `R/**/*.R + DESCRIPTION + NAMESPACE`
+- `rcmdcheck`: `R/ + man/ + tests/ + DESCRIPTION + NAMESPACE`
+- `rcmdcheck_examples`, `winbuilder`, `rhub`: above + `vignettes/ + inst/`
+- `tests`, `coverage`: `R/ + tests/ + DESCRIPTION + NAMESPACE`
+- `audit`: `R/ + DESCRIPTION + NAMESPACE`
+- `cran_extra`: `DESCRIPTION + NEWS.md + README.* + cran-comments.md`
+
+If the user passes `--no-cache`, every stage re-runs.
+
+After a stage runs (cache miss), record the cache:
+
+```bash
+ts="$(cache_new "$PKG" "$STAGE")"
+sig="$(cache_signature "$PKG_DIR" "$STAGE")"
+# ... pass --cache-dir "$(cache_dir $PKG $STAGE)" --ts "$ts" to the R script
+cache_record "$PKG" "$STAGE" "$ts" "$sig"
+state_set_cache "$STATE" "$STAGE" "$(cache_path_for $PKG $STAGE $ts log)" "$sig" false
+```
+
+## Output-handling rule (READ FILES, DON'T RE-PIPE)
+
+Every long-running R command **must** redirect output to the cache `.log` file (the `--cache-dir` + `--ts` mechanism does this automatically). To inspect the result, the agent **must use the Read tool** on the `.log`/`.json`/`.rds` files. **Do not** re-invoke the command via Bash to grep its output — that re-runs the long stage.
+
+Right pattern:
+```
+1. Run: Rscript parse-rcmdcheck.R run <pkg> --cache-dir <dir> --ts <ts>
+2. Read tool: <dir>/<ts>.classified.json    ← inspect parser verdict
+3. Read tool: <dir>/<ts>.log                ← look up specific failures
+```
+
+Wrong pattern (forbidden):
+```
+Bash: Rscript -e 'rcmdcheck::rcmdcheck(...)' | grep ERROR    # re-runs everything
+Bash: Rscript -e 'devtools::test(...)' 2>&1 | tail -50        # ditto
+```
+
+## Stages and order
+
+`format` → `document` → `rcmdcheck` → `tests` → `coverage` (opt) → `audit` (opt) → `rcmdcheck_examples` (opt) → `cran_extra` → `winbuilder` (opt) → `rhub` (opt) → `bump_version` (gated) → `merge_push` (gated).
+
+Stages marked `SKIPPED` at init time stay skipped (no flag → no run).
+
+## `--auto` per-stage loop
+
+For each non-skipped stage in order:
+
+1. Read state. If `DONE` or `SKIPPED`, advance. If `AWAITING_REMOTE`, prompt user for the remote result, parse, then advance.
+2. **Cache check.** If `--no-cache` is not set: `cache_is_fresh "$PKG" "$PKG_DIR" "$STAGE"`. If fresh, mark stage `DONE` (with `from_cache=true`), Read the cached `.classified.json` / `.summary.json` to surface counts to the user, advance.
+3. `state.sh set-stage <stage> RUNNING`.
+4. Mint a cache stamp and run the stage with `--cache-dir <dir> --ts <ts>`. The R script writes `.log`, `.rds`, and `.classified.json` / `.summary.json` to the cache.
+5. **Use the Read tool** on the cache files to inspect the result. Never re-invoke the R command to grep its output.
+6. Parse the JSON → list of issues, each classified `AUTO_FIX:<fixer>` or `AMBIGUOUS`.
+7. For each `AUTO_FIX`, run `Rscript ~/.claude/skills/r-pkg-release/auto-fixers.R <fixer> <pkg_dir>`. Record via `state.sh add-fix <stage> <fixer>`.
+8. If at least one fix was applied this iteration, **retry the stage once** — note the retry invalidates the previous cache stamp because source has changed; `cache_signature` will differ.
+9. If `AMBIGUOUS` is non-empty:
+   - For each: `state.sh mark-blocking <stage> <severity> <type> <message> [location]`.
+   - `state.sh set-stage <stage> FAILED`.
+   - **Stop the run.** Report the blocking issues, citing the `.log` line range so the user can jump there. The PreToolUse hook will now block any subsequent `git commit/push/merge` until the state is cleared.
+10. Otherwise `cache_record` + `state.sh set-cache` + `state.sh set-stage <stage> DONE` and advance.
+
+Stages 8 and 9 are **always interactive**, even in `--auto` — destructive actions confirm.
+
+## Stage helpers
+
+All long stages share the same cache-aware shape:
+
+```bash
+. ~/.claude/skills/r-pkg-release/cache.sh
+. ~/.claude/skills/r-pkg-release/state.sh
+
+if [[ "$NO_CACHE" != "true" ]] && cache_is_fresh "$PKG" "$PKG_DIR" "$STAGE"; then
+  ts="$(cache_latest "$PKG" "$STAGE")"
+  log="$(cache_path_for "$PKG" "$STAGE" "$ts" log)"
+  state_set_cache "$STATE" "$STAGE" "$log" "$(cache_signature $PKG_DIR $STAGE)" true
+  state_set_stage "$STATE" "$STAGE" DONE "from cache"
+  # Read tool: the .classified.json / .summary.json to surface counts.
+else
+  ts="$(cache_new "$PKG" "$STAGE")"
+  dir="$(cache_dir "$PKG" "$STAGE")"
+  state_set_stage "$STATE" "$STAGE" RUNNING
+  Rscript <stage-script> --cache-dir "$dir" --ts "$ts" "$PKG_DIR"
+  sig="$(cache_signature "$PKG_DIR" "$STAGE")"
+  cache_record "$PKG" "$STAGE" "$ts" "$sig"
+  state_set_cache "$STATE" "$STAGE" "$dir/$ts.log" "$sig" false
+  # Read tool: $dir/$ts.classified.json (or .summary.json) to classify.
+fi
+```
+
+### `format` (fast)
+
+```bash
+Rscript ~/.claude/skills/r-pkg-release/auto-fixers.R fix_format "$PKG_DIR" \
+  > "$dir/$ts.log" 2>&1
+```
+
+Idempotent. Cache hit policy: source-hash on `R/*.R`. No issues generated — mark `DONE`.
+
+### `document` (fast)
+
+```bash
+Rscript ~/.claude/skills/r-pkg-release/auto-fixers.R fix_document "$PKG_DIR" \
+  > "$dir/$ts.log" 2>&1
+```
+
+Idempotent. On error, the `.log` contains the message; classify as `AMBIGUOUS` (likely an `@param` mismatch).
+
+### `rcmdcheck` (fast pass — no examples, no vignettes, no tests)
+
+```bash
+Rscript ~/.claude/skills/r-pkg-release/parse-rcmdcheck.R run "$PKG_DIR" \
+  --cache-dir "$dir" --ts "$ts"
+```
+
+Writes `<dir>/<ts>.log` (raw rcmdcheck output), `.rds` (result object), `.classified.json` (parser verdict). The agent **Reads** the `.classified.json` to get `{summary, auto_fix, ambiguous}`, and `.log` only when it needs to look up a specific failure line.
+
+Classifier rules (see `parse-rcmdcheck.R`):
+
+| Pattern | Severity | Action |
+|---|---|---|
+| `non-ASCII` | NOTE | `fix_non_ascii` |
+| `Encoding not declared` | NOTE | `fix_encoding_declaration` |
+| `code/documentation mismatches`, stale `.Rd` | WARNING | `fix_document` |
+| `Undocumented arguments`, missing `@return` | WARNING | AMBIGUOUS |
+| `examples > 5 seconds`, examples failed | NOTE/WARNING | AMBIGUOUS |
+| any `ERROR` | ERROR | AMBIGUOUS |
+| anything else | * | AMBIGUOUS (default-deny) |
+
+### `tests` (potentially long)
+
+```bash
+Rscript ~/.claude/skills/r-pkg-release/parse-tests.R run "$PKG_DIR" \
+  --cache-dir "$dir" --ts "$ts"
+```
+
+Writes `<dir>/<ts>.log`, `.rds` (testthat result), `.summary.json` (per-file pass/fail + a `failing` list). The agent Reads `.summary.json` first; if anything failed, it Reads the relevant range of `.log` to surface the test message.
+
+After a partial fix (user resolved one failing test), **re-run only the failing files** with `--filter "<regex over failing files>"` rather than the whole suite. The result is also cached.
+
+Failing tests are always `AMBIGUOUS`.
+
+### `coverage` (only if `--with-coverage` — long)
+
+```bash
+Rscript -e 'sink(file("'$dir'/'$ts'.log", "wt"), split = FALSE);
+  res <- covr::package_coverage("'$PKG_DIR'");
+  cat(sprintf("coverage: %.2f%%\n", covr::percent_coverage(res)));
+  saveRDS(res, "'$dir'/'$ts'.rds");
+  if (Sys.getenv("CODECOV_TOKEN") != "") covr::codecov(coverage = res);
+  sink()'
+```
+
+Coverage upload failures are `AMBIGUOUS` but **non-blocking** — mark stage `FAILED` with reason and continue (do not set `has_blocking_errors`).
+
+### `audit` (only if `--with-audit` — long)
+
+Invoke `r-audit` for the package; redirect its full output to `<dir>/<ts>.log`. The audit TODO file under `audits/{pkg}_TODO.md` is informational — never block on it. Mark `DONE` once the script runs to completion regardless of TODO contents.
+
+### `rcmdcheck_examples` (only if `--with-examples` — long, full --as-cran)
+
+```bash
+Rscript ~/.claude/skills/r-pkg-release/parse-rcmdcheck.R run "$PKG_DIR" \
+  --with-examples --cache-dir "$dir" --ts "$ts"
+```
+
+Same shape as `rcmdcheck` but runs the full `--as-cran` (examples + vignettes). Source signature is broader (includes `vignettes/` and `inst/`) so this stage's cache is independent of the fast pass.
+
+### `cran_extra` (fast)
+
+Load and follow `r-lib:cran-extrachecks`. Capture its output to `<dir>/<ts>.log`. Issues that the skill itself flags as blocking → `AMBIGUOUS`. Suggestions → ignore in `--auto`.
+
+### `winbuilder` (only if `--with-remote-checks` — async)
+
+```bash
+Rscript -e 'devtools::check_win_devel()' > "$dir/$ts.log" 2>&1
+```
+
+Submit, then `state.sh set-stage winbuilder AWAITING_REMOTE` and **stop the run**. Tell the user: "Win-builder submitted. Re-run `/r-pkg-release {pkg} --auto --resume` once you have the result email." On `--resume`, prompt for the result URL or paste of `00check.log`, save the paste to `<dir>/<ts>.remote-result.log`, and parse it the same way as `rcmdcheck`.
+
+### `rhub` (only if `--with-remote-checks` — async)
+
+Same pause/resume semantics as `winbuilder`. Output to `<dir>/<ts>.log`.
+
+### `bump_version` (gated, even in `--auto`)
+
+Pre-flight: version must end in `.9xxx`. If not, mark `FAILED` with reason "package not in dev cycle" and stop cleanly (this is expected when a package was just released).
+
+Otherwise ask the user once (even in `--auto`):
+
+> "All checks passed. Bump {pkg} {current} for release? (Default: patch)"
+
+Then invoke `/r-pkg-bump-version {pkg} <type> --auto`.
+
+### `merge_push` (gated, even in `--auto`)
+
+Ask the user:
+
+> "Run `/r-pkg-merge-release {pkg}` (merge dev → master, push, bump dev)? Dry-run first is offered by the skill."
+
+Then invoke `/r-pkg-merge-release {pkg}`.
+
+## Interactive mode (default, no `--auto`)
+
+Use the existing per-stage flow:
+
+1. Run the stage's underlying skill (`r-test`, `r-check`, etc.).
+2. Print a one-line summary (pass/fail + key counts).
+3. Ask: "Stage {N} {pass|fail}. Continue?"
+4. If user stops, persist state (so they can `--resume`) and exit.
+
+Optional flags (`--with-coverage`, `--with-audit`, `--with-remote-checks`) skip the corresponding stage when not set, exactly as in `--auto`.
+
+Stages 8 and 9 follow their existing confirm-then-invoke pattern.
+
+## Final summary
+
+After all stages reach a terminal state (`DONE`, `SKIPPED`, `FAILED`), print:
+
+```
+## Release Readiness: {package} v{version}
+
+| Stage              | Status | Cache | Detail                                  |
+|--------------------|--------|-------|-----------------------------------------|
+| format             | …      | hit/miss | …                                  |
+| document           | …      | hit/miss | …                                  |
+| rcmdcheck          | …      | hit/miss | {E} errors, {W} warnings, {N} notes |
+| tests              | …      | hit/miss | {n} tests, {failed} failed         |
+| coverage           | …      | hit/miss | {pct}% (or SKIPPED)                |
+| audit              | …      | hit/miss | {n} functions, {errors} errors     |
+| rcmdcheck_examples | …      | hit/miss | {E}/{W}/{N} (or SKIPPED)           |
+| cran_extra         | …      | hit/miss | {n} issues                         |
+| winbuilder         | …      |       | (or SKIPPED / AWAITING_REMOTE)         |
+| rhub               | …      |       | (or SKIPPED / AWAITING_REMOTE)         |
+| bump_version       | …      |       | {old} → {new} (or SKIPPED)             |
+| merge_push         | …      |       | (or SKIPPED)                           |
+
+Auto-fixes applied: {list from .stages.*.fixes_applied}
+Cache hits:         {n} of {total} stages reused cached results
+Ambiguous issues:   {count from .ambiguous_issues, with details}
+
+Verdict: READY / NOT READY for CRAN submission
+```
+
+If any stage is `DONE` from cache, mention the cached file path so the user can inspect it: `tests: DONE (cached) — audits/.release-cache/{pkg}/tests/<ts>.log`.
+
+`READY` requires `rcmdcheck_examples` to be `DONE` (not `SKIPPED`) — i.e. you must have run with `--with-examples` at least once on the current source for a CRAN-ready verdict. Otherwise the verdict is `READY pending --with-examples`.
+
+If `READY` and `merge_push` is `DONE`, suggest `devtools::submit_cran()`.
+
+## Resume
+
+`--resume` reads `current_stage` and re-enters the loop there. Stages already `DONE` or `SKIPPED` are not re-run. If the previous run hit `FAILED` with `AMBIGUOUS`, the user must clear `has_blocking_errors` (the hook tells them how) and remove the entries from `ambiguous_issues` before the resume can advance past that stage.
+
+## Important rules
+
+- **Read cached files; never re-pipe bash.** Every long stage writes its full output to `audits/.release-cache/{pkg}/{stage}/<ts>.log` plus a structured `.json`/`.rds`. Use the Read tool on those files. Re-invoking `Rscript -e '...' | grep ERROR` defeats the cache and re-runs minutes-long commands.
+- **Trust the source-hash cache.** If `cache_is_fresh` is true, the stage's verdict from a previous run is still valid; mark `DONE (cached)` and move on. Only bypass with `--no-cache`.
+- **Default-deny in the classifier:** anything we don't recognize is `AMBIGUOUS`. Never silently apply a fix the agent doesn't understand.
+- **Stages 8 and 9 always confirm with the user**, even in `--auto`. The `--auto` flag means "no confirmation for non-destructive stages", not "no confirmation ever".
+- The PreToolUse hook (`hooks/pretooluse-block-on-error.sh`) is project-installed once via `hooks/settings-snippet.json`; it stays silent unless `has_blocking_errors == true` in the most recent state file under `audits/`.
+- Do not retry pushes or merges with `--force`. Surface the error and stop.
+- Keep stage summaries concise — the cached files have the detail.
