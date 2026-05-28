@@ -1,0 +1,38 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "a9fc28129ea7",
+  "session_id": "d82706b8-f537-4b1e-98fa-4bc434669314",
+  "strategy": "manual-commit",
+  "created_at": "2026-05-28T11:55:33.371162158Z",
+  "branch": "dev",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "NAMESPACE",
+    "R/MiscMetabar-package.R",
+    "R/dada_phyloseq.R",
+    "R/hill_helpers.R",
+    "cran-comments.md",
+    "inst/benchmark/function_timings.R",
+    "tests/testthat/Rplots.pdf",
+    "tests/testthat/test-taxonomy.R",
+    "tests/testthat/test_vsearch.R"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "82a9fb901ceb",
+  "token_usage": {
+    "input_tokens": 2568,
+    "cache_creation_tokens": 127288,
+    "cache_read_tokens": 6150685,
+    "output_tokens": 37366,
+    "api_call_count": 89
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-05-28T11:55:33.182163731Z",
+    "agent_lines": 68,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 68,
+    "agent_percentage": 100
+  }
+}

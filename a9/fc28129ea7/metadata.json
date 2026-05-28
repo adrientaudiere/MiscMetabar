@@ -1,0 +1,34 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "a9fc28129ea7",
+  "strategy": "manual-commit",
+  "branch": "dev",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "NAMESPACE",
+    "R/MiscMetabar-package.R",
+    "R/dada_phyloseq.R",
+    "R/hill_helpers.R",
+    "cran-comments.md",
+    "inst/benchmark/function_timings.R",
+    "tests/testthat/Rplots.pdf",
+    "tests/testthat/test-taxonomy.R",
+    "tests/testthat/test_vsearch.R"
+  ],
+  "sessions": [
+    {
+      "metadata": "/a9/fc28129ea7/0/metadata.json",
+      "transcript": "/a9/fc28129ea7/0/full.jsonl",
+      "context": "/a9/fc28129ea7/0/context.md",
+      "content_hash": "/a9/fc28129ea7/0/content_hash.txt",
+      "prompt": "/a9/fc28129ea7/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 2568,
+    "cache_creation_tokens": 127288,
+    "cache_read_tokens": 6150685,
+    "output_tokens": 37366,
+    "api_call_count": 89
+  }
+}
