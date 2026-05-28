@@ -21,3 +21,4 @@
 ^\.entire$
 ^Rplots\.pdf$
 ^CRAN-SUBMISSION$
+^audits$
