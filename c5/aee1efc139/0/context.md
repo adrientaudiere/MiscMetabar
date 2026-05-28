@@ -1,0 +1,125 @@
+# Session Context
+
+## User Prompts
+
+### Prompt 1
+
+Base directory for this skill: /home/adrien/.claude/skills/r-pkg-release
+
+Orchestrate an R-package release pipeline. Two modes: **interactive** (default — gated between stages, asks the user before mutating anything) and **`--auto`** (autonomous — runs end-to-end, applies a fixed set of safe deterministic fixes silently, only stops for issues that need human judgment).
+
+## Arguments
+
+`` may contain, in any order:
+
+- A package name (e.g. `MiscMetabar`). If absent, read `Package:` from `DESCRIP...
+
+### Prompt 2
+
+<task-notification>
+<task-id>bfmehvbru</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/tmp/claude-1000/-home-adrien-Nextcloud-IdEst-Projets-pqverse-pqverse-pkg-MiscMetabar/d82706b8-f537-4b1e-98fa-4bc434669314/tasks/bfmehvbru.output</output-file>
+<status>completed</status>
+<summary>Background command "Run full test suite" completed (exit code 0)</summary>
+</task-notification>
+
+### Prompt 3
+
+Base directory for this skill: /home/adrien/.claude/plugins/marketplaces/posit-dev-skills/r-lib/cran-extrachecks
+
+# CRAN Extra Checks
+
+Help R package developers prepare packages for CRAN submission by systematically checking for common ad-hoc requirements that CRAN reviewers enforce but `devtools::check()` doesn't catch.
+
+## Workflow
+
+1. **Initial Assessment**: Ask user if this is first submission or resubmission
+2. **Run Standard Checklist**: Work through each item systematically (see below)...
+
+### Prompt 4
+
+Base directory for this skill: /home/adrien/.claude/skills/r-pkg-bump-version
+
+Bump an R package from `X.Y.Z.9xxx` (dev) to a release version `X.Y.Z`. This is a thin wrapper around `usethis::use_version()`. It mutates two files (`DESCRIPTION`, `NEWS.md`) and **does not commit**.
+
+## Arguments
+
+`MiscMetabar patch --auto` may contain, in any order:
+
+- A package name (e.g. `MiscMetabar`). If absent, read `Package:` from `DESCRIPTION` in the current working directory.
+- A bump type: `patch` | `mi...
+
+### Prompt 5
+
+Base directory for this skill: /home/adrien/.claude/skills/r-pkg-merge-release
+
+Finalize the release of an R package by merging `dev` into `master`, pushing both branches, and bumping the dev branch to the next development cycle. This is Stage 9 of the `/r-pkg-release` pipeline. **This skill mutates git state and pushes to origin** — confirm with the user before executing.
+
+The actual flow is implemented in `${SKILL_DIR}/merge-release.sh`; this file describes the wrapper logic.
+
+## Package de...
+
+### Prompt 6
+
+Base directory for this skill: /home/adrien/.claude/skills/r-build
+
+Build the pkgdown documentation website and the R package source tarball.
+
+## Steps
+
+Run the following commands **in sequence**, capturing all output:
+
+1. Rebuild README from `README.Rmd`:
+```r
+Rscript -e "devtools::build_readme()"
+```
+
+2. Regenerate documentation:
+```r
+Rscript -e "devtools::document()"
+```
+
+3. Rebuild the NEWS page:
+```r
+Rscript -e "pkgdown::build_news()"
+```
+
+4. Build the full pkgdown site (lazy — only rebu...
+
+### Prompt 7
+
+<task-notification>
+<task-id>b9sa3ojw5</task-id>
+<tool-use-id>REDACTED</tool-use-id>
+<output-file>/tmp/claude-1000/-home-adrien-Nextcloud-IdEst-Projets-pqverse-pqverse-pkg-MiscMetabar/d82706b8-f537-4b1e-98fa-4bc434669314/tasks/b9sa3ojw5.output</output-file>
+<status>completed</status>
+<summary>Background command "Build full pkgdown site lazily" completed (exit code 0)</summary>
+</task-notification>
+
+### Prompt 8
+
+> Dear maintainer,
+>   package MiscMetabar_0.16.6.tar.gz does not pass the incoming checks automatically, please see the following pre-tests (additional issue checks):
+> Windows: <https://win-builder.r-project.org/incoming_pretest/MiscMetabar_0.16.6_20260528_150935/Windows/00check.log>
+> Status: 1 NOTE
+> Debian: <https://win-builder.r-project.org/incoming_pretest/MiscMetabar_0.16.6_20260528_150935/Debian/00check.log>
+> Status: 1 NOTE
+>   Last released version's CRAN status: OK: 8, ERROR: 5
+> ...
+
+### Prompt 9
+
+continue
+
+### Prompt 10
+
+This session is being continued from a previous conversation that ran out of context. The summary below covers the earlier portion of the conversation.
+
+Summary:
+1. Primary Request and Intent:
+   The user ran the full release pipeline for the MiscMetabar R package through several skills:
+   - `/r-pkg-release` — format, document, rcmdcheck, tests, cran_extra, bump_version stages
+   - `/r-pkg-merge-release MiscMetabar` — merge dev→master, push, bump dev cycle
+   - `/r-build MiscMetabar` — rebui...
+
