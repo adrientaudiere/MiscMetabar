@@ -3019,7 +3019,7 @@ add_new_taxonomy_pq <- function(
   # Validate ref_fasta format for methods that don't go through assign_*
 
   if (method == "dada2") {
-    if(.detect_tax_format(ref_fasta) != "unite") {
+    if (.detect_tax_format(ref_fasta) != "unite") {
       .validate_ref_format(ref_fasta, "dada2", "add_new_taxonomy_pq")
     }
 
@@ -4989,7 +4989,7 @@ assign_dada2 <- function(
     seq2search <- physeq@refseq
   }
   if (!from_sintax) {
-    if(.detect_tax_format(ref_fasta) != "unite") {
+    if (.detect_tax_format(ref_fasta) != "unite") {
       .validate_ref_format(ref_fasta, "dada2", "assign_dada2")
     }
   }

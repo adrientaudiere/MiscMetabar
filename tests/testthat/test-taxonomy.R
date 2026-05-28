@@ -223,7 +223,9 @@ test_that("assign_dada2 errors on SINTAX-formatted ref_fasta", {
   )
   expect_error(
     assign_dada2(
-      seq2search = Biostrings::DNAStringSet(c(ASV1 = "ATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCAAA")),
+      seq2search = Biostrings::DNAStringSet(c(
+        ASV1 = "ATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCAAA"
+      )),
       ref_fasta = tmp
     ),
     "dada2"

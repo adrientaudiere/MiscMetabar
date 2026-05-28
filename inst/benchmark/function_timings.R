@@ -13,7 +13,10 @@ data(data_fungi)
 data(data_fungi_mini)
 
 # Drop NA-height samples for functions that need a complete grouping factor.
-data_fungi_woNA <- subset_samples(data_fungi, !is.na(data_fungi@sam_data$Height))
+data_fungi_woNA <- subset_samples(
+  data_fungi,
+  !is.na(data_fungi@sam_data$Height)
+)
 
 # Number of replicate timings per function (low to keep the benchmark feasible)
 n_reps <- 1

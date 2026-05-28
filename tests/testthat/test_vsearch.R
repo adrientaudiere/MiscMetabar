@@ -190,19 +190,18 @@ if (!MiscMetabar:::is_vsearch_installed()) {
       "phyloseq"
     )
 
-         data_fungi_mini_new_id90 <- assign_vsearch_lca(
-            data_fungi_mini,
-            ref_fasta = system.file(
-              "extdata",
-              "mini_UNITE_fungi.fasta.gz",
-              package = "MiscMetabar"
-            ),
-            behavior = "add_to_phyloseq",
-            id = 0.9
-          )
-        
-        expect_s4_class(data_fungi_mini_new_id90, "phyloseq")
-   
+    data_fungi_mini_new_id90 <- assign_vsearch_lca(
+      data_fungi_mini,
+      ref_fasta = system.file(
+        "extdata",
+        "mini_UNITE_fungi.fasta.gz",
+        package = "MiscMetabar"
+      ),
+      behavior = "add_to_phyloseq",
+      id = 0.9
+    )
+
+    expect_s4_class(data_fungi_mini_new_id90, "phyloseq")
 
     expect_s4_class(
       assign_vsearch_lca(

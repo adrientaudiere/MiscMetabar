@@ -176,5 +176,6 @@ if (getRversion() >= "2.15.1") {
 ## usethis namespace: start
 #' @importFrom stats na.exclude na.omit reformulate reorder terms
 #' @importFrom lifecycle deprecated
+#' @importFrom XVector subseq
 ## usethis namespace: end
 NULL

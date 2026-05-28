@@ -36,7 +36,7 @@
 #' divent_hill_matrix_pq(otu, q = c(0, 1, 2))
 divent_hill_matrix_pq <- function(comm, q, ...) {
   comm_mat <- as.matrix(comm)
-   result_raw <- vapply(
+  result_raw <- vapply(
     seq_len(nrow(comm_mat)),
     function(i) {
       x <- comm_mat[i, ]
