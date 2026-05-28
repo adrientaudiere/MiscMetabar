@@ -127,6 +127,7 @@ Adrien Taudière
 ## Examples
 
 ``` r
+
 resolve_vector_ranks(c("A"))
 #> [1] "A"
 resolve_vector_ranks(c("A"),

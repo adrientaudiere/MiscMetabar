@@ -29,8 +29,7 @@ add_new_taxonomy_pq(
 
 - ref_fasta:
 
-  (required) A link to a database. passed on to
-  [`dada2::assignTaxonomy`](https://rdrr.io/pkg/dada2/man/assignTaxonomy.html).
+  (required) A link to a database. passed on to `method`.
 
 - suffix:
 

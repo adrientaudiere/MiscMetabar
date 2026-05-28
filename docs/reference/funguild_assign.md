@@ -75,12 +75,11 @@ by Adrien Taudière
 ## Examples
 
 ``` r
-# \donttest{
+if (FALSE) { # \dontrun{
 db <- get_funguild_db()
 data_fungi_FUNGUILD <- funguild_assign(as.data.frame(tax_table(data_fungi)),
   db_funguild = db, tax_col = "Genus_species"
 )
 ncol(data_fungi_FUNGUILD)
-#> [1] 23
-# }
+} # }
 ```

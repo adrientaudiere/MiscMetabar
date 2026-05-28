@@ -9,6 +9,7 @@ package.
 ## Load the necessary packages
 
 ``` r
+
 library(fastqcr)
 library(MiscMetabar)
 ```
@@ -39,12 +40,14 @@ library(MiscMetabar)
 ## Install the latest version of FastQC tool on Unix systems (MAC OSX and Linux)
 
 ``` r
+
 fastqc_install()
 ```
 
 ## Run the analysis
 
 ``` r
+
 qc.dir <- "fastqc_results"
 
 # Demo QC directory containing zipped FASTQC reports
@@ -54,6 +57,7 @@ qc <- fastqcr::qc_aggregate(qc.dir)
 ```
 
 ``` r
+
 fastqcr::qc_problems(qc)
 fastqcr::qc_stats(qc)
 summary(qc)
@@ -62,6 +66,7 @@ summary(qc)
 ## Plot base quality with Rsearch package
 
 ``` r
+
 library(Rsearch)
 
 fastq_dir <- list_fastq_files(system.file("/extdata", package = "MiscMetabar"))
@@ -78,6 +83,7 @@ print(qual_plots)
 ## Build reports
 
 ``` r
+
 # Building Multi QC Reports
 fastqcr::qc_report(qc.dir, result.file = "multi-qc-report")
 

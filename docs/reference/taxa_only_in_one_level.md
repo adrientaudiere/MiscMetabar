@@ -79,6 +79,7 @@ taxa_only_in_one_level(data_fungi_mini_woNA4height, "Height", "High")
 #> Number of kept samples 3
 #> Cleaning suppress 3 taxa and 0 samples.
 #> [1] "ASV48" "ASV50" "ASV77" "ASV93"
+# \donttest{
 #' # Taxa present only in low height samples
 suppressMessages(suppressWarnings(
   taxa_only_in_one_level(data_fungi, "Height", "Low")
@@ -106,6 +107,7 @@ suppressMessages(suppressWarnings(
   length(taxa_only_in_one_level(data_fungi, "Time", "15"))
 ))
 #> [1] 126
+# }
 data_fungi_mini_woNA4height <- subset_samples(
   data_fungi_mini,
   !is.na(data_fungi_mini@sam_data$Height)
@@ -121,6 +123,7 @@ taxa_only_in_one_level(data_fungi_mini_woNA4height, "Height", "High")
 #> Cleaning suppress 3 taxa and 0 samples.
 #> [1] "ASV48" "ASV50" "ASV77" "ASV93"
 #' # Taxa present only in low height samples
+# \donttest{
 suppressMessages(suppressWarnings(
   taxa_only_in_one_level(data_fungi, "Height", "Low")
 ))
@@ -147,4 +150,5 @@ suppressMessages(suppressWarnings(
   length(taxa_only_in_one_level(data_fungi, "Time", "15"))
 ))
 #> [1] 126
+# }
 ```

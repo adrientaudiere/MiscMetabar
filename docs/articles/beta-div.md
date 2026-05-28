@@ -1,6 +1,7 @@
 # beta-div
 
 ``` r
+
 library(MiscMetabar)
 library(lefser)
 library(ALDEx2)
@@ -10,6 +11,7 @@ data(data_fungi)
 ### Permanova
 
 ``` r
+
 data_fungi_woNA4height <- subset_samples(data_fungi, !is.na(data_fungi@sam_data$Height))
 res_ado <- adonis_pq(data_fungi_woNA4height, "Tree_name+Height")
 knitr::kable(res_ado)
@@ -24,6 +26,7 @@ knitr::kable(res_ado)
 ### Graph Test
 
 ``` r
+
 data_fungi_woNA4height <- subset_samples(data_fungi, !is.na(data_fungi@sam_data$Height))
 graph_test_pq(data_fungi_woNA4height, "Height")
 ```
@@ -33,6 +36,7 @@ graph_test_pq(data_fungi_woNA4height, "Height")
 ### Circle of ASVs
 
 ``` r
+
 circle_pq(data_fungi_woNA4height, "Height")
 ```
 
@@ -43,6 +47,7 @@ circle_pq(data_fungi_woNA4height, "Height")
 #### PCoA
 
 ``` r
+
 plot_ordination_pq(data_fungi, method = "robust.aitchison", ordination_method = "PCoA", color = "Height")
 #> Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
 #> ℹ Please use tidy evaluation idioms with `aes()`.
@@ -57,6 +62,7 @@ plot_ordination_pq(data_fungi, method = "robust.aitchison", ordination_method = 
 ![](beta-div_files/figure-html/unnamed-chunk-5-1.png)
 
 ``` r
+
 plot_ordination(data_fungi,
   ordination =
     ordinate(data_fungi, method = "PCoA", distance = "bray"), color = "Height"
@@ -68,6 +74,7 @@ plot_ordination(data_fungi,
 #### NMDS
 
 ``` r
+
 plot_ordination_pq(data_fungi, method = "robust.aitchison", color = "Height") +
   plot_ordination_pq(data_fungi, method = "bray", color = "Height")
 #> Run 0 stress 0.1133285 
@@ -127,6 +134,7 @@ plot_ordination_pq(data_fungi, method = "robust.aitchison", color = "Height") +
 #### TSNE
 
 ``` r
+
 plot_tsne_pq(data_fungi, fact = "Height")
 ```
 
@@ -135,6 +143,7 @@ plot_tsne_pq(data_fungi, fact = "Height")
 #### UMAP
 
 ``` r
+
 df_umap <- umap_pq(data_fungi)
 #> Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if
 #> `.name_repair` is omitted as of tibble 2.0.0.
@@ -156,6 +165,7 @@ ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
 #### Biplot
 
 ``` r
+
 data_fungi_low_high <- subset_samples(
   data_fungi,
   data_fungi@sam_data$Height %in%
@@ -173,6 +183,7 @@ biplot_pq(data_fungi_low_high, fact = "Height", merge_sample_by = "Height")
 #### Compare two (group of) samples with a table
 
 ``` r
+
 compare_pairs_pq(data_fungi_low_high,
   bifactor = "Height",
   merge_sample_by = "Height",
@@ -194,6 +205,7 @@ compare_pairs_pq(data_fungi_low_high,
 ### Venn diagram
 
 ``` r
+
 library("grid")
 venn_pq(data_fungi, fact = "Height")
 ```
@@ -201,6 +213,7 @@ venn_pq(data_fungi, fact = "Height")
 ![](beta-div_files/figure-html/unnamed-chunk-11-1.png)
 
 ``` r
+
 ggvenn_pq(data_fungi, fact = "Height") +
   ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1) +
   labs(title = "Share number of ASV among Height in tree")
@@ -209,6 +222,7 @@ ggvenn_pq(data_fungi, fact = "Height") +
 ![](beta-div_files/figure-html/unnamed-chunk-12-1.png)
 
 ``` r
+
 ggvenn_pq(data_fungi, fact = "Height", min_nb_seq = 5000) +
   ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1) +
   labs(title = "Share number of ASV with more than 5000 seqs")
@@ -217,6 +231,7 @@ ggvenn_pq(data_fungi, fact = "Height", min_nb_seq = 5000) +
 ![](beta-div_files/figure-html/unnamed-chunk-13-1.png)
 
 ``` r
+
 ggvenn_pq(data_fungi,
   fact = "Height", taxonomic_rank = "Genus",
   min_nb_seq = 100
@@ -235,6 +250,7 @@ propose a solution based on the package
 [ComplexUpset](https://krassowski.github.io/complex-upset/).
 
 ``` r
+
 upset_pq(data_fungi, fact = "Height")
 #> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 #> ℹ Please use `linewidth` instead.
@@ -249,6 +265,7 @@ upset_pq(data_fungi, fact = "Height")
 ![](beta-div_files/figure-html/unnamed-chunk-15-1.png)
 
 ``` r
+
 upset_pq(data_fungi, fact = "Time")
 ```
 
@@ -258,6 +275,7 @@ upset_pq(data_fungi, fact = "Time")
 can see in the following figure.
 
 ``` r
+
 upset_pq(
   data_fungi,
   fact = "Time",
@@ -316,6 +334,7 @@ sudo apt-get install libgsl-dev libmpfr-dev
 #### Using Deseq2 package
 
 ``` r
+
 data("GlobalPatterns", package = "phyloseq")
 GP <- subset_samples(
   GlobalPatterns,
@@ -330,6 +349,7 @@ plot_deseq2_pq(GP, c("SampleType", "Soil", "Skin"), pval = 0.001)
 #### Using Linear discriminant analysis (LDA) Effect Size (LEfSe)
 
 ``` r
+
 res_lefse <- lefser_pq(data_fungi, bifactor = "Height", modalities = c("Low", "High"))
 lefser::lefserPlot(res_lefse)
 #> Warning in geom_bar(stat = "identity", aes(fill = class), color = "black", :
@@ -339,6 +359,7 @@ lefser::lefserPlot(res_lefse)
 ![](beta-div_files/figure-html/unnamed-chunk-19-1.png)
 
 ``` r
+
 
 res_lefse_clade <- lefser_pq(data_fungi, bifactor = "Height", modalities = c("Low", "High"), by_clade = TRUE)
 lefser::lefserPlot(res_lefse_clade)
@@ -351,6 +372,7 @@ lefser::lefserPlot(res_lefse_clade)
 #### Using ALDEx2 package
 
 ``` r
+
 res_aldex <- aldex_pq(data_fungi_mini, bifactor = "Height", modalities = c("Low", "High"))
 
 ALDEx2::aldex.plot(res_aldex, type = "volcano")
@@ -361,6 +383,7 @@ ALDEx2::aldex.plot(res_aldex, type = "volcano")
 #### Using ancombc
 
 ``` r
+
 res_ancombc <- ancombc_pq(
   data_fungi_mini,
   fact = "Height",
@@ -379,6 +402,7 @@ res_ancombc <- ancombc_pq(
 ## Session information
 
 ``` r
+
 sessionInfo()
 #> R version 4.5.2 (2025-10-31)
 #> Platform: x86_64-pc-linux-gnu

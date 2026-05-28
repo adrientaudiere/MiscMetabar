@@ -224,19 +224,21 @@ adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison")
 #> ---
 #> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-adonis_pq(data_fungi, "Time*Height", na_remove = TRUE, correction_for_sample_size = TRUE)
+adonis_pq(data_fungi_mini, "Time*Height", na_remove = TRUE,
+  correction_for_sample_size = TRUE)
+#> Taxa are now in columns.
 #> Removing NA from Time
 #> Removing NA from Height
-#> 74 were discarded due to NA in variables present in formula.
+#> 62 were discarded due to NA in variables present in formula.
 #> Permutation test for adonis under reduced model
 #> Permutation: free
 #> Number of permutations: 999
 #> 
 #> vegan::adonis2(formula = .formula, data = metadata)
-#>           Df SumOfSqs      R2      F Pr(>F)    
-#> Model      6    4.136 0.07793 1.4649  0.001 ***
-#> Residual 104   48.934 0.92207                  
-#> Total    110   53.069 1.00000                  
+#>          Df SumOfSqs      R2      F Pr(>F)  
+#> Model     6    3.238 0.09064 1.1297  0.038 *
+#> Residual 68   32.484 0.90936                
+#> Total    74   35.722 1.00000                
 #> ---
 #> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 # }

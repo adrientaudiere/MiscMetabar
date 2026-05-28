@@ -56,12 +56,14 @@ A ggplot2 object
 ## Examples
 
 ``` r
-summary_plot_pq(data_fungi)
 
-summary_plot_pq(data_fungi, add_info = FALSE) + scale_fill_viridis_d()
+summary_plot_pq(data_fungi_mini)
+
+summary_plot_pq(data_fungi_mini, add_info = FALSE) + scale_fill_viridis_d()
 #> Scale for fill is already present.
 #> Adding another scale for fill, which will replace the existing scale.
 
+# \donttest{
 if (requireNamespace("patchwork")) {
   (summary_plot_pq(data_fungi, text_size = 0.5, text_size_info = 0.6) +
     summary_plot_pq(data_fungi_mini, text_size = 0.5, text_size_info = 0.6)) /
@@ -72,4 +74,6 @@ if (requireNamespace("patchwork")) {
 }
 #> Cleaning suppress 0 taxa and 1 samples.
 #> Cleaning suppress 0 taxa and 2 samples.
+
+# }
 ```

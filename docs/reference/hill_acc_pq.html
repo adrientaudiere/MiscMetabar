@@ -35,7 +35,7 @@ number of samples.
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,6 +54,7 @@ number of samples.
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -186,65 +187,20 @@ strong is the influence of methodological choices? <em>Journal of Biogeography</
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span> <span class="co"># Individual (sequence-based) accumulation curves</span></span></span>
-<span class="r-in"><span>  <span class="fu">hill_acc_pq</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">rarefy_even_depth</a></span> <span class="op">(</span><span class="va">data_fungi_mini</span>, sample.size <span class="op">=</span> <span class="fl">500</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="no_legend.html">no_legend</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> You set `rngseed` to FALSE. Make sure you've set &amp; recorded</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  the random seed of your session for reproducibility.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> See `?set.seed`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 58 samples removedbecause they contained fewer reads than `sample.size`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Up to first five removed samples are: </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> A15-004_S3_MERGED.fastq.gzAC29033_S8_MERGED.fastq.gzAD26-005-B_S9_MERGED.fastq.gzB18-006-B_S19_MERGED.fastq.gzBG7-010-H_S31_MERGED.fastq.gz</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing individual-based accumulation curves <span style="color: #00BB00;">■■■                             </span>…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing individual-based accumulation curves <span style="color: #00BB00;">■■■■■■                          </span>…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing individual-based accumulation curves <span style="color: #00BB00;">■■■■■■■■                        </span>…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing individual-based accumulation curves <span style="color: #00BB00;">■■■■■■■■■                       </span>…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing individual-based accumulation curves <span style="color: #00BB00;">■■■■■■■■■■                      </span>…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing individual-based accumulation curves <span style="color: #00BB00;">■■■■■■■■■■■■                    </span>…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing individual-based accumulation curves <span style="color: #00BB00;">■■■■■■■■■■■■■■                  </span>…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing individual-based accumulation curves <span style="color: #00BB00;">■■■■■■■■■■■■■■■                 </span>…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing individual-based accumulation curves <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■               </span>…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing individual-based accumulation curves <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■              </span>…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing individual-based accumulation curves <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■■■            </span>…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing individual-based accumulation curves <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■■■■■          </span>…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing individual-based accumulation curves <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■■■■■■■        </span>…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing individual-based accumulation curves <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■■■■■■■■■      </span>…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing individual-based accumulation curves <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■■■■■■■■■■     </span>…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing individual-based accumulation curves <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■■■■■■■■■■■■   </span>…</span>
-<span class="r-plt img"><img src="hill_acc_pq-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span>  <span class="fu">hill_acc_pq</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">rarefy_even_depth</a></span><span class="op">(</span><span class="va">data_fungi_mini</span>, sample.size <span class="op">=</span> <span class="fl">500</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    n_permutations <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>    n_permutations <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="no_legend.html">no_legend</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">hill_acc_pq</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">rarefy_even_depth</a></span><span class="op">(</span><span class="va">data_fungi_mini</span>, sample.size <span class="op">=</span> <span class="fl">500</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    n_permutations <span class="op">=</span> <span class="fl">3</span>,</span></span>
 <span class="r-in"><span>    merge_sample_by <span class="op">=</span> <span class="st">"Height"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> You set `rngseed` to FALSE. Make sure you've set &amp; recorded</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  the random seed of your session for reproducibility.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> See `?set.seed`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 58 samples removedbecause they contained fewer reads than `sample.size`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Up to first five removed samples are: </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> A15-004_S3_MERGED.fastq.gzAC29033_S8_MERGED.fastq.gzAD26-005-B_S9_MERGED.fastq.gzB18-006-B_S19_MERGED.fastq.gzBG7-010-H_S31_MERGED.fastq.gz</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ...</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`group` has missing values; corresponding samples will be dropped</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing individual-based accumulation curves <span style="color: #00BB00;">■■■■■■■■■■■                     </span>…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing individual-based accumulation curves <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■■■■           </span>…</span>
-<span class="r-plt img"><img src="hill_acc_pq-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span> <span class="co"># Sample-based accumulation curve</span></span></span>
-<span class="r-in"><span>  <span class="fu">hill_acc_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, type <span class="op">=</span> <span class="st">"sample"</span>, n_permutations <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing sample-based accumulation curves <span style="color: #00BB00;">■■■■■■■                         </span>  20…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing sample-based accumulation curves <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■■■■■■         </span>  74…</span>
-<span class="r-plt img"><img src="hill_acc_pq-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span>  <span class="fu">hill_acc_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, type <span class="op">=</span> <span class="st">"sample"</span>, merge_sample_by <span class="op">=</span> <span class="st">"Height"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing sample-based accumulation curves <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■               </span>  52…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Computing sample-based accumulation curves <span style="color: #00BB00;">■■■■■■■■■■■■■■■■■■■■■■■■        </span>  77…</span>
-<span class="r-plt img"><img src="hill_acc_pq-4.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span>  <span class="fu">hill_acc_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, type <span class="op">=</span> <span class="st">"sample"</span>, n_permutations <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">hill_acc_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, type <span class="op">=</span> <span class="st">"sample"</span>, merge_sample_by <span class="op">=</span> <span class="st">"Height"</span>,</span></span>
+<span class="r-in"><span>    n_permutations <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

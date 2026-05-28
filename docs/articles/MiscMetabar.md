@@ -41,6 +41,7 @@ codes](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html).
 #### Summarize a physeq object
 
 ``` r
+
 library("MiscMetabar")
 library("phyloseq")
 data("data_fungi")
@@ -52,6 +53,7 @@ summary_plot_pq(data_fungi)
 #### Create an interactive table of the tax_table
 
 ``` r
+
 data("GlobalPatterns", package = "phyloseq")
 tax_datatable(subset_taxa(
   GlobalPatterns,
@@ -62,6 +64,7 @@ tax_datatable(subset_taxa(
 #### Sankey diagram of the tax_table
 
 ``` r
+
 gp <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 sankey_pq(gp, taxa = c(1:5))
 ```
@@ -69,6 +72,7 @@ sankey_pq(gp, taxa = c(1:5))
 #### Upset plot for visualize distribution of taxa in function of samples variables
 
 ``` r
+
 if (packageVersion("ggplot2") < "4.0.0") {
   upset_pq(gp, "SampleType", taxa = "Class")
 }
@@ -84,6 +88,7 @@ in mice. Microbiome 8, 44 (2020).
 ## Session inform
 
 ``` r
+
 sessionInfo()
 #> R version 4.5.2 (2025-10-31)
 #> Platform: x86_64-pc-linux-gnu

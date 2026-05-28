@@ -6,6 +6,7 @@ al. (2020) available in the `mia` package.
 ## Load library
 
 ``` r
+
 library("MicrobiotaProcess")
 library("MiscMetabar")
 library("ggplot2")
@@ -14,12 +15,14 @@ library("iNEXT")
 ```
 
 ``` r
+
 ?Tengeler2020
 ```
 
 ## Import dataset in phyloseq format
 
 ``` r
+
 data(Tengeler2020_pq)
 ten <- Tengeler2020_pq
 summary_plot_pq(ten)
@@ -30,12 +33,14 @@ summary_plot_pq(ten)
 ## Alpha-diversity analysis
 
 ``` r
+
 hill_pq(ten, "patient_status", one_plot = TRUE)
 ```
 
 ![](tengeler_files/figure-html/unnamed-chunk-5-1.png)
 
 ``` r
+
 res_inext <-
   iNEXT_pq(ten,
     datatype = "abundance",
@@ -56,6 +61,7 @@ ggiNEXT(res_inext)
 ![](tengeler_files/figure-html/unnamed-chunk-6-1.png)
 
 ``` r
+
 accu_plot(
   ten,
   fact = "sample_name",
@@ -122,6 +128,7 @@ accu_plot(
 ## Explore taxonomy
 
 ``` r
+
 # library(metacoder)
 # heat_tree_pq(
 #   ten,
@@ -134,6 +141,7 @@ accu_plot(
 ```
 
 ``` r
+
 treemap_pq(ten, lvl1 = "Order", lvl2 = "Family")
 ```
 
@@ -142,12 +150,14 @@ treemap_pq(ten, lvl1 = "Order", lvl2 = "Family")
 ## Beta-diversity analysis : effect of patient status and cohort
 
 ``` r
+
 circle_pq(ten, "patient_status")
 ```
 
 ![](tengeler_files/figure-html/unnamed-chunk-10-1.png)
 
 ``` r
+
 upset_pq(ten, "patient_status_vs_cohort")
 #> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 #> ℹ Please use `linewidth` instead.
@@ -162,6 +172,7 @@ upset_pq(ten, "patient_status_vs_cohort")
 ![](tengeler_files/figure-html/unnamed-chunk-11-1.png)
 
 ``` r
+
 ggvenn_pq(clean_pq(ten, force_taxa_as_columns = TRUE),
   "cohort",
   rarefy_before_merging = TRUE
@@ -172,6 +183,7 @@ ggvenn_pq(clean_pq(ten, force_taxa_as_columns = TRUE),
 ![](tengeler_files/figure-html/unnamed-chunk-12-1.png)
 
 ``` r
+
 ten_control <- clean_pq(subset_samples(ten, patient_status == "Control"))
 # p_control <- heat_tree_pq(
 #   ten_control,
@@ -196,6 +208,7 @@ ten_ADHD <- clean_pq(subset_samples(ten, patient_status == "ADHD"))
 ```
 
 ``` r
+
 knitr::kable(track_wkflow(list(
   "All samples" = ten,
   "Control samples" = ten_control,
@@ -210,6 +223,7 @@ knitr::kable(track_wkflow(list(
 | ADHD samples    |       246603 |         142 |         13 |
 
 ``` r
+
 adonis_pq(ten, "cohort + patient_status")
 #> Permutation test for adonis under reduced model
 #> Permutation: free
@@ -225,6 +239,7 @@ adonis_pq(ten, "cohort + patient_status")
 ```
 
 ``` r
+
 ten@tax_table <- phyloseq::tax_table(cbind(
   ten@tax_table,
   "Species" = taxa_names(ten)
@@ -240,12 +255,14 @@ biplot_pq(subset_taxa_pq(ten, taxa_sums(ten) > 3000),
 ![](tengeler_files/figure-html/unnamed-chunk-16-1.png)
 
 ``` r
+
 multitax_bar_pq(ten, "Phylum", "Class", "Order", "patient_status")
 ```
 
 ![](tengeler_files/figure-html/unnamed-chunk-17-1.png)
 
 ``` r
+
 multitax_bar_pq(ten, "Phylum", "Class", "Order", "patient_status",
   nb_seq = FALSE, log10trans = FALSE
 )
@@ -256,6 +273,7 @@ multitax_bar_pq(ten, "Phylum", "Class", "Order", "patient_status",
 ## Differential abundance analysis
 
 ``` r
+
 plot_deseq2_pq(ten,
   contrast = c("patient_status", "ADHD", "Control"),
   taxolev = "Genus"
@@ -267,6 +285,7 @@ plot_deseq2_pq(ten,
 ![](tengeler_files/figure-html/unnamed-chunk-19-1.png)
 
 ``` r
+
 LEfSe <- diff_analysis(
   ten,
   classgroup = "patient_status",
@@ -296,6 +315,7 @@ ggeffectsize(LEfSe) +
 ## Session information
 
 ``` r
+
 sessionInfo()
 #> R version 4.5.2 (2025-10-31)
 #> Platform: x86_64-pc-linux-gnu

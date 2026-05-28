@@ -67,6 +67,7 @@ Adrien Taudière
 ## Examples
 
 ``` r
+
 data_fungi_wo_NA <- filt_taxa_wo_NA(data_fungi)
 #> Cleaning suppress 0 taxa (  ) and 1 sample(s) ( N23-002-M_S132_MERGED.fastq.gz ).
 #> Number of non-matching ASV 0

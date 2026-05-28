@@ -131,18 +131,19 @@ Adrien Taudière
 
 ``` r
 if (requireNamespace("ggVennDiagram")) {
-  ggvenn_pq(data_fungi, fact = "Height")
+  ggvenn_pq(data_fungi_mini, fact = "Height")
 }
-#> 54 were discarded due to NA in variable fact
-#> Cleaning suppress 501 taxa and 0 samples.
-#> Cleaning suppress 457 taxa and 0 samples.
-#> Cleaning suppress 469 taxa and 0 samples.
+#> 47 were discarded due to NA in variable fact
+#> Taxa are now in columns.
+#> Cleaning suppress 11 taxa and 0 samples.
+#> Cleaning suppress 11 taxa and 0 samples.
+#> Cleaning suppress 11 taxa and 0 samples.
 
 # \donttest{
 if (requireNamespace("ggVennDiagram")) {
-  ggvenn_pq(data_fungi, fact = "Height") +
+  ggvenn_pq(data_fungi_mini, fact = "Height") +
     ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
-  pl <- ggvenn_pq(data_fungi, fact = "Height", split_by = "Time")
+  pl <- ggvenn_pq(data_fungi_mini, fact = "Height", split_by = "Time")
   for (i in seq_along(pl)) {
     p <- pl[[i]] +
       scale_fill_distiller(palette = "BuPu", direction = 1) +
@@ -150,21 +151,23 @@ if (requireNamespace("ggVennDiagram")) {
     print(p)
   }
 
-  data_fungi2 <- subset_samples(data_fungi, data_fungi@sam_data$Tree_name == "A10-005" |
-    data_fungi@sam_data$Height %in% c("Low", "High"))
+  data_fungi2 <- subset_samples(data_fungi_mini,
+    data_fungi_mini@sam_data$Tree_name == "A10-005" |
+    data_fungi_mini@sam_data$Height %in% c("Low", "High"))
   ggvenn_pq(data_fungi2, fact = "Height")
 
   ggvenn_pq(data_fungi2, fact = "Height", type = "nb_seq")
 
-  ggvenn_pq(data_fungi, fact = "Height", add_nb_seq = TRUE, set_size = 4)
-  ggvenn_pq(data_fungi, fact = "Height", rarefy_before_merging = TRUE)
-  ggvenn_pq(data_fungi, fact = "Height", rarefy_after_merging = TRUE) +
+  ggvenn_pq(data_fungi_mini, fact = "Height", add_nb_seq = TRUE, set_size = 4)
+  ggvenn_pq(data_fungi_mini, fact = "Height", rarefy_before_merging = TRUE)
+  ggvenn_pq(data_fungi_mini, fact = "Height", rarefy_after_merging = TRUE) +
     scale_x_continuous(expand = expansion(mult = 0.5))
 
   # For more flexibility, you can save the dataset for more precise construction
   # with ggplot2 and ggVennDiagramm
   # (https://gaospecial.github.io/ggVennDiagram/articles/fully-customed.html)
-  res_venn <- ggvenn_pq(data_fungi, fact = "Height", return_data_for_venn = TRUE)
+  res_venn <- ggvenn_pq(data_fungi_mini, fact = "Height",
+    return_data_for_venn = TRUE)
 
   ggplot() +
     # 1. region count layer
@@ -192,44 +195,52 @@ if (requireNamespace("ggVennDiagram")) {
     ) +
     theme_void()
 }
-#> 54 were discarded due to NA in variable fact
-#> Cleaning suppress 501 taxa and 0 samples.
-#> Cleaning suppress 457 taxa and 0 samples.
-#> Cleaning suppress 469 taxa and 0 samples.
-#> 54 were discarded due to NA in variable fact
-#> Cleaning suppress 501 taxa and 0 samples.
-#> Cleaning suppress 457 taxa and 0 samples.
-#> Cleaning suppress 469 taxa and 0 samples.
-#> Cleaning suppress 335 taxa and 0 samples.
-#> Cleaning suppress 276 taxa and 0 samples.
-#> Cleaning suppress 299 taxa and 0 samples.
-#> Cleaning suppress 360 taxa and 0 samples.
-#> Cleaning suppress 404 taxa and 0 samples.
-#> Cleaning suppress 374 taxa and 0 samples.
-#> Cleaning suppress 341 taxa and 0 samples.
-#> Cleaning suppress 221 taxa and 0 samples.
-#> Cleaning suppress 360 taxa and 0 samples.
-#> Cleaning suppress 343 taxa and 0 samples.
-#> Cleaning suppress 218 taxa and 0 samples.
-#> Cleaning suppress 408 taxa and 0 samples.
-#> Two modalities differ greatly (more than x2) in their number of sequences (159635 vs 53355). You may be interested by the parameter rarefy_after_merging
+#> 47 were discarded due to NA in variable fact
+#> Taxa are now in columns.
+#> Cleaning suppress 11 taxa and 0 samples.
+#> Cleaning suppress 11 taxa and 0 samples.
+#> Cleaning suppress 11 taxa and 0 samples.
+#> 47 were discarded due to NA in variable fact
+#> Taxa are now in columns.
+#> Cleaning suppress 11 taxa and 0 samples.
+#> Cleaning suppress 11 taxa and 0 samples.
+#> Cleaning suppress 11 taxa and 0 samples.
+#> Cleaning suppress 10 taxa and 0 samples.
+#> Cleaning suppress 6 taxa and 0 samples.
+#> Cleaning suppress 9 taxa and 0 samples.
+#> Cleaning suppress 15 taxa and 0 samples.
+#> Cleaning suppress 11 taxa and 0 samples.
+#> Cleaning suppress 13 taxa and 0 samples.
+#> Two modalities differ greatly (more than x2) in their number of sequences (29085 vs 4489). You may be interested by the parameter rarefy_after_merging
+#> Cleaning suppress 9 taxa and 0 samples.
+#> Cleaning suppress 7 taxa and 0 samples.
+#> Cleaning suppress 12 taxa and 0 samples.
+#> Two modalities differ greatly (more than x2) in their number of sequences (13275 vs 5567). You may be interested by the parameter rarefy_after_merging
+#> Cleaning suppress 6 taxa and 0 samples.
+#> Cleaning suppress 5 taxa and 0 samples.
+#> Cleaning suppress 6 taxa and 0 samples.
+#> Two modalities differ greatly (more than x2) in their number of sequences (43910 vs 20393). You may be interested by the parameter rarefy_after_merging
 
 
 
 
-#> Cleaning suppress 501 taxa and 0 samples.
-#> Cleaning suppress 457 taxa and 0 samples.
-#> Cleaning suppress 1366 taxa and 0 samples.
-#> Two modalities differ greatly (more than x2) in their number of sequences (432919 vs 3961). You may be interested by the parameter rarefy_after_merging
-#> Cleaning suppress 501 taxa and 0 samples.
-#> Cleaning suppress 457 taxa and 0 samples.
-#> Cleaning suppress 1366 taxa and 0 samples.
-#> Two modalities differ greatly (more than x2) in their number of sequences (432919 vs 3961). You may be interested by the parameter rarefy_after_merging
-#> 54 were discarded due to NA in variable fact
-#> Cleaning suppress 501 taxa and 0 samples.
-#> Cleaning suppress 457 taxa and 0 samples.
-#> Cleaning suppress 469 taxa and 0 samples.
-#> 54 were discarded due to NA in variable fact
+#> Taxa are now in columns.
+#> Cleaning suppress 11 taxa and 0 samples.
+#> Cleaning suppress 11 taxa and 0 samples.
+#> Cleaning suppress 38 taxa and 0 samples.
+#> Two modalities differ greatly (more than x2) in their number of sequences (87919 vs 1134). You may be interested by the parameter rarefy_after_merging
+#> Taxa are now in columns.
+#> Cleaning suppress 11 taxa and 0 samples.
+#> Cleaning suppress 11 taxa and 0 samples.
+#> Cleaning suppress 38 taxa and 0 samples.
+#> Two modalities differ greatly (more than x2) in their number of sequences (87919 vs 1134). You may be interested by the parameter rarefy_after_merging
+#> 47 were discarded due to NA in variable fact
+#> Taxa are now in columns.
+#> Cleaning suppress 11 taxa and 0 samples.
+#> Cleaning suppress 11 taxa and 0 samples.
+#> Cleaning suppress 11 taxa and 0 samples.
+#> 47 were discarded due to NA in variable fact
+#> Taxa are now in columns.
 #> You set `rngseed` to FALSE. Make sure you've set & recorded
 #>  the random seed of your session for reproducibility.
 #> See `?set.seed`
@@ -238,13 +249,14 @@ if (requireNamespace("ggVennDiagram")) {
 #>  the random seed of your session for reproducibility.
 #> See `?set.seed`
 #> ...
-#> 1145OTUs were removed because they are no longer 
+#> 16OTUs were removed because they are no longer 
 #> present in any sample after random subsampling
 #> ...
-#> Cleaning suppress 166 taxa and 0 samples.
-#> Cleaning suppress 149 taxa and 0 samples.
-#> Cleaning suppress 140 taxa and 0 samples.
-#> 54 were discarded due to NA in variable fact
+#> Cleaning suppress 14 taxa and 0 samples.
+#> Cleaning suppress 10 taxa and 0 samples.
+#> Cleaning suppress 12 taxa and 0 samples.
+#> 47 were discarded due to NA in variable fact
+#> Taxa are now in columns.
 #> You set `rngseed` to FALSE. Make sure you've set & recorded
 #>  the random seed of your session for reproducibility.
 #> See `?set.seed`
@@ -253,16 +265,17 @@ if (requireNamespace("ggVennDiagram")) {
 #>  the random seed of your session for reproducibility.
 #> See `?set.seed`
 #> ...
-#> 157OTUs were removed because they are no longer 
+#> 4OTUs were removed because they are no longer 
 #> present in any sample after random subsampling
 #> ...
-#> Cleaning suppress 386 taxa and 0 samples.
-#> Cleaning suppress 342 taxa and 0 samples.
-#> Cleaning suppress 338 taxa and 0 samples.
-#> 54 were discarded due to NA in variable fact
-#> Cleaning suppress 501 taxa and 0 samples.
-#> Cleaning suppress 457 taxa and 0 samples.
-#> Cleaning suppress 469 taxa and 0 samples.
+#> Cleaning suppress 8 taxa and 0 samples.
+#> Cleaning suppress 7 taxa and 0 samples.
+#> Cleaning suppress 8 taxa and 0 samples.
+#> 47 were discarded due to NA in variable fact
+#> Taxa are now in columns.
+#> Cleaning suppress 11 taxa and 0 samples.
+#> Cleaning suppress 11 taxa and 0 samples.
+#> Cleaning suppress 11 taxa and 0 samples.
 
 # }
 ```

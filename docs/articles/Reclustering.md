@@ -1,6 +1,7 @@
 # Reclustering
 
 ``` r
+
 library(MiscMetabar)
 ```
 
@@ -63,6 +64,7 @@ the same OTU may be picked differently between datasets and algorithms.
 ### Using decipher or Vsearch algorithm
 
 ``` r
+
 data(data_fungi_sp_known)
 otu <- asv2otu(data_fungi_sp_known, method = "clusterize")
 #> Partitioning sequences by 5-mer similarity:
@@ -82,6 +84,7 @@ otu <- asv2otu(data_fungi_sp_known, method = "clusterize")
 ```
 
 ``` r
+
 otu_vs <- asv2otu(data_fungi_sp_known, method = "vsearch")
 ```
 
@@ -89,12 +92,14 @@ The vsearch method requires the installation of
 [Vsearch](https://github.com/torognes/vsearch).
 
 ``` r
+
 summary_plot_pq(data_fungi_sp_known)
 ```
 
 ![](Reclustering_files/figure-html/unnamed-chunk-4-1.png)
 
 ``` r
+
 summary_plot_pq(otu)
 ```
 
@@ -113,17 +118,20 @@ recommend to use [mumu](https://github.com/frederic-mahe/mumu) a C++
 re-implementation of LULU by Frédéric Mahé.
 
 ``` r
+
 data(data_fungi_sp_known)
 lulu_res <- lulu_pq(data_fungi_sp_known)
 ```
 
 ``` r
+
 summary_plot_pq(data_fungi_sp_known)
 ```
 
 ![](Reclustering_files/figure-html/unnamed-chunk-6-1.png)
 
 ``` r
+
 summary_plot_pq(lulu_res$new_physeq)
 ```
 
@@ -132,6 +140,7 @@ summary_plot_pq(lulu_res$new_physeq)
 ### Tracking number of samples, sequences and clusters
 
 ``` r
+
 track_wkflow(list(
   "Raw data" = data_fungi_sp_known,
   "OTU" = otu,
@@ -148,6 +157,7 @@ track_wkflow(list(
 ## Session information
 
 ``` r
+
 sessionInfo()
 #> R version 4.5.2 (2025-10-31)
 #> Platform: x86_64-pc-linux-gnu

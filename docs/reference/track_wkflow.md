@@ -76,9 +76,9 @@ Adrien Taudière
 ``` r
 data(enterotype)
 if (requireNamespace("pbapply")) {
-  track_wkflow(list(data_fungi, enterotype), taxonomy_rank = c(3, 5))
+  track_wkflow(list(data_fungi_mini, enterotype), taxonomy_rank = c(3, 5))
   track_wkflow(list(
-    "data FUNGI" = data_fungi,
+    "data FUNGI" = data_fungi_mini,
     "fastq files forward" =
       unlist(list_fastq_files(system.file("extdata", package = "MiscMetabar"),
         paired_end = FALSE
@@ -109,6 +109,6 @@ if (requireNamespace("pbapply")) {
 #> Start object of class: phyloseq
 #> Start object of class: character
 #>                     nb_sequences nb_clusters nb_samples
-#> data FUNGI               1839124        1420        185
+#> data FUNGI                569525          45        137
 #> fastq files forward          100          NA          1
 ```

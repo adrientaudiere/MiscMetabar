@@ -40,6 +40,7 @@ Adrien Taudière
 ## Examples
 
 ``` r
+
 A8_005 <- select_one_sample(data_fungi, "A8-005_S4_MERGED.fastq.gz")
 #> You select 1 of 185 samples and conserved 83 out of 1420 taxa represented by 13875 sequences (out of 1839124 sequences [1%])
 A8_005

@@ -1,6 +1,179 @@
 # Changelog
 
-## MiscMetabar 0.16.0
+## MiscMetabar 0.16.6 \[CRAN\]
+
+- [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/reference/verify_tax_table.md)
+  is now ~10× faster on full-size taxonomy tables.
+- [`divent_hill_matrix_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/divent_hill_matrix_pq.md)
+  no longer recomputes the per-sample positive-subset (`x <- x[x > 0]`)
+  once per Hill order. The loop is now sample-outer / q-inner, so each
+  row is sliced once. Numeric output is bitwise-identical. Speeds up
+  every Hill-diversity computation in the package:
+  [`hill_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_pq.md),
+  [`hill_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_bar_pq.md),
+  [`hill_tuckey_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_tuckey_pq.md),
+  [`profile_hill_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/profile_hill_pq.md),
+  [`psmelt_samples_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/psmelt_samples_pq.md),
+  [`plot_refseq_extremity_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_refseq_extremity_pq.md),
+  and the `*_rarperm_pq` family.
+- [`circle_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/circle_pq.md)
+  replaces a nested `pbapply(., 2, pbtapply(., group, sum))` over the
+  OTU table with two [`rowsum()`](https://rdrr.io/r/base/rowsum.html)
+  calls. On `data_fungi` (1420 taxa × 185 samples) the example dropped
+  from ~18 s to ~1.8 s (≈ 10× faster). Output unchanged.
+- `format2dada2(fasta_db = …)`, `hill_acc_pq(type = "sample")`,
+  [`adonis_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/adonis_rarperm_pq.md)
+  are also faster.
+- New pkgdown article: `vignettes/articles/timing.Rmd` documents
+  wall-clock cost of the main functions on `data_fungi` and
+  `data_fungi_mini`, with a CSV refreshed by
+  `inst/benchmark/function_timings.R`.
+- Pkgdown articles use fewer permutations / simulations to keep the site
+  build under a few minutes.
+- Reduced `R CMD check` time to keep CRAN’s 10-minute budget. Examples
+  for
+  [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/reference/verify_tax_table.md),
+  [`adonis_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/adonis_pq.md),
+  [`plot_SCBD_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_SCBD_pq.md),
+  [`multipatt_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/multipatt_pq.md),
+  [`hill_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_pq.md),
+  [`plot_tsne_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_tsne_pq.md),
+  [`upset_test_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/upset_test_pq.md),
+  [`summary_plot_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/summary_plot_pq.md),
+  [`ggvenn_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ggvenn_pq.md),
+  [`plot_refseq_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_refseq_pq.md),
+  [`plot_seq_ratio_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_seq_ratio_pq.md),
+  [`plot_refseq_extremity_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_refseq_extremity_pq.md),
+  [`glmutli_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/glmutli_pq.md),
+  [`adonis_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/adonis_rarperm_pq.md),
+  [`lefser_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/lefser_pq.md),
+  [`var_par_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/var_par_pq.md),
+  [`var_par_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/var_par_rarperm_pq.md),
+  [`taxa_only_in_one_level()`](https://adrientaudiere.github.io/MiscMetabar/reference/taxa_only_in_one_level.md),
+  [`distri_1_taxa()`](https://adrientaudiere.github.io/MiscMetabar/reference/distri_1_taxa.md),
+  [`accu_plot_balanced_modality()`](https://adrientaudiere.github.io/MiscMetabar/reference/accu_plot_balanced_modality.md),
+  [`multi_biplot_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/multi_biplot_pq.md),
+  [`tax_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/tax_bar_pq.md),
+  [`plot_var_part_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_var_part_pq.md),
+  [`track_wkflow()`](https://adrientaudiere.github.io/MiscMetabar/reference/track_wkflow.md),
+  [`reorder_taxa_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/reorder_taxa_pq.md)
+  and
+  [`transform_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/transform_pq.md)
+  now use `data_fungi_mini` (137 × 45) instead of the full `data_fungi`
+  (185 × 1420), keeping behaviour identical but much faster.
+- [`hill_acc_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_acc_pq.md),
+  [`iNEXT_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/iNEXT_pq.md),
+  [`format2dada2()`](https://adrientaudiere.github.io/MiscMetabar/reference/format2dada2.md)
+  and
+  [`hill_test_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_test_rarperm_pq.md)
+  examples moved from `\donttest{}` to `\dontrun{}`. These functions are
+  inherently CPU-bound (sample-based accumulation, fasta reformatting,
+  permutation × rarefaction × q-loop) and were the largest individual
+  contributors to the 10-min CRAN budget. Their behaviour is documented
+  in the corresponding vignettes.
+- [`verify_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/verify_pq.md)
+  example switched from `data_fungi` to `data_fungi_mini` (82 s → \< 5
+  s).
+- Tests:
+  [`plot_LCBD_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_LCBD_pq.md)
+  /
+  [`LCBD_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/LCBD_pq.md)
+  smoke tests in `tests/testthat/test_figures_beta_div.R` lowered
+  `nperm` from 100 to 9 (they only assert return class, not numeric
+  stability).
+- Function defaults (`nperm`, `n_permutations`) are unchanged.
+
+## MiscMetabar 0.16.5 \[CRAN\]
+
+- [`funguild_assign()`](https://adrientaudiere.github.io/MiscMetabar/reference/funguild_assign.md)
+  and
+  [`rotl_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/rotl_pq.md)
+  examples now use `\dontrun{}` instead of `\donttest{}`. Both examples
+  call external APIs (`www.stbates.org` and the Open Tree of Life
+  respectively) that are not always reachable during CRAN’s
+  `--run-donttest` check, causing spurious ERRORs.
+- [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/reference/verify_tax_table.md)’s
+  introductory example was moved inside the existing `\donttest{}`
+  block. The call against the full `data_fungi` dataset took ~70 s,
+  which triggered the CRAN “examples \> 5 s” NOTE on every check.
+- `XVector` removed from `DESCRIPTION` `Imports`. It was declared but
+  never imported in `NAMESPACE` or used directly; `Biostrings` already
+  loads it transitively. CRAN flagged this as “Namespace in Imports
+  field not imported from”.
+- Bibliography: corrected the DOI for Taberlet et al. (2012)
+  “Environmental DNA” in `paper/bibliography.bib`, `paper/paper.bib`,
+  and the two `vignettes/*.bib` files (was the journal ISSN landing
+  `10.1002/(issn)2637-4943`, now the paper DOI
+  `10.1111/j.1365-294X.2012.05542.x`). `README.md` and the pkgdown site
+  regenerate accordingly.
+
+## MiscMetabar 0.16.4 \[CRAN\]
+
+## MiscMetabar 0.16.3
+
+- [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/reference/verify_tax_table.md)
+  now recognises **non-breaking space (U+00A0)** and other Unicode
+  separators (em space, ideographic space, …) as border / internal
+  whitespace. Previously the detection regex `^\s|\s$` (TRE) and the
+  stripping call [`trimws()`](https://rdrr.io/r/base/trimws.html) only
+  handled ASCII `[ \t\r\n]`, so taxonomic values padded with NBSP —
+  common in spreadsheet- or copy-paste-derived metadata — were silently
+  kept as e.g. `"Archaeospora "`, causing duplicate genera and broken
+  grouping downstream. Detection now uses
+  `grepl("^[\\s\\p{Z}]|[\\s\\p{Z}]$", val, perl = TRUE)` and stripping
+  uses `gsub("^[\\s\\p{Z}]+|[\\s\\p{Z}]+$", "", val, perl = TRUE)`. Both
+  `clean_pq(..., tax_remove_border_spaces = TRUE)` and
+  `clean_pq(..., tax_remove_all_space = TRUE)` benefit from the fix.
+- [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/reference/verify_tax_table.md)
+  gains a new check for **invisible / unusual characters** in taxonomic
+  values: anything in Unicode category `\p{C}` (control / format /
+  surrogate / private use / unassigned) or any `\p{Z}` separator other
+  than plain ASCII space or tab. Typical offenders are NBSP (U+00A0),
+  zero-width space (U+200B), zero-width joiner (U+200D) and C0 control
+  characters. Three new parameters drive the check:
+  `detect_invisible_chars` (default `TRUE`, warns when
+  `verbose = TRUE`), `replace_invisible_chars` (default `FALSE`,
+  requires `modify_phyloseq = TRUE` to strip), and
+  `invisible_chars_replacement` (default `""`). Warnings/messages report
+  each offending value with the hexadecimal code points of the offending
+  characters so the user can see what is hiding inside the string.
+- [`clean_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/clean_pq.md)
+  gains `tax_replace_invisible_chars` (default `FALSE`) which forwards
+  to
+  [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/reference/verify_tax_table.md)
+  and strips invisible characters from the cleaned `tax_table`.
+- CRAN resubmission. Fixes the incoming-checks failure reported for
+  0.16.2:
+  [`write_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/write_pq.md)
+  no longer passes a `DNAStringSet` `refseq` slot directly to
+  [`utils::write.table()`](https://rdrr.io/r/utils/write.table.html) —
+  sequences are now coerced via
+  [`as.character()`](https://rdrr.io/r/base/character.html) first. This
+  avoids dispatching to `as.data.frame,XStringSet-method` from R-devel’s
+  [`data.frame()`](https://rdrr.io/r/base/data.frame.html), which now
+  forwards an internal `validRN = FALSE` argument that the XStringSet
+  method’s `.local` does not accept.
+- `Biostrings` is now an `Imports` (moved from `Suggests`), so that the
+  `XVector` classes stored in `data/data_fungi*.rda` are covered by
+  `MiscMetabar`’s recursive strong dependency graph.
+- Replaced an unreachable `ggstatsplot` link in `NEWS.md`
+  (`www.indrapatil.com`) with the CRAN page.
+- [`clean_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/clean_pq.md)
+  gains four FALSE-by-default toggles to apply
+  [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/reference/verify_tax_table.md)
+  modifications on the cleaned `tax_table`: `remove_border_spaces` (trim
+  leading/trailing whitespace), `remove_all_space` (replace internal
+  whitespace via `replace_space_with`, default `"_"`), `replace_to_NA`
+  (set values matching `unwanted_tax_patterns` to `NA`; accepts a custom
+  pattern vector), and `redundant_suffix` (drop redundant `"_sp"` tips
+  where the genus is already filled; accepts a custom suffix string such
+  as `"_var"`). Toggles can be enabled independently or combined in a
+  single call; each modification emits a message and nothing fires when
+  all toggles are `FALSE`.
+
+## MiscMetabar 0.16.2
+
+## MiscMetabar 0.16.1 \[CRAN\]
 
 - [`cutadapt_remove_primers()`](https://adrientaudiere.github.io/MiscMetabar/reference/cutadapt_remove_primers.md)
   gains a `cutadapt_args` parameter (default `""`) to pass additional
@@ -9,6 +182,21 @@
 
 ## MiscMetabar 0.15.2 \[CRAN\]
 
+- [`hill_test_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_test_rarperm_pq.md):
+  fixed default `type` from `"non-parametrique"` to `"nonparametric"` to
+  match the documented valid values and avoid confusion.
+- [`hill_test_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_test_rarperm_pq.md):
+  fixed example that incorrectly passed `p.val = 0.9` (not a valid
+  parameter); it now uses `p_val_signif = 0.9` as intended.
+- **ggstatsplot 1.0.0 compatibility notes**: ggstatsplot 1.0.0 removes
+  `var.equal`, `nboot`, and `effsize.type` from `ggbetweenstats()`; if
+  you were passing these through `...` to
+  [`ggbetween_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ggbetween_pq.md)
+  or
+  [`hill_test_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_test_rarperm_pq.md),
+  they will now be silently ignored. The `palette` argument now requires
+  `"package::palette"` format (e.g. `palette = "ggthemes::gdoc"`), and
+  the separate `package` argument has been removed from ggstatsplot.
 - [`hill_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_bar_pq.md)
   gains five parameters: `error_fun` (a function returning
   `c(lower, upper)` bounds, enabling asymmetric intervals such as
@@ -98,8 +286,9 @@
   QIIME-style ranks, etc.).
   [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/reference/verify_tax_table.md)
   now uses it as the default for `replace_to_NA`, and other pqverse
-  packages (e.g. `dbpq::count_unwanted_tax()`) can reuse it to keep
-  patterns in sync.
+  packages
+  (e.g. [`dbpq::count_unwanted_tax()`](https://rdrr.io/pkg/dbpq/man/count_unwanted_tax.html))
+  can reuse it to keep patterns in sync.
 
 ### Breaking changes
 
@@ -781,8 +970,8 @@ CRAN release: 2024-04-28
   [`psmelt_samples_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/psmelt_samples_pq.md)
   to build data frame of samples information including the number of
   sequences (Abundance) and Hill diversity metrics. Useful to use with
-  the [ggstatsplot](https://www.indrapatil.com/ggstatsplot/) packages
-  (see examples).
+  the [ggstatsplot](https://cran.r-project.org/package=ggstatsplot)
+  packages (see examples).
 - Replace param `variable` by `fact` in function
   [`ggbetween_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/ggbetween_pq.md)
   and

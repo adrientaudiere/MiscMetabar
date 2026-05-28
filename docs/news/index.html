@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,6 +26,7 @@
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -61,13 +62,70 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.16.0" id="miscmetabar-0160">MiscMetabar 0.16.0<a class="anchor" aria-label="anchor" href="#miscmetabar-0160"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.16.6" id="miscmetabar-0166-cran">MiscMetabar 0.16.6 [CRAN]<a class="anchor" aria-label="anchor" href="#miscmetabar-0166-cran"></a></h2>
+<ul><li>
+<code><a href="../reference/verify_tax_table.html">verify_tax_table()</a></code> is now ~10× faster on full-size taxonomy tables.</li>
+<li>
+<code><a href="../reference/divent_hill_matrix_pq.html">divent_hill_matrix_pq()</a></code> no longer recomputes the per-sample positive-subset (<code>x &lt;- x[x &gt; 0]</code>) once per Hill order. The loop is now sample-outer / q-inner, so each row is sliced once. Numeric output is bitwise-identical. Speeds up every Hill-diversity computation in the package: <code><a href="../reference/hill_pq.html">hill_pq()</a></code>, <code><a href="../reference/hill_bar_pq.html">hill_bar_pq()</a></code>, <code><a href="../reference/hill_tuckey_pq.html">hill_tuckey_pq()</a></code>, <code><a href="../reference/profile_hill_pq.html">profile_hill_pq()</a></code>, <code><a href="../reference/psmelt_samples_pq.html">psmelt_samples_pq()</a></code>, <code><a href="../reference/plot_refseq_extremity_pq.html">plot_refseq_extremity_pq()</a></code>, and the <code>*_rarperm_pq</code> family.</li>
+<li>
+<code><a href="../reference/circle_pq.html">circle_pq()</a></code> replaces a nested <code>pbapply(., 2, pbtapply(., group, sum))</code> over the OTU table with two <code><a href="https://rdrr.io/r/base/rowsum.html" class="external-link">rowsum()</a></code> calls. On <code>data_fungi</code> (1420 taxa × 185 samples) the example dropped from ~18 s to ~1.8 s (≈ 10× faster). Output unchanged.</li>
+<li>
+<code>format2dada2(fasta_db = …)</code>, <code>hill_acc_pq(type = "sample")</code>, <code><a href="../reference/adonis_rarperm_pq.html">adonis_rarperm_pq()</a></code> are also faster.</li>
+<li>New pkgdown article: <code>vignettes/articles/timing.Rmd</code> documents wall-clock cost of the main functions on <code>data_fungi</code> and <code>data_fungi_mini</code>, with a CSV refreshed by <code>inst/benchmark/function_timings.R</code>.</li>
+<li>Pkgdown articles use fewer permutations / simulations to keep the site build under a few minutes.</li>
+<li>Reduced <code>R CMD check</code> time to keep CRAN’s 10-minute budget. Examples for <code><a href="../reference/verify_tax_table.html">verify_tax_table()</a></code>, <code><a href="../reference/adonis_pq.html">adonis_pq()</a></code>, <code><a href="../reference/plot_SCBD_pq.html">plot_SCBD_pq()</a></code>, <code><a href="../reference/multipatt_pq.html">multipatt_pq()</a></code>, <code><a href="../reference/hill_pq.html">hill_pq()</a></code>, <code><a href="../reference/plot_tsne_pq.html">plot_tsne_pq()</a></code>, <code><a href="../reference/upset_test_pq.html">upset_test_pq()</a></code>, <code><a href="../reference/summary_plot_pq.html">summary_plot_pq()</a></code>, <code><a href="../reference/ggvenn_pq.html">ggvenn_pq()</a></code>, <code><a href="../reference/plot_refseq_pq.html">plot_refseq_pq()</a></code>, <code><a href="../reference/plot_seq_ratio_pq.html">plot_seq_ratio_pq()</a></code>, <code><a href="../reference/plot_refseq_extremity_pq.html">plot_refseq_extremity_pq()</a></code>, <code><a href="../reference/glmutli_pq.html">glmutli_pq()</a></code>, <code><a href="../reference/adonis_rarperm_pq.html">adonis_rarperm_pq()</a></code>, <code><a href="../reference/lefser_pq.html">lefser_pq()</a></code>, <code><a href="../reference/var_par_pq.html">var_par_pq()</a></code>, <code><a href="../reference/var_par_rarperm_pq.html">var_par_rarperm_pq()</a></code>, <code><a href="../reference/taxa_only_in_one_level.html">taxa_only_in_one_level()</a></code>, <code><a href="../reference/distri_1_taxa.html">distri_1_taxa()</a></code>, <code><a href="../reference/accu_plot_balanced_modality.html">accu_plot_balanced_modality()</a></code>, <code><a href="../reference/multi_biplot_pq.html">multi_biplot_pq()</a></code>, <code><a href="../reference/tax_bar_pq.html">tax_bar_pq()</a></code>, <code><a href="../reference/plot_var_part_pq.html">plot_var_part_pq()</a></code>, <code><a href="../reference/track_wkflow.html">track_wkflow()</a></code>, <code><a href="../reference/reorder_taxa_pq.html">reorder_taxa_pq()</a></code> and <code><a href="../reference/transform_pq.html">transform_pq()</a></code> now use <code>data_fungi_mini</code> (137 × 45) instead of the full <code>data_fungi</code> (185 × 1420), keeping behaviour identical but much faster.</li>
+<li>
+<code><a href="../reference/hill_acc_pq.html">hill_acc_pq()</a></code>, <code><a href="../reference/iNEXT_pq.html">iNEXT_pq()</a></code>, <code><a href="../reference/format2dada2.html">format2dada2()</a></code> and <code><a href="../reference/hill_test_rarperm_pq.html">hill_test_rarperm_pq()</a></code> examples moved from <code>\donttest{}</code> to <code>\dontrun{}</code>. These functions are inherently CPU-bound (sample-based accumulation, fasta reformatting, permutation × rarefaction × q-loop) and were the largest individual contributors to the 10-min CRAN budget. Their behaviour is documented in the corresponding vignettes.</li>
+<li>
+<code><a href="../reference/verify_pq.html">verify_pq()</a></code> example switched from <code>data_fungi</code> to <code>data_fungi_mini</code> (82 s → &lt; 5 s).</li>
+<li>Tests: <code><a href="../reference/plot_LCBD_pq.html">plot_LCBD_pq()</a></code> / <code><a href="../reference/LCBD_pq.html">LCBD_pq()</a></code> smoke tests in <code>tests/testthat/test_figures_beta_div.R</code> lowered <code>nperm</code> from 100 to 9 (they only assert return class, not numeric stability).</li>
+<li>Function defaults (<code>nperm</code>, <code>n_permutations</code>) are unchanged.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.16.5" id="miscmetabar-0165-cran">MiscMetabar 0.16.5 [CRAN]<a class="anchor" aria-label="anchor" href="#miscmetabar-0165-cran"></a></h2>
+<ul><li>
+<code><a href="../reference/funguild_assign.html">funguild_assign()</a></code> and <code><a href="../reference/rotl_pq.html">rotl_pq()</a></code> examples now use <code>\dontrun{}</code> instead of <code>\donttest{}</code>. Both examples call external APIs (<code>www.stbates.org</code> and the Open Tree of Life respectively) that are not always reachable during CRAN’s <code>--run-donttest</code> check, causing spurious ERRORs.</li>
+<li>
+<code><a href="../reference/verify_tax_table.html">verify_tax_table()</a></code>’s introductory example was moved inside the existing <code>\donttest{}</code> block. The call against the full <code>data_fungi</code> dataset took ~70 s, which triggered the CRAN “examples &gt; 5 s” NOTE on every check.</li>
+<li>
+<code>XVector</code> removed from <code>DESCRIPTION</code> <code>Imports</code>. It was declared but never imported in <code>NAMESPACE</code> or used directly; <code>Biostrings</code> already loads it transitively. CRAN flagged this as “Namespace in Imports field not imported from”.</li>
+<li>Bibliography: corrected the DOI for Taberlet et al. (2012) “Environmental DNA” in <code>paper/bibliography.bib</code>, <code>paper/paper.bib</code>, and the two <code>vignettes/*.bib</code> files (was the journal ISSN landing <code>10.1002/(issn)2637-4943</code>, now the paper DOI <code>10.1111/j.1365-294X.2012.05542.x</code>). <code>README.md</code> and the pkgdown site regenerate accordingly.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.16.4" id="miscmetabar-0164-cran">MiscMetabar 0.16.4 [CRAN]<a class="anchor" aria-label="anchor" href="#miscmetabar-0164-cran"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.16.3" id="miscmetabar-0163">MiscMetabar 0.16.3<a class="anchor" aria-label="anchor" href="#miscmetabar-0163"></a></h2>
+<ul><li>
+<code><a href="../reference/verify_tax_table.html">verify_tax_table()</a></code> now recognises <strong>non-breaking space (U+00A0)</strong> and other Unicode separators (em space, ideographic space, …) as border / internal whitespace. Previously the detection regex <code>^\s|\s$</code> (TRE) and the stripping call <code><a href="https://rdrr.io/r/base/trimws.html" class="external-link">trimws()</a></code> only handled ASCII <code>[ \t\r\n]</code>, so taxonomic values padded with NBSP — common in spreadsheet- or copy-paste-derived metadata — were silently kept as e.g. <code>"Archaeospora "</code>, causing duplicate genera and broken grouping downstream. Detection now uses <code>grepl("^[\\s\\p{Z}]|[\\s\\p{Z}]$", val, perl = TRUE)</code> and stripping uses <code>gsub("^[\\s\\p{Z}]+|[\\s\\p{Z}]+$", "", val, perl = TRUE)</code>. Both <code>clean_pq(..., tax_remove_border_spaces = TRUE)</code> and <code>clean_pq(..., tax_remove_all_space = TRUE)</code> benefit from the fix.</li>
+<li>
+<code><a href="../reference/verify_tax_table.html">verify_tax_table()</a></code> gains a new check for <strong>invisible / unusual characters</strong> in taxonomic values: anything in Unicode category <code>\p{C}</code> (control / format / surrogate / private use / unassigned) or any <code>\p{Z}</code> separator other than plain ASCII space or tab. Typical offenders are NBSP (U+00A0), zero-width space (U+200B), zero-width joiner (U+200D) and C0 control characters. Three new parameters drive the check: <code>detect_invisible_chars</code> (default <code>TRUE</code>, warns when <code>verbose = TRUE</code>), <code>replace_invisible_chars</code> (default <code>FALSE</code>, requires <code>modify_phyloseq = TRUE</code> to strip), and <code>invisible_chars_replacement</code> (default <code>""</code>). Warnings/messages report each offending value with the hexadecimal code points of the offending characters so the user can see what is hiding inside the string.</li>
+<li>
+<code><a href="../reference/clean_pq.html">clean_pq()</a></code> gains <code>tax_replace_invisible_chars</code> (default <code>FALSE</code>) which forwards to <code><a href="../reference/verify_tax_table.html">verify_tax_table()</a></code> and strips invisible characters from the cleaned <code>tax_table</code>.</li>
+<li>CRAN resubmission. Fixes the incoming-checks failure reported for 0.16.2: <code><a href="../reference/write_pq.html">write_pq()</a></code> no longer passes a <code>DNAStringSet</code> <code>refseq</code> slot directly to <code><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">utils::write.table()</a></code> — sequences are now coerced via <code><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character()</a></code> first. This avoids dispatching to <code>as.data.frame,XStringSet-method</code> from R-devel’s <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code>, which now forwards an internal <code>validRN = FALSE</code> argument that the XStringSet method’s <code>.local</code> does not accept.</li>
+<li>
+<code>Biostrings</code> is now an <code>Imports</code> (moved from <code>Suggests</code>), so that the <code>XVector</code> classes stored in <code>data/data_fungi*.rda</code> are covered by <code>MiscMetabar</code>’s recursive strong dependency graph.</li>
+<li>Replaced an unreachable <code>ggstatsplot</code> link in <code>NEWS.md</code> (<code>www.indrapatil.com</code>) with the CRAN page.</li>
+<li>
+<code><a href="../reference/clean_pq.html">clean_pq()</a></code> gains four FALSE-by-default toggles to apply <code><a href="../reference/verify_tax_table.html">verify_tax_table()</a></code> modifications on the cleaned <code>tax_table</code>: <code>remove_border_spaces</code> (trim leading/trailing whitespace), <code>remove_all_space</code> (replace internal whitespace via <code>replace_space_with</code>, default <code>"_"</code>), <code>replace_to_NA</code> (set values matching <code>unwanted_tax_patterns</code> to <code>NA</code>; accepts a custom pattern vector), and <code>redundant_suffix</code> (drop redundant <code>"_sp"</code> tips where the genus is already filled; accepts a custom suffix string such as <code>"_var"</code>). Toggles can be enabled independently or combined in a single call; each modification emits a message and nothing fires when all toggles are <code>FALSE</code>.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.16.2" id="miscmetabar-0162">MiscMetabar 0.16.2<a class="anchor" aria-label="anchor" href="#miscmetabar-0162"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.16.1" id="miscmetabar-0161-cran">MiscMetabar 0.16.1 [CRAN]<a class="anchor" aria-label="anchor" href="#miscmetabar-0161-cran"></a></h2>
 <ul><li>
 <code><a href="../reference/cutadapt_remove_primers.html">cutadapt_remove_primers()</a></code> gains a <code>cutadapt_args</code> parameter (default <code>""</code>) to pass additional arguments directly to cutadapt, such as <code>"-e 0.01"</code> to lower the maximum error rate from the cutadapt default of 10% to 1%.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.15.2" id="miscmetabar-0152-cran">MiscMetabar 0.15.2 [CRAN]<a class="anchor" aria-label="anchor" href="#miscmetabar-0152-cran"></a></h2>
 <ul><li>
+<code><a href="../reference/hill_test_rarperm_pq.html">hill_test_rarperm_pq()</a></code>: fixed default <code>type</code> from <code>"non-parametrique"</code> to <code>"nonparametric"</code> to match the documented valid values and avoid confusion.</li>
+<li>
+<code><a href="../reference/hill_test_rarperm_pq.html">hill_test_rarperm_pq()</a></code>: fixed example that incorrectly passed <code>p.val = 0.9</code> (not a valid parameter); it now uses <code>p_val_signif = 0.9</code> as intended.</li>
+<li>
+<strong>ggstatsplot 1.0.0 compatibility notes</strong>: ggstatsplot 1.0.0 removes <code>var.equal</code>, <code>nboot</code>, and <code>effsize.type</code> from <code>ggbetweenstats()</code>; if you were passing these through <code>...</code> to <code><a href="../reference/ggbetween_pq.html">ggbetween_pq()</a></code> or <code><a href="../reference/hill_test_rarperm_pq.html">hill_test_rarperm_pq()</a></code>, they will now be silently ignored. The <code>palette</code> argument now requires <code>"package::palette"</code> format (e.g. <code>palette = "ggthemes::gdoc"</code>), and the separate <code>package</code> argument has been removed from ggstatsplot.</li>
+<li>
 <code><a href="../reference/hill_bar_pq.html">hill_bar_pq()</a></code> gains five parameters: <code>error_fun</code> (a function returning <code>c(lower, upper)</code> bounds, enabling asymmetric intervals such as quantile ranges; default mean ± SE), <code>error_fun_lab</code> (caption label; default <code>"mean ± SE"</code>), <code>error_bar_alpha</code> (transparency of the secondary top-half error bar drawn over jittered points; default <code>0.35</code>), <code>point_alpha</code> (transparency of jittered data points; default <code>0.7</code>), and <code>letters_below_bar</code> (when <code>TRUE</code>, compact letters are placed below the x-axis at a fixed position, giving a clean layout independent of data spread; default <code>FALSE</code>). Groups with <code>NA</code> values in the grouping variable now receive <code>"n.d."</code> letters when Tukey HSD is run, instead of being silently dropped.</li>
 <li>
 <code><a href="../reference/umap_pq.html">umap_pq()</a></code> no longer emits a tibble <code>.name_repair</code> deprecation warning when using <code>pkg = "umap"</code> (fixes <a href="https://github.com/adrientaudiere/MiscMetabar/issues/134" class="external-link">#134</a>).</li>
@@ -106,7 +164,7 @@
 <div class="section level3">
 <h3 id="new-features-0-15-1">New features<a class="anchor" aria-label="anchor" href="#new-features-0-15-1"></a></h3>
 <ul><li>
-<code>unwanted_tax_patterns</code> is a new exported named character vector of regex patterns for common problematic taxonomy values (NA-like strings, <code>"unclassified"</code>, <code>"unknown"</code>, <code>"Incertae_sedis"</code>, empty QIIME-style ranks, etc.). <code><a href="../reference/verify_tax_table.html">verify_tax_table()</a></code> now uses it as the default for <code>replace_to_NA</code>, and other pqverse packages (e.g. <code>dbpq::count_unwanted_tax()</code>) can reuse it to keep patterns in sync.</li>
+<code>unwanted_tax_patterns</code> is a new exported named character vector of regex patterns for common problematic taxonomy values (NA-like strings, <code>"unclassified"</code>, <code>"unknown"</code>, <code>"Incertae_sedis"</code>, empty QIIME-style ranks, etc.). <code><a href="../reference/verify_tax_table.html">verify_tax_table()</a></code> now uses it as the default for <code>replace_to_NA</code>, and other pqverse packages (e.g. <code><a href="https://rdrr.io/pkg/dbpq/man/count_unwanted_tax.html" class="external-link">dbpq::count_unwanted_tax()</a></code>) can reuse it to keep patterns in sync.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="breaking-changes-0-15-1">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-15-1"></a></h3>
@@ -358,7 +416,7 @@
 <li>Add function <code><a href="../reference/distri_1_taxa.html">distri_1_taxa()</a></code> to summarize the distribution of one given taxa across level of a modality</li>
 <li>Add function <code><a href="../reference/normalize_prop_pq.html">normalize_prop_pq()</a></code> to implement the method proposed by <a href="https://doi.org/10.5061/dryad.tn8qs35" class="external-link">McKnight et al. 2018</a>
 </li>
-<li>Add function <code><a href="../reference/psmelt_samples_pq.html">psmelt_samples_pq()</a></code> to build data frame of samples information including the number of sequences (Abundance) and Hill diversity metrics. Useful to use with the <a href="https://www.indrapatil.com/ggstatsplot/" class="external-link">ggstatsplot</a> packages (see examples).</li>
+<li>Add function <code><a href="../reference/psmelt_samples_pq.html">psmelt_samples_pq()</a></code> to build data frame of samples information including the number of sequences (Abundance) and Hill diversity metrics. Useful to use with the <a href="https://cran.r-project.org/package=ggstatsplot" class="external-link">ggstatsplot</a> packages (see examples).</li>
 <li>Replace param <code>variable</code> by <code>fact</code> in function <code><a href="../reference/ggbetween_pq.html">ggbetween_pq()</a></code> and <code><a href="../reference/hill_pq.html">hill_pq()</a></code> (keeping the variable option in <code><a href="../reference/hill_pq.html">hill_pq()</a></code> for backward compatibility)</li>
 <li>Fix a bug in the class of the return object of function <code><a href="../reference/chimera_removal_vs.html">chimera_removal_vs()</a></code>. Now it return a matrix to be able to be parsed on to <code><a href="https://rdrr.io/pkg/dada2/man/getUniques.html" class="external-link">dada2::getUniques()</a></code>
 </li>

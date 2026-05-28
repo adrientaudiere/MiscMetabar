@@ -62,6 +62,7 @@ Adrien Taudière
 ## Examples
 
 ``` r
+
 subset_taxa_pq(data_fungi, data_fungi@tax_table[, "Phylum"] == "Ascomycota")
 #> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).
 #> Number of non-matching ASV 0

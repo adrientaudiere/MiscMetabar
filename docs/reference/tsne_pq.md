@@ -53,7 +53,6 @@ information
 
 ``` r
 if (requireNamespace("Rtsne")) {
-  res_tsne <- tsne_pq(data_fungi)
+  res_tsne <- tsne_pq(data_fungi_mini)
 }
-#> Taxa are now in rows.
 ```

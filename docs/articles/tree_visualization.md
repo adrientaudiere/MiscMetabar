@@ -7,6 +7,7 @@ Implementation in R](https://doi.org/10.3390/bioengineering11050480)“.
 ### Build phylogenetic tree using reference sequences
 
 ``` r
+
 library("tidytree")
 library("MiscMetabar")
 library("phangorn")
@@ -17,6 +18,7 @@ data_fungi_tree <- merge_phyloseq(df, phyloseq::phy_tree(df_tree$ML$tree))
 ```
 
 ``` r
+
 library("treeio")
 library("ggtree")
 
@@ -26,12 +28,14 @@ ggtree(data_fungi_tree@phy_tree, layout = "ellipse") + geom_tiplab()
 ![](tree_visualization_files/figure-html/unnamed-chunk-3-1.png)
 
 ``` r
+
 ggtree(as.treedata(df_tree$ML), layout = "slanted")
 ```
 
 ![](tree_visualization_files/figure-html/unnamed-chunk-3-2.png)
 
 ``` r
+
 ggdensitree(df_tree$ML_bs, alpha = 0.3, colour = "steelblue") +
   geom_tiplab(size = 3) + hexpand(0.35)
 ```
@@ -39,6 +43,7 @@ ggdensitree(df_tree$ML_bs, alpha = 0.3, colour = "steelblue") +
 ![](tree_visualization_files/figure-html/unnamed-chunk-3-3.png)
 
 ``` r
+
 ggtree(as.treedata(df_tree$ML)) +
   geom_text(aes(x = branch, label = AA_subs, vjust = -0.5), size = 1)
 ```
@@ -46,6 +51,7 @@ ggtree(as.treedata(df_tree$ML)) +
 ![](tree_visualization_files/figure-html/unnamed-chunk-3-4.png)
 
 ``` r
+
 tax_tab <- as.data.frame(data_fungi_tree@tax_table)
 tax_tab <- data.frame("OTU" = rownames(tax_tab), tax_tab)
 p <- ggtree(as.treedata(data_fungi_tree@phy_tree)) %<+%
@@ -57,6 +63,7 @@ p + geom_tippoint(aes(color = Class, shape = Phylum)) +
 ![](tree_visualization_files/figure-html/unnamed-chunk-4-1.png)
 
 ``` r
+
 ggtree(as.treedata(data_fungi_tree@phy_tree), branch.length = "none") %<+%
   tax_tab +
   geom_tippoint(aes(color = Class, shape = Phylum), size = 2)
@@ -69,6 +76,7 @@ ggtree(as.treedata(data_fungi_tree@phy_tree), branch.length = "none") %<+%
 ## Session information
 
 ``` r
+
 sessionInfo()
 #> R version 4.5.2 (2025-10-31)
 #> Platform: x86_64-pc-linux-gnu
