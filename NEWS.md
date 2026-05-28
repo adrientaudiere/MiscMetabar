@@ -1,5 +1,4 @@
-# MiscMetabar (development version)
-
+# MiscMetabar 0.16.6 [CRAN]
 * `verify_tax_table()` is now ~10× faster on full-size taxonomy tables.
 * `divent_hill_matrix_pq()` no longer recomputes the per-sample
   positive-subset (`x <- x[x > 0]`) once per Hill order. The loop is
