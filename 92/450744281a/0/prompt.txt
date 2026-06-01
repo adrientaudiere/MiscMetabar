@@ -1,0 +1,195 @@
+Under windows I obtain the following error :
+
+Barcodes : 
+16S bactéries (341F-785R) avec SILVA 
+18S archées (Arch349-arch806) avec SILVA + KSGP 
+ITS2 champignons (ITS86-ITS4) avec EUKaryome + UNITE
+18S microeucaryotes (TAReuk…) avec PR2 et EUKaryome
+18S gloméromycètes (AMV4.5-AMDGR) avec PR2 et MAARJAM 
+
+Méthode de regroupement : DADA2 et SWARM 
+Algorithme d’assignation : RDP et Blast
+
+
+I think it is a matter of "/" instead of "\". How to deal with this in all functions from MiscMetabar package
+
+---
+
+Erreur dans (function (physeq = NULL, ref_fasta = NULL, seq2search = NULL,  : 
+  Vsearch sintax failed with status 1.
+
+
+Fatal error: Unrecognized string on command line (-)
+De plus : Message d'avis :
+Dans system2(vsearchpath, args = cmd_sintax, stdout = TRUE, stderr = TRUE) :
+  l'exécution de la commande '"C:\Users\2024cb004\AppData\Roaming/R/data/R/MiscMetabar/bin/vsearch.exe"  --sintax C:\Users\2024CB~1\AppData\Local\Temp\RtmpAdSmYa/temp.fasta --db C:/Users/2024cb004/Desktop/Post-doc/7 - REFOUND/formation_INRAE/Base données SILVA/Refound/silva_132.18s.99_rep_set.dada2_sintax.fa.gz --tabbedout C:\Users\2024CB~1\AppData\Local\Temp\RtmpAdSmYa/output_taxo_vs.txt --threads 2 --sintax_random' renvoie un statut 1
+
+---
+
+roll the shQuote() fix across all the vsearch/blast/mmseqs2/dada2
+  shell-out functions. Krona and cutadapt are Unix-only functions.
+
+---
+
+Base directory for this skill: /home/adrien/.claude/skills/r-pkg-merge-release
+
+Finalize the release of an R package by merging `dev` into `master`, pushing both branches, and bumping the dev branch to the next development cycle. This is Stage 9 of the `/r-pkg-release` pipeline. **This skill mutates git state and pushes to origin** — confirm with the user before executing.
+
+The actual flow is implemented in `${SKILL_DIR}/merge-release.sh`; this file describes the wrapper logic.
+
+## Package detection
+
+The target package comes from `` (e.g., `/r-pkg-merge-release MiscMetabar`). If not provided, default to the current working directory if it contains a `DESCRIPTION`. Otherwise ask the user.
+
+When invoked from the pqverse workspace and given a package name, resolve to `pqverse_pkg/{name}/`.
+
+## Pre-flight checks
+
+The script enforces these too, but the skill should check first to give clear errors:
+
+1. **`DESCRIPTION` exists** in the package directory.
+2. **Version does NOT end in `.9xxx`** — Stage 8 (`/r-pkg-bump-version`) must have run. If it ends in `.9xxx`, tell the user:
+   > "DESCRIPTION still has a development version. Run `/r-pkg-bump-version {pkg}` first (Stage 8)."
+3. **NEWS.md first heading does not contain `(development version)` / `(Development version)`**. Same hint as above if it does.
+4. **Current branch is `dev`**.
+5. **Working tree is clean except for the Stage 8 changes to DESCRIPTION/NEWS.md** (the script will commit those as `Release {pkg} {version}`). If other files are staged or modified, warn the user.
+6. **`desc` R package available** (`Rscript -e 'utils::packageVersion("desc")'`).
+7. **A remote `origin` is configured** (`git remote get-url origin`). The script pushes to `origin/master` and `origin/dev`.
+
+If any check fails, report the specific issue and stop.
+
+## Confirmation
+
+Before executing, summarize what will happen and ask the user to confirm:
+
+```
+About to release {pkg} {version}:
+
+  1. (if needed) Commit pending DESCRIPTION + NEWS.md changes on dev as
+     "Release {pkg} {version}"
+  2. Merge dev → master and push origin master
+  3. Back on dev: bump DESCRIPTION to {version}.9000, prepend
+     "# {pkg} (development version)" to NEWS.md
+  4. Commit "Bump version to {version}.9000" and push origin dev
+
+Continue?
+```
+
+Use `AskUserQuestion`:
+- "Yes, run for real"
+- "Dry-run first (preview only)"
+- "Cancel"
+
+## Execute
+
+Run the bundled script. The skill directory is the directory containing this `SKILL.md`.
+
+```bash
+# Dry-run preview
+bash "${SKILL_DIR}/merge-release.sh" --dry-run "${PKG_DIR}"
+
+# Real run
+bash "${SKILL_DIR}/merge-release.sh" "${PKG_DIR}"
+```
+
+If the dry-run looks good, ask the user once more before running for real.
+
+## Report
+
+After the script completes, report:
+
+- Final state: `master` HEAD, `dev` HEAD (the script prints these).
+- New dev version on `DESCRIPTION`.
+- Suggested next steps:
+  - Build artifacts on `master` (re-run `/r-build {pkg}` after `git checkout master` if not already built).
+  - Submit to CRAN (if applicable) — point the user at `r-lib:cran-extrachecks` and the `posit-dev:create-release-checklist` skill for the submission checklist.
+
+## Behavior notes
+
+- **Behavior change vs. workspace `merge-release.sh`**: the workspace script bumps minor version on dev post-release (`0.5.0 → 0.6.0.9000`). This skill bumps in place to `.9000` (`0.5.0 → 0.5.0.9000`), deferring the major/minor/patch decision to the next release. This matches the tidyverse / `usethis::use_dev_version()` convention. The next call to `/r-pkg-bump-version` is where the user picks the next version's component.
+- **`[CRAN]` tag**: the script checks which version is on CRAN and appends ` [CRAN]` to the good version in NEWS.md heading. 
+- **No build step**: artifact building (README, pkgdown, source tarball) belongs to `/r-build` (Stage 5). Stage 9 only handles git + version bumps.
+
+## Important rules
+
+- **Always present a dry-run option.** This skill pushes to origin — the user should be able to preview first.
+- **Never force-push.** The script uses plain `git push`; if it fails (e.g., dev or master diverged unexpectedly), report the error and stop. Do not retry with `--force`.
+- **Hooks**: never pass `--no-verify` to git commits. If a pre-commit hook fails, surface the error and stop — do not bypass.
+- The bundled `merge-release.sh` is the source of truth for the action sequence. If you need to change the flow, edit the script, not just this `SKILL.md`.
+
+---
+
+1/ commit first 2/ I did R CMD check. Runn /r-pkg-bump-version then
+
+---
+
+Base directory for this skill: /home/adrien/.claude/skills/r-pkg-bump-version
+
+Bump an R package from `X.Y.Z.9xxx` (dev) to a release version `X.Y.Z`. This is a thin wrapper around `usethis::use_version()`. It mutates two files (`DESCRIPTION`, `NEWS.md`) and **does not commit**.
+
+## Arguments
+
+`MiscMetabar` may contain, in any order:
+
+- A package name (e.g. `MiscMetabar`). If absent, read `Package:` from `DESCRIPTION` in the current working directory.
+- A bump type: `patch` | `minor` | `major`. If absent and `--auto` is set, default to `patch`. If absent and not `--auto`, ask the user once.
+- `--auto` — non-interactive mode (no `AskUserQuestion`).
+
+When invoked from the pqverse workspace and only a package name is given, resolve the package directory to `pqverse_pkg/{name}/`.
+
+## Pre-flight (stop on first failure)
+
+1. `DESCRIPTION` exists; extract `Package` and `Version`.
+2. Current version ends in `.9xxx`. If not, stop and report — the package is already at a release version.
+3. Current branch is `dev`. If not, stop and report.
+4. Working tree is clean for `DESCRIPTION` and `NEWS.md` (`git diff --quiet DESCRIPTION NEWS.md`). If dirty, stop and report.
+5. `usethis` is installed:
+   ```bash
+   Rscript -e 'invisible(packageVersion("usethis"))'
+   ```
+   If missing, stop and tell the user to `install.packages("usethis")`. **No fallback** — `usethis::use_version()` is the single supported method.
+
+## Compute the new version
+
+Strip the `.9xxx` suffix, then increment the chosen component, zeroing lower components:
+
+| Current | Type | New |
+|---|---|---|
+| `1.2.3.9000` | major | `2.0.0` |
+| `1.2.3.9000` | minor | `1.3.0` |
+| `1.2.3.9000` | patch | `1.2.4` |
+| `0.16.0.9001` | minor | `0.17.0` |
+
+Display: `Bumping {pkg}: {current} → {new}`.
+
+## Apply the bump
+
+```bash
+Rscript -e "usethis::use_version('${NEW_VERSION}')"
+```
+
+`usethis::use_version()` is non-interactive when called from `Rscript`: it updates `DESCRIPTION$Version`, rewrites the first `NEWS.md` heading to `# {pkg} {new_version}`, and skips its commit prompt (leaves changes staged-but-uncommitted).
+
+If `use_version()` *did* auto-commit on this system, immediately undo with `git reset --soft HEAD~1` so Stage 9 can produce its own `Release {pkg} {version}` commit.
+
+## Show the diff and stop
+
+```bash
+git --no-pager diff DESCRIPTION NEWS.md
+```
+
+Report:
+
+> "DESCRIPTION + NEWS.md updated to {new}. **No commit made.** Run `/r-pkg-merge-release {pkg}` (Stage 9) to commit, merge dev → master, push, and bump dev for the next cycle. To revert: `git restore DESCRIPTION NEWS.md`."
+
+## Important rules
+
+- Do not commit, push, or change branches.
+- Do not invoke Stage 9.
+- No heuristics on the bump type — caller decides (or accepts the `patch` default in `--auto`).
+- No fallback chain — if `usethis` isn't installed, stop and ask the user to install it.
+- The first `NEWS.md` heading is rewritten to `# {pkg} {new}`. Any custom suffix or date on that line is dropped. The `[CRAN]` tag is re-applied later by Stage 9's `merge-release.sh` based on a live CRAN check.
+
+---
+
+yes

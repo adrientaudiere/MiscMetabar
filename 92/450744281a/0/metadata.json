@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "92450744281a",
+  "session_id": "b321af76-503c-44ed-a38c-c21cee139388",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-01T16:02:47.451923688Z",
+  "branch": "dev",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "NEWS.md",
+    "DESCRIPTION"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "ffe8a8dc6bb6",
+  "checkpoint_transcript_start": 370,
+  "transcript_lines_at_start": 370,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-01T16:02:46.721915729Z",
+    "agent_lines": 0,
+    "human_added": 2,
+    "human_modified": 1,
+    "human_removed": 0,
+    "total_committed": 2,
+    "agent_percentage": 0
+  }
+}
