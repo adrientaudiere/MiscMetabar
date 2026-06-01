@@ -1,3 +1,4 @@
+library(dada2)
 path_db <- system.file(
   "extdata",
   "100_sp_UNITE_sh_general_release_dynamic.fasta",
@@ -142,7 +143,7 @@ if (inherits(blast_error_or_not, "try-error")) {
   })
 
   derep_data <-
-    derepFastq(unlist(list_fastq_files("inst/extdata/")))
+    dada2::derepFastq(unlist(list_fastq_files("inst/extdata/")))
   test_that("blast_to_derep works fine", {
     expect_s3_class(
       derep_blast <-

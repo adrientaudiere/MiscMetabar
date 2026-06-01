@@ -84,13 +84,13 @@ Graphical representation of distribution of taxa across a factor.
 }
 \examples{
 \donttest{
-if (requireNamespace("pbapply")) {
-  data("GlobalPatterns", package = "phyloseq")
-  GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
-  circle_pq(GP, "SampleType")
-  circle_pq(GP, "SampleType", add_nb_seq = FALSE)
-  circle_pq(GP, "SampleType", taxa = "Class")
+data("GlobalPatterns", package = "phyloseq")
+GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+circle_pq(GP, "SampleType")
 }
+\dontrun{
+circle_pq(GP, "SampleType", add_nb_seq = FALSE)
+circle_pq(GP, "SampleType", taxa = "Class")
 }
 }
 \seealso{

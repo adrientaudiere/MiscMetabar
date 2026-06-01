@@ -74,19 +74,18 @@ You may use rarefy_by_sample = TRUE if the mean number of sequences per
 samples differs among modalities.
 }
 \examples{
-if (requireNamespace("ggstatsplot")) {
-  psm_tib <- psmelt_samples_pq(data_fungi_mini, hill_scales = c(0, 2, 7))
-  ggstatsplot::ggbetweenstats(psm_tib, Height, Hill_0)
-}
 \donttest{
-if (requireNamespace("ggstatsplot")) {
-  ggstatsplot::ggbetweenstats(psm_tib, Height, Hill_7)
-
-  psm_tib_tax <- psmelt_samples_pq(data_fungi_mini, taxa_ranks = c("Class", "Family"))
-  ggplot(filter(psm_tib_tax, Abundance > 2000), aes(y = Family, x = Abundance, fill = Time)) +
-    geom_bar(stat = "identity") +
-    facet_wrap(~Height)
+psm_tib <- psmelt_samples_pq(data_fungi_mini, hill_scales = c(0, 2, 7))
 }
+\dontrun{
+if (requireNamespace("ggstatsplot")) {
+  ggstatsplot::ggbetweenstats(psm_tib, Height, Hill_0)
+  ggstatsplot::ggbetweenstats(psm_tib, Height, Hill_7)
+}
+psm_tib_tax <- psmelt_samples_pq(data_fungi_mini, taxa_ranks = c("Class", "Family"))
+ggplot(filter(psm_tib_tax, Abundance > 2000), aes(y = Family, x = Abundance, fill = Time)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~Height)
 }
 }
 \references{

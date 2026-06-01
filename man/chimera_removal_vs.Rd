@@ -53,6 +53,9 @@ Please cite \href{https://github.com/torognes/vsearch}{vsearch}.
 \examples{
 \dontshow{if (MiscMetabar::is_vsearch_installed()) withAutoprint(\{ # examplesIf}
 \donttest{
+data_fungi_nochim <- chimera_removal_vs(data_fungi)
+}
+\dontrun{
 # Adding a chimeric sequence for the example
 data_fungi_with_chim <- data_fungi
 data_fungi_with_chim@refseq["ASV1710"] <- Biostrings::xscat(
@@ -63,16 +66,13 @@ data_fungi_nochim <- chimera_removal_vs(data_fungi)
 
 # Higher value of abskew parameter is less stringent
 data_fungi_nochim_16 <- chimera_removal_vs(data_fungi,
-  abskew = 16,
-  min_seq_length = 10
+  abskew = 16, min_seq_length = 10
 )
 
 # Potential Chimeric ASVs detected by vsearch
 chim_asv <- taxa_names(data_fungi_with_chim)[!taxa_names(data_fungi_with_chim)
   \%in\% taxa_names(data_fungi_nochim)]
-
 "ASV1710" \%in\% chim_asv
-
 track_wkflow(list(data_fungi_with_chim, data_fungi_nochim))
 
 data_fungi_nochim2 <-

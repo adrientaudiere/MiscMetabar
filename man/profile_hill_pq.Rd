@@ -35,7 +35,10 @@ ggplot2 object via \code{\link[ggplot2:autoplot]{ggplot2::autoplot()}}.
 }
 \examples{
 \donttest{
-profile_hill_pq(data_fungi_mini)
+profile_hill_pq(
+  prune_samples(sample_names(data_fungi_mini)[1:5], data_fungi_mini),
+  orders = c(0, 1, 2)
+)
 }
 }
 \seealso{

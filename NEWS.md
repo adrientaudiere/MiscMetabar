@@ -1,3 +1,12 @@
+# MiscMetabar 0.16.7 [CRAN]
+* Further check-time reductions for CRAN compliance:
+  extra examples `\dontrun{}` (kept for documentation,
+  not run during checks). 
+* Added file-level `skip_on_cran()` to some heavy test files.
+* Example speed-ups for some functions.
+* Fix several bugs when using Windows paths by quoting system call arguments with `shQuote()`
+
+
 # MiscMetabar 0.16.6 [CRAN]
 * `verify_tax_table()` is now ~10× faster on full-size taxonomy tables.
 * `divent_hill_matrix_pq()` no longer recomputes the per-sample

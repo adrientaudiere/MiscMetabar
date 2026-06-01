@@ -135,8 +135,8 @@ comparisons produce compact letter displays above the bars. Multiple values
 of \code{q} are assembled into a \link[patchwork:patchwork-package]{patchwork::patchwork} layout automatically.
 }
 \examples{
-hill_bar_pq(data_fungi_mini, Height)
-\donttest{
+hill_bar_pq(data_fungi_mini, Height, q = 1)
+\dontrun{
 hill_bar_pq(data_fungi_mini, Height, q = 0)
 hill_bar_pq(data_fungi_mini, Height, q = c(0, 1, 2), ncol = 1)
 hill_bar_pq(data_fungi_mini, Height, q = c(0, 2),

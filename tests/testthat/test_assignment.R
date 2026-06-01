@@ -1,3 +1,4 @@
+skip_on_cran()
 data(data_fungi)
 
 test_that("assign_blastn works", {

@@ -82,9 +82,9 @@ blast_to_phyloseq <- function(
     paste0(
       blastpath,
       "makeblastdb -dbtype nucl -in ",
-      paste0(tempdir(), "/", "db.fasta"),
+      shQuote(paste0(tempdir(), "/", "db.fasta")),
       " -out ",
-      paste0(tempdir(), "/", "dbase"),
+      shQuote(paste0(tempdir(), "/", "dbase")),
       " ",
       args_makedb
     )
@@ -94,11 +94,11 @@ blast_to_phyloseq <- function(
     paste0(
       blastpath,
       "blastn -query ",
-      seq2search,
+      shQuote(seq2search),
       " -db ",
-      paste0(tempdir(), "/", "dbase"),
+      shQuote(paste0(tempdir(), "/", "dbase")),
       " -out ",
-      paste0(tempdir(), "/", "blast_result.txt"),
+      shQuote(paste0(tempdir(), "/", "blast_result.txt")),
       " -outfmt \"6 qseqid qlen sseqid slen",
       " length pident evalue bitscore qcovs\"",
       " -num_threads ",
@@ -267,9 +267,9 @@ blast_pq <- function(
       paste0(
         blastpath,
         "makeblastdb -dbtype nucl -in ",
-        fasta_for_db,
+        shQuote(fasta_for_db),
         " -out ",
-        paste0(tempdir(), "/", "dbase"),
+        shQuote(paste0(tempdir(), "/", "dbase")),
         " ",
         args_makedb
       )
@@ -279,11 +279,11 @@ blast_pq <- function(
       paste0(
         blastpath,
         "blastn -query ",
-        paste0(tempdir(), "/", "physeq_refseq.fasta"),
+        shQuote(paste0(tempdir(), "/", "physeq_refseq.fasta")),
         " -db ",
-        paste0(tempdir(), "/", "dbase"),
+        shQuote(paste0(tempdir(), "/", "dbase")),
         " -out ",
-        paste0(tempdir(), "/", "blast_result.txt"),
+        shQuote(paste0(tempdir(), "/", "blast_result.txt")),
         " -num_threads ",
         nproc,
         " -outfmt \"6 qseqid qlen sseqid slen",
@@ -298,11 +298,11 @@ blast_pq <- function(
       paste0(
         blastpath,
         "blastn -query ",
-        paste0(tempdir(), "/", "physeq_refseq.fasta"),
+        shQuote(paste0(tempdir(), "/", "physeq_refseq.fasta")),
         " -db ",
-        database,
+        shQuote(database),
         " -out ",
-        paste0(tempdir(), "/", "blast_result.txt"),
+        shQuote(paste0(tempdir(), "/", "blast_result.txt")),
         " -outfmt \"6 qseqid qlen sseqid slen",
         " length pident evalue bitscore qcovs\"",
         " -num_threads ",
@@ -605,9 +605,9 @@ blast_to_derep <- function(
   system(paste0(
     blastpath,
     "makeblastdb -dbtype nucl -in ",
-    paste0(tempdir(), "/", "db.fasta"),
+    shQuote(paste0(tempdir(), "/", "db.fasta")),
     " -out ",
-    paste0(tempdir(), "/", "dbase"),
+    shQuote(paste0(tempdir(), "/", "dbase")),
     " ",
     args_makedb
   ))
@@ -616,11 +616,11 @@ blast_to_derep <- function(
     paste0(
       blastpath,
       "blastn -query ",
-      seq2search,
+      shQuote(seq2search),
       " -db ",
-      paste0(tempdir(), "/", "dbase"),
+      shQuote(paste0(tempdir(), "/", "dbase")),
       " -out ",
-      paste0(tempdir(), "/", "blast_result.txt"),
+      shQuote(paste0(tempdir(), "/", "blast_result.txt")),
       " -outfmt \"6 qseqid qlen sseqid slen",
       " length pident evalue bitscore qcovs\"",
       " -num_threads ",

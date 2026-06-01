@@ -92,15 +92,15 @@ use this function.
 data(enterotype)
 \donttest{
 adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE)
+adonis_pq(data_fungi_mini, "Time*Height", na_remove = TRUE,
+  correction_for_sample_size = TRUE)
+}
+\dontrun{
 adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = NULL)
 adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "onedf")
 adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "margin")
-
 adonis_pq(enterotype, "SeqTech", dist_method = "jaccard")
 adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison")
-
-adonis_pq(data_fungi_mini, "Time*Height", na_remove = TRUE,
-  correction_for_sample_size = TRUE)
 }
 }
 \author{

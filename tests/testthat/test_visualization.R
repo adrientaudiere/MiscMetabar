@@ -1,3 +1,4 @@
+library(divent)
 data(data_fungi)
 data(enterotype)
 

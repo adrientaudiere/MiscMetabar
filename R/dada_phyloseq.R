@@ -752,10 +752,12 @@ track_wkflow_samples <- function(
 #'   args was used.
 #'
 #' @examples
+#' \donttest{
 #' if (requireNamespace("DECIPHER")) {
 #'   postcluster_pq(data_fungi_mini)
 #' }
-#' \donttest{
+#' }
+#' \dontrun{
 #' if (requireNamespace("DECIPHER")) {
 #'   postcluster_pq(data_fungi_mini, method_clusterize = "longest")
 #'
@@ -1337,15 +1339,15 @@ lulu_pq <- function(
     vsearchpath,
     paste(
       " --usearch_global ",
-      temp_fasta,
+      shQuote(temp_fasta),
       " --db ",
-      temp_fasta,
+      shQuote(temp_fasta),
       " --self --iddef 1",
       " -userfields query+target+id --maxaccepts 0 --query_cov .9 --maxhits 10",
       " -id ",
       id,
       "  --userout ",
-      match_list_file,
+      shQuote(match_list_file),
       sep = ""
     ),
     stdout = TRUE,
@@ -1510,15 +1512,15 @@ mumu_pq <- function(
     vsearchpath,
     paste(
       " --usearch_global ",
-      temp_fasta,
+      shQuote(temp_fasta),
       " --db ",
-      temp_fasta,
+      shQuote(temp_fasta),
       " --self --iddef 1",
       " -userfields query+target+id --maxaccepts 0 --query_cov 0.9 --maxhits 10",
       " -id ",
       id,
       "  --userout ",
-      match_list_file
+      shQuote(match_list_file)
     ),
     stdout = TRUE,
     stderr = TRUE
@@ -1539,13 +1541,13 @@ mumu_pq <- function(
   mumu_cmd <-
     paste0(
       " --otu_table ",
-      otu_table_file,
+      shQuote(otu_table_file),
       " --match_list ",
-      match_list_file,
+      shQuote(match_list_file),
       " --log ",
-      log_file,
+      shQuote(log_file),
       " --new_otu_table ",
-      new_otu_file
+      shQuote(new_otu_file)
     )
 
   if (!is.null(extra_mumu_args)) {
@@ -4281,19 +4283,18 @@ taxa_only_in_one_level <- function(
 #'   strong is the influence of methodological choices? *Journal of Biogeography*,
 #'   47. \doi{10.1111/jbi.13681}
 #' @examples
-#' if (requireNamespace("ggstatsplot")) {
-#'   psm_tib <- psmelt_samples_pq(data_fungi_mini, hill_scales = c(0, 2, 7))
-#'   ggstatsplot::ggbetweenstats(psm_tib, Height, Hill_0)
-#' }
 #' \donttest{
-#' if (requireNamespace("ggstatsplot")) {
-#'   ggstatsplot::ggbetweenstats(psm_tib, Height, Hill_7)
-#'
-#'   psm_tib_tax <- psmelt_samples_pq(data_fungi_mini, taxa_ranks = c("Class", "Family"))
-#'   ggplot(filter(psm_tib_tax, Abundance > 2000), aes(y = Family, x = Abundance, fill = Time)) +
-#'     geom_bar(stat = "identity") +
-#'     facet_wrap(~Height)
+#' psm_tib <- psmelt_samples_pq(data_fungi_mini, hill_scales = c(0, 2, 7))
 #' }
+#' \dontrun{
+#' if (requireNamespace("ggstatsplot")) {
+#'   ggstatsplot::ggbetweenstats(psm_tib, Height, Hill_0)
+#'   ggstatsplot::ggbetweenstats(psm_tib, Height, Hill_7)
+#' }
+#' psm_tib_tax <- psmelt_samples_pq(data_fungi_mini, taxa_ranks = c("Class", "Family"))
+#' ggplot(filter(psm_tib_tax, Abundance > 2000), aes(y = Family, x = Abundance, fill = Time)) +
+#'   geom_bar(stat = "identity") +
+#'   facet_wrap(~Height)
 #' }
 psmelt_samples_pq <-
   function(
@@ -5003,7 +5004,7 @@ assign_dada2 <- function(
   } else {
     ref_fasta_taxo <- ref_fasta
   }
-  taxtab <- assignTaxonomy(
+  taxtab <- dada2::assignTaxonomy(
     seqs = seq2search,
     refFasta = ref_fasta_taxo,
     taxLevels = taxa_ranks,
@@ -5023,7 +5024,7 @@ assign_dada2 <- function(
       "temp_species.fasta"
     )
 
-    GS <- assignSpecies(
+    GS <- dada2::assignSpecies(
       seqs = seq2search,
       refFasta = "temp_species.fasta",
       allowMultiple = allowMultiple,

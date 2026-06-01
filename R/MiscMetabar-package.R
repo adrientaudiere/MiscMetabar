@@ -3,7 +3,7 @@
 #' Functions to help analyze and visualize metabarcoding data. Mainly based on
 #' the phyloseq and dada2 packages.
 #' @name MiscMetabar-package
-#' @import ggplot2 phyloseq dada2 dplyr purrr
+#' @import ggplot2 phyloseq dplyr
 NULL
 
 if (getRversion() >= "2.15.1") {
@@ -177,5 +177,6 @@ if (getRversion() >= "2.15.1") {
 #' @importFrom stats na.exclude na.omit reformulate reorder terms
 #' @importFrom lifecycle deprecated
 #' @importFrom XVector subseq
+#' @importFrom rlang %||%
 ## usethis namespace: end
 NULL

@@ -196,7 +196,8 @@ data_fungi_mini_new <- assign_vsearch_lca(data_fungi_mini,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
   lca_cutoff = 0.9, behavior = "add_to_phyloseq"
 )
-
+}
+\dontrun{
 data_fungi_mini_new2 <- assign_vsearch_lca(data_fungi_mini,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
   id = 0.6, behavior = "add_to_phyloseq", top_hits_only = FALSE

@@ -293,7 +293,7 @@ install_mmseqs2 <- function(
   ref_db <- file.path(tempdir(), "mmseqs2_refDB")
   system2(
     mmseqs2path,
-    paste("createdb", ref_fasta_path, ref_db),
+    paste("createdb", shQuote(ref_fasta_path), shQuote(ref_db)),
     stdout = if (verbose) "" else TRUE,
     stderr = if (verbose) "" else TRUE
   )
@@ -305,12 +305,12 @@ install_mmseqs2 <- function(
     mmseqs2path,
     paste(
       "createtaxdb",
-      ref_db,
-      createtaxdb_tmp,
+      shQuote(ref_db),
+      shQuote(createtaxdb_tmp),
       "--ncbi-tax-dump",
-      taxdump_dir,
+      shQuote(taxdump_dir),
       "--tax-mapping-file",
-      mapping_file
+      shQuote(mapping_file)
     ),
     stdout = if (verbose) "" else TRUE,
     stderr = if (verbose) "" else TRUE
@@ -564,10 +564,10 @@ assign_mmseqs2 <- function(
   output_prefix <- file.path(tempdir(), "mmseqs2_result")
   cmd <- paste(
     "easy-taxonomy",
-    temporary_fasta_file,
-    active_db,
-    output_prefix,
-    tmp_dir,
+    shQuote(temporary_fasta_file),
+    shQuote(active_db),
+    shQuote(output_prefix),
+    shQuote(tmp_dir),
     "--lca-mode",
     lca_mode,
     "--lca-ranks",
@@ -861,11 +861,11 @@ mmseqs2_clustering <- function(
     " ",
     mmseqs2_cluster_method,
     " ",
-    temporary_fasta_file,
+    shQuote(temporary_fasta_file),
     " ",
-    output_prefix,
+    shQuote(output_prefix),
     " ",
-    tmp_dir,
+    shQuote(tmp_dir),
     " --min-seq-id ",
     id,
     " -c ",

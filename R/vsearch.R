@@ -272,11 +272,11 @@ vs_search_global <- function(
     vsearchpath,
     paste(
       " --usearch_global ",
-      paste0(tempdir(), "/", "temp.fasta"),
+      shQuote(paste0(tempdir(), "/", "temp.fasta")),
       " --db ",
-      seq2search,
+      shQuote(seq2search),
       " --uc ",
-      paste0(tempdir(), "/", "temp.uc"),
+      shQuote(paste0(tempdir(), "/", "temp.uc")),
       " --id ",
       id,
       " --uc_allhits",
@@ -445,12 +445,12 @@ swarm_clustering <- function(
     system2(
       swarmpath,
       paste0(
-        paste0(tempdir(), "/", "temp.fasta"),
+        shQuote(paste0(tempdir(), "/", "temp.fasta")),
         " -o ",
-        paste0(tempdir(), "/", "temp_output"),
+        shQuote(paste0(tempdir(), "/", "temp_output")),
         " ",
         " -u ",
-        paste0(tempdir(), "/", "temp_uclust"),
+        shQuote(paste0(tempdir(), "/", "temp_uclust")),
         " -t ",
         nproc,
         " -d ",
@@ -467,9 +467,9 @@ swarm_clustering <- function(
       vsearch_path,
       paste0(
         " --derep_fulllength ",
-        paste0(tempdir(), "/", "amplicons.fasta"),
+        shQuote(paste0(tempdir(), "/", "amplicons.fasta")),
         " --sizeout  --relabel_sha1 --fasta_width 0 --output ",
-        paste0(tempdir(), "/", "temp.fasta")
+        shQuote(paste0(tempdir(), "/", "temp.fasta"))
       ),
       stdout = TRUE,
       stderr = TRUE
@@ -477,12 +477,12 @@ swarm_clustering <- function(
     system2(
       swarmpath,
       paste0(
-        paste0(tempdir(), "/", "temp.fasta"),
+        shQuote(paste0(tempdir(), "/", "temp.fasta")),
         " -o ",
-        paste0(tempdir(), "/", "temp_output"),
+        shQuote(paste0(tempdir(), "/", "temp_output")),
         " ",
         " -u ",
-        paste0(tempdir(), "/", "temp_uclust"),
+        shQuote(paste0(tempdir(), "/", "temp_uclust")),
         " -z ",
         " -t ",
         nproc,
@@ -655,16 +655,16 @@ vsearch_clustering <- function(
         " ",
         vsearch_cluster_method,
         " ",
-        paste0(tempdir(), "/", "temp.fasta"),
+        shQuote(paste0(tempdir(), "/", "temp.fasta")),
         " ",
         vsearch_args
       ),
       " -id ",
       id,
       " --centroids ",
-      paste0(tempdir(), "/", "cluster.fasta"),
+      shQuote(paste0(tempdir(), "/", "cluster.fasta")),
       " --uc ",
-      paste0(tempdir(), "/", "temp.uc")
+      shQuote(paste0(tempdir(), "/", "temp.uc"))
     ),
     stdout = TRUE,
     stderr = TRUE
@@ -767,6 +767,9 @@ vsearch_clustering <- function(
 #'
 #' @examplesIf MiscMetabar::is_vsearch_installed()
 #' \donttest{
+#' data_fungi_nochim <- chimera_removal_vs(data_fungi)
+#' }
+#' \dontrun{
 #' # Adding a chimeric sequence for the example
 #' data_fungi_with_chim <- data_fungi
 #' data_fungi_with_chim@refseq["ASV1710"] <- Biostrings::xscat(
@@ -777,16 +780,13 @@ vsearch_clustering <- function(
 #'
 #' # Higher value of abskew parameter is less stringent
 #' data_fungi_nochim_16 <- chimera_removal_vs(data_fungi,
-#'   abskew = 16,
-#'   min_seq_length = 10
+#'   abskew = 16, min_seq_length = 10
 #' )
 #'
 #' # Potential Chimeric ASVs detected by vsearch
 #' chim_asv <- taxa_names(data_fungi_with_chim)[!taxa_names(data_fungi_with_chim)
 #'   %in% taxa_names(data_fungi_nochim)]
-#'
 #' "ASV1710" %in% chim_asv
-#'
 #' track_wkflow(list(data_fungi_with_chim, data_fungi_nochim))
 #'
 #' data_fungi_nochim2 <-
@@ -807,7 +807,7 @@ chimera_removal_vs <-
         inherits(object, "data.frame") ||
         inherits(object, "list")
     ) {
-      object <- makeSequenceTable(object)
+      object <- dada2::makeSequenceTable(object)
     }
 
     if (inherits(object, "matrix")) {
@@ -978,15 +978,15 @@ chimera_detection_vs <- function(
     vsearchpath,
     paste0(
       " --uchime_denovo ",
-      paste0(tempdir(), "/", "temp.fasta"),
+      shQuote(paste0(tempdir(), "/", "temp.fasta")),
       " --abskew ",
       abskew,
       " --nonchimeras ",
-      paste0(tempdir(), "/", "non_chimeras.fasta"),
+      shQuote(paste0(tempdir(), "/", "non_chimeras.fasta")),
       " --chimeras ",
-      paste0(tempdir(), "/", "chimeras.fasta"),
+      shQuote(paste0(tempdir(), "/", "chimeras.fasta")),
       " --borderline ",
-      paste0(tempdir(), "/", "borderline.fasta"),
+      shQuote(paste0(tempdir(), "/", "borderline.fasta")),
       " ",
       vsearch_args
     ),
@@ -1240,11 +1240,11 @@ assign_sintax <- function(
   cmd_sintax <-
     paste0(
       " --sintax ",
-      temporary_fasta_file,
+      shQuote(temporary_fasta_file),
       " --db ",
-      ref_fasta,
+      shQuote(ref_fasta),
       " --tabbedout ",
-      output_taxo_file,
+      shQuote(output_taxo_file),
       " --threads ",
       nproc,
       " ",
@@ -1499,7 +1499,8 @@ assign_sintax <- function(
 #'   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
 #'   lca_cutoff = 0.9, behavior = "add_to_phyloseq"
 #' )
-#'
+#' }
+#' \dontrun{
 #' data_fungi_mini_new2 <- assign_vsearch_lca(data_fungi_mini,
 #'   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
 #'   id = 0.6, behavior = "add_to_phyloseq", top_hits_only = FALSE
@@ -1573,11 +1574,11 @@ assign_vsearch_lca <- function(
   cmd_usearch <-
     paste0(
       " --usearch_global ",
-      temporary_fasta_file,
+      shQuote(temporary_fasta_file),
       " --db ",
-      ref_fasta,
+      shQuote(ref_fasta),
       " --lcaout ",
-      out_lca_file,
+      shQuote(out_lca_file),
       " -id ",
       id,
       " --threads ",
@@ -1590,7 +1591,7 @@ assign_vsearch_lca <- function(
       " --lca_cutoff  ",
       lca_cutoff,
       " --userout ",
-      userout_file,
+      shQuote(userout_file),
       " ",
       cmd_args
     )
