@@ -1,9 +1,11 @@
 {
   "cli_version": "0.4.9",
   "checkpoint_id": "55dff11583e0",
+  "session_id": "d82706b8-f537-4b1e-98fa-4bc434669314",
   "strategy": "manual-commit",
+  "created_at": "2026-06-01T09:41:57.594361274Z",
   "branch": "dev",
-  "checkpoints_count": 11,
+  "checkpoints_count": 10,
   "files_touched": [
     "DESCRIPTION",
     "NAMESPACE",
@@ -43,27 +45,22 @@
     "tests/testthat/test_visualization.R",
     "tests/testthat/test_vsearch.R"
   ],
-  "sessions": [
-    {
-      "metadata": "/55/dff11583e0/0/metadata.json",
-      "transcript": "/55/dff11583e0/0/full.jsonl",
-      "context": "/55/dff11583e0/0/context.md",
-      "content_hash": "/55/dff11583e0/0/content_hash.txt",
-      "prompt": "/55/dff11583e0/0/prompt.txt"
-    },
-    {
-      "metadata": "/55/dff11583e0/1/metadata.json",
-      "transcript": "/55/dff11583e0/1/full.jsonl",
-      "context": "/55/dff11583e0/1/context.md",
-      "content_hash": "/55/dff11583e0/1/content_hash.txt",
-      "prompt": "/55/dff11583e0/1/prompt.txt"
-    }
-  ],
+  "agent": "Claude Code",
+  "turn_id": "d2ed75392ee4",
   "token_usage": {
-    "input_tokens": 8300,
-    "cache_creation_tokens": 1259710,
-    "cache_read_tokens": 31771221,
-    "output_tokens": 298172,
-    "api_call_count": 372
+    "input_tokens": 2874,
+    "cache_creation_tokens": 1101366,
+    "cache_read_tokens": 30825507,
+    "output_tokens": 291395,
+    "api_call_count": 366
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-01T09:41:56.669250213Z",
+    "agent_lines": 210,
+    "human_added": 2617,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 2827,
+    "agent_percentage": 7.428369296073576
   }
 }
