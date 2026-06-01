@@ -1339,15 +1339,15 @@ lulu_pq <- function(
     vsearchpath,
     paste(
       " --usearch_global ",
-      temp_fasta,
+      shQuote(temp_fasta),
       " --db ",
-      temp_fasta,
+      shQuote(temp_fasta),
       " --self --iddef 1",
       " -userfields query+target+id --maxaccepts 0 --query_cov .9 --maxhits 10",
       " -id ",
       id,
       "  --userout ",
-      match_list_file,
+      shQuote(match_list_file),
       sep = ""
     ),
     stdout = TRUE,
@@ -1512,15 +1512,15 @@ mumu_pq <- function(
     vsearchpath,
     paste(
       " --usearch_global ",
-      temp_fasta,
+      shQuote(temp_fasta),
       " --db ",
-      temp_fasta,
+      shQuote(temp_fasta),
       " --self --iddef 1",
       " -userfields query+target+id --maxaccepts 0 --query_cov 0.9 --maxhits 10",
       " -id ",
       id,
       "  --userout ",
-      match_list_file
+      shQuote(match_list_file)
     ),
     stdout = TRUE,
     stderr = TRUE
@@ -1541,13 +1541,13 @@ mumu_pq <- function(
   mumu_cmd <-
     paste0(
       " --otu_table ",
-      otu_table_file,
+      shQuote(otu_table_file),
       " --match_list ",
-      match_list_file,
+      shQuote(match_list_file),
       " --log ",
-      log_file,
+      shQuote(log_file),
       " --new_otu_table ",
-      new_otu_file
+      shQuote(new_otu_file)
     )
 
   if (!is.null(extra_mumu_args)) {

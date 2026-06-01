@@ -143,7 +143,7 @@ if (inherits(blast_error_or_not, "try-error")) {
   })
 
   derep_data <-
-    derepFastq(unlist(list_fastq_files("inst/extdata/")))
+    dada2::derepFastq(unlist(list_fastq_files("inst/extdata/")))
   test_that("blast_to_derep works fine", {
     expect_s3_class(
       derep_blast <-
