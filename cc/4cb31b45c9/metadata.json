@@ -3,7 +3,7 @@
   "checkpoint_id": "cc4cb31b45c9",
   "strategy": "manual-commit",
   "branch": "dev",
-  "checkpoints_count": 0,
+  "checkpoints_count": 2,
   "files_touched": [
     "CRAN-SUBMISSION"
   ],
@@ -14,13 +14,20 @@
       "context": "/cc/4cb31b45c9/0/context.md",
       "content_hash": "/cc/4cb31b45c9/0/content_hash.txt",
       "prompt": "/cc/4cb31b45c9/0/prompt.txt"
+    },
+    {
+      "metadata": "/cc/4cb31b45c9/1/metadata.json",
+      "transcript": "/cc/4cb31b45c9/1/full.jsonl",
+      "context": "/cc/4cb31b45c9/1/context.md",
+      "content_hash": "/cc/4cb31b45c9/1/content_hash.txt",
+      "prompt": "/cc/4cb31b45c9/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 5600,
-    "cache_creation_tokens": 15087,
-    "cache_read_tokens": 9777,
-    "output_tokens": 502,
-    "api_call_count": 1
+    "input_tokens": 9150,
+    "cache_creation_tokens": 1267977,
+    "cache_read_tokens": 31489029,
+    "output_tokens": 297087,
+    "api_call_count": 376
   }
 }
