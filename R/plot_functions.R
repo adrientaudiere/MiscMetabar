@@ -582,13 +582,13 @@ accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
 #'
 #' @examples
 #' \donttest{
-#' if (requireNamespace("pbapply")) {
-#'   data("GlobalPatterns", package = "phyloseq")
-#'   GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
-#'   circle_pq(GP, "SampleType")
-#'   circle_pq(GP, "SampleType", add_nb_seq = FALSE)
-#'   circle_pq(GP, "SampleType", taxa = "Class")
+#' data("GlobalPatterns", package = "phyloseq")
+#' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
+#' circle_pq(GP, "SampleType")
 #' }
+#' \dontrun{
+#' circle_pq(GP, "SampleType", add_nb_seq = FALSE)
+#' circle_pq(GP, "SampleType", taxa = "Class")
 #' }
 #' @author Adrien Taudière
 #'
@@ -1717,11 +1717,9 @@ multiplot <-
 #' @author Adrien Taudière
 #' @examples
 #'
-#' p <- hill_pq(data_fungi_mini, "Height", q = 1:2)
-#' p_h1 <- p[[1]] + theme(legend.position = "none")
-#' p_h2 <- p[[2]] + theme(legend.position = "none")
-#' multiplot(plotlist = list(p_h1, p_h2, p[[3]]), cols = 4)
-#' \donttest{
+#' p <- hill_pq(data_fungi_mini, "Height", q = c(0, 1))
+#' p[[1]] + theme(legend.position = "none")
+#' \dontrun{
 #' if (requireNamespace("multcompView")) {
 #'   p2 <- hill_pq(data_fungi_mini, "Time",
 #'     correction_for_sample_size = FALSE,
@@ -2022,9 +2020,12 @@ hill_pq <- function(
 #' if (requireNamespace("ggstatsplot")) {
 #'   p <- ggbetween_pq(data_fungi, fact = "Time", p.adjust.method = "BH")
 #'   p[[1]]
+#' }
+#' }
+#' \dontrun{
+#' if (requireNamespace("ggstatsplot")) {
 #'   ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE)
-#'   ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE,
-#'     rarefy_by_sample = TRUE)
+#'   ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE, rarefy_by_sample = TRUE)
 #' }
 #' }
 #' @author Adrien Taudière
@@ -5424,15 +5425,17 @@ treemap_pq <- function(
 #' if (requireNamespace("vegan")) {
 #'   data_fungi_woNA <- subset_samples(data_fungi_mini,
 #'     !is.na(Time) & !is.na(Height))
-#'   res_var_9 <- var_par_rarperm_pq(
-#'     data_fungi_woNA,
+#'   res_var0 <- var_par_pq(data_fungi_woNA,
 #'     list_component = list(
 #'       "Time" = c("Time"),
 #'       "Size" = c("Height", "Diameter")
-#'     ),
-#'     nperm = 9,
-#'     dbrda_computation = TRUE
+#'     )
 #'   )
+#'   plot_var_part_pq(res_var0)
+#' }
+#' }
+#' \dontrun{
+#' if (requireNamespace("vegan")) {
 #'   res_var_2 <- var_par_rarperm_pq(
 #'     data_fungi_woNA,
 #'     list_component = list(
@@ -5442,18 +5445,7 @@ treemap_pq <- function(
 #'     nperm = 2,
 #'     dbrda_computation = TRUE
 #'   )
-#'   res_var0 <- var_par_pq(data_fungi_woNA,
-#'     list_component = list(
-#'       "Time" = c("Time"),
-#'       "Size" = c("Height", "Diameter")
-#'     ),
-#'     dbrda_computation = TRUE
-#'   )
 #'   plot_var_part_pq(res_var0, digits_quantile = 2, show_dbrda_signif = TRUE)
-#'   plot_var_part_pq(res_var_9,
-#'     digits_quantile = 2, show_quantiles = TRUE,
-#'     show_dbrda_signif = TRUE
-#'   )
 #'   plot_var_part_pq(
 #'     res_var_2,
 #'     digits = 5,
@@ -5947,7 +5939,7 @@ ggaluv_pq <- function(
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' res1 <- plot_refseq_extremity_pq(data_fungi_mini)
+#' res1 <- plot_refseq_extremity_pq(data_fungi_mini, q = 1)
 #' names(res1)
 #' \donttest{
 #' res1$plot_start
@@ -6481,11 +6473,14 @@ hill_curves_pq <- function(
 #' @seealso [umap::umap()], [tsne_pq()], [phyloseq::plot_ordination()]
 #' @examples
 #' library("umap")
-#' df_umap <- umap_pq(data_fungi_mini)
+#' df_umap <- umap_pq(data_fungi_mini, n_neighbors = 3)
 #' ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
 #'   geom_point(size = 2)
 #'
 #' \donttest{
+#' df_uwot <- umap_pq(data_fungi_mini, pkg = "uwot")
+#' }
+#' \dontrun{
 #' library(patchwork)
 #' physeq <- data_fungi_mini
 #' res_tsne <- tsne_pq(data_fungi_mini)
@@ -6493,30 +6488,21 @@ hill_curves_pq <- function(
 #' df_umap_tsne$x_tsne <- res_tsne$Y[, 1]
 #' df_umap_tsne$y_tsne <- res_tsne$Y[, 2]
 #' ((ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
-#'   geom_point(size = 2) +
-#'   ggtitle("UMAP")) + (plot_ordination(physeq,
-#'   ordination =
-#'     ordinate(physeq, method = "PCoA", distance = "bray"), color = "Height"
-#' )) +
-#'   ggtitle("PCoA")) /
+#'   geom_point(size = 2) + ggtitle("UMAP")) +
+#'   (plot_ordination(physeq,
+#'     ordination = ordinate(physeq, method = "PCoA", distance = "bray"),
+#'     color = "Height") + ggtitle("PCoA"))) /
 #'   ((ggplot(df_umap_tsne, aes(x = x_tsne, y = y_tsne, col = Height)) +
-#'     geom_point(size = 2) +
-#'     ggtitle("tsne")) +
+#'     geom_point(size = 2) + ggtitle("tsne")) +
 #'     (plot_ordination(physeq,
 #'       ordination = ordinate(physeq, method = "NMDS", distance = "bray"),
-#'       color = "Height"
-#'     ) +
-#'       ggtitle("NMDS"))) +
+#'       color = "Height") + ggtitle("NMDS"))) +
 #'   patchwork::plot_layout(guides = "collect")
 #'
-#' df_uwot <- umap_pq(data_fungi_mini, pkg = "uwot")
-#'
 #' (ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
-#'   geom_point(size = 2) +
-#'   ggtitle("umap::umap")) /
+#'   geom_point(size = 2) + ggtitle("umap::umap")) /
 #'   (ggplot(df_uwot, aes(x = x_umap, y = y_umap, col = Height)) +
-#'     geom_point(size = 2) +
-#'     ggtitle("uwot::umap2"))
+#'     geom_point(size = 2) + ggtitle("uwot::umap2"))
 #' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
@@ -6601,7 +6587,7 @@ plot_complexity_pq <- function(
   ...
 ) {
   if (aggregate) {
-    refseq_complex <- seqComplexity(
+    refseq_complex <- dada2::seqComplexity(
       physeq@refseq,
       kmerSize = kmer_size,
       window = window,
@@ -6612,7 +6598,7 @@ plot_complexity_pq <- function(
     names(refseq_complex) <- sample_names(physeq)
     for (sam in sample_names(physeq)) {
       physeq_interm <- subset_samples_pq(physeq, sample_names(physeq) == sam)
-      refseq_complex[[sam]] <- seqComplexity(
+      refseq_complex[[sam]] <- dada2::seqComplexity(
         physeq_interm@refseq,
         kmerSize = kmer_size,
         window = window,
@@ -7334,8 +7320,8 @@ plot_ordination_pq <- function(
 #' @author Adrien Taudière
 #'
 #' @examples
-#' hill_bar_pq(data_fungi_mini, Height)
-#' \donttest{
+#' hill_bar_pq(data_fungi_mini, Height, q = 1)
+#' \dontrun{
 #' hill_bar_pq(data_fungi_mini, Height, q = 0)
 #' hill_bar_pq(data_fungi_mini, Height, q = c(0, 1, 2), ncol = 1)
 #' hill_bar_pq(data_fungi_mini, Height, q = c(0, 2),

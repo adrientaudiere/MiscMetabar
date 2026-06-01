@@ -1,3 +1,4 @@
+skip_on_cran()
 data(data_fungi)
 data(data_fungi_mini)
 

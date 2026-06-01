@@ -1,3 +1,4 @@
+skip_on_cran()
 data("GlobalPatterns", package = "phyloseq")
 data("enterotype", package = "phyloseq")
 

@@ -1,3 +1,4 @@
+library(dada2)
 path_db <- system.file(
   "extdata",
   "100_sp_UNITE_sh_general_release_dynamic.fasta",

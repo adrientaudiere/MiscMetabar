@@ -12,10 +12,7 @@ Depends:
     R (>= 4.1.0),
     phyloseq,
     ggplot2 (>= 3.5.0),
-    dada2,
-    dplyr,
-    purrr,
-    divent
+    dplyr
 Suggests:
     adespatial,
     ALDEx2,
@@ -98,7 +95,10 @@ Imports:
     ape,
     Biostrings,
     cli,
+    dada2,
+    divent,
     lifecycle,
+    purrr,
     rlang,
     stats,
     XVector

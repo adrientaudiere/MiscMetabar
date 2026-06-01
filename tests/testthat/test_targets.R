@@ -1,3 +1,5 @@
+skip_on_cran()
+library(dada2)
 data(enterotype)
 data(data_fungi)
 

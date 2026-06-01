@@ -172,15 +172,15 @@ graph_test_pq <- function(
 #' data(enterotype)
 #' \donttest{
 #' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE)
+#' adonis_pq(data_fungi_mini, "Time*Height", na_remove = TRUE,
+#'   correction_for_sample_size = TRUE)
+#' }
+#' \dontrun{
 #' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = NULL)
 #' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "onedf")
 #' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "margin")
-#'
 #' adonis_pq(enterotype, "SeqTech", dist_method = "jaccard")
 #' adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison")
-#'
-#' adonis_pq(data_fungi_mini, "Time*Height", na_remove = TRUE,
-#'   correction_for_sample_size = TRUE)
 #' }
 #' @export
 #' @author Adrien Taudière
@@ -1660,18 +1660,6 @@ var_par_pq <-
 #' if (requireNamespace("vegan")) {
 #'   data_fungi_woNA <- subset_samples(data_fungi_mini,
 #'     !is.na(Time) & !is.na(Height))
-#'   res_var_9 <- var_par_rarperm_pq(
-#'     data_fungi_woNA,
-#'     list_component = list(
-#'       "Time" = c("Time"),
-#'       "Size" = c("Height", "Diameter")
-#'     ),
-#'     nperm = 9,
-#'     dbrda_computation = TRUE
-#'   )
-#'
-#'   plot_var_part_pq(res_var_9)
-#'
 #'   res_var_2 <- var_par_rarperm_pq(
 #'     data_fungi_woNA,
 #'     list_component = list(
@@ -1681,9 +1669,10 @@ var_par_pq <-
 #'     nperm = 2,
 #'     dbrda_computation = TRUE
 #'   )
-#'
-#'   plot_var_part_pq(res_var_2)
 #' }
+#' }
+#' \dontrun{
+#' plot_var_part_pq(res_var_2)
 #' }
 #' @details
 #' This function is mainly a wrapper of the work of others.

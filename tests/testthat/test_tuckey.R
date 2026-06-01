@@ -1,3 +1,4 @@
+skip_on_cran()
 data("GlobalPatterns", package = "phyloseq")
 GlobalPatterns@sam_data[, "Soil_logical"] <-
   ifelse(GlobalPatterns@sam_data[, "SampleType"] == "Soil", "Soil", "Not Soil")

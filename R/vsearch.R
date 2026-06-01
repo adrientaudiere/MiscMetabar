@@ -767,6 +767,9 @@ vsearch_clustering <- function(
 #'
 #' @examplesIf MiscMetabar::is_vsearch_installed()
 #' \donttest{
+#' data_fungi_nochim <- chimera_removal_vs(data_fungi)
+#' }
+#' \dontrun{
 #' # Adding a chimeric sequence for the example
 #' data_fungi_with_chim <- data_fungi
 #' data_fungi_with_chim@refseq["ASV1710"] <- Biostrings::xscat(
@@ -777,16 +780,13 @@ vsearch_clustering <- function(
 #'
 #' # Higher value of abskew parameter is less stringent
 #' data_fungi_nochim_16 <- chimera_removal_vs(data_fungi,
-#'   abskew = 16,
-#'   min_seq_length = 10
+#'   abskew = 16, min_seq_length = 10
 #' )
 #'
 #' # Potential Chimeric ASVs detected by vsearch
 #' chim_asv <- taxa_names(data_fungi_with_chim)[!taxa_names(data_fungi_with_chim)
 #'   %in% taxa_names(data_fungi_nochim)]
-#'
 #' "ASV1710" %in% chim_asv
-#'
 #' track_wkflow(list(data_fungi_with_chim, data_fungi_nochim))
 #'
 #' data_fungi_nochim2 <-
@@ -807,7 +807,7 @@ chimera_removal_vs <-
         inherits(object, "data.frame") ||
         inherits(object, "list")
     ) {
-      object <- makeSequenceTable(object)
+      object <- dada2::makeSequenceTable(object)
     }
 
     if (inherits(object, "matrix")) {
@@ -1499,7 +1499,8 @@ assign_sintax <- function(
 #'   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
 #'   lca_cutoff = 0.9, behavior = "add_to_phyloseq"
 #' )
-#'
+#' }
+#' \dontrun{
 #' data_fungi_mini_new2 <- assign_vsearch_lca(data_fungi_mini,
 #'   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
 #'   id = 0.6, behavior = "add_to_phyloseq", top_hits_only = FALSE

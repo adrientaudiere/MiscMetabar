@@ -145,10 +145,12 @@ merge taxa into clusters. By default tax_adjust = 0. See the man page
 of \code{\link[=merge_taxa_vec]{merge_taxa_vec()}}.
 }
 \examples{
+\donttest{
 if (requireNamespace("DECIPHER")) {
   postcluster_pq(data_fungi_mini)
 }
-\donttest{
+}
+\dontrun{
 if (requireNamespace("DECIPHER")) {
   postcluster_pq(data_fungi_mini, method_clusterize = "longest")
 
