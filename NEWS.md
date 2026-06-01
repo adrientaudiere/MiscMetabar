@@ -5,6 +5,7 @@
   not run during checks). 
 * Added file-level `skip_on_cran()` to some heavy test files.
 * Example speed-ups for some functions.
+* Fix several bugs when using Windows paths by quoting system call arguments with `shQuote()`
 
 
 # MiscMetabar 0.16.6 [CRAN]
