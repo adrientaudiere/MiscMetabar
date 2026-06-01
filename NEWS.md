@@ -1,3 +1,5 @@
+# MiscMetabar (development version)
+
 # MiscMetabar 0.16.7 [CRAN]
 * Further check-time reductions for CRAN compliance:
   extra examples `\dontrun{}` (kept for documentation,
