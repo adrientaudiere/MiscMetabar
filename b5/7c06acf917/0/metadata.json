@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "b57c06acf917",
+  "session_id": "b321af76-503c-44ed-a38c-c21cee139388",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-01T09:53:29.401459962Z",
+  "branch": "dev",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "R/vsearch.R",
+    "R/blast.R",
+    "R/mmseqs2.R",
+    "R/dada_phyloseq.R"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "0773cbd0a3dd",
+  "checkpoint_transcript_start": 100,
+  "transcript_lines_at_start": 100,
+  "token_usage": {
+    "input_tokens": 3917,
+    "cache_creation_tokens": 29797,
+    "cache_read_tokens": 7130272,
+    "output_tokens": 13013,
+    "api_call_count": 37
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-01T09:53:28.512030598Z",
+    "agent_lines": 56,
+    "human_added": 2,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 58,
+    "agent_percentage": 96.55172413793103
+  }
+}
