@@ -49,3 +49,16 @@ The actual flow is implemented in `${SKILL_DIR}/merge-release.sh`; this file des
 
 1/ commit first 2/ I did R CMD check. Runn /r-pkg-bump-version then
 
+### Prompt 6
+
+Base directory for this skill: /home/adrien/.claude/skills/r-pkg-bump-version
+
+Bump an R package from `X.Y.Z.9xxx` (dev) to a release version `X.Y.Z`. This is a thin wrapper around `usethis::use_version()`. It mutates two files (`DESCRIPTION`, `NEWS.md`) and **does not commit**.
+
+## Arguments
+
+`MiscMetabar` may contain, in any order:
+
+- A package name (e.g. `MiscMetabar`). If absent, read `Package:` from `DESCRIPTION` in the current working directory.
+- A bump type: `patch` | `minor` | `major...
+

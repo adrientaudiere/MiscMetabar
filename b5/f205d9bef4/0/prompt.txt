@@ -120,3 +120,72 @@ After the script completes, report:
 ---
 
 1/ commit first 2/ I did R CMD check. Runn /r-pkg-bump-version then
+
+---
+
+Base directory for this skill: /home/adrien/.claude/skills/r-pkg-bump-version
+
+Bump an R package from `X.Y.Z.9xxx` (dev) to a release version `X.Y.Z`. This is a thin wrapper around `usethis::use_version()`. It mutates two files (`DESCRIPTION`, `NEWS.md`) and **does not commit**.
+
+## Arguments
+
+`MiscMetabar` may contain, in any order:
+
+- A package name (e.g. `MiscMetabar`). If absent, read `Package:` from `DESCRIPTION` in the current working directory.
+- A bump type: `patch` | `minor` | `major`. If absent and `--auto` is set, default to `patch`. If absent and not `--auto`, ask the user once.
+- `--auto` — non-interactive mode (no `AskUserQuestion`).
+
+When invoked from the pqverse workspace and only a package name is given, resolve the package directory to `pqverse_pkg/{name}/`.
+
+## Pre-flight (stop on first failure)
+
+1. `DESCRIPTION` exists; extract `Package` and `Version`.
+2. Current version ends in `.9xxx`. If not, stop and report — the package is already at a release version.
+3. Current branch is `dev`. If not, stop and report.
+4. Working tree is clean for `DESCRIPTION` and `NEWS.md` (`git diff --quiet DESCRIPTION NEWS.md`). If dirty, stop and report.
+5. `usethis` is installed:
+   ```bash
+   Rscript -e 'invisible(packageVersion("usethis"))'
+   ```
+   If missing, stop and tell the user to `install.packages("usethis")`. **No fallback** — `usethis::use_version()` is the single supported method.
+
+## Compute the new version
+
+Strip the `.9xxx` suffix, then increment the chosen component, zeroing lower components:
+
+| Current | Type | New |
+|---|---|---|
+| `1.2.3.9000` | major | `2.0.0` |
+| `1.2.3.9000` | minor | `1.3.0` |
+| `1.2.3.9000` | patch | `1.2.4` |
+| `0.16.0.9001` | minor | `0.17.0` |
+
+Display: `Bumping {pkg}: {current} → {new}`.
+
+## Apply the bump
+
+```bash
+Rscript -e "usethis::use_version('${NEW_VERSION}')"
+```
+
+`usethis::use_version()` is non-interactive when called from `Rscript`: it updates `DESCRIPTION$Version`, rewrites the first `NEWS.md` heading to `# {pkg} {new_version}`, and skips its commit prompt (leaves changes staged-but-uncommitted).
+
+If `use_version()` *did* auto-commit on this system, immediately undo with `git reset --soft HEAD~1` so Stage 9 can produce its own `Release {pkg} {version}` commit.
+
+## Show the diff and stop
+
+```bash
+git --no-pager diff DESCRIPTION NEWS.md
+```
+
+Report:
+
+> "DESCRIPTION + NEWS.md updated to {new}. **No commit made.** Run `/r-pkg-merge-release {pkg}` (Stage 9) to commit, merge dev → master, push, and bump dev for the next cycle. To revert: `git restore DESCRIPTION NEWS.md`."
+
+## Important rules
+
+- Do not commit, push, or change branches.
+- Do not invoke Stage 9.
+- No heuristics on the bump type — caller decides (or accepts the `patch` default in `--auto`).
+- No fallback chain — if `usethis` isn't installed, stop and ask the user to install it.
+- The first `NEWS.md` heading is rewritten to `# {pkg} {new}`. Any custom suffix or date on that line is dropped. The `[CRAN]` tag is re-applied later by Stage 9's `merge-release.sh` based on a live CRAN check.
