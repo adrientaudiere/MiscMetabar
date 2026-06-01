@@ -1,0 +1,32 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "13dd166b9111",
+  "session_id": "b321af76-503c-44ed-a38c-c21cee139388",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-01T09:46:39.892796414Z",
+  "branch": "dev",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "R/vsearch.R"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "0773cbd0a3dd",
+  "checkpoint_transcript_start": 62,
+  "transcript_lines_at_start": 62,
+  "token_usage": {
+    "input_tokens": 741,
+    "cache_creation_tokens": 12318,
+    "cache_read_tokens": 1198792,
+    "output_tokens": 8339,
+    "api_call_count": 7
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-01T09:46:39.176718726Z",
+    "agent_lines": 0,
+    "human_added": 4,
+    "human_modified": 6,
+    "human_removed": 0,
+    "total_committed": 7,
+    "agent_percentage": 0
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "13dd166b9111",
+  "strategy": "manual-commit",
+  "branch": "dev",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "R/vsearch.R"
+  ],
+  "sessions": [
+    {
+      "metadata": "/13/dd166b9111/0/metadata.json",
+      "transcript": "/13/dd166b9111/0/full.jsonl",
+      "context": "/13/dd166b9111/0/context.md",
+      "content_hash": "/13/dd166b9111/0/content_hash.txt",
+      "prompt": "/13/dd166b9111/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 741,
+    "cache_creation_tokens": 12318,
+    "cache_read_tokens": 1198792,
+    "output_tokens": 8339,
+    "api_call_count": 7
+  }
+}
