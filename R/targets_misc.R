@@ -163,7 +163,7 @@ rename_samples_otu_table <- function(physeq, names_of_samples) {
 #' )
 #'
 #' filt_fastq_fw <- filter_trim(testFastqs_fw, output_fw = tempdir())
-#' derep_fw <- derepFastq(filt_fastq_fw[1])
+#' derep_fw <- dada2::derepFastq(filt_fastq_fw[1])
 #' derep_fw
 #'
 #' \dontrun{
@@ -172,8 +172,8 @@ rename_samples_otu_table <- function(physeq, names_of_samples) {
 #'   output_fw = paste0(tempdir(), "/", "fw"),
 #'   output_rev = paste0(tempdir(), "rev")
 #' )
-#' derep_fw_pe <- derepFastq(filt_fastq_pe[[1]])
-#' derep_rv_pe <- derepFastq(filt_fastq_pe[[2]])
+#' derep_fw_pe <- dada2::derepFastq(filt_fastq_pe[[1]])
+#' derep_rv_pe <- dada2::derepFastq(filt_fastq_pe[[2]])
 #' derep_fw_pe
 #' derep_rv_pe
 #' }
