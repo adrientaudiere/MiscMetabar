@@ -1,0 +1,199 @@
+Base directory for this skill: /home/adrien/.claude/skills/r-audit
+
+Run an external black-box audit of a pqverse R package. The audit creates independent test phyloseq objects, calls every exported function, and produces a re-runnable R script plus a TODO checklist of issues. If a R script is already available here: /home/adrien/Nextcloud/IdEst/Projets/pqverse/audits/{pkg}_script.R propose to pass to phase 4 (run the script).
+
+The target package is specified via `dbpq` (e.g., `/r-audit tidypq`). If not provided, ask the user which package to audit (MiscMetabar, tidypq, or comparpq).
+
+## Output files
+
+All output goes in `audits/` at the **workspace root** (`/home/adrien/Nextcloud/IdEst/Projets/pqverse/audits/`):
+
+- `{pkg}_script.R` -- self-contained, re-runnable audit script
+- `{pkg}_results.csv` -- raw results (written by the script)
+- `{pkg}_TODO.md` -- checklist report (written by you after execution)
+
+Create `audits/` if it does not exist.
+
+## Phase 1: Setup & Discovery
+
+1. Read `pqverse_pkg/{pkg}/NAMESPACE` to extract all `export(...)` entries into a function list.
+2. Read `pqverse_pkg/{pkg}/DESCRIPTION` to get the version number.
+3. Read the R source files in `pqverse_pkg/{pkg}/R/*.R` to understand function signatures and roxygen documentation.
+4. **DO NOT** read `tests/`, `.Rd` files in `man/`, examples, or vignettes -- this is an external audit.
+
+## Phase 2: Create test phyloseq objects
+
+Write the opening section of `{pkg}_script.R` that builds these objects **from scratch** (no package datasets):
+
+| Object | Description |
+|--------|-------------|
+| `pq_normal` | 5 taxa, 4 samples, complete: otu_table + tax_table + sample_data + phy_tree + refseq |
+| `pq_mini` | 2 taxa, 2 samples, minimal valid object |
+| `pq_na_tax` | Like `pq_normal` but with NAs in tax_table (missing Genus/Species) |
+| `pq_na_samdata` | Like `pq_normal` but with NAs in sample_data columns |
+| `pq_empty_samples` | Contains 1-2 samples with all-zero rows in otu_table |
+| `pq_zero_taxa` | Contains 1-2 taxa with all-zero columns in otu_table |
+| `pq_no_tree` | Valid phyloseq without phy_tree slot |
+| `pq_no_refseq` | Valid phyloseq without refseq slot |
+| `pq_bad_tree` | phyloseq with a phy_tree whose tip labels don't match taxa names |
+| `pq_large_counts` | Exaggerated count values (>1e6) to test overflow/scaling |
+| `pq_single_taxon` | 1 taxon, 3 samples |
+| `pq_single_sample` | 3 taxa, 1 sample |
+
+For **comparpq**, also create `list_phyloseq` S7 objects wrapping 2-3 of the above (read `pqverse_pkg/comparpq/R/list_phyloseq.R` first to understand the constructor).
+
+Template for `pq_normal`:
+```r
+library(phyloseq)
+library(ape)
+library(Biostrings)
+
+set.seed(42)
+otu <- matrix(sample(0:500, 20, replace = TRUE), nrow = 5, ncol = 4,
+              dimnames = list(paste0("ASV", 1:5), paste0("S", 1:4)))
+tax <- matrix(c(
+  "Bacteria", "Proteobacteria", "Gammaproteobacteria", "Enterobacterales", "Enterobacteriaceae", "Escherichia", "E_coli",
+  "Bacteria", "Firmicutes", "Bacilli", "Lactobacillales", "Lactobacillaceae", "Lactobacillus", "L_acidophilus",
+  "Bacteria", "Actinobacteriota", "Actinomycetia", "Bifidobacteriales", "Bifidobacteriaceae", "Bifidobacterium", "B_longum",
+  "Bacteria", "Bacteroidota", "Bacteroidia", "Bacteroidales", "Bacteroidaceae", "Bacteroides", "B_fragilis",
+  "Fungi", "Ascomycota", "Saccharomycetes", "Saccharomycetales", "Saccharomycetaceae", "Saccharomyces", "S_cerevisiae"
+), nrow = 5, byrow = TRUE,
+  dimnames = list(paste0("ASV", 1:5), c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species")))
+sam <- data.frame(
+  Group = factor(c("A", "A", "B", "B")),
+  Depth = c(100, 200, 150, 250),
+  Site  = c("Forest", "Forest", "Field", "Field"),
+  row.names = paste0("S", 1:4)
+)
+tree <- rtree(5, tip.label = paste0("ASV", 1:5))
+seqs <- DNAStringSet(sapply(1:5, function(i) paste(sample(c("A","T","G","C"), 250, replace = TRUE), collapse = "")))
+names(seqs) <- paste0("ASV", 1:5)
+
+pq_normal <- phyloseq(otu_table(otu, taxa_are_rows = TRUE), tax_table(tax),
+                       sample_data(sam), phy_tree(tree), seqs)
+```
+
+Derive edge-case objects by modifying `pq_normal` (e.g., set tax_table entries to NA, zero out rows/columns, drop slots).
+
+## Phase 3: Systematic function testing
+
+Process functions **grouped by their R source file**, one file at a time:
+
+1. Read the R source file to understand each function's signature and required parameters.
+2. Write R code that calls each function:
+   - First with `pq_normal` (happy path)
+   - Then with relevant edge-case objects (functions mentioning `tax_table` -> `pq_na_tax`, functions requiring a tree -> `pq_no_tree`, etc.)
+3. For functions requiring **external file inputs** (BLAST, VSEARCH, dada2, etc.): use files from `inst/extdata/` (especially for MiscMetabar). Available files:
+   - FASTA: `ex.fasta`, `ex_little.fasta`, `ex_R1_001.fasta`, `ex_R1_002.fasta`
+   - FASTQ: `ex.fastq`, `ex_R1_001.fastq.gz`, `ex_R2_001.fastq.gz`
+   - BLAST db: `dbase.ndb`, `dbase.nhr`, `dbase.nin`, etc.
+   - UNITE: `100_sp_UNITE_sh_general_release_dynamic*.fasta`, `mini_UNITE_fungi.fasta.gz`
+   - CSV: `sam_data.csv`
+4. Functions requiring truly unavailable resources (network, interactive session, external binaries not installed) -> mark as **skipped** with a reason.
+5. For plotting functions, wrap in `pdf(tempfile()) ... dev.off()` to avoid opening graphics devices.
+6. Wrap **every** call in `tryCatch`/`withCallingHandlers`.
+7. Append code for each batch to `{pkg}_script.R`.
+
+Use this helper function at the top of the script:
+```r
+audit_call <- function(fn_name, expr, test_label) {
+  result <- tryCatch(
+    withCallingHandlers(
+      {
+        val <- force(expr)
+        list(status = "OK", message = "")
+      },
+      warning = function(w) {
+        invokeRestart("muffleWarning")
+        list(status = "WARNING", message = conditionMessage(w))
+      }
+    ),
+    error = function(e) list(status = "ERROR", message = conditionMessage(e))
+  )
+  data.frame(
+    fn = fn_name, test = test_label,
+    status = result$status, message = result$message,
+    stringsAsFactors = FALSE
+  )
+}
+```
+
+**Important**: The `expr` argument has a known issue with `withCallingHandlers` + `tryCatch` capturing only the first warning. For the audit, this is acceptable -- the first warning is the most informative.
+
+At the bottom of the script, write results to CSV:
+```r
+write.csv(audit_results, "audits/{pkg}_results.csv", row.names = FALSE)
+cat("\nAudit complete:", nrow(audit_results), "tests run\n")
+cat("OK:", sum(audit_results$status == "OK"), "\n")
+cat("WARNING:", sum(audit_results$status == "WARNING"), "\n")
+cat("ERROR:", sum(audit_results$status == "ERROR"), "\n")
+```
+
+## Phase 4: Run the audit script
+
+Execute the script:
+```bash
+cd /home/adrien/Nextcloud/IdEst/Projets/pqverse && Rscript audits/{pkg}_script.R
+```
+
+Capture and review the output. If the script itself crashes (syntax error, missing library), fix the script and re-run.
+
+## Phase 5: Generate TODO report
+
+Read `audits/{pkg}_results.csv` and write `audits/{pkg}_TODO.md` with this structure:
+
+```markdown
+# Audit Report: {package} v{version}
+
+Date: {YYYY-MM-DD}
+
+## Summary
+
+- Total exported functions: {N}
+- Tested: {n_tested}
+- Skipped: {n_skipped} (external tool, network, interactive)
+- OK: {n_ok}
+- Warnings: {n_warn}
+- Errors: {n_error}
+
+## Errors
+
+- [ ] `function_name()`: error message -- (tested with pq_na_tax) -- recommendation
+
+## Warnings
+
+- [ ] `function_name()`: warning message -- (tested with pq_empty_samples) -- recommendation
+
+## Recommendations
+
+- [ ] `function_name()`: suggestion for improvement (e.g., missing input validation, unclear error message)
+
+## Skipped functions
+
+- [ ] `function_name()`: reason (e.g., requires BLAST binary, requires network)
+```
+
+Organize errors/warnings by severity. For each entry, include:
+- The function name
+- The error/warning message
+- Which test object triggered it
+- A concrete recommendation for the package author
+
+## Phase 6: Present summary
+
+Show a concise summary to the user:
+- Total functions audited
+- Pass / warning / error counts
+- Top 5 most critical issues
+- Link to the generated files
+
+## Important rules
+
+- **ONLY create/modify files in `audits/`**: `{pkg}_script.R`, `{pkg}_TODO.md`, `{pkg}_results.csv`
+- **DO NOT read** package tests, examples, or vignettes -- this is an external audit
+- **DO read** roxygen documentation from R source files (`R/*.R`) and NAMESPACE
+- Use `inst/extdata/` files for functions requiring file inputs
+- The audit script must be **self-contained and re-runnable**
+- Use `tryCatch`/`withCallingHandlers` for **every** function call -- never let the script crash
+- Process functions by source file to keep context manageable
+- Ask the user before executing the script (Phase 4) in case they want to review it first
