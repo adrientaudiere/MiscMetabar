@@ -30,8 +30,12 @@
 #' @export
 #' @examples
 #' data("data_fungi_mini", package = "MiscMetabar")
+#' data_f <- prune_samples(
+#'   sample_names(data_fungi_mini)[1:5],
+#'   data_fungi_mini
+#' )
 #' otu <- as.data.frame(phyloseq::otu_table(
-#'   taxa_as_columns(data_fungi_mini)
+#'   taxa_as_columns(data_f)
 #' ))
 #' divent_hill_matrix_pq(otu, q = c(0, 1, 2))
 divent_hill_matrix_pq <- function(comm, q, ...) {

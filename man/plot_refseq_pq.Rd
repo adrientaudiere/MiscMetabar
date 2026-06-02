@@ -47,7 +47,9 @@ of the diversity (equitability) along the sequences.
 }
 \examples{
 plot_refseq_pq(data_fungi_mini)
+\dontrun{
 plot_refseq_pq(data_fungi_mini, q = c(2), first_n = 300)
+}
 
 }
 \author{

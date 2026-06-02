@@ -38,16 +38,19 @@ use this function.
 }
 \examples{
 library("umap")
-df_umap <- umap_pq(data_fungi_mini, n_neighbors = 3)
+data_f <- prune_samples(
+  sample_names(data_fungi_mini)[1:20],
+  data_fungi_mini
+)
+df_umap <- umap_pq(data_f, n_neighbors = 3)
 ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
   geom_point(size = 2)
 
-\donttest{
-df_uwot <- umap_pq(data_fungi_mini, pkg = "uwot")
-}
 \dontrun{
+df_uwot <- umap_pq(data_fungi_mini, pkg = "uwot")
 library(patchwork)
 physeq <- data_fungi_mini
+df_umap <- umap_pq(physeq, n_neighbors = 3)
 res_tsne <- tsne_pq(data_fungi_mini)
 df_umap_tsne <- df_umap
 df_umap_tsne$x_tsne <- res_tsne$Y[, 1]

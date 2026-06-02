@@ -125,7 +125,11 @@ computed.
 }
 \examples{
 
-p <- hill_pq(data_fungi_mini, "Height", q = c(0, 1))
+data_f <- prune_samples(
+  sample_names(data_fungi_mini)[1:20],
+  data_fungi_mini
+)
+p <- hill_pq(data_f, "Height", q = c(0, 1))
 p[[1]] + theme(legend.position = "none")
 \dontrun{
 if (requireNamespace("multcompView")) {
