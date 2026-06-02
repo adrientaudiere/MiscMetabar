@@ -21,23 +21,23 @@ Adrien Taudière
 ## Examples
 
 ``` r
-plot_refseq_pq(data_fungi)
-#> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).
+plot_refseq_pq(data_fungi_mini)
+#> Cleaning suppress 0 taxa (  ) and 1 sample(s) ( W26-001-B_S165_MERGED.fastq.gz ).
 #> Number of non-matching ASV 0
-#> Number of matching ASV 1420
+#> Number of matching ASV 45
 #> Number of filtered-out ASV 1
-#> Number of kept ASV 1419
-#> Number of kept samples 185
-#> Warning: Removed 688 rows containing missing values or values outside the scale range
+#> Number of kept ASV 44
+#> Number of kept samples 136
+#> Warning: Removed 336 rows containing missing values or values outside the scale range
 #> (`geom_point()`).
 
-plot_refseq_pq(data_fungi) + no_legend()
-#> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).
+plot_refseq_pq(data_fungi_mini) + no_legend()
+#> Cleaning suppress 0 taxa (  ) and 1 sample(s) ( W26-001-B_S165_MERGED.fastq.gz ).
 #> Number of non-matching ASV 0
-#> Number of matching ASV 1420
+#> Number of matching ASV 45
 #> Number of filtered-out ASV 1
-#> Number of kept ASV 1419
-#> Number of kept samples 185
-#> Warning: Removed 688 rows containing missing values or values outside the scale range
+#> Number of kept ASV 44
+#> Number of kept samples 136
+#> Warning: Removed 336 rows containing missing values or values outside the scale range
 #> (`geom_point()`).
 ```

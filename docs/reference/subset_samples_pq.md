@@ -44,6 +44,7 @@ Adrien Taudière
 ## Examples
 
 ``` r
+
 cond_samp <- grepl("A1", data_fungi@sam_data[["Sample_names"]])
 subset_samples_pq(data_fungi, cond_samp)
 #> phyloseq-class experiment-level object

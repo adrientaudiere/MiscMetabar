@@ -27,7 +27,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,6 +48,7 @@
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -197,12 +198,12 @@ OTUs proportionally to their frequency. A balanced measure.</li>
 common OTUs. Robust to rare artefactual sequences.</li>
 </ul>
 <p>An important consequence for eDNA data: <strong>higher q values are
-more robust to data curation choices</strong> <span class="citation">(Calderón-Sanou et al. 2019; Shirazi, Taylor, and
-Brewer 2021)</span>. Rarefaction curves at q = {1, 2} typically saturate
-well, while curves at q = 0 rarely saturate and are heavily affected by
-data curation decisions (chimera removal, clustering thresholds, etc.)
-and PCR variability across replicates. This makes q = 1 a pragmatic
-default — it weights OTUs by their frequency without disproportionately
+more robust to data curation choices</strong> <span class="citation">(Calderón-Sanou et al. 2019; Shirazi et al.
+2021)</span>. Rarefaction curves at q = {1, 2} typically saturate well,
+while curves at q = 0 rarely saturate and are heavily affected by data
+curation decisions (chimera removal, clustering thresholds, etc.) and
+PCR variability across replicates. This makes q = 1 a pragmatic default
+— it weights OTUs by their frequency without disproportionately
 favouring rare or abundant ones.</p>
 <p>For a thorough theoretical treatment of Hill Number, see <a href="https://ericmarcon.github.io/MesuresBioDiv2/chap-Accumulation.html" class="external-link">Marcon
 (2018)</a>.</p>
@@ -261,8 +262,8 @@ rarefaction curve:</p>
 <span>  q <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  type <span class="op">=</span> <span class="st">"individual"</span>,</span>
 <span>  merge_sample_by <span class="op">=</span> <span class="st">"metacommunity"</span>,</span>
-<span>  n_simulations <span class="op">=</span> <span class="fl">10</span></span>
-<span><span class="op">)</span> <span class="op">+</span></span>
+<span>  n_simulations <span class="op">=</span> <span class="fl">5</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/no_legend.html">no_legend</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Metacommunity rarefaction (q = 1)"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
@@ -347,12 +348,12 @@ the next section.</p>
 <span>  <span class="va">dfm_rarefied</span>,</span>
 <span>  q <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  type <span class="op">=</span> <span class="st">"sample"</span>,</span>
-<span>  n_permutations <span class="op">=</span> <span class="fl">50</span></span>
+<span>  n_permutations <span class="op">=</span> <span class="fl">10</span></span>
 <span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Sample-based accumulation (q = 1)"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="Sample-based accumulation for the entire dataset (q = 1, 50 permutations)" width="672"><p class="caption">
-Sample-based accumulation for the entire dataset (q = 1, 50
+<img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="Sample-based accumulation for the entire dataset (q = 1, 10 permutations)" width="672"><p class="caption">
+Sample-based accumulation for the entire dataset (q = 1, 10
 permutations)
 </p>
 </div>
@@ -364,7 +365,7 @@ within each level and how much each level contributes to the total:</p>
 <span>  q <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  type <span class="op">=</span> <span class="st">"sample"</span>,</span>
 <span>  merge_sample_by <span class="op">=</span> <span class="st">"Height"</span>,</span>
-<span>  n_permutations <span class="op">=</span> <span class="fl">50</span></span>
+<span>  n_permutations <span class="op">=</span> <span class="fl">10</span></span>
 <span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Sample-based accumulation by Height (q = 1)"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
@@ -393,7 +394,7 @@ with <code>type = "sample"</code>.</p>
 <span>  <span class="va">dfm_binary</span>,</span>
 <span>  q <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  type <span class="op">=</span> <span class="st">"sample"</span>,</span>
-<span>  n_permutations <span class="op">=</span> <span class="fl">50</span></span>
+<span>  n_permutations <span class="op">=</span> <span class="fl">10</span></span>
 <span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Incidence-based sample accumulation (q = 1)"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
@@ -413,7 +414,7 @@ Incidence-based sample accumulation (q = 1)
 <span>  q <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  type <span class="op">=</span> <span class="st">"sample"</span>,</span>
 <span>  merge_sample_by <span class="op">=</span> <span class="st">"Height"</span>,</span>
-<span>  n_permutations <span class="op">=</span> <span class="fl">50</span></span>
+<span>  n_permutations <span class="op">=</span> <span class="fl">10</span></span>
 <span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Incidence-based sample accumulation by Height (q = 1)"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
@@ -448,7 +449,7 @@ Abundance-based Hill diversity profiles per sample
 </p>
 </div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/profile_hill_pq.html">profile_hill_pq</a></span><span class="op">(</span><span class="va">dfm_rarefied</span>, merge_sample_by <span class="op">=</span> <span class="st">"Height"</span>, n_simulations <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/profile_hill_pq.html">profile_hill_pq</a></span><span class="op">(</span><span class="va">dfm_rarefied</span>, merge_sample_by <span class="op">=</span> <span class="st">"Height"</span>, n_simulations <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in merge_samples2(physeq, merge_sample_by): `group` has missing values;</span></span>
 <span><span class="co">#&gt; corresponding samples will be dropped</span></span></code></pre></div>
 <div class="figure">
@@ -467,7 +468,7 @@ proportion of samples it occurs in rather than its sequence count:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/profile_hill_pq.html">profile_hill_pq</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="../reference/as_binary_otu_table.html">as_binary_otu_table</a></span><span class="op">(</span><span class="va">data_fungi_woNA4Height</span><span class="op">)</span>,</span>
 <span>  merge_sample_by <span class="op">=</span> <span class="st">"Height"</span>,</span>
-<span>  n_simulations <span class="op">=</span> <span class="fl">10</span></span>
+<span>  n_simulations <span class="op">=</span> <span class="fl">5</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="Incidence-based Hill diversity profiles merged by Height" width="672"><p class="caption">
@@ -576,7 +577,7 @@ compared.</p>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Alberdi2019" class="csl-entry">
 Alberdi, Antton, and M. Thomas P. Gilbert. 2019. <span>“A Guide to the
 Application of <span>Hill</span> Numbers to <span>DNA</span>-Based
@@ -591,10 +592,9 @@ Methodological Choices?”</span> <em>Journal of Biogeography</em> 47 (1):
 193–206. <a href="https://doi.org/10.1111/jbi.13681" class="external-link">https://doi.org/10.1111/jbi.13681</a>.
 </div>
 <div id="ref-Chao2020" class="csl-entry">
-Chao, Anne, Yasuhiro Kubota, David Zeleny, Chun-Huo Chiu, Ching-Feng Li,
-Buntarou Kusumoto, Moriaki Yasuhara, et al. 2020. <span>“Quantifying
-Sample Completeness and Comparing Diversities Among Assemblages.”</span>
-<em>Ecological Research</em> 35 (3): 292–314. <a href="https://doi.org/10.1111/1440-1703.12102" class="external-link">https://doi.org/10.1111/1440-1703.12102</a>.
+Chao, Anne, Yasuhiro Kubota, David Zeleny, et al. 2020.
+<span>“Quantifying Sample Completeness and Comparing Diversities Among
+Assemblages.”</span> <em>Ecological Research</em> 35 (3): 292–314. <a href="https://doi.org/10.1111/1440-1703.12102" class="external-link">https://doi.org/10.1111/1440-1703.12102</a>.
 </div>
 <div id="ref-Hill73" class="csl-entry">
 Hill, Mark O. 1973. <span>“Diversity and Evenness: A Unifying Notation
@@ -618,13 +618,12 @@ Approach to Control for Uneven Sequencing Effort in Amplicon Sequence
 Analyses.”</span> <em>mSphere</em> 9 (1): e00354–23. <a href="https://doi.org/10.1128/msphere.00354-23" class="external-link">https://doi.org/10.1128/msphere.00354-23</a>.
 </div>
 <div id="ref-Schloss2024a" class="csl-entry">
-———. 2024b. <span>“Waste Not, Want Not: Revisiting the Analysis That
-Called into Question the Practice of Rarefaction.”</span>
+Schloss, Patrick D. 2024b. <span>“Waste Not, Want Not: Revisiting the
+Analysis That Called into Question the Practice of Rarefaction.”</span>
 <em>mSphere</em> 9 (1): e00355–23. <a href="https://doi.org/10.1128/msphere.00355-23" class="external-link">https://doi.org/10.1128/msphere.00355-23</a>.
 </div>
 <div id="ref-Shelton2023" class="csl-entry">
-Shelton, Andrew Olaf, Zachary J. Gold, Andrew Jensen, Erin D’Agnese,
-Elizabeth Dark, Alex Vigil, Krista S. Munsterman, et al. 2023.
+Shelton, Andrew Olaf, Zachary J. Gold, Andrew Jensen, et al. 2023.
 <span>“Toward Quantitative Metabarcoding.”</span> <em>Ecology</em> 104
 (2): e3906. <a href="https://doi.org/10.1002/ecy.3906" class="external-link">https://doi.org/10.1002/ecy.3906</a>.
 </div>
@@ -639,7 +638,7 @@ Sequencing Depth on Biodiversity Metrics in Environmental
 Skelton, Jack, Simon Creer, Gary R. Carvalho, and Mathew Seymour. 2023.
 <span>“Environmental <span>DNA</span> Metabarcoding Read Numbers and
 Their Variability Predict Species Abundance, but Weakly in Non-Dominant
-Species.”</span> <em>Environmental DNA</em> 5 (5): 1092–1104. <a href="https://doi.org/10.1002/edn3.355" class="external-link">https://doi.org/10.1002/edn3.355</a>.
+Species.”</span> <em>Environmental DNA</em> 5 (5): 1092–104. <a href="https://doi.org/10.1002/edn3.355" class="external-link">https://doi.org/10.1002/edn3.355</a>.
 </div>
 </div>
 </div>
@@ -671,8 +670,8 @@ Species.”</span> <em>Environmental DNA</em> 5 (5): 1092–1104. <a href="https
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] patchwork_1.3.2    MiscMetabar_0.15.2 divent_0.5-3       purrr_1.2.2       </span></span>
-<span><span class="co">#&gt; [5] dplyr_1.2.1        dada2_1.38.0       Rcpp_1.1.1         ggplot2_4.0.2     </span></span>
+<span><span class="co">#&gt; [1] patchwork_1.3.2    MiscMetabar_0.16.6 divent_0.5-3       purrr_1.2.2       </span></span>
+<span><span class="co">#&gt; [5] dplyr_1.2.1        dada2_1.38.0       Rcpp_1.1.1-1.1     ggplot2_4.0.3     </span></span>
 <span><span class="co">#&gt; [9] phyloseq_1.54.2   </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
@@ -708,14 +707,14 @@ Species.”</span> <em>Environmental DNA</em> 5 (5): 1092–1104. <a href="https
 <span><span class="co">#&gt;  [59] lattice_0.22-9              tibble_3.3.1               </span></span>
 <span><span class="co">#&gt;  [61] plyr_1.8.9                  Biobase_2.70.0             </span></span>
 <span><span class="co">#&gt;  [63] withr_3.0.2                 ShortRead_1.68.0           </span></span>
-<span><span class="co">#&gt;  [65] S7_0.2.1                    evaluate_1.0.5             </span></span>
+<span><span class="co">#&gt;  [65] S7_0.2.2                    evaluate_1.0.5             </span></span>
 <span><span class="co">#&gt;  [67] desc_1.4.3                  survival_3.8-6             </span></span>
 <span><span class="co">#&gt;  [69] RcppParallel_5.1.11-2       Biostrings_2.78.0          </span></span>
 <span><span class="co">#&gt;  [71] pillar_1.11.1               MatrixGenerics_1.22.0      </span></span>
 <span><span class="co">#&gt;  [73] DiagrammeR_1.0.11           foreach_1.5.2              </span></span>
 <span><span class="co">#&gt;  [75] stats4_4.5.2                generics_0.1.4             </span></span>
 <span><span class="co">#&gt;  [77] S4Vectors_0.48.1            scales_1.4.0               </span></span>
-<span><span class="co">#&gt;  [79] glue_1.8.0                  tools_4.5.2                </span></span>
+<span><span class="co">#&gt;  [79] glue_1.8.1                  tools_4.5.2                </span></span>
 <span><span class="co">#&gt;  [81] interp_1.1-6                data.table_1.18.2.1        </span></span>
 <span><span class="co">#&gt;  [83] GenomicAlignments_1.46.0    fs_2.0.1                   </span></span>
 <span><span class="co">#&gt;  [85] visNetwork_2.1.4            rhdf5_2.54.1               </span></span>

@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,6 +50,7 @@
     <li><a class="dropdown-item" href="articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="articles/alpha-div.html">Alpha-diversity</a></li>
@@ -92,7 +93,7 @@
 <a class="anchor" aria-label="anchor" href="#miscmetabar-"></a>
 </h1></div>
 <p>See the pkgdown documentation site <a href="https://adrientaudiere.github.io/MiscMetabar/">here</a> and the <a href="https://doi.org/10.21105/joss.06038" class="external-link">package paper</a> in the Journal Of Open Softwares.</p>
-<p>Biological studies, especially in ecology, health sciences and taxonomy, need to describe the biological composition of samples. Over the last twenty years, (i) the development of DNA sequencing, (ii) reference databases, (iii) high-throughput sequencing (HTS), and (iv) bioinformatics resources have enabled the description of biological communities through metabarcoding. Metabarcoding involves the sequencing of millions (<em>meta</em>-) of short regions of specific DNA (<em>-barcoding</em>, Valentini, Pompanon, and Taberlet (2009)) often from environmental samples (eDNA, Taberlet et al. (2012)) such as human stomach contents, lake water, soil, and air.</p>
+<p>Biological studies, especially in ecology, health sciences and taxonomy, need to describe the biological composition of samples. Over the last twenty years, (i) the development of DNA sequencing, (ii) reference databases, (iii) high-throughput sequencing (HTS), and (iv) bioinformatics resources have enabled the description of biological communities through metabarcoding. Metabarcoding involves the sequencing of millions (<em>meta</em>-) of short regions of specific DNA (<em>-barcoding</em>, Valentini et al. (2009)) often from environmental samples (eDNA, Taberlet et al. (2012)) such as human stomach contents, lake water, soil, and air.</p>
 <p><code>MiscMetabar</code> aims to facilitate the <strong>description</strong>, <strong>transformation</strong>, <strong>exploration</strong> and <strong>reproducibility</strong> of metabarcoding analyses using R. The development of <code>MiscMetabar</code> relies heavily on the R packages <a href="https://benjjneb.github.io/dada2/index.html" class="external-link"><code>dada2</code></a> (Callahan et al. 2016), <a href="https://joey711.github.io/phyloseq/" class="external-link"><code>phyloseq</code></a> (McMurdie and Holmes 2013) and <a href="https://books.ropensci.org/targets/" class="external-link"><code>targets</code></a> (Landau 2021).</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -230,7 +231,7 @@ Hill number 0
 <a href="https://cutadapt.readthedocs.io/en/stable/" class="external-link">cutadapt</a><a class="anchor" aria-label="anchor" href="#cutadapt"></a>
 </h4>
 <div class="sourceCode" id="cb13"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> cutadaptenv cutadapt</span></code></pre></div>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-callahan2016" class="csl-entry">
 Callahan, Benjamin J, Paul J McMurdie, Michael J Rosen, Andrew W Han, Amy Jo A Johnson, and Susan P Holmes. 2016. “DADA2: High-Resolution Sample Inference from Illumina Amplicon Data.” <em>Nature Methods</em> 13 (7): 581–83. <a href="https://doi.org/10.1038/nmeth.3869" class="external-link uri">https://doi.org/10.1038/nmeth.3869</a>.
 </div>
@@ -241,7 +242,7 @@ Landau, William Michael. 2021. “The Targets r Package: A Dynamic Make-Like Fun
 McMurdie, Paul J., and Susan Holmes. 2013. “Phyloseq: An r Package for Reproducible Interactive Analysis and Graphics of Microbiome Census Data.” <em>PLoS ONE</em> 8 (4): e61217. <a href="https://doi.org/10.1371/journal.pone.0061217" class="external-link uri">https://doi.org/10.1371/journal.pone.0061217</a>.
 </div>
 <div id="ref-taberlet2012" class="csl-entry">
-Taberlet, Pierre, Eric Coissac, Mehrdad Hajibabaei, and Loren H Rieseberg. 2012. “Environmental Dna.” <em>Molecular Ecology</em>. Wiley Online Library. <a href="https://doi.org/10.1111/j.1365-294X.2012.05542.x" class="external-link uri">https://doi.org/10.1111/j.1365-294X.2012.05542.x</a>.
+Taberlet, Pierre, Eric Coissac, Mehrdad Hajibabaei, and Loren H Rieseberg. 2012. “Environmental Dna.” In <em>Molecular Ecology</em>, No. 8, vol. 21. Wiley Online Library. <a href="https://doi.org/10.1111/j.1365-294X.2012.05542.x" class="external-link uri">https://doi.org/10.1111/j.1365-294X.2012.05542.x</a>.
 </div>
 <div id="ref-valentini2009" class="csl-entry">
 Valentini, Alice, François Pompanon, and Pierre Taberlet. 2009. “DNA Barcoding for Ecologists.” <em>Trends in Ecology &amp; Evolution</em> 24 (2): 110–17. <a href="https://doi.org/10.1016/j.tree.2008.09.011" class="external-link uri">https://doi.org/10.1016/j.tree.2008.09.011</a>.

@@ -88,6 +88,7 @@ is a web-based platform.
 ## Session information
 
 ``` r
+
 sessionInfo()
 ```
 

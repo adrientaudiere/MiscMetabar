@@ -93,20 +93,18 @@ Adrien Taudière
 ## Examples
 
 ``` r
-data(data_fungi)
 if (requireNamespace("Rtsne")) {
-  plot_tsne_pq(data_fungi, fact = "Height", perplexity = 15)
+  plot_tsne_pq(data_fungi_mini, fact = "Height", perplexity = 15)
 }
 #> Loading required namespace: Rtsne
-#> Taxa are now in rows.
 
 # \donttest{
 if (requireNamespace("Rtsne")) {
-  plot_tsne_pq(data_fungi, fact = "Time") + geom_label(aes(label = Sample_id, fill = Time))
-  plot_tsne_pq(data_fungi, fact = "Time", na_remove = FALSE, force_factor = FALSE)
+  plot_tsne_pq(data_fungi_mini, fact = "Time") +
+    geom_label(aes(label = Sample_id, fill = Time))
+  plot_tsne_pq(data_fungi_mini, fact = "Time", na_remove = FALSE,
+    force_factor = FALSE)
 }
-#> Taxa are now in rows.
-#> Taxa are now in rows.
 
 # }
 ```

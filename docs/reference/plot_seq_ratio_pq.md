@@ -49,10 +49,13 @@ Adrien Taudière
 ## Examples
 
 ``` r
+plot_seq_ratio_pq(data_fungi_mini, min_nb_seq = 10, annotations = FALSE)
+
+# \donttest{
 plot_seq_ratio_pq(data_fungi, min_nb_seq = 200)
 
 data(GlobalPatterns)
 plot_seq_ratio_pq(GlobalPatterns, min_nb_seq = 100000)
 
-plot_seq_ratio_pq(data_fungi_mini, min_nb_seq = 10, annotations = FALSE)
+# }
 ```

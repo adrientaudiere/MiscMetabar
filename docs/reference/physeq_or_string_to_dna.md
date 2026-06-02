@@ -45,6 +45,7 @@ Adrien Taudière
 ## Examples
 
 ``` r
+
 dna <- physeq_or_string_to_dna(data_fungi)
 dna
 #> DNAStringSet object of length 1420:

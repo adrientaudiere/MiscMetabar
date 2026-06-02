@@ -94,13 +94,13 @@ parameterised by an order *q*:
   Robust to rare artefactual sequences.
 
 An important consequence for eDNA data: **higher q values are more
-robust to data curation choices** (Calderón-Sanou et al. 2019; Shirazi,
-Taylor, and Brewer 2021). Rarefaction curves at q = {1, 2} typically
-saturate well, while curves at q = 0 rarely saturate and are heavily
-affected by data curation decisions (chimera removal, clustering
-thresholds, etc.) and PCR variability across replicates. This makes q =
-1 a pragmatic default — it weights OTUs by their frequency without
-disproportionately favouring rare or abundant ones.
+robust to data curation choices** (Calderón-Sanou et al. 2019; Shirazi
+et al. 2021). Rarefaction curves at q = {1, 2} typically saturate well,
+while curves at q = 0 rarely saturate and are heavily affected by data
+curation decisions (chimera removal, clustering thresholds, etc.) and
+PCR variability across replicates. This makes q = 1 a pragmatic default
+— it weights OTUs by their frequency without disproportionately
+favouring rare or abundant ones.
 
 For a thorough theoretical treatment of Hill Number, see [Marcon
 (2018)](https://ericmarcon.github.io/MesuresBioDiv2/chap-Accumulation.html).
@@ -108,6 +108,7 @@ For a thorough theoretical treatment of Hill Number, see [Marcon
 ## Setup
 
 ``` r
+
 library(MiscMetabar)
 library(phyloseq)
 library(ggplot2)
@@ -124,6 +125,7 @@ robust approach for controlling uneven sequencing depth in amplicon data
 (Schloss 2024b, 2024a).
 
 ``` r
+
 dfm_rarefied <- rarefy_even_depth(
   data_fungi_mini,
   rngseed = 1,
@@ -156,17 +158,19 @@ Merge all samples into a single community to obtain a global rarefaction
 curve:
 
 ``` r
+
 sample_data(dfm_rarefied)$metacommunity <- "all"
 ```
 
 ``` r
+
 hill_acc_pq(
   dfm_rarefied,
   q = 1,
   type = "individual",
   merge_sample_by = "metacommunity",
-  n_simulations = 10
-) +
+  n_simulations = 5
+  ) +
   no_legend() +
   ggtitle("Metacommunity rarefaction (q = 1)")
 ```
@@ -183,6 +187,7 @@ sampling completeness. Samples whose curve has not plateaued may harbour
 undetected taxa.
 
 ``` r
+
 random_samples <- sample(sample_names(dfm_rarefied), 5)
 dfm_5 <- prune_samples(random_samples, dfm_rarefied)
 
@@ -214,6 +219,7 @@ Merging samples by the `Height` variable aggregates sequences within
 each habitat, enabling comparison at the habitat scale:
 
 ``` r
+
 hill_acc_pq(
   dfm_rarefied,
   q = 1,
@@ -249,31 +255,33 @@ abundance-based. Compare with the incidence-based approach in the next
 section.
 
 ``` r
+
 hill_acc_pq(
   dfm_rarefied,
   q = 1,
   type = "sample",
-  n_permutations = 50
+  n_permutations = 10
 ) +
   ggtitle("Sample-based accumulation (q = 1)")
 ```
 
-![Sample-based accumulation for the entire dataset (q = 1, 50
+![Sample-based accumulation for the entire dataset (q = 1, 10
 permutations)](accumulation-rarefaction_files/figure-html/unnamed-chunk-7-1.png)
 
-Sample-based accumulation for the entire dataset (q = 1, 50
+Sample-based accumulation for the entire dataset (q = 1, 10
 permutations)
 
 By splitting by habitat, one can assess whether diversity saturates
 within each level and how much each level contributes to the total:
 
 ``` r
+
 hill_acc_pq(
   dfm_rarefied,
   q = 1,
   type = "sample",
   merge_sample_by = "Height",
-  n_permutations = 50
+  n_permutations = 10
 ) +
   ggtitle("Sample-based accumulation by Height (q = 1)")
 ```
@@ -298,16 +306,18 @@ meaningful at the level of the entire system and are most naturally used
 with `type = "sample"`.
 
 ``` r
+
 data(data_fungi)
 dfm_binary <- as_binary_otu_table(data_fungi)
 ```
 
 ``` r
+
 hill_acc_pq(
   dfm_binary,
   q = 1,
   type = "sample",
-  n_permutations = 50
+  n_permutations = 10
 ) +
   ggtitle("Incidence-based sample accumulation (q = 1)")
 ```
@@ -318,6 +328,7 @@ hill_acc_pq(
 Incidence-based sample accumulation (q = 1)
 
 ``` r
+
 data_fungi_woNA4Height <- subset_samples_pq(
   data_fungi,
   !is.na(data_fungi@sam_data$Height)
@@ -329,7 +340,7 @@ hill_acc_pq(
   q = 1,
   type = "sample",
   merge_sample_by = "Height",
-  n_permutations = 50
+  n_permutations = 10
 ) +
   ggtitle("Incidence-based sample accumulation by Height (q = 1)")
 ```
@@ -360,6 +371,7 @@ distributions.
 ### Abundance-based profiles
 
 ``` r
+
 profile_hill_pq(dfm_rarefied) + no_legend()
 ```
 
@@ -369,7 +381,8 @@ sample](accumulation-rarefaction_files/figure-html/unnamed-chunk-12-1.png)
 Abundance-based Hill diversity profiles per sample
 
 ``` r
-profile_hill_pq(dfm_rarefied, merge_sample_by = "Height", n_simulations = 10)
+
+profile_hill_pq(dfm_rarefied, merge_sample_by = "Height", n_simulations = 0)
 #> Warning in merge_samples2(physeq, merge_sample_by): `group` has missing values;
 #> corresponding samples will be dropped
 ```
@@ -388,10 +401,11 @@ each OTU is weighted by the proportion of samples it occurs in rather
 than its sequence count:
 
 ``` r
+
 profile_hill_pq(
   as_binary_otu_table(data_fungi_woNA4Height),
   merge_sample_by = "Height",
-  n_simulations = 10
+  n_simulations = 5
 )
 ```
 
@@ -456,10 +470,10 @@ Ecological Conclusions: How Strong Is the Influence of Methodological
 Choices?” *Journal of Biogeography* 47 (1): 193–206.
 <https://doi.org/10.1111/jbi.13681>.
 
-Chao, Anne, Yasuhiro Kubota, David Zeleny, Chun-Huo Chiu, Ching-Feng Li,
-Buntarou Kusumoto, Moriaki Yasuhara, et al. 2020. “Quantifying Sample
-Completeness and Comparing Diversities Among Assemblages.” *Ecological
-Research* 35 (3): 292–314. <https://doi.org/10.1111/1440-1703.12102>.
+Chao, Anne, Yasuhiro Kubota, David Zeleny, et al. 2020. “Quantifying
+Sample Completeness and Comparing Diversities Among Assemblages.”
+*Ecological Research* 35 (3): 292–314.
+<https://doi.org/10.1111/1440-1703.12102>.
 
 Hill, Mark O. 1973. “Diversity and Evenness: A Unifying Notation and Its
 Consequences.” *Ecology* 54 (2): 427–32.
@@ -479,13 +493,12 @@ Schloss, Patrick D. 2024a. “Rarefaction Is Currently the Best Approach
 to Control for Uneven Sequencing Effort in Amplicon Sequence Analyses.”
 *mSphere* 9 (1): e00354–23. <https://doi.org/10.1128/msphere.00354-23>.
 
-———. 2024b. “Waste Not, Want Not: Revisiting the Analysis That Called
-into Question the Practice of Rarefaction.” *mSphere* 9 (1): e00355–23.
-<https://doi.org/10.1128/msphere.00355-23>.
+Schloss, Patrick D. 2024b. “Waste Not, Want Not: Revisiting the Analysis
+That Called into Question the Practice of Rarefaction.” *mSphere* 9 (1):
+e00355–23. <https://doi.org/10.1128/msphere.00355-23>.
 
-Shelton, Andrew Olaf, Zachary J. Gold, Andrew Jensen, Erin D’Agnese,
-Elizabeth Dark, Alex Vigil, Krista S. Munsterman, et al. 2023. “Toward
-Quantitative Metabarcoding.” *Ecology* 104 (2): e3906.
+Shelton, Andrew Olaf, Zachary J. Gold, Andrew Jensen, et al. 2023.
+“Toward Quantitative Metabarcoding.” *Ecology* 104 (2): e3906.
 <https://doi.org/10.1002/ecy.3906>.
 
 Shirazi, Shadi, Hulvey R. Taylor, and Mark S. Brewer. 2021. “Revisiting
@@ -496,12 +509,12 @@ Metrics in Environmental DNA Metabarcoding.” *Ecology and Evolution* 11
 Skelton, Jack, Simon Creer, Gary R. Carvalho, and Mathew Seymour. 2023.
 “Environmental DNA Metabarcoding Read Numbers and Their Variability
 Predict Species Abundance, but Weakly in Non-Dominant Species.”
-*Environmental DNA* 5 (5): 1092–1104.
-<https://doi.org/10.1002/edn3.355>.
+*Environmental DNA* 5 (5): 1092–104. <https://doi.org/10.1002/edn3.355>.
 
 ## Session information
 
 ``` r
+
 sessionInfo()
 #> R version 4.5.2 (2025-10-31)
 #> Platform: x86_64-pc-linux-gnu
@@ -526,8 +539,8 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] patchwork_1.3.2    MiscMetabar_0.15.2 divent_0.5-3       purrr_1.2.2       
-#> [5] dplyr_1.2.1        dada2_1.38.0       Rcpp_1.1.1         ggplot2_4.0.2     
+#> [1] patchwork_1.3.2    MiscMetabar_0.16.6 divent_0.5-3       purrr_1.2.2       
+#> [5] dplyr_1.2.1        dada2_1.38.0       Rcpp_1.1.1-1.1     ggplot2_4.0.3     
 #> [9] phyloseq_1.54.2   
 #> 
 #> loaded via a namespace (and not attached):
@@ -563,14 +576,14 @@ sessionInfo()
 #>  [59] lattice_0.22-9              tibble_3.3.1               
 #>  [61] plyr_1.8.9                  Biobase_2.70.0             
 #>  [63] withr_3.0.2                 ShortRead_1.68.0           
-#>  [65] S7_0.2.1                    evaluate_1.0.5             
+#>  [65] S7_0.2.2                    evaluate_1.0.5             
 #>  [67] desc_1.4.3                  survival_3.8-6             
 #>  [69] RcppParallel_5.1.11-2       Biostrings_2.78.0          
 #>  [71] pillar_1.11.1               MatrixGenerics_1.22.0      
 #>  [73] DiagrammeR_1.0.11           foreach_1.5.2              
 #>  [75] stats4_4.5.2                generics_0.1.4             
 #>  [77] S4Vectors_0.48.1            scales_1.4.0               
-#>  [79] glue_1.8.0                  tools_4.5.2                
+#>  [79] glue_1.8.1                  tools_4.5.2                
 #>  [81] interp_1.1-6                data.table_1.18.2.1        
 #>  [83] GenomicAlignments_1.46.0    fs_2.0.1                   
 #>  [85] visNetwork_2.1.4            rhdf5_2.54.1               

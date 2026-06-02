@@ -62,23 +62,23 @@ Adrien Taudière
 ## Examples
 
 ``` r
-plot_refseq_pq(data_fungi)
-#> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).
+plot_refseq_pq(data_fungi_mini)
+#> Cleaning suppress 0 taxa (  ) and 1 sample(s) ( W26-001-B_S165_MERGED.fastq.gz ).
 #> Number of non-matching ASV 0
-#> Number of matching ASV 1420
+#> Number of matching ASV 45
 #> Number of filtered-out ASV 1
-#> Number of kept ASV 1419
-#> Number of kept samples 185
-#> Warning: Removed 688 rows containing missing values or values outside the scale range
+#> Number of kept ASV 44
+#> Number of kept samples 136
+#> Warning: Removed 336 rows containing missing values or values outside the scale range
 #> (`geom_point()`).
 
-plot_refseq_pq(data_fungi, q = c(2), first_n = 300)
+plot_refseq_pq(data_fungi_mini, q = c(2), first_n = 300)
 #> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).
 #> Number of non-matching ASV 0
-#> Number of matching ASV 1420
-#> Number of filtered-out ASV 483
-#> Number of kept ASV 937
-#> Number of kept samples 185
+#> Number of matching ASV 45
+#> Number of filtered-out ASV 0
+#> Number of kept ASV 45
+#> Number of kept samples 137
 #> ! Entropy estimators can't apply to probability data.
 #> → `estimator` forced to 'naive'.
 #> ! The estimator can't be applied to non-integer values.
@@ -301,144 +301,9 @@ plot_refseq_pq(data_fungi, q = c(2), first_n = 300)
 #> ! Entropy estimators can't apply to probability data.
 #> → `estimator` forced to 'naive'.
 #> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> ! Entropy estimators can't apply to probability data.
-#> → `estimator` forced to 'naive'.
-#> ! The estimator can't be applied to non-integer values.
-#> Warning: Removed 492 rows containing missing values or values outside the scale range
+#> Warning: Removed 348 rows containing missing values or values outside the scale range
 #> (`geom_point()`).
-#> Warning: Removed 123 rows containing missing values or values outside the scale range
+#> Warning: Removed 87 rows containing missing values or values outside the scale range
 #> (`geom_line()`).
 
 ```

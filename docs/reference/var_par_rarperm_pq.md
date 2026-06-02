@@ -109,7 +109,8 @@ Adrien Taudière
 ``` r
 # \donttest{
 if (requireNamespace("vegan")) {
-  data_fungi_woNA <- subset_samples(data_fungi, !is.na(Time) & !is.na(Height))
+  data_fungi_woNA <- subset_samples(data_fungi_mini,
+    !is.na(Time) & !is.na(Height))
   res_var_9 <- var_par_rarperm_pq(
     data_fungi_woNA,
     list_component = list(
@@ -134,8 +135,10 @@ if (requireNamespace("vegan")) {
 
   plot_var_part_pq(res_var_2)
 }
+#> Taxa are now in columns.
 #>   |                                                          |                                                  |   0%  |                                                          |======                                            |  11%  |                                                          |===========                                       |  22%  |                                                          |=================                                 |  33%  |                                                          |======================                            |  44%  |                                                          |============================                      |  56%  |                                                          |=================================                 |  67%  |                                                          |=======================================           |  78%  |                                                          |============================================      |  89%  |                                                          |==================================================| 100%
 
+#> Taxa are now in columns.
 #>   |                                                          |                                                  |   0%  |                                                          |=========================                         |  50%  |                                                          |==================================================| 100%
 
 # }

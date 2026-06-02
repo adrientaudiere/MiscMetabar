@@ -132,19 +132,31 @@ Biogeography*, 47.
 # \donttest{
 if (requireNamespace("glmulti")) {
   res_glmulti <-
-    glmutli_pq(data_fungi, "Hill_0 ~ Hill_1 + Abundance + Time + Height", level = 1)
+    glmutli_pq(data_fungi_mini,
+      "Hill_0 ~ Hill_1 + Abundance + Time + Height", level = 1)
   res_glmulti
   res_glmulti_interaction <-
-    glmutli_pq(data_fungi, "Hill_0 ~ Abundance + Time + Height", level = 2)
+    glmutli_pq(data_fungi_mini,
+      "Hill_0 ~ Abundance + Time + Height", level = 2)
   res_glmulti_interaction
 }
-#> Taxa are now in rows.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
 #> Joining with `by = join_by(Sample)`
 #> Initialization...
 #> TASK: Exhaustive screening of candidate set.
 #> Fitting...
 #> Completed.
-#> Taxa are now in rows.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
 #> Joining with `by = join_by(Sample)`
 #> Initialization...
 #> TASK: Exhaustive screening of candidate set.
@@ -152,32 +164,32 @@ if (requireNamespace("glmulti")) {
 #> 
 #> After 50 models:
 #> Best model: Hill_0~1+Abundance+Time+Time:Abundance+Height:Abundance
-#> Crit= 1162.46935121017
-#> Mean crit= 1326.57756179615
+#> Crit= 380.266307886255
+#> Mean crit= 439.149731147241
 #> Completed.
-#>                            estimates unconditional_interval nb_model importance
-#> HeightHigh:Time         0.0238428433           5.369345e-03        8 0.02339703
-#> Abundance:HeightHigh    0.0001567326           9.040694e-08        8 0.05936981
-#> HeightLow               1.3672307044           2.837356e+01       32 0.28630897
-#> HeightMiddle           -2.8823946528           4.305119e+01       32 0.28630897
-#> HeightLow:Time          0.6976197936           1.991032e+00       32 0.48361405
-#> HeightMiddle:Time      -0.3490561261           1.442196e+00       32 0.48361405
-#> Abundance:HeightLow     0.0009609861           1.351266e-06       32 0.52347724
-#> Abundance:HeightMiddle  0.0008434925           1.380631e-06       32 0.52347724
-#> Time                    1.9148085653           3.424966e+00       32 0.72978508
-#> Abundance:Time         -0.0001497892           9.036339e-09       32 0.86061128
-#> Abundance               0.0040684019           1.456572e-06       32 0.94026666
-#>                               alpha               variable
-#> HeightHigh:Time        1.442951e-01        HeightHigh:Time
-#> Abundance:HeightHigh   5.895794e-04   Abundance:HeightHigh
-#> HeightLow              1.050820e+01              HeightLow
-#> HeightMiddle           1.292959e+01           HeightMiddle
-#> HeightLow:Time         2.778215e+00         HeightLow:Time
-#> HeightMiddle:Time      2.367383e+00      HeightMiddle:Time
-#> Abundance:HeightLow    2.286482e-03    Abundance:HeightLow
-#> Abundance:HeightMiddle 2.312397e-03 Abundance:HeightMiddle
-#> Time                   3.645902e+00                   Time
-#> Abundance:Time         1.874648e-04         Abundance:Time
-#> Abundance              2.378267e-03              Abundance
+#>                            estimates unconditional_interval nb_model
+#> HeightHigh:Time         1.021021e-03           4.896053e-06        8
+#> Abundance:HeightHigh    1.444574e-06           1.376218e-11        8
+#> HeightLow              -2.818502e-01           2.975283e-01       32
+#> HeightMiddle           -2.284000e-01           2.804621e-01       32
+#> HeightLow:Time         -4.802362e-02           7.037018e-03       32
+#> HeightMiddle:Time      -5.451488e-02           8.777216e-03       32
+#> Abundance:HeightLow     9.952410e-05           2.196739e-08       32
+#> Abundance:HeightMiddle  1.942462e-04           3.617651e-08       32
+#> Time                    1.927954e-01           1.152254e-02       32
+#> Abundance               4.367041e-04           3.508660e-08       32
+#> Abundance:Time         -3.131657e-05           1.596068e-10       32
+#>                         importance        alpha               variable
+#> HeightHigh:Time        0.006596239 4.348738e-03        HeightHigh:Time
+#> Abundance:HeightHigh   0.014891518 7.317402e-06   Abundance:HeightHigh
+#> HeightLow              0.293275977 1.076681e+00              HeightLow
+#> HeightMiddle           0.293275977 1.046605e+00           HeightMiddle
+#> HeightLow:Time         0.409654935 1.655170e-01         HeightLow:Time
+#> HeightMiddle:Time      0.409654935 1.848108e-01      HeightMiddle:Time
+#> Abundance:HeightLow    0.671985280 2.935384e-04    Abundance:HeightLow
+#> Abundance:HeightMiddle 0.671985280 3.755994e-04 Abundance:HeightMiddle
+#> Time                   0.900282159 2.125915e-01                   Time
+#> Abundance              0.933935731 3.708996e-04              Abundance
+#> Abundance:Time         0.967098115 2.508155e-05         Abundance:Time
 # }
 ```

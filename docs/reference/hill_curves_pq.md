@@ -108,6 +108,7 @@ Adrien Taudière
 ## Examples
 
 ``` r
+# \donttest{
 if (requireNamespace("vegan")) {
   hill_curves_pq(data_fungi_mini, merge_sample_by = "Time")
   hill_curves_pq(data_fungi_mini, color_fac = "Time", plot_legend = FALSE)
@@ -147,4 +148,6 @@ if (requireNamespace("vegan")) {
 #> 47 were discarded due to NA in variables present in formula.
 #> 'nperm' >= set of all permutations: complete enumeration.
 #> Set of permutations < 'minperm'. Generating entire set.
+
+# }
 ```

@@ -1,6 +1,7 @@
 # Import/export and track
 
 ``` r
+
 library(MiscMetabar)
 data(data_fungi)
 data(data_fungi_sp_known)
@@ -15,6 +16,7 @@ Finally, if `rdata` is set to TRUE, a `rdata` file containing the
 phyloseq object is also writed.
 
 ``` r
+
 write_pq(data_fungi, path = "fungi_phyloseq")
 write_pq(data_fungi, path = "fungi_phyloseq", one_file = TRUE)
 write_pq(data_fungi, path = "fungi_phyloseq", rdata = TRUE)
@@ -26,6 +28,7 @@ to write the phyloseq object in all 3 versions (one table for each slot,
 a file merging each slot and an Rdata file).
 
 ``` r
+
 save_pq(data_fungi)
 ```
 
@@ -41,6 +44,7 @@ please use the function
 [`read_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/read_pq.md).
 
 ``` r
+
 d <- read_pq(path = "fungi_phyloseq")
 ```
 
@@ -59,6 +63,7 @@ derep-class object, matrix of samples x clusters (e.g. `otu_table`) and
 phyloseq-class object.
 
 ``` r
+
 track_wkflow(list(data_fungi, data_fungi_sp_known))
 #>   nb_sequences nb_clusters nb_samples
 #> 1      1839124        1420        185
@@ -68,6 +73,7 @@ track_wkflow(list(data_fungi, data_fungi_sp_known))
 ## Session information
 
 ``` r
+
 sessionInfo()
 #> R version 4.5.2 (2025-10-31)
 #> Platform: x86_64-pc-linux-gnu

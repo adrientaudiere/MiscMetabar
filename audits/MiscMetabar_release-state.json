@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "package": "MiscMetabar",
+  "package_dir": "/home/adrien/Nextcloud/IdEst/Projets/pqverse/pqverse_pkg/MiscMetabar",
+  "version": "0.16.5.9000",
+  "mode": "interactive",
+  "flags": {
+    "with_coverage": false,
+    "with_audit": false,
+    "with_remote_checks": false,
+    "with_examples": false,
+    "no_cache": false
+  },
+  "started_at": "2026-05-27T14:07:21Z",
+  "updated_at": "2026-05-28T11:43:50Z",
+  "current_stage": "bump_version",
+  "has_blocking_errors": false,
+  "stages": {
+    "format": {
+      "status": "DONE",
+      "fixes_applied": [],
+      "from_cache": false,
+      "started_at": "2026-05-27T14:09:27Z",
+      "ended_at": "2026-05-27T14:09:27Z"
+    },
+    "document": {
+      "status": "DONE",
+      "fixes_applied": [],
+      "from_cache": false,
+      "started_at": "2026-05-27T14:26:52Z",
+      "ended_at": "2026-05-27T14:27:12Z"
+    },
+    "rcmdcheck": {
+      "status": "DONE",
+      "fixes_applied": [],
+      "errors": 0,
+      "warnings": 0,
+      "notes": 1,
+      "ambiguous": [],
+      "from_cache": false,
+      "started_at": "2026-05-28T10:50:26Z",
+      "ended_at": "2026-05-28T10:58:58Z",
+      "reason": "0E 0W 1N"
+    },
+    "tests": {
+      "status": "DONE",
+      "fixes_applied": [],
+      "from_cache": false,
+      "started_at": "2026-05-28T09:08:37Z",
+      "ended_at": "2026-05-28T09:21:55Z",
+      "reason": "1096 tests, 0 fail, 31 warn, 1 skip"
+    },
+    "coverage": {
+      "status": "SKIPPED",
+      "fixes_applied": [],
+      "from_cache": false
+    },
+    "audit": {
+      "status": "SKIPPED",
+      "fixes_applied": [],
+      "from_cache": false
+    },
+    "rcmdcheck_examples": {
+      "status": "SKIPPED",
+      "fixes_applied": [],
+      "errors": 0,
+      "warnings": 0,
+      "notes": 0,
+      "ambiguous": [],
+      "from_cache": false
+    },
+    "cran_extra": {
+      "status": "DONE",
+      "fixes_applied": [],
+      "from_cache": false,
+      "ended_at": "2026-05-28T10:58:58Z",
+      "reason": "XVector subseq import added; cran-comments.md updated; DOI 403 noted"
+    },
+    "winbuilder": {
+      "status": "SKIPPED",
+      "fixes_applied": [],
+      "from_cache": false
+    },
+    "rhub": {
+      "status": "SKIPPED",
+      "fixes_applied": [],
+      "from_cache": false
+    },
+    "bump_version": {
+      "status": "DONE",
+      "fixes_applied": [],
+      "from_cache": false,
+      "ended_at": "2026-05-28T11:43:50Z",
+      "reason": "0.16.5.9000 → 0.16.6"
+    },
+    "merge_push": {
+      "status": "PENDING",
+      "fixes_applied": [],
+      "from_cache": false
+    }
+  },
+  "ambiguous_issues": []
+}

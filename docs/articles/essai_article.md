@@ -1,6 +1,7 @@
 # essai_article
 
 ``` r
+
 library(MiscMetabar)
 #> Loading required package: phyloseq
 #> Loading required package: ggplot2

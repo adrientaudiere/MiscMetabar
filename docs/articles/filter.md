@@ -1,6 +1,7 @@
 # Filter taxa and samples
 
 ``` r
+
 library(MiscMetabar)
 library(formattable)
 ```
@@ -16,6 +17,7 @@ versatile but need to be used with caution because the order of the
 condition must match the orders of the samples.
 
 ``` r
+
 data(data_fungi)
 cond_samp <- grepl("A1", data_fungi@sam_data[["Sample_names"]])
 subset_samples_pq(data_fungi, cond_samp)
@@ -43,6 +45,7 @@ and then select only taxa with more than 1000 nb_sequences using
 [`subset_taxa_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/subset_taxa_pq.md).
 
 ``` r
+
 df_basidio <- subset_taxa(data_fungi, Phylum == "Basidiomycota")
 df_basidio_abundant <- subset_taxa_pq(
   df_basidio,
@@ -77,6 +80,7 @@ the database :
   quality (score) that could be found just by chance.
 
 ``` r
+
 path_db <- system.file("extdata",
   "100_sp_UNITE_sh_general_release_dynamic.fasta",
   package = "MiscMetabar", mustWork = TRUE
@@ -105,6 +109,7 @@ if (!is(blast_error_or_not, "try-error")) {
 ```
 
 ``` r
+
 if (!is(blast_error_or_not, "try-error")) {
   formattable(
     track_formattable,
@@ -136,6 +141,7 @@ on pseudo-abundance. In the example code above, we select taxon using
 the ASV_50 as control through 6 different algorithms.
 
 ``` r
+
 res_seq <-
   suppressWarnings(
     subset_taxa_tax_control(data_fungi, as.numeric(data_fungi@otu_table[, 50]),
@@ -186,6 +192,7 @@ res_mean <-
 ```
 
 ``` r
+
 track_formattable <- track_wkflow(list(
   "raw data" = data_fungi,
   "cutoff_seq" = res_seq,
@@ -222,6 +229,7 @@ formattable(
 ## Session information
 
 ``` r
+
 sessionInfo()
 #> R version 4.5.2 (2025-10-31)
 #> Platform: x86_64-pc-linux-gnu

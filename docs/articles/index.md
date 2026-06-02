@@ -23,5 +23,7 @@
   metabarcoding](https://adrientaudiere.github.io/MiscMetabar/articles/states_of_fields_in_R.md):
 - [Examples with published dataset:
   Tengeler](https://adrientaudiere.github.io/MiscMetabar/articles/tengeler.md):
+- [Function
+  timing](https://adrientaudiere.github.io/MiscMetabar/articles/timing.md):
 - [Tree building and
   visualization](https://adrientaudiere.github.io/MiscMetabar/articles/tree_visualization.md):

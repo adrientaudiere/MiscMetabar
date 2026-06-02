@@ -114,9 +114,10 @@ Adrien Taudière
 ## Examples
 
 ``` r
+# \donttest{
 if (requireNamespace("vegan")) {
   data_fungi_woNA <-
-    subset_samples(data_fungi, !is.na(Time) & !is.na(Height))
+    subset_samples(data_fungi_mini, !is.na(Time) & !is.na(Height))
   adonis_rarperm_pq(data_fungi_woNA, "Time*Height", na_remove = TRUE, nperm = 3)
 }
 #>   |                                                          |                                                  |   0%
@@ -124,9 +125,10 @@ if (requireNamespace("vegan")) {
 #> Please record this for your records so others can reproduce.
 #> Try `set.seed(1); .Random.seed` for the full vector
 #> ...
-#> 1156OTUs were removed because they are no longer 
+#> 15OTUs were removed because they are no longer 
 #> present in any sample after random subsampling
 #> ...
+#> Taxa are now in columns.
 #> Removing NA from Time
 #> Removing NA from Height
 #>   |                                                          |=================                                 |  33%
@@ -134,9 +136,10 @@ if (requireNamespace("vegan")) {
 #> Please record this for your records so others can reproduce.
 #> Try `set.seed(2); .Random.seed` for the full vector
 #> ...
-#> 1160OTUs were removed because they are no longer 
+#> 15OTUs were removed because they are no longer 
 #> present in any sample after random subsampling
 #> ...
+#> Taxa are now in columns.
 #> Removing NA from Time
 #> Removing NA from Height
 #>   |                                                          |=================================                 |  67%
@@ -144,28 +147,30 @@ if (requireNamespace("vegan")) {
 #> Please record this for your records so others can reproduce.
 #> Try `set.seed(3); .Random.seed` for the full vector
 #> ...
-#> 1180OTUs were removed because they are no longer 
+#> 15OTUs were removed because they are no longer 
 #> present in any sample after random subsampling
 #> ...
+#> Taxa are now in columns.
 #> Removing NA from Time
 #> Removing NA from Height
 #>   |                                                          |==================================================| 100%
 #> $mean
-#>           Df  SumOfSqs         R2        F     Pr(>F)
-#> Model      5  2.724437 0.05067775 1.121097 0.05733333
-#> Residual 105 51.040745 0.94932225       NA         NA
-#> Total    110 53.765182 1.00000000       NA         NA
+#>          Df  SumOfSqs         R2         F    Pr(>F)
+#> Model     5  2.346505 0.06649319 0.9844575 0.5743333
+#> Residual 69 32.942384 0.93350681        NA        NA
+#> Total    74 35.288889 1.00000000        NA        NA
 #> 
 #> $quantile_min
-#>           Df  SumOfSqs        R2        F  Pr(>F)
-#> Model      5  2.633518 0.0488029 1.077451 0.03225
-#> Residual 105 50.681723 0.9479599       NA      NA
-#> Total    110 53.463976 1.0000000       NA      NA
+#>          Df  SumOfSqs         R2         F Pr(>F)
+#> Model     5  2.070369 0.05846765 0.8569665 0.1342
+#> Residual 69 32.531964 0.92132923        NA     NA
+#> Total    74 35.130000 1.00000000        NA     NA
 #> 
 #> $quantile_max
-#>           Df  SumOfSqs         R2        F Pr(>F)
-#> Model      5  2.782253 0.05204009 1.152836 0.0997
-#> Residual 105 51.328995 0.95119710       NA     NA
-#> Total    110 53.962513 1.00000000       NA     NA
+#>          Df  SumOfSqs         R2        F  Pr(>F)
+#> Model     5  2.778036 0.07867077 1.178625 0.86855
+#> Residual 69 33.340964 0.94153235       NA      NA
+#> Total    74 35.421333 1.00000000       NA      NA
 #> 
+# }
 ```

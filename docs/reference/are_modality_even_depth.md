@@ -43,6 +43,7 @@ Adrien Taudière
 ## Examples
 
 ``` r
+
 are_modality_even_depth(data_fungi_mini, "Time")$p.value
 #> [1] 0.0006936505
 are_modality_even_depth(rarefy_even_depth(data_fungi_mini), "Time")$p.value

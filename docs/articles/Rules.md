@@ -65,6 +65,7 @@ limitations or not working at all on windows OS:
 ## Session information
 
 ``` r
+
 sessionInfo()
 ```
 

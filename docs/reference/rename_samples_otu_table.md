@@ -33,6 +33,7 @@ Adrien Taudière
 ## Examples
 
 ``` r
+
 rename_samples_otu_table(data_fungi, as.character(seq_along(sample_names(data_fungi))))
 #> OTU Table:          [1420 taxa and 185 samples]
 #>                      taxa are columns

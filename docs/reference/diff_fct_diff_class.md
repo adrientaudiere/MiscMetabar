@@ -62,6 +62,7 @@ Adrien Taudière
 ## Examples
 
 ``` r
+
 diff_fct_diff_class(
   data_fungi@sam_data$Sample_id,
   numeric_fonction = sum,

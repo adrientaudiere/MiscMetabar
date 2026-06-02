@@ -1,6 +1,7 @@
 # alpha-div
 
 ``` r
+
 library(MiscMetabar)
 data(data_fungi)
 ```
@@ -20,6 +21,7 @@ plots the Hill diversity profile (diversity as a function of the order
 `merge_sample_by`.
 
 ``` r
+
 data(data_fungi_mini)
 dfm_rarefied <- rarefy_even_depth(data_fungi_mini, rngseed = 1, sample.size=200)
 p <-profile_hill_pq(dfm_rarefied) 
@@ -33,6 +35,7 @@ p + no_legend()
 Hill diversity profiles per sample (data_fungi_mini)
 
 ``` r
+
 profile_hill_pq(dfm_rarefied, merge_sample_by = "Height")
 #> Warning in merge_samples2(physeq, merge_sample_by): `group` has missing values;
 #> corresponding samples will be dropped
@@ -51,7 +54,8 @@ or per merged group — showing how estimated diversity grows with
 sequencing depth.
 
 ``` r
-hill_acc_pq(dfm_rarefied, q = 1, n_simulations=20) + no_legend()
+
+hill_acc_pq(dfm_rarefied, q = 1, n_simulations = 5) + no_legend()
 #> Warning: This manual palette can handle a maximum of 13 values. You have
 #> supplied 89
 ```
@@ -62,7 +66,8 @@ hill_acc_pq(dfm_rarefied, q = 1, n_simulations=20) + no_legend()
 Rarefaction curves per sample (Hill order q = 1)
 
 ``` r
-hill_acc_pq(dfm_rarefied, q = 0, merge_sample_by = "Height", n_simulations=20)
+
+hill_acc_pq(dfm_rarefied, q = 0, merge_sample_by = "Height", n_simulations = 5)
 #> Warning in merge_samples2(physeq, merge_sample_by): `group` has missing values;
 #> corresponding samples will be dropped
 ```
@@ -80,6 +85,7 @@ roots of the number of sequence as the first explanatory variable of the
 linear model [^2].
 
 ``` r
+
 p <- MiscMetabar::hill_pq(data_fungi, fact = "Height")
 p$plot_Hill_0
 ```
@@ -89,6 +95,7 @@ p$plot_Hill_0
 Hill number 1
 
 ``` r
+
 p$plot_tuckey
 #> NULL
 ```
@@ -103,6 +110,7 @@ for two-group comparisons when there are no relevant covariates.
 ### Alpha diversity using package `MicrobiotaProcess`
 
 ``` r
+
 library("MicrobiotaProcess")
 clean_pq(subset_samples_pq(data_fungi, !is.na(data_fungi@sam_data$Height))) %>%
   as.MPSE() %>%
@@ -145,6 +153,7 @@ dichotomy engendered by P values. ” Citation from dabest documentation
 #### Durga package
 
 ``` r
+
 library("Durga")
 psm <- psmelt_samples_pq(data_fungi)
 
@@ -155,6 +164,7 @@ DurgaPlot(durga_res)
 ![](alpha-div_files/figure-html/unnamed-chunk-9-1.png)
 
 ``` r
+
 durga_pq <- function(physeq, formula, plot = FALSE) {
   verify_pq(physeq)
   psm <- psmelt_samples_pq(physeq)
@@ -173,6 +183,7 @@ durga_pq(data_fungi, Hill_0 ~ Height, plot = TRUE)
 ![](alpha-div_files/figure-html/unnamed-chunk-10-1.png)
 
 ``` r
+
 durga_pq(data_fungi, Hill_0 ~ Time + Height, plot = TRUE)
 ```
 
@@ -180,18 +191,21 @@ durga_pq(data_fungi, Hill_0 ~ Time + Height, plot = TRUE)
 
 ``` r
 
+
 durga_pq(data_fungi, Hill_0 ~ Time == 0, plot = TRUE)
 ```
 
 ![](alpha-div_files/figure-html/unnamed-chunk-10-3.png)
 
 ``` r
+
 durga_pq(data_fungi, Hill_1 ~ Time == 0, plot = TRUE)
 ```
 
 ![](alpha-div_files/figure-html/unnamed-chunk-10-4.png)
 
 ``` r
+
 durga_pq(data_fungi, Hill_2 ~ Time == 0, plot = TRUE)
 ```
 
@@ -200,6 +214,7 @@ durga_pq(data_fungi, Hill_2 ~ Time == 0, plot = TRUE)
 #### dabest R package
 
 ``` r
+
 library("dabestr")
 psm <- psmelt_samples_pq(data_fungi)
 
@@ -216,6 +231,7 @@ load(
 ![](alpha-div_files/figure-html/unnamed-chunk-11-1.png)
 
 ``` r
+
 psm |>
   mutate(Time_is_0 = Time == 0) |>
   load(
@@ -244,27 +260,28 @@ From the help of glmulti package :
 > inference.
 
 ``` r
+
 library("glmulti")
 formula <- "Hill_0 ~ Hill_1 + Abundance + Time + Height"
 res_glmulti <-
-  glmutli_pq(data_fungi, formula = formula, level = 1)
+  glmutli_pq(data_fungi_mini, formula = formula, level = 1)
 #> Initialization...
 #> TASK: Exhaustive screening of candidate set.
 #> Fitting...
 #> Completed.
 res_glmulti
-#>                 estimates unconditional_interval nb_model importance
-#> Hill_1        2.900951522           4.275367e-01        8  0.9997782
-#> Abundance     0.003998598           2.385948e-07        8  1.0000000
-#> Time          0.726115314           6.769683e-01        8  1.0000000
-#> HeightLow    15.419649831           9.548706e+01        8  1.0000000
-#> HeightMiddle -0.782365837           1.030841e+02        8  1.0000000
+#>                  estimates unconditional_interval nb_model importance
+#> Abundance     0.0002425004           4.049862e-09        8  0.9976746
+#> Hill_1        1.4818202876           1.144356e-01        8  0.9996675
+#> Time          0.0202445718           3.271583e-03        8  1.0000000
+#> HeightLow    -0.0685647506           6.111797e-01        8  1.0000000
+#> HeightMiddle  0.1905543547           6.885434e-01        8  1.0000000
 #>                     alpha     variable
-#> Hill_1       1.296475e+00       Hill_1
-#> Abundance    9.685283e-04    Abundance
-#> Time         1.631422e+00         Time
-#> HeightLow    1.937557e+01    HeightLow
-#> HeightMiddle 2.013159e+01 HeightMiddle
+#> Abundance    0.0001269354    Abundance
+#> Hill_1       0.6748363040       Hill_1
+#> Time         0.1141042429         Time
+#> HeightLow    1.5596025795    HeightLow
+#> HeightMiddle 1.6553735697 HeightMiddle
 
 ggplot(data = res_glmulti, aes(x = estimates, y = variable)) +
   geom_point(
@@ -293,6 +310,7 @@ ggplot(data = res_glmulti, aes(x = estimates, y = variable)) +
 
 ``` r
 
+
 ggplot(data = res_glmulti, aes(
   x = importance,
   y = as.factor(variable),
@@ -316,43 +334,44 @@ ggplot(data = res_glmulti, aes(
 ![](alpha-div_files/figure-html/unnamed-chunk-13-2.png)
 
 ``` r
+
 formula <- "Hill_0 ~ Abundance + Time + Height"
 res_glmulti_interaction <-
-  glmutli_pq(data_fungi, formula = formula, level = 2)
+  glmutli_pq(data_fungi_mini, formula = formula, level = 2)
 #> Initialization...
 #> TASK: Exhaustive screening of candidate set.
 #> Fitting...
 #> 
 #> After 50 models:
 #> Best model: Hill_0~1+Abundance+Time+Time:Abundance+Height:Abundance
-#> Crit= 1162.46935121017
-#> Mean crit= 1326.57756179615
+#> Crit= 380.266307886255
+#> Mean crit= 439.149731147241
 #> Completed.
 res_glmulti_interaction
-#>                            estimates unconditional_interval nb_model importance
-#> HeightHigh:Time         0.0238428433           5.369345e-03        8 0.02339703
-#> Abundance:HeightHigh    0.0001567326           9.040694e-08        8 0.05936981
-#> HeightLow               1.3672307044           2.837356e+01       32 0.28630897
-#> HeightMiddle           -2.8823946528           4.305119e+01       32 0.28630897
-#> HeightLow:Time          0.6976197936           1.991032e+00       32 0.48361405
-#> HeightMiddle:Time      -0.3490561261           1.442196e+00       32 0.48361405
-#> Abundance:HeightLow     0.0009609861           1.351266e-06       32 0.52347724
-#> Abundance:HeightMiddle  0.0008434925           1.380631e-06       32 0.52347724
-#> Time                    1.9148085653           3.424966e+00       32 0.72978508
-#> Abundance:Time         -0.0001497892           9.036339e-09       32 0.86061128
-#> Abundance               0.0040684019           1.456572e-06       32 0.94026666
-#>                               alpha               variable
-#> HeightHigh:Time        1.442951e-01        HeightHigh:Time
-#> Abundance:HeightHigh   5.895794e-04   Abundance:HeightHigh
-#> HeightLow              1.050820e+01              HeightLow
-#> HeightMiddle           1.292959e+01           HeightMiddle
-#> HeightLow:Time         2.778215e+00         HeightLow:Time
-#> HeightMiddle:Time      2.367383e+00      HeightMiddle:Time
-#> Abundance:HeightLow    2.286482e-03    Abundance:HeightLow
-#> Abundance:HeightMiddle 2.312397e-03 Abundance:HeightMiddle
-#> Time                   3.645902e+00                   Time
-#> Abundance:Time         1.874648e-04         Abundance:Time
-#> Abundance              2.378267e-03              Abundance
+#>                            estimates unconditional_interval nb_model
+#> HeightHigh:Time         1.021021e-03           4.896053e-06        8
+#> Abundance:HeightHigh    1.444574e-06           1.376218e-11        8
+#> HeightLow              -2.818502e-01           2.975283e-01       32
+#> HeightMiddle           -2.284000e-01           2.804621e-01       32
+#> HeightLow:Time         -4.802362e-02           7.037018e-03       32
+#> HeightMiddle:Time      -5.451488e-02           8.777216e-03       32
+#> Abundance:HeightLow     9.952410e-05           2.196739e-08       32
+#> Abundance:HeightMiddle  1.942462e-04           3.617651e-08       32
+#> Time                    1.927954e-01           1.152254e-02       32
+#> Abundance               4.367041e-04           3.508660e-08       32
+#> Abundance:Time         -3.131657e-05           1.596068e-10       32
+#>                         importance        alpha               variable
+#> HeightHigh:Time        0.006596239 4.348738e-03        HeightHigh:Time
+#> Abundance:HeightHigh   0.014891518 7.317402e-06   Abundance:HeightHigh
+#> HeightLow              0.293275977 1.076681e+00              HeightLow
+#> HeightMiddle           0.293275977 1.046605e+00           HeightMiddle
+#> HeightLow:Time         0.409654935 1.655170e-01         HeightLow:Time
+#> HeightMiddle:Time      0.409654935 1.848108e-01      HeightMiddle:Time
+#> Abundance:HeightLow    0.671985280 2.935384e-04    Abundance:HeightLow
+#> Abundance:HeightMiddle 0.671985280 3.755994e-04 Abundance:HeightMiddle
+#> Time                   0.900282159 2.125915e-01                   Time
+#> Abundance              0.933935731 3.708996e-04              Abundance
+#> Abundance:Time         0.967098115 2.508155e-05         Abundance:Time
 
 ggplot(data = res_glmulti_interaction, aes(x = estimates, y = variable)) +
   geom_point(
@@ -381,6 +400,7 @@ ggplot(data = res_glmulti_interaction, aes(x = estimates, y = variable)) +
 
 ``` r
 
+
 ggplot(data = res_glmulti_interaction, aes(
   x = importance,
   y = as.factor(variable),
@@ -406,6 +426,7 @@ ggplot(data = res_glmulti_interaction, aes(
 ## Session information
 
 ``` r
+
 sessionInfo()
 #> R version 4.5.2 (2025-10-31)
 #> Platform: x86_64-pc-linux-gnu
@@ -432,9 +453,9 @@ sessionInfo()
 #> other attached packages:
 #>  [1] glmulti_1.0.8            leaps_3.2                rJava_1.0-18            
 #>  [4] dabestr_2025.3.15        Durga_2.1.0              MicrobiotaProcess_1.22.1
-#>  [7] MiscMetabar_0.15.2       divent_0.5-3             purrr_1.2.2             
-#> [10] dplyr_1.2.1              dada2_1.38.0             Rcpp_1.1.1              
-#> [13] ggplot2_4.0.2            phyloseq_1.54.2         
+#>  [7] MiscMetabar_0.16.6       divent_0.5-3             purrr_1.2.2             
+#> [10] dplyr_1.2.1              dada2_1.38.0             Rcpp_1.1.1-1.1          
+#> [13] ggplot2_4.0.3            phyloseq_1.54.2         
 #> 
 #> loaded via a namespace (and not attached):
 #>   [1] splines_4.5.2               bitops_1.0-9               
@@ -465,7 +486,7 @@ sessionInfo()
 #>  [51] systemfonts_1.3.2           foreach_1.5.2              
 #>  [53] tools_4.5.2                 ggnewscale_0.5.2           
 #>  [55] treeio_1.34.0               ragg_1.5.2                 
-#>  [57] ggstar_1.0.6                glue_1.8.0                 
+#>  [57] ggstar_1.0.6                glue_1.8.1                 
 #>  [59] gridExtra_2.3               SparseArray_1.10.10        
 #>  [61] xfun_0.57                   mgcv_1.9-4                 
 #>  [63] MatrixGenerics_1.22.0       withr_3.0.2                
@@ -480,7 +501,7 @@ sessionInfo()
 #>  [81] data.table_1.18.2.1         htmlwidgets_1.6.4          
 #>  [83] S4Arrays_1.10.1             pkgconfig_2.0.3            
 #>  [85] gtable_0.3.6                modeltools_0.2-24          
-#>  [87] S7_0.2.1                    hwriter_1.3.2.1            
+#>  [87] S7_0.2.2                    hwriter_1.3.2.1            
 #>  [89] XVector_0.50.0              htmltools_0.5.9            
 #>  [91] fontBitstreamVera_0.1.1     biomformat_1.38.3          
 #>  [93] scales_1.4.0                Biobase_2.70.0             

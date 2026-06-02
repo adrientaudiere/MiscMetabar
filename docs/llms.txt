@@ -12,9 +12,9 @@ databases, (iii) high-throughput sequencing (HTS), and (iv)
 bioinformatics resources have enabled the description of biological
 communities through metabarcoding. Metabarcoding involves the sequencing
 of millions (*meta*-) of short regions of specific DNA (*-barcoding*,
-Valentini, Pompanon, and Taberlet (2009)) often from environmental
-samples (eDNA, Taberlet et al. (2012)) such as human stomach contents,
-lake water, soil, and air.
+Valentini et al. (2009)) often from environmental samples (eDNA,
+Taberlet et al. (2012)) such as human stomach contents, lake water,
+soil, and air.
 
 `MiscMetabar` aims to facilitate the **description**,
 **transformation**, **exploration** and **reproducibility** of
@@ -30,6 +30,7 @@ Holmes 2013) and [`targets`](https://books.ropensci.org/targets/)
 A CRAN version of MiscMetabar is available.
 
 ``` r
+
 install.packages("MiscMetabar")
 ```
 
@@ -40,6 +41,7 @@ comes with the benefit to check for uninstalled dependencies on your
 computer (system requirements), thank you [pak](https://pak.r-lib.org/)!
 
 ``` r
+
 pak::pkg_install("MiscMetabar")
 ```
 
@@ -47,6 +49,7 @@ You can also install the stable development version from
 [GitHub](https://github.com/) with:
 
 ``` r
+
 if (!require("devtools", quietly = TRUE)) {
   install.packages("devtools")
 }
@@ -57,6 +60,7 @@ You can install the unstable development version from
 [GitHub](https://github.com/) with:
 
 ``` r
+
 if (!require("devtools", quietly = TRUE)) {
   install.packages("devtools")
 }
@@ -100,6 +104,7 @@ codes](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html).
 ### Summarize a physeq object
 
 ``` r
+
 library("MiscMetabar")
 library("phyloseq")
 library("magrittr")
@@ -114,6 +119,7 @@ shown.](reference/figures/README-example-1.png)
 ### Alpha-diversity analysis
 
 ``` r
+
 p <- MiscMetabar::hill_pq(data_fungi, fact = "Height")
 p$plot_Hill_0
 ```
@@ -124,6 +130,7 @@ modality](reference/figures/README-unnamed-chunk-6-1.png)
 Hill number 0
 
 ``` r
+
 p$plot_tuckey
 #> NULL
 ```
@@ -131,6 +138,7 @@ p$plot_tuckey
 ### Beta-diversity analysis
 
 ``` r
+
 if (!require("ggVennDiagram", quietly = TRUE)) {
   install.packages("ggVennDiagram")
 }
@@ -249,8 +257,9 @@ Data.” *PLoS ONE* 8 (4): e61217.
 <https://doi.org/10.1371/journal.pone.0061217>.
 
 Taberlet, Pierre, Eric Coissac, Mehrdad Hajibabaei, and Loren H
-Rieseberg. 2012. “Environmental Dna.” *Molecular Ecology*. Wiley Online
-Library. <https://doi.org/10.1111/j.1365-294X.2012.05542.x>.
+Rieseberg. 2012. “Environmental Dna.” In *Molecular Ecology*, No. 8,
+vol. 21. Wiley Online Library.
+<https://doi.org/10.1111/j.1365-294X.2012.05542.x>.
 
 Valentini, Alice, François Pompanon, and Pierre Taberlet. 2009. “DNA
 Barcoding for Ecologists.” *Trends in Ecology & Evolution* 24 (2):
@@ -995,5 +1004,7 @@ Barcoding for Ecologists.” *Trends in Ecology & Evolution* 24 (2):
   metabarcoding](https://adrientaudiere.github.io/MiscMetabar/articles/states_of_fields_in_R.md):
 - [Examples with published dataset:
   Tengeler](https://adrientaudiere.github.io/MiscMetabar/articles/tengeler.md):
+- [Function
+  timing](https://adrientaudiere.github.io/MiscMetabar/articles/timing.md):
 - [Tree building and
   visualization](https://adrientaudiere.github.io/MiscMetabar/articles/tree_visualization.md):

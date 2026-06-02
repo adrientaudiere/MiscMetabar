@@ -72,7 +72,7 @@ Adrien Taudière
 ## Examples
 
 ``` r
-data(data_fungi)
+# \donttest{
 if (requireNamespace("adespatial")) {
   plot_LCBD_pq(data_fungi_mini,
     nperm = 100, only_plot_significant = FALSE,
@@ -81,7 +81,6 @@ if (requireNamespace("adespatial")) {
 }
 #> Taxa are now in columns.
 
-# \donttest{
 if (requireNamespace("adespatial")) {
   plot_LCBD_pq(data_fungi_mini,
     nperm = 100, only_plot_significant = TRUE,

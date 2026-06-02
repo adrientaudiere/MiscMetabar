@@ -29,9 +29,9 @@ databases, (iii) high-throughput sequencing (HTS), and (iv)
 bioinformatics resources have enabled the description of biological
 communities through metabarcoding. Metabarcoding involves the sequencing
 of millions (*meta*-) of short regions of specific DNA (*-barcoding*,
-Valentini, Pompanon, and Taberlet (2009)) often from environmental
-samples (eDNA, Taberlet et al. (2012)) such as human stomach contents,
-lake water, soil, and air.
+Valentini et al. (2009)) often from environmental samples (eDNA,
+Taberlet et al. (2012)) such as human stomach contents, lake water,
+soil, and air.
 
 `MiscMetabar` aims to facilitate the **description**,
 **transformation**, **exploration** and **reproducibility** of
@@ -248,8 +248,7 @@ make install  # as root or sudo
 conda create -n cutadaptenv cutadapt
 ```
 
-<div id="refs" class="references csl-bib-body hanging-indent"
-entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 
 <div id="ref-callahan2016" class="csl-entry">
 
@@ -281,8 +280,9 @@ Data.” *PLoS ONE* 8 (4): e61217.
 <div id="ref-taberlet2012" class="csl-entry">
 
 Taberlet, Pierre, Eric Coissac, Mehrdad Hajibabaei, and Loren H
-Rieseberg. 2012. “Environmental Dna.” *Molecular Ecology*. Wiley Online
-Library. <https://doi.org/10.1111/j.1365-294X.2012.05542.x>.
+Rieseberg. 2012. “Environmental Dna.” In *Molecular Ecology*, No. 8,
+vol. 21. Wiley Online Library.
+<https://doi.org/10.1111/j.1365-294X.2012.05542.x>.
 
 </div>
 

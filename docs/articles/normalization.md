@@ -1,6 +1,7 @@
 # Transformation and normalisation of phyloseq objects
 
 ``` r
+
 library(MiscMetabar)
 data(data_fungi_mini)
 ```
@@ -28,6 +29,7 @@ experiment. Applying diversity or ordination methods to raw counts
 therefore conflates biological signal with technical depth variation.
 
 ``` r
+
 ggplot(data=tibble(x=sample_sums(data_fungi_mini)),aes(x=x)) + geom_histogram(color="black") + scale_x_log10() + labs(x="Number of sequences per samples")
 ```
 
@@ -71,6 +73,7 @@ wraps
 and handles the `taxa_are_rows` orientation automatically.
 
 ``` r
+
 data_tss <- transform_pq(data_fungi_mini, method = "tss")
 data_hell <- transform_pq(data_fungi_mini, method = "hellinger")
 data_clr <- transform_pq(data_fungi_mini, method = "clr")  # pseudocount = 1 by default
@@ -95,6 +98,7 @@ applies a log transformation. This is the “rarefaction-free”
 normalisation proposed by McKnight et al. (2019).
 
 ``` r
+
 data_norm <- normalize_prop_pq(data_fungi_mini)
 # All sample sums are equal after log transform
 round(range(sample_sums(data_norm)), 2)
@@ -110,6 +114,7 @@ loss (McMurdie and Holmes 2014; McKnight et al. 2019).
 allows averaging over `n` random subsamplings to reduce stochasticity.
 
 ``` r
+
 data_rar1 <- rarefy_pq(data_fungi_mini, seed = 1)
 data_rar10 <- rarefy_pq(data_fungi_mini, n = 10, seed = 1)
 
@@ -128,6 +133,7 @@ SRS (Heidrich et al. 2021) scales to a common library size while
 of rarefaction and the data loss associated with it.
 
 ``` r
+
 data_srs <- srs_pq(data_fungi_mini)
 round(range(sample_sums(data_srs)), 0)
 #> [1] 1 1
@@ -140,6 +146,7 @@ of median pairwise ratios between samples, making it robust to the high
 proportion of zeros in microbial OTU tables.
 
 ``` r
+
 data_gmpr <- gmpr_pq(data_fungi_mini)
 round(range(sample_sums(data_gmpr)), 0)
 #> [1]     1 61091
@@ -152,6 +159,7 @@ of counts up to a data-driven percentile, rather than the total. It is
 less sensitive to a few very abundant OTUs.
 
 ``` r
+
 data_css <- css_pq(data_fungi_mini)
 ```
 
@@ -162,6 +170,7 @@ library-specific normalisation factors by trimming the distribution of
 log-fold changes between each sample and a reference.
 
 ``` r
+
 data_tmm <- tmm_pq(data_fungi_mini)
 ```
 
@@ -172,6 +181,7 @@ stabilise the mean-variance relationship, making counts more suitable
 for methods that assume homoscedastic data.
 
 ``` r
+
 data_vst <- vst_pq(data_fungi_mini)
 ```
 
@@ -185,6 +195,7 @@ et al. (2019) and used in large-scale soil fungal surveys (Mikryukov et
 al. 2023).
 
 ``` r
+
 data_res <- mcknight_residuals_pq(data_fungi_mini)
 head(sample_data(data_res)$mcknight_residuals)
 #> [1]  0.3273090 -0.1430749  0.5681529  0.7310108 -0.7698491  0.4374109
@@ -198,6 +209,7 @@ A PCoA on Bray-Curtis dissimilarity illustrates how strongly the choice
 of normalisation shapes the ordination landscape.
 
 ``` r
+
 ord_raw <- phyloseq::ordinate(data_fungi_mini, method = "PCoA", distance = "bray")
 ord_tss <- phyloseq::ordinate(data_tss, method = "PCoA", distance = "bray")
 ord_hell <- phyloseq::ordinate(data_hell, method = "PCoA", distance = "bray")

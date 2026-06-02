@@ -52,6 +52,7 @@ Adrien Taudière
 ## Examples
 
 ``` r
+
 data_fungi <- add_info_to_sam_data(data_fungi)
 boxplot(data_fungi@sam_data$nb_otu ~ data_fungi@sam_data$Time)
 
