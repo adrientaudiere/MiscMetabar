@@ -176,7 +176,7 @@ lulu <- function(
         if (!success) {
           relative_cooccurence <-
             sum((daughter_samples[otutable[line2, ] > 0]) > 0) /
-            sum(daughter_samples > 0)
+              sum(daughter_samples > 0)
           message(
             paste0(
               "\n",

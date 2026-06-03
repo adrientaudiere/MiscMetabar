@@ -99,8 +99,7 @@ install_mmseqs2 <- function(
   os <- tolower(Sys.info()[["sysname"]])
 
   # Determine platform tag for download URL
-  platform_info <- switch(
-    os,
+  platform_info <- switch(os,
     "darwin" = list(tag = "osx-universal", ext = ".tar.gz"),
     "linux" = {
       # Pick the best SIMD variant available

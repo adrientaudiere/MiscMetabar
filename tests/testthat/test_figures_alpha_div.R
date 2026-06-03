@@ -1,6 +1,7 @@
 skip_on_cran()
 data("GlobalPatterns", package = "phyloseq")
 data("enterotype", package = "phyloseq")
+library("divent")
 
 GP <- GlobalPatterns
 data_fungi_2trees <-

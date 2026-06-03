@@ -81,13 +81,17 @@ This reduce the risk of a random drawing of a exceptional situation of an unique
 \dontrun{
 if (requireNamespace("ggstatsplot")) {
   hill_test_rarperm_pq(data_fungi, "Time", nperm = 3)
-  res <- hill_test_rarperm_pq(data_fungi, "Height", nperm = 3,
-    p_val_signif = 0.9)
+  res <- hill_test_rarperm_pq(data_fungi, "Height",
+    nperm = 3,
+    p_val_signif = 0.9
+  )
   patchwork::wrap_plots(res$plots[[1]])
   res$plots[[1]][[1]] + res$plots[[2]][[1]] + res$plots[[3]][[1]]
   res$prop_signif
-  res_para <- hill_test_rarperm_pq(data_fungi, "Height", nperm = 3,
-    type = "parametric")
+  res_para <- hill_test_rarperm_pq(data_fungi, "Height",
+    nperm = 3,
+    type = "parametric"
+  )
   res_para$plots[[1]][[1]] + res_para$plots[[2]][[1]] + res_para$plots[[3]][[1]]
   res_para$pvals
   res_para$method

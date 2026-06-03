@@ -109,8 +109,7 @@ blast_to_phyloseq <- function(
   )
   if (file.info(paste0(tempdir(), "/", "blast_result.txt"))$size > 0) {
     blast_tab <- utils::read.table(
-      paste0(tempdir(), "/", "blast_result.txt"),
-      ,
+      paste0(tempdir(), "/", "blast_result.txt"), ,
       sep = "\t",
       header = FALSE,
       stringsAsFactors = FALSE
@@ -315,8 +314,7 @@ blast_pq <- function(
 
   if (file.info(paste0(tempdir(), "/", "blast_result.txt"))$size > 0) {
     blast_tab <- utils::read.table(
-      paste0(tempdir(), "/", "blast_result.txt"),
-      ,
+      paste0(tempdir(), "/", "blast_result.txt"), ,
       sep = "\t",
       header = FALSE,
       stringsAsFactors = FALSE
@@ -419,7 +417,6 @@ blast_pq <- function(
 #'   )
 #' )
 #' }
-
 filter_asv_blast <- function(
   physeq,
   fasta_for_db = NULL,
@@ -553,9 +550,9 @@ filter_taxa_blast <- filter_asv_blast
 #' \dontrun{
 #' # derep_list is the result of dada2::derepFastq()
 #' derep_list <- list(dada2::derepFastq(
-#'  system.file("extdata", "ex.fastq",
-#'    package = "MiscMetabar", mustWork = TRUE
-#'  )
+#'   system.file("extdata", "ex.fastq",
+#'     package = "MiscMetabar", mustWork = TRUE
+#'   )
 #' ))
 #' blast_to_derep(
 #'   derep = derep_list,
@@ -632,8 +629,7 @@ blast_to_derep <- function(
 
   if (file.info(paste0(tempdir(), "/", "blast_result.txt"))$size > 0) {
     blast_tab <- utils::read.table(
-      paste0(tempdir(), "/", "blast_result.txt"),
-      ,
+      paste0(tempdir(), "/", "blast_result.txt"), ,
       sep = "\t",
       header = FALSE,
       stringsAsFactors = FALSE
@@ -750,7 +746,6 @@ blast_to_derep <- function(
 #'   )
 #' )
 #' }
-
 add_blast_info <- function(
   physeq,
   fasta_for_db,

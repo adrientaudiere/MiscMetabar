@@ -38,8 +38,8 @@ Hill numbers [^Hill73] is a kind of general framework for alpha diversity index.
 
 ```{r, fig.cap="Hill diversity profiles per sample (data_fungi_mini)"}
 data(data_fungi_mini)
-dfm_rarefied <- rarefy_even_depth(data_fungi_mini, rngseed = 1, sample.size=200)
-p <-profile_hill_pq(dfm_rarefied) 
+dfm_rarefied <- rarefy_even_depth(data_fungi_mini, rngseed = 1, sample.size = 200)
+p <- profile_hill_pq(dfm_rarefied)
 
 p + no_legend()
 ```

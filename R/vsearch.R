@@ -80,16 +80,14 @@ install_vsearch <- function(
   os <- tolower(Sys.info()[["sysname"]])
   arch <- Sys.info()[["machine"]]
 
-  os_tag <- switch(
-    os,
+  os_tag <- switch(os,
     "linux" = "linux",
     "darwin" = "macos",
     "windows" = "win",
     stop("Unsupported operating system: ", os)
   )
 
-  arch_tag <- switch(
-    arch,
+  arch_tag <- switch(arch,
     "x86_64" = "x86_64",
     "x86-64" = "x86_64",
     "amd64" = "x86_64",
@@ -785,7 +783,7 @@ vsearch_clustering <- function(
 #'
 #' # Potential Chimeric ASVs detected by vsearch
 #' chim_asv <- taxa_names(data_fungi_with_chim)[!taxa_names(data_fungi_with_chim)
-#'   %in% taxa_names(data_fungi_nochim)]
+#' %in% taxa_names(data_fungi_nochim)]
 #' "ASV1710" %in% chim_asv
 #' track_wkflow(list(data_fungi_with_chim, data_fungi_nochim))
 #'

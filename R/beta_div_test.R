@@ -172,8 +172,10 @@ graph_test_pq <- function(
 #' data(enterotype)
 #' \donttest{
 #' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE)
-#' adonis_pq(data_fungi_mini, "Time*Height", na_remove = TRUE,
-#'   correction_for_sample_size = TRUE)
+#' adonis_pq(data_fungi_mini, "Time*Height",
+#'   na_remove = TRUE,
+#'   correction_for_sample_size = TRUE
+#' )
 #' }
 #' \dontrun{
 #' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = NULL)
@@ -655,8 +657,10 @@ plot_LCBD_pq <- function(
 #'     xlim(c(0, NA))
 #' }
 #' if (requireNamespace("adespatial")) {
-#'   plot_SCBD_pq(data_fungi_mini, tax_level = "Class", tax_col = "Phylum",
-#'     min_SCBD = 0) +
+#'   plot_SCBD_pq(data_fungi_mini,
+#'     tax_level = "Class", tax_col = "Phylum",
+#'     min_SCBD = 0
+#'   ) +
 #'     geom_jitter()
 #' }
 #' }
@@ -721,7 +725,8 @@ plot_SCBD_pq <- function(
 #' \donttest{
 #' if (requireNamespace("indicspecies")) {
 #'   multipatt_pq(subset_samples(data_fungi_mini, !is.na(Time)),
-#'     fact = "Time", control = permute::how(nperm = 99))
+#'     fact = "Time", control = permute::how(nperm = 99)
+#'   )
 #'   multipatt_pq(subset_samples(data_fungi_mini, !is.na(Time)),
 #'     fact = "Time",
 #'     max.order = 1, control = permute::how(nperm = 99)
@@ -1658,8 +1663,10 @@ var_par_pq <-
 #' @examples
 #' \donttest{
 #' if (requireNamespace("vegan")) {
-#'   data_fungi_woNA <- subset_samples(data_fungi_mini,
-#'     !is.na(Time) & !is.na(Height))
+#'   data_fungi_woNA <- subset_samples(
+#'     data_fungi_mini,
+#'     !is.na(Time) & !is.na(Height)
+#'   )
 #'   res_var_2 <- var_par_rarperm_pq(
 #'     data_fungi_woNA,
 #'     list_component = list(
@@ -1744,7 +1751,7 @@ var_par_rarperm_pq <-
           }) <
             dbrda_signif_pval
         ) /
-        nperm
+          nperm
     }
 
     # Pre-compute sapply results for efficiency

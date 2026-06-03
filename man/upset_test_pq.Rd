@@ -53,7 +53,8 @@ See \code{\link[=upset_pq]{upset_pq()}} to plot upset. There is a bug with ggplo
 \examples{
 if (requireNamespace("ComplexUpset")) {
   upset_test_pq(data_fungi_mini, "Height",
-    var_to_test = c("OTU", "Class", "Guild"))
+    var_to_test = c("OTU", "Class", "Guild")
+  )
   upset_test_pq(data_fungi_mini, "Time")
 }
 }

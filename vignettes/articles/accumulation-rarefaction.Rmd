@@ -219,8 +219,8 @@ dfm_rarefied <- rarefy_even_depth(
   data_fungi_mini,
   rngseed = 1,
   sample.size = 500
-) 
-dfm_rarefied <-  prune_samples(sample_names(dfm_rarefied) %in% sample(sample_names(dfm_rarefied), 25), dfm_rarefied)
+)
+dfm_rarefied <- prune_samples(sample_names(dfm_rarefied) %in% sample(sample_names(dfm_rarefied), 25), dfm_rarefied)
 dfm_rarefied
 ```
 
@@ -250,7 +250,7 @@ hill_acc_pq(
   type = "individual",
   merge_sample_by = "metacommunity",
   n_simulations = 5
-  ) +
+) +
   no_legend() +
   ggtitle("Metacommunity rarefaction (q = 1)")
 ```

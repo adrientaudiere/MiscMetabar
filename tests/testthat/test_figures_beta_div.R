@@ -464,7 +464,7 @@ test_that("multipatt_pq works with data_fungi_mini dataset", {
   expect_error(multipatt_pq(data_fungi_mini, fact = "Time"))
 })
 
-test_that("multipatt_pq works with data_fungi_mini dataset", {
+test_that("ancombc_pq works with data_fungi_mini dataset", {
   skip_on_os("windows")
   skip_on_cran()
   expect_type(

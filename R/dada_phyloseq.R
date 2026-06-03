@@ -28,7 +28,6 @@ if (getRversion() >= "2.15.1") {
 #' )
 #' phyloseq::taxa_names(pq_seq_names) <- as.character(phyloseq::refseq(data_fungi_mini))
 #' add_dna_to_phyloseq(pq_seq_names)
-
 add_dna_to_phyloseq <- function(physeq, prefix_taxa_names = "Taxa_") {
   verify_pq(physeq)
   dna <- Biostrings::DNAStringSet(phyloseq::taxa_names(physeq))
@@ -3213,7 +3212,8 @@ add_new_taxonomy_pq <- function(
 tbl_sum_samdata <- function(physeq, remove_col_unique_value = TRUE, ...) {
   tbl <- tibble(data.frame(physeq@sam_data))
   if (remove_col_unique_value) {
-    tbl <- tbl[,
+    tbl <- tbl[
+      ,
       !apply(tbl, 2, function(x) {
         length(unique(x)) == nrow(tbl) && is.character(x)
       })
@@ -3750,7 +3750,8 @@ are_modality_even_depth <- function(physeq, fact, boxplot = FALSE) {
 #' data_fungi_ordered_by_genus <- reorder_taxa_pq(
 #'   data_fungi_mini,
 #'   taxa_names(data_fungi_mini)[order(
-#'     as.vector(data_fungi_mini@tax_table[, "Genus"]))]
+#'     as.vector(data_fungi_mini@tax_table[, "Genus"])
+#'   )]
 #' )
 #'
 #' data_fungi_mini_asc_ordered_by_abundance <- reorder_taxa_pq(

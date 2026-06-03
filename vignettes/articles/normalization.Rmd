@@ -49,7 +49,10 @@ Applying diversity or ordination methods to raw counts therefore conflates
 biological signal with technical depth variation.
 
 ```{r depth-variation, fig.cap="Large variation in sequencing depth across samples in 'data_fungi_mini'."}
-ggplot(data=tibble(x=sample_sums(data_fungi_mini)),aes(x=x)) + geom_histogram(color="black") + scale_x_log10() + labs(x="Number of sequences per samples")
+ggplot(data = tibble(x = sample_sums(data_fungi_mini)), aes(x = x)) +
+  geom_histogram(color = "black") +
+  scale_x_log10() +
+  labs(x = "Number of sequences per samples")
 ```
 
 ---
@@ -87,7 +90,7 @@ orientation automatically.
 ```{r transform-pq, examplesIf = rlang::is_installed("vegan")}
 data_tss <- transform_pq(data_fungi_mini, method = "tss")
 data_hell <- transform_pq(data_fungi_mini, method = "hellinger")
-data_clr <- transform_pq(data_fungi_mini, method = "clr")  # pseudocount = 1 by default
+data_clr <- transform_pq(data_fungi_mini, method = "clr") # pseudocount = 1 by default
 data_log1p <- transform_pq(data_fungi_mini, method = "log1p")
 
 # Sample sums after TSS: all 1
@@ -208,19 +211,23 @@ ord_hell <- phyloseq::ordinate(data_hell, method = "PCoA", distance = "bray")
 ord_log1p <- phyloseq::ordinate(data_log1p, method = "PCoA", distance = "bray")
 
 p_raw <- phyloseq::plot_ordination(
-  data_fungi_mini, ord_raw, color = "Height"
+  data_fungi_mini, ord_raw,
+  color = "Height"
 ) + ggplot2::ggtitle("Raw counts")
 
 p_tss <- phyloseq::plot_ordination(
-  data_tss, ord_tss, color = "Height"
+  data_tss, ord_tss,
+  color = "Height"
 ) + ggplot2::ggtitle("TSS")
 
 p_hell <- phyloseq::plot_ordination(
-  data_hell, ord_hell, color = "Height"
+  data_hell, ord_hell,
+  color = "Height"
 ) + ggplot2::ggtitle("Hellinger")
 
 p_log1p <- phyloseq::plot_ordination(
-  data_log1p, ord_log1p, color = "Height"
+  data_log1p, ord_log1p,
+  color = "Height"
 ) + ggplot2::ggtitle("log1p")
 
 patchwork::wrap_plots(p_raw, p_tss, p_hell, p_log1p, ncol = 2) +

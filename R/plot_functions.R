@@ -414,7 +414,7 @@ accu_plot_balanced_modality <- function(
   }
   for (i in 1:nperm) {
     if (rarefy_by_sample_before_merging) {
-      plist[,, i] <-
+      plist[, , i] <-
         as.matrix(suppressWarnings(suppressMessages(
           accu_plot(
             rarefy_sample_count_by_modality(
@@ -924,7 +924,8 @@ sankey_pq <-
           apply(mat_interm, 1, function(x) {
             tapply(
               x,
-              physeq@tax_table[,
+              physeq@tax_table[
+                ,
                 taxa[length(taxa)]
               ],
               function(x) {
@@ -937,7 +938,8 @@ sankey_pq <-
           apply(mat_interm, 1, function(x) {
             tapply(
               x,
-              physeq@tax_table[,
+              physeq@tax_table[
+                ,
                 taxa[length(taxa)]
               ],
               sum
@@ -1323,9 +1325,11 @@ venn_pq <-
 #'     print(p)
 #'   }
 #'
-#'   data_fungi2 <- subset_samples(data_fungi_mini,
+#'   data_fungi2 <- subset_samples(
+#'     data_fungi_mini,
 #'     data_fungi_mini@sam_data$Tree_name == "A10-005" |
-#'     data_fungi_mini@sam_data$Height %in% c("Low", "High"))
+#'       data_fungi_mini@sam_data$Height %in% c("Low", "High")
+#'   )
 #'   ggvenn_pq(data_fungi2, fact = "Height")
 #'
 #'   ggvenn_pq(data_fungi2, fact = "Height", type = "nb_seq")
@@ -1338,8 +1342,10 @@ venn_pq <-
 #'   # For more flexibility, you can save the dataset for more precise construction
 #'   # with ggplot2 and ggVennDiagramm
 #'   # (https://gaospecial.github.io/ggVennDiagram/articles/fully-customed.html)
-#'   res_venn <- ggvenn_pq(data_fungi_mini, fact = "Height",
-#'     return_data_for_venn = TRUE)
+#'   res_venn <- ggvenn_pq(data_fungi_mini,
+#'     fact = "Height",
+#'     return_data_for_venn = TRUE
+#'   )
 #'
 #'   ggplot() +
 #'     # 1. region count layer
@@ -1484,14 +1490,14 @@ ggvenn_pq <- function(
   for (f in levels(physeq@sam_data[[fact]])) {
     newphyseq <- physeq
     new_DF <- newphyseq@sam_data[
-      newphyseq@sam_data[[fact]] == f,
-      ,
+      newphyseq@sam_data[[fact]] == f, ,
       drop = FALSE
     ]
     sample_data(newphyseq) <- sample_data(new_DF)
     newphyseq <- clean_pq(newphyseq)
     if (is.null(taxonomic_rank) || type == "nb_seq") {
-      res[[f]] <- colnames(newphyseq@otu_table[,
+      res[[f]] <- colnames(newphyseq@otu_table[
+        ,
         colSums(newphyseq@otu_table) > min_nb_seq
       ])
     } else {
@@ -3240,8 +3246,10 @@ biplot_pq <- function(
 #'
 #' @examples
 #' \donttest{
-#' data_fungi_abun <- subset_taxa_pq(data_fungi_mini,
-#'   taxa_sums(data_fungi_mini) > 1000)
+#' data_fungi_abun <- subset_taxa_pq(
+#'   data_fungi_mini,
+#'   taxa_sums(data_fungi_mini) > 1000
+#' )
 #' p <- multi_biplot_pq(data_fungi_abun, "Height")
 #' lapply(p, print)
 #' }
@@ -3745,8 +3753,10 @@ tsne_pq <-
 #' if (requireNamespace("Rtsne")) {
 #'   plot_tsne_pq(data_fungi_mini, fact = "Time") +
 #'     geom_label(aes(label = Sample_id, fill = Time))
-#'   plot_tsne_pq(data_fungi_mini, fact = "Time", na_remove = FALSE,
-#'     force_factor = FALSE)
+#'   plot_tsne_pq(data_fungi_mini,
+#'     fact = "Time", na_remove = FALSE,
+#'     force_factor = FALSE
+#'   )
 #' }
 #' }
 #'
@@ -4215,7 +4225,8 @@ upset_pq <- function(
 #' @examples
 #' if (requireNamespace("ComplexUpset")) {
 #'   upset_test_pq(data_fungi_mini, "Height",
-#'     var_to_test = c("OTU", "Class", "Guild"))
+#'     var_to_test = c("OTU", "Class", "Guild")
+#'   )
 #'   upset_test_pq(data_fungi_mini, "Time")
 #' }
 upset_test_pq <-
@@ -4478,11 +4489,15 @@ diff_fct_diff_class <-
 #'
 #' @examples
 #'
-#' data_fungi_ab <- subset_taxa_pq(data_fungi_mini,
-#'   taxa_sums(data_fungi_mini) > 1000)
+#' data_fungi_ab <- subset_taxa_pq(
+#'   data_fungi_mini,
+#'   taxa_sums(data_fungi_mini) > 1000
+#' )
 #' tax_bar_pq(data_fungi_ab) + theme(legend.position = "none")
-#' tax_bar_pq(data_fungi_ab, taxa = "Class", fact = "Height",
-#'   show_n_samples = TRUE)
+#' tax_bar_pq(data_fungi_ab,
+#'   taxa = "Class", fact = "Height",
+#'   show_n_samples = TRUE
+#' )
 #' \donttest{
 #' tax_bar_pq(data_fungi_ab, taxa = "Class")
 #' tax_bar_pq(data_fungi_ab, taxa = "Class", percent_bar = TRUE)
@@ -4499,21 +4514,25 @@ diff_fct_diff_class <-
 #'   taxa = "Class", fact = "Time",
 #'   show_values = TRUE, minimum_value_to_show = 10000
 #' )
-#' tax_bar_pq(data_fungi_ab, fact = "Height", taxa = "Class",
+#' tax_bar_pq(data_fungi_ab,
+#'   fact = "Height", taxa = "Class",
 #'   nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
-#'   add_ribbon = TRUE, value_size=7, ribbon_alpha = .6,
-#'   show_values=TRUE, label_size = 4, top_label_size = 6,
-#'   minimum_value_to_show=0.05) |>
-#'   reorder_distinct_colors(alternate_lightness=TRUE)
+#'   add_ribbon = TRUE, value_size = 7, ribbon_alpha = .6,
+#'   show_values = TRUE, label_size = 4, top_label_size = 6,
+#'   minimum_value_to_show = 0.05
+#' ) |>
+#'   reorder_distinct_colors(alternate_lightness = TRUE)
 #'
-#' tax_bar_pq(data_fungi_mini, fact = "Height", taxa = "Order",
+#' tax_bar_pq(data_fungi_mini,
+#'   fact = "Height", taxa = "Order",
 #'   nb_seq = TRUE, percent_bar = TRUE, label_taxa = TRUE,
-#'   add_ribbon = TRUE, value_size=5,
-#'   ribbon_alpha = .6, show_values=TRUE,
+#'   add_ribbon = TRUE, value_size = 5,
+#'   ribbon_alpha = .6, show_values = TRUE,
 #'   label_size = 4, top_label_size = 8,
-#'   minimum_value_to_show=0.05, bar_width = NULL,
-#'   linewidth_bar_internal = 0.1, bar_internal_color="black") |>
-#'   reorder_distinct_colors(alternate_lightness=TRUE)
+#'   minimum_value_to_show = 0.05, bar_width = NULL,
+#'   linewidth_bar_internal = 0.1, bar_internal_color = "black"
+#' ) |>
+#'   reorder_distinct_colors(alternate_lightness = TRUE)
 #' }
 #' @author Adrien Taudière
 #' @seealso [plot_tax_pq()] and [multitax_bar_pq()]
@@ -5100,9 +5119,11 @@ ridges_pq <- function(
 #' @author Adrien Taudière
 #' @examples
 #' if (requireNamespace("ggridges")) {
-#'   ridges_sam_pq(data_fungi_mini, "Height", alpha = 0.5,
-#'     log10trans = FALSE, tax_level = "Genus") +
-#'   xlim(c(0, 1000))
+#'   ridges_sam_pq(data_fungi_mini, "Height",
+#'     alpha = 0.5,
+#'     log10trans = FALSE, tax_level = "Genus"
+#'   ) +
+#'     xlim(c(0, 1000))
 #' }
 #' \donttest{
 #' if (requireNamespace("ggridges")) {
@@ -5427,8 +5448,10 @@ treemap_pq <- function(
 #' @examples
 #' \donttest{
 #' if (requireNamespace("vegan")) {
-#'   data_fungi_woNA <- subset_samples(data_fungi_mini,
-#'     !is.na(Time) & !is.na(Height))
+#'   data_fungi_woNA <- subset_samples(
+#'     data_fungi_mini,
+#'     !is.na(Time) & !is.na(Height)
+#'   )
 #'   res_var0 <- var_par_pq(data_fungi_woNA,
 #'     list_component = list(
 #'       "Time" = c("Time"),
@@ -5943,17 +5966,21 @@ ggaluv_pq <- function(
 #' @export
 #' @author Adrien Taudière
 #' @examples
-#' res1 <- plot_refseq_extremity_pq(data_fungi_mini, q = 1)
+#' data_f <- prune_samples(
+#'   sample_names(data_fungi_mini)[1:20],
+#'   data_fungi_mini
+#' )
+#' res1 <- plot_refseq_extremity_pq(data_f, q = 1)
 #' names(res1)
 #' \donttest{
 #' res1$plot_start
 #' res1$plot_last
 #'
-#' res2 <- plot_refseq_extremity_pq(data_fungi_mini, first_n = 200, last_n = 100)
+#' res2 <- plot_refseq_extremity_pq(data_f, first_n = 200, last_n = 100)
 #' res2$plot_start
 #' res2$plot_last
 #'
-#' plot_refseq_extremity_pq(data_fungi_mini,
+#' plot_refseq_extremity_pq(data_f,
 #'   first_n = NULL,
 #'   last_n = 200,
 #'   min_width = 200,
@@ -6347,7 +6374,7 @@ hill_curves_pq <- function(
     what <- c("Collector", "mean", "Qnt 0.025", "Qnt 0.975")
     what <- what[what %in% dimnames(df_hill)[[3]]]
     if (any(what %in% dimnames(df_hill)[[3]])) {
-      df_hill <- df_hill[,, what, drop = FALSE]
+      df_hill <- df_hill[, , what, drop = FALSE]
     }
     dm <- dim(df_hill)
     dnam <- dimnames(df_hill)
@@ -6497,21 +6524,27 @@ hill_curves_pq <- function(
 #' df_umap_tsne$x_tsne <- res_tsne$Y[, 1]
 #' df_umap_tsne$y_tsne <- res_tsne$Y[, 2]
 #' ((ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
-#'   geom_point(size = 2) + ggtitle("UMAP")) +
+#'   geom_point(size = 2) +
+#'   ggtitle("UMAP")) +
 #'   (plot_ordination(physeq,
 #'     ordination = ordinate(physeq, method = "PCoA", distance = "bray"),
-#'     color = "Height") + ggtitle("PCoA"))) /
+#'     color = "Height"
+#'   ) + ggtitle("PCoA"))) /
 #'   ((ggplot(df_umap_tsne, aes(x = x_tsne, y = y_tsne, col = Height)) +
-#'     geom_point(size = 2) + ggtitle("tsne")) +
+#'     geom_point(size = 2) +
+#'     ggtitle("tsne")) +
 #'     (plot_ordination(physeq,
 #'       ordination = ordinate(physeq, method = "NMDS", distance = "bray"),
-#'       color = "Height") + ggtitle("NMDS"))) +
+#'       color = "Height"
+#'     ) + ggtitle("NMDS"))) +
 #'   patchwork::plot_layout(guides = "collect")
 #'
 #' (ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
-#'   geom_point(size = 2) + ggtitle("umap::umap")) /
+#'   geom_point(size = 2) +
+#'   ggtitle("umap::umap")) /
 #'   (ggplot(df_uwot, aes(x = x_umap, y = y_umap, col = Height)) +
-#'     geom_point(size = 2) + ggtitle("uwot::umap2"))
+#'     geom_point(size = 2) +
+#'     ggtitle("uwot::umap2"))
 #' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
@@ -6833,12 +6866,14 @@ plot_seq_ratio_pq <- function(physeq, min_nb_seq = 1000, annotations = TRUE) {
 #' reorder_distinct_colors(p, colorblind = TRUE)
 #' p + reorder_distinct_colors(alternate_lightness = TRUE)
 #'
-#' tax_bar_pq(data_fungi_mini, fact = "Height", taxa = "Order",
-#'  nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
-#'  add_ribbon = TRUE, value_size=7, ribbon_alpha = .6,
-#'  show_values=TRUE, label_size = 4, top_label_size = 8,
-#'  minimum_value_to_show=0.05) |>
-#'  reorder_distinct_colors(alternate_lightness=TRUE)
+#' tax_bar_pq(data_fungi_mini,
+#'   fact = "Height", taxa = "Order",
+#'   nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
+#'   add_ribbon = TRUE, value_size = 7, ribbon_alpha = .6,
+#'   show_values = TRUE, label_size = 4, top_label_size = 8,
+#'   minimum_value_to_show = 0.05
+#' ) |>
+#'   reorder_distinct_colors(alternate_lightness = TRUE)
 reorder_distinct_colors <- function(
   p = NULL,
   alternate_lightness = FALSE,
@@ -7333,8 +7368,10 @@ plot_ordination_pq <- function(
 #' \dontrun{
 #' hill_bar_pq(data_fungi_mini, Height, q = 0)
 #' hill_bar_pq(data_fungi_mini, Height, q = c(0, 1, 2), ncol = 1)
-#' hill_bar_pq(data_fungi_mini, Height, q = c(0, 2),
-#'   y_labs = c(Hill_0 = "Richness", Hill_2 = "Simpson diversity"))
+#' hill_bar_pq(data_fungi_mini, Height,
+#'   q = c(0, 2),
+#'   y_labs = c(Hill_0 = "Richness", Hill_2 = "Simpson diversity")
+#' )
 #' hill_bar_pq(data_fungi_mini, Height, add_letters = FALSE)
 #' }
 #'

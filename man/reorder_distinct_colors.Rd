@@ -56,12 +56,14 @@ reorder_distinct_colors(p)
 reorder_distinct_colors(p, colorblind = TRUE)
 p + reorder_distinct_colors(alternate_lightness = TRUE)
 
-tax_bar_pq(data_fungi_mini, fact = "Height", taxa = "Order",
- nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
- add_ribbon = TRUE, value_size=7, ribbon_alpha = .6,
- show_values=TRUE, label_size = 4, top_label_size = 8,
- minimum_value_to_show=0.05) |>
- reorder_distinct_colors(alternate_lightness=TRUE)
+tax_bar_pq(data_fungi_mini,
+  fact = "Height", taxa = "Order",
+  nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
+  add_ribbon = TRUE, value_size = 7, ribbon_alpha = .6,
+  show_values = TRUE, label_size = 4, top_label_size = 8,
+  minimum_value_to_show = 0.05
+) |>
+  reorder_distinct_colors(alternate_lightness = TRUE)
 }
 \author{
 Adrien Taudière

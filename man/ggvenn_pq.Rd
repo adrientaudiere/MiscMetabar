@@ -111,9 +111,11 @@ if (requireNamespace("ggVennDiagram")) {
     print(p)
   }
 
-  data_fungi2 <- subset_samples(data_fungi_mini,
+  data_fungi2 <- subset_samples(
+    data_fungi_mini,
     data_fungi_mini@sam_data$Tree_name == "A10-005" |
-    data_fungi_mini@sam_data$Height \%in\% c("Low", "High"))
+      data_fungi_mini@sam_data$Height \%in\% c("Low", "High")
+  )
   ggvenn_pq(data_fungi2, fact = "Height")
 
   ggvenn_pq(data_fungi2, fact = "Height", type = "nb_seq")
@@ -126,8 +128,10 @@ if (requireNamespace("ggVennDiagram")) {
   # For more flexibility, you can save the dataset for more precise construction
   # with ggplot2 and ggVennDiagramm
   # (https://gaospecial.github.io/ggVennDiagram/articles/fully-customed.html)
-  res_venn <- ggvenn_pq(data_fungi_mini, fact = "Height",
-    return_data_for_venn = TRUE)
+  res_venn <- ggvenn_pq(data_fungi_mini,
+    fact = "Height",
+    return_data_for_venn = TRUE
+  )
 
   ggplot() +
     # 1. region count layer

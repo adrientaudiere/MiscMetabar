@@ -84,7 +84,7 @@ Suggests:
     viridis,
     withr,
     spelling
-RoxygenNote: 7.3.3
+RoxygenNote: 8.0.0
 URL: https://github.com/adrientaudiere/MiscMetabar,
     https://adrientaudiere.github.io/MiscMetabar/
 biocViews: Sequencing, Microbiome, Metagenomics,

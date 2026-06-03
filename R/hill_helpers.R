@@ -74,8 +74,7 @@ divent_hill_matrix_pq <- function(comm, q, ...) {
 .divent_diversity <- function(x, index, ...) {
   x <- as.numeric(x)
   x <- x[x > 0]
-  switch(
-    index,
+  switch(index,
     "shannon" = divent::ent_shannon(x, as_numeric = TRUE, ...),
     "simpson" = divent::ent_simpson(x, as_numeric = TRUE, ...),
     stop("Unsupported index for divent: ", index, call. = FALSE)

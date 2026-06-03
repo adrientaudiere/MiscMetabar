@@ -51,7 +51,8 @@ use this function.
 \donttest{
 if (requireNamespace("indicspecies")) {
   multipatt_pq(subset_samples(data_fungi_mini, !is.na(Time)),
-    fact = "Time", control = permute::how(nperm = 99))
+    fact = "Time", control = permute::how(nperm = 99)
+  )
   multipatt_pq(subset_samples(data_fungi_mini, !is.na(Time)),
     fact = "Time",
     max.order = 1, control = permute::how(nperm = 99)

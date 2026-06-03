@@ -56,21 +56,27 @@ df_umap_tsne <- df_umap
 df_umap_tsne$x_tsne <- res_tsne$Y[, 1]
 df_umap_tsne$y_tsne <- res_tsne$Y[, 2]
 ((ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
-  geom_point(size = 2) + ggtitle("UMAP")) +
+  geom_point(size = 2) +
+  ggtitle("UMAP")) +
   (plot_ordination(physeq,
     ordination = ordinate(physeq, method = "PCoA", distance = "bray"),
-    color = "Height") + ggtitle("PCoA"))) /
+    color = "Height"
+  ) + ggtitle("PCoA"))) /
   ((ggplot(df_umap_tsne, aes(x = x_tsne, y = y_tsne, col = Height)) +
-    geom_point(size = 2) + ggtitle("tsne")) +
+    geom_point(size = 2) +
+    ggtitle("tsne")) +
     (plot_ordination(physeq,
       ordination = ordinate(physeq, method = "NMDS", distance = "bray"),
-      color = "Height") + ggtitle("NMDS"))) +
+      color = "Height"
+    ) + ggtitle("NMDS"))) +
   patchwork::plot_layout(guides = "collect")
 
 (ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
-  geom_point(size = 2) + ggtitle("umap::umap")) /
+  geom_point(size = 2) +
+  ggtitle("umap::umap")) /
   (ggplot(df_uwot, aes(x = x_umap, y = y_umap, col = Height)) +
-    geom_point(size = 2) + ggtitle("uwot::umap2"))
+    geom_point(size = 2) +
+    ggtitle("uwot::umap2"))
 }
 }
 \seealso{

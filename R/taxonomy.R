@@ -505,7 +505,6 @@ format2sintax <- function(
 #' )
 #' format2dada2(fasta_db = f, from_sintax = FALSE)
 #' }
-
 format2dada2 <- function(
   fasta_db = NULL,
   taxnames = NULL,

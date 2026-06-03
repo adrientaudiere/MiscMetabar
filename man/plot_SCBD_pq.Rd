@@ -51,8 +51,10 @@ if (requireNamespace("adespatial")) {
     xlim(c(0, NA))
 }
 if (requireNamespace("adespatial")) {
-  plot_SCBD_pq(data_fungi_mini, tax_level = "Class", tax_col = "Phylum",
-    min_SCBD = 0) +
+  plot_SCBD_pq(data_fungi_mini,
+    tax_level = "Class", tax_col = "Phylum",
+    min_SCBD = 0
+  ) +
     geom_jitter()
 }
 }

@@ -225,8 +225,7 @@ compare_pairs_pq <- function(
     newphyseq <- physeq
     if (!is.null(modality)) {
       new_DF <- newphyseq@sam_data[
-        newphyseq@sam_data[[modality]] == i,
-        ,
+        newphyseq@sam_data[[modality]] == i, ,
         drop = FALSE
       ]
       sample_data(newphyseq) <- sample_data(new_DF)
@@ -254,7 +253,8 @@ compare_pairs_pq <- function(
       div_first <- round(all_div[cond1], 2)
       div_second <- round(all_div[cond2], 2)
 
-      nb_shared_seq <- sum(newphyseq@otu_table[,
+      nb_shared_seq <- sum(newphyseq@otu_table[
+        ,
         newphyseq@otu_table[cond1, ] > nb_min_seq &
           newphyseq@otu_table[cond2, ] > nb_min_seq
       ])

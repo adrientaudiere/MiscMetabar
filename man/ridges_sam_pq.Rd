@@ -53,9 +53,11 @@ distribution across samples, optionally colored by a sample factor.
 }
 \examples{
 if (requireNamespace("ggridges")) {
-  ridges_sam_pq(data_fungi_mini, "Height", alpha = 0.5,
-    log10trans = FALSE, tax_level = "Genus") +
-  xlim(c(0, 1000))
+  ridges_sam_pq(data_fungi_mini, "Height",
+    alpha = 0.5,
+    log10trans = FALSE, tax_level = "Genus"
+  ) +
+    xlim(c(0, 1000))
 }
 \donttest{
 if (requireNamespace("ggridges")) {
