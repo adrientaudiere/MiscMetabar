@@ -66,10 +66,10 @@ from \url{https://github.com/tobiasgf/lulu}
 \examples{
 \dontshow{if (MiscMetabar::is_vsearch_installed()) withAutoprint(\{ # examplesIf}
 \donttest{
-data_f <- prune_samples(
+data_f <- clean_pq(prune_samples(
   sample_names(data_fungi_sp_known)[1:20],
   data_fungi_sp_known
-)
+))
 lulu_pq(data_f)
 }
 \dontshow{\}) # examplesIf}

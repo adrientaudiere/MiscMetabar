@@ -1297,10 +1297,10 @@ read_pq <- function(
 #' @seealso [mumu_pq()]
 #' @examplesIf MiscMetabar::is_vsearch_installed()
 #' \donttest{
-#' data_f <- prune_samples(
+#' data_f <- clean_pq(prune_samples(
 #'   sample_names(data_fungi_sp_known)[1:20],
 #'   data_fungi_sp_known
-#' )
+#' ))
 #' lulu_pq(data_f)
 #' }
 #' @author Tobias Guldberg Frøslev \email{tobiasgf@snm.ku.dk}
