@@ -1,0 +1,9 @@
+lets implement some feature from the ROADMAP.md for dbpq
+
+---
+
+Information about KSGP : https://ksgp.earlham.ac.uk/ Start with the download_ksgp_db
+
+---
+
+how to render the dbpq/README.md in html?
