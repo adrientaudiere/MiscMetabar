@@ -3,7 +3,7 @@
   "checkpoint_id": "a46317681ba7",
   "strategy": "manual-commit",
   "branch": "master",
-  "checkpoints_count": 2,
+  "checkpoints_count": 3,
   "files_touched": [
     "DESCRIPTION",
     "R/Deseq2_edgeR.R",
@@ -57,13 +57,20 @@
       "context": "/a4/6317681ba7/0/context.md",
       "content_hash": "/a4/6317681ba7/0/content_hash.txt",
       "prompt": "/a4/6317681ba7/0/prompt.txt"
+    },
+    {
+      "metadata": "/a4/6317681ba7/1/metadata.json",
+      "transcript": "/a4/6317681ba7/1/full.jsonl",
+      "context": "/a4/6317681ba7/1/context.md",
+      "content_hash": "/a4/6317681ba7/1/content_hash.txt",
+      "prompt": "/a4/6317681ba7/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 385,
-    "cache_creation_tokens": 175512,
-    "cache_read_tokens": 5841092,
-    "output_tokens": 45893,
-    "api_call_count": 61
+    "input_tokens": 431,
+    "cache_creation_tokens": 225722,
+    "cache_read_tokens": 7785318,
+    "output_tokens": 59981,
+    "api_call_count": 104
   }
 }
