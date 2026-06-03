@@ -22,7 +22,7 @@ adonis_pq(
 \item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{formula}{(required) the right part of a formula for \code{\link[vegan:adonis]{vegan::adonis2()}}.
+\item{formula}{(required) the right part of a formula for \code{\link[vegan:adonis2]{vegan::adonis2()}}.
 Variables must be present in the \code{physeq@sam_data} slot.}
 
 \item{dist_method}{(default "bray") the distance used. See
@@ -67,11 +67,11 @@ beforehand to achieve reproducible results. Default is FALSE.}
 
 \item{verbose}{(logical, default TRUE) If TRUE, prompt some messages.}
 
-\item{...}{Additional arguments passed on to \code{\link[vegan:adonis]{vegan::adonis2()}} function.}
+\item{...}{Additional arguments passed on to \code{\link[vegan:adonis2]{vegan::adonis2()}} function.}
 }
 \value{
 The function returns an anova.cca result object with a
-new column for partial R^2. See help of \code{\link[vegan:adonis]{vegan::adonis2()}} for
+new column for partial R^2. See help of \code{\link[vegan:adonis2]{vegan::adonis2()}} for
 more information.
 }
 \description{
@@ -81,7 +81,7 @@ more information.
 }}
 
 
-A wrapper for the \code{\link[vegan:adonis]{vegan::adonis2()}} function in the case of \code{physeq} object.
+A wrapper for the \code{\link[vegan:adonis2]{vegan::adonis2()}} function in the case of \code{physeq} object.
 }
 \details{
 This function is mainly a wrapper of the work of others.

@@ -43,7 +43,7 @@ a new phyloseq object
 
 
 The main objective of this function is to complete the
-\code{\link[phyloseq:subset_taxa-methods]{phyloseq::subset_taxa()}} function by propose a more easy way of
+\code{\link[phyloseq:subset_taxa]{phyloseq::subset_taxa()}} function by propose a more easy way of
 subset_taxa using a named boolean vector. Names must match taxa_names.
 }
 \examples{

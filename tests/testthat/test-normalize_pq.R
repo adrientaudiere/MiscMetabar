@@ -118,14 +118,14 @@ test_that("srs_pq returns phyloseq with equal sample sums", {
 
 test_that("css_pq returns phyloseq with same dims", {
   skip_if_not_installed("metagenomeSeq")
-  res <- css_pq(dfm)
+  suppressWarnings(res <- css_pq(dfm))
   expect_true(is_pq(res))
   expect_true(same_dims(res, dfm))
 })
 
 test_that("tmm_pq returns phyloseq with same dims", {
   skip_if_not_installed("edgeR")
-  res <- tmm_pq(dfm)
+  suppressWarnings(res <- tmm_pq(dfm))
   expect_true(is_pq(res))
   expect_true(same_dims(res, dfm))
 })

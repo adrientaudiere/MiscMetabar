@@ -100,7 +100,7 @@ Function in MiscMetabar that use this function: \code{\link[=postcluster_pq]{pos
 
 \code{\link[base:rowsum]{base::rowsum()}}
 
-\code{\link[phyloseq:merge_taxa-methods]{phyloseq::merge_taxa()}}
+\code{\link[phyloseq:merge_taxa]{phyloseq::merge_taxa()}}
 }
 \author{
 Michael R. McLaren (orcid: \href{https://orcid.org/0000-0003-1575-473X}{0000-0003-1575-473X}) modified by Adrien Taudiere

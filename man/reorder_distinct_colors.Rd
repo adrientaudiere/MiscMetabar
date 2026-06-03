@@ -30,8 +30,8 @@ distances under simulated deuteranopia so that the reordering
 optimizes contrast for colorblind viewers.}
 }
 \value{
-A new ggplot object with \code{\link[ggplot2:scale_manual]{ggplot2::scale_fill_manual()}} and
-(if a color scale is present) \code{\link[ggplot2:scale_manual]{ggplot2::scale_color_manual()}}
+A new ggplot object with \code{\link[ggplot2:scale_fill_manual]{ggplot2::scale_fill_manual()}} and
+(if a color scale is present) \code{\link[ggplot2:scale_color_manual]{ggplot2::scale_color_manual()}}
 replacing the original scales. When \code{p} is omitted, returns an
 object that can be added to a ggplot with \code{+}.
 }

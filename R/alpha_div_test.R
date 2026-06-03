@@ -403,6 +403,7 @@ hill_test_rarperm_pq <- function(
 #' @examples
 #' \donttest{
 #' if (requireNamespace("glmulti")) {
+#'    library("divent")
 #'   res_glmulti <-
 #'     glmutli_pq(data_fungi_mini,
 #'       "Hill_0 ~ Hill_1 + Abundance + Time + Height",

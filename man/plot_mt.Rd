@@ -2,12 +2,12 @@
 % Please edit documentation in R/plot_functions.R
 \name{plot_mt}
 \alias{plot_mt}
-\title{Plot the result of a mt test \code{\link[phyloseq:mt-methods]{phyloseq::mt()}}}
+\title{Plot the result of a mt test \code{\link[phyloseq:mt]{phyloseq::mt()}}}
 \usage{
 plot_mt(mt = NULL, pval = 0.05, color_tax = "Class", taxa = "Species")
 }
 \arguments{
-\item{mt}{(required) Result of a mt test from the function \code{\link[phyloseq:mt-methods]{phyloseq::mt()}}.}
+\item{mt}{(required) Result of a mt test from the function \code{\link[phyloseq:mt]{phyloseq::mt()}}.}
 
 \item{pval}{(default: 0.05) Choose the cut off p-value to plot taxa.}
 
@@ -36,7 +36,7 @@ plot_mt(res, taxa = "Genus", color_tax = "Order")
 }
 }
 \seealso{
-\code{\link[phyloseq:mt-methods]{phyloseq::mt()}}
+\code{\link[phyloseq:mt]{phyloseq::mt()}}
 }
 \author{
 Adrien Taudière

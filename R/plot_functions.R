@@ -2027,6 +2027,7 @@ hill_pq <- function(
 #' @export
 #' @examples
 #' \donttest{
+#'  library("divent")
 #' if (requireNamespace("ggstatsplot")) {
 #'   p <- ggbetween_pq(data_fungi, fact = "Time", p.adjust.method = "BH")
 #'   p[[1]]
@@ -5642,11 +5643,11 @@ plot_var_part_pq <-
 #'
 #' @examples
 #' if (requireNamespace("ggstatsplot")) {
+#'   library("divent")
 #'   ggscatt_pq(data_fungi_mini, "Time", q = 0, type = "non-parametric")
 #' }
 #' \donttest{
 #' if (requireNamespace("ggstatsplot")) {
-#'   ggscatt_pq(data_fungi_mini, "Time", q = 0, type = "parametric")
 #'   ggscatt_pq(data_fungi_mini, "Sample_id",
 #'     q = 0,
 #'     one_plot = FALSE
@@ -5970,6 +5971,7 @@ ggaluv_pq <- function(
 #'   sample_names(data_fungi_mini)[1:20],
 #'   data_fungi_mini
 #' )
+#'  library("divent")
 #' res1 <- plot_refseq_extremity_pq(data_f, q = 1)
 #' names(res1)
 #' \donttest{
@@ -6047,10 +6049,10 @@ plot_refseq_extremity_pq <- function(
       )
 
     if (!is.null(q)) {
-      hill_nucleotide <- divent_hill_matrix_pq(
+      suppressMessages(hill_nucleotide <- divent_hill_matrix_pq(
         nucleotide_first_interm[, c("nb_A", "nb_C", "nb_G", "nb_T")],
         q = q
-      )
+      ))
       if (sum(q == 0) > 0) {
         hill_nucleotide <- hill_nucleotide |>
           rename("Hill 0 (Richness)" = "0")
@@ -6127,10 +6129,10 @@ plot_refseq_extremity_pq <- function(
       )
 
     if (!is.null(q)) {
-      hill_nucleotide <- divent_hill_matrix_pq(
+      suppressMessages(hill_nucleotide <- divent_hill_matrix_pq(
         nucleotide_last_interm[, c("nb_A", "nb_C", "nb_G", "nb_T")],
         q = q
-      )
+      ))
       if (sum(q == 0) > 0) {
         hill_nucleotide <- hill_nucleotide |>
           rename("Hill 0 (Richness)" = "0")

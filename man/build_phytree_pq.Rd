@@ -26,29 +26,29 @@ the function also build 3 bootstrapped trees using \code{nb_bootstrap}
 bootstrap samples}
 
 \item{model}{allows to choose an amino acid models or nucleotide model,
-see \code{\link[phangorn:pml]{phangorn::optim.pml()}} for more details}
+see \code{\link[phangorn:optim.pml]{phangorn::optim.pml()}} for more details}
 
 \item{optInv}{Logical value indicating whether topology gets optimized
-(NNI). See \code{\link[phangorn:pml]{phangorn::optim.pml()}} for more details}
+(NNI). See \code{\link[phangorn:optim.pml]{phangorn::optim.pml()}} for more details}
 
 \item{optGamma}{Logical value indicating whether gamma rate parameter gets
-optimized. See \code{\link[phangorn:pml]{phangorn::optim.pml()}} for more details}
+optimized. See \code{\link[phangorn:optim.pml]{phangorn::optim.pml()}} for more details}
 
 \item{rearrangement}{type of tree tree rearrangements to perform, one of
 "NNI", "stochastic" or "ratchet"
-see \code{\link[phangorn:pml]{phangorn::optim.pml()}} for more details}
+see \code{\link[phangorn:optim.pml]{phangorn::optim.pml()}} for more details}
 
 \item{control}{A list of parameters for controlling the fitting process.
-see \code{\link[phangorn:pml]{phangorn::optim.pml()}} for more details}
+see \code{\link[phangorn:optim.pml]{phangorn::optim.pml()}} for more details}
 
 \item{optNni}{Logical value indicating whether topology gets optimized (NNI).
-see \code{\link[phangorn:pml]{phangorn::optim.pml()}} for more details}
+see \code{\link[phangorn:optim.pml]{phangorn::optim.pml()}} for more details}
 
 \item{multicore}{(logical) whether models should estimated in parallel.
 see \code{\link[phangorn:bootstrap.pml]{phangorn::bootstrap.pml()}} for more details}
 
 \item{...}{Other params for be passed on to
-\code{\link[phangorn:pml]{phangorn::optim.pml()}} function}
+\code{\link[phangorn:optim.pml]{phangorn::optim.pml()}} function}
 }
 \value{
 A list of phylogenetic tree

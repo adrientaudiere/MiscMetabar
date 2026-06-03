@@ -24,6 +24,7 @@ test_that("plot_ancombc_pq works", {
     error = function(e) NULL
   )
   skip_if(is.null(ancombc_res))
+  library(patchwork)
   p <- plot_ancombc_pq(data_subset, ancombc_res)
   expect_s3_class(p, "ggplot")
 })

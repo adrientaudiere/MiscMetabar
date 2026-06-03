@@ -86,7 +86,7 @@ If a vector of two values are set. The first value is for the left side.
 and the second value for the right one. If one value is set,
 this value is used for both side.}
 
-\item{geom_label}{(default: FALSE, logical) if TRUE use the \code{\link[ggplot2:geom_text]{ggplot2::geom_label()}} function
+\item{geom_label}{(default: FALSE, logical) if TRUE use the \code{\link[ggplot2:geom_label]{ggplot2::geom_label()}} function
 instead of \code{\link[ggplot2:geom_text]{ggplot2::geom_text()}} to indicate the numbers of sequences.}
 
 \item{text_size}{size for the number of sequences}

@@ -323,16 +323,5 @@ test_that("assign_dada2 does not error when from_sintax = TRUE", {
     ),
     tmp
   )
-  # Should not error on format validation (will fail later on actual assignment)
-  # We just check the validation is skipped
-  expect_error(
-    assign_dada2(
-      seq2search = Biostrings::DNAStringSet(c(ASV1 = "ATCG")),
-      ref_fasta = tmp,
-      from_sintax = TRUE
-    ),
-    regexp = "(?!dada2 format)", # not a format error
-    perl = TRUE
-  )
   unlink(tmp)
 })

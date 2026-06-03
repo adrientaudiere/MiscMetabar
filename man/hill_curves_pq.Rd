@@ -34,7 +34,7 @@ the mq_by factor. See examples.}
 \item{nperm}{(int Default NULL) If a integer is set to nperm, nperm
 permutation are computed to draw confidence interval for each curves.
 The function use \code{\link[vegan:renyi]{vegan::renyi()}} if nperm is NULL and
-\code{\link[vegan:renyi]{vegan::renyiaccum()}} else.}
+\code{\link[vegan:renyiaccum]{vegan::renyiaccum()}} else.}
 
 \item{na_remove}{(logical, default FALSE) If set to TRUE, remove samples with
 NA in the variables set in merge_sample_by. Not used if merge_sample_by is
@@ -50,7 +50,7 @@ no legend are plotted.}
 \item{size_point}{(int, default 1) The size of the point.}
 
 \item{...}{Additional arguments passed on to \code{\link[vegan:renyi]{vegan::renyi()}} function or
-\code{\link[vegan:renyi]{vegan::renyiaccum()}} if nperm is not NULL.}
+\code{\link[vegan:renyiaccum]{vegan::renyiaccum()}} if nperm is not NULL.}
 }
 \value{
 A ggplot2 object
@@ -63,12 +63,12 @@ A ggplot2 object
 
 
 Basically a wrapper of \code{\link[vegan:renyi]{vegan::renyi()}} and
-\code{\link[vegan:renyi]{vegan::renyiaccum()}} functions
+\code{\link[vegan:renyiaccum]{vegan::renyiaccum()}} functions
 }
 \details{
 This function is mainly a wrapper of the work of others.
 Please make a reference to \code{\link[vegan:renyi]{vegan::renyi()}} or
-\code{\link[vegan:renyi]{vegan::renyiaccum()}} functions
+\code{\link[vegan:renyiaccum]{vegan::renyiaccum()}} functions
 }
 \examples{
 \donttest{

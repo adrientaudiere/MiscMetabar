@@ -24,7 +24,7 @@ a new phyloseq object
 
 
 The main objective of this function is to complete the
-\code{\link[phyloseq:subset_samples-methods]{phyloseq::subset_samples()}} function by propose a more easy
+\code{\link[phyloseq:subset_samples]{phyloseq::subset_samples()}} function by propose a more easy
 (but more prone to error) way of subset_samples.
 It replace the subsetting expression which used the name of the variable
 in the sam_data by a boolean vector.

@@ -1297,7 +1297,9 @@ read_pq <- function(
 #' @seealso [mumu_pq()]
 #' @examplesIf MiscMetabar::is_vsearch_installed()
 #' \donttest{
-#' lulu_pq(data_fungi_sp_known)
+#'   data_f <- prune_samples(sample_names(data_fungi_sp_known)[1:20],
+#'     data_fungi_sp_known)
+#'   lulu_pq(data_f)
 #' }
 #' @author Tobias Guldberg Frøslev \email{tobiasgf@snm.ku.dk}
 #'   & Adrien Taudière \email{adrien.taudiere@@zaclys.net}

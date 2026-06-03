@@ -15,7 +15,7 @@ simplify_taxo(
 \item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{pattern_to_remove}{(a vector of character) the pattern to remove using \code{\link[base:grep]{base::gsub()}} function.}
+\item{pattern_to_remove}{(a vector of character) the pattern to remove using \code{\link[base:gsub]{base::gsub()}} function.}
 
 \item{remove_space}{(logical; default TRUE): do we remove space?}
 

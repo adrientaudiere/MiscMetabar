@@ -32,7 +32,7 @@ assign_mmseqs2(
 \item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{ref_fasta}{Either a \link[Biostrings:XStringSet-class]{Biostrings::DNAStringSet} object or a path
+\item{ref_fasta}{Either a \link[Biostrings:DNAStringSet]{Biostrings::DNAStringSet} object or a path
 to a FASTA file in SINTAX format (taxonomy in headers after
 \verb{;tax=}). Only used if \code{database} is not set.
 See \code{\link[=assign_sintax]{assign_sintax()}} for the SINTAX format specification.}
@@ -40,7 +40,7 @@ See \code{\link[=assign_sintax]{assign_sintax()}} for the SINTAX format specific
 \item{database}{(optional) Path to a pre-built MMseqs2 database with
 NCBI taxonomy information. Only used if \code{ref_fasta} is not set.}
 
-\item{seq2search}{(optional) A \link[Biostrings:XStringSet-class]{Biostrings::DNAStringSet} object. Use
+\item{seq2search}{(optional) A \link[Biostrings:DNAStringSet]{Biostrings::DNAStringSet} object. Use
 instead of \code{physeq} to search arbitrary sequences. Cannot be used
 together with \code{physeq}.}
 

@@ -132,7 +132,7 @@ For each Hill diversity order in \code{q}, draws a bar at the group mean (±1 SE
 with jittered individual points. A Kruskal-Wallis test is reported in the
 subtitle; when the global effect is significant, Tukey HSD pairwise
 comparisons produce compact letter displays above the bars. Multiple values
-of \code{q} are assembled into a \link[patchwork:patchwork-package]{patchwork::patchwork} layout automatically.
+of \code{q} are assembled into a \link[patchwork:patchwork]{patchwork} layout automatically.
 }
 \examples{
 hill_bar_pq(data_fungi_mini, Height, q = 1)

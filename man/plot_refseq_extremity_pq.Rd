@@ -51,17 +51,22 @@ If \code{hill_scale} is not null, Hill diversity number are used to represent th
 of the diversity (equitability) along the sequences.
 }
 \examples{
-res1 <- plot_refseq_extremity_pq(data_fungi_mini, q = 1)
+data_f <- prune_samples(
+  sample_names(data_fungi_mini)[1:20],
+  data_fungi_mini
+)
+library(divent)
+res1 <- plot_refseq_extremity_pq(data_f, q = 1)
 names(res1)
 \donttest{
 res1$plot_start
 res1$plot_last
 
-res2 <- plot_refseq_extremity_pq(data_fungi_mini, first_n = 200, last_n = 100)
+res2 <- plot_refseq_extremity_pq(data_f, first_n = 200, last_n = 100)
 res2$plot_start
 res2$plot_last
 
-plot_refseq_extremity_pq(data_fungi_mini,
+plot_refseq_extremity_pq(data_f,
   first_n = NULL,
   last_n = 200,
   min_width = 200,

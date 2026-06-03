@@ -23,7 +23,7 @@ adonis_rarperm_pq(
 \item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{formula}{(required) the right part of a formula for \code{\link[vegan:adonis]{vegan::adonis2()}}.
+\item{formula}{(required) the right part of a formula for \code{\link[vegan:adonis2]{vegan::adonis2()}}.
 Variables must be present in the \code{physeq@sam_data} slot.}
 
 \item{dist_method}{(default "bray") the distance used. See

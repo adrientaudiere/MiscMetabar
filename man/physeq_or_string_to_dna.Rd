@@ -16,7 +16,7 @@ in place of physeq args. When physeq is set, dna sequences take the value
 of \code{physeq@refseq}}
 }
 \value{
-An object of class DNAStringSet (see the \code{\link[Biostrings:XStringSet-class]{Biostrings::DNAStringSet()}}
+An object of class DNAStringSet (see the \code{\link[Biostrings:DNAStringSet]{Biostrings::DNAStringSet()}}
 function)
 }
 \description{
@@ -50,7 +50,7 @@ dna2
 
 }
 \seealso{
-\code{\link[Biostrings:XStringSet-class]{Biostrings::DNAStringSet()}}
+\code{\link[Biostrings:DNAStringSet]{Biostrings::DNAStringSet()}}
 }
 \author{
 Adrien Taudière

@@ -56,7 +56,7 @@ labelled on the left side of the first bar. Segments are drawn to
 resolve overlapping labels.}
 
 \item{void_theme}{(logical; default TRUE) If TRUE, use
-\code{\link[ggplot2:ggtheme]{ggplot2::theme_void()}} when \code{label_taxa} is TRUE.}
+\code{\link[ggplot2:theme_void]{ggplot2::theme_void()}} when \code{label_taxa} is TRUE.}
 
 \item{show_values}{(logical; default FALSE) If TRUE, display
 abundance values (or percentages when \code{percent_bar = TRUE}) inside
