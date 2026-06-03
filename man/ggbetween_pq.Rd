@@ -78,6 +78,7 @@ use this function.
 }
 \examples{
 \donttest{
+library("divent")
 if (requireNamespace("ggstatsplot")) {
   p <- ggbetween_pq(data_fungi, fact = "Time", p.adjust.method = "BH")
   p[[1]]

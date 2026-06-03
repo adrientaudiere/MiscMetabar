@@ -2027,7 +2027,7 @@ hill_pq <- function(
 #' @export
 #' @examples
 #' \donttest{
-#'  library("divent")
+#' library("divent")
 #' if (requireNamespace("ggstatsplot")) {
 #'   p <- ggbetween_pq(data_fungi, fact = "Time", p.adjust.method = "BH")
 #'   p[[1]]
@@ -5971,7 +5971,7 @@ ggaluv_pq <- function(
 #'   sample_names(data_fungi_mini)[1:20],
 #'   data_fungi_mini
 #' )
-#'  library("divent")
+#' library("divent")
 #' res1 <- plot_refseq_extremity_pq(data_f, q = 1)
 #' names(res1)
 #' \donttest{

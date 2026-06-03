@@ -55,7 +55,7 @@ data_f <- prune_samples(
   sample_names(data_fungi_mini)[1:20],
   data_fungi_mini
 )
-library(divent)
+library("divent")
 res1 <- plot_refseq_extremity_pq(data_f, q = 1)
 names(res1)
 \donttest{

@@ -1,6 +1,4 @@
-# MiscMetabar (development version)
-
-# MiscMetabar 0.16.7 [CRAN]
+# MiscMetabar 0.16.8
 * Further check-time reductions for CRAN compliance:
   extra examples `\dontrun{}` (kept for documentation,
   not run during checks). 
@@ -9,7 +7,7 @@
 * Fix several bugs when using Windows paths by quoting system call arguments with `shQuote()`
 
 
-# MiscMetabar 0.16.6 [CRAN]
+# MiscMetabar 0.16.6 
 * `verify_tax_table()` is now ~10× faster on full-size taxonomy tables.
 * `divent_hill_matrix_pq()` no longer recomputes the per-sample
   positive-subset (`x <- x[x > 0]`) once per Hill order. The loop is
@@ -52,7 +50,7 @@
   (they only assert return class, not numeric stability).
 * Function defaults (`nperm`, `n_permutations`) are unchanged.
 
-# MiscMetabar 0.16.5 [CRAN]
+# MiscMetabar 0.16.5 
 * `funguild_assign()` and `rotl_pq()` examples now use `\dontrun{}` instead of
   `\donttest{}`. Both examples call external APIs (`www.stbates.org` and the
   Open Tree of Life respectively) that are not always reachable during CRAN's
@@ -71,7 +69,6 @@
   `10.1111/j.1365-294X.2012.05542.x`). `README.md` and the pkgdown site
   regenerate accordingly.
 
-# MiscMetabar 0.16.4 [CRAN]
 # MiscMetabar 0.16.3
 
 * `verify_tax_table()` now recognises **non-breaking space (U+00A0)** and other
@@ -114,10 +111,10 @@
 
 # MiscMetabar 0.16.2
 
-# MiscMetabar 0.16.1 [CRAN]
+# MiscMetabar 0.16.1 
 * `cutadapt_remove_primers()` gains a `cutadapt_args` parameter (default `""`) to pass additional arguments directly to cutadapt, such as `"-e 0.01"` to lower the maximum error rate from the cutadapt default of 10% to 1%.
 
-# MiscMetabar 0.15.2 [CRAN]
+# MiscMetabar 0.15.2 
 * `hill_test_rarperm_pq()`: fixed default `type` from `"non-parametrique"` to `"nonparametric"` to match the documented valid values and avoid confusion.
 * `hill_test_rarperm_pq()`: fixed example that incorrectly passed `p.val = 0.9` (not a valid parameter); it now uses `p_val_signif = 0.9` as intended.
 * **ggstatsplot 1.0.0 compatibility notes**: ggstatsplot 1.0.0 removes `var.equal`, `nboot`, and `effsize.type` from `ggbetweenstats()`; if you were passing these through `...` to `ggbetween_pq()` or `hill_test_rarperm_pq()`, they will now be silently ignored. The `palette` argument now requires `"package::palette"` format (e.g. `palette = "ggthemes::gdoc"`), and the separate `package` argument has been removed from ggstatsplot.
