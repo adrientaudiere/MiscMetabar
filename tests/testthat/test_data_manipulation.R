@@ -1,4 +1,5 @@
 data(data_fungi)
+library("divent")
 
 test_that("normalize_prop_pq works", {
   result <- normalize_prop_pq(data_fungi)

@@ -158,7 +158,7 @@ graph_test_pq <- function(
 #'   if `correction_for_sample_size` is TRUE, rarefy_nb_seqs will have no
 #'   effect.
 #' @param rngseed (Optional). A single integer value passed to
-#'   [phyloseq::rarefy_even_depth()], which is used to fix a seed for
+#'   [rarefy_even_depth_pq()], which is used to fix a seed for
 #'   reproducibly random number generation (in this case, reproducibly
 #'   random subsampling). If set to FALSE, then no fiddling with the RNG seed
 #'   is performed, and it is up to the user to appropriately call set.seed
@@ -278,7 +278,7 @@ adonis_pq <- function(
       )
       message("...")
     }
-    physeq <- rarefy_even_depth(physeq, rngseed = rngseed)
+    physeq <- rarefy_even_depth_pq(physeq, rngseed = rngseed)
     physeq <- clean_pq(physeq)
   }
 
@@ -313,7 +313,7 @@ adonis_pq <- function(
 #'   Minimum quantile is computed using 1-quantile_prob.
 #' @param sample.size (int) A single integer value equal to the number of
 #'   reads being simulated, also known as the depth. See
-#'   [phyloseq::rarefy_even_depth()].
+#'   [phyloseq::rarefy_even_depth()] and [rarefy_even_depth_pq()].
 #' @param ... Other params to be passed on to [adonis_pq()] function
 #'
 #' @return A list of three dataframe representing the mean, the minimum quantile
@@ -343,10 +343,8 @@ adonis_rarperm_pq <- function(
   sample.size = min(sample_sums(physeq)),
   ...
 ) {
-  # Ensure .Random.seed exists before calling rarefy_even_depth(),
-
-  # which tries to save/restore it. In a fresh R session .Random.seed
-  # is absent until the first random operation.
+  # Ensure .Random.seed exists before the rarefaction below saves/restores it.
+  # In a fresh R session .Random.seed is absent until the first random operation.
   if (!exists(".Random.seed", envir = globalenv(), inherits = FALSE)) {
     sample.int(1L)
   }
@@ -364,11 +362,10 @@ adonis_rarperm_pq <- function(
   for (i in 1:nperm) {
     res_perm[[i]] <-
       adonis_pq(
-        rarefy_even_depth(
+        rarefy_even_depth_pq(
           physeq,
           rngseed = i,
-          sample.size = sample.size,
-          verbose = verbose
+          sample_size = sample.size
         ),
         formula,
         dist_method = dist_method,
@@ -1648,7 +1645,7 @@ var_par_pq <-
 #'   considered significant.
 #' @param sample.size (int) A single integer value equal to the number of
 #'   reads being simulated, also known as the depth. See
-#'   [phyloseq::rarefy_even_depth()].
+#'   [phyloseq::rarefy_even_depth()] and [rarefy_even_depth_pq()].
 #' @param verbose (logical). If TRUE, print additional information.
 #' @param progress_bar (logical, default TRUE) Do we print progress during
 #'   the calculation?
@@ -1719,11 +1716,10 @@ var_par_rarperm_pq <-
     for (i in 1:nperm) {
       res_perm[[i]] <-
         var_par_pq(
-          physeq = rarefy_even_depth(
+          physeq = rarefy_even_depth_pq(
             physeq,
             rngseed = i,
-            sample.size = sample.size,
-            verbose = verbose
+            sample_size = sample.size
           ),
           list_component = list_component,
           dist_method = dist_method,
@@ -1751,7 +1747,7 @@ var_par_rarperm_pq <-
           }) <
             dbrda_signif_pval
         ) /
-          nperm
+        nperm
     }
 
     # Pre-compute sapply results for efficiency

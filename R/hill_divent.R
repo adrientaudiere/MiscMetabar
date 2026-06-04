@@ -114,10 +114,10 @@ profile_hill_pq <- function(
 #' @examples
 #' \dontrun{
 #' # Individual (sequence-based) accumulation curves
-#' hill_acc_pq(rarefy_even_depth(data_fungi_mini, sample.size = 500),
+#' hill_acc_pq(rarefy_pq(data_fungi_mini, sample_size = 500, replace = TRUE),
 #'   n_permutations = 3
 #' ) + no_legend()
-#' hill_acc_pq(rarefy_even_depth(data_fungi_mini, sample.size = 500),
+#' hill_acc_pq(rarefy_pq(data_fungi_mini, sample_size = 500, replace = TRUE),
 #'   n_permutations = 3,
 #'   merge_sample_by = "Height"
 #' )

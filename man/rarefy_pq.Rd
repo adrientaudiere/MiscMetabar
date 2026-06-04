@@ -4,23 +4,28 @@
 \alias{rarefy_pq}
 \title{Rarefy a phyloseq object, optionally averaging over repetitions}
 \usage{
-rarefy_pq(physeq, sample_size = NULL, n = 1, seed = 123, ...)
+rarefy_pq(physeq, sample_size = NULL, n = 1, seed = 123, replace = FALSE, ...)
 }
 \arguments{
 \item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
 \item{sample_size}{(integer) the depth to rarefy to. If \code{NULL} (default),
-the minimum \code{sample_sums(physeq)} is used.}
+the minimum \code{sample_sums(physeq)} is used. Samples with fewer reads than
+\code{sample_size} are dropped.}
 
 \item{n}{(integer, default 1) number of rarefaction repetitions to average
 over. Values > 1 return a non-integer (averaged) OTU table.}
 
-\item{seed}{(integer, default 123) random seed passed to
-\code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}}.}
+\item{seed}{(integer, default 123) random seed. Set to \code{FALSE} to leave the
+random number generator untouched (i.e. use the current RNG state),
+mirroring the \code{rngseed} argument of \code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}}.}
 
-\item{...}{Additional arguments passed on to
-\code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}}.}
+\item{replace}{(logical, default FALSE) sample with replacement? \code{FALSE}
+(without replacement) is the recommended, less biased default. \code{TRUE}
+reproduces the default behaviour of \code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}}.}
+
+\item{...}{Not used. Kept for backward compatibility.}
 }
 \value{
 A new \code{\link[phyloseq]{phyloseq-class}} object with a
@@ -33,16 +38,29 @@ rarefied (or averaged-rarefied) \code{otu_table}.
 }}
 
 
-Wrapper around \code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}} that can repeat the
-rarefaction \code{n} times and return the averaged OTU table, reducing the
-stochasticity of a single subsampling pass. With \code{n = 1} (default) the
-behaviour matches a standard single rarefaction.
+Rarefy (subsample to an even depth) a phyloseq object. \code{rarefy_pq()} is a
+drop-in, R-version-robust replacement for \code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}}
+that can additionally repeat the rarefaction \code{n} times and return the
+averaged OTU table, reducing the stochasticity of a single subsampling
+pass. With \code{n = 1} (default) the behaviour matches a standard single
+rarefaction.
+}
+\details{
+Rarefaction is performed internally rather than by calling
+\code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}}, whose \code{replace = FALSE} code path relies
+on \code{rep_len(x["OTUi"], x["times"])} and errors with \verb{invalid 'length.out' value} under recent R-devel (see phyloseq issue \#1753). For a single
+rarefaction (\code{n = 1}), the result is identical to
+\code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}} with \code{trimOTUs = FALSE} for the same
+\code{seed}, \code{sample_size} and \code{replace} — except in the degenerate case where
+a retained sample has a single read, in which phyloseq triggers a
+\code{sample()} edge-case bug that \code{rarefy_pq()} avoids. Empty OTUs are never
+trimmed.
 }
 \examples{
-data_f_rar <- rarefy_pq(data_fungi_mini, seed = 1)
+data_f_rar <- rarefy_pq(data_fungi_mini, sample_size = 500, seed = 1)
 sample_sums(data_f_rar)
 
-data_f_rar5 <- rarefy_pq(data_fungi_mini, n = 5, seed = 1)
+data_f_rar5 <- rarefy_pq(data_fungi_mini, sample_size = 500, n = 5, seed = 1)
 sample_sums(data_f_rar5)
 }
 \seealso{

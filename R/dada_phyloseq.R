@@ -3013,6 +3013,26 @@ add_new_taxonomy_pq <- function(
 ) {
   method <- match.arg(method)
 
+  # Warn on a rank-name argument that the chosen method ignores: dada2 uses
+  # dada2::assignTaxonomy()'s `taxLevels`, whereas SINTAX uses assign_sintax()'s
+  # `taxa_ranks`. The unused one is silently dropped by the per-method `...`
+  # filtering below, which otherwise leads to confusing downstream errors.
+  dots_names <- ...names()
+  if (method == "sintax" && "taxLevels" %in% dots_names) {
+    cli::cli_warn(c(
+      "!" = "{.arg taxLevels} is a {.fn dada2::assignTaxonomy} argument and is
+             ignored when {.code method = \"sintax\"}.",
+      "i" = "Pass SINTAX rank names via {.arg taxa_ranks} instead."
+    ))
+  }
+  if (method == "dada2" && "taxa_ranks" %in% dots_names) {
+    cli::cli_warn(c(
+      "!" = "{.arg taxa_ranks} is a SINTAX ({.fn assign_sintax}) argument and is
+             ignored when {.code method = \"dada2\"}.",
+      "i" = "Pass dada2 rank names via {.arg taxLevels} instead."
+    ))
+  }
+
   if (is.null(min_bootstrap)) {
     min_bootstrap <- ifelse(method == "idtaxa", 0.6, 0.5)
   }
@@ -3216,8 +3236,7 @@ add_new_taxonomy_pq <- function(
 tbl_sum_samdata <- function(physeq, remove_col_unique_value = TRUE, ...) {
   tbl <- tibble(data.frame(physeq@sam_data))
   if (remove_col_unique_value) {
-    tbl <- tbl[
-      ,
+    tbl <- tbl[,
       !apply(tbl, 2, function(x) {
         length(unique(x)) == nrow(tbl) && is.character(x)
       })
@@ -3693,7 +3712,7 @@ build_phytree_pq <- function(
 #' @examples
 #'
 #' are_modality_even_depth(data_fungi_mini, "Time")$p.value
-#' are_modality_even_depth(rarefy_even_depth(data_fungi_mini), "Time")$p.value
+#' are_modality_even_depth(rarefy_pq(data_fungi_mini, replace = TRUE), "Time")$p.value
 #' are_modality_even_depth(data_fungi_mini, "Height", boxplot = TRUE)
 are_modality_even_depth <- function(physeq, fact, boxplot = FALSE) {
   nb_seq <- sample_sums(physeq)
@@ -4350,7 +4369,7 @@ psmelt_samples_pq <-
         )
         message("...")
       }
-      physeq <- rarefy_even_depth(physeq, rngseed = rngseed)
+      physeq <- rarefy_even_depth_pq(physeq, rngseed = rngseed)
     }
     psm <- psmelt(physeq)
     if (filter_zero) {

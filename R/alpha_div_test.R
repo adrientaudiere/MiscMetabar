@@ -162,7 +162,7 @@ hill_tuckey_pq <- function(
 #' @param nperm (int) The number of permutations to perform.
 #' @param sample.size (int) A single integer value equal to the number of
 #'   reads being simulated, also known as the depth. See
-#'   [phyloseq::rarefy_even_depth()].
+#'   [phyloseq::rarefy_even_depth()] and [rarefy_even_depth_pq()].
 #' @param verbose (logical). If TRUE, print additional information.
 #' @param progress_bar (logical, default TRUE) Do we print progress during
 #'   the calculation?
@@ -259,22 +259,20 @@ hill_test_rarperm_pq <- function(
     if (verbose) {
       psm <-
         psmelt_samples_pq(
-          physeq = rarefy_even_depth(
+          physeq = rarefy_even_depth_pq(
             physeq,
             rngseed = i,
-            sample.size = sample.size,
-            verbose = verbose
+            sample_size = sample.size
           ),
           q = q
         )
     } else {
       psm <-
         suppressMessages(psmelt_samples_pq(
-          physeq = rarefy_even_depth(
+          physeq = rarefy_even_depth_pq(
             physeq,
             rngseed = i,
-            sample.size = sample.size,
-            verbose = verbose
+            sample_size = sample.size
           ),
           q = q
         ))

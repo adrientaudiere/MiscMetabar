@@ -91,7 +91,7 @@ plot_mt <-
 #' \donttest{
 #' data("GlobalPatterns", package = "phyloseq")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
-#' GP <- rarefy_even_depth(subset_samples_pq(GP, sample_sums(GP) > 3000))
+#' GP <- rarefy_pq(subset_samples_pq(GP, sample_sums(GP) > 3000), replace = TRUE)
 #' p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10)
 #' p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, step = 10)
 #'
@@ -329,7 +329,7 @@ accu_plot <-
 #'    only use rarefy_by_sample_before_merging = TRUE
 #' @param sample.size (int) A single integer value equal to the number of
 #'   reads being simulated, also known as the depth. See
-#'   [phyloseq::rarefy_even_depth()].
+#'   [phyloseq::rarefy_even_depth()] and [rarefy_even_depth_pq()].
 #' @param verbose (logical). If TRUE, print additional information.
 #' @param ... Other params for be passed on to [accu_plot()] function
 #'
@@ -376,11 +376,10 @@ accu_plot_balanced_modality <- function(
   if (rarefy_by_sample_before_merging) {
     p_for_dim <- accu_plot(
       rarefy_sample_count_by_modality(
-        rarefy_even_depth(
+        rarefy_even_depth_pq(
           physeq,
           rngseed = 1,
-          sample.size = sample.size,
-          verbose = verbose
+          sample_size = sample.size
         ),
         fact,
         rngseed = 1
@@ -414,15 +413,14 @@ accu_plot_balanced_modality <- function(
   }
   for (i in 1:nperm) {
     if (rarefy_by_sample_before_merging) {
-      plist[, , i] <-
+      plist[,, i] <-
         as.matrix(suppressWarnings(suppressMessages(
           accu_plot(
             rarefy_sample_count_by_modality(
-              rarefy_even_depth(
+              rarefy_even_depth_pq(
                 physeq,
                 rngseed = i,
-                sample.size = sample.size,
-                verbose = verbose
+                sample_size = sample.size
               ),
               fact,
               rngseed = i
@@ -511,7 +509,7 @@ accu_plot_balanced_modality <- function(
 #' \donttest{
 #' data("GlobalPatterns", package = "phyloseq")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
-#' GP <- rarefy_even_depth(subset_samples_pq(GP, sample_sums(GP) > 3000))
+#' GP <- rarefy_pq(subset_samples_pq(GP, sample_sums(GP) > 3000), replace = TRUE)
 #' p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10)
 #'
 #' val_threshold <- accu_samp_threshold(p)
@@ -924,8 +922,7 @@ sankey_pq <-
           apply(mat_interm, 1, function(x) {
             tapply(
               x,
-              physeq@tax_table[
-                ,
+              physeq@tax_table[,
                 taxa[length(taxa)]
               ],
               function(x) {
@@ -938,8 +935,7 @@ sankey_pq <-
           apply(mat_interm, 1, function(x) {
             tapply(
               x,
-              physeq@tax_table[
-                ,
+              physeq@tax_table[,
                 taxa[length(taxa)]
               ],
               sum
@@ -1446,7 +1442,7 @@ ggvenn_pq <- function(
       )
       message("...")
     }
-    physeq <- rarefy_even_depth(physeq, rngseed = rngseed)
+    physeq <- rarefy_even_depth_pq(physeq, rngseed = rngseed)
     physeq <- clean_pq(physeq)
   }
 
@@ -1479,7 +1475,7 @@ ggvenn_pq <- function(
       )
       message("...")
     }
-    physeq <- rarefy_even_depth(physeq, rngseed = rngseed)
+    physeq <- rarefy_even_depth_pq(physeq, rngseed = rngseed)
     physeq <- clean_pq(physeq)
   }
 
@@ -1490,14 +1486,14 @@ ggvenn_pq <- function(
   for (f in levels(physeq@sam_data[[fact]])) {
     newphyseq <- physeq
     new_DF <- newphyseq@sam_data[
-      newphyseq@sam_data[[fact]] == f, ,
+      newphyseq@sam_data[[fact]] == f,
+      ,
       drop = FALSE
     ]
     sample_data(newphyseq) <- sample_data(new_DF)
     newphyseq <- clean_pq(newphyseq)
     if (is.null(taxonomic_rank) || type == "nb_seq") {
-      res[[f]] <- colnames(newphyseq@otu_table[
-        ,
+      res[[f]] <- colnames(newphyseq@otu_table[,
         colSums(newphyseq@otu_table) > min_nb_seq
       ])
     } else {
@@ -2105,7 +2101,7 @@ ggbetween_pq <-
         )
         message("...")
       }
-      physeq <- clean_pq(rarefy_even_depth(physeq, rngseed = rngseed))
+      physeq <- clean_pq(rarefy_even_depth_pq(physeq, rngseed = rngseed))
     }
 
     if (are_modality_even_depth(physeq, fact)$p.value < 0.05) {
@@ -2726,7 +2722,7 @@ biplot_pq <- function(
       )
       message("...")
     }
-    physeq <- clean_pq(rarefy_even_depth(physeq, rngseed = rngseed))
+    physeq <- clean_pq(rarefy_even_depth_pq(physeq, rngseed = rngseed))
   }
 
   if (
@@ -4152,7 +4148,7 @@ upset_pq <- function(
       )
       message("...")
     }
-    physeq <- clean_pq(rarefy_even_depth(physeq, rngseed = rngseed))
+    physeq <- clean_pq(rarefy_even_depth_pq(physeq, rngseed = rngseed))
   }
 
   psm <- psmelt(physeq)
@@ -5698,7 +5694,7 @@ ggscatt_pq <- function(
       )
       message("...")
     }
-    physeq <- clean_pq(rarefy_even_depth(physeq, rngseed = rngseed))
+    physeq <- clean_pq(rarefy_even_depth_pq(physeq, rngseed = rngseed))
   }
 
   p_list <- vector("list", length(q))
@@ -5850,7 +5846,7 @@ ggaluv_pq <- function(
       )
       message("...")
     }
-    physeq <- rarefy_even_depth(physeq, rngseed = rngseed)
+    physeq <- rarefy_even_depth_pq(physeq, rngseed = rngseed)
   }
 
   if (na_remove && !is.null(fact)) {
@@ -6049,10 +6045,12 @@ plot_refseq_extremity_pq <- function(
       )
 
     if (!is.null(q)) {
-      suppressMessages(hill_nucleotide <- divent_hill_matrix_pq(
-        nucleotide_first_interm[, c("nb_A", "nb_C", "nb_G", "nb_T")],
-        q = q
-      ))
+      suppressMessages(
+        hill_nucleotide <- divent_hill_matrix_pq(
+          nucleotide_first_interm[, c("nb_A", "nb_C", "nb_G", "nb_T")],
+          q = q
+        )
+      )
       if (sum(q == 0) > 0) {
         hill_nucleotide <- hill_nucleotide |>
           rename("Hill 0 (Richness)" = "0")
@@ -6129,10 +6127,12 @@ plot_refseq_extremity_pq <- function(
       )
 
     if (!is.null(q)) {
-      suppressMessages(hill_nucleotide <- divent_hill_matrix_pq(
-        nucleotide_last_interm[, c("nb_A", "nb_C", "nb_G", "nb_T")],
-        q = q
-      ))
+      suppressMessages(
+        hill_nucleotide <- divent_hill_matrix_pq(
+          nucleotide_last_interm[, c("nb_A", "nb_C", "nb_G", "nb_T")],
+          q = q
+        )
+      )
       if (sum(q == 0) > 0) {
         hill_nucleotide <- hill_nucleotide |>
           rename("Hill 0 (Richness)" = "0")
@@ -6376,7 +6376,7 @@ hill_curves_pq <- function(
     what <- c("Collector", "mean", "Qnt 0.025", "Qnt 0.975")
     what <- what[what %in% dimnames(df_hill)[[3]]]
     if (any(what %in% dimnames(df_hill)[[3]])) {
-      df_hill <- df_hill[, , what, drop = FALSE]
+      df_hill <- df_hill[,, what, drop = FALSE]
     }
     dm <- dim(df_hill)
     dnam <- dimnames(df_hill)

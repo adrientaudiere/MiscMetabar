@@ -104,6 +104,7 @@ reference:
   - gmpr_pq
   - mcknight_residuals_pq
   - normalize_prop_pq
+  - rarefy_even_depth_pq
   - rarefy_pq
   - srs_pq
   - taxa_as_columns
