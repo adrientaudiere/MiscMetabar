@@ -21,7 +21,6 @@ plots the Hill diversity profile (diversity as a function of the order
 `merge_sample_by`.
 
 ``` r
-
 data(data_fungi_mini)
 dfm_rarefied <- rarefy_even_depth(data_fungi_mini, rngseed = 1, sample.size=200)
 p <-profile_hill_pq(dfm_rarefied) 

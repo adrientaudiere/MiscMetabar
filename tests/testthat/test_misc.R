@@ -125,7 +125,10 @@ test_that("are_modality_even_depth works fine", {
     62.143
   )
   expect_equal(
-    are_modality_even_depth(rarefy_even_depth(data_fungi), "Time")$p.value,
+    are_modality_even_depth(
+      rarefy_pq(data_fungi, replace = TRUE),
+      "Time"
+    )$p.value,
     1
   )
   expect_silent(are_modality_even_depth(data_fungi, "Height", boxplot = TRUE))

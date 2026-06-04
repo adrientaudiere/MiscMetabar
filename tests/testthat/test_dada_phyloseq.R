@@ -1,6 +1,7 @@
 data(data_fungi)
 data(data_fungi_mini)
 data(enterotype)
+library("divent")
 
 
 test_that("taxa_as_columns works fine", {

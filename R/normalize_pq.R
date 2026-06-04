@@ -157,7 +157,8 @@ transform_pq <- function(
     otu <- t(otu)
   }
 
-  new_otu <- switch(method,
+  new_otu <- switch(
+    method,
     tss = vegan::decostand(otu, method = "total", ...),
     hellinger = vegan::decostand(otu, method = "hellinger", ...),
     clr = vegan::decostand(otu + pseudocount, method = "clr", ...),
@@ -271,20 +272,38 @@ normalize_prop_pq <- function(
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
-#'   Wrapper around [phyloseq::rarefy_even_depth()] that can repeat the
-#'   rarefaction `n` times and return the averaged OTU table, reducing the
-#'   stochasticity of a single subsampling pass. With `n = 1` (default) the
-#'   behaviour matches a standard single rarefaction.
+#'   Rarefy (subsample to an even depth) a phyloseq object. `rarefy_pq()` is a
+#'   drop-in, R-version-robust replacement for [phyloseq::rarefy_even_depth()]
+#'   that can additionally repeat the rarefaction `n` times and return the
+#'   averaged OTU table, reducing the stochasticity of a single subsampling
+#'   pass. With `n = 1` (default) the behaviour matches a standard single
+#'   rarefaction.
 #'
 #' @inheritParams clean_pq
 #' @param sample_size (integer) the depth to rarefy to. If `NULL` (default),
-#'   the minimum `sample_sums(physeq)` is used.
+#'   the minimum `sample_sums(physeq)` is used. Samples with fewer reads than
+#'   `sample_size` are dropped.
 #' @param n (integer, default 1) number of rarefaction repetitions to average
 #'   over. Values > 1 return a non-integer (averaged) OTU table.
-#' @param seed (integer, default 123) random seed passed to
-#'   [phyloseq::rarefy_even_depth()].
-#' @param ... Additional arguments passed on to
-#'   [phyloseq::rarefy_even_depth()].
+#' @param seed (integer, default 123) random seed. Set to `FALSE` to leave the
+#'   random number generator untouched (i.e. use the current RNG state),
+#'   mirroring the `rngseed` argument of [phyloseq::rarefy_even_depth()].
+#' @param replace (logical, default FALSE) sample with replacement? `FALSE`
+#'   (without replacement) is the recommended, less biased default. `TRUE`
+#'   reproduces the default behaviour of [phyloseq::rarefy_even_depth()].
+#' @param ... Not used. Kept for backward compatibility.
+#'
+#' @details
+#'   Rarefaction is performed internally rather than by calling
+#'   [phyloseq::rarefy_even_depth()], whose `replace = FALSE` code path relies
+#'   on `rep_len(x["OTUi"], x["times"])` and errors with `invalid 'length.out'
+#'   value` under recent R-devel (see phyloseq issue \#1753). For a single
+#'   rarefaction (`n = 1`), the result is identical to
+#'   [phyloseq::rarefy_even_depth()] with `trimOTUs = FALSE` for the same
+#'   `seed`, `sample_size` and `replace` — except in the degenerate case where
+#'   a retained sample has a single read, in which phyloseq triggers a
+#'   `sample()` edge-case bug that `rarefy_pq()` avoids. Empty OTUs are never
+#'   trimmed.
 #'
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object with a
 #'   rarefied (or averaged-rarefied) `otu_table`.
@@ -292,38 +311,29 @@ normalize_prop_pq <- function(
 #' @author Adrien Taudière
 #' @seealso [phyloseq::rarefy_even_depth()], [transform_pq()]
 #' @examples
-#' data_f_rar <- rarefy_pq(data_fungi_mini, seed = 1)
+#' data_f_rar <- rarefy_pq(data_fungi_mini, sample_size = 500, seed = 1)
 #' sample_sums(data_f_rar)
 #'
-#' data_f_rar5 <- rarefy_pq(data_fungi_mini, n = 5, seed = 1)
+#' data_f_rar5 <- rarefy_pq(data_fungi_mini, sample_size = 500, n = 5, seed = 1)
 #' sample_sums(data_f_rar5)
 rarefy_pq <- function(
   physeq,
   sample_size = NULL,
   n = 1,
   seed = 123,
+  replace = FALSE,
   ...
 ) {
   verify_pq(physeq)
-  if (is.null(sample_size)) {
-    sample_size <- min(sample_sums(physeq))
-  }
 
   rar_once <- function(s) {
-    suppressMessages(phyloseq::rarefy_even_depth(
+    rarefy_even_depth_pq(
       physeq,
-      sample.size = sample_size,
+      sample_size,
       rngseed = s,
-      replace = FALSE,
-      trimOTUs = FALSE,
-      verbose = FALSE,
-      ...
-    ))
-  }
-
-  # Ensure .Random.seed exists before phyloseq tries to save it
-  if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)) {
-    set.seed(NULL)
+      replace = replace,
+      trimOTUs = FALSE
+    )
   }
 
   if (n <= 1) {
@@ -344,6 +354,110 @@ rarefy_pq <- function(
     taxa_are_rows = taxa_are_rows(reps[[1]])
   )
   return(new_physeq)
+}
+
+################################################################################
+#' Rarefy a phyloseq object to even sequencing depth
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-stable-brightgreen" alt="lifecycle-stable"></a>
+#'
+#'   An R-version-robust drop-in replacement for
+#'   [phyloseq::rarefy_even_depth()], heavily inspired by that function.
+#'
+#' @inheritParams clean_pq
+#' @param sample_size (integer) the sequencing depth to rarefy to. If `NULL`
+#'   (default), `min(sample_sums(physeq))` is used. Samples with fewer reads
+#'   than `sample_size` are dropped.
+#' @param rngseed (logical or integer, default `FALSE`) random seed. Set to an
+#'   integer to seed the RNG before subsampling and restore the caller's global
+#'   RNG state on exit (matching [phyloseq::rarefy_even_depth()] behaviour).
+#'   `FALSE` leaves the global RNG untouched.
+#' @param replace (logical, default `TRUE`) sample with replacement? `TRUE`
+#'   matches the [phyloseq::rarefy_even_depth()] default.
+#' @param trimOTUs (logical, default `TRUE`) if `TRUE`, taxa that are entirely
+#'   emptied by subsampling are removed from the returned object.
+#'
+#' @return A new \code{\link[phyloseq]{phyloseq-class}} object with a rarefied
+#'   `otu_table`.
+#' @export
+#' @author Adrien Taudière
+#' @seealso [phyloseq::rarefy_even_depth()], [rarefy_pq()]
+#' @examples
+#' data_f_rar <- rarefy_even_depth_pq(data_fungi_mini, sample_size = 500)
+#' sample_sums(data_f_rar)
+#'
+#' \donttest{
+#' data_f_rar_notrim <- rarefy_even_depth_pq(
+#'   data_fungi_mini,
+#'   sample_size = 500,
+#'   trimOTUs = FALSE
+#' )
+#' }
+rarefy_even_depth_pq <- function(
+  physeq,
+  sample_size = NULL,
+  rngseed = FALSE,
+  replace = TRUE,
+  trimOTUs = TRUE
+) {
+  if (isTRUE(as.logical(rngseed))) {
+    if (exists(".Random.seed", envir = globalenv(), inherits = FALSE)) {
+      old_seed <- get(".Random.seed", envir = globalenv())
+      on.exit(
+        assign(".Random.seed", old_seed, envir = globalenv()),
+        add = TRUE
+      )
+    }
+    set.seed(rngseed)
+  }
+  if (is.null(sample_size)) {
+    sample_size <- min(sample_sums(physeq))
+  }
+  sample_size <- as.integer(sample_size)
+  if (is.na(sample_size) || sample_size <= 0) {
+    stop("`sample_size` must be a positive integer.")
+  }
+
+  taxa_rows <- taxa_are_rows(physeq)
+  otu <- as(otu_table(physeq), "matrix")
+  if (!taxa_rows) {
+    otu <- t(otu)
+  }
+  # Drop samples with fewer reads than `sample_size`
+  keep <- colSums(otu) >= sample_size
+  otu <- otu[, keep, drop = FALSE]
+
+  subsample <- function(x) {
+    if (replace) {
+      idx <- suppressWarnings(
+        sample(seq_along(x), sample_size, replace = TRUE, prob = x)
+      )
+    } else {
+      expanded <- rep(seq_along(x), times = as.integer(x))
+      idx <- expanded[sample.int(length(expanded), sample_size)]
+    }
+    tabulate(idx, nbins = length(x))
+  }
+
+  new_otu <- apply(otu, 2, subsample)
+  if (is.null(dim(new_otu))) {
+    new_otu <- matrix(new_otu, nrow = nrow(otu))
+  }
+  dimnames(new_otu) <- dimnames(otu)
+
+  new_physeq <- prune_samples(colnames(otu), physeq)
+  new_physeq@otu_table <- otu_table(new_otu, taxa_are_rows = TRUE)
+  # Trim OTUs emptied by subsampling
+  if (trimOTUs) {
+    new_physeq <- prune_taxa(taxa_sums(new_physeq) > 0, new_physeq)
+  }
+  if (!taxa_rows) {
+    new_physeq <- t(new_physeq)
+  }
+  new_physeq
 }
 ################################################################################
 
