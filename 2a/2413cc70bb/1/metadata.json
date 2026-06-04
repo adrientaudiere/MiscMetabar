@@ -1,0 +1,47 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "2a2413cc70bb",
+  "session_id": "83a7dc1c-51b7-4f02-92c6-a6a1ad3689ad",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-04T13:48:58.928511899Z",
+  "branch": "dev",
+  "checkpoints_count": 7,
+  "files_touched": [
+    ".Rbuildignore",
+    "NEWS.md",
+    "R/alpha_div_test.R",
+    "R/beta_div_test.R",
+    "R/dada_phyloseq.R",
+    "R/hill_divent.R",
+    "R/normalize_pq.R",
+    "R/plot_functions.R",
+    "man/accu_plot.Rd",
+    "man/accu_samp_threshold.Rd",
+    "man/are_modality_even_depth.Rd",
+    "man/hill_acc_pq.Rd",
+    "man/rarefy_pq.Rd",
+    "tests/testthat/Rplots.pdf",
+    "tests/testthat/test_dada_phyloseq.R",
+    "tests/testthat/test_data_manipulation.R",
+    "tests/testthat/test_figures_alpha_div.R",
+    "tests/testthat/test_misc.R"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "28c03695f5b4",
+  "token_usage": {
+    "input_tokens": 26664,
+    "cache_creation_tokens": 435682,
+    "cache_read_tokens": 24018973,
+    "output_tokens": 209880,
+    "api_call_count": 138
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-04T13:48:58.688612598Z",
+    "agent_lines": 0,
+    "human_added": 154,
+    "human_modified": 790,
+    "human_removed": 0,
+    "total_committed": 341,
+    "agent_percentage": 0
+  }
+}
