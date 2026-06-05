@@ -3,7 +3,7 @@
   "checkpoint_id": "e4a92098327f",
   "strategy": "manual-commit",
   "branch": "dev",
-  "checkpoints_count": 1,
+  "checkpoints_count": 4,
   "files_touched": [
     "DESCRIPTION",
     "NAMESPACE",
@@ -18,6 +18,8 @@
     "man/adonis_rarperm_pq.Rd",
     "man/clean_pq.Rd",
     "man/hill_test_rarperm_pq.Rd",
+    "man/is_blastn_installed.Rd",
+    "man/is_multiqc_installed.Rd",
     "man/var_par_rarperm_pq.Rd",
     "tests/testthat/test_clean_pq.R",
     "tests/testthat/test_utils.R"
@@ -29,13 +31,20 @@
       "context": "/e4/a92098327f/0/context.md",
       "content_hash": "/e4/a92098327f/0/content_hash.txt",
       "prompt": "/e4/a92098327f/0/prompt.txt"
+    },
+    {
+      "metadata": "/e4/a92098327f/1/metadata.json",
+      "transcript": "/e4/a92098327f/1/full.jsonl",
+      "context": "/e4/a92098327f/1/context.md",
+      "content_hash": "/e4/a92098327f/1/content_hash.txt",
+      "prompt": "/e4/a92098327f/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 14565,
-    "cache_creation_tokens": 35636,
-    "cache_read_tokens": 268563,
-    "output_tokens": 5105,
-    "api_call_count": 9
+    "input_tokens": 47182,
+    "cache_creation_tokens": 372507,
+    "cache_read_tokens": 12761537,
+    "output_tokens": 86817,
+    "api_call_count": 136
   }
 }

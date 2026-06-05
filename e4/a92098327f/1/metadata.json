@@ -1,0 +1,47 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "e4a92098327f",
+  "session_id": "c8a28616-fd7b-4618-bc23-079833b29a77",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-05T12:53:27.753384408Z",
+  "branch": "dev",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "DESCRIPTION",
+    "NAMESPACE",
+    "NEWS.md",
+    "R/dada_phyloseq.R",
+    "R/miscellanous.R",
+    "R/plot_functions.R",
+    "_pkgdown.yml",
+    "inst/WORDLIST",
+    "man/accu_plot_balanced_modality.Rd",
+    "man/adonis_pq.Rd",
+    "man/adonis_rarperm_pq.Rd",
+    "man/clean_pq.Rd",
+    "man/hill_test_rarperm_pq.Rd",
+    "man/is_blastn_installed.Rd",
+    "man/is_multiqc_installed.Rd",
+    "man/var_par_rarperm_pq.Rd",
+    "tests/testthat/test_clean_pq.R",
+    "tests/testthat/test_utils.R"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "4afe6e5a277b",
+  "token_usage": {
+    "input_tokens": 32617,
+    "cache_creation_tokens": 336871,
+    "cache_read_tokens": 12492974,
+    "output_tokens": 81712,
+    "api_call_count": 127
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-05T12:53:27.354304472Z",
+    "agent_lines": 139,
+    "human_added": 1002,
+    "human_modified": 9,
+    "human_removed": 0,
+    "total_committed": 1150,
+    "agent_percentage": 12.086956521739129
+  }
+}
