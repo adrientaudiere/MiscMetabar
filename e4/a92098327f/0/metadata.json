@@ -1,0 +1,45 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "e4a92098327f",
+  "session_id": "47c5a513-0fdd-4a37-b4b0-9c982c0b07a1",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-05T12:53:24.848629377Z",
+  "branch": "dev",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "DESCRIPTION",
+    "NAMESPACE",
+    "NEWS.md",
+    "R/dada_phyloseq.R",
+    "R/miscellanous.R",
+    "R/plot_functions.R",
+    "_pkgdown.yml",
+    "inst/WORDLIST",
+    "man/accu_plot_balanced_modality.Rd",
+    "man/adonis_pq.Rd",
+    "man/adonis_rarperm_pq.Rd",
+    "man/clean_pq.Rd",
+    "man/hill_test_rarperm_pq.Rd",
+    "man/var_par_rarperm_pq.Rd",
+    "tests/testthat/test_clean_pq.R",
+    "tests/testthat/test_utils.R"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "e28f18b2827e",
+  "token_usage": {
+    "input_tokens": 14565,
+    "cache_creation_tokens": 35636,
+    "cache_read_tokens": 268563,
+    "output_tokens": 5105,
+    "api_call_count": 9
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-05T12:53:24.773563109Z",
+    "agent_lines": 242,
+    "human_added": 917,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 1159,
+    "agent_percentage": 20.88006902502157
+  }
+}

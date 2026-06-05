@@ -1,0 +1,41 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "e4a92098327f",
+  "strategy": "manual-commit",
+  "branch": "dev",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "DESCRIPTION",
+    "NAMESPACE",
+    "NEWS.md",
+    "R/dada_phyloseq.R",
+    "R/miscellanous.R",
+    "R/plot_functions.R",
+    "_pkgdown.yml",
+    "inst/WORDLIST",
+    "man/accu_plot_balanced_modality.Rd",
+    "man/adonis_pq.Rd",
+    "man/adonis_rarperm_pq.Rd",
+    "man/clean_pq.Rd",
+    "man/hill_test_rarperm_pq.Rd",
+    "man/var_par_rarperm_pq.Rd",
+    "tests/testthat/test_clean_pq.R",
+    "tests/testthat/test_utils.R"
+  ],
+  "sessions": [
+    {
+      "metadata": "/e4/a92098327f/0/metadata.json",
+      "transcript": "/e4/a92098327f/0/full.jsonl",
+      "context": "/e4/a92098327f/0/context.md",
+      "content_hash": "/e4/a92098327f/0/content_hash.txt",
+      "prompt": "/e4/a92098327f/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 14565,
+    "cache_creation_tokens": 35636,
+    "cache_read_tokens": 268563,
+    "output_tokens": 5105,
+    "api_call_count": 9
+  }
+}
