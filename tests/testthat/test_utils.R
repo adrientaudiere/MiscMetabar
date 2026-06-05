@@ -268,3 +268,13 @@ test_that("is_swarm_installed works", {
   result <- is_swarm_installed()
   expect_type(result, "logical")
 })
+
+test_that("is_blastn_installed works", {
+  result <- is_blastn_installed()
+  expect_type(result, "logical")
+})
+
+test_that("is_multiqc_installed works", {
+  suppressWarnings(result <- is_multiqc_installed())
+  expect_type(result, "logical")
+})

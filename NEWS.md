@@ -1,6 +1,11 @@
 # MiscMetabar 0.16.8.9000
+* `clean_pq()` gains a `tax_replace_NA_string` argument (default `FALSE`) to replace the literal strings `"NA"`, `"NA NA"`, `"NA NA NA"` (whitespace-separated repetitions of `NA`, a common artifact of pasting taxonomic ranks) in the `tax_table` with true `<NA>` values.
+* `fastp()` is a new wrapper for the fastp software performing adapter detection, quality control and preprocessing of paired-end or single-end FASTQ files, with a companion `is_fastp_installed()` tool-presence helper.
+* `is_blastn_installed()` and `is_multiqc_installed()` are new tool-presence helpers, following the existing `is_cutadapt_installed()` / `is_vsearch_installed()` pattern.
+* `phyloseq_to_MDT_excel()` exports the OTU table, sample data, taxonomy and reference sequences of a phyloseq object to a multi-sheet Excel file for GBIF Metabarcoding Data Toolkit (MDT) submission, with an optional Darwin Core sample-term check.
 * Rarefaction across the package is now performed by an internal R-version-robust reimplementation rather than `phyloseq::rarefy_even_depth()`, whose `replace = FALSE` code path errors with `invalid 'length.out' value` under recent R-devel (phyloseq issue #1753). The reimplementation is bit-identical to `phyloseq::rarefy_even_depth()` for the same `seed`, depth and `replace` value (and is more correct in the degenerate case where a retained sample has a single read). This affects `rarefy_pq()`, `adonis_pq()`, `adonis_rarperm_pq()`, `hill_test_rarperm_pq()`, `hill_pq()`, `biplot_pq()`, `ggvenn_pq()`, `upset_pq()`, `ggaluv_pq()` and `ggscatt_pq()`.
 * `rarefy_pq()` gains a `replace` argument (default `FALSE`, sampling without replacement) and accepts `seed = FALSE` to leave the random number generator untouched, mirroring `phyloseq::rarefy_even_depth()`.
+* `reshape_ggplot()` auto-wraps the title, subtitle and axis labels of a ggplot2 object using `stringr::str_wrap()`, useful before combining several plots with `patchwork`.
 
 # MiscMetabar 0.16.8
 * Further check-time reductions for CRAN compliance:

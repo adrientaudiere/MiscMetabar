@@ -23,7 +23,8 @@ clean_pq(
   tax_replace_to_NA = FALSE,
   tax_redundant_suffix = FALSE,
   tax_replace_space_with = "_",
-  tax_replace_invisible_chars = FALSE
+  tax_replace_invisible_chars = FALSE,
+  tax_replace_NA_string = FALSE
 )
 }
 \arguments{
@@ -91,6 +92,12 @@ internal whitespace when \code{tax_remove_all_space = TRUE}.}
 strip invisible / unusual characters (control chars, zero-width space,
 NBSP inside values, ...) from \code{tax_table} values. See
 \code{\link[=verify_tax_table]{verify_tax_table()}}'s \code{replace_invisible_chars} for the exact pattern.}
+
+\item{tax_replace_NA_string}{(logical, default FALSE) If TRUE, replace the
+literal strings \code{"NA"}, \code{"NA NA"}, \code{"NA NA NA"} (any whitespace-separated
+repetition of \code{NA}, a common artifact of pasting taxonomic ranks together)
+in \code{tax_table} values with true \verb{<NA>}. Case-sensitive to avoid clobbering
+real data. Default \code{FALSE} to avoid breaking changes.}
 }
 \value{
 A new \code{\link[phyloseq]{phyloseq-class}} object
@@ -115,6 +122,8 @@ clean_pq(data_fungi_mini, tax_remove_border_spaces = TRUE)
 clean_pq(data_fungi_mini, tax_replace_to_NA = TRUE)
 # Drop redundant "_sp" tips
 clean_pq(data_fungi_mini, tax_redundant_suffix = TRUE)
+# Replace "NA" / "NA NA" concatenation artifacts with true <NA>
+clean_pq(data_fungi_mini, tax_replace_NA_string = TRUE)
 }
 }
 \author{

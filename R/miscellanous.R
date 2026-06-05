@@ -544,6 +544,64 @@ is_swarm_installed <- function(path = "swarm") {
   )
 }
 
+#' Test if blastn is installed.
+#'
+#' @description
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
+#' Useful for testthat and examples compilation for R CMD CHECK and
+#'   test coverage
+#'
+#' @param path (default: blastn) Path to blastn (NCBI BLAST+)
+#' @export
+#' @return A logical that say if blastn is installed.
+#'
+#' @examples
+#' MiscMetabar::is_blastn_installed()
+#' @author Adrien Taudière
+
+is_blastn_installed <- function(path = "blastn") {
+  return(
+    !inherits(
+      try(
+        system2(path, "-version", stdout = TRUE, stderr = TRUE),
+        silent = TRUE
+      ),
+      "try-error"
+    )
+  )
+}
+
+#' Test if MultiQC is installed.
+#'
+#' @description
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
+#' Useful for testthat and examples compilation for R CMD CHECK and
+#'   test coverage
+#'
+#' @param path (default: multiqc) Path to MultiQC
+#' @export
+#' @return A logical that say if MultiQC is installed.
+#'
+#' @examples
+#' MiscMetabar::is_multiqc_installed()
+#' @author Adrien Taudière
+
+is_multiqc_installed <- function(path = "multiqc") {
+  return(
+    !inherits(
+      try(
+        system2(path, "--version", stdout = TRUE, stderr = TRUE),
+        silent = TRUE
+      ),
+      "try-error"
+    )
+  )
+}
+
 #' Test if vsearch is installed.
 #'
 #' @description

@@ -59,7 +59,7 @@ if \code{correction_for_sample_size} is TRUE, rarefy_nb_seqs will have no
 effect.}
 
 \item{rngseed}{(Optional). A single integer value passed to
-\code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}}, which is used to fix a seed for
+\code{\link[=rarefy_even_depth_pq]{rarefy_even_depth_pq()}}, which is used to fix a seed for
 reproducibly random number generation (in this case, reproducibly
 random subsampling). If set to FALSE, then no fiddling with the RNG seed
 is performed, and it is up to the user to appropriately call set.seed

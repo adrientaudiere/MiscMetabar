@@ -36,7 +36,7 @@ when \code{q > 0} (Alberdi & Gilbert, 2019; Calderón-Sanou et al., 2019).}
 
 \item{sample.size}{(int) A single integer value equal to the number of
 reads being simulated, also known as the depth. See
-\code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}}.}
+\code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}} and \code{\link[=rarefy_even_depth_pq]{rarefy_even_depth_pq()}}.}
 
 \item{verbose}{(logical). If TRUE, print additional information.}
 

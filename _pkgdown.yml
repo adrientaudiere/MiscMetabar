@@ -248,11 +248,13 @@ reference:
 - subtitle: Processing fastq files
   contents:
   - cutadapt_remove_primers
+  - fastp
   - filter_trim
   - list_fastq_files
   - subsample_fastq
 - subtitle: Import/export phyloseq object
   contents:
+  - phyloseq_to_MDT_excel
   - read_pq
   - save_pq
   - write_pq
@@ -300,10 +302,13 @@ reference:
   - find_vsearch
   - install_mmseqs2
   - install_vsearch
+  - is_blastn_installed
   - is_cutadapt_installed
+  - is_fastp_installed
   - is_mmseqs2_installed
   - is_falco_installed
   - is_krona_installed
+  - is_multiqc_installed
   - is_mumu_installed
   - is_swarm_installed
   - is_vsearch_installed
@@ -311,6 +316,7 @@ reference:
   contents:
   - multiplot
   - no_legend
+  - reshape_ggplot
 - subtitle: Variable management
   contents:
   - diff_fct_diff_class

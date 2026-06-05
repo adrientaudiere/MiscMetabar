@@ -157,3 +157,23 @@ test_that("clean_pq tax_redundant_suffix accepts a custom suffix", {
   res <- suppressMessages(clean_pq(pq, tax_redundant_suffix = "_var"))
   expect_true(is.na(res@tax_table[1, "Species"]))
 })
+
+test_that("clean_pq tax_replace_NA_string replaces 'NA' and 'NA NA' with <NA>", {
+  pq <- data_fungi_mini
+  pq@tax_table[1, "Genus"] <- "NA"
+  pq@tax_table[2, "Species"] <- "NA NA"
+  pq@tax_table[3, "Species"] <- "NA NA NA"
+  res <- suppressMessages(clean_pq(pq, tax_replace_NA_string = TRUE))
+  expect_true(is.na(res@tax_table[1, "Genus"]))
+  expect_true(is.na(res@tax_table[2, "Species"]))
+  expect_true(is.na(res@tax_table[3, "Species"]))
+})
+
+test_that("clean_pq tax_replace_NA_string is case-sensitive and keeps real data", {
+  pq <- data_fungi_mini
+  pq@tax_table[1, "Genus"] <- "Navas"
+  pq@tax_table[2, "Genus"] <- "na"
+  res <- suppressMessages(clean_pq(pq, tax_replace_NA_string = TRUE))
+  expect_identical(as.character(res@tax_table[1, "Genus"]), "Navas")
+  expect_identical(as.character(res@tax_table[2, "Genus"]), "na")
+})

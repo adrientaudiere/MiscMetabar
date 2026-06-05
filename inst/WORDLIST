@@ -42,6 +42,7 @@ Cutadapt
 DESeq
 DGEList
 DNAStringSet
+Darwin
 Deseq
 Dna
 Durga
@@ -85,6 +86,7 @@ LCBD
 LEfSe
 LMs
 Lifecycle
+MDT
 MMseqs
 MUMU
 Mahé
@@ -105,6 +107,7 @@ Microbiomes
 Mikryukov
 Mirdita
 Modificator
+MultiQC
 Mumu
 Münkemüller
 NBSP
@@ -167,6 +170,7 @@ Tengeler
 Thibaut
 Thuiller
 Tobias
+Toolkit
 Torognes
 Treename
 Tuckey
@@ -255,6 +259,8 @@ databse
 datatable
 dbase
 dbrda
+decimalLatitude
+decimalLongitude
 denoise
 denoised
 derep
@@ -277,11 +283,13 @@ eg
 equiprobable
 equitability
 et
+eventDate
 exacly
 fac
 falco
 fasta
 fastg
+fastp
 fastq
 fastqcr
 favour
@@ -366,6 +374,7 @@ msystems
 multcompLetters
 multimodel
 multipatt
+multiqc
 mumu
 na
 nb
@@ -386,6 +395,7 @@ occurence
 occurences
 occuring
 onedf
+openxlsx
 optionnaly
 orcid
 otu
@@ -408,6 +418,7 @@ plotlist
 pq
 pqverse
 pre
+preprocessing
 pseudocount
 pts
 pval
@@ -424,8 +435,10 @@ reclustering
 recognises
 reformated
 refseq
+reimplementation
 replacte
 reproducibly
+reshape
 resubmission
 rl
 robur
@@ -461,6 +474,7 @@ stderr
 stochasticity
 str
 substr
+subtitle
 tSNE
 tabbedout
 tapply
@@ -498,6 +512,7 @@ vizualisation
 vsearch
 wraper
 writed
+writexl
 www
 ylim
 zOTU

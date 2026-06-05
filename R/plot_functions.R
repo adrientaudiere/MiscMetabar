@@ -7480,3 +7480,93 @@ hill_bar_pq <- function(
   }
 }
 ################################################################################
+
+#' Reshape a ggplot2 object by wrapping its text elements
+#'
+#' @description
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#' Auto-wrap (and optionally resize the font of) the title, subtitle and axis
+#' labels of a ggplot2 plot using [stringr::str_wrap()]. Useful to tidy up long
+#' titles produced automatically by other `MiscMetabar` plotting functions, in
+#' particular before combining several plots with `patchwork`.
+#'
+#' @param plot (required) A ggplot2 object.
+#' @param width (int, default 60) The wrapping width (in characters) of the
+#'   title. Also used to compute the default value of the other widths.
+#' @param width_subtitle (int, default `width * fontsize_title /
+#'   fontsize_subtitle`) The wrapping width of the subtitle.
+#' @param width_labs (int, default `width * fontsize_title / fontsize_labs`)
+#'   The wrapping width of the x and y axis labels.
+#' @param fontsize_title (int, default 10) Font size for the title.
+#' @param fontsize_subtitle (int, default 7) Font size for the subtitle.
+#' @param fontsize_labs (int, default 8) Font size for the x and y axis labels.
+#'
+#' @return A ggplot2 object with wrapped/resized text elements.
+#' @export
+#' @author Adrien Taudière
+#'
+#' @examples
+#' \donttest{
+#' if (requireNamespace("stringr") && requireNamespace("patchwork")) {
+#'   df_mini <- prune_samples(
+#'     sample_names(data_fungi_mini)[1:5],
+#'     data_fungi_mini
+#'   )
+#'   patchwork::wrap_plots(lapply(
+#'     hill_pq(df_mini, "Height", vioplot = TRUE),
+#'     reshape_ggplot,
+#'     width = 45
+#'   ))
+#' }
+#' }
+reshape_ggplot <- function(
+  plot,
+  width = 60,
+  width_subtitle = width * fontsize_title / fontsize_subtitle,
+  width_labs = width * fontsize_title / fontsize_labs,
+  fontsize_title = 10,
+  fontsize_subtitle = 7,
+  fontsize_labs = 8
+) {
+  if (!requireNamespace("stringr", quietly = TRUE)) {
+    cli::cli_abort(
+      "Package {.pkg stringr} is required for {.fn reshape_ggplot}. Please install it."
+    )
+  }
+
+  if (is.character(plot$labels$title)) {
+    plot <- plot +
+      labs(title = stringr::str_wrap(plot$labels$title, width = width))
+  }
+
+  if (is.character(plot$labels$subtitle)) {
+    plot <- plot +
+      labs(
+        subtitle = stringr::str_wrap(
+          plot$labels$subtitle,
+          width = width_subtitle
+        )
+      )
+  }
+
+  if (is.character(plot$labels$x)) {
+    plot <- plot +
+      xlab(label = stringr::str_wrap(plot$labels$x, width = width_labs))
+  }
+  if (is.character(plot$labels$y)) {
+    plot <- plot +
+      ylab(label = stringr::str_wrap(plot$labels$y, width = width_labs))
+  }
+
+  plot <- plot +
+    theme(
+      plot.subtitle = element_text(size = fontsize_subtitle),
+      plot.title = element_text(size = fontsize_title),
+      axis.title = element_text(size = fontsize_labs)
+    )
+  return(plot)
+}
+################################################################################

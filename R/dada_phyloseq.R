@@ -97,6 +97,11 @@ add_dna_to_phyloseq <- function(physeq, prefix_taxa_names = "Taxa_") {
 #'   custom suffix.
 #' @param tax_replace_space_with (character, default `"_"`) Replacement for
 #'   internal whitespace when `tax_remove_all_space = TRUE`.
+#' @param tax_replace_NA_string (logical, default FALSE) If TRUE, replace the
+#'   literal strings `"NA"`, `"NA NA"`, `"NA NA NA"` (any whitespace-separated
+#'   repetition of `NA`, a common artifact of pasting taxonomic ranks together)
+#'   in `tax_table` values with true `<NA>`. Case-sensitive to avoid clobbering
+#'   real data. Default `FALSE` to avoid breaking changes.
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object
 #' @export
 #' @author Adrien Taudière
@@ -109,6 +114,8 @@ add_dna_to_phyloseq <- function(physeq, prefix_taxa_names = "Taxa_") {
 #' clean_pq(data_fungi_mini, tax_replace_to_NA = TRUE)
 #' # Drop redundant "_sp" tips
 #' clean_pq(data_fungi_mini, tax_redundant_suffix = TRUE)
+#' # Replace "NA" / "NA NA" concatenation artifacts with true <NA>
+#' clean_pq(data_fungi_mini, tax_replace_NA_string = TRUE)
 #' }
 clean_pq <- function(
   physeq,
@@ -129,7 +136,8 @@ clean_pq <- function(
   tax_replace_to_NA = FALSE,
   tax_redundant_suffix = FALSE,
   tax_replace_space_with = "_",
-  tax_replace_invisible_chars = FALSE
+  tax_replace_invisible_chars = FALSE,
+  tax_replace_NA_string = FALSE
 ) {
   if (clean_samples_names) {
     if (!is.null(physeq@refseq)) {
@@ -258,7 +266,8 @@ clean_pq <- function(
     isTRUE(tax_remove_all_space) ||
     !isFALSE(tax_replace_to_NA) ||
     !isFALSE(tax_redundant_suffix) ||
-    isTRUE(tax_replace_invisible_chars)
+    isTRUE(tax_replace_invisible_chars) ||
+    isTRUE(tax_replace_NA_string)
 
   if (do_tax_modif && !is.null(new_physeq@tax_table)) {
     patterns_arg <- if (isTRUE(tax_replace_to_NA)) {
@@ -267,6 +276,9 @@ clean_pq <- function(
       character(0)
     } else {
       tax_replace_to_NA
+    }
+    if (isTRUE(tax_replace_NA_string)) {
+      patterns_arg <- c(patterns_arg, "NA string" = "^NA( NA)*$")
     }
     suffix_arg <- if (isTRUE(tax_redundant_suffix)) {
       "_sp"
