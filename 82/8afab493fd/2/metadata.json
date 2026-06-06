@@ -1,0 +1,51 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "828afab493fd",
+  "session_id": "8c8247cc-e0a5-4297-93cc-2a0c9a87b8c6",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-06T14:24:24.504242476Z",
+  "branch": "dev",
+  "checkpoints_count": 3,
+  "files_touched": [
+    ".claude/settings.json",
+    "NAMESPACE",
+    "NEWS.md",
+    "R/phyloseq_to_MDT_csv.R",
+    "R/plot_functions.R",
+    "R/plot_overview_pq.R",
+    "R/plot_volcano_pq.R",
+    "_pkgdown.yml",
+    "inst/WORDLIST",
+    "man/hill_bar_pq.Rd",
+    "man/phyloseq_to_MDT_csv.Rd",
+    "man/plot_overview_pq.Rd",
+    "man/plot_volcano_pq.Rd",
+    "man/reshape_ggplot.Rd",
+    "man/tax_bar_pq.Rd",
+    "tests/testthat/Rplots.pdf",
+    "tests/testthat/test_figures_taxo.R",
+    "tests/testthat/test_phyloseq_to_MDT_csv.R",
+    "tests/testthat/test_plot_overview_pq.R",
+    "tests/testthat/test_plot_volcano_pq.R",
+    "tests/testthat/test_reshape_ggplot.R",
+    "vignettes/articles/pkgnet-report.Rmd"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "4ea6ec3088e2",
+  "token_usage": {
+    "input_tokens": 38709,
+    "cache_creation_tokens": 364037,
+    "cache_read_tokens": 19123330,
+    "output_tokens": 130251,
+    "api_call_count": 182
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-06T14:24:23.959654717Z",
+    "agent_lines": 1312,
+    "human_added": 42,
+    "human_modified": 33,
+    "human_removed": 0,
+    "total_committed": 1387,
+    "agent_percentage": 94.59264599855803
+  }
+}
