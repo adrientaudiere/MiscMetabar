@@ -57,7 +57,7 @@ Minimum quantile is computed using 1-quantile_prob.}
 
 \item{sample.size}{(int) A single integer value equal to the number of
 reads being simulated, also known as the depth. See
-\code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}}.}
+\code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}} and \code{\link[=rarefy_even_depth_pq]{rarefy_even_depth_pq()}}.}
 
 \item{...}{Other params to be passed on to \code{\link[=adonis_pq]{adonis_pq()}} function}
 }
