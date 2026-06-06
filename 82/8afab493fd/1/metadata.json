@@ -1,0 +1,42 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "828afab493fd",
+  "session_id": "53d9726d-e2e6-4815-93b6-3962ba589222",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-06T14:24:21.417625949Z",
+  "branch": "dev",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".claude/settings.json",
+    "NAMESPACE",
+    "NEWS.md",
+    "R/plot_functions.R",
+    "_pkgdown.yml",
+    "inst/WORDLIST",
+    "man/hill_bar_pq.Rd",
+    "man/reshape_ggplot.Rd",
+    "man/tax_bar_pq.Rd",
+    "tests/testthat/Rplots.pdf",
+    "tests/testthat/test_figures_taxo.R",
+    "tests/testthat/test_reshape_ggplot.R",
+    "vignettes/articles/pkgnet-report.Rmd"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "d6c79632bce4",
+  "token_usage": {
+    "input_tokens": 8327,
+    "cache_creation_tokens": 45159,
+    "cache_read_tokens": 1162814,
+    "output_tokens": 11486,
+    "api_call_count": 28
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-06T14:24:21.354834004Z",
+    "agent_lines": 314,
+    "human_added": 1054,
+    "human_modified": 26,
+    "human_removed": 0,
+    "total_committed": 1394,
+    "agent_percentage": 22.525107604017215
+  }
+}
