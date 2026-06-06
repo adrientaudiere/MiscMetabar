@@ -1,4 +1,15 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(cd:*)",
+      "Bash(tail:*)",
+      "Bash(head:*)",
+      "Bash(ps:*)",
+      "Bash(which:*)",
+      "Bash(rtk rg:*)"
+    ],
+    "deny": []
+  },
   "hooks": {
     "PostToolUse": [
       {
@@ -74,11 +85,6 @@
           }
         ]
       }
-    ]
-  },
-  "permissions": {
-    "deny": [
-      "Read(./.entire/metadata/**)"
     ]
   }
 }

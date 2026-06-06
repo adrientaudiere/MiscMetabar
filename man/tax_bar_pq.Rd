@@ -7,11 +7,13 @@
 tax_bar_pq(
   physeq,
   fact = "Sample",
+  order_modality = NULL,
   taxa = "Order",
   percent_bar = FALSE,
   nb_seq = TRUE,
   add_ribbon = FALSE,
   ribbon_alpha = 0.3,
+  ribbon_hide_zero = TRUE,
   label_taxa = FALSE,
   void_theme = TRUE,
   show_values = FALSE,
@@ -33,6 +35,13 @@ using the \code{phyloseq} package.}
 \item{fact}{Name of the factor to cluster samples by modalities.
 Need to be in \code{physeq@sam_data}.}
 
+\item{order_modality}{(default NULL) Optional character vector giving the
+order of the \code{fact} modalities (i.e. the order of the bars). Values must
+match the modalities present in \code{physeq@sam_data[[fact]]}. If some
+modalities are omitted, only the listed ones are kept (a message lists the
+dropped modalities). If a value is not found among the modalities, an
+informative error lists the offending values.}
+
 \item{taxa}{(default: 'Order') Name of the taxonomic rank of interest}
 
 \item{percent_bar}{(default FALSE) If TRUE, the stacked bar fill all
@@ -48,6 +57,11 @@ otu_table (each value different from zero is set to one)}
 adjacent bars. Only meaningful when \code{fact} has more than one level.}
 
 \item{ribbon_alpha}{(numeric; default 0.3) Transparency of the ribbons.}
+
+\item{ribbon_hide_zero}{(logical; default TRUE) When \code{add_ribbon = TRUE},
+suppress the ribbon of a taxon between two adjacent bars whenever its
+value is zero (absent) in either of the two connected bars. Set to
+\code{FALSE} to keep ribbons that collapse to a flat line at a zero end.}
 
 \item{label_taxa}{(logical; default FALSE) If TRUE, replace the legend
 with direct labels on the right side of the last bar. Taxa that appear

@@ -194,6 +194,7 @@ reference:
   - multi_biplot_pq
   - plot_LCBD_pq
   - plot_ordination_pq
+  - plot_overview_pq
   - plot_SCBD_pq
   - plot_tsne_pq
   - plot_var_part_pq
@@ -219,6 +220,7 @@ reference:
   - plot_deseq2_pq
   - plot_edgeR_pq
   - plot_mt
+  - plot_volcano_pq
   - signif_ancombc
 
 - subtitle: Taxonomy
@@ -254,6 +256,7 @@ reference:
   - subsample_fastq
 - subtitle: Import/export phyloseq object
   contents:
+  - phyloseq_to_MDT_csv
   - phyloseq_to_MDT_excel
   - read_pq
   - save_pq

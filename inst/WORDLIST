@@ -163,6 +163,7 @@ TMM
 TRE
 TSNE
 TSS
+TSV
 Taberlet
 Taudiere
 Tedersoo
@@ -177,12 +178,14 @@ Tuckey
 Tuz
 UMAP
 UPGMA
+UpSet
 VSEARCH
 VST
 Valentini
 VascoElbrecht
 Vsearch
 Wiesmann
+XLSX
 XStringSet
 XStringset
 abundancy
@@ -500,6 +503,7 @@ usearch
 usefull
 userout
 uwot
+validator
 varpart
 vec
 vectorising

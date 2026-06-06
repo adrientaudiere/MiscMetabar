@@ -564,6 +564,85 @@ test_that("tax_bar_pq work with data_fungi dataset", {
   )
 })
 
+test_that("tax_bar_pq order_modality reorders, filters and validates bars", {
+  skip_on_cran()
+  bar_labels <- function(p) {
+    ggplot2::ggplot_build(p)$layout$panel_params[[1]]$x$get_labels()
+  }
+  # full reorder keeps every modality in the requested order
+  p_reorder <- tax_bar_pq(
+    data_fungi_mini,
+    taxa = "Class",
+    fact = "Height",
+    order_modality = c("High", "Low", "Middle")
+  )
+  expect_equal(bar_labels(p_reorder)[1:3], c("High", "Low", "Middle"))
+  # partial order_modality keeps only the listed modalities and messages
+  expect_message(
+    p_partial <- tax_bar_pq(
+      data_fungi_mini,
+      taxa = "Class",
+      fact = "Height",
+      order_modality = c("High", "Low")
+    ),
+    "Keeping only"
+  )
+  expect_equal(bar_labels(p_partial), c("High", "Low"))
+  # order is preserved through the nb_seq = FALSE aggregation path
+  p_binary <- suppressMessages(tax_bar_pq(
+    data_fungi_mini,
+    taxa = "Class",
+    fact = "Height",
+    nb_seq = FALSE,
+    order_modality = c("High", "Low")
+  ))
+  expect_equal(bar_labels(p_binary), c("High", "Low"))
+  # an unknown modality aborts with a helpful message
+  expect_error(
+    tax_bar_pq(
+      data_fungi_mini,
+      taxa = "Class",
+      fact = "Height",
+      order_modality = c("High", "WRONG")
+    ),
+    "not found"
+  )
+})
+
+test_that("tax_bar_pq ribbon_hide_zero drops ribbons touching a zero bar", {
+  skip_on_cran()
+  n_ribbons <- function(p) {
+    idx <- which(vapply(
+      p$layers,
+      function(l) inherits(l$geom, "GeomPolygon"),
+      logical(1)
+    ))
+    if (length(idx) == 0) {
+      return(0L)
+    }
+    built <- ggplot2::ggplot_build(p)
+    length(unique(built$data[[idx[1]]]$group))
+  }
+  p_hide <- suppressWarnings(tax_bar_pq(
+    data_fungi_mini,
+    taxa = "Genus",
+    fact = "Height",
+    add_ribbon = TRUE,
+    ribbon_hide_zero = TRUE
+  ))
+  p_keep <- suppressWarnings(tax_bar_pq(
+    data_fungi_mini,
+    taxa = "Genus",
+    fact = "Height",
+    add_ribbon = TRUE,
+    ribbon_hide_zero = FALSE
+  ))
+  expect_s3_class(p_hide, "ggplot")
+  expect_s3_class(p_keep, "ggplot")
+  # hiding zero-end ribbons can only remove ribbons, never add them
+  expect_lt(n_ribbons(p_hide), n_ribbons(p_keep))
+})
+
 test_that("tax_bar_pq nb_seq=FALSE bar height counts distinct OTUs per group", {
   skip_on_cran()
   p <- tax_bar_pq(

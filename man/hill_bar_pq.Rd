@@ -36,6 +36,7 @@ hill_bar_pq(
   error_bar_alpha = 0.35,
   point_alpha = 0.5,
   letters_below_bar = FALSE,
+  sig_symbol = "∅",
   ...
 )
 }
@@ -114,6 +115,14 @@ fixed position independent of data spread. When \code{FALSE} (default), letters
 are placed above whichever is higher: the error bar top or the highest
 data point.}
 
+\item{sig_symbol}{Character symbol (default \code{"∅"}, the empty set, evoking the
+absence of a pairwise comparison) used, when several values
+of \code{q} are drawn, to flag the panels for which Tukey HSD pairwise
+comparisons were not run (no global Kruskal-Wallis significance). The
+symbol is appended to the panel subtitle and explained once in the shared
+figure caption. The "Error bars" / "letters from Tukey HSD" caption is set
+a single time for the whole figure rather than repeated on every panel.}
+
 \item{...}{Additional arguments passed to \code{\link[=psmelt_samples_pq]{psmelt_samples_pq()}} and hence
 to \code{\link[divent:div_hill]{divent::div_hill()}} (e.g. \code{estimator = "naive"}).}
 }
@@ -138,7 +147,7 @@ of \code{q} are assembled into a \link[patchwork:patchwork]{patchwork} layout au
 hill_bar_pq(data_fungi_mini, Height, q = 1)
 \dontrun{
 hill_bar_pq(data_fungi_mini, Height, q = 0)
-hill_bar_pq(data_fungi_mini, Height, q = c(0, 1, 2), ncol = 1)
+hill_bar_pq(data_fungi_mini, Height, q = c(0, 2), ncol = 2)
 hill_bar_pq(data_fungi_mini, Height,
   q = c(0, 2),
   y_labs = c(Hill_0 = "Richness", Hill_2 = "Simpson diversity")

@@ -9,9 +9,11 @@ reshape_ggplot(
   width = 60,
   width_subtitle = width * fontsize_title/fontsize_subtitle,
   width_labs = width * fontsize_title/fontsize_labs,
+  width_caption = width * fontsize_title/fontsize_caption,
   fontsize_title = 10,
   fontsize_subtitle = 7,
-  fontsize_labs = 8
+  fontsize_labs = 8,
+  fontsize_caption = 7
 )
 }
 \arguments{
@@ -25,11 +27,15 @@ title. Also used to compute the default value of the other widths.}
 \item{width_labs}{(int, default \code{width * fontsize_title / fontsize_labs})
 The wrapping width of the x and y axis labels.}
 
+\item{width_caption}{(int, default \code{width * fontsize_title / fontsize_caption}) The wrapping width of the caption.}
+
 \item{fontsize_title}{(int, default 10) Font size for the title.}
 
 \item{fontsize_subtitle}{(int, default 7) Font size for the subtitle.}
 
 \item{fontsize_labs}{(int, default 8) Font size for the x and y axis labels.}
+
+\item{fontsize_caption}{(int, default 7) Font size for the caption.}
 }
 \value{
 A ggplot2 object with wrapped/resized text elements.
@@ -41,10 +47,10 @@ A ggplot2 object with wrapped/resized text elements.
 }}
 
 
-Auto-wrap (and optionally resize the font of) the title, subtitle and axis
-labels of a ggplot2 plot using \code{\link[stringr:str_wrap]{stringr::str_wrap()}}. Useful to tidy up long
-titles produced automatically by other \code{MiscMetabar} plotting functions, in
-particular before combining several plots with \code{patchwork}.
+Auto-wrap (and optionally resize the font of) the title, subtitle, caption
+and axis labels of a ggplot2 plot using \code{\link[stringr:str_wrap]{stringr::str_wrap()}}. Useful to tidy
+up long titles produced automatically by other \code{MiscMetabar} plotting
+functions, in particular before combining several plots with \code{patchwork}.
 }
 \examples{
 \donttest{

@@ -4435,6 +4435,12 @@ diff_fct_diff_class <-
 #' @inheritParams clean_pq
 #' @param fact Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}.
+#' @param order_modality (default NULL) Optional character vector giving the
+#'   order of the `fact` modalities (i.e. the order of the bars). Values must
+#'   match the modalities present in `physeq@sam_data[[fact]]`. If some
+#'   modalities are omitted, only the listed ones are kept (a message lists the
+#'   dropped modalities). If a value is not found among the modalities, an
+#'   informative error lists the offending values.
 #' @param taxa (default: 'Order') Name of the taxonomic rank of interest
 #' @param percent_bar (default FALSE) If TRUE, the stacked bar fill all
 #'   the space between 0 and 1. It just set position = "fill" in the
@@ -4446,6 +4452,10 @@ diff_fct_diff_class <-
 #'   "Sample", add curved ribbons connecting matching taxa between
 #'   adjacent bars. Only meaningful when `fact` has more than one level.
 #' @param ribbon_alpha (numeric; default 0.3) Transparency of the ribbons.
+#' @param ribbon_hide_zero (logical; default TRUE) When `add_ribbon = TRUE`,
+#'   suppress the ribbon of a taxon between two adjacent bars whenever its
+#'   value is zero (absent) in either of the two connected bars. Set to
+#'   `FALSE` to keep ribbons that collapse to a flat line at a zero end.
 #' @param label_taxa (logical; default FALSE) If TRUE, replace the legend
 #'   with direct labels on the right side of the last bar. Taxa that appear
 #'   in the first bar but are absent from the last bar are additionally
@@ -4538,11 +4548,13 @@ tax_bar_pq <-
   function(
     physeq,
     fact = "Sample",
+    order_modality = NULL,
     taxa = "Order",
     percent_bar = FALSE,
     nb_seq = TRUE,
     add_ribbon = FALSE,
     ribbon_alpha = 0.3,
+    ribbon_hide_zero = TRUE,
     label_taxa = FALSE,
     void_theme = TRUE,
     show_values = FALSE,
@@ -4562,6 +4574,28 @@ tax_bar_pq <-
     psm <- psmelt(physeq)
 
     psm[[fact]] <- factor(psm[[fact]])
+
+    if (!is.null(order_modality)) {
+      order_modality <- unique(order_modality)
+      modality_values <- levels(psm[[fact]])
+      not_found <- setdiff(order_modality, modality_values)
+      if (length(not_found) > 0) {
+        cli::cli_abort(c(
+          "All values of {.arg order_modality} must be present in the {.val {fact}} modality of the {.field sam_data} slot.",
+          "x" = "Value{?s} not found: {.val {not_found}}.",
+          "i" = "Available value{?s}: {.val {modality_values}}."
+        ))
+      }
+      if (length(order_modality) < length(modality_values)) {
+        dropped <- setdiff(modality_values, order_modality)
+        cli::cli_inform(c(
+          "i" = "Keeping only {length(order_modality)} of {length(modality_values)} modalit{?y/ies} of {.val {fact}}.",
+          "i" = "Dropped modalit{?y/ies}: {.val {dropped}}."
+        ))
+        psm <- psm[psm[[fact]] %in% order_modality, , drop = FALSE]
+      }
+      psm[[fact]] <- factor(psm[[fact]], levels = order_modality)
+    }
 
     if (show_n_samples && fact != "Sample") {
       n_per_group <- psm |>
@@ -4645,6 +4679,14 @@ tax_bar_pq <-
               lapply(common, \(g) {
                 l <- left[left$taxa_name == g, ]
                 r <- right[right$taxa_name == g, ]
+                # Drop ribbons whose taxon is absent (zero height) in either of
+                # the two connected bars when `ribbon_hide_zero = TRUE`.
+                if (
+                  ribbon_hide_zero &&
+                    ((l$ymax - l$ymin) == 0 || (r$ymax - r$ymin) == 0)
+                ) {
+                  return(NULL)
+                }
                 t_seq <- seq(0, 1, length.out = 50)
                 s <- sigmoid(t_seq)
                 x_left <- x_vals[i] + hw
@@ -4665,8 +4707,6 @@ tax_bar_pq <-
         )
       )
 
-      ribbon_data$taxa_fill[ribbon_data$taxa_fill == "NA"] <- NA
-
       bar_tops <- bar_agg |>
         dplyr::group_by(x) |>
         dplyr::summarise(ymax = max(ymax), .groups = "drop")
@@ -4674,13 +4714,20 @@ tax_bar_pq <-
       x_labels[is.na(x_labels)] <- "NA"
       bar_tops$label <- x_labels[bar_tops$x]
 
+      # `ribbon_data` may be NULL/empty when `ribbon_hide_zero = TRUE` removes
+      # every connecting ribbon: only draw the polygons when some remain.
+      if (!is.null(ribbon_data) && nrow(ribbon_data) > 0) {
+        ribbon_data$taxa_fill[ribbon_data$taxa_fill == "NA"] <- NA
+        p <- p +
+          geom_polygon(
+            data = ribbon_data,
+            aes(x = x, y = y, fill = .data[["taxa_fill"]], group = group_id),
+            alpha = ribbon_alpha,
+            inherit.aes = FALSE
+          )
+      }
+
       p <- p +
-        geom_polygon(
-          data = ribbon_data,
-          aes(x = x, y = y, fill = .data[["taxa_fill"]], group = group_id),
-          alpha = ribbon_alpha,
-          inherit.aes = FALSE
-        ) +
         geom_text(
           data = bar_tops,
           aes(x = x, y = ymax, label = label),
@@ -7110,10 +7157,11 @@ plot_ordination_pq <- function(
   show_n_samples,
   palette,
   error_fun,
-  error_fun_lab,
   error_bar_alpha,
   point_alpha,
-  letters_below_bar
+  letters_below_bar,
+  mark_symbol = FALSE,
+  sig_symbol = "∅"
 ) {
   # --- Kruskal-Wallis test ---
   data[[x_name]] <- as.factor(data[[x_name]])
@@ -7238,29 +7286,21 @@ plot_ordination_pq <- function(
     p <- p + ggplot2::scale_x_discrete(labels = x_labels)
   }
 
-  p +
+  # In a multi-panel figure the "Error bars / Tukey" caption is set once at the
+  # figure level (see `hill_bar_pq()`); panels where Tukey HSD was not run are
+  # instead flagged with `sig_symbol` appended to their subtitle.
+  subtitle_lab <- if (mark_symbol && add_letters && !tukey_run) {
+    paste0(kw_subtitle, " ", sig_symbol)
+  } else {
+    kw_subtitle
+  }
+
+  out <- p +
     ggplot2::scale_fill_manual(values = palette) +
     ggplot2::labs(
       x = x_lab,
       y = y_lab,
-      subtitle = kw_subtitle,
-      caption = if (add_letters && tukey_run) {
-        paste0(
-          "Error bars: ",
-          error_fun_lab,
-          "\nletters from Tukey HSD pairwise comparisons"
-        )
-      } else if (add_letters && !tukey_run) {
-        paste0(
-          "Error bars: ",
-          error_fun_lab,
-          "; Kruskal-Wallis p \u2265 ",
-          p_threshold,
-          "\nTukey HSD pairwise comparisons not run (no global significance)"
-        )
-      } else {
-        paste0("Error bars: ", error_fun_lab)
-      }
+      subtitle = subtitle_lab
     ) +
     ggplot2::theme_bw(base_size = base_size) +
     ggplot2::theme(
@@ -7291,6 +7331,48 @@ plot_ordination_pq <- function(
       ),
       plot.margin = ggplot2::margin(5, 5, 5, 5, "pt")
     )
+
+  list(plot = out, tukey_run = tukey_run)
+}
+
+################################################################################
+#' Build the figure-level caption shared by all Hill bar panels
+#'
+#' @param error_fun_lab Label describing the error bars.
+#' @param add_letters Logical, whether compact letters are displayed.
+#' @param tukey_flags Logical vector, one element per panel, `TRUE` when Tukey
+#'   HSD pairwise comparisons were run for that panel.
+#' @param p_threshold Kruskal-Wallis significance threshold.
+#' @param sig_symbol Symbol used to flag panels where Tukey HSD was not run.
+#'   The symbol prefix is only added when there is more than one panel.
+#' @return A single character string for use as a plot caption.
+#' @noRd
+.hill_caption <- function(
+  error_fun_lab,
+  add_letters,
+  tukey_flags,
+  p_threshold,
+  sig_symbol
+) {
+  cap <- paste0("Error bars: ", error_fun_lab)
+  if (!add_letters) {
+    return(cap)
+  }
+  if (any(tukey_flags)) {
+    cap <- paste0(cap, "; letters from Tukey HSD pairwise comparisons")
+  }
+  if (any(!tukey_flags)) {
+    prefix <- if (length(tukey_flags) > 1L) paste0(sig_symbol, " ") else ""
+    cap <- paste0(
+      cap,
+      "\n",
+      prefix,
+      "Kruskal-Wallis p ≥ ",
+      p_threshold,
+      ": Tukey HSD pairwise comparisons not run (no global significance)"
+    )
+  }
+  cap
 }
 
 ################################################################################
@@ -7356,6 +7438,13 @@ plot_ordination_pq <- function(
 #'   fixed position independent of data spread. When `FALSE` (default), letters
 #'   are placed above whichever is higher: the error bar top or the highest
 #'   data point.
+#' @param sig_symbol Character symbol (default `"∅"`, the empty set, evoking the
+#'   absence of a pairwise comparison) used, when several values
+#'   of `q` are drawn, to flag the panels for which Tukey HSD pairwise
+#'   comparisons were not run (no global Kruskal-Wallis significance). The
+#'   symbol is appended to the panel subtitle and explained once in the shared
+#'   figure caption. The "Error bars" / "letters from Tukey HSD" caption is set
+#'   a single time for the whole figure rather than repeated on every panel.
 #' @param ... Additional arguments passed to [psmelt_samples_pq()] and hence
 #'   to [divent::div_hill()] (e.g. `estimator = "naive"`).
 #'
@@ -7369,7 +7458,7 @@ plot_ordination_pq <- function(
 #' hill_bar_pq(data_fungi_mini, Height, q = 1)
 #' \dontrun{
 #' hill_bar_pq(data_fungi_mini, Height, q = 0)
-#' hill_bar_pq(data_fungi_mini, Height, q = c(0, 1, 2), ncol = 1)
+#' hill_bar_pq(data_fungi_mini, Height, q = c(0, 2), ncol = 2)
 #' hill_bar_pq(data_fungi_mini, Height,
 #'   q = c(0, 2),
 #'   y_labs = c(Hill_0 = "Richness", Hill_2 = "Simpson diversity")
@@ -7417,6 +7506,7 @@ hill_bar_pq <- function(
   error_bar_alpha = 0.35,
   point_alpha = 0.5,
   letters_below_bar = FALSE,
+  sig_symbol = "\u2205",
   ...
 ) {
   verify_pq(physeq)
@@ -7450,10 +7540,10 @@ hill_bar_pq <- function(
     show_n_samples = show_n_samples,
     palette = palette,
     error_fun = error_fun,
-    error_fun_lab = error_fun_lab,
     error_bar_alpha = error_bar_alpha,
     point_alpha = point_alpha,
-    letters_below_bar = letters_below_bar
+    letters_below_bar = letters_below_bar,
+    sig_symbol = sig_symbol
   )
 
   if (length(ys) == 1) {
@@ -7462,9 +7552,25 @@ hill_bar_pq <- function(
     } else {
       .hill_y_lab(q)
     }
-    do.call(.hill_bar_single, c(plot_args, list(y_name = ys, y_lab = y_lab)))
+    # Single panel: caption carried by the plot itself, no symbol needed.
+    res <- do.call(
+      .hill_bar_single,
+      c(plot_args, list(y_name = ys, y_lab = y_lab, mark_symbol = FALSE))
+    )
+    res$plot +
+      ggplot2::labs(
+        caption = .hill_caption(
+          error_fun_lab,
+          add_letters,
+          res$tukey_run,
+          p_threshold,
+          sig_symbol
+        )
+      )
   } else {
-    plots <- lapply(seq_along(ys), function(i) {
+    # Multiple panels: flag non-significant panels with `sig_symbol` and set a
+    # single figure-level caption via `patchwork::plot_annotation()`.
+    results <- lapply(seq_along(ys), function(i) {
       y_name <- ys[[i]]
       y_lab <- if (!is.null(y_labs) && y_name %in% names(y_labs)) {
         y_labs[[y_name]]
@@ -7473,10 +7579,27 @@ hill_bar_pq <- function(
       }
       do.call(
         .hill_bar_single,
-        c(plot_args, list(y_name = y_name, y_lab = y_lab))
+        c(plot_args, list(y_name = y_name, y_lab = y_lab, mark_symbol = TRUE))
       )
     })
-    patchwork::wrap_plots(plots, ncol = ncol)
+    plots <- lapply(results, function(res) res$plot)
+    tukey_flags <- vapply(results, function(res) res$tukey_run, logical(1))
+    patchwork::wrap_plots(plots, ncol = ncol) +
+      patchwork::plot_annotation(
+        caption = .hill_caption(
+          error_fun_lab,
+          add_letters,
+          tukey_flags,
+          p_threshold,
+          sig_symbol
+        ),
+        theme = ggplot2::theme(
+          plot.caption = ggplot2::element_text(
+            size = base_size * 0.7,
+            colour = "grey50"
+          )
+        )
+      )
   }
 }
 ################################################################################
@@ -7488,10 +7611,10 @@ hill_bar_pq <- function(
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
-#' Auto-wrap (and optionally resize the font of) the title, subtitle and axis
-#' labels of a ggplot2 plot using [stringr::str_wrap()]. Useful to tidy up long
-#' titles produced automatically by other `MiscMetabar` plotting functions, in
-#' particular before combining several plots with `patchwork`.
+#' Auto-wrap (and optionally resize the font of) the title, subtitle, caption
+#' and axis labels of a ggplot2 plot using [stringr::str_wrap()]. Useful to tidy
+#' up long titles produced automatically by other `MiscMetabar` plotting
+#' functions, in particular before combining several plots with `patchwork`.
 #'
 #' @param plot (required) A ggplot2 object.
 #' @param width (int, default 60) The wrapping width (in characters) of the
@@ -7500,9 +7623,12 @@ hill_bar_pq <- function(
 #'   fontsize_subtitle`) The wrapping width of the subtitle.
 #' @param width_labs (int, default `width * fontsize_title / fontsize_labs`)
 #'   The wrapping width of the x and y axis labels.
+#' @param width_caption (int, default `width * fontsize_title /
+#'   fontsize_caption`) The wrapping width of the caption.
 #' @param fontsize_title (int, default 10) Font size for the title.
 #' @param fontsize_subtitle (int, default 7) Font size for the subtitle.
 #' @param fontsize_labs (int, default 8) Font size for the x and y axis labels.
+#' @param fontsize_caption (int, default 7) Font size for the caption.
 #'
 #' @return A ggplot2 object with wrapped/resized text elements.
 #' @export
@@ -7527,9 +7653,11 @@ reshape_ggplot <- function(
   width = 60,
   width_subtitle = width * fontsize_title / fontsize_subtitle,
   width_labs = width * fontsize_title / fontsize_labs,
+  width_caption = width * fontsize_title / fontsize_caption,
   fontsize_title = 10,
   fontsize_subtitle = 7,
-  fontsize_labs = 8
+  fontsize_labs = 8,
+  fontsize_caption = 7
 ) {
   if (!requireNamespace("stringr", quietly = TRUE)) {
     cli::cli_abort(
@@ -7552,6 +7680,16 @@ reshape_ggplot <- function(
       )
   }
 
+  if (is.character(plot$labels$caption)) {
+    plot <- plot +
+      labs(
+        caption = stringr::str_wrap(
+          plot$labels$caption,
+          width = width_caption
+        )
+      )
+  }
+
   if (is.character(plot$labels$x)) {
     plot <- plot +
       xlab(label = stringr::str_wrap(plot$labels$x, width = width_labs))
@@ -7565,6 +7703,7 @@ reshape_ggplot <- function(
     theme(
       plot.subtitle = element_text(size = fontsize_subtitle),
       plot.title = element_text(size = fontsize_title),
+      plot.caption = element_text(size = fontsize_caption),
       axis.title = element_text(size = fontsize_labs)
     )
   return(plot)
