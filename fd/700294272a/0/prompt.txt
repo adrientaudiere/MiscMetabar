@@ -1,0 +1,148 @@
+Base directory for this skill: /home/adrien/.claude/skills/r-feature-batch
+
+Implement a batch of **3-4 ROADMAP features** for a pqverse R package, **one feature at a
+time** in the `dev` working tree, then finish with **one consolidation pass** that does every
+global edit exactly once and **one Quarto demo** illustrating all the new features together.
+
+This skill reproduces the workflow proven in MiscMetabar 0.16.8.9000 (clean_pq NA-cleanup,
+reshape_ggplot, phyloseq_to_MDT_excel, fastp, tool-presence checks).
+
+## The discipline that keeps the diff clean
+
+While implementing each feature, touch **only its own files** — `R/<slug>.R` and
+`tests/testthat/test_<slug>.R`. Defer **every global file** to the single consolidation stage
+at the end:
+
+`NEWS.md`, `_pkgdown.yml`, `DESCRIPTION` (Suggests), `inst/WORDLIST`, `NAMESPACE`, `man/`.
+
+Why batch them: NEWS bullets are alphabetised across the *whole* set at once; `document()`
+and `air format` run once over the final tree (not N times); and a single `git diff
+NAMESPACE man/` at the end cleanly reveals any carryover. Editing globals per-feature just
+creates churn and re-sorting work.
+
+## Arguments
+
+`` may contain, in any order:
+
+- A count (`3` or `4`) — how many features to implement. If absent, ask.
+- `--filter "High/easy"` — priority/facility filter for candidate selection. Default:
+  `High/easy` plus `Medium/easy`. Prefer items carrying a `(source: …)` prototype pointer.
+- `--package <name>` — target package. If absent, read `Package:` from `DESCRIPTION` in the
+  cwd. Resolves to `pqverse_pkg/<name>/` from the workspace root.
+
+## Commits
+
+**Leave everything uncommitted on `dev` for the developer.** The rule is "Don't commit, the
+developer do." This skill never commits, branches, or merges.
+
+---
+
+## Stage 0 — Preconditions & context
+
+1. Confirm cwd (or `--package` target) is an R package: `DESCRIPTION` present. Read `Package:`.
+2. Locate the workspace root and `ROADMAP.md` (pqverse root, e.g.
+   `/home/adrien/Nextcloud/IdEst/Projets/pqverse/ROADMAP.md`).
+3. Confirm the current branch is `dev` (or ask). Run `git status` so you know the starting
+   diff and can keep the new work scoped.
+4. Identify the demo target dir: `<workspace>/arround_MiscMetabar/`.
+
+## Stage 1 — Select features
+
+1. Read the target package's section of `ROADMAP.md`. Extract bullets matching the filter.
+   **Strongly prefer items with a `(source: …)` pointer** — the prototype already exists, so
+   they're lower-risk and faster. Open each pointer (often
+   `arround_MiscMetabar/en_cours_de_dev.qmd:<lines>`) to confirm scope.
+2. Present the candidates to the user with `AskUserQuestion` (`multiSelect: true`). Let them
+   pick the 3-4 to build. Show the one-line description and facility tag per option.
+3. For each chosen feature, record a small manifest:
+   - `slug` — kebab-case, drives `R/<slug>.R` and `test_<slug>.R`.
+   - target function name(s) (with `()`),
+   - one-line description + source pointer,
+   - the ROADMAP bullet text (to delete from ROADMAP on success — mirror the prior session).
+
+## Stage 2 — Implement each feature (linear, one at a time)
+
+For each selected feature, in turn:
+
+1. **Read 2-3 existing functions** in `R/` to match conventions before writing anything.
+2. Write `R/<slug>.R`:
+   - Base pipe `|>` (never `%>%`); `function() {}` not `\()`; `{}` around every if/else body.
+   - Full roxygen2 (`@param`, `@return`, `@export`, `@examples`, `@author`), matching the
+     style of neighbouring functions.
+   - Guard every Suggests-package call with `requireNamespace("<pkg>", quietly = TRUE)` +
+     `cli::cli_abort(...)`. **Note** any new Suggests dependency for Stage 3 — do **not**
+     edit `DESCRIPTION` yet.
+   - CRAN constraints: primary example in `\donttest{}`, variants in `\dontrun{}`; cap any
+     per-sample loop at 5 samples via
+     `prune_samples(sample_names(data_fungi_mini)[1:5], data_fungi_mini)`
+     (`data_fungi_mini` has 137 samples); external-tool examples in `\dontrun{}`.
+3. Write `tests/testthat/test_<slug>.R`:
+   - **Underscore** filename — repo convention. (r_development.md says `test-<name>.R` with a
+     hyphen; that's wrong for this repo. Use underscore.)
+   - `skip_on_cran()` as the **first line** if the whole file should skip on CRAN.
+   - Minimal, few comments. Guard Suggests-dependent tests with
+     `skip_if_not_installed("<pkg>")`.
+4. **Validate this feature before moving on:**
+   `NOT_CRAN=true Rscript -e "devtools::load_all('.'); testthat::test_file('tests/testthat/test_<slug>.R')"`
+   (never append `2>&1` to Rscript calls). Don't start the next feature with this one red.
+
+Do **not** edit any global file in this stage — collect the per-feature notes (function
+names, new Suggests deps, NEWS bullet text, `_pkgdown.yml` section, spelling terms) for
+Stage 3.
+
+## Stage 3 — Consolidate (ONE pass over the global files)
+
+Once all features are implemented and individually green, do the global edits once, in order:
+
+1. **NEWS.md** — add every bullet, then **re-sort the whole current-version list**
+   alphabetically by function name (bullets without a function name go first). Present tense,
+   function name in `backticks()` early in the bullet.
+2. **_pkgdown.yml** — add each new topic to the section it belongs in.
+3. **DESCRIPTION** — add all new Suggests deps in a single edit, keep the list sorted.
+4. **inst/WORDLIST** — add all flagged terms; keep it `LC_ALL=C` sorted, en-US.
+5. **`air format`** — run, then **scope the diff**: `air format .` reformats unrelated files.
+   Revert incidental reformats so the diff stays feature-scoped
+   (`git checkout -- <unrelated.R>`), or format only the changed files.
+6. **`devtools::document()` ONCE** → regenerates `NAMESPACE` + `man/` with all new exports
+   together.
+7. **Carryover check** — `git diff NAMESPACE man/` and flag anything **not** attributable to
+   the new features (e.g. a prior commit that never ran `document()`, like the
+   `rarefy_even_depth_pq` carryover). Report it; don't silently bundle it.
+8. **Spelling** — `Rscript -e "spelling::spell_check_package()"` once; fix real typos, add
+   legitimate jargon to `inst/WORDLIST`.
+9. **Full test suite** — once, `NOT_CRAN=true Rscript -e "devtools::test()"`. Swallow output;
+   show `✓` if green, dump on failure.
+
+## Stage 4 — One Quarto demo for all features
+
+Write `<workspace>/arround_MiscMetabar/<name>_demo.qmd` covering **every** new feature in one
+document:
+
+- A setup chunk that `devtools::load_all()`s the dev package and loads
+  `data(data_fungi_mini)`, capped to 5 samples for any per-sample work.
+- One section per feature: a short prose explanation + a **runnable** chunk. Tool-dependent
+  features (fastp etc.) use the dry-run / `cmd_is_run = FALSE` path or `is_*_installed()` so
+  the chunk evaluates without the external binary.
+- Close with `sessionInfo()`.
+- **Verify the chunks actually evaluate** (render, or source each chunk) against the
+  5-sample subset — a demo that only *looks* runnable is a regression waiting to happen.
+
+## Stage 5 — ROADMAP cleanup & report
+
+1. **ROADMAP.md** — delete the shipped bullets and any now-dead `(source:)` pointer rows. If a
+   prototype in `en_cours_de_dev.qmd` is fully shipped, offer to remove that section too.
+2. **Report** a table of features shipped (function · test · NEWS · pkgdown · man), the test
+   result, spelling status, the demo path, and any `NAMESPACE`/`man/` **carryover** flagged
+   in Stage 3.7. State plainly that the diff is left **uncommitted on `dev`** for the
+   developer, and that **R CMD check was not run** — offer `/r-check`.
+3. Open the html report in a browser.
+
+## Important rules
+
+- **Never commit** — the developer commits.
+- **No global-file edits while implementing a feature.** All of NEWS / _pkgdown / DESCRIPTION
+  / WORDLIST / NAMESPACE / man happen once, in Stage 3.
+- **When scope or design is ambiguous, ask the developer** — especially before writing a
+  custom implementation of something a CRAN package (vegan, etc.) likely already provides.
+- Tests are `test_<slug>.R` (underscore). Never append `2>&1` to Rscript Bash calls.
+- Prefer items with an existing `(source:)` prototype; they're the low-risk path.
