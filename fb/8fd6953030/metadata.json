@@ -1,0 +1,37 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "fb8fd6953030",
+  "strategy": "manual-commit",
+  "branch": "dev",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "NAMESPACE",
+    "NEWS.md",
+    "R/fastq_to_fasta.R",
+    "R/wheat_plot.R",
+    "_pkgdown.yml",
+    "inst/WORDLIST",
+    "man/fastq_to_fasta.Rd",
+    "man/plot_ordination_pq.Rd",
+    "man/wheat_plot.Rd",
+    "tests/testthat/Rplots.pdf",
+    "tests/testthat/test_fastq_to_fasta.R",
+    "tests/testthat/test_wheat_plot.R"
+  ],
+  "sessions": [
+    {
+      "metadata": "/fb/8fd6953030/0/metadata.json",
+      "transcript": "/fb/8fd6953030/0/full.jsonl",
+      "context": "/fb/8fd6953030/0/context.md",
+      "content_hash": "/fb/8fd6953030/0/content_hash.txt",
+      "prompt": "/fb/8fd6953030/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}

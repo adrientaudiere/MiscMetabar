@@ -1,0 +1,43 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "fb8fd6953030",
+  "session_id": "6747f48e-975e-44dd-8aa7-96dba4b1bb58",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-08T20:25:44.065987659Z",
+  "branch": "dev",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "NAMESPACE",
+    "NEWS.md",
+    "R/fastq_to_fasta.R",
+    "R/wheat_plot.R",
+    "_pkgdown.yml",
+    "inst/WORDLIST",
+    "man/fastq_to_fasta.Rd",
+    "man/wheat_plot.Rd",
+    "man/plot_ordination_pq.Rd",
+    "tests/testthat/Rplots.pdf",
+    "tests/testthat/test_fastq_to_fasta.R",
+    "tests/testthat/test_wheat_plot.R"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "658db362731a",
+  "checkpoint_transcript_start": 572,
+  "transcript_lines_at_start": 572,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-08T20:25:43.763578259Z",
+    "agent_lines": 417,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 417,
+    "agent_percentage": 100
+  }
+}
