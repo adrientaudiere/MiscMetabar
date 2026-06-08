@@ -297,7 +297,7 @@ normalize_prop_pq <- function(
 #'   Rarefaction is performed internally rather than by calling
 #'   [phyloseq::rarefy_even_depth()], whose `replace = FALSE` code path relies
 #'   on `rep_len(x["OTUi"], x["times"])` and errors with `invalid 'length.out'
-#'   value` under recent R-devel (see phyloseq issue \#1753). For a single
+#'   value` under recent R-devel (see phyloseq issue 1753). For a single
 #'   rarefaction (`n = 1`), the result is identical to
 #'   [phyloseq::rarefy_even_depth()] with `trimOTUs = FALSE` for the same
 #'   `seed`, `sample_size` and `replace` — except in the degenerate case where

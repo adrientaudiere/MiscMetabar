@@ -48,7 +48,7 @@ rarefaction.
 \details{
 Rarefaction is performed internally rather than by calling
 \code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}}, whose \code{replace = FALSE} code path relies
-on \code{rep_len(x["OTUi"], x["times"])} and errors with \verb{invalid 'length.out' value} under recent R-devel (see phyloseq issue \#1753). For a single
+on \code{rep_len(x["OTUi"], x["times"])} and errors with \verb{invalid 'length.out' value} under recent R-devel (see phyloseq issue 1753). For a single
 rarefaction (\code{n = 1}), the result is identical to
 \code{\link[phyloseq:rarefy_even_depth]{phyloseq::rarefy_even_depth()}} with \code{trimOTUs = FALSE} for the same
 \code{seed}, \code{sample_size} and \code{replace} — except in the degenerate case where

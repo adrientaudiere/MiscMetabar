@@ -1,9 +1,7 @@
-# MiscMetabar 0.16.8.9000
+# MiscMetabar 0.16.8
 * `accu_plot()`, `dist_pos_control()`, `hill_curves_pq()` and `tsne_pq()` no longer error under recent R-devel: the `otu_table` is now coerced to a base matrix before being passed to `vegan` functions (`renyi()`, `renyiaccum()`, `specaccum()`, `vegdist()`), which previously triggered an `assignment of an object of class "numeric" is not valid for @'.Data'` error because plain `as.matrix()` does not strip the S4 `otu_table` class.
 * Rarefaction across the package is now performed by an internal R-version-robust reimplementation rather than `phyloseq::rarefy_even_depth()`, whose `replace = FALSE` code path errors with `invalid 'length.out' value` under recent R-devel (phyloseq issue #1753). The reimplementation is bit-identical to `phyloseq::rarefy_even_depth()` for the same `seed`, depth and `replace` value (and is more correct in the degenerate case where a retained sample has a single read). This affects `rarefy_pq()`, `adonis_pq()`, `adonis_rarperm_pq()`, `hill_test_rarperm_pq()`, `hill_pq()`, `biplot_pq()`, `ggvenn_pq()`, `upset_pq()`, `ggaluv_pq()` and `ggscatt_pq()`.
 * `rarefy_pq()` gains a `replace` argument (default `FALSE`, sampling without replacement) and accepts `seed = FALSE` to leave the random number generator untouched, mirroring `phyloseq::rarefy_even_depth()`.
-
-# MiscMetabar 0.16.8
 * Further check-time reductions for CRAN compliance:
   extra examples `\dontrun{}` (kept for documentation,
   not run during checks). 
