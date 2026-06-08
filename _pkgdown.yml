@@ -252,6 +252,7 @@ reference:
   contents:
   - cutadapt_remove_primers
   - fastp
+  - fastq_to_fasta
   - filter_trim
   - list_fastq_files
   - subsample_fastq
@@ -321,6 +322,7 @@ reference:
   - multiplot
   - no_legend
   - reshape_ggplot
+  - wheat_plot
 - subtitle: Variable management
   contents:
   - diff_fct_diff_class

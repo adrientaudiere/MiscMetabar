@@ -79,7 +79,7 @@ plot_ordination_pq(
   method = "bray",
   color = "Height",
   add_envfit = TRUE,
-  envfit_fact = "Height"
+  envfit_fact = "Time"
 )
 }
 }

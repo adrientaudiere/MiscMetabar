@@ -44,6 +44,7 @@ DGEList
 DNAStringSet
 Darwin
 Deseq
+Diaconis
 Dna
 Dufrêne
 Durga
@@ -477,6 +478,7 @@ standardise
 standardised
 standardises
 stderr
+steelblue
 stochasticity
 str
 substr
