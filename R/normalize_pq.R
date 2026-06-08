@@ -265,7 +265,7 @@ normalize_prop_pq <- function(
 ################################################################################
 
 ################################################################################
-#' Rarefy a phyloseq object, optionally averaging over repetitions
+#' Rarefy a phyloseq object
 #'
 #' @description
 #'

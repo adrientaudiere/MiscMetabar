@@ -45,3 +45,57 @@ test_that("plot_volcano_pq aborts on missing columns", {
   res <- data.frame(a = 1:3, b = 1:3)
   expect_error(plot_volcano_pq(res), "not found")
 })
+
+test_that("plot_volcano_pq auto-detects ALDEx2 columns", {
+  res <- data.frame(
+    effect = c(2, -2, 0.1),
+    wi.eBH = c(0.01, 0.03, 0.8),
+    we.eBH = c(0.02, 0.04, 0.9)
+  )
+  p <- plot_volcano_pq(res)
+  expect_s3_class(p, "ggplot")
+  expect_identical(as.character(p$data$.status[1]), "Up")
+  expect_identical(as.character(p$data$.status[2]), "Down")
+})
+
+test_that("plot_volcano_pq auto-detects ANCOMBC list and extracts $res", {
+  ancombc_res <- list(
+    res = data.frame(
+      taxon = letters[1:4],
+      lfc_GroupB = c(2, -2, 0.1, -0.1),
+      q_GroupB = c(0.01, 0.02, 0.8, 0.9)
+    )
+  )
+  p <- suppressMessages(plot_volcano_pq(ancombc_res))
+  expect_s3_class(p, "ggplot")
+  expect_identical(as.character(p$data$.status[1]), "Up")
+  expect_identical(as.character(p$data$.status[2]), "Down")
+})
+
+test_that("plot_volcano_pq ANCOMBC: explicit fc/padj overrides auto-detect", {
+  ancombc_res <- list(
+    res = data.frame(
+      taxon = letters[1:3],
+      lfc_GroupB = c(2, -2, 0.1),
+      q_GroupB = c(0.01, 0.02, 0.8),
+      lfc_GroupC = c(-1, 1, 0.3),
+      q_GroupC = c(0.03, 0.04, 0.7)
+    )
+  )
+  p <- suppressMessages(
+    plot_volcano_pq(ancombc_res, fc = "lfc_GroupC", padj = "q_GroupC")
+  )
+  expect_s3_class(p, "ggplot")
+  expect_identical(as.character(p$data$.status[2]), "Up")
+})
+
+test_that("plot_volcano_pq auto-detects lefser_df and enters score mode", {
+  res <- data.frame(features = letters[1:5], scores = c(3, -3, 0.2, -0.5, 1.5))
+  class(res) <- c("lefser_df", "data.frame")
+  p <- plot_volcano_pq(res)
+  expect_s3_class(p, "ggplot")
+  expect_identical(p$labels$x, "LDA score")
+  expect_identical(p$labels$y, "|LDA score|")
+  expect_identical(as.character(p$data$.status[1]), "Up")
+  expect_identical(as.character(p$data$.status[2]), "Down")
+})
