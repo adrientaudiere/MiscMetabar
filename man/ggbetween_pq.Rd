@@ -80,7 +80,11 @@ use this function.
 \donttest{
 library("divent")
 if (requireNamespace("ggstatsplot")) {
-  p <- ggbetween_pq(data_fungi, fact = "Time", p.adjust.method = "BH")
+  data_f <- clean_pq(prune_samples(
+  sample_names(data_fungi_sp_known)[1:10],
+  data_fungi_sp_known
+))
+  p <- ggbetween_pq(data_f, fact = "Time", p.adjust.method = "BH")
   p[[1]]
 }
 }

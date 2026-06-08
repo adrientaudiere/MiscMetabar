@@ -32,7 +32,11 @@ object.
 \examples{
 \donttest{
 if (requireNamespace("adespatial")) {
-  res <- LCBD_pq(data_fungi_sp_known, nperm = 5)
+  data_f <- clean_pq(prune_samples(
+    sample_names(data_fungi_sp_known)[1:10],
+    data_fungi_sp_known
+  ))
+  res <- LCBD_pq(data_f, nperm = 5)
   str(res)
   length(res$LCBD)
   length(res$SCBD)
