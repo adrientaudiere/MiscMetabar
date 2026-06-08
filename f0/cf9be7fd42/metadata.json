@@ -1,0 +1,28 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "f0cf9be7fd42",
+  "strategy": "manual-commit",
+  "branch": "dev",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "NEWS.md",
+    "R/plot_volcano_pq.R",
+    "tests/testthat/test_plot_volcano_pq.R"
+  ],
+  "sessions": [
+    {
+      "metadata": "/f0/cf9be7fd42/0/metadata.json",
+      "transcript": "/f0/cf9be7fd42/0/full.jsonl",
+      "context": "/f0/cf9be7fd42/0/context.md",
+      "content_hash": "/f0/cf9be7fd42/0/content_hash.txt",
+      "prompt": "/f0/cf9be7fd42/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 10,
+    "cache_creation_tokens": 15490,
+    "cache_read_tokens": 596262,
+    "output_tokens": 5264,
+    "api_call_count": 8
+  }
+}
