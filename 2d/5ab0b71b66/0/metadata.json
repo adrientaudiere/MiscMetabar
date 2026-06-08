@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "2d5ab0b71b66",
+  "session_id": "b224e670-5467-4cac-a6a0-a26e6c338094",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-08T09:42:08.539117044Z",
+  "branch": "dev",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "NEWS.md",
+    "R/normalize_pq.R",
+    "R/plot_volcano_pq.R",
+    "tests/testthat/test_plot_volcano_pq.R"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "338c4fba7e92",
+  "token_usage": {
+    "input_tokens": 47,
+    "cache_creation_tokens": 54925,
+    "cache_read_tokens": 1842436,
+    "output_tokens": 24177,
+    "api_call_count": 40
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-08T09:42:08.43432066Z",
+    "agent_lines": 231,
+    "human_added": 0,
+    "human_modified": 2,
+    "human_removed": 0,
+    "total_committed": 233,
+    "agent_percentage": 99.14163090128756
+  }
+}
