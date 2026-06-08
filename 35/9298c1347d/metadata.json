@@ -1,0 +1,42 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "359298c1347d",
+  "strategy": "manual-commit",
+  "branch": "dev",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "NAMESPACE",
+    "NEWS.md",
+    "R/dada_phyloseq.R",
+    "R/plot_functions.R",
+    "R/strassoc_pq.R",
+    "R/vsearch.R",
+    "_pkgdown.yml",
+    "inst/WORDLIST",
+    "man/plot_ordination_pq.Rd",
+    "man/plot_volcano_pq.Rd",
+    "man/postcluster_pq.Rd",
+    "man/rarefy_pq.Rd",
+    "man/strassoc_pq.Rd",
+    "man/vsearch_clustering.Rd",
+    "tests/testthat/test_plot_ordination_envfit.R",
+    "tests/testthat/test_postcluster_cov.R",
+    "tests/testthat/test_strassoc_pq.R"
+  ],
+  "sessions": [
+    {
+      "metadata": "/35/9298c1347d/0/metadata.json",
+      "transcript": "/35/9298c1347d/0/full.jsonl",
+      "context": "/35/9298c1347d/0/context.md",
+      "content_hash": "/35/9298c1347d/0/content_hash.txt",
+      "prompt": "/35/9298c1347d/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 8385,
+    "cache_creation_tokens": 272210,
+    "cache_read_tokens": 11174308,
+    "output_tokens": 63342,
+    "api_call_count": 95
+  }
+}
