@@ -16,31 +16,24 @@
 #' The function auto-detects the input type and sets `fc` and `padj`
 #' accordingly (see *Details*). Pass explicit values to override.
 #'
-#' For \pkg{lefser} results ([lefser_pq()]), which have no per-feature
-#' p-value, a score plot is produced instead: LDA score on both axes
-#' (\eqn{|\text{score}|} on y), with taxa classified by sign and
-#' `lfc_threshold`.
-#'
 #' @param df (required) A `data.frame` (or any object coercible with
-#'   [as.data.frame()], such as a `DESeqResults` object), the `$res` list
-#'   returned by [ancombc_pq()], or a `lefser_df` object from [lefser_pq()].
+#'   [as.data.frame()], such as a `DESeqResults` object) or the raw list
+#'   returned by [ancombc_pq()].
 #' @param fc (character or NULL, default `NULL`) Name of the (log2) fold
 #'   change column. When `NULL` the column is inferred from the input type
 #'   (see *Details*).
 #' @param padj (character or NULL, default `NULL`) Name of the adjusted
 #'   p-value column. When `NULL` the column is inferred from the input type.
-#'   Set to `NULL` explicitly (and supply a `lefser_df`) to activate score
-#'   mode.
 #' @param alpha (numeric, default 0.05) Adjusted p-value threshold for
-#'   significance (horizontal dashed line). Ignored in LEfSe score mode.
+#'   significance (horizontal dashed line).
 #' @param lfc_threshold (numeric, default 1) Absolute (log2) fold-change
 #'   threshold for biological relevance (vertical dashed lines). Set to 0 to
 #'   classify on significance only.
 #' @param label_col (character, default NULL) Optional column used to label the
 #'   significant points (e.g. a taxonomic rank). If NULL, no labels are drawn.
 #' @param label_n (integer, default 10) Maximum number of significant points to
-#'   label, ranked by \eqn{-\log_{10}(\text{padj})} (or \eqn{|\text{score}|}
-#'   in LEfSe mode). Ignored when `label_col` is NULL.
+#'   label, ranked by \eqn{-\log_{10}(\text{padj})}. Ignored when `label_col`
+#'   is NULL.
 #' @param point_size (numeric, default 2) Size of the points.
 #' @param point_alpha (numeric, default 0.7) Opacity of the points.
 #' @param palette (named character vector) Colours for the three statuses. Must
@@ -54,10 +47,9 @@
 #'
 #' - If `df` is a list with a `$res` slot containing `lfc_*` and `q_*`
 #'   columns (output of [ancombc_pq()]): `$res` is extracted automatically,
-#'   and the first `lfc_*` / `q_*` column is used. Pass `fc` / `padj`
-#'   explicitly to pick a specific comparison when multiple groups are present.
-#' - If `df` inherits from `lefser_df` (output of [lefser_pq()]): score mode
-#'   is activated (`fc = "scores"`, no p-value axis).
+#'   and the first `lfc_*` / `q_*` column (excluding the intercept) is used.
+#'   Pass `fc` / `padj` explicitly to pick a specific comparison when multiple
+#'   groups are present.
 #' - If columns `log2FoldChange` and `padj` are present (e.g. after
 #'   `as.data.frame(DESeq2::results(dds))`): DESeq2 defaults are used.
 #' - If columns `effect` and `wi.eBH` are present (output of [aldex_pq()]):
@@ -99,7 +91,7 @@
 #'
 #' # From ANCOMBC (auto-detected: $res extracted, lfc_/q_ columns picked)
 #' if (requireNamespace("ANCOMBC")) {
-#'   res_ancombc <- ancombc_pq(data_fungi_mini, fact=  "Height",  levels_fact = c("Low", "High"))
+#'   res_ancombc <- ancombc_pq(data_fungi_mini, fact = "Height", levels_fact = c("Low", "High"))
 #'   plot_volcano_pq(res_ancombc)
 #' }
 #'
@@ -108,13 +100,6 @@
 #'   res_aldex <- aldex_pq(data_fungi_mini, bifactor = "Height",
 #'                         modalities = c("Low", "High"))
 #'   plot_volcano_pq(res_aldex)
-#' }
-#'
-#' # From LEfSe (score plot, no p-value)
-#' if (requireNamespace("lefser") && requireNamespace("mia")) {
-#'   res_lefse <- lefser_pq(data_fungi_mini, bifactor = "Height",
-#'                          modalities = c("Low", "High"))
-#'   plot_volcano_pq(res_lefse)
 #' }
 #' }
 plot_volcano_pq <- function(
@@ -162,22 +147,13 @@ plot_volcano_pq <- function(
     }
   }
 
-  # Auto-detect LEfSe: lefser_df class has scores but no p-value
-  lefser_mode <- inherits(df, "lefser_df")
-  if (lefser_mode) {
-    if (is.null(fc)) {
-      fc <- "scores"
-    }
-    padj <- NULL
-  }
-
   df <- as.data.frame(df)
 
-  # Auto-detect DESeq2 columns (after coercion, DESeqResults → data.frame)
+  # Auto-detect DESeq2 columns (after coercion, DESeqResults -> data.frame)
   if (is.null(fc) && "log2FoldChange" %in% colnames(df)) {
     fc <- "log2FoldChange"
   }
-  if (is.null(padj) && !lefser_mode && "padj" %in% colnames(df)) {
+  if (is.null(padj) && "padj" %in% colnames(df)) {
     padj <- "padj"
   }
 
@@ -185,7 +161,7 @@ plot_volcano_pq <- function(
   if (is.null(fc) && "effect" %in% colnames(df)) {
     fc <- "effect"
   }
-  if (is.null(padj) && !lefser_mode && "wi.eBH" %in% colnames(df)) {
+  if (is.null(padj) && "wi.eBH" %in% colnames(df)) {
     padj <- "wi.eBH"
   }
 
@@ -193,7 +169,7 @@ plot_volcano_pq <- function(
   if (is.null(fc)) {
     fc <- "log2FoldChange"
   }
-  if (is.null(padj) && !lefser_mode) {
+  if (is.null(padj)) {
     padj <- "padj"
   }
 
@@ -202,67 +178,13 @@ plot_volcano_pq <- function(
       "Fold-change column {.val {fc}} not found in {.arg df}. Available columns: {.val {colnames(df)}}."
     )
   }
-  if (!is.null(padj) && !padj %in% colnames(df)) {
+  if (!padj %in% colnames(df)) {
     cli::cli_abort(
       "Adjusted p-value column {.val {padj}} not found in {.arg df}. Available columns: {.val {colnames(df)}}."
     )
   }
 
   fc_vals <- as.numeric(df[[fc]])
-
-  if (lefser_mode) {
-    # Score plot for LEfSe: classify by sign × threshold, y = |score|
-    status <- rep("NotDA", nrow(df))
-    status[fc_vals >= lfc_threshold] <- "Up"
-    status[fc_vals <= -lfc_threshold] <- "Down"
-    status <- factor(status, levels = c("Down", "NotDA", "Up"))
-
-    plot_df <- data.frame(
-      .fc = fc_vals,
-      .neglog10 = abs(fc_vals),
-      .status = status,
-      stringsAsFactors = FALSE
-    )
-    if (!is.null(label_col)) {
-      if (!label_col %in% colnames(df)) {
-        cli::cli_abort("Label column {.val {label_col}} not found in {.arg df}.")
-      }
-      plot_df$.label <- as.character(df[[label_col]])
-    }
-
-    p <- ggplot(
-      plot_df,
-      aes(x = .data$.fc, y = .data$.neglog10, color = .data$.status)
-    ) +
-      geom_vline(
-        xintercept = c(-lfc_threshold, lfc_threshold),
-        linetype = "dashed",
-        color = "grey60"
-      ) +
-      geom_point(size = point_size, alpha = point_alpha) +
-      scale_color_manual(values = palette, drop = FALSE, name = NULL) +
-      labs(x = "LDA score", y = "|LDA score|") +
-      theme_bw()
-
-    if (!is.null(label_col)) {
-      lab_df <- plot_df[plot_df$.status != "NotDA", , drop = FALSE]
-      if (nrow(lab_df) > 0) {
-        lab_df <- lab_df[order(-lab_df$.neglog10), , drop = FALSE]
-        lab_df <- utils::head(lab_df, label_n)
-        p <- p +
-          geom_text(
-            data = lab_df,
-            aes(label = .data$.label),
-            size = 3,
-            vjust = -0.6,
-            show.legend = FALSE
-          )
-      }
-    }
-    return(p)
-  }
-
-  # Standard volcano mode (DESeq2, ALDEx2, ANCOMBC, ...)
   padj_vals <- as.numeric(df[[padj]])
 
   # Significance status

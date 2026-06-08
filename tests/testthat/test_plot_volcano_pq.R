@@ -88,14 +88,3 @@ test_that("plot_volcano_pq ANCOMBC: explicit fc/padj overrides auto-detect", {
   expect_s3_class(p, "ggplot")
   expect_identical(as.character(p$data$.status[2]), "Up")
 })
-
-test_that("plot_volcano_pq auto-detects lefser_df and enters score mode", {
-  res <- data.frame(features = letters[1:5], scores = c(3, -3, 0.2, -0.5, 1.5))
-  class(res) <- c("lefser_df", "data.frame")
-  p <- plot_volcano_pq(res)
-  expect_s3_class(p, "ggplot")
-  expect_identical(p$labels$x, "LDA score")
-  expect_identical(p$labels$y, "|LDA score|")
-  expect_identical(as.character(p$data$.status[1]), "Up")
-  expect_identical(as.character(p$data$.status[2]), "Down")
-})
