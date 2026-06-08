@@ -2,7 +2,7 @@
 % Please edit documentation in R/normalize_pq.R
 \name{rarefy_pq}
 \alias{rarefy_pq}
-\title{Rarefy a phyloseq object, optionally averaging over repetitions}
+\title{Rarefy a phyloseq object}
 \usage{
 rarefy_pq(physeq, sample_size = NULL, n = 1, seed = 123, replace = FALSE, ...)
 }

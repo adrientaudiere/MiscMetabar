@@ -15,6 +15,8 @@ vsearch_clustering(
   rank_propagation = FALSE,
   vsearch_cluster_method = "--cluster_size",
   vsearch_args = "--strand both",
+  query_cov = NULL,
+  target_cov = NULL,
   keep_temporary_files = FALSE
 )
 }
@@ -52,6 +54,18 @@ methods in the \href{https://github.com/torognes/vsearch}{vsearch manual} (e.g. 
 
 \item{vsearch_args}{(default : "--strand both") a one length character element defining other parameters to
 passed on to vsearch.}
+
+\item{query_cov}{(default: NULL) Reject the alignment if the fraction of the
+query sequence aligned to the target is lower than this value. When NULL
+(default), the vsearch \code{--query_cov} option is not added to the command.
+See the \code{--query_cov} option in the
+\href{https://github.com/torognes/vsearch}{vsearch manual}.}
+
+\item{target_cov}{(default: NULL) Reject the alignment if the fraction of the
+target sequence aligned to the query is lower than this value. When NULL
+(default), the vsearch \code{--target_cov} option is not added to the command.
+See the \code{--target_cov} option in the
+\href{https://github.com/torognes/vsearch}{vsearch manual}.}
 
 \item{keep_temporary_files}{(logical, default: FALSE) Do we keep temporary files ?
 \itemize{

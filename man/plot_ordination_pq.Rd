@@ -8,6 +8,12 @@ plot_ordination_pq(
   physeq,
   method = "robust.aitchison",
   ordination_method = "NMDS",
+  add_envfit = FALSE,
+  envfit_fact = NULL,
+  envfit_pval = 1,
+  envfit_arrow_mult = 1,
+  envfit_text_size = 3,
+  envfit_col = "black",
   ...
 )
 }
@@ -20,6 +26,30 @@ from vegan::vegdist(). See ?vegan::vegdist for more details.}
 
 \item{ordination_method}{(string, default "NMDS") The ordination method to use
 in phyloseq::ordinate(). See ?phyloseq::ordinate for more details.}
+
+\item{add_envfit}{(logical, default FALSE) If TRUE, overlay environmental
+vectors (and factor centroids) fitted to the ordination using
+\code{\link[vegan:envfit]{vegan::envfit()}}. Continuous variables are shown as arrows and factor
+variables as labelled centroids.}
+
+\item{envfit_fact}{(default NULL) A character vector of variable names from
+\code{physeq@sam_data} to fit onto the ordination. When NULL (default) and
+\code{add_envfit = TRUE}, every variable of \code{physeq@sam_data} is used; passing an
+explicit subset is recommended, as fitting identifier or high-cardinality
+character columns produces a cluttered overlay.}
+
+\item{envfit_pval}{(float, default 1) Only environmental variables with an
+\code{\link[vegan:envfit]{vegan::envfit()}} p-value lower than or equal to this threshold are drawn.
+The default (1) draws all of them.}
+
+\item{envfit_arrow_mult}{(float, default 1) A multiplier applied to the
+environmental arrow lengths, to scale them for readability.}
+
+\item{envfit_text_size}{(float, default 3) Text size for the environmental
+variable labels.}
+
+\item{envfit_col}{(default "black") Color of the environmental arrows,
+centroids and labels.}
 
 \item{...}{Additional arguments passed on to phyloseq::plot_ordination()}
 }
@@ -43,6 +73,18 @@ robust.aitchison distances from vegan package.
 library(patchwork)
 plot_ordination_pq(data_fungi_mini, method = "robust.aitchison", color = "Height") +
   plot_ordination_pq(data_fungi_mini, method = "bray", color = "Height")
+\donttest{
+plot_ordination_pq(
+  subset_samples(data_fungi_mini, !is.na(Height)),
+  method = "bray",
+  color = "Height",
+  add_envfit = TRUE,
+  envfit_fact = "Height"
+)
+}
+}
+\seealso{
+\code{\link[vegan:envfit]{vegan::envfit()}}, \code{\link[phyloseq:plot_ordination]{phyloseq::plot_ordination()}}
 }
 \author{
 Adrien Taudière

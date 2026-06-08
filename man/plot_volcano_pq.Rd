@@ -6,8 +6,8 @@
 \usage{
 plot_volcano_pq(
   df,
-  fc = "log2FoldChange",
-  padj = "padj",
+  fc = NULL,
+  padj = NULL,
   alpha = 0.05,
   lfc_threshold = 1,
   label_col = NULL,
@@ -19,14 +19,15 @@ plot_volcano_pq(
 }
 \arguments{
 \item{df}{(required) A \code{data.frame} (or any object coercible with
-\code{\link[=as.data.frame]{as.data.frame()}}, such as a \code{DESeqResults} object) with one row per taxon
-and at least a fold-change column and an adjusted p-value column.}
+\code{\link[=as.data.frame]{as.data.frame()}}, such as a \code{DESeqResults} object) or the raw list
+returned by \code{\link[=ancombc_pq]{ancombc_pq()}}.}
 
-\item{fc}{(character, default \code{"log2FoldChange"}) Name of the (log2) fold
-change column.}
+\item{fc}{(character or NULL, default \code{NULL}) Name of the (log2) fold
+change column. When \code{NULL} the column is inferred from the input type
+(see \emph{Details}).}
 
-\item{padj}{(character, default \code{"padj"}) Name of the adjusted p-value
-column.}
+\item{padj}{(character or NULL, default \code{NULL}) Name of the adjusted
+p-value column. When \code{NULL} the column is inferred from the input type.}
 
 \item{alpha}{(numeric, default 0.05) Adjusted p-value threshold for
 significance (horizontal dashed line).}
@@ -66,14 +67,27 @@ table of a differential abundance analysis, e.g. \pkg{DESeq2}
 (\code{\link[=aldex_pq]{aldex_pq()}}). Each taxon is colored according to its status: up, down or
 not differentially abundant (\code{NotDA}).
 
-The function is column-name agnostic: point \code{fc} and \code{padj} at the relevant
-columns of your result table (see \emph{Details} for common cases).
+The function auto-detects the input type and sets \code{fc} and \code{padj}
+accordingly (see \emph{Details}). Pass explicit values to override.
 }
 \details{
-Common column mappings:
+\strong{Auto-detection rules} (applied when \code{fc} or \code{padj} is \code{NULL}):
+\itemize{
+\item If \code{df} is a list with a \verb{$res} slot containing \verb{lfc_*} and \verb{q_*}
+columns (output of \code{\link[=ancombc_pq]{ancombc_pq()}}): \verb{$res} is extracted automatically,
+and the first \verb{lfc_*} / \verb{q_*} column (excluding the intercept) is used.
+Pass \code{fc} / \code{padj} explicitly to pick a specific comparison when multiple
+groups are present.
+\item If columns \code{log2FoldChange} and \code{padj} are present (e.g. after
+\code{as.data.frame(DESeq2::results(dds))}): DESeq2 defaults are used.
+\item If columns \code{effect} and \code{wi.eBH} are present (output of \code{\link[=aldex_pq]{aldex_pq()}}):
+ALDEx2 defaults are used.
+}
+
+\strong{Manual column mappings} (for other tools or custom results):
 \itemize{
 \item \pkg{DESeq2} (\code{\link[DESeq2:results]{DESeq2::results()}}): \code{fc = "log2FoldChange"},
-\code{padj = "padj"} (the defaults).
+\code{padj = "padj"}.
 \item \pkg{ANCOMBC} (\code{\link[=ancombc_pq]{ancombc_pq()}} \verb{$res}): \code{fc = "lfc_<group>"},
 \code{padj = "q_<group>"}.
 \item \pkg{ALDEx2} (\code{\link[=aldex_pq]{aldex_pq()}}): \code{fc = "effect"}, \code{padj = "wi.eBH"} (or
@@ -97,13 +111,26 @@ plot_volcano_pq(res)
 plot_volcano_pq(res, lfc_threshold = 2, label_col = "Genus", label_n = 5)
 }
 \dontrun{
-# From a real DESeq2 analysis
+# From a real DESeq2 analysis (auto-detected)
 data("GlobalPatterns", package = "phyloseq")
 GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 GP <- subset_samples(GP, SampleType \%in\% c("Soil", "Skin"))
 if (requireNamespace("DESeq2")) {
   dds <- DESeq2::DESeq(phyloseq_to_deseq2(GP, ~SampleType))
   plot_volcano_pq(DESeq2::results(dds))
+}
+
+# From ANCOMBC (auto-detected: $res extracted, lfc_/q_ columns picked)
+if (requireNamespace("ANCOMBC")) {
+  res_ancombc <- ancombc_pq(data_fungi_mini, fact = "Height", levels_fact = c("Low", "High"))
+  plot_volcano_pq(res_ancombc)
+}
+
+# From ALDEx2 (auto-detected)
+if (requireNamespace("ALDEx2")) {
+  res_aldex <- aldex_pq(data_fungi_mini, bifactor = "Height",
+                        modalities = c("Low", "High"))
+  plot_volcano_pq(res_aldex)
 }
 }
 }

@@ -222,6 +222,7 @@ reference:
   - plot_mt
   - plot_volcano_pq
   - signif_ancombc
+  - strassoc_pq
 
 - subtitle: Taxonomy
   contents:

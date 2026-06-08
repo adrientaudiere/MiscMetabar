@@ -737,6 +737,14 @@ track_wkflow_samples <- function(
 #'   - `--cluster_size` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence abundance beforehand.
 #' @param vsearch_args (default : "--strand both") a one length character element defining other parameters to
 #'   passed on to vsearch.
+#' @param query_cov (default: NULL) Only used when `method = "vsearch"`. Reject
+#'   the alignment if the fraction of the query sequence aligned to the target is
+#'   lower than this value. When NULL (default), the vsearch `--query_cov` option
+#'   is not added to the command. See [vsearch_clustering()].
+#' @param target_cov (default: NULL) Only used when `method = "vsearch"`. Reject
+#'   the alignment if the fraction of the target sequence aligned to the query is
+#'   lower than this value. When NULL (default), the vsearch `--target_cov`
+#'   option is not added to the command. See [vsearch_clustering()].
 #' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files
 #'   - temp.fasta (refseq in fasta or dna_seq sequences)
 #'   - cluster.fasta (centroid if method = "vsearch")
@@ -804,6 +812,8 @@ postcluster_pq <- function(
   rank_propagation = FALSE,
   vsearch_cluster_method = "--cluster_size",
   vsearch_args = "--strand both",
+  query_cov = NULL,
+  target_cov = NULL,
   keep_temporary_files = FALSE,
   swarmpath = "swarm",
   d = 1,
@@ -870,6 +880,8 @@ postcluster_pq <- function(
       rank_propagation = rank_propagation,
       vsearch_cluster_method = vsearch_cluster_method,
       vsearch_args = vsearch_args,
+      query_cov = query_cov,
+      target_cov = target_cov,
       keep_temporary_files = keep_temporary_files
     )
   } else if (method == "swarm") {

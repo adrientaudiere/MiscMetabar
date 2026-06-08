@@ -45,6 +45,7 @@ DNAStringSet
 Darwin
 Deseq
 Dna
+Dufrêne
 Durga
 ERRORs
 ESV
@@ -76,6 +77,7 @@ ISSN
 IdClusters
 IdTaxa
 Illumina
+IndVal
 JAMP
 JOlaHsd
 JS
@@ -221,6 +223,7 @@ bioconductor
 bioinformatic
 bioinformatics
 biomedcentral
+biserial
 blastn
 bordeline
 bue

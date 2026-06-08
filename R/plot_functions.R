@@ -7087,19 +7087,53 @@ ggplot_add.reorder_distinct_colors_spec <- function(object, plot, ...) {
 #'   from vegan::vegdist(). See ?vegan::vegdist for more details.
 #' @param ordination_method (string, default "NMDS") The ordination method to use
 #'   in phyloseq::ordinate(). See ?phyloseq::ordinate for more details.
+#' @param add_envfit (logical, default FALSE) If TRUE, overlay environmental
+#'   vectors (and factor centroids) fitted to the ordination using
+#'   [vegan::envfit()]. Continuous variables are shown as arrows and factor
+#'   variables as labelled centroids.
+#' @param envfit_fact (default NULL) A character vector of variable names from
+#'   `physeq@sam_data` to fit onto the ordination. When NULL (default) and
+#'   `add_envfit = TRUE`, every variable of `physeq@sam_data` is used; passing an
+#'   explicit subset is recommended, as fitting identifier or high-cardinality
+#'   character columns produces a cluttered overlay.
+#' @param envfit_pval (float, default 1) Only environmental variables with an
+#'   [vegan::envfit()] p-value lower than or equal to this threshold are drawn.
+#'   The default (1) draws all of them.
+#' @param envfit_arrow_mult (float, default 1) A multiplier applied to the
+#'   environmental arrow lengths, to scale them for readability.
+#' @param envfit_text_size (float, default 3) Text size for the environmental
+#'   variable labels.
+#' @param envfit_col (default "black") Color of the environmental arrows,
+#'   centroids and labels.
 #' @param ... Additional arguments passed on to phyloseq::plot_ordination()
 #' @returns A ggplot2 object
 #' @export
+#' @seealso [vegan::envfit()], [phyloseq::plot_ordination()]
 #' @author Adrien Taudière
 #'
 #' @examples
 #' library(patchwork)
 #' plot_ordination_pq(data_fungi_mini, method = "robust.aitchison", color = "Height") +
 #'   plot_ordination_pq(data_fungi_mini, method = "bray", color = "Height")
+#' \donttest{
+#' plot_ordination_pq(
+#'   subset_samples(data_fungi_mini, !is.na(Height)),
+#'   method = "bray",
+#'   color = "Height",
+#'   add_envfit = TRUE,
+#'   envfit_fact = "Time"
+#' )
+#' }
 plot_ordination_pq <- function(
   physeq,
   method = "robust.aitchison",
   ordination_method = "NMDS",
+  add_envfit = FALSE,
+  envfit_fact = NULL,
+  envfit_pval = 1,
+  envfit_arrow_mult = 1,
+  envfit_text_size = 3,
+  envfit_col = "black",
   ...
 ) {
   verify_pq(physeq)
@@ -7119,6 +7153,109 @@ plot_ordination_pq <- function(
       title = paste(ordination_method, "ordination"),
       subtitle = paste("Using ", method, "distance")
     )
+
+  if (add_envfit) {
+    p <- .add_envfit_layers(
+      p,
+      physeq,
+      envfit_fact = envfit_fact,
+      envfit_pval = envfit_pval,
+      envfit_arrow_mult = envfit_arrow_mult,
+      envfit_text_size = envfit_text_size,
+      envfit_col = envfit_col
+    )
+  }
+
+  return(p)
+}
+
+# Overlay vegan::envfit() vectors and factor centroids on a plot_ordination
+# ggplot object (internal helper for plot_ordination_pq()).
+.add_envfit_layers <- function(
+  p,
+  physeq,
+  envfit_fact,
+  envfit_pval,
+  envfit_arrow_mult,
+  envfit_text_size,
+  envfit_col
+) {
+  x_var <- rlang::as_label(p$mapping$x)
+  y_var <- rlang::as_label(p$mapping$y)
+  pts <- as.matrix(p$data[, c(x_var, y_var)])
+
+  if (is.null(envfit_fact)) {
+    envfit_fact <- colnames(physeq@sam_data)
+  }
+  env <- as.data.frame(as(physeq@sam_data, "data.frame"))[,
+    envfit_fact,
+    drop = FALSE
+  ]
+  env <- env[match(rownames(pts), sample_names(physeq)), , drop = FALSE]
+
+  fit <- vegan::envfit(pts, env, na.rm = TRUE)
+
+  arrows_df <- NULL
+  if (!is.null(fit$vectors)) {
+    keep <- fit$vectors$pvals <= envfit_pval
+    if (any(keep)) {
+      arrows_df <- as.data.frame(
+        vegan::scores(fit, display = "vectors")[keep, , drop = FALSE]
+      )
+      arrows_df[[x_var]] <- arrows_df[[x_var]] * envfit_arrow_mult
+      arrows_df[[y_var]] <- arrows_df[[y_var]] * envfit_arrow_mult
+      arrows_df$label <- rownames(arrows_df)
+    }
+  }
+
+  cent_df <- NULL
+  if (!is.null(fit$factors)) {
+    cent_df <- as.data.frame(vegan::scores(fit, display = "factors"))
+    cent_df$label <- rownames(cent_df)
+  }
+
+  if (!is.null(arrows_df)) {
+    p <- p +
+      geom_segment(
+        data = arrows_df,
+        aes(
+          x = 0,
+          y = 0,
+          xend = .data[[x_var]],
+          yend = .data[[y_var]]
+        ),
+        arrow = arrow(length = unit(0.02, "npc")),
+        color = envfit_col,
+        inherit.aes = FALSE
+      ) +
+      geom_text(
+        data = arrows_df,
+        aes(x = .data[[x_var]], y = .data[[y_var]], label = label),
+        color = envfit_col,
+        size = envfit_text_size,
+        inherit.aes = FALSE
+      )
+  }
+
+  if (!is.null(cent_df)) {
+    p <- p +
+      geom_point(
+        data = cent_df,
+        aes(x = .data[[x_var]], y = .data[[y_var]]),
+        shape = 4,
+        color = envfit_col,
+        inherit.aes = FALSE
+      ) +
+      geom_text(
+        data = cent_df,
+        aes(x = .data[[x_var]], y = .data[[y_var]], label = label),
+        color = envfit_col,
+        size = envfit_text_size,
+        fontface = "italic",
+        inherit.aes = FALSE
+      )
+  }
+
   return(p)
 }
 ################################################################################

@@ -80,14 +80,16 @@ install_vsearch <- function(
   os <- tolower(Sys.info()[["sysname"]])
   arch <- Sys.info()[["machine"]]
 
-  os_tag <- switch(os,
+  os_tag <- switch(
+    os,
     "linux" = "linux",
     "darwin" = "macos",
     "windows" = "win",
     stop("Unsupported operating system: ", os)
   )
 
-  arch_tag <- switch(arch,
+  arch_tag <- switch(
+    arch,
     "x86_64" = "x86_64",
     "x86-64" = "x86_64",
     "amd64" = "x86_64",
@@ -600,6 +602,16 @@ swarm_clustering <- function(
 #'   - `--cluster_size` : Clusterize the fasta sequences in filename, automatically sort by decreasing sequence abundance beforehand.
 #' @param vsearch_args (default : "--strand both") a one length character element defining other parameters to
 #'   passed on to vsearch.
+#' @param query_cov (default: NULL) Reject the alignment if the fraction of the
+#'   query sequence aligned to the target is lower than this value. When NULL
+#'   (default), the vsearch `--query_cov` option is not added to the command.
+#'   See the `--query_cov` option in the
+#'   [vsearch manual](https://github.com/torognes/vsearch).
+#' @param target_cov (default: NULL) Reject the alignment if the fraction of the
+#'   target sequence aligned to the query is lower than this value. When NULL
+#'   (default), the vsearch `--target_cov` option is not added to the command.
+#'   See the `--target_cov` option in the
+#'   [vsearch manual](https://github.com/torognes/vsearch).
 #' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files ?
 #'   - temp.fasta (refseq in fasta or dna_seq sequences)
 #'   - cluster.fasta (centroid if method = "vsearch")
@@ -640,11 +652,21 @@ vsearch_clustering <- function(
   rank_propagation = FALSE,
   vsearch_cluster_method = "--cluster_size",
   vsearch_args = "--strand both",
+  query_cov = NULL,
+  target_cov = NULL,
   keep_temporary_files = FALSE
 ) {
   dna <- physeq_or_string_to_dna(physeq = physeq, dna_seq = dna_seq)
 
   Biostrings::writeXStringSet(dna, paste0(tempdir(), "/", "temp.fasta"))
+
+  cov_args <- ""
+  if (!is.null(query_cov)) {
+    cov_args <- paste0(cov_args, " --query_cov ", query_cov)
+  }
+  if (!is.null(target_cov)) {
+    cov_args <- paste0(cov_args, " --target_cov ", target_cov)
+  }
 
   system2(
     vsearchpath,
@@ -659,6 +681,7 @@ vsearch_clustering <- function(
       ),
       " -id ",
       id,
+      cov_args,
       " --centroids ",
       shQuote(paste0(tempdir(), "/", "cluster.fasta")),
       " --uc ",
