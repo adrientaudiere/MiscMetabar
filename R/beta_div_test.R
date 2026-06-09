@@ -299,7 +299,10 @@ adonis_pq <- function(
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-deprecated-orange" alt="lifecycle-deprecated"></a>
+#'
+#' # `r lifecycle::badge("deprecated")` This function has moved to the `bootpq`
+#' # package. Please use [bootpq::adonis_rarperm_pq()] instead.
 #'
 #' Permanova are computed on a given number of rarefaction with different
 #' seed.number. This reduce the risk of a random drawing of a exceptional
@@ -343,6 +346,11 @@ adonis_rarperm_pq <- function(
   sample.size = min(sample_sums(physeq)),
   ...
 ) {
+  # lifecycle::deprecate_soft(
+  #   "0.17.0",
+  #   "adonis_rarperm_pq()",
+  #   "bootpq::adonis_rarperm_pq()"
+  # )
   # Ensure .Random.seed exists before the rarefaction below saves/restores it.
   # In a fresh R session .Random.seed is absent until the first random operation.
   if (!exists(".Random.seed", envir = globalenv(), inherits = FALSE)) {
@@ -1622,7 +1630,10 @@ var_par_pq <-
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-deprecated-orange" alt="lifecycle-deprecated"></a>
+#'
+#' `r lifecycle::badge("deprecated")` This function has moved to the `bootpq`
+#' package. Please use [bootpq::var_par_rarperm_pq()] instead.
 #'
 #'   This is an extension of the function [var_par_pq()]. The main addition is
 #'   the computation of nperm permutations with rarefaction even depth by
@@ -1695,6 +1706,11 @@ var_par_rarperm_pq <-
     verbose = FALSE,
     progress_bar = TRUE
   ) {
+    lifecycle::deprecate_soft(
+      "0.17.0",
+      "var_par_rarperm_pq()",
+      "bootpq::var_par_rarperm_pq()"
+    )
     physeq <- taxa_as_columns(physeq)
     verify_pq(physeq)
 

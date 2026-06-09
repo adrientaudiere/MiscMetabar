@@ -68,9 +68,12 @@ and the maximum quantile value for adonis results. See \code{\link[=adonis_pq]{a
 \description{
 \if{html}{\out{
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+<img src="https://img.shields.io/badge/lifecycle-deprecated-orange" alt="lifecycle-deprecated"></a>
 }}
 
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} This function has moved to the \code{bootpq}
+package. Please use \code{\link[bootpq:adonis_rarperm_pq]{bootpq::adonis_rarperm_pq()}} instead.
 
 Permanova are computed on a given number of rarefaction with different
 seed.number. This reduce the risk of a random drawing of a exceptional

@@ -147,7 +147,10 @@ hill_tuckey_pq <- function(
 #'
 #' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-deprecated-orange" alt="lifecycle-deprecated"></a>
+#'
+#' #`r lifecycle::badge("deprecated")` This function has moved to the `bootpq`
+#' #package. Please use [bootpq::hill_test_rarperm_pq()] instead.
 #'
 #' This reduce the risk of a random drawing of a exceptional situation of an unique rarefaction.
 #' @inheritParams clean_pq
@@ -231,6 +234,11 @@ hill_test_rarperm_pq <- function(
   type = "nonparametric",
   ...
 ) {
+#  lifecycle::deprecate_soft(
+#    "0.17.0",
+#    "hill_test_rarperm_pq()",
+#    "bootpq::hill_test_rarperm_pq()"
+#  )
   verify_pq(physeq)
 
   if (nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {

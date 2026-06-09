@@ -71,9 +71,12 @@ A list of 6 components :
 \description{
 \if{html}{\out{
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+<img src="https://img.shields.io/badge/lifecycle-deprecated-orange" alt="lifecycle-deprecated"></a>
 }}
 
+
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} This function has moved to the \code{bootpq}
+package. Please use \code{\link[bootpq:hill_test_rarperm_pq]{bootpq::hill_test_rarperm_pq()}} instead.
 
 This reduce the risk of a random drawing of a exceptional situation of an unique rarefaction.
 }
