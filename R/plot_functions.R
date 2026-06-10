@@ -6929,6 +6929,11 @@ reorder_distinct_colors <- function(
   lightness_amount = 0.15,
   colorblind = FALSE
 ) {
+  lifecycle::deprecate_soft(
+    "0.17.0",
+    "reorder_distinct_colors()",
+    "ggplotpq::reorder_distinct_colors()"
+  )
   spec <- structure(
     list(
       alternate_lightness = alternate_lightness,
@@ -7063,6 +7068,11 @@ reorder_distinct_colors <- function(
 
 #' @exportS3Method ggplot2::ggplot_add
 ggplot_add.reorder_distinct_colors_spec <- function(object, plot, ...) {
+  lifecycle::deprecate_soft(
+    "0.17.0",
+    "reorder_distinct_colors()",
+    "ggplotpq::reorder_distinct_colors()"
+  )
   reorder_distinct_colors(
     p = plot,
     alternate_lightness = object$alternate_lightness,

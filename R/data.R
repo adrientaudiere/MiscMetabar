@@ -131,6 +131,7 @@ unwanted_tax_patterns <- c(
   "None / none" = "^[Nn]one$",
   "empty string" = "^$",
   "whitespace only" = "^\\s+$",
+  "question mark" = "^\\?$",
   "unclassified" = "[Uu]nclassified",
   "unknown" = "[Uu]nknown",
   "unidentified" = "[Uu]nidentified",

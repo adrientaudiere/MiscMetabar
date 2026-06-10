@@ -58,6 +58,11 @@ wheat_plot <- function(
   ylab = "Count",
   title = "Wheat Plot"
 ) {
+  lifecycle::deprecate_soft(
+    "0.17.0",
+    "wheat_plot()",
+    "ggplotpq::wheat_plot()"
+  )
   xvar_sym <- rlang::ensym(xvar)
 
   dat <- data |>
