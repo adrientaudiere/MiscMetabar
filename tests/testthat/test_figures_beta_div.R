@@ -107,7 +107,7 @@ test_that("plot_mt works", {
     suppressWarnings(plot_mt(
       res_mt,
       taxa = "Genus",
-      color_tax = "Order"
+      color_rank = "Order"
     )),
     "ggplot"
   )

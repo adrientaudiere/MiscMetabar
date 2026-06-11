@@ -77,7 +77,7 @@ test_that("Test one case for each deprecated functions", {
       plot_edgeR_phyloseq(
         GlobalPatterns,
         c("SampleType", "Soil", "Feces"),
-        color_tax = "Kingdom"
+        color_rank = "Kingdom"
       ),
       "deprecated"
     ),
@@ -88,7 +88,7 @@ test_that("Test one case for each deprecated functions", {
       res_deseq,
       c("SampleType", "Soil", "Skin"),
       tax_table = GP@tax_table,
-      color_tax = "Kingdom"
+      color_rank = "Kingdom"
     ),
     "deprecated"
   )

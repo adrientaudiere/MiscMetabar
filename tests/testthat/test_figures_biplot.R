@@ -36,6 +36,24 @@ test_that("biplot_pq works", {
     log10trans = FALSE,
     inverse_side = TRUE
   ))
+  # Regression: sample counts must follow the inverted side, not the original order
+  p_normal <- suppressMessages(biplot_pq(
+    data_fungi_2trees,
+    merge_sample_by = "Tree_name",
+    inverse_side = FALSE
+  ))
+  p_inverse <- suppressMessages(biplot_pq(
+    data_fungi_2trees,
+    merge_sample_by = "Tree_name",
+    inverse_side = TRUE
+  ))
+  get_text_labels <- function(p) {
+    unlist(lapply(p$layers, function(l) l$aes_params$label))
+  }
+  labs_normal <- get_text_labels(p_normal)
+  labs_inverse <- get_text_labels(p_inverse)
+  expect_false(identical(labs_normal, labs_inverse))
+  expect_identical(sort(labs_normal), sort(labs_inverse))
   expect_error(
     biplot_pq(data_fungi, merge_sample_by = "Tree_name"),
     "biplot_pq needs only two samples"

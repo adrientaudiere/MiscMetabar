@@ -16,8 +16,8 @@
 #'   the independent filtering. If the adjusted p-value cutoff (FDR) will be a
 #'   value other than 0.05, pval should be set to that value.
 #' @param taxolev taxonomic level of interest
-#' @param color_tax taxonomic level used for
-#'   color assignation
+#' @param color_rank taxonomic level used for color assignation.
+#' @param color_tax `r lifecycle::badge("deprecated")` Use `color_rank` instead.
 #' @param verbose (logical): whether the function print some
 #'   information during the computation
 #' @param ... Additional arguments passed on to \code{\link[edgeR]{exactTest}}
@@ -30,11 +30,11 @@
 #' \donttest{
 #' if (requireNamespace("edgeR")) {
 #'   plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
-#'     color_tax = "Kingdom"
+#'     color_rank = "Kingdom"
 #'   )
 #'
 #'   plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
-#'     taxolev = "Class", color_tax = "Kingdom"
+#'     taxolev = "Class", color_rank = "Kingdom"
 #'   )
 #' }
 #' }
@@ -51,10 +51,19 @@ plot_edgeR_pq <-
     contrast = NULL,
     pval = 0.05,
     taxolev = "Genus",
-    color_tax = "Phylum",
+    color_rank = "Phylum",
+    color_tax = lifecycle::deprecated(),
     verbose = TRUE,
     ...
   ) {
+    if (lifecycle::is_present(color_tax)) {
+      lifecycle::deprecate_warn(
+        "0.17.0",
+        "plot_edgeR_pq(color_tax)",
+        "plot_edgeR_pq(color_rank)"
+      )
+      color_rank <- color_tax
+    }
     if (!inherits(physeq, "phyloseq")) {
       stop("data must be an object of class 'phyloseq'")
     }
@@ -83,12 +92,12 @@ plot_edgeR_pq <-
     sigtabgen <- subset(sigtab, !is.na(taxolev))
 
     d <-
-      tapply(sigtabgen$logFC, sigtabgen[, color_tax], function(x) {
+      tapply(sigtabgen$logFC, sigtabgen[, color_rank], function(x) {
         max(x)
       })
     d <- sort(d, TRUE)
     sigtabgen$col_tax <-
-      factor(as.character(sigtabgen[, color_tax]), levels = names(d))
+      factor(as.character(sigtabgen[, color_rank]), levels = names(d))
 
     d <-
       tapply(sigtabgen$logFC, sigtabgen[, taxolev], function(x) {
@@ -154,8 +163,8 @@ plot_edgeR_pq <-
 #' @param select_taxa Either the name of the taxa (in the form of [DESeq2::results()])
 #'   or a logical vector (length of the results from [DESeq2::results()]) to select taxa
 #'   to plot.
-#' @param color_tax taxonomic level used for color or a
-#'   color vector.
+#' @param color_rank taxonomic level used for color, or a color vector.
+#' @param color_tax `r lifecycle::badge("deprecated")` Use `color_rank` instead.
 #' @param tax_depth Taxonomic depth to test for differential
 #'   distribution among contrast. If Null the analysis is done at the OTU
 #'   (i.e. Species) level. If not Null, data need to be a column name in
@@ -180,14 +189,14 @@ plot_edgeR_pq <-
 #'     test = "Wald", fitType = "local"
 #'   )
 #'   plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
-#'     tax_table = GP@tax_table, color_tax = "Kingdom"
+#'     tax_table = GP@tax_table, color_rank = "Kingdom"
 #'   )
 #'   plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
-#'     tax_table = GP@tax_table, color_tax = "Kingdom",
+#'     tax_table = GP@tax_table, color_rank = "Kingdom",
 #'     pval = 0.7
 #'   )
 #'   plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
-#'     tax_table = GP@tax_table, color_tax = "Class",
+#'     tax_table = GP@tax_table, color_rank = "Class",
 #'     select_taxa = c("522457", "271582")
 #'   )
 #' }
@@ -208,12 +217,21 @@ plot_deseq2_pq <-
     pval = 0.05,
     taxolev = "Genus",
     select_taxa = NULL,
-    color_tax = "Phylum",
+    color_rank = "Phylum",
+    color_tax = lifecycle::deprecated(),
     tax_depth = NULL,
     verbose = TRUE,
     jitter_width = 0.1,
     ...
   ) {
+    if (lifecycle::is_present(color_tax)) {
+      lifecycle::deprecate_warn(
+        "0.17.0",
+        "plot_deseq2_pq(color_tax)",
+        "plot_deseq2_pq(color_rank)"
+      )
+      color_rank <- color_tax
+    }
     if (!inherits(data, "phyloseq")) {
       if (!inherits(data, "DESeqDataSet")) {
         stop("data must be an object of class 'phyloseq' or 'DESeqDataSet'")
@@ -320,15 +338,15 @@ plot_deseq2_pq <-
       })
     }
 
-    if (!sum(are_colors(color_tax)) > 0) {
-      x <- tapply(d$log2FoldChange, d[, color_tax], function(x) {
+    if (!sum(are_colors(color_rank)) > 0) {
+      x <- tapply(d$log2FoldChange, d[, color_rank], function(x) {
         max(x)
       })
       x <- sort(x, TRUE)
       d$col_tax <-
-        factor(as.character(d[, color_tax]), levels = names(x))
+        factor(as.character(d[, color_rank]), levels = names(x))
     } else {
-      d$col_tax <- rep(color_tax, length = dim(d)[1])
+      d$col_tax <- rep(color_rank, length = dim(d)[1])
     }
 
     # Compute log2FoldChange values
@@ -338,7 +356,7 @@ plot_deseq2_pq <-
     x <- sort(x, TRUE)
     d$tax <- factor(as.character(d[, taxolev]), levels = names(x))
 
-    if (!sum(are_colors(color_tax)) > 0) {
+    if (!sum(are_colors(color_rank)) > 0) {
       p <-
         ggplot(d, aes(x = tax, y = log2FoldChange, color = col_tax), ...) +
         geom_point(

@@ -10,7 +10,8 @@
 #'
 #' @param mt (required) Result of a mt test from the function [phyloseq::mt()].
 #' @param pval (default: 0.05) Choose the cut off p-value to plot taxa.
-#' @param color_tax (default: "Class") A taxonomic level to color the points.
+#' @param color_rank (default: "Class") A taxonomic level to color the points.
+#' @param color_tax `r lifecycle::badge("deprecated")` Use `color_rank` instead.
 #' @param taxa (default: "Species") The taxonomic level you choose for x-positioning.
 #' @author Adrien Taudière
 #' @examples
@@ -19,16 +20,30 @@
 #' data_fungi_mini2 <- subset_samples(data_fungi_mini, !is.na(Time))
 #' res <- mt(data_fungi_mini2, "Time", method = "fdr", test = "f", B = 300)
 #' plot_mt(res)
-#' plot_mt(res, taxa = "Genus", color_tax = "Order")
+#' plot_mt(res, taxa = "Genus", color_rank = "Order")
 #' }
 #' @return a \code{\link[ggplot2]{ggplot}}2 plot of result of a mt test
 #' @export
 #' @seealso [phyloseq::mt()]
 
 plot_mt <-
-  function(mt = NULL, pval = 0.05, color_tax = "Class", taxa = "Species") {
+  function(
+    mt = NULL,
+    pval = 0.05,
+    color_rank = "Class",
+    color_tax = lifecycle::deprecated(),
+    taxa = "Species"
+  ) {
+    if (lifecycle::is_present(color_tax)) {
+      lifecycle::deprecate_warn(
+        "0.17.0",
+        "plot_mt(color_tax)",
+        "plot_mt(color_rank)"
+      )
+      color_rank <- color_tax
+    }
     d <- mt[mt$plower < pval, ]
-    d$tax_col <- factor(as.character(d[, color_tax]))
+    d$tax_col <- factor(as.character(d[, color_rank]))
     d$tax_col[is.na(d$tax_col)] <- "unidentified"
     d$tax <- as.character(d[, taxa])
     d$tax[is.na(d$tax)] <- "unidentified"
@@ -2765,6 +2780,11 @@ biplot_pq <- function(
 
   if (inverse_side) {
     modality <- factor(modality, rev(levels(as.factor(modality))))
+    if (!is.null(merge_sample_by) && nb_samples_info) {
+      tmp <- modality_1_nb
+      modality_1_nb <- modality_2_nb
+      modality_2_nb <- tmp
+    }
   }
 
   if (is.null(left_name)) {

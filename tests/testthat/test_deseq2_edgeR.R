@@ -17,7 +17,7 @@ test_that("plot_edgeR_pq works with GP dataset", {
       plot_edgeR_pq(
         GP_archae,
         c("SampleType", "Soil", "Feces"),
-        color_tax = "Kingdom"
+        color_rank = "Kingdom"
       ),
       "Perform edgeR binary test"
     )
@@ -26,7 +26,7 @@ test_that("plot_edgeR_pq works with GP dataset", {
       plot_edgeR_pq(
         GP_archae,
         c("SampleType", "Soil", "Feces"),
-        color_tax = "Species"
+        color_rank = "Species"
       ),
       "Perform edgeR binary test"
     )
@@ -35,7 +35,7 @@ test_that("plot_edgeR_pq works with GP dataset", {
         GP_archae,
         c("SampleType", "Soil", "Feces"),
         taxolev = "Class",
-        color_tax = "Kingdom"
+        color_rank = "Kingdom"
       ),
       "Perform edgeR binary test"
     )
@@ -44,14 +44,14 @@ test_that("plot_edgeR_pq works with GP dataset", {
         GP_archae,
         "SampleType",
         taxolev = "Class",
-        color_tax = "Kingdom"
+        color_rank = "Kingdom"
       ),
       "At least one element of given pair is not a group"
     )
     expect_error(plot_edgeR_pq(
       GP_archae,
       c("SampleType", "Soil", "Feces"),
-      color_tax = "Samples"
+      color_rank = "Samples"
     ))
   }
 })
@@ -70,7 +70,7 @@ test_that("plot_deseq2_pq works with results on GP dataset", {
     res,
     c("SampleType", "Soil", "Skin"),
     tax_table = GP@tax_table,
-    color_tax = "Kingdom"
+    color_rank = "Kingdom"
   )))
   expect_silent(suppressWarnings(plot_deseq2_pq(
     res,
@@ -83,27 +83,27 @@ test_that("plot_deseq2_pq works with results on GP dataset", {
     c("SampleType", "Soil", "Skin"),
     tax_table = GP@tax_table,
     tax_depth = "Family",
-    color_tax = fac2col(as.vector(GP@tax_table[, "Order"]))
+    color_rank = fac2col(as.vector(GP@tax_table[, "Order"]))
   )))
   expect_silent(suppressWarnings(plot_deseq2_pq(
     res,
     c("SampleType", "Soil", "Skin"),
     tax_table = GP@tax_table,
-    color_tax = "Kingdom",
+    color_rank = "Kingdom",
     verbose = TRUE
   )))
   expect_silent(suppressWarnings(plot_deseq2_pq(
     res,
     c("SampleType", "Soil", "Skin"),
     tax_table = GP@tax_table,
-    color_tax = "Class",
+    color_rank = "Class",
     alpha = 0.7
   )))
   expect_silent(suppressWarnings(plot_deseq2_pq(
     res,
     c("SampleType", "Soil", "Skin"),
     tax_table = GP@tax_table,
-    color_tax = "Kingdom",
+    color_rank = "Kingdom",
     taxolev = "Class"
   )))
 
@@ -111,31 +111,31 @@ test_that("plot_deseq2_pq works with results on GP dataset", {
     res,
     c("SampleType", "Soil", "Skyp"),
     tax_table = GP@tax_table,
-    color_tax = "Kingdom"
+    color_rank = "Kingdom"
   ))
   expect_error(plot_deseq2_pq(
     res,
     c("SampleType", "Soil", "Skin"),
-    color_tax = "Class"
+    color_rank = "Class"
   ))
   expect_error(plot_deseq2_pq(
     data_fungi_mini@otu_table,
     c("SampleType", "Soil", "Skyp"),
     tax_table = GP@tax_table,
-    color_tax = "Kingdom"
+    color_rank = "Kingdom"
   ))
   expect_message(plot_deseq2_pq(
     res,
     c("SampleType", "Soil", "Skin"),
     tax_table = GP@tax_table,
-    color_tax = "Class",
+    color_rank = "Class",
     select_taxa = "522457"
   ))
   expect_message(plot_deseq2_pq(
     res,
     c("SampleType", "Soil", "Skin"),
     tax_table = GP@tax_table,
-    color_tax = "Class",
+    color_rank = "Class",
     select_taxa = c("522457", "271582")
   ))
   expect_message(suppressWarnings(plot_deseq2_pq(
@@ -156,7 +156,7 @@ test_that("plot_deseq2_pq works with GP dataset", {
     expect_message(suppressWarnings(plot_deseq2_pq(
       GP,
       c("SampleType", "Soil", "Skin"),
-      color_tax = "Class",
+      color_rank = "Class",
       select_taxa = c("522457", "271582", "200359")
     )))
     expect_message(suppressWarnings(plot_deseq2_pq(
