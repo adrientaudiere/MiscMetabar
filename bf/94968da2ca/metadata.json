@@ -1,0 +1,32 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "bf94968da2ca",
+  "strategy": "manual-commit",
+  "branch": "dev",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "NEWS.md",
+    "R/Deseq2_edgeR.R",
+    "R/plot_functions.R",
+    "tests/testthat/test_deprecated.R",
+    "tests/testthat/test_deseq2_edgeR.R",
+    "tests/testthat/test_figures_beta_div.R",
+    "tests/testthat/test_figures_biplot.R"
+  ],
+  "sessions": [
+    {
+      "metadata": "/bf/94968da2ca/0/metadata.json",
+      "transcript": "/bf/94968da2ca/0/full.jsonl",
+      "context": "/bf/94968da2ca/0/context.md",
+      "content_hash": "/bf/94968da2ca/0/content_hash.txt",
+      "prompt": "/bf/94968da2ca/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  }
+}
