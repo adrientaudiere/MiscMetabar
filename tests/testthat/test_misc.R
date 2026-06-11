@@ -165,6 +165,35 @@ test_that("simplify_taxo works fine", {
   expect_s4_class(simplify_taxo(d_fm, remove_NA = TRUE), "phyloseq")
 })
 
+test_that("simplify_taxo pattern_to_NA replaces PR2 unknowns with NA", {
+  skip_on_cran()
+  d_pr2 <- data_fungi_mini
+  pr2_pattern <- "_X+$|_sp\\.$"
+
+  d_pr2@tax_table[1, "Genus"] <- "Embryophyceae_XXX"
+  d_pr2@tax_table[2, "Genus"] <- "Mortierella"
+  d_pr2@tax_table[1, "Species"] <- "Embryophyceae_XXX_sp."
+  d_pr2@tax_table[2, "Species"] <- "Mortierella_sp."
+  d_pr2@tax_table[3, "Species"] <- "Brachypodium_distachyon"
+  d_pr2@tax_table[3, "Order"] <- "Embryophyceae_X"
+  d_pr2@tax_table[3, "Family"] <- "Embryophyceae_XX"
+
+  result <- simplify_taxo(d_pr2, pattern_to_NA = pr2_pattern)
+  tt <- result@tax_table
+
+  expect_true(is.na(tt[1, "Genus"]))
+  expect_true(is.na(tt[1, "Species"]))
+  expect_true(is.na(tt[2, "Species"]))
+  expect_true(is.na(tt[3, "Order"]))
+  expect_true(is.na(tt[3, "Family"]))
+
+  expect_false(is.na(tt[2, "Genus"]))
+  expect_false(is.na(tt[3, "Species"]))
+  expect_identical(tt[3, "Species"], "Brachypodium_distachyon")
+
+  expect_s4_class(result, "phyloseq")
+})
+
 
 test_that("get_file_extension works fine", {
   expect_identical(get_file_extension("test.fasta"), "fasta")

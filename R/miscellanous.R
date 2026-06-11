@@ -129,9 +129,19 @@ all_object_size <- function() {
 #'
 #' Internally used in [clean_pq()]
 #' @inheritParams clean_pq
-#' @param pattern_to_remove (a vector of character) the pattern to remove using [base::gsub()] function.
+#' @param pattern_to_remove (a vector of character) regex patterns passed to
+#'   [base::gsub()]: the matched *substring* is deleted from the cell value and
+#'   the rest of the string is kept (e.g. `".__"` turns `"k__Fungi"` into
+#'   `"Fungi"`).
 #' @param remove_space (logical; default TRUE): do we remove space?
 #' @param remove_NA (logical; default FALSE): do we remove NA (in majuscule)?
+#' @param pattern_to_NA (character; default NULL): a regex; if an entire cell
+#'   value matches, the *whole cell* is replaced with `NA` (nothing from the
+#'   original value is kept). Designed for PR2-style placeholder unknowns such
+#'   as `Embryophyceae_X`, `Embryophyceae_XX`, `Embryophyceae_XXX`,
+#'   `Embryophyceae_XXX_sp.`, or `Mortierella_sp.`. Use `"_X+$|_sp\\.$"` to
+#'   cover all such patterns: `_X+$` catches rank-filler X's; `_sp\\.$` catches
+#'   any genus-only species placeholder.
 #' @author Adrien Taudière
 #'
 #' @return A  \code{\link[phyloseq]{phyloseq-class}} object with simplified taxonomy
@@ -153,11 +163,16 @@ all_object_size <- function() {
 #'   simplify_taxo(d_fm, remove_NA = TRUE)@tax_table[, "Species"],
 #'   d_fm@tax_table[, "Species"]
 #' )
+#' \dontrun{
+#' # Replace PR2 placeholder unknowns (_X, _XX, _XXX, _XXX_sp., Genus_sp.) with NA
+#' simplify_taxo(pq_pr2, pattern_to_NA = "_X+$|_sp\\.$")
+#' }
 simplify_taxo <- function(
   physeq,
   pattern_to_remove = c(".__", ".*:"),
   remove_space = TRUE,
-  remove_NA = FALSE
+  remove_NA = FALSE,
+  pattern_to_NA = NULL
 ) {
   taxo <- physeq@tax_table
   for (p in pattern_to_remove) {
@@ -171,6 +186,10 @@ simplify_taxo <- function(
 
   if (remove_NA) {
     taxo <- gsub("NA", "", taxo, ignore.case = FALSE)
+  }
+
+  if (!is.null(pattern_to_NA)) {
+    taxo[grepl(pattern_to_NA, taxo)] <- NA
   }
 
   physeq@tax_table <- tax_table(taxo)
