@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 ```{r setup, message=FALSE}
 library(MiscMetabar)
-data(data_fungi)
+library(divent)
 ```
 
 ### Alpha diversity analysis

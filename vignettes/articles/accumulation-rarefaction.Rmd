@@ -37,6 +37,10 @@ to compute and visualise these curves using `hill_acc_pq()` and
 `profile_hill_pq()`, two MiscMetabar functions built on the
 [divent](https://ericmarcon.github.io/divent/) package [@Marcon2015].
 
+```{r}
+library(divent)
+```
+
 ## Which function should I use?
 
 ```{r decision-tree, echo = FALSE, fig.cap = "Decision tree for choosing the appropriate diversity curve in metabarcoding."}

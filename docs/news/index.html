@@ -79,7 +79,7 @@
 <li>
 <code><a href="../reference/hill_bar_pq.html">hill_bar_pq()</a></code> now sets the “Error bars / Tukey HSD” caption once for the whole figure (via <code><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html" class="external-link">patchwork::plot_annotation()</a></code>) instead of repeating it on every <code>q</code> panel, fixing the overlapping captions seen with several values of <code>q</code>. Panels where Tukey HSD pairwise comparisons were not run (no global Kruskal-Wallis significance) are flagged with a <code>sig_symbol</code> (default <code>"∅"</code>, the empty set, new argument) appended to their subtitle and explained once in the shared caption.</li>
 <li>
-<code><a href="../reference/hill_test_rarperm_pq.html">hill_test_rarperm_pq()</a></code> is deprecated; it has moved to the <code>bootpq</code> package. Use <code><a href="https://rdrr.io/pkg/bootpq/man/hill_test_rarperm_pq.html" class="external-link">bootpq::hill_test_rarperm_pq()</a></code> instead.</li>
+<code><a href="../reference/hill_test_rarperm_pq.html">hill_test_rarperm_pq()</a></code> is deprecated; it has moved to the <code>bootpq</code> package. Use <code><a href="https://adrientaudiere.github.io/bootpq/reference/hill_test_rarperm_pq.html" class="external-link">bootpq::hill_test_rarperm_pq()</a></code> instead.</li>
 <li>
 <code><a href="../reference/is_blastn_installed.html">is_blastn_installed()</a></code> and <code><a href="../reference/is_multiqc_installed.html">is_multiqc_installed()</a></code> are new tool-presence helpers, following the existing <code><a href="../reference/is_cutadapt_installed.html">is_cutadapt_installed()</a></code> / <code><a href="../reference/is_vsearch_installed.html">is_vsearch_installed()</a></code> pattern.</li>
 <li>
@@ -107,7 +107,7 @@
 <li>
 <code><a href="../reference/tax_bar_pq.html">tax_bar_pq()</a></code> gains a <code>ribbon_hide_zero</code> argument (default <code>TRUE</code>) that, when <code>add_ribbon = TRUE</code>, suppresses the ribbon of a taxon between two adjacent bars whenever its value is zero in either connected bar, avoiding ribbons that collapse to a flat line.</li>
 <li>
-<code><a href="../reference/var_par_rarperm_pq.html">var_par_rarperm_pq()</a></code> is deprecated; it has moved to the <code>bootpq</code> package. Use <code><a href="https://rdrr.io/pkg/bootpq/man/var_par_rarperm_pq.html" class="external-link">bootpq::var_par_rarperm_pq()</a></code> instead.</li>
+<code><a href="../reference/var_par_rarperm_pq.html">var_par_rarperm_pq()</a></code> is deprecated; it has moved to the <code>bootpq</code> package. Use <code><a href="https://adrientaudiere.github.io/bootpq/reference/var_par_rarperm_pq.html" class="external-link">bootpq::var_par_rarperm_pq()</a></code> instead.</li>
 <li>
 <code><a href="../reference/vsearch_clustering.html">vsearch_clustering()</a></code> (and <code><a href="../reference/postcluster_pq.html">postcluster_pq()</a></code> with <code>method = "vsearch"</code>) gain <code>query_cov</code> and <code>target_cov</code> arguments to set the vsearch <code>--query_cov</code> and <code>--target_cov</code> alignment-coverage thresholds directly, instead of only through <code>vsearch_args</code>.</li>
 <li>
