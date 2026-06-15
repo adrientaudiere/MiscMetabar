@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.4.9",
+  "checkpoint_id": "0f519c6c1241",
+  "session_id": "6747f48e-975e-44dd-8aa7-96dba4b1bb58",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-15T14:57:18.334168819Z",
+  "branch": "dev",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "docs/news/index.html",
+    "man/adonis_rarperm_pq.Rd"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "658db362731a",
+  "checkpoint_transcript_start": 572,
+  "transcript_lines_at_start": 572,
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-06-15T14:57:18.013011026Z",
+    "agent_lines": 3,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 3,
+    "agent_percentage": 100
+  }
+}
