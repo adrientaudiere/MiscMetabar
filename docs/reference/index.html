@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -321,10 +321,17 @@
 
         <dt>
 
+          <code><a href="rarefy_even_depth_pq.html">rarefy_even_depth_pq()</a></code>
+
+        </dt>
+        <dd>Rarefy a phyloseq object to even sequencing depth</dd>
+
+        <dt>
+
           <code><a href="rarefy_pq.html">rarefy_pq()</a></code>
 
         </dt>
-        <dd>Rarefy a phyloseq object, optionally averaging over repetitions</dd>
+        <dd>Rarefy a phyloseq object</dd>
 
         <dt>
 
@@ -714,7 +721,7 @@
         <dt>
 
           <code><a href="hill_test_rarperm_pq.html">hill_test_rarperm_pq()</a></code>
-
+          <span class="badge lifecycle lifecycle-deprecated">deprecated</span>
         </dt>
         <dd>Test multiple times effect of factor on Hill diversity with different rarefaction even depth</dd>
 
@@ -834,6 +841,13 @@
 
         <dt>
 
+          <code><a href="plot_overview_pq.html">plot_overview_pq()</a></code>
+
+        </dt>
+        <dd>Overview plot of alpha and beta diversity for a phyloseq object</dd>
+
+        <dt>
+
           <code><a href="plot_SCBD_pq.html">plot_SCBD_pq()</a></code>
 
         </dt>
@@ -912,7 +926,7 @@
         <dt>
 
           <code><a href="var_par_rarperm_pq.html">var_par_rarperm_pq()</a></code>
-
+          <span class="badge lifecycle lifecycle-deprecated">deprecated</span>
         </dt>
         <dd>Partition the Variation of a phyloseq object with rarefaction permutations</dd>
 
@@ -997,10 +1011,24 @@
 
         <dt>
 
+          <code><a href="plot_volcano_pq.html">plot_volcano_pq()</a></code>
+
+        </dt>
+        <dd>Volcano plot for differential abundance results</dd>
+
+        <dt>
+
           <code><a href="signif_ancombc.html">signif_ancombc()</a></code>
 
         </dt>
         <dd>Filter ancombc_pq results</dd>
+
+        <dt>
+
+          <code><a href="strassoc_pq.html">strassoc_pq()</a></code>
+
+        </dt>
+        <dd>Strength of species-group associations for a phyloseq object</dd>
       </dl></div><div class="section level2">
 
       <h3 id="taxonomy-1">Taxonomy<a class="anchor" aria-label="anchor" href="#taxonomy-1"></a></h3>
@@ -1155,6 +1183,20 @@
 
         <dt>
 
+          <code><a href="fastp.html">fastp()</a></code>
+
+        </dt>
+        <dd>Fastp: adapter detection, quality control and preprocessing of FASTQ files</dd>
+
+        <dt>
+
+          <code><a href="fastq_to_fasta.html">fastq_to_fasta()</a></code>
+
+        </dt>
+        <dd>Convert FASTQ file(s) to FASTA file(s)</dd>
+
+        <dt>
+
           <code><a href="filter_trim.html">filter_trim()</a></code>
 
         </dt>
@@ -1184,6 +1226,27 @@
 
 
       <dl><dt>
+
+          <code><a href="load_pq.html">load_pq()</a></code>
+
+        </dt>
+        <dd>Load a phyloseq object from an RData file written by <code><a href="../reference/save_pq.html">save_pq()</a></code> or <code><a href="../reference/write_pq.html">write_pq()</a></code></dd>
+
+        <dt>
+
+          <code><a href="phyloseq_to_MDT_csv.html">phyloseq_to_MDT_csv()</a></code>
+
+        </dt>
+        <dd>Export a phyloseq object to GBIF MDT template CSV/TSV files</dd>
+
+        <dt>
+
+          <code><a href="phyloseq_to_MDT_excel.html">phyloseq_to_MDT_excel()</a></code>
+
+        </dt>
+        <dd>Export a phyloseq object to a multi-sheet Excel file for GBIF MDT submission</dd>
+
+        <dt>
 
           <code><a href="read_pq.html">read_pq()</a></code>
 
@@ -1371,7 +1434,7 @@
           <code><a href="transp.html">transp()</a></code>
 
         </dt>
-        <dd>Adds transparency to a vector of colors</dd>
+        <dd>Adds transparency to a vector of colors <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle"> <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a></dd>
       </dl></div><div class="section level2">
 
       <h3 id="fasta-taxonomic-database">Fasta taxonomic database<a class="anchor" aria-label="anchor" href="#fasta-taxonomic-database"></a></h3>
@@ -1458,10 +1521,24 @@
 
         <dt>
 
+          <code><a href="is_blastn_installed.html">is_blastn_installed()</a></code>
+
+        </dt>
+        <dd>Test if blastn is installed.</dd>
+
+        <dt>
+
           <code><a href="is_cutadapt_installed.html">is_cutadapt_installed()</a></code>
 
         </dt>
         <dd>Test if cutadapt is installed.</dd>
+
+        <dt>
+
+          <code><a href="is_fastp_installed.html">is_fastp_installed()</a></code>
+
+        </dt>
+        <dd>Test if fastp is installed.</dd>
 
         <dt>
 
@@ -1483,6 +1560,13 @@
 
         </dt>
         <dd>Test if krona is installed.</dd>
+
+        <dt>
+
+          <code><a href="is_multiqc_installed.html">is_multiqc_installed()</a></code>
+
+        </dt>
+        <dd>Test if MultiQC is installed.</dd>
 
         <dt>
 
@@ -1527,6 +1611,20 @@
 
         </dt>
         <dd>Discard legend in ggplot2</dd>
+
+        <dt>
+
+          <code><a href="reshape_ggplot.html">reshape_ggplot()</a></code>
+
+        </dt>
+        <dd>Reshape a ggplot2 object by wrapping its text elements</dd>
+
+        <dt>
+
+          <code><a href="wheat_plot.html">wheat_plot()</a></code>
+
+        </dt>
+        <dd>Wheat plot of a numeric distribution</dd>
       </dl></div><div class="section level2">
 
       <h3 id="variable-management">Variable management<a class="anchor" aria-label="anchor" href="#variable-management"></a></h3>

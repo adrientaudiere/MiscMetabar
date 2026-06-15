@@ -6,14 +6,14 @@ For each Hill diversity order in q, draws a bar at the group mean (±1 SE)
 with jittered individual points. A Kruskal-Wallis test is reported in the
 subtitle; when the global effect is significant, Tukey HSD pairwise
 comparisons produce compact letter displays above the bars. Multiple values
-of q are assembled into a patchwork::patchwork layout automatically."><meta property="og:description" content="
+of q are assembled into a patchwork layout automatically."><meta property="og:description" content="
 
 
 For each Hill diversity order in q, draws a bar at the group mean (±1 SE)
 with jittered individual points. A Kruskal-Wallis test is reported in the
 subtitle; when the global effect is significant, Tukey HSD pairwise
 comparisons produce compact letter displays above the bars. Multiple values
-of q are assembled into a patchwork::patchwork layout automatically."><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+of q are assembled into a patchwork layout automatically."><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -21,7 +21,7 @@ of q are assembled into a patchwork::patchwork layout automatically."><script da
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,6 +40,7 @@ of q are assembled into a patchwork::patchwork layout automatically."><script da
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -83,7 +84,7 @@ of q are assembled into a patchwork::patchwork layout automatically."><script da
 with jittered individual points. A Kruskal-Wallis test is reported in the
 subtitle; when the global effect is significant, Tukey HSD pairwise
 comparisons produce compact letter displays above the bars. Multiple values
-of <code>q</code> are assembled into a <a href="https://patchwork.data-imaginist.com/reference/patchwork-package.html" class="external-link">patchwork::patchwork</a> layout automatically.</p>
+of <code>q</code> are assembled into a <a href="https://patchwork.data-imaginist.com/reference/patchwork-package.html" class="external-link">patchwork</a> layout automatically.</p>
     </div>
 
     <div class="section level2">
@@ -120,6 +121,7 @@ of <code>q</code> are assembled into a <a href="https://patchwork.data-imaginist
 <span>  error_bar_alpha <span class="op">=</span> <span class="fl">0.35</span>,</span>
 <span>  point_alpha <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  letters_below_bar <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  sig_symbol <span class="op">=</span> <span class="st">"∅"</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -252,6 +254,16 @@ are placed above whichever is higher: the error bar top or the highest
 data point.</p></dd>
 
 
+<dt id="arg-sig-symbol">sig_symbol<a class="anchor" aria-label="anchor" href="#arg-sig-symbol"></a></dt>
+<dd><p>Character symbol (default <code>"∅"</code>, the empty set, evoking the
+absence of a pairwise comparison) used, when several values
+of <code>q</code> are drawn, to flag the panels for which Tukey HSD pairwise
+comparisons were not run (no global Kruskal-Wallis significance). The
+symbol is appended to the panel subtitle and explained once in the shared
+figure caption. The "Error bars" / "letters from Tukey HSD" caption is set
+a single time for the whole figure rather than repeated on every panel.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional arguments passed to <code><a href="psmelt_samples_pq.html">psmelt_samples_pq()</a></code> and hence
 to <code><a href="https://ericmarcon.github.io/divent/reference/div_hill.html" class="external-link">divent::div_hill()</a></code> (e.g. <code>estimator = "naive"</code>).</p></dd>
@@ -273,44 +285,20 @@ when <code>length(q) &gt; 1</code>.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">hill_bar_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="va">Height</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">hill_bar_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="va">Height</span>, q <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(Sample)`</span>
 <span class="r-plt img"><img src="hill_bar_pq-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">hill_bar_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="va">Height</span>, q <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(Sample)`</span>
-<span class="r-plt img"><img src="hill_bar_pq-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">hill_bar_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="va">Height</span>, q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(Sample)`</span>
-<span class="r-plt img"><img src="hill_bar_pq-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">hill_bar_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="va">Height</span>, q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  y_labs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Hill_0 <span class="op">=</span> <span class="st">"Richness"</span>, Hill_2 <span class="op">=</span> <span class="st">"Simpson diversity"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(Sample)`</span>
-<span class="r-plt img"><img src="hill_bar_pq-4.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">hill_bar_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="va">Height</span>, q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">hill_bar_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="va">Height</span>,</span></span>
+<span class="r-in"><span>  q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  y_labs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Hill_0 <span class="op">=</span> <span class="st">"Richness"</span>, Hill_2 <span class="op">=</span> <span class="st">"Simpson diversity"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">hill_bar_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="va">Height</span>, add_letters <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(Sample)`</span>
-<span class="r-plt img"><img src="hill_bar_pq-5.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

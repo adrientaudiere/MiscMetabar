@@ -13,7 +13,7 @@ See glmulti::glmulti() for more information."><script data-goatcounter="https://
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -193,13 +193,18 @@ strong is the influence of methodological choices? <em>Journal of Biogeography</
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"glmulti"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ericmarcon.github.io/divent/" class="external-link">"divent"</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">res_glmulti</span> <span class="op">&lt;-</span></span></span>
 <span class="r-in"><span>    <span class="fu">glmutli_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>,</span></span>
-<span class="r-in"><span>      <span class="st">"Hill_0 ~ Hill_1 + Abundance + Time + Height"</span>, level <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="st">"Hill_0 ~ Hill_1 + Abundance + Time + Height"</span>,</span></span>
+<span class="r-in"><span>      level <span class="op">=</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">res_glmulti</span></span></span>
 <span class="r-in"><span>  <span class="va">res_glmulti_interaction</span> <span class="op">&lt;-</span></span></span>
 <span class="r-in"><span>    <span class="fu">glmutli_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>,</span></span>
-<span class="r-in"><span>      <span class="st">"Hill_0 ~ Abundance + Time + Height"</span>, level <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="st">"Hill_0 ~ Abundance + Time + Height"</span>,</span></span>
+<span class="r-in"><span>      level <span class="op">=</span> <span class="fl">2</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">res_glmulti_interaction</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Sample coverage is 0, most estimators will return `NaN`.</span>

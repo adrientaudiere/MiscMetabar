@@ -35,7 +35,7 @@ The possible values for vote_algorithm are "consensus", "rel_majority",
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,6 +54,7 @@ The possible values for vote_algorithm are "consensus", "rel_majority",
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -230,7 +231,9 @@ than 0.5, but not larger than 1.0"</p></dd>
 Maximum number of non-matching target sequences to consider before
 stopping the search for a given query.
 Default value is based on <a href="https://github.com/frederic-mahe/stampa" class="external-link">stampa</a>
-See Vsearch Manual for parameter <code>--maxrejects</code>.</p></dd>
+See Vsearch Manual for parameter <code>--maxrejects</code>.
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a></p></dd>
 
 
 <dt id="arg-top-hits-only">top_hits_only<a class="anchor" aria-label="anchor" href="#arg-top-hits-only"></a></dt>
@@ -342,7 +345,8 @@ Please cite <a href="https://github.com/torognes/vsearch" class="external-link">
 <span class="r-in"><span>  ref_fasta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mini_UNITE_fungi.fasta.gz"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  lca_cutoff <span class="op">=</span> <span class="fl">0.9</span>, behavior <span class="op">=</span> <span class="st">"add_to_phyloseq"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="va">data_fungi_mini_new2</span> <span class="op">&lt;-</span> <span class="fu">assign_vsearch_lca</span><span class="op">(</span><span class="va">data_fungi_mini</span>,</span></span>
 <span class="r-in"><span>  ref_fasta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mini_UNITE_fungi.fasta.gz"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  id <span class="op">=</span> <span class="fl">0.6</span>, behavior <span class="op">=</span> <span class="st">"add_to_phyloseq"</span>, top_hits_only <span class="op">=</span> <span class="cn">FALSE</span></span></span>
@@ -352,7 +356,7 @@ Please cite <a href="https://github.com/torognes/vsearch" class="external-link">
 <span class="r-in"><span>  ref_fasta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mini_UNITE_fungi.fasta.gz"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  id <span class="op">=</span> <span class="fl">0.5</span>, behavior <span class="op">=</span> <span class="st">"add_to_phyloseq"</span>, top_hits_only <span class="op">=</span> <span class="cn">FALSE</span>, vote_algorithm <span class="op">=</span> <span class="st">"rel_majority"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

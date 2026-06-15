@@ -19,7 +19,7 @@ Cmin while preserving the rank order of OTU abundances."><script data-goatcounte
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,7 @@ Cmin while preserving the rank order of OTU abundances."><script data-goatcounte
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -123,7 +124,7 @@ normalised <code>otu_table</code>.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">data_f_srs</span> <span class="op">&lt;-</span> <span class="fu">srs_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">sample_sums</span><span class="op">(</span><span class="va">data_f_srs</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_sums.html" class="external-link">sample_sums</a></span><span class="op">(</span><span class="va">data_f_srs</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    A10-005-B_S188_MERGED.fastq.gz    A10-005-H_S189_MERGED.fastq.gz </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                 1                                 1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    A10-005-M_S190_MERGED.fastq.gz      A12-007_S191_MERGED.fastq.gz </span>

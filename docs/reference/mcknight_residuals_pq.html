@@ -23,7 +23,7 @@ discarding data through rarefaction."><script data-goatcounter="https://miscmeta
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,6 +42,7 @@ discarding data through rarefaction."><script data-goatcounter="https://miscmeta
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -123,7 +124,7 @@ or a named numeric vector of residuals.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">data_f_res</span> <span class="op">&lt;-</span> <span class="fu">mcknight_residuals_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">sample_data</span><span class="op">(</span><span class="va">data_f_res</span><span class="op">)</span><span class="op">$</span><span class="va">mcknight_residuals</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_data-methods.html" class="external-link">sample_data</a></span><span class="op">(</span><span class="va">data_f_res</span><span class="op">)</span><span class="op">$</span><span class="va">mcknight_residuals</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.3273090 -0.1430749  0.5681529  0.7310108 -0.7698491  0.4374109</span>
 </code></pre></div>
     </div>

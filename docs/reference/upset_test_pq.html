@@ -15,7 +15,7 @@ https://github.com/krassowski/complex-upset/issues/213 for more details."><scrip
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -148,10 +148,10 @@ useful only for complex plot (see examples)</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ComplexUpset"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">upset_test_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="st">"Height"</span>,</span></span>
-<span class="r-in"><span>    var_to_test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OTU"</span>, <span class="st">"Class"</span>, <span class="st">"Guild"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    var_to_test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OTU"</span>, <span class="st">"Class"</span>, <span class="st">"Guild"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">upset_test_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="st">"Time"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required namespace: ComplexUpset</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 45</span>

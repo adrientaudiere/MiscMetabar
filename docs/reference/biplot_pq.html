@@ -13,7 +13,7 @@ Graphical representation of distribution of taxa across two samples."><script da
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +32,7 @@ Graphical representation of distribution of taxa across two samples."><script da
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -253,7 +254,7 @@ and the <code>left_fill</code>/<code>right_fill</code> color parameters are igno
 <dt id="arg-taxa-names-rank">taxa_names_rank<a class="anchor" aria-label="anchor" href="#arg-taxa-names-rank"></a></dt>
 <dd><p>(default: NULL) Name of a taxonomic rank in
 <code>tax_table(physeq)</code> to use as labels on the taxa axis instead of
-<code>taxa_names()</code>. When NULL (default), <code>taxa_names()</code> are used. When set
+<code><a href="https://rdrr.io/pkg/phyloseq/man/taxa_names-methods.html" class="external-link">taxa_names()</a></code>. When NULL (default), <code><a href="https://rdrr.io/pkg/phyloseq/man/taxa_names-methods.html" class="external-link">taxa_names()</a></code> are used. When set
 (e.g. <code>"Genus"</code>), the genus name is displayed. OTUs sharing the same
 label at this rank will appear as a single merged bar.</p></dd>
 
@@ -278,7 +279,7 @@ a interactive ggplot.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">data_fungi_2Height</span> <span class="op">&lt;-</span> <span class="fu">subset_samples</span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="va">Height</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Low"</span>, <span class="st">"High"</span><span class="op">)</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">data_fungi_2Height</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html" class="external-link">subset_samples</a></span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="va">Height</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Low"</span>, <span class="st">"High"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">biplot_pq</span><span class="op">(</span><span class="va">data_fungi_2Height</span>, <span class="st">"Height"</span>, merge_sample_by <span class="op">=</span> <span class="st">"Height"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 5 taxa and 0 samples.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for <span style="color: #00BB00;">y</span> is already present.</span>

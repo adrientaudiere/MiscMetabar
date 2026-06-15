@@ -1,5 +1,5 @@
 ---
-title: "Accumulation and rarefaction curves (WORK IN PROGRESS)"
+title: "Accumulation and rarefaction curves"
 output: rmarkdown::html_vignette
 bibliography: ../bibliography.bib
 orphan: true

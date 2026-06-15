@@ -13,7 +13,7 @@ https://journals.asm.org/doi/full/10.1128/msystems.00691-21"><script data-goatco
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,8 +29,10 @@ https://journals.asm.org/doi/full/10.1128/msystems.00691-21"><script data-goatco
     <li><a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a></li>
     <li><a class="dropdown-item" href="../articles/explore_data.html">Explore phyloseq data</a></li>
     <li><a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a></li>
+    <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -121,85 +123,43 @@ use this function.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/tkonopka/umap" class="external-link">"umap"</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">df_umap</span> <span class="op">&lt;-</span> <span class="fu">umap_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">data_f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/prune_samples-methods.html" class="external-link">prune_samples</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_names-methods.html" class="external-link">sample_names</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span>  <span class="va">data_fungi_mini</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df_umap</span> <span class="op">&lt;-</span> <span class="fu">umap_pq</span><span class="op">(</span><span class="va">data_f</span>, n_neighbors <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in rows.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(Sample)`</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The `x` argument of `as_tibble.matrix()` must have unique column names if</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> `.name_repair` is omitted as of tibble 2.0.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Using compatibility `.name_repair`.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">MiscMetabar</span> package.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   Please report the issue at</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/adrientaudiere/MiscMetabar/issues&gt;</span>.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(Sample)`</span>
 <span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df_umap</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x_umap</span>, y <span class="op">=</span> <span class="va">y_umap</span>, col <span class="op">=</span> <span class="va">Height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="umap_pq-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="va">df_uwot</span> <span class="op">&lt;-</span> <span class="fu">umap_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, pkg <span class="op">=</span> <span class="st">"uwot"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">physeq</span> <span class="op">&lt;-</span> <span class="va">data_fungi_mini</span></span></span>
+<span class="r-in"><span><span class="va">df_umap</span> <span class="op">&lt;-</span> <span class="fu">umap_pq</span><span class="op">(</span><span class="va">physeq</span>, n_neighbors <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">res_tsne</span> <span class="op">&lt;-</span> <span class="fu"><a href="tsne_pq.html">tsne_pq</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">df_umap_tsne</span> <span class="op">&lt;-</span> <span class="va">df_umap</span></span></span>
 <span class="r-in"><span><span class="va">df_umap_tsne</span><span class="op">$</span><span class="va">x_tsne</span> <span class="op">&lt;-</span> <span class="va">res_tsne</span><span class="op">$</span><span class="va">Y</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">df_umap_tsne</span><span class="op">$</span><span class="va">y_tsne</span> <span class="op">&lt;-</span> <span class="va">res_tsne</span><span class="op">$</span><span class="va">Y</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df_umap</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x_umap</span>, y <span class="op">=</span> <span class="va">y_umap</span>, col <span class="op">=</span> <span class="va">Height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"UMAP"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/plot_ordination.html" class="external-link">plot_ordination</a></span><span class="op">(</span><span class="va">physeq</span>,</span></span>
-<span class="r-in"><span>  ordination <span class="op">=</span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/ordinate.html" class="external-link">ordinate</a></span><span class="op">(</span><span class="va">physeq</span>, method <span class="op">=</span> <span class="st">"PCoA"</span>, distance <span class="op">=</span> <span class="st">"bray"</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"Height"</span></span></span>
-<span class="r-in"><span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"PCoA"</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"UMAP"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/plot_ordination.html" class="external-link">plot_ordination</a></span><span class="op">(</span><span class="va">physeq</span>,</span></span>
+<span class="r-in"><span>    ordination <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/ordinate.html" class="external-link">ordinate</a></span><span class="op">(</span><span class="va">physeq</span>, method <span class="op">=</span> <span class="st">"PCoA"</span>, distance <span class="op">=</span> <span class="st">"bray"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    color <span class="op">=</span> <span class="st">"Height"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"PCoA"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span></span></span>
 <span class="r-in"><span>  <span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df_umap_tsne</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x_tsne</span>, y <span class="op">=</span> <span class="va">y_tsne</span>, col <span class="op">=</span> <span class="va">Height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"tsne"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>    <span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/plot_ordination.html" class="external-link">plot_ordination</a></span><span class="op">(</span><span class="va">physeq</span>,</span></span>
 <span class="r-in"><span>      ordination <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/ordinate.html" class="external-link">ordinate</a></span><span class="op">(</span><span class="va">physeq</span>, method <span class="op">=</span> <span class="st">"NMDS"</span>, distance <span class="op">=</span> <span class="st">"bray"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>      color <span class="op">=</span> <span class="st">"Height"</span></span></span>
-<span class="r-in"><span>    <span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"NMDS"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"NMDS"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu">patchwork</span><span class="fu">::</span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html" class="external-link">plot_layout</a></span><span class="op">(</span>guides <span class="op">=</span> <span class="st">"collect"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Square root transformation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Wisconsin double standardization</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run 0 stress 0.1842417 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run 1 stress 0.1830653 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ... New best solution</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ... Procrustes: rmse 0.05975443  max resid 0.2477283 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run 2 stress 0.1808269 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ... New best solution</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ... Procrustes: rmse 0.07519717  max resid 0.2637364 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run 3 stress 0.1802656 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ... New best solution</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ... Procrustes: rmse 0.04975387  max resid 0.2982434 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run 4 stress 0.183484 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run 5 stress 0.184756 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run 6 stress 0.1847681 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run 7 stress 0.1819892 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run 8 stress 0.1820539 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run 9 stress 0.18634 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run 10 stress 0.1856027 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run 11 stress 0.1827823 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run 12 stress 0.1816633 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run 13 stress 0.1833599 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run 14 stress 0.1842722 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run 15 stress 0.1850547 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run 16 stress 0.1860664 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run 17 stress 0.1857189 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run 18 stress 0.1795345 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ... New best solution</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ... Procrustes: rmse 0.05055477  max resid 0.2998752 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run 19 stress 0.1857847 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Run 20 stress 0.1831573 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> *** Best solution was not repeated -- monoMDS stopping criteria:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     18: no. of iterations &gt;= maxit</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      2: stress ratio &gt; sratmax</span>
-<span class="r-plt img"><img src="umap_pq-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">df_uwot</span> <span class="op">&lt;-</span> <span class="fu">umap_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, pkg <span class="op">=</span> <span class="st">"uwot"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in rows.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(Sample)`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(Sample)`</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df_umap</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x_umap</span>, y <span class="op">=</span> <span class="va">y_umap</span>, col <span class="op">=</span> <span class="va">Height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span></span>
@@ -207,8 +167,7 @@ use this function.</p>
 <span class="r-in"><span>  <span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df_uwot</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x_umap</span>, y <span class="op">=</span> <span class="va">y_umap</span>, col <span class="op">=</span> <span class="va">Height</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"uwot::umap2"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="umap_pq-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

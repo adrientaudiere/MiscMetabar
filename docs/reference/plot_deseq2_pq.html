@@ -13,7 +13,7 @@ Graphical representation of DESeq2 analysis."><script data-goatcounter="https://
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,8 +29,10 @@ Graphical representation of DESeq2 analysis."><script data-goatcounter="https://
     <li><a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a></li>
     <li><a class="dropdown-item" href="../articles/explore_data.html">Explore phyloseq data</a></li>
     <li><a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a></li>
+    <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -82,7 +84,8 @@ Graphical representation of DESeq2 analysis."><script data-goatcounter="https://
 <span>  pval <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  taxolev <span class="op">=</span> <span class="st">"Genus"</span>,</span>
 <span>  select_taxa <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  color_tax <span class="op">=</span> <span class="st">"Phylum"</span>,</span>
+<span>  color_rank <span class="op">=</span> <span class="st">"Phylum"</span>,</span>
+<span>  color_tax <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  tax_depth <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  jitter_width <span class="op">=</span> <span class="fl">0.1</span>,</span>
@@ -129,9 +132,12 @@ or a logical vector (length of the results from <code><a href="https://rdrr.io/p
 to plot.</p></dd>
 
 
+<dt id="arg-color-rank">color_rank<a class="anchor" aria-label="anchor" href="#arg-color-rank"></a></dt>
+<dd><p>taxonomic level used for color, or a color vector.</p></dd>
+
+
 <dt id="arg-color-tax">color_tax<a class="anchor" aria-label="anchor" href="#arg-color-tax"></a></dt>
-<dd><p>taxonomic level used for color or a
-color vector.</p></dd>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> Use <code>color_rank</code> instead.</p></dd>
 
 
 <dt id="arg-tax-depth">tax_depth<a class="anchor" aria-label="anchor" href="#arg-tax-depth"></a></dt>
@@ -202,14 +208,14 @@ or <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="ex
 <span class="r-in"><span>    test <span class="op">=</span> <span class="st">"Wald"</span>, fitType <span class="op">=</span> <span class="st">"local"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">plot_deseq2_pq</span><span class="op">(</span><span class="va">res</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SampleType"</span>, <span class="st">"Soil"</span>, <span class="st">"Skin"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    tax_table <span class="op">=</span> <span class="va">GP</span><span class="op">@</span><span class="va">tax_table</span>, color_tax <span class="op">=</span> <span class="st">"Kingdom"</span></span></span>
+<span class="r-in"><span>    tax_table <span class="op">=</span> <span class="va">GP</span><span class="op">@</span><span class="va">tax_table</span>, color_rank <span class="op">=</span> <span class="st">"Kingdom"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">plot_deseq2_pq</span><span class="op">(</span><span class="va">res</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SampleType"</span>, <span class="st">"Soil"</span>, <span class="st">"Skin"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    tax_table <span class="op">=</span> <span class="va">GP</span><span class="op">@</span><span class="va">tax_table</span>, color_tax <span class="op">=</span> <span class="st">"Kingdom"</span>,</span></span>
+<span class="r-in"><span>    tax_table <span class="op">=</span> <span class="va">GP</span><span class="op">@</span><span class="va">tax_table</span>, color_rank <span class="op">=</span> <span class="st">"Kingdom"</span>,</span></span>
 <span class="r-in"><span>    pval <span class="op">=</span> <span class="fl">0.7</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">plot_deseq2_pq</span><span class="op">(</span><span class="va">res</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SampleType"</span>, <span class="st">"Soil"</span>, <span class="st">"Skin"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    tax_table <span class="op">=</span> <span class="va">GP</span><span class="op">@</span><span class="va">tax_table</span>, color_tax <span class="op">=</span> <span class="st">"Class"</span>,</span></span>
+<span class="r-in"><span>    tax_table <span class="op">=</span> <span class="va">GP</span><span class="op">@</span><span class="va">tax_table</span>, color_rank <span class="op">=</span> <span class="st">"Class"</span>,</span></span>
 <span class="r-in"><span>    select_taxa <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"522457"</span>, <span class="st">"271582"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
@@ -221,6 +227,14 @@ or <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="ex
 <span class="r-msg co"><span class="r-pr">#&gt;</span> mean-dispersion relationship</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> final dispersion estimates</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> fitting model and testing</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Arguments in `...` must be used.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Problematic argument:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> color_rank = "Kingdom"</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Did you misspell an argument name?</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Arguments in `...` must be used.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">✖</span> Problematic argument:</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> color_rank = "Kingdom"</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Did you misspell an argument name?</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> None taxa present significant distribution pattern through</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>               contrast.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "None taxa present significant distribution pattern through\n             contrast."</span>

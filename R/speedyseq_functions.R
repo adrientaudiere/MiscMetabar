@@ -616,6 +616,7 @@ unique_or_na <- function(x) {
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @export
+#' @keywords internal
 unique_or_na.default <- function(x) {
   if (length(unique(x)) == 1) {
     x[[1]]
@@ -630,6 +631,7 @@ unique_or_na.default <- function(x) {
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @export
+#' @keywords internal
 unique_or_na.factor <- function(x) {
   if (length(unique(x)) == 1) {
     x[[1]]

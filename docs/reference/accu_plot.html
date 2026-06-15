@@ -15,7 +15,7 @@ cannot be interpreted in the same way as with conventional biodiversity sampling
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,8 +31,10 @@ cannot be interpreted in the same way as with conventional biodiversity sampling
     <li><a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a></li>
     <li><a class="dropdown-item" href="../articles/explore_data.html">Explore phyloseq data</a></li>
     <li><a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a></li>
+    <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -192,11 +194,7 @@ return a base plot.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
-<span class="r-in"><span><span class="va">GP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">rarefy_even_depth</a></span><span class="op">(</span><span class="fu"><a href="subset_samples_pq.html">subset_samples_pq</a></span><span class="op">(</span><span class="va">GP</span>, <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_sums.html" class="external-link">sample_sums</a></span><span class="op">(</span><span class="va">GP</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">3000</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> You set `rngseed` to FALSE. Make sure you've set &amp; recorded</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  the random seed of your session for reproducibility.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> See `?set.seed`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ...</span>
+<span class="r-in"><span><span class="va">GP</span> <span class="op">&lt;-</span> <span class="fu"><a href="rarefy_pq.html">rarefy_pq</a></span><span class="op">(</span><span class="fu"><a href="subset_samples_pq.html">subset_samples_pq</a></span><span class="op">(</span><span class="va">GP</span>, <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_sums.html" class="external-link">sample_sums</a></span><span class="op">(</span><span class="va">GP</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">3000</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
@@ -205,17 +203,6 @@ return a base plot.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 63OTUs were removed because they are no longer </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> present in any sample after random subsampling</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">accu_plot</span><span class="op">(</span><span class="va">GP</span>, <span class="st">"SampleType"</span>, add_nb_seq <span class="op">=</span> <span class="cn">TRUE</span>, by.fact <span class="op">=</span> <span class="cn">TRUE</span>, step <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>

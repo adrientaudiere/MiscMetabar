@@ -7093,6 +7093,7 @@ reorder_distinct_colors <- function(
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @exportS3Method ggplot2::ggplot_add
+#' @keywords internal
 ggplot_add.reorder_distinct_colors_spec <- function(object, plot, ...) {
   lifecycle::deprecate_soft(
     "0.17.0",

@@ -15,7 +15,7 @@ physeq object."><script data-goatcounter="https://miscmetabar.goatcounter.com/co
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -141,7 +141,8 @@ use this function.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"indicspecies"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">multipatt_pq</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html" class="external-link">subset_samples</a></span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Time</span><span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    fact <span class="op">=</span> <span class="st">"Time"</span>, control <span class="op">=</span> <span class="fu">permute</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/permute/man/how.html" class="external-link">how</a></span><span class="op">(</span>nperm <span class="op">=</span> <span class="fl">99</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    fact <span class="op">=</span> <span class="st">"Time"</span>, control <span class="op">=</span> <span class="fu">permute</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/permute/man/how.html" class="external-link">how</a></span><span class="op">(</span>nperm <span class="op">=</span> <span class="fl">99</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">multipatt_pq</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html" class="external-link">subset_samples</a></span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Time</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    fact <span class="op">=</span> <span class="st">"Time"</span>,</span></span>
 <span class="r-in"><span>    max.order <span class="op">=</span> <span class="fl">1</span>, control <span class="op">=</span> <span class="fu">permute</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/permute/man/how.html" class="external-link">how</a></span><span class="op">(</span>nperm <span class="op">=</span> <span class="fl">99</span><span class="op">)</span></span></span>

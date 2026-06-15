@@ -15,7 +15,7 @@ object."><script data-goatcounter="https://miscmetabar.goatcounter.com/count" as
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -108,7 +108,9 @@ using the <code>phyloseq</code> package.</p></dd>
 
 <dt id="arg-min-scbd">min_SCBD<a class="anchor" aria-label="anchor" href="#arg-min-scbd"></a></dt>
 <dd><p>(default 0.01) the minimum SCBD value
-to plot the taxa</p></dd>
+to plot the taxa
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a></p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -145,8 +147,10 @@ use this function.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
 <span class="r-plt img"><img src="plot_SCBD_pq-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"adespatial"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu">plot_SCBD_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, tax_level <span class="op">=</span> <span class="st">"Class"</span>, tax_col <span class="op">=</span> <span class="st">"Phylum"</span>,</span></span>
-<span class="r-in"><span>    min_SCBD <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu">plot_SCBD_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>,</span></span>
+<span class="r-in"><span>    tax_level <span class="op">=</span> <span class="st">"Class"</span>, tax_col <span class="op">=</span> <span class="st">"Phylum"</span>,</span></span>
+<span class="r-in"><span>    min_SCBD <span class="op">=</span> <span class="fl">0</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html" class="external-link">geom_jitter</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>

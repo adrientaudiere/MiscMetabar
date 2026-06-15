@@ -13,7 +13,7 @@ Graphical representation of distribution of taxonomy, optionnaly across a factor
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,11 +80,13 @@ Graphical representation of distribution of taxonomy, optionnaly across a factor
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">tax_bar_pq</span><span class="op">(</span></span>
 <span>  <span class="va">physeq</span>,</span>
 <span>  fact <span class="op">=</span> <span class="st">"Sample"</span>,</span>
+<span>  order_modality <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  taxa <span class="op">=</span> <span class="st">"Order"</span>,</span>
 <span>  percent_bar <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  nb_seq <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  add_ribbon <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  ribbon_alpha <span class="op">=</span> <span class="fl">0.3</span>,</span>
+<span>  ribbon_hide_zero <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  label_taxa <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  void_theme <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  show_values <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -114,6 +116,15 @@ using the <code>phyloseq</code> package.</p></dd>
 Need to be in <code>physeq@sam_data</code>.</p></dd>
 
 
+<dt id="arg-order-modality">order_modality<a class="anchor" aria-label="anchor" href="#arg-order-modality"></a></dt>
+<dd><p>(default NULL) Optional character vector giving the
+order of the <code>fact</code> modalities (i.e. the order of the bars). Values must
+match the modalities present in <code>physeq@sam_data[[fact]]</code>. If some
+modalities are omitted, only the listed ones are kept (a message lists the
+dropped modalities). If a value is not found among the modalities, an
+informative error lists the offending values.</p></dd>
+
+
 <dt id="arg-taxa">taxa<a class="anchor" aria-label="anchor" href="#arg-taxa"></a></dt>
 <dd><p>(default: 'Order') Name of the taxonomic rank of interest</p></dd>
 
@@ -138,6 +149,13 @@ adjacent bars. Only meaningful when <code>fact</code> has more than one level.</
 
 <dt id="arg-ribbon-alpha">ribbon_alpha<a class="anchor" aria-label="anchor" href="#arg-ribbon-alpha"></a></dt>
 <dd><p>(numeric; default 0.3) Transparency of the ribbons.</p></dd>
+
+
+<dt id="arg-ribbon-hide-zero">ribbon_hide_zero<a class="anchor" aria-label="anchor" href="#arg-ribbon-hide-zero"></a></dt>
+<dd><p>(logical; default TRUE) When <code>add_ribbon = TRUE</code>,
+suppress the ribbon of a taxon between two adjacent bars whenever its
+value is zero (absent) in either of the two connected bars. Set to
+<code>FALSE</code> to keep ribbons that collapse to a flat line at a zero end.</p></dd>
 
 
 <dt id="arg-label-taxa">label_taxa<a class="anchor" aria-label="anchor" href="#arg-label-taxa"></a></dt>
@@ -226,8 +244,10 @@ number of sequence en each taxonomic groups</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">data_fungi_ab</span> <span class="op">&lt;-</span> <span class="fu"><a href="subset_taxa_pq.html">subset_taxa_pq</a></span><span class="op">(</span><span class="va">data_fungi_mini</span>,</span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/taxa_sums.html" class="external-link">taxa_sums</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1000</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">data_fungi_ab</span> <span class="op">&lt;-</span> <span class="fu"><a href="subset_taxa_pq.html">subset_taxa_pq</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">data_fungi_mini</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/taxa_sums.html" class="external-link">taxa_sums</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1000</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 45</span>
@@ -236,8 +256,10 @@ number of sequence en each taxonomic groups</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 137</span>
 <span class="r-in"><span><span class="fu">tax_bar_pq</span><span class="op">(</span><span class="va">data_fungi_ab</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="tax_bar_pq-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">tax_bar_pq</span><span class="op">(</span><span class="va">data_fungi_ab</span>, taxa <span class="op">=</span> <span class="st">"Class"</span>, fact <span class="op">=</span> <span class="st">"Height"</span>,</span></span>
-<span class="r-in"><span>  show_n_samples <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">tax_bar_pq</span><span class="op">(</span><span class="va">data_fungi_ab</span>,</span></span>
+<span class="r-in"><span>  taxa <span class="op">=</span> <span class="st">"Class"</span>, fact <span class="op">=</span> <span class="st">"Height"</span>,</span></span>
+<span class="r-in"><span>  show_n_samples <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="tax_bar_pq-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">tax_bar_pq</span><span class="op">(</span><span class="va">data_fungi_ab</span>, taxa <span class="op">=</span> <span class="st">"Class"</span><span class="op">)</span></span></span>
@@ -262,22 +284,26 @@ number of sequence en each taxonomic groups</p>
 <span class="r-in"><span>  show_values <span class="op">=</span> <span class="cn">TRUE</span>, minimum_value_to_show <span class="op">=</span> <span class="fl">10000</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="tax_bar_pq-8.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">tax_bar_pq</span><span class="op">(</span><span class="va">data_fungi_ab</span>, fact <span class="op">=</span> <span class="st">"Height"</span>, taxa <span class="op">=</span> <span class="st">"Class"</span>,</span></span>
+<span class="r-in"><span><span class="fu">tax_bar_pq</span><span class="op">(</span><span class="va">data_fungi_ab</span>,</span></span>
+<span class="r-in"><span>  fact <span class="op">=</span> <span class="st">"Height"</span>, taxa <span class="op">=</span> <span class="st">"Class"</span>,</span></span>
 <span class="r-in"><span>  nb_seq <span class="op">=</span> <span class="cn">FALSE</span>, percent_bar <span class="op">=</span> <span class="cn">TRUE</span>, label_taxa <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
-<span class="r-in"><span>  add_ribbon <span class="op">=</span> <span class="cn">TRUE</span>, value_size<span class="op">=</span><span class="fl">7</span>, ribbon_alpha <span class="op">=</span> <span class="fl">.6</span>,</span></span>
-<span class="r-in"><span>  show_values<span class="op">=</span><span class="cn">TRUE</span>, label_size <span class="op">=</span> <span class="fl">4</span>, top_label_size <span class="op">=</span> <span class="fl">6</span>,</span></span>
-<span class="r-in"><span>  minimum_value_to_show<span class="op">=</span><span class="fl">0.05</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="reorder_distinct_colors.html">reorder_distinct_colors</a></span><span class="op">(</span>alternate_lightness<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  add_ribbon <span class="op">=</span> <span class="cn">TRUE</span>, value_size <span class="op">=</span> <span class="fl">7</span>, ribbon_alpha <span class="op">=</span> <span class="fl">.6</span>,</span></span>
+<span class="r-in"><span>  show_values <span class="op">=</span> <span class="cn">TRUE</span>, label_size <span class="op">=</span> <span class="fl">4</span>, top_label_size <span class="op">=</span> <span class="fl">6</span>,</span></span>
+<span class="r-in"><span>  minimum_value_to_show <span class="op">=</span> <span class="fl">0.05</span></span></span>
+<span class="r-in"><span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="reorder_distinct_colors.html">reorder_distinct_colors</a></span><span class="op">(</span>alternate_lightness <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="tax_bar_pq-9.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">tax_bar_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, fact <span class="op">=</span> <span class="st">"Height"</span>, taxa <span class="op">=</span> <span class="st">"Order"</span>,</span></span>
+<span class="r-in"><span><span class="fu">tax_bar_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>,</span></span>
+<span class="r-in"><span>  fact <span class="op">=</span> <span class="st">"Height"</span>, taxa <span class="op">=</span> <span class="st">"Order"</span>,</span></span>
 <span class="r-in"><span>  nb_seq <span class="op">=</span> <span class="cn">TRUE</span>, percent_bar <span class="op">=</span> <span class="cn">TRUE</span>, label_taxa <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
-<span class="r-in"><span>  add_ribbon <span class="op">=</span> <span class="cn">TRUE</span>, value_size<span class="op">=</span><span class="fl">5</span>,</span></span>
-<span class="r-in"><span>  ribbon_alpha <span class="op">=</span> <span class="fl">.6</span>, show_values<span class="op">=</span><span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  add_ribbon <span class="op">=</span> <span class="cn">TRUE</span>, value_size <span class="op">=</span> <span class="fl">5</span>,</span></span>
+<span class="r-in"><span>  ribbon_alpha <span class="op">=</span> <span class="fl">.6</span>, show_values <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>  label_size <span class="op">=</span> <span class="fl">4</span>, top_label_size <span class="op">=</span> <span class="fl">8</span>,</span></span>
-<span class="r-in"><span>  minimum_value_to_show<span class="op">=</span><span class="fl">0.05</span>, bar_width <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
-<span class="r-in"><span>  linewidth_bar_internal <span class="op">=</span> <span class="fl">0.1</span>, bar_internal_color<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="reorder_distinct_colors.html">reorder_distinct_colors</a></span><span class="op">(</span>alternate_lightness<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  minimum_value_to_show <span class="op">=</span> <span class="fl">0.05</span>, bar_width <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
+<span class="r-in"><span>  linewidth_bar_internal <span class="op">=</span> <span class="fl">0.1</span>, bar_internal_color <span class="op">=</span> <span class="st">"black"</span></span></span>
+<span class="r-in"><span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="reorder_distinct_colors.html">reorder_distinct_colors</a></span><span class="op">(</span>alternate_lightness <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="tax_bar_pq-10.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>

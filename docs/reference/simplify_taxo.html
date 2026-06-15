@@ -13,7 +13,7 @@ Internally used in clean_pq()"><script data-goatcounter="https://miscmetabar.goa
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.14.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,8 +29,10 @@ Internally used in clean_pq()"><script data-goatcounter="https://miscmetabar.goa
     <li><a class="dropdown-item" href="../articles/import_export_track.html">Import/export and track</a></li>
     <li><a class="dropdown-item" href="../articles/explore_data.html">Explore phyloseq data</a></li>
     <li><a class="dropdown-item" href="../articles/filter.html">Filter taxa and samples</a></li>
+    <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -78,8 +80,12 @@ Internally used in clean_pq()"><script data-goatcounter="https://miscmetabar.goa
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">simplify_taxo</span><span class="op">(</span></span>
 <span>  <span class="va">physeq</span>,</span>
 <span>  pattern_to_remove <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">".__"</span>, <span class="st">".*:"</span><span class="op">)</span>,</span>
-<span>  remove_space <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  remove_NA <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  ranks_for_pattern_to_remove <span class="op">=</span> <span class="fu">phyloseq</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/rank_names.html" class="external-link">rank_names</a></span><span class="op">(</span><span class="va">physeq</span><span class="op">)</span>,</span>
+<span>  ranks_to_remove_space <span class="op">=</span> <span class="fu">phyloseq</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/rank_names.html" class="external-link">rank_names</a></span><span class="op">(</span><span class="va">physeq</span><span class="op">)</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"Species"</span>,</span>
+<span>    <span class="fu">phyloseq</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/rank_names.html" class="external-link">rank_names</a></span><span class="op">(</span><span class="va">physeq</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>,</span>
+<span>  ranks_to_remove_NA <span class="op">=</span> <span class="fu">phyloseq</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/rank_names.html" class="external-link">rank_names</a></span><span class="op">(</span><span class="va">physeq</span><span class="op">)</span>,</span>
+<span>  pattern_to_NA <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ranks_for_pattern_to_NA <span class="op">=</span> <span class="fu">phyloseq</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/rank_names.html" class="external-link">rank_names</a></span><span class="op">(</span><span class="va">physeq</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -93,15 +99,47 @@ using the <code>phyloseq</code> package.</p></dd>
 
 
 <dt id="arg-pattern-to-remove">pattern_to_remove<a class="anchor" aria-label="anchor" href="#arg-pattern-to-remove"></a></dt>
-<dd><p>(a vector of character) the pattern to remove using <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">base::gsub()</a></code> function.</p></dd>
+<dd><p>(a vector of character) regex patterns passed to
+<code><a href="https://rdrr.io/r/base/grep.html" class="external-link">base::gsub()</a></code>: the matched <em>substring</em> is deleted from the cell value and
+the rest of the string is kept (e.g. <code>".__"</code> turns <code>"k__Fungi"</code> into
+<code>"Fungi"</code>).</p></dd>
 
 
-<dt id="arg-remove-space">remove_space<a class="anchor" aria-label="anchor" href="#arg-remove-space"></a></dt>
-<dd><p>(logical; default TRUE): do we remove space?</p></dd>
+<dt id="arg-ranks-for-pattern-to-remove">ranks_for_pattern_to_remove<a class="anchor" aria-label="anchor" href="#arg-ranks-for-pattern-to-remove"></a></dt>
+<dd><p>(character vector or NULL; default all
+ranks) column names in <code>tax_table</code> to which <code>pattern_to_remove</code> is
+applied. Pass <code>NULL</code> to skip this operation on all columns.</p></dd>
 
 
-<dt id="arg-remove-na">remove_NA<a class="anchor" aria-label="anchor" href="#arg-remove-na"></a></dt>
-<dd><p>(logical; default FALSE): do we remove NA (in majuscule)?</p></dd>
+<dt id="arg-ranks-to-remove-space">ranks_to_remove_space<a class="anchor" aria-label="anchor" href="#arg-ranks-to-remove-space"></a></dt>
+<dd><p>(character vector or NULL; default all ranks
+whose name does not contain <code>"Species"</code>) column names from which ASCII
+spaces and non-breaking spaces (U+00A0) are stripped. Pass <code>NULL</code> to
+skip space removal entirely.</p></dd>
+
+
+<dt id="arg-ranks-to-remove-na">ranks_to_remove_NA<a class="anchor" aria-label="anchor" href="#arg-ranks-to-remove-na"></a></dt>
+<dd><p>(character vector or NULL; default all ranks)
+column names from which the literal string <code>"NA"</code> (case-sensitive) is
+removed. Pass <code>NULL</code> to skip this operation. <strong>Breaking change from
+v0.16:</strong> the old <code>remove_NA = FALSE</code> default is now <code>ranks_to_remove_NA</code>
+defaulting to all ranks; pass <code>NULL</code> to reproduce the old behaviour.</p></dd>
+
+
+<dt id="arg-pattern-to-na">pattern_to_NA<a class="anchor" aria-label="anchor" href="#arg-pattern-to-na"></a></dt>
+<dd><p>(character; default NULL): a regex; if an entire cell
+value matches, the <em>whole cell</em> is replaced with <code>NA</code> (nothing from the
+original value is kept). Designed for PR2-style placeholder unknowns such
+as <code>Embryophyceae_X</code>, <code>Embryophyceae_XX</code>, <code>Embryophyceae_XXX</code>,
+<code>Embryophyceae_XXX_sp.</code>, or <code>Mortierella_sp.</code>. Use <code>"_X+$|_sp\\.$"</code> to
+cover all such patterns: <code>_X+$</code> catches rank-filler X's; <code>_sp\\.$</code> catches
+any genus-only species placeholder.</p></dd>
+
+
+<dt id="arg-ranks-for-pattern-to-na">ranks_for_pattern_to_NA<a class="anchor" aria-label="anchor" href="#arg-ranks-for-pattern-to-na"></a></dt>
+<dd><p>(character vector or NULL; default all ranks)
+column names to which <code>pattern_to_NA</code> is applied. Pass <code>NULL</code> to skip
+this operation on all columns.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -173,56 +211,23 @@ using the <code>phyloseq</code> package.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ASV105 "flaviporus"    "s__flaviporus"   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ASV107 "raduloides"    "s:raduloides"    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ASV108 "glandulosa"    "s__glandulosa"   </span>
+<span class="r-in"><span><span class="co"># Apply pattern_to_remove only to Genus and Species columns</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="fu">simplify_taxo</span><span class="op">(</span><span class="va">d_fm</span>, remove_NA <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">@</span><span class="va">tax_table</span><span class="op">[</span>, <span class="st">"Species"</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">simplify_taxo</span><span class="op">(</span><span class="va">d_fm</span>,</span></span>
+<span class="r-in"><span>    ranks_for_pattern_to_remove <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Genus"</span>, <span class="st">"Species"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span><span class="op">@</span><span class="va">tax_table</span><span class="op">[</span>, <span class="st">"Species"</span><span class="op">]</span>,</span></span>
 <span class="r-in"><span>  <span class="va">d_fm</span><span class="op">@</span><span class="va">tax_table</span><span class="op">[</span>, <span class="st">"Species"</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        Species         Species           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7   ""              "s__NA"           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8   "ostrea"        "s:ostrea"        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12  "raduloides"    "s__raduloides"   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18  "ostrea"        "s:ostrea"        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25  "lachnopus"     "s__lachnopus"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV26  "hirsutum"      "s:hirsutum"      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV27  "brasiliensis"  "s__brasiliensis" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV29  "eyrei"         "s:eyrei"         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV32  "oblongisporum" "s__oblongisporum"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV34  ""              "s:NA"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV35  "fomentarius"   "s__fomentarius"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV41  "renati"        "s:renati"        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV42  "lachnopus"     "s__lachnopus"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV46  "pellucida"     "s:pellucida"     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV47  "molaris"       "s__molaris"      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV48  "caryae"        "s:caryae"        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV49  "livescens"     "s__livescens"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV50  "analogum"      "s:analogum"      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV53  "fomentarius"   "s__fomentarius"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV54  ""              "s:NA"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV58  "fomentarius"   "s__fomentarius"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV59  "roseocremeum"  "s:roseocremeum"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV61  "setigerum"     "s__setigerum"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV62  ""              "s:NA"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV63  ""              "s__NA"           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV64  "versicolor"    "s:versicolor"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV67  "raduloides"    "s__raduloides"   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV68  "lachnopus"     "s:lachnopus"     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV71  ""              "s__NA"           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV72  ""              "s:NA"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV75  "versiformis"   "s__versiformis"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV77  "lachnopus"     "s:lachnopus"     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV82  "glandulosa"    "s__glandulosa"   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV83  ""              "s:NA"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV85  "pubera"        "s__pubera"       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV91  "mesenterica"   "s:mesenterica"   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV93  ""              "s__NA"           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV94  "ostrea"        "s:ostrea"        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV99  "fomentarius"   "s__fomentarius"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV100 ""              "s:NA"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV101 "buckii"        "s__buckii"       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV104 "coralloides"   "s:coralloides"   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV105 "flaviporus"    "s__flaviporus"   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV107 "raduloides"    "s:raduloides"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV108 "glandulosa"    "s__glandulosa"   </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in simplify_taxo(d_fm, ranks_for_pattern_to_remove = c("Genus",     "Species")):</span> unused argument (ranks_for_pattern_to_remove = c("Genus", "Species"))</span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># Replace PR2 placeholder unknowns (_X, _XX, _XXX, _XXX_sp., Genus_sp.) with NA</span></span></span>
+<span class="r-in"><span><span class="fu">simplify_taxo</span><span class="op">(</span><span class="va">pq_pr2</span>, pattern_to_NA <span class="op">=</span> <span class="st">"_X+$|_sp\\.$"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Apply pattern_to_NA only to the Species column</span></span></span>
+<span class="r-in"><span><span class="fu">simplify_taxo</span><span class="op">(</span><span class="va">pq_pr2</span>,</span></span>
+<span class="r-in"><span>  pattern_to_NA <span class="op">=</span> <span class="st">"_X+$|_sp\\.$"</span>,</span></span>
+<span class="r-in"><span>  ranks_for_pattern_to_NA <span class="op">=</span> <span class="st">"Species"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
