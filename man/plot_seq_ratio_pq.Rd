@@ -20,7 +20,10 @@ plotted}
 A ggplot2 object
 }
 \description{
-A diagnostic plot of the number of sequences per samples
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+}}
 }
 \details{
 The x axis depict the number of sequences per samples and the y

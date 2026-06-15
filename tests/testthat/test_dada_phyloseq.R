@@ -183,3 +183,24 @@ test_that("reorder_taxa_pq works fine", {
   expect_s4_class(result, "phyloseq")
   expect_identical(taxa_names(result), new_order)
 })
+
+
+test_that("load_pq works fine", {
+  skip_on_cran()
+  path <- paste0(tempdir(), "/load_pq_test")
+  save_pq(data_fungi_mini, path = path)
+
+  # Returns the object, assignable to any name
+  res <- load_pq(path = path)
+  expect_s4_class(res, "phyloseq")
+  expect_identical(taxa_names(res), taxa_names(data_fungi_mini))
+
+  # Direct path to the .RData file
+  res_file <- load_pq(path = paste0(path, "/physeq.RData"))
+  expect_s4_class(res_file, "phyloseq")
+
+  expect_error(load_pq())
+  expect_error(load_pq(path = paste0(tempdir(), "/does_not_exist")))
+
+  unlink(path, recursive = TRUE)
+})

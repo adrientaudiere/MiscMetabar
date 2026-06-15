@@ -1,5 +1,6 @@
 ################################################################################
 #' @title Performs graph-based permutation tests on phyloseq object
+#' 
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
@@ -42,6 +43,15 @@
 #' @export
 
 graph_test_pq <- function(
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
   physeq,
   fact,
   merge_sample_by = NULL,
@@ -648,6 +658,9 @@ plot_LCBD_pq <- function(
 #' @param min_SCBD (default 0.01) the minimum SCBD value
 #'   to plot the taxa
 
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
 #' @param ... Additional arguments passed on to [adespatial::beta.div()] function
 #'
 #' @return A ggplot2 object build with the package patchwork

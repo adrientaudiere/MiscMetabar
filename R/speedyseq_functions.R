@@ -592,6 +592,9 @@ setMethod(
 #' will be kept in either case. If `x` is a non-atomic vector (i.e. a list),
 #' then the logical `NA` will be used.
 #'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
 #' @param x A vector
 #' @export
 #' @return Either a single value (if `unique(x)` return a single value) or a NA
@@ -609,6 +612,9 @@ unique_or_na <- function(x) {
   UseMethod("unique_or_na")
 }
 
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
 #' @export
 unique_or_na.default <- function(x) {
   if (length(unique(x)) == 1) {
@@ -620,6 +626,9 @@ unique_or_na.default <- function(x) {
   }
 }
 
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
 #' @export
 unique_or_na.factor <- function(x) {
   if (length(unique(x)) == 1) {

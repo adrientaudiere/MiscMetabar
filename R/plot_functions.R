@@ -6747,6 +6747,9 @@ plot_complexity_pq <- function(
 ################################################################################
 #' A diagnostic plot of the number of sequences per samples
 #'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
 #' @inheritParams clean_pq
 #' @param min_nb_seq (int) The minimum number of sequences per samples to compare
 #'   the ratio.
@@ -7086,6 +7089,9 @@ reorder_distinct_colors <- function(
   p
 }
 
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
 #' @exportS3Method ggplot2::ggplot_add
 ggplot_add.reorder_distinct_colors_spec <- function(object, plot, ...) {
   lifecycle::deprecate_soft(

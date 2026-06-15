@@ -75,8 +75,8 @@ A list of 6 components :
 }}
 
 
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} This function has moved to the \code{bootpq}
-package. Please use \code{\link[bootpq:hill_test_rarperm_pq]{bootpq::hill_test_rarperm_pq()}} instead.
+#\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} This function has moved to the \code{bootpq}
+#package. Please use \code{\link[bootpq:hill_test_rarperm_pq]{bootpq::hill_test_rarperm_pq()}} instead.
 
 This reduce the risk of a random drawing of a exceptional situation of an unique rarefaction.
 }

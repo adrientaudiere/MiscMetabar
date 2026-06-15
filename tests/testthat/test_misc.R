@@ -162,7 +162,16 @@ test_that("simplify_taxo works fine", {
   simplified <- simplify_taxo(d_fm)
   expect_false(any(grepl("s__", simplified@tax_table[, "Species"])))
   expect_false(any(grepl("s:", simplified@tax_table[, "Species"])))
-  expect_s4_class(simplify_taxo(d_fm, remove_NA = TRUE), "phyloseq")
+
+  expect_s4_class(
+    simplify_taxo(d_fm, ranks_to_remove_NA = phyloseq::rank_names(d_fm)),
+    "phyloseq"
+  )
+  expect_s4_class(simplify_taxo(d_fm, ranks_to_remove_NA = NULL), "phyloseq")
+  expect_s4_class(
+    simplify_taxo(d_fm, ranks_for_pattern_to_remove = c("Genus", "Species")),
+    "phyloseq"
+  )
 })
 
 test_that("simplify_taxo pattern_to_NA replaces PR2 unknowns with NA", {

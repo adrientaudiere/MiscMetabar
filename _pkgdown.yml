@@ -258,6 +258,7 @@ reference:
   - subsample_fastq
 - subtitle: Import/export phyloseq object
   contents:
+  - load_pq
   - phyloseq_to_MDT_csv
   - phyloseq_to_MDT_excel
   - read_pq

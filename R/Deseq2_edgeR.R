@@ -418,6 +418,9 @@ plot_deseq2_pq <-
 ################################################################################
 #' Convert phyloseq OTU count data into DGEList for edgeR package
 #'
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
 #' @inheritParams clean_pq
 #'
 #' @param group (required) A character vector or factor giving the experimental

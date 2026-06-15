@@ -21,7 +21,9 @@ using the \code{phyloseq} package.}
 \item{tax_col}{Taxonomic level to colored points}
 
 \item{min_SCBD}{(default 0.01) the minimum SCBD value
-to plot the taxa}
+to plot the taxa
+\if{html}{\out{<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">}}
+\if{html}{\out{<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing">}}\if{html}{\out{</a>}}}
 
 \item{...}{Additional arguments passed on to \code{\link[adespatial:beta.div]{adespatial::beta.div()}} function}
 }

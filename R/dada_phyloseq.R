@@ -45,7 +45,7 @@ add_dna_to_phyloseq <- function(physeq, prefix_taxa_names = "Taxa_") {
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #'  In addition, this function check for discrepancy (and rename) between
 #' (i) taxa names in refseq, taxonomy table and otu_table and between
@@ -314,7 +314,7 @@ clean_pq <- function(
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #'  * List of fastq and fastg.gz files -> nb of reads and samples
 #'  * List of dada-class -> nb of reads, clusters (ASV) and samples
@@ -1283,6 +1283,60 @@ read_pq <- function(
   return(physeq)
 }
 
+################################################################################
+
+################################################################################
+#' Load a phyloseq object from an RData file written by `save_pq()` or `write_pq()`
+#'
+#' @description
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
+#' This is the reverse function of [save_pq()] and [write_pq()] when used with
+#' `rdata = TRUE`. Those functions save the phyloseq object in an RData file
+#' named `physeq.RData` (the object is always stored under the name `physeq`).
+#' Contrary to [base::load()], `load_pq()` returns the phyloseq object so it can
+#' be assigned to any name, without modifying the calling environment.
+#'
+#' @param path (required) a path to the folder where the phyloseq object was
+#'   saved, or directly the path to the `.RData`/`.rda` file. If a folder is
+#'   given, the file `physeq.RData` inside it is loaded.
+#' @return The loaded phyloseq object.
+#' @export
+#' @author Adrien Taudière
+#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
+#' save_pq(data_fungi, path = paste0(tempdir(), "/phyloseq"))
+#' # Load the object and assign it to any name you like
+#' my_pq <- load_pq(path = paste0(tempdir(), "/phyloseq"))
+#' unlink(paste0(tempdir(), "/phyloseq"), recursive = TRUE)
+#' @seealso [save_pq()], [write_pq()], [read_pq()]
+load_pq <- function(path = NULL) {
+  if (is.null(path)) {
+    stop("The argument `path` is required.")
+  }
+
+  if (grepl("\\.(RData|rda)$", path, ignore.case = TRUE)) {
+    rdata_file <- path
+  } else {
+    rdata_file <- paste0(path, "/physeq.RData")
+  }
+
+  if (!file.exists(rdata_file)) {
+    stop(
+      "No RData file found at '",
+      rdata_file,
+      "'. Did you use `save_pq()` or `write_pq(rdata = TRUE)`?"
+    )
+  }
+
+  temp_env <- new.env()
+  loaded_names <- load(rdata_file, envir = temp_env)
+  physeq <- get(loaded_names[[1]], envir = temp_env)
+
+  verify_pq(physeq)
+
+  return(physeq)
+}
 ################################################################################
 
 ################################################################################

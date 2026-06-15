@@ -23,6 +23,12 @@ A data.frame with one row per sample and one column per value in
 Row names match the input row names.
 }
 \description{
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+}}
+
+
 Iterates over all samples in an OTU table and computes Hill diversity
 numbers using \code{\link[divent:div_hill]{divent::div_hill()}}.
 }

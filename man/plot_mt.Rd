@@ -4,14 +4,22 @@
 \alias{plot_mt}
 \title{Plot the result of a mt test \code{\link[phyloseq:mt]{phyloseq::mt()}}}
 \usage{
-plot_mt(mt = NULL, pval = 0.05, color_tax = "Class", taxa = "Species")
+plot_mt(
+  mt = NULL,
+  pval = 0.05,
+  color_rank = "Class",
+  color_tax = lifecycle::deprecated(),
+  taxa = "Species"
+)
 }
 \arguments{
 \item{mt}{(required) Result of a mt test from the function \code{\link[phyloseq:mt]{phyloseq::mt()}}.}
 
 \item{pval}{(default: 0.05) Choose the cut off p-value to plot taxa.}
 
-\item{color_tax}{(default: "Class") A taxonomic level to color the points.}
+\item{color_rank}{(default: "Class") A taxonomic level to color the points.}
+
+\item{color_tax}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{color_rank} instead.}
 
 \item{taxa}{(default: "Species") The taxonomic level you choose for x-positioning.}
 }
@@ -32,7 +40,7 @@ Graphical representation of mt test.
 data_fungi_mini2 <- subset_samples(data_fungi_mini, !is.na(Time))
 res <- mt(data_fungi_mini2, "Time", method = "fdr", test = "f", B = 300)
 plot_mt(res)
-plot_mt(res, taxa = "Genus", color_tax = "Order")
+plot_mt(res, taxa = "Genus", color_rank = "Order")
 }
 }
 \seealso{

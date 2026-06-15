@@ -11,7 +11,8 @@ plot_deseq2_pq(
   pval = 0.05,
   taxolev = "Genus",
   select_taxa = NULL,
-  color_tax = "Phylum",
+  color_rank = "Phylum",
+  color_tax = lifecycle::deprecated(),
   tax_depth = NULL,
   verbose = TRUE,
   jitter_width = 0.1,
@@ -42,8 +43,9 @@ value other than 0.05, pval should be set to that value.}
 or a logical vector (length of the results from \code{\link[DESeq2:results]{DESeq2::results()}}) to select taxa
 to plot.}
 
-\item{color_tax}{taxonomic level used for color or a
-color vector.}
+\item{color_rank}{taxonomic level used for color, or a color vector.}
+
+\item{color_tax}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{color_rank} instead.}
 
 \item{tax_depth}{Taxonomic depth to test for differential
 distribution among contrast. If Null the analysis is done at the OTU
@@ -84,14 +86,14 @@ if (requireNamespace("DESeq2")) {
     test = "Wald", fitType = "local"
   )
   plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
-    tax_table = GP@tax_table, color_tax = "Kingdom"
+    tax_table = GP@tax_table, color_rank = "Kingdom"
   )
   plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
-    tax_table = GP@tax_table, color_tax = "Kingdom",
+    tax_table = GP@tax_table, color_rank = "Kingdom",
     pval = 0.7
   )
   plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
-    tax_table = GP@tax_table, color_tax = "Class",
+    tax_table = GP@tax_table, color_rank = "Class",
     select_taxa = c("522457", "271582")
   )
 }

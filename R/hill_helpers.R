@@ -2,6 +2,9 @@
 #' Compute Hill diversity numbers for all samples in an OTU table
 #'
 #' @description
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
 #' Iterates over all samples in an OTU table and computes Hill diversity
 #' numbers using [divent::div_hill()].
 #'

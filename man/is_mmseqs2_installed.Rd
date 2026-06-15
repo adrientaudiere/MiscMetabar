@@ -13,6 +13,12 @@ is_mmseqs2_installed(path = find_mmseqs2())
 Logical.
 }
 \description{
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+}}
+
+
 Tries to run \verb{mmseqs version} and returns \code{TRUE} if it succeeds.
 }
 \examples{

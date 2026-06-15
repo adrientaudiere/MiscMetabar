@@ -2,6 +2,9 @@
 #' Find the vsearch binary
 #'
 #' @description
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
 #' Searches for the vsearch binary in the following order:
 #' 1. The `MiscMetabar.vsearchpath` option (if set)
 #' 2. A previously installed copy in the MiscMetabar user data directory
@@ -39,6 +42,9 @@ find_vsearch <- function() {
 #' Install vsearch binary
 #'
 #' @description
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
 #' Downloads and installs the vsearch binary from
 #' [GitHub](https://github.com/torognes/vsearch/releases) into the
 #' MiscMetabar user data directory. This is especially useful on Windows
@@ -1473,6 +1479,9 @@ assign_sintax <- function(
 #'   Default value is based on [stampa](https://github.com/frederic-mahe/stampa)
 #'   See Vsearch Manual for parameter `--maxrejects`.
 
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
 #' @param top_hits_only (Logical, default TRUE)
 #'  Only the top hits with an equally high percentage of identity between the query and
 #'  database sequence sets are written to the output. If you set top_hits_only

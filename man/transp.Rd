@@ -2,7 +2,9 @@
 % Please edit documentation in R/miscellanous.R
 \name{transp}
 \alias{transp}
-\title{Adds transparency to a vector of colors}
+\title{Adds transparency to a vector of colors
+\if{html}{\out{<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">}}
+\if{html}{\out{<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing">}}\if{html}{\out{</a>}}}
 \usage{
 transp(col, alpha = 0.5)
 }
@@ -16,6 +18,8 @@ a color vector
 }
 \description{
 Adds transparency to a vector of colors
+\if{html}{\out{<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">}}
+\if{html}{\out{<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing">}}\if{html}{\out{</a>}}
 }
 \examples{
 transp("red")

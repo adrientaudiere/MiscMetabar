@@ -2,6 +2,9 @@
 #' Find the MMseqs2 binary
 #'
 #' @description
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#'
 #' Looks for the MMseqs2 binary in three places, in order:
 #' 1. The option `MiscMetabar.mmseqs2path` (if set).
 #' 2. A local copy installed by [install_mmseqs2()] in the user data directory.
@@ -34,6 +37,9 @@ find_mmseqs2 <- function() {
 #' Check whether MMseqs2 is installed and callable
 #'
 #' @description
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
 #' Tries to run `mmseqs version` and returns `TRUE` if it succeeds.
 #'
 #' @param path Path to the `mmseqs` binary (default: [find_mmseqs2()]).

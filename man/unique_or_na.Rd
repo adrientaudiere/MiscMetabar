@@ -18,6 +18,12 @@ same type as \code{x}. If \code{x} is a factor, then the levels and ordered stat
 will be kept in either case. If \code{x} is a non-atomic vector (i.e. a list),
 then the logical \code{NA} will be used.
 }
+\details{
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+}}
+}
 \examples{
 f <- factor(c("a", "a", "b", "c"), ordered = TRUE)
 unique_or_na(f)

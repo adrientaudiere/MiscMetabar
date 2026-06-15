@@ -9,7 +9,8 @@ plot_edgeR_pq(
   contrast = NULL,
   pval = 0.05,
   taxolev = "Genus",
-  color_tax = "Phylum",
+  color_rank = "Phylum",
+  color_tax = lifecycle::deprecated(),
   verbose = TRUE,
   ...
 )
@@ -28,8 +29,9 @@ value other than 0.05, pval should be set to that value.}
 
 \item{taxolev}{taxonomic level of interest}
 
-\item{color_tax}{taxonomic level used for
-color assignation}
+\item{color_rank}{taxonomic level used for color assignation.}
+
+\item{color_tax}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{color_rank} instead.}
 
 \item{verbose}{(logical): whether the function print some
 information during the computation}
@@ -56,11 +58,11 @@ GP_archae <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archa
 \donttest{
 if (requireNamespace("edgeR")) {
   plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
-    color_tax = "Kingdom"
+    color_rank = "Kingdom"
   )
 
   plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
-    taxolev = "Class", color_tax = "Kingdom"
+    taxolev = "Class", color_rank = "Kingdom"
   )
 }
 }

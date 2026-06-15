@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,67 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.16.6" id="miscmetabar-0166-cran">MiscMetabar 0.16.6 [CRAN]<a class="anchor" aria-label="anchor" href="#miscmetabar-0166-cran"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.16.8.9000" id="miscmetabar-01689000">MiscMetabar 0.16.8.9000<a class="anchor" aria-label="anchor" href="#miscmetabar-01689000"></a></h2>
+<ul><li>
+<code><a href="../reference/biplot_pq.html">biplot_pq()</a></code> fixes a bug where using <code>inverse_side = TRUE</code> together with <code>merge_sample_by</code> and <code>nb_samples_info = TRUE</code> caused sample counts to be attached to the wrong modality label.</li>
+<li>
+<code><a href="../reference/plot_deseq2_pq.html">plot_deseq2_pq()</a></code>, <code><a href="../reference/plot_edgeR_pq.html">plot_edgeR_pq()</a></code>, and <code><a href="../reference/plot_mt.html">plot_mt()</a></code> rename the <code>color_tax</code> parameter to <code>color_rank</code>, which more explicitly names the <code>@tax_table</code> as the source of the colouring variable. <code>color_tax</code> is kept as a deprecated alias and will warn with <code><a href="https://lifecycle.r-lib.org/reference/deprecate_soft.html" class="external-link">lifecycle::deprecate_warn()</a></code> until removed in a future version.</li>
+<li>Rarefaction across the package is now performed by an internal R-version-robust reimplementation rather than <code><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">phyloseq::rarefy_even_depth()</a></code>, whose <code>replace = FALSE</code> code path errors with <code>invalid 'length.out' value</code> under recent R-devel (phyloseq issue <a href="https://github.com/adrientaudiere/MiscMetabar/issues/1753" class="external-link">#1753</a>). The reimplementation is bit-identical to <code><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">phyloseq::rarefy_even_depth()</a></code> for the same <code>seed</code>, depth and <code>replace</code> value (and is more correct in the degenerate case where a retained sample has a single read). This affects <code><a href="../reference/rarefy_pq.html">rarefy_pq()</a></code>, <code><a href="../reference/adonis_pq.html">adonis_pq()</a></code>, <code><a href="../reference/adonis_rarperm_pq.html">adonis_rarperm_pq()</a></code>, <code><a href="../reference/hill_test_rarperm_pq.html">hill_test_rarperm_pq()</a></code>, <code><a href="../reference/hill_pq.html">hill_pq()</a></code>, <code><a href="../reference/biplot_pq.html">biplot_pq()</a></code>, <code><a href="../reference/ggvenn_pq.html">ggvenn_pq()</a></code>, <code><a href="../reference/upset_pq.html">upset_pq()</a></code>, <code><a href="../reference/ggaluv_pq.html">ggaluv_pq()</a></code> and <code><a href="../reference/ggscatt_pq.html">ggscatt_pq()</a></code>.</li>
+<li>
+<code><a href="../reference/simplify_taxo.html">simplify_taxo()</a></code> replaces the logical <code>remove_space</code> and <code>remove_NA</code> parameters with <code>ranks_to_remove_space</code> and <code>ranks_to_remove_NA</code> (character vectors of <code>tax_table</code> column names), and adds <code>ranks_for_pattern_to_remove</code> and <code>ranks_for_pattern_to_NA</code> to control which columns <code>pattern_to_remove</code> and <code>pattern_to_NA</code> are applied to. All four default to the relevant rank names derived from the phyloseq object; pass <code>NULL</code> to skip the operation. <strong>Breaking change:</strong> <code>ranks_to_remove_NA</code> now defaults to all ranks (previously <code>remove_NA = FALSE</code>); pass <code>NULL</code> to restore the old behaviour.</li>
+<li>
+<code><a href="../reference/clean_pq.html">clean_pq()</a></code> gains a <code>tax_replace_NA_string</code> argument (default <code>FALSE</code>) to replace the literal strings <code>"NA"</code>, <code>"NA NA"</code>, <code>"NA NA NA"</code> (whitespace-separated repetitions of <code>NA</code>, a common artifact of pasting taxonomic ranks) in the <code>tax_table</code> with true <code>&lt;NA&gt;</code> values.</li>
+<li>
+<code><a href="../reference/fastp.html">fastp()</a></code> is a new wrapper for the fastp software performing adapter detection, quality control and preprocessing of paired-end or single-end FASTQ files, with a companion <code><a href="../reference/is_fastp_installed.html">is_fastp_installed()</a></code> tool-presence helper.</li>
+<li>
+<code><a href="../reference/fastq_to_fasta.html">fastq_to_fasta()</a></code> converts one or several FASTQ files (optionally gzip-compressed, with <code>.fastq</code> or <code>.fq</code> extensions) to FASTA format, dropping the quality lines and returning the paths of the written files.</li>
+<li>
+<code><a href="../reference/hill_bar_pq.html">hill_bar_pq()</a></code> now sets the “Error bars / Tukey HSD” caption once for the whole figure (via <code><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html" class="external-link">patchwork::plot_annotation()</a></code>) instead of repeating it on every <code>q</code> panel, fixing the overlapping captions seen with several values of <code>q</code>. Panels where Tukey HSD pairwise comparisons were not run (no global Kruskal-Wallis significance) are flagged with a <code>sig_symbol</code> (default <code>"∅"</code>, the empty set, new argument) appended to their subtitle and explained once in the shared caption.</li>
+<li>
+<code><a href="../reference/hill_test_rarperm_pq.html">hill_test_rarperm_pq()</a></code> is deprecated; it has moved to the <code>bootpq</code> package. Use <code>bootpq::hill_test_rarperm_pq()</code> instead.</li>
+<li>
+<code><a href="../reference/is_blastn_installed.html">is_blastn_installed()</a></code> and <code><a href="../reference/is_multiqc_installed.html">is_multiqc_installed()</a></code> are new tool-presence helpers, following the existing <code><a href="../reference/is_cutadapt_installed.html">is_cutadapt_installed()</a></code> / <code><a href="../reference/is_vsearch_installed.html">is_vsearch_installed()</a></code> pattern.</li>
+<li>
+<code><a href="../reference/load_pq.html">load_pq()</a></code> loads a phyloseq object from the <code>physeq.RData</code> file written by <code><a href="../reference/save_pq.html">save_pq()</a></code> or <code>write_pq(rdata = TRUE)</code> and returns it so it can be assigned to any name, contrary to <code><a href="https://rdrr.io/r/base/load.html" class="external-link">base::load()</a></code> which always restores it under the name <code>physeq</code>.</li>
+<li>
+<code><a href="../reference/phyloseq_to_MDT_csv.html">phyloseq_to_MDT_csv()</a></code> exports the OTU table, taxonomy and sample data of a phyloseq object to separate CSV (or TSV) files following the GBIF Metabarcoding Data Toolkit (MDT) template layout (OTU IDs in rows, sample IDs in columns), the plain-text counterpart of <code><a href="../reference/phyloseq_to_MDT_excel.html">phyloseq_to_MDT_excel()</a></code>.</li>
+<li>
+<code><a href="../reference/phyloseq_to_MDT_excel.html">phyloseq_to_MDT_excel()</a></code> exports the OTU table, sample data, taxonomy and reference sequences of a phyloseq object to a multi-sheet Excel file for GBIF Metabarcoding Data Toolkit (MDT) submission, with an optional Darwin Core sample-term check.</li>
+<li>
+<code><a href="../reference/plot_ordination_pq.html">plot_ordination_pq()</a></code> gains an <code>add_envfit</code> argument to overlay environmental vectors (continuous variables as arrows) and factor centroids fitted with <code><a href="https://vegandevs.github.io/vegan/reference/envfit.html" class="external-link">vegan::envfit()</a></code> onto the ordination, controlled by the new <code>envfit_fact</code>, <code>envfit_pval</code>, <code>envfit_arrow_mult</code>, <code>envfit_text_size</code> and <code>envfit_col</code> arguments.</li>
+<li>
+<code><a href="../reference/plot_overview_pq.html">plot_overview_pq()</a></code> produces a single-call alpha- and beta-diversity overview of a phyloseq object for one sample variable, adapting the panels to the variable type: a Hill-number scatter via <code><a href="../reference/ggscatt_pq.html">ggscatt_pq()</a></code> for a numeric variable (gradient-colored ordination and UMAP, Venn/UpSet skipped), or Hill-number bar plots via <code><a href="../reference/hill_bar_pq.html">hill_bar_pq()</a></code> plus a Venn diagram (or an UpSet plot above <code>venn_max</code> levels) for a factor. Panels are returned as a named list by default, or assembled into a <code>patchwork</code> figure with <code>one_plot = TRUE</code>.</li>
+<li>
+<code><a href="../reference/plot_volcano_pq.html">plot_volcano_pq()</a></code> draws a volcano plot (log2 fold change versus -log10 adjusted p-value) from a differential abundance result table such as <code>DESeq2</code>, <code><a href="../reference/ancombc_pq.html">ancombc_pq()</a></code> or <code><a href="../reference/aldex_pq.html">aldex_pq()</a></code> output, coloring taxa as up, down or not differentially abundant. The <code>fc</code> and <code>padj</code> arguments now default to <code>NULL</code> and are auto-detected from the input type: the raw list from <code><a href="../reference/ancombc_pq.html">ancombc_pq()</a></code> is unwrapped to <code>$res</code> and its <code>lfc_*</code>/<code>q_*</code> columns are detected automatically (intercept excluded); <code><a href="../reference/aldex_pq.html">aldex_pq()</a></code> output is detected via <code>effect</code>/<code>wi.eBH</code> columns; <code><a href="https://rdrr.io/pkg/DESeq2/man/results.html" class="external-link">DESeq2::results()</a></code> is detected via <code>log2FoldChange</code>/<code>padj</code> columns.</li>
+<li>
+<code><a href="../reference/rarefy_pq.html">rarefy_pq()</a></code> gains a <code>replace</code> argument (default <code>FALSE</code>, sampling without replacement) and accepts <code>seed = FALSE</code> to leave the random number generator untouched, mirroring <code><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">phyloseq::rarefy_even_depth()</a></code>.</li>
+<li>
+<code><a href="../reference/reshape_ggplot.html">reshape_ggplot()</a></code> auto-wraps the title, subtitle, caption and axis labels of a ggplot2 object using <code><a href="https://stringr.tidyverse.org/reference/str_wrap.html" class="external-link">stringr::str_wrap()</a></code>, useful before combining several plots with <code>patchwork</code>. It gains dedicated <code>width_caption</code> and <code>fontsize_caption</code> arguments to control the caption wrapping width and font size.</li>
+<li>
+<code><a href="../reference/simplify_taxo.html">simplify_taxo()</a></code> gains a <code>pattern_to_NA</code> argument (default <code>NULL</code>): any cell whose value matches the regex is replaced with <code>NA</code>. Designed for PR2-style placeholder unknowns such as <code>Embryophyceae_X</code>, <code>Embryophyceae_XX</code>, <code>Embryophyceae_XXX</code>, <code>Embryophyceae_XXX_sp.</code>, or <code>Mortierella_sp.</code>; use <code>"_X+$|_sp\\.$"</code> to cover all such patterns in one pass.</li>
+<li>
+<code><a href="../reference/strassoc_pq.html">strassoc_pq()</a></code> is a new wrapper around <code><a href="https://emf-creaf.github.io/indicspecies/reference/strassoc.html" class="external-link">indicspecies::strassoc()</a></code> computing the strength of association (e.g. <code>IndVal</code>, the phi coefficient, the specificity component <code>A</code> or the fidelity component <code>B</code>) between each taxon and the groups of a sample variable, complementing <code><a href="../reference/multipatt_pq.html">multipatt_pq()</a></code>.</li>
+<li>
+<code><a href="../reference/tax_bar_pq.html">tax_bar_pq()</a></code> gains an <code>order_modality</code> argument (default <code>NULL</code>) to set the order of the <code>fact</code> modalities (the order of the bars); listing only a subset of modalities keeps just those bars (with an informative message) and an unknown value triggers an error listing the offending values.</li>
+<li>
+<code><a href="../reference/tax_bar_pq.html">tax_bar_pq()</a></code> gains a <code>ribbon_hide_zero</code> argument (default <code>TRUE</code>) that, when <code>add_ribbon = TRUE</code>, suppresses the ribbon of a taxon between two adjacent bars whenever its value is zero in either connected bar, avoiding ribbons that collapse to a flat line.</li>
+<li>
+<code><a href="../reference/var_par_rarperm_pq.html">var_par_rarperm_pq()</a></code> is deprecated; it has moved to the <code>bootpq</code> package. Use <code>bootpq::var_par_rarperm_pq()</code> instead.</li>
+<li>
+<code><a href="../reference/vsearch_clustering.html">vsearch_clustering()</a></code> (and <code><a href="../reference/postcluster_pq.html">postcluster_pq()</a></code> with <code>method = "vsearch"</code>) gain <code>query_cov</code> and <code>target_cov</code> arguments to set the vsearch <code>--query_cov</code> and <code>--target_cov</code> alignment-coverage thresholds directly, instead of only through <code>vsearch_args</code>.</li>
+<li>
+<code><a href="../reference/wheat_plot.html">wheat_plot()</a></code> draws a wheat plot (a histogram/dot-plot hybrid) of a numeric variable, binning values along the x-axis and stacking individual observations as points, useful to inspect distributions such as <code>taxa_sums()</code> or <code>sample_sums()</code>.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.16.8" id="miscmetabar-0168">MiscMetabar 0.16.8<a class="anchor" aria-label="anchor" href="#miscmetabar-0168"></a></h2><p class="text-muted">CRAN release: 2026-06-08</p>
+<ul><li>Further check-time reductions for CRAN compliance: extra examples <code>\dontrun{}</code> (kept for documentation, not run during checks).</li>
+<li>Added file-level <code>skip_on_cran()</code> to some heavy test files.</li>
+<li>Example speed-ups for some functions.</li>
+<li>Fix several bugs when using Windows paths by quoting system call arguments with <code><a href="https://rdrr.io/r/base/shQuote.html" class="external-link">shQuote()</a></code>
+</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.16.6" id="miscmetabar-0166">MiscMetabar 0.16.6<a class="anchor" aria-label="anchor" href="#miscmetabar-0166"></a></h2>
 <ul><li>
 <code><a href="../reference/verify_tax_table.html">verify_tax_table()</a></code> is now ~10× faster on full-size taxonomy tables.</li>
 <li>
@@ -82,7 +142,7 @@
 <li>Function defaults (<code>nperm</code>, <code>n_permutations</code>) are unchanged.</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.16.5" id="miscmetabar-0165-cran">MiscMetabar 0.16.5 [CRAN]<a class="anchor" aria-label="anchor" href="#miscmetabar-0165-cran"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.16.5" id="miscmetabar-0165">MiscMetabar 0.16.5<a class="anchor" aria-label="anchor" href="#miscmetabar-0165"></a></h2>
 <ul><li>
 <code><a href="../reference/funguild_assign.html">funguild_assign()</a></code> and <code><a href="../reference/rotl_pq.html">rotl_pq()</a></code> examples now use <code>\dontrun{}</code> instead of <code>\donttest{}</code>. Both examples call external APIs (<code>www.stbates.org</code> and the Open Tree of Life respectively) that are not always reachable during CRAN’s <code>--run-donttest</code> check, causing spurious ERRORs.</li>
 <li>
@@ -91,9 +151,6 @@
 <code>XVector</code> removed from <code>DESCRIPTION</code> <code>Imports</code>. It was declared but never imported in <code>NAMESPACE</code> or used directly; <code>Biostrings</code> already loads it transitively. CRAN flagged this as “Namespace in Imports field not imported from”.</li>
 <li>Bibliography: corrected the DOI for Taberlet et al. (2012) “Environmental DNA” in <code>paper/bibliography.bib</code>, <code>paper/paper.bib</code>, and the two <code>vignettes/*.bib</code> files (was the journal ISSN landing <code>10.1002/(issn)2637-4943</code>, now the paper DOI <code>10.1111/j.1365-294X.2012.05542.x</code>). <code>README.md</code> and the pkgdown site regenerate accordingly.</li>
 </ul></div>
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.16.4" id="miscmetabar-0164-cran">MiscMetabar 0.16.4 [CRAN]<a class="anchor" aria-label="anchor" href="#miscmetabar-0164-cran"></a></h2>
-</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.16.3" id="miscmetabar-0163">MiscMetabar 0.16.3<a class="anchor" aria-label="anchor" href="#miscmetabar-0163"></a></h2>
 <ul><li>
@@ -113,12 +170,12 @@
 <h2 class="pkg-version" data-toc-text="0.16.2" id="miscmetabar-0162">MiscMetabar 0.16.2<a class="anchor" aria-label="anchor" href="#miscmetabar-0162"></a></h2>
 </div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.16.1" id="miscmetabar-0161-cran">MiscMetabar 0.16.1 [CRAN]<a class="anchor" aria-label="anchor" href="#miscmetabar-0161-cran"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.16.1" id="miscmetabar-0161">MiscMetabar 0.16.1<a class="anchor" aria-label="anchor" href="#miscmetabar-0161"></a></h2>
 <ul><li>
 <code><a href="../reference/cutadapt_remove_primers.html">cutadapt_remove_primers()</a></code> gains a <code>cutadapt_args</code> parameter (default <code>""</code>) to pass additional arguments directly to cutadapt, such as <code>"-e 0.01"</code> to lower the maximum error rate from the cutadapt default of 10% to 1%.</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.15.2" id="miscmetabar-0152-cran">MiscMetabar 0.15.2 [CRAN]<a class="anchor" aria-label="anchor" href="#miscmetabar-0152-cran"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.15.2" id="miscmetabar-0152">MiscMetabar 0.15.2<a class="anchor" aria-label="anchor" href="#miscmetabar-0152"></a></h2>
 <ul><li>
 <code><a href="../reference/hill_test_rarperm_pq.html">hill_test_rarperm_pq()</a></code>: fixed default <code>type</code> from <code>"non-parametrique"</code> to <code>"nonparametric"</code> to match the documented valid values and avoid confusion.</li>
 <li>
@@ -155,7 +212,7 @@
 <li>
 <code><a href="../reference/biplot_pq.html">biplot_pq()</a></code> gains a <code>color_rank</code> parameter (default <code>NULL</code>): when set to a taxonomic rank (e.g. <code>"Class"</code>), bars are colored by that rank instead of by sample modality, giving a taxonomic-composition view of the biplot. The fill legend is automatically titled with the rank name.</li>
 <li>
-<code><a href="../reference/biplot_pq.html">biplot_pq()</a></code> gains a <code>taxa_names_rank</code> parameter (default <code>NULL</code>): when set to a taxonomic rank (e.g. <code>"Genus"</code>), the taxon axis labels display that rank instead of <code><a href="https://rdrr.io/pkg/phyloseq/man/taxa_names-methods.html" class="external-link">taxa_names()</a></code>. Each OTU remains a separate bar regardless of shared rank values.</li>
+<code><a href="../reference/biplot_pq.html">biplot_pq()</a></code> gains a <code>taxa_names_rank</code> parameter (default <code>NULL</code>): when set to a taxonomic rank (e.g. <code>"Genus"</code>), the taxon axis labels display that rank instead of <code>taxa_names()</code>. Each OTU remains a separate bar regardless of shared rank values.</li>
 <li>
 <code><a href="../reference/biplot_pq.html">biplot_pq()</a></code> no longer displays “Samples” on the taxon axis; the position used for the modality name annotations is now unlabeled.</li>
 </ul></div>

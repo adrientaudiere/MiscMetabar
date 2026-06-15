@@ -106,7 +106,9 @@ than 0.5, but not larger than 1.0"}
 Maximum number of non-matching target sequences to consider before
 stopping the search for a given query.
 Default value is based on \href{https://github.com/frederic-mahe/stampa}{stampa}
-See Vsearch Manual for parameter \code{--maxrejects}.}
+See Vsearch Manual for parameter \code{--maxrejects}.
+\if{html}{\out{<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">}}
+\if{html}{\out{<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing">}}\if{html}{\out{</a>}}}
 
 \item{top_hits_only}{(Logical, default TRUE)
 Only the top hits with an equally high percentage of identity between the query and

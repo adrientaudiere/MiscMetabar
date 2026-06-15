@@ -24,6 +24,12 @@ is already installed.}
 The path to the installed vsearch binary (invisibly).
 }
 \description{
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+}}
+
+
 Downloads and installs the vsearch binary from
 \href{https://github.com/torognes/vsearch/releases}{GitHub} into the
 MiscMetabar user data directory. This is especially useful on Windows

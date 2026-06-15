@@ -133,8 +133,18 @@ all_object_size <- function() {
 #'   [base::gsub()]: the matched *substring* is deleted from the cell value and
 #'   the rest of the string is kept (e.g. `".__"` turns `"k__Fungi"` into
 #'   `"Fungi"`).
-#' @param remove_space (logical; default TRUE): do we remove space?
-#' @param remove_NA (logical; default FALSE): do we remove NA (in majuscule)?
+#' @param ranks_for_pattern_to_remove (character vector or NULL; default all
+#'   ranks) column names in `tax_table` to which `pattern_to_remove` is
+#'   applied. Pass `NULL` to skip this operation on all columns.
+#' @param ranks_to_remove_space (character vector or NULL; default all ranks
+#'   whose name does not contain `"Species"`) column names from which ASCII
+#'   spaces and non-breaking spaces (U+00A0) are stripped. Pass `NULL` to
+#'   skip space removal entirely.
+#' @param ranks_to_remove_NA (character vector or NULL; default all ranks)
+#'   column names from which the literal string `"NA"` (case-sensitive) is
+#'   removed. Pass `NULL` to skip this operation. **Breaking change from
+#'   v0.16:** the old `remove_NA = FALSE` default is now `ranks_to_remove_NA`
+#'   defaulting to all ranks; pass `NULL` to reproduce the old behaviour.
 #' @param pattern_to_NA (character; default NULL): a regex; if an entire cell
 #'   value matches, the *whole cell* is replaced with `NA` (nothing from the
 #'   original value is kept). Designed for PR2-style placeholder unknowns such
@@ -142,6 +152,9 @@ all_object_size <- function() {
 #'   `Embryophyceae_XXX_sp.`, or `Mortierella_sp.`. Use `"_X+$|_sp\\.$"` to
 #'   cover all such patterns: `_X+$` catches rank-filler X's; `_sp\\.$` catches
 #'   any genus-only species placeholder.
+#' @param ranks_for_pattern_to_NA (character vector or NULL; default all ranks)
+#'   column names to which `pattern_to_NA` is applied. Pass `NULL` to skip
+#'   this operation on all columns.
 #' @author Adrien Taudière
 #'
 #' @return A  \code{\link[phyloseq]{phyloseq-class}} object with simplified taxonomy
@@ -159,37 +172,60 @@ all_object_size <- function() {
 #'   simplify_taxo(d_fm)@tax_table[, "Species"],
 #'   d_fm@tax_table[, "Species"]
 #' )
+#' # Apply pattern_to_remove only to Genus and Species columns
 #' cbind(
-#'   simplify_taxo(d_fm, remove_NA = TRUE)@tax_table[, "Species"],
+#'   simplify_taxo(d_fm,
+#'     ranks_for_pattern_to_remove = c("Genus", "Species")
+#'   )@tax_table[, "Species"],
 #'   d_fm@tax_table[, "Species"]
 #' )
 #' \dontrun{
 #' # Replace PR2 placeholder unknowns (_X, _XX, _XXX, _XXX_sp., Genus_sp.) with NA
 #' simplify_taxo(pq_pr2, pattern_to_NA = "_X+$|_sp\\.$")
+#' # Apply pattern_to_NA only to the Species column
+#' simplify_taxo(pq_pr2,
+#'   pattern_to_NA = "_X+$|_sp\\.$",
+#'   ranks_for_pattern_to_NA = "Species"
+#' )
 #' }
 simplify_taxo <- function(
   physeq,
   pattern_to_remove = c(".__", ".*:"),
-  remove_space = TRUE,
-  remove_NA = FALSE,
-  pattern_to_NA = NULL
+  ranks_for_pattern_to_remove = phyloseq::rank_names(physeq),
+  ranks_to_remove_space = phyloseq::rank_names(physeq)[
+    !grepl("Species", phyloseq::rank_names(physeq))
+  ],
+  ranks_to_remove_NA = phyloseq::rank_names(physeq),
+  pattern_to_NA = NULL,
+  ranks_for_pattern_to_NA = phyloseq::rank_names(physeq)
 ) {
-  taxo <- physeq@tax_table
-  for (p in pattern_to_remove) {
-    taxo <- gsub(p, "", taxo)
+  taxo <- as(physeq@tax_table, "matrix")
+
+  if (!is.null(ranks_for_pattern_to_remove)) {
+    for (p in pattern_to_remove) {
+      for (col in ranks_for_pattern_to_remove) {
+        taxo[, col] <- gsub(p, "", taxo[, col])
+      }
+    }
   }
 
-  if (remove_space) {
-    taxo <- gsub(" ", "", taxo)
-    taxo <- gsub("\u00a0", "", taxo)
+  if (!is.null(ranks_to_remove_space)) {
+    for (col in ranks_to_remove_space) {
+      taxo[, col] <- gsub(" ", "", taxo[, col])
+      taxo[, col] <- gsub("\u00a0", "", taxo[, col])
+    }
   }
 
-  if (remove_NA) {
-    taxo <- gsub("NA", "", taxo, ignore.case = FALSE)
+  if (!is.null(ranks_to_remove_NA)) {
+    for (col in ranks_to_remove_NA) {
+      taxo[, col] <- gsub("NA", "", taxo[, col], ignore.case = FALSE)
+    }
   }
 
-  if (!is.null(pattern_to_NA)) {
-    taxo[grepl(pattern_to_NA, taxo)] <- NA
+  if (!is.null(pattern_to_NA) && !is.null(ranks_for_pattern_to_NA)) {
+    for (col in ranks_for_pattern_to_NA) {
+      taxo[grepl(pattern_to_NA, taxo[, col]), col] <- NA
+    }
   }
 
   physeq@tax_table <- tax_table(taxo)
@@ -202,7 +238,7 @@ simplify_taxo <- function(
 #'
 #' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Internally used in [count_seq()].
 #' Warning: don't work when there is '.' in the name of the
@@ -403,6 +439,9 @@ fac2col <-
 
 ################################################################################
 #' Adds transparency to a vector of colors
+#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#'
 #' @param col a vector of colors
 #' @param alpha (default 0.5) a numeric value between 0 and 1 representing the alpha coefficient; 0: total transparency; 1: no transparency.
 #' @return a color vector
@@ -625,7 +664,7 @@ is_multiqc_installed <- function(path = "multiqc") {
 #'
 #' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' Useful for testthat and examples compilation for R CMD CHECK and
 #'   test coverage

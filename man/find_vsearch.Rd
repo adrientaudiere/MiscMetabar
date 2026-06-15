@@ -11,6 +11,12 @@ A character string with the path to the vsearch binary, or
 \code{"vsearch"} as a fallback (relying on PATH resolution).
 }
 \description{
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+}}
+
+
 Searches for the vsearch binary in the following order:
 \enumerate{
 \item The \code{MiscMetabar.vsearchpath} option (if set)

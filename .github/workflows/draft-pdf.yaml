@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [main, master]
+    branches: [main, main]
 jobs:
   paper:
     runs-on: ubuntu-latest
@@ -9,7 +9,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Build draft PDF
-        uses: openjournals/openjournals-draft-action@master
+        uses: openjournals/openjournals-draft-action@main
         with:
           journal: joss
           # This should be the path to the paper within your repo.

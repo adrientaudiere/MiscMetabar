@@ -7,19 +7,49 @@
 simplify_taxo(
   physeq,
   pattern_to_remove = c(".__", ".*:"),
-  remove_space = TRUE,
-  remove_NA = FALSE
+  ranks_for_pattern_to_remove = phyloseq::rank_names(physeq),
+  ranks_to_remove_space = phyloseq::rank_names(physeq)[!grepl("Species",
+    phyloseq::rank_names(physeq))],
+  ranks_to_remove_NA = phyloseq::rank_names(physeq),
+  pattern_to_NA = NULL,
+  ranks_for_pattern_to_NA = phyloseq::rank_names(physeq)
 )
 }
 \arguments{
 \item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{pattern_to_remove}{(a vector of character) the pattern to remove using \code{\link[base:gsub]{base::gsub()}} function.}
+\item{pattern_to_remove}{(a vector of character) regex patterns passed to
+\code{\link[base:gsub]{base::gsub()}}: the matched \emph{substring} is deleted from the cell value and
+the rest of the string is kept (e.g. \code{".__"} turns \code{"k__Fungi"} into
+\code{"Fungi"}).}
 
-\item{remove_space}{(logical; default TRUE): do we remove space?}
+\item{ranks_for_pattern_to_remove}{(character vector or NULL; default all
+ranks) column names in \code{tax_table} to which \code{pattern_to_remove} is
+applied. Pass \code{NULL} to skip this operation on all columns.}
 
-\item{remove_NA}{(logical; default FALSE): do we remove NA (in majuscule)?}
+\item{ranks_to_remove_space}{(character vector or NULL; default all ranks
+whose name does not contain \code{"Species"}) column names from which ASCII
+spaces and non-breaking spaces (U+00A0) are stripped. Pass \code{NULL} to
+skip space removal entirely.}
+
+\item{ranks_to_remove_NA}{(character vector or NULL; default all ranks)
+column names from which the literal string \code{"NA"} (case-sensitive) is
+removed. Pass \code{NULL} to skip this operation. \strong{Breaking change from
+v0.16:} the old \code{remove_NA = FALSE} default is now \code{ranks_to_remove_NA}
+defaulting to all ranks; pass \code{NULL} to reproduce the old behaviour.}
+
+\item{pattern_to_NA}{(character; default NULL): a regex; if an entire cell
+value matches, the \emph{whole cell} is replaced with \code{NA} (nothing from the
+original value is kept). Designed for PR2-style placeholder unknowns such
+as \code{Embryophyceae_X}, \code{Embryophyceae_XX}, \code{Embryophyceae_XXX},
+\code{Embryophyceae_XXX_sp.}, or \code{Mortierella_sp.}. Use \code{"_X+$|_sp\\\\.$"} to
+cover all such patterns: \verb{_X+$} catches rank-filler X's; \verb{_sp\\\\.$} catches
+any genus-only species placeholder.}
+
+\item{ranks_for_pattern_to_NA}{(character vector or NULL; default all ranks)
+column names to which \code{pattern_to_NA} is applied. Pass \code{NULL} to skip
+this operation on all columns.}
 }
 \value{
 A  \code{\link[phyloseq]{phyloseq-class}} object with simplified taxonomy
@@ -46,10 +76,22 @@ cbind(
   simplify_taxo(d_fm)@tax_table[, "Species"],
   d_fm@tax_table[, "Species"]
 )
+# Apply pattern_to_remove only to Genus and Species columns
 cbind(
-  simplify_taxo(d_fm, remove_NA = TRUE)@tax_table[, "Species"],
+  simplify_taxo(d_fm,
+    ranks_for_pattern_to_remove = c("Genus", "Species")
+  )@tax_table[, "Species"],
   d_fm@tax_table[, "Species"]
 )
+\dontrun{
+# Replace PR2 placeholder unknowns (_X, _XX, _XXX, _XXX_sp., Genus_sp.) with NA
+simplify_taxo(pq_pr2, pattern_to_NA = "_X+$|_sp\\\\.$")
+# Apply pattern_to_NA only to the Species column
+simplify_taxo(pq_pr2,
+  pattern_to_NA = "_X+$|_sp\\\\.$",
+  ranks_for_pattern_to_NA = "Species"
+)
+}
 }
 \author{
 Adrien Taudière

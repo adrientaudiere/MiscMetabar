@@ -37,7 +37,10 @@ the following options to the \code{method} argument:
 A DGEList object. See \code{\link[edgeR:estimateTagwiseDisp]{edgeR::estimateTagwiseDisp()}} for more details.
 }
 \description{
-Convert phyloseq OTU count data into DGEList for edgeR package
+\if{html}{\out{
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+}}
 }
 \examples{
 \donttest{
