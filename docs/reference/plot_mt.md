@@ -78,6 +78,7 @@ plot_mt(res)
 #> Warning: invalid factor level, NA generated
 
 plot_mt(res, taxa = "Genus", color_rank = "Order")
-#> Error in plot_mt(res, taxa = "Genus", color_rank = "Order"): unused argument (color_rank = "Order")
+#> Warning: invalid factor level, NA generated
+
 # }
 ```

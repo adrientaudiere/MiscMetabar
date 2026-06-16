@@ -58,17 +58,17 @@ Adrien Taudière
 ``` r
 list_fastq_files(system.file("extdata", package = "MiscMetabar"))
 #> $fnfs
-#> [1] "/home/adrien/R/x86_64-pc-linux-gnu-library/4.6/MiscMetabar/extdata/ex_R1_001.fastq.gz"
+#> [1] "/tmp/RtmpfG79Lq/temp_libpathc9e8623e2f995/MiscMetabar/extdata/ex_R1_001.fastq.gz"
 #> 
 #> $fnrs
-#> [1] "/home/adrien/R/x86_64-pc-linux-gnu-library/4.6/MiscMetabar/extdata/ex_R2_001.fastq.gz"
+#> [1] "/tmp/RtmpfG79Lq/temp_libpathc9e8623e2f995/MiscMetabar/extdata/ex_R2_001.fastq.gz"
 #> 
 list_fastq_files(system.file("extdata", package = "MiscMetabar"),
   paired_end = FALSE, pattern_R1 = ""
 )
 #> $fnfs
-#> [1] "/home/adrien/R/x86_64-pc-linux-gnu-library/4.6/MiscMetabar/extdata/ex.fastq"          
-#> [2] "/home/adrien/R/x86_64-pc-linux-gnu-library/4.6/MiscMetabar/extdata/ex_R1_001.fastq.gz"
-#> [3] "/home/adrien/R/x86_64-pc-linux-gnu-library/4.6/MiscMetabar/extdata/ex_R2_001.fastq.gz"
+#> [1] "/tmp/RtmpfG79Lq/temp_libpathc9e8623e2f995/MiscMetabar/extdata/ex.fastq"          
+#> [2] "/tmp/RtmpfG79Lq/temp_libpathc9e8623e2f995/MiscMetabar/extdata/ex_R1_001.fastq.gz"
+#> [3] "/tmp/RtmpfG79Lq/temp_libpathc9e8623e2f995/MiscMetabar/extdata/ex_R2_001.fastq.gz"
 #> 
 ```

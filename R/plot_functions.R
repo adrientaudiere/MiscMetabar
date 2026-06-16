@@ -7089,9 +7089,16 @@ reorder_distinct_colors <- function(
   p
 }
 
+#' Add reordered distinct colors to a ggplot
+#'
+#' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
+#' @param object A `reorder_distinct_colors_spec` object.
+#' @param plot A `ggplot` object.
+#' @param ... Additional arguments (ignored).
+#' @return A `ggplot` object with reordered distinct colors.
 #' @exportS3Method ggplot2::ggplot_add
 #' @keywords internal
 ggplot_add.reorder_distinct_colors_spec <- function(object, plot, ...) {

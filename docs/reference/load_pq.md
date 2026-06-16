@@ -140,6 +140,5 @@ save_pq(data_fungi, path = paste0(tempdir(), "/phyloseq"))
 #> `Z30-002_S186_MERGED.fastq.gz`, `Z30-ABM560-M_S187_MERGED.fastq.gz`)`
 # Load the object and assign it to any name you like
 my_pq <- load_pq(path = paste0(tempdir(), "/phyloseq"))
-#> Error in load_pq(path = paste0(tempdir(), "/phyloseq")): could not find function "load_pq"
 unlink(paste0(tempdir(), "/phyloseq"), recursive = TRUE)
 ```

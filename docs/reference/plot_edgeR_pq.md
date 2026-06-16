@@ -106,6 +106,11 @@ if (requireNamespace("edgeR")) {
 #> Also defined by ‘RNeXML’ ‘tidytree’
 #> calcNormFactors has been renamed to normLibSizes
 #> Perform edgeR binary test
-#> Error in edgeR::exactTest(data_edger, pair = c(contrast[2], contrast[3]),     ...): unused argument (color_rank = "Kingdom")
+#> Conversion to edgeR format
+#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
+#> Also defined by ‘RNeXML’ ‘tidytree’
+#> calcNormFactors has been renamed to normLibSizes
+#> Perform edgeR binary test
+
 # }
 ```

@@ -62,6 +62,8 @@ Adrien Taudière
 ``` r
 p <- tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time")
 reorder_distinct_colors(p)
+#> Warning: `reorder_distinct_colors()` was deprecated in MiscMetabar 0.17.0.
+#> ℹ Please use `ggplotpq::reorder_distinct_colors()` instead.
 
 reorder_distinct_colors(p, colorblind = TRUE)
 

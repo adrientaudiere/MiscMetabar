@@ -166,14 +166,6 @@ if (requireNamespace("DESeq2")) {
 #> mean-dispersion relationship
 #> final dispersion estimates
 #> fitting model and testing
-#> Warning: Arguments in `...` must be used.
-#> ✖ Problematic argument:
-#> • color_rank = "Kingdom"
-#> ℹ Did you misspell an argument name?
-#> Warning: Arguments in `...` must be used.
-#> ✖ Problematic argument:
-#> • color_rank = "Kingdom"
-#> ℹ Did you misspell an argument name?
 #> None taxa present significant distribution pattern through
 #>               contrast.
 #> [1] "None taxa present significant distribution pattern through\n             contrast."

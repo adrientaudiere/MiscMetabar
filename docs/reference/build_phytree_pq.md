@@ -150,12 +150,12 @@ if (requireNamespace("phangorn")) {
 #> Clustering into groups by similarity:
 #> ================================================================================
 #> 
-#> Time difference of 0.01 secs
+#> Time difference of 0 secs
 #> 
 #> Aligning Sequences:
 #> ================================================================================
 #> 
-#> Time difference of 0.15 secs
+#> Time difference of 0.14 secs
 #> 
 #> Iteration 1 of 2:
 #> 
@@ -172,7 +172,7 @@ if (requireNamespace("phangorn")) {
 #> Realigning Sequences:
 #> ================================================================================
 #> 
-#> Time difference of 0.11 secs
+#> Time difference of 0.09 secs
 #> 
 #> Iteration 2 of 2:
 #> 
@@ -194,7 +194,7 @@ if (requireNamespace("phangorn")) {
 #> Refining the alignment:
 #> ================================================================================
 #> 
-#> Time difference of 0.04 secs
+#> Time difference of 0.03 secs
 #> 
 #> optimize edge weights:  -4496.258 --> -4357.83 
 #> optimize edge weights:  -4357.83 --> -4357.827 

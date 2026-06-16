@@ -9,6 +9,12 @@ a list), then the logical `NA` will be used.
 
 ``` r
 unique_or_na(x)
+
+# Default S3 method
+unique_or_na(x)
+
+# S3 method for class 'factor'
+unique_or_na(x)
 ```
 
 ## Arguments

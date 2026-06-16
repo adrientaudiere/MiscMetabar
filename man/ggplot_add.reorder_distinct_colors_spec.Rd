@@ -2,12 +2,19 @@
 % Please edit documentation in R/plot_functions.R
 \name{ggplot_add.reorder_distinct_colors_spec}
 \alias{ggplot_add.reorder_distinct_colors_spec}
-\title{\if{html}{\out{
-<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
-}}}
+\title{Add reordered distinct colors to a ggplot}
 \usage{
 \method{ggplot_add}{reorder_distinct_colors_spec}(object, plot, ...)
+}
+\arguments{
+\item{object}{A \code{reorder_distinct_colors_spec} object.}
+
+\item{plot}{A \code{ggplot} object.}
+
+\item{...}{Additional arguments (ignored).}
+}
+\value{
+A \code{ggplot} object with reordered distinct colors.
 }
 \description{
 \if{html}{\out{

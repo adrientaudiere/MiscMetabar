@@ -2,9 +2,15 @@
 % Please edit documentation in R/speedyseq_functions.R
 \name{unique_or_na}
 \alias{unique_or_na}
+\alias{unique_or_na.default}
+\alias{unique_or_na.factor}
 \title{Get the unique value in x or NA if none}
 \usage{
 unique_or_na(x)
+
+\method{unique_or_na}{default}(x)
+
+\method{unique_or_na}{factor}(x)
 }
 \arguments{
 \item{x}{A vector}

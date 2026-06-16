@@ -81,6 +81,8 @@ wheat_plot(
   value,
   binwidth = 2
 )
+#> Warning: `wheat_plot()` was deprecated in MiscMetabar 0.17.0.
+#> ℹ Please use `ggplotpq::wheat_plot()` instead.
 
 # \donttest{
 wheat_plot(

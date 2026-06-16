@@ -24,7 +24,7 @@ test_that("var_par_pq works", {
 
 test_that("var_par_rarperm_pq works", {
   skip_on_cran()
-  result <- var_par_rarperm_pq(
+  result <- suppressWarnings(var_par_rarperm_pq(
     data_subset,
     list_component = list(
       "Time" = c("Time"),
@@ -32,7 +32,7 @@ test_that("var_par_rarperm_pq works", {
     ),
     dbrda_computation = TRUE,
     nperm = 9
-  )
+  ))
   expect_type(result, "list")
   expect_s3_class(result, "varpart")
   expect_null(plot_var_part_pq(

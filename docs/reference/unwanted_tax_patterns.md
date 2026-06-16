@@ -105,6 +105,8 @@ unwanted_tax_patterns
 #>                                                   "^$" 
 #>                                        whitespace only 
 #>                                               "^\\s+$" 
+#>                                          question mark 
+#>                                                "^\\?$" 
 #>                                           unclassified 
 #>                                      "[Uu]nclassified" 
 #>                                                unknown 

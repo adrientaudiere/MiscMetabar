@@ -612,11 +612,8 @@ unique_or_na <- function(x) {
   UseMethod("unique_or_na")
 }
 
-#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
-#'
+#' @rdname unique_or_na
 #' @export
-#' @keywords internal
 unique_or_na.default <- function(x) {
   if (length(unique(x)) == 1) {
     x[[1]]
@@ -627,11 +624,8 @@ unique_or_na.default <- function(x) {
   }
 }
 
-#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
-#'
+#' @rdname unique_or_na
 #' @export
-#' @keywords internal
 unique_or_na.factor <- function(x) {
   if (length(unique(x)) == 1) {
     x[[1]]
