@@ -30,7 +30,10 @@ therefore conflates biological signal with technical depth variation.
 
 ``` r
 
-ggplot(data=tibble(x=sample_sums(data_fungi_mini)),aes(x=x)) + geom_histogram(color="black") + scale_x_log10() + labs(x="Number of sequences per samples")
+ggplot(data = tibble(x = sample_sums(data_fungi_mini)), aes(x = x)) +
+  geom_histogram(color = "black") +
+  scale_x_log10() +
+  labs(x = "Number of sequences per samples")
 ```
 
 ![Large variation in sequencing depth across samples in
@@ -58,7 +61,7 @@ Large variation in sequencing depth across samples in ‘data_fungi_mini’.
 | GMPR | [`gmpr_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/gmpr_pq.md) | Pairwise ratio geometric mean (Chen et al. 2018) |
 | CSS | [`css_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/css_pq.md) | Cumulative sum scaling (Paulson et al. 2013) |
 | TMM | [`tmm_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/tmm_pq.md) | Trimmed mean of M-values (Robinson and Oshlack 2010) |
-| VST | [`vst_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/vst_pq.md) | Variance-stabilising (DESeq2) (Love, Huber, and Anders 2014) |
+| VST | [`vst_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/vst_pq.md) | Variance-stabilising (DESeq2) (Love et al. 2014) |
 | Depth residuals | [`mcknight_residuals_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/mcknight_residuals_pq.md) | Log-log regression residuals (McKnight et al. 2019) |
 
 ------------------------------------------------------------------------
@@ -76,7 +79,7 @@ and handles the `taxa_are_rows` orientation automatically.
 
 data_tss <- transform_pq(data_fungi_mini, method = "tss")
 data_hell <- transform_pq(data_fungi_mini, method = "hellinger")
-data_clr <- transform_pq(data_fungi_mini, method = "clr")  # pseudocount = 1 by default
+data_clr <- transform_pq(data_fungi_mini, method = "clr") # pseudocount = 1 by default
 data_log1p <- transform_pq(data_fungi_mini, method = "log1p")
 
 # Sample sums after TSS: all 1
@@ -176,9 +179,9 @@ data_tmm <- tmm_pq(data_fungi_mini)
 
 ### `vst_pq()` — Variance Stabilising Transformation
 
-VST (Love, Huber, and Anders 2014) fits a negative-binomial model to
-stabilise the mean-variance relationship, making counts more suitable
-for methods that assume homoscedastic data.
+VST (Love et al. 2014) fits a negative-binomial model to stabilise the
+mean-variance relationship, making counts more suitable for methods that
+assume homoscedastic data.
 
 ``` r
 
@@ -216,19 +219,23 @@ ord_hell <- phyloseq::ordinate(data_hell, method = "PCoA", distance = "bray")
 ord_log1p <- phyloseq::ordinate(data_log1p, method = "PCoA", distance = "bray")
 
 p_raw <- phyloseq::plot_ordination(
-  data_fungi_mini, ord_raw, color = "Height"
+  data_fungi_mini, ord_raw,
+  color = "Height"
 ) + ggplot2::ggtitle("Raw counts")
 
 p_tss <- phyloseq::plot_ordination(
-  data_tss, ord_tss, color = "Height"
+  data_tss, ord_tss,
+  color = "Height"
 ) + ggplot2::ggtitle("TSS")
 
 p_hell <- phyloseq::plot_ordination(
-  data_hell, ord_hell, color = "Height"
+  data_hell, ord_hell,
+  color = "Height"
 ) + ggplot2::ggtitle("Hellinger")
 
 p_log1p <- phyloseq::plot_ordination(
-  data_log1p, ord_log1p, color = "Height"
+  data_log1p, ord_log1p,
+  color = "Height"
 ) + ggplot2::ggtitle("log1p")
 
 patchwork::wrap_plots(p_raw, p_tss, p_hell, p_log1p, ncol = 2) +
@@ -322,8 +329,7 @@ McMurdie, Paul J, and Susan Holmes. 2014. “Waste Not, Want Not: Why
 Rarefying Microbiome Data Is Inadmissible.” *PLoS Computational Biology*
 10 (4): e1003531. <https://doi.org/10.1371/journal.pcbi.1003531>.
 
-Mikryukov, Vladimir, Olesya Dulya, Alexander Zizka, Mohammad Bahram,
-Niloufar Hagh-Doust, Sten Anslan, Oleh Prylutskyi, et al. 2023.
+Mikryukov, Vladimir, Olesya Dulya, Alexander Zizka, et al. 2023.
 “Connecting the Multiple Dimensions of Global Soil Fungal Diversity.”
 *Science Advances* 9 (48): eadj8016.
 <https://doi.org/10.1126/sciadv.adj8016>.
@@ -342,8 +348,7 @@ Robinson, Mark D, and Alicia Oshlack. 2010. “A Scaling Normalization
 Method for Differential Expression Analysis of RNA-Seq Data.” *Genome
 Biology* 11 (3): R25. <https://doi.org/10.1186/gb-2010-11-3-r25>.
 
-Weiss, Sophie, Zhenjiang Zech Xu, Shyamal Peddada, Amnon Amir, Kyle
-Bittinger, Antonio Gonzalez, Catherine Lozupone, et al. 2017.
+Weiss, Sophie, Zhenjiang Zech Xu, Shyamal Peddada, et al. 2017.
 “Normalization and Microbial Differential Abundance Strategies Depend
 Upon Data Characteristics.” *Microbiome* 5 (1): 27.
 <https://doi.org/10.1186/s40168-017-0237-y>.

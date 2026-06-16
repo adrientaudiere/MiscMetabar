@@ -120,13 +120,8 @@ Adrien Taudière
 
 ``` r
 # \donttest{
-if (requireNamespace("pbapply")) {
-  data("GlobalPatterns", package = "phyloseq")
-  GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
-  circle_pq(GP, "SampleType")
-  circle_pq(GP, "SampleType", add_nb_seq = FALSE)
-  circle_pq(GP, "SampleType", taxa = "Class")
-}
+data("GlobalPatterns", package = "phyloseq")
+GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
 #> Also defined by ‘RNeXML’
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
@@ -135,14 +130,13 @@ if (requireNamespace("pbapply")) {
 #> Also defined by ‘RNeXML’
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
 #> Also defined by ‘RNeXML’
+circle_pq(GP, "SampleType")
 #> Only 4 modalities are plot (44.44%). Use 'min_prop_mod' to plot more samples.
-#> Only 5 taxa are plot (45.45%). Use 'min_prop_tax' to plot more taxa
-
-#> Only 4 modalities are plot (44.44%). Use 'min_prop_mod' to plot more samples.
-#> Only 9 taxa are plot (81.82%). Use 'min_prop_tax' to plot more taxa
-
-#> Only 4 modalities are plot (44.44%). Use 'min_prop_mod' to plot more samples.
-#> Only 4 taxa are plot (44.44%). Use 'min_prop_tax' to plot more taxa
+#> Only 5 taxa are plot (41.67%). Use 'min_prop_tax' to plot more taxa
 
 # }
+if (FALSE) { # \dontrun{
+circle_pq(GP, "SampleType", add_nb_seq = FALSE)
+circle_pq(GP, "SampleType", taxa = "Class")
+} # }
 ```

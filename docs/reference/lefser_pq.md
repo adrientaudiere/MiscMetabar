@@ -78,11 +78,13 @@ if (requireNamespace("lefser") && requireNamespace("mia")) {
   lefser::lefserPlot(res_lefse)
 }
 #> Loading required namespace: lefser
+#> Registered S3 method overwritten by 'ggtree':
+#>   method         from     
+#>   fortify.igraph ggnetwork
 #> Loading required namespace: mia
 #> The outcome variable is specified as 'Height' and the reference category is 'High'.
 #>  See `?factor` or `?relevel` to change the reference category.
 #> No significant features found.
-#> Warning: Ignoring unknown parameters: `size`
 
 # }
 ```

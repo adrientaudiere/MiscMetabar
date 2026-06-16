@@ -569,7 +569,7 @@ track_wkflow <- function(
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Accept all input types supported by [track_wkflow()]: phyloseq objects,
 #' matrices (samples x clusters), dada-class, derep-class, lists of
@@ -930,7 +930,7 @@ asv2otu <- postcluster_pq
 #'
 #' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' This is the reverse function of [read_pq()].
 #' @inheritParams clean_pq
@@ -1729,7 +1729,7 @@ mumu_pq <- function(
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' Check taxonomy table for common issues and send warnings/messages accordingly.
 #' This function is called by [verify_pq()] when `check_taxonomy = TRUE`.
@@ -2672,7 +2672,7 @@ verify_pq <- function(
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' The main objective of this function is to complete the
 #' [phyloseq::subset_samples()] function by propose a more easy
@@ -2727,7 +2727,7 @@ subset_samples_pq <- function(physeq, condition) {
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' The main objective of this function is to complete the
 #' [phyloseq::subset_taxa()] function by propose a more easy way of
@@ -2931,7 +2931,7 @@ filt_taxa_pq <- function(
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Mostly for internal used, for example in function [track_wkflow_samples()].
 #'
@@ -3908,7 +3908,7 @@ reorder_taxa_pq <- function(physeq, names_ordered, remove_phy_tree = FALSE) {
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Warning: The value nb_seq and nb_otu may be outdated if you transform your
 #' phyloseq object, e.g. using the [subset_taxa_pq()] function
@@ -4539,7 +4539,7 @@ psmelt_samples_pq <-
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' Mainly for internal use. It is a special case of clean_pq function.
 #'
@@ -4568,7 +4568,7 @@ taxa_as_columns <- function(physeq) {
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' Mainly for internal use. It is a special case of clean_pq function.
 #'
@@ -4692,7 +4692,7 @@ rarefy_sample_count_by_modality <-
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' This function is basically a wrapper of functions [DECIPHER::IdTaxa()] and
 #' [DECIPHER::LearnTaxa()], please cite the DECIPHER package if you use this
@@ -4892,7 +4892,7 @@ assign_idtaxa <- function(
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' This function is basically a wrapper of functions [DECIPHER::LearnTaxa()],
 #'  please cite the DECIPHER package if you use this function.
@@ -5009,7 +5009,7 @@ learn_idtaxa <- function(
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' Mainly a wrapper of [dada2::assignTaxonomy()] and [dada2::assignSpecies()]
 #'

@@ -2,8 +2,8 @@
 
 ### All vignettes
 
-- [Accumulation and rarefaction curves (WORK IN
-  PROGRESS)](https://adrientaudiere.github.io/MiscMetabar/articles/accumulation-rarefaction.md):
+- [Accumulation and rarefaction
+  curves](https://adrientaudiere.github.io/MiscMetabar/articles/accumulation-rarefaction.md):
 - [alpha-div](https://adrientaudiere.github.io/MiscMetabar/articles/alpha-div.md):
 - [beta-div](https://adrientaudiere.github.io/MiscMetabar/articles/beta-div.md):
 - [explore_data](https://adrientaudiere.github.io/MiscMetabar/articles/explore_data.md):

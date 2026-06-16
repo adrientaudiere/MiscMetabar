@@ -14,7 +14,8 @@ plot_deseq2_pq(
   pval = 0.05,
   taxolev = "Genus",
   select_taxa = NULL,
-  color_tax = "Phylum",
+  color_rank = "Phylum",
+  color_tax = lifecycle::deprecated(),
   tax_depth = NULL,
   verbose = TRUE,
   jitter_width = 0.1,
@@ -66,9 +67,13 @@ plot_deseq2_pq(
   [`DESeq2::results()`](https://rdrr.io/pkg/DESeq2/man/results.html)) to
   select taxa to plot.
 
+- color_rank:
+
+  taxonomic level used for color, or a color vector.
+
 - color_tax:
 
-  taxonomic level used for color or a color vector.
+  **\[deprecated\]** Use `color_rank` instead.
 
 - tax_depth:
 
@@ -142,14 +147,14 @@ if (requireNamespace("DESeq2")) {
     test = "Wald", fitType = "local"
   )
   plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
-    tax_table = GP@tax_table, color_tax = "Kingdom"
+    tax_table = GP@tax_table, color_rank = "Kingdom"
   )
   plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
-    tax_table = GP@tax_table, color_tax = "Kingdom",
+    tax_table = GP@tax_table, color_rank = "Kingdom",
     pval = 0.7
   )
   plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
-    tax_table = GP@tax_table, color_tax = "Class",
+    tax_table = GP@tax_table, color_rank = "Class",
     select_taxa = c("522457", "271582")
   )
 }
@@ -161,6 +166,14 @@ if (requireNamespace("DESeq2")) {
 #> mean-dispersion relationship
 #> final dispersion estimates
 #> fitting model and testing
+#> Warning: Arguments in `...` must be used.
+#> ✖ Problematic argument:
+#> • color_rank = "Kingdom"
+#> ℹ Did you misspell an argument name?
+#> Warning: Arguments in `...` must be used.
+#> ✖ Problematic argument:
+#> • color_rank = "Kingdom"
+#> ℹ Did you misspell an argument name?
 #> None taxa present significant distribution pattern through
 #>               contrast.
 #> [1] "None taxa present significant distribution pattern through\n             contrast."

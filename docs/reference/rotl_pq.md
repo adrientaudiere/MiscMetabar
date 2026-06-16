@@ -1,6 +1,6 @@
 # rotl wrapper for phyloseq data
 
-[![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 Make a taxonomic tree using the ASV names of a physeq object and the
 Open Tree of Life tree.

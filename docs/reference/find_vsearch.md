@@ -1,5 +1,7 @@
 # Find the vsearch binary
 
+[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+
 Searches for the vsearch binary in the following order:
 
 1.  The `MiscMetabar.vsearchpath` option (if set)

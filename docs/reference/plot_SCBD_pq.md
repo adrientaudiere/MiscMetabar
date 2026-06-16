@@ -37,6 +37,7 @@ plot_SCBD_pq(
 - min_SCBD:
 
   (default 0.01) the minimum SCBD value to plot the taxa
+  [![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 - ...:
 
@@ -74,8 +75,10 @@ if (requireNamespace("adespatial")) {
 #> Taxa are now in columns.
 
 if (requireNamespace("adespatial")) {
-  plot_SCBD_pq(data_fungi_mini, tax_level = "Class", tax_col = "Phylum",
-    min_SCBD = 0) +
+  plot_SCBD_pq(data_fungi_mini,
+    tax_level = "Class", tax_col = "Phylum",
+    min_SCBD = 0
+  ) +
     geom_jitter()
 }
 #> Taxa are now in columns.

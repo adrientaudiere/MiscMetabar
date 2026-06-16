@@ -1,6 +1,6 @@
 # Reorder fill and color scales to maximize perceptual contrast between adjacent segments
 
-[![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 In stacked bar plots, ggplot2's default discrete palette assigns colors
 using level ordered (sometimes alphabetically), which often places
@@ -68,10 +68,12 @@ reorder_distinct_colors(p, colorblind = TRUE)
 p + reorder_distinct_colors(alternate_lightness = TRUE)
 
 
-tax_bar_pq(data_fungi_mini, fact = "Height", taxa = "Order",
- nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
- add_ribbon = TRUE, value_size=7, ribbon_alpha = .6,
- show_values=TRUE, label_size = 4, top_label_size = 8,
- minimum_value_to_show=0.05) |>
- reorder_distinct_colors(alternate_lightness=TRUE)
+tax_bar_pq(data_fungi_mini,
+  fact = "Height", taxa = "Order",
+  nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
+  add_ribbon = TRUE, value_size = 7, ribbon_alpha = .6,
+  show_values = TRUE, label_size = 4, top_label_size = 8,
+  minimum_value_to_show = 0.05
+) |>
+  reorder_distinct_colors(alternate_lightness = TRUE)
 ```

@@ -1,6 +1,6 @@
 # Get the extension of a file
 
-[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-stable](https://img.shields.io/badge/lifecycle-stable-green)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 Internally used in
 [`count_seq()`](https://adrientaudiere.github.io/MiscMetabar/reference/count_seq.md).

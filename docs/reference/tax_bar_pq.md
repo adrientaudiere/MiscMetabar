@@ -11,11 +11,13 @@ a factor.
 tax_bar_pq(
   physeq,
   fact = "Sample",
+  order_modality = NULL,
   taxa = "Order",
   percent_bar = FALSE,
   nb_seq = TRUE,
   add_ribbon = FALSE,
   ribbon_alpha = 0.3,
+  ribbon_hide_zero = TRUE,
   label_taxa = FALSE,
   void_theme = TRUE,
   show_values = FALSE,
@@ -44,6 +46,15 @@ tax_bar_pq(
   Name of the factor to cluster samples by modalities. Need to be in
   `physeq@sam_data`.
 
+- order_modality:
+
+  (default NULL) Optional character vector giving the order of the
+  `fact` modalities (i.e. the order of the bars). Values must match the
+  modalities present in `physeq@sam_data[[fact]]`. If some modalities
+  are omitted, only the listed ones are kept (a message lists the
+  dropped modalities). If a value is not found among the modalities, an
+  informative error lists the offending values.
+
 - taxa:
 
   (default: 'Order') Name of the taxonomic rank of interest
@@ -70,6 +81,13 @@ tax_bar_pq(
 - ribbon_alpha:
 
   (numeric; default 0.3) Transparency of the ribbons.
+
+- ribbon_hide_zero:
+
+  (logical; default TRUE) When `add_ribbon = TRUE`, suppress the ribbon
+  of a taxon between two adjacent bars whenever its value is zero
+  (absent) in either of the two connected bars. Set to `FALSE` to keep
+  ribbons that collapse to a flat line at a zero end.
 
 - label_taxa:
 
@@ -158,8 +176,10 @@ Adrien Taudière
 
 ``` r
 
-data_fungi_ab <- subset_taxa_pq(data_fungi_mini,
-  taxa_sums(data_fungi_mini) > 1000)
+data_fungi_ab <- subset_taxa_pq(
+  data_fungi_mini,
+  taxa_sums(data_fungi_mini) > 1000
+)
 #> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).
 #> Number of non-matching ASV 0
 #> Number of matching ASV 45
@@ -168,8 +188,10 @@ data_fungi_ab <- subset_taxa_pq(data_fungi_mini,
 #> Number of kept samples 137
 tax_bar_pq(data_fungi_ab) + theme(legend.position = "none")
 
-tax_bar_pq(data_fungi_ab, taxa = "Class", fact = "Height",
-  show_n_samples = TRUE)
+tax_bar_pq(data_fungi_ab,
+  taxa = "Class", fact = "Height",
+  show_n_samples = TRUE
+)
 
 # \donttest{
 tax_bar_pq(data_fungi_ab, taxa = "Class")
@@ -194,22 +216,26 @@ tax_bar_pq(data_fungi_ab,
   show_values = TRUE, minimum_value_to_show = 10000
 )
 
-tax_bar_pq(data_fungi_ab, fact = "Height", taxa = "Class",
+tax_bar_pq(data_fungi_ab,
+  fact = "Height", taxa = "Class",
   nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
-  add_ribbon = TRUE, value_size=7, ribbon_alpha = .6,
-  show_values=TRUE, label_size = 4, top_label_size = 6,
-  minimum_value_to_show=0.05) |>
-  reorder_distinct_colors(alternate_lightness=TRUE)
+  add_ribbon = TRUE, value_size = 7, ribbon_alpha = .6,
+  show_values = TRUE, label_size = 4, top_label_size = 6,
+  minimum_value_to_show = 0.05
+) |>
+  reorder_distinct_colors(alternate_lightness = TRUE)
 
 
-tax_bar_pq(data_fungi_mini, fact = "Height", taxa = "Order",
+tax_bar_pq(data_fungi_mini,
+  fact = "Height", taxa = "Order",
   nb_seq = TRUE, percent_bar = TRUE, label_taxa = TRUE,
-  add_ribbon = TRUE, value_size=5,
-  ribbon_alpha = .6, show_values=TRUE,
+  add_ribbon = TRUE, value_size = 5,
+  ribbon_alpha = .6, show_values = TRUE,
   label_size = 4, top_label_size = 8,
-  minimum_value_to_show=0.05, bar_width = NULL,
-  linewidth_bar_internal = 0.1, bar_internal_color="black") |>
-  reorder_distinct_colors(alternate_lightness=TRUE)
+  minimum_value_to_show = 0.05, bar_width = NULL,
+  linewidth_bar_internal = 0.1, bar_internal_color = "black"
+) |>
+  reorder_distinct_colors(alternate_lightness = TRUE)
 
 # }
 ```

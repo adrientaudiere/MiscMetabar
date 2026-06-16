@@ -102,8 +102,10 @@ if (requireNamespace("Rtsne")) {
 if (requireNamespace("Rtsne")) {
   plot_tsne_pq(data_fungi_mini, fact = "Time") +
     geom_label(aes(label = Sample_id, fill = Time))
-  plot_tsne_pq(data_fungi_mini, fact = "Time", na_remove = FALSE,
-    force_factor = FALSE)
+  plot_tsne_pq(data_fungi_mini,
+    fact = "Time", na_remove = FALSE,
+    force_factor = FALSE
+  )
 }
 
 # }

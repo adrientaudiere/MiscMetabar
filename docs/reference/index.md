@@ -131,8 +131,11 @@
 - [`normalize_prop_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/normalize_prop_pq.md)
   : Normalize OTU table using samples depth
 
+- [`rarefy_even_depth_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/rarefy_even_depth_pq.md)
+  : Rarefy a phyloseq object to even sequencing depth
+
 - [`rarefy_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/rarefy_pq.md)
-  : Rarefy a phyloseq object, optionally averaging over repetitions
+  : Rarefy a phyloseq object
 
 - [`srs_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/srs_pq.md)
   : Scaling with Ranked Subsampling (SRS) normalization of a phyloseq
@@ -314,8 +317,8 @@
   : Graphical representation of hill number 0, 1 and 2 across a factor
 
 - [`hill_test_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_test_rarperm_pq.md)
-  : Test multiple times effect of factor on Hill diversity with
-  different rarefaction even depth
+  **\[deprecated\]** : Test multiple times effect of factor on Hill
+  diversity with different rarefaction even depth
 
 - [`hill_tuckey_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_tuckey_pq.md)
   : Calculate hill number and compute Tuckey post-hoc test
@@ -329,7 +332,14 @@
 ### beta-diversity
 
 - [`adonis_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/adonis_pq.md)
-  : Permanova on a phyloseq object
+  :
+
+  Permanova on a phyloseq object
+  [![lifecycle-stable](https://img.shields.io/badge/lifecycle-stable-green)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+  [![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+  A wrapper for the
+  [`vegan::adonis2()`](https://vegandevs.github.io/vegan/reference/adonis.html)
+  function in the case of `physeq` object.
 
 - [`adonis_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/adonis_rarperm_pq.md)
   : Permanova (adonis) on permutations of rarefaction even depth
@@ -378,6 +388,9 @@
 - [`plot_ordination_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_ordination_pq.md)
   : A wrapper of plot_ordination with vegan distance matrix
 
+- [`plot_overview_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_overview_pq.md)
+  : Overview plot of alpha and beta diversity for a phyloseq object
+
 - [`plot_SCBD_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_SCBD_pq.md)
   : Plot species contributions to beta diversity (SCBD) of samples
 
@@ -414,8 +427,8 @@
   Explanatory Matrices
 
 - [`var_par_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/var_par_rarperm_pq.md)
-  : Partition the Variation of a phyloseq object with rarefaction
-  permutations
+  **\[deprecated\]** : Partition the Variation of a phyloseq object with
+  rarefaction permutations
 
 - [`venn_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/venn_pq.md)
   :
@@ -456,8 +469,14 @@
   Plot the result of a mt test
   [`phyloseq::mt()`](https://rdrr.io/pkg/phyloseq/man/mt-methods.html)
 
+- [`plot_volcano_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/plot_volcano_pq.md)
+  : Volcano plot for differential abundance results
+
 - [`signif_ancombc()`](https://adrientaudiere.github.io/MiscMetabar/reference/signif_ancombc.md)
   : Filter ancombc_pq results
+
+- [`strassoc_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/strassoc_pq.md)
+  : Strength of species-group associations for a phyloseq object
 
 ### Taxonomy
 
@@ -545,6 +564,13 @@
 
   Remove primers using [cutadapt](https://github.com/marcelm/cutadapt/)
 
+- [`fastp()`](https://adrientaudiere.github.io/MiscMetabar/reference/fastp.md)
+  : Fastp: adapter detection, quality control and preprocessing of FASTQ
+  files
+
+- [`fastq_to_fasta()`](https://adrientaudiere.github.io/MiscMetabar/reference/fastq_to_fasta.md)
+  : Convert FASTQ file(s) to FASTA file(s)
+
 - [`filter_trim()`](https://adrientaudiere.github.io/MiscMetabar/reference/filter_trim.md)
   :
 
@@ -561,11 +587,28 @@
 
 ### Import/export phyloseq object
 
+- [`load_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/load_pq.md)
+  :
+
+  Load a phyloseq object from an RData file written by
+  [`save_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/save_pq.md)
+  or
+  [`write_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/write_pq.md)
+
+- [`phyloseq_to_MDT_csv()`](https://adrientaudiere.github.io/MiscMetabar/reference/phyloseq_to_MDT_csv.md)
+  : Export a phyloseq object to GBIF MDT template CSV/TSV files
+
+- [`phyloseq_to_MDT_excel()`](https://adrientaudiere.github.io/MiscMetabar/reference/phyloseq_to_MDT_excel.md)
+  : Export a phyloseq object to a multi-sheet Excel file for GBIF MDT
+  submission
+
 - [`read_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/read_pq.md)
   : Read phyloseq object from multiple csv tables and a phylogenetic
   tree in Newick format.
+
 - [`save_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/save_pq.md)
   : A wrapper of write_pq to save in all three possible formats
+
 - [`write_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/write_pq.md)
   : Save phyloseq object in the form of multiple csv tables.
 
@@ -623,13 +666,19 @@
 
 - [`fac2col()`](https://adrientaudiere.github.io/MiscMetabar/reference/fac2col.md)
   : Translates a factor into colors.
+
 - [`funky_color()`](https://adrientaudiere.github.io/MiscMetabar/reference/funky_color.md)
   : Funky palette color
+
 - [`reorder_distinct_colors()`](https://adrientaudiere.github.io/MiscMetabar/reference/reorder_distinct_colors.md)
   : Reorder fill and color scales to maximize perceptual contrast
   between adjacent segments
+
 - [`transp()`](https://adrientaudiere.github.io/MiscMetabar/reference/transp.md)
-  : Adds transparency to a vector of colors
+  :
+
+  Adds transparency to a vector of colors
+  [![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 ### Fasta taxonomic database
 
@@ -655,14 +704,20 @@
   : Install MMseqs2 from GitHub releases
 - [`install_vsearch()`](https://adrientaudiere.github.io/MiscMetabar/reference/install_vsearch.md)
   : Install vsearch binary
+- [`is_blastn_installed()`](https://adrientaudiere.github.io/MiscMetabar/reference/is_blastn_installed.md)
+  : Test if blastn is installed.
 - [`is_cutadapt_installed()`](https://adrientaudiere.github.io/MiscMetabar/reference/is_cutadapt_installed.md)
   : Test if cutadapt is installed.
+- [`is_fastp_installed()`](https://adrientaudiere.github.io/MiscMetabar/reference/is_fastp_installed.md)
+  : Test if fastp is installed.
 - [`is_mmseqs2_installed()`](https://adrientaudiere.github.io/MiscMetabar/reference/is_mmseqs2_installed.md)
   : Check whether MMseqs2 is installed and callable
 - [`is_falco_installed()`](https://adrientaudiere.github.io/MiscMetabar/reference/is_falco_installed.md)
   : Test if falco is installed.
 - [`is_krona_installed()`](https://adrientaudiere.github.io/MiscMetabar/reference/is_krona_installed.md)
   : Test if krona is installed.
+- [`is_multiqc_installed()`](https://adrientaudiere.github.io/MiscMetabar/reference/is_multiqc_installed.md)
+  : Test if MultiQC is installed.
 - [`is_mumu_installed()`](https://adrientaudiere.github.io/MiscMetabar/reference/is_mumu_installed.md)
   : Test if mumu is installed.
 - [`is_swarm_installed()`](https://adrientaudiere.github.io/MiscMetabar/reference/is_swarm_installed.md)
@@ -676,6 +731,10 @@
   : Multiple plot function
 - [`no_legend()`](https://adrientaudiere.github.io/MiscMetabar/reference/no_legend.md)
   : Discard legend in ggplot2
+- [`reshape_ggplot()`](https://adrientaudiere.github.io/MiscMetabar/reference/reshape_ggplot.md)
+  : Reshape a ggplot2 object by wrapping its text elements
+- [`wheat_plot()`](https://adrientaudiere.github.io/MiscMetabar/reference/wheat_plot.md)
+  : Wheat plot of a numeric distribution
 
 ### Variable management
 

@@ -44,7 +44,8 @@ Adrien Taudière
 data_fungi_ordered_by_genus <- reorder_taxa_pq(
   data_fungi_mini,
   taxa_names(data_fungi_mini)[order(
-    as.vector(data_fungi_mini@tax_table[, "Genus"]))]
+    as.vector(data_fungi_mini@tax_table[, "Genus"])
+  )]
 )
 
 data_fungi_mini_asc_ordered_by_abundance <- reorder_taxa_pq(

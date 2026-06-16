@@ -78,6 +78,6 @@ if (requireNamespace("patchwork")) {
 #> Cleaning suppress 11 taxa and 0 samples.
 #> Taxa are now in columns.
 #> Cleaning suppress 11 taxa and 0 samples.
-#> Cleaning suppress 12 taxa and 0 samples.
+#> Cleaning suppress 14 taxa and 0 samples.
 #> Cleaning suppress 12 taxa and 0 samples.
 ```

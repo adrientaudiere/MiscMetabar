@@ -18,5 +18,6 @@ a list of size
 
 ``` r
 all_object_size()
-#> named numeric(0)
+#>     enterotype GlobalPatterns 
+#>        1441328       10972560 
 ```

@@ -93,7 +93,6 @@ if (requireNamespace("seqinr")) {
 
   clean_pq(subset_taxa(data_fungi, res$identity != "*"))
 }
-#> Loading required namespace: seqinr
 #> Error in eval(e, x, parent.frame()): object 'res' not found
 # }
 ```

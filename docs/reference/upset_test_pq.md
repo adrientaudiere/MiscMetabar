@@ -78,10 +78,10 @@ Adrien Taudière
 ``` r
 if (requireNamespace("ComplexUpset")) {
   upset_test_pq(data_fungi_mini, "Height",
-    var_to_test = c("OTU", "Class", "Guild"))
+    var_to_test = c("OTU", "Class", "Guild")
+  )
   upset_test_pq(data_fungi_mini, "Time")
 }
-#> Loading required namespace: ComplexUpset
 #> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).
 #> Number of non-matching ASV 0
 #> Number of matching ASV 45

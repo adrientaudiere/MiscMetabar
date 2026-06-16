@@ -5,7 +5,7 @@
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' Useful to test if the results are not biased by sequences bias
 #'   that appended during PCR or NGS pipeline.
@@ -238,7 +238,7 @@ simplify_taxo <- function(
 #'
 #' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' Internally used in [count_seq()].
 #' Warning: don't work when there is '.' in the name of the
@@ -305,7 +305,7 @@ perc <- function(x, y = NULL, accuracy = 0, add_symbol = FALSE) {
 #'
 #' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Use grep to count the number of line with only one '+' (fastq, fastq.gz)
 #'   or lines starting with a '>' (fasta) to count sequences.
@@ -517,7 +517,7 @@ subsample_fastq <- function(
 #'
 #' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' Useful for testthat and examples compilation for R CMD CHECK and
 #'   test coverage
@@ -554,7 +554,7 @@ is_cutadapt_installed <- function(
 #'
 #' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' Useful for testthat and examples compilation for R CMD CHECK and
 #'   test coverage
@@ -580,7 +580,7 @@ is_falco_installed <- function(path = "falco") {
 #'
 #' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' Useful for testthat and examples compilation for R CMD CHECK and
 #'   test coverage
@@ -606,7 +606,7 @@ is_swarm_installed <- function(path = "swarm") {
 #'
 #' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' Useful for testthat and examples compilation for R CMD CHECK and
 #'   test coverage
@@ -635,7 +635,7 @@ is_blastn_installed <- function(path = "blastn") {
 #'
 #' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' Useful for testthat and examples compilation for R CMD CHECK and
 #'   test coverage
@@ -664,7 +664,7 @@ is_multiqc_installed <- function(path = "multiqc") {
 #'
 #' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' Useful for testthat and examples compilation for R CMD CHECK and
 #'   test coverage
@@ -694,7 +694,7 @@ is_vsearch_installed <- function(path = find_vsearch()) {
 #'
 #' @description
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #' Useful for testthat and examples compilation for R CMD CHECK and
 #'   test coverage

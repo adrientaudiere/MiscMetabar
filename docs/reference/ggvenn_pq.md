@@ -1,6 +1,6 @@
 # Venn diagram of [`phyloseq-class`](https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html) object using `ggVennDiagram::ggVennDiagram` function
 
-[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-stable](https://img.shields.io/badge/lifecycle-stable-green)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 Note that you can use ggplot2 function to customize the plot for ex.
 `+ scale_fill_distiller(palette = "BuPu", direction = 1)` and
@@ -151,9 +151,11 @@ if (requireNamespace("ggVennDiagram")) {
     print(p)
   }
 
-  data_fungi2 <- subset_samples(data_fungi_mini,
+  data_fungi2 <- subset_samples(
+    data_fungi_mini,
     data_fungi_mini@sam_data$Tree_name == "A10-005" |
-    data_fungi_mini@sam_data$Height %in% c("Low", "High"))
+      data_fungi_mini@sam_data$Height %in% c("Low", "High")
+  )
   ggvenn_pq(data_fungi2, fact = "Height")
 
   ggvenn_pq(data_fungi2, fact = "Height", type = "nb_seq")
@@ -166,8 +168,10 @@ if (requireNamespace("ggVennDiagram")) {
   # For more flexibility, you can save the dataset for more precise construction
   # with ggplot2 and ggVennDiagramm
   # (https://gaospecial.github.io/ggVennDiagram/articles/fully-customed.html)
-  res_venn <- ggvenn_pq(data_fungi_mini, fact = "Height",
-    return_data_for_venn = TRUE)
+  res_venn <- ggvenn_pq(data_fungi_mini,
+    fact = "Height",
+    return_data_for_venn = TRUE
+  )
 
   ggplot() +
     # 1. region count layer
@@ -245,32 +249,18 @@ if (requireNamespace("ggVennDiagram")) {
 #>  the random seed of your session for reproducibility.
 #> See `?set.seed`
 #> ...
-#> You set `rngseed` to FALSE. Make sure you've set & recorded
-#>  the random seed of your session for reproducibility.
-#> See `?set.seed`
-#> ...
-#> 16OTUs were removed because they are no longer 
-#> present in any sample after random subsampling
-#> ...
-#> Cleaning suppress 14 taxa and 0 samples.
-#> Cleaning suppress 10 taxa and 0 samples.
+#> Cleaning suppress 15 taxa and 0 samples.
 #> Cleaning suppress 12 taxa and 0 samples.
+#> Cleaning suppress 15 taxa and 0 samples.
 #> 47 were discarded due to NA in variable fact
 #> Taxa are now in columns.
 #> You set `rngseed` to FALSE. Make sure you've set & recorded
 #>  the random seed of your session for reproducibility.
 #> See `?set.seed`
 #> ...
-#> You set `rngseed` to FALSE. Make sure you've set & recorded
-#>  the random seed of your session for reproducibility.
-#> See `?set.seed`
-#> ...
-#> 4OTUs were removed because they are no longer 
-#> present in any sample after random subsampling
-#> ...
+#> Cleaning suppress 9 taxa and 0 samples.
 #> Cleaning suppress 8 taxa and 0 samples.
-#> Cleaning suppress 7 taxa and 0 samples.
-#> Cleaning suppress 8 taxa and 0 samples.
+#> Cleaning suppress 9 taxa and 0 samples.
 #> 47 were discarded due to NA in variable fact
 #> Taxa are now in columns.
 #> Cleaning suppress 11 taxa and 0 samples.

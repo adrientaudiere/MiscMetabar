@@ -1,6 +1,6 @@
 # Summarize a [`phyloseq-class`](https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html) object using a plot.
 
-[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-stable](https://img.shields.io/badge/lifecycle-stable-green)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 Graphical representation of a phyloseq object.
 

@@ -71,7 +71,7 @@ and the maximum quantile value for adonis results. See \code{\link[=adonis_pq]{a
 <img src="https://img.shields.io/badge/lifecycle-deprecated-orange" alt="lifecycle-deprecated"></a>
 }}
 }
-\section{1e26dIUecPq0d3qTvYvTpsEmMYW0KQyI-1- This function has moved to the \code{bootpq}}{
+\section{AnRlyTcMBPGwHgFkQ1tppGwzchboJ0XP-1- This function has moved to the \code{bootpq}}{
 
 }
 

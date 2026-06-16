@@ -1,6 +1,6 @@
 # Add information to sample_data slot of a phyloseq-class object
 
-[![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 Warning: The value nb_seq and nb_otu may be outdated if you transform
 your phyloseq object, e.g. using the

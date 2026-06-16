@@ -1,6 +1,6 @@
 # Transform the otu_table of a [`phyloseq-class`](https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html) object into a [`phyloseq-class`](https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html) object with a binary otu_table.
 
-[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-stable](https://img.shields.io/badge/lifecycle-stable-green)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 Useful to test if the results are not biased by sequences bias that
 appended during PCR or NGS pipeline.

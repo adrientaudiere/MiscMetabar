@@ -1,6 +1,6 @@
 # Merge Krona files using [KronaTools](https://github.com/marbl/Krona/wiki).
 
-[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-stable](https://img.shields.io/badge/lifecycle-stable-green)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 Need the installation of kronatools on the computer ([installation
 instruction](https://github.com/marbl/Krona/wiki/Installing)).

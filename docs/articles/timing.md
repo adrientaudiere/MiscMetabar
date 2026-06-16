@@ -85,8 +85,8 @@ caching with `targets` or `memoise`:
 
 library(memoise)
 adonis_pq_m <- memoise(adonis_pq)
-adonis_pq_m(data_fungi, "Height")  # slow the first time
-adonis_pq_m(data_fungi, "Height")  # instant the second time
+adonis_pq_m(data_fungi, "Height") # slow the first time
+adonis_pq_m(data_fungi, "Height") # instant the second time
 ```
 
 ### Lower iteration counts for exploratory work

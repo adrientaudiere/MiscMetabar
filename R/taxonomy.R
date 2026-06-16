@@ -4,7 +4,7 @@
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #'   Internally used in the function [assign_blastn()] with method="vote"
 #'   and [assign_vsearch_lca()] if `top_hits_only` is FALSE and `vote_algorithm` is not NULL.
@@ -403,7 +403,7 @@ resolve_vector_ranks <- function(
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Only tested with Unite and Eukaryome fasta file for the moment. Rely on the presence of the pattern
 #'  pattern_tax default "k__" to format the header.
@@ -482,7 +482,7 @@ format2sintax <- function(
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' First format in sintax format and then in dada2 format
 #'

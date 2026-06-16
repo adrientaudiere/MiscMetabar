@@ -1,9 +1,11 @@
-# Permanova on a phyloseq object
+# Permanova on a phyloseq object [![lifecycle-stable](https://img.shields.io/badge/lifecycle-stable-green)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle) [![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle) A wrapper for the [`vegan::adonis2()`](https://vegandevs.github.io/vegan/reference/adonis.html) function in the case of `physeq` object.
 
+Permanova on a phyloseq object
+[![lifecycle-stable](https://img.shields.io/badge/lifecycle-stable-green)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 [![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 A wrapper for the
-[`vegan::adonis2()`](https://vegandevs.github.io/vegan/reference/vegan-defunct.html)
+[`vegan::adonis2()`](https://vegandevs.github.io/vegan/reference/adonis.html)
 function in the case of `physeq` object.
 
 ## Usage
@@ -35,7 +37,7 @@ adonis_pq(
 - formula:
 
   (required) the right part of a formula for
-  [`vegan::adonis2()`](https://vegandevs.github.io/vegan/reference/vegan-defunct.html).
+  [`vegan::adonis2()`](https://vegandevs.github.io/vegan/reference/adonis.html).
   Variables must be present in the `physeq@sam_data` slot.
 
 - dist_method:
@@ -92,7 +94,7 @@ adonis_pq(
 - rngseed:
 
   (Optional). A single integer value passed to
-  [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html),
+  [`rarefy_even_depth_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/rarefy_even_depth_pq.md),
   which is used to fix a seed for reproducibly random number generation
   (in this case, reproducibly random subsampling). If set to FALSE, then
   no fiddling with the RNG seed is performed, and it is up to the user
@@ -106,14 +108,14 @@ adonis_pq(
 - ...:
 
   Additional arguments passed on to
-  [`vegan::adonis2()`](https://vegandevs.github.io/vegan/reference/vegan-defunct.html)
+  [`vegan::adonis2()`](https://vegandevs.github.io/vegan/reference/adonis.html)
   function.
 
 ## Value
 
 The function returns an anova.cca result object with a new column for
 partial R^2. See help of
-[`vegan::adonis2()`](https://vegandevs.github.io/vegan/reference/vegan-defunct.html)
+[`vegan::adonis2()`](https://vegandevs.github.io/vegan/reference/adonis.html)
 for more information.
 
 ## Details
@@ -148,84 +150,10 @@ adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE)
 #> Total    270   53.972 1.00000                  
 #> ---
 #> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = NULL)
-#> Taxa are now in columns.
-#> Removing NA from SeqTech
-#> Removing NA from Enterotype
-#> 9 were discarded due to NA in variables present in formula.
-#> Permutation test for adonis under reduced model
-#> Permutation: free
-#> Number of permutations: 999
-#> 
-#> vegan::adonis2(formula = .formula, data = metadata)
-#>           Df SumOfSqs      R2      F Pr(>F)    
-#> Model      8   38.194 0.70766 79.278  0.001 ***
-#> Residual 262   15.778 0.29234                  
-#> Total    270   53.972 1.00000                  
-#> ---
-#> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "onedf")
-#> Taxa are now in columns.
-#> Removing NA from SeqTech
-#> Removing NA from Enterotype
-#> 9 were discarded due to NA in variables present in formula.
-#> Permutation test for adonis under reduced model
-#> Permutation: free
-#> Number of permutations: 999
-#> 
-#> vegan::adonis2(formula = .formula, data = metadata)
-#>           Df SumOfSqs      R2      F Pr(>F)    
-#> Model      8   38.194 0.70766 79.278  0.001 ***
-#> Residual 262   15.778 0.29234                  
-#> Total    270   53.972 1.00000                  
-#> ---
-#> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "margin")
-#> Taxa are now in columns.
-#> Removing NA from SeqTech
-#> Removing NA from Enterotype
-#> 9 were discarded due to NA in variables present in formula.
-#> Permutation test for adonis under reduced model
-#> Permutation: free
-#> Number of permutations: 999
-#> 
-#> vegan::adonis2(formula = .formula, data = metadata)
-#>           Df SumOfSqs      R2      F Pr(>F)    
-#> Model      8   38.194 0.70766 79.278  0.001 ***
-#> Residual 262   15.778 0.29234                  
-#> Total    270   53.972 1.00000                  
-#> ---
-#> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-adonis_pq(enterotype, "SeqTech", dist_method = "jaccard")
-#> Taxa are now in columns.
-#> Permutation test for adonis under reduced model
-#> Permutation: free
-#> Number of permutations: 999
-#> 
-#> vegan::adonis2(formula = .formula, data = metadata)
-#>           Df SumOfSqs      R2      F Pr(>F)    
-#> Model      2   31.330 0.40211 93.147  0.001 ***
-#> Residual 277   46.585 0.59789                  
-#> Total    279   77.915 1.00000                  
-#> ---
-#> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison")
-#> Taxa are now in columns.
-#> Permutation test for adonis under reduced model
-#> Permutation: free
-#> Number of permutations: 999
-#> 
-#> vegan::adonis2(formula = .formula, data = metadata)
-#>           Df SumOfSqs      R2    F Pr(>F)    
-#> Model      2   121403 0.95598 3008  0.001 ***
-#> Residual 277     5590 0.04402                
-#> Total    279   126992 1.00000                
-#> ---
-#> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-adonis_pq(data_fungi_mini, "Time*Height", na_remove = TRUE,
-  correction_for_sample_size = TRUE)
+adonis_pq(data_fungi_mini, "Time*Height",
+  na_remove = TRUE,
+  correction_for_sample_size = TRUE
+)
 #> Taxa are now in columns.
 #> Removing NA from Time
 #> Removing NA from Height
@@ -236,10 +164,17 @@ adonis_pq(data_fungi_mini, "Time*Height", na_remove = TRUE,
 #> 
 #> vegan::adonis2(formula = .formula, data = metadata)
 #>          Df SumOfSqs      R2      F Pr(>F)  
-#> Model     6    3.238 0.09064 1.1297  0.038 *
+#> Model     6    3.238 0.09064 1.1297  0.045 *
 #> Residual 68   32.484 0.90936                
 #> Total    74   35.722 1.00000                
 #> ---
 #> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 # }
+if (FALSE) { # \dontrun{
+adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = NULL)
+adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "onedf")
+adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "margin")
+adonis_pq(enterotype, "SeqTech", dist_method = "jaccard")
+adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison")
+} # }
 ```

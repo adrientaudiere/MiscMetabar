@@ -27,7 +27,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -264,8 +264,8 @@ most worth caching with <code>targets</code> or
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://memoise.r-lib.org" class="external-link">memoise</a></span><span class="op">)</span></span>
 <span><span class="va">adonis_pq_m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://memoise.r-lib.org/reference/memoise.html" class="external-link">memoise</a></span><span class="op">(</span><span class="va">adonis_pq</span><span class="op">)</span></span>
-<span><span class="fu">adonis_pq_m</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Height"</span><span class="op">)</span>  <span class="co"># slow the first time</span></span>
-<span><span class="fu">adonis_pq_m</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Height"</span><span class="op">)</span>  <span class="co"># instant the second time</span></span></code></pre></div>
+<span><span class="fu">adonis_pq_m</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Height"</span><span class="op">)</span> <span class="co"># slow the first time</span></span>
+<span><span class="fu">adonis_pq_m</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Height"</span><span class="op">)</span> <span class="co"># instant the second time</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="lower-iteration-counts-for-exploratory-work">Lower iteration counts for exploratory work<a class="anchor" aria-label="anchor" href="#lower-iteration-counts-for-exploratory-work"></a>

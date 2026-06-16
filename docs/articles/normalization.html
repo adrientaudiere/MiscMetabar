@@ -27,7 +27,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.15.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.16.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,6 +48,7 @@
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -122,7 +123,10 @@ of magnitude, even within the same experiment. Applying diversity or
 ordination methods to raw counts therefore conflates biological signal
 with technical depth variation.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data<span class="op">=</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_sums.html" class="external-link">sample_sums</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span><span class="op">)</span>,<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span>color<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x<span class="op">=</span><span class="st">"Number of sequences per samples"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_sums.html" class="external-link">sample_sums</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Number of sequences per samples"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="normalization_files/figure-html/depth-variation-1.png" class="r-plt" alt="Large variation in sequencing depth across samples in 'data_fungi_mini'." width="672"><p class="caption">
 Large variation in sequencing depth across samples in ‘data_fungi_mini’.
@@ -198,8 +202,7 @@ Large variation in sequencing depth across samples in ‘data_fungi_mini’.
 <tr class="odd">
 <td>SRS</td>
 <td><code><a href="../reference/srs_pq.html">srs_pq()</a></code></td>
-<td>Rank-preserving subsampling <span class="citation">(Heidrich et al.
-2021)</span>
+<td>Rank-preserving subsampling <span class="citation">(<span class="nocase">Heidrich et al.</span> 2021)</span>
 </td>
 </tr>
 <tr class="even">
@@ -226,8 +229,8 @@ Oshlack 2010)</span>
 <tr class="odd">
 <td>VST</td>
 <td><code><a href="../reference/vst_pq.html">vst_pq()</a></code></td>
-<td>Variance-stabilising (DESeq2) <span class="citation">(Love, Huber,
-and Anders 2014)</span>
+<td>Variance-stabilising (DESeq2) <span class="citation">(Love et al.
+2014)</span>
 </td>
 </tr>
 <tr class="even">
@@ -254,7 +257,7 @@ handles the <code>taxa_are_rows</code> orientation automatically.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data_tss</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/transform_pq.html">transform_pq</a></span><span class="op">(</span><span class="va">data_fungi_mini</span>, method <span class="op">=</span> <span class="st">"tss"</span><span class="op">)</span></span>
 <span><span class="va">data_hell</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/transform_pq.html">transform_pq</a></span><span class="op">(</span><span class="va">data_fungi_mini</span>, method <span class="op">=</span> <span class="st">"hellinger"</span><span class="op">)</span></span>
-<span><span class="va">data_clr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/transform_pq.html">transform_pq</a></span><span class="op">(</span><span class="va">data_fungi_mini</span>, method <span class="op">=</span> <span class="st">"clr"</span><span class="op">)</span>  <span class="co"># pseudocount = 1 by default</span></span>
+<span><span class="va">data_clr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/transform_pq.html">transform_pq</a></span><span class="op">(</span><span class="va">data_fungi_mini</span>, method <span class="op">=</span> <span class="st">"clr"</span><span class="op">)</span> <span class="co"># pseudocount = 1 by default</span></span>
 <span><span class="va">data_log1p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/transform_pq.html">transform_pq</a></span><span class="op">(</span><span class="va">data_fungi_mini</span>, method <span class="op">=</span> <span class="st">"log1p"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Sample sums after TSS: all 1</span></span>
@@ -307,10 +310,10 @@ loss <span class="citation">(McMurdie and Holmes 2014; McKnight et al.
 <h3 id="srs_pq-scaling-with-ranked-subsampling">
 <code>srs_pq()</code> — Scaling with Ranked Subsampling<a class="anchor" aria-label="anchor" href="#srs_pq-scaling-with-ranked-subsampling"></a>
 </h3>
-<p>SRS <span class="citation">(Heidrich et al. 2021)</span> scales to a
-common library size while <strong>preserving the rank order</strong> of
-OTU abundances, avoiding the randomness of rarefaction and the data loss
-associated with it.</p>
+<p>SRS <span class="citation">(<span class="nocase">Heidrich et
+al.</span> 2021)</span> scales to a common library size while
+<strong>preserving the rank order</strong> of OTU abundances, avoiding
+the randomness of rarefaction and the data loss associated with it.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data_srs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/srs_pq.html">srs_pq</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_sums.html" class="external-link">sample_sums</a></span><span class="op">(</span><span class="va">data_srs</span><span class="op">)</span><span class="op">)</span>, <span class="fl">0</span><span class="op">)</span></span>
@@ -355,8 +358,8 @@ a reference.</p>
 <h3 id="vst_pq-variance-stabilising-transformation">
 <code>vst_pq()</code> — Variance Stabilising Transformation<a class="anchor" aria-label="anchor" href="#vst_pq-variance-stabilising-transformation"></a>
 </h3>
-<p>VST <span class="citation">(Love, Huber, and Anders 2014)</span> fits
-a negative-binomial model to stabilise the mean-variance relationship,
+<p>VST <span class="citation">(Love et al. 2014)</span> fits a
+negative-binomial model to stabilise the mean-variance relationship,
 making counts more suitable for methods that assume homoscedastic
 data.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -372,8 +375,7 @@ residuals from a regression of log-richness on log-depth and stores them
 in <code>sample_data</code>. The residuals represent richness corrected
 for depth variation — a depth-robust alpha diversity metric proposed by
 <span class="citation">McKnight et al. (2019)</span> and used in
-large-scale soil fungal surveys <span class="citation">(Mikryukov et al.
-2023)</span>.</p>
+large-scale soil fungal surveys <span class="citation">(<span class="nocase">Mikryukov et al.</span> 2023)</span>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mcknight_residuals_pq.html">mcknight_residuals_pq</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_data-methods.html" class="external-link">sample_data</a></span><span class="op">(</span><span class="va">data_res</span><span class="op">)</span><span class="op">$</span><span class="va">mcknight_residuals</span><span class="op">)</span></span>
@@ -393,19 +395,23 @@ choice of normalisation shapes the ordination landscape.</p>
 <span><span class="va">ord_log1p</span> <span class="op">&lt;-</span> <span class="fu">phyloseq</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/ordinate.html" class="external-link">ordinate</a></span><span class="op">(</span><span class="va">data_log1p</span>, method <span class="op">=</span> <span class="st">"PCoA"</span>, distance <span class="op">=</span> <span class="st">"bray"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p_raw</span> <span class="op">&lt;-</span> <span class="fu">phyloseq</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/plot_ordination.html" class="external-link">plot_ordination</a></span><span class="op">(</span></span>
-<span>  <span class="va">data_fungi_mini</span>, <span class="va">ord_raw</span>, color <span class="op">=</span> <span class="st">"Height"</span></span>
+<span>  <span class="va">data_fungi_mini</span>, <span class="va">ord_raw</span>,</span>
+<span>  color <span class="op">=</span> <span class="st">"Height"</span></span>
 <span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Raw counts"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p_tss</span> <span class="op">&lt;-</span> <span class="fu">phyloseq</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/plot_ordination.html" class="external-link">plot_ordination</a></span><span class="op">(</span></span>
-<span>  <span class="va">data_tss</span>, <span class="va">ord_tss</span>, color <span class="op">=</span> <span class="st">"Height"</span></span>
+<span>  <span class="va">data_tss</span>, <span class="va">ord_tss</span>,</span>
+<span>  color <span class="op">=</span> <span class="st">"Height"</span></span>
 <span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"TSS"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p_hell</span> <span class="op">&lt;-</span> <span class="fu">phyloseq</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/plot_ordination.html" class="external-link">plot_ordination</a></span><span class="op">(</span></span>
-<span>  <span class="va">data_hell</span>, <span class="va">ord_hell</span>, color <span class="op">=</span> <span class="st">"Height"</span></span>
+<span>  <span class="va">data_hell</span>, <span class="va">ord_hell</span>,</span>
+<span>  color <span class="op">=</span> <span class="st">"Height"</span></span>
 <span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Hellinger"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p_log1p</span> <span class="op">&lt;-</span> <span class="fu">phyloseq</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/plot_ordination.html" class="external-link">plot_ordination</a></span><span class="op">(</span></span>
-<span>  <span class="va">data_log1p</span>, <span class="va">ord_log1p</span>, color <span class="op">=</span> <span class="st">"Height"</span></span>
+<span>  <span class="va">data_log1p</span>, <span class="va">ord_log1p</span>,</span>
+<span>  color <span class="op">=</span> <span class="st">"Height"</span></span>
 <span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"log1p"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">patchwork</span><span class="fu">::</span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html" class="external-link">wrap_plots</a></span><span class="op">(</span><span class="va">p_raw</span>, <span class="va">p_tss</span>, <span class="va">p_hell</span>, <span class="va">p_log1p</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
@@ -435,7 +441,8 @@ covariate<a class="anchor" aria-label="anchor" href="#adonis_pq-permanova-with-l
 <p>When <code>correction_for_sample_size = TRUE</code>,
 <code><a href="../reference/adonis_pq.html">adonis_pq()</a></code> prepends <code>sample_size</code>
 (i.e. <code>sample_sums(physeq)</code>) to the PERMANOVA formula, as
-recommended by <span class="citation">Weiss et al. (2017)</span>:</p>
+recommended by <span class="citation"><span class="nocase">Weiss et
+al.</span> (2017)</span>:</p>
 <pre><code><span><span class="va">sample_size</span> <span class="op">+</span> <span class="va">Biological_Effect</span> <span class="op">~</span> <span class="va">distance_matrix</span></span></code></pre>
 <p>Library-size variation is partitioned out as the first term, so the
 remaining variance attributed to the biological factor is not confounded
@@ -495,7 +502,7 @@ Are you doing alpha diversity?
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-chen2018" class="csl-entry">
 Chen, Li, James Reeve, Lunchao Zhang, Shengbing Huang, Xuefeng Wang, and
 Jun Chen. 2018. <span>“GMPR: A Robust Normalization Method for
@@ -508,10 +515,10 @@ Egozcue. 2017. <span>“Microbiome Datasets Are Compositional: And This Is
 Not Optional.”</span> <em>Frontiers in Microbiology</em> 8: 2224. <a href="https://doi.org/10.3389/fmicb.2017.02224" class="external-link">https://doi.org/10.3389/fmicb.2017.02224</a>.
 </div>
 <div id="ref-heidrich2021" class="csl-entry">
-Heidrich, Vitor, Eder T Rezende-Filho, Mariana F Crisóstomo, et al.
-2021. <span>“SRS: A Powerful r Package for Normalizing Whole-Genome
-Shotgun Sequencing Data with Uneven Sequencing Depth.”</span>
-<em>PeerJ</em> 9: e9593. <a href="https://doi.org/10.7717/peerj.9593" class="external-link">https://doi.org/10.7717/peerj.9593</a>.
+<span class="nocase">Heidrich, Vitor, Eder T Rezende-Filho, Mariana F
+Crisóstomo, et al.</span> 2021. <span>“SRS: A Powerful r Package for
+Normalizing Whole-Genome Shotgun Sequencing Data with Uneven Sequencing
+Depth.”</span> <em>PeerJ</em> 9: e9593. <a href="https://doi.org/10.7717/peerj.9593" class="external-link">https://doi.org/10.7717/peerj.9593</a>.
 </div>
 <div id="ref-legendre2001" class="csl-entry">
 Legendre, Pierre, and Eugene D Gallagher. 2001. <span>“Ecologically
@@ -535,10 +542,10 @@ Why Rarefying Microbiome Data Is Inadmissible.”</span> <em>PLoS
 Computational Biology</em> 10 (4): e1003531. <a href="https://doi.org/10.1371/journal.pcbi.1003531" class="external-link">https://doi.org/10.1371/journal.pcbi.1003531</a>.
 </div>
 <div id="ref-mikryukov2023" class="csl-entry">
-Mikryukov, Vladimir, Olesya Dulya, Alexander Zizka, Mohammad Bahram,
-Niloufar Hagh-Doust, Sten Anslan, Oleh Prylutskyi, et al. 2023.
-<span>“Connecting the Multiple Dimensions of Global Soil Fungal
-Diversity.”</span> <em>Science Advances</em> 9 (48): eadj8016. <a href="https://doi.org/10.1126/sciadv.adj8016" class="external-link">https://doi.org/10.1126/sciadv.adj8016</a>.
+<span class="nocase">Mikryukov, Vladimir, Olesya Dulya, Alexander Zizka,
+et al.</span> 2023. <span>“Connecting the Multiple Dimensions of Global
+Soil Fungal Diversity.”</span> <em>Science Advances</em> 9 (48):
+eadj8016. <a href="https://doi.org/10.1126/sciadv.adj8016" class="external-link">https://doi.org/10.1126/sciadv.adj8016</a>.
 </div>
 <div id="ref-paulson2013" class="csl-entry">
 Paulson, Joseph N, O Colin Stine, Héctor Corrada Bravo, and Mihai Pop.
@@ -556,11 +563,10 @@ Normalization Method for Differential Expression Analysis of RNA-Seq
 Data.”</span> <em>Genome Biology</em> 11 (3): R25. <a href="https://doi.org/10.1186/gb-2010-11-3-r25" class="external-link">https://doi.org/10.1186/gb-2010-11-3-r25</a>.
 </div>
 <div id="ref-weiss2017" class="csl-entry">
-Weiss, Sophie, Zhenjiang Zech Xu, Shyamal Peddada, Amnon Amir, Kyle
-Bittinger, Antonio Gonzalez, Catherine Lozupone, et al. 2017.
-<span>“Normalization and Microbial Differential Abundance Strategies
-Depend Upon Data Characteristics.”</span> <em>Microbiome</em> 5 (1): 27.
-<a href="https://doi.org/10.1186/s40168-017-0237-y" class="external-link">https://doi.org/10.1186/s40168-017-0237-y</a>.
+<span class="nocase">Weiss, Sophie, Zhenjiang Zech Xu, Shyamal Peddada,
+et al.</span> 2017. <span>“Normalization and Microbial Differential
+Abundance Strategies Depend Upon Data Characteristics.”</span>
+<em>Microbiome</em> 5 (1): 27. <a href="https://doi.org/10.1186/s40168-017-0237-y" class="external-link">https://doi.org/10.1186/s40168-017-0237-y</a>.
 </div>
 </div>
 </div>

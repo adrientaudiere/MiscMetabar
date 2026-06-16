@@ -1,6 +1,6 @@
 # A wrapper of [`IdTaxa`](https://rdrr.io/pkg/DECIPHER/man/IdTaxa.html)
 
-[![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-stable](https://img.shields.io/badge/lifecycle-stable-green)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 This function is basically a wrapper of functions
 [`DECIPHER::IdTaxa()`](https://rdrr.io/pkg/DECIPHER/man/IdTaxa.html) and

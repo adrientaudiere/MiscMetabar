@@ -49,11 +49,7 @@ GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #> Also defined by ‘RNeXML’
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
 #> Also defined by ‘RNeXML’
-GP <- rarefy_even_depth(subset_samples_pq(GP, sample_sums(GP) > 3000))
-#> You set `rngseed` to FALSE. Make sure you've set & recorded
-#>  the random seed of your session for reproducibility.
-#> See `?set.seed`
-#> ...
+GP <- rarefy_pq(subset_samples_pq(GP, sample_sums(GP) > 3000), replace = TRUE)
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
 #> Also defined by ‘RNeXML’
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
@@ -62,17 +58,6 @@ GP <- rarefy_even_depth(subset_samples_pq(GP, sample_sums(GP) > 3000))
 #> Also defined by ‘RNeXML’
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
 #> Also defined by ‘RNeXML’
-#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
-#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
-#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
-#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
-#> 58OTUs were removed because they are no longer 
-#> present in any sample after random subsampling
-#> ...
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
 #> Also defined by ‘RNeXML’
 p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10)
@@ -81,7 +66,7 @@ val_threshold <- accu_samp_threshold(p)
 
 summary(val_threshold)
 #>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#>    2891    6154    7361    7006    8214   10411 
+#>    3551    6094    7261    7084    8251   10261 
 
 ##'  Plot the number of sequences needed to accumulate 0.95% of ASV in 50%, 75%
 ##'  and 100% of samples

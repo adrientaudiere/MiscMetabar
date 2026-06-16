@@ -1,6 +1,6 @@
 # Verify the taxonomy table of a phyloseq object
 
-[![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-stable](https://img.shields.io/badge/lifecycle-stable-green)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 Check taxonomy table for common issues and send warnings/messages
 accordingly. This function is called by

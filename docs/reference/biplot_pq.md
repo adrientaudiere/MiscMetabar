@@ -188,10 +188,13 @@ biplot_pq(
 - taxa_names_rank:
 
   (default: NULL) Name of a taxonomic rank in `tax_table(physeq)` to use
-  as labels on the taxa axis instead of `taxa_names()`. When NULL
-  (default), `taxa_names()` are used. When set (e.g. `"Genus"`), the
-  genus name is displayed. OTUs sharing the same label at this rank will
-  appear as a single merged bar.
+  as labels on the taxa axis instead of
+  [`taxa_names()`](https://rdrr.io/pkg/phyloseq/man/taxa_names-methods.html).
+  When NULL (default),
+  [`taxa_names()`](https://rdrr.io/pkg/phyloseq/man/taxa_names-methods.html)
+  are used. When set (e.g. `"Genus"`), the genus name is displayed. OTUs
+  sharing the same label at this rank will appear as a single merged
+  bar.
 
 - plotly_version:
 

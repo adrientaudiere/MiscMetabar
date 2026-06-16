@@ -1,5 +1,7 @@
 # Find the MMseqs2 binary
 
+[![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+
 Looks for the MMseqs2 binary in three places, in order:
 
 1.  The option `MiscMetabar.mmseqs2path` (if set).

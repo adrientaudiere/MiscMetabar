@@ -2390,7 +2390,7 @@ summary_plot_pq <- function(
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #'   Make a taxonomic tree using the ASV names of a physeq object and the
 #'   Open Tree of Life tree.
@@ -5157,7 +5157,7 @@ ridges_pq <- function(
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' Graphical representation of distribution of samples across taxa using ridges.
 #' This is the sample-centric counterpart of [ridges_pq()]: each ridge
@@ -6901,7 +6901,7 @@ plot_seq_ratio_pq <- function(physeq, min_nb_seq = 1000, annotations = TRUE) {
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' In stacked bar plots, ggplot2's default discrete palette assigns colors
 #' using level ordered (sometimes alphabetically), which often places perceptually
@@ -7114,7 +7114,7 @@ ggplot_add.reorder_distinct_colors_spec <- function(object, plot, ...) {
 #'
 #' @details
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
+#' <img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 #'
 #'   Basically a wrapper of [phyloseq::plot_ordination()] to use aitchison and
 #'  robust.aitchison distances from vegan package.

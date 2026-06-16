@@ -79,6 +79,8 @@
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/distri_1_taxa.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/divent_hill_matrix_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/fac2col.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/fastp.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/fastq_to_fasta.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/filt_taxa_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/filt_taxa_wo_NA.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/filter_asv_blast.html</loc></url>
@@ -95,6 +97,7 @@
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/get_funguild_db.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/ggaluv_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/ggbetween_pq.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/ggplot_add.reorder_distinct_colors_spec.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/ggscatt_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/ggvenn_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/glmutli_pq.html</loc></url>
@@ -112,10 +115,13 @@
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/install_mmseqs2.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/install_pkg_needed.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/install_vsearch.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/is_blastn_installed.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/is_cutadapt_installed.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/is_falco_installed.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/is_fastp_installed.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/is_krona_installed.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/is_mmseqs2_installed.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/is_multiqc_installed.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/is_mumu_installed.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/is_swarm_installed.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/is_vsearch_installed.html</loc></url>
@@ -124,6 +130,7 @@
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/lefser_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/libs/datatables-binding-0.32/fastqc_report.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/list_fastq_files.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/load_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/lulu.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/lulu_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/mcknight_residuals_pq.html</loc></url>
@@ -141,6 +148,8 @@
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/no_legend.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/normalize_prop_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/perc.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/phyloseq_to_MDT_csv.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/phyloseq_to_MDT_excel.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/phyloseq_to_edgeR.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/physeq_heat_tree.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/physeq_or_string_to_dna.html</loc></url>
@@ -153,15 +162,18 @@
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_guild_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_mt.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_ordination_pq.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_overview_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_refseq_extremity_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_refseq_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_seq_ratio_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_tax_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_tsne_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_var_part_pq.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/plot_volcano_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/postcluster_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/profile_hill_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/psmelt_samples_pq.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/rarefy_even_depth_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/rarefy_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/rarefy_sample_count_by_modality.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/read_pq.html</loc></url>
@@ -170,6 +182,7 @@
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/reorder_colors.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/reorder_distinct_colors.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/reorder_taxa_pq.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/reshape_ggplot.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/resolve_vector_ranks.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/ridges_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/ridges_sam_pq.html</loc></url>
@@ -185,6 +198,7 @@
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/signif_ancombc.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/simplify_taxo.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/srs_pq.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/strassoc_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/subsample_fastq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/subset_samples_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/subset_taxa_pq.html</loc></url>
@@ -206,6 +220,8 @@
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/treemap_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/tsne_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/umap_pq.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/unique_or_na.default.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/unique_or_na.factor.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/unique_or_na.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/unwanted_tax_patterns.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/upset_pq.html</loc></url>
@@ -218,6 +234,7 @@
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/vs_search_global.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/vsearch_clustering.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/vst_pq.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/wheat_plot.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/reference/write_pq.html</loc></url>
 </urlset>
 

@@ -152,6 +152,7 @@ assign_vsearch_lca(
   consider before stopping the search for a given query. Default value
   is based on [stampa](https://github.com/frederic-mahe/stampa) See
   Vsearch Manual for parameter `--maxrejects`.
+  [![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 - top_hits_only:
 
@@ -280,7 +281,8 @@ data_fungi_mini_new <- assign_vsearch_lca(data_fungi_mini,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
   lca_cutoff = 0.9, behavior = "add_to_phyloseq"
 )
-
+# }
+if (FALSE) { # \dontrun{
 data_fungi_mini_new2 <- assign_vsearch_lca(data_fungi_mini,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
   id = 0.6, behavior = "add_to_phyloseq", top_hits_only = FALSE
@@ -290,5 +292,5 @@ data_fungi_mini_new3 <- assign_vsearch_lca(data_fungi_mini,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
   id = 0.5, behavior = "add_to_phyloseq", top_hits_only = FALSE, vote_algorithm = "rel_majority"
 )
-# }
+} # }
 ```

@@ -1,6 +1,6 @@
 # Convert phyloseq OTU count data into DGEList for edgeR package
 
-Convert phyloseq OTU count data into DGEList for edgeR package
+[![lifecycle-stable](https://img.shields.io/badge/lifecycle-stable-green)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 ## Usage
 
@@ -63,6 +63,7 @@ if (requireNamespace("edgeR")) {
   phyloseq_to_edgeR(data_fungi_mini, group = "Height")
 }
 #> Loading required namespace: edgeR
+#> calcNormFactors has been renamed to normLibSizes
 #> An object of class "DGEList"
 #> $counts
 #>       A10-005-B_S188_MERGED.fastq.gz A10-005-H_S189_MERGED.fastq.gz

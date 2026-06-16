@@ -2,7 +2,13 @@
 % Please edit documentation in R/beta_div_test.R
 \name{adonis_pq}
 \alias{adonis_pq}
-\title{Permanova on a phyloseq object}
+\title{Permanova on a phyloseq object
+\if{html}{\out{<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">}}
+\if{html}{\out{<img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable">}}\if{html}{\out{</a>}}
+\if{html}{\out{<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">}}
+\if{html}{\out{<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental">}}\if{html}{\out{</a>}}
+
+A wrapper for the \code{\link[vegan:adonis2]{vegan::adonis2()}} function in the case of \code{physeq} object.}
 \usage{
 adonis_pq(
   physeq,
@@ -75,11 +81,11 @@ new column for partial R^2. See help of \code{\link[vegan:adonis2]{vegan::adonis
 more information.
 }
 \description{
-\if{html}{\out{
-<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
-}}
-
+Permanova on a phyloseq object
+\if{html}{\out{<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">}}
+\if{html}{\out{<img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable">}}\if{html}{\out{</a>}}
+\if{html}{\out{<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">}}
+\if{html}{\out{<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental">}}\if{html}{\out{</a>}}
 
 A wrapper for the \code{\link[vegan:adonis2]{vegan::adonis2()}} function in the case of \code{physeq} object.
 }

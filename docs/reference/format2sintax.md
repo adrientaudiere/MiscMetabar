@@ -1,6 +1,6 @@
 # Format a fasta database in sintax format
 
-[![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 Only tested with Unite and Eukaryome fasta file for the moment. Rely on
 the presence of the pattern pattern_tax default "k\_\_" to format the

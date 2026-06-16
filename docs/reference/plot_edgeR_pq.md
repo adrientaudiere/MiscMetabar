@@ -12,7 +12,8 @@ plot_edgeR_pq(
   contrast = NULL,
   pval = 0.05,
   taxolev = "Genus",
-  color_tax = "Phylum",
+  color_rank = "Phylum",
+  color_tax = lifecycle::deprecated(),
   verbose = TRUE,
   ...
 )
@@ -43,9 +44,13 @@ plot_edgeR_pq(
 
   taxonomic level of interest
 
+- color_rank:
+
+  taxonomic level used for color assignation.
+
 - color_tax:
 
-  taxonomic level used for color assignation
+  **\[deprecated\]** Use `color_rank` instead.
 
 - verbose:
 
@@ -89,21 +94,18 @@ GP_archae <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archa
 # \donttest{
 if (requireNamespace("edgeR")) {
   plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
-    color_tax = "Kingdom"
+    color_rank = "Kingdom"
   )
 
   plot_edgeR_pq(GP_archae, c("SampleType", "Soil", "Feces"),
-    taxolev = "Class", color_tax = "Kingdom"
+    taxolev = "Class", color_rank = "Kingdom"
   )
 }
 #> Conversion to edgeR format
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
 #> Also defined by ‘RNeXML’ ‘tidytree’
+#> calcNormFactors has been renamed to normLibSizes
 #> Perform edgeR binary test
-#> Conversion to edgeR format
-#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’ ‘tidytree’
-#> Perform edgeR binary test
-
+#> Error in edgeR::exactTest(data_edger, pair = c(contrast[2], contrast[3]),     ...): unused argument (color_rank = "Kingdom")
 # }
 ```

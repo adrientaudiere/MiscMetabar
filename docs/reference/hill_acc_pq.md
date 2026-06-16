@@ -111,17 +111,20 @@ Biogeography*, 47.
 
 ``` r
 if (FALSE) { # \dontrun{
- # Individual (sequence-based) accumulation curves
-  hill_acc_pq(rarefy_even_depth(data_fungi_mini, sample.size = 500),
-    n_permutations = 3) + no_legend()
-  hill_acc_pq(rarefy_even_depth(data_fungi_mini, sample.size = 500),
-    n_permutations = 3,
-    merge_sample_by = "Height"
-  )
+# Individual (sequence-based) accumulation curves
+hill_acc_pq(rarefy_pq(data_fungi_mini, sample_size = 500, replace = TRUE),
+  n_permutations = 3
+) + no_legend()
+hill_acc_pq(rarefy_pq(data_fungi_mini, sample_size = 500, replace = TRUE),
+  n_permutations = 3,
+  merge_sample_by = "Height"
+)
 
- # Sample-based accumulation curve
-  hill_acc_pq(data_fungi_mini, type = "sample", n_permutations = 3)
-  hill_acc_pq(data_fungi_mini, type = "sample", merge_sample_by = "Height",
-    n_permutations = 3)
+# Sample-based accumulation curve
+hill_acc_pq(data_fungi_mini, type = "sample", n_permutations = 3)
+hill_acc_pq(data_fungi_mini,
+  type = "sample", merge_sample_by = "Height",
+  n_permutations = 3
+)
 } # }
 ```

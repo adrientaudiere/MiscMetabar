@@ -181,15 +181,15 @@ Adrien Taudière
 
 ``` r
 
-p <- hill_pq(data_fungi_mini, "Height", q = 1:2)
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
+data_f <- prune_samples(
+  sample_names(data_fungi_mini)[1:20],
+  data_fungi_mini
+)
+p <- hill_pq(data_f, "Height", q = c(0, 1))
 #> 2 out of 2 Hill scales do not show any global trends with you factor Height. Tuckey HSD plot is not informative for those Hill scales. Letters are not printed for those Hill scales
-p_h1 <- p[[1]] + theme(legend.position = "none")
-p_h2 <- p[[2]] + theme(legend.position = "none")
-multiplot(plotlist = list(p_h1, p_h2, p[[3]]), cols = 4)
+p[[1]] + theme(legend.position = "none")
 
-# \donttest{
+if (FALSE) { # \dontrun{
 if (requireNamespace("multcompView")) {
   p2 <- hill_pq(data_fungi_mini, "Time",
     correction_for_sample_size = FALSE,
@@ -204,12 +204,5 @@ if (requireNamespace("multcompView")) {
     add_points = TRUE
   )
 }
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> 3 out of 3 Hill scales do not show any global trends with you factor Height. Tuckey HSD plot is not informative for those Hill scales. Letters are not printed for those Hill scales
-# }
+} # }
 ```

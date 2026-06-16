@@ -21,6 +21,10 @@ unique_or_na(x)
 
 Either a single value (if `unique(x)` return a single value) or a NA
 
+## Details
+
+[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+
 ## Author
 
 Michael R. McLaren (orcid:

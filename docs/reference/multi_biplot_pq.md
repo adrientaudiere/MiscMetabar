@@ -55,8 +55,10 @@ Adrien Taudière
 
 ``` r
 # \donttest{
-data_fungi_abun <- subset_taxa_pq(data_fungi_mini,
-  taxa_sums(data_fungi_mini) > 1000)
+data_fungi_abun <- subset_taxa_pq(
+  data_fungi_mini,
+  taxa_sums(data_fungi_mini) > 1000
+)
 #> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).
 #> Number of non-matching ASV 0
 #> Number of matching ASV 45

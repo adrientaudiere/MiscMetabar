@@ -71,7 +71,9 @@ accu_plot_balanced_modality(
 
   (int) A single integer value equal to the number of reads being
   simulated, also known as the depth. See
-  [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html).
+  [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html)
+  and
+  [`rarefy_even_depth_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/rarefy_even_depth_pq.md).
 
 - verbose:
 

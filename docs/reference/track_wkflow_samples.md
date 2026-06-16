@@ -1,6 +1,6 @@
 # Track the number of reads (= sequences), samples and cluster (e.g. ASV) for each sample
 
-[![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 Accept all input types supported by
 [`track_wkflow()`](https://adrientaudiere.github.io/MiscMetabar/reference/track_wkflow.md):

@@ -1,6 +1,6 @@
 # Clean phyloseq object by removing empty samples and taxa
 
-[![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-stable](https://img.shields.io/badge/lifecycle-stable-green)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 In addition, this function check for discrepancy (and rename) between
 (i) taxa names in refseq, taxonomy table and otu_table and between (ii)
@@ -28,7 +28,8 @@ clean_pq(
   tax_replace_to_NA = FALSE,
   tax_redundant_suffix = FALSE,
   tax_replace_space_with = "_",
-  tax_replace_invisible_chars = FALSE
+  tax_replace_invisible_chars = FALSE,
+  tax_replace_NA_string = FALSE
 )
 ```
 
@@ -141,6 +142,14 @@ clean_pq(
   [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/reference/verify_tax_table.md)'s
   `replace_invisible_chars` for the exact pattern.
 
+- tax_replace_NA_string:
+
+  (logical, default FALSE) If TRUE, replace the literal strings `"NA"`,
+  `"NA NA"`, `"NA NA NA"` (any whitespace-separated repetition of `NA`,
+  a common artifact of pasting taxonomic ranks together) in `tax_table`
+  values with true `<NA>`. Case-sensitive to avoid clobbering real data.
+  Default `FALSE` to avoid breaking changes.
+
 ## Value
 
 A new
@@ -180,6 +189,14 @@ clean_pq(data_fungi_mini, tax_replace_to_NA = TRUE)
 #> refseq()      DNAStringSet:      [ 45 reference sequences ]
 # Drop redundant "_sp" tips
 clean_pq(data_fungi_mini, tax_redundant_suffix = TRUE)
+#> No values to modify. Returning original phyloseq object.
+#> phyloseq-class experiment-level object
+#> otu_table()   OTU Table:         [ 45 taxa and 137 samples ]
+#> sample_data() Sample Data:       [ 137 samples by 7 sample variables ]
+#> tax_table()   Taxonomy Table:    [ 45 taxa by 12 taxonomic ranks ]
+#> refseq()      DNAStringSet:      [ 45 reference sequences ]
+# Replace "NA" / "NA NA" concatenation artifacts with true <NA>
+clean_pq(data_fungi_mini, tax_replace_NA_string = TRUE)
 #> No values to modify. Returning original phyloseq object.
 #> phyloseq-class experiment-level object
 #> otu_table()   OTU Table:         [ 45 taxa and 137 samples ]

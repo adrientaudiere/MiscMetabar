@@ -79,7 +79,7 @@ args was used or if return_swarm_df was set to TRUE.
 \description{
 \if{html}{\out{
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
+<img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a>
 }}
 
 

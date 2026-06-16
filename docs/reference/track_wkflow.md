@@ -1,6 +1,6 @@
 # Track the number of reads (= sequences), samples and cluster (e.g. ASV) from various objects including dada-class and derep-class.
 
-[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-stable](https://img.shields.io/badge/lifecycle-stable-green)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 - List of fastq and fastg.gz files -\> nb of reads and samples
 

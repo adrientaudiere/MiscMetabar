@@ -1,6 +1,9 @@
 # Test multiple times effect of factor on Hill diversity with different rarefaction even depth
 
-[![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-deprecated](https://img.shields.io/badge/lifecycle-deprecated-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+
+\#**\[deprecated\]** This function has moved to the `bootpq` \#package.
+Please use `bootpq::hill_test_rarperm_pq()` instead.
 
 This reduce the risk of a random drawing of a exceptional situation of
 an unique rarefaction.
@@ -52,7 +55,9 @@ hill_test_rarperm_pq(
 
   (int) A single integer value equal to the number of reads being
   simulated, also known as the depth. See
-  [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html).
+  [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html)
+  and
+  [`rarefy_even_depth_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/rarefy_even_depth_pq.md).
 
 - verbose:
 
@@ -131,13 +136,17 @@ Adrien Taudière
 if (FALSE) { # \dontrun{
 if (requireNamespace("ggstatsplot")) {
   hill_test_rarperm_pq(data_fungi, "Time", nperm = 3)
-  res <- hill_test_rarperm_pq(data_fungi, "Height", nperm = 3,
-    p_val_signif = 0.9)
+  res <- hill_test_rarperm_pq(data_fungi, "Height",
+    nperm = 3,
+    p_val_signif = 0.9
+  )
   patchwork::wrap_plots(res$plots[[1]])
   res$plots[[1]][[1]] + res$plots[[2]][[1]] + res$plots[[3]][[1]]
   res$prop_signif
-  res_para <- hill_test_rarperm_pq(data_fungi, "Height", nperm = 3,
-    type = "parametric")
+  res_para <- hill_test_rarperm_pq(data_fungi, "Height",
+    nperm = 3,
+    type = "parametric"
+  )
   res_para$plots[[1]][[1]] + res_para$plots[[2]][[1]] + res_para$plots[[3]][[1]]
   res_para$pvals
   res_para$method

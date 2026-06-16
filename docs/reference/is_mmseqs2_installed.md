@@ -1,5 +1,7 @@
 # Check whether MMseqs2 is installed and callable
 
+[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+
 Tries to run `mmseqs version` and returns `TRUE` if it succeeds.
 
 ## Usage
