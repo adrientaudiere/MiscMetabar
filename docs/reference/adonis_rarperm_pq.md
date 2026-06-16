@@ -103,7 +103,7 @@ and the maximum quantile value for adonis results. See
 
 ## NGNjpel6HZEIUCifveBCKjS4TkiX0cqp-1- This function has moved to the `bootpq`
 
-## package. Please use `bootpq::adonis_rarperm_pq()` instead.
+## package. Please use [`bootpq::adonis_rarperm_pq()`](https://adrientaudiere.github.io/bootpq/reference/adonis_rarperm_pq.html) instead.
 
 Permanova are computed on a given number of rarefaction with different
 seed.number. This reduce the risk of a random drawing of a exceptional

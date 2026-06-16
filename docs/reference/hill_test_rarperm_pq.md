@@ -3,7 +3,9 @@
 [![lifecycle-deprecated](https://img.shields.io/badge/lifecycle-deprecated-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 \#**\[deprecated\]** This function has moved to the `bootpq` \#package.
-Please use `bootpq::hill_test_rarperm_pq()` instead.
+Please use
+[`bootpq::hill_test_rarperm_pq()`](https://adrientaudiere.github.io/bootpq/reference/hill_test_rarperm_pq.html)
+instead.
 
 This reduce the risk of a random drawing of a exceptional situation of
 an unique rarefaction.

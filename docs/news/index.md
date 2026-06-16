@@ -74,7 +74,8 @@
   in the shared caption.
 - [`hill_test_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/hill_test_rarperm_pq.md)
   is deprecated; it has moved to the `bootpq` package. Use
-  `bootpq::hill_test_rarperm_pq()` instead.
+  [`bootpq::hill_test_rarperm_pq()`](https://adrientaudiere.github.io/bootpq/reference/hill_test_rarperm_pq.html)
+  instead.
 - [`is_blastn_installed()`](https://adrientaudiere.github.io/MiscMetabar/reference/is_blastn_installed.md)
   and
   [`is_multiqc_installed()`](https://adrientaudiere.github.io/MiscMetabar/reference/is_multiqc_installed.md)
@@ -174,7 +175,8 @@
   avoiding ribbons that collapse to a flat line.
 - [`var_par_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/var_par_rarperm_pq.md)
   is deprecated; it has moved to the `bootpq` package. Use
-  `bootpq::var_par_rarperm_pq()` instead.
+  [`bootpq::var_par_rarperm_pq()`](https://adrientaudiere.github.io/bootpq/reference/var_par_rarperm_pq.html)
+  instead.
 - [`vsearch_clustering()`](https://adrientaudiere.github.io/MiscMetabar/reference/vsearch_clustering.md)
   (and
   [`postcluster_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/postcluster_pq.md)
@@ -484,7 +486,7 @@ CRAN release: 2026-06-08
   [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/reference/verify_tax_table.md)
   now uses it as the default for `replace_to_NA`, and other pqverse
   packages
-  (e.g. [`dbpq::count_unwanted_tax()`](https://rdrr.io/pkg/dbpq/man/count_unwanted_tax.html))
+  (e.g. [`dbpq::count_unwanted_tax()`](https://adrientaudiere.github.io/dbpq/reference/count_unwanted_tax.html))
   can reuse it to keep patterns in sync.
 
 ### Breaking changes

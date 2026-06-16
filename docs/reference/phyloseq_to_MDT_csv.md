@@ -91,7 +91,7 @@ files <- phyloseq_to_MDT_csv(clean_pq(data_fungi_mini), path = out_dir)
 #> Warning: ! Recommended Darwin Core sample terms missing from sample_data:
 #>   "decimalLatitude", "decimalLongitude", and "eventDate".
 #> ℹ Add them before GBIF MDT submission if available.
-#> MDT template files written to /tmp/RtmpcTGA0a/mdt_csv
+#> MDT template files written to /tmp/RtmpYra0A9/mdt_csv
 file.exists(files)
 #> [1] TRUE TRUE TRUE
 unlink(out_dir, recursive = TRUE)

@@ -73,176 +73,171 @@ subset_taxa_tax_control(data_fungi,
   as.numeric(data_fungi@otu_table[, 300]),
   min_diff_for_cutoff = 2
 )
-#> number of iterations= 6 
-#> number of iterations= 6 
+#> number of iterations= 5 
+#> number of iterations= 22 
+#> number of iterations= 16 
 #> number of iterations= 11 
-#> number of iterations= 18 
-#> number of iterations= 9 
-#> number of iterations= 13 
+#> number of iterations= 6 
+#> number of iterations= 15 
 #> Error in stats::uniroot(f = f, lower = 1, upper = 1000) : 
 #>   f.upper = f(upper) is NA
 #> Warning: NAs introduced by coercion
-#> number of iterations= 31 
-#> number of iterations= 11 
-#> number of iterations= 9 
-#> number of iterations= 15 
-#> number of iterations= 12 
-#> number of iterations= 13 
-#> number of iterations= 16 
-#> number of iterations= 18 
+#> number of iterations= 5 
 #> number of iterations= 5 
 #> number of iterations= 7 
-#> number of iterations= 18 
 #> number of iterations= 13 
-#> number of iterations= 2 
-#> number of iterations= 46 
+#> number of iterations= 12 
 #> number of iterations= 15 
-#> number of iterations= 12 
-#> number of iterations= 4 
-#> number of iterations= 14 
-#> number of iterations= 17 
-#> number of iterations= 5 
-#> number of iterations= 4 
-#> number of iterations= 9 
-#> number of iterations= 17 
-#> number of iterations= 17 
-#> number of iterations= 9 
-#> number of iterations= 4 
-#> One of the variances is going to zero;  trying new starting values.
-#> number of iterations= 3 
-#> number of iterations= 8 
-#> number of iterations= 18 
-#> number of iterations= 22 
-#> One of the variances is going to zero;  trying new starting values.
-#> One of the variances is going to zero;  trying new starting values.
-#> One of the variances is going to zero;  trying new starting values.
-#> One of the variances is going to zero;  trying new starting values.
-#> One of the variances is going to zero;  trying new starting values.
-#> number of iterations= 12 
-#> number of iterations= 8 
-#> number of iterations= 8 
-#> number of iterations= 10 
-#> number of iterations= 7 
-#> number of iterations= 22 
-#> number of iterations= 11 
-#> number of iterations= 9 
-#> number of iterations= 18 
-#> number of iterations= 9 
-#> number of iterations= 12 
-#> number of iterations= 4 
-#> number of iterations= 8 
-#> number of iterations= 15 
-#> number of iterations= 8 
-#> number of iterations= 22 
-#> number of iterations= 6 
-#> number of iterations= 15 
-#> number of iterations= 13 
-#> number of iterations= 9 
-#> number of iterations= 33 
-#> number of iterations= 15 
-#> number of iterations= 23 
-#> number of iterations= 9 
-#> number of iterations= 35 
-#> number of iterations= 52 
-#> number of iterations= 4 
-#> number of iterations= 6 
-#> number of iterations= 12 
-#> number of iterations= 5 
-#> number of iterations= 5 
-#> Error in stats::uniroot(f = f, lower = 1, upper = 1000) : 
-#>   f.upper = f(upper) is NA
-#> Warning: NAs introduced by coercion
-#> number of iterations= 18 
-#> number of iterations= 12 
-#> number of iterations= 17 
 #> number of iterations= 16 
-#> number of iterations= 4 
-#> number of iterations= 16 
-#> number of iterations= 4 
-#> number of iterations= 17 
-#> number of iterations= 41 
-#> number of iterations= 7 
-#> One of the variances is going to zero;  trying new starting values.
-#> number of iterations= 6 
-#> Error in stats::uniroot(f = f, lower = 1, upper = 1000) : 
-#>   f.upper = f(upper) is NA
-#> Warning: NAs introduced by coercion
-#> number of iterations= 4 
-#> number of iterations= 11 
-#> number of iterations= 4 
-#> number of iterations= 10 
-#> number of iterations= 12 
-#> number of iterations= 9 
-#> number of iterations= 10 
-#> number of iterations= 9 
-#> number of iterations= 9 
-#> number of iterations= 3 
-#> Warning: no non-missing arguments to min; returning Inf
-#> number of iterations= 26 
 #> number of iterations= 19 
-#> number of iterations= 7 
-#> number of iterations= 22 
-#> number of iterations= 13 
-#> number of iterations= 17 
-#> number of iterations= 7 
-#> number of iterations= 16 
-#> number of iterations= 5 
-#> number of iterations= 25 
-#> number of iterations= 14 
-#> number of iterations= 4 
 #> One of the variances is going to zero;  trying new starting values.
-#> number of iterations= 7 
-#> number of iterations= 28 
+#> number of iterations= 4 
+#> number of iterations= 8 
+#> number of iterations= 5 
 #> number of iterations= 12 
+#> number of iterations= 3 
+#> number of iterations= 9 
+#> number of iterations= 14 
+#> number of iterations= 14 
+#> number of iterations= 6 
+#> number of iterations= 13 
+#> number of iterations= 21 
+#> number of iterations= 13 
+#> number of iterations= 5 
+#> number of iterations= 12 
+#> number of iterations= 17 
+#> number of iterations= 14 
+#> number of iterations= 14 
+#> number of iterations= 7 
+#> number of iterations= 15 
+#> number of iterations= 6 
+#> number of iterations= 4 
+#> number of iterations= 10 
+#> One of the variances is going to zero;  trying new starting values.
+#> One of the variances is going to zero;  trying new starting values.
+#> number of iterations= 4 
+#> number of iterations= 7 
+#> number of iterations= 11 
+#> number of iterations= 12 
+#> number of iterations= 7 
+#> number of iterations= 20 
+#> number of iterations= 9 
+#> number of iterations= 5 
+#> number of iterations= 18 
+#> number of iterations= 9 
+#> number of iterations= 14 
+#> number of iterations= 7 
+#> number of iterations= 9 
+#> number of iterations= 13 
+#> number of iterations= 12 
+#> number of iterations= 23 
+#> number of iterations= 7 
+#> number of iterations= 23 
+#> number of iterations= 5 
+#> number of iterations= 5 
+#> number of iterations= 4 
+#> number of iterations= 8 
+#> number of iterations= 9 
+#> number of iterations= 15 
+#> number of iterations= 20 
+#> number of iterations= 20 
+#> number of iterations= 10 
+#> number of iterations= 4 
+#> number of iterations= 8 
+#> number of iterations= 12 
+#> number of iterations= 6 
+#> Error in stats::uniroot(f = f, lower = 1, upper = 1000) : 
+#>   f.upper = f(upper) is NA
+#> Warning: NAs introduced by coercion
+#> number of iterations= 16 
+#> number of iterations= 6 
+#> number of iterations= 20 
+#> number of iterations= 6 
+#> number of iterations= 19 
+#> number of iterations= 12 
+#> number of iterations= 5 
+#> number of iterations= 15 
+#> number of iterations= 10 
+#> One of the variances is going to zero;  trying new starting values.
+#> number of iterations= 5 
+#> number of iterations= 22 
+#> Error in stats::uniroot(f = f, lower = 1, upper = 1000) : 
+#>   f.upper = f(upper) is NA
+#> Warning: NAs introduced by coercion
+#> number of iterations= 11 
+#> number of iterations= 11 
+#> number of iterations= 10 
+#> number of iterations= 3 
+#> number of iterations= 16 
+#> number of iterations= 18 
+#> number of iterations= 6 
+#> number of iterations= 5 
+#> number of iterations= 8 
+#> number of iterations= 4 
+#> Warning: no non-missing arguments to min; returning Inf
+#> number of iterations= 24 
+#> number of iterations= 6 
+#> number of iterations= 4 
+#> number of iterations= 14 
+#> number of iterations= 11 
+#> number of iterations= 23 
+#> number of iterations= 5 
+#> number of iterations= 8 
+#> number of iterations= 8 
+#> number of iterations= 11 
+#> number of iterations= 17 
+#> number of iterations= 11 
+#> number of iterations= 15 
+#> number of iterations= 3 
+#> number of iterations= 7 
 #> number of iterations= 7 
 #> Error in stats::uniroot(f = f, lower = 1, upper = 1000) : 
 #>   f.upper = f(upper) is NA
 #> Warning: NAs introduced by coercion
-#> number of iterations= 18 
-#> number of iterations= 8 
+#> number of iterations= 16 
+#> number of iterations= 6 
 #> number of iterations= 11 
-#> One of the variances is going to zero;  trying new starting values.
-#> number of iterations= 7 
-#> number of iterations= 2 
+#> number of iterations= 10 
+#> number of iterations= 3 
 #> number of iterations= 12 
 #> number of iterations= 4 
-#> number of iterations= 23 
-#> number of iterations= 11 
-#> number of iterations= 26 
-#> number of iterations= 14 
-#> number of iterations= 23 
 #> number of iterations= 10 
+#> number of iterations= 17 
+#> number of iterations= 19 
+#> number of iterations= 6 
+#> number of iterations= 4 
+#> number of iterations= 11 
 #> Warning: no non-missing arguments to min; returning Inf
 #> Warning: no non-missing arguments to min; returning Inf
+#> number of iterations= 11 
+#> Warning: no non-missing arguments to min; returning Inf
+#> number of iterations= 4 
+#> number of iterations= 7 
+#> number of iterations= 6 
+#> number of iterations= 9 
+#> number of iterations= 14 
+#> number of iterations= 6 
+#> number of iterations= 9 
 #> number of iterations= 13 
 #> Warning: no non-missing arguments to min; returning Inf
-#> number of iterations= 6 
+#> number of iterations= 3 
 #> number of iterations= 5 
-#> number of iterations= 6 
-#> number of iterations= 11 
-#> number of iterations= 16 
-#> number of iterations= 9 
-#> number of iterations= 8 
-#> number of iterations= 12 
-#> Warning: no non-missing arguments to min; returning Inf
+#> number of iterations= 33 
+#> number of iterations= 13 
 #> number of iterations= 6 
 #> number of iterations= 18 
 #> number of iterations= 5 
-#> number of iterations= 27 
-#> number of iterations= 7 
-#> number of iterations= 34 
-#> number of iterations= 6 
-#> number of iterations= 11 
-#> number of iterations= 6 
-#> number of iterations= 8 
-#> number of iterations= 4 
-#> number of iterations= 2 
-#> number of iterations= 3 
-#> number of iterations= 5 
-#> number of iterations= 5 
 #> number of iterations= 16 
-#> number of iterations= 7 
-#> The filtering processes discard 66 taxa and 37044 sequences. Note that for  66 samples, all taxa were discarded. Please run clean_pq() to remove empty samples.
+#> number of iterations= 2 
+#> number of iterations= 6 
+#> number of iterations= 14 
+#> number of iterations= 5 
+#> number of iterations= 9 
+#> number of iterations= 12 
+#> number of iterations= 4 
+#> number of iterations= 17 
+#> number of iterations= 8 
+#> The filtering processes discard 66 taxa and 36820 sequences. Note that for  66 samples, all taxa were discarded. Please run clean_pq() to remove empty samples.
 #> phyloseq-class experiment-level object
 #> otu_table()   OTU Table:         [ 1354 taxa and 185 samples ]
 #> sample_data() Sample Data:       [ 185 samples by 7 sample variables ]

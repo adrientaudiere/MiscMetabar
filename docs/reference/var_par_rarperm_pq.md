@@ -3,7 +3,9 @@
 [![lifecycle-deprecated](https://img.shields.io/badge/lifecycle-deprecated-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 **\[deprecated\]** This function has moved to the `bootpq` package.
-Please use `bootpq::var_par_rarperm_pq()` instead.
+Please use
+[`bootpq::var_par_rarperm_pq()`](https://adrientaudiere.github.io/bootpq/reference/var_par_rarperm_pq.html)
+instead.
 
 This is an extension of the function
 [`var_par_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/var_par_pq.md).
