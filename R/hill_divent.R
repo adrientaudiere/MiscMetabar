@@ -46,7 +46,7 @@ profile_hill_pq <- function(
     \(i) {
       abund <- as.numeric(otu[i, ])
       abund <- abund[abund > 0]
-      res <- divent::profile_hill(abund, orders = orders, ...)
+      res <- divent::profile_hill(abund, orders = orders, check_arguments = FALSE, ...)
       res$site <- sample_names[i]
       res
     }
@@ -217,7 +217,7 @@ hill_acc_pq <- function(
     \(i) {
       abund <- as.numeric(otu[i, ])
       abund <- abund[abund > 0]
-      res <- divent::accum_hill(abund, q = q, ...)
+      res <- divent::accum_hill(abund, q = q, check_arguments = FALSE, ...)
       res$site <- sample_names[i]
       res
     }
@@ -263,6 +263,7 @@ hill_acc_pq <- function(
         q = q,
         as_numeric = TRUE,
         estimator = "naive",
+        check_arguments = FALSE,
         ...
       )
     }

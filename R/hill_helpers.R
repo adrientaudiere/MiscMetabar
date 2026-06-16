@@ -54,7 +54,7 @@ divent_hill_matrix_pq <- function(comm, q, ...) {
       vapply(
         q,
         function(q_val) {
-          divent::div_hill(x, q = q_val, as_numeric = TRUE, ...)
+          divent::div_hill(x, q = q_val, as_numeric = TRUE, check_arguments = FALSE, ...)
         },
         numeric(1)
       )
@@ -78,8 +78,8 @@ divent_hill_matrix_pq <- function(comm, q, ...) {
   x <- as.numeric(x)
   x <- x[x > 0]
   switch(index,
-    "shannon" = divent::ent_shannon(x, as_numeric = TRUE, ...),
-    "simpson" = divent::ent_simpson(x, as_numeric = TRUE, ...),
+    "shannon" = divent::ent_shannon(x, as_numeric = TRUE, check_arguments = FALSE, ...),
+    "simpson" = divent::ent_simpson(x, as_numeric = TRUE, check_arguments = FALSE, ...),
     stop("Unsupported index for divent: ", index, call. = FALSE)
   )
 }
