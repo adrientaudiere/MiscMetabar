@@ -50,7 +50,7 @@ Adrien Taudière
 # \donttest{
 fq <- system.file("extdata", "ex.fastq", package = "MiscMetabar")
 out <- fastq_to_fasta(fq, output_folder = tempdir())
-#> ✔ Wrote 1 FASTA file to /tmp/RtmpYra0A9.
+#> ✔ Wrote 1 FASTA file to /tmp/RtmpjUa81B.
 readLines(out, n = 2)
 #> [1] ">M03493:483:000000000-KW735:1:1101:10710:1281 1:N:0:17"                                                                                                                                                                                                                                                       
 #> [2] "CTTGTTGGAGGGCAAGTCTGGTGCCCGCAGCCGCGGTAATTCCAGCTCCAATAGCGNNTNNTAAAGTTGTTGCAGTTAAAAAGCTCGTAGTTGAATTTCGGGATNNATGGGTTGGTCACGCCCTCGGTATGTACTGATTGCATTGGTGCTCACCTTCTAAGGAACCATGATGTCATTCGTTTGATGTGGTTGGGAATGAGGACTGTTATCTTGAAAAAATTGGAGGGTTTAAAGCAGTCTAACGCTTTAATACATTATCATGGAATAATGAAATCGGACAGCCGATTATATTTTGTTGGCG"
