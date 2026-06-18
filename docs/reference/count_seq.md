@@ -47,7 +47,7 @@ count_seq(
   folder_path = system.file("extdata", package = "MiscMetabar"),
   pattern = "*.fasta"
 )
-#> Warning: There is more than one '.' inside your file path: /tmp/Rtmpg4yjUZ/temp_libpath1ca639912463/MiscMetabar/extdata/mini_UNITE_fungi.fasta.gz
-#> Warning: There is more than one '.' inside your file path: /tmp/Rtmpg4yjUZ/temp_libpath1ca639912463/MiscMetabar/extdata/mini_UNITE_fungi.fasta.gz
+#> Warning: There is more than one '.' inside your file path: /tmp/RtmpRD3W8T/temp_libpath3b704e3755e/MiscMetabar/extdata/mini_UNITE_fungi.fasta.gz
+#> Warning: There is more than one '.' inside your file path: /tmp/RtmpRD3W8T/temp_libpath3b704e3755e/MiscMetabar/extdata/mini_UNITE_fungi.fasta.gz
 #> [1]  100  100  100    3   63   51    2 5000
 ```
