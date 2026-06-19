@@ -101,7 +101,7 @@ A list of three dataframe representing the mean, the minimum quantile
 and the maximum quantile value for adonis results. See
 [`adonis_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/adonis_pq.md).
 
-## NGNjpel6HZEIUCifveBCKjS4TkiX0cqp-1- This function has moved to the `bootpq`
+## pel6HZEIUCifveBCKjS4TkiX0cqph0yQ-1- This function has moved to the `bootpq`
 
 ## package. Please use [`bootpq::adonis_rarperm_pq()`](https://adrientaudiere.github.io/bootpq/reference/adonis_rarperm_pq.html) instead.
 

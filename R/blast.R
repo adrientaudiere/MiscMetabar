@@ -109,7 +109,8 @@ blast_to_phyloseq <- function(
   )
   if (file.info(paste0(tempdir(), "/", "blast_result.txt"))$size > 0) {
     blast_tab <- utils::read.table(
-      paste0(tempdir(), "/", "blast_result.txt"), ,
+      paste0(tempdir(), "/", "blast_result.txt"),
+      ,
       sep = "\t",
       header = FALSE,
       stringsAsFactors = FALSE
@@ -314,7 +315,8 @@ blast_pq <- function(
 
   if (file.info(paste0(tempdir(), "/", "blast_result.txt"))$size > 0) {
     blast_tab <- utils::read.table(
-      paste0(tempdir(), "/", "blast_result.txt"), ,
+      paste0(tempdir(), "/", "blast_result.txt"),
+      ,
       sep = "\t",
       header = FALSE,
       stringsAsFactors = FALSE
@@ -629,7 +631,8 @@ blast_to_derep <- function(
 
   if (file.info(paste0(tempdir(), "/", "blast_result.txt"))$size > 0) {
     blast_tab <- utils::read.table(
-      paste0(tempdir(), "/", "blast_result.txt"), ,
+      paste0(tempdir(), "/", "blast_result.txt"),
+      ,
       sep = "\t",
       header = FALSE,
       stringsAsFactors = FALSE

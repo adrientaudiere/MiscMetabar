@@ -2785,6 +2785,9 @@ biplot_pq <- function(
       modality_1_nb <- modality_2_nb
       modality_2_nb <- tmp
     }
+    tmp_name <- left_name
+    left_name <- right_name
+    right_name <- tmp_name
   }
 
   if (is.null(left_name)) {

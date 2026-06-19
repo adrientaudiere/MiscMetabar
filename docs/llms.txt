@@ -1,4 +1,4 @@
-# MiscMetabar [![MiscMetabar website](https://adrientaudiere.github.io/MiscMetabar/reference/figures/logo.png)](https://adrientaudiere.github.io/MiscMetabar/)
+# MiscMetabar
 
 See the pkgdown documentation site
 [here](https://adrientaudiere.github.io/MiscMetabar/) and the [package

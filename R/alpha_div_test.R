@@ -234,11 +234,11 @@ hill_test_rarperm_pq <- function(
   type = "nonparametric",
   ...
 ) {
-#  lifecycle::deprecate_soft(
-#    "0.17.0",
-#    "hill_test_rarperm_pq()",
-#    "bootpq::hill_test_rarperm_pq()"
-#  )
+  #  lifecycle::deprecate_soft(
+  #    "0.17.0",
+  #    "hill_test_rarperm_pq()",
+  #    "bootpq::hill_test_rarperm_pq()"
+  #  )
   verify_pq(physeq)
 
   if (nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {

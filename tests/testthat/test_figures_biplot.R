@@ -48,7 +48,7 @@ test_that("biplot_pq works", {
     inverse_side = TRUE
   ))
   get_text_labels <- function(p) {
-    unlist(lapply(p$layers, function(l) l$aes_params$label))
+    unname(unlist(lapply(p$layers, function(l) l$aes_params$label)))
   }
   labs_normal <- get_text_labels(p_normal)
   labs_inverse <- get_text_labels(p_inverse)

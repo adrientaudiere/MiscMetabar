@@ -15,7 +15,7 @@ format. For each input file, the @ sign starting a FASTQ sequence
 header is replaced by the &amp;gt; sign required by the FASTA format, and the
 quality lines are dropped. Output files keep the input base name with the
 extension changed to .fasta.
-Inspired by https://github.com/ambuvjyn/baseq."><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+Inspired by https://github.com/ambuvjyn/baseq."><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -72,8 +72,7 @@ Inspired by https://github.com/ambuvjyn/baseq."><script data-goatcounter="https:
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Convert FASTQ file(s) to FASTA file(s)</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Convert FASTQ file(s) to FASTA file(s)</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/fastq_to_fasta.R" class="external-link"><code>R/fastq_to_fasta.R</code></a></small>
       <div class="d-none name"><code>fastq_to_fasta.Rd</code></div>
     </div>
@@ -130,7 +129,7 @@ are not overwritten and an error is thrown instead.</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="va">fq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"ex.fastq"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">fastq_to_fasta</span><span class="op">(</span><span class="va">fq</span>, output_folder <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Wrote 1 FASTA file to <span style="color: #0000BB;">/tmp/RtmplwIHEj</span>.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Wrote 1 FASTA file to <span style="color: #0000BB;">/tmp/RtmpMeUGPY</span>.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/readLines.html" class="external-link">readLines</a></span><span class="op">(</span><span class="va">out</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "&gt;M03493:483:000000000-KW735:1:1101:10710:1281 1:N:0:17"                                                                                                                                                                                                                                                       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2] "CTTGTTGGAGGGCAAGTCTGGTGCCCGCAGCCGCGGTAATTCCAGCTCCAATAGCGNNTNNTAAAGTTGTTGCAGTTAAAAAGCTCGTAGTTGAATTTCGGGATNNATGGGTTGGTCACGCCCTCGGTATGTACTGATTGCATTGGTGCTCACCTTCTAAGGAACCATGATGTCATTCGTTTGATGTGGTTGGGAATGAGGACTGTTATCTTGAAAAAATTGGAGGGTTTAAAGCAGTCTAACGCTTTAATACATTATCATGGAATAATGAAATCGGACAGCCGATTATATTTTGTTGGCG"</span>

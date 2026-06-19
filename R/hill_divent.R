@@ -46,7 +46,12 @@ profile_hill_pq <- function(
     \(i) {
       abund <- as.numeric(otu[i, ])
       abund <- abund[abund > 0]
-      res <- divent::profile_hill(abund, orders = orders, check_arguments = FALSE, ...)
+      res <- divent::profile_hill(
+        abund,
+        orders = orders,
+        check_arguments = FALSE,
+        ...
+      )
       res$site <- sample_names[i]
       res
     }

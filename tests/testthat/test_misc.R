@@ -198,7 +198,7 @@ test_that("simplify_taxo pattern_to_NA replaces PR2 unknowns with NA", {
 
   expect_false(is.na(tt[2, "Genus"]))
   expect_false(is.na(tt[3, "Species"]))
-  expect_identical(tt[3, "Species"], "Brachypodium_distachyon")
+  expect_identical(as.character(tt[3, "Species"]), "Brachypodium_distachyon")
 
   expect_s4_class(result, "phyloseq")
 })

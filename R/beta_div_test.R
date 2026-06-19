@@ -1,6 +1,6 @@
 ################################################################################
 #' @title Performs graph-based permutation tests on phyloseq object
-#' 
+#'
 #' @description
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">

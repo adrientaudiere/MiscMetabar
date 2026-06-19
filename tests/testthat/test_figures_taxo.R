@@ -728,20 +728,23 @@ test_that("tax_bar_pq always shows modality labels above bars when add_ribbon=FA
 test_that("reorder_distinct_colors works on tax_bar_pq output", {
   skip_on_cran()
   p <- tax_bar_pq(data_fungi_mini, taxa = "Class", fact = "Time")
-  expect_s3_class(reorder_distinct_colors(p), "ggplot")
-  expect_s3_class(reorder_distinct_colors(p, colorblind = TRUE), "ggplot")
+  expect_s3_class(suppressWarnings(reorder_distinct_colors(p)), "ggplot")
   expect_s3_class(
-    reorder_distinct_colors(p, alternate_lightness = TRUE),
+    suppressWarnings(reorder_distinct_colors(p, colorblind = TRUE)),
     "ggplot"
   )
-  p2 <- reorder_distinct_colors(p)
+  expect_s3_class(
+    suppressWarnings(reorder_distinct_colors(p, alternate_lightness = TRUE)),
+    "ggplot"
+  )
+  p2 <- suppressWarnings(reorder_distinct_colors(p))
   built <- ggplot2::ggplot_build(p2)
   fill_scale <- built$plot$scales$get_scales("fill")
   expect_true(inherits(fill_scale, "ScaleDiscrete"))
-  expect_error(reorder_distinct_colors("not a plot"))
-  expect_s3_class(p + reorder_distinct_colors(), "ggplot")
+  expect_error(suppressWarnings(reorder_distinct_colors("not a plot")))
+  expect_s3_class(suppressWarnings(p + reorder_distinct_colors()), "ggplot")
   expect_s3_class(
-    p + reorder_distinct_colors(alternate_lightness = TRUE),
+    suppressWarnings(p + reorder_distinct_colors(alternate_lightness = TRUE)),
     "ggplot"
   )
 })

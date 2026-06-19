@@ -253,8 +253,7 @@ plot_deseq2_pq <-
           )
         data_tax@tax_table <-
           tax_table(apply(
-            data@tax_table[
-              ,
+            data@tax_table[,
               1:match(
                 tax_depth,
                 colnames(data@tax_table)

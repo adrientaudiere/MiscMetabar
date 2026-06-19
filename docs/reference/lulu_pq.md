@@ -15496,7 +15496,7 @@ lulu_pq(data_f)
 #> [141] "ASV1111" "ASV1263" "ASV1303" "ASV1341" "ASV1380" "ASV1388" "ASV1484"
 #> 
 #> $res_lulu$runtime
-#> Time difference of 1.988576 secs
+#> Time difference of 2.117477 secs
 #> 
 #> $res_lulu$minimum_match
 #> [1] 84

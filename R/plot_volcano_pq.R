@@ -116,8 +116,10 @@ plot_volcano_pq <- function(
 ) {
   # Auto-detect ANCOMBC: raw list with $res slot containing lfc_/q_ columns
   if (
-    is.list(df) && !is.data.frame(df) &&
-      "res" %in% names(df) && is.data.frame(df$res) &&
+    is.list(df) &&
+      !is.data.frame(df) &&
+      "res" %in% names(df) &&
+      is.data.frame(df$res) &&
       any(grepl("^lfc_", colnames(df$res)))
   ) {
     df <- df$res
