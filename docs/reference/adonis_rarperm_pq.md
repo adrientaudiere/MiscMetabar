@@ -101,7 +101,7 @@ A list of three dataframe representing the mean, the minimum quantile
 and the maximum quantile value for adonis results. See
 [`adonis_pq()`](https://adrientaudiere.github.io/MiscMetabar/reference/adonis_pq.md).
 
-## pel6HZEIUCifveBCKjS4TkiX0cqph0yQ-1- This function has moved to the `bootpq`
+## Njpel6HZEIUCifveBCKjS4TkiX0cqph0-1- This function has moved to the `bootpq`
 
 ## package. Please use [`bootpq::adonis_rarperm_pq()`](https://adrientaudiere.github.io/bootpq/reference/adonis_rarperm_pq.html) instead.
 
@@ -140,22 +140,22 @@ if (requireNamespace("vegan")) {
 #> Removing NA from Height
 #>   |                                                          |==================================================| 100%
 #> $mean
-#>          Df  SumOfSqs         R2         F    Pr(>F)
-#> Model     5  2.346505 0.06649319 0.9844575 0.5556667
-#> Residual 69 32.942384 0.93350681        NA        NA
-#> Total    74 35.288889 1.00000000        NA        NA
+#>          Df  SumOfSqs         R2         F Pr(>F)
+#> Model     5  2.346505 0.06649319 0.9844575  0.569
+#> Residual 69 32.942384 0.93350681        NA     NA
+#> Total    74 35.288889 1.00000000        NA     NA
 #> 
 #> $quantile_min
-#>          Df  SumOfSqs         R2         F Pr(>F)
-#> Model     5  2.070369 0.05846765 0.8569665 0.1065
-#> Residual 69 32.531964 0.92132923        NA     NA
-#> Total    74 35.130000 1.00000000        NA     NA
+#>          Df  SumOfSqs         R2         F  Pr(>F)
+#> Model     5  2.070369 0.05846765 0.8569665 0.11735
+#> Residual 69 32.531964 0.92132923        NA      NA
+#> Total    74 35.130000 1.00000000        NA      NA
 #> 
 #> $quantile_max
-#>          Df  SumOfSqs         R2        F  Pr(>F)
-#> Model     5  2.778036 0.07867077 1.178625 0.86175
-#> Residual 69 33.340964 0.94153235       NA      NA
-#> Total    74 35.421333 1.00000000       NA      NA
+#>          Df  SumOfSqs         R2        F Pr(>F)
+#> Model     5  2.778036 0.07867077 1.178625 0.8821
+#> Residual 69 33.340964 0.94153235       NA     NA
+#> Total    74 35.421333 1.00000000       NA     NA
 #> 
 # }
 ```
