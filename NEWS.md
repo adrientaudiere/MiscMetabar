@@ -26,6 +26,7 @@
 * `wheat_plot()` draws a wheat plot (a histogram/dot-plot hybrid) of a numeric variable, binning values along the x-axis and stacking individual observations as points, useful to inspect distributions such as `taxa_sums()` or `sample_sums()`.
 
 # MiscMetabar 0.16.8
+* `accu_plot()`, `dist_pos_control()`, `hill_curves_pq()` and `tsne_pq()` no longer error under recent R-devel: the `otu_table` is now coerced to a base matrix before being passed to `vegan` functions (`renyi()`, `renyiaccum()`, `specaccum()`, `vegdist()`), which previously triggered an `assignment of an object of class "numeric" is not valid for @'.Data'` error because plain `as.matrix()` does not strip the S4 `otu_table` class.
 * Further check-time reductions for CRAN compliance:
   extra examples `\dontrun{}` (kept for documentation,
   not run during checks). 

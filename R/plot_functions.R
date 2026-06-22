@@ -159,7 +159,7 @@ accu_plot <-
         eval(parse(text = paste("physeq@sam_data$", fact, sep = "")))
       factor_interm <- as.factor(factor_interm)
 
-      physeq_accu <- as.matrix(t(physeq@otu_table))
+      physeq_accu <- as(t(physeq@otu_table), "matrix")
       physeq_accu[physeq_accu > 0] <- 1
       accu_all <- vegan::specaccum(physeq_accu)
 
@@ -2040,7 +2040,11 @@ hill_pq <- function(
 #' \donttest{
 #' library("divent")
 #' if (requireNamespace("ggstatsplot")) {
-#'   p <- ggbetween_pq(data_fungi, fact = "Time", p.adjust.method = "BH")
+#'   data_f <- clean_pq(prune_samples(
+#'   sample_names(data_fungi_sp_known)[1:10],
+#'   data_fungi_sp_known
+#' ))
+#'   p <- ggbetween_pq(data_f, fact = "Time", p.adjust.method = "BH")
 #'   p[[1]]
 #' }
 #' }
@@ -3725,7 +3729,7 @@ tsne_pq <-
 
     res_tsne <-
       Rtsne::Rtsne(
-        vegan::vegdist(t(physeq@otu_table), method = method),
+        vegan::vegdist(as(t(physeq@otu_table), "matrix"), method = method),
         dims = dims,
         theta = theta,
         perplexity = perplexity,
@@ -6434,10 +6438,12 @@ hill_curves_pq <- function(
     clean_samples_names = FALSE
   )
 
+  otu_mat <- as(t(physeq)@otu_table, "matrix")
+
   if (!is.null(nperm)) {
     df_hill <-
       vegan::renyiaccum(
-        t(physeq)@otu_table,
+        otu_mat,
         scales = q,
         permutation = nperm,
         hill = TRUE,
@@ -6504,7 +6510,7 @@ hill_curves_pq <- function(
         facet_wrap("Modality")
     }
   } else {
-    df_hill <- vegan::renyi(t(physeq)@otu_table, scales = q, hill = TRUE)
+    df_hill <- vegan::renyi(otu_mat, scales = q, hill = TRUE)
     if (inherits(df_hill, "data.frame")) {
       if (is.null(color_fac)) {
         modality <- sample_names(physeq)

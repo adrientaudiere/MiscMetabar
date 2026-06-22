@@ -102,7 +102,7 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
   dist_control <- vector()
 
   for (i in levels(as.factor(samples_names))) {
-    interm <- physeq@otu_table[samples_names == i, ]
+    interm <- as(physeq@otu_table[samples_names == i, ], "matrix")
     if (dim(interm)[1] > 1) {
       dist_control <-
         c(dist_control, as.numeric(vegan::vegdist(interm, method = method)))
@@ -114,9 +114,9 @@ dist_pos_control <- function(physeq, samples_names, method = "bray") {
 
   # Compute distance among all samples
   if (taxa_are_rows(physeq)) {
-    matdist_interm <- t(physeq@otu_table)
+    matdist_interm <- as(t(physeq@otu_table), "matrix")
   } else {
-    matdist_interm <- physeq@otu_table
+    matdist_interm <- as(physeq@otu_table, "matrix")
   }
 
   res[[1]] <-
