@@ -427,9 +427,9 @@ track_wkflow <- function(
         message(paste("Start object of class:", class(object), sep = " "))
       }
       if (inherits(object, "phyloseq")) {
-        ntaxa(object)
+        sum(taxa_sums(object) > 0)
       } else if (inherits(object, "matrix")) {
-        ncol(object)
+        sum(colSums(object, na.rm = TRUE) > 0)
       } else if (inherits(object, "dada")) {
         length(object$sequence)
       } else if (inherits(object[[1]], "dada")) {

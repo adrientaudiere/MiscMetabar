@@ -329,6 +329,31 @@ test_that("track_wkflow_samples works with mixed object types", {
   expect_s3_class(res[[1]], "data.frame")
 })
 
+test_that("track_wkflow_samples returns nb_clusters = 0 when nb_sequences = 0", {
+  skip_on_cran()
+  # Phyloseq case: zero out one sample's counts
+  ps <- data_fungi
+  sam_to_zero <- sample_names(ps)[1]
+  if (taxa_are_rows(ps)) {
+    ps@otu_table[, sam_to_zero] <- 0
+  } else {
+    ps@otu_table[sam_to_zero, ] <- 0
+  }
+  res <- track_wkflow_samples(ps)
+  expect_equal(res[[sam_to_zero]]$nb_sequences, 0)
+  expect_equal(res[[sam_to_zero]]$nb_clusters, 0)
+
+  # Matrix case: zero out one row
+  mat <- as(data_fungi@otu_table, "matrix")
+  if (taxa_are_rows(data_fungi)) {
+    mat <- t(mat)
+  }
+  mat[1, ] <- 0
+  res_mat <- track_wkflow_samples(mat)
+  expect_equal(res_mat[[1]]$nb_sequences, 0)
+  expect_equal(res_mat[[1]]$nb_clusters, 0)
+})
+
 test_that("select_one_sample function works fine", {
   expect_message(
     A8_005 <-
