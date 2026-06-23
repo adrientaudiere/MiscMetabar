@@ -4462,13 +4462,13 @@ diff_fct_diff_class <-
 #' @inheritParams clean_pq
 #' @param fact Name of the factor to cluster samples by modalities.
 #'   Need to be in \code{physeq@sam_data}.
+#' @param taxa (default: 'Order') Name of the taxonomic rank of interest
 #' @param order_modality (default NULL) Optional character vector giving the
 #'   order of the `fact` modalities (i.e. the order of the bars). Values must
 #'   match the modalities present in `physeq@sam_data[[fact]]`. If some
 #'   modalities are omitted, only the listed ones are kept (a message lists the
 #'   dropped modalities). If a value is not found among the modalities, an
 #'   informative error lists the offending values.
-#' @param taxa (default: 'Order') Name of the taxonomic rank of interest
 #' @param percent_bar (default FALSE) If TRUE, the stacked bar fill all
 #'   the space between 0 and 1. It just set position = "fill" in the
 #'   `ggplot2::geom_bar()` function
@@ -4575,8 +4575,8 @@ tax_bar_pq <-
   function(
     physeq,
     fact = "Sample",
-    order_modality = NULL,
     taxa = "Order",
+    order_modality = NULL,
     percent_bar = FALSE,
     nb_seq = TRUE,
     add_ribbon = FALSE,
