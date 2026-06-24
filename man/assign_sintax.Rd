@@ -8,7 +8,7 @@ assign_sintax(
   physeq = NULL,
   ref_fasta = NULL,
   seq2search = NULL,
-  behavior = c("return_matrix", "add_to_phyloseq", "return_cmd"),
+  behavior = c("return_matrix", "return_taxtab", "add_to_phyloseq", "return_cmd"),
   vsearchpath = find_vsearch(),
   clean_pq = TRUE,
   nproc = 1,
@@ -41,16 +41,24 @@ Example:
 
 \>X80725_S000004313;tax=d:Bacteria,p:Proteobacteria,c:Gammaproteobacteria,o:Enterobacteriales,f:Enterobacteriaceae,g:Escherichia/Shigella,s:Escherichia_coli,t:str._K-12_substr._MG1655}
 
-\item{seq2search}{A DNAStringSet object of sequences to search for. Replace
-the physeq object.}
+\item{seq2search}{A DNAStringSet object of sequences to search for, or a
+matrix whose \code{colnames} are the sequences to search for (e.g. a dada2
+sequence table where columns are ASV sequences). In the latter case the
+\code{colnames} are converted to a DNAStringSet and used as the taxa names.
+Replace the physeq object.}
 
 \item{behavior}{Either "return_matrix" (default), "return_cmd",
-or "add_to_phyloseq":
+"return_taxtab", or "add_to_phyloseq":
 \itemize{
 \item "return_matrix" return a list of two matrix with taxonomic value in the
 first element of the list and bootstrap value in the second one.
 Note that if min_bootstrap is not set to NULL or 0, some taxonomic value are
 set to NA.
+\item "return_taxtab" return a character matrix of taxonomic values (rows are
+taxa, columns are the \code{taxa_ranks}) with rownames set to the taxa names.
+Values with a bootstrap below \code{min_bootstrap} are set to NA. This is the
+same as \code{return_matrix$taxo_value} converted to a matrix, and is convenient
+as a direct input to \code{\link[phyloseq:tax_table]{phyloseq::tax_table()}}.
 \item "return_cmd" return the command to run without running it.
 \item "add_to_phyloseq" return a phyloseq object with amended slot \verb{@taxtable}.
 Only available if using physeq input and not seq2search input.
@@ -164,6 +172,24 @@ res_seq2search <- assign_sintax(seq2search = seqs_to_assign,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar")
 )
 head(res_seq2search$taxo_value)
+
+## return_taxtab returns a character matrix ready for phyloseq::tax_table()
+tax_mat <- assign_sintax(seq2search = seqs_to_assign,
+  ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
+  behavior = "return_taxtab"
+)
+head(tax_mat)
+
+## A matrix whose colnames are the sequences (e.g. a dada2 sequence table)
+## is accepted directly as seq2search — the colnames are converted to a
+## DNAStringSet and used as the taxa names.
+seqtab <- matrix(1, nrow = 1, ncol = length(seqs_to_assign))
+colnames(seqtab) <- unname(as.character(seqs_to_assign))
+tax_mat_from_matrix <- assign_sintax(seq2search = seqtab,
+  ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
+  behavior = "return_taxtab"
+)
+head(tax_mat_from_matrix)
 }
 \dontshow{\}) # examplesIf}
 }

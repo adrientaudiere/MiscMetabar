@@ -420,4 +420,71 @@ if (!MiscMetabar:::is_vsearch_installed()) {
       "add_to_phyloseq"
     )
   })
+
+  test_that("assign_sintax return_taxtab returns a ready-to-use matrix", {
+    ref <- system.file(
+      "extdata",
+      "mini_UNITE_fungi.fasta.gz",
+      package = "MiscMetabar"
+    )
+    seqs_to_assign <- refseq(data_fungi_mini)
+
+    tax_mat <- assign_sintax(
+      seq2search = seqs_to_assign,
+      ref_fasta = ref,
+      behavior = "return_taxtab",
+      min_bootstrap = 0.8,
+      verbose = FALSE
+    )
+    expect_type(tax_mat, "character")
+    expect_true(is.matrix(tax_mat))
+    expect_equal(rownames(tax_mat), names(seqs_to_assign))
+    rank_cols <- c(
+      "Kingdom",
+      "Phylum",
+      "Class",
+      "Order",
+      "Family",
+      "Genus",
+      "Species"
+    )
+    expect_equal(colnames(tax_mat), rank_cols)
+    expect_equal(nrow(tax_mat), length(seqs_to_assign))
+
+    # min_bootstrap filter is applied (NAs present where bootstrap < 0.8)
+    expect_true(any(is.na(tax_mat)))
+  })
+
+  test_that("assign_sintax accepts a matrix as seq2search", {
+    ref <- system.file(
+      "extdata",
+      "mini_UNITE_fungi.fasta.gz",
+      package = "MiscMetabar"
+    )
+    seqs <- refseq(data_fungi_mini)
+    # Build a dada2-style sequence table: colnames are the DNA sequences
+    seqtab <- matrix(1, nrow = 1, ncol = length(seqs))
+    colnames(seqtab) <- unname(as.character(seqs))
+
+    tax_mat <- assign_sintax(
+      seq2search = seqtab,
+      ref_fasta = ref,
+      behavior = "return_taxtab",
+      verbose = FALSE
+    )
+    expect_true(is.matrix(tax_mat))
+    # rownames are the colnames of the matrix (the sequences)
+    expect_equal(rownames(tax_mat), colnames(seqtab))
+    expect_equal(nrow(tax_mat), ncol(seqtab))
+    rank_cols <- c(
+      "Kingdom",
+      "Phylum",
+      "Class",
+      "Order",
+      "Family",
+      "Genus",
+      "Species"
+    )
+    expect_equal(colnames(tax_mat), rank_cols)
+  })
 }
