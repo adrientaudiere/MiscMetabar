@@ -349,5 +349,75 @@ if (!MiscMetabar:::is_vsearch_installed()) {
         ),
       2
     )
+
+    # return_matrix must apply min_bootstrap to taxo_value (previously only
+    # add_to_phyloseq applied the filter; return_matrix returned raw values)
+    res_filt <- assign_sintax(
+      data_fungi_mini,
+      ref_fasta = system.file(
+        "extdata",
+        "mini_UNITE_fungi.fasta.gz",
+        package = "MiscMetabar"
+      ),
+      behavior = "return_matrix",
+      min_bootstrap = 0.8,
+      verbose = FALSE
+    )
+    rank_cols <- setdiff(names(res_filt$taxo_value), "taxa_names")
+    tax_val <- as.matrix(res_filt$taxo_value[, rank_cols, drop = FALSE])
+    tax_boot <- as.matrix(res_filt$taxo_bootstrap[, rank_cols, drop = FALSE])
+    low_boot <- !is.na(tax_boot) & tax_boot < 0.8
+    expect_true(any(low_boot))
+    expect_true(all(is.na(tax_val[low_boot])))
+  })
+
+  test_that("assign_sintax works with seq2search input", {
+    ref <- system.file(
+      "extdata",
+      "mini_UNITE_fungi.fasta.gz",
+      package = "MiscMetabar"
+    )
+    seqs_to_assign <- refseq(data_fungi_mini)
+
+    # return_cmd works with seq2search and returns a character string
+    expect_type(
+      assign_sintax(
+        seq2search = seqs_to_assign,
+        ref_fasta = ref,
+        behavior = "return_cmd"
+      ),
+      "character"
+    )
+
+    # return_matrix returns a length-2 list with the expected rank columns
+    res <- assign_sintax(
+      seq2search = seqs_to_assign,
+      ref_fasta = ref,
+      verbose = FALSE
+    )
+    expect_length(res, 2)
+    expect_true(all(c("taxo_value", "taxo_bootstrap") %in% names(res)))
+    rank_cols <- c(
+      "Kingdom",
+      "Phylum",
+      "Class",
+      "Order",
+      "Family",
+      "Genus",
+      "Species"
+    )
+    expect_true(all(rank_cols %in% names(res$taxo_value)))
+    # one row per input sequence
+    expect_equal(nrow(res$taxo_value), length(seqs_to_assign))
+
+    # add_to_phyloseq is not allowed with seq2search
+    expect_error(
+      assign_sintax(
+        seq2search = seqs_to_assign,
+        ref_fasta = ref,
+        behavior = "add_to_phyloseq"
+      ),
+      "add_to_phyloseq"
+    )
   })
 }

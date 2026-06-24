@@ -1,5 +1,6 @@
 # MiscMetabar 0.17.0 (Development version)
 
+* `assign_sintax()` now applies the `min_bootstrap` filter to `taxo_value` when `behavior = "return_matrix"`, matching the `add_to_phyloseq` behavior. Previously the filter was only applied in `add_to_phyloseq` mode, so `return_matrix` returned raw taxonomic values regardless of `min_bootstrap`; the unfiltered bootstrap values remain available in the `taxo_bootstrap` element.
 * `mumu_pq()` no longer returns a phyloseq object whose `otu_table` and `tax_table` hold the same taxa in different orders. The new OTU table is now aligned to `taxa_names()` of the pruned object before being assigned. The previous desync (caused by assigning the otu_table directly in mumu output order) broke downstream verbs that align `tax_table` values with `taxa_names()` positionally, e.g. `tidypq::filter_taxa_pq(pq, Kingdom == "Archaea")` could return Bacteria.
 * `track_wkflow_samples()` fixes a bug where `nb_clusters` was incorrectly set to the total number of clusters of the phyloseq object (or columns of the matrix) when a sample had `nb_sequences = 0`. It now correctly reports `0` clusters for samples with no reads. The fix is in `track_wkflow()`, which now counts only clusters with at least one sequence (`sum(taxa_sums() > 0)` for phyloseq, `sum(colSums() > 0)` for matrices) instead of using `ntaxa()` / `ncol()`.
 

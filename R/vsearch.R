@@ -1143,6 +1143,8 @@ write_temp_fasta <- function(
 #'
 #'  - "return_matrix" return a list of two matrix with taxonomic value in the
 #'    first element of the list and bootstrap value in the second one.
+#'    Note that if min_bootstrap is not set to NULL or 0, some taxonomic value are
+#'     set to NA.
 #'
 #'  - "return_cmd" return the command to run without running it.
 #'
@@ -1162,7 +1164,8 @@ write_temp_fasta <- function(
 #'   ref_fasta
 #' @param min_bootstrap (Float \[0:1\], default 0.5)
 #'   Minimum bootstrap value to inform taxonomy. For each bootstrap
-#'   below the min_bootstrap value, the taxonomy information is set to NA.
+#'   below the min_bootstrap value, the taxonomy information is set to NA. Set
+#'   to NULL or 0 to disable.
 #' @param keep_temporary_files (logical, default: FALSE) Do we keep temporary files?
 #'
 #' - temporary_fasta_file (default in `tempdir()`) : the fasta file from physeq
@@ -1213,6 +1216,21 @@ write_temp_fasta <- function(
 #'   )) +
 #'   geom_jitter(alpha = 0.8, aes(color = name)) +
 #'   geom_boxplot(alpha = 0.3)
+#'
+#' ## Same assignation using seq2search (a DNAStringSet) instead of a phyloseq
+#' ## object. This is useful when you do not have (or do not need) a phyloseq
+#' ## object, e.g. to assign taxonomy to a set of ASV sequences extracted from
+#' ## a dada2 sequence table.
+#' seqs_to_assign <- refseq(data_fungi_mini)
+#' assign_sintax(seq2search = seqs_to_assign,
+#'   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
+#'   behavior = "return_cmd"
+#' )
+#'
+#' res_seq2search <- assign_sintax(seq2search = seqs_to_assign,
+#'   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar")
+#' )
+#' head(res_seq2search$taxo_value)
 #' }
 #' @export
 #' @author Adrien Taudière
@@ -1355,6 +1373,8 @@ assign_sintax <- function(
   if (!is.null(min_bootstrap)) {
     res_sintax_wide_taxo_filter <- res_sintax_wide_taxo
     res_sintax_wide_taxo_filter[res_sintax_wide_bootstrap < min_bootstrap] <- NA
+  } else {
+    res_sintax_wide_taxo_filter <- res_sintax_wide_taxo
   }
 
   if (!keep_temporary_files) {
@@ -1387,7 +1407,7 @@ assign_sintax <- function(
     return(new_physeq)
   } else if (behavior == "return_matrix") {
     return(list(
-      "taxo_value" = res_sintax_wide_taxo,
+      "taxo_value" = res_sintax_wide_taxo_filter,
       "taxo_bootstrap" = res_sintax_wide_bootstrap
     ))
   }
