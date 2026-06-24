@@ -1650,8 +1650,17 @@ mumu_pq <- function(
 
   new_physeq <-
     prune_taxa(taxa_names(physeq) %in% taxa_names(new_otu_tab), physeq)
+  # Align the new OTU table to the canonical taxa order of new_physeq.
+  # Without this, the directly assigned otu_table (in mumu output order) and
+  # the tax_table (in prune_taxa order) hold the same taxa in different
+  # orders. Because taxa_names() prioritises the otu_table, that desync breaks
+  # downstream verbs that align tax_table values with taxa_names() positionally
+  # (e.g. tidypq::filter_taxa_pq()).
+  new_otu_mat <- as(new_otu_tab, "matrix")
+  new_otu_mat <-
+    new_otu_mat[phyloseq::taxa_names(new_physeq), , drop = FALSE]
   new_physeq@otu_table <-
-    otu_table(t(new_otu_tab), taxa_are_rows = FALSE)
+    otu_table(t(new_otu_mat), taxa_are_rows = FALSE)
   if (nsamples(new_physeq) != nsamples(physeq)) {
     stop(
       "There is a different number of samples before and after mumu algorithm.

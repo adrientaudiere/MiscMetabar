@@ -1,5 +1,6 @@
 # MiscMetabar 0.17.0 (Development version)
 
+* `mumu_pq()` no longer returns a phyloseq object whose `otu_table` and `tax_table` hold the same taxa in different orders. The new OTU table is now aligned to `taxa_names()` of the pruned object before being assigned. The previous desync (caused by assigning the otu_table directly in mumu output order) broke downstream verbs that align `tax_table` values with `taxa_names()` positionally, e.g. `tidypq::filter_taxa_pq(pq, Kingdom == "Archaea")` could return Bacteria.
 * `track_wkflow_samples()` fixes a bug where `nb_clusters` was incorrectly set to the total number of clusters of the phyloseq object (or columns of the matrix) when a sample had `nb_sequences = 0`. It now correctly reports `0` clusters for samples with no reads. The fix is in `track_wkflow()`, which now counts only clusters with at least one sequence (`sum(taxa_sums() > 0)` for phyloseq, `sum(colSums() > 0)` for matrices) instead of using `ntaxa()` / `ncol()`.
 
 # MiscMetabar 0.16.8 [CRAN]* `biplot_pq()` fixes a bug where using `inverse_side = TRUE` together with `merge_sample_by` and `nb_samples_info = TRUE` caused sample counts to be attached to the wrong modality label.
