@@ -803,17 +803,28 @@ add_blast_info <- function(
 #' Use the blast software.
 #'
 #'
-#' @inheritParams clean_pq
+#' @param physeq (optional) A phyloseq object with a `@refseq` slot. If `seq2search`
+#'  is provided, `physeq` can be `NULL`.
+#' @param seq2search A DNAStringSet object of sequences to search for, or a
+#'   matrix whose `colnames` are the sequences to search for (e.g. a dada2
+#'   sequence table where columns are ASV sequences). In the latter case the
+#'   `colnames` are converted to a DNAStringSet and used as the taxa names.
+#'   Replace the physeq object.
 #' @param ref_fasta Either a DNAStringSet object or a path to a fasta
 #'  file to make the blast database. It must be in sintax format.
 #'  See [assign_sintax()].
 #' @param database path to a blast database. Only used if ref_fasta
 #'   is not set.
 #' @param blastpath path to blast program.
-#' @param behavior Either "return_matrix" (default), or "add_to_phyloseq":
+#' @param behavior Either "return_matrix" (default), "return_taxtab", or
+#' "add_to_phyloseq":
 #'
 #'  - "return_matrix" return a list of two matrix with taxonomic value in the
 #'    first element of the list and bootstrap value in the second one.
+#'
+#'  - "return_taxtab" return a character matrix of taxonomic values (rows are
+#'    taxa, columns are the `column_names`) with rownames set to the taxa names.
+#'    This is convenient as a direct input to [phyloseq::tax_table()].
 #'
 #'  - "add_to_phyloseq" return a phyloseq object with amended slot `@taxtable`.
 #'    Only available if using physeq input and not seq2search input.
@@ -860,6 +871,9 @@ add_blast_info <- function(
 #'      the taxonomic assignation in which conflicts are resolved
 #'      using vote.
 #'
+#' - If behavior == "return_taxtab", a character matrix of taxonomic values
+#'   ready for [phyloseq::tax_table()]
+#'
 #' - If behavior == "add_to_phyloseq", return a new phyloseq object
 #' @export
 #' @author Adrien Taudière
@@ -888,13 +902,23 @@ add_blast_info <- function(
 #'   vote_algorithm = "consensus", replace_collapsed_rank_by_NA = FALSE,
 #'   min_id = 90, min_cover = 50, behavior = "add_to_phyloseq"
 #' )@tax_table
+#'
+#' ## return_taxtab with seq2search (a DNAStringSet or a matrix)
+#' seqs_to_assign <- refseq(data_fungi_mini)
+#' tax_mat <- assign_blastn(seq2search = seqs_to_assign,
+#'   ref_fasta = ref_fasta, method_algo = "top-hit", min_id = 70,
+#'   min_e_value = 1e-3, min_cover = 50, min_bit_score = 20,
+#'   behavior = "return_taxtab"
+#' )
+#' head(tax_mat)
 #' }
 assign_blastn <- function(
-  physeq,
+  physeq = NULL,
   ref_fasta = NULL,
   database = NULL,
   blastpath = NULL,
-  behavior = c("return_matrix", "add_to_phyloseq"),
+  seq2search = NULL,
+  behavior = c("return_matrix", "return_taxtab", "add_to_phyloseq"),
   method_algo = c("vote", "top-hit"),
   suffix = "_blastn",
   min_id = 95,
@@ -929,6 +953,28 @@ assign_blastn <- function(
   behavior <- match.arg(behavior)
   method_algo <- match.arg(method_algo)
   vote_algorithm <- match.arg(vote_algorithm)
+
+  ##> If seq2search is a matrix (e.g. a dada2 sequence table), convert its
+  ##> colnames (the ASV sequences) to a DNAStringSet and use them as names
+  if (!is.null(seq2search) && is.matrix(seq2search)) {
+    seqs <- Biostrings::DNAStringSet(colnames(seq2search))
+    names(seqs) <- colnames(seq2search)
+    seq2search <- seqs
+  }
+
+  ##> If seq2search is provided, build a minimal phyloseq object so that
+  ##> blast_pq() — which requires a physeq with a @refseq slot — works
+  if (!is.null(seq2search)) {
+    if (behavior == "add_to_phyloseq") {
+      stop("You can't use behavior = 'add_to_phyloseq' with seq2search param.")
+    }
+    dummy_mat <- matrix(1, nrow = 1, ncol = length(seq2search))
+    colnames(dummy_mat) <- names(seq2search)
+    physeq <- phyloseq(
+      otu_table(dummy_mat, taxa_are_rows = FALSE),
+      refseq(seq2search)
+    )
+  }
 
   if (!is.null(ref_fasta)) {
     .validate_ref_format(ref_fasta, "sintax", "assign_blastn")
@@ -1064,6 +1110,12 @@ assign_blastn <- function(
     } else if (method_algo == "top-hit") {
       return("blast_table_per_query" = blast_tab)
     }
+  } else if (behavior == "return_taxtab") {
+    rank_cols <- paste0(column_names, suffix)
+    tax_mat <- as.matrix(blast_tab[, rank_cols, drop = FALSE])
+    colnames(tax_mat) <- column_names
+    rownames(tax_mat) <- unname(blast_tab$taxa_names)
+    return(tax_mat)
   } else if (behavior == "add_to_phyloseq") {
     tax_tab <- as.data.frame(as.matrix(physeq@tax_table))
     tax_tab$taxa_names <- taxa_names(physeq)
@@ -1084,10 +1136,6 @@ assign_blastn <- function(
     verify_pq(new_physeq)
 
     return(new_physeq)
-  } else {
-    stop(
-      "Param behavior must take either 'return_matrix' or 'add_to_phyloseq' value"
-    )
   }
 }
 ################################################################################

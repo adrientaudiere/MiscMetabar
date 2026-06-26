@@ -8,7 +8,7 @@ assign_vsearch_lca(
   physeq = NULL,
   ref_fasta = NULL,
   seq2search = NULL,
-  behavior = c("return_matrix", "add_to_phyloseq", "return_cmd"),
+  behavior = c("return_matrix", "return_taxtab", "add_to_phyloseq", "return_cmd"),
   vsearchpath = find_vsearch(),
   clean_pq = TRUE,
   taxa_ranks = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
@@ -53,14 +53,20 @@ Example:
 
 \>X80725_S000004313;tax=d:Bacteria,p:Proteobacteria,c:Gammaproteobacteria,o:Enterobacteriales,f:Enterobacteriaceae,g:Escherichia/Shigella,s:Escherichia_coli,t:str._K-12_substr._MG1655}
 
-\item{seq2search}{A DNAStringSet object of sequences to search for. Replace
-the physeq object.}
+\item{seq2search}{A DNAStringSet object of sequences to search for, or a
+matrix whose \code{colnames} are the sequences to search for (e.g. a dada2
+sequence table where columns are ASV sequences). In the latter case the
+\code{colnames} are converted to a DNAStringSet and used as the taxa names.
+Replace the physeq object.}
 
-\item{behavior}{Either "return_matrix" (default), "return_cmd",
-or "add_to_phyloseq":
+\item{behavior}{Either "return_matrix" (default), "return_taxtab",
+"return_cmd", or "add_to_phyloseq":
 \itemize{
 \item "return_matrix" return a list of two matrix with taxonomic value in the
 first element of the list and bootstrap value in the second one.
+\item "return_taxtab" return a character matrix of taxonomic values (rows are
+taxa, columns are the \code{taxa_ranks}) with rownames set to the taxa names.
+This is convenient as a direct input to \code{\link[phyloseq:tax_table]{phyloseq::tax_table()}}.
 \item "return_cmd" return the command to run without running it.
 \item "add_to_phyloseq" return a phyloseq object with amended slot \verb{@taxtable}.
 Only available if using physeq input and not seq2search input.
@@ -209,6 +215,16 @@ data_fungi_mini_new3 <- assign_vsearch_lca(data_fungi_mini,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
   id = 0.5, behavior = "add_to_phyloseq", top_hits_only = FALSE, vote_algorithm = "rel_majority"
 )
+}
+
+\donttest{
+## return_taxtab with seq2search (a DNAStringSet or a matrix)
+seqs_to_assign <- refseq(data_fungi_mini)
+tax_mat <- assign_vsearch_lca(seq2search = seqs_to_assign,
+  ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
+  behavior = "return_taxtab"
+)
+head(tax_mat)
 }
 \dontshow{\}) # examplesIf}
 }

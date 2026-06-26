@@ -1097,7 +1097,7 @@ write_temp_fasta <- function(
     Biostrings::writeXStringSet(dna, temporary_fasta_file)
   } else if (is.null(physeq)) {
     Biostrings::writeXStringSet(seq2search, temporary_fasta_file)
-    if (behavior == "add_to_phyloseq") {
+    if (identical(behavior, "add_to_phyloseq")) {
       stop("You can't use behavior = 'add_to_phyloseq' with seq2search param.")
     }
   } else if (is.null(physeq) && is.null(seq2search)) {
@@ -1496,13 +1496,20 @@ assign_sintax <- function(
 #'  Example:
 #'
 #'  \>X80725_S000004313;tax=d:Bacteria,p:Proteobacteria,c:Gammaproteobacteria,o:Enterobacteriales,f:Enterobacteriaceae,g:Escherichia/Shigella,s:Escherichia_coli,t:str._K-12_substr._MG1655
-#' @param seq2search A DNAStringSet object of sequences to search for. Replace
-#'   the physeq object.
-#' @param behavior Either "return_matrix" (default), "return_cmd",
-#' or "add_to_phyloseq":
+#' @param seq2search A DNAStringSet object of sequences to search for, or a
+#'   matrix whose `colnames` are the sequences to search for (e.g. a dada2
+#'   sequence table where columns are ASV sequences). In the latter case the
+#'   `colnames` are converted to a DNAStringSet and used as the taxa names.
+#'   Replace the physeq object.
+#' @param behavior Either "return_matrix" (default), "return_taxtab",
+#' "return_cmd", or "add_to_phyloseq":
 #'
 #'  - "return_matrix" return a list of two matrix with taxonomic value in the
 #'    first element of the list and bootstrap value in the second one.
+#'
+#'  - "return_taxtab" return a character matrix of taxonomic values (rows are
+#'    taxa, columns are the `taxa_ranks`) with rownames set to the taxa names.
+#'    This is convenient as a direct input to [phyloseq::tax_table()].
 #'
 #'  - "return_cmd" return the command to run without running it.
 #'
@@ -1606,6 +1613,16 @@ assign_sintax <- function(
 #'   id = 0.5, behavior = "add_to_phyloseq", top_hits_only = FALSE, vote_algorithm = "rel_majority"
 #' )
 #' }
+#'
+#' \donttest{
+#' ## return_taxtab with seq2search (a DNAStringSet or a matrix)
+#' seqs_to_assign <- refseq(data_fungi_mini)
+#' tax_mat <- assign_vsearch_lca(seq2search = seqs_to_assign,
+#'   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
+#'   behavior = "return_taxtab"
+#' )
+#' head(tax_mat)
+#' }
 #' @export
 #' @author Adrien Taudière
 #' @details
@@ -1616,7 +1633,12 @@ assign_vsearch_lca <- function(
   physeq = NULL,
   ref_fasta = NULL,
   seq2search = NULL,
-  behavior = c("return_matrix", "add_to_phyloseq", "return_cmd"),
+  behavior = c(
+    "return_matrix",
+    "return_taxtab",
+    "add_to_phyloseq",
+    "return_cmd"
+  ),
   vsearchpath = find_vsearch(),
   clean_pq = TRUE,
   taxa_ranks = c(
@@ -1651,6 +1673,14 @@ assign_vsearch_lca <- function(
   keep_vsearch_score = FALSE
 ) {
   behavior <- match.arg(behavior)
+
+  ##> If seq2search is a matrix (e.g. a dada2 sequence table), convert its
+  ##> colnames (the ASV sequences) to a DNAStringSet and use them as names
+  if (!is.null(seq2search) && is.matrix(seq2search)) {
+    seqs <- Biostrings::DNAStringSet(colnames(seq2search))
+    names(seqs) <- colnames(seq2search)
+    seq2search <- seqs
+  }
 
   .validate_ref_format(ref_fasta, "sintax", "assign_vsearch_lca")
 
@@ -1851,6 +1881,12 @@ assign_vsearch_lca <- function(
     return(new_physeq)
   } else if (behavior == "return_matrix") {
     return(res_usearch_wide_taxo)
+  } else if (behavior == "return_taxtab") {
+    rank_cols <- paste0(taxa_ranks, suffix)
+    tax_mat <- as.matrix(res_usearch_wide_taxo[, rank_cols, drop = FALSE])
+    colnames(tax_mat) <- taxa_ranks
+    rownames(tax_mat) <- unname(res_usearch_wide_taxo$taxa_names)
+    return(tax_mat)
   }
 }
 ################################################################################

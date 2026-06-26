@@ -5,11 +5,11 @@
 \title{A wrapper of \code{\link[DECIPHER]{IdTaxa}}}
 \usage{
 assign_idtaxa(
-  physeq,
+  physeq = NULL,
   trainingSet = NULL,
   seq2search = NULL,
   fasta_for_training = NULL,
-  behavior = "return_matrix",
+  behavior = c("return_matrix", "return_taxtab", "add_to_phyloseq"),
   threshold = 60,
   column_names = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
   suffix = "_idtaxa",
@@ -26,8 +26,11 @@ using the \code{phyloseq} package.}
 \item{trainingSet}{An object of class Taxa and subclass
 Train compatible with the class of test.}
 
-\item{seq2search}{A DNAStringSet object of sequences to search for. Replace
-the physeq object.}
+\item{seq2search}{A DNAStringSet object of sequences to search for, or a
+matrix whose \code{colnames} are the sequences to search for (e.g. a dada2
+sequence table where columns are ASV sequences). In the latter case the
+\code{colnames} are converted to a DNAStringSet and used as the taxa names.
+Replace the physeq object.}
 
 \item{fasta_for_training}{A fasta file (can be gzip) to train the trainingSet
 using the function \code{\link[=learn_idtaxa]{learn_idtaxa()}}. Only used if trainingSet is NULL.
@@ -40,11 +43,15 @@ taxonomic identifiers.
 The only exception is if \code{unite=TRUE}. In that case the UNITE taxonomy is
 automatically formatted.}
 
-\item{behavior}{Either "return_matrix" (default), or "add_to_phyloseq":
+\item{behavior}{Either "return_matrix" (default), "return_taxtab", or
+"add_to_phyloseq":
 \itemize{
 \item "return_matrix" return a list of two objects. The first element is
 the taxonomic matrix and the second element is the raw results from
 DECIPHER::IdTaxa() function.
+\item "return_taxtab" return a character matrix of taxonomic values (rows are
+taxa, columns are the \code{column_names}) with rownames set to the taxa names.
+This is convenient as a direct input to \code{\link[phyloseq:tax_table]{phyloseq::tax_table()}}.
 \item "add_to_phyloseq" return a phyloseq object with amended slot \verb{@taxtable}.
 Only available if using physeq input and not seq2search input.
 }}
@@ -118,6 +125,15 @@ result_idtaxa <- assign_idtaxa(data_fungi_mini,
 )
 
 plot(result_idtaxa$idtaxa_raw)
+
+## return_taxtab with seq2search (a DNAStringSet or a matrix)
+seqs_to_assign <- refseq(data_fungi_mini)
+tax_mat <- assign_idtaxa(seq2search = seqs_to_assign,
+  fasta_for_training = system.file("extdata", "mini_UNITE_fungi.fasta.gz",
+    package = "MiscMetabar"
+  ), threshold = 20, behavior = "return_taxtab"
+)
+head(tax_mat)
 }
 }
 \seealso{

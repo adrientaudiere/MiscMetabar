@@ -4718,8 +4718,11 @@ rarefy_sample_count_by_modality <-
 #' @inheritParams clean_pq
 #' @param trainingSet An object of class Taxa and subclass
 #'   Train compatible with the class of test.
-#' @param seq2search A DNAStringSet object of sequences to search for. Replace
-#'   the physeq object.
+#' @param seq2search A DNAStringSet object of sequences to search for, or a
+#'   matrix whose `colnames` are the sequences to search for (e.g. a dada2
+#'   sequence table where columns are ASV sequences). In the latter case the
+#'   `colnames` are converted to a DNAStringSet and used as the taxa names.
+#'   Replace the physeq object.
 #' @param fasta_for_training A fasta file (can be gzip) to train the trainingSet
 #'   using the function [learn_idtaxa()]. Only used if trainingSet is NULL.
 #'
@@ -4730,11 +4733,16 @@ rarefy_sample_count_by_modality <-
 #'
 #'   The only exception is if `unite=TRUE`. In that case the UNITE taxonomy is
 #'   automatically formatted.
-#' @param behavior Either "return_matrix" (default), or "add_to_phyloseq":
+#' @param behavior Either "return_matrix" (default), "return_taxtab", or
+#' "add_to_phyloseq":
 #'
 #'  - "return_matrix" return a list of two objects. The first element is
 #'    the taxonomic matrix and the second element is the raw results from
 #'    DECIPHER::IdTaxa() function.
+#'
+#'  - "return_taxtab" return a character matrix of taxonomic values (rows are
+#'    taxa, columns are the `column_names`) with rownames set to the taxa names.
+#'    This is convenient as a direct input to [phyloseq::tax_table()].
 #'
 #'  - "add_to_phyloseq" return a phyloseq object with amended slot `@taxtable`.
 #'    Only available if using physeq input and not seq2search input.
@@ -4778,17 +4786,26 @@ rarefy_sample_count_by_modality <-
 #' )
 #'
 #' plot(result_idtaxa$idtaxa_raw)
+#'
+#' ## return_taxtab with seq2search (a DNAStringSet or a matrix)
+#' seqs_to_assign <- refseq(data_fungi_mini)
+#' tax_mat <- assign_idtaxa(seq2search = seqs_to_assign,
+#'   fasta_for_training = system.file("extdata", "mini_UNITE_fungi.fasta.gz",
+#'     package = "MiscMetabar"
+#'   ), threshold = 20, behavior = "return_taxtab"
+#' )
+#' head(tax_mat)
 #' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to [DECIPHER::IdTaxa()] if you
 #'   use this function.
 assign_idtaxa <- function(
-  physeq,
+  physeq = NULL,
   trainingSet = NULL,
   seq2search = NULL,
   fasta_for_training = NULL,
-  behavior = "return_matrix",
+  behavior = c("return_matrix", "return_taxtab", "add_to_phyloseq"),
   threshold = 60,
   column_names = c(
     "Kingdom",
@@ -4805,6 +4822,20 @@ assign_idtaxa <- function(
   verbose = TRUE,
   ...
 ) {
+  behavior <- match.arg(behavior)
+
+  ##> If seq2search is a matrix (e.g. a dada2 sequence table), convert its
+  ##> colnames (the ASV sequences) to a DNAStringSet and use them as names
+  if (!is.null(seq2search) && is.matrix(seq2search)) {
+    seqs <- Biostrings::DNAStringSet(colnames(seq2search))
+    names(seqs) <- colnames(seq2search)
+    seq2search <- seqs
+  }
+
+  if (!is.null(seq2search) && behavior == "add_to_phyloseq") {
+    stop("You can't use behavior = 'add_to_phyloseq' with seq2search param.")
+  }
+
   if (!is.null(trainingSet) && !is.null(fasta_for_training)) {
     stop(
       "Please provide either trainingSet or fasta_for_training parameters, not both."
@@ -4864,6 +4895,7 @@ assign_idtaxa <- function(
     max(stringr::str_count(idtaxa_taxa_df, ";")) + 1
   )))[, -1]
 
+  rank_cols_clean <- column_names
   column_names <- paste0(column_names, suffix)
   colnames(t_idtaxa) <- column_names
   t_idtaxa$taxa_names <- names(fasta2search)
@@ -4873,6 +4905,11 @@ assign_idtaxa <- function(
       "taxo_value" = t_idtaxa,
       "idtaxa_raw" = idtaxa_taxa_test
     ))
+  } else if (behavior == "return_taxtab") {
+    tax_mat <- as.matrix(t_idtaxa[, column_names, drop = FALSE])
+    colnames(tax_mat) <- rank_cols_clean
+    rownames(tax_mat) <- unname(t_idtaxa$taxa_names)
+    return(tax_mat)
   } else if (behavior == "add_to_phyloseq") {
     tax_tab <- as.data.frame(as.matrix(physeq@tax_table))
     tax_tab$taxa_names <- taxa_names(physeq)
@@ -4887,10 +4924,6 @@ assign_idtaxa <- function(
     taxa_names(new_physeq@tax_table) <- taxa_names(physeq)
 
     return(new_physeq)
-  } else {
-    stop(
-      "Param behavior must take either 'return_matrix' or 'add_to_phyloseq' value"
-    )
   }
 }
 ################################################################################
