@@ -334,10 +334,41 @@ clean_pq <- function(
 #'   taxonomic rank `in physeq@tax_table` to compute the number of unique value.
 #'   Default is NULL and do not compute values for any taxonomic rank
 #' @param verbose (logical) If true, print some additional messages.
+#' @param compute_occurrences (logical, default FALSE) If TRUE, add a column
+#'   `nb_occurrences` with the total number of non-zero cells in the OTU table
+#'   (number of (taxon, sample) presences), computed via
+#'   [as_binary_otu_table()]. Phyloseq objects only (NA otherwise).
+#' @param compute_taxo_info (logical, default FALSE) If TRUE, add a column
+#'   `nb_rank` (number of taxonomic ranks, [phyloseq::rank_names()]) and one
+#'   column `prop_na_<rank>` per rank in `ranks_for_na_prop` giving the
+#'   proportion of NA assignments among present taxa.
+#' @param ranks_for_na_prop (character, default `c("Class","Order","Family","Genus")`)
+#'   Rank names for which the proportion of NA is computed when
+#'   `compute_taxo_info = TRUE`. Ignored otherwise.
+#' @param compute_sam_metadata (logical, default FALSE) If TRUE, add a column
+#'   `nb_sam_metadata` with the number of columns in `sample_data`.
+#' @param compute_seq_length (logical, default FALSE) If TRUE, add three columns
+#'   `mean_length_seq`, `max_length_seq`, `min_length_seq` from the width of the
+#'   reference sequences ([Biostrings::width()]) of present taxa.
+#' @param compute_genetic_diversity (logical, default FALSE) If TRUE, add two
+#'   columns `genetic_diversity_weighted` (abundance-weighted nucleotide
+#'   diversity, pi) and `genetic_diversity_unweighted` (mean pairwise distance),
+#'   both computed from `@ref_seq` of present taxa with
+#'   [DECIPHER::DistanceMatrix()], which handles unequal-length sequences by
+#'   using the shorter length in each pairwise comparison. Requires the
+#'   \pkg{DECIPHER} package (in `Suggests`). May be slow for objects with many
+#'   taxa.
+#' @param compute_factor_counts (logical, default FALSE) If TRUE, add one column
+#'   `n_samples_<level>` per level of `factor` with the number of samples in
+#'   each level.
+#' @param factor (character, default NULL) Name of a variable in `sample_data`
+#'   used when `compute_factor_counts = TRUE`.
 #' @param ... Additional arguments passed on to [clean_pq()] function.
 #'
 #' @return The number of sequences, clusters (e.g. OTUs, ASVs) and samples for
-#'   each object.
+#'   each object. When any `compute_*` extra-metrics argument is TRUE, extra
+#'   columns are appended (phyloseq objects only; NA for other object types).
+#'   These are propagated to [track_wkflow_samples()] via `...`.
 #' @export
 #' @author Adrien Taudière
 #' @seealso [track_wkflow_samples()]
@@ -352,6 +383,9 @@ clean_pq <- function(
 #'         paired_end = FALSE
 #'       ))
 #'   ))
+#'   track_wkflow(list(data_fungi_mini, enterotype),
+#'     compute_occurrences = TRUE, compute_taxo_info = TRUE,
+#'     compute_seq_length = TRUE, compute_genetic_diversity = TRUE)
 #' }
 track_wkflow <- function(
   list_of_objects,
@@ -359,6 +393,14 @@ track_wkflow <- function(
   clean_pq = FALSE,
   taxonomy_rank = NULL,
   verbose = TRUE,
+  compute_occurrences = FALSE,
+  compute_taxo_info = FALSE,
+  ranks_for_na_prop = c("Class", "Order", "Family", "Genus"),
+  compute_sam_metadata = FALSE,
+  compute_seq_length = FALSE,
+  compute_genetic_diversity = FALSE,
+  compute_factor_counts = FALSE,
+  factor = NULL,
   ...
 ) {
   if (verbose) {
@@ -558,7 +600,199 @@ track_wkflow <- function(
     rownames(track) <- names(list_of_objects)
   }
 
+  extra_df <- track_wkflow_extra_metrics(
+    list_of_objects,
+    compute_occurrences = compute_occurrences,
+    compute_taxo_info = compute_taxo_info,
+    ranks_for_na_prop = ranks_for_na_prop,
+    compute_sam_metadata = compute_sam_metadata,
+    compute_seq_length = compute_seq_length,
+    compute_genetic_diversity = compute_genetic_diversity,
+    compute_factor_counts = compute_factor_counts,
+    factor = factor,
+    verbose = verbose
+  )
+  if (!is.null(extra_df)) {
+    if (!is.null(rownames(track))) {
+      rownames(extra_df) <- rownames(track)
+    }
+    track <- cbind(track, extra_df)
+  }
+
   return(track)
+}
+###############################################################################
+# Internal helper for track_wkflow(): compute optional extra metrics for
+# phyloseq objects only. Returns a data frame with one row per object (same
+# order as list_of_objects) or NULL if no extra metric is requested.
+track_wkflow_extra_metrics <- function(
+  list_of_objects,
+  compute_occurrences = FALSE,
+  compute_taxo_info = FALSE,
+  ranks_for_na_prop = c("Class", "Order", "Family", "Genus"),
+  compute_sam_metadata = FALSE,
+  compute_seq_length = FALSE,
+  compute_genetic_diversity = FALSE,
+  compute_factor_counts = FALSE,
+  factor = NULL,
+  verbose = TRUE
+) {
+  any_extra <- compute_occurrences ||
+    compute_taxo_info ||
+    compute_sam_metadata ||
+    compute_seq_length ||
+    compute_genetic_diversity ||
+    compute_factor_counts
+  if (!any_extra) {
+    return(NULL)
+  }
+  if (isTRUE(compute_factor_counts) && is.null(factor)) {
+    stop("compute_factor_counts is TRUE but 'factor' is not provided.")
+  }
+
+  factor_levels <- NULL
+  if (isTRUE(compute_factor_counts)) {
+    factor_levels <- character(0)
+    for (object in list_of_objects) {
+      if (
+        inherits(object, "phyloseq") &&
+          !is.null(object@sam_data) &&
+          factor %in% colnames(object@sam_data)
+      ) {
+        vals <- as.character(unclass(object@sam_data[[factor]]))
+        factor_levels <- union(factor_levels, stats::na.omit(vals))
+      }
+    }
+    factor_levels <- sort(factor_levels)
+  }
+
+  col_names <- character(0)
+  if (isTRUE(compute_occurrences)) {
+    col_names <- c(col_names, "nb_occurrences")
+  }
+  if (isTRUE(compute_taxo_info)) {
+    col_names <- c(col_names, "nb_rank")
+    if (!is.null(ranks_for_na_prop)) {
+      col_names <- c(col_names, paste0("prop_na_", ranks_for_na_prop))
+    }
+  }
+  if (isTRUE(compute_sam_metadata)) {
+    col_names <- c(col_names, "nb_sam_metadata")
+  }
+  if (isTRUE(compute_seq_length)) {
+    col_names <- c(
+      col_names,
+      "mean_length_seq",
+      "max_length_seq",
+      "min_length_seq"
+    )
+  }
+  if (isTRUE(compute_genetic_diversity)) {
+    col_names <- c(
+      col_names,
+      "genetic_diversity_weighted",
+      "genetic_diversity_unweighted"
+    )
+  }
+  if (isTRUE(compute_factor_counts)) {
+    col_names <- c(col_names, paste0("n_samples_", factor_levels))
+  }
+
+  rows <- pbapply::pblapply(list_of_objects, function(object) {
+    vec <- stats::setNames(rep(NA_real_, length(col_names)), col_names)
+    if (!inherits(object, "phyloseq")) {
+      return(vec)
+    }
+    present_taxa <- taxa_names(object)[taxa_sums(object) > 0]
+
+    if (isTRUE(compute_occurrences)) {
+      vec["nb_occurrences"] <-
+        sum(as(as_binary_otu_table(object)@otu_table, "matrix") > 0)
+    }
+
+    if (isTRUE(compute_taxo_info)) {
+      vec["nb_rank"] <- length(rank_names(object))
+      if (!is.null(ranks_for_na_prop) && !is.null(object@tax_table)) {
+        tt <- as(object@tax_table, "matrix")
+        present_tt <- intersect(present_taxa, rownames(tt))
+        for (rk in ranks_for_na_prop) {
+          cn <- paste0("prop_na_", rk)
+          if (rk %in% colnames(tt)) {
+            vec[cn] <- mean(is.na(tt[present_tt, rk]))
+          }
+        }
+      }
+    }
+
+    if (isTRUE(compute_sam_metadata)) {
+      vec["nb_sam_metadata"] <-
+        if (is.null(object@sam_data)) NA_integer_ else ncol(object@sam_data)
+    }
+
+    if (isTRUE(compute_seq_length) && !is.null(object@refseq)) {
+      present_rs <- intersect(present_taxa, names(object@refseq))
+      if (length(present_rs) > 0) {
+        widths <- Biostrings::width(object@refseq[present_rs])
+        vec["mean_length_seq"] <- mean(widths)
+        vec["max_length_seq"] <- max(widths)
+        vec["min_length_seq"] <- min(widths)
+      }
+    }
+
+    if (isTRUE(compute_genetic_diversity) && !is.null(object@refseq)) {
+      present_rs <- intersect(present_taxa, names(object@refseq))
+      if (length(present_rs) >= 2) {
+        if (!requireNamespace("DECIPHER", quietly = TRUE)) {
+          stop(
+            "compute_genetic_diversity requires the 'DECIPHER' package. ",
+            "Install it with BiocManager::install(\"DECIPHER\")."
+          )
+        }
+        dm <- suppressWarnings(DECIPHER::DistanceMatrix(
+          object@refseq[present_rs],
+          type = "matrix",
+          verbose = FALSE
+        ))
+        unweighted <- mean(dm[lower.tri(dm)], na.rm = TRUE)
+        vec["genetic_diversity_unweighted"] <-
+          if (is.nan(unweighted) || is.na(unweighted)) {
+            NA_real_
+          } else {
+            unweighted
+          }
+        rel <- taxa_sums(object)[present_rs]
+        rel <- rel / sum(rel)
+        weighted <- sum(outer(rel, rel) * dm, na.rm = TRUE)
+        vec["genetic_diversity_weighted"] <-
+          if (is.nan(weighted) || is.na(weighted)) {
+            NA_real_
+          } else {
+            weighted
+          }
+      }
+    }
+
+    if (
+      isTRUE(compute_factor_counts) &&
+        !is.null(object@sam_data) &&
+        factor %in% colnames(object@sam_data)
+    ) {
+      vals <- as.character(unclass(object@sam_data[[factor]]))
+      tab <- table(factor(vals, levels = factor_levels))
+      for (lv in factor_levels) {
+        vec[paste0("n_samples_", lv)] <- as.numeric(tab[[lv]])
+      }
+    }
+    vec
+  })
+
+  extra_df <- as.data.frame(
+    do.call(rbind, rows),
+    stringsAsFactors = FALSE,
+    check.names = FALSE
+  )
+  rownames(extra_df) <- NULL
+  extra_df
 }
 ################################################################################
 

@@ -466,3 +466,73 @@ test_that("sam_data_matching_names returns expected structure", {
   expect_true("sam_data" %in% names(res))
   expect_s3_class(res$sam_names_matching, "tbl_df")
 })
+
+test_that("track_wkflow extra metrics add columns for phyloseq objects", {
+  skip_on_cran()
+  res <- track_wkflow(
+    list(data_fungi, enterotype),
+    compute_occurrences = TRUE,
+    compute_taxo_info = TRUE,
+    compute_sam_metadata = TRUE,
+    compute_seq_length = TRUE,
+    compute_genetic_diversity = TRUE
+  )
+  expect_s3_class(res, "data.frame")
+  expect_true("nb_occurrences" %in% colnames(res))
+  expect_true("nb_rank" %in% colnames(res))
+  expect_true("prop_na_Genus" %in% colnames(res))
+  expect_true("nb_sam_metadata" %in% colnames(res))
+  expect_true("mean_length_seq" %in% colnames(res))
+  expect_true("max_length_seq" %in% colnames(res))
+  expect_true("min_length_seq" %in% colnames(res))
+  expect_true("genetic_diversity_weighted" %in% colnames(res))
+  expect_true("genetic_diversity_unweighted" %in% colnames(res))
+})
+
+test_that("track_wkflow default behavior is unchanged (no extra columns)", {
+  skip_on_cran()
+  res0 <- track_wkflow(list(data_fungi, enterotype))
+  expect_false("nb_occurrences" %in% colnames(res0))
+  expect_false("nb_rank" %in% colnames(res0))
+  expect_equal(colnames(res0), c("nb_sequences", "nb_clusters", "nb_samples"))
+})
+
+test_that("track_wkflow extra metrics are NA for non-phyloseq objects", {
+  skip_on_cran()
+  mat <- as(data_fungi@otu_table, "matrix")
+  res <- track_wkflow(
+    list(mat, data_fungi),
+    compute_occurrences = TRUE,
+    compute_seq_length = TRUE
+  )
+  expect_true(is.na(res[1, "nb_occurrences"]))
+  expect_true(is.na(res[1, "mean_length_seq"]))
+  expect_false(is.na(res[2, "nb_occurrences"]))
+})
+
+test_that("track_wkflow compute_factor_counts counts samples per level", {
+  skip_on_cran()
+  fac <- "Height"
+  res <- track_wkflow(list(data_fungi),
+    compute_factor_counts = TRUE, factor = fac)
+  lvl_cols <- grep("^n_samples_", colnames(res), value = TRUE)
+  expect_length(lvl_cols, length(unique(stats::na.omit(data_fungi@sam_data[[fac]]))))
+  expect_equal(sum(res[1, lvl_cols]),
+    sum(!is.na(data_fungi@sam_data[[fac]])))
+})
+
+test_that("track_wkflow compute_factor_counts errors without factor", {
+  skip_on_cran()
+  expect_error(
+    track_wkflow(list(data_fungi), compute_factor_counts = TRUE),
+    class = "error"
+  )
+})
+
+test_that("track_wkflow_samples propagates extra metrics via ...", {
+  skip_on_cran()
+  res <- track_wkflow_samples(tree_A10_005,
+    compute_occurrences = TRUE, compute_seq_length = TRUE)
+  expect_true("nb_occurrences" %in% colnames(res[[1]]))
+  expect_true("mean_length_seq" %in% colnames(res[[1]]))
+})

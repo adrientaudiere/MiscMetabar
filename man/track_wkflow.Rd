@@ -11,6 +11,14 @@ track_wkflow(
   clean_pq = FALSE,
   taxonomy_rank = NULL,
   verbose = TRUE,
+  compute_occurrences = FALSE,
+  compute_taxo_info = FALSE,
+  ranks_for_na_prop = c("Class", "Order", "Family", "Genus"),
+  compute_sam_metadata = FALSE,
+  compute_seq_length = FALSE,
+  compute_genetic_diversity = FALSE,
+  compute_factor_counts = FALSE,
+  factor = NULL,
   ...
 )
 }
@@ -29,11 +37,50 @@ Default is NULL and do not compute values for any taxonomic rank}
 
 \item{verbose}{(logical) If true, print some additional messages.}
 
+\item{compute_occurrences}{(logical, default FALSE) If TRUE, add a column
+\code{nb_occurrences} with the total number of non-zero cells in the OTU table
+(number of (taxon, sample) presences), computed via
+\code{\link[=as_binary_otu_table]{as_binary_otu_table()}}. Phyloseq objects only (NA otherwise).}
+
+\item{compute_taxo_info}{(logical, default FALSE) If TRUE, add a column
+\code{nb_rank} (number of taxonomic ranks, \code{\link[phyloseq:rank_names]{phyloseq::rank_names()}}) and one
+column \verb{prop_na_<rank>} per rank in \code{ranks_for_na_prop} giving the
+proportion of NA assignments among present taxa.}
+
+\item{ranks_for_na_prop}{(character, default \code{c("Class","Order","Family","Genus")})
+Rank names for which the proportion of NA is computed when
+\code{compute_taxo_info = TRUE}. Ignored otherwise.}
+
+\item{compute_sam_metadata}{(logical, default FALSE) If TRUE, add a column
+\code{nb_sam_metadata} with the number of columns in \code{sample_data}.}
+
+\item{compute_seq_length}{(logical, default FALSE) If TRUE, add three columns
+\code{mean_length_seq}, \code{max_length_seq}, \code{min_length_seq} from the width of the
+reference sequences (\code{\link[Biostrings:width]{Biostrings::width()}}) of present taxa.}
+
+\item{compute_genetic_diversity}{(logical, default FALSE) If TRUE, add two
+columns \code{genetic_diversity_weighted} (abundance-weighted nucleotide
+diversity, pi) and \code{genetic_diversity_unweighted} (mean pairwise distance),
+both computed from \verb{@ref_seq} of present taxa with
+\code{\link[DECIPHER:DistanceMatrix]{DECIPHER::DistanceMatrix()}}, which handles unequal-length sequences by
+using the shorter length in each pairwise comparison. Requires the
+\pkg{DECIPHER} package (in \code{Suggests}). May be slow for objects with many
+taxa.}
+
+\item{compute_factor_counts}{(logical, default FALSE) If TRUE, add one column
+\verb{n_samples_<level>} per level of \code{factor} with the number of samples in
+each level.}
+
+\item{factor}{(character, default NULL) Name of a variable in \code{sample_data}
+used when \code{compute_factor_counts = TRUE}.}
+
 \item{...}{Additional arguments passed on to \code{\link[=clean_pq]{clean_pq()}} function.}
 }
 \value{
 The number of sequences, clusters (e.g. OTUs, ASVs) and samples for
-each object.
+each object. When any \verb{compute_*} extra-metrics argument is TRUE, extra
+columns are appended (phyloseq objects only; NA for other object types).
+These are propagated to \code{\link[=track_wkflow_samples]{track_wkflow_samples()}} via \code{...}.
 }
 \description{
 \if{html}{\out{
@@ -63,6 +110,9 @@ if (requireNamespace("pbapply")) {
         paired_end = FALSE
       ))
   ))
+  track_wkflow(list(data_fungi_mini, enterotype),
+    compute_occurrences = TRUE, compute_taxo_info = TRUE,
+    compute_seq_length = TRUE, compute_genetic_diversity = TRUE)
 }
 \dontshow{\}) # examplesIf}
 }
