@@ -6756,6 +6756,8 @@ plot_complexity_pq <- function(
 ################################################################################
 #' A diagnostic plot of the number of sequences per samples
 #'
+#' A diagnostic plot of the number of sequences per samples.
+#'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
@@ -7100,7 +7102,8 @@ reorder_distinct_colors <- function(
 
 #' Add reordered distinct colors to a ggplot
 #'
-#' @description
+#' Add reordered distinct colors to a ggplot.
+#'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'

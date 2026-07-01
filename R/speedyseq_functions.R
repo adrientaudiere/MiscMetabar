@@ -586,6 +586,7 @@ setMethod(
 # Helpers ---------------------------------------------------------------------
 
 #' Get the unique value in x or NA if none
+#' @description
 #'
 #' If `unique(x)` is a single value, return it; otherwise, return an NA of the
 #' same type as `x`. If `x` is a factor, then the levels and ordered status
