@@ -7,7 +7,7 @@ SE) with jittered individual points. A Kruskal-Wallis test is reported
 in the subtitle; when the global effect is significant, Tukey HSD
 pairwise comparisons produce compact letter displays above the bars.
 Multiple values of `q` are assembled into a
-[patchwork::patchwork](https://patchwork.data-imaginist.com/reference/patchwork-package.html)
+[patchwork](https://patchwork.data-imaginist.com/reference/patchwork-package.html)
 layout automatically.
 
 ## Usage
@@ -45,6 +45,7 @@ m <- mean(x, na.rm = TRUE)
   error_bar_alpha = 0.35,
   point_alpha = 0.5,
   letters_below_bar = FALSE,
+  sig_symbol = "∅",
   ...
 )
 ```
@@ -177,6 +178,16 @@ m <- mean(x, na.rm = TRUE)
   above whichever is higher: the error bar top or the highest data
   point.
 
+- sig_symbol:
+
+  Character symbol (default `"∅"`, the empty set, evoking the absence of
+  a pairwise comparison) used, when several values of `q` are drawn, to
+  flag the panels for which Tukey HSD pairwise comparisons were not run
+  (no global Kruskal-Wallis significance). The symbol is appended to the
+  panel subtitle and explained once in the shared figure caption. The
+  "Error bars" / "letters from Tukey HSD" caption is set a single time
+  for the whole figure rather than repeated on every panel.
+
 - ...:
 
   Additional arguments passed to
@@ -203,42 +214,18 @@ Adrien Taudière
 ## Examples
 
 ``` r
-hill_bar_pq(data_fungi_mini, Height)
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
+hill_bar_pq(data_fungi_mini, Height, q = 1)
 #> ! Sample coverage is 0, most estimators will return `NaN`.
 #> ! Sample coverage is 0, most estimators will return `NaN`.
 #> Joining with `by = join_by(Sample)`
 
-# \donttest{
+if (FALSE) { # \dontrun{
 hill_bar_pq(data_fungi_mini, Height, q = 0)
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Joining with `by = join_by(Sample)`
-
-hill_bar_pq(data_fungi_mini, Height, q = c(0, 1, 2), ncol = 1)
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Joining with `by = join_by(Sample)`
-
-hill_bar_pq(data_fungi_mini, Height, q = c(0, 2),
-  y_labs = c(Hill_0 = "Richness", Hill_2 = "Simpson diversity"))
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Joining with `by = join_by(Sample)`
-
+hill_bar_pq(data_fungi_mini, Height, q = c(0, 2), ncol = 2)
+hill_bar_pq(data_fungi_mini, Height,
+  q = c(0, 2),
+  y_labs = c(Hill_0 = "Richness", Hill_2 = "Simpson diversity")
+)
 hill_bar_pq(data_fungi_mini, Height, add_letters = FALSE)
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Joining with `by = join_by(Sample)`
-
-# }
+} # }
 ```

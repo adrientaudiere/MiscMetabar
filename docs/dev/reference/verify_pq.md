@@ -13,6 +13,7 @@ verify_pq(
   min_nb_seq_sample = 500,
   min_nb_seq_taxa = 1,
   check_taxonomy = FALSE,
+  check_order = TRUE,
   ...
 )
 ```
@@ -45,6 +46,16 @@ verify_pq(
   [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/verify_tax_table.md)
   to check for common taxonomy table issues.
 
+- check_order:
+
+  (logical, default TRUE) If TRUE, additionally check that the *order*
+  (not only the set) of `sample_names` matches between the `otu_table`
+  and `sam_data` slots, and that the order of `taxa_names` matches
+  between the `otu_table` and `tax_table` slots. A mismatching order is
+  tolerated by phyloseq but silently breaks any function that aligns
+  slots positionally; set to FALSE to bypass this check (e.g. on a
+  legacy object you intend to reorder afterwards).
+
 - ...:
 
   Additional arguments passed to
@@ -63,12 +74,12 @@ Adrien Taudière
 ## Examples
 
 ``` r
-verify_pq(data_fungi)
+verify_pq(data_fungi_mini)
 # \donttest{
-verify_pq(data_fungi, check_taxonomy = TRUE)
-#> Warning: Found 145 taxonomic value(s) matching NA-like patterns. Unique values: Pezizomycotina_cls_Incertae_sedis, Rozellomycotina_cls_Incertae_sedis, Sordariomycetes_ord_Incertae_sedis, Microbotryomycetes_ord_Incertae_sedis, Lecanoromycetes_ord_Incertae_sedis, Dothideomycetes_ord_Incertae_sedis, Cystobasidiomycetes_ord_Incertae_sedis, Pezizomycotina_ord_Incertae_sedis, Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, .... Use modify_phyloseq = TRUE to replace these with NA.
-#> Warning: Found 1432 taxonomic value(s) with less than 4 characters: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars). Use modify_phyloseq = TRUE to replace these with NA.
-#> Found 976 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.
-#> Warning: Found 1319 taxonomic value(s) with internal spaces: 'Plant Pathogen' (Guild), 'Endophyte-Undefined Saprotroph-Wood Saprotroph' (Guild), 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), 'Wood Saprotroph' (Guild), .... Use modify_phyloseq = TRUE and remove_all_space = TRUE to replace these spaces with '_'.
+verify_pq(data_fungi_mini, check_taxonomy = TRUE)
+#> Warning: Found 4 taxonomic value(s) matching NA-like patterns. Unique values: Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, Russulales_fam_Incertae_sedis, Hymenochaetales_fam_Incertae_sedis. Use modify_phyloseq = TRUE to replace these with NA.
+#> Warning: Found 20 taxonomic value(s) with less than 4 characters: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars). Use modify_phyloseq = TRUE to replace these with NA.
+#> Found 13 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.
+#> Warning: Found 70 taxonomic value(s) with internal spaces: 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), 'Wood Saprotroph' (Guild), 'Ectomycorrhizal-Wood Saprotroph' (Guild), 'Leaf Saprotroph-Plant Pathogen-Undefined Saprotroph-Wood Saprotroph' (Guild), .... Use modify_phyloseq = TRUE and remove_all_space = TRUE to replace these spaces with '_'.
 # }
 ```

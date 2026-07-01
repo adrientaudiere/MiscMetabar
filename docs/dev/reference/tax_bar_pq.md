@@ -12,10 +12,12 @@ tax_bar_pq(
   physeq,
   fact = "Sample",
   taxa = "Order",
+  order_modality = NULL,
   percent_bar = FALSE,
   nb_seq = TRUE,
   add_ribbon = FALSE,
   ribbon_alpha = 0.3,
+  ribbon_hide_zero = TRUE,
   label_taxa = FALSE,
   void_theme = TRUE,
   show_values = FALSE,
@@ -48,6 +50,15 @@ tax_bar_pq(
 
   (default: 'Order') Name of the taxonomic rank of interest
 
+- order_modality:
+
+  (default NULL) Optional character vector giving the order of the
+  `fact` modalities (i.e. the order of the bars). Values must match the
+  modalities present in `physeq@sam_data[[fact]]`. If some modalities
+  are omitted, only the listed ones are kept (a message lists the
+  dropped modalities). If a value is not found among the modalities, an
+  informative error lists the offending values.
+
 - percent_bar:
 
   (default FALSE) If TRUE, the stacked bar fill all the space between 0
@@ -70,6 +81,13 @@ tax_bar_pq(
 - ribbon_alpha:
 
   (numeric; default 0.3) Transparency of the ribbons.
+
+- ribbon_hide_zero:
+
+  (logical; default TRUE) When `add_ribbon = TRUE`, suppress the ribbon
+  of a taxon between two adjacent bars whenever its value is zero
+  (absent) in either of the two connected bars. Set to `FALSE` to keep
+  ribbons that collapse to a flat line at a zero end.
 
 - label_taxa:
 
@@ -157,18 +175,22 @@ Adrien Taudière
 ## Examples
 
 ``` r
-data_fungi_ab <- subset_taxa_pq(data_fungi,
-  taxa_sums(data_fungi) > 10000)
-#> Cleaning suppress 0 taxa (  ) and 15 sample(s) ( BE9-006-B_S27_MERGED.fastq.gz / C21-NV1-M_S64_MERGED.fastq.gz / DJ2-008-B_S87_MERGED.fastq.gz / DY5-004-H_S97_MERGED.fastq.gz / DY5-004-M_S98_MERGED.fastq.gz / E9-009-B_S100_MERGED.fastq.gz / E9-009-H_S101_MERGED.fastq.gz / N22-001-B_S129_MERGED.fastq.gz / O20-X-B_S139_MERGED.fastq.gz / O21-007-M_S144_MERGED.fastq.gz / R28-008-H_S159_MERGED.fastq.gz / R28-008-M_S160_MERGED.fastq.gz / W26-001-M_S167_MERGED.fastq.gz / Y29-007-H_S182_MERGED.fastq.gz / Y29-007-M_S183_MERGED.fastq.gz ).
+data_fungi_ab <- subset_taxa_pq(
+  data_fungi_mini,
+  taxa_sums(data_fungi_mini) > 1000
+)
+#> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).
 #> Number of non-matching ASV 0
-#> Number of matching ASV 1420
-#> Number of filtered-out ASV 1385
-#> Number of kept ASV 35
-#> Number of kept samples 170
+#> Number of matching ASV 45
+#> Number of filtered-out ASV 0
+#> Number of kept ASV 45
+#> Number of kept samples 137
 tax_bar_pq(data_fungi_ab) + theme(legend.position = "none")
 
-tax_bar_pq(data_fungi_ab, taxa = "Class", fact = "Height",
-  show_n_samples = TRUE)
+tax_bar_pq(data_fungi_ab,
+  taxa = "Class", fact = "Height",
+  show_n_samples = TRUE
+)
 
 # \donttest{
 tax_bar_pq(data_fungi_ab, taxa = "Class")
@@ -186,29 +208,33 @@ tax_bar_pq(data_fungi_ab,
   taxa = "Class", fact = "Time",
   percent_bar = TRUE, add_ribbon = TRUE, label_taxa = TRUE
 )
-#> Warning: 1 taxon/taxa only appear in intermediate levels and will not be labelled: Atractiellomycetes. Consider using label_taxa = FALSE.
+#> Warning: 2 taxon/taxa only appear in intermediate levels and will not be labelled: Atractiellomycetes, NA. Consider using label_taxa = FALSE.
 
 tax_bar_pq(data_fungi_ab,
   taxa = "Class", fact = "Time",
   show_values = TRUE, minimum_value_to_show = 10000
 )
 
-tax_bar_pq(data_fungi_ab, fact = "Height", taxa = "Class",
+tax_bar_pq(data_fungi_ab,
+  fact = "Height", taxa = "Class",
   nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
-  add_ribbon = TRUE, value_size=7, ribbon_alpha = .6,
-  show_values=TRUE, label_size = 4, top_label_size = 6,
-  minimum_value_to_show=0.05) |>
-  reorder_distinct_colors(alternate_lightness=TRUE)
+  add_ribbon = TRUE, value_size = 7, ribbon_alpha = .6,
+  show_values = TRUE, label_size = 4, top_label_size = 6,
+  minimum_value_to_show = 0.05
+) |>
+  reorder_distinct_colors(alternate_lightness = TRUE)
 
 
-tax_bar_pq(data_fungi_mini, fact = "Height", taxa = "Order",
+tax_bar_pq(data_fungi_mini,
+  fact = "Height", taxa = "Order",
   nb_seq = TRUE, percent_bar = TRUE, label_taxa = TRUE,
-  add_ribbon = TRUE, value_size=5,
-  ribbon_alpha = .6, show_values=TRUE,
+  add_ribbon = TRUE, value_size = 5,
+  ribbon_alpha = .6, show_values = TRUE,
   label_size = 4, top_label_size = 8,
-  minimum_value_to_show=0.05, bar_width = NULL,
-  linewidth_bar_internal = 0.1, bar_internal_color="black") |>
-  reorder_distinct_colors(alternate_lightness=TRUE)
+  minimum_value_to_show = 0.05, bar_width = NULL,
+  linewidth_bar_internal = 0.1, bar_internal_color = "black"
+) |>
+  reorder_distinct_colors(alternate_lightness = TRUE)
 
 # }
 ```

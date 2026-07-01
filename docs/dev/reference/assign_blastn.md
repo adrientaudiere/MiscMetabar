@@ -8,11 +8,12 @@ Use the blast software.
 
 ``` r
 assign_blastn(
-  physeq,
+  physeq = NULL,
   ref_fasta = NULL,
   database = NULL,
   blastpath = NULL,
-  behavior = c("return_matrix", "add_to_phyloseq"),
+  seq2search = NULL,
+  behavior = c("return_matrix", "return_taxtab", "add_to_phyloseq"),
   method_algo = c("vote", "top-hit"),
   suffix = "_blastn",
   min_id = 95,
@@ -37,9 +38,8 @@ assign_blastn(
 
 - physeq:
 
-  (required) a
-  [`phyloseq-class`](https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html)
-  object obtained using the `phyloseq` package.
+  (optional) A phyloseq object with a `@refseq` slot. If `seq2search` is
+  provided, `physeq` can be `NULL`.
 
 - ref_fasta:
 
@@ -55,12 +55,26 @@ assign_blastn(
 
   path to blast program.
 
+- seq2search:
+
+  A DNAStringSet object of sequences to search for, or a matrix whose
+  `colnames` are the sequences to search for (e.g. a dada2 sequence
+  table where columns are ASV sequences). In the latter case the
+  `colnames` are converted to a DNAStringSet and used as the taxa names.
+  Replace the physeq object.
+
 - behavior:
 
-  Either "return_matrix" (default), or "add_to_phyloseq":
+  Either "return_matrix" (default), "return_taxtab", or
+  "add_to_phyloseq":
 
   - "return_matrix" return a list of two matrix with taxonomic value in
     the first element of the list and bootstrap value in the second one.
+
+  - "return_taxtab" return a character matrix of taxonomic values (rows
+    are taxa, columns are the `column_names`) with rownames set to the
+    taxa names. This is convenient as a direct input to
+    [`phyloseq::tax_table()`](https://rdrr.io/pkg/phyloseq/man/tax_table-methods.html).
 
   - "add_to_phyloseq" return a phyloseq object with amended slot
     `@taxtable`. Only available if using physeq input and not seq2search
@@ -174,6 +188,10 @@ assign_blastn(
     taxonomic assignation (before vote). The second one is the taxonomic
     assignation in which conflicts are resolved using vote.
 
+- If behavior == "return_taxtab", a character matrix of taxonomic values
+  ready for
+  [`phyloseq::tax_table()`](https://rdrr.io/pkg/phyloseq/man/tax_table-methods.html)
+
 - If behavior == "add_to_phyloseq", return a new phyloseq object
 
 ## Author
@@ -207,5 +225,14 @@ assign_blastn(data_fungi_mini,
   vote_algorithm = "consensus", replace_collapsed_rank_by_NA = FALSE,
   min_id = 90, min_cover = 50, behavior = "add_to_phyloseq"
 )@tax_table
+
+## return_taxtab with seq2search (a DNAStringSet or a matrix)
+seqs_to_assign <- refseq(data_fungi_mini)
+tax_mat <- assign_blastn(seq2search = seqs_to_assign,
+  ref_fasta = ref_fasta, method_algo = "top-hit", min_id = 70,
+  min_e_value = 1e-3, min_cover = 50, min_bit_score = 20,
+  behavior = "return_taxtab"
+)
+head(tax_mat)
 } # }
 ```

@@ -76,25 +76,24 @@ Adrien Taudière
 ## Examples
 
 ``` r
-data(data_fungi)
 if (requireNamespace("ComplexUpset")) {
-  upset_test_pq(data_fungi, "Height", var_to_test = c("OTU", "Class", "Guild"))
-  upset_test_pq(data_fungi, "Time")
+  upset_test_pq(data_fungi_mini, "Height",
+    var_to_test = c("OTU", "Class", "Guild")
+  )
+  upset_test_pq(data_fungi_mini, "Time")
 }
 #> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).
 #> Number of non-matching ASV 0
-#> Number of matching ASV 1420
+#> Number of matching ASV 45
 #> Number of filtered-out ASV 0
-#> Number of kept ASV 1420
-#> Number of kept samples 185
-#> [1] "OTU, Class, Guild differ significantly between intersections"
+#> Number of kept ASV 45
+#> Number of kept samples 137
 #> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).
 #> Number of non-matching ASV 0
-#> Number of matching ASV 1420
+#> Number of matching ASV 45
 #> Number of filtered-out ASV 0
-#> Number of kept ASV 1420
-#> Number of kept samples 185
-#> [1] "OTU differ significantly between intersections"
-#>     variable     p.value statistic                         test         fdr
-#> OTU      OTU 0.002217898   33.7837 Kruskal-Wallis rank sum test 0.002217898
+#> Number of kept ASV 45
+#> Number of kept samples 137
+#>     variable   p.value statistic                         test       fdr
+#> OTU      OTU 0.3847389  12.78662 Kruskal-Wallis rank sum test 0.3847389
 ```

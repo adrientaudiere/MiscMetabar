@@ -7,7 +7,7 @@ can be reused by other pqverse packages (e.g. dbpq::count_unwanted_tax())."><met
 problematic values in taxonomy tables. Each element is a regex pattern;
 names provide human-readable descriptions.
 Used as the default replace_to_NA argument in verify_tax_table() and
-can be reused by other pqverse packages (e.g. dbpq::count_unwanted_tax())."><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+can be reused by other pqverse packages (e.g. dbpq::count_unwanted_tax())."><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -15,7 +15,7 @@ can be reused by other pqverse packages (e.g. dbpq::count_unwanted_tax())."><met
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,6 +34,7 @@ can be reused by other pqverse packages (e.g. dbpq::count_unwanted_tax())."><met
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -63,8 +64,7 @@ can be reused by other pqverse packages (e.g. dbpq::count_unwanted_tax())."><met
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Default patterns for unwanted taxonomic values</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Default patterns for unwanted taxonomic values</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/data.R" class="external-link"><code>R/data.R</code></a></small>
       <div class="d-none name"><code>unwanted_tax_patterns.Rd</code></div>
     </div>
@@ -74,7 +74,7 @@ can be reused by other pqverse packages (e.g. dbpq::count_unwanted_tax())."><met
 problematic values in taxonomy tables. Each element is a regex pattern;
 names provide human-readable descriptions.</p>
 <p>Used as the default <code>replace_to_NA</code> argument in <code><a href="verify_tax_table.html">verify_tax_table()</a></code> and
-can be reused by other pqverse packages (e.g. <code>dbpq::count_unwanted_tax()</code>).</p>
+can be reused by other pqverse packages (e.g. <code><a href="https://adrientaudiere.github.io/dbpq/reference/count_unwanted_tax.html" class="external-link">dbpq::count_unwanted_tax()</a></code>).</p>
     </div>
 
     <div class="section level2">
@@ -155,6 +155,8 @@ can be reused by other pqverse packages (e.g. <code>dbpq::count_unwanted_tax()</
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                   "^$" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                        whitespace only </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                               "^\\s+$" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                          question mark </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                                "^\\?$" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                           unclassified </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                      "[Uu]nclassified" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                                unknown </span>

@@ -149,8 +149,8 @@ hill_tuckey_pq <- function(
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-deprecated-orange" alt="lifecycle-deprecated"></a>
 #'
-#' #`r lifecycle::badge("deprecated")` This function has moved to the `bootpq`
-#' #package. Please use [bootpq::hill_test_rarperm_pq()] instead.
+#' `r lifecycle::badge("deprecated")` This function has moved to the `bootpq`
+#' package. Please use [bootpq::hill_test_rarperm_pq()] instead.
 #'
 #' This reduce the risk of a random drawing of a exceptional situation of an unique rarefaction.
 #' @inheritParams clean_pq

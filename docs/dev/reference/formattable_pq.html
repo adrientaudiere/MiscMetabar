@@ -5,7 +5,7 @@
 Allow to visualize a table with graphical input."><meta property="og:description" content="
 
 
-Allow to visualize a table with graphical input."><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+Allow to visualize a table with graphical input."><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -13,7 +13,7 @@ Allow to visualize a table with graphical input."><meta name="robots" content="n
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +32,7 @@ Allow to visualize a table with graphical input."><meta name="robots" content="n
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -61,8 +62,7 @@ Allow to visualize a table with graphical input."><meta name="robots" content="n
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Create a visualization table to describe taxa distribution across a modality</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Create a visualization table to describe taxa distribution across a modality</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/table_functions.R" class="external-link"><code>R/table_functions.R</code></a></small>
       <div class="d-none name"><code>formattable_pq.Rd</code></div>
     </div>
@@ -273,7 +273,7 @@ use this function.</p>
 <span class="r-in"><span>          `background-color` <span class="op">=</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/csscolor.html" class="external-link">csscolor</a></span><span class="op">(</span><span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/gradient.html" class="external-link">gradient</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>            <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="transp.html">transp</a></span><span class="op">(</span><span class="st">"#1a91ff"</span><span class="op">)</span>, <span class="st">"#1a91ff"</span></span></span>
 <span class="r-in"><span>          <span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>          width <span class="op">=</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/legacy.html" class="external-link">percent</a></span><span class="op">(</span><span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/proportion.html" class="external-link">proportion</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>          width <span class="op">=</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/percent.html" class="external-link">percent</a></span><span class="op">(</span><span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/proportion.html" class="external-link">proportion</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>        <span class="op">)</span></span></span>
 <span class="r-in"><span>      <span class="op">)</span>,</span></span>
 <span class="r-in"><span>      Low <span class="op">=</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/formatter.html" class="external-link">formatter</a></span><span class="op">(</span></span></span>
@@ -288,7 +288,7 @@ use this function.</p>
 <span class="r-in"><span>            <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>            <span class="fu"><a href="transp.html">transp</a></span><span class="op">(</span><span class="st">"green"</span><span class="op">)</span>, <span class="st">"green"</span></span></span>
 <span class="r-in"><span>          <span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>          width <span class="op">=</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/legacy.html" class="external-link">percent</a></span><span class="op">(</span><span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/proportion.html" class="external-link">proportion</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>          width <span class="op">=</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/percent.html" class="external-link">percent</a></span><span class="op">(</span><span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/proportion.html" class="external-link">proportion</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>        <span class="op">)</span></span></span>
 <span class="r-in"><span>      <span class="op">)</span>,</span></span>
 <span class="r-in"><span>      Middle <span class="op">=</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/formatter.html" class="external-link">formatter</a></span><span class="op">(</span></span></span>
@@ -302,7 +302,7 @@ use this function.</p>
 <span class="r-in"><span>          `background-color` <span class="op">=</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/csscolor.html" class="external-link">csscolor</a></span><span class="op">(</span><span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/gradient.html" class="external-link">gradient</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>            <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="transp.html">transp</a></span><span class="op">(</span><span class="st">"orange"</span><span class="op">)</span>, <span class="st">"orange"</span></span></span>
 <span class="r-in"><span>          <span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>          width <span class="op">=</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/legacy.html" class="external-link">percent</a></span><span class="op">(</span><span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/proportion.html" class="external-link">proportion</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>          width <span class="op">=</span> <span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/percent.html" class="external-link">percent</a></span><span class="op">(</span><span class="fu">formattable</span><span class="fu">::</span><span class="fu"><a href="https://renkun-ken.github.io/formattable/reference/proportion.html" class="external-link">proportion</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>        <span class="op">)</span></span></span>
 <span class="r-in"><span>      <span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>

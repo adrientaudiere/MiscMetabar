@@ -5,7 +5,7 @@
 Use the blast software."><meta property="og:description" content="
 
 
-Use the blast software."><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+Use the blast software."><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -13,7 +13,7 @@ Use the blast software."><meta name="robots" content="noindex"><script data-goat
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +32,7 @@ Use the blast software."><meta name="robots" content="noindex"><script data-goat
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -61,8 +62,7 @@ Use the blast software."><meta name="robots" content="noindex"><script data-goat
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Assign taxonomy using blastn algorithm and the blast software</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Assign taxonomy using blastn algorithm and the blast software</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/blast.R" class="external-link"><code>R/blast.R</code></a></small>
       <div class="d-none name"><code>assign_blastn.Rd</code></div>
     </div>
@@ -77,11 +77,12 @@ Use the blast software."><meta name="robots" content="noindex"><script data-goat
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">assign_blastn</span><span class="op">(</span></span>
-<span>  <span class="va">physeq</span>,</span>
+<span>  physeq <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ref_fasta <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  database <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  blastpath <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  behavior <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"return_matrix"</span>, <span class="st">"add_to_phyloseq"</span><span class="op">)</span>,</span>
+<span>  seq2search <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  behavior <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"return_matrix"</span>, <span class="st">"return_taxtab"</span>, <span class="st">"add_to_phyloseq"</span><span class="op">)</span>,</span>
 <span>  method_algo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vote"</span>, <span class="st">"top-hit"</span><span class="op">)</span>,</span>
 <span>  suffix <span class="op">=</span> <span class="st">"_blastn"</span>,</span>
 <span>  min_id <span class="op">=</span> <span class="fl">95</span>,</span>
@@ -107,8 +108,8 @@ Use the blast software."><meta name="robots" content="noindex"><script data-goat
 
 
 <dl><dt id="arg-physeq">physeq<a class="anchor" aria-label="anchor" href="#arg-physeq"></a></dt>
-<dd><p>(required) a <code><a href="https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html" class="external-link">phyloseq-class</a></code> object obtained
-using the <code>phyloseq</code> package.</p></dd>
+<dd><p>(optional) A phyloseq object with a <code>@refseq</code> slot. If <code>seq2search</code>
+is provided, <code>physeq</code> can be <code>NULL</code>.</p></dd>
 
 
 <dt id="arg-ref-fasta">ref_fasta<a class="anchor" aria-label="anchor" href="#arg-ref-fasta"></a></dt>
@@ -126,9 +127,21 @@ is not set.</p></dd>
 <dd><p>path to blast program.</p></dd>
 
 
+<dt id="arg-seq-search">seq2search<a class="anchor" aria-label="anchor" href="#arg-seq-search"></a></dt>
+<dd><p>A DNAStringSet object of sequences to search for, or a
+matrix whose <code>colnames</code> are the sequences to search for (e.g. a dada2
+sequence table where columns are ASV sequences). In the latter case the
+<code>colnames</code> are converted to a DNAStringSet and used as the taxa names.
+Replace the physeq object.</p></dd>
+
+
 <dt id="arg-behavior">behavior<a class="anchor" aria-label="anchor" href="#arg-behavior"></a></dt>
-<dd><p>Either "return_matrix" (default), or "add_to_phyloseq":</p><ul><li><p>"return_matrix" return a list of two matrix with taxonomic value in the
+<dd><p>Either "return_matrix" (default), "return_taxtab", or
+"add_to_phyloseq":</p><ul><li><p>"return_matrix" return a list of two matrix with taxonomic value in the
 first element of the list and bootstrap value in the second one.</p></li>
+<li><p>"return_taxtab" return a character matrix of taxonomic values (rows are
+taxa, columns are the <code>column_names</code>) with rownames set to the taxa names.
+This is convenient as a direct input to <code><a href="https://rdrr.io/pkg/phyloseq/man/tax_table-methods.html" class="external-link">phyloseq::tax_table()</a></code>.</p></li>
 <li><p>"add_to_phyloseq" return a phyloseq object with amended slot <code>@taxtable</code>.
 Only available if using physeq input and not seq2search input.</p></li>
 </ul></dd>
@@ -227,6 +240,8 @@ raw taxonomic assignation (before vote). The second one is
 the taxonomic assignation in which conflicts are resolved
 using vote.</p></li>
 </ul></li>
+<li><p>If behavior == "return_taxtab", a character matrix of taxonomic values
+ready for <code><a href="https://rdrr.io/pkg/phyloseq/man/tax_table-methods.html" class="external-link">phyloseq::tax_table()</a></code></p></li>
 <li><p>If behavior == "add_to_phyloseq", return a new phyloseq object</p></li>
 </ul></div>
     <div class="section level2">
@@ -260,6 +275,15 @@ using vote.</p></li>
 <span class="r-in"><span>  vote_algorithm <span class="op">=</span> <span class="st">"consensus"</span>, replace_collapsed_rank_by_NA <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
 <span class="r-in"><span>  min_id <span class="op">=</span> <span class="fl">90</span>, min_cover <span class="op">=</span> <span class="fl">50</span>, behavior <span class="op">=</span> <span class="st">"add_to_phyloseq"</span></span></span>
 <span class="r-in"><span><span class="op">)</span><span class="op">@</span><span class="va">tax_table</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## return_taxtab with seq2search (a DNAStringSet or a matrix)</span></span></span>
+<span class="r-in"><span><span class="va">seqs_to_assign</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/refseq-methods.html" class="external-link">refseq</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tax_mat</span> <span class="op">&lt;-</span> <span class="fu">assign_blastn</span><span class="op">(</span>seq2search <span class="op">=</span> <span class="va">seqs_to_assign</span>,</span></span>
+<span class="r-in"><span>  ref_fasta <span class="op">=</span> <span class="va">ref_fasta</span>, method_algo <span class="op">=</span> <span class="st">"top-hit"</span>, min_id <span class="op">=</span> <span class="fl">70</span>,</span></span>
+<span class="r-in"><span>  min_e_value <span class="op">=</span> <span class="fl">1e-3</span>, min_cover <span class="op">=</span> <span class="fl">50</span>, min_bit_score <span class="op">=</span> <span class="fl">20</span>,</span></span>
+<span class="r-in"><span>  behavior <span class="op">=</span> <span class="st">"return_taxtab"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tax_mat</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

@@ -1,6 +1,6 @@
 # Re-cluster sequences of an object of class `physeq` or cluster a list of DNA sequences using SWARM
 
-[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-stable](https://img.shields.io/badge/lifecycle-stable-green)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 A wrapper of SWARM software.
 

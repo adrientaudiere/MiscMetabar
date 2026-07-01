@@ -1,6 +1,6 @@
 # Resolve conflict in a vector of taxonomy values
 
-[![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 Internally used in the function
 [`assign_blastn()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/assign_blastn.md)

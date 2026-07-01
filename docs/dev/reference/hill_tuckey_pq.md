@@ -85,5 +85,9 @@ Adrien Taudière
 ## Examples
 
 ``` r
-hill_tuckey_pq(data_fungi_mini, "Height")
+data_f <- prune_samples(
+  sample_names(data_fungi_mini)[1:20],
+  data_fungi_mini
+)
+hill_tuckey_pq(data_f, "Height")
 ```

@@ -120,76 +120,25 @@ Adrien Taudière
 
 ``` r
 # \donttest{
+library("divent")
+#> Loading required package: Rcpp
 if (requireNamespace("ggstatsplot")) {
-  p <- ggbetween_pq(data_fungi, fact = "Time", p.adjust.method = "BH")
+  data_f <- clean_pq(prune_samples(
+  sample_names(data_fungi_sp_known)[1:10],
+  data_fungi_sp_known
+))
+  p <- ggbetween_pq(data_f, fact = "Time", p.adjust.method = "BH")
   p[[1]]
+}
+#> Cleaning suppress 412 taxa and 0 samples.
+#> Warning: Groups with fewer than two datapoints have been dropped.
+#> ℹ Set `drop = FALSE` to consider such groups for position adjustment purposes.
+
+# }
+if (FALSE) { # \dontrun{
+if (requireNamespace("ggstatsplot")) {
   ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE)
   ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE, rarefy_by_sample = TRUE)
 }
-#> Warning: The mean number of sequences per samples vary across modalities of the variable 'Time' You should use rarefy_by_sample = TRUE or try hill_pq() with correction_for_sample_size = TRUE
-#> You set `rngseed` to FALSE. Make sure you've set & recorded
-#>  the random seed of your session for reproducibility.
-#> See `?set.seed`
-#> ...
-#> You set `rngseed` to FALSE. Make sure you've set & recorded
-#>  the random seed of your session for reproducibility.
-#> See `?set.seed`
-#> ...
-#> 1031OTUs were removed because they are no longer 
-#> present in any sample after random subsampling
-#> ...
-#> All modality were undoubtedly rarefy in the physeq object.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-
-# }
+} # }
 ```

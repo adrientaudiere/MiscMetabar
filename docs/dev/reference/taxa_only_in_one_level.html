@@ -11,7 +11,7 @@ return the taxa strictly specific of this level."><meta property="og:description
 
 
 Given one modality name in sam_data and one level of the modality,
-return the taxa strictly specific of this level."><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+return the taxa strictly specific of this level."><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -19,7 +19,7 @@ return the taxa strictly specific of this level."><meta name="robots" content="n
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,7 @@ return the taxa strictly specific of this level."><meta name="robots" content="n
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -67,8 +68,7 @@ return the taxa strictly specific of this level."><meta name="robots" content="n
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Show taxa which are present in only one given level of a modality</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Show taxa which are present in only one given level of a modality</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/beta_div_test.R" class="external-link"><code>R/beta_div_test.R</code></a>, <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/dada_phyloseq.R" class="external-link"><code>R/dada_phyloseq.R</code></a></small>
       <div class="d-none name"><code>taxa_only_in_one_level.Rd</code></div>
     </div>
@@ -154,6 +154,7 @@ of the physeq object. Must be a character vector or a factor.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 3</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 3 taxa and 0 samples.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ASV48" "ASV50" "ASV77" "ASV93"</span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co">#' # Taxa present only in low height samples</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="fu">taxa_only_in_one_level</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Height"</span>, <span class="st">"Low"</span><span class="op">)</span></span></span>
@@ -181,6 +182,7 @@ of the physeq object. Must be a character vector or a factor.</p></dd>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu">taxa_only_in_one_level</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Time"</span>, <span class="st">"15"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 126</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span><span class="va">data_fungi_mini_woNA4height</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html" class="external-link">subset_samples</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">data_fungi_mini</span>,</span></span>
 <span class="r-in"><span>  <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">@</span><span class="va">sam_data</span><span class="op">$</span><span class="va">Height</span><span class="op">)</span></span></span>
@@ -196,6 +198,7 @@ of the physeq object. Must be a character vector or a factor.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 3 taxa and 0 samples.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ASV48" "ASV50" "ASV77" "ASV93"</span>
 <span class="r-in"><span><span class="co">#' # Taxa present only in low height samples</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="fu">taxa_only_in_one_level</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Height"</span>, <span class="st">"Low"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
@@ -222,6 +225,7 @@ of the physeq object. Must be a character vector or a factor.</p></dd>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu">taxa_only_in_one_level</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Time"</span>, <span class="st">"15"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 126</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

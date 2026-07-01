@@ -1,4 +1,4 @@
-# Accumulation and rarefaction curves (WORK IN PROGRESS)
+# Accumulation and rarefaction curves
 
 /! (WORK IN PROGRESS) /!  
 
@@ -17,6 +17,10 @@ and
 two MiscMetabar functions built on the
 [divent](https://ericmarcon.github.io/divent/) package (Marcon and
 Hérault 2015).
+
+``` r
+library(divent)
+```
 
 ## Which function should I use?
 
@@ -128,8 +132,8 @@ dfm_rarefied <- rarefy_even_depth(
   data_fungi_mini,
   rngseed = 1,
   sample.size = 500
-) 
-dfm_rarefied <-  prune_samples(sample_names(dfm_rarefied) %in% sample(sample_names(dfm_rarefied), 25), dfm_rarefied)
+)
+dfm_rarefied <- prune_samples(sample_names(dfm_rarefied) %in% sample(sample_names(dfm_rarefied), 25), dfm_rarefied)
 dfm_rarefied
 #> phyloseq-class experiment-level object
 #> otu_table()   OTU Table:         [ 45 taxa and 25 samples ]
@@ -165,14 +169,14 @@ hill_acc_pq(
   q = 1,
   type = "individual",
   merge_sample_by = "metacommunity",
-  n_simulations = 10
+  n_simulations = 5
 ) +
   no_legend() +
   ggtitle("Metacommunity rarefaction (q = 1)")
 ```
 
 ![Individual-based rarefaction for the entire metacommunity (q =
-1)](accumulation-rarefaction_files/figure-html/unnamed-chunk-4-1.png)
+1)](accumulation-rarefaction_files/figure-html/unnamed-chunk-5-1.png)
 
 Individual-based rarefaction for the entire metacommunity (q = 1)
 
@@ -197,7 +201,7 @@ p_q2 <- hill_acc_pq(dfm_5, q = 2, type = "individual", n_simulations = 0) +
 ```
 
 ![Individual-based rarefaction for 5 random samples at different Hill
-orders](accumulation-rarefaction_files/figure-html/unnamed-chunk-5-1.png)
+orders](accumulation-rarefaction_files/figure-html/unnamed-chunk-6-1.png)
 
 Individual-based rarefaction for 5 random samples at different Hill
 orders
@@ -227,7 +231,7 @@ hill_acc_pq(
 ```
 
 ![Individual-based rarefaction by Height (q =
-1)](accumulation-rarefaction_files/figure-html/unnamed-chunk-6-1.png)
+1)](accumulation-rarefaction_files/figure-html/unnamed-chunk-7-1.png)
 
 Individual-based rarefaction by Height (q = 1)
 
@@ -253,15 +257,15 @@ hill_acc_pq(
   dfm_rarefied,
   q = 1,
   type = "sample",
-  n_permutations = 50
+  n_permutations = 10
 ) +
   ggtitle("Sample-based accumulation (q = 1)")
 ```
 
-![Sample-based accumulation for the entire dataset (q = 1, 50
-permutations)](accumulation-rarefaction_files/figure-html/unnamed-chunk-7-1.png)
+![Sample-based accumulation for the entire dataset (q = 1, 10
+permutations)](accumulation-rarefaction_files/figure-html/unnamed-chunk-8-1.png)
 
-Sample-based accumulation for the entire dataset (q = 1, 50
+Sample-based accumulation for the entire dataset (q = 1, 10
 permutations)
 
 By splitting by habitat, one can assess whether diversity saturates
@@ -273,13 +277,13 @@ hill_acc_pq(
   q = 1,
   type = "sample",
   merge_sample_by = "Height",
-  n_permutations = 50
+  n_permutations = 10
 ) +
   ggtitle("Sample-based accumulation by Height (q = 1)")
 ```
 
 ![Sample-based accumulation by Height (q =
-1)](accumulation-rarefaction_files/figure-html/unnamed-chunk-8-1.png)
+1)](accumulation-rarefaction_files/figure-html/unnamed-chunk-9-1.png)
 
 Sample-based accumulation by Height (q = 1)
 
@@ -307,13 +311,13 @@ hill_acc_pq(
   dfm_binary,
   q = 1,
   type = "sample",
-  n_permutations = 50
+  n_permutations = 10
 ) +
   ggtitle("Incidence-based sample accumulation (q = 1)")
 ```
 
 ![Incidence-based sample accumulation (q =
-1)](accumulation-rarefaction_files/figure-html/unnamed-chunk-10-1.png)
+1)](accumulation-rarefaction_files/figure-html/unnamed-chunk-11-1.png)
 
 Incidence-based sample accumulation (q = 1)
 
@@ -329,13 +333,13 @@ hill_acc_pq(
   q = 1,
   type = "sample",
   merge_sample_by = "Height",
-  n_permutations = 50
+  n_permutations = 10
 ) +
   ggtitle("Incidence-based sample accumulation by Height (q = 1)")
 ```
 
 ![Incidence-based sample accumulation by Height (q =
-1)](accumulation-rarefaction_files/figure-html/unnamed-chunk-11-1.png)
+1)](accumulation-rarefaction_files/figure-html/unnamed-chunk-12-1.png)
 
 Incidence-based sample accumulation by Height (q = 1)
 
@@ -364,18 +368,18 @@ profile_hill_pq(dfm_rarefied) + no_legend()
 ```
 
 ![Abundance-based Hill diversity profiles per
-sample](accumulation-rarefaction_files/figure-html/unnamed-chunk-12-1.png)
+sample](accumulation-rarefaction_files/figure-html/unnamed-chunk-13-1.png)
 
 Abundance-based Hill diversity profiles per sample
 
 ``` r
-profile_hill_pq(dfm_rarefied, merge_sample_by = "Height", n_simulations = 10)
+profile_hill_pq(dfm_rarefied, merge_sample_by = "Height", n_simulations = 0)
 #> Warning in merge_samples2(physeq, merge_sample_by): `group` has missing values;
 #> corresponding samples will be dropped
 ```
 
 ![Abundance-based Hill diversity profiles merged by
-Height](accumulation-rarefaction_files/figure-html/unnamed-chunk-13-1.png)
+Height](accumulation-rarefaction_files/figure-html/unnamed-chunk-14-1.png)
 
 Abundance-based Hill diversity profiles merged by Height
 
@@ -391,12 +395,12 @@ than its sequence count:
 profile_hill_pq(
   as_binary_otu_table(data_fungi_woNA4Height),
   merge_sample_by = "Height",
-  n_simulations = 10
+  n_simulations = 5
 )
 ```
 
 ![Incidence-based Hill diversity profiles merged by
-Height](accumulation-rarefaction_files/figure-html/unnamed-chunk-14-1.png)
+Height](accumulation-rarefaction_files/figure-html/unnamed-chunk-15-1.png)
 
 Incidence-based Hill diversity profiles merged by Height
 
@@ -435,13 +439,13 @@ varies across the samples being compared.
 
 ## Summary
 
-| Approach | Data | x-axis | Function | What it reveals |
-|----|----|----|----|----|
-| Individual-based rarefaction | Abundance | Number of sequences | `hill_acc_pq(type = "individual")` | Sequencing depth sufficiency |
-| Sample-based accumulation | Abundance | Number of samples | `hill_acc_pq(type = "sample")` | Spatial turnover, beta-diversity |
-| Incidence-based accumulation | Presence/absence | Number of samples | [`as_binary_otu_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/as_binary_otu_table.md) + `hill_acc_pq(type = "sample")` | Turnover robust to amplification biases |
-| Abundance-based profiles | Abundance | Hill order *q* | [`profile_hill_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/profile_hill_pq.md) | OTU abundance distribution |
-| Incidence-based profiles | Presence/absence | Hill order *q* | [`as_binary_otu_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/as_binary_otu_table.md) + [`profile_hill_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/profile_hill_pq.md) | OTU frequency distribution across samples |
+| Approach                     | Data             | x-axis              | Function                                                                                                                                                                                                            | What it reveals                           |
+|------------------------------|------------------|---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------|
+| Individual-based rarefaction | Abundance        | Number of sequences | `hill_acc_pq(type = "individual")`                                                                                                                                                                                  | Sequencing depth sufficiency              |
+| Sample-based accumulation    | Abundance        | Number of samples   | `hill_acc_pq(type = "sample")`                                                                                                                                                                                      | Spatial turnover, beta-diversity          |
+| Incidence-based accumulation | Presence/absence | Number of samples   | [`as_binary_otu_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/as_binary_otu_table.md) + `hill_acc_pq(type = "sample")`                                                                       | Turnover robust to amplification biases   |
+| Abundance-based profiles     | Abundance        | Hill order *q*      | [`profile_hill_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/profile_hill_pq.md)                                                                                                                | OTU abundance distribution                |
+| Incidence-based profiles     | Presence/absence | Hill order *q*      | [`as_binary_otu_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/as_binary_otu_table.md) + [`profile_hill_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/profile_hill_pq.md) | OTU frequency distribution across samples |
 
 ## References
 
@@ -503,21 +507,21 @@ Predict Species Abundance, but Weakly in Non-Dominant Species.”
 
 ``` r
 sessionInfo()
-#> R version 4.5.2 (2025-10-31)
+#> R version 4.6.0 (2026-04-24)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Pop!_OS 24.04 LTS
 #> 
 #> Matrix products: default
-#> BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.12.0 
-#> LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.12.0  LAPACK version 3.12.0
+#> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
+#> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0
 #> 
 #> locale:
-#>  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
-#>  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
-#>  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
-#>  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+#>  [1] LC_CTYPE=fr_FR.UTF-8       LC_NUMERIC=C              
+#>  [3] LC_TIME=fr_FR.UTF-8        LC_COLLATE=fr_FR.UTF-8    
+#>  [5] LC_MONETARY=fr_FR.UTF-8    LC_MESSAGES=fr_FR.UTF-8   
+#>  [7] LC_PAPER=fr_FR.UTF-8       LC_NAME=C                 
 #>  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-#> [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+#> [11] LC_MEASUREMENT=fr_FR.UTF-8 LC_IDENTIFICATION=C       
 #> 
 #> time zone: Europe/Paris
 #> tzcode source: system (glibc)
@@ -526,62 +530,37 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] patchwork_1.3.2         MiscMetabar_0.16.1.9000 divent_0.5-3           
-#> [4] purrr_1.2.2             dplyr_1.2.1             dada2_1.38.0           
-#> [7] Rcpp_1.1.1              ggplot2_4.0.2           phyloseq_1.54.2        
+#> [1] patchwork_1.3.2         MiscMetabar_0.17.0.9000 dplyr_1.2.1            
+#> [4] ggplot2_4.0.3           phyloseq_1.56.0         divent_0.5-4           
+#> [7] Rcpp_1.1.1-1.1         
 #> 
 #> loaded via a namespace (and not attached):
-#>   [1] Rdpack_2.6.6                bitops_1.0-9               
-#>   [3] deldir_2.0-4                permute_0.9-10             
-#>   [5] rlang_1.2.0                 magrittr_2.0.5             
-#>   [7] ade4_1.7-24                 otel_0.2.0                 
-#>   [9] matrixStats_1.5.0           compiler_4.5.2             
-#>  [11] mgcv_1.9-4                  png_0.1-9                  
-#>  [13] systemfonts_1.3.2           vctrs_0.7.3                
-#>  [15] reshape2_1.4.5              stringr_1.6.0              
-#>  [17] pwalign_1.6.0               pkgconfig_2.0.3            
-#>  [19] crayon_1.5.3                fastmap_1.2.0              
-#>  [21] XVector_0.50.0              labeling_0.4.3             
-#>  [23] Rsamtools_2.26.0            rmarkdown_2.31             
-#>  [25] ragg_1.5.2                  xfun_0.57                  
-#>  [27] cachem_1.1.0                cigarillo_1.0.0            
-#>  [29] jsonlite_2.0.0              biomformat_1.38.3          
-#>  [31] rhdf5filters_1.22.0         DelayedArray_0.36.1        
-#>  [33] Rhdf5lib_1.32.0             BiocParallel_1.44.0        
-#>  [35] jpeg_0.1-11                 parallel_4.5.2             
-#>  [37] cluster_2.1.8.2             R6_2.6.1                   
-#>  [39] bslib_0.10.0                stringi_1.8.7              
-#>  [41] RColorBrewer_1.1-3          GenomicRanges_1.62.1       
-#>  [43] jquerylib_0.1.4             Seqinfo_1.0.0              
-#>  [45] SummarizedExperiment_1.40.0 iterators_1.0.14           
-#>  [47] knitr_1.51                  IRanges_2.44.0             
-#>  [49] Matrix_1.7-4                splines_4.5.2              
-#>  [51] igraph_2.2.3                tidyselect_1.2.1           
-#>  [53] rstudioapi_0.18.0           abind_1.4-8                
-#>  [55] yaml_2.3.12                 vegan_2.7-3                
-#>  [57] codetools_0.2-20            hwriter_1.3.2.1            
-#>  [59] lattice_0.22-9              tibble_3.3.1               
-#>  [61] plyr_1.8.9                  Biobase_2.70.0             
-#>  [63] withr_3.0.2                 ShortRead_1.68.0           
-#>  [65] S7_0.2.1                    evaluate_1.0.5             
-#>  [67] desc_1.4.3                  survival_3.8-6             
-#>  [69] RcppParallel_5.1.11-2       Biostrings_2.78.0          
-#>  [71] pillar_1.11.1               MatrixGenerics_1.22.0      
-#>  [73] DiagrammeR_1.0.11           foreach_1.5.2              
-#>  [75] stats4_4.5.2                generics_0.1.4             
-#>  [77] S4Vectors_0.48.1            scales_1.4.0               
-#>  [79] glue_1.8.0                  tools_4.5.2                
-#>  [81] interp_1.1-6                data.table_1.18.2.1        
-#>  [83] GenomicAlignments_1.46.0    fs_2.0.1                   
-#>  [85] visNetwork_2.1.4            rhdf5_2.54.1               
-#>  [87] grid_4.5.2                  ape_5.8-1                  
-#>  [89] rbibutils_2.4.1             latticeExtra_0.6-31        
-#>  [91] nlme_3.1-168                cli_3.6.6                  
-#>  [93] textshaping_1.0.5           S4Arrays_1.10.1            
-#>  [95] gtable_0.3.6                sass_0.4.10                
-#>  [97] digest_0.6.39               BiocGenerics_0.56.0        
-#>  [99] SparseArray_1.10.10         htmlwidgets_1.6.4          
-#> [101] farver_2.1.2                htmltools_0.5.9            
-#> [103] pkgdown_2.2.0               multtest_2.66.0            
-#> [105] lifecycle_1.0.5             MASS_7.3-65
+#>  [1] gtable_0.3.6          xfun_0.58             bslib_0.11.0         
+#>  [4] htmlwidgets_1.6.4     visNetwork_2.1.4      Biobase_2.72.0       
+#>  [7] lattice_0.22-9        vctrs_0.7.3           tools_4.6.0          
+#> [10] Rdpack_2.6.6          generics_0.1.4        biomformat_1.40.0    
+#> [13] stats4_4.6.0          parallel_4.6.0        tibble_3.3.1         
+#> [16] cluster_2.1.8.2       pkgconfig_2.0.3       Matrix_1.7-5         
+#> [19] data.table_1.18.4     RColorBrewer_1.1-3    S7_0.2.2             
+#> [22] desc_1.4.3            S4Vectors_0.50.1      RcppParallel_5.1.11-2
+#> [25] lifecycle_1.0.5       compiler_4.6.0        farver_2.1.2         
+#> [28] stringr_1.6.0         textshaping_1.0.5     Biostrings_2.80.1    
+#> [31] Seqinfo_1.2.0         codetools_0.2-20      permute_0.9-10       
+#> [34] htmltools_0.5.9       sass_0.4.10           yaml_2.3.12          
+#> [37] pillar_1.11.1         pkgdown_2.2.0         crayon_1.5.3         
+#> [40] jquerylib_0.1.4       MASS_7.3-65           cachem_1.1.0         
+#> [43] vegan_2.7-5           iterators_1.0.14      foreach_1.5.2        
+#> [46] nlme_3.1-169          tidyselect_1.2.1      digest_0.6.39        
+#> [49] stringi_1.8.7         purrr_1.2.2           reshape2_1.4.5       
+#> [52] labeling_0.4.3        splines_4.6.0         ade4_1.7-24          
+#> [55] fastmap_1.2.0         grid_4.6.0            cli_3.6.6            
+#> [58] magrittr_2.0.5        DiagrammeR_1.0.12     survival_3.8-6       
+#> [61] ape_5.8-1             withr_3.0.2           scales_1.4.0         
+#> [64] rmarkdown_2.31        XVector_0.52.0        multtest_2.68.0      
+#> [67] igraph_2.3.2          otel_0.2.0            ragg_1.5.2           
+#> [70] evaluate_1.0.5        knitr_1.51            IRanges_2.46.0       
+#> [73] rbibutils_2.4.1       mgcv_1.9-4            rlang_1.2.0          
+#> [76] glue_1.8.1            BiocGenerics_0.58.1   rstudioapi_0.19.0    
+#> [79] jsonlite_2.0.0        R6_2.6.1              plyr_1.8.9           
+#> [82] systemfonts_1.3.2     fs_2.1.0
 ```

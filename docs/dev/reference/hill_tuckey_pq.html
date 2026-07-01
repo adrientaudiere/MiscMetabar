@@ -7,7 +7,7 @@ model in order to correct for uneven sampling depth."><meta property="og:descrip
 
 
 Note that, by default, this function use a sqrt of the read numbers in the linear
-model in order to correct for uneven sampling depth."><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+model in order to correct for uneven sampling depth."><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -15,7 +15,7 @@ model in order to correct for uneven sampling depth."><meta name="robots" conten
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,6 +34,7 @@ model in order to correct for uneven sampling depth."><meta name="robots" conten
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -63,8 +64,7 @@ model in order to correct for uneven sampling depth."><meta name="robots" conten
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Calculate hill number and compute Tuckey post-hoc test</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Calculate hill number and compute Tuckey post-hoc test</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/alpha_div_test.R" class="external-link"><code>R/alpha_div_test.R</code></a></small>
       <div class="d-none name"><code>hill_tuckey_pq.Rd</code></div>
     </div>
@@ -153,7 +153,11 @@ strong is the influence of methodological choices? <em>Journal of Biogeography</
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">hill_tuckey_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="st">"Height"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">data_f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/prune_samples-methods.html" class="external-link">prune_samples</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_names-methods.html" class="external-link">sample_names</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">20</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span>  <span class="va">data_fungi_mini</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">hill_tuckey_pq</span><span class="op">(</span><span class="va">data_f</span>, <span class="st">"Height"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="hill_tuckey_pq-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>

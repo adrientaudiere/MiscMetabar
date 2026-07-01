@@ -1,6 +1,6 @@
 # Ridges plot of sample distribution across taxa
 
-[![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 Graphical representation of distribution of samples across taxa using
 ridges. This is the sample-centric counterpart of
@@ -74,9 +74,11 @@ Adrien Taudière
 
 ``` r
 if (requireNamespace("ggridges")) {
-  ridges_sam_pq(data_fungi_mini, "Height", alpha = 0.5,
-    log10trans = FALSE, tax_level = "Genus") +
-  xlim(c(0, 1000))
+  ridges_sam_pq(data_fungi_mini, "Height",
+    alpha = 0.5,
+    log10trans = FALSE, tax_level = "Genus"
+  ) +
+    xlim(c(0, 1000))
 }
 #> Scale for x is already present.
 #> Adding another scale for x, which will replace the existing scale.

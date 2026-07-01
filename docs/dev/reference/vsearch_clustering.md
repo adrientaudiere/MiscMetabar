@@ -1,6 +1,6 @@
 # Recluster sequences of an object of class `physeq` or cluster a list of DNA sequences using vsearch software
 
-[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-stable](https://img.shields.io/badge/lifecycle-stable-green)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 A wrapper of VSEARCH software.
 
@@ -17,6 +17,8 @@ vsearch_clustering(
   rank_propagation = FALSE,
   vsearch_cluster_method = "--cluster_size",
   vsearch_args = "--strand both",
+  query_cov = NULL,
+  target_cov = NULL,
   keep_temporary_files = FALSE
 )
 ```
@@ -79,6 +81,22 @@ vsearch_clustering(
 
   (default : "–strand both") a one length character element defining
   other parameters to passed on to vsearch.
+
+- query_cov:
+
+  (default: NULL) Reject the alignment if the fraction of the query
+  sequence aligned to the target is lower than this value. When NULL
+  (default), the vsearch `--query_cov` option is not added to the
+  command. See the `--query_cov` option in the [vsearch
+  manual](https://github.com/torognes/vsearch).
+
+- target_cov:
+
+  (default: NULL) Reject the alignment if the fraction of the target
+  sequence aligned to the query is lower than this value. When NULL
+  (default), the vsearch `--target_cov` option is not added to the
+  command. See the `--target_cov` option in the [vsearch
+  manual](https://github.com/torognes/vsearch).
 
 - keep_temporary_files:
 

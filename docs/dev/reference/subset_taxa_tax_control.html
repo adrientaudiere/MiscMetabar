@@ -11,7 +11,7 @@ the sample level."><meta property="og:description" content="
 There is 3 main methods : discard taxa (i) using a control taxa (e.g. truffle root tips),
 (ii) using a mixture models to detect bimodality in pseudo-abundance distribution or
 (iii) using a minimum difference threshold pseudo-abundance. Each cutoff is defined at
-the sample level."><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+the sample level."><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -19,7 +19,7 @@ the sample level."><meta name="robots" content="noindex"><script data-goatcounte
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,7 @@ the sample level."><meta name="robots" content="noindex"><script data-goatcounte
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -67,8 +68,7 @@ the sample level."><meta name="robots" content="noindex"><script data-goatcounte
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Subset taxa using a taxa control or distribution based method</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Subset taxa using a taxa control or distribution based method</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/controls.R" class="external-link"><code>R/controls.R</code></a></small>
       <div class="d-none name"><code>subset_taxa_tax_control.Rd</code></div>
     </div>
@@ -141,174 +141,193 @@ Required if method is <code>cutoff_diff</code>, <code>min</code>, <code>max</cod
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">otu_table</span><span class="op">[</span>, <span class="fl">300</span><span class="op">]</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  min_diff_for_cutoff <span class="op">=</span> <span class="fl">2</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 4 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 27 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 18 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 7 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 12 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error in stats::uniroot(f = f, lower = 1, upper = 1000) : </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   f.upper = f(upper) is NA</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>NAs introduced by coercion</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 30 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 9 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 10 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 24 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 13 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 14 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 23 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 20 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 12 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 12 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 11 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 7 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 20 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 4 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 17 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 11 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 12 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 7 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 26 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 17 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 6 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 4 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 16 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 12 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 16 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 7 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> One of the variances is going to zero;  trying new starting values.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 9 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 19 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 12 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 9 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 12 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 10 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 11 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 17 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 9 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 12 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 4 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 14 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 38 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 7 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 21 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 12 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 7 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 7 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 22 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 13 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 32 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 18 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 10 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 16 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 10 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 11 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 7 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error in stats::uniroot(f = f, lower = 1, upper = 1000) : </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   f.upper = f(upper) is NA</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>NAs introduced by coercion</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 4 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 10 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 20 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 16 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 15 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 13 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 22 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 14 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error in stats::uniroot(f = f, lower = 1, upper = 1000) : </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   f.upper = f(upper) is NA</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>NAs introduced by coercion</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 12 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 10 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 14 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 11 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> One of the variances is going to zero;  trying new starting values.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 5 </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to min; returning Inf</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 10 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 19 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 14 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 14 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 26 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 6 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 6 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 11 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 7 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 10 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 17 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 6 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 4 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error in stats::uniroot(f = f, lower = 1, upper = 1000) : </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   f.upper = f(upper) is NA</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>NAs introduced by coercion</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 19 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 9 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 12 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 7 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 7 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 13 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 4 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 36 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 6 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 20 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 27 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 8 </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to min; returning Inf</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to min; returning Inf</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 6 </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to min; returning Inf</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 9 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 18 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 13 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 11 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 8 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 11 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 25 </span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to min; returning Inf</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 7 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in stats::uniroot(f = f, lower = 1, upper = 1000) : </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   f.upper = f(upper) is NA</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>NAs introduced by coercion</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 23 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 11 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 13 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 17 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 23 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 25 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 14 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 44 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 10 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 42 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 12 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 7 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 13 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 16 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 13 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 9 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 7 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 13 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 15 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 20 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> One of the variances is going to zero;  trying new starting values.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> One of the variances is going to zero;  trying new starting values.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> One of the variances is going to zero;  trying new starting values.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> One of the variances is going to zero;  trying new starting values.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> One of the variances is going to zero;  trying new starting values.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> One of the variances is going to zero;  trying new starting values.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> One of the variances is going to zero;  trying new starting values.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> One of the variances is going to zero;  trying new starting values.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> One of the variances is going to zero;  trying new starting values.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> One of the variances is going to zero;  trying new starting values.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> One of the variances is going to zero;  trying new starting values.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> One of the variances is going to zero;  trying new starting values.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> One of the variances is going to zero;  trying new starting values.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> One of the variances is going to zero;  trying new starting values.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> One of the variances is going to zero;  trying new starting values.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> One of the variances is going to zero;  trying new starting values.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 11 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 15 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 9 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 22 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 6 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 16 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 14 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 10 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 11 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 11 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 11 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 22 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 10 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 19 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 13 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 5 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 28 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 9 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 5 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 4 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 4 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 7 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 27 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 11 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 9 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 37 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 16 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 13 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 13 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 6 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in stats::uniroot(f = f, lower = 1, upper = 1000) : </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   f.upper = f(upper) is NA</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>NAs introduced by coercion</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 11 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 6 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 10 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 14 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 15 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 11 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 10 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 17 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 28 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in stats::uniroot(f = f, lower = 1, upper = 1000) : </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   f.upper = f(upper) is NA</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>NAs introduced by coercion</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 11 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 13 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 10 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 13 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 13 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 12 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> One of the variances is going to zero;  trying new starting values.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 9 </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to min; returning Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 20 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 14 </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The filtering processes discard 66 taxa and 37199 sequences. Note that for  66 samples, all taxa were discarded. Please run clean_pq() to remove empty samples.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 18 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 19 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> One of the variances is going to zero;  trying new starting values.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 12 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 6 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 13 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 10 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 16 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 12 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 9 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in stats::uniroot(f = f, lower = 1, upper = 1000) : </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   f.upper = f(upper) is NA</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>NAs introduced by coercion</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 19 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 12 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 10 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 9 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 6 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 15 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 20 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 9 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 18 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 23 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 6 </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to min; returning Inf</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to min; returning Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 13 </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to min; returning Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 11 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 17 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in stats::uniroot(f = f, lower = 1, upper = 1000) : </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   f() values at end points not of opposite sign</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>NAs introduced by coercion</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 7 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 10 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 10 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 6 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 15 </span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to min; returning Inf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 10 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 16 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 42 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 13 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 21 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 9 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 5 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 19 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 19 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 7 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 10 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 4 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 13 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> number of iterations= 5 </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> The filtering processes discard 58 taxa and 35633 sequences. Note that for  58 samples, all taxa were discarded. Please run clean_pq() to remove empty samples.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> phyloseq-class experiment-level object</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> otu_table()   OTU Table:         [ 1354 taxa and 185 samples ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> otu_table()   OTU Table:         [ 1362 taxa and 185 samples ]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sample_data() Sample Data:       [ 185 samples by 7 sample variables ]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> tax_table()   Taxonomy Table:    [ 1354 taxa by 12 taxonomic ranks ]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> refseq()      DNAStringSet:      [ 1354 reference sequences ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tax_table()   Taxonomy Table:    [ 1362 taxa by 12 taxonomic ranks ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> refseq()      DNAStringSet:      [ 1362 reference sequences ]</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

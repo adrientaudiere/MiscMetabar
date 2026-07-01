@@ -1,6 +1,6 @@
 # Count sequences in fasta or fastq file
 
-[![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 Use grep to count the number of line with only one '+' (fastq, fastq.gz)
 or lines starting with a '\>' (fasta) to count sequences.
@@ -47,7 +47,7 @@ count_seq(
   folder_path = system.file("extdata", package = "MiscMetabar"),
   pattern = "*.fasta"
 )
-#> Warning: There is more than one '.' inside your file path: /tmp/RtmpqjfEjN/temp_libpath8b9a0278523e3/MiscMetabar/extdata/mini_UNITE_fungi.fasta.gz
-#> Warning: There is more than one '.' inside your file path: /tmp/RtmpqjfEjN/temp_libpath8b9a0278523e3/MiscMetabar/extdata/mini_UNITE_fungi.fasta.gz
+#> Warning: There is more than one '.' inside your file path: /tmp/Rtmpvo7n0C/temp_libpath30458650b10b1/MiscMetabar/extdata/mini_UNITE_fungi.fasta.gz
+#> Warning: There is more than one '.' inside your file path: /tmp/Rtmpvo7n0C/temp_libpath30458650b10b1/MiscMetabar/extdata/mini_UNITE_fungi.fasta.gz
 #> [1]  100  100  100    3   63   51    2 5000
 ```

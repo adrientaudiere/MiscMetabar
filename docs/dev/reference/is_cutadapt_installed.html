@@ -7,7 +7,7 @@ test coverage"><meta property="og:description" content="
 
 
 Useful for testthat and examples compilation for R CMD CHECK and
-test coverage"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+test coverage"><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -15,7 +15,7 @@ test coverage"><meta name="robots" content="noindex"><script data-goatcounter="h
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,6 +34,7 @@ test coverage"><meta name="robots" content="noindex"><script data-goatcounter="h
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -63,15 +64,14 @@ test coverage"><meta name="robots" content="noindex"><script data-goatcounter="h
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Test if cutadapt is installed.</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Test if cutadapt is installed.</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/miscellanous.R" class="external-link"><code>R/miscellanous.R</code></a></small>
       <div class="d-none name"><code>is_cutadapt_installed.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
     <p><a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a></p>
+<img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a></p>
 
 <p>Useful for testthat and examples compilation for R CMD CHECK and
 test coverage</p>
@@ -106,7 +106,7 @@ to run cutadapt. For examples, "source ~/miniconda3/etc/profile.d/conda.sh &amp;
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">MiscMetabar</span><span class="fu">::</span><span class="fu">is_cutadapt_installed</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>running command 'bash /tmp/RtmpNXJg8E/script_cutadapt.sh 2&gt;&amp;1' had status 1</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>running command 'bash /tmp/RtmpgduPhe/script_cutadapt.sh 2&gt;&amp;1' had status 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 </code></pre></div>
     </div>

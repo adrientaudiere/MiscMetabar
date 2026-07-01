@@ -27,7 +27,7 @@ list of taxonomic assignations is resolve using the function resolve_vector_rank
 The possible values for vote_algorithm are "consensus", "rel_majority",
 "abs_majority" and "unanimity". See resolve_vector_ranks() for more details.
 
-'><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+'><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -35,7 +35,7 @@ The possible values for vote_algorithm are "consensus", "rel_majority",
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,6 +54,7 @@ The possible values for vote_algorithm are "consensus", "rel_majority",
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -83,8 +84,7 @@ The possible values for vote_algorithm are "consensus", "rel_majority",
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Assign taxonomy using LCA</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Assign taxonomy using LCA</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/vsearch.R" class="external-link"><code>R/vsearch.R</code></a></small>
       <div class="d-none name"><code>assign_vsearch_lca.Rd</code></div>
     </div>
@@ -110,7 +110,7 @@ The possible values for vote_algorithm are "consensus", "rel_majority",
 <span>  physeq <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ref_fasta <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  seq2search <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  behavior <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"return_matrix"</span>, <span class="st">"add_to_phyloseq"</span>, <span class="st">"return_cmd"</span><span class="op">)</span>,</span>
+<span>  behavior <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"return_matrix"</span>, <span class="st">"return_taxtab"</span>, <span class="st">"add_to_phyloseq"</span>, <span class="st">"return_cmd"</span><span class="op">)</span>,</span>
 <span>  vsearchpath <span class="op">=</span> <span class="fu"><a href="find_vsearch.html">find_vsearch</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  clean_pq <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  taxa_ranks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Kingdom"</span>, <span class="st">"Phylum"</span>, <span class="st">"Class"</span>, <span class="st">"Order"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span>, <span class="st">"Species"</span><span class="op">)</span>,</span>
@@ -162,14 +162,20 @@ the name of the rank. Non-ascii characters should be avoided in the names.</p>
 
 
 <dt id="arg-seq-search">seq2search<a class="anchor" aria-label="anchor" href="#arg-seq-search"></a></dt>
-<dd><p>A DNAStringSet object of sequences to search for. Replace
-the physeq object.</p></dd>
+<dd><p>A DNAStringSet object of sequences to search for, or a
+matrix whose <code>colnames</code> are the sequences to search for (e.g. a dada2
+sequence table where columns are ASV sequences). In the latter case the
+<code>colnames</code> are converted to a DNAStringSet and used as the taxa names.
+Replace the physeq object.</p></dd>
 
 
 <dt id="arg-behavior">behavior<a class="anchor" aria-label="anchor" href="#arg-behavior"></a></dt>
-<dd><p>Either "return_matrix" (default), "return_cmd",
-or "add_to_phyloseq":</p><ul><li><p>"return_matrix" return a list of two matrix with taxonomic value in the
+<dd><p>Either "return_matrix" (default), "return_taxtab",
+"return_cmd", or "add_to_phyloseq":</p><ul><li><p>"return_matrix" return a list of two matrix with taxonomic value in the
 first element of the list and bootstrap value in the second one.</p></li>
+<li><p>"return_taxtab" return a character matrix of taxonomic values (rows are
+taxa, columns are the <code>taxa_ranks</code>) with rownames set to the taxa names.
+This is convenient as a direct input to <code><a href="https://rdrr.io/pkg/phyloseq/man/tax_table-methods.html" class="external-link">phyloseq::tax_table()</a></code>.</p></li>
 <li><p>"return_cmd" return the command to run without running it.</p></li>
 <li><p>"add_to_phyloseq" return a phyloseq object with amended slot <code>@taxtable</code>.
 Only available if using physeq input and not seq2search input.</p></li>
@@ -230,7 +236,9 @@ than 0.5, but not larger than 1.0"</p></dd>
 Maximum number of non-matching target sequences to consider before
 stopping the search for a given query.
 Default value is based on <a href="https://github.com/frederic-mahe/stampa" class="external-link">stampa</a>
-See Vsearch Manual for parameter <code>--maxrejects</code>.</p></dd>
+See Vsearch Manual for parameter <code>--maxrejects</code>.
+<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
+<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a></p></dd>
 
 
 <dt id="arg-top-hits-only">top_hits_only<a class="anchor" aria-label="anchor" href="#arg-top-hits-only"></a></dt>
@@ -342,7 +350,8 @@ Please cite <a href="https://github.com/torognes/vsearch" class="external-link">
 <span class="r-in"><span>  ref_fasta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mini_UNITE_fungi.fasta.gz"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  lca_cutoff <span class="op">=</span> <span class="fl">0.9</span>, behavior <span class="op">=</span> <span class="st">"add_to_phyloseq"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="va">data_fungi_mini_new2</span> <span class="op">&lt;-</span> <span class="fu">assign_vsearch_lca</span><span class="op">(</span><span class="va">data_fungi_mini</span>,</span></span>
 <span class="r-in"><span>  ref_fasta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mini_UNITE_fungi.fasta.gz"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  id <span class="op">=</span> <span class="fl">0.6</span>, behavior <span class="op">=</span> <span class="st">"add_to_phyloseq"</span>, top_hits_only <span class="op">=</span> <span class="cn">FALSE</span></span></span>
@@ -352,6 +361,30 @@ Please cite <a href="https://github.com/torognes/vsearch" class="external-link">
 <span class="r-in"><span>  ref_fasta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mini_UNITE_fungi.fasta.gz"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  id <span class="op">=</span> <span class="fl">0.5</span>, behavior <span class="op">=</span> <span class="st">"add_to_phyloseq"</span>, top_hits_only <span class="op">=</span> <span class="cn">FALSE</span>, vote_algorithm <span class="op">=</span> <span class="st">"rel_majority"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co">## return_taxtab with seq2search (a DNAStringSet or a matrix)</span></span></span>
+<span class="r-in"><span><span class="va">seqs_to_assign</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/refseq-methods.html" class="external-link">refseq</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tax_mat</span> <span class="op">&lt;-</span> <span class="fu">assign_vsearch_lca</span><span class="op">(</span>seq2search <span class="op">=</span> <span class="va">seqs_to_assign</span>,</span></span>
+<span class="r-in"><span>  ref_fasta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mini_UNITE_fungi.fasta.gz"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  behavior <span class="op">=</span> <span class="st">"return_taxtab"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tax_mat</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       Kingdom Phylum          Class            Order        Family       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7  "Fungi" "Basidiomycota" "Agaricomycetes" "Russulales" "Stereaceae" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8  "Fungi" "Basidiomycota" "Agaricomycetes" "Agaricales" "Amanitaceae"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12 "Fungi" "Basidiomycota" "Agaricomycetes" "Agaricales" "Amanitaceae"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18 "Fungi" "Basidiomycota" "Agaricomycetes" "Agaricales" "Amanitaceae"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25 "Fungi" "Basidiomycota" "Agaricomycetes" "Agaricales" "Amanitaceae"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV26 "Fungi" "Basidiomycota" "Agaricomycetes" "Russulales" "Stereaceae" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       Genus            Species                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7  "Xylobolus"      "Xylobolus_sp"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8  "Zhuliangomyces" "Zhuliangomyces_illinitus"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12 "Zhuliangomyces" "Zhuliangomyces_illinitus"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18 "Zhuliangomyces" "Zhuliangomyces_illinitus"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25 "Zhuliangomyces" "Zhuliangomyces_illinitus"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ASV26 "Xylobolus"      "Xylobolus_sp"            </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

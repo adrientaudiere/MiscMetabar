@@ -7,7 +7,7 @@ https://github.com/krassowski/complex-upset/issues/213 for more details."><meta 
 
 
 See upset_pq() to plot upset. There is a bug with ggplot2 &amp;gt;= 4.0.0. See issue
-https://github.com/krassowski/complex-upset/issues/213 for more details."><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+https://github.com/krassowski/complex-upset/issues/213 for more details."><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -15,7 +15,7 @@ https://github.com/krassowski/complex-upset/issues/213 for more details."><meta 
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,6 +34,7 @@ https://github.com/krassowski/complex-upset/issues/213 for more details."><meta 
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -63,8 +64,7 @@ https://github.com/krassowski/complex-upset/issues/213 for more details."><meta 
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Test for differences between intersections</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Test for differences between intersections</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/plot_functions.R" class="external-link"><code>R/plot_functions.R</code></a></small>
       <div class="d-none name"><code>upset_test_pq.Rd</code></div>
     </div>
@@ -145,27 +145,26 @@ useful only for complex plot (see examples)</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ComplexUpset"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu">upset_test_pq</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Height"</span>, var_to_test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OTU"</span>, <span class="st">"Class"</span>, <span class="st">"Guild"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu">upset_test_pq</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Time"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"ComplexUpset"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">upset_test_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="st">"Height"</span>,</span></span>
+<span class="r-in"><span>    var_to_test <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OTU"</span>, <span class="st">"Class"</span>, <span class="st">"Guild"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">upset_test_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="st">"Time"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 1420</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 45</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 1420</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 185</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "OTU, Class, Guild differ significantly between intersections"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 45</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 137</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 1420</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 45</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 1420</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 185</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "OTU differ significantly between intersections"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     variable     p.value statistic                         test         fdr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> OTU      OTU 0.002217898   33.7837 Kruskal-Wallis rank sum test 0.002217898</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 45</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 137</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     variable   p.value statistic                         test       fdr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> OTU      OTU 0.3847389  12.78662 Kruskal-Wallis rank sum test 0.3847389</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

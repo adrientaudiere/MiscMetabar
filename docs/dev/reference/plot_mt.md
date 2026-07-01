@@ -1,4 +1,4 @@
-# Plot the result of a mt test `phyloseq::mt()`
+# Plot the result of a mt test [`phyloseq::mt()`](https://rdrr.io/pkg/phyloseq/man/mt-methods.html)
 
 [![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
@@ -7,7 +7,13 @@ Graphical representation of mt test.
 ## Usage
 
 ``` r
-plot_mt(mt = NULL, pval = 0.05, color_tax = "Class", taxa = "Species")
+plot_mt(
+  mt = NULL,
+  pval = 0.05,
+  color_rank = "Class",
+  color_tax = lifecycle::deprecated(),
+  taxa = "Species"
+)
 ```
 
 ## Arguments
@@ -21,9 +27,13 @@ plot_mt(mt = NULL, pval = 0.05, color_tax = "Class", taxa = "Species")
 
   (default: 0.05) Choose the cut off p-value to plot taxa.
 
-- color_tax:
+- color_rank:
 
   (default: "Class") A taxonomic level to color the points.
+
+- color_tax:
+
+  **\[deprecated\]** Use `color_rank` instead.
 
 - taxa:
 
@@ -67,7 +77,7 @@ res <- mt(data_fungi_mini2, "Time", method = "fdr", test = "f", B = 300)
 plot_mt(res)
 #> Warning: invalid factor level, NA generated
 
-plot_mt(res, taxa = "Genus", color_tax = "Order")
+plot_mt(res, taxa = "Genus", color_rank = "Order")
 #> Warning: invalid factor level, NA generated
 
 # }

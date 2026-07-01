@@ -5,7 +5,7 @@
 Mostly for internal use in MiscMetabar functions."><meta property="og:description" content="
 
 
-Mostly for internal use in MiscMetabar functions."><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+Mostly for internal use in MiscMetabar functions."><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -13,7 +13,7 @@ Mostly for internal use in MiscMetabar functions."><meta name="robots" content="
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +32,7 @@ Mostly for internal use in MiscMetabar functions."><meta name="robots" content="
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -61,8 +62,7 @@ Mostly for internal use in MiscMetabar functions."><meta name="robots" content="
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Verify the validity of a phyloseq object</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Verify the validity of a phyloseq object</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/dada_phyloseq.R" class="external-link"><code>R/dada_phyloseq.R</code></a></small>
       <div class="d-none name"><code>verify_pq.Rd</code></div>
     </div>
@@ -82,6 +82,7 @@ Mostly for internal use in MiscMetabar functions."><meta name="robots" content="
 <span>  min_nb_seq_sample <span class="op">=</span> <span class="fl">500</span>,</span>
 <span>  min_nb_seq_taxa <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  check_taxonomy <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  check_order <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -114,6 +115,16 @@ Minimum number of sequences per taxa to not show warning.</p></dd>
 <code><a href="verify_tax_table.html">verify_tax_table()</a></code> to check for common taxonomy table issues.</p></dd>
 
 
+<dt id="arg-check-order">check_order<a class="anchor" aria-label="anchor" href="#arg-check-order"></a></dt>
+<dd><p>(logical, default TRUE) If TRUE, additionally check that
+the <em>order</em> (not only the set) of <code>sample_names</code> matches between the
+<code>otu_table</code> and <code>sam_data</code> slots, and that the order of <code>taxa_names</code>
+matches between the <code>otu_table</code> and <code>tax_table</code> slots. A mismatching
+order is tolerated by phyloseq but silently breaks any function that
+aligns slots positionally; set to FALSE to bypass this check (e.g. on a
+legacy object you intend to reorder afterwards).</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional arguments passed to <code><a href="verify_tax_table.html">verify_tax_table()</a></code> when
 <code>check_taxonomy = TRUE</code>.</p></dd>
@@ -132,13 +143,13 @@ Warnings if verbose = TRUE or check_taxonomy = TRUE</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">verify_pq</span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">verify_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="fu">verify_pq</span><span class="op">(</span><span class="va">data_fungi</span>, check_taxonomy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Found 145 taxonomic value(s) matching NA-like patterns. Unique values: Pezizomycotina_cls_Incertae_sedis, Rozellomycotina_cls_Incertae_sedis, Sordariomycetes_ord_Incertae_sedis, Microbotryomycetes_ord_Incertae_sedis, Lecanoromycetes_ord_Incertae_sedis, Dothideomycetes_ord_Incertae_sedis, Cystobasidiomycetes_ord_Incertae_sedis, Pezizomycotina_ord_Incertae_sedis, Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, .... Use modify_phyloseq = TRUE to replace these with NA.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Found 1432 taxonomic value(s) with less than 4 characters: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars). Use modify_phyloseq = TRUE to replace these with NA.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Found 976 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Found 1319 taxonomic value(s) with internal spaces: 'Plant Pathogen' (Guild), 'Endophyte-Undefined Saprotroph-Wood Saprotroph' (Guild), 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), 'Wood Saprotroph' (Guild), .... Use modify_phyloseq = TRUE and remove_all_space = TRUE to replace these spaces with '_'.</span>
+<span class="r-in"><span><span class="fu">verify_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, check_taxonomy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Found 4 taxonomic value(s) matching NA-like patterns. Unique values: Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, Russulales_fam_Incertae_sedis, Hymenochaetales_fam_Incertae_sedis. Use modify_phyloseq = TRUE to replace these with NA.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Found 20 taxonomic value(s) with less than 4 characters: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars). Use modify_phyloseq = TRUE to replace these with NA.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Found 13 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Found 70 taxonomic value(s) with internal spaces: 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), 'Wood Saprotroph' (Guild), 'Ectomycorrhizal-Wood Saprotroph' (Guild), 'Leaf Saprotroph-Plant Pathogen-Undefined Saprotroph-Wood Saprotroph' (Guild), .... Use modify_phyloseq = TRUE and remove_all_space = TRUE to replace these spaces with '_'.</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

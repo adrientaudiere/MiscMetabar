@@ -10,9 +10,7 @@ v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.06038/status.svg)](https://doi.org/10.21105/joss.06038)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
 <!-- devtools::build_readme() -->
-
 <!-- <img src="https://repobeats.axiom.co/api/embed/82c4ce7bcc414cd0ddfeefecb32bc1fb0d51b45b.svg" title="Repobeats analytics image" alt="A panel showing some github statistics of the repositories using repobeats.axiom">-->
 
 # MiscMetabar <a href="https://adrientaudiere.github.io/MiscMetabar/"><img src="https://adrientaudiere.github.io/MiscMetabar/reference/figures/logo.png" align="right" height="138" alt="MiscMetabar website" /></a>
@@ -29,9 +27,9 @@ databases, (iii) high-throughput sequencing (HTS), and (iv)
 bioinformatics resources have enabled the description of biological
 communities through metabarcoding. Metabarcoding involves the sequencing
 of millions (*meta*-) of short regions of specific DNA (*-barcoding*,
-Valentini et al. (2009)) often from environmental samples (eDNA,
-Taberlet et al. (2012)) such as human stomach contents, lake water,
-soil, and air.
+Valentini, Pompanon, and Taberlet (2009)) often from environmental
+samples (eDNA, Taberlet et al. (2012)) such as human stomach contents,
+lake water, soil, and air.
 
 `MiscMetabar` aims to facilitate the **description**,
 **transformation**, **exploration** and **reproducibility** of
@@ -137,7 +135,6 @@ p$plot_Hill_0
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" alt="Hill number 0, aka richness are plot in function of the height modality" width="100%" />
 <p class="caption">
-
 Hill number 0
 </p>
 
@@ -280,9 +277,8 @@ Data.” *PLoS ONE* 8 (4): e61217.
 <div id="ref-taberlet2012" class="csl-entry">
 
 Taberlet, Pierre, Eric Coissac, Mehrdad Hajibabaei, and Loren H
-Rieseberg. 2012. “Environmental Dna.” In *Molecular Ecology*, No. 8,
-vol. 21. Wiley Online Library.
-<https://doi.org/10.1111/j.1365-294X.2012.05542.x>.
+Rieseberg. 2012. “Environmental Dna.” *Molecular Ecology*. Wiley Online
+Library. <https://doi.org/10.1111/j.1365-294X.2012.05542.x>.
 
 </div>
 

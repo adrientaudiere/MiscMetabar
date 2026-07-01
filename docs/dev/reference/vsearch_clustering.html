@@ -5,7 +5,7 @@
 A wrapper of VSEARCH software."><meta property="og:description" content="
 
 
-A wrapper of VSEARCH software."><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+A wrapper of VSEARCH software."><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -13,7 +13,7 @@ A wrapper of VSEARCH software."><meta name="robots" content="noindex"><script da
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +32,7 @@ A wrapper of VSEARCH software."><meta name="robots" content="noindex"><script da
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -61,15 +62,14 @@ A wrapper of VSEARCH software."><meta name="robots" content="noindex"><script da
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Recluster sequences of an object of class <code>physeq</code> or cluster a list of DNA sequences using vsearch software</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Recluster sequences of an object of class <code>physeq</code> or cluster a list of DNA sequences using vsearch software</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/vsearch.R" class="external-link"><code>R/vsearch.R</code></a></small>
       <div class="d-none name"><code>vsearch_clustering.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
     <p><a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a></p>
+<img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a></p>
 
 <p>A wrapper of VSEARCH software.</p>
     </div>
@@ -86,6 +86,8 @@ A wrapper of VSEARCH software."><meta name="robots" content="noindex"><script da
 <span>  rank_propagation <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  vsearch_cluster_method <span class="op">=</span> <span class="st">"--cluster_size"</span>,</span>
 <span>  vsearch_args <span class="op">=</span> <span class="st">"--strand both"</span>,</span>
+<span>  query_cov <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  target_cov <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  keep_temporary_files <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -142,6 +144,22 @@ methods in the <a href="https://github.com/torognes/vsearch" class="external-lin
 <dt id="arg-vsearch-args">vsearch_args<a class="anchor" aria-label="anchor" href="#arg-vsearch-args"></a></dt>
 <dd><p>(default : "–strand both") a one length character element defining other parameters to
 passed on to vsearch.</p></dd>
+
+
+<dt id="arg-query-cov">query_cov<a class="anchor" aria-label="anchor" href="#arg-query-cov"></a></dt>
+<dd><p>(default: NULL) Reject the alignment if the fraction of the
+query sequence aligned to the target is lower than this value. When NULL
+(default), the vsearch <code>--query_cov</code> option is not added to the command.
+See the <code>--query_cov</code> option in the
+<a href="https://github.com/torognes/vsearch" class="external-link">vsearch manual</a>.</p></dd>
+
+
+<dt id="arg-target-cov">target_cov<a class="anchor" aria-label="anchor" href="#arg-target-cov"></a></dt>
+<dd><p>(default: NULL) Reject the alignment if the fraction of the
+target sequence aligned to the query is lower than this value. When NULL
+(default), the vsearch <code>--target_cov</code> option is not added to the command.
+See the <code>--target_cov</code> option in the
+<a href="https://github.com/torognes/vsearch" class="external-link">vsearch manual</a>.</p></dd>
 
 
 <dt id="arg-keep-temporary-files">keep_temporary_files<a class="anchor" aria-label="anchor" href="#arg-keep-temporary-files"></a></dt>

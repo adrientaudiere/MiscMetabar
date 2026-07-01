@@ -2,8 +2,8 @@
 
 ### All vignettes
 
-- [Accumulation and rarefaction curves (WORK IN
-  PROGRESS)](https://adrientaudiere.github.io/MiscMetabar/dev/articles/accumulation-rarefaction.md):
+- [Accumulation and rarefaction
+  curves](https://adrientaudiere.github.io/MiscMetabar/dev/articles/accumulation-rarefaction.md):
 - [alpha-div](https://adrientaudiere.github.io/MiscMetabar/dev/articles/alpha-div.md):
 - [beta-div](https://adrientaudiere.github.io/MiscMetabar/dev/articles/beta-div.md):
 - [explore_data](https://adrientaudiere.github.io/MiscMetabar/dev/articles/explore_data.md):
@@ -23,5 +23,7 @@
   metabarcoding](https://adrientaudiere.github.io/MiscMetabar/dev/articles/states_of_fields_in_R.md):
 - [Examples with published dataset:
   Tengeler](https://adrientaudiere.github.io/MiscMetabar/dev/articles/tengeler.md):
+- [Function
+  timing](https://adrientaudiere.github.io/MiscMetabar/dev/articles/timing.md):
 - [Tree building and
   visualization](https://adrientaudiere.github.io/MiscMetabar/dev/articles/tree_visualization.md):

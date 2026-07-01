@@ -67,7 +67,7 @@ test_that("assign_idtaxa works", {
     )
   }
   expect_s4_class(data_fungi_mini2, "phyloseq")
-  expect_identical(ncol(data_fungi_mini2@tax_table), 16L)
+  expect_identical(ncol(data_fungi_mini2@tax_table), 19L)
 })
 
 test_that("assign_blastn return_taxtab with seq2search", {

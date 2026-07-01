@@ -7,7 +7,7 @@ cannot be interpreted in the same way as with conventional biodiversity sampling
 
 
 Note that as most bioinformatic pipeline discard singleton, accumulation curves from metabarcoding
-cannot be interpreted in the same way as with conventional biodiversity sampling techniques."><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+cannot be interpreted in the same way as with conventional biodiversity sampling techniques."><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -15,7 +15,7 @@ cannot be interpreted in the same way as with conventional biodiversity sampling
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,6 +34,7 @@ cannot be interpreted in the same way as with conventional biodiversity sampling
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -63,8 +64,7 @@ cannot be interpreted in the same way as with conventional biodiversity sampling
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Compute the number of sequence to obtain a given proportion of ASV in accumulation curves</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Compute the number of sequence to obtain a given proportion of ASV in accumulation curves</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/plot_functions.R" class="external-link"><code>R/plot_functions.R</code></a></small>
       <div class="d-none name"><code>accu_samp_threshold.Rd</code></div>
     </div>
@@ -121,11 +121,7 @@ to obtain <code>threshold</code> proportion of the ASV</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
-<span class="r-in"><span><span class="va">GP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">rarefy_even_depth</a></span><span class="op">(</span><span class="fu"><a href="subset_samples_pq.html">subset_samples_pq</a></span><span class="op">(</span><span class="va">GP</span>, <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_sums.html" class="external-link">sample_sums</a></span><span class="op">(</span><span class="va">GP</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">3000</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> You set `rngseed` to FALSE. Make sure you've set &amp; recorded</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>  the random seed of your session for reproducibility.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> See `?set.seed`</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ...</span>
+<span class="r-in"><span><span class="va">GP</span> <span class="op">&lt;-</span> <span class="fu"><a href="rarefy_pq.html">rarefy_pq</a></span><span class="op">(</span><span class="fu"><a href="subset_samples_pq.html">subset_samples_pq</a></span><span class="op">(</span><span class="va">GP</span>, <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_sums.html" class="external-link">sample_sums</a></span><span class="op">(</span><span class="va">GP</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">3000</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
@@ -134,17 +130,6 @@ to obtain <code>threshold</code> proportion of the ASV</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 62OTUs were removed because they are no longer </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> present in any sample after random subsampling</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Also defined by ‘RNeXML’</span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="accu_plot.html">accu_plot</a></span><span class="op">(</span><span class="va">GP</span>, <span class="st">"SampleType"</span>, add_nb_seq <span class="op">=</span> <span class="cn">TRUE</span>, by.fact <span class="op">=</span> <span class="cn">TRUE</span>, step <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
@@ -153,7 +138,7 @@ to obtain <code>threshold</code> proportion of the ASV</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">val_threshold</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    3691    6444    7576    7211    8344   10001 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    3551    6094    7261    7084    8251   10261 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">##'  Plot the number of sequences needed to accumulate 0.95% of ASV in 50%, 75%</span></span></span>
 <span class="r-in"><span><span class="co">##'  and 100% of samples</span></span></span>

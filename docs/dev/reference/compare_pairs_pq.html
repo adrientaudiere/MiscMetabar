@@ -5,7 +5,7 @@
 For the moment refseq slot need to be not Null."><meta property="og:description" content="
 
 
-For the moment refseq slot need to be not Null."><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+For the moment refseq slot need to be not Null."><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -13,7 +13,7 @@ For the moment refseq slot need to be not Null."><meta name="robots" content="no
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +32,7 @@ For the moment refseq slot need to be not Null."><meta name="robots" content="no
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -61,8 +62,7 @@ For the moment refseq slot need to be not Null."><meta name="robots" content="no
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Compare samples in pairs using diversity and number of ASV including shared ASV.</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Compare samples in pairs using diversity and number of ASV including shared ASV.</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/table_functions.R" class="external-link"><code>R/table_functions.R</code></a></small>
       <div class="d-none name"><code>compare_pairs_pq.Rd</code></div>
     </div>
@@ -149,6 +149,10 @@ and diversity</p>
 <span class="r-in"><span><span class="fu">compare_pairs_pq</span><span class="op">(</span><span class="va">data_fungi_mini_lh</span>, bifactor <span class="op">=</span> <span class="st">"Height"</span>, merge_sample_by <span class="op">=</span> <span class="st">"Height"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 5 taxa and 0 samples.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Function arguments cannot be checked because the package <span style="color: #0000BB;">divent</span> is not attached.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Add `CheckArguments=FALSE` to suppress this warning or run `library('divent')`.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Function arguments cannot be checked because the package <span style="color: #0000BB;">divent</span> is not attached.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Add `CheckArguments=FALSE` to suppress this warning or run `library('divent')`.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 13</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   modality nb_ASV_High nb_ASV_Low nb_shared_ASV div_High div_Low nb_shared_seq</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
@@ -164,6 +168,22 @@ and diversity</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 7 samples were discarded due to NA in variable modality.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 5 taxa and 0 samples.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Function arguments cannot be checked because the package <span style="color: #0000BB;">divent</span> is not attached.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Add `CheckArguments=FALSE` to suppress this warning or run `library('divent')`.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Function arguments cannot be checked because the package <span style="color: #0000BB;">divent</span> is not attached.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Add `CheckArguments=FALSE` to suppress this warning or run `library('divent')`.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Function arguments cannot be checked because the package <span style="color: #0000BB;">divent</span> is not attached.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Add `CheckArguments=FALSE` to suppress this warning or run `library('divent')`.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Function arguments cannot be checked because the package <span style="color: #0000BB;">divent</span> is not attached.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Add `CheckArguments=FALSE` to suppress this warning or run `library('divent')`.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Function arguments cannot be checked because the package <span style="color: #0000BB;">divent</span> is not attached.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Add `CheckArguments=FALSE` to suppress this warning or run `library('divent')`.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Function arguments cannot be checked because the package <span style="color: #0000BB;">divent</span> is not attached.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Add `CheckArguments=FALSE` to suppress this warning or run `library('divent')`.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Function arguments cannot be checked because the package <span style="color: #0000BB;">divent</span> is not attached.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Add `CheckArguments=FALSE` to suppress this warning or run `library('divent')`.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Function arguments cannot be checked because the package <span style="color: #0000BB;">divent</span> is not attached.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → Add `CheckArguments=FALSE` to suppress this warning or run `library('divent')`.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 13</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   modality nb_ASV_High nb_ASV_Low nb_shared_ASV div_High div_Low nb_shared_seq</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>

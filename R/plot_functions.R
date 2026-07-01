@@ -7351,7 +7351,7 @@ plot_ordination_pq <- function(
   point_alpha,
   letters_below_bar,
   mark_symbol = FALSE,
-  sig_symbol = "∅"
+  sig_symbol = "\u2205"
 ) {
   # --- Kruskal-Wallis test ---
   data[[x_name]] <- as.factor(data[[x_name]])
@@ -7557,7 +7557,7 @@ plot_ordination_pq <- function(
       cap,
       "\n",
       prefix,
-      "Kruskal-Wallis p ≥ ",
+      "Kruskal-Wallis p \u2265 ",
       p_threshold,
       ": Tukey HSD pairwise comparisons not run (no global significance)"
     )

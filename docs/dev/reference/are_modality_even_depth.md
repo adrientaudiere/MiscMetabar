@@ -45,14 +45,7 @@ Adrien Taudière
 ``` r
 are_modality_even_depth(data_fungi_mini, "Time")$p.value
 #> [1] 0.0006936505
-are_modality_even_depth(rarefy_even_depth(data_fungi_mini), "Time")$p.value
-#> You set `rngseed` to FALSE. Make sure you've set & recorded
-#>  the random seed of your session for reproducibility.
-#> See `?set.seed`
-#> ...
-#> 7OTUs were removed because they are no longer 
-#> present in any sample after random subsampling
-#> ...
+are_modality_even_depth(rarefy_pq(data_fungi_mini, replace = TRUE), "Time")$p.value
 #> All modality were undoubtedly rarefy in the physeq object.
 #> [1] 1
 are_modality_even_depth(data_fungi_mini, "Height", boxplot = TRUE)

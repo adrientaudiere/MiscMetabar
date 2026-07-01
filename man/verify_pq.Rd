@@ -10,6 +10,7 @@ verify_pq(
   min_nb_seq_sample = 500,
   min_nb_seq_taxa = 1,
   check_taxonomy = FALSE,
+  check_order = TRUE,
   ...
 )
 }
@@ -27,6 +28,14 @@ Minimum number of sequences per taxa to not show warning.}
 
 \item{check_taxonomy}{(logical, default FALSE) If TRUE, call
 \code{\link[=verify_tax_table]{verify_tax_table()}} to check for common taxonomy table issues.}
+
+\item{check_order}{(logical, default TRUE) If TRUE, additionally check that
+the \emph{order} (not only the set) of \code{sample_names} matches between the
+\code{otu_table} and \code{sam_data} slots, and that the order of \code{taxa_names}
+matches between the \code{otu_table} and \code{tax_table} slots. A mismatching
+order is tolerated by phyloseq but silently breaks any function that
+aligns slots positionally; set to FALSE to bypass this check (e.g. on a
+legacy object you intend to reorder afterwards).}
 
 \item{...}{Additional arguments passed to \code{\link[=verify_tax_table]{verify_tax_table()}} when
 \code{check_taxonomy = TRUE}.}

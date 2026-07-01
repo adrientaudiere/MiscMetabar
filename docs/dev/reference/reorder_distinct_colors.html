@@ -17,7 +17,7 @@ similar colors next to
 each other. This function reassigns the same set of colors to factor
 levels so that visually adjacent segments receive maximally different
 colors. Both the fill and color scales are updated so that direct
-labels (e.g. from label_taxa = TRUE) stay in sync with the bars."><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+labels (e.g. from label_taxa = TRUE) stay in sync with the bars."><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -25,7 +25,7 @@ labels (e.g. from label_taxa = TRUE) stay in sync with the bars."><meta name="ro
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,6 +44,7 @@ labels (e.g. from label_taxa = TRUE) stay in sync with the bars."><meta name="ro
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -73,15 +74,14 @@ labels (e.g. from label_taxa = TRUE) stay in sync with the bars."><meta name="ro
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Reorder fill and color scales to maximize perceptual contrast between adjacent segments</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Reorder fill and color scales to maximize perceptual contrast between adjacent segments</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/plot_functions.R" class="external-link"><code>R/plot_functions.R</code></a></small>
       <div class="d-none name"><code>reorder_distinct_colors.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
     <p><a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a></p>
+<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a></p>
 
 <p>In stacked bar plots, ggplot2's default discrete palette assigns colors
 using level ordered (sometimes alphabetically), which often places perceptually
@@ -146,18 +146,22 @@ object that can be added to a ggplot with <code>+</code>.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="tax_bar_pq.html">tax_bar_pq</a></span><span class="op">(</span><span class="va">data_fungi_mini</span>, taxa <span class="op">=</span> <span class="st">"Class"</span>, fact <span class="op">=</span> <span class="st">"Time"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">reorder_distinct_colors</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`reorder_distinct_colors()` was deprecated in MiscMetabar 0.17.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use `ggplotpq::reorder_distinct_colors()` instead.</span>
 <span class="r-plt img"><img src="reorder_distinct_colors-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="fu">reorder_distinct_colors</span><span class="op">(</span><span class="va">p</span>, colorblind <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="reorder_distinct_colors-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">+</span> <span class="fu">reorder_distinct_colors</span><span class="op">(</span>alternate_lightness <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="reorder_distinct_colors-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="tax_bar_pq.html">tax_bar_pq</a></span><span class="op">(</span><span class="va">data_fungi_mini</span>, fact <span class="op">=</span> <span class="st">"Height"</span>, taxa <span class="op">=</span> <span class="st">"Order"</span>,</span></span>
-<span class="r-in"><span> nb_seq <span class="op">=</span> <span class="cn">FALSE</span>, percent_bar <span class="op">=</span> <span class="cn">TRUE</span>, label_taxa <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
-<span class="r-in"><span> add_ribbon <span class="op">=</span> <span class="cn">TRUE</span>, value_size<span class="op">=</span><span class="fl">7</span>, ribbon_alpha <span class="op">=</span> <span class="fl">.6</span>,</span></span>
-<span class="r-in"><span> show_values<span class="op">=</span><span class="cn">TRUE</span>, label_size <span class="op">=</span> <span class="fl">4</span>, top_label_size <span class="op">=</span> <span class="fl">8</span>,</span></span>
-<span class="r-in"><span> minimum_value_to_show<span class="op">=</span><span class="fl">0.05</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span> <span class="fu">reorder_distinct_colors</span><span class="op">(</span>alternate_lightness<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="tax_bar_pq.html">tax_bar_pq</a></span><span class="op">(</span><span class="va">data_fungi_mini</span>,</span></span>
+<span class="r-in"><span>  fact <span class="op">=</span> <span class="st">"Height"</span>, taxa <span class="op">=</span> <span class="st">"Order"</span>,</span></span>
+<span class="r-in"><span>  nb_seq <span class="op">=</span> <span class="cn">FALSE</span>, percent_bar <span class="op">=</span> <span class="cn">TRUE</span>, label_taxa <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  add_ribbon <span class="op">=</span> <span class="cn">TRUE</span>, value_size <span class="op">=</span> <span class="fl">7</span>, ribbon_alpha <span class="op">=</span> <span class="fl">.6</span>,</span></span>
+<span class="r-in"><span>  show_values <span class="op">=</span> <span class="cn">TRUE</span>, label_size <span class="op">=</span> <span class="fl">4</span>, top_label_size <span class="op">=</span> <span class="fl">8</span>,</span></span>
+<span class="r-in"><span>  minimum_value_to_show <span class="op">=</span> <span class="fl">0.05</span></span></span>
+<span class="r-in"><span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu">reorder_distinct_colors</span><span class="op">(</span>alternate_lightness <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="reorder_distinct_colors-4.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>

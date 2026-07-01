@@ -28,7 +28,10 @@ experiment. Applying diversity or ordination methods to raw counts
 therefore conflates biological signal with technical depth variation.
 
 ``` r
-ggplot(data=tibble(x=sample_sums(data_fungi_mini)),aes(x=x)) + geom_histogram(color="black") + scale_x_log10() + labs(x="Number of sequences per samples")
+ggplot(data = tibble(x = sample_sums(data_fungi_mini)), aes(x = x)) +
+  geom_histogram(color = "black") +
+  scale_x_log10() +
+  labs(x = "Number of sequences per samples")
 ```
 
 ![Large variation in sequencing depth across samples in
@@ -40,24 +43,24 @@ Large variation in sequencing depth across samples in ‘data_fungi_mini’.
 
 ## Overview of methods
 
-| Family | Function | Key property |
-|----|----|----|
-| Presence/absence | [`as_binary_otu_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/as_binary_otu_table.md) | Ignores abundance entirely |
-| Proportions (TSS) | `transform_pq(method="tss")` | Divides by library size |
-| TSS + log | [`normalize_prop_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/normalize_prop_pq.md) | TSS × constant, then log |
-| Hellinger | `transform_pq(method="hellinger")` | Square-root of proportions |
-| Centred log-ratio | `transform_pq(method="clr")` | Compositionally coherent |
-| Robust CLR | `transform_pq(method="rclr")` | CLR robust to zeros |
-| Log(1+x) | `transform_pq(method="log1p")` | Simple variance stabilisation |
-| Z-score | `transform_pq(method="z")` | Per-taxon standardisation |
-| Rank | `transform_pq(method="rank")` | Non-parametric, outlier robust |
-| Rarefaction | [`rarefy_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/rarefy_pq.md) | Subsampling to equal depth |
-| SRS | [`srs_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/srs_pq.md) | Rank-preserving subsampling (Heidrich et al. 2021) |
-| GMPR | [`gmpr_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/gmpr_pq.md) | Pairwise ratio geometric mean (Chen et al. 2018) |
-| CSS | [`css_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/css_pq.md) | Cumulative sum scaling (Paulson et al. 2013) |
-| TMM | [`tmm_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/tmm_pq.md) | Trimmed mean of M-values (Robinson and Oshlack 2010) |
-| VST | [`vst_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/vst_pq.md) | Variance-stabilising (DESeq2) (Love, Huber, and Anders 2014) |
-| Depth residuals | [`mcknight_residuals_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/mcknight_residuals_pq.md) | Log-log regression residuals (McKnight et al. 2019) |
+| Family            | Function                                                                                                         | Key property                                                 |
+|-------------------|------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
+| Presence/absence  | [`as_binary_otu_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/as_binary_otu_table.md)     | Ignores abundance entirely                                   |
+| Proportions (TSS) | `transform_pq(method="tss")`                                                                                     | Divides by library size                                      |
+| TSS + log         | [`normalize_prop_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/normalize_prop_pq.md)         | TSS × constant, then log                                     |
+| Hellinger         | `transform_pq(method="hellinger")`                                                                               | Square-root of proportions                                   |
+| Centred log-ratio | `transform_pq(method="clr")`                                                                                     | Compositionally coherent                                     |
+| Robust CLR        | `transform_pq(method="rclr")`                                                                                    | CLR robust to zeros                                          |
+| Log(1+x)          | `transform_pq(method="log1p")`                                                                                   | Simple variance stabilisation                                |
+| Z-score           | `transform_pq(method="z")`                                                                                       | Per-taxon standardisation                                    |
+| Rank              | `transform_pq(method="rank")`                                                                                    | Non-parametric, outlier robust                               |
+| Rarefaction       | [`rarefy_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/rarefy_pq.md)                         | Subsampling to equal depth                                   |
+| SRS               | [`srs_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/srs_pq.md)                               | Rank-preserving subsampling (Heidrich et al. 2021)           |
+| GMPR              | [`gmpr_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/gmpr_pq.md)                             | Pairwise ratio geometric mean (Chen et al. 2018)             |
+| CSS               | [`css_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/css_pq.md)                               | Cumulative sum scaling (Paulson et al. 2013)                 |
+| TMM               | [`tmm_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/tmm_pq.md)                               | Trimmed mean of M-values (Robinson and Oshlack 2010)         |
+| VST               | [`vst_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/vst_pq.md)                               | Variance-stabilising (DESeq2) (Love, Huber, and Anders 2014) |
+| Depth residuals   | [`mcknight_residuals_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/mcknight_residuals_pq.md) | Log-log regression residuals (McKnight et al. 2019)          |
 
 ------------------------------------------------------------------------
 
@@ -73,7 +76,7 @@ and handles the `taxa_are_rows` orientation automatically.
 ``` r
 data_tss <- transform_pq(data_fungi_mini, method = "tss")
 data_hell <- transform_pq(data_fungi_mini, method = "hellinger")
-data_clr <- transform_pq(data_fungi_mini, method = "clr")  # pseudocount = 1 by default
+data_clr <- transform_pq(data_fungi_mini, method = "clr") # pseudocount = 1 by default
 data_log1p <- transform_pq(data_fungi_mini, method = "log1p")
 
 # Sample sums after TSS: all 1
@@ -204,19 +207,23 @@ ord_hell <- phyloseq::ordinate(data_hell, method = "PCoA", distance = "bray")
 ord_log1p <- phyloseq::ordinate(data_log1p, method = "PCoA", distance = "bray")
 
 p_raw <- phyloseq::plot_ordination(
-  data_fungi_mini, ord_raw, color = "Height"
+  data_fungi_mini, ord_raw,
+  color = "Height"
 ) + ggplot2::ggtitle("Raw counts")
 
 p_tss <- phyloseq::plot_ordination(
-  data_tss, ord_tss, color = "Height"
+  data_tss, ord_tss,
+  color = "Height"
 ) + ggplot2::ggtitle("TSS")
 
 p_hell <- phyloseq::plot_ordination(
-  data_hell, ord_hell, color = "Height"
+  data_hell, ord_hell,
+  color = "Height"
 ) + ggplot2::ggtitle("Hellinger")
 
 p_log1p <- phyloseq::plot_ordination(
-  data_log1p, ord_log1p, color = "Height"
+  data_log1p, ord_log1p,
+  color = "Height"
 ) + ggplot2::ggtitle("log1p")
 
 patchwork::wrap_plots(p_raw, p_tss, p_hell, p_log1p, ncol = 2) +

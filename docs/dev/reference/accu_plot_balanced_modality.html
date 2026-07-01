@@ -11,7 +11,7 @@ nperm values, results must be identical."><meta property="og:description" conten
 This function (i) rarefy (equalize) the number of samples per modality of a
 factor and (ii) rarefy the number of sequences per sample (depth). The
 seed is set to 1:nperm. Thus, with exacly the same parameter, including
-nperm values, results must be identical."><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+nperm values, results must be identical."><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -19,7 +19,7 @@ nperm values, results must be identical."><meta name="robots" content="noindex">
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,7 @@ nperm values, results must be identical."><meta name="robots" content="noindex">
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -67,8 +68,7 @@ nperm values, results must be identical."><meta name="robots" content="noindex">
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Plot accumulation curves with balanced modality and depth rarefaction</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Plot accumulation curves with balanced modality and depth rarefaction</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/plot_functions.R" class="external-link"><code>R/plot_functions.R</code></a></small>
       <div class="d-none name"><code>accu_plot_balanced_modality.Rd</code></div>
     </div>
@@ -147,7 +147,7 @@ only use rarefy_by_sample_before_merging = TRUE</p></dd>
 <dt id="arg-sample-size">sample.size<a class="anchor" aria-label="anchor" href="#arg-sample-size"></a></dt>
 <dd><p>(int) A single integer value equal to the number of
 reads being simulated, also known as the depth. See
-<code><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">phyloseq::rarefy_even_depth()</a></code>.</p></dd>
+<code><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">phyloseq::rarefy_even_depth()</a></code> and <code><a href="rarefy_even_depth_pq.html">rarefy_even_depth_pq()</a></code>.</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
@@ -175,12 +175,15 @@ reads being simulated, also known as the depth. See
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="va">data_fungi_woNA4Time</span> <span class="op">&lt;-</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html" class="external-link">subset_samples</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Time</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">data_fungi_woNA4Time</span><span class="op">@</span><span class="va">sam_data</span><span class="op">$</span><span class="va">Time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"time-"</span>, <span class="va">data_fungi_woNA4Time</span><span class="op">@</span><span class="va">sam_data</span><span class="op">$</span><span class="va">Time</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html" class="external-link">subset_samples</a></span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Time</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">data_fungi_woNA4Time</span><span class="op">@</span><span class="va">sam_data</span><span class="op">$</span><span class="va">Time</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"time-"</span>, <span class="va">data_fungi_woNA4Time</span><span class="op">@</span><span class="va">sam_data</span><span class="op">$</span><span class="va">Time</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">accu_plot_balanced_modality</span><span class="op">(</span><span class="va">data_fungi_woNA4Time</span>, <span class="st">"Time"</span>, nperm <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> `set.seed(1)` was used to initialize repeatable random subsampling.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Please record this for your records so others can reproduce.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Try `set.seed(1); .Random.seed` for the full vector</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>most observed count data have counts 1, but smallest count is 3</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>most observed count data have counts 1, but smallest count is 4</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to max; returning -Inf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                          |                                                  |   0%  |                                                          |=================                                 |  33%  |                                                          |=================================                 |  67%  |                                                          |==================================================| 100%</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 4 rows containing missing values or values outside the scale range</span>
@@ -190,11 +193,12 @@ reads being simulated, also known as the depth. See
 <span class="r-plt img"><img src="accu_plot_balanced_modality-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">data_fungi_woNA4Height</span> <span class="op">&lt;-</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html" class="external-link">subset_samples</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Height</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/subset_samples-methods.html" class="external-link">subset_samples</a></span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Height</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">accu_plot_balanced_modality</span><span class="op">(</span><span class="va">data_fungi_woNA4Height</span>, <span class="st">"Height"</span>, nperm <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> `set.seed(1)` was used to initialize repeatable random subsampling.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Please record this for your records so others can reproduce.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Try `set.seed(1); .Random.seed` for the full vector</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>most observed count data have counts 1, but smallest count is 7</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to max; returning -Inf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   |                                                          |                                                  |   0%  |                                                          |=================                                 |  33%  |                                                          |=================================                 |  67%  |                                                          |==================================================| 100%</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 3 rows containing missing values or values outside the scale range</span>

@@ -5,7 +5,7 @@
 Use the VSEARCH software."><meta property="og:description" content="
 
 
-Use the VSEARCH software."><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+Use the VSEARCH software."><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -13,7 +13,7 @@ Use the VSEARCH software."><meta name="robots" content="noindex"><script data-go
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +32,7 @@ Use the VSEARCH software."><meta name="robots" content="noindex"><script data-go
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -61,8 +62,7 @@ Use the VSEARCH software."><meta name="robots" content="noindex"><script data-go
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Search for a list of sequence in an object to remove chimera taxa using <a href="https://github.com/torognes/vsearch" class="external-link">vsearch</a></h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Search for a list of sequence in an object to remove chimera taxa using <a href="https://github.com/torognes/vsearch" class="external-link">vsearch</a></h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/vsearch.R" class="external-link"><code>R/vsearch.R</code></a></small>
       <div class="d-none name"><code>chimera_removal_vs.Rd</code></div>
     </div>
@@ -135,12 +135,6 @@ Please cite <a href="https://github.com/torognes/vsearch" class="external-link">
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="co"># Adding a chimeric sequence for the example</span></span></span>
-<span class="r-in"><span><span class="va">data_fungi_with_chim</span> <span class="op">&lt;-</span> <span class="va">data_fungi</span></span></span>
-<span class="r-in"><span><span class="va">data_fungi_with_chim</span><span class="op">@</span><span class="va">refseq</span><span class="op">[</span><span class="st">"ASV1710"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">Biostrings</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Biostrings/man/xscat.html" class="external-link">xscat</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="fu">Biostrings</span><span class="fu">::</span><span class="fu">subseq</span><span class="op">(</span><span class="va">data_fungi_with_chim</span><span class="op">@</span><span class="va">refseq</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, start <span class="op">=</span> <span class="fl">1</span>, end <span class="op">=</span> <span class="fl">150</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  <span class="fu">Biostrings</span><span class="fu">::</span><span class="fu">subseq</span><span class="op">(</span><span class="va">data_fungi_with_chim</span><span class="op">@</span><span class="va">refseq</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span>, start <span class="op">=</span> <span class="fl">151</span>, end <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">data_fungi_nochim</span> <span class="op">&lt;-</span> <span class="fu">chimera_removal_vs</span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering for sequences under 100 bp remove a total of 0 ( 0 %) unique sequences for a total of 0 sequences removed ( 0 %)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).</span>
@@ -149,60 +143,32 @@ Please cite <a href="https://github.com/torognes/vsearch" class="external-link">
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 240</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 1180</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 185</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># Adding a chimeric sequence for the example</span></span></span>
+<span class="r-in"><span><span class="va">data_fungi_with_chim</span> <span class="op">&lt;-</span> <span class="va">data_fungi</span></span></span>
+<span class="r-in"><span><span class="va">data_fungi_with_chim</span><span class="op">@</span><span class="va">refseq</span><span class="op">[</span><span class="st">"ASV1710"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">Biostrings</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Biostrings/man/xscat.html" class="external-link">xscat</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu">Biostrings</span><span class="fu">::</span><span class="fu">subseq</span><span class="op">(</span><span class="va">data_fungi_with_chim</span><span class="op">@</span><span class="va">refseq</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, start <span class="op">=</span> <span class="fl">1</span>, end <span class="op">=</span> <span class="fl">150</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">Biostrings</span><span class="fu">::</span><span class="fu">subseq</span><span class="op">(</span><span class="va">data_fungi_with_chim</span><span class="op">@</span><span class="va">refseq</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span>, start <span class="op">=</span> <span class="fl">151</span>, end <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">data_fungi_nochim</span> <span class="op">&lt;-</span> <span class="fu">chimera_removal_vs</span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Higher value of abskew parameter is less stringent</span></span></span>
 <span class="r-in"><span><span class="va">data_fungi_nochim_16</span> <span class="op">&lt;-</span> <span class="fu">chimera_removal_vs</span><span class="op">(</span><span class="va">data_fungi</span>,</span></span>
-<span class="r-in"><span>  abskew <span class="op">=</span> <span class="fl">16</span>,</span></span>
-<span class="r-in"><span>  min_seq_length <span class="op">=</span> <span class="fl">10</span></span></span>
+<span class="r-in"><span>  abskew <span class="op">=</span> <span class="fl">16</span>, min_seq_length <span class="op">=</span> <span class="fl">10</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering for sequences under 10 bp remove a total of 0 ( 0 %) unique sequences for a total of 0 sequences removed ( 0 %)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 1420</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 159</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 1261</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 185</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Potential Chimeric ASVs detected by vsearch</span></span></span>
 <span class="r-in"><span><span class="va">chim_asv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/taxa_names-methods.html" class="external-link">taxa_names</a></span><span class="op">(</span><span class="va">data_fungi_with_chim</span><span class="op">)</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/taxa_names-methods.html" class="external-link">taxa_names</a></span><span class="op">(</span><span class="va">data_fungi_with_chim</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/taxa_names-methods.html" class="external-link">taxa_names</a></span><span class="op">(</span><span class="va">data_fungi_nochim</span><span class="op">)</span><span class="op">]</span></span></span>
-<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/taxa_names-methods.html" class="external-link">taxa_names</a></span><span class="op">(</span><span class="va">data_fungi_nochim</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="st">"ASV1710"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">chim_asv</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="track_wkflow.html">track_wkflow</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">data_fungi_with_chim</span>, <span class="va">data_fungi_nochim</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Compute the number of sequences</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Compute the number of clusters</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Compute the number of samples</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   nb_sequences nb_clusters nb_samples</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      1839124        1420        185</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      1789481        1180        185</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">data_fungi_nochim2</span> <span class="op">&lt;-</span></span></span>
 <span class="r-in"><span>  <span class="fu">chimera_removal_vs</span><span class="op">(</span><span class="va">data_fungi</span>, type <span class="op">=</span> <span class="st">"Select_only_non_chim_seqlen_filtered"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering for sequences under 100 bp remove a total of 0 ( 0 %) unique sequences for a total of 0 sequences removed ( 0 %)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 1420</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 366</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 1054</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 185</span>
 <span class="r-in"><span><span class="va">data_fungi_chimera</span> <span class="op">&lt;-</span></span></span>
 <span class="r-in"><span>  <span class="fu">chimera_removal_vs</span><span class="op">(</span><span class="va">data_fungi</span>, type <span class="op">=</span> <span class="st">"Select_only_chim"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Filtering for sequences under 100 bp remove a total of 0 ( 0 %) unique sequences for a total of 0 sequences removed ( 0 %)</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 14 sample(s) ( BA16-036bis_S20_MERGED.fastq.gz / C21-NV1-M_S64_MERGED.fastq.gz / CB8-019-B_S69_MERGED.fastq.gz / DY5-004-M_S98_MERGED.fastq.gz / E9-009-B_S100_MERGED.fastq.gz / H10-018-M_S110_MERGED.fastq.gz / N22-001-B_S129_MERGED.fastq.gz / N23-002-M_S132_MERGED.fastq.gz / O21-007-H_S143_MERGED.fastq.gz / O21-007-M_S144_MERGED.fastq.gz / O24-003-H_S146_MERGED.fastq.gz / X24-009-H_S171_MERGED.fastq.gz / Y28-002-B_S178_MERGED.fastq.gz / Y29-007-H_S182_MERGED.fastq.gz ).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 1420</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 1180</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 240</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 171</span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -11,7 +11,7 @@ subsequent analysis in a targets pipeline."><meta property="og:description" cont
 This function filter and trim (with parameters passed on to
 dada2::filterAndTrim() function) forward sequences or paired end
 sequence if 'rev' parameter is set. It return the list of files to
-subsequent analysis in a targets pipeline."><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+subsequent analysis in a targets pipeline."><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -19,7 +19,7 @@ subsequent analysis in a targets pipeline."><meta name="robots" content="noindex
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,7 @@ subsequent analysis in a targets pipeline."><meta name="robots" content="noindex
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -67,8 +68,7 @@ subsequent analysis in a targets pipeline."><meta name="robots" content="noindex
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>A wrapper of the function <code><a href="https://rdrr.io/pkg/dada2/man/filterAndTrim.html" class="external-link">dada2::filterAndTrim()</a></code> to use in <a href="https://books.ropensci.org/targets/" class="external-link">targets</a> pipeline</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>A wrapper of the function <code><a href="https://rdrr.io/pkg/dada2/man/filterAndTrim.html" class="external-link">dada2::filterAndTrim()</a></code> to use in <a href="https://books.ropensci.org/targets/" class="external-link">targets</a> pipeline</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/targets_misc.R" class="external-link"><code>R/targets_misc.R</code></a></small>
       <div class="d-none name"><code>filter_trim.Rd</code></div>
     </div>
@@ -156,7 +156,7 @@ is a list of reverse files.</p>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">filt_fastq_fw</span> <span class="op">&lt;-</span> <span class="fu">filter_trim</span><span class="op">(</span><span class="va">testFastqs_fw</span>, output_fw <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">derep_fw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/dada2/man/derepFastq.html" class="external-link">derepFastq</a></span><span class="op">(</span><span class="va">filt_fastq_fw</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">derep_fw</span> <span class="op">&lt;-</span> <span class="fu">dada2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dada2/man/derepFastq.html" class="external-link">derepFastq</a></span><span class="op">(</span><span class="va">filt_fastq_fw</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">derep_fw</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $sam1F.fastq.gz</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> derep-class: R object describing dereplicated sequencing reads</span>
@@ -181,8 +181,8 @@ is a list of reverse files.</p>
 <span class="r-in"><span>  output_fw <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"/"</span>, <span class="st">"fw"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  output_rev <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"rev"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">derep_fw_pe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/dada2/man/derepFastq.html" class="external-link">derepFastq</a></span><span class="op">(</span><span class="va">filt_fastq_pe</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">derep_rv_pe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/dada2/man/derepFastq.html" class="external-link">derepFastq</a></span><span class="op">(</span><span class="va">filt_fastq_pe</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">derep_fw_pe</span> <span class="op">&lt;-</span> <span class="fu">dada2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dada2/man/derepFastq.html" class="external-link">derepFastq</a></span><span class="op">(</span><span class="va">filt_fastq_pe</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">derep_rv_pe</span> <span class="op">&lt;-</span> <span class="fu">dada2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dada2/man/derepFastq.html" class="external-link">derepFastq</a></span><span class="op">(</span><span class="va">filt_fastq_pe</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">derep_fw_pe</span></span></span>
 <span class="r-in"><span><span class="va">derep_rv_pe</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>

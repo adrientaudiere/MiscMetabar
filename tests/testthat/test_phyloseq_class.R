@@ -130,6 +130,32 @@ test_that("verify_pq works fine", {
     verify_pq(data_fungi3),
     "Inconsistency of sample_names between otu_table and sam_data slots."
   )
+
+  # Same samples/taxa, but slots in a different ORDER are rejected when
+  # check_order = TRUE (default) and tolerated when check_order = FALSE.
+  data_fungi_samord <- data_fungi
+  data_fungi_samord@sam_data <-
+    data_fungi_samord@sam_data[rev(sample_names(data_fungi)), ]
+  expect_error(
+    verify_pq(data_fungi_samord),
+    "Inconsistency of sample_names ORDER"
+  )
+  expect_silent(suppressWarnings(verify_pq(
+    data_fungi_samord,
+    check_order = FALSE
+  )))
+
+  data_fungi_taxord <- data_fungi
+  data_fungi_taxord@tax_table <-
+    data_fungi_taxord@tax_table[rev(taxa_names(data_fungi)), ]
+  expect_error(
+    verify_pq(data_fungi_taxord),
+    "Inconsistency of taxa_names ORDER"
+  )
+  expect_silent(suppressWarnings(verify_pq(
+    data_fungi_taxord,
+    check_order = FALSE
+  )))
 })
 
 test_that("verify_tax_table works fine", {

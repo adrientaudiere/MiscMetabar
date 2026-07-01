@@ -1,15 +1,510 @@
 # Changelog
 
-## MiscMetabar (development version)
+## MiscMetabar 0.17.0 (Development version)
 
-## MiscMetabar 0.16.1 \[CRAN\]
+- [`assign_sintax()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/assign_sintax.md)
+  gains a `behavior = "return_taxtab"` option that returns a character
+  matrix of taxonomic values (rows are taxa, columns are the
+  `taxa_ranks`) with rownames set to the taxa names, ready to be passed
+  to
+  [`phyloseq::tax_table()`](https://rdrr.io/pkg/phyloseq/man/tax_table-methods.html).
+  As with `add_to_phyloseq` and `return_matrix`, values with a bootstrap
+  below `min_bootstrap` are set to NA.
+- [`assign_sintax()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/assign_sintax.md)
+  now accepts a matrix as `seq2search` (e.g. a dada2 sequence table
+  whose `colnames` are the ASV sequences). The `colnames` are
+  automatically converted to a `DNAStringSet` and used as the taxa
+  names, removing the need for manual conversion at the call site.
+- [`assign_sintax()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/assign_sintax.md)
+  now applies the `min_bootstrap` filter to `taxo_value` when
+  `behavior = "return_matrix"`, matching the `add_to_phyloseq` behavior.
+  Previously the filter was only applied in `add_to_phyloseq` mode, so
+  `return_matrix` returned raw taxonomic values regardless of
+  `min_bootstrap`; the unfiltered bootstrap values remain available in
+  the `taxo_bootstrap` element.
+- [`assign_blastn()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/assign_blastn.md),
+  [`assign_idtaxa()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/assign_idtaxa.md),
+  and
+  [`assign_vsearch_lca()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/assign_vsearch_lca.md)
+  gain a `behavior = "return_taxtab"` option that returns a character
+  matrix of taxonomic values (rows are taxa, columns are the rank names
+  without suffix) with rownames set to the taxa names, ready to be
+  passed to
+  [`phyloseq::tax_table()`](https://rdrr.io/pkg/phyloseq/man/tax_table-methods.html).
+  This mirrors the `return_taxtab` behavior already available in
+  [`assign_sintax()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/assign_sintax.md).
+- [`assign_blastn()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/assign_blastn.md),
+  [`assign_idtaxa()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/assign_idtaxa.md),
+  and
+  [`assign_vsearch_lca()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/assign_vsearch_lca.md)
+  now accept a matrix as `seq2search` (e.g. a dada2 sequence table whose
+  `colnames` are the ASV sequences). The `colnames` are automatically
+  converted to a `DNAStringSet` and used as the taxa names.
+  [`assign_blastn()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/assign_blastn.md)
+  also gains a new `seq2search` parameter (it previously only accepted a
+  `physeq` object); when `seq2search` is provided, a minimal phyloseq
+  object is built internally so that
+  [`blast_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/blast_pq.md)
+  works unchanged.
+- [`assign_idtaxa()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/assign_idtaxa.md)
+  now always returns one column per rank requested in `column_names`,
+  regardless of how deep the classification reached. Previously, when no
+  sequence was classified down to the deepest ranks, the result had
+  fewer columns than `column_names`, raising
+  `Can't subset columns that don't exist` with
+  `behavior = "return_taxtab"` and producing a tax_table with a variable
+  number of columns with `behavior = "add_to_phyloseq"`; shallow
+  classifications are now padded with empty strings.
+- `write_temp_fasta()` (internal) now uses
+  [`identical()`](https://rdrr.io/r/base/identical.html) instead of `==`
+  to check the `behavior` argument, fixing a pre-existing bug where
+  [`assign_idtaxa()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/assign_idtaxa.md)
+  — which does not pass `behavior` to `write_temp_fasta()` — would error
+  with “argument is of length zero” when used with `seq2search`.
+- [`mumu_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/mumu_pq.md)
+  no longer returns a phyloseq object whose `otu_table` and `tax_table`
+  hold the same taxa in different orders. The new OTU table is now
+  aligned to
+  [`taxa_names()`](https://rdrr.io/pkg/phyloseq/man/taxa_names-methods.html)
+  of the pruned object before being assigned. The previous desync
+  (caused by assigning the otu_table directly in mumu output order)
+  broke downstream verbs that align `tax_table` values with
+  [`taxa_names()`](https://rdrr.io/pkg/phyloseq/man/taxa_names-methods.html)
+  positionally, e.g. `tidypq::filter_taxa_pq(pq, Kingdom == "Archaea")`
+  could return Bacteria.
+- [`track_wkflow_samples()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/track_wkflow_samples.md)
+  fixes a bug where `nb_clusters` was incorrectly set to the total
+  number of clusters of the phyloseq object (or columns of the matrix)
+  when a sample had `nb_sequences = 0`. It now correctly reports `0`
+  clusters for samples with no reads. The fix is in
+  [`track_wkflow()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/track_wkflow.md),
+  which now counts only clusters with at least one sequence
+  (`sum(taxa_sums() > 0)` for phyloseq, `sum(colSums() > 0)` for
+  matrices) instead of using
+  [`ntaxa()`](https://rdrr.io/pkg/phyloseq/man/ntaxa-methods.html) /
+  [`ncol()`](https://rdrr.io/r/base/nrow.html).
+- [`track_wkflow()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/track_wkflow.md)
+  gains optional extra-metrics parameters (all default `FALSE`, so
+  behavior is unchanged unless requested): `compute_occurrences` (number
+  of non-zero OTU-table cells via
+  [`as_binary_otu_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/as_binary_otu_table.md)),
+  `compute_taxo_info` (number of taxonomic ranks and proportion of NA
+  per rank, configurable via `ranks_for_na_prop`),
+  `compute_sam_metadata` (number of `sample_data` columns),
+  `compute_seq_length` (mean/max/min reference-sequence length of
+  present taxa), `compute_genetic_diversity` (abundance-weighted
+  nucleotide diversity and unweighted mean pairwise distance from
+  `@ref_seq`, via
+  [`DECIPHER::DistanceMatrix()`](https://rdrr.io/pkg/DECIPHER/man/DistanceMatrix.html)
+  which handles unequal-length sequences), and `compute_factor_counts`
+  (number of samples per level of a `factor`). These metrics are
+  computed only for phyloseq objects (NA otherwise) and are propagated
+  to
+  [`track_wkflow_samples()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/track_wkflow_samples.md)
+  via `...`.
+- [`verify_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/verify_pq.md)
+  gains a `check_order` argument (default `TRUE`) that additionally
+  verifies the slots are in a consistent *order*, not merely that they
+  share the same set of names:
+  [`sample_names()`](https://rdrr.io/pkg/phyloseq/man/sample_names-methods.html)
+  must match between the `otu_table` and `sam_data` slots, and
+  [`taxa_names()`](https://rdrr.io/pkg/phyloseq/man/taxa_names-methods.html)
+  between the `otu_table` and `tax_table` slots. A mismatching order is
+  tolerated by phyloseq but silently breaks any function that aligns
+  slots positionally; set `check_order = FALSE` to bypass the check on a
+  legacy object you intend to reorder afterwards.
+
+## MiscMetabar 0.16.8 \[CRAN\]\* `biplot_pq()` fixes a bug where using `inverse_side = TRUE` together with `merge_sample_by` and `nb_samples_info = TRUE` caused sample counts to be attached to the wrong modality label.
+
+CRAN release: 2026-06-08
+
+- [`plot_deseq2_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_deseq2_pq.md),
+  [`plot_edgeR_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_edgeR_pq.md),
+  and
+  [`plot_mt()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_mt.md)
+  rename the `color_tax` parameter to `color_rank`, which more
+  explicitly names the `@tax_table` as the source of the colouring
+  variable. `color_tax` is kept as a deprecated alias and will warn with
+  [`lifecycle::deprecate_warn()`](https://lifecycle.r-lib.org/reference/deprecate_soft.html)
+  until removed in a future version.
+- Rarefaction across the package is now performed by an internal
+  R-version-robust reimplementation rather than
+  [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html),
+  whose `replace = FALSE` code path errors with
+  `invalid 'length.out' value` under recent R-devel (phyloseq issue
+  [\#1753](https://github.com/adrientaudiere/MiscMetabar/issues/1753)).
+  The reimplementation is bit-identical to
+  [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html)
+  for the same `seed`, depth and `replace` value (and is more correct in
+  the degenerate case where a retained sample has a single read). This
+  affects
+  [`rarefy_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/rarefy_pq.md),
+  [`adonis_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/adonis_pq.md),
+  [`adonis_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/adonis_rarperm_pq.md),
+  [`hill_test_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/hill_test_rarperm_pq.md),
+  [`hill_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/hill_pq.md),
+  [`biplot_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/biplot_pq.md),
+  [`ggvenn_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/ggvenn_pq.md),
+  [`upset_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/upset_pq.md),
+  [`ggaluv_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/ggaluv_pq.md)
+  and
+  [`ggscatt_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/ggscatt_pq.md).
+- [`simplify_taxo()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/simplify_taxo.md)
+  replaces the logical `remove_space` and `remove_NA` parameters with
+  `ranks_to_remove_space` and `ranks_to_remove_NA` (character vectors of
+  `tax_table` column names), and adds `ranks_for_pattern_to_remove` and
+  `ranks_for_pattern_to_NA` to control which columns `pattern_to_remove`
+  and `pattern_to_NA` are applied to. All four default to the relevant
+  rank names derived from the phyloseq object; pass `NULL` to skip the
+  operation. **Breaking change:** `ranks_to_remove_NA` now defaults to
+  all ranks (previously `remove_NA = FALSE`); pass `NULL` to restore the
+  old behaviour.
+- [`clean_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/clean_pq.md)
+  gains a `tax_replace_NA_string` argument (default `FALSE`) to replace
+  the literal strings `"NA"`, `"NA NA"`, `"NA NA NA"`
+  (whitespace-separated repetitions of `NA`, a common artifact of
+  pasting taxonomic ranks) in the `tax_table` with true `<NA>` values.
+- [`fastp()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/fastp.md)
+  is a new wrapper for the fastp software performing adapter detection,
+  quality control and preprocessing of paired-end or single-end FASTQ
+  files, with a companion
+  [`is_fastp_installed()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_fastp_installed.md)
+  tool-presence helper.
+- [`fastq_to_fasta()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/fastq_to_fasta.md)
+  converts one or several FASTQ files (optionally gzip-compressed, with
+  `.fastq` or `.fq` extensions) to FASTA format, dropping the quality
+  lines and returning the paths of the written files.
+- [`hill_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/hill_bar_pq.md)
+  now sets the “Error bars / Tukey HSD” caption once for the whole
+  figure (via
+  [`patchwork::plot_annotation()`](https://patchwork.data-imaginist.com/reference/plot_annotation.html))
+  instead of repeating it on every `q` panel, fixing the overlapping
+  captions seen with several values of `q`. Panels where Tukey HSD
+  pairwise comparisons were not run (no global Kruskal-Wallis
+  significance) are flagged with a `sig_symbol` (default `"∅"`, the
+  empty set, new argument) appended to their subtitle and explained once
+  in the shared caption.
+- [`hill_test_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/hill_test_rarperm_pq.md)
+  is deprecated; it has moved to the `bootpq` package. Use
+  [`bootpq::hill_test_rarperm_pq()`](https://adrientaudiere.github.io/bootpq/reference/hill_test_rarperm_pq.html)
+  instead.
+- [`is_blastn_installed()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_blastn_installed.md)
+  and
+  [`is_multiqc_installed()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_multiqc_installed.md)
+  are new tool-presence helpers, following the existing
+  [`is_cutadapt_installed()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_cutadapt_installed.md)
+  /
+  [`is_vsearch_installed()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_vsearch_installed.md)
+  pattern.
+- [`load_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/load_pq.md)
+  loads a phyloseq object from the `physeq.RData` file written by
+  [`save_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/save_pq.md)
+  or `write_pq(rdata = TRUE)` and returns it so it can be assigned to
+  any name, contrary to
+  [`base::load()`](https://rdrr.io/r/base/load.html) which always
+  restores it under the name `physeq`.
+- [`phyloseq_to_MDT_csv()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/phyloseq_to_MDT_csv.md)
+  exports the OTU table, taxonomy and sample data of a phyloseq object
+  to separate CSV (or TSV) files following the GBIF Metabarcoding Data
+  Toolkit (MDT) template layout (OTU IDs in rows, sample IDs in
+  columns), the plain-text counterpart of
+  [`phyloseq_to_MDT_excel()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/phyloseq_to_MDT_excel.md).
+- [`phyloseq_to_MDT_excel()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/phyloseq_to_MDT_excel.md)
+  exports the OTU table, sample data, taxonomy and reference sequences
+  of a phyloseq object to a multi-sheet Excel file for GBIF
+  Metabarcoding Data Toolkit (MDT) submission, with an optional Darwin
+  Core sample-term check.
+- [`plot_ordination_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_ordination_pq.md)
+  gains an `add_envfit` argument to overlay environmental vectors
+  (continuous variables as arrows) and factor centroids fitted with
+  [`vegan::envfit()`](https://vegandevs.github.io/vegan/reference/envfit.html)
+  onto the ordination, controlled by the new `envfit_fact`,
+  `envfit_pval`, `envfit_arrow_mult`, `envfit_text_size` and
+  `envfit_col` arguments.
+- [`plot_overview_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_overview_pq.md)
+  produces a single-call alpha- and beta-diversity overview of a
+  phyloseq object for one sample variable, adapting the panels to the
+  variable type: a Hill-number scatter via
+  [`ggscatt_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/ggscatt_pq.md)
+  for a numeric variable (gradient-colored ordination and UMAP,
+  Venn/UpSet skipped), or Hill-number bar plots via
+  [`hill_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/hill_bar_pq.md)
+  plus a Venn diagram (or an UpSet plot above `venn_max` levels) for a
+  factor. Panels are returned as a named list by default, or assembled
+  into a `patchwork` figure with `one_plot = TRUE`.
+- [`plot_volcano_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_volcano_pq.md)
+  draws a volcano plot (log2 fold change versus -log10 adjusted p-value)
+  from a differential abundance result table such as `DESeq2`,
+  [`ancombc_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/ancombc_pq.md)
+  or
+  [`aldex_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/aldex_pq.md)
+  output, coloring taxa as up, down or not differentially abundant. The
+  `fc` and `padj` arguments now default to `NULL` and are auto-detected
+  from the input type: the raw list from
+  [`ancombc_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/ancombc_pq.md)
+  is unwrapped to `$res` and its `lfc_*`/`q_*` columns are detected
+  automatically (intercept excluded);
+  [`aldex_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/aldex_pq.md)
+  output is detected via `effect`/`wi.eBH` columns;
+  [`DESeq2::results()`](https://rdrr.io/pkg/DESeq2/man/results.html) is
+  detected via `log2FoldChange`/`padj` columns.
+- [`rarefy_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/rarefy_pq.md)
+  gains a `replace` argument (default `FALSE`, sampling without
+  replacement) and accepts `seed = FALSE` to leave the random number
+  generator untouched, mirroring
+  [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html).
+- [`reshape_ggplot()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/reshape_ggplot.md)
+  auto-wraps the title, subtitle, caption and axis labels of a ggplot2
+  object using
+  [`stringr::str_wrap()`](https://stringr.tidyverse.org/reference/str_wrap.html),
+  useful before combining several plots with `patchwork`. It gains
+  dedicated `width_caption` and `fontsize_caption` arguments to control
+  the caption wrapping width and font size.
+- [`simplify_taxo()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/simplify_taxo.md)
+  gains a `pattern_to_NA` argument (default `NULL`): any cell whose
+  value matches the regex is replaced with `NA`. Designed for PR2-style
+  placeholder unknowns such as `Embryophyceae_X`, `Embryophyceae_XX`,
+  `Embryophyceae_XXX`, `Embryophyceae_XXX_sp.`, or `Mortierella_sp.`;
+  use `"_X+$|_sp\\.$"` to cover all such patterns in one pass.
+- [`strassoc_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/strassoc_pq.md)
+  is a new wrapper around
+  [`indicspecies::strassoc()`](https://emf-creaf.github.io/indicspecies/reference/strassoc.html)
+  computing the strength of association (e.g. `IndVal`, the phi
+  coefficient, the specificity component `A` or the fidelity component
+  `B`) between each taxon and the groups of a sample variable,
+  complementing
+  [`multipatt_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/multipatt_pq.md).
+- [`tax_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/tax_bar_pq.md)
+  gains an `order_modality` argument (default `NULL`) to set the order
+  of the `fact` modalities (the order of the bars); listing only a
+  subset of modalities keeps just those bars (with an informative
+  message) and an unknown value triggers an error listing the offending
+  values.
+- [`tax_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/tax_bar_pq.md)
+  gains a `ribbon_hide_zero` argument (default `TRUE`) that, when
+  `add_ribbon = TRUE`, suppresses the ribbon of a taxon between two
+  adjacent bars whenever its value is zero in either connected bar,
+  avoiding ribbons that collapse to a flat line.
+- [`var_par_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/var_par_rarperm_pq.md)
+  is deprecated; it has moved to the `bootpq` package. Use
+  [`bootpq::var_par_rarperm_pq()`](https://adrientaudiere.github.io/bootpq/reference/var_par_rarperm_pq.html)
+  instead.
+- [`vsearch_clustering()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/vsearch_clustering.md)
+  (and
+  [`postcluster_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/postcluster_pq.md)
+  with `method = "vsearch"`) gain `query_cov` and `target_cov` arguments
+  to set the vsearch `--query_cov` and `--target_cov` alignment-coverage
+  thresholds directly, instead of only through `vsearch_args`.
+- [`wheat_plot()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/wheat_plot.md)
+  draws a wheat plot (a histogram/dot-plot hybrid) of a numeric
+  variable, binning values along the x-axis and stacking individual
+  observations as points, useful to inspect distributions such as
+  [`taxa_sums()`](https://rdrr.io/pkg/phyloseq/man/taxa_sums.html) or
+  [`sample_sums()`](https://rdrr.io/pkg/phyloseq/man/sample_sums.html).
+
+## MiscMetabar 0.16.8
+
+CRAN release: 2026-06-08
+
+- [`accu_plot()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/accu_plot.md),
+  [`dist_pos_control()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/dist_pos_control.md),
+  [`hill_curves_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/hill_curves_pq.md)
+  and
+  [`tsne_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/tsne_pq.md)
+  no longer error under recent R-devel: the `otu_table` is now coerced
+  to a base matrix before being passed to `vegan` functions (`renyi()`,
+  `renyiaccum()`, `specaccum()`, `vegdist()`), which previously
+  triggered an
+  `assignment of an object of class "numeric" is not valid for @'.Data'`
+  error because plain
+  [`as.matrix()`](https://rdrr.io/r/base/matrix.html) does not strip the
+  S4 `otu_table` class.
+- Further check-time reductions for CRAN compliance: extra examples
+  `\dontrun{}` (kept for documentation, not run during checks).
+- Added file-level `skip_on_cran()` to some heavy test files.
+- Example speed-ups for some functions.
+- Fix several bugs when using Windows paths by quoting system call
+  arguments with [`shQuote()`](https://rdrr.io/r/base/shQuote.html)
+
+## MiscMetabar 0.16.6
+
+- [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/verify_tax_table.md)
+  is now ~10× faster on full-size taxonomy tables.
+- [`divent_hill_matrix_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/divent_hill_matrix_pq.md)
+  no longer recomputes the per-sample positive-subset (`x <- x[x > 0]`)
+  once per Hill order. The loop is now sample-outer / q-inner, so each
+  row is sliced once. Numeric output is bitwise-identical. Speeds up
+  every Hill-diversity computation in the package:
+  [`hill_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/hill_pq.md),
+  [`hill_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/hill_bar_pq.md),
+  [`hill_tuckey_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/hill_tuckey_pq.md),
+  [`profile_hill_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/profile_hill_pq.md),
+  [`psmelt_samples_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/psmelt_samples_pq.md),
+  [`plot_refseq_extremity_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_refseq_extremity_pq.md),
+  and the `*_rarperm_pq` family.
+- [`circle_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/circle_pq.md)
+  replaces a nested `pbapply(., 2, pbtapply(., group, sum))` over the
+  OTU table with two [`rowsum()`](https://rdrr.io/r/base/rowsum.html)
+  calls. On `data_fungi` (1420 taxa × 185 samples) the example dropped
+  from ~18 s to ~1.8 s (≈ 10× faster). Output unchanged.
+- `format2dada2(fasta_db = …)`, `hill_acc_pq(type = "sample")`,
+  [`adonis_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/adonis_rarperm_pq.md)
+  are also faster.
+- New pkgdown article: `vignettes/articles/timing.Rmd` documents
+  wall-clock cost of the main functions on `data_fungi` and
+  `data_fungi_mini`, with a CSV refreshed by
+  `inst/benchmark/function_timings.R`.
+- Pkgdown articles use fewer permutations / simulations to keep the site
+  build under a few minutes.
+- Reduced `R CMD check` time to keep CRAN’s 10-minute budget. Examples
+  for
+  [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/verify_tax_table.md),
+  [`adonis_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/adonis_pq.md),
+  [`plot_SCBD_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_SCBD_pq.md),
+  [`multipatt_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/multipatt_pq.md),
+  [`hill_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/hill_pq.md),
+  [`plot_tsne_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_tsne_pq.md),
+  [`upset_test_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/upset_test_pq.md),
+  [`summary_plot_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/summary_plot_pq.md),
+  [`ggvenn_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/ggvenn_pq.md),
+  [`plot_refseq_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_refseq_pq.md),
+  [`plot_seq_ratio_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_seq_ratio_pq.md),
+  [`plot_refseq_extremity_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_refseq_extremity_pq.md),
+  [`glmutli_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/glmutli_pq.md),
+  [`adonis_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/adonis_rarperm_pq.md),
+  [`lefser_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/lefser_pq.md),
+  [`var_par_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/var_par_pq.md),
+  [`var_par_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/var_par_rarperm_pq.md),
+  [`taxa_only_in_one_level()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/taxa_only_in_one_level.md),
+  [`distri_1_taxa()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/distri_1_taxa.md),
+  [`accu_plot_balanced_modality()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/accu_plot_balanced_modality.md),
+  [`multi_biplot_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/multi_biplot_pq.md),
+  [`tax_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/tax_bar_pq.md),
+  [`plot_var_part_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_var_part_pq.md),
+  [`track_wkflow()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/track_wkflow.md),
+  [`reorder_taxa_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/reorder_taxa_pq.md)
+  and
+  [`transform_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/transform_pq.md)
+  now use `data_fungi_mini` (137 × 45) instead of the full `data_fungi`
+  (185 × 1420), keeping behaviour identical but much faster.
+- [`hill_acc_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/hill_acc_pq.md),
+  [`iNEXT_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/iNEXT_pq.md),
+  [`format2dada2()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/format2dada2.md)
+  and
+  [`hill_test_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/hill_test_rarperm_pq.md)
+  examples moved from `\donttest{}` to `\dontrun{}`. These functions are
+  inherently CPU-bound (sample-based accumulation, fasta reformatting,
+  permutation × rarefaction × q-loop) and were the largest individual
+  contributors to the 10-min CRAN budget. Their behaviour is documented
+  in the corresponding vignettes.
+- [`verify_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/verify_pq.md)
+  example switched from `data_fungi` to `data_fungi_mini` (82 s → \< 5
+  s).
+- Tests:
+  [`plot_LCBD_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_LCBD_pq.md)
+  /
+  [`LCBD_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/LCBD_pq.md)
+  smoke tests in `tests/testthat/test_figures_beta_div.R` lowered
+  `nperm` from 100 to 9 (they only assert return class, not numeric
+  stability).
+- Function defaults (`nperm`, `n_permutations`) are unchanged.
+
+## MiscMetabar 0.16.5
+
+- [`funguild_assign()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/funguild_assign.md)
+  and
+  [`rotl_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/rotl_pq.md)
+  examples now use `\dontrun{}` instead of `\donttest{}`. Both examples
+  call external APIs (`www.stbates.org` and the Open Tree of Life
+  respectively) that are not always reachable during CRAN’s
+  `--run-donttest` check, causing spurious ERRORs.
+- [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/verify_tax_table.md)’s
+  introductory example was moved inside the existing `\donttest{}`
+  block. The call against the full `data_fungi` dataset took ~70 s,
+  which triggered the CRAN “examples \> 5 s” NOTE on every check.
+- `XVector` removed from `DESCRIPTION` `Imports`. It was declared but
+  never imported in `NAMESPACE` or used directly; `Biostrings` already
+  loads it transitively. CRAN flagged this as “Namespace in Imports
+  field not imported from”.
+- Bibliography: corrected the DOI for Taberlet et al. (2012)
+  “Environmental DNA” in `paper/bibliography.bib`, `paper/paper.bib`,
+  and the two `vignettes/*.bib` files (was the journal ISSN landing
+  `10.1002/(issn)2637-4943`, now the paper DOI
+  `10.1111/j.1365-294X.2012.05542.x`). `README.md` and the pkgdown site
+  regenerate accordingly.
+
+## MiscMetabar 0.16.3
+
+- [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/verify_tax_table.md)
+  now recognises **non-breaking space (U+00A0)** and other Unicode
+  separators (em space, ideographic space, …) as border / internal
+  whitespace. Previously the detection regex `^\s|\s$` (TRE) and the
+  stripping call [`trimws()`](https://rdrr.io/r/base/trimws.html) only
+  handled ASCII `[ \t\r\n]`, so taxonomic values padded with NBSP —
+  common in spreadsheet- or copy-paste-derived metadata — were silently
+  kept as e.g. `"Archaeospora "`, causing duplicate genera and broken
+  grouping downstream. Detection now uses
+  `grepl("^[\\s\\p{Z}]|[\\s\\p{Z}]$", val, perl = TRUE)` and stripping
+  uses `gsub("^[\\s\\p{Z}]+|[\\s\\p{Z}]+$", "", val, perl = TRUE)`. Both
+  `clean_pq(..., tax_remove_border_spaces = TRUE)` and
+  `clean_pq(..., tax_remove_all_space = TRUE)` benefit from the fix.
+- [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/verify_tax_table.md)
+  gains a new check for **invisible / unusual characters** in taxonomic
+  values: anything in Unicode category `\p{C}` (control / format /
+  surrogate / private use / unassigned) or any `\p{Z}` separator other
+  than plain ASCII space or tab. Typical offenders are NBSP (U+00A0),
+  zero-width space (U+200B), zero-width joiner (U+200D) and C0 control
+  characters. Three new parameters drive the check:
+  `detect_invisible_chars` (default `TRUE`, warns when
+  `verbose = TRUE`), `replace_invisible_chars` (default `FALSE`,
+  requires `modify_phyloseq = TRUE` to strip), and
+  `invisible_chars_replacement` (default `""`). Warnings/messages report
+  each offending value with the hexadecimal code points of the offending
+  characters so the user can see what is hiding inside the string.
+- [`clean_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/clean_pq.md)
+  gains `tax_replace_invisible_chars` (default `FALSE`) which forwards
+  to
+  [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/verify_tax_table.md)
+  and strips invisible characters from the cleaned `tax_table`.
+- CRAN resubmission. Fixes the incoming-checks failure reported for
+  0.16.2:
+  [`write_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/write_pq.md)
+  no longer passes a `DNAStringSet` `refseq` slot directly to
+  [`utils::write.table()`](https://rdrr.io/r/utils/write.table.html) —
+  sequences are now coerced via
+  [`as.character()`](https://rdrr.io/r/base/character.html) first. This
+  avoids dispatching to `as.data.frame,XStringSet-method` from R-devel’s
+  [`data.frame()`](https://rdrr.io/r/base/data.frame.html), which now
+  forwards an internal `validRN = FALSE` argument that the XStringSet
+  method’s `.local` does not accept.
+- `Biostrings` is now an `Imports` (moved from `Suggests`), so that the
+  `XVector` classes stored in `data/data_fungi*.rda` are covered by
+  `MiscMetabar`’s recursive strong dependency graph.
+- Replaced an unreachable `ggstatsplot` link in `NEWS.md`
+  (`www.indrapatil.com`) with the CRAN page.
+- [`clean_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/clean_pq.md)
+  gains four FALSE-by-default toggles to apply
+  [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/verify_tax_table.md)
+  modifications on the cleaned `tax_table`: `remove_border_spaces` (trim
+  leading/trailing whitespace), `remove_all_space` (replace internal
+  whitespace via `replace_space_with`, default `"_"`), `replace_to_NA`
+  (set values matching `unwanted_tax_patterns` to `NA`; accepts a custom
+  pattern vector), and `redundant_suffix` (drop redundant `"_sp"` tips
+  where the genus is already filled; accepts a custom suffix string such
+  as `"_var"`). Toggles can be enabled independently or combined in a
+  single call; each modification emits a message and nothing fires when
+  all toggles are `FALSE`.
+
+## MiscMetabar 0.16.2
+
+## MiscMetabar 0.16.1
 
 - [`cutadapt_remove_primers()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/cutadapt_remove_primers.md)
   gains a `cutadapt_args` parameter (default `""`) to pass additional
   arguments directly to cutadapt, such as `"-e 0.01"` to lower the
   maximum error rate from the cutadapt default of 10% to 1%.
 
-## MiscMetabar 0.15.2 \[CRAN\]
+## MiscMetabar 0.15.2
 
 - [`hill_test_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/hill_test_rarperm_pq.md):
   fixed default `type` from `"non-parametrique"` to `"nonparametric"` to
@@ -115,8 +610,9 @@
   QIIME-style ranks, etc.).
   [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/verify_tax_table.md)
   now uses it as the default for `replace_to_NA`, and other pqverse
-  packages (e.g. `dbpq::count_unwanted_tax()`) can reuse it to keep
-  patterns in sync.
+  packages
+  (e.g. [`dbpq::count_unwanted_tax()`](https://adrientaudiere.github.io/dbpq/reference/count_unwanted_tax.html))
+  can reuse it to keep patterns in sync.
 
 ### Breaking changes
 
@@ -798,8 +1294,8 @@ CRAN release: 2024-04-28
   [`psmelt_samples_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/psmelt_samples_pq.md)
   to build data frame of samples information including the number of
   sequences (Abundance) and Hill diversity metrics. Useful to use with
-  the [ggstatsplot](https://www.indrapatil.com/ggstatsplot/) packages
-  (see examples).
+  the [ggstatsplot](https://cran.r-project.org/package=ggstatsplot)
+  packages (see examples).
 - Replace param `variable` by `fact` in function
   [`ggbetween_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/ggbetween_pq.md)
   and
@@ -1171,11 +1667,11 @@ CRAN release: 2024-04-28
   sequences (obtained by
   [`dada2::derepFastq`](https://rdrr.io/pkg/dada2/man/derepFastq.html))
 
-|  | Database (makeblastdb) | Sequences to blast (blastn) |
-|----|----|----|
-| [`blast_to_phyloseq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/blast_to_phyloseq.md) | Built from `ref_seq` slot(physeq-class) | Custom fasta file |
-| [`blast_to_derep()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/blast_to_derep.md) | Built from dereplicate sequences (derep-class) | Custom fasta file |
-| [`blast_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/blast_pq.md) | Custom database or custom fasta file | `ref_seq` slot of a physeq object |
+|                                                                                                          | Database (makeblastdb)                         | Sequences to blast (blastn)       |
+|----------------------------------------------------------------------------------------------------------|------------------------------------------------|-----------------------------------|
+| [`blast_to_phyloseq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/blast_to_phyloseq.md) | Built from `ref_seq` slot(physeq-class)        | Custom fasta file                 |
+| [`blast_to_derep()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/blast_to_derep.md)       | Built from dereplicate sequences (derep-class) | Custom fasta file                 |
+| [`blast_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/blast_pq.md)                   | Custom database or custom fasta file           | `ref_seq` slot of a physeq object |
 
 - Add functions
   [`tsne_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/tsne_pq.md)

@@ -5,7 +5,7 @@
 Graphical representation of DESeq2 analysis."><meta property="og:description" content="
 
 
-Graphical representation of DESeq2 analysis."><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+Graphical representation of DESeq2 analysis."><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -13,7 +13,7 @@ Graphical representation of DESeq2 analysis."><meta name="robots" content="noind
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +32,7 @@ Graphical representation of DESeq2 analysis."><meta name="robots" content="noind
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -61,8 +62,7 @@ Graphical representation of DESeq2 analysis."><meta name="robots" content="noind
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Plot DESeq2 results for a phyloseq or a DESeq2 object.</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Plot DESeq2 results for a phyloseq or a DESeq2 object.</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/Deseq2_edgeR.R" class="external-link"><code>R/Deseq2_edgeR.R</code></a></small>
       <div class="d-none name"><code>plot_deseq2_pq.Rd</code></div>
     </div>
@@ -83,7 +83,8 @@ Graphical representation of DESeq2 analysis."><meta name="robots" content="noind
 <span>  pval <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  taxolev <span class="op">=</span> <span class="st">"Genus"</span>,</span>
 <span>  select_taxa <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  color_tax <span class="op">=</span> <span class="st">"Phylum"</span>,</span>
+<span>  color_rank <span class="op">=</span> <span class="st">"Phylum"</span>,</span>
+<span>  color_tax <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  tax_depth <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  jitter_width <span class="op">=</span> <span class="fl">0.1</span>,</span>
@@ -130,9 +131,12 @@ or a logical vector (length of the results from <code><a href="https://rdrr.io/p
 to plot.</p></dd>
 
 
+<dt id="arg-color-rank">color_rank<a class="anchor" aria-label="anchor" href="#arg-color-rank"></a></dt>
+<dd><p>taxonomic level used for color, or a color vector.</p></dd>
+
+
 <dt id="arg-color-tax">color_tax<a class="anchor" aria-label="anchor" href="#arg-color-tax"></a></dt>
-<dd><p>taxonomic level used for color or a
-color vector.</p></dd>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> Use <code>color_rank</code> instead.</p></dd>
 
 
 <dt id="arg-tax-depth">tax_depth<a class="anchor" aria-label="anchor" href="#arg-tax-depth"></a></dt>
@@ -203,14 +207,14 @@ or <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="ex
 <span class="r-in"><span>    test <span class="op">=</span> <span class="st">"Wald"</span>, fitType <span class="op">=</span> <span class="st">"local"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">plot_deseq2_pq</span><span class="op">(</span><span class="va">res</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SampleType"</span>, <span class="st">"Soil"</span>, <span class="st">"Skin"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    tax_table <span class="op">=</span> <span class="va">GP</span><span class="op">@</span><span class="va">tax_table</span>, color_tax <span class="op">=</span> <span class="st">"Kingdom"</span></span></span>
+<span class="r-in"><span>    tax_table <span class="op">=</span> <span class="va">GP</span><span class="op">@</span><span class="va">tax_table</span>, color_rank <span class="op">=</span> <span class="st">"Kingdom"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">plot_deseq2_pq</span><span class="op">(</span><span class="va">res</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SampleType"</span>, <span class="st">"Soil"</span>, <span class="st">"Skin"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    tax_table <span class="op">=</span> <span class="va">GP</span><span class="op">@</span><span class="va">tax_table</span>, color_tax <span class="op">=</span> <span class="st">"Kingdom"</span>,</span></span>
+<span class="r-in"><span>    tax_table <span class="op">=</span> <span class="va">GP</span><span class="op">@</span><span class="va">tax_table</span>, color_rank <span class="op">=</span> <span class="st">"Kingdom"</span>,</span></span>
 <span class="r-in"><span>    pval <span class="op">=</span> <span class="fl">0.7</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">plot_deseq2_pq</span><span class="op">(</span><span class="va">res</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SampleType"</span>, <span class="st">"Soil"</span>, <span class="st">"Skin"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    tax_table <span class="op">=</span> <span class="va">GP</span><span class="op">@</span><span class="va">tax_table</span>, color_tax <span class="op">=</span> <span class="st">"Class"</span>,</span></span>
+<span class="r-in"><span>    tax_table <span class="op">=</span> <span class="va">GP</span><span class="op">@</span><span class="va">tax_table</span>, color_rank <span class="op">=</span> <span class="st">"Class"</span>,</span></span>
 <span class="r-in"><span>    select_taxa <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"522457"</span>, <span class="st">"271582"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>

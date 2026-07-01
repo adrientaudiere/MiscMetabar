@@ -5,7 +5,7 @@
 This function use the merge_taxa_vec function to  merge taxa into clusters."><meta property="og:description" content="
 
 
-This function use the merge_taxa_vec function to  merge taxa into clusters."><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+This function use the merge_taxa_vec function to  merge taxa into clusters."><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -13,7 +13,7 @@ This function use the merge_taxa_vec function to  merge taxa into clusters."><me
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +32,7 @@ This function use the merge_taxa_vec function to  merge taxa into clusters."><me
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -61,8 +62,7 @@ This function use the merge_taxa_vec function to  merge taxa into clusters."><me
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Recluster sequences of an object of class <code>physeq</code> or a list of DNA sequences</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Recluster sequences of an object of class <code>physeq</code> or a list of DNA sequences</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/dada_phyloseq.R" class="external-link"><code>R/dada_phyloseq.R</code></a></small>
       <div class="d-none name"><code>postcluster_pq.Rd</code></div>
     </div>
@@ -87,6 +87,8 @@ This function use the merge_taxa_vec function to  merge taxa into clusters."><me
 <span>  rank_propagation <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  vsearch_cluster_method <span class="op">=</span> <span class="st">"--cluster_size"</span>,</span>
 <span>  vsearch_args <span class="op">=</span> <span class="st">"--strand both"</span>,</span>
+<span>  query_cov <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  target_cov <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  keep_temporary_files <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  swarmpath <span class="op">=</span> <span class="st">"swarm"</span>,</span>
 <span>  d <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -109,6 +111,8 @@ This function use the merge_taxa_vec function to  merge taxa into clusters."><me
 <span>  rank_propagation <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  vsearch_cluster_method <span class="op">=</span> <span class="st">"--cluster_size"</span>,</span>
 <span>  vsearch_args <span class="op">=</span> <span class="st">"--strand both"</span>,</span>
+<span>  query_cov <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  target_cov <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  keep_temporary_files <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  swarmpath <span class="op">=</span> <span class="st">"swarm"</span>,</span>
 <span>  d <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -187,6 +191,20 @@ methods in the <a href="https://github.com/torognes/vsearch/" class="external-li
 passed on to vsearch.</p></dd>
 
 
+<dt id="arg-query-cov">query_cov<a class="anchor" aria-label="anchor" href="#arg-query-cov"></a></dt>
+<dd><p>(default: NULL) Only used when <code>method = "vsearch"</code>. Reject
+the alignment if the fraction of the query sequence aligned to the target is
+lower than this value. When NULL (default), the vsearch <code>--query_cov</code> option
+is not added to the command. See <code><a href="vsearch_clustering.html">vsearch_clustering()</a></code>.</p></dd>
+
+
+<dt id="arg-target-cov">target_cov<a class="anchor" aria-label="anchor" href="#arg-target-cov"></a></dt>
+<dd><p>(default: NULL) Only used when <code>method = "vsearch"</code>. Reject
+the alignment if the fraction of the target sequence aligned to the query is
+lower than this value. When NULL (default), the vsearch <code>--target_cov</code>
+option is not added to the command. See <code><a href="vsearch_clustering.html">vsearch_clustering()</a></code>.</p></dd>
+
+
 <dt id="arg-keep-temporary-files">keep_temporary_files<a class="anchor" aria-label="anchor" href="#arg-keep-temporary-files"></a></dt>
 <dd><p>(logical, default: FALSE) Do we keep temporary files</p><ul><li><p>temp.fasta (refseq in fasta or dna_seq sequences)</p></li>
 <li><p>cluster.fasta (centroid if method = "vsearch")</p></li>
@@ -262,7 +280,8 @@ and <code><a href="mmseqs2_clustering.html">mmseqs2_clustering()</a></code></p><
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"DECIPHER"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"DECIPHER"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">postcluster_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Partitioning sequences by 3-mer similarity:</span>
@@ -289,7 +308,8 @@ and <code><a href="mmseqs2_clustering.html">mmseqs2_clustering()</a></code></p><
 <span class="r-out co"><span class="r-pr">#&gt;</span> sample_data() Sample Data:       [ 137 samples by 7 sample variables ]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> tax_table()   Taxonomy Table:    [ 32 taxa by 12 taxonomic ranks ]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> refseq()      DNAStringSet:      [ 32 reference sequences ]</span>
-<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"DECIPHER"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">postcluster_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, method_clusterize <span class="op">=</span> <span class="st">"longest"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -303,26 +323,7 @@ and <code><a href="mmseqs2_clustering.html">mmseqs2_clustering()</a></code></p><
 <span class="r-in"><span>    <span class="va">d_mm</span> <span class="op">&lt;-</span> <span class="fu">postcluster_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, method <span class="op">=</span> <span class="st">"mmseqs2"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">}</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Partitioning sequences by 3-mer similarity:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.02 secs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Sorting by relatedness within 11 groups:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> iteration 1 of up to 17 (100.0% stability) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.01 secs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Clustering sequences by 9-mer similarity:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.07 secs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Clusters via relatedness sorting: 100% (0% exclusively)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Clusters via rare 3-mers: 100% (0% exclusively)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Estimated clustering effectiveness: 100%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

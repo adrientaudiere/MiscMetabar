@@ -1,6 +1,6 @@
 # Save phyloseq object in the form of multiple csv tables.
 
-[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-stable](https://img.shields.io/badge/lifecycle-stable-green)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 This is the reverse function of
 [`read_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/read_pq.md).

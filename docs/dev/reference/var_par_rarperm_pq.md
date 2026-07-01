@@ -1,6 +1,11 @@
 # Partition the Variation of a phyloseq object with rarefaction permutations
 
-[![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-deprecated](https://img.shields.io/badge/lifecycle-deprecated-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+
+**\[deprecated\]** This function has moved to the `bootpq` package.
+Please use
+[`bootpq::var_par_rarperm_pq()`](https://adrientaudiere.github.io/bootpq/reference/var_par_rarperm_pq.html)
+instead.
 
 This is an extension of the function
 [`var_par_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/var_par_pq.md).
@@ -70,7 +75,9 @@ var_par_rarperm_pq(
 
   (int) A single integer value equal to the number of reads being
   simulated, also known as the depth. See
-  [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html).
+  [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html)
+  and
+  [`rarefy_even_depth_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/rarefy_even_depth_pq.md).
 
 - verbose:
 
@@ -109,19 +116,10 @@ Adrien Taudière
 ``` r
 # \donttest{
 if (requireNamespace("vegan")) {
-  data_fungi_woNA <- subset_samples(data_fungi, !is.na(Time) & !is.na(Height))
-  res_var_9 <- var_par_rarperm_pq(
-    data_fungi_woNA,
-    list_component = list(
-      "Time" = c("Time"),
-      "Size" = c("Height", "Diameter")
-    ),
-    nperm = 9,
-    dbrda_computation = TRUE
+  data_fungi_woNA <- subset_samples(
+    data_fungi_mini,
+    !is.na(Time) & !is.na(Height)
   )
-
-  plot_var_part_pq(res_var_9)
-
   res_var_2 <- var_par_rarperm_pq(
     data_fungi_woNA,
     list_component = list(
@@ -131,12 +129,13 @@ if (requireNamespace("vegan")) {
     nperm = 2,
     dbrda_computation = TRUE
   )
-
-  plot_var_part_pq(res_var_2)
 }
-#>   |                                                          |                                                  |   0%  |                                                          |======                                            |  11%  |                                                          |===========                                       |  22%  |                                                          |=================                                 |  33%  |                                                          |======================                            |  44%  |                                                          |============================                      |  56%  |                                                          |=================================                 |  67%  |                                                          |=======================================           |  78%  |                                                          |============================================      |  89%  |                                                          |==================================================| 100%
-
+#> Warning: `var_par_rarperm_pq()` was deprecated in MiscMetabar 0.17.0.
+#> ℹ Please use `bootpq::var_par_rarperm_pq()` instead.
+#> Taxa are now in columns.
 #>   |                                                          |                                                  |   0%  |                                                          |=========================                         |  50%  |                                                          |==================================================| 100%
-
 # }
+if (FALSE) { # \dontrun{
+plot_var_part_pq(res_var_2)
+} # }
 ```

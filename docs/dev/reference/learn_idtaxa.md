@@ -1,6 +1,6 @@
 # A wrapper of [`DECIPHER::LearnTaxa()`](https://rdrr.io/pkg/DECIPHER/man/LearnTaxa.html)
 
-[![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 This function is basically a wrapper of functions
 [`DECIPHER::LearnTaxa()`](https://rdrr.io/pkg/DECIPHER/man/LearnTaxa.html),

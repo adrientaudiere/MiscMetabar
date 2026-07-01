@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Accumulation and rarefaction curves (WORK IN PROGRESS) • MiscMetabar</title>
+<title>Accumulation and rarefaction curves • MiscMetabar</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Accumulation and rarefaction curves (WORK IN PROGRESS)">
+<meta property="og:title" content="Accumulation and rarefaction curves">
 <meta name="robots" content="noindex">
 <script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,6 +49,7 @@
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -86,10 +87,9 @@
 
 <link href="accumulation-rarefaction_files/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
 <script src="accumulation-rarefaction_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="accumulation-rarefaction_files/viz-1.8.2/viz.js"></script><link href="accumulation-rarefaction_files/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
-<script src="accumulation-rarefaction_files/grViz-binding-1.0.11/grViz.js"></script><div class="row">
+<script src="accumulation-rarefaction_files/grViz-binding-1.0.12/grViz.js"></script><div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Accumulation and rarefaction curves (WORK IN PROGRESS)</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Accumulation and rarefaction curves</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/vignettes/articles/accumulation-rarefaction.Rmd" class="external-link"><code>vignettes/articles/accumulation-rarefaction.Rmd</code></a></small>
@@ -109,6 +109,8 @@ biological diversity in the field.</p>
 illustrates how to compute and visualise these curves using
 <code><a href="../reference/hill_acc_pq.html">hill_acc_pq()</a></code> and <code><a href="../reference/profile_hill_pq.html">profile_hill_pq()</a></code>, two
 MiscMetabar functions built on the <a href="https://ericmarcon.github.io/divent/" class="external-link">divent</a> package <span class="citation">(Marcon and Hérault 2015)</span>.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ericmarcon.github.io/divent/" class="external-link">divent</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="which-function-should-i-use">Which function should I use?<a class="anchor" aria-label="anchor" href="#which-function-should-i-use"></a>
 </h2>
@@ -211,7 +213,7 @@ favouring rare or abundant ones.</p>
 <div class="section level2">
 <h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
 </h2>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/adrientaudiere/MiscMetabar" class="external-link">MiscMetabar</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://dx.plos.org/10.1371/journal.pone.0061217" class="external-link">phyloseq</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
@@ -225,13 +227,13 @@ higher depth if possible. Recent analyses confirm that rarefaction
 remains the most robust approach for controlling uneven sequencing depth
 in amplicon data <span class="citation">(Schloss 2024b,
 2024a)</span>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dfm_rarefied</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html" class="external-link">rarefy_even_depth</a></span><span class="op">(</span></span>
 <span>  <span class="va">data_fungi_mini</span>,</span>
 <span>  rngseed <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  sample.size <span class="op">=</span> <span class="fl">500</span></span>
-<span><span class="op">)</span> </span>
-<span><span class="va">dfm_rarefied</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/prune_samples-methods.html" class="external-link">prune_samples</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_names-methods.html" class="external-link">sample_names</a></span><span class="op">(</span><span class="va">dfm_rarefied</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_names-methods.html" class="external-link">sample_names</a></span><span class="op">(</span><span class="va">dfm_rarefied</span><span class="op">)</span>, <span class="fl">25</span><span class="op">)</span>, <span class="va">dfm_rarefied</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">dfm_rarefied</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/prune_samples-methods.html" class="external-link">prune_samples</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_names-methods.html" class="external-link">sample_names</a></span><span class="op">(</span><span class="va">dfm_rarefied</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_names-methods.html" class="external-link">sample_names</a></span><span class="op">(</span><span class="va">dfm_rarefied</span><span class="op">)</span>, <span class="fl">25</span><span class="op">)</span>, <span class="va">dfm_rarefied</span><span class="op">)</span></span>
 <span><span class="va">dfm_rarefied</span></span>
 <span><span class="co">#&gt; phyloseq-class experiment-level object</span></span>
 <span><span class="co">#&gt; otu_table()   OTU Table:         [ 45 taxa and 25 samples ]</span></span>
@@ -254,20 +256,20 @@ curve reflects the sequence count distribution within each sample.</p>
 </h3>
 <p>Merge all samples into a single community to obtain a global
 rarefaction curve:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_data-methods.html" class="external-link">sample_data</a></span><span class="op">(</span><span class="va">dfm_rarefied</span><span class="op">)</span><span class="op">$</span><span class="va">metacommunity</span> <span class="op">&lt;-</span> <span class="st">"all"</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_data-methods.html" class="external-link">sample_data</a></span><span class="op">(</span><span class="va">dfm_rarefied</span><span class="op">)</span><span class="op">$</span><span class="va">metacommunity</span> <span class="op">&lt;-</span> <span class="st">"all"</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/hill_acc_pq.html">hill_acc_pq</a></span><span class="op">(</span></span>
 <span>  <span class="va">dfm_rarefied</span>,</span>
 <span>  q <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  type <span class="op">=</span> <span class="st">"individual"</span>,</span>
 <span>  merge_sample_by <span class="op">=</span> <span class="st">"metacommunity"</span>,</span>
-<span>  n_simulations <span class="op">=</span> <span class="fl">10</span></span>
+<span>  n_simulations <span class="op">=</span> <span class="fl">5</span></span>
 <span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/no_legend.html">no_legend</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Metacommunity rarefaction (q = 1)"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="Individual-based rarefaction for the entire metacommunity (q = 1)" width="672"><p class="caption">
+<img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="Individual-based rarefaction for the entire metacommunity (q = 1)" width="672"><p class="caption">
 Individual-based rarefaction for the entire metacommunity (q = 1)
 </p>
 </div>
@@ -278,7 +280,7 @@ Individual-based rarefaction for the entire metacommunity (q = 1)
 <p>Examining individual samples reveals heterogeneity in diversity and
 sampling completeness. Samples whose curve has not plateaued may harbour
 undetected taxa.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">random_samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/sample_names-methods.html" class="external-link">sample_names</a></span><span class="op">(</span><span class="va">dfm_rarefied</span><span class="op">)</span>, <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="va">dfm_5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/prune_samples-methods.html" class="external-link">prune_samples</a></span><span class="op">(</span><span class="va">random_samples</span>, <span class="va">dfm_rarefied</span><span class="op">)</span></span>
 <span></span>
@@ -291,7 +293,7 @@ undetected taxa.</p>
 <span></span>
 <span><span class="op">(</span><span class="va">p_q0</span> <span class="op">+</span> <span class="va">p_q1</span> <span class="op">+</span> <span class="va">p_q2</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="../reference/no_legend.html">no_legend</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="Individual-based rarefaction for 5 random samples at different Hill orders" width="672"><p class="caption">
+<img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="Individual-based rarefaction for 5 random samples at different Hill orders" width="672"><p class="caption">
 Individual-based rarefaction for 5 random samples at different Hill
 orders
 </p>
@@ -309,7 +311,7 @@ completeness assessments <span class="citation">(Calderón-Sanou et al.
 <p>Merging samples by the <code>Height</code> variable aggregates
 sequences within each habitat, enabling comparison at the habitat
 scale:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/hill_acc_pq.html">hill_acc_pq</a></span><span class="op">(</span></span>
 <span>  <span class="va">dfm_rarefied</span>,</span>
 <span>  q <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -321,7 +323,7 @@ scale:</p>
 <span><span class="co">#&gt; Warning in merge_samples2(physeq, merge_sample_by): `group` has missing values;</span></span>
 <span><span class="co">#&gt; corresponding samples will be dropped</span></span></code></pre></div>
 <div class="figure">
-<img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="Individual-based rarefaction by Height (q = 1)" width="672"><p class="caption">
+<img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="Individual-based rarefaction by Height (q = 1)" width="672"><p class="caption">
 Individual-based rarefaction by Height (q = 1)
 </p>
 </div>
@@ -343,33 +345,33 @@ shaded band shows the confidence envelope.</p>
 community is still evaluated using <strong>sequence counts</strong> — it
 remains abundance-based. Compare with the incidence-based approach in
 the next section.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/hill_acc_pq.html">hill_acc_pq</a></span><span class="op">(</span></span>
-<span>  <span class="va">dfm_rarefied</span>,</span>
-<span>  q <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  type <span class="op">=</span> <span class="st">"sample"</span>,</span>
-<span>  n_permutations <span class="op">=</span> <span class="fl">50</span></span>
-<span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Sample-based accumulation (q = 1)"</span><span class="op">)</span></span></code></pre></div>
-<div class="figure">
-<img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="Sample-based accumulation for the entire dataset (q = 1, 50 permutations)" width="672"><p class="caption">
-Sample-based accumulation for the entire dataset (q = 1, 50
-permutations)
-</p>
-</div>
-<p>By splitting by habitat, one can assess whether diversity saturates
-within each level and how much each level contributes to the total:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/hill_acc_pq.html">hill_acc_pq</a></span><span class="op">(</span></span>
 <span>  <span class="va">dfm_rarefied</span>,</span>
 <span>  q <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  type <span class="op">=</span> <span class="st">"sample"</span>,</span>
+<span>  n_permutations <span class="op">=</span> <span class="fl">10</span></span>
+<span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Sample-based accumulation (q = 1)"</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="Sample-based accumulation for the entire dataset (q = 1, 10 permutations)" width="672"><p class="caption">
+Sample-based accumulation for the entire dataset (q = 1, 10
+permutations)
+</p>
+</div>
+<p>By splitting by habitat, one can assess whether diversity saturates
+within each level and how much each level contributes to the total:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/hill_acc_pq.html">hill_acc_pq</a></span><span class="op">(</span></span>
+<span>  <span class="va">dfm_rarefied</span>,</span>
+<span>  q <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"sample"</span>,</span>
 <span>  merge_sample_by <span class="op">=</span> <span class="st">"Height"</span>,</span>
-<span>  n_permutations <span class="op">=</span> <span class="fl">50</span></span>
+<span>  n_permutations <span class="op">=</span> <span class="fl">10</span></span>
 <span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Sample-based accumulation by Height (q = 1)"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="Sample-based accumulation by Height (q = 1)" width="672"><p class="caption">
+<img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" alt="Sample-based accumulation by Height (q = 1)" width="672"><p class="caption">
 Sample-based accumulation by Height (q = 1)
 </p>
 </div>
@@ -386,23 +388,23 @@ samples. <code><a href="../reference/as_binary_otu_table.html">as_binary_otu_tab
 OTUs weighted by the fraction of samples they occur in, they are only
 meaningful at the level of the entire system and are most naturally used
 with <code>type = "sample"</code>.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span>
 <span><span class="va">dfm_binary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_binary_otu_table.html">as_binary_otu_table</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/hill_acc_pq.html">hill_acc_pq</a></span><span class="op">(</span></span>
 <span>  <span class="va">dfm_binary</span>,</span>
 <span>  q <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  type <span class="op">=</span> <span class="st">"sample"</span>,</span>
-<span>  n_permutations <span class="op">=</span> <span class="fl">50</span></span>
+<span>  n_permutations <span class="op">=</span> <span class="fl">10</span></span>
 <span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Incidence-based sample accumulation (q = 1)"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="Incidence-based sample accumulation (q = 1)" width="672"><p class="caption">
+<img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="Incidence-based sample accumulation (q = 1)" width="672"><p class="caption">
 Incidence-based sample accumulation (q = 1)
 </p>
 </div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data_fungi_woNA4Height</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/subset_samples_pq.html">subset_samples_pq</a></span><span class="op">(</span></span>
 <span>  <span class="va">data_fungi</span>,</span>
 <span>  <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">@</span><span class="va">sam_data</span><span class="op">$</span><span class="va">Height</span><span class="op">)</span></span>
@@ -414,11 +416,11 @@ Incidence-based sample accumulation (q = 1)
 <span>  q <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  type <span class="op">=</span> <span class="st">"sample"</span>,</span>
 <span>  merge_sample_by <span class="op">=</span> <span class="st">"Height"</span>,</span>
-<span>  n_permutations <span class="op">=</span> <span class="fl">50</span></span>
+<span>  n_permutations <span class="op">=</span> <span class="fl">10</span></span>
 <span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Incidence-based sample accumulation by Height (q = 1)"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="Incidence-based sample accumulation by Height (q = 1)" width="672"><p class="caption">
+<img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="Incidence-based sample accumulation by Height (q = 1)" width="672"><p class="caption">
 Incidence-based sample accumulation by Height (q = 1)
 </p>
 </div>
@@ -441,19 +443,19 @@ distributions.</p>
 <div class="section level3">
 <h3 id="abundance-based-profiles">Abundance-based profiles<a class="anchor" aria-label="anchor" href="#abundance-based-profiles"></a>
 </h3>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/profile_hill_pq.html">profile_hill_pq</a></span><span class="op">(</span><span class="va">dfm_rarefied</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="../reference/no_legend.html">no_legend</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="Abundance-based Hill diversity profiles per sample" width="672"><p class="caption">
+<img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="Abundance-based Hill diversity profiles per sample" width="672"><p class="caption">
 Abundance-based Hill diversity profiles per sample
 </p>
 </div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/profile_hill_pq.html">profile_hill_pq</a></span><span class="op">(</span><span class="va">dfm_rarefied</span>, merge_sample_by <span class="op">=</span> <span class="st">"Height"</span>, n_simulations <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/profile_hill_pq.html">profile_hill_pq</a></span><span class="op">(</span><span class="va">dfm_rarefied</span>, merge_sample_by <span class="op">=</span> <span class="st">"Height"</span>, n_simulations <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in merge_samples2(physeq, merge_sample_by): `group` has missing values;</span></span>
 <span><span class="co">#&gt; corresponding samples will be dropped</span></span></code></pre></div>
 <div class="figure">
-<img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="Abundance-based Hill diversity profiles merged by Height" width="672"><p class="caption">
+<img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="Abundance-based Hill diversity profiles merged by Height" width="672"><p class="caption">
 Abundance-based Hill diversity profiles merged by Height
 </p>
 </div>
@@ -464,14 +466,14 @@ Abundance-based Hill diversity profiles merged by Height
 <p>Applying <code><a href="../reference/profile_hill_pq.html">profile_hill_pq()</a></code> to a binary OTU table yields
 incidence-based diversity profiles, where each OTU is weighted by the
 proportion of samples it occurs in rather than its sequence count:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/profile_hill_pq.html">profile_hill_pq</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="../reference/as_binary_otu_table.html">as_binary_otu_table</a></span><span class="op">(</span><span class="va">data_fungi_woNA4Height</span><span class="op">)</span>,</span>
 <span>  merge_sample_by <span class="op">=</span> <span class="st">"Height"</span>,</span>
-<span>  n_simulations <span class="op">=</span> <span class="fl">10</span></span>
+<span>  n_simulations <span class="op">=</span> <span class="fl">5</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="Incidence-based Hill diversity profiles merged by Height" width="672"><p class="caption">
+<img src="accumulation-rarefaction_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" alt="Incidence-based Hill diversity profiles merged by Height" width="672"><p class="caption">
 Incidence-based Hill diversity profiles merged by Height
 </p>
 </div>
@@ -577,7 +579,7 @@ compared.</p>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Alberdi2019" class="csl-entry">
 Alberdi, Antton, and M. Thomas P. Gilbert. 2019. <span>“A Guide to the
 Application of <span>Hill</span> Numbers to <span>DNA</span>-Based
@@ -647,23 +649,23 @@ Species.”</span> <em>Environmental DNA</em> 5 (5): 1092–1104. <a href="https
 <div class="section level2">
 <h2 id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
 </h2>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; R version 4.5.2 (2025-10-31)</span></span>
+<span><span class="co">#&gt; R version 4.6.0 (2026-04-24)</span></span>
 <span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu</span></span>
 <span><span class="co">#&gt; Running under: Pop!_OS 24.04 LTS</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Matrix products: default</span></span>
-<span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.12.0 </span></span>
-<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.12.0  LAPACK version 3.12.0</span></span>
+<span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
+<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; locale:</span></span>
-<span><span class="co">#&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
-<span><span class="co">#&gt;  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    </span></span>
-<span><span class="co">#&gt;  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   </span></span>
-<span><span class="co">#&gt;  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 </span></span>
+<span><span class="co">#&gt;  [1] LC_CTYPE=fr_FR.UTF-8       LC_NUMERIC=C              </span></span>
+<span><span class="co">#&gt;  [3] LC_TIME=fr_FR.UTF-8        LC_COLLATE=fr_FR.UTF-8    </span></span>
+<span><span class="co">#&gt;  [5] LC_MONETARY=fr_FR.UTF-8    LC_MESSAGES=fr_FR.UTF-8   </span></span>
+<span><span class="co">#&gt;  [7] LC_PAPER=fr_FR.UTF-8       LC_NAME=C                 </span></span>
 <span><span class="co">#&gt;  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span></span>
-<span><span class="co">#&gt; [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span></span>
+<span><span class="co">#&gt; [11] LC_MEASUREMENT=fr_FR.UTF-8 LC_IDENTIFICATION=C       </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; time zone: Europe/Paris</span></span>
 <span><span class="co">#&gt; tzcode source: system (glibc)</span></span>
@@ -672,64 +674,39 @@ Species.”</span> <em>Environmental DNA</em> 5 (5): 1092–1104. <a href="https
 <span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt; [1] patchwork_1.3.2         MiscMetabar_0.16.1.9000 divent_0.5-3           </span></span>
-<span><span class="co">#&gt; [4] purrr_1.2.2             dplyr_1.2.1             dada2_1.38.0           </span></span>
-<span><span class="co">#&gt; [7] Rcpp_1.1.1              ggplot2_4.0.2           phyloseq_1.54.2        </span></span>
+<span><span class="co">#&gt; [1] patchwork_1.3.2         MiscMetabar_0.17.0.9000 dplyr_1.2.1            </span></span>
+<span><span class="co">#&gt; [4] ggplot2_4.0.3           phyloseq_1.56.0         divent_0.5-4           </span></span>
+<span><span class="co">#&gt; [7] Rcpp_1.1.1-1.1         </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;   [1] Rdpack_2.6.6                bitops_1.0-9               </span></span>
-<span><span class="co">#&gt;   [3] deldir_2.0-4                permute_0.9-10             </span></span>
-<span><span class="co">#&gt;   [5] rlang_1.2.0                 magrittr_2.0.5             </span></span>
-<span><span class="co">#&gt;   [7] ade4_1.7-24                 otel_0.2.0                 </span></span>
-<span><span class="co">#&gt;   [9] matrixStats_1.5.0           compiler_4.5.2             </span></span>
-<span><span class="co">#&gt;  [11] mgcv_1.9-4                  png_0.1-9                  </span></span>
-<span><span class="co">#&gt;  [13] systemfonts_1.3.2           vctrs_0.7.3                </span></span>
-<span><span class="co">#&gt;  [15] reshape2_1.4.5              stringr_1.6.0              </span></span>
-<span><span class="co">#&gt;  [17] pwalign_1.6.0               pkgconfig_2.0.3            </span></span>
-<span><span class="co">#&gt;  [19] crayon_1.5.3                fastmap_1.2.0              </span></span>
-<span><span class="co">#&gt;  [21] XVector_0.50.0              labeling_0.4.3             </span></span>
-<span><span class="co">#&gt;  [23] Rsamtools_2.26.0            rmarkdown_2.31             </span></span>
-<span><span class="co">#&gt;  [25] ragg_1.5.2                  xfun_0.57                  </span></span>
-<span><span class="co">#&gt;  [27] cachem_1.1.0                cigarillo_1.0.0            </span></span>
-<span><span class="co">#&gt;  [29] jsonlite_2.0.0              biomformat_1.38.3          </span></span>
-<span><span class="co">#&gt;  [31] rhdf5filters_1.22.0         DelayedArray_0.36.1        </span></span>
-<span><span class="co">#&gt;  [33] Rhdf5lib_1.32.0             BiocParallel_1.44.0        </span></span>
-<span><span class="co">#&gt;  [35] jpeg_0.1-11                 parallel_4.5.2             </span></span>
-<span><span class="co">#&gt;  [37] cluster_2.1.8.2             R6_2.6.1                   </span></span>
-<span><span class="co">#&gt;  [39] bslib_0.10.0                stringi_1.8.7              </span></span>
-<span><span class="co">#&gt;  [41] RColorBrewer_1.1-3          GenomicRanges_1.62.1       </span></span>
-<span><span class="co">#&gt;  [43] jquerylib_0.1.4             Seqinfo_1.0.0              </span></span>
-<span><span class="co">#&gt;  [45] SummarizedExperiment_1.40.0 iterators_1.0.14           </span></span>
-<span><span class="co">#&gt;  [47] knitr_1.51                  IRanges_2.44.0             </span></span>
-<span><span class="co">#&gt;  [49] Matrix_1.7-4                splines_4.5.2              </span></span>
-<span><span class="co">#&gt;  [51] igraph_2.2.3                tidyselect_1.2.1           </span></span>
-<span><span class="co">#&gt;  [53] rstudioapi_0.18.0           abind_1.4-8                </span></span>
-<span><span class="co">#&gt;  [55] yaml_2.3.12                 vegan_2.7-3                </span></span>
-<span><span class="co">#&gt;  [57] codetools_0.2-20            hwriter_1.3.2.1            </span></span>
-<span><span class="co">#&gt;  [59] lattice_0.22-9              tibble_3.3.1               </span></span>
-<span><span class="co">#&gt;  [61] plyr_1.8.9                  Biobase_2.70.0             </span></span>
-<span><span class="co">#&gt;  [63] withr_3.0.2                 ShortRead_1.68.0           </span></span>
-<span><span class="co">#&gt;  [65] S7_0.2.1                    evaluate_1.0.5             </span></span>
-<span><span class="co">#&gt;  [67] desc_1.4.3                  survival_3.8-6             </span></span>
-<span><span class="co">#&gt;  [69] RcppParallel_5.1.11-2       Biostrings_2.78.0          </span></span>
-<span><span class="co">#&gt;  [71] pillar_1.11.1               MatrixGenerics_1.22.0      </span></span>
-<span><span class="co">#&gt;  [73] DiagrammeR_1.0.11           foreach_1.5.2              </span></span>
-<span><span class="co">#&gt;  [75] stats4_4.5.2                generics_0.1.4             </span></span>
-<span><span class="co">#&gt;  [77] S4Vectors_0.48.1            scales_1.4.0               </span></span>
-<span><span class="co">#&gt;  [79] glue_1.8.0                  tools_4.5.2                </span></span>
-<span><span class="co">#&gt;  [81] interp_1.1-6                data.table_1.18.2.1        </span></span>
-<span><span class="co">#&gt;  [83] GenomicAlignments_1.46.0    fs_2.0.1                   </span></span>
-<span><span class="co">#&gt;  [85] visNetwork_2.1.4            rhdf5_2.54.1               </span></span>
-<span><span class="co">#&gt;  [87] grid_4.5.2                  ape_5.8-1                  </span></span>
-<span><span class="co">#&gt;  [89] rbibutils_2.4.1             latticeExtra_0.6-31        </span></span>
-<span><span class="co">#&gt;  [91] nlme_3.1-168                cli_3.6.6                  </span></span>
-<span><span class="co">#&gt;  [93] textshaping_1.0.5           S4Arrays_1.10.1            </span></span>
-<span><span class="co">#&gt;  [95] gtable_0.3.6                sass_0.4.10                </span></span>
-<span><span class="co">#&gt;  [97] digest_0.6.39               BiocGenerics_0.56.0        </span></span>
-<span><span class="co">#&gt;  [99] SparseArray_1.10.10         htmlwidgets_1.6.4          </span></span>
-<span><span class="co">#&gt; [101] farver_2.1.2                htmltools_0.5.9            </span></span>
-<span><span class="co">#&gt; [103] pkgdown_2.2.0               multtest_2.66.0            </span></span>
-<span><span class="co">#&gt; [105] lifecycle_1.0.5             MASS_7.3-65</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] gtable_0.3.6          xfun_0.58             bslib_0.11.0         </span></span>
+<span><span class="co">#&gt;  [4] htmlwidgets_1.6.4     visNetwork_2.1.4      Biobase_2.72.0       </span></span>
+<span><span class="co">#&gt;  [7] lattice_0.22-9        vctrs_0.7.3           tools_4.6.0          </span></span>
+<span><span class="co">#&gt; [10] Rdpack_2.6.6          generics_0.1.4        biomformat_1.40.0    </span></span>
+<span><span class="co">#&gt; [13] stats4_4.6.0          parallel_4.6.0        tibble_3.3.1         </span></span>
+<span><span class="co">#&gt; [16] cluster_2.1.8.2       pkgconfig_2.0.3       Matrix_1.7-5         </span></span>
+<span><span class="co">#&gt; [19] data.table_1.18.4     RColorBrewer_1.1-3    S7_0.2.2             </span></span>
+<span><span class="co">#&gt; [22] desc_1.4.3            S4Vectors_0.50.1      RcppParallel_5.1.11-2</span></span>
+<span><span class="co">#&gt; [25] lifecycle_1.0.5       compiler_4.6.0        farver_2.1.2         </span></span>
+<span><span class="co">#&gt; [28] stringr_1.6.0         textshaping_1.0.5     Biostrings_2.80.1    </span></span>
+<span><span class="co">#&gt; [31] Seqinfo_1.2.0         codetools_0.2-20      permute_0.9-10       </span></span>
+<span><span class="co">#&gt; [34] htmltools_0.5.9       sass_0.4.10           yaml_2.3.12          </span></span>
+<span><span class="co">#&gt; [37] pillar_1.11.1         pkgdown_2.2.0         crayon_1.5.3         </span></span>
+<span><span class="co">#&gt; [40] jquerylib_0.1.4       MASS_7.3-65           cachem_1.1.0         </span></span>
+<span><span class="co">#&gt; [43] vegan_2.7-5           iterators_1.0.14      foreach_1.5.2        </span></span>
+<span><span class="co">#&gt; [46] nlme_3.1-169          tidyselect_1.2.1      digest_0.6.39        </span></span>
+<span><span class="co">#&gt; [49] stringi_1.8.7         purrr_1.2.2           reshape2_1.4.5       </span></span>
+<span><span class="co">#&gt; [52] labeling_0.4.3        splines_4.6.0         ade4_1.7-24          </span></span>
+<span><span class="co">#&gt; [55] fastmap_1.2.0         grid_4.6.0            cli_3.6.6            </span></span>
+<span><span class="co">#&gt; [58] magrittr_2.0.5        DiagrammeR_1.0.12     survival_3.8-6       </span></span>
+<span><span class="co">#&gt; [61] ape_5.8-1             withr_3.0.2           scales_1.4.0         </span></span>
+<span><span class="co">#&gt; [64] rmarkdown_2.31        XVector_0.52.0        multtest_2.68.0      </span></span>
+<span><span class="co">#&gt; [67] igraph_2.3.2          otel_0.2.0            ragg_1.5.2           </span></span>
+<span><span class="co">#&gt; [70] evaluate_1.0.5        knitr_1.51            IRanges_2.46.0       </span></span>
+<span><span class="co">#&gt; [73] rbibutils_2.4.1       mgcv_1.9-4            rlang_1.2.0          </span></span>
+<span><span class="co">#&gt; [76] glue_1.8.1            BiocGenerics_0.58.1   rstudioapi_0.19.0    </span></span>
+<span><span class="co">#&gt; [79] jsonlite_2.0.0        R6_2.6.1              plyr_1.8.9           </span></span>
+<span><span class="co">#&gt; [82] systemfonts_1.3.2     fs_2.1.0</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

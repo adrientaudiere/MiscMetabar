@@ -5,7 +5,7 @@
 A more memorable shortcut for theme(legend.position = "none").'><meta property="og:description" content='
 
 
-A more memorable shortcut for theme(legend.position = "none").'><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+A more memorable shortcut for theme(legend.position = "none").'><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -13,7 +13,7 @@ A more memorable shortcut for theme(legend.position = "none").'><meta name="robo
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +32,7 @@ A more memorable shortcut for theme(legend.position = "none").'><meta name="robo
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -61,8 +62,7 @@ A more memorable shortcut for theme(legend.position = "none").'><meta name="robo
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Discard legend in ggplot2</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Discard legend in ggplot2</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/plot_functions.R" class="external-link"><code>R/plot_functions.R</code></a></small>
       <div class="d-none name"><code>no_legend.Rd</code></div>
     </div>
@@ -90,24 +90,24 @@ A more memorable shortcut for theme(legend.position = "none").'><meta name="robo
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="plot_refseq_pq.html">plot_refseq_pq</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="plot_refseq_pq.html">plot_refseq_pq</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 1 sample(s) ( W26-001-B_S165_MERGED.fastq.gz ).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 1420</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 45</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 1419</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 185</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 688 rows containing missing values or values outside the scale range</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 44</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 136</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 336 rows containing missing values or values outside the scale range</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
 <span class="r-plt img"><img src="no_legend-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu"><a href="plot_refseq_pq.html">plot_refseq_pq</a></span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span> <span class="op">+</span> <span class="fu">no_legend</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).</span>
+<span class="r-in"><span><span class="fu"><a href="plot_refseq_pq.html">plot_refseq_pq</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span> <span class="op">+</span> <span class="fu">no_legend</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 1 sample(s) ( W26-001-B_S165_MERGED.fastq.gz ).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 1420</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 45</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 1419</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 185</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 688 rows containing missing values or values outside the scale range</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 44</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 136</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 336 rows containing missing values or values outside the scale range</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
 <span class="r-plt img"><img src="no_legend-2.png" alt="" width="700" height="433"></span>
 </code></pre></div>

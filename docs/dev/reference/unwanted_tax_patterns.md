@@ -7,7 +7,7 @@ names provide human-readable descriptions.
 Used as the default `replace_to_NA` argument in
 [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/verify_tax_table.md)
 and can be reused by other pqverse packages (e.g.
-`dbpq::count_unwanted_tax()`).
+[`dbpq::count_unwanted_tax()`](https://adrientaudiere.github.io/dbpq/reference/count_unwanted_tax.html)).
 
 ## Usage
 
@@ -105,6 +105,8 @@ unwanted_tax_patterns
 #>                                                   "^$" 
 #>                                        whitespace only 
 #>                                               "^\\s+$" 
+#>                                          question mark 
+#>                                                "^\\?$" 
 #>                                           unclassified 
 #>                                      "[Uu]nclassified" 
 #>                                                unknown 

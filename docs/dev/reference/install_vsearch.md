@@ -1,5 +1,7 @@
 # Install vsearch binary
 
+[![lifecycle-stable](https://img.shields.io/badge/lifecycle-stable-green)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+
 Downloads and installs the vsearch binary from
 [GitHub](https://github.com/torognes/vsearch/releases) into the
 MiscMetabar user data directory. This is especially useful on Windows

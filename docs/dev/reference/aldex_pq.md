@@ -56,15 +56,21 @@ Adrien Taudière
 ## Examples
 
 ``` r
-res_aldex <- aldex_pq(data_fungi_mini,
-  bifactor = "Height",
-  modalities = c("Low", "High")
-)
+# \donttest{
+if (requireNamespace("ALDEx2")) {
+  res_aldex <- aldex_pq(data_fungi_mini,
+    bifactor = "Height",
+    modalities = c("Low", "High")
+  )
+  ALDEx2::aldex.plot(res_aldex, type = "volcano")
+}
+#> Loading required namespace: ALDEx2
 #> aldex.clr: generating Monte-Carlo instances and clr values
 #> conditions vector supplied
 #> operating in serial mode
 #> aldex.scaleSim: adjusting samples to reflect scale uncertainty.
 #> aldex.ttest: doing t-test
 #> aldex.effect: calculating effect sizes
-ALDEx2::aldex.plot(res_aldex, type = "volcano")
+
+# }
 ```

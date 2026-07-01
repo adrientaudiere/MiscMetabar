@@ -7,7 +7,7 @@ vegan::renyiaccum() functions"><meta property="og:description" content="
 
 
 Basically a wrapper of vegan::renyi() and
-vegan::renyiaccum() functions"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+vegan::renyiaccum() functions"><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -15,7 +15,7 @@ vegan::renyiaccum() functions"><meta name="robots" content="noindex"><script dat
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,6 +34,7 @@ vegan::renyiaccum() functions"><meta name="robots" content="noindex"><script dat
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -63,8 +64,7 @@ vegan::renyiaccum() functions"><meta name="robots" content="noindex"><script dat
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Hill Diversities and Corresponding Accumulation Curves for phyloseq</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Hill Diversities and Corresponding Accumulation Curves for phyloseq</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/plot_functions.R" class="external-link"><code>R/plot_functions.R</code></a></small>
       <div class="d-none name"><code>hill_curves_pq.Rd</code></div>
     </div>
@@ -170,7 +170,8 @@ Please make a reference to <code><a href="https://vegandevs.github.io/vegan/refe
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"vegan"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"vegan"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">hill_curves_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, merge_sample_by <span class="op">=</span> <span class="st">"Time"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">hill_curves_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, color_fac <span class="op">=</span> <span class="st">"Time"</span>, plot_legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">hill_curves_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>,</span></span>
@@ -210,6 +211,7 @@ Please make a reference to <code><a href="https://vegandevs.github.io/vegan/refe
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 'nperm' &gt;= set of all permutations: complete enumeration.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Set of permutations &lt; 'minperm'. Generating entire set.</span>
 <span class="r-plt img"><img src="hill_curves_pq-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -1,6 +1,6 @@
 # Clean phyloseq object by removing empty samples and taxa
 
-[![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-stable](https://img.shields.io/badge/lifecycle-stable-green)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 In addition, this function check for discrepancy (and rename) between
 (i) taxa names in refseq, taxonomy table and otu_table and between (ii)
@@ -22,7 +22,14 @@ clean_pq(
   rename_taxa = FALSE,
   simplify_taxo = FALSE,
   prefix_taxa_names = "_Taxa",
-  check_taxonomy = FALSE
+  check_taxonomy = FALSE,
+  tax_remove_border_spaces = FALSE,
+  tax_remove_all_space = FALSE,
+  tax_replace_to_NA = FALSE,
+  tax_redundant_suffix = FALSE,
+  tax_replace_space_with = "_",
+  tax_replace_invisible_chars = FALSE,
+  tax_replace_NA_string = FALSE
 )
 ```
 
@@ -95,6 +102,54 @@ clean_pq(
   [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/verify_tax_table.md)
   to check for common taxonomy table issues.
 
+- tax_remove_border_spaces:
+
+  (logical, default FALSE) If TRUE, trim leading/trailing whitespace
+  from values in the `tax_table` slot (passed to
+  [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/verify_tax_table.md)
+  with `modify_phyloseq = TRUE`). Handles both ASCII whitespace and
+  Unicode separators such as NBSP (U+00A0).
+
+- tax_remove_all_space:
+
+  (logical, default FALSE) If TRUE, replace internal whitespace (ASCII
+  or Unicode separator) in `tax_table` values with `replace_space_with`.
+
+- tax_replace_to_NA:
+
+  (logical or character, default FALSE) If TRUE, replace `tax_table`
+  values matching the default
+  [unwanted_tax_patterns](https://adrientaudiere.github.io/MiscMetabar/dev/reference/unwanted_tax_patterns.md)
+  with `NA`. A character vector of regex patterns can be supplied to
+  override the defaults.
+
+- tax_redundant_suffix:
+
+  (logical or character, default FALSE) If TRUE, replace redundant
+  `"_sp"` values with `NA` (e.g. `Russula_sp` at Species when `Russula`
+  is already at Genus). A character string supplies a custom suffix.
+
+- tax_replace_space_with:
+
+  (character, default `"_"`) Replacement for internal whitespace when
+  `tax_remove_all_space = TRUE`.
+
+- tax_replace_invisible_chars:
+
+  (logical, default FALSE) If TRUE, strip invisible / unusual characters
+  (control chars, zero-width space, NBSP inside values, ...) from
+  `tax_table` values. See
+  [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/verify_tax_table.md)'s
+  `replace_invisible_chars` for the exact pattern.
+
+- tax_replace_NA_string:
+
+  (logical, default FALSE) If TRUE, replace the literal strings `"NA"`,
+  `"NA NA"`, `"NA NA NA"` (any whitespace-separated repetition of `NA`,
+  a common artifact of pasting taxonomic ranks together) in `tax_table`
+  values with true `<NA>`. Case-sensitive to avoid clobbering real data.
+  Default `FALSE` to avoid breaking changes.
+
 ## Value
 
 A new
@@ -114,4 +169,39 @@ clean_pq(data_fungi_mini)
 #> sample_data() Sample Data:       [ 137 samples by 7 sample variables ]
 #> tax_table()   Taxonomy Table:    [ 45 taxa by 12 taxonomic ranks ]
 #> refseq()      DNAStringSet:      [ 45 reference sequences ]
+# \donttest{
+# Trim leading/trailing whitespace in tax_table values
+clean_pq(data_fungi_mini, tax_remove_border_spaces = TRUE)
+#> No values to modify. Returning original phyloseq object.
+#> phyloseq-class experiment-level object
+#> otu_table()   OTU Table:         [ 45 taxa and 137 samples ]
+#> sample_data() Sample Data:       [ 137 samples by 7 sample variables ]
+#> tax_table()   Taxonomy Table:    [ 45 taxa by 12 taxonomic ranks ]
+#> refseq()      DNAStringSet:      [ 45 reference sequences ]
+# Replace NA-like values (e.g. "unidentified", "NA") with NA
+clean_pq(data_fungi_mini, tax_replace_to_NA = TRUE)
+#> Replaced 4 NA-like value(s) with NA. Unique values: Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, Russulales_fam_Incertae_sedis, Hymenochaetales_fam_Incertae_sedis
+#> Total: 4 modification(s) in the taxonomy table: 4 value(s) replaced with NA (4 NA-like patterns, 0 short values, 0 redundant suffixes).
+#> phyloseq-class experiment-level object
+#> otu_table()   OTU Table:         [ 45 taxa and 137 samples ]
+#> sample_data() Sample Data:       [ 137 samples by 7 sample variables ]
+#> tax_table()   Taxonomy Table:    [ 45 taxa by 12 taxonomic ranks ]
+#> refseq()      DNAStringSet:      [ 45 reference sequences ]
+# Drop redundant "_sp" tips
+clean_pq(data_fungi_mini, tax_redundant_suffix = TRUE)
+#> No values to modify. Returning original phyloseq object.
+#> phyloseq-class experiment-level object
+#> otu_table()   OTU Table:         [ 45 taxa and 137 samples ]
+#> sample_data() Sample Data:       [ 137 samples by 7 sample variables ]
+#> tax_table()   Taxonomy Table:    [ 45 taxa by 12 taxonomic ranks ]
+#> refseq()      DNAStringSet:      [ 45 reference sequences ]
+# Replace "NA" / "NA NA" concatenation artifacts with true <NA>
+clean_pq(data_fungi_mini, tax_replace_NA_string = TRUE)
+#> No values to modify. Returning original phyloseq object.
+#> phyloseq-class experiment-level object
+#> otu_table()   OTU Table:         [ 45 taxa and 137 samples ]
+#> sample_data() Sample Data:       [ 137 samples by 7 sample variables ]
+#> tax_table()   Taxonomy Table:    [ 45 taxa by 12 taxonomic ranks ]
+#> refseq()      DNAStringSet:      [ 45 reference sequences ]
+# }
 ```

@@ -151,7 +151,7 @@ Adrien Taudière
 ## Examples
 
 ``` r
-data_f_tss  <- transform_pq(data_fungi_mini, method = "tss")
+data_f_tss <- transform_pq(data_fungi_mini, method = "tss")
 sample_sums(data_f_tss)
 #>    A10-005-B_S188_MERGED.fastq.gz    A10-005-H_S189_MERGED.fastq.gz 
 #>                                 1                                 1 
@@ -292,24 +292,31 @@ sample_sums(data_f_tss)
 #> Z30-ABM560-M_S187_MERGED.fastq.gz 
 #>                                 1 
 # \donttest{
-data_f_hell <- transform_pq(data_fungi, method = "hellinger")
-data_f_clr  <- transform_pq(data_fungi, method = "clr")
-data_f_rclr <- transform_pq(data_fungi, method = "rclr")
-data_f_log1p <- transform_pq(data_fungi, method = "log1p")
-data_f_z    <- transform_pq(data_fungi, method = "z")
-data_f_pa   <- transform_pq(data_fungi, method = "pa")
-data_f_rank <- transform_pq(data_fungi, method = "rank")
-data_f_norm_prop_log10 <- transform_pq(data_fungi, method = "normalize_prop", base_log = 10)
-data_f_norm_prop_no_log <- transform_pq(data_fungi, method = "normalize_prop", base_log = NULL)
-data_f_norm_prop_log2 <- transform_pq(data_fungi, method = "normalize_prop", base_log = 2)
-data_f_rarefy   <- transform_pq(data_fungi, method = "rarefy", seed = 1)
-data_f_srs     <- transform_pq(data_fungi, method = "srs", seed = 1)
-data_f_gmpr    <- transform_pq(data_fungi, method = "gmpr")
-#> Warning: GMPR size factors could not be computed for 7 sample(s); these samples are left unscaled.
-data_f_css     <- transform_pq(data_fungi, method = "css")
-#> Taxa are now in rows.
+data_f_hell <- transform_pq(data_fungi_mini, method = "hellinger")
+data_f_clr <- transform_pq(data_fungi_mini, method = "clr")
+data_f_rclr <- transform_pq(data_fungi_mini, method = "rclr")
+data_f_log1p <- transform_pq(data_fungi_mini, method = "log1p")
+data_f_z <- transform_pq(data_fungi_mini, method = "z")
+data_f_pa <- transform_pq(data_fungi_mini, method = "pa")
+data_f_rank <- transform_pq(data_fungi_mini, method = "rank")
+data_f_norm_prop_log10 <- transform_pq(data_fungi_mini,
+  method = "normalize_prop", base_log = 10
+)
+data_f_norm_prop_no_log <- transform_pq(data_fungi_mini,
+  method = "normalize_prop", base_log = NULL
+)
+data_f_norm_prop_log2 <- transform_pq(data_fungi_mini,
+  method = "normalize_prop", base_log = 2
+)
+data_f_rarefy <- transform_pq(data_fungi_mini, method = "rarefy", seed = 1)
+data_f_srs <- transform_pq(data_fungi_mini, method = "srs", seed = 1)
+data_f_gmpr <- transform_pq(data_fungi_mini, method = "gmpr")
+#> Warning: GMPR size factors could not be computed for 90 sample(s); these samples are left unscaled.
+data_f_css <- transform_pq(data_fungi_mini, method = "css")
+#> Warning: cumNormStatFast() failed (likely samples with <=1 feature); falling back to cumNormStat(). Original error: Warning sample with one or zero features
 #> Default value being used.
-data_f_tmm     <- transform_pq(data_fungi, method = "tmm")
+data_f_tmm <- transform_pq(data_fungi_mini, method = "tmm")
+#> calcNormFactors has been renamed to normLibSizes
 #> Warning: no non-missing arguments to max; returning -Inf
 #> Warning: no non-missing arguments to max; returning -Inf
 #> Warning: no non-missing arguments to max; returning -Inf
@@ -323,19 +330,34 @@ data_f_tmm     <- transform_pq(data_fungi, method = "tmm")
 #> Warning: no non-missing arguments to max; returning -Inf
 #> Warning: no non-missing arguments to max; returning -Inf
 #> Warning: no non-missing arguments to max; returning -Inf
-data_f_vst     <- transform_pq(data_fungi, method = "vst")
+#> Warning: no non-missing arguments to max; returning -Inf
+#> Warning: no non-missing arguments to max; returning -Inf
+#> Warning: no non-missing arguments to max; returning -Inf
+#> Warning: no non-missing arguments to max; returning -Inf
+#> Warning: no non-missing arguments to max; returning -Inf
+#> Warning: no non-missing arguments to max; returning -Inf
+#> Warning: no non-missing arguments to max; returning -Inf
+#> Warning: no non-missing arguments to max; returning -Inf
+#> Warning: no non-missing arguments to max; returning -Inf
+#> Warning: no non-missing arguments to max; returning -Inf
+#> Warning: no non-missing arguments to max; returning -Inf
+#> Warning: no non-missing arguments to max; returning -Inf
+#> Warning: no non-missing arguments to max; returning -Inf
+#> Warning: no non-missing arguments to max; returning -Inf
+#> Warning: no non-missing arguments to max; returning -Inf
+data_f_vst <- transform_pq(data_fungi_mini, method = "vst")
 #> converting counts to integer mode
 #> -- note: fitType='parametric', but the dispersion trend was not well captured by the
 #>    function: y = a/x + b, and a local regression fit was automatically substituted.
 #>    specify fitType='local' or 'mean' to avoid this message next time.
-data_f_mcknight <- transform_pq(data_fungi, method = "mcknight_residuals")
+data_f_mcknight <- transform_pq(data_fungi_mini, method = "mcknight_residuals")
 
 otu_list <- list(
-  hell  = unclass(data_f_hell@otu_table),
-  clr   = unclass(data_f_clr@otu_table),
-  rclr  = unclass(data_f_rclr@otu_table),
+  hell = unclass(data_f_hell@otu_table),
+  clr = unclass(data_f_clr@otu_table),
+  rclr = unclass(data_f_rclr@otu_table),
   log1p = unclass(data_f_log1p@otu_table),
-  z     = unclass(data_f_z@otu_table),
+  z = unclass(data_f_z@otu_table),
   rarefy = unclass(data_f_rarefy@otu_table)
 )
 pairs_cor <- sapply(
@@ -344,12 +366,12 @@ pairs_cor <- sapply(
 )
 pairs_cor
 #>             hell       clr      rclr     log1p         z    rarefy
-#> hell   1.0000000 0.7716877 0.7716877 0.7691126 0.5939012 0.7208942
-#> clr    0.7716877 1.0000000 1.0000000 0.9914052 0.7481895 0.3883424
-#> rclr   0.7716877 1.0000000 1.0000000 0.9914052 0.7481895 0.3883424
-#> log1p  0.7691126 0.9914052 0.9914052 1.0000000 0.7524942 0.3850047
-#> z      0.5939012 0.7481895 0.7481895 0.7524942 1.0000000 0.2974622
-#> rarefy 0.7208942 0.3883424 0.3883424 0.3850047 0.2974622 1.0000000
+#> hell   1.0000000 0.8138757 0.8138757 0.8076421 0.5742337 0.8123282
+#> clr    0.8138757 1.0000000 1.0000000 0.9809713 0.6929287 0.5805872
+#> rclr   0.8138757 1.0000000 1.0000000 0.9809713 0.6929287 0.5805872
+#> log1p  0.8076421 0.9809713 0.9809713 1.0000000 0.7028648 0.5695394
+#> z      0.5742337 0.6929287 0.6929287 0.7028648 1.0000000 0.4739432
+#> rarefy 0.8123282 0.5805872 0.5805872 0.5695394 0.4739432 1.0000000
 
 plot(unclass(data_f_mcknight@otu_table), unclass(data_f_css@otu_table))
 

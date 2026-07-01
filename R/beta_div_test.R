@@ -302,8 +302,8 @@ adonis_pq <- function(
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-deprecated-orange" alt="lifecycle-deprecated"></a>
 #'
-#' # `r lifecycle::badge("deprecated")` This function has moved to the `bootpq`
-#' # package. Please use [bootpq::adonis_rarperm_pq()] instead.
+#' `r lifecycle::badge("deprecated")` This function has moved to the `bootpq`
+#' package. Please use [bootpq::adonis_rarperm_pq()] instead.
 #'
 #' Permanova are computed on a given number of rarefaction with different
 #' seed.number. This reduce the risk of a random drawing of a exceptional

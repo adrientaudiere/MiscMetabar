@@ -11,7 +11,7 @@ of the diversity (equitability) along the sequences."><meta property="og:descrip
 It is a wrapper of the function plot_refseq_extremity_pq(). See
 ?plot_refseq_extremity_pq for more examples.
 If hill_scale is not null, Hill diversity number are used to represent the distribution
-of the diversity (equitability) along the sequences."><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+of the diversity (equitability) along the sequences."><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -19,7 +19,7 @@ of the diversity (equitability) along the sequences."><meta name="robots" conten
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,7 @@ of the diversity (equitability) along the sequences."><meta name="robots" conten
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -67,8 +68,7 @@ of the diversity (equitability) along the sequences."><meta name="robots" conten
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Plot the nucleotide proportion of references sequences</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Plot the nucleotide proportion of references sequences</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/plot_functions.R" class="external-link"><code>R/plot_functions.R</code></a></small>
       <div class="d-none name"><code>plot_refseq_pq.Rd</code></div>
     </div>
@@ -135,385 +135,19 @@ references sequences, you must use min_width to filter out the narrower sequence
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">plot_refseq_pq</span><span class="op">(</span><span class="va">data_fungi</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">plot_refseq_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 1 sample(s) ( W26-001-B_S165_MERGED.fastq.gz ).</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 1420</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 45</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 1419</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 185</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 688 rows containing missing values or values outside the scale range</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 44</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 136</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 336 rows containing missing values or values outside the scale range</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
 <span class="r-plt img"><img src="plot_refseq_pq-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="fu">plot_refseq_pq</span><span class="op">(</span><span class="va">data_fungi</span>, q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, first_n <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of non-matching ASV 0</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of matching ASV 1420</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 483</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 937</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 185</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Entropy estimators can't apply to probability data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> → `estimator` forced to 'naive'.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> The estimator can't be applied to non-integer values.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 492 rows containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_point()`).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 123 rows containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_line()`).</span>
-<span class="r-plt img"><img src="plot_refseq_pq-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="fu">plot_refseq_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, first_n <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

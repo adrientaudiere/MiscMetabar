@@ -5,7 +5,7 @@
 Focus on one taxon and one factor."><meta property="og:description" content="
 
 
-Focus on one taxon and one factor."><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+Focus on one taxon and one factor."><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -13,7 +13,7 @@ Focus on one taxon and one factor."><meta name="robots" content="noindex"><scrip
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +32,7 @@ Focus on one taxon and one factor."><meta name="robots" content="noindex"><scrip
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -61,8 +62,7 @@ Focus on one taxon and one factor."><meta name="robots" content="noindex"><scrip
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Distribution of sequences across a factor for one taxon</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Distribution of sequences across a factor for one taxon</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/beta_div_test.R" class="external-link"><code>R/beta_div_test.R</code></a></small>
       <div class="d-none name"><code>distri_1_taxa.Rd</code></div>
     </div>
@@ -118,16 +118,16 @@ to be used (see <code><a href="https://rdrr.io/r/base/Round.html" class="externa
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">distri_1_taxa</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Height"</span>, <span class="st">"ASV2"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in rows.</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">distri_1_taxa</span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="st">"Height"</span>, <span class="st">"ASV7"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        nb_seq nb_samp mean_nb_seq sd_nb_seq mean_nb_seq_when_present</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> High    26876      28      655.51   2623.30                   959.86</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Low     60925      29     1353.89   5075.12                  2100.86</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Middle   4444      33       98.76    453.06                   134.67</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> High    15911      12      568.25   1947.97                  1325.92</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Low      3818       6      119.31    522.43                   636.33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Middle   6501       9      216.70    638.43                   722.33</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        nb_total_samp prop_samp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> High              41      0.68</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Low               45      0.64</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Middle            45      0.73</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> High              28      0.43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Low               32      0.19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Middle            30      0.30</span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">distri_1_taxa</span><span class="op">(</span><span class="va">data_fungi</span>, <span class="st">"Time"</span>, <span class="st">"ASV81"</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in rows.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    nb_seq nb_samp mean_nb_seq sd_nb_seq mean_nb_seq_when_present nb_total_samp</span>
@@ -140,6 +140,7 @@ to be used (see <code><a href="https://rdrr.io/r/base/Round.html" class="externa
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5        0.1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10       0.1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 15       0.0</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

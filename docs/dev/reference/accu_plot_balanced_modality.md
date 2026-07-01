@@ -71,7 +71,9 @@ accu_plot_balanced_modality(
 
   (int) A single integer value equal to the number of reads being
   simulated, also known as the depth. See
-  [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html).
+  [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html)
+  and
+  [`rarefy_even_depth_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/rarefy_even_depth_pq.md).
 
 - verbose:
 
@@ -102,12 +104,15 @@ Adrien Taudière
 ``` r
 # \donttest{
 data_fungi_woNA4Time <-
-  subset_samples(data_fungi, !is.na(Time))
-data_fungi_woNA4Time@sam_data$Time <- paste0("time-", data_fungi_woNA4Time@sam_data$Time)
+  subset_samples(data_fungi_mini, !is.na(Time))
+data_fungi_woNA4Time@sam_data$Time <-
+  paste0("time-", data_fungi_woNA4Time@sam_data$Time)
 accu_plot_balanced_modality(data_fungi_woNA4Time, "Time", nperm = 3)
 #> `set.seed(1)` was used to initialize repeatable random subsampling.
 #> Please record this for your records so others can reproduce.
 #> Try `set.seed(1); .Random.seed` for the full vector
+#> Warning: most observed count data have counts 1, but smallest count is 3
+#> Warning: most observed count data have counts 1, but smallest count is 4
 #> Warning: no non-missing arguments to max; returning -Inf
 #>   |                                                          |                                                  |   0%  |                                                          |=================                                 |  33%  |                                                          |=================================                 |  67%  |                                                          |==================================================| 100%
 #> Warning: Removed 4 rows containing missing values or values outside the scale range
@@ -117,11 +122,12 @@ accu_plot_balanced_modality(data_fungi_woNA4Time, "Time", nperm = 3)
 
 
 data_fungi_woNA4Height <-
-  subset_samples(data_fungi, !is.na(Height))
+  subset_samples(data_fungi_mini, !is.na(Height))
 accu_plot_balanced_modality(data_fungi_woNA4Height, "Height", nperm = 3)
 #> `set.seed(1)` was used to initialize repeatable random subsampling.
 #> Please record this for your records so others can reproduce.
 #> Try `set.seed(1); .Random.seed` for the full vector
+#> Warning: most observed count data have counts 1, but smallest count is 7
 #> Warning: no non-missing arguments to max; returning -Inf
 #>   |                                                          |                                                  |   0%  |                                                          |=================                                 |  33%  |                                                          |=================================                 |  67%  |                                                          |==================================================| 100%
 #> Warning: Removed 3 rows containing missing values or values outside the scale range

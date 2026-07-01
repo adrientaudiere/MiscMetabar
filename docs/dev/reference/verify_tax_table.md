@@ -1,6 +1,6 @@
 # Verify the taxonomy table of a phyloseq object
 
-[![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-stable](https://img.shields.io/badge/lifecycle-stable-green)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 Check taxonomy table for common issues and send warnings/messages
 accordingly. This function is called by
@@ -12,7 +12,7 @@ when `check_taxonomy = TRUE`.
 ``` r
 verify_tax_table(
   physeq,
-  verbose = FALSE,
+  verbose = TRUE,
   replace_to_NA = unwanted_tax_patterns,
   min_char = 4,
   redundant_suffix = "_sp",
@@ -20,7 +20,10 @@ verify_tax_table(
   modify_phyloseq = FALSE,
   remove_border_spaces = TRUE,
   remove_all_space = FALSE,
-  replace_space_with = "_"
+  replace_space_with = "_",
+  detect_invisible_chars = TRUE,
+  replace_invisible_chars = FALSE,
+  invisible_chars_replacement = ""
 )
 ```
 
@@ -34,7 +37,7 @@ verify_tax_table(
 
 - verbose:
 
-  (logical, default FALSE) If TRUE, print warnings and messages about
+  (logical, default TRUE) If TRUE, print warnings and messages about
   potential taxonomy issues.
 
 - replace_to_NA:
@@ -82,27 +85,59 @@ verify_tax_table(
   - Redundant suffix patterns (e.g., "Russula_sp" when "Russula" is in
     Genus)
 
-  - Leading/trailing whitespace (if `remove_border_spaces = TRUE`)
+  - Leading/trailing whitespace, including non-breaking space U+00A0 and
+    other Unicode separators (if `remove_border_spaces = TRUE`)
 
-  - Internal spaces (if `remove_all_space = TRUE`)
+  - Internal spaces, including Unicode separators (if
+    `remove_all_space = TRUE`)
+
+  - Invisible / unusual characters such as control chars, zero-width
+    space U+200B or non-breaking space U+00A0 inside values (if
+    `replace_invisible_chars = TRUE`)
 
   Messages will indicate the number of values replaced for each type.
 
 - remove_border_spaces:
 
   (logical, default TRUE) If TRUE and `modify_phyloseq = TRUE`, remove
-  leading and trailing whitespace from taxonomic values.
+  leading and trailing whitespace from taxonomic values. Matches both
+  ASCII whitespace and Unicode separators (NBSP, em space, ideographic
+  space, ...) — [`trimws()`](https://rdrr.io/r/base/trimws.html) alone
+  only handles `[ \\t\\r\\n]` and would silently leave NBSP in place.
 
 - remove_all_space:
 
   (logical, default FALSE) If TRUE and `modify_phyloseq = TRUE`, replace
-  internal spaces (spaces within taxonomic values) with the character
+  internal whitespace (ASCII or Unicode separator) with the character
   specified in `replace_space_with`.
 
 - replace_space_with:
 
   (character, default "\_") Character to use when replacing internal
   spaces. Only used when `remove_all_space = TRUE`.
+
+- detect_invisible_chars:
+
+  (logical, default TRUE) If TRUE, scan taxonomic values for invisible /
+  unusual characters: anything in Unicode category `\\p{C}` (control /
+  format / surrogate / private use / unassigned) or any `\\p{Z}`
+  separator other than a plain ASCII space or tab. Typical offenders
+  include non-breaking space (U+00A0), zero-width space (U+200B),
+  zero-width joiner (U+200D), and control characters. Letters with
+  diacritics, digits and punctuation are NOT flagged.
+
+- replace_invisible_chars:
+
+  (logical, default FALSE) If TRUE and `modify_phyloseq = TRUE`, strip
+  the characters detected by `detect_invisible_chars` from taxonomic
+  values (replacement is `invisible_chars_replacement`, default empty
+  string). Values that become empty after stripping are turned into
+  `NA`.
+
+- invisible_chars_replacement:
+
+  (character, default `""`) Replacement string for
+  `replace_invisible_chars = TRUE`.
 
 ## Value
 
@@ -118,103 +153,108 @@ Adrien Taudière
 ## Examples
 
 ``` r
-verify_tax_table(data_fungi)
 # \donttest{
-verify_tax_table(data_fungi, verbose = TRUE)
-#> Warning: Found 145 taxonomic value(s) matching NA-like patterns. Unique values: Pezizomycotina_cls_Incertae_sedis, Rozellomycotina_cls_Incertae_sedis, Sordariomycetes_ord_Incertae_sedis, Microbotryomycetes_ord_Incertae_sedis, Lecanoromycetes_ord_Incertae_sedis, Dothideomycetes_ord_Incertae_sedis, Cystobasidiomycetes_ord_Incertae_sedis, Pezizomycotina_ord_Incertae_sedis, Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, .... Use modify_phyloseq = TRUE to replace these with NA.
-#> Warning: Found 1432 taxonomic value(s) with less than 4 characters: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars). Use modify_phyloseq = TRUE to replace these with NA.
-#> Found 976 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.
-#> Warning: Found 1319 taxonomic value(s) with internal spaces: 'Plant Pathogen' (Guild), 'Endophyte-Undefined Saprotroph-Wood Saprotroph' (Guild), 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), 'Wood Saprotroph' (Guild), .... Use modify_phyloseq = TRUE and remove_all_space = TRUE to replace these spaces with '_'.
+verify_tax_table(data_fungi_mini)
+#> Warning: Found 4 taxonomic value(s) matching NA-like patterns. Unique values: Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, Russulales_fam_Incertae_sedis, Hymenochaetales_fam_Incertae_sedis. Use modify_phyloseq = TRUE to replace these with NA.
+#> Warning: Found 20 taxonomic value(s) with less than 4 characters: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars). Use modify_phyloseq = TRUE to replace these with NA.
+#> Found 13 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.
+#> Warning: Found 70 taxonomic value(s) with internal spaces: 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), 'Wood Saprotroph' (Guild), 'Ectomycorrhizal-Wood Saprotroph' (Guild), 'Leaf Saprotroph-Plant Pathogen-Undefined Saprotroph-Wood Saprotroph' (Guild), .... Use modify_phyloseq = TRUE and remove_all_space = TRUE to replace these spaces with '_'.
+verify_tax_table(data_fungi_mini, verbose = TRUE)
+#> Warning: Found 4 taxonomic value(s) matching NA-like patterns. Unique values: Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, Russulales_fam_Incertae_sedis, Hymenochaetales_fam_Incertae_sedis. Use modify_phyloseq = TRUE to replace these with NA.
+#> Warning: Found 20 taxonomic value(s) with less than 4 characters: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars). Use modify_phyloseq = TRUE to replace these with NA.
+#> Found 13 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.
+#> Warning: Found 70 taxonomic value(s) with internal spaces: 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), 'Wood Saprotroph' (Guild), 'Ectomycorrhizal-Wood Saprotroph' (Guild), 'Leaf Saprotroph-Plant Pathogen-Undefined Saprotroph-Wood Saprotroph' (Guild), .... Use modify_phyloseq = TRUE and remove_all_space = TRUE to replace these spaces with '_'.
 
 # Check for redundant "_sp" patterns (default)
-data_fungi2 <- data_fungi
+data_fungi2 <- data_fungi_mini
 data_fungi2@tax_table[1, "Species"] <- "Eutypa_sp"
 verify_tax_table(data_fungi2, verbose = TRUE, redundant_suffix = "_sp")
-#> Warning: Found 145 taxonomic value(s) matching NA-like patterns. Unique values: Pezizomycotina_cls_Incertae_sedis, Rozellomycotina_cls_Incertae_sedis, Sordariomycetes_ord_Incertae_sedis, Microbotryomycetes_ord_Incertae_sedis, Lecanoromycetes_ord_Incertae_sedis, Dothideomycetes_ord_Incertae_sedis, Cystobasidiomycetes_ord_Incertae_sedis, Pezizomycotina_ord_Incertae_sedis, Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, .... Use modify_phyloseq = TRUE to replace these with NA.
-#> Warning: Found 1432 taxonomic value(s) with less than 4 characters: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars). Use modify_phyloseq = TRUE to replace these with NA.
-#> Found 975 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.
-#> Warning: Found 1319 taxonomic value(s) with internal spaces: 'Plant Pathogen' (Guild), 'Endophyte-Undefined Saprotroph-Wood Saprotroph' (Guild), 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), 'Wood Saprotroph' (Guild), .... Use modify_phyloseq = TRUE and remove_all_space = TRUE to replace these spaces with '_'.
-#> Warning: Found 1 taxonomic value(s) with redundant '_sp' patterns where the information is already present at a higher rank: Eutypa_sp (Species = Genus). Use modify_phyloseq = TRUE to replace these with NA.
+#> Warning: Found 4 taxonomic value(s) matching NA-like patterns. Unique values: Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, Russulales_fam_Incertae_sedis, Hymenochaetales_fam_Incertae_sedis. Use modify_phyloseq = TRUE to replace these with NA.
+#> Warning: Found 20 taxonomic value(s) with less than 4 characters: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars). Use modify_phyloseq = TRUE to replace these with NA.
+#> Found 12 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.
+#> Warning: Found 70 taxonomic value(s) with internal spaces: 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), 'Wood Saprotroph' (Guild), 'Ectomycorrhizal-Wood Saprotroph' (Guild), 'Leaf Saprotroph-Plant Pathogen-Undefined Saprotroph-Wood Saprotroph' (Guild), .... Use modify_phyloseq = TRUE and remove_all_space = TRUE to replace these spaces with '_'.
 
 # Automatically replace problematic values with NA
 # This replaces: NA-like patterns, short values, and redundant suffixes
 data_fungi2_cleaned <- verify_tax_table(data_fungi2,
   modify_phyloseq = TRUE
 )
-#> Replaced 145 NA-like value(s) with NA. Unique values: Pezizomycotina_cls_Incertae_sedis, Rozellomycotina_cls_Incertae_sedis, Sordariomycetes_ord_Incertae_sedis, Microbotryomycetes_ord_Incertae_sedis, Lecanoromycetes_ord_Incertae_sedis, Dothideomycetes_ord_Incertae_sedis, Cystobasidiomycetes_ord_Incertae_sedis, Pezizomycotina_ord_Incertae_sedis, Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, ...
-#> Replaced 1432 short value(s) (< 4 chars) with NA: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars)
-#> Replaced 1 redundant '_sp' value(s) with NA: Eutypa_sp (Species = Genus)
-#> Total: 1578 modification(s) in the taxonomy table: 1578 value(s) replaced with NA (145 NA-like patterns, 1432 short values, 1 redundant suffixes).
+#> Replaced 4 NA-like value(s) with NA. Unique values: Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, Russulales_fam_Incertae_sedis, Hymenochaetales_fam_Incertae_sedis
+#> Replaced 20 short value(s) (< 4 chars) with NA: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars)
+#> Found 12 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.
+#> Warning: Found 70 taxonomic value(s) with internal spaces: 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), 'Wood Saprotroph' (Guild), 'Ectomycorrhizal-Wood Saprotroph' (Guild), 'Leaf Saprotroph-Plant Pathogen-Undefined Saprotroph-Wood Saprotroph' (Guild), .... Use modify_phyloseq = TRUE and remove_all_space = TRUE to replace these spaces with '_'.
+#> Total: 24 modification(s) in the taxonomy table: 24 value(s) replaced with NA (4 NA-like patterns, 20 short values, 0 redundant suffixes).
 # Check that the redundant value was replaced
 data_fungi2@tax_table[1, "Species"] # "Eutypa_sp"
 #> Taxonomy Table:     [1 taxa by 1 taxonomic ranks]:
 #>      Species    
-#> ASV2 "Eutypa_sp"
+#> ASV7 "Eutypa_sp"
 data_fungi2_cleaned@tax_table[1, "Species"] # NA
 #> Taxonomy Table:     [1 taxa by 1 taxonomic ranks]:
-#>      Species
-#> ASV2 NA     
+#>      Species    
+#> ASV7 "Eutypa_sp"
 
 # Combine verbose mode with modifications to see all issues
 data_fungi2_cleaned <- verify_tax_table(data_fungi2,
   verbose = TRUE,
   modify_phyloseq = TRUE
 )
-#> Replaced 145 NA-like value(s) with NA. Unique values: Pezizomycotina_cls_Incertae_sedis, Rozellomycotina_cls_Incertae_sedis, Sordariomycetes_ord_Incertae_sedis, Microbotryomycetes_ord_Incertae_sedis, Lecanoromycetes_ord_Incertae_sedis, Dothideomycetes_ord_Incertae_sedis, Cystobasidiomycetes_ord_Incertae_sedis, Pezizomycotina_ord_Incertae_sedis, Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, ...
-#> Replaced 1432 short value(s) (< 4 chars) with NA: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars)
-#> Found 976 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.
-#> Warning: Found 1319 taxonomic value(s) with internal spaces: 'Plant Pathogen' (Guild), 'Endophyte-Undefined Saprotroph-Wood Saprotroph' (Guild), 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), 'Wood Saprotroph' (Guild), .... Use modify_phyloseq = TRUE and remove_all_space = TRUE to replace these spaces with '_'.
-#> Replaced 1 redundant '_sp' value(s) with NA: Eutypa_sp (Species = Genus)
-#> Total: 1578 modification(s) in the taxonomy table: 1578 value(s) replaced with NA (145 NA-like patterns, 1432 short values, 1 redundant suffixes).
+#> Replaced 4 NA-like value(s) with NA. Unique values: Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, Russulales_fam_Incertae_sedis, Hymenochaetales_fam_Incertae_sedis
+#> Replaced 20 short value(s) (< 4 chars) with NA: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars)
+#> Found 12 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.
+#> Warning: Found 70 taxonomic value(s) with internal spaces: 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), 'Wood Saprotroph' (Guild), 'Ectomycorrhizal-Wood Saprotroph' (Guild), 'Leaf Saprotroph-Plant Pathogen-Undefined Saprotroph-Wood Saprotroph' (Guild), .... Use modify_phyloseq = TRUE and remove_all_space = TRUE to replace these spaces with '_'.
+#> Total: 24 modification(s) in the taxonomy table: 24 value(s) replaced with NA (4 NA-like patterns, 20 short values, 0 redundant suffixes).
 
 # Check for other patterns like "_var" or "_cf"
-verify_tax_table(data_fungi, verbose = TRUE, redundant_suffix = "_var")
-#> Warning: Found 145 taxonomic value(s) matching NA-like patterns. Unique values: Pezizomycotina_cls_Incertae_sedis, Rozellomycotina_cls_Incertae_sedis, Sordariomycetes_ord_Incertae_sedis, Microbotryomycetes_ord_Incertae_sedis, Lecanoromycetes_ord_Incertae_sedis, Dothideomycetes_ord_Incertae_sedis, Cystobasidiomycetes_ord_Incertae_sedis, Pezizomycotina_ord_Incertae_sedis, Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, .... Use modify_phyloseq = TRUE to replace these with NA.
-#> Warning: Found 1432 taxonomic value(s) with less than 4 characters: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars). Use modify_phyloseq = TRUE to replace these with NA.
-#> Found 976 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.
-#> Warning: Found 1319 taxonomic value(s) with internal spaces: 'Plant Pathogen' (Guild), 'Endophyte-Undefined Saprotroph-Wood Saprotroph' (Guild), 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), 'Wood Saprotroph' (Guild), .... Use modify_phyloseq = TRUE and remove_all_space = TRUE to replace these spaces with '_'.
+verify_tax_table(data_fungi_mini, verbose = TRUE, redundant_suffix = "_var")
+#> Warning: Found 4 taxonomic value(s) matching NA-like patterns. Unique values: Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, Russulales_fam_Incertae_sedis, Hymenochaetales_fam_Incertae_sedis. Use modify_phyloseq = TRUE to replace these with NA.
+#> Warning: Found 20 taxonomic value(s) with less than 4 characters: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars). Use modify_phyloseq = TRUE to replace these with NA.
+#> Found 13 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.
+#> Warning: Found 70 taxonomic value(s) with internal spaces: 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), 'Wood Saprotroph' (Guild), 'Ectomycorrhizal-Wood Saprotroph' (Guild), 'Leaf Saprotroph-Plant Pathogen-Undefined Saprotroph-Wood Saprotroph' (Guild), .... Use modify_phyloseq = TRUE and remove_all_space = TRUE to replace these spaces with '_'.
 
 # Disable redundant suffix check
-verify_tax_table(data_fungi, verbose = TRUE, redundant_suffix = NULL)
-#> Warning: Found 145 taxonomic value(s) matching NA-like patterns. Unique values: Pezizomycotina_cls_Incertae_sedis, Rozellomycotina_cls_Incertae_sedis, Sordariomycetes_ord_Incertae_sedis, Microbotryomycetes_ord_Incertae_sedis, Lecanoromycetes_ord_Incertae_sedis, Dothideomycetes_ord_Incertae_sedis, Cystobasidiomycetes_ord_Incertae_sedis, Pezizomycotina_ord_Incertae_sedis, Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, .... Use modify_phyloseq = TRUE to replace these with NA.
-#> Warning: Found 1432 taxonomic value(s) with less than 4 characters: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars). Use modify_phyloseq = TRUE to replace these with NA.
-#> Found 976 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.
-#> Warning: Found 1319 taxonomic value(s) with internal spaces: 'Plant Pathogen' (Guild), 'Endophyte-Undefined Saprotroph-Wood Saprotroph' (Guild), 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), 'Wood Saprotroph' (Guild), .... Use modify_phyloseq = TRUE and remove_all_space = TRUE to replace these spaces with '_'.
+verify_tax_table(data_fungi_mini, verbose = TRUE, redundant_suffix = NULL)
+#> Warning: Found 4 taxonomic value(s) matching NA-like patterns. Unique values: Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, Russulales_fam_Incertae_sedis, Hymenochaetales_fam_Incertae_sedis. Use modify_phyloseq = TRUE to replace these with NA.
+#> Warning: Found 20 taxonomic value(s) with less than 4 characters: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars). Use modify_phyloseq = TRUE to replace these with NA.
+#> Found 13 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.
+#> Warning: Found 70 taxonomic value(s) with internal spaces: 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), 'Wood Saprotroph' (Guild), 'Ectomycorrhizal-Wood Saprotroph' (Guild), 'Leaf Saprotroph-Plant Pathogen-Undefined Saprotroph-Wood Saprotroph' (Guild), .... Use modify_phyloseq = TRUE and remove_all_space = TRUE to replace these spaces with '_'.
 
 # Specify custom taxonomic rank order
-verify_tax_table(data_fungi,
+verify_tax_table(data_fungi_mini,
   verbose = TRUE,
   taxonomic_ranks = c("Class", "Order", "Family", "Genus")
 )
-#> Warning: Found 145 taxonomic value(s) matching NA-like patterns. Unique values: Pezizomycotina_cls_Incertae_sedis, Rozellomycotina_cls_Incertae_sedis, Sordariomycetes_ord_Incertae_sedis, Microbotryomycetes_ord_Incertae_sedis, Lecanoromycetes_ord_Incertae_sedis, Dothideomycetes_ord_Incertae_sedis, Cystobasidiomycetes_ord_Incertae_sedis, Pezizomycotina_ord_Incertae_sedis, Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, .... Use modify_phyloseq = TRUE to replace these with NA.
-#> Warning: Found 1432 taxonomic value(s) with less than 4 characters: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars). Use modify_phyloseq = TRUE to replace these with NA.
-#> Found 976 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.
-#> Warning: Found 1319 taxonomic value(s) with internal spaces: 'Plant Pathogen' (Guild), 'Endophyte-Undefined Saprotroph-Wood Saprotroph' (Guild), 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), 'Wood Saprotroph' (Guild), .... Use modify_phyloseq = TRUE and remove_all_space = TRUE to replace these spaces with '_'.
+#> Warning: Found 4 taxonomic value(s) matching NA-like patterns. Unique values: Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, Russulales_fam_Incertae_sedis, Hymenochaetales_fam_Incertae_sedis. Use modify_phyloseq = TRUE to replace these with NA.
+#> Warning: Found 20 taxonomic value(s) with less than 4 characters: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars). Use modify_phyloseq = TRUE to replace these with NA.
+#> Found 13 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.
+#> Warning: Found 70 taxonomic value(s) with internal spaces: 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), 'Wood Saprotroph' (Guild), 'Ectomycorrhizal-Wood Saprotroph' (Guild), 'Leaf Saprotroph-Plant Pathogen-Undefined Saprotroph-Wood Saprotroph' (Guild), .... Use modify_phyloseq = TRUE and remove_all_space = TRUE to replace these spaces with '_'.
 
 # Handle whitespace in taxonomic values
 # Create example with spaces
-data_fungi3 <- data_fungi
+data_fungi3 <- data_fungi_mini
 data_fungi3@tax_table[1, "Genus"] <- " Russula "
 data_fungi3@tax_table[2, "Species"] <- "Russula emetica"
 
 # Check for spaces (verbose mode)
 verify_tax_table(data_fungi3, verbose = TRUE)
-#> Warning: Found 145 taxonomic value(s) matching NA-like patterns. Unique values: Pezizomycotina_cls_Incertae_sedis, Rozellomycotina_cls_Incertae_sedis, Sordariomycetes_ord_Incertae_sedis, Microbotryomycetes_ord_Incertae_sedis, Lecanoromycetes_ord_Incertae_sedis, Dothideomycetes_ord_Incertae_sedis, Cystobasidiomycetes_ord_Incertae_sedis, Pezizomycotina_ord_Incertae_sedis, Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, .... Use modify_phyloseq = TRUE to replace these with NA.
-#> Warning: Found 1432 taxonomic value(s) with less than 4 characters: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars). Use modify_phyloseq = TRUE to replace these with NA.
-#> Found 974 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.
+#> Warning: Found 4 taxonomic value(s) matching NA-like patterns. Unique values: Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, Russulales_fam_Incertae_sedis, Hymenochaetales_fam_Incertae_sedis. Use modify_phyloseq = TRUE to replace these with NA.
+#> Warning: Found 20 taxonomic value(s) with less than 4 characters: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars). Use modify_phyloseq = TRUE to replace these with NA.
+#> Found 11 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.
 #> Warning: Found 1 taxonomic value(s) with leading or trailing whitespace: ' Russula ' (Genus). Use modify_phyloseq = TRUE to trim these values.
-#> Warning: Found 1320 taxonomic value(s) with internal spaces: 'Russula emetica' (Species), 'Plant Pathogen' (Guild), 'Endophyte-Undefined Saprotroph-Wood Saprotroph' (Guild), 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), .... Use modify_phyloseq = TRUE and remove_all_space = TRUE to replace these spaces with '_'.
+#> Warning: Found 71 taxonomic value(s) with internal spaces: 'Russula emetica' (Species), 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), 'Wood Saprotroph' (Guild), 'Ectomycorrhizal-Wood Saprotroph' (Guild), .... Use modify_phyloseq = TRUE and remove_all_space = TRUE to replace these spaces with '_'.
 
 # Remove leading/trailing whitespace (enabled by default)
 data_fungi3_trimmed <- verify_tax_table(data_fungi3, modify_phyloseq = TRUE)
-#> Replaced 145 NA-like value(s) with NA. Unique values: Pezizomycotina_cls_Incertae_sedis, Rozellomycotina_cls_Incertae_sedis, Sordariomycetes_ord_Incertae_sedis, Microbotryomycetes_ord_Incertae_sedis, Lecanoromycetes_ord_Incertae_sedis, Dothideomycetes_ord_Incertae_sedis, Cystobasidiomycetes_ord_Incertae_sedis, Pezizomycotina_ord_Incertae_sedis, Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, ...
-#> Replaced 1432 short value(s) (< 4 chars) with NA: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars)
+#> Replaced 4 NA-like value(s) with NA. Unique values: Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, Russulales_fam_Incertae_sedis, Hymenochaetales_fam_Incertae_sedis
+#> Replaced 20 short value(s) (< 4 chars) with NA: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars)
+#> Found 11 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.
 #> Trimmed leading/trailing whitespace from 1 value(s): ' Russula ' (Genus)
-#> Total: 1578 modification(s) in the taxonomy table: 1577 value(s) replaced with NA (145 NA-like patterns, 1432 short values, 0 redundant suffixes); 1 value(s) trimmed of border whitespace.
+#> Warning: Found 71 taxonomic value(s) with internal spaces: 'Russula emetica' (Species), 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), 'Wood Saprotroph' (Guild), 'Ectomycorrhizal-Wood Saprotroph' (Guild), .... Use modify_phyloseq = TRUE and remove_all_space = TRUE to replace these spaces with '_'.
+#> Total: 25 modification(s) in the taxonomy table: 24 value(s) replaced with NA (4 NA-like patterns, 20 short values, 0 redundant suffixes); 1 value(s) trimmed of border whitespace.
 data_fungi3_trimmed@tax_table[1, "Genus"] # "Russula" (trimmed)
 #> Taxonomy Table:     [1 taxa by 1 taxonomic ranks]:
 #>      Genus    
-#> ASV2 "Russula"
+#> ASV7 "Russula"
 
 # Also replace internal spaces with underscores
 data_fungi3_cleaned <- verify_tax_table(data_fungi3,
@@ -222,14 +262,15 @@ data_fungi3_cleaned <- verify_tax_table(data_fungi3,
   remove_all_space = TRUE,
   replace_space_with = "_"
 )
-#> Replaced 145 NA-like value(s) with NA. Unique values: Pezizomycotina_cls_Incertae_sedis, Rozellomycotina_cls_Incertae_sedis, Sordariomycetes_ord_Incertae_sedis, Microbotryomycetes_ord_Incertae_sedis, Lecanoromycetes_ord_Incertae_sedis, Dothideomycetes_ord_Incertae_sedis, Cystobasidiomycetes_ord_Incertae_sedis, Pezizomycotina_ord_Incertae_sedis, Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, ...
-#> Replaced 1432 short value(s) (< 4 chars) with NA: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars)
+#> Replaced 4 NA-like value(s) with NA. Unique values: Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, Russulales_fam_Incertae_sedis, Hymenochaetales_fam_Incertae_sedis
+#> Replaced 20 short value(s) (< 4 chars) with NA: - (Trophic.Mode, 1 chars), - (Guild, 1 chars), - (Trait, 1 chars), - (Confidence.Ranking, 1 chars)
+#> Found 11 taxa with duplicate taxonomic paths. This may indicate redundant taxa or issues with taxonomic assignment.
 #> Trimmed leading/trailing whitespace from 1 value(s): ' Russula ' (Genus)
-#> Replaced internal spaces with '_' in 1320 value(s): 'Russula emetica' (Species), 'Plant Pathogen' (Guild), 'Endophyte-Undefined Saprotroph-Wood Saprotroph' (Guild), 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), ...
-#> Total: 2898 modification(s) in the taxonomy table: 1577 value(s) replaced with NA (145 NA-like patterns, 1432 short values, 0 redundant suffixes); 1 value(s) trimmed of border whitespace; 1320 value(s) had internal spaces replaced.
+#> Replaced internal spaces with '_' in 71 value(s): 'Russula emetica' (Species), 'Wood Saprotroph-Undefined Saprotroph' (Guild), 'Undefined Saprotroph' (Guild), 'Wood Saprotroph' (Guild), 'Ectomycorrhizal-Wood Saprotroph' (Guild), ...
+#> Total: 96 modification(s) in the taxonomy table: 24 value(s) replaced with NA (4 NA-like patterns, 20 short values, 0 redundant suffixes); 1 value(s) trimmed of border whitespace; 71 value(s) had internal spaces replaced.
 data_fungi3_cleaned@tax_table[2, "Species"] # "Russula_emetica"
 #> Taxonomy Table:     [1 taxa by 1 taxonomic ranks]:
 #>      Species          
-#> ASV6 "Russula_emetica"
+#> ASV8 "Russula_emetica"
 # }
 ```

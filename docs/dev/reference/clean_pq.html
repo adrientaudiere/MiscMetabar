@@ -9,7 +9,7 @@ In addition, this function check for discrepancy (and rename) between
 
 In addition, this function check for discrepancy (and rename) between
 (i) taxa names in refseq, taxonomy table and otu_table and between
-(ii) sample names in sam_data and otu_table."><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+(ii) sample names in sam_data and otu_table."><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -17,7 +17,7 @@ In addition, this function check for discrepancy (and rename) between
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,6 +36,7 @@ In addition, this function check for discrepancy (and rename) between
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -65,15 +66,14 @@ In addition, this function check for discrepancy (and rename) between
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Clean phyloseq object by removing empty samples and taxa</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Clean phyloseq object by removing empty samples and taxa</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/dada_phyloseq.R" class="external-link"><code>R/dada_phyloseq.R</code></a></small>
       <div class="d-none name"><code>clean_pq.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
     <p><a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a></p>
+<img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a></p>
 
 <p>In addition, this function check for discrepancy (and rename) between
 (i) taxa names in refseq, taxonomy table and otu_table and between
@@ -95,7 +95,14 @@ In addition, this function check for discrepancy (and rename) between
 <span>  rename_taxa <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  simplify_taxo <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  prefix_taxa_names <span class="op">=</span> <span class="st">"_Taxa"</span>,</span>
-<span>  check_taxonomy <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  check_taxonomy <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  tax_remove_border_spaces <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  tax_remove_all_space <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  tax_replace_to_NA <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  tax_redundant_suffix <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  tax_replace_space_with <span class="op">=</span> <span class="st">"_"</span>,</span>
+<span>  tax_replace_invisible_chars <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  tax_replace_NA_string <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -166,6 +173,53 @@ the taxa (ASV, OTU) names in verbose information can be misleading.</p></dd>
 <dd><p>(logical, default FALSE) If TRUE, call
 <code><a href="verify_tax_table.html">verify_tax_table()</a></code> to check for common taxonomy table issues.</p></dd>
 
+
+<dt id="arg-tax-remove-border-spaces">tax_remove_border_spaces<a class="anchor" aria-label="anchor" href="#arg-tax-remove-border-spaces"></a></dt>
+<dd><p>(logical, default FALSE) If TRUE, trim
+leading/trailing whitespace from values in the <code>tax_table</code> slot
+(passed to <code><a href="verify_tax_table.html">verify_tax_table()</a></code> with <code>modify_phyloseq = TRUE</code>). Handles
+both ASCII whitespace and Unicode separators such as NBSP (U+00A0).</p></dd>
+
+
+<dt id="arg-tax-remove-all-space">tax_remove_all_space<a class="anchor" aria-label="anchor" href="#arg-tax-remove-all-space"></a></dt>
+<dd><p>(logical, default FALSE) If TRUE, replace
+internal whitespace (ASCII or Unicode separator) in <code>tax_table</code> values
+with <code>replace_space_with</code>.</p></dd>
+
+
+<dt id="arg-tax-replace-to-na">tax_replace_to_NA<a class="anchor" aria-label="anchor" href="#arg-tax-replace-to-na"></a></dt>
+<dd><p>(logical or character, default FALSE) If TRUE,
+replace <code>tax_table</code> values matching the default <a href="unwanted_tax_patterns.html">unwanted_tax_patterns</a>
+with <code>NA</code>. A character vector of regex patterns can be supplied to
+override the defaults.</p></dd>
+
+
+<dt id="arg-tax-redundant-suffix">tax_redundant_suffix<a class="anchor" aria-label="anchor" href="#arg-tax-redundant-suffix"></a></dt>
+<dd><p>(logical or character, default FALSE) If TRUE,
+replace redundant <code>"_sp"</code> values with <code>NA</code> (e.g. <code>Russula_sp</code> at Species
+when <code>Russula</code> is already at Genus). A character string supplies a
+custom suffix.</p></dd>
+
+
+<dt id="arg-tax-replace-space-with">tax_replace_space_with<a class="anchor" aria-label="anchor" href="#arg-tax-replace-space-with"></a></dt>
+<dd><p>(character, default <code>"_"</code>) Replacement for
+internal whitespace when <code>tax_remove_all_space = TRUE</code>.</p></dd>
+
+
+<dt id="arg-tax-replace-invisible-chars">tax_replace_invisible_chars<a class="anchor" aria-label="anchor" href="#arg-tax-replace-invisible-chars"></a></dt>
+<dd><p>(logical, default FALSE) If TRUE,
+strip invisible / unusual characters (control chars, zero-width space,
+NBSP inside values, ...) from <code>tax_table</code> values. See
+<code><a href="verify_tax_table.html">verify_tax_table()</a></code>'s <code>replace_invisible_chars</code> for the exact pattern.</p></dd>
+
+
+<dt id="arg-tax-replace-na-string">tax_replace_NA_string<a class="anchor" aria-label="anchor" href="#arg-tax-replace-na-string"></a></dt>
+<dd><p>(logical, default FALSE) If TRUE, replace the
+literal strings <code>"NA"</code>, <code>"NA NA"</code>, <code>"NA NA NA"</code> (any whitespace-separated
+repetition of <code>NA</code>, a common artifact of pasting taxonomic ranks together)
+in <code>tax_table</code> values with true <code>&lt;NA&gt;</code>. Case-sensitive to avoid clobbering
+real data. Default <code>FALSE</code> to avoid breaking changes.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -184,6 +238,41 @@ the taxa (ASV, OTU) names in verbose information can be misleading.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sample_data() Sample Data:       [ 137 samples by 7 sample variables ]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> tax_table()   Taxonomy Table:    [ 45 taxa by 12 taxonomic ranks ]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> refseq()      DNAStringSet:      [ 45 reference sequences ]</span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co"># Trim leading/trailing whitespace in tax_table values</span></span></span>
+<span class="r-in"><span><span class="fu">clean_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, tax_remove_border_spaces <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> No values to modify. Returning original phyloseq object.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phyloseq-class experiment-level object</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> otu_table()   OTU Table:         [ 45 taxa and 137 samples ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sample_data() Sample Data:       [ 137 samples by 7 sample variables ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tax_table()   Taxonomy Table:    [ 45 taxa by 12 taxonomic ranks ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> refseq()      DNAStringSet:      [ 45 reference sequences ]</span>
+<span class="r-in"><span><span class="co"># Replace NA-like values (e.g. "unidentified", "NA") with NA</span></span></span>
+<span class="r-in"><span><span class="fu">clean_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, tax_replace_to_NA <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Replaced 4 NA-like value(s) with NA. Unique values: Cantharellales_fam_Incertae_sedis, Atractiellales_fam_Incertae_sedis, Russulales_fam_Incertae_sedis, Hymenochaetales_fam_Incertae_sedis</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Total: 4 modification(s) in the taxonomy table: 4 value(s) replaced with NA (4 NA-like patterns, 0 short values, 0 redundant suffixes).</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phyloseq-class experiment-level object</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> otu_table()   OTU Table:         [ 45 taxa and 137 samples ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sample_data() Sample Data:       [ 137 samples by 7 sample variables ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tax_table()   Taxonomy Table:    [ 45 taxa by 12 taxonomic ranks ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> refseq()      DNAStringSet:      [ 45 reference sequences ]</span>
+<span class="r-in"><span><span class="co"># Drop redundant "_sp" tips</span></span></span>
+<span class="r-in"><span><span class="fu">clean_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, tax_redundant_suffix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> No values to modify. Returning original phyloseq object.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phyloseq-class experiment-level object</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> otu_table()   OTU Table:         [ 45 taxa and 137 samples ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sample_data() Sample Data:       [ 137 samples by 7 sample variables ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tax_table()   Taxonomy Table:    [ 45 taxa by 12 taxonomic ranks ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> refseq()      DNAStringSet:      [ 45 reference sequences ]</span>
+<span class="r-in"><span><span class="co"># Replace "NA" / "NA NA" concatenation artifacts with true &lt;NA&gt;</span></span></span>
+<span class="r-in"><span><span class="fu">clean_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, tax_replace_NA_string <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> No values to modify. Returning original phyloseq object.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> phyloseq-class experiment-level object</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> otu_table()   OTU Table:         [ 45 taxa and 137 samples ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sample_data() Sample Data:       [ 137 samples by 7 sample variables ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tax_table()   Taxonomy Table:    [ 45 taxa by 12 taxonomic ranks ]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> refseq()      DNAStringSet:      [ 45 reference sequences ]</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

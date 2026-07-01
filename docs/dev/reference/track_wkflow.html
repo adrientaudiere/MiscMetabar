@@ -21,7 +21,7 @@ Matrix of samples x clusters (e.g. otu_table) -&amp;gt; nb of reads,
 clusters and samples
 Phyloseq-class -&amp;gt; nb of reads, clusters and samples
 
-"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
+"><meta property="og:image" content="https://adrientaudiere.github.io/MiscMetabar/logo.svg"><meta name="robots" content="noindex"><script data-goatcounter="https://miscmetabar.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -29,7 +29,7 @@ Phyloseq-class -&amp;gt; nb of reads, clusters and samples
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.16.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,6 +48,7 @@ Phyloseq-class -&amp;gt; nb of reads, clusters and samples
     <li><a class="dropdown-item" href="../articles/normalization.html">Transformation and normalisation</a></li>
     <li><a class="dropdown-item" href="../articles/Reclustering.html">Reclustering</a></li>
     <li><a class="dropdown-item" href="../articles/tree_visualization.html">Tree building and visualization</a></li>
+    <li><a class="dropdown-item" href="../articles/timing.html">Function timing</a></li>
     <li><hr class="dropdown-divider"></li>
     <li><h6 class="dropdown-header" data-toc-skip>Diversity analysis</h6></li>
     <li><a class="dropdown-item" href="../articles/alpha-div.html">Alpha-diversity</a></li>
@@ -77,15 +78,14 @@ Phyloseq-class -&amp;gt; nb of reads, clusters and samples
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-
-      <h1>Track the number of reads (= sequences), samples and cluster (e.g. ASV) from various objects including dada-class and derep-class.</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Track the number of reads (= sequences), samples and cluster (e.g. ASV) from various objects including dada-class and derep-class.</h1>
       <small class="dont-index">Source: <a href="https://github.com/adrientaudiere/MiscMetabar/blob/HEAD/R/dada_phyloseq.R" class="external-link"><code>R/dada_phyloseq.R</code></a></small>
       <div class="d-none name"><code>track_wkflow.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
     <p><a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a></p>
+<img src="https://img.shields.io/badge/lifecycle-stable-green" alt="lifecycle-stable"></a></p>
 <ul><li><p>List of fastq and fastg.gz files -&gt; nb of reads and samples</p></li>
 <li><p>List of dada-class -&gt; nb of reads, clusters (ASV) and samples</p></li>
 <li><p>List of derep-class -&gt; nb of reads, clusters (unique sequences)
@@ -103,6 +103,14 @@ clusters and samples</p></li>
 <span>  clean_pq <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  taxonomy_rank <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  compute_occurrences <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  compute_taxo_info <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  ranks_for_na_prop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Class"</span>, <span class="st">"Order"</span>, <span class="st">"Family"</span>, <span class="st">"Genus"</span><span class="op">)</span>,</span>
+<span>  compute_sam_metadata <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  compute_seq_length <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  compute_genetic_diversity <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  compute_factor_counts <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  factor <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -135,6 +143,59 @@ Default is NULL and do not compute values for any taxonomic rank</p></dd>
 <dd><p>(logical) If true, print some additional messages.</p></dd>
 
 
+<dt id="arg-compute-occurrences">compute_occurrences<a class="anchor" aria-label="anchor" href="#arg-compute-occurrences"></a></dt>
+<dd><p>(logical, default FALSE) If TRUE, add a column
+<code>nb_occurrences</code> with the total number of non-zero cells in the OTU table
+(number of (taxon, sample) presences), computed via
+<code><a href="as_binary_otu_table.html">as_binary_otu_table()</a></code>. Phyloseq objects only (NA otherwise).</p></dd>
+
+
+<dt id="arg-compute-taxo-info">compute_taxo_info<a class="anchor" aria-label="anchor" href="#arg-compute-taxo-info"></a></dt>
+<dd><p>(logical, default FALSE) If TRUE, add a column
+<code>nb_rank</code> (number of taxonomic ranks, <code><a href="https://rdrr.io/pkg/phyloseq/man/rank_names.html" class="external-link">phyloseq::rank_names()</a></code>) and one
+column <code>prop_na_&lt;rank&gt;</code> per rank in <code>ranks_for_na_prop</code> giving the
+proportion of NA assignments among present taxa.</p></dd>
+
+
+<dt id="arg-ranks-for-na-prop">ranks_for_na_prop<a class="anchor" aria-label="anchor" href="#arg-ranks-for-na-prop"></a></dt>
+<dd><p>(character, default <code>c("Class","Order","Family","Genus")</code>)
+Rank names for which the proportion of NA is computed when
+<code>compute_taxo_info = TRUE</code>. Ignored otherwise.</p></dd>
+
+
+<dt id="arg-compute-sam-metadata">compute_sam_metadata<a class="anchor" aria-label="anchor" href="#arg-compute-sam-metadata"></a></dt>
+<dd><p>(logical, default FALSE) If TRUE, add a column
+<code>nb_sam_metadata</code> with the number of columns in <code>sample_data</code>.</p></dd>
+
+
+<dt id="arg-compute-seq-length">compute_seq_length<a class="anchor" aria-label="anchor" href="#arg-compute-seq-length"></a></dt>
+<dd><p>(logical, default FALSE) If TRUE, add three columns
+<code>mean_length_seq</code>, <code>max_length_seq</code>, <code>min_length_seq</code> from the width of the
+reference sequences (<code>Biostrings::width()</code>) of present taxa.</p></dd>
+
+
+<dt id="arg-compute-genetic-diversity">compute_genetic_diversity<a class="anchor" aria-label="anchor" href="#arg-compute-genetic-diversity"></a></dt>
+<dd><p>(logical, default FALSE) If TRUE, add two
+columns <code>genetic_diversity_weighted</code> (abundance-weighted nucleotide
+diversity, pi) and <code>genetic_diversity_unweighted</code> (mean pairwise distance),
+both computed from <code>@ref_seq</code> of present taxa with
+<code><a href="https://rdrr.io/pkg/DECIPHER/man/DistanceMatrix.html" class="external-link">DECIPHER::DistanceMatrix()</a></code>, which handles unequal-length sequences by
+using the shorter length in each pairwise comparison. Requires the
+<span class="pkg">DECIPHER</span> package (in <code>Suggests</code>). May be slow for objects with many
+taxa.</p></dd>
+
+
+<dt id="arg-compute-factor-counts">compute_factor_counts<a class="anchor" aria-label="anchor" href="#arg-compute-factor-counts"></a></dt>
+<dd><p>(logical, default FALSE) If TRUE, add one column
+<code>n_samples_&lt;level&gt;</code> per level of <code>factor</code> with the number of samples in
+each level.</p></dd>
+
+
+<dt id="arg-factor">factor<a class="anchor" aria-label="anchor" href="#arg-factor"></a></dt>
+<dd><p>(character, default NULL) Name of a variable in <code>sample_data</code>
+used when <code>compute_factor_counts = TRUE</code>.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional arguments passed on to <code><a href="clean_pq.html">clean_pq()</a></code> function.</p></dd>
 
@@ -142,7 +203,9 @@ Default is NULL and do not compute values for any taxonomic rank</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>The number of sequences, clusters (e.g. OTUs, ASVs) and samples for
-each object.</p>
+each object. When any <code>compute_*</code> extra-metrics argument is TRUE, extra
+columns are appended (phyloseq objects only; NA for other object types).
+These are propagated to <code><a href="track_wkflow_samples.html">track_wkflow_samples()</a></code> via <code>...</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -157,14 +220,17 @@ each object.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">enterotype</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"pbapply"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu">track_wkflow</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">data_fungi</span>, <span class="va">enterotype</span><span class="op">)</span>, taxonomy_rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">track_wkflow</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="va">enterotype</span><span class="op">)</span>, taxonomy_rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">track_wkflow</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="st">"data FUNGI"</span> <span class="op">=</span> <span class="va">data_fungi</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"data FUNGI"</span> <span class="op">=</span> <span class="va">data_fungi_mini</span>,</span></span>
 <span class="r-in"><span>    <span class="st">"fastq files forward"</span> <span class="op">=</span></span></span>
 <span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="list_fastq_files.html">list_fastq_files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>        paired_end <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span>      <span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">track_wkflow</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="va">enterotype</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    compute_occurrences <span class="op">=</span> <span class="cn">TRUE</span>, compute_taxo_info <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>    compute_seq_length <span class="op">=</span> <span class="cn">TRUE</span>, compute_genetic_diversity <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Compute the number of sequences</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
@@ -189,9 +255,24 @@ each object.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Compute the number of samples</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: character</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                     nb_sequences nb_clusters nb_samples</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> data FUNGI               1839124        1420        185</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> fastq files forward          100          NA          1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Compute the number of sequences</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Compute the number of clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Compute the number of samples</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start object of class: phyloseq</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   nb_sequences nb_clusters nb_samples nb_occurrences nb_rank prop_na_Class</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  569525.0000          45        137            560      12    0.02222222</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     279.9807         553        280              0       1            NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   prop_na_Order prop_na_Family prop_na_Genus mean_length_seq max_length_seq</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    0.06666667      0.1333333   0.177777778        343.0889            387</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2            NA             NA   0.003616637              NA             NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   min_length_seq genetic_diversity_weighted genetic_diversity_unweighted</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1            303                  0.4743904                    0.4924878</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2             NA                         NA                           NA</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

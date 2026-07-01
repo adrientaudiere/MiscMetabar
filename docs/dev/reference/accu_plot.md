@@ -126,11 +126,7 @@ GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #> Also defined by ‘RNeXML’
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
 #> Also defined by ‘RNeXML’
-GP <- rarefy_even_depth(subset_samples_pq(GP, sample_sums(GP) > 3000))
-#> You set `rngseed` to FALSE. Make sure you've set & recorded
-#>  the random seed of your session for reproducibility.
-#> See `?set.seed`
-#> ...
+GP <- rarefy_pq(subset_samples_pq(GP, sample_sums(GP) > 3000), replace = TRUE)
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
 #> Also defined by ‘RNeXML’
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
@@ -139,17 +135,6 @@ GP <- rarefy_even_depth(subset_samples_pq(GP, sample_sums(GP) > 3000))
 #> Also defined by ‘RNeXML’
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
 #> Also defined by ‘RNeXML’
-#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
-#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
-#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
-#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
-#> 63OTUs were removed because they are no longer 
-#> present in any sample after random subsampling
-#> ...
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
 #> Also defined by ‘RNeXML’
 p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10)

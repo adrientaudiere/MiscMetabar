@@ -29,7 +29,7 @@ assign_vsearch_lca(
   physeq = NULL,
   ref_fasta = NULL,
   seq2search = NULL,
-  behavior = c("return_matrix", "add_to_phyloseq", "return_cmd"),
+  behavior = c("return_matrix", "return_taxtab", "add_to_phyloseq", "return_cmd"),
   vsearchpath = find_vsearch(),
   clean_pq = TRUE,
   taxa_ranks = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
@@ -84,15 +84,24 @@ assign_vsearch_lca(
 
 - seq2search:
 
-  A DNAStringSet object of sequences to search for. Replace the physeq
-  object.
+  A DNAStringSet object of sequences to search for, or a matrix whose
+  `colnames` are the sequences to search for (e.g. a dada2 sequence
+  table where columns are ASV sequences). In the latter case the
+  `colnames` are converted to a DNAStringSet and used as the taxa names.
+  Replace the physeq object.
 
 - behavior:
 
-  Either "return_matrix" (default), "return_cmd", or "add_to_phyloseq":
+  Either "return_matrix" (default), "return_taxtab", "return_cmd", or
+  "add_to_phyloseq":
 
   - "return_matrix" return a list of two matrix with taxonomic value in
     the first element of the list and bootstrap value in the second one.
+
+  - "return_taxtab" return a character matrix of taxonomic values (rows
+    are taxa, columns are the `taxa_ranks`) with rownames set to the
+    taxa names. This is convenient as a direct input to
+    [`phyloseq::tax_table()`](https://rdrr.io/pkg/phyloseq/man/tax_table-methods.html).
 
   - "return_cmd" return the command to run without running it.
 
@@ -152,6 +161,7 @@ assign_vsearch_lca(
   consider before stopping the search for a given query. Default value
   is based on [stampa](https://github.com/frederic-mahe/stampa) See
   Vsearch Manual for parameter `--maxrejects`.
+  [![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 - top_hits_only:
 
@@ -280,7 +290,8 @@ data_fungi_mini_new <- assign_vsearch_lca(data_fungi_mini,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
   lca_cutoff = 0.9, behavior = "add_to_phyloseq"
 )
-
+# }
+if (FALSE) { # \dontrun{
 data_fungi_mini_new2 <- assign_vsearch_lca(data_fungi_mini,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
   id = 0.6, behavior = "add_to_phyloseq", top_hits_only = FALSE
@@ -290,5 +301,29 @@ data_fungi_mini_new3 <- assign_vsearch_lca(data_fungi_mini,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
   id = 0.5, behavior = "add_to_phyloseq", top_hits_only = FALSE, vote_algorithm = "rel_majority"
 )
+} # }
+
+# \donttest{
+## return_taxtab with seq2search (a DNAStringSet or a matrix)
+seqs_to_assign <- refseq(data_fungi_mini)
+tax_mat <- assign_vsearch_lca(seq2search = seqs_to_assign,
+  ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
+  behavior = "return_taxtab"
+)
+head(tax_mat)
+#>       Kingdom Phylum          Class            Order        Family       
+#> ASV7  "Fungi" "Basidiomycota" "Agaricomycetes" "Russulales" "Stereaceae" 
+#> ASV8  "Fungi" "Basidiomycota" "Agaricomycetes" "Agaricales" "Amanitaceae"
+#> ASV12 "Fungi" "Basidiomycota" "Agaricomycetes" "Agaricales" "Amanitaceae"
+#> ASV18 "Fungi" "Basidiomycota" "Agaricomycetes" "Agaricales" "Amanitaceae"
+#> ASV25 "Fungi" "Basidiomycota" "Agaricomycetes" "Agaricales" "Amanitaceae"
+#> ASV26 "Fungi" "Basidiomycota" "Agaricomycetes" "Russulales" "Stereaceae" 
+#>       Genus            Species                   
+#> ASV7  "Xylobolus"      "Xylobolus_sp"            
+#> ASV8  "Zhuliangomyces" "Zhuliangomyces_illinitus"
+#> ASV12 "Zhuliangomyces" "Zhuliangomyces_illinitus"
+#> ASV18 "Zhuliangomyces" "Zhuliangomyces_illinitus"
+#> ASV25 "Zhuliangomyces" "Zhuliangomyces_illinitus"
+#> ASV26 "Xylobolus"      "Xylobolus_sp"            
 # }
 ```

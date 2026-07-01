@@ -19,6 +19,8 @@ postcluster_pq(
   rank_propagation = FALSE,
   vsearch_cluster_method = "--cluster_size",
   vsearch_args = "--strand both",
+  query_cov = NULL,
+  target_cov = NULL,
   keep_temporary_files = FALSE,
   swarmpath = "swarm",
   d = 1,
@@ -41,6 +43,8 @@ asv2otu(
   rank_propagation = FALSE,
   vsearch_cluster_method = "--cluster_size",
   vsearch_args = "--strand both",
+  query_cov = NULL,
+  target_cov = NULL,
   keep_temporary_files = FALSE,
   swarmpath = "swarm",
   d = 1,
@@ -131,6 +135,22 @@ asv2otu(
   (default : "–strand both") a one length character element defining
   other parameters to passed on to vsearch.
 
+- query_cov:
+
+  (default: NULL) Only used when `method = "vsearch"`. Reject the
+  alignment if the fraction of the query sequence aligned to the target
+  is lower than this value. When NULL (default), the vsearch
+  `--query_cov` option is not added to the command. See
+  [`vsearch_clustering()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/vsearch_clustering.md).
+
+- target_cov:
+
+  (default: NULL) Only used when `method = "vsearch"`. Reject the
+  alignment if the fraction of the target sequence aligned to the query
+  is lower than this value. When NULL (default), the vsearch
+  `--target_cov` option is not added to the command. See
+  [`vsearch_clustering()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/vsearch_clustering.md).
+
 - keep_temporary_files:
 
   (logical, default: FALSE) Do we keep temporary files
@@ -217,6 +237,7 @@ Adrien Taudière
 ## Examples
 
 ``` r
+# \donttest{
 if (requireNamespace("DECIPHER")) {
   postcluster_pq(data_fungi_mini)
 }
@@ -244,7 +265,8 @@ if (requireNamespace("DECIPHER")) {
 #> sample_data() Sample Data:       [ 137 samples by 7 sample variables ]
 #> tax_table()   Taxonomy Table:    [ 32 taxa by 12 taxonomic ranks ]
 #> refseq()      DNAStringSet:      [ 32 reference sequences ]
-# \donttest{
+# }
+if (FALSE) { # \dontrun{
 if (requireNamespace("DECIPHER")) {
   postcluster_pq(data_fungi_mini, method_clusterize = "longest")
 
@@ -258,24 +280,5 @@ if (requireNamespace("DECIPHER")) {
     d_mm <- postcluster_pq(data_fungi_mini, method = "mmseqs2")
   }
 }
-#> Partitioning sequences by 3-mer similarity:
-#> ================================================================================
-#> 
-#> Time difference of 0.02 secs
-#> 
-#> Sorting by relatedness within 11 groups:
-#> iteration 1 of up to 17 (100.0% stability) 
-#> 
-#> Time difference of 0.01 secs
-#> 
-#> Clustering sequences by 9-mer similarity:
-#> ================================================================================
-#> 
-#> Time difference of 0.07 secs
-#> 
-#> Clusters via relatedness sorting: 100% (0% exclusively)
-#> Clusters via rare 3-mers: 100% (0% exclusively)
-#> Estimated clustering effectiveness: 100%
-#> 
-# }
+} # }
 ```

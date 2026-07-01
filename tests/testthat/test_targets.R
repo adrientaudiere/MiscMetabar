@@ -513,12 +513,17 @@ test_that("track_wkflow extra metrics are NA for non-phyloseq objects", {
 test_that("track_wkflow compute_factor_counts counts samples per level", {
   skip_on_cran()
   fac <- "Height"
-  res <- track_wkflow(list(data_fungi),
-    compute_factor_counts = TRUE, factor = fac)
+  res <- track_wkflow(
+    list(data_fungi),
+    compute_factor_counts = TRUE,
+    factor = fac
+  )
   lvl_cols <- grep("^n_samples_", colnames(res), value = TRUE)
-  expect_length(lvl_cols, length(unique(stats::na.omit(data_fungi@sam_data[[fac]]))))
-  expect_equal(sum(res[1, lvl_cols]),
-    sum(!is.na(data_fungi@sam_data[[fac]])))
+  expect_length(
+    lvl_cols,
+    length(unique(stats::na.omit(data_fungi@sam_data[[fac]])))
+  )
+  expect_equal(sum(res[1, lvl_cols]), sum(!is.na(data_fungi@sam_data[[fac]])))
 })
 
 test_that("track_wkflow compute_factor_counts errors without factor", {
@@ -531,8 +536,11 @@ test_that("track_wkflow compute_factor_counts errors without factor", {
 
 test_that("track_wkflow_samples propagates extra metrics via ...", {
   skip_on_cran()
-  res <- track_wkflow_samples(tree_A10_005,
-    compute_occurrences = TRUE, compute_seq_length = TRUE)
+  res <- track_wkflow_samples(
+    tree_A10_005,
+    compute_occurrences = TRUE,
+    compute_seq_length = TRUE
+  )
   expect_true("nb_occurrences" %in% colnames(res[[1]]))
   expect_true("mean_length_seq" %in% colnames(res[[1]]))
 })

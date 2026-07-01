@@ -1,6 +1,11 @@
 # Permanova (adonis) on permutations of rarefaction even depth
 
-[![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+[![lifecycle-deprecated](https://img.shields.io/badge/lifecycle-deprecated-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+
+**\[deprecated\]** This function has moved to the `bootpq` package.
+Please use
+[`bootpq::adonis_rarperm_pq()`](https://adrientaudiere.github.io/bootpq/reference/adonis_rarperm_pq.html)
+instead.
 
 Permanova are computed on a given number of rarefaction with different
 seed.number. This reduce the risk of a random drawing of a exceptional
@@ -36,7 +41,7 @@ adonis_rarperm_pq(
 - formula:
 
   (required) the right part of a formula for
-  [`vegan::adonis2()`](https://vegandevs.github.io/vegan/reference/vegan-defunct.html).
+  [`vegan::adonis2()`](https://vegandevs.github.io/vegan/reference/adonis.html).
   Variables must be present in the `physeq@sam_data` slot.
 
 - dist_method:
@@ -89,7 +94,9 @@ adonis_rarperm_pq(
 
   (int) A single integer value equal to the number of reads being
   simulated, also known as the depth. See
-  [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html).
+  [`phyloseq::rarefy_even_depth()`](https://rdrr.io/pkg/phyloseq/man/rarefy_even_depth.html)
+  and
+  [`rarefy_even_depth_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/rarefy_even_depth_pq.md).
 
 - ...:
 
@@ -114,58 +121,42 @@ Adrien Taudière
 ## Examples
 
 ``` r
+# \donttest{
 if (requireNamespace("vegan")) {
   data_fungi_woNA <-
-    subset_samples(data_fungi, !is.na(Time) & !is.na(Height))
+    subset_samples(data_fungi_mini, !is.na(Time) & !is.na(Height))
   adonis_rarperm_pq(data_fungi_woNA, "Time*Height", na_remove = TRUE, nperm = 3)
 }
 #>   |                                                          |                                                  |   0%
-#> `set.seed(1)` was used to initialize repeatable random subsampling.
-#> Please record this for your records so others can reproduce.
-#> Try `set.seed(1); .Random.seed` for the full vector
-#> ...
-#> 1156OTUs were removed because they are no longer 
-#> present in any sample after random subsampling
-#> ...
+#> Taxa are now in columns.
 #> Removing NA from Time
 #> Removing NA from Height
 #>   |                                                          |=================                                 |  33%
-#> `set.seed(2)` was used to initialize repeatable random subsampling.
-#> Please record this for your records so others can reproduce.
-#> Try `set.seed(2); .Random.seed` for the full vector
-#> ...
-#> 1160OTUs were removed because they are no longer 
-#> present in any sample after random subsampling
-#> ...
+#> Taxa are now in columns.
 #> Removing NA from Time
 #> Removing NA from Height
 #>   |                                                          |=================================                 |  67%
-#> `set.seed(3)` was used to initialize repeatable random subsampling.
-#> Please record this for your records so others can reproduce.
-#> Try `set.seed(3); .Random.seed` for the full vector
-#> ...
-#> 1180OTUs were removed because they are no longer 
-#> present in any sample after random subsampling
-#> ...
+#> Taxa are now in columns.
 #> Removing NA from Time
 #> Removing NA from Height
 #>   |                                                          |==================================================| 100%
 #> $mean
-#>           Df  SumOfSqs         R2        F     Pr(>F)
-#> Model      5  2.724437 0.05067775 1.121097 0.06266667
-#> Residual 105 51.040745 0.94932225       NA         NA
-#> Total    110 53.765182 1.00000000       NA         NA
+#>          Df  SumOfSqs         R2         F    Pr(>F)
+#> Model     5  2.346505 0.06649319 0.9844575 0.5556667
+#> Residual 69 32.942384 0.93350681        NA        NA
+#> Total    74 35.288889 1.00000000        NA        NA
 #> 
 #> $quantile_min
-#>           Df  SumOfSqs        R2        F Pr(>F)
-#> Model      5  2.633518 0.0488029 1.077451 0.0273
-#> Residual 105 50.681723 0.9479599       NA     NA
-#> Total    110 53.463976 1.0000000       NA     NA
+#>          Df  SumOfSqs         R2         F Pr(>F)
+#> Model     5  2.070369 0.05846765 0.8569665 0.1065
+#> Residual 69 32.531964 0.92132923        NA     NA
+#> Total    74 35.130000 1.00000000        NA     NA
 #> 
 #> $quantile_max
-#>           Df  SumOfSqs         R2        F  Pr(>F)
-#> Model      5  2.782253 0.05204009 1.152836 0.12325
-#> Residual 105 51.328995 0.95119710       NA      NA
-#> Total    110 53.962513 1.00000000       NA      NA
+#>          Df  SumOfSqs         R2        F  Pr(>F)
+#> Model     5  2.778036 0.07867077 1.178625 0.86175
+#> Residual 69 33.340964 0.94153235       NA      NA
+#> Total    74 35.421333 1.00000000       NA      NA
 #> 
+# }
 ```

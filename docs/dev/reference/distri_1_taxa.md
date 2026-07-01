@@ -58,16 +58,16 @@ Adrien Taudière
 ## Examples
 
 ``` r
-distri_1_taxa(data_fungi, "Height", "ASV2")
-#> Taxa are now in rows.
+distri_1_taxa(data_fungi_mini, "Height", "ASV7")
 #>        nb_seq nb_samp mean_nb_seq sd_nb_seq mean_nb_seq_when_present
-#> High    26876      28      655.51   2623.30                   959.86
-#> Low     60925      29     1353.89   5075.12                  2100.86
-#> Middle   4444      33       98.76    453.06                   134.67
+#> High    15911      12      568.25   1947.97                  1325.92
+#> Low      3818       6      119.31    522.43                   636.33
+#> Middle   6501       9      216.70    638.43                   722.33
 #>        nb_total_samp prop_samp
-#> High              41      0.68
-#> Low               45      0.64
-#> Middle            45      0.73
+#> High              28      0.43
+#> Low               32      0.19
+#> Middle            30      0.30
+# \donttest{
 distri_1_taxa(data_fungi, "Time", "ASV81", digits = 1)
 #> Taxa are now in rows.
 #>    nb_seq nb_samp mean_nb_seq sd_nb_seq mean_nb_seq_when_present nb_total_samp
@@ -80,4 +80,5 @@ distri_1_taxa(data_fungi, "Time", "ASV81", digits = 1)
 #> 5        0.1
 #> 10       0.1
 #> 15       0.0
+# }
 ```

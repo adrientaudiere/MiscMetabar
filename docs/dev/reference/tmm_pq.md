@@ -45,6 +45,7 @@ Adrien Taudière
 
 ``` r
 data_f_tmm <- tmm_pq(data_fungi_mini)
+#> calcNormFactors has been renamed to normLibSizes
 #> Warning: no non-missing arguments to max; returning -Inf
 #> Warning: no non-missing arguments to max; returning -Inf
 #> Warning: no non-missing arguments to max; returning -Inf
