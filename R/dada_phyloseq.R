@@ -2784,6 +2784,13 @@ verify_tax_table <- function(
 #'   Minimum number of sequences per taxa to not show warning.
 #' @param check_taxonomy (logical, default FALSE) If TRUE, call
 #'   [verify_tax_table()] to check for common taxonomy table issues.
+#' @param check_order (logical, default TRUE) If TRUE, additionally check that
+#'   the *order* (not only the set) of `sample_names` matches between the
+#'   `otu_table` and `sam_data` slots, and that the order of `taxa_names`
+#'   matches between the `otu_table` and `tax_table` slots. A mismatching
+#'   order is tolerated by phyloseq but silently breaks any function that
+#'   aligns slots positionally; set to FALSE to bypass this check (e.g. on a
+#'   legacy object you intend to reorder afterwards).
 #' @param ... Additional arguments passed to [verify_tax_table()] when
 #'   `check_taxonomy = TRUE`.
 #' @return Nothing if the phyloseq object is valid. An error in the other case.
@@ -2803,6 +2810,7 @@ verify_pq <- function(
   min_nb_seq_sample = 500,
   min_nb_seq_taxa = 1,
   check_taxonomy = FALSE,
+  check_order = TRUE,
   ...
 ) {
   # check consistency of taxa_names between slots
@@ -2845,6 +2853,28 @@ verify_pq <- function(
     }
   }
 
+  # check consistency of taxa_names ORDER (not only the set) between the
+  # otu_table and tax_table slots. A mismatching order is tolerated by
+  # phyloseq but silently breaks functions that align slots positionally.
+  if (
+    check_order &&
+      !is.null(physeq@otu_table) &&
+      !is.null(physeq@tax_table)
+  ) {
+    otu_taxa <- taxa_names(physeq@otu_table)
+    tax_taxa <- taxa_names(physeq@tax_table)
+    if (setequal(otu_taxa, tax_taxa) && !identical(otu_taxa, tax_taxa)) {
+      stop(
+        "Inconsistency of taxa_names ORDER between otu_table and tax_table ",
+        "slots (same taxa, different order). This silently breaks functions ",
+        "that align slots positionally. Reorder the tax_table to match the ",
+        "otu_table, e.g.\n",
+        "  physeq@tax_table <- physeq@tax_table[taxa_names(physeq), ]\n",
+        "or set check_order = FALSE to bypass this check."
+      )
+    }
+  }
+
   # check for duplicate in refseq
   if (!is.null(physeq@refseq)) {
     if (any(duplicated(as.character(physeq@refseq)))) {
@@ -2859,6 +2889,17 @@ verify_pq <- function(
     if (!setequal(otu_samples, sam_samples)) {
       stop(
         "Inconsistency of sample_names between otu_table and sam_data slots."
+      )
+    }
+    # check consistency of sample_names ORDER (not only the set).
+    if (check_order && !identical(otu_samples, sam_samples)) {
+      stop(
+        "Inconsistency of sample_names ORDER between otu_table and sam_data ",
+        "slots (same samples, different order). This silently breaks ",
+        "functions that align slots positionally. Reorder the sam_data to ",
+        "match the otu_table, e.g.\n",
+        "  physeq@sam_data <- physeq@sam_data[sample_names(physeq), ]\n",
+        "or set check_order = FALSE to bypass this check."
       )
     }
   }
@@ -5123,10 +5164,14 @@ assign_idtaxa <- function(
         paste(as.character(rep(";", each = col2add[i])), collapse = "")
       )
   }
+  ##> Split width is driven by the requested ranks (`column_names`), not by the
+  ##> observed classification depth: shallow assignments (e.g. stopping at Class)
+  ##> are padded with empty strings so the result always has one column per rank.
+  ##> The `+ 1` accounts for the leading "Root" element dropped by `[, -1]`.
   t_idtaxa <- tibble::tibble(data.frame(stringr::str_split_fixed(
     idtaxa_taxa_df,
     ";",
-    max(stringr::str_count(idtaxa_taxa_df, ";")) + 1
+    length(column_names) + 1
   )))[, -1]
 
   rank_cols_clean <- column_names
