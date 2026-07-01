@@ -22,10 +22,7 @@ Either a single value (if \code{unique(x)} return a single value) or a NA
 If \code{unique(x)} is a single value, return it; otherwise, return an NA of the
 same type as \code{x}. If \code{x} is a factor, then the levels and ordered status
 will be kept in either case. If \code{x} is a non-atomic vector (i.e. a list),
-then the logical \code{NA} will be used.
-}
-\details{
-\if{html}{\out{
+then the logical \code{NA} will be used.\if{html}{\out{
 <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 }}
