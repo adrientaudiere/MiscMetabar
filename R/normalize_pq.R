@@ -192,7 +192,7 @@ transform_pq <- function(
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #'   This function implement the method proposed by
-#'   McKnight et al. 2018 (\doi{doi:10.5061/dryad.tn8qs35})
+#'   McKnight et al. 2018 (\doi{10.5061/dryad.tn8qs35})
 #'
 #' @inheritParams clean_pq
 #'

@@ -86,6 +86,7 @@ strassoc_pq <- function(
   }
 
   verify_pq(physeq)
+  verify_fact_pq(physeq, fact = fact)
 
   if (nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
     cli::cli_abort(

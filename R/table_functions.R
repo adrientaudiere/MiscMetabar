@@ -205,8 +205,11 @@ compare_pairs_pq <- function(
   if (!is.factor(physeq@sam_data[[bifactor]])) {
     physeq@sam_data[[bifactor]] <- as.factor(physeq@sam_data[[bifactor]])
   }
-  if (nlevels(as.factor(physeq@sam_data[[bifactor]]) != 2)) {
-    stop("The bifactor arguments needs only two levels")
+  n_lev_bifactor <- nlevels(physeq@sam_data[[bifactor]])
+  if (n_lev_bifactor != 2) {
+    cli::cli_abort(
+      "The {.arg bifactor} argument {.val {bifactor}} must have exactly two levels, but has {n_lev_bifactor}."
+    )
   }
   lev1 <- levels(physeq@sam_data[[bifactor]])[1]
   lev2 <- levels(physeq@sam_data[[bifactor]])[2]

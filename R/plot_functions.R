@@ -140,6 +140,10 @@ accu_plot <-
       stop("physeq must be a phyloseq object")
     }
 
+    if (!is.null(fact)) {
+      verify_fact_pq(physeq, fact = fact)
+    }
+
     if (!is.null(fact) && nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
       stop(
         "The factor '",
@@ -378,6 +382,8 @@ accu_plot_balanced_modality <- function(
   verbose = FALSE,
   ...
 ) {
+  verify_fact_pq(physeq, fact = fact)
+
   if (nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
     stop(
       "The factor '",
@@ -1815,6 +1821,10 @@ hill_pq <- function(
     color_fac <- sym(color_fac)
   }
 
+  if (!is.null(fact)) {
+    verify_fact_pq(physeq, fact = fact)
+  }
+
   physeq <- taxa_as_rows(physeq)
   if (na_remove || letters) {
     physeq <- subset_samples_pq(physeq, !is.na(physeq@sam_data[[fact]]))
@@ -2080,6 +2090,9 @@ ggbetween_pq <-
     ...
   ) {
     verify_pq(physeq)
+    if (!is.null(fact)) {
+      verify_fact_pq(physeq, fact = fact)
+    }
 
     if (nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
       stop(
@@ -3797,6 +3810,10 @@ plot_tsne_pq <- function(
   force_factor = TRUE,
   ...
 ) {
+  if (!is.na(fact)) {
+    verify_fact_pq(physeq, fact = fact)
+  }
+
   if (
     !is.factor(physeq@sam_data[[fact]]) &&
       !is.na(fact) &&
@@ -4126,6 +4143,8 @@ upset_pq <- function(
   verbose = TRUE,
   ...
 ) {
+  verify_fact_pq(physeq, fact = fact)
+
   if (nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
     stop(
       "The factor '",

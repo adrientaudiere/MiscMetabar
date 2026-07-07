@@ -411,7 +411,7 @@ vs_search_global <- function(
 #'   SWARM can be downloaded from
 #'   \url{https://github.com/torognes/swarm}.
 #'   More information in the associated publications
-#'   \doi{doi:10.1093/bioinformatics/btab493} and \doi{doi:10.7717/peerj.593}
+#'   \doi{10.1093/bioinformatics/btab493} and \doi{10.7717/peerj.593}
 #' @details
 #' This function is mainly a wrapper of the work of others.
 #'   Please cite [SWARM](https://github.com/torognes/swarm).

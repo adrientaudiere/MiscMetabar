@@ -3653,7 +3653,7 @@ tbl_sum_taxtable <- function(physeq, taxonomic_ranks = NULL, ...) {
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
-#' Please cite Nguyen et al. 2016 (\doi{doi:10.1016/j.funeco.2015.06.006})
+#' Please cite Nguyen et al. 2016 (\doi{10.1016/j.funeco.2015.06.006})
 #'
 #' @inheritParams clean_pq
 #' @param taxLevels Name of the 7 columns in tax_table required by funguild
@@ -3684,7 +3684,7 @@ tbl_sum_taxtable <- function(physeq, taxonomic_ranks = NULL, ...) {
 #' @details
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `FUNGuildR` package and the associate
-#'   publication (\doi{doi:10.1016/j.funeco.2015.06.006}) if you
+#'   publication (\doi{10.1016/j.funeco.2015.06.006}) if you
 #'   use this function.
 #' @seealso [plot_guild_pq()]
 
@@ -3885,7 +3885,7 @@ plot_guild_pq <-
 #' This function build tree phylogenetic tree and if nb_bootstrap is
 #' set, it build also the 3 corresponding bootstrapped tree.
 #'
-#' Default parameters are based on \doi{doi:10.12688/f1000research.8986.2}
+#' Default parameters are based on \doi{10.12688/f1000research.8986.2}
 #' and phangorn vignette [Estimating phylogenetic trees with phangorn](https://klausvigo.github.io/phangorn/articles/Trees.html). You should understand your data, especially the markers,
 #' before using this function.
 #'
@@ -4402,7 +4402,7 @@ physeq_or_string_to_dna <- function(physeq = NULL, dna_seq = NULL) {
 #' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
-#'   Please cite cutadapt (\doi{doi:10.14806/ej.17.1.200}).
+#'   Please cite cutadapt (\doi{10.14806/ej.17.1.200}).
 
 cutadapt_remove_primers <- function(
   path_to_fastq,

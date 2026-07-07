@@ -9,7 +9,9 @@
 #'   model in order to correct for uneven sampling depth.
 #' @aliases hill_tuckey_pq
 #' @inheritParams clean_pq
-#' @param modality (required) the variable to test
+#' @param fact (required) Name of the `physeq@sam_data` column defining the
+#'   groups to test. Formerly `modality`.
+#' @param modality `r lifecycle::badge("deprecated")` Use `fact` instead.
 #' @param q (numeric vector) Hill diversity orders to compute (q values).
 #'   Default computes Hill number 0 (species richness), Hill number 1
 #'   (exponential of Shannon index) and Hill number 2 (inverse of Simpson
@@ -46,11 +48,12 @@
 #' hill_tuckey_pq(data_f, "Height")
 hill_tuckey_pq <- function(
   physeq,
-  modality,
+  fact,
   q = c(0, 1, 2),
   hill_scales = lifecycle::deprecated(),
   silent = TRUE,
   correction_for_sample_size = TRUE,
+  modality = lifecycle::deprecated(),
   ...
 ) {
   if (lifecycle::is_present(hill_scales)) {
@@ -61,8 +64,17 @@ hill_tuckey_pq <- function(
     )
     q <- hill_scales
   }
+  if (lifecycle::is_present(modality)) {
+    lifecycle::deprecate_warn(
+      "0.17.0",
+      "hill_tuckey_pq(modality=)",
+      "hill_tuckey_pq(fact=)"
+    )
+    fact <- modality
+  }
+  verify_fact_pq(physeq, fact = fact)
   modality_vector <-
-    as.factor(as.vector(unlist(unclass(physeq@sam_data[, modality]))))
+    as.factor(as.vector(unlist(unclass(physeq@sam_data[, fact]))))
 
   physeq <- if (silent) {
     suppressMessages(taxa_as_rows(physeq))
@@ -240,6 +252,7 @@ hill_test_rarperm_pq <- function(
   #    "bootpq::hill_test_rarperm_pq()"
   #  )
   verify_pq(physeq)
+  verify_fact_pq(physeq, fact = fact)
 
   if (nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
     stop(

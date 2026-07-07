@@ -53,6 +53,7 @@ graph_test_pq <- function(
   ...
 ) {
   verify_pq(physeq)
+  verify_fact_pq(physeq, fact = fact)
 
   if (nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
     stop(
@@ -761,6 +762,8 @@ multipatt_pq <- function(
   control = permute::how(nperm = 999),
   ...
 ) {
+  verify_fact_pq(physeq, fact = fact)
+
   if (nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
     stop(
       "The factor '",
@@ -882,6 +885,8 @@ ancombc_pq <- function(
   tax_level = "Class",
   ...
 ) {
+  verify_fact_pq(physeq, fact = fact)
+
   if (nlevels(as.factor(physeq@sam_data[[fact]])) < 2) {
     stop(
       "The factor '",
