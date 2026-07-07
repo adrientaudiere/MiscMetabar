@@ -8,6 +8,9 @@ template:
     fg: "#003f5f"
     primary: "#b96821"
     secondary: "#c8a734"
+    base_font: "Fira Mono, monospace"
+    heading_font: "Fira Sans, sans-serif"
+    code_font: "Fira Code, monospace"
   includes:
     in_header: |
       <script data-goatcounter="https://miscmetabar.goatcounter.com/count"
@@ -71,6 +74,7 @@ reference:
   contents:
   - clean_pq
   - verify_pq
+  - verify_fact_pq
   - unwanted_tax_patterns
   - verify_tax_table
 
