@@ -128,6 +128,15 @@ summary_plot_pq(data_fungi)
 
 ``` r
 p <- MiscMetabar::hill_pq(data_fungi, fact = "Height")
+#> Warning: The `modality` argument of `hill_tuckey_pq()` is deprecated as of MiscMetabar
+#> 0.17.0.
+#> ℹ Please use the `fact` argument instead.
+#> ℹ The deprecated feature was likely used in the MiscMetabar package.
+#>   Please report the issue at
+#>   <https://github.com/adrientaudiere/MiscMetabar/issues>.
+#> This warning is displayed once per session.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
 p$plot_Hill_0
 ```
 
