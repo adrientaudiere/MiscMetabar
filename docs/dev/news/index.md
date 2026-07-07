@@ -102,6 +102,43 @@
   to
   [`track_wkflow_samples()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/track_wkflow_samples.md)
   via `...`.
+- [`compare_pairs_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/compare_pairs_pq.md)
+  fixes a bug where the two-level check on `bifactor` never triggered (a
+  misplaced parenthesis evaluated `nlevels(as.factor(x) != 2)`, which is
+  always `0`), so a `bifactor` with more or fewer than two levels
+  silently passed; it now errors with a clear message reporting the
+  actual number of levels.
+- [`hill_test_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/hill_test_rarperm_pq.md)
+  now raises a clear error listing the available `sam_data` columns when
+  the `fact` column is absent, instead of the misleading “must have at
+  least two levels” message that resulted from a missing column being
+  coerced to a zero-level factor.
+- [`hill_tuckey_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/hill_tuckey_pq.md)
+  renames its `modality` argument to `fact` for consistency with the
+  rest of the pqverse; `modality` is kept as a deprecated alias and
+  warns via
+  [`lifecycle::deprecate_warn()`](https://lifecycle.r-lib.org/reference/deprecate_soft.html).
+- [`verify_fact_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/verify_fact_pq.md)
+  is a new exported helper that checks a `fact`/`modality`/`bifactor`
+  column exists in the `sam_data` slot (and, for `bifactor`, has exactly
+  two levels), raising an informative error that lists the available
+  columns. It is now used internally by
+  [`accu_plot()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/accu_plot.md),
+  [`accu_plot_balanced_modality()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/accu_plot_balanced_modality.md),
+  [`ancombc_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/ancombc_pq.md),
+  [`graph_test_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/graph_test_pq.md),
+  [`hill_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/hill_pq.md),
+  [`hill_test_rarperm_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/hill_test_rarperm_pq.md),
+  [`hill_tuckey_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/hill_tuckey_pq.md),
+  [`multipatt_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/multipatt_pq.md),
+  [`plot_tsne_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_tsne_pq.md),
+  [`strassoc_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/strassoc_pq.md)
+  and
+  [`upset_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/upset_pq.md),
+  so passing a grouping column absent from
+  [`sample_data()`](https://rdrr.io/pkg/phyloseq/man/sample_data-methods.html)
+  now raises this clear error instead of a misleading “must have at
+  least two levels” message.
 - [`verify_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/verify_pq.md)
   gains a `check_order` argument (default `TRUE`) that additionally
   verifies the slots are in a consistent *order*, not merely that they

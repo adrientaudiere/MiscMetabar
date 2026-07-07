@@ -185,6 +185,12 @@ data_f <- prune_samples(
   data_fungi_mini
 )
 p <- hill_pq(data_f, "Height", q = c(0, 1))
+#> Warning: The `modality` argument of `hill_tuckey_pq()` is deprecated as of MiscMetabar
+#> 0.17.0.
+#> ℹ Please use the `fact` argument instead.
+#> ℹ The deprecated feature was likely used in the MiscMetabar package.
+#>   Please report the issue at
+#>   <https://github.com/adrientaudiere/MiscMetabar/issues>.
 #> 2 out of 2 Hill scales do not show any global trends with you factor Height. Tuckey HSD plot is not informative for those Hill scales. Letters are not printed for those Hill scales
 p[[1]] + theme(legend.position = "none")
 

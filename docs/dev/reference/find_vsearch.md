@@ -36,5 +36,5 @@ Adrien Taudière
 
 ``` r
 find_vsearch()
-#> [1] "vsearch"
+#> [1] "/home/adrien/.local/share/R/MiscMetabar/bin/vsearch"
 ```

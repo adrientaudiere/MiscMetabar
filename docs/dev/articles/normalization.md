@@ -43,24 +43,24 @@ Large variation in sequencing depth across samples in ‘data_fungi_mini’.
 
 ## Overview of methods
 
-| Family            | Function                                                                                                         | Key property                                                 |
-|-------------------|------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
-| Presence/absence  | [`as_binary_otu_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/as_binary_otu_table.md)     | Ignores abundance entirely                                   |
-| Proportions (TSS) | `transform_pq(method="tss")`                                                                                     | Divides by library size                                      |
-| TSS + log         | [`normalize_prop_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/normalize_prop_pq.md)         | TSS × constant, then log                                     |
-| Hellinger         | `transform_pq(method="hellinger")`                                                                               | Square-root of proportions                                   |
-| Centred log-ratio | `transform_pq(method="clr")`                                                                                     | Compositionally coherent                                     |
-| Robust CLR        | `transform_pq(method="rclr")`                                                                                    | CLR robust to zeros                                          |
-| Log(1+x)          | `transform_pq(method="log1p")`                                                                                   | Simple variance stabilisation                                |
-| Z-score           | `transform_pq(method="z")`                                                                                       | Per-taxon standardisation                                    |
-| Rank              | `transform_pq(method="rank")`                                                                                    | Non-parametric, outlier robust                               |
-| Rarefaction       | [`rarefy_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/rarefy_pq.md)                         | Subsampling to equal depth                                   |
-| SRS               | [`srs_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/srs_pq.md)                               | Rank-preserving subsampling (Heidrich et al. 2021)           |
-| GMPR              | [`gmpr_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/gmpr_pq.md)                             | Pairwise ratio geometric mean (Chen et al. 2018)             |
-| CSS               | [`css_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/css_pq.md)                               | Cumulative sum scaling (Paulson et al. 2013)                 |
-| TMM               | [`tmm_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/tmm_pq.md)                               | Trimmed mean of M-values (Robinson and Oshlack 2010)         |
-| VST               | [`vst_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/vst_pq.md)                               | Variance-stabilising (DESeq2) (Love, Huber, and Anders 2014) |
-| Depth residuals   | [`mcknight_residuals_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/mcknight_residuals_pq.md) | Log-log regression residuals (McKnight et al. 2019)          |
+| Family            | Function                                                                                                         | Key property                                         |
+|-------------------|------------------------------------------------------------------------------------------------------------------|------------------------------------------------------|
+| Presence/absence  | [`as_binary_otu_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/as_binary_otu_table.md)     | Ignores abundance entirely                           |
+| Proportions (TSS) | `transform_pq(method="tss")`                                                                                     | Divides by library size                              |
+| TSS + log         | [`normalize_prop_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/normalize_prop_pq.md)         | TSS × constant, then log                             |
+| Hellinger         | `transform_pq(method="hellinger")`                                                                               | Square-root of proportions                           |
+| Centred log-ratio | `transform_pq(method="clr")`                                                                                     | Compositionally coherent                             |
+| Robust CLR        | `transform_pq(method="rclr")`                                                                                    | CLR robust to zeros                                  |
+| Log(1+x)          | `transform_pq(method="log1p")`                                                                                   | Simple variance stabilisation                        |
+| Z-score           | `transform_pq(method="z")`                                                                                       | Per-taxon standardisation                            |
+| Rank              | `transform_pq(method="rank")`                                                                                    | Non-parametric, outlier robust                       |
+| Rarefaction       | [`rarefy_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/rarefy_pq.md)                         | Subsampling to equal depth                           |
+| SRS               | [`srs_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/srs_pq.md)                               | Rank-preserving subsampling (Heidrich et al. 2021)   |
+| GMPR              | [`gmpr_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/gmpr_pq.md)                             | Pairwise ratio geometric mean (Chen et al. 2018)     |
+| CSS               | [`css_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/css_pq.md)                               | Cumulative sum scaling (Paulson et al. 2013)         |
+| TMM               | [`tmm_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/tmm_pq.md)                               | Trimmed mean of M-values (Robinson and Oshlack 2010) |
+| VST               | [`vst_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/vst_pq.md)                               | Variance-stabilising (DESeq2) (Love et al. 2014)     |
+| Depth residuals   | [`mcknight_residuals_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/mcknight_residuals_pq.md) | Log-log regression residuals (McKnight et al. 2019)  |
 
 ------------------------------------------------------------------------
 
@@ -170,9 +170,9 @@ data_tmm <- tmm_pq(data_fungi_mini)
 
 ### `vst_pq()` — Variance Stabilising Transformation
 
-VST (Love, Huber, and Anders 2014) fits a negative-binomial model to
-stabilise the mean-variance relationship, making counts more suitable
-for methods that assume homoscedastic data.
+VST (Love et al. 2014) fits a negative-binomial model to stabilise the
+mean-variance relationship, making counts more suitable for methods that
+assume homoscedastic data.
 
 ``` r
 data_vst <- vst_pq(data_fungi_mini)
@@ -317,8 +317,7 @@ McMurdie, Paul J, and Susan Holmes. 2014. “Waste Not, Want Not: Why
 Rarefying Microbiome Data Is Inadmissible.” *PLoS Computational Biology*
 10 (4): e1003531. <https://doi.org/10.1371/journal.pcbi.1003531>.
 
-Mikryukov, Vladimir, Olesya Dulya, Alexander Zizka, Mohammad Bahram,
-Niloufar Hagh-Doust, Sten Anslan, Oleh Prylutskyi, et al. 2023.
+Mikryukov, Vladimir, Olesya Dulya, Alexander Zizka, et al. 2023.
 “Connecting the Multiple Dimensions of Global Soil Fungal Diversity.”
 *Science Advances* 9 (48): eadj8016.
 <https://doi.org/10.1126/sciadv.adj8016>.
@@ -337,8 +336,7 @@ Robinson, Mark D, and Alicia Oshlack. 2010. “A Scaling Normalization
 Method for Differential Expression Analysis of RNA-Seq Data.” *Genome
 Biology* 11 (3): R25. <https://doi.org/10.1186/gb-2010-11-3-r25>.
 
-Weiss, Sophie, Zhenjiang Zech Xu, Shyamal Peddada, Amnon Amir, Kyle
-Bittinger, Antonio Gonzalez, Catherine Lozupone, et al. 2017.
+Weiss, Sophie, Zhenjiang Zech Xu, Shyamal Peddada, et al. 2017.
 “Normalization and Microbial Differential Abundance Strategies Depend
 Upon Data Characteristics.” *Microbiome* 5 (1): 27.
 <https://doi.org/10.1186/s40168-017-0237-y>.

@@ -17,10 +17,6 @@ library(MiscMetabar)
 
     ## Loading required package: ggplot2
 
-    ## Loading required package: dada2
-
-    ## Loading required package: Rcpp
-
     ## Loading required package: dplyr
 
     ## 
@@ -33,10 +29,6 @@ library(MiscMetabar)
     ## The following objects are masked from 'package:base':
     ## 
     ##     intersect, setdiff, setequal, union
-
-    ## Loading required package: purrr
-
-    ## Loading required package: divent
 
 ## Install the latest version of FastQC tool on Unix systems (MAC OSX and Linux)
 

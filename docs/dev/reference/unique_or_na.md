@@ -4,6 +4,7 @@ If `unique(x)` is a single value, return it; otherwise, return an NA of
 the same type as `x`. If `x` is a factor, then the levels and ordered
 status will be kept in either case. If `x` is a non-atomic vector (i.e.
 a list), then the logical `NA` will be used.
+[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 ## Usage
 
@@ -26,10 +27,6 @@ unique_or_na(x)
 ## Value
 
 Either a single value (if `unique(x)` return a single value) or a NA
-
-## Details
-
-[![lifecycle-maturing](https://img.shields.io/badge/lifecycle-maturing-blue)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 ## Author
 

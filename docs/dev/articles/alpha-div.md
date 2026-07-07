@@ -397,7 +397,7 @@ ggplot(data = res_glmulti_interaction, aes(
 
 ``` r
 sessionInfo()
-#> R version 4.6.0 (2026-04-24)
+#> R version 4.6.1 (2026-06-24)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Pop!_OS 24.04 LTS
 #> 
@@ -406,12 +406,12 @@ sessionInfo()
 #> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0
 #> 
 #> locale:
-#>  [1] LC_CTYPE=fr_FR.UTF-8          LC_NUMERIC=C                 
-#>  [3] LC_TIME=fr_FR.UTF-8           LC_COLLATE=fr_FR.UTF-8       
-#>  [5] LC_MONETARY=fr_FR.UTF-8       LC_MESSAGES=fr_FR.UTF-8      
-#>  [7] LC_PAPER=fr_FR.UTF-8          LC_NAME=fr_FR.UTF-8          
-#>  [9] LC_ADDRESS=fr_FR.UTF-8        LC_TELEPHONE=fr_FR.UTF-8     
-#> [11] LC_MEASUREMENT=fr_FR.UTF-8    LC_IDENTIFICATION=fr_FR.UTF-8
+#>  [1] LC_CTYPE=en_US.UTF-8          LC_NUMERIC=C                 
+#>  [3] LC_TIME=en_US.UTF-8           LC_COLLATE=en_US.UTF-8       
+#>  [5] LC_MONETARY=en_US.UTF-8       LC_MESSAGES=en_US.UTF-8      
+#>  [7] LC_PAPER=en_US.UTF-8          LC_NAME=en_US.UTF-8          
+#>  [9] LC_ADDRESS=en_US.UTF-8        LC_TELEPHONE=en_US.UTF-8     
+#> [11] LC_MEASUREMENT=en_US.UTF-8    LC_IDENTIFICATION=en_US.UTF-8
 #> 
 #> time zone: Europe/Paris
 #> tzcode source: system (glibc)
@@ -439,7 +439,7 @@ sessionInfo()
 #>  [21] htmlwidgets_1.6.4           desc_1.4.3                 
 #>  [23] plyr_1.8.9                  sandwich_3.1-1             
 #>  [25] zoo_1.8-15                  cachem_1.1.0               
-#>  [27] igraph_2.3.2                lifecycle_1.0.5            
+#>  [27] igraph_2.3.3                lifecycle_1.0.5            
 #>  [29] iterators_1.0.14            pkgconfig_2.0.3            
 #>  [31] Matrix_1.7-5                R6_2.6.1                   
 #>  [33] fastmap_1.2.0               rbibutils_2.4.1            
@@ -449,16 +449,16 @@ sessionInfo()
 #>  [41] textshaping_1.0.5           GenomicRanges_1.64.0       
 #>  [43] vegan_2.7-5                 labeling_0.4.3             
 #>  [45] abind_1.4-8                 mgcv_1.9-4                 
-#>  [47] compiler_4.6.0              fontquiver_0.2.1           
-#>  [49] withr_3.0.2                 S7_0.2.2                   
+#>  [47] compiler_4.6.1              fontquiver_0.2.1           
+#>  [49] withr_3.0.3                 S7_0.2.2                   
 #>  [51] ggsignif_0.6.4              MASS_7.3-65                
 #>  [53] rappdirs_0.3.4              DelayedArray_0.38.2        
 #>  [55] biomformat_1.40.0           ggsci_5.0.0                
-#>  [57] permute_0.9-10              tools_4.6.0                
+#>  [57] permute_0.9-10              tools_4.6.1                
 #>  [59] vipor_0.4.7                 otel_0.2.0                 
 #>  [61] beeswarm_0.4.0              ape_5.8-1                  
 #>  [63] glue_1.8.1                  nlme_3.1-169               
-#>  [65] grid_4.6.0                  cluster_2.1.8.2            
+#>  [65] grid_4.6.1                  cluster_2.1.8.2            
 #>  [67] reshape2_1.4.5              ade4_1.7-24                
 #>  [69] generics_0.1.4              gtable_0.3.6               
 #>  [71] tidyr_1.3.2                 data.table_1.18.4          
@@ -466,14 +466,14 @@ sessionInfo()
 #>  [75] BiocGenerics_0.58.1         ggrepel_0.9.8              
 #>  [77] foreach_1.5.2               pillar_1.11.1              
 #>  [79] stringr_1.6.0               yulab.utils_0.2.4          
-#>  [81] splines_4.6.0               treeio_1.36.1              
+#>  [81] splines_4.6.1               treeio_1.36.1              
 #>  [83] lattice_0.22-9              survival_3.8-6             
 #>  [85] tidyselect_1.2.1            fontLiberation_0.1.0       
 #>  [87] Biostrings_2.80.1           knitr_1.51                 
 #>  [89] fontBitstreamVera_0.1.1     gridExtra_2.3              
 #>  [91] IRanges_2.46.0              Seqinfo_1.2.0              
 #>  [93] SummarizedExperiment_1.42.0 ggtreeExtra_1.22.0         
-#>  [95] stats4_4.6.0                xfun_0.58                  
+#>  [95] stats4_4.6.1                xfun_0.58                  
 #>  [97] Biobase_2.72.0              matrixStats_1.5.0          
 #>  [99] stringi_1.8.7               lazyeval_0.2.3             
 #> [101] ggfun_0.2.0                 yaml_2.3.12                
@@ -483,7 +483,7 @@ sessionInfo()
 #> [109] ggplotify_0.1.3             cli_3.6.6                  
 #> [111] RcppParallel_5.1.11-2       systemfonts_1.3.2          
 #> [113] Rdpack_2.6.6                jquerylib_0.1.4            
-#> [115] parallel_4.6.0              pkgdown_2.2.0              
+#> [115] parallel_4.6.1              pkgdown_2.2.0              
 #> [117] ggh4x_0.3.1                 ggstar_1.0.6               
 #> [119] viridisLite_0.4.3           mvtnorm_1.4-1              
 #> [121] tidytree_0.4.7              ggiraph_0.9.6              

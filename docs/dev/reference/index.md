@@ -24,10 +24,19 @@
 
 - [`clean_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/clean_pq.md)
   : Clean phyloseq object by removing empty samples and taxa
+
 - [`verify_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/verify_pq.md)
   : Verify the validity of a phyloseq object
+
+- [`verify_fact_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/verify_fact_pq.md)
+  :
+
+  Verify that grouping columns exist in the `sam_data` slot of a
+  phyloseq object
+
 - [`unwanted_tax_patterns`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/unwanted_tax_patterns.md)
   : Default patterns for unwanted taxonomic values
+
 - [`verify_tax_table()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/verify_tax_table.md)
   : Verify the taxonomy table of a phyloseq object
 

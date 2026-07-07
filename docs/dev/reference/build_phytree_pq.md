@@ -155,7 +155,7 @@ if (requireNamespace("phangorn")) {
 #> Aligning Sequences:
 #> ================================================================================
 #> 
-#> Time difference of 0.14 secs
+#> Time difference of 0.13 secs
 #> 
 #> Iteration 1 of 2:
 #> 
@@ -172,7 +172,7 @@ if (requireNamespace("phangorn")) {
 #> Realigning Sequences:
 #> ================================================================================
 #> 
-#> Time difference of 0.1 secs
+#> Time difference of 0.09 secs
 #> 
 #> Iteration 2 of 2:
 #> 

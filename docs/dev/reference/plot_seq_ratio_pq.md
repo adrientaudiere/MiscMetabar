@@ -1,6 +1,6 @@
 # A diagnostic plot of the number of sequences per samples
 
-[![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
+A diagnostic plot of the number of sequences per samples.
 
 ## Usage
 
@@ -30,6 +30,8 @@ plot_seq_ratio_pq(physeq, min_nb_seq = 1000, annotations = TRUE)
 A ggplot2 object
 
 ## Details
+
+[![lifecycle-experimental](https://img.shields.io/badge/lifecycle-experimental-orange)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 The x axis depict the number of sequences per samples and the y axis
 depicted the ratio of the number of sequences for a given sample divide

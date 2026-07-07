@@ -10,11 +10,12 @@ the linear model in order to correct for uneven sampling depth.
 ``` r
 hill_tuckey_pq(
   physeq,
-  modality,
+  fact,
   q = c(0, 1, 2),
   hill_scales = lifecycle::deprecated(),
   silent = TRUE,
   correction_for_sample_size = TRUE,
+  modality = lifecycle::deprecated(),
   ...
 )
 ```
@@ -27,9 +28,10 @@ hill_tuckey_pq(
   [`phyloseq-class`](https://rdrr.io/pkg/phyloseq/man/phyloseq-class.html)
   object obtained using the `phyloseq` package.
 
-- modality:
+- fact:
 
-  (required) the variable to test
+  (required) Name of the `physeq@sam_data` column defining the groups to
+  test. Formerly `modality`.
 
 - q:
 
@@ -52,6 +54,10 @@ hill_tuckey_pq(
 
   (logical, default TRUE) This function use a sqrt of the read numbers
   in the linear model in order to correct for uneven sampling depth.
+
+- modality:
+
+  **\[deprecated\]** Use `fact` instead.
 
 - ...:
 

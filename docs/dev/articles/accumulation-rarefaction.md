@@ -98,13 +98,13 @@ parameterised by an order *q*:
   Robust to rare artefactual sequences.
 
 An important consequence for eDNA data: **higher q values are more
-robust to data curation choices** (Calderón-Sanou et al. 2019; Shirazi,
-Taylor, and Brewer 2021). Rarefaction curves at q = {1, 2} typically
-saturate well, while curves at q = 0 rarely saturate and are heavily
-affected by data curation decisions (chimera removal, clustering
-thresholds, etc.) and PCR variability across replicates. This makes q =
-1 a pragmatic default — it weights OTUs by their frequency without
-disproportionately favouring rare or abundant ones.
+robust to data curation choices** (Calderón-Sanou et al. 2019; Shirazi
+et al. 2021). Rarefaction curves at q = {1, 2} typically saturate well,
+while curves at q = 0 rarely saturate and are heavily affected by data
+curation decisions (chimera removal, clustering thresholds, etc.) and
+PCR variability across replicates. This makes q = 1 a pragmatic default
+— it weights OTUs by their frequency without disproportionately
+favouring rare or abundant ones.
 
 For a thorough theoretical treatment of Hill Number, see [Marcon
 (2018)](https://ericmarcon.github.io/MesuresBioDiv2/chap-Accumulation.html).
@@ -460,10 +460,10 @@ Ecological Conclusions: How Strong Is the Influence of Methodological
 Choices?” *Journal of Biogeography* 47 (1): 193–206.
 <https://doi.org/10.1111/jbi.13681>.
 
-Chao, Anne, Yasuhiro Kubota, David Zeleny, Chun-Huo Chiu, Ching-Feng Li,
-Buntarou Kusumoto, Moriaki Yasuhara, et al. 2020. “Quantifying Sample
-Completeness and Comparing Diversities Among Assemblages.” *Ecological
-Research* 35 (3): 292–314. <https://doi.org/10.1111/1440-1703.12102>.
+Chao, Anne, Yasuhiro Kubota, David Zeleny, et al. 2020. “Quantifying
+Sample Completeness and Comparing Diversities Among Assemblages.”
+*Ecological Research* 35 (3): 292–314.
+<https://doi.org/10.1111/1440-1703.12102>.
 
 Hill, Mark O. 1973. “Diversity and Evenness: A Unifying Notation and Its
 Consequences.” *Ecology* 54 (2): 427–32.
@@ -483,13 +483,12 @@ Schloss, Patrick D. 2024a. “Rarefaction Is Currently the Best Approach
 to Control for Uneven Sequencing Effort in Amplicon Sequence Analyses.”
 *mSphere* 9 (1): e00354–23. <https://doi.org/10.1128/msphere.00354-23>.
 
-———. 2024b. “Waste Not, Want Not: Revisiting the Analysis That Called
-into Question the Practice of Rarefaction.” *mSphere* 9 (1): e00355–23.
-<https://doi.org/10.1128/msphere.00355-23>.
+Schloss, Patrick D. 2024b. “Waste Not, Want Not: Revisiting the Analysis
+That Called into Question the Practice of Rarefaction.” *mSphere* 9 (1):
+e00355–23. <https://doi.org/10.1128/msphere.00355-23>.
 
-Shelton, Andrew Olaf, Zachary J. Gold, Andrew Jensen, Erin D’Agnese,
-Elizabeth Dark, Alex Vigil, Krista S. Munsterman, et al. 2023. “Toward
-Quantitative Metabarcoding.” *Ecology* 104 (2): e3906.
+Shelton, Andrew Olaf, Zachary J. Gold, Andrew Jensen, et al. 2023.
+“Toward Quantitative Metabarcoding.” *Ecology* 104 (2): e3906.
 <https://doi.org/10.1002/ecy.3906>.
 
 Shirazi, Shadi, Hulvey R. Taylor, and Mark S. Brewer. 2021. “Revisiting
@@ -500,14 +499,13 @@ Metrics in Environmental DNA Metabarcoding.” *Ecology and Evolution* 11
 Skelton, Jack, Simon Creer, Gary R. Carvalho, and Mathew Seymour. 2023.
 “Environmental DNA Metabarcoding Read Numbers and Their Variability
 Predict Species Abundance, but Weakly in Non-Dominant Species.”
-*Environmental DNA* 5 (5): 1092–1104.
-<https://doi.org/10.1002/edn3.355>.
+*Environmental DNA* 5 (5): 1092–104. <https://doi.org/10.1002/edn3.355>.
 
 ## Session information
 
 ``` r
 sessionInfo()
-#> R version 4.6.0 (2026-04-24)
+#> R version 4.6.1 (2026-06-24)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Pop!_OS 24.04 LTS
 #> 
@@ -516,12 +514,12 @@ sessionInfo()
 #> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0
 #> 
 #> locale:
-#>  [1] LC_CTYPE=fr_FR.UTF-8       LC_NUMERIC=C              
-#>  [3] LC_TIME=fr_FR.UTF-8        LC_COLLATE=fr_FR.UTF-8    
-#>  [5] LC_MONETARY=fr_FR.UTF-8    LC_MESSAGES=fr_FR.UTF-8   
-#>  [7] LC_PAPER=fr_FR.UTF-8       LC_NAME=C                 
+#>  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+#>  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+#>  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+#>  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
 #>  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-#> [11] LC_MEASUREMENT=fr_FR.UTF-8 LC_IDENTIFICATION=C       
+#> [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 #> 
 #> time zone: Europe/Paris
 #> tzcode source: system (glibc)
@@ -537,13 +535,13 @@ sessionInfo()
 #> loaded via a namespace (and not attached):
 #>  [1] gtable_0.3.6          xfun_0.58             bslib_0.11.0         
 #>  [4] htmlwidgets_1.6.4     visNetwork_2.1.4      Biobase_2.72.0       
-#>  [7] lattice_0.22-9        vctrs_0.7.3           tools_4.6.0          
+#>  [7] lattice_0.22-9        vctrs_0.7.3           tools_4.6.1          
 #> [10] Rdpack_2.6.6          generics_0.1.4        biomformat_1.40.0    
-#> [13] stats4_4.6.0          parallel_4.6.0        tibble_3.3.1         
+#> [13] stats4_4.6.1          parallel_4.6.1        tibble_3.3.1         
 #> [16] cluster_2.1.8.2       pkgconfig_2.0.3       Matrix_1.7-5         
 #> [19] data.table_1.18.4     RColorBrewer_1.1-3    S7_0.2.2             
 #> [22] desc_1.4.3            S4Vectors_0.50.1      RcppParallel_5.1.11-2
-#> [25] lifecycle_1.0.5       compiler_4.6.0        farver_2.1.2         
+#> [25] lifecycle_1.0.5       compiler_4.6.1        farver_2.1.2         
 #> [28] stringr_1.6.0         textshaping_1.0.5     Biostrings_2.80.1    
 #> [31] Seqinfo_1.2.0         codetools_0.2-20      permute_0.9-10       
 #> [34] htmltools_0.5.9       sass_0.4.10           yaml_2.3.12          
@@ -552,12 +550,12 @@ sessionInfo()
 #> [43] vegan_2.7-5           iterators_1.0.14      foreach_1.5.2        
 #> [46] nlme_3.1-169          tidyselect_1.2.1      digest_0.6.39        
 #> [49] stringi_1.8.7         purrr_1.2.2           reshape2_1.4.5       
-#> [52] labeling_0.4.3        splines_4.6.0         ade4_1.7-24          
-#> [55] fastmap_1.2.0         grid_4.6.0            cli_3.6.6            
+#> [52] labeling_0.4.3        splines_4.6.1         ade4_1.7-24          
+#> [55] fastmap_1.2.0         grid_4.6.1            cli_3.6.6            
 #> [58] magrittr_2.0.5        DiagrammeR_1.0.12     survival_3.8-6       
-#> [61] ape_5.8-1             withr_3.0.2           scales_1.4.0         
+#> [61] ape_5.8-1             withr_3.0.3           scales_1.4.0         
 #> [64] rmarkdown_2.31        XVector_0.52.0        multtest_2.68.0      
-#> [67] igraph_2.3.2          otel_0.2.0            ragg_1.5.2           
+#> [67] igraph_2.3.3          otel_0.2.0            ragg_1.5.2           
 #> [70] evaluate_1.0.5        knitr_1.51            IRanges_2.46.0       
 #> [73] rbibutils_2.4.1       mgcv_1.9-4            rlang_1.2.0          
 #> [76] glue_1.8.1            BiocGenerics_0.58.1   rstudioapi_0.19.0    

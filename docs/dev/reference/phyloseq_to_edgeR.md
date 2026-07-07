@@ -1,5 +1,6 @@
 # Convert phyloseq OTU count data into DGEList for edgeR package
 
+Convert phyloseq OTU count data into DGEList for edgeR package.
 [![lifecycle-stable](https://img.shields.io/badge/lifecycle-stable-green)](https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle)
 
 ## Usage
