@@ -6,11 +6,12 @@
 \usage{
 hill_tuckey_pq(
   physeq,
-  modality,
+  fact,
   q = c(0, 1, 2),
   hill_scales = lifecycle::deprecated(),
   silent = TRUE,
   correction_for_sample_size = TRUE,
+  modality = lifecycle::deprecated(),
   ...
 )
 }
@@ -18,7 +19,8 @@ hill_tuckey_pq(
 \item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{modality}{(required) the variable to test}
+\item{fact}{(required) Name of the \code{physeq@sam_data} column defining the
+groups to test. Formerly \code{modality}.}
 
 \item{q}{(numeric vector) Hill diversity orders to compute (q values).
 Default computes Hill number 0 (species richness), Hill number 1
@@ -34,6 +36,8 @@ Calderón-Sanou et al., 2019).}
 \item{correction_for_sample_size}{(logical, default TRUE) This function
 use a sqrt of the read numbers in the linear model in order to
 correct for uneven sampling depth.}
+
+\item{modality}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{fact} instead.}
 
 \item{...}{Additional arguments passed to \code{\link[=divent_hill_matrix_pq]{divent_hill_matrix_pq()}} and
 hence to \code{\link[divent:div_hill]{divent::div_hill()}} (e.g. \code{estimator = "naive"} to match

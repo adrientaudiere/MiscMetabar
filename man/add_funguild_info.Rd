@@ -30,12 +30,12 @@ A new object of class \code{physeq} with Guild information added to
 }}
 
 
-Please cite Nguyen et al. 2016 (\doi{doi:10.1016/j.funeco.2015.06.006})
+Please cite Nguyen et al. 2016 (\doi{10.1016/j.funeco.2015.06.006})
 }
 \details{
 This function is mainly a wrapper of the work of others.
 Please make a reference to \code{FUNGuildR} package and the associate
-publication (\doi{doi:10.1016/j.funeco.2015.06.006}) if you
+publication (\doi{10.1016/j.funeco.2015.06.006}) if you
 use this function.
 }
 \examples{

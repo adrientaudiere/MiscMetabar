@@ -30,7 +30,7 @@ normalize and log transformed (if base_log is an integer)
 
 
 This function implement the method proposed by
-McKnight et al. 2018 (\doi{doi:10.5061/dryad.tn8qs35})
+McKnight et al. 2018 (\doi{10.5061/dryad.tn8qs35})
 }
 \examples{
 taxa_sums(data_fungi_mini)

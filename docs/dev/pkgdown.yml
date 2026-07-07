@@ -1,4 +1,4 @@
-pandoc: 3.6.3
+pandoc: 3.8.3
 pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
@@ -16,8 +16,9 @@ articles:
   articles/Rules: Rules.html
   articles/states_of_fields_in_R: states_of_fields_in_R.html
   articles/tengeler: tengeler.html
+  articles/timing: timing.html
   articles/tree_visualization: tree_visualization.html
-last_built: 2026-05-07T11:17Z
+last_built: 2026-07-06T12:26Z
 urls:
   reference: https://adrientaudiere.github.io/MiscMetabar/reference
   article: https://adrientaudiere.github.io/MiscMetabar/articles
