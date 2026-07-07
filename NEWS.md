@@ -1,3 +1,5 @@
+# MiscMetabar 0.18.0 (Development version)
+
 # MiscMetabar 0.17.0 [CRAN]
 * `assign_sintax()` gains a `behavior = "return_taxtab"` option that returns a character matrix of taxonomic values (rows are taxa, columns are the `taxa_ranks`) with rownames set to the taxa names, ready to be passed to `phyloseq::tax_table()`. As with `add_to_phyloseq` and `return_matrix`, values with a bootstrap below `min_bootstrap` are set to NA.
 * `assign_sintax()` now accepts a matrix as `seq2search` (e.g. a dada2 sequence table whose `colnames` are the ASV sequences). The `colnames` are automatically converted to a `DNAStringSet` and used as the taxa names, removing the need for manual conversion at the call site.
