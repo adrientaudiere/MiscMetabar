@@ -189,7 +189,7 @@ if (requireNamespace("phangorn")) {
 #> Realigning Sequences:
 #> ================================================================================
 #> 
-#> Time difference of 0.07 secs
+#> Time difference of 0.06 secs
 #> 
 #> Refining the alignment:
 #> ================================================================================

@@ -1,6 +1,6 @@
 # Changelog
 
-## MiscMetabar 0.17.0 (Development version)
+## MiscMetabar 0.17.0 \[CRAN\]
 
 - [`assign_sintax()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/assign_sintax.md)
   gains a `behavior = "return_taxtab"` option that returns a character

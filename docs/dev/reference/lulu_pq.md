@@ -113,7 +113,6 @@ lulu_pq(data_f)
 #> 
 #> ####processing: ASV2 #####4
 #> 
-#> ---hits: ASV576
 #> ---hits: ASV1027
 #> ---hits: ASV1082
 #> ---hits: ASV962
@@ -1054,6 +1053,7 @@ lulu_pq(data_f)
 #> 
 #> ####processing: ASV24 #####4
 #> 
+#> ---hits: ASV736
 #> ---hits: ASV266
 #> ---hits: ASV979
 #> ---hits: ASV731
@@ -15496,7 +15496,7 @@ lulu_pq(data_f)
 #> [141] "ASV1111" "ASV1263" "ASV1303" "ASV1341" "ASV1380" "ASV1388" "ASV1484"
 #> 
 #> $res_lulu$runtime
-#> Time difference of 2.147203 secs
+#> Time difference of 2.115831 secs
 #> 
 #> $res_lulu$minimum_match
 #> [1] 84
