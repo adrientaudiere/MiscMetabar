@@ -66,6 +66,7 @@ Suggests:
     reshape2,
     rmarkdown,
     rotl,
+    Rsearch,
     Rtsne,
     scales,
     seqinr,

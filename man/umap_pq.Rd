@@ -51,10 +51,7 @@ df_uwot <- umap_pq(data_fungi_mini, pkg = "uwot")
 library(patchwork)
 physeq <- data_fungi_mini
 df_umap <- umap_pq(physeq, n_neighbors = 3)
-res_tsne <- tsne_pq(data_fungi_mini)
-df_umap_tsne <- df_umap
-df_umap_tsne$x_tsne <- res_tsne$Y[, 1]
-df_umap_tsne$y_tsne <- res_tsne$Y[, 2]
+df_umap_tsne <- tsne_pq(data_fungi_mini)
 ((ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
   geom_point(size = 2) +
   ggtitle("UMAP")) +

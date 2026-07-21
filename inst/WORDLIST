@@ -48,6 +48,7 @@ Diaconis
 Dna
 Dufrêne
 Durga
+EE
 ERRORs
 ESV
 EXTrapolation
@@ -130,6 +131,7 @@ PLoS
 Paulson
 PeerJ
 Permanova
+Phred
 Phyloseq
 Pkgdown
 Pompanon
@@ -151,6 +153,7 @@ Rtsne
 Russula
 Rényi
 SCBD
+SHA
 SINTAX
 SNE
 SRS
@@ -274,6 +277,7 @@ denoised
 derep
 dereplicate
 dereplicated
+dereplication
 deuteranopia
 devel's
 df
@@ -300,6 +304,7 @@ fastg
 fastp
 fastq
 fastqcr
+fastx
 favour
 favouring
 filterAndTrim
@@ -325,6 +330,7 @@ grey
 gtsummary
 gz
 gzip
+gzipped
 harbour
 https
 iNEXT
@@ -395,6 +401,7 @@ normalise
 normalised
 normalises
 normalising
+novo
 nperm
 nrow
 nucleotides

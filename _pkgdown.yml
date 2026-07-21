@@ -140,6 +140,7 @@ reference:
   - lulu_pq
   - mmseqs2_clustering
   - mumu_pq
+  - reads2otu
   - swarm_clustering
   - vsearch_clustering
 
@@ -147,6 +148,7 @@ reference:
   contents:
   - chimera_detection_vs
   - chimera_removal_vs
+  - vs_uchime_ref
 
 - subtitle: Sample data
   contents:
@@ -259,7 +261,10 @@ reference:
   - fastq_to_fasta
   - filter_trim
   - list_fastq_files
+  - plot_ee_rate_dist
+  - plot_read_quality
   - subsample_fastq
+  - vs_fastx_uniques
 - subtitle: Import/export phyloseq object
   contents:
   - load_pq

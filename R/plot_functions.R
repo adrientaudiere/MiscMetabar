@@ -3721,13 +3721,17 @@ multitax_bar_pq <- function(
 #' @param perplexity (Numeric) Perplexity parameter (should not be bigger than 3 * perplexity < nrow(X) - 1, see details in the man page of `Rtsne::Rtsne`)
 #' @param ... Additional arguments passed on to `Rtsne::Rtsne()`
 #'
-#' @return A list of element including the matrix Y containing the new representations for the objects.
-#'   See ?Rtsne::Rtsne() for more information
+#' @return A dataframe with samples informations and the x_tsne and y_tsne
+#'   position (or `tsne_1`, `tsne_2`, ... columns when `dims != 2`).
 #' @export
+#' @author Adrien Taudiere
+#' @seealso [Rtsne::Rtsne()], [umap_pq()], [phyloseq::plot_ordination()]
 #'
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' if (requireNamespace("Rtsne")) {
-#'   res_tsne <- tsne_pq(data_fungi_mini)
+#'   df_tsne <- tsne_pq(data_fungi_mini)
+#'   ggplot(df_tsne, aes(x = x_tsne, y = y_tsne, col = Height)) +
+#'     geom_point(size = 2)
 #' }
 tsne_pq <-
   function(
@@ -3738,7 +3742,10 @@ tsne_pq <-
     perplexity = 30,
     ...
   ) {
+    verify_pq(physeq)
     physeq <- taxa_as_rows(physeq)
+
+    psm_samp <- psmelt_samples_pq(physeq)
 
     res_tsne <-
       Rtsne::Rtsne(
@@ -3750,7 +3757,17 @@ tsne_pq <-
         ...
       )
 
-    return(res_tsne)
+    tsne_layout <- as_tibble(res_tsne$Y, .name_repair = "minimal")
+    names(tsne_layout) <- if (dims == 2) {
+      c("x_tsne", "y_tsne")
+    } else {
+      paste0("tsne_", seq_len(dims))
+    }
+    tsne_layout$Sample <- sample_names(physeq)
+
+    df_tsne <- left_join(tsne_layout, psm_samp)
+
+    return(df_tsne)
   }
 ################################################################################
 
@@ -3835,7 +3852,7 @@ plot_tsne_pq <- function(
     )
   }
 
-  tsne <- tsne_pq(
+  df_tsne <- tsne_pq(
     physeq = physeq,
     method = method,
     dims = dims,
@@ -3844,19 +3861,18 @@ plot_tsne_pq <- function(
     ...
   )
 
-  res_tSNE_A <- tsne$Y[, plot_dims[1]] / 100
-  res_tSNE_B <- tsne$Y[, plot_dims[2]] / 100
-
-  df <- tibble(
-    res_tSNE_A,
-    res_tSNE_B,
-    as(physeq@sam_data, "data.frame")
-  )
+  if (dims == 2) {
+    col_x <- "x_tsne"
+    col_y <- "y_tsne"
+  } else {
+    col_x <- paste0("tsne_", plot_dims[1])
+    col_y <- paste0("tsne_", plot_dims[2])
+  }
 
   g <-
     ggplot(
-      data = df,
-      aes(.data[["res_tSNE_A"]], .data[["res_tSNE_B"]], group = .data[[fact]])
+      data = df_tsne,
+      aes(.data[[col_x]], .data[[col_y]], group = .data[[fact]])
     ) +
     xlab(paste0("Dimension ", plot_dims[1], " of tSNE analysis")) +
     ylab(paste0("Dimension ", plot_dims[2], " of tSNE analysis"))
@@ -6616,10 +6632,7 @@ hill_curves_pq <- function(
 #' library(patchwork)
 #' physeq <- data_fungi_mini
 #' df_umap <- umap_pq(physeq, n_neighbors = 3)
-#' res_tsne <- tsne_pq(data_fungi_mini)
-#' df_umap_tsne <- df_umap
-#' df_umap_tsne$x_tsne <- res_tsne$Y[, 1]
-#' df_umap_tsne$y_tsne <- res_tsne$Y[, 2]
+#' df_umap_tsne <- tsne_pq(data_fungi_mini)
 #' ((ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
 #'   geom_point(size = 2) +
 #'   ggtitle("UMAP")) +

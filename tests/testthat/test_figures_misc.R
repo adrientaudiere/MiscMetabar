@@ -17,10 +17,12 @@ test_that("tsne_pq works with data_fungi_mini dataset", {
   skip_on_os("windows")
   skip_on_cran()
   expect_silent(suppressMessages(res_tsne <- tsne_pq(data_fungi_mini)))
-  expect_s3_class(res_tsne, "Rtsne")
+  expect_s3_class(res_tsne, "data.frame")
+  expect_true(all(c("x_tsne", "y_tsne", "Sample") %in% names(res_tsne)))
   expect_silent(suppressMessages(
-    res_tsne <- tsne_pq(data_fungi_mini, dims = 3, perplexity = 25)
+    res_tsne3 <- tsne_pq(data_fungi_mini, dims = 3, perplexity = 25)
   ))
+  expect_true(all(c("tsne_1", "tsne_2", "tsne_3") %in% names(res_tsne3)))
 })
 
 test_that("plot_tsne_pq works with data_fungi_mini dataset", {

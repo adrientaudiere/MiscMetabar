@@ -21,8 +21,8 @@ using the \code{phyloseq} package.}
 \item{...}{Additional arguments passed on to \code{Rtsne::Rtsne()}}
 }
 \value{
-A list of element including the matrix Y containing the new representations for the objects.
-See ?Rtsne::Rtsne() for more information
+A dataframe with samples informations and the x_tsne and y_tsne
+position (or \code{tsne_1}, \code{tsne_2}, ... columns when \code{dims != 2}).
 }
 \description{
 Compute tSNE position of samples from a phyloseq object
@@ -30,7 +30,15 @@ Compute tSNE position of samples from a phyloseq object
 \examples{
 \dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") withAutoprint(\{ # examplesIf}
 if (requireNamespace("Rtsne")) {
-  res_tsne <- tsne_pq(data_fungi_mini)
+  df_tsne <- tsne_pq(data_fungi_mini)
+  ggplot(df_tsne, aes(x = x_tsne, y = y_tsne, col = Height)) +
+    geom_point(size = 2)
 }
 \dontshow{\}) # examplesIf}
+}
+\seealso{
+\code{\link[Rtsne:Rtsne]{Rtsne::Rtsne()}}, \code{\link[=umap_pq]{umap_pq()}}, \code{\link[phyloseq:plot_ordination]{phyloseq::plot_ordination()}}
+}
+\author{
+Adrien Taudiere
 }
