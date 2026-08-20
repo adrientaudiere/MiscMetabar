@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MiscMetabar</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.17.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.18.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -487,6 +487,20 @@
 
         <dt>
 
+          <code><a href="cluster_reads.html">cluster_reads()</a></code>
+
+        </dt>
+        <dd>Cluster raw reads into OTUs (vsearch or SWARM), no DADA2 required</dd>
+
+        <dt>
+
+          <code><a href="denoised_reads.html">denoised_reads()</a></code>
+
+        </dt>
+        <dd>Denoise raw reads into ASVs / zOTUs (dada2, SWARM or vsearch UNOISE)</dd>
+
+        <dt>
+
           <code><a href="lulu.html">lulu()</a></code>
 
         </dt>
@@ -549,6 +563,13 @@
 
         </dt>
         <dd>Search for a list of sequence in an object to remove chimera taxa using <a href="https://github.com/torognes/vsearch" class="external-link">vsearch</a></dd>
+
+        <dt>
+
+          <code><a href="vs_uchime_ref.html">vs_uchime_ref()</a></code>
+
+        </dt>
+        <dd>Reference-based chimera detection with vsearch</dd>
       </dl></div><div class="section level2">
 
       <h3 id="sample-data">Sample data<a class="anchor" aria-label="anchor" href="#sample-data"></a></h3>
@@ -1217,10 +1238,31 @@
 
         <dt>
 
+          <code><a href="plot_ee_rate_dist.html">plot_ee_rate_dist()</a></code>
+
+        </dt>
+        <dd>Plot the distribution of expected error (EE) rates of reads</dd>
+
+        <dt>
+
+          <code><a href="plot_read_quality.html">plot_read_quality()</a></code>
+
+        </dt>
+        <dd>Plot the quality of reads in a fastq file</dd>
+
+        <dt>
+
           <code><a href="subsample_fastq.html">subsample_fastq()</a></code>
 
         </dt>
         <dd>Subsample a fastq file copying the n_seq first sequences in a given folder</dd>
+
+        <dt>
+
+          <code><a href="vs_fastx_uniques.html">vs_fastx_uniques()</a></code>
+
+        </dt>
+        <dd>Dereplicate sequences in a fastx file</dd>
       </dl></div><div class="section level2">
 
       <h3 id="import-export-phyloseq-object">Import/export phyloseq object<a class="anchor" aria-label="anchor" href="#import-export-phyloseq-object"></a></h3>

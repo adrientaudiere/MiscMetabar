@@ -97,6 +97,11 @@ if (requireNamespace("Rtsne")) {
   plot_tsne_pq(data_fungi_mini, fact = "Height", perplexity = 15)
 }
 #> Loading required namespace: Rtsne
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> Joining with `by = join_by(Sample)`
+#> Joining with `by = join_by(Sample)`
 
 # \donttest{
 if (requireNamespace("Rtsne")) {
@@ -107,6 +112,19 @@ if (requireNamespace("Rtsne")) {
     force_factor = FALSE
   )
 }
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> Joining with `by = join_by(Sample)`
+#> Joining with `by = join_by(Sample)`
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> ! Sample coverage is 0, most estimators will return `NaN`.
+#> Joining with `by = join_by(Sample)`
+#> Joining with `by = join_by(Sample)`
 
 # }
 ```

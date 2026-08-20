@@ -136,11 +136,12 @@ reference:
 - subtitle: (Re)clustering OTU table
   contents:
   - asv2otu
+  - cluster_reads
+  - denoised_reads
   - lulu
   - lulu_pq
   - mmseqs2_clustering
   - mumu_pq
-  - reads2otu
   - swarm_clustering
   - vsearch_clustering
 

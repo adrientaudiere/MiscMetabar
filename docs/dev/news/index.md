@@ -1,6 +1,52 @@
 # Changelog
 
-## MiscMetabar 0.17.0 (Development version)
+## MiscMetabar 0.18.0 (Development version)
+
+- [`plot_ee_rate_dist()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_ee_rate_dist.md)
+  and
+  [`plot_read_quality()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_read_quality.md)
+  are new thin wrappers of the eponymous `Rsearch` functions plotting,
+  from a fastq file, the distribution of expected error (EE) rates and
+  the per-base read quality.
+- [`cluster_reads()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/cluster_reads.md)
+  clusters raw reads (fasta/fastq files, or a vector of DNA sequences
+  treated as one sample) into similarity-threshold OTUs without DADA2:
+  reads are dereplicated with vsearch, pooled across samples, clustered
+  with vsearch (`--cluster_size`, default) or SWARM (`d > 1`
+  recommended), and per-sample abundances are assembled into an
+  `otu_table` with the representative (seed/centroid) sequence of each
+  OTU in the `refseq` slot. It complements
+  [`asv2otu()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/postcluster_pq.md),
+  which post-clusters ASVs already stored in a phyloseq object.
+- [`denoised_reads()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/denoised_reads.md)
+  denoises raw reads into ASVs/zOTUs (named `ASV_1`, …) using vsearch
+  UNOISE3 (default), SWARM with `d = 1` (fastidious), or the classical
+  dada2 pipeline
+  ([`dada2::dada()`](https://rdrr.io/pkg/dada2/man/dada.html) with
+  `selfConsist = TRUE` by default, overridable through `...`; fastq
+  only; followed by de-novo chimera removal), returning a phyloseq
+  object with an `otu_table` of per-sample abundances and the variant
+  sequences in the `refseq` slot.
+- [`tsne_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/tsne_pq.md)
+  now returns a tibble of sample informations with the `x_tsne`/`y_tsne`
+  position (or `tsne_1`, `tsne_2`, … columns when `dims != 2`),
+  mirroring the output of
+  [`umap_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/umap_pq.md),
+  instead of the raw
+  [`Rtsne::Rtsne()`](https://rdrr.io/pkg/Rtsne/man/Rtsne.html) list.
+  **Breaking change:** code relying on the previous `$Y` matrix output
+  must be updated to use the new named columns;
+  [`plot_tsne_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_tsne_pq.md)
+  is updated accordingly and requires no changes from callers.
+- [`vs_fastx_uniques()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/vs_fastx_uniques.md)
+  and
+  [`vs_uchime_ref()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/vs_uchime_ref.md)
+  are new thin wrappers of the eponymous `Rsearch` functions for
+  standalone dereplication of a fastx file and reference-based chimera
+  detection against a fasta database (the latter complements the de-novo
+  [`chimera_detection_vs()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/chimera_detection_vs.md)).
+
+## MiscMetabar 0.17.0 \[CRAN\]
 
 - [`assign_sintax()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/assign_sintax.md)
   gains a `behavior = "return_taxtab"` option that returns a character

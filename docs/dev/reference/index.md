@@ -202,6 +202,12 @@
   Recluster sequences of an object of class `physeq` or a list of DNA
   sequences
 
+- [`cluster_reads()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/cluster_reads.md)
+  : Cluster raw reads into OTUs (vsearch or SWARM), no DADA2 required
+
+- [`denoised_reads()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/denoised_reads.md)
+  : Denoise raw reads into ASVs / zOTUs (dada2, SWARM or vsearch UNOISE)
+
 - [`lulu()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/lulu.md)
   : Post Clustering Curation of Amplicon Data.
 
@@ -244,6 +250,9 @@
 
   Search for a list of sequence in an object to remove chimera taxa
   using [vsearch](https://github.com/torognes/vsearch)
+
+- [`vs_uchime_ref()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/vs_uchime_ref.md)
+  : Reference-based chimera detection with vsearch
 
 ### Sample data
 
@@ -591,9 +600,18 @@
 - [`list_fastq_files()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/list_fastq_files.md)
   : List fastq files
 
+- [`plot_ee_rate_dist()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_ee_rate_dist.md)
+  : Plot the distribution of expected error (EE) rates of reads
+
+- [`plot_read_quality()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_read_quality.md)
+  : Plot the quality of reads in a fastq file
+
 - [`subsample_fastq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/subsample_fastq.md)
   : Subsample a fastq file copying the n_seq first sequences in a given
   folder
+
+- [`vs_fastx_uniques()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/vs_fastx_uniques.md)
+  : Dereplicate sequences in a fastx file
 
 ### Import/export phyloseq object
 
