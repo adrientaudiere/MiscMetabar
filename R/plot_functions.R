@@ -1854,7 +1854,7 @@ hill_pq <- function(
   p_var <-
     hill_tuckey_pq(
       physeq,
-      modality = variable_fac,
+      fact = variable_fac,
       q = q,
       correction_for_sample_size = correction_for_sample_size,
       ...

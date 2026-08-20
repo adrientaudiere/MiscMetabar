@@ -145,7 +145,7 @@ plot_ee_rate_dist <- function(
 #'   `fastx_output`.
 #' @export
 #' @author Adrien Taudière
-#' @seealso [Rsearch::vs_fastx_uniques()], [vs_uchime_ref()], [reads2otu()]
+#' @seealso [Rsearch::vs_fastx_uniques()], [vs_uchime_ref()], [cluster_reads()]
 #'
 #' @examplesIf requireNamespace("Rsearch", quietly = TRUE) && MiscMetabar::is_vsearch_installed()
 #' vs_fastx_uniques(
