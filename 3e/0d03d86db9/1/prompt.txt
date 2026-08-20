@@ -1,0 +1,13 @@
+I want to always call "eza  -l --hyperlink --icons" when using eza
+
+---
+
+I want to remove from claude.md preference, it is only for interactive use
+
+---
+
+Yes and add also to .bashrc
+
+---
+
+fix the lighton_api_key
