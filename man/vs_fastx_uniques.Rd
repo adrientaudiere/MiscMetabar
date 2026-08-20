@@ -86,7 +86,7 @@ vs_fastx_uniques(
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-\code{\link[Rsearch:vs_fastx_uniques]{Rsearch::vs_fastx_uniques()}}, \code{\link[=vs_uchime_ref]{vs_uchime_ref()}}, \code{\link[=reads2otu]{reads2otu()}}
+\code{\link[Rsearch:vs_fastx_uniques]{Rsearch::vs_fastx_uniques()}}, \code{\link[=vs_uchime_ref]{vs_uchime_ref()}}, \code{\link[=cluster_reads]{cluster_reads()}}
 }
 \author{
 Adrien Taudière
