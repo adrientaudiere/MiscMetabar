@@ -3721,11 +3721,37 @@ multitax_bar_pq <- function(
 #' @param perplexity (Numeric) Perplexity parameter (should not be bigger than 3 * perplexity < nrow(X) - 1, see details in the man page of `Rtsne::Rtsne`)
 #' @param ... Additional arguments passed on to `Rtsne::Rtsne()`
 #'
+#' @details
+#' t-SNE is a **local** dimensionality-reduction technique: it preferentially
+#' preserves the neighbourhood structure of the original samples. It is
+#' therefore well suited to *neighbourhood identification*, *outlier
+#' identification* and *cluster identification*. However, the distances between
+#' points, the distances between clusters, the density of a cluster and the
+#' class separability read on the embedding are **not** faithful to the original
+#' space and must not be interpreted as such (Jeon et al., 2026). For these
+#' *global* questions, use a global technique instead, such as PCA
+#' (`stats::prcomp()`) or MDS/PCoA ([phyloseq::ordinate()],
+#' [plot_ordination_pq()]). Recent techniques such as UMATO (Jeon et al., 2025)
+#' and PaCMAP (Wang et al., 2021) seek a better compromise between local and
+#' global structure preservation.
+#'
+#' This function is mainly a wrapper of the work of others.
+#'   Please make a reference to `Rtsne::Rtsne()` if you
+#'   use this function.
+#'
 #' @return A dataframe with samples informations and the x_tsne and y_tsne
 #'   position (or `tsne_1`, `tsne_2`, ... columns when `dims != 2`).
 #' @export
-#' @author Adrien Taudiere
-#' @seealso [Rtsne::Rtsne()], [umap_pq()], [phyloseq::plot_ordination()]
+#' @author Adrien Taudière
+#' @seealso [Rtsne::Rtsne()], [umap_pq()], [plot_ordination_pq()],
+#'   [phyloseq::plot_ordination()]
+#' @references
+#' Jeon, H., Park, J., Shin, S., & Seo, J. (2026). Stop Misusing t-SNE and UMAP
+#'   for Visual Analytics. *IEEE Transactions on Visualization and Computer
+#'   Graphics*. \doi{10.48550/arXiv.2506.08725}
+#'
+#' van der Maaten, L., & Hinton, G. (2008). Visualizing Data using t-SNE.
+#'   *Journal of Machine Learning Research*, 9, 2579-2605.
 #'
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' if (requireNamespace("Rtsne")) {
@@ -3793,11 +3819,27 @@ tsne_pq <-
 #' @param force_factor (logical, default TRUE) Force the fact column to be a factor.
 #' @param ... Additional arguments passed on to `Rtsne::Rtsne()`
 #'
+#' @details
+#' As explained in the documentation of [tsne_pq()], t-SNE is a **local**
+#' technique: the plot is reliable for *neighbourhood*, *outlier* and *cluster
+#' identification*, but the distances between points or clusters, the cluster
+#' density and the class separability it suggests must not be read as faithful
+#' to the original space (Jeon et al., 2026). See [tsne_pq()] for details and
+#' for global alternatives (PCA, MDS/PCoA).
+#'
 #' @return
 #' A ggplot object
 #'
 #' @export
 #' @author Adrien Taudière
+#'
+#' @references
+#' Jeon, H., Park, J., Shin, S., & Seo, J. (2026). Stop Misusing t-SNE and UMAP
+#'   for Visual Analytics. *IEEE Transactions on Visualization and Computer
+#'   Graphics*. \doi{10.48550/arXiv.2506.08725}
+#'
+#' van der Maaten, L., & Hinton, G. (2008). Visualizing Data using t-SNE.
+#'   *Journal of Machine Learning Research*, 9, 2579-2605.
 #'
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
 #' if (requireNamespace("Rtsne")) {
@@ -6657,9 +6699,42 @@ hill_curves_pq <- function(
 #'     ggtitle("uwot::umap2"))
 #' }
 #' @details
+#' UMAP is a **local** dimensionality-reduction technique: it preferentially
+#' preserves the neighbourhood structure of the original samples. It is
+#' therefore well suited to *neighbourhood identification*, *outlier
+#' identification* and *cluster identification*. However, the distances between
+#' points, the distances between clusters, the density of a cluster and the
+#' class separability read on the embedding are **not** faithful to the original
+#' space and must not be interpreted as such (Jeon et al., 2026). For these
+#' *global* questions, use a global technique instead, such as PCA
+#' (`stats::prcomp()`) or MDS/PCoA ([phyloseq::ordinate()],
+#' [plot_ordination_pq()]). Recent techniques such as UMATO (Jeon et al., 2025)
+#' and PaCMAP (Wang et al., 2021) seek a better compromise between local and
+#' global structure preservation.
+#'
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `umap::umap()` if you
 #'   use this function.
+#'
+#' @references
+#' Jeon, H., Park, J., Shin, S., & Seo, J. (2026). Stop Misusing t-SNE and UMAP
+#'   for Visual Analytics. *IEEE Transactions on Visualization and Computer
+#'   Graphics*. \doi{10.48550/arXiv.2506.08725}
+#'
+#' Jeon, H., Ko, K., Lee, S., Hyun, J., Yang, T., Go, G., Jo, J., & Seo, J.
+#'   (2025). UMATO: Bridging Local and Global Structures for Reliable Visual
+#'   Analytics with Dimensionality Reduction. *IEEE Transactions on
+#'   Visualization and Computer Graphics*. \doi{10.1109/TVCG.2025.3602735}
+#'
+#' McInnes, L., Healy, J., & Melville, J. (2018). UMAP: Uniform Manifold
+#'   Approximation and Projection for Dimension Reduction.
+#'   \doi{10.48550/arXiv.1802.03426}
+#'
+#' Wang, Y., Huang, H., Rudin, C., & Shaposhnik, Y. (2021). Understanding How
+#'   Dimension Reduction Tools Work: An Empirical Approach to Deciphering
+#'   t-SNE, UMAP, TriMap, and PaCMAP for Data Visualization. *Journal of Machine
+#'   Learning Research*, 22(201), 1-73.
+#'   \doi{10.48550/arXiv.2012.04456}
 
 umap_pq <- function(physeq, pkg = "umap", ...) {
   verify_pq(physeq)

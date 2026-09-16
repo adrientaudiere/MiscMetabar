@@ -27,6 +27,24 @@ position (or \code{tsne_1}, \code{tsne_2}, ... columns when \code{dims != 2}).
 \description{
 Compute tSNE position of samples from a phyloseq object
 }
+\details{
+t-SNE is a \strong{local} dimensionality-reduction technique: it preferentially
+preserves the neighbourhood structure of the original samples. It is
+therefore well suited to \emph{neighbourhood identification}, \emph{outlier
+identification} and \emph{cluster identification}. However, the distances between
+points, the distances between clusters, the density of a cluster and the
+class separability read on the embedding are \strong{not} faithful to the original
+space and must not be interpreted as such (Jeon et al., 2026). For these
+\emph{global} questions, use a global technique instead, such as PCA
+(\code{stats::prcomp()}) or MDS/PCoA (\code{\link[phyloseq:ordinate]{phyloseq::ordinate()}},
+\code{\link[=plot_ordination_pq]{plot_ordination_pq()}}). Recent techniques such as UMATO (Jeon et al., 2025)
+and PaCMAP (Wang et al., 2021) seek a better compromise between local and
+global structure preservation.
+
+This function is mainly a wrapper of the work of others.
+Please make a reference to \code{Rtsne::Rtsne()} if you
+use this function.
+}
 \examples{
 \dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") withAutoprint(\{ # examplesIf}
 if (requireNamespace("Rtsne")) {
@@ -36,9 +54,18 @@ if (requireNamespace("Rtsne")) {
 }
 \dontshow{\}) # examplesIf}
 }
+\references{
+Jeon, H., Park, J., Shin, S., & Seo, J. (2026). Stop Misusing t-SNE and UMAP
+for Visual Analytics. \emph{IEEE Transactions on Visualization and Computer
+Graphics}. \doi{10.48550/arXiv.2506.08725}
+
+van der Maaten, L., & Hinton, G. (2008). Visualizing Data using t-SNE.
+\emph{Journal of Machine Learning Research}, 9, 2579-2605.
+}
 \seealso{
-\code{\link[Rtsne:Rtsne]{Rtsne::Rtsne()}}, \code{\link[=umap_pq]{umap_pq()}}, \code{\link[phyloseq:plot_ordination]{phyloseq::plot_ordination()}}
+\code{\link[Rtsne:Rtsne]{Rtsne::Rtsne()}}, \code{\link[=umap_pq]{umap_pq()}}, \code{\link[=plot_ordination_pq]{plot_ordination_pq()}},
+\code{\link[phyloseq:plot_ordination]{phyloseq::plot_ordination()}}
 }
 \author{
-Adrien Taudiere
+Adrien Taudière
 }

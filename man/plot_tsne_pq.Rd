@@ -54,6 +54,14 @@ A ggplot object
 
 Partially inspired by \code{phylosmith::tsne_phyloseq()} function developed by Schuyler D. Smith.
 }
+\details{
+As explained in the documentation of \code{\link[=tsne_pq]{tsne_pq()}}, t-SNE is a \strong{local}
+technique: the plot is reliable for \emph{neighbourhood}, \emph{outlier} and \emph{cluster
+identification}, but the distances between points or clusters, the cluster
+density and the class separability it suggests must not be read as faithful
+to the original space (Jeon et al., 2026). See \code{\link[=tsne_pq]{tsne_pq()}} for details and
+for global alternatives (PCA, MDS/PCoA).
+}
 \examples{
 \dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") withAutoprint(\{ # examplesIf}
 if (requireNamespace("Rtsne")) {
@@ -70,6 +78,14 @@ if (requireNamespace("Rtsne")) {
 }
 }
 \dontshow{\}) # examplesIf}
+}
+\references{
+Jeon, H., Park, J., Shin, S., & Seo, J. (2026). Stop Misusing t-SNE and UMAP
+for Visual Analytics. \emph{IEEE Transactions on Visualization and Computer
+Graphics}. \doi{10.48550/arXiv.2506.08725}
+
+van der Maaten, L., & Hinton, G. (2008). Visualizing Data using t-SNE.
+\emph{Journal of Machine Learning Research}, 9, 2579-2605.
 }
 \author{
 Adrien Taudière

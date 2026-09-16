@@ -32,6 +32,19 @@ A dataframe with samples informations and the x_umap and y_umap position
 https://journals.asm.org/doi/full/10.1128/msystems.00691-21
 }
 \details{
+UMAP is a \strong{local} dimensionality-reduction technique: it preferentially
+preserves the neighbourhood structure of the original samples. It is
+therefore well suited to \emph{neighbourhood identification}, \emph{outlier
+identification} and \emph{cluster identification}. However, the distances between
+points, the distances between clusters, the density of a cluster and the
+class separability read on the embedding are \strong{not} faithful to the original
+space and must not be interpreted as such (Jeon et al., 2026). For these
+\emph{global} questions, use a global technique instead, such as PCA
+(\code{stats::prcomp()}) or MDS/PCoA (\code{\link[phyloseq:ordinate]{phyloseq::ordinate()}},
+\code{\link[=plot_ordination_pq]{plot_ordination_pq()}}). Recent techniques such as UMATO (Jeon et al., 2025)
+and PaCMAP (Wang et al., 2021) seek a better compromise between local and
+global structure preservation.
+
 This function is mainly a wrapper of the work of others.
 Please make a reference to \code{umap::umap()} if you
 use this function.
@@ -75,6 +88,26 @@ df_umap_tsne <- tsne_pq(data_fungi_mini)
     geom_point(size = 2) +
     ggtitle("uwot::umap2"))
 }
+}
+\references{
+Jeon, H., Park, J., Shin, S., & Seo, J. (2026). Stop Misusing t-SNE and UMAP
+for Visual Analytics. \emph{IEEE Transactions on Visualization and Computer
+Graphics}. \doi{10.48550/arXiv.2506.08725}
+
+Jeon, H., Ko, K., Lee, S., Hyun, J., Yang, T., Go, G., Jo, J., & Seo, J.
+(2025). UMATO: Bridging Local and Global Structures for Reliable Visual
+Analytics with Dimensionality Reduction. \emph{IEEE Transactions on
+Visualization and Computer Graphics}. \doi{10.1109/TVCG.2025.3602735}
+
+McInnes, L., Healy, J., & Melville, J. (2018). UMAP: Uniform Manifold
+Approximation and Projection for Dimension Reduction.
+\doi{10.48550/arXiv.1802.03426}
+
+Wang, Y., Huang, H., Rudin, C., & Shaposhnik, Y. (2021). Understanding How
+Dimension Reduction Tools Work: An Empirical Approach to Deciphering
+t-SNE, UMAP, TriMap, and PaCMAP for Data Visualization. \emph{Journal of Machine
+Learning Research}, 22(201), 1-73.
+\doi{10.48550/arXiv.2012.04456}
 }
 \seealso{
 \code{\link[umap:umap]{umap::umap()}}, \code{\link[=tsne_pq]{tsne_pq()}}, \code{\link[phyloseq:plot_ordination]{phyloseq::plot_ordination()}}

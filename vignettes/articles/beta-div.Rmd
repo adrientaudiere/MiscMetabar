@@ -50,6 +50,20 @@ circle_pq(data_fungi_woNA4height, "Height")
 
 ## Ordination
 
+Ordination methods fall into two families. **Global** methods (PCA, PCoA, MDS,
+NMDS) aim to preserve the overall arrangement of the samples, so distances
+between points or clusters, cluster density and class separability can be read
+from the plot. **Local** methods (t-SNE and UMAP below) instead preserve the
+neighbourhood of each sample: they are excellent at revealing neighbourhoods,
+outliers and clusters, but the distances, the relative sizes and the separations
+of the clusters they draw **must not** be interpreted as reflecting the original
+data (Jeon et al., 2026, *Stop Misusing t-SNE and UMAP for Visual Analytics*,
+[arXiv:2506.08725](https://arxiv.org/abs/2506.08725)). Recent methods such as
+[UMATO](https://github.com/hyungkwonko/umato) (Jeon et al., 2025) and
+[PaCMAP](https://github.com/YingfanWang/PaCMAP) (Wang et al., 2021) explicitly
+try to preserve both local and global structure, but they are not implemented in
+MiscMetabar yet (see the pqverse ROADMAP).
+
 ### PCoA
 
 ```{r}
@@ -70,12 +84,18 @@ plot_ordination_pq(data_fungi, method = "robust.aitchison", color = "Height") +
 
 ### TSNE
 
+t-SNE is a local method: here it is used to identify neighbourhoods, outliers
+and clusters, not to compare the distances between samples or groups.
+
 ```{r}
 plot_tsne_pq(data_fungi, fact = "Height")
 ```
 
 
 ### UMAP
+
+UMAP is a local method with the same caveat as t-SNE: interpret groups and
+neighbourhoods, not distances or densities.
 
 ```{r}
 df_umap <- umap_pq(data_fungi)
