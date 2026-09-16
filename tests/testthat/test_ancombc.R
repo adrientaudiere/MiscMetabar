@@ -1,5 +1,5 @@
 skip_on_cran()
-data(data_fungi)
+
 data_subset <- subset_samples(data_fungi, Height %in% c("Low", "High")) |>
   clean_pq()
 

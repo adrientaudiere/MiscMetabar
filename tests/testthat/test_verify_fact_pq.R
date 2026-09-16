@@ -1,4 +1,4 @@
-data(data_fungi_mini)
+
 
 test_that("verify_fact_pq passes for existing columns", {
   expect_invisible(verify_fact_pq(data_fungi_mini, fact = "Height"))

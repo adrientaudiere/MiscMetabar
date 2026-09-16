@@ -1,5 +1,5 @@
 data(enterotype)
-data(data_fungi)
+
 
 test_that("write_pq function works fine with enterotype dataset", {
   testFolder <- tempdir()

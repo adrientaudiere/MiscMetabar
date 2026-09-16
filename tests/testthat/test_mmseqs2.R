@@ -1,4 +1,4 @@
-data(data_fungi)
+
 
 test_that("find_mmseqs2 returns a string", {
   expect_type(find_mmseqs2(), "character")

@@ -1,6 +1,6 @@
 skip_on_cran()
-data(data_fungi)
-data(data_fungi_mini)
+
+
 
 
 test_that("hill_tuckey_pq works with different parameters", {

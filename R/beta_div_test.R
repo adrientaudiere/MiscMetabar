@@ -290,7 +290,7 @@ adonis_pq <- function(
     metadata$sample_size <- sample_sums(physeq)
   }
 
-  res_ado <- vegan::adonis2(.formula, data = metadata, ...)
+  res_ado <- vegan::adonis2(.formula, data = metadata, by = by, ...)
   return(res_ado)
 }
 ################################################################################

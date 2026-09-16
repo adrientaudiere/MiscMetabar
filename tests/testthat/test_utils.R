@@ -1,4 +1,4 @@
-data(data_fungi)
+
 
 test_that("unique_or_na works with default method", {
   expect_identical(unique_or_na(c("a", "a", "a")), "a")

@@ -188,6 +188,50 @@ if (inherits(blast_error_or_not, "try-error")) {
       "phyloseq"
     )
   })
+
+  test_that("assign_blastn reuses a blast_table instead of running blastn again", {
+    path_db_sintax <- system.file(
+      "extdata",
+      "100_sp_UNITE_sh_general_release_dynamic_sintax.fasta",
+      package = "MiscMetabar",
+      mustWork = TRUE
+    )
+    raw <- blast_pq(
+      data_fungi_mini,
+      fasta_for_db = path_db_sintax,
+      unique_per_seq = FALSE,
+      score_filter = FALSE
+    )
+    for (algo in c("vote", "top-hit")) {
+      direct <- assign_blastn(
+        data_fungi_mini,
+        ref_fasta = path_db_sintax,
+        method_algo = algo,
+        vote_algorithm = "rel_majority",
+        min_id = 80,
+        min_cover = 50,
+        min_bit_score = 20,
+        min_e_value = 1e-3,
+        behavior = "return_taxtab"
+      )
+      reused <- assign_blastn(
+        data_fungi_mini,
+        blast_table = raw,
+        method_algo = algo,
+        vote_algorithm = "rel_majority",
+        min_id = 80,
+        min_cover = 50,
+        min_bit_score = 20,
+        min_e_value = 1e-3,
+        behavior = "return_taxtab"
+      )
+      expect_identical(reused, direct)
+    }
+    expect_error(
+      assign_blastn(data_fungi_mini, blast_table = raw[, 1:3]),
+      "columns returned by blast_pq"
+    )
+  })
 }
 
 file.remove(list.files("tests/testthat", pattern = "dbase"))

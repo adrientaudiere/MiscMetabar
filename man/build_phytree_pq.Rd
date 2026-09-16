@@ -14,6 +14,8 @@ build_phytree_pq(
   control = phangorn::pml.control(trace = 0),
   optNni = TRUE,
   multicore = FALSE,
+  align_method = c("decipher", "mafft"),
+  mafft_exec = NULL,
   ...
 )
 }
@@ -46,6 +48,14 @@ see \code{\link[phangorn:optim.pml]{phangorn::optim.pml()}} for more details}
 
 \item{multicore}{(logical) whether models should estimated in parallel.
 see \code{\link[phangorn:bootstrap.pml]{phangorn::bootstrap.pml()}} for more details}
+
+\item{align_method}{Aligner used to align the \code{refseq} slot before the tree
+is built, either \code{"decipher"} (default, pure R) or \code{"mafft"} (external
+program, much faster on large \code{refseq} slots). See \code{\link[=align_pq]{align_pq()}}.}
+
+\item{mafft_exec}{Path to the MAFFT executable. Only used when
+\code{align_method = "mafft"}. Default to NULL, i.e. the usual lookup of
+\code{\link[=is_mafft_installed]{is_mafft_installed()}}.}
 
 \item{...}{Other params for be passed on to
 \code{\link[phangorn:optim.pml]{phangorn::optim.pml()}} function}
@@ -102,6 +112,9 @@ if (requireNamespace("phangorn")) {
 }
 }
 \dontshow{\}) # examplesIf}
+}
+\seealso{
+\code{\link[=align_pq]{align_pq()}}, \code{\link[=is_mafft_installed]{is_mafft_installed()}}
 }
 \author{
 Adrien Taudière

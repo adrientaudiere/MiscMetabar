@@ -1,4 +1,4 @@
-data(data_fungi)
+
 data(enterotype)
 
 test_that("tax_datatable function works fine with data_fungi dataset", {

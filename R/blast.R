@@ -352,10 +352,50 @@ blast_pq <- function(
     "Query cover"
   )
 
+  .filter_blast_table(
+    blast_tab,
+    id_cut = id_cut,
+    bit_score_cut = bit_score_cut,
+    min_cover_cut = min_cover_cut,
+    e_value_cut = e_value_cut,
+    unique_per_seq = unique_per_seq,
+    score_filter = score_filter
+  )
+}
+
+# Order a blast table (columns named as in blast_pq()) by decreasing bit
+# score, keep the best hit of each query if `unique_per_seq`, then apply the
+# score filters. Returns NULL with a message when no hit is left. Shared by
+# blast_pq() and assign_blastn(blast_table = ...).
+.filter_blast_table <- function(
+  blast_tab,
+  id_cut,
+  bit_score_cut,
+  min_cover_cut,
+  e_value_cut,
+  unique_per_seq = FALSE,
+  score_filter = TRUE
+) {
+  needed <- c(
+    "Query name",
+    "Taxa name",
+    "% id. match",
+    "e-value",
+    "bit score",
+    "Query cover"
+  )
+  if (!all(needed %in% colnames(blast_tab))) {
+    stop(
+      "The blast table must have the columns returned by blast_pq(): ",
+      paste(setdiff(needed, colnames(blast_tab)), collapse = ", "),
+      " missing."
+    )
+  }
+
   blast_tab <- blast_tab[order(blast_tab[, "bit score"], decreasing = TRUE), ]
 
   if (unique_per_seq) {
-    blast_tab <- blast_tab[which(!duplicated(blast_tab[, 1])), ]
+    blast_tab <- blast_tab[which(!duplicated(blast_tab[, "Query name"])), ]
   }
 
   if (score_filter) {
@@ -363,8 +403,6 @@ blast_pq <- function(
     blast_tab <- blast_tab[blast_tab[, "% id. match"] >= id_cut, ]
     blast_tab <- blast_tab[blast_tab[, "Query cover"] >= min_cover_cut, ]
     blast_tab <- blast_tab[blast_tab[, "e-value"] <= e_value_cut, ]
-  } else {
-    blast_tab <- blast_tab
   }
 
   if (nrow(blast_tab) == 0) {
@@ -861,6 +899,13 @@ add_blast_info <- function(
 #' @param keep_blast_metrics (Logical, default FALSE). If TRUE, the blast metrics
 #'   ("Query seq. length", "Taxa seq. length", "Alignment length",  "% id. match", "e-value",
 #'   "bit score" and "Query cover") are stored in the tax_table.
+#' @param blast_table (data.frame, default NULL). A raw blast table as returned
+#'   by [blast_pq()] with `unique_per_seq = FALSE` and `score_filter = FALSE`.
+#'   If set, blastn is not run again: the score filters (`min_id`,
+#'   `min_bit_score`, `min_cover` and `min_e_value`) and the vote (or top hit)
+#'   are applied to this table, so one search can serve several
+#'   `vote_algorithm` or filter values. `ref_fasta` and `database` are then
+#'   ignored.
 #' @param ... Additional arguments passed on to [blast_pq()]
 #'
 #' @returns
@@ -948,6 +993,7 @@ assign_blastn <- function(
   replace_collapsed_rank_by_NA = TRUE,
   simplify_taxo = TRUE,
   keep_blast_metrics = FALSE,
+  blast_table = NULL,
   ...
 ) {
   behavior <- match.arg(behavior)
@@ -981,17 +1027,28 @@ assign_blastn <- function(
   }
 
   if (method_algo == "vote") {
-    blast_tab_raw <- blast_pq(
-      physeq = physeq,
-      fasta_for_db = ref_fasta,
-      database = database,
-      unique_per_seq = FALSE,
-      id_cut = min_id,
-      bit_score_cut = min_bit_score,
-      min_cover_cut = min_cover,
-      e_value_cut = min_e_value,
-      ...
-    )
+    if (is.null(blast_table)) {
+      blast_tab_raw <- blast_pq(
+        physeq = physeq,
+        fasta_for_db = ref_fasta,
+        database = database,
+        unique_per_seq = FALSE,
+        id_cut = min_id,
+        bit_score_cut = min_bit_score,
+        min_cover_cut = min_cover,
+        e_value_cut = min_e_value,
+        ...
+      )
+    } else {
+      blast_tab_raw <- .filter_blast_table(
+        blast_table,
+        id_cut = min_id,
+        bit_score_cut = min_bit_score,
+        min_cover_cut = min_cover,
+        e_value_cut = min_e_value,
+        unique_per_seq = FALSE
+      )
+    }
 
     if (is.null(blast_tab_raw)) {
       message("None blast query match the score filters")
@@ -1059,17 +1116,28 @@ assign_blastn <- function(
         ))
     }
   } else if (method_algo == "top-hit") {
-    blast_tab_raw <- blast_pq(
-      physeq = physeq,
-      fasta_for_db = ref_fasta,
-      database = database,
-      unique_per_seq = TRUE,
-      id_cut = min_id,
-      bit_score_cut = min_bit_score,
-      min_cover_cut = min_cover,
-      e_value_cut = min_e_value,
-      ...
-    )
+    if (is.null(blast_table)) {
+      blast_tab_raw <- blast_pq(
+        physeq = physeq,
+        fasta_for_db = ref_fasta,
+        database = database,
+        unique_per_seq = TRUE,
+        id_cut = min_id,
+        bit_score_cut = min_bit_score,
+        min_cover_cut = min_cover,
+        e_value_cut = min_e_value,
+        ...
+      )
+    } else {
+      blast_tab_raw <- .filter_blast_table(
+        blast_table,
+        id_cut = min_id,
+        bit_score_cut = min_bit_score,
+        min_cover_cut = min_cover,
+        e_value_cut = min_e_value,
+        unique_per_seq = TRUE
+      )
+    }
     if (is.null(blast_tab_raw)) {
       message("None blast query match the score filters")
       if (behavior == "return_matrix") {

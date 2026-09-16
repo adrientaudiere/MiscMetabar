@@ -74,6 +74,7 @@ HSD
 Hajibabaei
 Heidrich
 Hellinger
+Homebrew
 IC
 ISSN
 IdClusters
@@ -90,6 +91,7 @@ LCBD
 LEfSe
 LMs
 Lifecycle
+MAFFT
 MDT
 MMseqs
 MUMU
@@ -190,6 +192,7 @@ VST
 Valentini
 VascoElbrecht
 Vsearch
+WSL
 Wiesmann
 XLSX
 XStringSet
@@ -202,6 +205,7 @@ aicc
 aitchison
 al
 algo
+aligner
 amplicon
 amplicons
 ancombc
@@ -223,6 +227,7 @@ bg
 bic
 bifactor
 bimodality
+bioconda
 bioconductor
 bioinformatic
 bioinformatics
@@ -421,6 +426,7 @@ parameterised
 params
 phangorn
 phy
+phylopq
 phyloseq
 phyloseq's
 phylosmith

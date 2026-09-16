@@ -1,4 +1,4 @@
-data(data_fungi_mini)
+
 
 subset_pq <- function() {
   sn <- sample_names(data_fungi_mini)

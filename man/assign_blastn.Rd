@@ -27,6 +27,7 @@ assign_blastn(
   replace_collapsed_rank_by_NA = TRUE,
   simplify_taxo = TRUE,
   keep_blast_metrics = FALSE,
+  blast_table = NULL,
   ...
 )
 }
@@ -108,6 +109,14 @@ function \code{\link[=simplify_taxo]{simplify_taxo()}} to the phyloseq object?}
 \item{keep_blast_metrics}{(Logical, default FALSE). If TRUE, the blast metrics
 ("Query seq. length", "Taxa seq. length", "Alignment length",  "\% id. match", "e-value",
 "bit score" and "Query cover") are stored in the tax_table.}
+
+\item{blast_table}{(data.frame, default NULL). A raw blast table as returned
+by \code{\link[=blast_pq]{blast_pq()}} with \code{unique_per_seq = FALSE} and \code{score_filter = FALSE}.
+If set, blastn is not run again: the score filters (\code{min_id},
+\code{min_bit_score}, \code{min_cover} and \code{min_e_value}) and the vote (or top hit)
+are applied to this table, so one search can serve several
+\code{vote_algorithm} or filter values. \code{ref_fasta} and \code{database} are then
+ignored.}
 
 \item{...}{Additional arguments passed on to \code{\link[=blast_pq]{blast_pq()}}}
 }

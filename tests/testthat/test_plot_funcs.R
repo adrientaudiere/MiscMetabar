@@ -1,4 +1,4 @@
-data(data_fungi)
+
 
 test_that("plot_complexity_pq works", {
   p <- plot_complexity_pq(data_fungi)

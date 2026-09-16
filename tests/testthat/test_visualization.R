@@ -1,5 +1,5 @@
 library("divent")
-data(data_fungi)
+
 data(enterotype)
 
 test_that("ggaluv_pq works", {

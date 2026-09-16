@@ -158,6 +158,7 @@ reference:
 
 - subtitle: Phylogenetic tree
   contents:
+  - align_pq
   - build_phytree_pq
 
 - subtitle: References sequences
@@ -325,6 +326,7 @@ reference:
   - is_falco_installed
   - is_krona_installed
   - is_multiqc_installed
+  - is_mafft_installed
   - is_mumu_installed
   - is_swarm_installed
   - is_vsearch_installed

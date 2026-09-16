@@ -1,4 +1,4 @@
-data(data_fungi)
+
 data(enterotype)
 
 test_that("taxa_as_columns works", {

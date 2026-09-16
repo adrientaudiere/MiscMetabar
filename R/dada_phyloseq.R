@@ -3912,12 +3912,19 @@ plot_guild_pq <-
 #'   see [phangorn::optim.pml()] for more details
 #' @param multicore	(logical) whether models should estimated in parallel.
 #'   see [phangorn::bootstrap.pml()] for more details
+#' @param align_method Aligner used to align the `refseq` slot before the tree
+#'   is built, either `"decipher"` (default, pure R) or `"mafft"` (external
+#'   program, much faster on large `refseq` slots). See [align_pq()].
+#' @param mafft_exec Path to the MAFFT executable. Only used when
+#'   `align_method = "mafft"`. Default to NULL, i.e. the usual lookup of
+#'   [is_mafft_installed()].
 #' @param ... Other params for be passed on to
 #'   [phangorn::optim.pml()] function
 #'
 #' @return A list of phylogenetic tree
 #' @export
 #' @author Adrien Taudière
+#' @seealso [align_pq()], [is_mafft_installed()]
 #' @details
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `phangorn` package if you
@@ -3956,11 +3963,20 @@ build_phytree_pq <- function(
   control = phangorn::pml.control(trace = 0),
   optNni = TRUE,
   multicore = FALSE,
+  align_method = c("decipher", "mafft"),
+  mafft_exec = NULL,
   ...
 ) {
-  seqs <- physeq@refseq
-  alignment <-
-    DECIPHER::AlignSeqs(Biostrings::DNAStringSet(seqs), anchor = NA)
+  align_method <- match.arg(align_method)
+  # `force = TRUE` keeps the behaviour this function had when it called
+  # DECIPHER directly: a refseq slot whose sequences happen to share a width is
+  # not assumed to be aligned already, and is aligned like any other.
+  alignment <- align_pq(
+    physeq,
+    method = align_method,
+    exec = mafft_exec,
+    force = TRUE
+  )
 
   phang.align <-
     phangorn::phyDat(as(alignment, "matrix"), type = "DNA")

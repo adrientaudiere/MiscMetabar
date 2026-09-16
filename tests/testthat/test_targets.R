@@ -1,7 +1,7 @@
 skip_on_cran()
 library(dada2)
 data(enterotype)
-data(data_fungi)
+
 
 test_that("list_fastq_files function works fine", {
   skip_on_cran()

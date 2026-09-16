@@ -1,5 +1,5 @@
-data(data_fungi)
-data(data_fungi_mini)
+
+
 data(enterotype)
 
 

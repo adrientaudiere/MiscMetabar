@@ -1,4 +1,4 @@
-data(data_fungi)
+
 
 test_that("funguild_assign works", {
   skip_on_cran()
