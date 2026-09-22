@@ -307,6 +307,80 @@ if (!MiscMetabar:::is_vsearch_installed()) {
     )
   })
 
+  test_that("assign_vsearch_lca with hits_table reproduces vsearch lca_cutoff", {
+    set.seed(1)
+    rand_seq <- function(n) {
+      paste(sample(c("A", "C", "G", "T"), n, replace = TRUE), collapse = "")
+    }
+    seq_a <- rand_seq(300)
+    seq_b <- rand_seq(300)
+    tax_a <- c(
+      rep("k:Fungi,p:P1,c:C1,o:O1,f:F1,g:G1,s:S1", 7),
+      rep("k:Fungi,p:P1,c:C1,o:O1,f:F1,g:G2,s:S2", 2),
+      "k:Fungi,p:P1,c:C1,o:O1,f:F2,g:G3,s:S3"
+    )
+    tax_b <- c(
+      rep("k:Fungi,p:P1,o:O1,f:F1,g:G1,s:S1", 3),
+      "k:Fungi,p:P1,c:C9,o:O1,f:F1,g:G1,s:S1"
+    )
+    ref <- Biostrings::DNAStringSet(c(
+      rep(seq_a, length(tax_a)),
+      rep(seq_b, length(tax_b))
+    ))
+    names(ref) <- paste0("ref", seq_along(ref), ";tax=", c(tax_a, tax_b))
+    ref_file <- tempfile(fileext = ".fasta")
+    Biostrings::writeXStringSet(ref, ref_file)
+    queries <- Biostrings::DNAStringSet(c(seq_a, seq_b, rand_seq(300)))
+    names(queries) <- c("q_a", "q_b", "q_none")
+
+    hits <- assign_vsearch_lca(
+      seq2search = queries,
+      ref_fasta = ref_file,
+      behavior = "return_hits",
+      id = 0.9,
+      verbose = FALSE
+    )
+    expect_named(hits, c("query", "id", "target"))
+    expect_setequal(unique(hits$query), names(queries))
+    expect_true(is.na(hits$target[hits$query == "q_none"]))
+
+    genus_by_cutoff <- list()
+    for (cutoff in c(0.6, 0.8, 0.9, 1)) {
+      direct <- assign_vsearch_lca(
+        seq2search = queries,
+        ref_fasta = ref_file,
+        behavior = "return_taxtab",
+        id = 0.9,
+        lca_cutoff = cutoff,
+        verbose = FALSE
+      )
+      derived <- assign_vsearch_lca(
+        seq2search = queries,
+        hits_table = hits,
+        behavior = "return_taxtab",
+        lca_cutoff = cutoff,
+        verbose = FALSE
+      )
+      expect_identical(derived[rownames(direct), ], direct)
+      genus_by_cutoff[[as.character(cutoff)]] <- direct["q_a", "Genus"]
+    }
+    expect_equal(genus_by_cutoff[["0.6"]], "G1")
+    expect_true(is.na(genus_by_cutoff[["0.9"]]))
+
+    expect_error(
+      assign_vsearch_lca(hits_table = hits, lca_cutoff = 0.5),
+      "larger than 0.5"
+    )
+    expect_error(
+      assign_vsearch_lca(hits_table = hits, behavior = "return_hits"),
+      "can't be used with hits_table"
+    )
+    expect_error(
+      assign_vsearch_lca(hits_table = data.frame(a = 1)),
+      "columns query, id and target"
+    )
+  })
+
   test_that("assign_sintax works fine", {
     expect_type(
       assign_sintax(

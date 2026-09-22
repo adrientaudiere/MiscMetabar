@@ -1482,8 +1482,15 @@ assign_sintax <- function(
 #'  The possible values for vote_algorithm are "consensus", "rel_majority",
 #'  "abs_majority" and "unanimity". See [resolve_vector_ranks()] for more details.
 #'
+#'  One vsearch search can serve several `lca_cutoff` (or `vote_algorithm`)
+#'  values: run it once with `behavior = "return_hits"`, then pass the returned
+#'  table to `hits_table` with each value. The LCA is then computed in R as
+#'  vsearch computes `--lcaout` (a rank is kept while the most frequent lineage
+#'  down to that rank is shared by at least `lca_cutoff` of the hits; empty rank
+#'  names are skipped), so no search is run again.
+#'
 #' @inheritParams clean_pq
-#' @param ref_fasta (required) A link to a database in vsearch format
+#' @param ref_fasta (required unless `hits_table` is given) A link to a database in vsearch format
 #'  The reference database must contain taxonomic information in the header of
 #'  each sequence in the form of a string starting with ";tax=" and followed
 #'  by a comma-separated list of up to nine taxonomic identifiers. Each taxonomic
@@ -1502,7 +1509,7 @@ assign_sintax <- function(
 #'   `colnames` are converted to a DNAStringSet and used as the taxa names.
 #'   Replace the physeq object.
 #' @param behavior Either "return_matrix" (default), "return_taxtab",
-#' "return_cmd", or "add_to_phyloseq":
+#' "return_cmd", "return_hits" or "add_to_phyloseq":
 #'
 #'  - "return_matrix" return a list of two matrix with taxonomic value in the
 #'    first element of the list and bootstrap value in the second one.
@@ -1513,9 +1520,21 @@ assign_sintax <- function(
 #'
 #'  - "return_cmd" return the command to run without running it.
 #'
+#'  - "return_hits" run the search and return the hits written by vsearch
+#'    `--userout` as a data.frame with columns `query`, `id` and `target` (the
+#'    target header, taxonomy included), plus one row with `id` and `target`
+#'    set to NA for each query without hit. It is the input of `hits_table`.
+#'
 #'  - "add_to_phyloseq" return a phyloseq object with amended slot `@taxtable`.
 #'    Only available if using physeq input and not seq2search input.
 #'
+#' @param hits_table (data.frame, default NULL). A table returned by
+#'   `behavior = "return_hits"`. When given, vsearch is not run: the
+#'   taxonomy is computed from these hits with the current `lca_cutoff`
+#'   (or `vote_algorithm`), and `ref_fasta`, `id`, `maxaccepts` and
+#'   `maxrejects` are ignored. With `top_hits_only = TRUE`, only the hits of
+#'   highest identity of each query are used. `lca_cutoff` must be larger than
+#'   0.5, as in vsearch.
 #' @param vsearchpath (default: "vsearch") path to vsearch
 #' @param clean_pq (logical, default TRUE)
 #'   If set to TRUE, empty samples and empty ASV are discarded
@@ -1637,7 +1656,8 @@ assign_vsearch_lca <- function(
     "return_matrix",
     "return_taxtab",
     "add_to_phyloseq",
-    "return_cmd"
+    "return_cmd",
+    "return_hits"
   ),
   vsearchpath = find_vsearch(),
   clean_pq = TRUE,
@@ -1670,7 +1690,8 @@ assign_vsearch_lca <- function(
   collapse_string = "/",
   replace_collapsed_rank_by_NA = TRUE,
   simplify_taxo = TRUE,
-  keep_vsearch_score = FALSE
+  keep_vsearch_score = FALSE,
+  hits_table = NULL
 ) {
   behavior <- match.arg(behavior)
 
@@ -1682,91 +1703,120 @@ assign_vsearch_lca <- function(
     seq2search <- seqs
   }
 
-  .validate_ref_format(ref_fasta, "sintax", "assign_vsearch_lca")
-
   out_lca_file <- paste0(tempdir(), "/out_lca.txt")
   userout_file <- paste0(tempdir(), "/userout.txt")
 
-  write_temp_fasta(
-    physeq = physeq,
-    seq2search = seq2search,
-    temporary_fasta_file = temporary_fasta_file,
-    behavior = behavior,
-    clean_pq = clean_pq,
-    verbose = verbose
-  )
+  if (!is.null(hits_table)) {
+    if (behavior %in% c("return_cmd", "return_hits")) {
+      stop(
+        "behavior = '",
+        behavior,
+        "' runs vsearch: it can't be used with hits_table."
+      )
+    }
+    if (behavior == "add_to_phyloseq" && is.null(physeq)) {
+      stop("behavior = 'add_to_phyloseq' needs the physeq param.")
+    }
+    hits_table <- .check_lca_hits_table(hits_table)
+  } else {
+    .validate_ref_format(ref_fasta, "sintax", "assign_vsearch_lca")
 
-  cmd_usearch <-
-    paste0(
-      " --usearch_global ",
-      shQuote(temporary_fasta_file),
-      " --db ",
-      shQuote(ref_fasta),
-      " --lcaout ",
-      shQuote(out_lca_file),
-      " -id ",
-      id,
-      " --threads ",
-      nproc,
-      " --userfields query+id+target",
-      " --maxaccepts ",
-      maxaccepts,
-      " --maxrejects ",
-      maxrejects,
-      " --lca_cutoff  ",
-      lca_cutoff,
-      " --userout ",
-      shQuote(userout_file),
-      " ",
-      cmd_args
+    write_temp_fasta(
+      physeq = physeq,
+      seq2search = seq2search,
+      temporary_fasta_file = temporary_fasta_file,
+      behavior = behavior,
+      clean_pq = clean_pq,
+      verbose = verbose
     )
 
-  if (top_hits_only) {
     cmd_usearch <-
-      paste0(cmd_usearch, " --top_hits_only")
-  }
+      paste0(
+        " --usearch_global ",
+        shQuote(temporary_fasta_file),
+        " --db ",
+        shQuote(ref_fasta),
+        " --lcaout ",
+        shQuote(out_lca_file),
+        " -id ",
+        id,
+        " --threads ",
+        nproc,
+        " --userfields query+id+target",
+        " --maxaccepts ",
+        maxaccepts,
+        " --maxrejects ",
+        maxrejects,
+        " --lca_cutoff  ",
+        lca_cutoff,
+        " --userout ",
+        shQuote(userout_file),
+        " ",
+        cmd_args
+      )
 
-  if (behavior == "return_cmd") {
-    if (!keep_temporary_files) {
-      unlink(temporary_fasta_file)
+    if (top_hits_only) {
+      cmd_usearch <-
+        paste0(cmd_usearch, " --top_hits_only")
     }
-    return("sintax" = paste0(vsearchpath, " ", cmd_usearch))
-  }
 
-  vsearch_output <- system2(
-    vsearchpath,
-    args = cmd_usearch,
-    stdout = TRUE,
-    stderr = TRUE
-  )
-  vsearch_status <- attr(vsearch_output, "status")
-
-  if (!is.null(vsearch_status) && vsearch_status != 0) {
-    if (!keep_temporary_files) {
-      unlink(temporary_fasta_file)
+    if (behavior == "return_cmd") {
+      if (!keep_temporary_files) {
+        unlink(temporary_fasta_file)
+      }
+      return("sintax" = paste0(vsearchpath, " ", cmd_usearch))
     }
-    stop(
-      "Vsearch usearch_global failed with status ",
-      vsearch_status,
-      ".\n",
-      paste(vsearch_output, collapse = "\n")
+
+    vsearch_output <- system2(
+      vsearchpath,
+      args = cmd_usearch,
+      stdout = TRUE,
+      stderr = TRUE
     )
-  }
+    vsearch_status <- attr(vsearch_output, "status")
 
-  if (!file.exists(out_lca_file) || file.info(out_lca_file)$size == 0) {
-    warning("No LCA output produced (out_lca.txt is missing or empty).")
-    if (!keep_temporary_files) {
-      unlink(temporary_fasta_file)
+    if (!is.null(vsearch_status) && vsearch_status != 0) {
+      if (!keep_temporary_files) {
+        unlink(temporary_fasta_file)
+      }
+      stop(
+        "Vsearch usearch_global failed with status ",
+        vsearch_status,
+        ".\n",
+        paste(vsearch_output, collapse = "\n")
+      )
     }
-    if (behavior == "add_to_phyloseq") {
-      warning("physeq object returned unchanged.")
-      return(physeq)
-    } else {
-      return(NULL)
+
+    if (behavior == "return_hits") {
+      query_names <- Biostrings::fasta.index(temporary_fasta_file)$desc
+      hits <- .read_vsearch_userout(userout_file, query_names)
+      if (!keep_temporary_files) {
+        unlink(temporary_fasta_file)
+        unlink(out_lca_file)
+        unlink(userout_file)
+      }
+      return(hits)
+    }
+
+    if (!file.exists(out_lca_file) || file.info(out_lca_file)$size == 0) {
+      warning("No LCA output produced (out_lca.txt is missing or empty).")
+      if (!keep_temporary_files) {
+        unlink(temporary_fasta_file)
+      }
+      if (behavior == "add_to_phyloseq") {
+        warning("physeq object returned unchanged.")
+        return(physeq)
+      } else {
+        return(NULL)
+      }
     }
   }
   if (top_hits_only || is.null(vote_algorithm)) {
-    res_usearch <- read.csv(out_lca_file, sep = "\t", header = FALSE)
+    if (is.null(hits_table)) {
+      res_usearch <- read.csv(out_lca_file, sep = "\t", header = FALSE)
+    } else {
+      res_usearch <- .lca_from_hits(hits_table, lca_cutoff, top_hits_only)
+    }
 
     taxa_names <- res_usearch$V1
     res_usearch <- tibble(res_usearch$V2, taxa_names)
@@ -1793,7 +1843,16 @@ assign_vsearch_lca <- function(
       res_usearch |>
       tidyr::pivot_wider(names_from = name, values_from = value)
   } else if (!is.null(vote_algorithm)) {
-    res_usearch <- read.csv(userout_file, sep = "\t", header = FALSE)
+    if (is.null(hits_table)) {
+      res_usearch <- read.csv(userout_file, sep = "\t", header = FALSE)
+    } else {
+      with_hit <- !is.na(hits_table$target)
+      res_usearch <- data.frame(
+        V1 = hits_table$query[with_hit],
+        V2 = hits_table$id[with_hit],
+        V3 = hits_table$target[with_hit]
+      )
+    }
 
     if (is.null(nb_voting)) {
       nb_voting <- max(table(res_usearch$V1))
@@ -1888,5 +1947,132 @@ assign_vsearch_lca <- function(
     rownames(tax_mat) <- unname(res_usearch_wide_taxo$taxa_names)
     return(tax_mat)
   }
+}
+
+
+# Hits written by vsearch --userout (fields query+id+target) as a data.frame
+# with columns query, id and target, plus one row with NA id and target for
+# each of `query_names` without hit.
+.read_vsearch_userout <- function(userout_file, query_names) {
+  if (file.exists(userout_file) && file.info(userout_file)$size > 0) {
+    hits <- utils::read.table(
+      userout_file,
+      sep = "\t",
+      header = FALSE,
+      quote = "",
+      comment.char = "",
+      col.names = c("query", "id", "target"),
+      colClasses = c("character", "numeric", "character")
+    )
+  } else {
+    hits <- data.frame(
+      query = character(0),
+      id = numeric(0),
+      target = character(0)
+    )
+  }
+  no_hit <- setdiff(query_names, hits$query)
+  rbind(
+    hits,
+    data.frame(
+      query = no_hit,
+      id = rep(NA_real_, length(no_hit)),
+      target = rep(NA_character_, length(no_hit))
+    )
+  )
+}
+
+.check_lca_hits_table <- function(hits_table) {
+  if (
+    !is.data.frame(hits_table) ||
+      !all(c("query", "id", "target") %in% colnames(hits_table))
+  ) {
+    stop(
+      "hits_table must be a data.frame with the columns query, id and target, ",
+      "as returned by assign_vsearch_lca(behavior = 'return_hits')."
+    )
+  }
+  data.frame(
+    query = as.character(hits_table$query),
+    id = as.numeric(hits_table$id),
+    target = as.character(hits_table$target)
+  )
+}
+
+# LCA of the hits of each query, as vsearch --lcaout computes it
+# (results_show_lcaout() in vsearch/src/results.cc, v2.31.0). The taxonomy of
+# a target is split in the nine levels d, k, p, c, o, f, g, s, t. At level j,
+# the candidate is the most frequent lineage from level 1 to level j among the
+# hits, and the level is kept if that lineage is shared by at least
+# `lca_cutoff` of the hits; the first level below the cutoff ends the
+# lineage, and a kept level with an empty name is not written. vsearch picks
+# the candidate by a Boyer-Moore majority vote, which returns the most
+# frequent lineage whenever it holds more than half of the hits: since
+# `lca_cutoff` > 0.5, both give the same output. With top_hits_only, only the
+# hits of highest identity of a query are counted. Returns a data.frame shaped
+# like the --lcaout file read by read.csv(): V1 the query, V2 the lineage
+# ("k:Fungi,p:Ascomycota,..."), "" for a query without lineage.
+.lca_from_hits <- function(hits_table, lca_cutoff = 1, top_hits_only = TRUE) {
+  if (!is.numeric(lca_cutoff) || lca_cutoff <= 0.5 || lca_cutoff > 1) {
+    stop("lca_cutoff must be larger than 0.5 and not larger than 1.")
+  }
+  levels_letters <- c("d", "k", "p", "c", "o", "f", "g", "s", "t")
+  queries <- unique(hits_table$query)
+  hits <- hits_table[!is.na(hits_table$target), , drop = FALSE]
+  if (top_hits_only && nrow(hits) > 0) {
+    best_id <- stats::ave(hits$id, hits$query, FUN = max)
+    hits <- hits[hits$id == best_id, , drop = FALSE]
+  }
+
+  lineage <- rep(NA_character_, length(queries))
+  names(lineage) <- queries
+  if (nrow(hits) > 0) {
+    # First "tax=" attribute of the header, as vsearch's tax_parse().
+    tax <- ifelse(
+      grepl("(^|;)tax=", hits$target),
+      sub("^(?:.*?;)?tax=([^;]*).*$", "\\1", hits$target, perl = TRUE),
+      ""
+    )
+    fields <- strsplit(tax, ",", fixed = TRUE)
+    names_mat <- t(vapply(
+      fields,
+      function(f) {
+        out <- stats::setNames(rep("", length(levels_letters)), levels_letters)
+        f <- f[grepl("^[dkpcofgst]:", f, ignore.case = TRUE)]
+        out[tolower(substr(f, 1, 1))] <- substring(f, 3)
+        out
+      },
+      character(length(levels_letters))
+    ))
+
+    idx_by_query <- split(seq_len(nrow(hits)), hits$query)
+    for (q in names(idx_by_query)) {
+      idx <- idx_by_query[[q]]
+      prefix <- rep("", length(idx))
+      parts <- character(0)
+      for (j in seq_along(levels_letters)) {
+        prefix <- paste(prefix, names_mat[idx, j], sep = "\x1f")
+        counts <- table(prefix)
+        top <- which.max(counts)
+        if (counts[[top]] / length(idx) < lca_cutoff) {
+          break
+        }
+        top_name <- names_mat[idx[match(names(counts)[top], prefix)], j]
+        if (nzchar(top_name)) {
+          parts <- c(parts, paste0(levels_letters[j], ":", top_name))
+        }
+      }
+      if (length(parts) > 0) {
+        lineage[[q]] <- paste(parts, collapse = ",")
+      }
+    }
+  }
+  # read.csv() reads an empty lineage as "" when another query has one, and
+  # the whole column as NA when none has.
+  lineage[is.na(lineage)] <- ""
+  if (all(lineage == "")) {
+    lineage[] <- NA
+  }
+  data.frame(V1 = queries, V2 = unname(lineage))
 }
 ################################################################################

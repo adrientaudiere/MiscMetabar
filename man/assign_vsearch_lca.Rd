@@ -8,7 +8,8 @@ assign_vsearch_lca(
   physeq = NULL,
   ref_fasta = NULL,
   seq2search = NULL,
-  behavior = c("return_matrix", "return_taxtab", "add_to_phyloseq", "return_cmd"),
+  behavior = c("return_matrix", "return_taxtab", "add_to_phyloseq", "return_cmd",
+    "return_hits"),
   vsearchpath = find_vsearch(),
   clean_pq = TRUE,
   taxa_ranks = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
@@ -32,14 +33,15 @@ assign_vsearch_lca(
   collapse_string = "/",
   replace_collapsed_rank_by_NA = TRUE,
   simplify_taxo = TRUE,
-  keep_vsearch_score = FALSE
+  keep_vsearch_score = FALSE,
+  hits_table = NULL
 )
 }
 \arguments{
 \item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{ref_fasta}{(required) A link to a database in vsearch format
+\item{ref_fasta}{(required unless \code{hits_table} is given) A link to a database in vsearch format
 The reference database must contain taxonomic information in the header of
 each sequence in the form of a string starting with ";tax=" and followed
 by a comma-separated list of up to nine taxonomic identifiers. Each taxonomic
@@ -60,7 +62,7 @@ sequence table where columns are ASV sequences). In the latter case the
 Replace the physeq object.}
 
 \item{behavior}{Either "return_matrix" (default), "return_taxtab",
-"return_cmd", or "add_to_phyloseq":
+"return_cmd", "return_hits" or "add_to_phyloseq":
 \itemize{
 \item "return_matrix" return a list of two matrix with taxonomic value in the
 first element of the list and bootstrap value in the second one.
@@ -68,6 +70,10 @@ first element of the list and bootstrap value in the second one.
 taxa, columns are the \code{taxa_ranks}) with rownames set to the taxa names.
 This is convenient as a direct input to \code{\link[phyloseq:tax_table]{phyloseq::tax_table()}}.
 \item "return_cmd" return the command to run without running it.
+\item "return_hits" run the search and return the hits written by vsearch
+\code{--userout} as a data.frame with columns \code{query}, \code{id} and \code{target} (the
+target header, taxonomy included), plus one row with \code{id} and \code{target}
+set to NA for each query without hit. It is the input of \code{hits_table}.
 \item "add_to_phyloseq" return a phyloseq object with amended slot \verb{@taxtable}.
 Only available if using physeq input and not seq2search input.
 }}
@@ -168,6 +174,14 @@ function \code{\link[=simplify_taxo]{simplify_taxo()}} to the phyloseq object?}
 
 \item{keep_vsearch_score}{(Logical, default FALSE). If TRUE, the mean and sd of id score
 are stored in the tax_table.}
+
+\item{hits_table}{(data.frame, default NULL). A table returned by
+\code{behavior = "return_hits"}. When given, vsearch is not run: the
+taxonomy is computed from these hits with the current \code{lca_cutoff}
+(or \code{vote_algorithm}), and \code{ref_fasta}, \code{id}, \code{maxaccepts} and
+\code{maxrejects} are ignored. With \code{top_hits_only = TRUE}, only the hits of
+highest identity of each query are used. \code{lca_cutoff} must be larger than
+0.5, as in vsearch.}
 }
 \value{
 See param behavior
@@ -191,6 +205,13 @@ list of taxonomic assignations is resolve using the function \code{\link[=resolv
 The possible values for vote_algorithm are "consensus", "rel_majority",
 "abs_majority" and "unanimity". See \code{\link[=resolve_vector_ranks]{resolve_vector_ranks()}} for more details.
 }
+
+One vsearch search can serve several \code{lca_cutoff} (or \code{vote_algorithm})
+values: run it once with \code{behavior = "return_hits"}, then pass the returned
+table to \code{hits_table} with each value. The LCA is then computed in R as
+vsearch computes \code{--lcaout} (a rank is kept while the most frequent lineage
+down to that rank is shared by at least \code{lca_cutoff} of the hits; empty rank
+names are skipped), so no search is run again.
 }
 \details{
 This function is mainly a wrapper of the work of others.
