@@ -19,6 +19,7 @@ assign_sintax(
   verbose = FALSE,
   temporary_fasta_file = paste0(tempdir(), "/temp.fasta"),
   cmd_args = "--sintax_random",
+  seed = NULL,
   too_few = "align_start",
   too_many = "drop"
 )
@@ -100,6 +101,14 @@ or seq2search
 \item{cmd_args}{Additional arguments passed on to vsearch sintax cmd.
 By default cmd_args is equal to "--sintax_random" as recommended by
 \href{https://github.com/torognes/vsearch/issues/535}{Torognes}.}
+
+\item{seed}{(int, default NULL) Seed of the vsearch random number generator,
+passed as \code{--randseed}. With \code{--sintax_random} (the default \code{cmd_args}),
+sintax draws the k-mers of each bootstrap replicate and breaks ties at
+random, so two runs can return a different taxonomy for the same
+sequence. Set a seed to make the assignment reproducible. The vsearch
+documentation guarantees reproducibility only with a single thread
+(\code{nproc = 1}). If NULL, vsearch picks a pseudo-random seed.}
 
 \item{too_few}{(default value "align_start") see \code{\link[tidyr:separate_wider_delim]{tidyr::separate_wider_delim()}}}
 

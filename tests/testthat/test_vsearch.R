@@ -445,6 +445,33 @@ if (!MiscMetabar:::is_vsearch_installed()) {
     expect_true(all(is.na(tax_val[low_boot])))
   })
 
+  test_that("assign_sintax passes seed to vsearch and is reproducible with it", {
+    ref <- system.file(
+      "extdata",
+      "mini_UNITE_fungi.fasta.gz",
+      package = "MiscMetabar"
+    )
+    expect_match(
+      assign_sintax(
+        data_fungi_mini,
+        ref_fasta = ref,
+        behavior = "return_cmd",
+        seed = 42
+      ),
+      "--randseed 42",
+      fixed = TRUE
+    )
+    expect_no_match(
+      assign_sintax(data_fungi_mini, ref_fasta = ref, behavior = "return_cmd"),
+      "--randseed",
+      fixed = TRUE
+    )
+    run <- function() {
+      assign_sintax(data_fungi_mini, ref_fasta = ref, seed = 1, nproc = 1)
+    }
+    expect_identical(run(), run())
+  })
+
   test_that("assign_sintax works with seq2search input", {
     ref <- system.file(
       "extdata",

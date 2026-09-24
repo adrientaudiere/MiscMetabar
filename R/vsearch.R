@@ -1188,6 +1188,13 @@ write_temp_fasta <- function(
 #' @param cmd_args Additional arguments passed on to vsearch sintax cmd.
 #'   By default cmd_args is equal to "--sintax_random" as recommended by
 #'   [Torognes](https://github.com/torognes/vsearch/issues/535).
+#' @param seed (int, default NULL) Seed of the vsearch random number generator,
+#'   passed as `--randseed`. With `--sintax_random` (the default `cmd_args`),
+#'   sintax draws the k-mers of each bootstrap replicate and breaks ties at
+#'   random, so two runs can return a different taxonomy for the same
+#'   sequence. Set a seed to make the assignment reproducible. The vsearch
+#'   documentation guarantees reproducibility only with a single thread
+#'   (`nproc = 1`). If NULL, vsearch picks a pseudo-random seed.
 #' @param too_few (default value "align_start") see [tidyr::separate_wider_delim()]
 #' @param too_many (default value "drop") see [tidyr::separate_wider_delim()]
 #' @return See param behavior
@@ -1292,6 +1299,7 @@ assign_sintax <- function(
   verbose = FALSE,
   temporary_fasta_file = paste0(tempdir(), "/temp.fasta"),
   cmd_args = "--sintax_random",
+  seed = NULL,
   too_few = "align_start",
   too_many = "drop"
 ) {
@@ -1333,7 +1341,10 @@ assign_sintax <- function(
       " --threads ",
       nproc,
       " ",
-      cmd_args
+      cmd_args,
+      if (!is.null(seed)) {
+        paste0(" --randseed ", seed)
+      }
     )
 
   if (behavior == "return_cmd") {
