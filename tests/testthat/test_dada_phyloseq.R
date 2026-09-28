@@ -1,5 +1,3 @@
-
-
 data(enterotype)
 library("divent")
 
@@ -133,7 +131,10 @@ test_that("psmelt_samples_pq works fine", {
 
 test_that("psmelt_samples_pq keeps factor levels order", {
   d <- data_fungi_mini
-  d@sam_data$Height <- factor(d@sam_data$Height, levels = c("Low", "Middle", "High"))
+  d@sam_data$Height <- factor(
+    d@sam_data$Height,
+    levels = c("Low", "Middle", "High")
+  )
   result <- psmelt_samples_pq(d, q = NULL)
   expect_s3_class(result$Height, "factor")
   expect_equal(levels(result$Height), c("Low", "Middle", "High"))

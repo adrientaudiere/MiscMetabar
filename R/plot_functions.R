@@ -6652,6 +6652,8 @@ hill_curves_pq <- function(
 #' @param ... Additional arguments passed on to [umap::umap()] or
 #'   [uwot::umap2()] function.
 #'   For example `n_neighbors` set the number of nearest neighbors (Default 15).
+#'   `n_neighbors` is capped to `nsamples(physeq) - 1` (with a minimum of 2)
+#'   so that small phyloseq objects run, as in `ggplotpq::dr_plot_pq()`.
 #'   See [umap::umap.defaults()] or [uwot::umap2()] for the list of
 #'   parameters and default values.
 #'
@@ -6741,13 +6743,29 @@ umap_pq <- function(physeq, pkg = "umap", ...) {
   physeq <- MiscMetabar::taxa_as_columns(physeq)
 
   psm_samp <- psmelt_samples_pq(physeq)
+
+  # umap::umap() and uwot::umap2() fail when n_neighbors is not smaller than
+  # the number of samples, so cap it (default 15) to nsamples - 1.
+  args <- list(...)
+  n_neighbors <- args[["n_neighbors"]]
+  if (is.null(n_neighbors) && !is.null(args[["config"]])) {
+    n_neighbors <- args[["config"]][["n_neighbors"]]
+  }
+  if (is.null(n_neighbors)) {
+    n_neighbors <- 15
+  }
+  args[["n_neighbors"]] <- as.integer(
+    max(2, min(n_neighbors, nsamples(physeq) - 1))
+  )
+  otu_mat <- as.matrix(unclass(physeq@otu_table))
+
   if (pkg == "umap") {
-    res_umap <- umap::umap(as.matrix(unclass(physeq@otu_table)), ...)
+    res_umap <- do.call(umap::umap, c(list(otu_mat), args))
     umap_layout <- as_tibble(res_umap$layout, .name_repair = "minimal")
     umap_layout$Sample <- rownames(res_umap$layout)
     names(umap_layout) <- c("x_umap", "y_umap", "Sample")
   } else if (pkg == "uwot") {
-    res_umap <- uwot::umap2(as.matrix(unclass(physeq@otu_table)), ...)
+    res_umap <- do.call(uwot::umap2, c(list(otu_mat), args))
     umap_layout <- as_tibble(res_umap, .name_repair = c("minimal"))
     umap_layout$Sample <- rownames(res_umap)
     names(umap_layout) <- c("x_umap", "y_umap", "Sample")

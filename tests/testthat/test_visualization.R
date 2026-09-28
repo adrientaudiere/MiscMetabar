@@ -59,3 +59,17 @@ test_that("umap_pq works", {
     expect_s3_class(result, "tbl_df")
   }
 })
+
+test_that("umap_pq caps n_neighbors on small phyloseq objects", {
+  data_8 <- prune_samples(sample_names(data_fungi_mini)[1:8], data_fungi_mini)
+  if (requireNamespace("umap", quietly = TRUE)) {
+    # default n_neighbors (15) and a too large value are capped to 7
+    expect_equal(nrow(umap_pq(data_8)), 8)
+    expect_equal(nrow(umap_pq(data_8, n_neighbors = 30)), 8)
+    expect_equal(nrow(umap_pq(data_8, n_neighbors = 3)), 8)
+  }
+  if (requireNamespace("uwot", quietly = TRUE)) {
+    suppressWarnings(result <- umap_pq(data_8, pkg = "uwot"))
+    expect_equal(nrow(result), 8)
+  }
+})
