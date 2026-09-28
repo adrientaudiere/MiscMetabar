@@ -131,6 +131,18 @@ test_that("psmelt_samples_pq works fine", {
   expect_s3_class(result3, "tbl_df")
 })
 
+test_that("psmelt_samples_pq keeps factor levels order", {
+  d <- data_fungi_mini
+  d@sam_data$Height <- factor(d@sam_data$Height, levels = c("Low", "Middle", "High"))
+  result <- psmelt_samples_pq(d, q = NULL)
+  expect_s3_class(result$Height, "factor")
+  expect_equal(levels(result$Height), c("Low", "Middle", "High"))
+
+  p <- hill_bar_pq(d, Height, q = 0)
+  x_limits <- ggplot2::ggplot_build(p)$layout$panel_scales_x[[1]]$get_limits()
+  expect_equal(x_limits[!is.na(x_limits)], c("Low", "Middle", "High"))
+})
+
 
 test_that("rarefy_sample_count_by_modality works fine", {
   result <- rarefy_sample_count_by_modality(
