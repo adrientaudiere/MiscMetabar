@@ -81,9 +81,9 @@ use this function.
 library("divent")
 if (requireNamespace("ggstatsplot")) {
   data_f <- clean_pq(prune_samples(
-  sample_names(data_fungi_sp_known)[1:10],
-  data_fungi_sp_known
-))
+    sample_names(data_fungi_sp_known)[1:10],
+    data_fungi_sp_known
+  ))
   p <- ggbetween_pq(data_f, fact = "Time", p.adjust.method = "BH")
   p[[1]]
 }

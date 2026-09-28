@@ -16,6 +16,8 @@ using the \code{phyloseq} package.}
 \item{...}{Additional arguments passed on to \code{\link[umap:umap]{umap::umap()}} or
 \code{\link[uwot:umap2]{uwot::umap2()}} function.
 For example \code{n_neighbors} set the number of nearest neighbors (Default 15).
+\code{n_neighbors} is capped to \code{nsamples(physeq) - 1} (with a minimum of 2)
+so that small phyloseq objects run, as in \code{ggplotpq::dr_plot_pq()}.
 See \code{\link[umap:umap.defaults]{umap::umap.defaults()}} or \code{\link[uwot:umap2]{uwot::umap2()}} for the list of
 parameters and default values.}
 }
