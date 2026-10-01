@@ -472,6 +472,41 @@ if (!MiscMetabar:::is_vsearch_installed()) {
     expect_identical(run(), run())
   })
 
+  test_that("assign_sintax gives NA to a sequence it cannot classify", {
+    ref <- system.file(
+      "extdata",
+      "mini_UNITE_fungi.fasta.gz",
+      package = "MiscMetabar"
+    )
+    seqs <- Biostrings::DNAStringSet(c(
+      long = as.character(data_fungi_mini@refseq[[1]]),
+      short = "ACACATCCTTATTTACCTAACACACATTTTATTTTT"
+    ))
+    res <- assign_sintax(
+      seq2search = seqs,
+      ref_fasta = ref,
+      behavior = "return_matrix",
+      min_bootstrap = 0,
+      seed = 1,
+      nproc = 1,
+      verbose = FALSE
+    )
+    tax <- res$taxo_value
+    rank_cols <- setdiff(names(tax), "taxa_names")
+    expect_true(all(is.na(unlist(tax[tax$taxa_names == "short", rank_cols]))))
+    expect_false(all(is.na(unlist(tax[tax$taxa_names == "long", rank_cols]))))
+
+    only_short <- assign_sintax(
+      seq2search = seqs["short"],
+      ref_fasta = ref,
+      behavior = "return_matrix",
+      seed = 1,
+      nproc = 1,
+      verbose = FALSE
+    )
+    expect_true(all(is.na(unlist(only_short$taxo_value[, rank_cols]))))
+  })
+
   test_that("assign_sintax works with seq2search input", {
     ref <- system.file(
       "extdata",

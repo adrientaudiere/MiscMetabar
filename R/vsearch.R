@@ -1391,6 +1391,11 @@ assign_sintax <- function(
     }
   }
   res_sintax <- read.csv(output_taxo_file, sep = "\t", header = FALSE)
+  # A sequence sintax cannot classify (e.g. a few dozen bases, too short to
+  # share k-mers with the reference) comes back with an empty taxonomy: NA at
+  # every rank, rather than an error when the labels are split on "(".
+  res_sintax$V2 <- as.character(res_sintax$V2)
+  res_sintax$V2[!is.na(res_sintax$V2) & res_sintax$V2 == ""] <- NA
   taxa_names <- res_sintax$V1
   res_sintax <- tibble(res_sintax$V2, taxa_names)
   res_sintax <- res_sintax |>
