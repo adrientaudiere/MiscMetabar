@@ -11,6 +11,8 @@ itsx_pq(
   keep_undetected = TRUE,
   add_origin = TRUE,
   origin_col = "ITSx_origin",
+  add_detected = FALSE,
+  detected_col = "ITSx_detected",
   remove_other_origin = FALSE,
   keep_origin = "F",
   duplicated_seqs = c("merge", "remove"),
@@ -41,6 +43,14 @@ is added to the \code{tax_table} with the putative origin ITSx gives to each
 taxon (e.g. \code{"Fungi"}), NA when ITSx detects nothing in the sequence.}
 
 \item{origin_col}{(default: "ITSx_origin") Name of that column.}
+
+\item{add_detected}{(logical, default FALSE) If TRUE, a column
+\code{detected_col} is added to the \code{tax_table}: \code{"TRUE"} when ITSx found
+\code{region} in the taxon (its sequence is the extracted region), \code{"FALSE"}
+when it did not (with \code{keep_undetected = TRUE}, its sequence is the
+original one). After merging, the value of the taxon kept.}
+
+\item{detected_col}{(default: "ITSx_detected") Name of that column.}
 
 \item{remove_other_origin}{(logical, default FALSE) If TRUE, the taxa
 whose putative origin is not in \code{keep_origin} are removed, including the

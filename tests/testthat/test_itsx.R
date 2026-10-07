@@ -63,4 +63,24 @@ test_that("itsx_pq() extracts the region, records the origin and filters", {
   )
   expect_false("ITSx_origin" %in% colnames(detected_only@tax_table))
   expect_lte(phyloseq::ntaxa(detected_only), phyloseq::ntaxa(pq))
+
+  flagged <- itsx_pq(
+    pq,
+    region = "ITS2",
+    add_detected = TRUE,
+    duplicated_seqs = "remove",
+    args_before_itsx = itsx_prelude,
+    verbose = FALSE
+  )
+  detected <- as.character(flagged@tax_table[, "ITSx_detected"])
+  expect_true(all(detected %in% c("TRUE", "FALSE")))
+  undetected <- phyloseq::taxa_names(flagged)[detected == "FALSE"]
+  expect_equal(
+    unname(as.character(flagged@refseq))[detected == "FALSE"],
+    unname(as.character(pq@refseq))[match(undetected, phyloseq::taxa_names(pq))]
+  )
+  expect_equal(
+    sum(detected == "TRUE"),
+    phyloseq::ntaxa(detected_only)
+  )
 })

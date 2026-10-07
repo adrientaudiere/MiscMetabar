@@ -317,6 +317,12 @@ run_itsx_seqs <- function(
 #'   is added to the `tax_table` with the putative origin ITSx gives to each
 #'   taxon (e.g. `"Fungi"`), NA when ITSx detects nothing in the sequence.
 #' @param origin_col (default: "ITSx_origin") Name of that column.
+#' @param add_detected (logical, default FALSE) If TRUE, a column
+#'   `detected_col` is added to the `tax_table`: `"TRUE"` when ITSx found
+#'   `region` in the taxon (its sequence is the extracted region), `"FALSE"`
+#'   when it did not (with `keep_undetected = TRUE`, its sequence is the
+#'   original one). After merging, the value of the taxon kept.
+#' @param detected_col (default: "ITSx_detected") Name of that column.
 #' @param remove_other_origin (logical, default FALSE) If TRUE, the taxa
 #'   whose putative origin is not in `keep_origin` are removed, including the
 #'   taxa in which ITSx detects nothing.
@@ -369,6 +375,8 @@ itsx_pq <- function(
   keep_undetected = TRUE,
   add_origin = TRUE,
   origin_col = "ITSx_origin",
+  add_detected = FALSE,
+  detected_col = "ITSx_detected",
   remove_other_origin = FALSE,
   keep_origin = "F",
   duplicated_seqs = c("merge", "remove"),
@@ -427,18 +435,20 @@ itsx_pq <- function(
   new_physeq <- physeq
   new_physeq@refseq <- Biostrings::DNAStringSet(new_seqs)
 
+  new_cols <- list()
   if (add_origin) {
-    origin <- unname(itsx_origin_codes[origin_code])
-    if (is.null(new_physeq@tax_table)) {
-      tax <- matrix(
-        origin,
-        ncol = 1,
-        dimnames = list(phyloseq::taxa_names(physeq), origin_col)
-      )
+    new_cols[[origin_col]] <- unname(itsx_origin_codes[origin_code])
+  }
+  if (add_detected) {
+    new_cols[[detected_col]] <- as.character(detected)
+  }
+  if (length(new_cols) > 0) {
+    added <- do.call(cbind, new_cols)
+    rownames(added) <- phyloseq::taxa_names(physeq)
+    tax <- if (is.null(new_physeq@tax_table)) {
+      added
     } else {
-      tax <- as(new_physeq@tax_table, "matrix")
-      tax <- cbind(tax, stats::setNames(origin, NULL))
-      colnames(tax)[ncol(tax)] <- origin_col
+      cbind(as(new_physeq@tax_table, "matrix"), added)
     }
     new_physeq@tax_table <- phyloseq::tax_table(tax)
   }
