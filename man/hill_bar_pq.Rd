@@ -91,7 +91,8 @@ point / error-bar to position letters. Default \code{0.05}.}
 appended below each x-axis tick label as \code{(n=X)}. Default \code{TRUE}.}
 
 \item{palette}{Character vector of fill colours. Defaults to the Okabe-Ito
-palette.}
+palette (8 colours). When the \code{fill} variable has more groups than
+colours in \code{palette}, \code{\link[grDevices:hcl.colors]{grDevices::hcl.colors()}} is used instead.}
 
 \item{error_fun}{Function taking a numeric vector and returning a 2-element
 numeric vector \code{c(lower, upper)} with the actual y-axis bounds of the

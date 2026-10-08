@@ -227,6 +227,15 @@ test_that("hill_bar_pq works with data_fungi_mini dataset", {
   )
 })
 
+test_that("hill_bar_pq falls back to a longer palette with more than 8 groups", {
+  skip_on_cran()
+  d <- data_fungi_mini
+  d@sam_data$Group12 <- rep(paste0("G", 1:12), length.out = nsamples(d))
+  p <- suppressMessages(hill_bar_pq(d, Group12, q = 0, add_letters = FALSE))
+  expect_s3_class(p, "ggplot")
+  expect_no_error(ggplot2::ggplot_build(p))
+})
+
 test_that("accu_samp_threshold works with data_fungi_mini dataset", {
   skip_on_cran()
   expect_warning(

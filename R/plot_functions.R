@@ -7739,7 +7739,8 @@ plot_ordination_pq <- function(
 #' @param show_n_samples Logical. If `TRUE`, the number of samples per group is
 #'   appended below each x-axis tick label as `(n=X)`. Default `TRUE`.
 #' @param palette Character vector of fill colours. Defaults to the Okabe-Ito
-#'   palette.
+#'   palette (8 colours). When the `fill` variable has more groups than
+#'   colours in `palette`, [grDevices::hcl.colors()] is used instead.
 #' @param error_fun Function taking a numeric vector and returning a 2-element
 #'   numeric vector `c(lower, upper)` with the actual y-axis bounds of the
 #'   error bar (not offsets from the mean). The first element is the lower
@@ -7840,6 +7841,13 @@ hill_bar_pq <- function(
   x_lab <- if (is.null(x_lab)) x_name else x_lab
 
   ys <- paste0("Hill_", q)
+
+  # Fall back to a longer palette when there are more groups than colours,
+  # otherwise scale_fill_manual() stops with "Insufficient values".
+  n_fill <- length(unique(stats::na.omit(data[[fill_name]])))
+  if (n_fill > length(palette)) {
+    palette <- grDevices::hcl.colors(n_fill)
+  }
 
   plot_args <- list(
     data = data,
