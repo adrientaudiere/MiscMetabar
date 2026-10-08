@@ -7941,6 +7941,7 @@ hill_bar_pq <- function(
 #' and axis labels of a ggplot2 plot using [stringr::str_wrap()]. Useful to tidy
 #' up long titles produced automatically by other `MiscMetabar` plotting
 #' functions, in particular before combining several plots with `patchwork`.
+#' See also function resize_fonts from ggplotpq package.
 #'
 #' @param plot (required) A ggplot2 object.
 #' @param width (int, default 60) The wrapping width (in characters) of the
@@ -7959,6 +7960,7 @@ hill_bar_pq <- function(
 #' @return A ggplot2 object with wrapped/resized text elements.
 #' @export
 #' @author Adrien Taudière
+#' 
 #'
 #' @examples
 #' \donttest{
