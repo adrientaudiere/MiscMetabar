@@ -51,6 +51,7 @@ Auto-wrap (and optionally resize the font of) the title, subtitle, caption
 and axis labels of a ggplot2 plot using \code{\link[stringr:str_wrap]{stringr::str_wrap()}}. Useful to tidy
 up long titles produced automatically by other \code{MiscMetabar} plotting
 functions, in particular before combining several plots with \code{patchwork}.
+See also function resize_fonts from ggplotpq package.
 }
 \examples{
 \donttest{
