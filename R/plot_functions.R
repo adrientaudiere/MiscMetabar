@@ -434,7 +434,7 @@ accu_plot_balanced_modality <- function(
   }
   for (i in 1:nperm) {
     if (rarefy_by_sample_before_merging) {
-      plist[, , i] <-
+      plist[,, i] <-
         as.matrix(suppressWarnings(suppressMessages(
           accu_plot(
             rarefy_sample_count_by_modality(
@@ -943,8 +943,7 @@ sankey_pq <-
           apply(mat_interm, 1, function(x) {
             tapply(
               x,
-              physeq@tax_table[
-                ,
+              physeq@tax_table[,
                 taxa[length(taxa)]
               ],
               function(x) {
@@ -957,8 +956,7 @@ sankey_pq <-
           apply(mat_interm, 1, function(x) {
             tapply(
               x,
-              physeq@tax_table[
-                ,
+              physeq@tax_table[,
                 taxa[length(taxa)]
               ],
               sum
@@ -1509,14 +1507,14 @@ ggvenn_pq <- function(
   for (f in levels(physeq@sam_data[[fact]])) {
     newphyseq <- physeq
     new_DF <- newphyseq@sam_data[
-      newphyseq@sam_data[[fact]] == f, ,
+      newphyseq@sam_data[[fact]] == f,
+      ,
       drop = FALSE
     ]
     sample_data(newphyseq) <- sample_data(new_DF)
     newphyseq <- clean_pq(newphyseq)
     if (is.null(taxonomic_rank) || type == "nb_seq") {
-      res[[f]] <- colnames(newphyseq@otu_table[
-        ,
+      res[[f]] <- colnames(newphyseq@otu_table[,
         colSums(newphyseq@otu_table) > min_nb_seq
       ])
     } else {
@@ -6531,7 +6529,7 @@ hill_curves_pq <- function(
     what <- c("Collector", "mean", "Qnt 0.025", "Qnt 0.975")
     what <- what[what %in% dimnames(df_hill)[[3]]]
     if (any(what %in% dimnames(df_hill)[[3]])) {
-      df_hill <- df_hill[, , what, drop = FALSE]
+      df_hill <- df_hill[,, what, drop = FALSE]
     }
     dm <- dim(df_hill)
     dnam <- dimnames(df_hill)

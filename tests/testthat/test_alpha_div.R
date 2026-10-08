@@ -1,8 +1,6 @@
 skip_on_cran()
 
 
-
-
 test_that("hill_tuckey_pq works with different parameters", {
   data("GlobalPatterns", package = "phyloseq")
   GlobalPatterns@sam_data[, "Soil_logical"] <-

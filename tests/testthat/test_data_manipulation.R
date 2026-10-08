@@ -1,4 +1,3 @@
-
 library("divent")
 
 test_that("normalize_prop_pq works", {

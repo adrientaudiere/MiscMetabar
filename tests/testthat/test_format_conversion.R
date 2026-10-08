@@ -1,5 +1,3 @@
-
-
 test_that("format2dada2 works works with Unite", {
   result <- format2dada2(
     test_path(

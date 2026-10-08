@@ -1,4 +1,3 @@
-
 data(enterotype)
 
 test_that("taxa_as_columns works", {

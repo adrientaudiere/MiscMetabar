@@ -1,5 +1,3 @@
-
-
 subset_pq <- function() {
   sn <- sample_names(data_fungi_mini)
   hi <- sn[which(data_fungi_mini@sam_data$Height == "High")[1:3]]

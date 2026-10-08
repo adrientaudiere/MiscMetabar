@@ -1,5 +1,3 @@
-
-
 test_that("funguild_assign works", {
   skip_on_cran()
   db <- get_funguild_db()

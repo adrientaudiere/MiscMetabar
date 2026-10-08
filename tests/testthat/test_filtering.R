@@ -1,4 +1,3 @@
-
 data(enterotype)
 
 test_that("filt_taxa_pq works", {

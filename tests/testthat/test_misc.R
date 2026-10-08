@@ -1,4 +1,3 @@
-
 data("enterotype")
 
 test_that("dist_bycol works fine", {

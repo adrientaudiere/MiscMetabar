@@ -10,8 +10,6 @@ suppressMessages({
 set.seed(1)
 
 
-
-
 # Drop NA-height samples for functions that need a complete grouping factor.
 data_fungi_woNA <- subset_samples(
   data_fungi,

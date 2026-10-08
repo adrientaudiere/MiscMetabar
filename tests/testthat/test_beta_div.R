@@ -1,4 +1,3 @@
-
 data_subset <- subset_samples(data_fungi, Height %in% c("Low", "High")) |>
   subset_samples(!is.na(Time) & !is.na(Height))
 

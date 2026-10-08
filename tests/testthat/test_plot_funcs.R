@@ -1,5 +1,3 @@
-
-
 test_that("plot_complexity_pq works", {
   p <- plot_complexity_pq(data_fungi)
   expect_s3_class(p, "ggplot")
