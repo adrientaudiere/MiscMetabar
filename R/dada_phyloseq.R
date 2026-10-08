@@ -1239,59 +1239,6 @@ write_pq <- function(
   }
   if (one_file) {
     if (
-      !is.null(physeq@refseq) &&
-        !is.null(physeq@otu_table) &&
-        !is.null(physeq@tax_table)
-    ) {
-      if (!taxa_are_rows(physeq)) {
-        otu_table(physeq) <-
-          otu_table(
-            t(as.matrix(unclass(
-              physeq@otu_table
-            ))),
-            taxa_are_rows = TRUE
-          )
-      }
-      df_physeq_interm <- cbind(
-        physeq@otu_table,
-        physeq@tax_table,
-        as.character(physeq@refseq)
-      )
-      colnames(df_physeq_interm) <-
-        c(
-          sample_names(physeq),
-          colnames(physeq@tax_table),
-          "Reference Sequences"
-        )
-
-      df_physeq_interm <- as.data.frame(df_physeq_interm)
-
-      if (write_sam_data) {
-        sam_data <- data.frame(t(data.frame(unclass(
-          physeq@sam_data
-        ))))
-        colnames(sam_data) <- sample_names(physeq)
-        if (sam_data_first) {
-          df_physeq <- dplyr::full_join(sam_data, df_physeq_interm)
-          rownames(df_physeq) <-
-            c(rownames(sam_data), rownames(df_physeq_interm))
-        } else {
-          df_physeq <- dplyr::full_join(df_physeq_interm, sam_data)
-          rownames(df_physeq) <-
-            c(rownames(df_physeq_interm), rownames(sam_data))
-        }
-      } else {
-        df_physeq <- df_physeq_interm
-      }
-      utils::write.table(
-        df_physeq,
-        paste0(path, "/ASV_table_allInOne.csv"),
-        quote = quote,
-        sep = sep_csv,
-        col.names = NA,
-        ...
-      )
-    } else if (
       !is.null(physeq@otu_table) &&
         !is.null(physeq@tax_table)
     ) {
@@ -1304,30 +1251,40 @@ write_pq <- function(
             taxa_are_rows = TRUE
           )
       }
-      df_physeq_interm <- cbind(physeq@otu_table, physeq@tax_table, )
-      colnames(df_physeq_interm) <-
-        c(
-          sample_names(physeq),
-          colnames(physeq@tax_table),
-          "Reference Sequences"
+      df_physeq_interm <- cbind(physeq@otu_table, physeq@tax_table)
+      col_names <- c(sample_names(physeq), colnames(physeq@tax_table))
+      if (!is.null(physeq@refseq)) {
+        df_physeq_interm <- cbind(
+          df_physeq_interm,
+          as.character(physeq@refseq)
         )
-
+        col_names <- c(col_names, "Reference Sequences")
+      }
+      colnames(df_physeq_interm) <- col_names
       df_physeq_interm <- as.data.frame(df_physeq_interm)
 
-      if (write_sam_data) {
+      if (write_sam_data && !is.null(physeq@sam_data)) {
         sam_data <- data.frame(t(data.frame(unclass(
           physeq@sam_data
         ))))
         colnames(sam_data) <- sample_names(physeq)
+        # Rows are stacked, not joined: a join on the sample columns would
+        # merge a sample-data row with any taxon whose abundances are equal
+        # to its values (e.g. a one-sample object with a value of 25 and a
+        # taxon of 25 sequences), leaving rownames of the wrong length.
+        sam_data[] <- lapply(sam_data, as.character)
+        df_physeq_interm[] <- lapply(df_physeq_interm, as.character)
         if (sam_data_first) {
-          df_physeq <- dplyr::full_join(sam_data, df_physeq_interm)
+          df_physeq <- dplyr::bind_rows(sam_data, df_physeq_interm)
           rownames(df_physeq) <-
             c(rownames(sam_data), rownames(df_physeq_interm))
         } else {
-          df_physeq <- dplyr::full_join(df_physeq_interm, sam_data)
+          df_physeq <- dplyr::bind_rows(df_physeq_interm, sam_data)
           rownames(df_physeq) <-
             c(rownames(df_physeq_interm), rownames(sam_data))
         }
+      } else {
+        df_physeq <- df_physeq_interm
       }
       utils::write.table(
         df_physeq,
