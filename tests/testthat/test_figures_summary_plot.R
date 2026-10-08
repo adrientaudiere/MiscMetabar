@@ -18,6 +18,12 @@ test_that("summary_plot_pq works with data_fungi dataset", {
   expect_silent(summary_plot_pq(data_fungi, clean_pq = FALSE))
 })
 
+test_that("summary_plot_pq separates the min-depth sample name from its count", {
+  p <- summary_plot_pq(data_fungi_mini)
+  info <- p$layers[[length(p$layers)]]$data$nb_values
+  expect_match(info, "Min nb seq per sample \\([^)]+\\): [0-9]+\n")
+})
+
 test_that("summary_plot_pq works with GP dataset", {
   expect_message(summary_plot_pq(GP))
   skip_on_cran()

@@ -227,6 +227,26 @@ test_that("hill_bar_pq works with data_fungi_mini dataset", {
   )
 })
 
+test_that("hill_bar_pq skips Kruskal-Wallis only when every group has one sample", {
+  skip_on_cran()
+  d <- prune_samples(sample_names(data_fungi_mini)[1:4], data_fungi_mini)
+  d@sam_data$Single <- paste0("G", 1:4)
+  p <- suppressMessages(hill_bar_pq(d, Single, q = 0))
+  expect_equal(
+    p$labels$subtitle,
+    "Kruskal-Wallis not computed: one sample per group"
+  )
+  expect_no_error(ggplot2::ggplot_build(p))
+  expect_false(grepl(
+    "Tukey HSD pairwise comparisons not run",
+    p$labels$caption
+  ))
+
+  d@sam_data$Pair <- c("G1", "G1", "G2", "G3")
+  p2 <- suppressMessages(hill_bar_pq(d, Pair, q = 0))
+  expect_match(p2$labels$subtitle, "^Kruskal-Wallis: X-squared")
+})
+
 test_that("hill_bar_pq falls back to a longer palette with more than 8 groups", {
   skip_on_cran()
   d <- data_fungi_mini

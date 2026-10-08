@@ -2352,6 +2352,7 @@ summary_plot_pq <- function(
             15,
             "right"
           ),
+          "): ",
           min(sample_sums(otu_tab)),
           "\n",
           "Nb samples with less than ",
@@ -7482,14 +7483,23 @@ plot_ordination_pq <- function(
   sig_symbol = "\u2205"
 ) {
   # --- Kruskal-Wallis test ---
+  # Not computed when every group has a single value: the statistic is then
+  # always n - 1 and its p-value carries no information.
   data[[x_name]] <- as.factor(data[[x_name]])
-  kw <- kruskal.test(reformulate(x_name, response = y_name), data = data)
-  kw_subtitle <- sprintf(
-    "Kruskal-Wallis: X-squared(%d) = %.2f, p = %s",
-    kw$parameter,
-    kw$statistic,
-    format.pval(kw$p.value, digits = 3, eps = 0.001)
-  )
+  n_per_group_y <- table(data[[x_name]][!is.na(data[[y_name]])])
+  kw_run <- any(n_per_group_y >= 2)
+  if (kw_run) {
+    kw <- kruskal.test(reformulate(x_name, response = y_name), data = data)
+    kw_subtitle <- sprintf(
+      "Kruskal-Wallis: X-squared(%d) = %.2f, p = %s",
+      kw$parameter,
+      kw$statistic,
+      format.pval(kw$p.value, digits = 3, eps = 0.001)
+    )
+  } else {
+    kw_subtitle <- "Kruskal-Wallis not computed: one sample per group"
+  }
+  show_letters <- add_letters && kw_run
 
   # --- Summary stats ---
   summary_data <- data |>
@@ -7504,8 +7514,8 @@ plot_ordination_pq <- function(
   # NA groups are excluded from statistical comparisons; they receive "n.d."
   .grp_chr <- function(x) ifelse(is.na(x), "<NA>", as.character(x))
 
-  tukey_run <- FALSE
-  if (add_letters) {
+  tukey_run <- if (kw_run) FALSE else NA
+  if (show_letters) {
     if (kw$p.value < p_threshold) {
       tukey <- TukeyHSD(aov(
         reformulate(x_name, response = y_name),
@@ -7583,7 +7593,7 @@ plot_ordination_pq <- function(
       alpha = error_bar_alpha
     )
 
-  if (add_letters) {
+  if (show_letters) {
     p <- p +
       ggplot2::geom_text(
         data = summary_data,
@@ -7607,7 +7617,7 @@ plot_ordination_pq <- function(
   # In a multi-panel figure the "Error bars / Tukey" caption is set once at the
   # figure level (see `hill_bar_pq()`); panels where Tukey HSD was not run are
   # instead flagged with `sig_symbol` appended to their subtitle.
-  subtitle_lab <- if (mark_symbol && add_letters && !tukey_run) {
+  subtitle_lab <- if (mark_symbol && add_letters && isFALSE(tukey_run)) {
     paste0(kw_subtitle, " ", sig_symbol)
   } else {
     kw_subtitle
@@ -7659,7 +7669,8 @@ plot_ordination_pq <- function(
 #' @param error_fun_lab Label describing the error bars.
 #' @param add_letters Logical, whether compact letters are displayed.
 #' @param tukey_flags Logical vector, one element per panel, `TRUE` when Tukey
-#'   HSD pairwise comparisons were run for that panel.
+#'   HSD pairwise comparisons were run for that panel, `NA` when the
+#'   Kruskal-Wallis test was not computed (one sample per group).
 #' @param p_threshold Kruskal-Wallis significance threshold.
 #' @param sig_symbol Symbol used to flag panels where Tukey HSD was not run.
 #'   The symbol prefix is only added when there is more than one panel.
@@ -7676,10 +7687,11 @@ plot_ordination_pq <- function(
   if (!add_letters) {
     return(cap)
   }
-  if (any(tukey_flags)) {
+  # NA flags: Kruskal-Wallis not computed (one sample per group), no letters.
+  if (any(tukey_flags, na.rm = TRUE)) {
     cap <- paste0(cap, "; letters from Tukey HSD pairwise comparisons")
   }
-  if (any(!tukey_flags)) {
+  if (any(!tukey_flags, na.rm = TRUE)) {
     prefix <- if (length(tukey_flags) > 1L) paste0(sig_symbol, " ") else ""
     cap <- paste0(
       cap,
@@ -7704,8 +7716,10 @@ plot_ordination_pq <- function(
 #' For each Hill diversity order in `q`, draws a bar at the group mean (±1 SE)
 #' with jittered individual points. A Kruskal-Wallis test is reported in the
 #' subtitle; when the global effect is significant, Tukey HSD pairwise
-#' comparisons produce compact letter displays above the bars. Multiple values
-#' of `q` are assembled into a [patchwork] layout automatically.
+#' comparisons produce compact letter displays above the bars. When every group
+#' has a single sample, the test is not computed (the subtitle says so) and no
+#' letters are drawn. Multiple values of `q` are assembled into a [patchwork]
+#' layout automatically.
 #'
 #' @inheritParams clean_pq
 #' @param x Name (unquoted) of the grouping variable in `sam_data` (x-axis).
@@ -7960,7 +7974,7 @@ hill_bar_pq <- function(
 #' @return A ggplot2 object with wrapped/resized text elements.
 #' @export
 #' @author Adrien Taudière
-#' 
+#'
 #'
 #' @examples
 #' \donttest{
