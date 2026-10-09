@@ -110,6 +110,8 @@ taxonomic classification (see vignette <a href="https://adrientaudiere.github.io
 <span>  control <span class="op">=</span> <span class="fu">phangorn</span><span class="fu">::</span><span class="fu"><a href="https://klausvigo.github.io/phangorn/reference/pml.control.html" class="external-link">pml.control</a></span><span class="op">(</span>trace <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,</span>
 <span>  optNni <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  multicore <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  align_method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"decipher"</span>, <span class="st">"mafft"</span><span class="op">)</span>,</span>
+<span>  mafft_exec <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -165,6 +167,18 @@ see <code><a href="https://klausvigo.github.io/phangorn/reference/pml.html" clas
 see <code><a href="https://klausvigo.github.io/phangorn/reference/bootstrap.pml.html" class="external-link">phangorn::bootstrap.pml()</a></code> for more details</p></dd>
 
 
+<dt id="arg-align-method">align_method<a class="anchor" aria-label="anchor" href="#arg-align-method"></a></dt>
+<dd><p>Aligner used to align the <code>refseq</code> slot before the tree
+is built, either <code>"decipher"</code> (default, pure R) or <code>"mafft"</code> (external
+program, much faster on large <code>refseq</code> slots). See <code><a href="align_pq.html">align_pq()</a></code>.</p></dd>
+
+
+<dt id="arg-mafft-exec">mafft_exec<a class="anchor" aria-label="anchor" href="#arg-mafft-exec"></a></dt>
+<dd><p>Path to the MAFFT executable. Only used when
+<code>align_method = "mafft"</code>. Default to NULL, i.e. the usual lookup of
+<code><a href="is_mafft_installed.html">is_mafft_installed()</a></code>.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Other params for be passed on to
 <code><a href="https://klausvigo.github.io/phangorn/reference/pml.html" class="external-link">phangorn::optim.pml()</a></code> function</p></dd>
@@ -179,6 +193,10 @@ see <code><a href="https://klausvigo.github.io/phangorn/reference/bootstrap.pml.
     <p>This function is mainly a wrapper of the work of others.
 Please make a reference to <code>phangorn</code> package if you
 use this function.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code><a href="align_pq.html">align_pq()</a></code>, <code><a href="is_mafft_installed.html">is_mafft_installed()</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -215,60 +233,6 @@ use this function.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of filtered-out ASV 23</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept ASV 22</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Number of kept samples 131</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Determining distance matrix based on shared 8-mers:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0 secs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Clustering into groups by similarity:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0 secs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Aligning Sequences:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.14 secs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 1 of 2:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Determining distance matrix based on alignment:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0 secs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Reclustering into groups by similarity:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0 secs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Realigning Sequences:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.1 secs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Iteration 2 of 2:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Determining distance matrix based on alignment:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0 secs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Reclustering into groups by similarity:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0 secs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Realigning Sequences:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.07 secs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Refining the alignment:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.03 secs</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -4496.258 --&gt; -4357.83 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> optimize edge weights:  -4357.83 --&gt; -4357.827 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> optimize topology:  -4357.827 --&gt; -4357.827  NNI moves:  0 </span>
@@ -305,7 +269,7 @@ use this function.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

@@ -29,5 +29,5 @@ Adrien Taudière
 
 ``` r
 MiscMetabar::is_multiqc_installed()
-#> [1] TRUE
+#> [1] FALSE
 ```

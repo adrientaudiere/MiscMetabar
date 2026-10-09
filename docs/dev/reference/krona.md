@@ -74,13 +74,19 @@ Adrien Taudière
 ## Examples
 
 ``` r
-if (FALSE) { # tolower(Sys.info()[["sysname"]]) != "windows" && MiscMetabar::is_krona_installed()
 data("GlobalPatterns", package = "phyloseq")
 GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
+#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
+#> Also defined by ‘RNeXML’
+#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
+#> Also defined by ‘RNeXML’
+#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
+#> Also defined by ‘RNeXML’
+#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
+#> Also defined by ‘RNeXML’
 if (FALSE) { # \dontrun{
 krona(GA, "Number.of.sequences.html")
 krona(GA, "Number.of.ASVs.html", nb_seq = FALSE)
 merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"))
 } # }
-}
 ```

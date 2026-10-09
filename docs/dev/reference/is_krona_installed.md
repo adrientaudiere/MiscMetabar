@@ -29,5 +29,5 @@ Adrien Taudière
 
 ``` r
 MiscMetabar::is_krona_installed()
-#> [1] FALSE
+#> [1] TRUE
 ```

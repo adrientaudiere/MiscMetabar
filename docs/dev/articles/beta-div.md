@@ -15,11 +15,12 @@ res_ado <- adonis_pq(data_fungi_woNA4height, "Tree_name+Height")
 knitr::kable(res_ado)
 ```
 
-|          |  Df | SumOfSqs |        R2 |        F | Pr(\>F) |
-|:---------|----:|---------:|----------:|---------:|--------:|
-| Model    |  63 | 36.92559 | 0.5881754 | 1.518899 |   0.001 |
-| Residual |  67 | 25.85431 | 0.4118246 |       NA |      NA |
-| Total    | 130 | 62.77990 | 1.0000000 |       NA |      NA |
+|           |  Df |   SumOfSqs |        R2 |        F | Pr(\>F) |
+|:----------|----:|-----------:|----------:|---------:|--------:|
+| Tree_name |  61 | 36.0741288 | 0.5746127 | 1.532526 |   0.001 |
+| Height    |   2 |  0.8514605 | 0.0135626 | 1.103256 |   0.125 |
+| Residual  |  67 | 25.8543072 | 0.4118246 |       NA |      NA |
+| Total     | 130 | 62.7798964 | 1.0000000 |       NA |      NA |
 
 ### Graph Test
 
@@ -39,6 +40,21 @@ circle_pq(data_fungi_woNA4height, "Height")
 ![](beta-div_files/figure-html/unnamed-chunk-4-1.png)
 
 ### Ordination
+
+Ordination methods fall into two families. **Global** methods (PCA,
+PCoA, MDS, NMDS) aim to preserve the overall arrangement of the samples,
+so distances between points or clusters, cluster density and class
+separability can be read from the plot. **Local** methods (t-SNE and
+UMAP below) instead preserve the neighbourhood of each sample: they are
+excellent at revealing neighbourhoods, outliers and clusters, but the
+distances, the relative sizes and the separations of the clusters they
+draw **must not** be interpreted as reflecting the original data (Jeon
+et al., 2026, *Stop Misusing t-SNE and UMAP for Visual Analytics*,
+[arXiv:2506.08725](https://arxiv.org/abs/2506.08725)). Recent methods
+such as [UMATO](https://github.com/hyungkwonko/umato) (Jeon et al.,
+2025) and [PaCMAP](https://github.com/YingfanWang/PaCMAP) (Wang et al.,
+2021) explicitly try to preserve both local and global structure, but
+they are not implemented in MiscMetabar yet (see the pqverse ROADMAP).
 
 #### PCoA
 
@@ -126,6 +142,10 @@ plot_ordination_pq(data_fungi, method = "robust.aitchison", color = "Height") +
 
 #### TSNE
 
+t-SNE is a local method: here it is used to identify neighbourhoods,
+outliers and clusters, not to compare the distances between samples or
+groups.
+
 ``` r
 plot_tsne_pq(data_fungi, fact = "Height")
 ```
@@ -133,6 +153,9 @@ plot_tsne_pq(data_fungi, fact = "Height")
 ![](beta-div_files/figure-html/unnamed-chunk-7-1.png)
 
 #### UMAP
+
+UMAP is a local method with the same caveat as t-SNE: interpret groups
+and neighbourhoods, not distances or densities.
 
 ``` r
 df_umap <- umap_pq(data_fungi)
@@ -376,12 +399,12 @@ sessionInfo()
 #> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0
 #> 
 #> locale:
-#>  [1] LC_CTYPE=en_US.UTF-8          LC_NUMERIC=C                 
-#>  [3] LC_TIME=en_US.UTF-8           LC_COLLATE=en_US.UTF-8       
-#>  [5] LC_MONETARY=en_US.UTF-8       LC_MESSAGES=en_US.UTF-8      
-#>  [7] LC_PAPER=en_US.UTF-8          LC_NAME=en_US.UTF-8          
-#>  [9] LC_ADDRESS=en_US.UTF-8        LC_TELEPHONE=en_US.UTF-8     
-#> [11] LC_MEASUREMENT=en_US.UTF-8    LC_IDENTIFICATION=en_US.UTF-8
+#>  [1] LC_CTYPE=fr_FR.UTF-8          LC_NUMERIC=C                 
+#>  [3] LC_TIME=fr_FR.UTF-8           LC_COLLATE=fr_FR.UTF-8       
+#>  [5] LC_MONETARY=fr_FR.UTF-8       LC_MESSAGES=fr_FR.UTF-8      
+#>  [7] LC_PAPER=fr_FR.UTF-8          LC_NAME=fr_FR.UTF-8          
+#>  [9] LC_ADDRESS=fr_FR.UTF-8        LC_TELEPHONE=fr_FR.UTF-8     
+#> [11] LC_MEASUREMENT=fr_FR.UTF-8    LC_IDENTIFICATION=fr_FR.UTF-8
 #> 
 #> time zone: Europe/Paris
 #> tzcode source: system (glibc)
@@ -393,17 +416,17 @@ sessionInfo()
 #> other attached packages:
 #>  [1] doRNG_1.8.6.3               rngtools_1.5.2             
 #>  [3] foreach_1.5.2               ALDEx2_1.44.0              
-#>  [5] latticeExtra_0.6-31         lattice_0.22-9             
-#>  [7] zCompositions_1.6.1         survival_3.8-6             
-#>  [9] truncnorm_1.0-9             MASS_7.3-65                
-#> [11] lefser_1.22.0               SummarizedExperiment_1.42.0
-#> [13] Biobase_2.72.0              GenomicRanges_1.64.0       
-#> [15] Seqinfo_1.2.0               IRanges_2.46.0             
-#> [17] S4Vectors_0.50.1            BiocGenerics_0.58.1        
-#> [19] generics_0.1.4              MatrixGenerics_1.24.0      
-#> [21] matrixStats_1.5.0           MiscMetabar_0.17.0.9000    
-#> [23] dplyr_1.2.1                 ggplot2_4.0.3              
-#> [25] phyloseq_1.56.0            
+#>  [5] latticeExtra_0.6-31         lattice_0.23-1             
+#>  [7] zCompositions_1.6.2         truncnorm_1.0-9            
+#>  [9] NADA_1.6-1.2                survival_3.8-9             
+#> [11] MASS_7.3-66                 lefser_1.22.0              
+#> [13] SummarizedExperiment_1.42.0 Biobase_2.72.0             
+#> [15] GenomicRanges_1.64.0        Seqinfo_1.2.0              
+#> [17] IRanges_2.46.0              S4Vectors_0.50.1           
+#> [19] BiocGenerics_0.58.1         generics_0.1.4             
+#> [21] MatrixGenerics_1.24.0       matrixStats_1.5.0          
+#> [23] MiscMetabar_0.18.0.9000     dplyr_1.2.1                
+#> [25] ggplot2_4.0.3               phyloseq_1.56.0            
 #> 
 #> loaded via a namespace (and not attached):
 #>   [1] fs_2.1.0                        DirichletMultinomial_1.54.0    
@@ -413,23 +436,23 @@ sessionInfo()
 #>   [9] utf8_1.2.6                      R6_2.6.1                       
 #>  [11] vegan_2.7-5                     lazyeval_0.2.3                 
 #>  [13] mgcv_1.9-4                      permute_0.9-10                 
-#>  [15] withr_3.0.3                     gridExtra_2.3                  
+#>  [15] withr_3.0.3                     gridExtra_2.3.1                
 #>  [17] cli_3.6.6                       textshaping_1.0.5              
-#>  [19] network_1.20.0                  sandwich_3.1-1                 
+#>  [19] network_1.20.0                  sandwich_3.1-3                 
 #>  [21] labeling_0.4.3                  sass_0.4.10                    
-#>  [23] mvtnorm_1.4-1                   S7_0.2.2                       
+#>  [23] mvtnorm_1.4-2                   S7_0.2.2                       
 #>  [25] readr_2.2.0                     proxy_0.4-29                   
-#>  [27] askpass_1.2.1                   pkgdown_2.2.0                  
+#>  [27] askpass_1.2.1                   pkgdown_2.2.1                  
 #>  [29] systemfonts_1.3.2               yulab.utils_0.2.4              
-#>  [31] foreign_0.8-91                  scater_1.40.1                  
+#>  [31] foreign_0.8-91                  scater_1.40.2                  
 #>  [33] decontam_1.32.0                 readxl_1.5.0                   
 #>  [35] rstudioapi_0.19.0               gridGraphics_0.5-1             
 #>  [37] ggVennDiagram_1.5.7             shape_1.4.6.1                  
-#>  [39] gtools_3.9.5                    Matrix_1.7-5                   
+#>  [39] gtools_3.9.5                    Matrix_1.7-6                   
 #>  [41] interp_1.1-6                    biomformat_1.40.0              
 #>  [43] ggbeeswarm_0.7.3                DescTools_0.99.60              
-#>  [45] DECIPHER_3.8.0                  abind_1.4-8                    
-#>  [47] lifecycle_1.0.5                 multcomp_1.4-30                
+#>  [45] DECIPHER_3.8.1                  abind_1.4-8                    
+#>  [47] lifecycle_1.0.5                 multcomp_1.4-31                
 #>  [49] yaml_2.3.12                     SparseArray_1.12.2             
 #>  [51] Rtsne_0.17                      crayon_1.5.3                   
 #>  [53] haven_2.5.5                     beachmat_2.28.0                
@@ -438,26 +461,26 @@ sessionInfo()
 #>  [59] knitr_1.51                      boot_1.3-32                    
 #>  [61] gld_2.6.8                       codetools_0.2-20               
 #>  [63] glue_1.8.1                      ggiraph_0.9.6                  
-#>  [65] ggfun_0.2.0                     fontLiberation_0.1.0           
+#>  [65] ggfun_0.2.1                     fontLiberation_0.1.0           
 #>  [67] data.table_1.18.4               MultiAssayExperiment_1.38.0    
 #>  [69] vctrs_0.7.3                     png_0.1-9                      
 #>  [71] treeio_1.36.1                   Rdpack_2.6.6                   
 #>  [73] cellranger_1.1.0                testthat_3.3.2                 
 #>  [75] gtable_0.3.6                    cachem_1.1.0                   
-#>  [77] zigg_0.0.2                      xfun_0.58                      
+#>  [77] zigg_0.0.2                      xfun_0.60                      
 #>  [79] rbibutils_2.4.1                 S4Arrays_1.12.0                
-#>  [81] Rfast_2.1.5.2                   libcoin_1.0-12                 
+#>  [81] Rfast_2.1.5.2                   libcoin_1.0-13                 
 #>  [83] reformulas_0.4.4                coda_0.19-4.1                  
 #>  [85] SingleCellExperiment_1.34.0     rJava_1.0-18                   
 #>  [87] iterators_1.0.14                bluster_1.22.0                 
 #>  [89] directlabels_2026.4.23          TH.data_1.1-5                  
-#>  [91] nlme_3.1-169                    ANCOMBC_2.14.0                 
+#>  [91] nlme_3.1-170                    ANCOMBC_2.14.0                 
 #>  [93] phyloseqGraphTest_0.1.1         ggtree_4.2.0                   
-#>  [95] fontquiver_0.2.1                bslib_0.11.0                   
+#>  [95] fontquiver_0.2.1                bslib_0.12.0                   
 #>  [97] irlba_2.3.7                     rpart_4.1.27                   
 #>  [99] vipor_0.4.7                     otel_0.2.0                     
-#> [101] Hmisc_5.2-5                     colorspace_2.1-2               
-#> [103] DBI_1.3.0                       nnet_7.3-20                    
+#> [101] Hmisc_5.2-6                     colorspace_2.1-3               
+#> [103] DBI_1.3.0                       nnet_7.3-21                    
 #> [105] ade4_1.7-24                     Exact_3.3                      
 #> [107] DESeq2_1.52.0                   tidyselect_1.2.1               
 #> [109] compiler_4.6.1                  microbiome_1.34.0              
@@ -470,21 +493,21 @@ sessionInfo()
 #> [123] minqa_1.2.8                     rmarkdown_2.31                 
 #> [125] XVector_0.52.0                  base64enc_0.1-6                
 #> [127] htmltools_0.5.9                 pkgconfig_2.0.3                
-#> [129] jpeg_0.1-11                     lme4_2.0-1                     
+#> [129] jpeg_0.1-11                     lme4_2.0-6                     
 #> [131] umap_0.2.10.0                   sparseMatrixStats_1.24.0       
-#> [133] fastmap_1.2.0                   rlang_1.2.0                    
+#> [133] fastmap_1.2.0                   rlang_1.3.0                    
 #> [135] GlobalOptions_0.1.4             htmlwidgets_1.6.4              
 #> [137] DelayedMatrixStats_1.34.0       farver_2.1.2                   
 #> [139] jquerylib_0.1.4                 energy_1.7-12                  
-#> [141] zoo_1.8-15                      jsonlite_2.0.0                 
+#> [141] zoo_1.9-0                       jsonlite_2.0.0                 
 #> [143] BiocParallel_1.46.0             statnet.common_4.13.0          
 #> [145] BiocSingular_1.28.0             magrittr_2.0.5                 
-#> [147] Formula_1.2-5                   modeltools_0.2-24              
+#> [147] Formula_1.2-6                   modeltools_0.2-24              
 #> [149] scuttle_1.22.0                  ggnetwork_0.5.14               
 #> [151] ggplotify_0.1.3                 patchwork_1.3.2                
-#> [153] Rcpp_1.1.1-1.1                  ape_5.8-1                      
+#> [153] Rcpp_1.1.2                      ape_5.8-1                      
 #> [155] viridis_0.6.5                   gdtools_0.5.1                  
-#> [157] reticulate_1.46.0               stringi_1.8.7                  
+#> [157] reticulate_1.46.0               stringi_1.8.9                  
 #> [159] rootSolve_1.8.2.4               brio_1.1.5                     
 #> [161] plyr_1.8.9                      parallel_4.6.1                 
 #> [163] ggrepel_0.9.8                   forcats_1.0.1                  
@@ -494,16 +517,16 @@ sessionInfo()
 #> [171] circlize_0.4.18                 locfit_1.5-9.12                
 #> [173] igraph_2.3.3                    reshape2_1.4.5                 
 #> [175] ScaledMatrix_1.20.0             evaluate_1.0.5                 
-#> [177] RcppParallel_5.1.11-2           nloptr_2.2.1                   
+#> [177] RcppParallel_6.2.0              nloptr_2.2.1                   
 #> [179] tzdb_0.5.0                      tidyr_1.3.2                    
 #> [181] openssl_2.4.2                   purrr_1.2.2                    
 #> [183] ecodive_2.2.6                   rsvd_1.0.5                     
-#> [185] coin_1.4-3                      divent_0.5-4                   
+#> [185] coin_1.4-5                      divent_0.5-4                   
 #> [187] e1071_1.7-17                    RSpectra_0.16-2                
-#> [189] tidytree_0.4.7                  class_7.3-23                   
+#> [189] tidytree_0.4.8                  class_7.3-24                   
 #> [191] viridisLite_0.4.3               ragg_1.5.2                     
 #> [193] gsl_2.1-9                       tibble_3.3.1                   
-#> [195] lmerTest_3.2-1                  aplot_0.2.9                    
+#> [195] lmerTest_3.2-1                  aplot_0.3.1                    
 #> [197] beeswarm_0.4.0                  cluster_2.1.8.2                
 #> [199] TreeSummarizedExperiment_2.20.0 mia_1.20.0
 ```

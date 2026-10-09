@@ -96,6 +96,8 @@ using the <code>phyloseq</code> package.</p></dd>
 <dd><p>Additional arguments passed on to <code><a href="https://rdrr.io/pkg/umap/man/umap.html" class="external-link">umap::umap()</a></code> or
 <code><a href="https://jlmelville.github.io/uwot/reference/umap2.html" class="external-link">uwot::umap2()</a></code> function.
 For example <code>n_neighbors</code> set the number of nearest neighbors (Default 15).
+<code>n_neighbors</code> is capped to <code>nsamples(physeq) - 1</code> (with a minimum of 2)
+so that small phyloseq objects run, as in <code><a href="https://adrientaudiere.github.io/ggplotpq/reference/dr_plot_pq.html" class="external-link">ggplotpq::dr_plot_pq()</a></code>.
 See <code><a href="https://rdrr.io/pkg/umap/man/umap.defaults.html" class="external-link">umap::umap.defaults()</a></code> or <code><a href="https://jlmelville.github.io/uwot/reference/umap2.html" class="external-link">uwot::umap2()</a></code> for the list of
 parameters and default values.</p></dd>
 
@@ -106,9 +108,39 @@ parameters and default values.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This function is mainly a wrapper of the work of others.
+    <p>UMAP is a <strong>local</strong> dimensionality-reduction technique: it preferentially
+preserves the neighbourhood structure of the original samples. It is
+therefore well suited to <em>neighbourhood identification</em>, <em>outlier
+identification</em> and <em>cluster identification</em>. However, the distances between
+points, the distances between clusters, the density of a cluster and the
+class separability read on the embedding are <strong>not</strong> faithful to the original
+space and must not be interpreted as such (Jeon et al., 2026). For these
+<em>global</em> questions, use a global technique instead, such as PCA
+(<code><a href="https://rdrr.io/r/stats/prcomp.html" class="external-link">stats::prcomp()</a></code>) or MDS/PCoA (<code><a href="https://rdrr.io/pkg/phyloseq/man/ordinate.html" class="external-link">phyloseq::ordinate()</a></code>,
+<code><a href="plot_ordination_pq.html">plot_ordination_pq()</a></code>). Recent techniques such as UMATO (Jeon et al., 2025)
+and PaCMAP (Wang et al., 2021) seek a better compromise between local and
+global structure preservation.</p>
+<p>This function is mainly a wrapper of the work of others.
 Please make a reference to <code><a href="https://rdrr.io/pkg/umap/man/umap.html" class="external-link">umap::umap()</a></code> if you
 use this function.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <p>Jeon, H., Park, J., Shin, S., &amp; Seo, J. (2026). Stop Misusing t-SNE and UMAP
+for Visual Analytics. <em>IEEE Transactions on Visualization and Computer
+Graphics</em>. <a href="https://doi.org/10.48550/arXiv.2506.08725" class="external-link">doi:10.48550/arXiv.2506.08725</a></p>
+<p>Jeon, H., Ko, K., Lee, S., Hyun, J., Yang, T., Go, G., Jo, J., &amp; Seo, J.
+(2025). UMATO: Bridging Local and Global Structures for Reliable Visual
+Analytics with Dimensionality Reduction. <em>IEEE Transactions on
+Visualization and Computer Graphics</em>. <a href="https://doi.org/10.1109/TVCG.2025.3602735" class="external-link">doi:10.1109/TVCG.2025.3602735</a></p>
+<p>McInnes, L., Healy, J., &amp; Melville, J. (2018). UMAP: Uniform Manifold
+Approximation and Projection for Dimension Reduction.
+<a href="https://doi.org/10.48550/arXiv.1802.03426" class="external-link">doi:10.48550/arXiv.1802.03426</a></p>
+<p>Wang, Y., Huang, H., Rudin, C., &amp; Shaposhnik, Y. (2021). Understanding How
+Dimension Reduction Tools Work: An Empirical Approach to Deciphering
+t-SNE, UMAP, TriMap, and PaCMAP for Data Visualization. <em>Journal of Machine
+Learning Research</em>, 22(201), 1-73.
+<a href="https://doi.org/10.48550/arXiv.2012.04456" class="external-link">doi:10.48550/arXiv.2012.04456</a></p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -175,7 +207,7 @@ use this function.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

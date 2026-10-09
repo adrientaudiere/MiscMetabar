@@ -86,6 +86,28 @@ plot_tsne_pq(
 
 A ggplot object
 
+## Details
+
+As explained in the documentation of
+[`tsne_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/tsne_pq.md),
+t-SNE is a **local** technique: the plot is reliable for
+*neighbourhood*, *outlier* and *cluster identification*, but the
+distances between points or clusters, the cluster density and the class
+separability it suggests must not be read as faithful to the original
+space (Jeon et al., 2026). See
+[`tsne_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/tsne_pq.md)
+for details and for global alternatives (PCA, MDS/PCoA).
+
+## References
+
+Jeon, H., Park, J., Shin, S., & Seo, J. (2026). Stop Misusing t-SNE and
+UMAP for Visual Analytics. *IEEE Transactions on Visualization and
+Computer Graphics*.
+[doi:10.48550/arXiv.2506.08725](https://doi.org/10.48550/arXiv.2506.08725)
+
+van der Maaten, L., & Hinton, G. (2008). Visualizing Data using t-SNE.
+*Journal of Machine Learning Research*, 9, 2579-2605.
+
 ## Author
 
 Adrien Taudière

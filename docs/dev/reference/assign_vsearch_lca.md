@@ -22,6 +22,13 @@ function to assign taxonomy.
     [`resolve_vector_ranks()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/resolve_vector_ranks.md)
     for more details.
 
+One vsearch search can serve several `lca_cutoff` (or `vote_algorithm`)
+values: run it once with `behavior = "return_hits"`, then pass the
+returned table to `hits_table` with each value. The LCA is then computed
+in R as vsearch computes `--lcaout` (a rank is kept while the most
+frequent lineage down to that rank is shared by at least `lca_cutoff` of
+the hits; empty rank names are skipped), so no search is run again.
+
 ## Usage
 
 ``` r
@@ -29,7 +36,8 @@ assign_vsearch_lca(
   physeq = NULL,
   ref_fasta = NULL,
   seq2search = NULL,
-  behavior = c("return_matrix", "return_taxtab", "add_to_phyloseq", "return_cmd"),
+  behavior = c("return_matrix", "return_taxtab", "add_to_phyloseq", "return_cmd",
+    "return_hits"),
   vsearchpath = find_vsearch(),
   clean_pq = TRUE,
   taxa_ranks = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"),
@@ -53,7 +61,8 @@ assign_vsearch_lca(
   collapse_string = "/",
   replace_collapsed_rank_by_NA = TRUE,
   simplify_taxo = TRUE,
-  keep_vsearch_score = FALSE
+  keep_vsearch_score = FALSE,
+  hits_table = NULL
 )
 ```
 
@@ -67,16 +76,16 @@ assign_vsearch_lca(
 
 - ref_fasta:
 
-  (required) A link to a database in vsearch format The reference
-  database must contain taxonomic information in the header of each
-  sequence in the form of a string starting with ";tax=" and followed by
-  a comma-separated list of up to nine taxonomic identifiers. Each
-  taxonomic identifier must start with an indication of the rank by one
-  of the letters d (for domain) k (kingdom), p (phylum), c (class), o
-  (order), f (family), g (genus), s (species), or t (strain). The letter
-  is followed by a colon (:) and the name of that rank. Commas and
-  semicolons are not allowed in the name of the rank. Non-ascii
-  characters should be avoided in the names.
+  (required unless `hits_table` is given) A link to a database in
+  vsearch format The reference database must contain taxonomic
+  information in the header of each sequence in the form of a string
+  starting with ";tax=" and followed by a comma-separated list of up to
+  nine taxonomic identifiers. Each taxonomic identifier must start with
+  an indication of the rank by one of the letters d (for domain) k
+  (kingdom), p (phylum), c (class), o (order), f (family), g (genus), s
+  (species), or t (strain). The letter is followed by a colon (:) and
+  the name of that rank. Commas and semicolons are not allowed in the
+  name of the rank. Non-ascii characters should be avoided in the names.
 
   Example:
 
@@ -92,8 +101,8 @@ assign_vsearch_lca(
 
 - behavior:
 
-  Either "return_matrix" (default), "return_taxtab", "return_cmd", or
-  "add_to_phyloseq":
+  Either "return_matrix" (default), "return_taxtab", "return_cmd",
+  "return_hits" or "add_to_phyloseq":
 
   - "return_matrix" return a list of two matrix with taxonomic value in
     the first element of the list and bootstrap value in the second one.
@@ -104,6 +113,12 @@ assign_vsearch_lca(
     [`phyloseq::tax_table()`](https://rdrr.io/pkg/phyloseq/man/tax_table-methods.html).
 
   - "return_cmd" return the command to run without running it.
+
+  - "return_hits" run the search and return the hits written by vsearch
+    `--userout` as a data.frame with columns `query`, `id` and `target`
+    (the target header, taxonomy included), plus one row with `id` and
+    `target` set to NA for each query without hit. It is the input of
+    `hits_table`.
 
   - "add_to_phyloseq" return a phyloseq object with amended slot
     `@taxtable`. Only available if using physeq input and not seq2search
@@ -262,6 +277,16 @@ assign_vsearch_lca(
 
   (Logical, default FALSE). If TRUE, the mean and sd of id score are
   stored in the tax_table.
+
+- hits_table:
+
+  (data.frame, default NULL). A table returned by
+  `behavior = "return_hits"`. When given, vsearch is not run: the
+  taxonomy is computed from these hits with the current `lca_cutoff` (or
+  `vote_algorithm`), and `ref_fasta`, `id`, `maxaccepts` and
+  `maxrejects` are ignored. With `top_hits_only = TRUE`, only the hits
+  of highest identity of each query are used. `lca_cutoff` must be
+  larger than 0.5, as in vsearch.
 
 ## Value
 

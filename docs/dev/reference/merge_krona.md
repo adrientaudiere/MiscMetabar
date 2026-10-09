@@ -49,7 +49,6 @@ Adrien Taudière
 ## Examples
 
 ``` r
-if (FALSE) { # tolower(Sys.info()[["sysname"]]) != "windows" && MiscMetabar::is_krona_installed()
 if (FALSE) { # \dontrun{
 data("GlobalPatterns", package = "phyloseq")
 GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
@@ -58,5 +57,4 @@ krona(GA, "Number.of.ASVs.html", nb_seq = FALSE, name = "Nb_asv_GP_acidobacteria
 merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"), "mergeKrona.html")
 unlink(c("Number.of.sequences.html", "Number.of.ASVs.html", "mergeKrona.html"))
 } # }
-}
 ```

@@ -30,6 +30,7 @@ assign_blastn(
   replace_collapsed_rank_by_NA = TRUE,
   simplify_taxo = TRUE,
   keep_blast_metrics = FALSE,
+  blast_table = NULL,
   ...
 )
 ```
@@ -172,6 +173,16 @@ assign_blastn(
   (Logical, default FALSE). If TRUE, the blast metrics ("Query seq.
   length", "Taxa seq. length", "Alignment length", "% id. match",
   "e-value", "bit score" and "Query cover") are stored in the tax_table.
+
+- blast_table:
+
+  (data.frame, default NULL). A raw blast table as returned by
+  [`blast_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/blast_pq.md)
+  with `unique_per_seq = FALSE` and `score_filter = FALSE`. If set,
+  blastn is not run again: the score filters (`min_id`, `min_bit_score`,
+  `min_cover` and `min_e_value`) and the vote (or top hit) are applied
+  to this table, so one search can serve several `vote_algorithm` or
+  filter values. `ref_fasta` and `database` are then ignored.
 
 - ...:
 

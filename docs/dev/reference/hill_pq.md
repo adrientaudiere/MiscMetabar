@@ -74,7 +74,7 @@ hill_pq(
 
   (optional, default FALSE): If set to TRUE, the plot show letters based
   on p-values for comparison. Use the
-  [`multcompLetters`](https://rdrr.io/pkg/multcompView/man/multcompLetters.html)
+  [`multcompLetters`](https://lselzer.github.io/multcompView/reference/multcompLetters.html)
   function from the package multcompLetters. BROKEN for the moment. Note
   that na values in The variable param need to be removed (see examples)
   to use letters.

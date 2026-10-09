@@ -28,7 +28,11 @@ umap_pq(physeq, pkg = "umap", ...)
   [`umap::umap()`](https://rdrr.io/pkg/umap/man/umap.html) or
   [`uwot::umap2()`](https://jlmelville.github.io/uwot/reference/umap2.html)
   function. For example `n_neighbors` set the number of nearest
-  neighbors (Default 15). See
+  neighbors (Default 15). `n_neighbors` is capped to
+  `nsamples(physeq) - 1` (with a minimum of 2) so that small phyloseq
+  objects run, as in
+  [`ggplotpq::dr_plot_pq()`](https://adrientaudiere.github.io/ggplotpq/reference/dr_plot_pq.html).
+  See
   [`umap::umap.defaults()`](https://rdrr.io/pkg/umap/man/umap.defaults.html)
   or
   [`uwot::umap2()`](https://jlmelville.github.io/uwot/reference/umap2.html)
@@ -40,9 +44,48 @@ A dataframe with samples informations and the x_umap and y_umap position
 
 ## Details
 
+UMAP is a **local** dimensionality-reduction technique: it
+preferentially preserves the neighbourhood structure of the original
+samples. It is therefore well suited to *neighbourhood identification*,
+*outlier identification* and *cluster identification*. However, the
+distances between points, the distances between clusters, the density of
+a cluster and the class separability read on the embedding are **not**
+faithful to the original space and must not be interpreted as such (Jeon
+et al., 2026). For these *global* questions, use a global technique
+instead, such as PCA
+([`stats::prcomp()`](https://rdrr.io/r/stats/prcomp.html)) or MDS/PCoA
+([`phyloseq::ordinate()`](https://rdrr.io/pkg/phyloseq/man/ordinate.html),
+[`plot_ordination_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_ordination_pq.md)).
+Recent techniques such as UMATO (Jeon et al., 2025) and PaCMAP (Wang et
+al., 2021) seek a better compromise between local and global structure
+preservation.
+
 This function is mainly a wrapper of the work of others. Please make a
 reference to [`umap::umap()`](https://rdrr.io/pkg/umap/man/umap.html) if
 you use this function.
+
+## References
+
+Jeon, H., Park, J., Shin, S., & Seo, J. (2026). Stop Misusing t-SNE and
+UMAP for Visual Analytics. *IEEE Transactions on Visualization and
+Computer Graphics*.
+[doi:10.48550/arXiv.2506.08725](https://doi.org/10.48550/arXiv.2506.08725)
+
+Jeon, H., Ko, K., Lee, S., Hyun, J., Yang, T., Go, G., Jo, J., & Seo, J.
+(2025). UMATO: Bridging Local and Global Structures for Reliable Visual
+Analytics with Dimensionality Reduction. *IEEE Transactions on
+Visualization and Computer Graphics*.
+[doi:10.1109/TVCG.2025.3602735](https://doi.org/10.1109/TVCG.2025.3602735)
+
+McInnes, L., Healy, J., & Melville, J. (2018). UMAP: Uniform Manifold
+Approximation and Projection for Dimension Reduction.
+[doi:10.48550/arXiv.1802.03426](https://doi.org/10.48550/arXiv.1802.03426)
+
+Wang, Y., Huang, H., Rudin, C., & Shaposhnik, Y. (2021). Understanding
+How Dimension Reduction Tools Work: An Empirical Approach to Deciphering
+t-SNE, UMAP, TriMap, and PaCMAP for Data Visualization. *Journal of
+Machine Learning Research*, 22(201), 1-73.
+[doi:10.48550/arXiv.2012.04456](https://doi.org/10.48550/arXiv.2012.04456)
 
 ## See also
 

@@ -31,6 +31,8 @@ build_phytree_pq(
   control = phangorn::pml.control(trace = 0),
   optNni = TRUE,
   multicore = FALSE,
+  align_method = c("decipher", "mafft"),
+  mafft_exec = NULL,
   ...
 )
 ```
@@ -92,6 +94,19 @@ build_phytree_pq(
   [`phangorn::bootstrap.pml()`](https://klausvigo.github.io/phangorn/reference/bootstrap.pml.html)
   for more details
 
+- align_method:
+
+  Aligner used to align the `refseq` slot before the tree is built,
+  either `"decipher"` (default, pure R) or `"mafft"` (external program,
+  much faster on large `refseq` slots). See
+  [`align_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/align_pq.md).
+
+- mafft_exec:
+
+  Path to the MAFFT executable. Only used when `align_method = "mafft"`.
+  Default to NULL, i.e. the usual lookup of
+  [`is_mafft_installed()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_mafft_installed.md).
+
 - ...:
 
   Other params for be passed on to
@@ -106,6 +121,11 @@ A list of phylogenetic tree
 
 This function is mainly a wrapper of the work of others. Please make a
 reference to `phangorn` package if you use this function.
+
+## See also
+
+[`align_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/align_pq.md),
+[`is_mafft_installed()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_mafft_installed.md)
 
 ## Author
 
@@ -142,60 +162,6 @@ if (requireNamespace("phangorn")) {
 #> Number of filtered-out ASV 23
 #> Number of kept ASV 22
 #> Number of kept samples 131
-#> Determining distance matrix based on shared 8-mers:
-#> ================================================================================
-#> 
-#> Time difference of 0 secs
-#> 
-#> Clustering into groups by similarity:
-#> ================================================================================
-#> 
-#> Time difference of 0 secs
-#> 
-#> Aligning Sequences:
-#> ================================================================================
-#> 
-#> Time difference of 0.14 secs
-#> 
-#> Iteration 1 of 2:
-#> 
-#> Determining distance matrix based on alignment:
-#> ================================================================================
-#> 
-#> Time difference of 0 secs
-#> 
-#> Reclustering into groups by similarity:
-#> ================================================================================
-#> 
-#> Time difference of 0 secs
-#> 
-#> Realigning Sequences:
-#> ================================================================================
-#> 
-#> Time difference of 0.1 secs
-#> 
-#> Iteration 2 of 2:
-#> 
-#> Determining distance matrix based on alignment:
-#> ================================================================================
-#> 
-#> Time difference of 0 secs
-#> 
-#> Reclustering into groups by similarity:
-#> ================================================================================
-#> 
-#> Time difference of 0 secs
-#> 
-#> Realigning Sequences:
-#> ================================================================================
-#> 
-#> Time difference of 0.07 secs
-#> 
-#> Refining the alignment:
-#> ================================================================================
-#> 
-#> Time difference of 0.03 secs
-#> 
 #> optimize edge weights:  -4496.258 --> -4357.83 
 #> optimize edge weights:  -4357.83 --> -4357.827 
 #> optimize topology:  -4357.827 --> -4357.827  NNI moves:  0 

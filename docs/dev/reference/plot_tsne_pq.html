@@ -145,6 +145,23 @@ using the <code>phyloseq</code> package.</p></dd>
     <p>A ggplot object</p>
     </div>
     <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>As explained in the documentation of <code><a href="tsne_pq.html">tsne_pq()</a></code>, t-SNE is a <strong>local</strong>
+technique: the plot is reliable for <em>neighbourhood</em>, <em>outlier</em> and <em>cluster
+identification</em>, but the distances between points or clusters, the cluster
+density and the class separability it suggests must not be read as faithful
+to the original space (Jeon et al., 2026). See <code><a href="tsne_pq.html">tsne_pq()</a></code> for details and
+for global alternatives (PCA, MDS/PCoA).</p>
+    </div>
+    <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <p>Jeon, H., Park, J., Shin, S., &amp; Seo, J. (2026). Stop Misusing t-SNE and UMAP
+for Visual Analytics. <em>IEEE Transactions on Visualization and Computer
+Graphics</em>. <a href="https://doi.org/10.48550/arXiv.2506.08725" class="external-link">doi:10.48550/arXiv.2506.08725</a></p>
+<p>van der Maaten, L., &amp; Hinton, G. (2008). Visualizing Data using t-SNE.
+<em>Journal of Machine Learning Research</em>, 9, 2579-2605.</p>
+    </div>
+    <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
     <p>Adrien Taudière</p>
     </div>
@@ -196,7 +213,7 @@ using the <code>phyloseq</code> package.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

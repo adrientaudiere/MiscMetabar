@@ -140,14 +140,17 @@ adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE)
 #> Removing NA from Enterotype
 #> 9 were discarded due to NA in variables present in formula.
 #> Permutation test for adonis under reduced model
+#> Terms added sequentially (first to last)
 #> Permutation: free
 #> Number of permutations: 999
 #> 
-#> vegan::adonis2(formula = .formula, data = metadata)
-#>           Df SumOfSqs      R2      F Pr(>F)    
-#> Model      8   38.194 0.70766 79.278  0.001 ***
-#> Residual 262   15.778 0.29234                  
-#> Total    270   53.972 1.00000                  
+#> vegan::adonis2(formula = .formula, data = metadata, by = by)
+#>                     Df SumOfSqs      R2        F Pr(>F)    
+#> SeqTech              2   29.175 0.54055 242.2289  0.001 ***
+#> Enterotype           2    8.651 0.16028  71.8250  0.001 ***
+#> SeqTech:Enterotype   4    0.368 0.00683   1.5293  0.124    
+#> Residual           262   15.778 0.29234                    
+#> Total              270   53.972 1.00000                    
 #> ---
 #> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 adonis_pq(data_fungi_mini, "Time*Height",
@@ -159,14 +162,18 @@ adonis_pq(data_fungi_mini, "Time*Height",
 #> Removing NA from Height
 #> 62 were discarded due to NA in variables present in formula.
 #> Permutation test for adonis under reduced model
+#> Terms added sequentially (first to last)
 #> Permutation: free
 #> Number of permutations: 999
 #> 
-#> vegan::adonis2(formula = .formula, data = metadata)
-#>          Df SumOfSqs      R2      F Pr(>F)  
-#> Model     6    3.238 0.09064 1.1297  0.045 *
-#> Residual 68   32.484 0.90936                
-#> Total    74   35.722 1.00000                
+#> vegan::adonis2(formula = .formula, data = metadata, by = by)
+#>             Df SumOfSqs      R2      F Pr(>F)   
+#> sample_size  1    0.794 0.02222 1.6616  0.006 **
+#> Time         1    0.621 0.01739 1.3004  0.042 * 
+#> Height       2    0.869 0.02433 0.9098  0.765   
+#> Time:Height  2    0.954 0.02670 0.9983  0.477   
+#> Residual    68   32.484 0.90936                 
+#> Total       74   35.722 1.00000                 
 #> ---
 #> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 # }

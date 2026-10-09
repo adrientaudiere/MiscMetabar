@@ -6,7 +6,9 @@ For each Hill diversity order in `q`, draws a bar at the group mean (±1
 SE) with jittered individual points. A Kruskal-Wallis test is reported
 in the subtitle; when the global effect is significant, Tukey HSD
 pairwise comparisons produce compact letter displays above the bars.
-Multiple values of `q` are assembled into a
+When every group has a single sample, the test is not computed (the
+subtitle says so) and no letters are drawn. Multiple values of `q` are
+assembled into a
 [patchwork](https://patchwork.data-imaginist.com/reference/patchwork-package.html)
 layout automatically.
 
@@ -143,7 +145,11 @@ m <- mean(x, na.rm = TRUE)
 
 - palette:
 
-  Character vector of fill colours. Defaults to the Okabe-Ito palette.
+  Character vector of fill colours. Defaults to the Okabe-Ito palette (8
+  colours). When the `fill` variable has more groups than colours in
+  `palette`,
+  [`grDevices::hcl.colors()`](https://rdrr.io/r/grDevices/palettes.html)
+  is used instead.
 
 - error_fun:
 

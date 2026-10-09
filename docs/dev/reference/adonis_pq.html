@@ -200,14 +200,17 @@ use this function.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Removing NA from Enterotype</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 9 were discarded due to NA in variables present in formula.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Permutation test for adonis under reduced model</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Terms added sequentially (first to last)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Permutation: free</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of permutations: 999</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> vegan::adonis2(formula = .formula, data = metadata)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           Df SumOfSqs      R2      F Pr(&gt;F)    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Model      8   38.194 0.70766 79.278  0.001 ***</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual 262   15.778 0.29234                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total    270   53.972 1.00000                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> vegan::adonis2(formula = .formula, data = metadata, by = by)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     Df SumOfSqs      R2        F Pr(&gt;F)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTech              2   29.175 0.54055 242.2289  0.001 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Enterotype           2    8.651 0.16028  71.8250  0.001 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SeqTech:Enterotype   4    0.368 0.00683   1.5293  0.124    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual           262   15.778 0.29234                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total              270   53.972 1.00000                    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-in"><span><span class="fu">adonis_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, <span class="st">"Time*Height"</span>,</span></span>
@@ -219,14 +222,18 @@ use this function.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Removing NA from Height</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 62 were discarded due to NA in variables present in formula.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Permutation test for adonis under reduced model</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Terms added sequentially (first to last)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Permutation: free</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of permutations: 999</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> vegan::adonis2(formula = .formula, data = metadata)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          Df SumOfSqs      R2      F Pr(&gt;F)  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Model     6    3.238 0.09064 1.1297  0.045 *</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual 68   32.484 0.90936                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total    74   35.722 1.00000                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> vegan::adonis2(formula = .formula, data = metadata, by = by)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Df SumOfSqs      R2      F Pr(&gt;F)   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sample_size  1    0.794 0.02222 1.6616  0.006 **</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time         1    0.621 0.01739 1.3004  0.042 * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Height       2    0.869 0.02433 0.9098  0.765   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time:Height  2    0.954 0.02670 0.9983  0.477   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual    68   32.484 0.90936                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total       74   35.722 1.00000                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
@@ -248,7 +255,7 @@ use this function.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

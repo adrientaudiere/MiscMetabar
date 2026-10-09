@@ -18,6 +18,6 @@ a list of size
 
 ``` r
 all_object_size()
-#>     enterotype GlobalPatterns 
-#>        1441328       10972560 
+#> data_fungi_mini      enterotype  GlobalPatterns 
+#>          594376         1441328        10972560 
 ```

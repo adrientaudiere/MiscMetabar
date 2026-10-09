@@ -105,12 +105,39 @@ using the <code>phyloseq</code> package.</p></dd>
 position (or <code>tsne_1</code>, <code>tsne_2</code>, ... columns when <code>dims != 2</code>).</p>
     </div>
     <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>t-SNE is a <strong>local</strong> dimensionality-reduction technique: it preferentially
+preserves the neighbourhood structure of the original samples. It is
+therefore well suited to <em>neighbourhood identification</em>, <em>outlier
+identification</em> and <em>cluster identification</em>. However, the distances between
+points, the distances between clusters, the density of a cluster and the
+class separability read on the embedding are <strong>not</strong> faithful to the original
+space and must not be interpreted as such (Jeon et al., 2026). For these
+<em>global</em> questions, use a global technique instead, such as PCA
+(<code><a href="https://rdrr.io/r/stats/prcomp.html" class="external-link">stats::prcomp()</a></code>) or MDS/PCoA (<code><a href="https://rdrr.io/pkg/phyloseq/man/ordinate.html" class="external-link">phyloseq::ordinate()</a></code>,
+<code><a href="plot_ordination_pq.html">plot_ordination_pq()</a></code>). Recent techniques such as UMATO (Jeon et al., 2025)
+and PaCMAP (Wang et al., 2021) seek a better compromise between local and
+global structure preservation.</p>
+<p>This function is mainly a wrapper of the work of others.
+Please make a reference to <code><a href="https://rdrr.io/pkg/Rtsne/man/Rtsne.html" class="external-link">Rtsne::Rtsne()</a></code> if you
+use this function.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <p>Jeon, H., Park, J., Shin, S., &amp; Seo, J. (2026). Stop Misusing t-SNE and UMAP
+for Visual Analytics. <em>IEEE Transactions on Visualization and Computer
+Graphics</em>. <a href="https://doi.org/10.48550/arXiv.2506.08725" class="external-link">doi:10.48550/arXiv.2506.08725</a></p>
+<p>van der Maaten, L., &amp; Hinton, G. (2008). Visualizing Data using t-SNE.
+<em>Journal of Machine Learning Research</em>, 9, 2579-2605.</p>
+    </div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="https://rdrr.io/pkg/Rtsne/man/Rtsne.html" class="external-link">Rtsne::Rtsne()</a></code>, <code><a href="umap_pq.html">umap_pq()</a></code>, <code><a href="https://rdrr.io/pkg/phyloseq/man/plot_ordination.html" class="external-link">phyloseq::plot_ordination()</a></code></p></div>
+    <div class="dont-index"><p><code><a href="https://rdrr.io/pkg/Rtsne/man/Rtsne.html" class="external-link">Rtsne::Rtsne()</a></code>, <code><a href="umap_pq.html">umap_pq()</a></code>, <code><a href="plot_ordination_pq.html">plot_ordination_pq()</a></code>,
+<code><a href="https://rdrr.io/pkg/phyloseq/man/plot_ordination.html" class="external-link">phyloseq::plot_ordination()</a></code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
-    <p>Adrien Taudiere</p>
+    <p>Adrien Taudière</p>
     </div>
 
     <div class="section level2">
@@ -140,7 +167,7 @@ position (or <code>tsne_1</code>, <code>tsne_2</code>, ... columns when <code>di
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

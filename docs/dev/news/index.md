@@ -2,12 +2,68 @@
 
 ## MiscMetabar 0.18.0 (Development version)
 
-- [`plot_ee_rate_dist()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_ee_rate_dist.md)
+- [`adonis_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/adonis_pq.md)
+  now forwards its `by` argument to
+  [`vegan::adonis2()`](https://vegandevs.github.io/vegan/reference/adonis.html).
+  It was documented and accepted but silently dropped, so the `by` value
+  used was always the
+  [`vegan::adonis2()`](https://vegandevs.github.io/vegan/reference/adonis.html)
+  default. With vegan \>= 2.7 that default became `by = NULL`, meaning
+  [`adonis_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/adonis_pq.md)
+  only reported the overall significance of the model instead of the
+  per-term p-values expected from its own `by = "terms"` default.
+  [`comparpq::adonis_lpq()`](https://adrientaudiere.github.io/comparpq/reference/adonis_lpq.html),
+  which forwards `by` to
+  [`adonis_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/adonis_pq.md),
+  is fixed as well.
+- [`align_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/align_pq.md)
+  builds a multiple sequence alignment from the `refseq` slot of a
+  phyloseq object, or from a `DNAStringSet` or a `DNAbin` object, with
+  either the pure-R
+  [`DECIPHER::AlignSeqs()`](https://rdrr.io/pkg/DECIPHER/man/AlignSeqs.html)
+  or the much faster MAFFT command-line aligner through
+  [`ips::mafft()`](https://rdrr.io/pkg/ips/man/mafft.html). It moved
+  here from phylopq 0.2.0, where it was introduced, so that every
+  package of the pqverse can reach the MAFFT backend: MiscMetabar must
+  keep working on its own and therefore cannot depend on phylopq, while
+  phylopq re-exports
+  [`align_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/align_pq.md)
+  unchanged. The alignment is returned as a `DNAStringSet` rather than
+  written back into `refseq`, whose sequences are consumed as unaligned
+  elsewhere in the pqverse.
+- [`assign_blastn()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/assign_blastn.md)
+  gains a `blast_table` argument: a raw table from
+  [`blast_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/blast_pq.md)
+  (with `unique_per_seq = FALSE` and `score_filter = FALSE`) is filtered
+  and voted on without running blastn again, so a single search can
+  serve several `vote_algorithm`, `nb_voting` or score-filter values.
+  [`blast_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/blast_pq.md)
   and
-  [`plot_read_quality()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_read_quality.md)
-  are new thin wrappers of the eponymous `Rsearch` functions plotting,
-  from a fastq file, the distribution of expected error (EE) rates and
-  the per-base read quality.
+  [`assign_blastn()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/assign_blastn.md)
+  now share the same ordering and filtering code.
+- [`assign_sintax()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/assign_sintax.md)
+  gains a `seed` argument, passed to vsearch as `--randseed`. With the
+  default `cmd_args = "--sintax_random"`, sintax draws its bootstrap
+  k-mers and breaks ties at random, so two runs could return a different
+  taxonomy for the same sequence; a seed (with `nproc = 1`) makes the
+  assignment reproducible.
+- [`assign_sintax()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/assign_sintax.md)
+  returns NA at every rank for a sequence sintax cannot classify (for
+  example a sequence of a few dozen bases, too short to share k-mers
+  with the reference) instead of failing with “Expected 2 pieces in each
+  element of `value`” while reading the vsearch output.
+- [`assign_vsearch_lca()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/assign_vsearch_lca.md)
+  gains `behavior = "return_hits"`, which returns the hits of the
+  vsearch search (`query`, `id`, `target`), and a `hits_table` argument
+  that computes the taxonomy from such a table without running vsearch
+  again, so a single search can serve several `lca_cutoff` (or
+  `vote_algorithm`) values. In that case the LCA is computed in R as
+  vsearch `--lcaout` computes it.
+- [`build_phytree_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/build_phytree_pq.md)
+  gains an `align_method` argument, so the reference sequences can be
+  aligned with MAFFT instead of DECIPHER before the trees are built,
+  which is much faster on large `refseq` slots, plus a `mafft_exec`
+  argument to point at the executable.
 - [`cluster_reads()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/cluster_reads.md)
   clusters raw reads (fasta/fastq files, or a vector of DNA sequences
   treated as one sample) into similarity-threshold OTUs without DADA2:
@@ -27,6 +83,62 @@
   only; followed by de-novo chimera removal), returning a phyloseq
   object with an `otu_table` of per-sample abundances and the variant
   sequences in the `refseq` slot.
+- [`hill_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/hill_bar_pq.md)
+  switches to
+  [`grDevices::hcl.colors()`](https://rdrr.io/r/grDevices/palettes.html)
+  when the `fill` variable has more groups than colours in `palette` (8
+  by default), instead of failing with “Insufficient values in manual
+  scale”.
+- [`hill_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/hill_bar_pq.md)
+  no longer reports a Kruskal-Wallis test when every group has a single
+  sample, a case where the statistic is always n - 1 and its p-value
+  carries no information: the subtitle reads “Kruskal-Wallis not
+  computed: one sample per group” and no letters are drawn. The test is
+  still computed as soon as one group has two samples or more.
+- [`is_mafft_installed()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_mafft_installed.md)
+  reports whether the MAFFT command-line aligner is available; it is
+  resolved from the `MiscMetabar.mafftpath` option, then from the system
+  `PATH`.
+- [`itsx_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/itsx_pq.md)
+  runs ITSx on the `refseq` slot of a phyloseq object and returns it
+  with the extracted region (`"ITS1"`, `"ITS2"` or `"full"`). It records
+  the putative origin ITSx gives to each taxon as a `tax_table` column
+  (`add_origin = TRUE`), optionally whether ITSx found the region in it
+  (`add_detected = TRUE`, column `ITSx_detected`), and can remove the
+  taxa of another origin (`remove_other_origin`), keeps or removes the
+  taxa without the region (`keep_undetected`), and merges or removes the
+  taxa that become identical once trimmed (`duplicated_seqs`).
+  [`find_itsx()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/find_itsx.md),
+  [`is_itsx_installed()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_itsx_installed.md)
+  and
+  [`install_itsx()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/install_itsx.md)
+  (which creates a bioconda environment and returns the
+  `args_before_itsx` string activating it) come with it.
+- [`plot_ee_rate_dist()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_ee_rate_dist.md)
+  and
+  [`plot_read_quality()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_read_quality.md)
+  are new thin wrappers of the eponymous `Rsearch` functions plotting,
+  from a fastq file, the distribution of expected error (EE) rates and
+  the per-base read quality.
+- [`psmelt_samples_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/psmelt_samples_pq.md)
+  now keeps the factor columns of the `sam_data` slot as factors, with
+  their levels, instead of converting them to character.
+  [`hill_bar_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/hill_bar_pq.md),
+  which relies on it, therefore orders its bars following the factor
+  levels instead of alphabetically.
+- [`summary_plot_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/summary_plot_pq.md)
+  separates the name of the sample with the fewest sequences from its
+  sequence count (`Min nb seq per sample (<sample>): <count>`); the
+  closing parenthesis and the space were missing, so the two were
+  printed glued together.
+- The documentation of
+  [`tsne_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/tsne_pq.md),
+  [`plot_tsne_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_tsne_pq.md)
+  and
+  [`umap_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/umap_pq.md)
+  now states explicitly that t-SNE and UMAP are **local** techniques
+  (Jeon et al. 2026, “Stop Misusing t-SNE and UMAP for Visual
+  Analytics”, <https://arxiv.org/abs/2506.08725>).
 - [`tsne_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/tsne_pq.md)
   now returns a tibble of sample informations with the `x_tsne`/`y_tsne`
   position (or `tsne_1`, `tsne_2`, … columns when `dims != 2`),
@@ -38,6 +150,14 @@
   must be updated to use the new named columns;
   [`plot_tsne_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/plot_tsne_pq.md)
   is updated accordingly and requires no changes from callers.
+- [`umap_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/umap_pq.md)
+  now caps `n_neighbors` (default 15) to `nsamples(physeq) - 1`, with a
+  minimum of 2, for both `pkg = "umap"` and `pkg = "uwot"`, as
+  [`ggplotpq::dr_plot_pq()`](https://adrientaudiere.github.io/ggplotpq/reference/dr_plot_pq.html)
+  does. Calling
+  [`umap_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/umap_pq.md)
+  without `n_neighbors` on 15 samples or fewer no longer fails with
+  `umap: number of neighbors must be smaller than number of items`.
 - [`vs_fastx_uniques()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/vs_fastx_uniques.md)
   and
   [`vs_uchime_ref()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/vs_uchime_ref.md)
@@ -45,6 +165,14 @@
   standalone dereplication of a fastx file and reference-based chimera
   detection against a fasta database (the latter complements the de-novo
   [`chimera_detection_vs()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/chimera_detection_vs.md)).
+- [`write_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/write_pq.md)
+  with `one_file = TRUE`, and therefore
+  [`save_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/save_pq.md),
+  stacks the sample-data rows under the taxa rows instead of joining
+  them on the sample columns. A one-sample object whose sample data
+  holds a value equal to the abundance of a taxon (e.g. a mycorrhization
+  index of 25 and a taxon of 25 sequences) is now exported instead of
+  failing with “invalid ‘row.names’ length”.
 
 ## MiscMetabar 0.17.0 \[CRAN\]
 
@@ -1506,7 +1634,9 @@ CRAN release: 2024-04-28
   from the [FUNGuildR](https://github.com/brendanf/FUNGuildR/) package
   into MiscMetabar to decrease package dependencies
 - Remove all dependencies from packages not available on CRAN or
-  Bioconductor. Improve code using `goodpractice::gp`() and
+  Bioconductor. Improve code using
+  [`goodpractice::gp`](https://docs.ropensci.org/goodpractice/reference/gp.html)()
+  and
   [`devtools::check()`](https://devtools.r-lib.org/reference/check.html)
   function
 - Add messages in various cases (NA in samples data, low number of

@@ -521,6 +521,8 @@ Barcoding for Ecologists.” *Trends in Ecology & Evolution* 24 (2):
 
 ### Phylogenetic tree
 
+- [`align_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/align_pq.md)
+  : Align the reference sequences of a phyloseq object
 - [`build_phytree_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/build_phytree_pq.md)
   : Build phylogenetic trees from refseq slot of a phyloseq object
 
@@ -841,6 +843,10 @@ Barcoding for Ecologists.” *Trends in Ecology & Evolution* 24 (2):
 
   Remove primers using [cutadapt](https://github.com/marcelm/cutadapt/)
 
+- [`itsx_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/itsx_pq.md)
+  : Extract the ITS region of the sequences of a phyloseq object with
+  ITSx
+
 - [`fastp()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/fastp.md)
   : Fastp: adapter detection, quality control and preprocessing of FASTQ
   files
@@ -982,10 +988,14 @@ Barcoding for Ecologists.” *Trends in Ecology & Evolution* 24 (2):
 
 ### External software management
 
+- [`find_itsx()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/find_itsx.md)
+  : Find the ITSx executable
 - [`find_mmseqs2()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/find_mmseqs2.md)
   : Find the MMseqs2 binary
 - [`find_vsearch()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/find_vsearch.md)
   : Find the vsearch binary
+- [`install_itsx()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/install_itsx.md)
+  : Install ITSx in a conda environment
 - [`install_mmseqs2()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/install_mmseqs2.md)
   : Install MMseqs2 from GitHub releases
 - [`install_vsearch()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/install_vsearch.md)
@@ -996,6 +1006,8 @@ Barcoding for Ecologists.” *Trends in Ecology & Evolution* 24 (2):
   : Test if cutadapt is installed.
 - [`is_fastp_installed()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_fastp_installed.md)
   : Test if fastp is installed.
+- [`is_itsx_installed()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_itsx_installed.md)
+  : Test if ITSx is installed
 - [`is_mmseqs2_installed()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_mmseqs2_installed.md)
   : Check whether MMseqs2 is installed and callable
 - [`is_falco_installed()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_falco_installed.md)
@@ -1004,6 +1016,8 @@ Barcoding for Ecologists.” *Trends in Ecology & Evolution* 24 (2):
   : Test if krona is installed.
 - [`is_multiqc_installed()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_multiqc_installed.md)
   : Test if MultiQC is installed.
+- [`is_mafft_installed()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_mafft_installed.md)
+  : Is MAFFT available?
 - [`is_mumu_installed()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_mumu_installed.md)
   : Test if mumu is installed.
 - [`is_swarm_installed()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_swarm_installed.md)
