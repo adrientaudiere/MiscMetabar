@@ -195,6 +195,7 @@ reference:
   - biplot_pq
   - circle_pq
   - compare_pairs_pq
+  - diversity_pq
   - formattable_pq
   - ggvenn_pq
   - graph_test_pq

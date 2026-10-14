@@ -24,6 +24,7 @@ Suggests:
     DESeq2,
     devtools,
     DT,
+    ecodive,
     edgeR,
     formattable,
     ggalluvial,

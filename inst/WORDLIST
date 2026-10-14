@@ -42,6 +42,8 @@ ComplexUpset
 Compositionally
 Curation
 Cutadapt
+DEICODE
+DEICODE's
 DESeq
 DGEList
 DNAStringSet
@@ -93,6 +95,7 @@ IndVal
 JAMP
 JOlaHsd
 JS
+JT
 Jeon
 Jombart
 Ko
@@ -112,6 +115,8 @@ MUMU
 Maaten
 Mahé
 Marcon
+Marotz
+Martino
 McInnes
 McLaren
 McMurdie
@@ -142,6 +147,7 @@ OSX
 OTU
 OTUs
 Okabe
+OptSpace
 Oshlack
 PCoA
 PERMANOVA
@@ -208,6 +214,7 @@ Toolkit
 Torognes
 Treename
 TriMap
+Tripathi
 Tuckey
 Tuz
 UMAP
@@ -224,6 +231,7 @@ Wiesmann
 XLSX
 XStringSet
 XStringset
+Zengler
 abundancy
 accu
 adaptator
@@ -321,6 +329,7 @@ dna
 doi
 eDNA
 ecdf
+ecodive
 ecotypes
 edgeR
 edu
@@ -397,6 +406,7 @@ lintr
 lm
 luminance
 lvl
+mSystems
 majuscule
 makeblastdb
 matchlist
@@ -424,6 +434,7 @@ multipatt
 multiqc
 mumu
 na
+natively
 nb
 nbSeq
 neighbour
@@ -479,6 +490,7 @@ pvalues
 qaic
 qaicc
 quantil
+rCLR
 rDNA
 rdata
 reFasta
