@@ -8,11 +8,12 @@ shared ASV.}
 compare_pairs_pq(
   physeq = NULL,
   bifactor = NULL,
-  modality = NULL,
+  fact = NULL,
   merge_sample_by = NULL,
   nb_min_seq = 0,
   veg_index = "shannon",
   na_remove = TRUE,
+  modality = lifecycle::deprecated(),
   ...
 )
 }
@@ -23,8 +24,8 @@ using the \code{phyloseq} package.}
 \item{bifactor}{(required) a factor (present in the \code{sam_data} slot of
 the physeq object) presenting the pair names}
 
-\item{modality}{the name of the column in the \code{sam_data}
-slot of the physeq object to split samples by pairs}
+\item{fact}{the name of the column in the \code{sam_data}
+slot of the physeq object to split samples by pairs. Formerly \code{modality}.}
 
 \item{merge_sample_by}{a vector to determine
 which samples to merge using the
@@ -39,9 +40,11 @@ to count the ASV/OTU}
 \code{\link[vegan:diversity]{vegan::diversity()}}.}
 
 \item{na_remove}{(logical, default TRUE) If set to TRUE, remove samples with
-NA in the variables set in bifactor, modality and merge_sample_by.
+NA in the variables set in bifactor, fact and merge_sample_by.
 NA in variables are well managed even if na_remove = FALSE, so na_remove may
 be useless.}
+
+\item{modality}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{fact} instead.}
 
 \item{...}{Additional arguments passed to \code{\link[divent:ent_shannon]{divent::ent_shannon()}} or
 \code{\link[divent:ent_simpson]{divent::ent_simpson()}} when \code{veg_index} is \code{"shannon"} or \code{"simpson"}.}
@@ -64,6 +67,6 @@ data_fungi_mini_lh <- subset_samples(data_fungi_mini, Height \%in\% c("Low", "Hi
 compare_pairs_pq(data_fungi_mini_lh, bifactor = "Height", merge_sample_by = "Height")
 compare_pairs_pq(data_fungi_mini_lh,
   bifactor = "Height",
-  merge_sample_by = "Height", modality = "Time"
+  merge_sample_by = "Height", fact = "Time"
 )
 }

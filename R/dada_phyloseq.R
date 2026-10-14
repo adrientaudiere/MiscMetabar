@@ -4510,76 +4510,7 @@ cutadapt_remove_primers <- function(
 ################################################################################
 
 ################################################################################
-#' List the taxa founded only in one given level of a modality
-#'
-#' @description
-#'
-#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
-#'
-#' Given one modality name in sam_data and one level of the modality,
-#' return the taxa strictly specific of this level.
-#'
-#' @inheritParams clean_pq
-#' @param modality (required) The name of a column present in the `@sam_data` slot
-#'   of the physeq object. Must be a character vector or a factor.
-#' @param level (required) The level (must be present in modality) of interest
-#' @param min_nb_seq_taxa (default 0 = no filter) The minimum number of sequences per taxa
-#' @param min_nb_samples_taxa (default 0 = no filter) The minimum number of samples per taxa
-#'
-#' @return A vector of taxa names
-#' @export
-#'
-#' @author Adrien Taudière
-#' @examples
-#' data_fungi_mini_woNA4height <- subset_samples(
-#'   data_fungi_mini,
-#'   !is.na(data_fungi_mini@sam_data$Height)
-#' )
-#' taxa_only_in_one_level(data_fungi_mini_woNA4height, "Height", "High")
-#' #' # Taxa present only in low height samples
-#' \donttest{
-#' suppressMessages(suppressWarnings(
-#'   taxa_only_in_one_level(data_fungi, "Height", "Low")
-#' ))
-#' # Number of taxa present only in sample of time equal to 15
-#' suppressMessages(suppressWarnings(
-#'   length(taxa_only_in_one_level(data_fungi, "Time", "15"))
-#' ))
-#' }
-taxa_only_in_one_level <- function(
-  physeq,
-  modality,
-  level,
-  min_nb_seq_taxa = 0,
-  min_nb_samples_taxa = 0
-) {
-  if (min_nb_seq_taxa > 0) {
-    physeq <-
-      subset_taxa_pq(physeq, taxa_sums(physeq) >= min_nb_seq_taxa)
-  }
-  if (min_nb_samples_taxa > 0) {
-    physeq <-
-      subset_taxa_pq(
-        physeq,
-        taxa_sums(as_binary_otu_table(physeq)) >= min_nb_samples_taxa
-      )
-  }
-
-  physeq_merged <- clean_pq(merge_samples2(physeq, modality))
-
-  physeq_merged_only_one_level <-
-    subset_taxa_pq(
-      physeq_merged,
-      taxa_sums(as_binary_otu_table(physeq_merged)) == 1
-    )
-  physeq_merged_only_level_given <-
-    clean_pq(subset_samples_pq(
-      physeq_merged_only_one_level,
-      rownames(physeq_merged_only_one_level@sam_data) == level
-    ))
-  return(taxa_names(physeq_merged_only_level_given))
-}
+# taxa_only_in_one_level() is defined in R/beta_div_test.R
 ################################################################################
 
 ################################################################################

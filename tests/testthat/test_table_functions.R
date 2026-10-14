@@ -11,7 +11,7 @@ test_that("tax_datatable function works fine with data_fungi dataset", {
   expect_no_warning(
     taxdt <- suppressWarnings(tax_datatable(
       data_fungi,
-      modality = data_fungi@sam_data$Height
+      fact = data_fungi@sam_data$Height
     ))
   )
   expect_s3_class(taxdt, "datatables")
@@ -25,10 +25,10 @@ test_that("tax_datatable function works fine with enterotype dataset", {
   expect_s3_class(tax_datatable(enterotype), "datatables")
   expect_silent(tax_datatable(
     enterotype,
-    modality = enterotype@sam_data$SeqTech
+    fact = enterotype@sam_data$SeqTech
   ))
   expect_s3_class(
-    tax_datatable(enterotype, modality = enterotype@sam_data$SeqTech),
+    tax_datatable(enterotype, fact = enterotype@sam_data$SeqTech),
     "datatables"
   )
 })
@@ -85,7 +85,7 @@ test_that("compare_pairs_pq function works fine with data_fungi dataset", {
         data_fungi_low_high_withNA,
         bifactor = "Height",
         merge_sample_by = "Height",
-        modality = "Time"
+        fact = "Time"
       ),
       "tbl_df"
     )
@@ -94,7 +94,7 @@ test_that("compare_pairs_pq function works fine with data_fungi dataset", {
         data_fungi_low_high_withNA,
         bifactor = "Height",
         merge_sample_by = "Height",
-        modality = "Time"
+        fact = "Time"
       )),
       c(4L, 13L)
     )

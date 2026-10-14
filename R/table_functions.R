@@ -12,8 +12,10 @@
 #' @param abundance (logical, default TRUE) Does the number of sequences is print
 #' @param taxonomic_level (default: NULL) a vector of selected taxonomic
 #' level using their column numbers (e.g. taxonomic_level = 1:7)
-#' @param modality (default: NULL) A sample modality to split
-#' OTU abundancy by level of the modality
+#' @param fact (default: NULL) Name of a column in `physeq@sam_data` or a
+#'   factor/vector of length `nsamples(physeq)` to split OTU abundance by
+#'   level. Formerly `modality`.
+#' @param modality `r lifecycle::badge("deprecated")` Use `fact` instead.
 #' @param ... Other argument for the datatable function
 #'
 #' @author Adrien Taudière
@@ -28,25 +30,34 @@
 #'     rowSums(GlobalPatterns@otu_table) > 10000
 #'   ))
 #'
-#'   # Using modality
+#'   # Using fact
 #'   tax_datatable(GlobalPatterns,
-#'     modality = GlobalPatterns@sam_data$SampleType
+#'     fact = "SampleType"
 #'   )
 #' }
 tax_datatable <- function(
   physeq,
   abundance = TRUE,
   taxonomic_level = NULL,
-  modality = NULL,
+  fact = NULL,
+  modality = lifecycle::deprecated(),
   ...
 ) {
+  if (lifecycle::is_present(modality)) {
+    lifecycle::deprecate_warn(
+      "0.18.0",
+      "tax_datatable(modality=)",
+      "tax_datatable(fact=)"
+    )
+    fact <- modality
+  }
   df <- as.data.frame(unclass(physeq@tax_table))
 
   if (!is.null(taxonomic_level)) {
     df <- df[, taxonomic_level]
   }
 
-  if (is.null(modality)) {
+  if (is.null(fact)) {
     if (abundance) {
       if (physeq@otu_table@taxa_are_rows) {
         df$nb_seq <- rowSums(physeq@otu_table)
@@ -55,23 +66,36 @@ tax_datatable <- function(
       }
     }
   } else {
-    modality <- as.factor(modality)
+    if (
+      is.character(fact) &&
+        length(fact) == 1 &&
+        !is.null(physeq@sam_data) &&
+        fact %in% colnames(physeq@sam_data)
+    ) {
+      fact_vec <- as.factor(physeq@sam_data[[fact]])
+    } else {
+      fact_vec <- as.factor(fact)
+    }
     if (physeq@otu_table@taxa_are_rows) {
-      for (mod in levels(modality)) {
+      for (mod in levels(fact_vec)) {
         varname <- paste0("nb_seq_", mod)
-        df[[varname]] <- rowSums(physeq@otu_table[, modality == mod])
+        df[[varname]] <- rowSums(
+          physeq@otu_table[, which(fact_vec == mod), drop = FALSE]
+        )
       }
       df$nb_seq_tot <- rowSums(physeq@otu_table)
     } else {
-      for (mod in levels(modality)) {
+      for (mod in levels(fact_vec)) {
         varname <- paste0("nb_seq_", mod)
-        df[[varname]] <- colSums(physeq@otu_table[modality == mod, ])
+        df[[varname]] <- colSums(
+          physeq@otu_table[which(fact_vec == mod), , drop = FALSE]
+        )
       }
       df$nb_seq_tot <- colSums(physeq@otu_table)
     }
   }
 
-  if (is.null(modality)) {
+  if (is.null(fact)) {
     dt <- DT::datatable(df, ...) |>
       DT::formatStyle(
         "nb_seq",
@@ -110,8 +134,9 @@ tax_datatable <- function(
 #' @inheritParams clean_pq
 #' @param bifactor (required) a factor (present in the `sam_data` slot of
 #'   the physeq object) presenting the pair names
-#' @param modality the name of the column in the `sam_data`
-#'   slot of the physeq object to split samples by pairs
+#' @param fact the name of the column in the `sam_data`
+#'   slot of the physeq object to split samples by pairs. Formerly `modality`.
+#' @param modality `r lifecycle::badge("deprecated")` Use `fact` instead.
 #' @param merge_sample_by a vector to determine
 #'   which samples to merge using the
 #'   [merge_samples2()] function.
@@ -122,7 +147,7 @@ tax_datatable <- function(
 #'   `"simpson"` are computed via `divent`; other names are forwarded to
 #'   [vegan::diversity()].
 #' @param na_remove (logical, default TRUE) If set to TRUE, remove samples with
-#'   NA in the variables set in bifactor, modality and merge_sample_by.
+#'   NA in the variables set in bifactor, fact and merge_sample_by.
 #'   NA in variables are well managed even if na_remove = FALSE, so na_remove may
 #'   be useless.
 #' @param ... Additional arguments passed to [divent::ent_shannon()] or
@@ -136,18 +161,27 @@ tax_datatable <- function(
 #' compare_pairs_pq(data_fungi_mini_lh, bifactor = "Height", merge_sample_by = "Height")
 #' compare_pairs_pq(data_fungi_mini_lh,
 #'   bifactor = "Height",
-#'   merge_sample_by = "Height", modality = "Time"
+#'   merge_sample_by = "Height", fact = "Time"
 #' )
 compare_pairs_pq <- function(
   physeq = NULL,
   bifactor = NULL,
-  modality = NULL,
+  fact = NULL,
   merge_sample_by = NULL,
   nb_min_seq = 0,
   veg_index = "shannon",
   na_remove = TRUE,
+  modality = lifecycle::deprecated(),
   ...
 ) {
+  if (lifecycle::is_present(modality)) {
+    lifecycle::deprecate_warn(
+      "0.18.0",
+      "compare_pairs_pq(modality=)",
+      "compare_pairs_pq(fact=)"
+    )
+    fact <- modality
+  }
   physeq <- taxa_as_columns(physeq)
 
   if (na_remove) {
@@ -173,15 +207,15 @@ compare_pairs_pq <- function(
       physeq <- new_physeq
     }
 
-    if (!is.null(modality)) {
+    if (!is.null(fact)) {
       new_physeq <- subset_samples_pq(
         physeq,
-        !is.na(physeq@sam_data[[modality]])
+        !is.na(physeq@sam_data[[fact]])
       )
       if (nsamples(physeq) - nsamples(new_physeq) > 0) {
         message(paste0(
           nsamples(physeq) - nsamples(new_physeq),
-          " samples were discarded due to NA in variable modality."
+          " samples were discarded due to NA in variable fact."
         ))
       }
       physeq <- new_physeq
@@ -189,13 +223,13 @@ compare_pairs_pq <- function(
   }
 
   if (!is.null(merge_sample_by)) {
-    if (is.null(modality)) {
+    if (is.null(fact)) {
       physeq <- merge_samples2(physeq, merge_sample_by)
     } else {
       physeq@sam_data[["merge_sample_by___modality"]] <- paste0(
         physeq@sam_data[[merge_sample_by]],
         " - ",
-        physeq@sam_data[[modality]]
+        physeq@sam_data[[fact]]
       )
       physeq <- merge_samples2(physeq, "merge_sample_by___modality")
     }
@@ -214,9 +248,9 @@ compare_pairs_pq <- function(
   lev1 <- levels(physeq@sam_data[[bifactor]])[1]
   lev2 <- levels(physeq@sam_data[[bifactor]])[2]
 
-  if (!is.null(modality)) {
-    physeq@sam_data[[modality]] <- as.factor(physeq@sam_data[[modality]])
-    nmodality <- levels(physeq@sam_data[[modality]])
+  if (!is.null(fact)) {
+    physeq@sam_data[[fact]] <- as.factor(physeq@sam_data[[fact]])
+    nmodality <- levels(physeq@sam_data[[fact]])
   } else {
     nmodality <- bifactor
   }
@@ -226,9 +260,9 @@ compare_pairs_pq <- function(
 
   for (i in nmodality) {
     newphyseq <- physeq
-    if (!is.null(modality)) {
+    if (!is.null(fact)) {
       new_DF <- newphyseq@sam_data[
-        newphyseq@sam_data[[modality]] == i,
+        newphyseq@sam_data[[fact]] == i,
         ,
         drop = FALSE
       ]
@@ -345,8 +379,10 @@ compare_pairs_pq <- function(
 #' Allow to visualize a table with graphical input.
 #'
 #' @inheritParams clean_pq
-#' @param modality (required) The name of a column present in the `@sam_data` slot
-#'   of the physeq object. Must be a character vector or a factor.
+#' @param fact (required) The name of a column present in the `@sam_data` slot
+#'   of the physeq object. Must be a character vector or a factor. Formerly
+#'   `modality`.
+#' @param modality `r lifecycle::badge("deprecated")` Use `fact` instead.
 #' @param taxonomic_levels (default = c("Phylum", "Order", "Family", "Genus"))
 #'   The taxonomic levels (must be present in the `@sam_data` slot) you want to
 #'   see and/or used (for example to compute a color) in the table.
@@ -358,7 +394,7 @@ compare_pairs_pq <- function(
 #' @param lev_col_taxa Taxonomic level used to plot the background color of taxa names
 #' @param arrange_by The column used to sort the table.
 #'   Can take the values NULL, "proportion_samp", "nb_seq" (default), , "nb_sam" "OTU", or a column names
-#'   from the levels of modality or from taxonomic levels
+#'   from the levels of fact or from taxonomic levels
 #' @param descending_order (logical, default TRUE) Do we use descending order when sort the table
 #'  (if arrange_by is not NULL) ?
 #' @param na_remove (logical, default TRUE) if TRUE remove all the samples
@@ -493,7 +529,7 @@ compare_pairs_pq <- function(
 #'   use this function.
 formattable_pq <- function(
   physeq,
-  modality,
+  fact,
   taxonomic_levels = c("Phylum", "Order", "Family", "Genus"),
   min_nb_seq_taxa = 1000,
   log10trans = FALSE,
@@ -502,19 +538,30 @@ formattable_pq <- function(
   arrange_by = "nb_seq",
   descending_order = TRUE,
   na_remove = TRUE,
-  formattable_args = NULL
+  formattable_args = NULL,
+  modality = lifecycle::deprecated()
 ) {
+  if (lifecycle::is_present(modality)) {
+    lifecycle::deprecate_warn(
+      "0.18.0",
+      "formattable_pq(modality=)",
+      "formattable_pq(fact=)"
+    )
+    fact <- modality
+  }
   verify_pq(physeq)
 
   if (na_remove) {
     new_physeq <-
-      subset_samples_pq(physeq, !is.na(physeq@sam_data[[modality]]))
+      subset_samples_pq(physeq, !is.na(physeq@sam_data[[fact]]))
     if (nsamples(physeq) - nsamples(new_physeq) > 0) {
       message(paste0(
         nsamples(physeq) - nsamples(new_physeq),
-        " samples were discarded due to NA in variable modality"
+        " samples were discarded due to NA in variable fact"
       ))
     }
+  } else {
+    new_physeq <- physeq
   }
   new_physeq2 <-
     clean_pq(subset_taxa_pq(
@@ -526,9 +573,9 @@ formattable_pq <- function(
 
   if (log10trans) {
     psm2 <- psm |>
-      group_by_at(c(modality, "OTU", taxonomic_levels)) |>
+      group_by_at(c(fact, "OTU", taxonomic_levels)) |>
       summarise(Ab = round(log10(1 + sum(Abundance)), 2)) |>
-      tidyr::spread(modality, Ab)
+      tidyr::spread(fact, Ab)
 
     psm3 <-
       left_join(
@@ -545,9 +592,9 @@ formattable_pq <- function(
       )
   } else {
     psm2 <- psm |>
-      group_by_at(c(modality, "OTU", taxonomic_levels)) |>
+      group_by_at(c(fact, "OTU", taxonomic_levels)) |>
       summarise(Ab = sum(Abundance)) |>
-      tidyr::spread(modality, Ab)
+      tidyr::spread(fact, Ab)
 
     psm3 <-
       left_join(
@@ -589,7 +636,7 @@ formattable_pq <- function(
         ),
         formattable::area(
           col = levels(as.factor(
-            new_physeq2@sam_data[[modality]]
+            new_physeq2@sam_data[[fact]]
           ))
         ) ~ formattable::formatter(
           "span",

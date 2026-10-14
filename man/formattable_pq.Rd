@@ -6,7 +6,7 @@
 \usage{
 formattable_pq(
   physeq,
-  modality,
+  fact,
   taxonomic_levels = c("Phylum", "Order", "Family", "Genus"),
   min_nb_seq_taxa = 1000,
   log10trans = FALSE,
@@ -15,15 +15,17 @@ formattable_pq(
   arrange_by = "nb_seq",
   descending_order = TRUE,
   na_remove = TRUE,
-  formattable_args = NULL
+  formattable_args = NULL,
+  modality = lifecycle::deprecated()
 )
 }
 \arguments{
 \item{physeq}{(required) a \code{\link[phyloseq]{phyloseq-class}} object obtained
 using the \code{phyloseq} package.}
 
-\item{modality}{(required) The name of a column present in the \verb{@sam_data} slot
-of the physeq object. Must be a character vector or a factor.}
+\item{fact}{(required) The name of a column present in the \verb{@sam_data} slot
+of the physeq object. Must be a character vector or a factor. Formerly
+\code{modality}.}
 
 \item{taxonomic_levels}{(default = c("Phylum", "Order", "Family", "Genus"))
 The taxonomic levels (must be present in the \verb{@sam_data} slot) you want to
@@ -41,7 +43,7 @@ sequences}
 
 \item{arrange_by}{The column used to sort the table.
 Can take the values NULL, "proportion_samp", "nb_seq" (default), , "nb_sam" "OTU", or a column names
-from the levels of modality or from taxonomic levels}
+from the levels of fact or from taxonomic levels}
 
 \item{descending_order}{(logical, default TRUE) Do we use descending order when sort the table
 (if arrange_by is not NULL) ?}
@@ -50,6 +52,8 @@ from the levels of modality or from taxonomic levels}
 with NA in the \code{split_by} variable of the \code{physeq@sam_data} slot}
 
 \item{formattable_args}{Other args to the formattable function. See examples and \code{formattable::formattable()}}
+
+\item{modality}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{fact} instead.}
 }
 \value{
 A datatable

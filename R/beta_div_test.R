@@ -1370,16 +1370,18 @@ aldex_pq <- function(
 ################################################################################
 
 ################################################################################
-#' Show taxa which are present in only one given level of a modality
+#' Show taxa which are present in only one given level of a factor
 #'
 #'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
 #' @inheritParams clean_pq
-#' @param modality (required) The name of a column present in the `@sam_data` slot
-#'   of the physeq object. Must be a character vector or a factor.
-#' @param level (required) The level (must be present in modality) of interest
+#' @param fact (required) The name of a column present in the `@sam_data` slot
+#'   of the physeq object. Must be a character vector or a factor. Formerly
+#'   `modality`.
+#' @param modality `r lifecycle::badge("deprecated")` Use `fact` instead.
+#' @param level (required) The level (must be present in `fact`) of interest
 #' @param min_nb_seq_taxa (default 0 = no filter) The minimum number of sequences per taxa
 #' @param min_nb_samples_taxa (default 0 = no filter) The minimum number of samples per taxa
 #'
@@ -1405,11 +1407,20 @@ aldex_pq <- function(
 #' }
 taxa_only_in_one_level <- function(
   physeq,
-  modality,
+  fact,
   level,
   min_nb_seq_taxa = 0,
-  min_nb_samples_taxa = 0
+  min_nb_samples_taxa = 0,
+  modality = lifecycle::deprecated()
 ) {
+  if (lifecycle::is_present(modality)) {
+    lifecycle::deprecate_warn(
+      "0.18.0",
+      "taxa_only_in_one_level(modality=)",
+      "taxa_only_in_one_level(fact=)"
+    )
+    fact <- modality
+  }
   if (min_nb_seq_taxa > 0) {
     physeq <-
       subset_taxa_pq(physeq, taxa_sums(physeq) >= min_nb_seq_taxa)
@@ -1422,7 +1433,7 @@ taxa_only_in_one_level <- function(
       )
   }
 
-  physeq_merged <- clean_pq(merge_samples2(physeq, modality))
+  physeq_merged <- clean_pq(merge_samples2(physeq, fact))
 
   physeq_merged_only_one_level <-
     subset_taxa_pq(

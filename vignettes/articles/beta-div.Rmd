@@ -128,7 +128,7 @@ biplot_pq(data_fungi_low_high, fact = "Height", merge_sample_by = "Height")
 compare_pairs_pq(data_fungi_low_high,
   bifactor = "Height",
   merge_sample_by = "Height",
-  modality = "Time"
+  fact = "Time"
 )
 ```
 

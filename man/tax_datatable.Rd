@@ -8,7 +8,8 @@ tax_datatable(
   physeq,
   abundance = TRUE,
   taxonomic_level = NULL,
-  modality = NULL,
+  fact = NULL,
+  modality = lifecycle::deprecated(),
   ...
 )
 }
@@ -21,8 +22,11 @@ using the \code{phyloseq} package.}
 \item{taxonomic_level}{(default: NULL) a vector of selected taxonomic
 level using their column numbers (e.g. taxonomic_level = 1:7)}
 
-\item{modality}{(default: NULL) A sample modality to split
-OTU abundancy by level of the modality}
+\item{fact}{(default: NULL) Name of a column in \code{physeq@sam_data} or a
+factor/vector of length \code{nsamples(physeq)} to split OTU abundance by
+level. Formerly \code{modality}.}
+
+\item{modality}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Use \code{fact} instead.}
 
 \item{...}{Other argument for the datatable function}
 }
@@ -47,9 +51,9 @@ if (requireNamespace("DT")) {
     rowSums(GlobalPatterns@otu_table) > 10000
   ))
 
-  # Using modality
+  # Using fact
   tax_datatable(GlobalPatterns,
-    modality = GlobalPatterns@sam_data$SampleType
+    fact = "SampleType"
   )
 }
 \dontshow{\}) # examplesIf}
