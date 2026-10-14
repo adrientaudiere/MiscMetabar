@@ -231,7 +231,7 @@ test_that("hill_bar_pq skips Kruskal-Wallis only when every group has one sample
   skip_on_cran()
   d <- prune_samples(sample_names(data_fungi_mini)[1:4], data_fungi_mini)
   d@sam_data$Single <- paste0("G", 1:4)
-  p <- suppressMessages(hill_bar_pq(d, Single, q = 0))
+  p <- suppressMessages(hill_bar_pq(d, Single, q = 0, test_text = TRUE))
   expect_equal(
     p$labels$subtitle,
     "Kruskal-Wallis not computed: one sample per group"
@@ -243,8 +243,29 @@ test_that("hill_bar_pq skips Kruskal-Wallis only when every group has one sample
   ))
 
   d@sam_data$Pair <- c("G1", "G1", "G2", "G3")
-  p2 <- suppressMessages(hill_bar_pq(d, Pair, q = 0))
+  p2 <- suppressMessages(hill_bar_pq(d, Pair, q = 0, test_text = TRUE))
   expect_match(p2$labels$subtitle, "^Kruskal-Wallis: X-squared")
+})
+
+test_that("hill_bar_pq hides Kruskal-Wallis on small samples unless test_text = TRUE", {
+  skip_on_cran()
+  expect_no_message(
+    p_big <- hill_bar_pq(data_fungi_mini, Height, q = 0),
+    message = "test_text"
+  )
+  expect_match(p_big$labels$subtitle, "^Kruskal-Wallis: X-squared")
+
+  d <- prune_samples(sample_names(data_fungi_mini)[1:12], data_fungi_mini)
+  d@sam_data$Group <- rep(c("A", "B", "C"), each = 4)
+  expect_message(
+    p <- hill_bar_pq(d, Group, q = c(0, 2)),
+    "test_text = TRUE"
+  )
+  expect_null(p[[1]]$labels$subtitle)
+  expect_false(grepl("Tukey", p$patches$annotation$caption))
+
+  p_forced <- hill_bar_pq(d, Group, q = 0, test_text = TRUE)
+  expect_match(p_forced$labels$subtitle, "^Kruskal-Wallis: X-squared")
 })
 
 test_that("hill_bar_pq falls back to a longer palette with more than 8 groups", {

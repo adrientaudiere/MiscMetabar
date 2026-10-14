@@ -7480,14 +7480,16 @@ plot_ordination_pq <- function(
   point_alpha,
   letters_below_bar,
   mark_symbol = FALSE,
-  sig_symbol = "\u2205"
+  sig_symbol = "\u2205",
+  show_test = TRUE
 ) {
   # --- Kruskal-Wallis test ---
   # Not computed when every group has a single value: the statistic is then
-  # always n - 1 and its p-value carries no information.
+  # always n - 1 and its p-value carries no information. Not shown either
+  # when `show_test` is FALSE (small samples, see `hill_bar_pq()`).
   data[[x_name]] <- as.factor(data[[x_name]])
   n_per_group_y <- table(data[[x_name]][!is.na(data[[y_name]])])
-  kw_run <- any(n_per_group_y >= 2)
+  kw_run <- any(n_per_group_y >= 2) && show_test
   if (kw_run) {
     kw <- kruskal.test(reformulate(x_name, response = y_name), data = data)
     kw_subtitle <- sprintf(
@@ -7496,8 +7498,10 @@ plot_ordination_pq <- function(
       kw$statistic,
       format.pval(kw$p.value, digits = 3, eps = 0.001)
     )
-  } else {
+  } else if (show_test) {
     kw_subtitle <- "Kruskal-Wallis not computed: one sample per group"
+  } else {
+    kw_subtitle <- NULL
   }
   show_letters <- add_letters && kw_run
 
@@ -7716,9 +7720,12 @@ plot_ordination_pq <- function(
 #' For each Hill diversity order in `q`, draws a bar at the group mean (±1 SE)
 #' with jittered individual points. A Kruskal-Wallis test is reported in the
 #' subtitle; when the global effect is significant, Tukey HSD pairwise
-#' comparisons produce compact letter displays above the bars. When every group
-#' has a single sample, the test is not computed (the subtitle says so) and no
-#' letters are drawn. Multiple values of `q` are assembled into a [patchwork]
+#' comparisons produce compact letter displays above the bars. When at least
+#' one group has fewer than 5 samples, or when there are fewer than 30 samples
+#' in total, the test and its letters are not shown (a message says so) unless
+#' `test_text = TRUE`: on such small samples the p-value is unstable and the
+#' test has little power. When every group has a single sample, the test is
+#' never computed. Multiple values of `q` are assembled into a [patchwork]
 #' layout automatically.
 #'
 #' @inheritParams clean_pq
@@ -7778,6 +7785,10 @@ plot_ordination_pq <- function(
 #'   symbol is appended to the panel subtitle and explained once in the shared
 #'   figure caption. The "Error bars" / "letters from Tukey HSD" caption is set
 #'   a single time for the whole figure rather than repeated on every panel.
+#' @param test_text Logical. Show the Kruskal-Wallis subtitle and the Tukey
+#'   letters even on small samples (at least one group with fewer than 5
+#'   samples, or fewer than 30 samples in total), where they are hidden by
+#'   default. Default `FALSE`.
 #' @param ... Additional arguments passed to [psmelt_samples_pq()] and hence
 #'   to [divent::div_hill()] (e.g. `estimator = "naive"`).
 #'
@@ -7840,6 +7851,7 @@ hill_bar_pq <- function(
   point_alpha = 0.5,
   letters_below_bar = FALSE,
   sig_symbol = "\u2205",
+  test_text = FALSE,
   ...
 ) {
   verify_pq(physeq)
@@ -7851,6 +7863,22 @@ hill_bar_pq <- function(
   x_name <- rlang::as_string(x_var)
   fill_name <- rlang::as_string(fill_var)
   x_lab <- if (is.null(x_lab)) x_name else x_lab
+
+  # Small samples: hide the Kruskal-Wallis test and its letters unless forced.
+  n_per_group <- table(data[[x_name]])
+  n_per_group <- n_per_group[n_per_group > 0]
+  n_min <- if (length(n_per_group) > 0) min(n_per_group) else 0
+  small_sample <- n_min < 5 || sum(n_per_group) < 30
+  if (small_sample && !test_text) {
+    message(
+      "Kruskal-Wallis test and Tukey letters not shown: a group has fewer ",
+      "than 5 samples (min = ",
+      n_min,
+      ") or there are fewer than 30 samples in total (n = ",
+      sum(n_per_group),
+      "). Use `test_text = TRUE` to show them anyway."
+    )
+  }
 
   ys <- paste0("Hill_", q)
 
@@ -7883,7 +7911,8 @@ hill_bar_pq <- function(
     error_bar_alpha = error_bar_alpha,
     point_alpha = point_alpha,
     letters_below_bar = letters_below_bar,
-    sig_symbol = sig_symbol
+    sig_symbol = sig_symbol,
+    show_test = test_text || !small_sample
   )
 
   if (length(ys) == 1) {

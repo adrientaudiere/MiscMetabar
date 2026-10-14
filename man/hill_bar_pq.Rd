@@ -37,6 +37,7 @@ hill_bar_pq(
   point_alpha = 0.5,
   letters_below_bar = FALSE,
   sig_symbol = "∅",
+  test_text = FALSE,
   ...
 )
 }
@@ -124,6 +125,11 @@ symbol is appended to the panel subtitle and explained once in the shared
 figure caption. The "Error bars" / "letters from Tukey HSD" caption is set
 a single time for the whole figure rather than repeated on every panel.}
 
+\item{test_text}{Logical. Show the Kruskal-Wallis subtitle and the Tukey
+letters even on small samples (at least one group with fewer than 5
+samples, or fewer than 30 samples in total), where they are hidden by
+default. Default \code{FALSE}.}
+
 \item{...}{Additional arguments passed to \code{\link[=psmelt_samples_pq]{psmelt_samples_pq()}} and hence
 to \code{\link[divent:div_hill]{divent::div_hill()}} (e.g. \code{estimator = "naive"}).}
 }
@@ -141,9 +147,12 @@ when \code{length(q) > 1}.
 For each Hill diversity order in \code{q}, draws a bar at the group mean (±1 SE)
 with jittered individual points. A Kruskal-Wallis test is reported in the
 subtitle; when the global effect is significant, Tukey HSD pairwise
-comparisons produce compact letter displays above the bars. When every group
-has a single sample, the test is not computed (the subtitle says so) and no
-letters are drawn. Multiple values of \code{q} are assembled into a \link[patchwork:patchwork]{patchwork}
+comparisons produce compact letter displays above the bars. When at least
+one group has fewer than 5 samples, or when there are fewer than 30 samples
+in total, the test and its letters are not shown (a message says so) unless
+\code{test_text = TRUE}: on such small samples the p-value is unstable and the
+test has little power. When every group has a single sample, the test is
+never computed. Multiple values of \code{q} are assembled into a \link[patchwork:patchwork]{patchwork}
 layout automatically.
 }
 \examples{
