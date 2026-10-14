@@ -260,6 +260,7 @@ reference:
   contents:
   - cutadapt_remove_primers
   - itsx_pq
+  - itsxpress_pq
   - fastp
   - fastq_to_fasta
   - filter_trim
@@ -317,15 +318,18 @@ reference:
 - subtitle: External software management
   contents:
   - find_itsx
+  - find_itsxpress
   - find_mmseqs2
   - find_vsearch
   - install_itsx
+  - install_itsxpress
   - install_mmseqs2
   - install_vsearch
   - is_blastn_installed
   - is_cutadapt_installed
   - is_fastp_installed
   - is_itsx_installed
+  - is_itsxpress_installed
   - is_mmseqs2_installed
   - is_falco_installed
   - is_krona_installed

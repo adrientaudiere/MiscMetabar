@@ -4,7 +4,6 @@ ALDEx
 ANCOM
 ANCOMBC
 ANalysis
-Analytics
 ASV
 ASVs
 Aitchinson
@@ -12,6 +11,7 @@ Alberdi
 Aldex
 Altschul
 Amplicon
+Analytics
 Anders
 BH
 BLASTN
@@ -22,10 +22,12 @@ Behaviour
 Benchdamic
 Biogeography
 Bioinformatics
+Biopython
 Blastn
 Branco
 Breitwieser
 Bálint
+CCS
 CLR
 CMD
 COmpositions
@@ -54,6 +56,7 @@ ERRORs
 ESV
 EXTrapolation
 EasyAmplicon
+Einarsson
 Enterobacteriaceae
 Enterobacteriales
 Eukaryome
@@ -71,6 +74,7 @@ Gamboa
 Gammaproteobacteria
 GlobalEnv
 Guldberg
+HMMER
 HSD
 Hajibabaei
 Healy
@@ -80,14 +84,16 @@ Homebrew
 Hyun
 IC
 ISSN
+ITSx
+ITSxpress
 IdClusters
 IdTaxa
 Illumina
 IndVal
 JAMP
-Jeon
 JOlaHsd
 JS
+Jeon
 Jombart
 Ko
 KronaTools
@@ -95,13 +101,15 @@ LCA
 LCBD
 LEfSe
 LMs
+LSU
 Lifecycle
-Maaten
+Liu
 MAFFT
 MDS
 MDT
 MMseqs
 MUMU
+Maaten
 Mahé
 Marcon
 McInnes
@@ -139,6 +147,7 @@ PCoA
 PERMANOVA
 PLoS
 PaCMAP
+PacBio
 Paulson
 PeerJ
 Permanova
@@ -153,12 +162,12 @@ QIIME
 Quercus
 RColorBrewer
 RData
+ROADMAP
 Raison
 Rdata
 Recluster
 Reclustering
 Rieseberg
-ROADMAP
 Rosen
 Rsearch
 Rtsne
@@ -170,6 +179,8 @@ SHA
 SINTAX
 SNE
 SRS
+SSU
+SV
 Sankey
 Sanou
 Seo
@@ -180,6 +191,7 @@ Soding
 Softwares
 Stabilising
 Steinegger
+TG
 TMM
 TRE
 TSNE
@@ -294,6 +306,7 @@ decimalLatitude
 decimalLongitude
 denoise
 denoised
+denoising
 derep
 dereplicate
 dereplicated
@@ -413,9 +426,9 @@ mumu
 na
 nb
 nbSeq
+neighbour
 neighbourhood
 neighbourhoods
-neighbour
 newcastle
 normalisation
 normalisations
@@ -478,6 +491,7 @@ replacte
 reproducibly
 reshape
 resubmission
+ribosomal
 rl
 robur
 rotl
@@ -535,6 +549,7 @@ uclust
 umap
 un
 unclustered
+unmerged
 usearch
 usefull
 userout
