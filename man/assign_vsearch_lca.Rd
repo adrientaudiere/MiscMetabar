@@ -238,16 +238,6 @@ data_fungi_mini_new3 <- assign_vsearch_lca(data_fungi_mini,
   id = 0.5, behavior = "add_to_phyloseq", top_hits_only = FALSE, vote_algorithm = "rel_majority"
 )
 }
-
-\donttest{
-## return_taxtab with seq2search (a DNAStringSet or a matrix)
-seqs_to_assign <- refseq(data_fungi_mini)[1:10]
-tax_mat <- assign_vsearch_lca(seq2search = seqs_to_assign,
-  ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
-  behavior = "return_taxtab"
-)
-head(tax_mat)
-}
 \dontshow{\}) # examplesIf}
 }
 \seealso{

@@ -73,15 +73,6 @@ robust.aitchison distances from vegan package.
 library(patchwork)
 plot_ordination_pq(data_fungi_mini, method = "robust.aitchison", color = "Height") +
   plot_ordination_pq(data_fungi_mini, method = "bray", color = "Height")
-\donttest{
-plot_ordination_pq(
-  subset_samples(data_fungi_mini, !is.na(Height)),
-  method = "bray",
-  color = "Height",
-  add_envfit = TRUE,
-  envfit_fact = "Time"
-)
-}
 }
 \seealso{
 \code{\link[vegan:envfit]{vegan::envfit()}}, \code{\link[phyloseq:plot_ordination]{phyloseq::plot_ordination()}}

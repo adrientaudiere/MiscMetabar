@@ -2007,60 +2007,6 @@ mumu_pq <- function(
 #' @examples
 #' \donttest{
 #' verify_tax_table(data_fungi_mini)
-#' verify_tax_table(data_fungi_mini, verbose = TRUE)
-#'
-#' # Check for redundant "_sp" patterns (default)
-#' data_fungi2 <- data_fungi_mini
-#' data_fungi2@tax_table[1, "Species"] <- "Eutypa_sp"
-#' verify_tax_table(data_fungi2, verbose = TRUE, redundant_suffix = "_sp")
-#'
-#' # Automatically replace problematic values with NA
-#' # This replaces: NA-like patterns, short values, and redundant suffixes
-#' data_fungi2_cleaned <- verify_tax_table(data_fungi2,
-#'   modify_phyloseq = TRUE
-#' )
-#' # Check that the redundant value was replaced
-#' data_fungi2@tax_table[1, "Species"] # "Eutypa_sp"
-#' data_fungi2_cleaned@tax_table[1, "Species"] # NA
-#'
-#' # Combine verbose mode with modifications to see all issues
-#' data_fungi2_cleaned <- verify_tax_table(data_fungi2,
-#'   verbose = TRUE,
-#'   modify_phyloseq = TRUE
-#' )
-#'
-#' # Check for other patterns like "_var" or "_cf"
-#' verify_tax_table(data_fungi_mini, verbose = TRUE, redundant_suffix = "_var")
-#'
-#' # Disable redundant suffix check
-#' verify_tax_table(data_fungi_mini, verbose = TRUE, redundant_suffix = NULL)
-#'
-#' # Specify custom taxonomic rank order
-#' verify_tax_table(data_fungi_mini,
-#'   verbose = TRUE,
-#'   taxonomic_ranks = c("Class", "Order", "Family", "Genus")
-#' )
-#'
-#' # Handle whitespace in taxonomic values
-#' # Create example with spaces
-#' data_fungi3 <- data_fungi_mini
-#' data_fungi3@tax_table[1, "Genus"] <- " Russula "
-#' data_fungi3@tax_table[2, "Species"] <- "Russula emetica"
-#'
-#' # Check for spaces (verbose mode)
-#' verify_tax_table(data_fungi3, verbose = TRUE)
-#'
-#' # Remove leading/trailing whitespace (enabled by default)
-#' data_fungi3_trimmed <- verify_tax_table(data_fungi3, modify_phyloseq = TRUE)
-#' data_fungi3_trimmed@tax_table[1, "Genus"] # "Russula" (trimmed)
-#'
-#' # Also replace internal spaces with underscores
-#' data_fungi3_cleaned <- verify_tax_table(data_fungi3,
-#'   modify_phyloseq = TRUE,
-#'   remove_all_space = TRUE,
-#'   replace_space_with = "_"
-#' )
-#' data_fungi3_cleaned@tax_table[2, "Species"] # "Russula_emetica"
 #' }
 verify_tax_table <- function(
   physeq,
@@ -3540,13 +3486,6 @@ add_new_taxonomy_pq <- function(
 #'     statistic = list(Time ~ c("{median} ({p25}, {p75})", "{min}, {max}"))
 #'   )
 #' }
-#' \donttest{
-#' data(enterotype)
-#' if (requireNamespace("gtsummary")) {
-#'   summary_samdata <- tbl_sum_samdata(enterotype)
-#'   summary_samdata <- tbl_sum_samdata(enterotype, include = !contains("SampleId"))
-#' }
-#' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `gtsummary::tbl_summary()` if you
@@ -3587,9 +3526,6 @@ tbl_sum_samdata <- function(physeq, remove_col_unique_value = TRUE, ...) {
 #'
 #' @examples
 #' tbl_sum_taxtable(data_fungi_mini)
-#' data_fungi_mini |>
-#'   filt_taxa_pq(min_occurence = 2) |>
-#'   tbl_sum_taxtable(taxonomic_rank = c("Species", "Genus"))
 tbl_sum_taxtable <- function(physeq, taxonomic_ranks = NULL, ...) {
   taxatab <- as.data.frame(unclass(physeq@tax_table))
 
@@ -3892,22 +3828,6 @@ plot_guild_pq <-
 #'   set.seed(22)
 #'   df <- subset_taxa_pq(data_fungi_mini, taxa_sums(data_fungi_mini) > 9000)
 #'   df_tree <- build_phytree_pq(df, nb_bootstrap = 2)
-#'   plot(df_tree$UPGMA)
-#'   phangorn::plotBS(df_tree$UPGMA, df_tree$UPGMA_bs, main = "UPGMA")
-#'   plot(df_tree$NJ, "unrooted")
-#'   plot(df_tree$ML)
-#'
-#'   phangorn::plotBS(df_tree$ML$tree, df_tree$ML_bs, p = 20, frame = "circle")
-#'   phangorn::plotBS(
-#'     df_tree$ML$tree,
-#'     df_tree$ML_bs,
-#'     p = 20,
-#'     frame = "circle",
-#'     method = "TBE"
-#'   )
-#'   plot(phangorn::consensusNet(df_tree$ML_bs))
-#'   plot(phangorn::consensusNet(df_tree$NJ_bs))
-#'   ps_tree <- merge_phyloseq(df, df_tree$ML$tree)
 #' }
 #' }
 build_phytree_pq <- function(

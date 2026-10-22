@@ -115,60 +115,6 @@ This function is called by \code{\link[=verify_pq]{verify_pq()}} when \code{chec
 \examples{
 \donttest{
 verify_tax_table(data_fungi_mini)
-verify_tax_table(data_fungi_mini, verbose = TRUE)
-
-# Check for redundant "_sp" patterns (default)
-data_fungi2 <- data_fungi_mini
-data_fungi2@tax_table[1, "Species"] <- "Eutypa_sp"
-verify_tax_table(data_fungi2, verbose = TRUE, redundant_suffix = "_sp")
-
-# Automatically replace problematic values with NA
-# This replaces: NA-like patterns, short values, and redundant suffixes
-data_fungi2_cleaned <- verify_tax_table(data_fungi2,
-  modify_phyloseq = TRUE
-)
-# Check that the redundant value was replaced
-data_fungi2@tax_table[1, "Species"] # "Eutypa_sp"
-data_fungi2_cleaned@tax_table[1, "Species"] # NA
-
-# Combine verbose mode with modifications to see all issues
-data_fungi2_cleaned <- verify_tax_table(data_fungi2,
-  verbose = TRUE,
-  modify_phyloseq = TRUE
-)
-
-# Check for other patterns like "_var" or "_cf"
-verify_tax_table(data_fungi_mini, verbose = TRUE, redundant_suffix = "_var")
-
-# Disable redundant suffix check
-verify_tax_table(data_fungi_mini, verbose = TRUE, redundant_suffix = NULL)
-
-# Specify custom taxonomic rank order
-verify_tax_table(data_fungi_mini,
-  verbose = TRUE,
-  taxonomic_ranks = c("Class", "Order", "Family", "Genus")
-)
-
-# Handle whitespace in taxonomic values
-# Create example with spaces
-data_fungi3 <- data_fungi_mini
-data_fungi3@tax_table[1, "Genus"] <- " Russula "
-data_fungi3@tax_table[2, "Species"] <- "Russula emetica"
-
-# Check for spaces (verbose mode)
-verify_tax_table(data_fungi3, verbose = TRUE)
-
-# Remove leading/trailing whitespace (enabled by default)
-data_fungi3_trimmed <- verify_tax_table(data_fungi3, modify_phyloseq = TRUE)
-data_fungi3_trimmed@tax_table[1, "Genus"] # "Russula" (trimmed)
-
-# Also replace internal spaces with underscores
-data_fungi3_cleaned <- verify_tax_table(data_fungi3,
-  modify_phyloseq = TRUE,
-  remove_all_space = TRUE,
-  replace_space_with = "_"
-)
-data_fungi3_cleaned@tax_table[2, "Species"] # "Russula_emetica"
 }
 }
 \author{

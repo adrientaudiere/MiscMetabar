@@ -45,13 +45,6 @@ if (requireNamespace("gtsummary")) {
     statistic = list(Time ~ c("{median} ({p25}, {p75})", "{min}, {max}"))
   )
 }
-\donttest{
-data(enterotype)
-if (requireNamespace("gtsummary")) {
-  summary_samdata <- tbl_sum_samdata(enterotype)
-  summary_samdata <- tbl_sum_samdata(enterotype, include = !contains("SampleId"))
-}
-}
 }
 \author{
 Adrien Taudière

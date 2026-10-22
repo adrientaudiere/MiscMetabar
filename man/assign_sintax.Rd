@@ -138,67 +138,6 @@ assign_sintax(data_fungi_mini,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
   behavior = "return_cmd"
 )
-
-data_fungi_mini_new <- assign_sintax(data_fungi_mini,
-  ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
-  behavior = "add_to_phyloseq"
-)
-
-assignation_results <- assign_sintax(data_fungi_mini,
-  ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar")
-)
-
-left_join(
-  tidyr::pivot_longer(assignation_results$taxo_value, -taxa_names),
-  tidyr::pivot_longer(assignation_results$taxo_bootstrap, -taxa_names),
-  by = join_by(taxa_names, name),
-  suffix = c("rank", "bootstrap")
-) |>
-  mutate(name = factor(name,
-    levels = c(
-      "Kingdom", "Phylum", "Class",
-      "Order", "Family", "Genus", "Species"
-    )
-  )) |>
-  ggplot(aes(valuebootstrap,
-    valuerank,
-    fill = name
-  )) +
-  geom_jitter(alpha = 0.8, aes(color = name)) +
-  geom_boxplot(alpha = 0.3)
-
-## Same assignation using seq2search (a DNAStringSet) instead of a phyloseq
-## object. This is useful when you do not have (or do not need) a phyloseq
-## object, e.g. to assign taxonomy to a set of ASV sequences extracted from
-## a dada2 sequence table.
-seqs_to_assign <- refseq(data_fungi_mini)[1:10]
-assign_sintax(seq2search = seqs_to_assign,
-  ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
-  behavior = "return_cmd"
-)
-
-res_seq2search <- assign_sintax(seq2search = seqs_to_assign,
-  ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar")
-)
-head(res_seq2search$taxo_value)
-
-## return_taxtab returns a character matrix ready for phyloseq::tax_table()
-tax_mat <- assign_sintax(seq2search = seqs_to_assign,
-  ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
-  behavior = "return_taxtab"
-)
-head(tax_mat)
-
-## A matrix whose colnames are the sequences (e.g. a dada2 sequence table)
-## is accepted directly as seq2search — the colnames are converted to a
-## DNAStringSet and used as the taxa names.
-seqtab <- matrix(1, nrow = 1, ncol = length(seqs_to_assign))
-colnames(seqtab) <- unname(as.character(seqs_to_assign))
-tax_mat_from_matrix <- assign_sintax(seq2search = seqtab,
-  ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
-  behavior = "return_taxtab"
-)
-head(tax_mat_from_matrix)
 }
 \dontshow{\}) # examplesIf}
 }

@@ -64,7 +64,7 @@ the quantile values of adjusted R squared
 
 
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} This function has moved to the \code{bootpq}
-package. Please use \code{\link[bootpq:var_par_rarperm_pq]{bootpq::var_par_rarperm_pq()}} instead.
+package. Please use \code{bootpq::var_par_rarperm_pq()} instead.
 
 This is an extension of the function \code{\link[=var_par_pq]{var_par_pq()}}. The main addition is
 the computation of nperm permutations with rarefaction even depth by

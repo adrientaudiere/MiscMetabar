@@ -58,21 +58,6 @@ data_f <- prune_samples(
 library("divent")
 res1 <- plot_refseq_extremity_pq(data_f, q = 1)
 names(res1)
-\donttest{
-res1$plot_start
-res1$plot_last
-
-res2 <- plot_refseq_extremity_pq(data_f, first_n = 200, last_n = 100)
-res2$plot_start
-res2$plot_last
-
-plot_refseq_extremity_pq(data_f,
-  first_n = NULL,
-  last_n = 200,
-  min_width = 200,
-  q = c(3)
-)$plot_last
-}
 }
 \author{
 Adrien Taudière

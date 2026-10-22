@@ -34,12 +34,6 @@ GP <- rarefy_pq(subset_samples_pq(GP, sample_sums(GP) > 3000), replace = TRUE)
 p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10)
 
 val_threshold <- accu_samp_threshold(p)
-
-summary(val_threshold)
-
-##'  Plot the number of sequences needed to accumulate 0.95\% of ASV in 50\%, 75\%
-##'  and 100\% of samples
-p + geom_vline(xintercept = quantile(val_threshold, probs = c(0.50, 0.75, 1)))
 }
 }
 \seealso{

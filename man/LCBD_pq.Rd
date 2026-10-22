@@ -41,9 +41,6 @@ if (requireNamespace("adespatial")) {
   length(res$LCBD)
   length(res$SCBD)
 }
-if (requireNamespace("adespatial")) {
-  LCBD_pq(data_fungi_sp_known, nperm = 5, method = "jaccard")
-}
 }
 
 }

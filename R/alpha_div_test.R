@@ -162,7 +162,7 @@ hill_tuckey_pq <- function(
 #' <img src="https://img.shields.io/badge/lifecycle-deprecated-orange" alt="lifecycle-deprecated"></a>
 #'
 #' `r lifecycle::badge("deprecated")` This function has moved to the `bootpq`
-#' package. Please use [bootpq::hill_test_rarperm_pq()] instead.
+#' package. Please use `bootpq::hill_test_rarperm_pq()` instead.
 #'
 #' This reduce the risk of a random drawing of a exceptional situation of an unique rarefaction.
 #' @inheritParams clean_pq
@@ -428,13 +428,6 @@ hill_test_rarperm_pq <- function(
 #'       "Hill_0 ~ Hill_1 + Abundance + Time + Height",
 #'       level = 1
 #'     )
-#'   res_glmulti
-#'   res_glmulti_interaction <-
-#'     glmutli_pq(data_fungi_mini,
-#'       "Hill_0 ~ Abundance + Time + Height",
-#'       level = 2
-#'     )
-#'   res_glmulti_interaction
 #' }
 #' }
 #' @details

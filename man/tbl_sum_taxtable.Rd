@@ -29,9 +29,6 @@ of \code{physeq} object.
 }
 \examples{
 tbl_sum_taxtable(data_fungi_mini)
-data_fungi_mini |>
-  filt_taxa_pq(min_occurence = 2) |>
-  tbl_sum_taxtable(taxonomic_rank = c("Species", "Genus"))
 }
 \author{
 Adrien Taudière

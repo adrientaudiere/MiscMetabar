@@ -132,42 +132,6 @@ tax_bar_pq(data_fungi_ab,
   taxa = "Class", fact = "Height",
   show_n_samples = TRUE
 )
-\donttest{
-tax_bar_pq(data_fungi_ab, taxa = "Class")
-tax_bar_pq(data_fungi_ab, taxa = "Class", percent_bar = TRUE)
-tax_bar_pq(data_fungi_ab, taxa = "Class", fact = "Time")
-tax_bar_pq(data_fungi_ab,
-  taxa = "Class", fact = "Time",
-  percent_bar = TRUE, add_ribbon = TRUE
-)
-tax_bar_pq(data_fungi_ab,
-  taxa = "Class", fact = "Time",
-  percent_bar = TRUE, add_ribbon = TRUE, label_taxa = TRUE
-)
-tax_bar_pq(data_fungi_ab,
-  taxa = "Class", fact = "Time",
-  show_values = TRUE, minimum_value_to_show = 10000
-)
-tax_bar_pq(data_fungi_ab,
-  fact = "Height", taxa = "Class",
-  nb_seq = FALSE, percent_bar = TRUE, label_taxa = TRUE,
-  add_ribbon = TRUE, value_size = 7, ribbon_alpha = .6,
-  show_values = TRUE, label_size = 4, top_label_size = 6,
-  minimum_value_to_show = 0.05
-) |>
-  reorder_distinct_colors(alternate_lightness = TRUE)
-
-tax_bar_pq(data_fungi_mini,
-  fact = "Height", taxa = "Order",
-  nb_seq = TRUE, percent_bar = TRUE, label_taxa = TRUE,
-  add_ribbon = TRUE, value_size = 5,
-  ribbon_alpha = .6, show_values = TRUE,
-  label_size = 4, top_label_size = 8,
-  minimum_value_to_show = 0.05, bar_width = NULL,
-  linewidth_bar_internal = 0.1, bar_internal_color = "black"
-) |>
-  reorder_distinct_colors(alternate_lightness = TRUE)
-}
 }
 \seealso{
 \code{\link[=plot_tax_pq]{plot_tax_pq()}} and \code{\link[=multitax_bar_pq]{multitax_bar_pq()}}

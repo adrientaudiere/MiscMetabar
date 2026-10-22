@@ -146,15 +146,6 @@ Graphical representation of distribution of taxa across two samples.
 \examples{
 data_fungi_2Height <- subset_samples(data_fungi_mini, Height \%in\% c("Low", "High"))
 biplot_pq(data_fungi_2Height, "Height", merge_sample_by = "Height")
-biplot_pq(data_fungi_2Height, "Height",
-  merge_sample_by = "Height",
-  split_by_sample = TRUE
-)
-biplot_pq(data_fungi_2Height, "Height",
-  merge_sample_by = "Height",
-  color_rank = "Order",
-  taxa_names_rank = "Genus"
-)
 }
 \author{
 Adrien Taudière

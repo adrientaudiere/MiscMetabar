@@ -49,14 +49,4 @@ Graphical representation of a phyloseq object.
 
 summary_plot_pq(data_fungi_mini)
 summary_plot_pq(data_fungi_mini, add_info = FALSE) + scale_fill_viridis_d()
-\donttest{
-if (requireNamespace("patchwork")) {
-  (summary_plot_pq(data_fungi, text_size = 0.5, text_size_info = 0.6) +
-    summary_plot_pq(data_fungi_mini, text_size = 0.5, text_size_info = 0.6)) /
-    (summary_plot_pq(data_fungi_sp_known, text_size = 0.5, text_size_info = 0.6) +
-      summary_plot_pq(subset_taxa(data_fungi_sp_known, Phylum == "Ascomycota"),
-        text_size = 0.5, text_size_info = 0.6
-      ))
-}
-}
 }

@@ -74,31 +74,6 @@ Please make a reference to \code{\link[vegan:renyi]{vegan::renyi()}} or
 \donttest{
 if (requireNamespace("vegan")) {
   hill_curves_pq(data_fungi_mini, merge_sample_by = "Time")
-  hill_curves_pq(data_fungi_mini, color_fac = "Time", plot_legend = FALSE)
-  hill_curves_pq(data_fungi_mini,
-    color_fac = "Time", plot_legend = FALSE,
-    nperm = 9, size_point = 1, linewidth = 0.5
-  )
-
-  hill_curves_pq(data_fungi_mini,
-    nperm = 9, plot_legend = FALSE, size_point = 1,
-    linewidth = 0.5
-  )
-  hill_curves_pq(data_fungi_mini, "Height",
-    q = c(0, 1, 2, 8), plot_legend = FALSE
-  )
-  hill_curves_pq(data_fungi_mini, "Height",
-    q = c(0, 0.5, 1, 2, 4, 8),
-    nperm = 9
-  )
-  hill_curves_pq(data_fungi_mini, "Height", nperm = 9, wrap_factor = FALSE)
-
-  data_fungi_mini@sam_data$H_T <- paste0(
-    data_fungi_mini@sam_data$Height,
-    "_", data_fungi_mini@sam_data$Time
-  )
-  merge_samples2(data_fungi_mini, "H_T")
-  hill_curves_pq(data_fungi_mini, "H_T", color_fac = "Time", nperm = 9)
 }
 }
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_functions.R
 \name{ggplot_add.reorder_distinct_colors_spec}
 \alias{ggplot_add.reorder_distinct_colors_spec}
-\title{Add reordered distinct colors to a ggplot}
+\title{Add reordered distinct colors to a ggplot.}
 \usage{
 \method{ggplot_add}{reorder_distinct_colors_spec}(object, plot, ...)
 }

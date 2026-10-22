@@ -191,14 +191,6 @@ plot_edgeR_pq <-
 #'   plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
 #'     tax_table = GP@tax_table, color_rank = "Kingdom"
 #'   )
-#'   plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
-#'     tax_table = GP@tax_table, color_rank = "Kingdom",
-#'     pval = 0.7
-#'   )
-#'   plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
-#'     tax_table = GP@tax_table, color_rank = "Class",
-#'     select_taxa = c("522457", "271582")
-#'   )
 #' }
 #' }
 #' @author Adrien Taudière

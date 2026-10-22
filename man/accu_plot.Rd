@@ -77,11 +77,6 @@ data("GlobalPatterns", package = "phyloseq")
 GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 GP <- rarefy_pq(subset_samples_pq(GP, sample_sums(GP) > 3000), replace = TRUE)
 p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10)
-p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, step = 10)
-
-p + theme(legend.position = "none")
-
-p + xlim(c(0, 400))
 }
 }
 \seealso{

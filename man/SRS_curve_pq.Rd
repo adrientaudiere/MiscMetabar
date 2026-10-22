@@ -34,9 +34,4 @@ if (requireNamespace("SRS")) {
     rarefy.comparison = TRUE, rarefy.repeats = 3
   )
 }
-\donttest{
-if (requireNamespace("SRS")) {
-  SRS_curve_pq(data_fungi_mini, max.sample.size = 500, metric = "shannon")
-}
-}
 }

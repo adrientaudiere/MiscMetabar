@@ -42,7 +42,6 @@ data_fungi_abun <- subset_taxa_pq(
   taxa_sums(data_fungi_mini) > 1000
 )
 p <- multi_biplot_pq(data_fungi_abun, "Height")
-lapply(p, print)
 }
 }
 \author{

@@ -72,14 +72,6 @@ if (requireNamespace("ggstatsplot")) {
   library("divent")
   ggscatt_pq(data_fungi_mini, "Time", q = 0, type = "non-parametric")
 }
-\donttest{
-if (requireNamespace("ggstatsplot")) {
-  ggscatt_pq(data_fungi_mini, "Sample_id",
-    q = 0,
-    one_plot = FALSE
-  )
-}
-}
 }
 \seealso{
 \code{\link[=ggbetween_pq]{ggbetween_pq()}}

@@ -99,67 +99,6 @@ examples.
 if (requireNamespace("ggVennDiagram")) {
   ggvenn_pq(data_fungi_mini, fact = "Height")
 }
-\donttest{
-if (requireNamespace("ggVennDiagram")) {
-  ggvenn_pq(data_fungi_mini, fact = "Height") +
-    ggplot2::scale_fill_distiller(palette = "BuPu", direction = 1)
-  pl <- ggvenn_pq(data_fungi_mini, fact = "Height", split_by = "Time")
-  for (i in seq_along(pl)) {
-    p <- pl[[i]] +
-      scale_fill_distiller(palette = "BuPu", direction = 1) +
-      theme(plot.title = element_text(hjust = 0.5, size = 22))
-    print(p)
-  }
-
-  data_fungi2 <- subset_samples(
-    data_fungi_mini,
-    data_fungi_mini@sam_data$Tree_name == "A10-005" |
-      data_fungi_mini@sam_data$Height \%in\% c("Low", "High")
-  )
-  ggvenn_pq(data_fungi2, fact = "Height")
-
-  ggvenn_pq(data_fungi2, fact = "Height", type = "nb_seq")
-
-  ggvenn_pq(data_fungi_mini, fact = "Height", add_nb_seq = TRUE, set_size = 4)
-  ggvenn_pq(data_fungi_mini, fact = "Height", rarefy_before_merging = TRUE)
-  ggvenn_pq(data_fungi_mini, fact = "Height", rarefy_after_merging = TRUE) +
-    scale_x_continuous(expand = expansion(mult = 0.5))
-
-  # For more flexibility, you can save the dataset for more precise construction
-  # with ggplot2 and ggVennDiagramm
-  # (https://gaospecial.github.io/ggVennDiagram/articles/fully-customed.html)
-  res_venn <- ggvenn_pq(data_fungi_mini,
-    fact = "Height",
-    return_data_for_venn = TRUE
-  )
-
-  ggplot() +
-    # 1. region count layer
-    geom_polygon(aes(X, Y, group = id, fill = name),
-      data = ggVennDiagram::venn_regionedge(res_venn)
-    ) +
-    scale_fill_manual(values = funky_color(7)) +
-    # 2. set edge layer
-    geom_path(aes(X, Y, color = id, group = id),
-      data = ggVennDiagram::venn_setedge(res_venn),
-      show.legend = FALSE, linewidth = 2
-    ) +
-    scale_color_manual(values = c("red", "red", "blue")) +
-    # 3. set label layer
-    geom_text(aes(X, Y, label = name),
-      data = ggVennDiagram::venn_setlabel(res_venn)
-    ) +
-    # 4. region label layer
-    geom_label(
-      aes(X, Y, label = paste0(
-        count, " (",
-        scales::percent(count / sum(count), accuracy = 2), ")"
-      )),
-      data = ggVennDiagram::venn_regionlabel(res_venn)
-    ) +
-    theme_void()
-}
-}
 }
 \seealso{
 \code{\link[=upset_pq]{upset_pq()}}

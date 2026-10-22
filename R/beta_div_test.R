@@ -174,10 +174,6 @@ graph_test_pq <- function(
 #' data(enterotype)
 #' \donttest{
 #' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE)
-#' adonis_pq(data_fungi_mini, "Time*Height",
-#'   na_remove = TRUE,
-#'   correction_for_sample_size = TRUE
-#' )
 #' }
 #' \dontrun{
 #' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = NULL)
@@ -304,7 +300,7 @@ adonis_pq <- function(
 #' <img src="https://img.shields.io/badge/lifecycle-deprecated-orange" alt="lifecycle-deprecated"></a>
 #'
 #' `r lifecycle::badge("deprecated")` This function has moved to the `bootpq`
-#' package. Please use [bootpq::adonis_rarperm_pq()] instead.
+#' package. Please use `bootpq::adonis_rarperm_pq()` instead.
 #'
 #' Permanova are computed on a given number of rarefaction with different
 #' seed.number. This reduce the risk of a random drawing of a exceptional
@@ -454,9 +450,6 @@ adonis_rarperm_pq <- function(
 #'   length(res$LCBD)
 #'   length(res$SCBD)
 #' }
-#' if (requireNamespace("adespatial")) {
-#'   LCBD_pq(data_fungi_sp_known, nperm = 5, method = "jaccard")
-#' }
 #' }
 #'
 #' @author Adrien Taudière
@@ -506,27 +499,6 @@ LCBD_pq <- function(physeq, p_adjust_method = "BH", ...) {
 #'     nperm = 20, only_plot_significant = FALSE,
 #'     pval = 0.2
 #'   )
-#' }
-#' if (requireNamespace("adespatial")) {
-#'   plot_LCBD_pq(data_fungi_mini,
-#'     nperm = 20, only_plot_significant = TRUE,
-#'     pval = 0.2
-#'   )
-#'   if (requireNamespace("patchwork")) {
-#'     plot_LCBD_pq(data_fungi_mini,
-#'       nperm = 20, only_plot_significant = FALSE,
-#'       sam_variables = c("Time", "Height")
-#'     )
-#'     plot_LCBD_pq(data_fungi_mini,
-#'       nperm = 20, only_plot_significant = TRUE, pval = 0.2,
-#'       sam_variables = c("Time", "Height", "Tree_name")
-#'     ) &
-#'       theme(
-#'         legend.key.size = unit(0.4, "cm"),
-#'         legend.text = element_text(size = 10),
-#'         axis.title.x = element_text(size = 6)
-#'       )
-#'   }
 #' }
 #' }
 #' @author Adrien Taudière
@@ -669,13 +641,6 @@ plot_LCBD_pq <- function(
 #'   plot_SCBD_pq(data_fungi_mini) +
 #'     geom_text(aes(label = paste(Genus, Species)), hjust = 1, vjust = 2) +
 #'     xlim(c(0, NA))
-#' }
-#' if (requireNamespace("adespatial")) {
-#'   plot_SCBD_pq(data_fungi_mini,
-#'     tax_level = "Class", tax_col = "Phylum",
-#'     min_SCBD = 0
-#'   ) +
-#'     geom_jitter()
 #' }
 #' }
 #'
@@ -1372,12 +1337,11 @@ aldex_pq <- function(
 ################################################################################
 #' Show taxa which are present in only one given level of a factor
 #'
+#' Return the names of the taxa found in samples of the given `level` of
+#' `fact` and in no sample of the other levels.
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
-#' Return the names of the taxa found in samples of the given `level` of
-#' `fact` and in no sample of the other levels.
-#' 
 #' @inheritParams clean_pq
 #' @param fact (required) The name of a column present in the `@sam_data` slot
 #'   of the physeq object. Must be a character vector or a factor. Formerly
@@ -1659,7 +1623,7 @@ var_par_pq <-
 #' <img src="https://img.shields.io/badge/lifecycle-deprecated-orange" alt="lifecycle-deprecated"></a>
 #'
 #' `r lifecycle::badge("deprecated")` This function has moved to the `bootpq`
-#' package. Please use [bootpq::var_par_rarperm_pq()] instead.
+#' package. Please use `bootpq::var_par_rarperm_pq()` instead.
 #'
 #'   This is an extension of the function [var_par_pq()]. The main addition is
 #'   the computation of nperm permutations with rarefaction even depth by
