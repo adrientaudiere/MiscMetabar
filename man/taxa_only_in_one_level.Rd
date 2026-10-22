@@ -33,10 +33,10 @@ of the physeq object. Must be a character vector or a factor. Formerly
 A vector of taxa names
 }
 \description{
-\if{html}{\out{
-<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
-}}
+Return the names of the taxa found in samples of the given \code{level} of
+\code{fact} and in no sample of the other levels.
+\if{html}{\out{<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">}}
+\if{html}{\out{<img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental">}}\if{html}{\out{</a>}}
 }
 \examples{
 data_fungi_mini_woNA4height <- subset_samples(

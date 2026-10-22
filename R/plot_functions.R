@@ -7226,12 +7226,7 @@ reorder_distinct_colors <- function(
   p
 }
 
-#' Add reordered distinct colors to a ggplot
-#'
 #' Add reordered distinct colors to a ggplot.
-#'
-#' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-#' <img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
 #'
 #' @param object A `reorder_distinct_colors_spec` object.
 #' @param plot A `ggplot` object.
@@ -7480,7 +7475,7 @@ plot_ordination_pq <- function(
   point_alpha,
   letters_below_bar,
   mark_symbol = FALSE,
-  sig_symbol = "\u2205",
+  sig_symbol = "\u00d8",
   show_test = TRUE
 ) {
   # --- Kruskal-Wallis test ---
@@ -7778,7 +7773,7 @@ plot_ordination_pq <- function(
 #'   fixed position independent of data spread. When `FALSE` (default), letters
 #'   are placed above whichever is higher: the error bar top or the highest
 #'   data point.
-#' @param sig_symbol Character symbol (default `"∅"`, the empty set, evoking the
+#' @param sig_symbol Character symbol (default `"Ø"`, a slashed O evoking the empty set and the
 #'   absence of a pairwise comparison) used, when several values
 #'   of `q` are drawn, to flag the panels for which Tukey HSD pairwise
 #'   comparisons were not run (no global Kruskal-Wallis significance). The
@@ -7850,7 +7845,7 @@ hill_bar_pq <- function(
   error_bar_alpha = 0.35,
   point_alpha = 0.5,
   letters_below_bar = FALSE,
-  sig_symbol = "\u2205",
+  sig_symbol = "\u00d8",
   test_text = FALSE,
   ...
 ) {

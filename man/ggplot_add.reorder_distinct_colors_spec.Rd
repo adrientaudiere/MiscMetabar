@@ -19,10 +19,4 @@ A \code{ggplot} object with reordered distinct colors.
 \description{
 Add reordered distinct colors to a ggplot.
 }
-\details{
-\if{html}{\out{
-<a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
-<img src="https://img.shields.io/badge/lifecycle-maturing-blue" alt="lifecycle-maturing"></a>
-}}
-}
 \keyword{internal}

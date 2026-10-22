@@ -102,7 +102,7 @@ clustering for \code{method = "vsearch"}); swarm is additionally required for
 \code{\link[=is_swarm_installed]{is_swarm_installed()}} to check availability. This function is mainly a
 wrapper of the work of others: please cite
 \href{https://github.com/torognes/vsearch}{vsearch}
-(\url{https://pubmed.ncbi.nlm.nih.gov/27781170}) and/or
+(\doi{10.7717/peerj.2584}) and/or
 \href{https://github.com/torognes/swarm}{SWARM}
 (\doi{10.1093/bioinformatics/btab493}).
 }

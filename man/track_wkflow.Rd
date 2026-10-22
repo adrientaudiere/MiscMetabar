@@ -56,7 +56,7 @@ Rank names for which the proportion of NA is computed when
 
 \item{compute_seq_length}{(logical, default FALSE) If TRUE, add three columns
 \code{mean_length_seq}, \code{max_length_seq}, \code{min_length_seq} from the width of the
-reference sequences (\code{\link[Biostrings:width]{Biostrings::width()}}) of present taxa.}
+reference sequences (\code{Biostrings::width()}) of present taxa.}
 
 \item{compute_genetic_diversity}{(logical, default FALSE) If TRUE, add two
 columns \code{genetic_diversity_weighted} (abundance-weighted nucleotide

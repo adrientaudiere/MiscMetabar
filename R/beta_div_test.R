@@ -503,22 +503,22 @@ LCBD_pq <- function(physeq, p_adjust_method = "BH", ...) {
 #' \donttest{
 #' if (requireNamespace("adespatial")) {
 #'   plot_LCBD_pq(data_fungi_mini,
-#'     nperm = 100, only_plot_significant = FALSE,
+#'     nperm = 20, only_plot_significant = FALSE,
 #'     pval = 0.2
 #'   )
 #' }
 #' if (requireNamespace("adespatial")) {
 #'   plot_LCBD_pq(data_fungi_mini,
-#'     nperm = 100, only_plot_significant = TRUE,
+#'     nperm = 20, only_plot_significant = TRUE,
 #'     pval = 0.2
 #'   )
 #'   if (requireNamespace("patchwork")) {
 #'     plot_LCBD_pq(data_fungi_mini,
-#'       nperm = 100, only_plot_significant = FALSE,
+#'       nperm = 20, only_plot_significant = FALSE,
 #'       sam_variables = c("Time", "Height")
 #'     )
 #'     plot_LCBD_pq(data_fungi_mini,
-#'       nperm = 100, only_plot_significant = TRUE, pval = 0.2,
+#'       nperm = 20, only_plot_significant = TRUE, pval = 0.2,
 #'       sam_variables = c("Time", "Height", "Tree_name")
 #'     ) &
 #'       theme(
@@ -1372,10 +1372,12 @@ aldex_pq <- function(
 ################################################################################
 #' Show taxa which are present in only one given level of a factor
 #'
-#'
 #' <a href="https://adrientaudiere.github.io/MiscMetabar/articles/Rules.html#lifecycle">
 #' <img src="https://img.shields.io/badge/lifecycle-experimental-orange" alt="lifecycle-experimental"></a>
 #'
+#' Return the names of the taxa found in samples of the given `level` of
+#' `fact` and in no sample of the other levels.
+#' 
 #' @inheritParams clean_pq
 #' @param fact (required) The name of a column present in the `@sam_data` slot
 #'   of the physeq object. Must be a character vector or a factor. Formerly

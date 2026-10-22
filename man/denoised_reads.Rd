@@ -123,10 +123,10 @@ for \code{method = "swarm"}. Use \code{\link[=is_vsearch_installed]{is_vsearch_i
 \code{\link[=is_swarm_installed]{is_swarm_installed()}} to check availability. This function is mainly a
 wrapper of the work of others: please cite
 \href{https://github.com/torognes/vsearch}{vsearch}
-(\url{https://pubmed.ncbi.nlm.nih.gov/27781170}),
+(\doi{10.7717/peerj.2584}),
 \href{https://github.com/torognes/swarm}{SWARM}
 (\doi{10.1093/bioinformatics/btab493}) and/or
-\href{https://doi.org/10.1038/nmeth.3869}{dada2} depending on the method used.
+dada2 (\doi{10.1038/nmeth.3869}) depending on the method used.
 }
 \examples{
 \dontshow{if (MiscMetabar::is_vsearch_installed() && MiscMetabar::is_swarm_installed()) withAutoprint(\{ # examplesIf}

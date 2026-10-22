@@ -126,7 +126,7 @@ amplicons, meaning that two amplicons will be grouped if they have \code{d}
 
 \item{swarm_args}{(default : "--fastidious") a one length character
 element defining other parameters to  passed on to swarm See other possible
-methods in the \href{https://github.com/torognes/swarm/blob/master/man/swarm_manual.pdf}{SWARM pdf manual}}
+methods in the \href{https://github.com/torognes/swarm/blob/master/man/swarm.1}{SWARM manual}}
 
 \item{mmseqs2path}{(default: \code{\link[=find_mmseqs2]{find_mmseqs2()}}) path to MMseqs2}
 
@@ -184,7 +184,7 @@ if (requireNamespace("DECIPHER")) {
 VSEARCH can be downloaded from
 \url{https://github.com/torognes/vsearch}.
 More information in the associated publication
-\url{https://pubmed.ncbi.nlm.nih.gov/27781170}.
+\doi{10.7717/peerj.2584}.
 }
 \seealso{
 \code{\link[=vsearch_clustering]{vsearch_clustering()}}, \code{\link[=swarm_clustering]{swarm_clustering()}},

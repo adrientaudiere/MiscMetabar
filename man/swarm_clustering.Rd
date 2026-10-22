@@ -48,7 +48,7 @@ Not that if d is different from 1, fastidious is automatically set to FALSE.}
 \item{swarm_args}{a one length character
 element defining other parameters to  passed on to swarm (e.g. "--mismatch-penalty 4").
 See other possible
-methods in the \href{https://github.com/torognes/swarm/blob/master/man/swarm_manual.pdf}{SWARM pdf manual}}
+methods in the \href{https://github.com/torognes/swarm/blob/master/man/swarm.1}{SWARM manual}}
 
 \item{tax_adjust}{(Default 0) See the man page
 of \code{\link[=merge_taxa_vec]{merge_taxa_vec()}} for more details.

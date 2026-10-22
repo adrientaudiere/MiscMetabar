@@ -75,7 +75,8 @@ samples differs among modalities.
 }
 \examples{
 \donttest{
-psm_tib <- psmelt_samples_pq(data_fungi_mini, hill_scales = c(0, 2, 7))
+data_f5 <- prune_samples(sample_names(data_fungi_mini)[1:5], data_fungi_mini)
+psm_tib <- psmelt_samples_pq(data_f5, hill_scales = c(0, 2, 7))
 }
 \dontrun{
 if (requireNamespace("ggstatsplot")) {

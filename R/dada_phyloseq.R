@@ -349,7 +349,7 @@ clean_pq <- function(
 #'   `nb_sam_metadata` with the number of columns in `sample_data`.
 #' @param compute_seq_length (logical, default FALSE) If TRUE, add three columns
 #'   `mean_length_seq`, `max_length_seq`, `min_length_seq` from the width of the
-#'   reference sequences ([Biostrings::width()]) of present taxa.
+#'   reference sequences (`Biostrings::width()`) of present taxa.
 #' @param compute_genetic_diversity (logical, default FALSE) If TRUE, add two
 #'   columns `genetic_diversity_weighted` (abundance-weighted nucleotide
 #'   diversity, pi) and `genetic_diversity_unweighted` (mean pairwise distance),
@@ -989,7 +989,7 @@ track_wkflow_samples <- function(
 #'   (or less) differences
 #' @param swarm_args (default : "--fastidious") a one length character
 #'   element defining other parameters to  passed on to swarm See other possible
-#'   methods in the [SWARM pdf manual](https://github.com/torognes/swarm/blob/master/man/swarm_manual.pdf)
+#'   methods in the [SWARM manual](https://github.com/torognes/swarm/blob/master/man/swarm.1)
 #' @param mmseqs2path (default: [find_mmseqs2()]) path to MMseqs2
 #' @param mmseqs2_cluster_method (default: `"easy-cluster"`) Either
 #'   `"easy-cluster"` or `"easy-linclust"`. See [mmseqs2_clustering()].
@@ -1029,7 +1029,7 @@ track_wkflow_samples <- function(
 #'   VSEARCH can be downloaded from
 #'   \url{https://github.com/torognes/vsearch}.
 #'   More information in the associated publication
-#'   \url{https://pubmed.ncbi.nlm.nih.gov/27781170}.
+#'   \doi{10.7717/peerj.2584}.
 #' @seealso [vsearch_clustering()], [swarm_clustering()],
 #'   and [mmseqs2_clustering()]
 #' @export
@@ -4574,7 +4574,8 @@ cutadapt_remove_primers <- function(
 #'   47. \doi{10.1111/jbi.13681}
 #' @examples
 #' \donttest{
-#' psm_tib <- psmelt_samples_pq(data_fungi_mini, hill_scales = c(0, 2, 7))
+#' data_f5 <- prune_samples(sample_names(data_fungi_mini)[1:5], data_fungi_mini)
+#' psm_tib <- psmelt_samples_pq(data_f5, hill_scales = c(0, 2, 7))
 #' }
 #' \dontrun{
 #' if (requireNamespace("ggstatsplot")) {

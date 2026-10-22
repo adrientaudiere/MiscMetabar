@@ -108,7 +108,7 @@ summary_plot_pq(d_vs)
 VSEARCH can be downloaded from
 \url{https://github.com/torognes/vsearch}.
 More information in the associated publication
-\url{https://pubmed.ncbi.nlm.nih.gov/27781170}.
+\doi{10.7717/peerj.2584}.
 }
 \seealso{
 \code{\link[=postcluster_pq]{postcluster_pq()}}, \code{\link[=swarm_clustering]{swarm_clustering()}}

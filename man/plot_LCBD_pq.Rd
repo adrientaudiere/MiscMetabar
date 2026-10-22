@@ -52,22 +52,22 @@ use this function.
 \donttest{
 if (requireNamespace("adespatial")) {
   plot_LCBD_pq(data_fungi_mini,
-    nperm = 100, only_plot_significant = FALSE,
+    nperm = 20, only_plot_significant = FALSE,
     pval = 0.2
   )
 }
 if (requireNamespace("adespatial")) {
   plot_LCBD_pq(data_fungi_mini,
-    nperm = 100, only_plot_significant = TRUE,
+    nperm = 20, only_plot_significant = TRUE,
     pval = 0.2
   )
   if (requireNamespace("patchwork")) {
     plot_LCBD_pq(data_fungi_mini,
-      nperm = 100, only_plot_significant = FALSE,
+      nperm = 20, only_plot_significant = FALSE,
       sam_variables = c("Time", "Height")
     )
     plot_LCBD_pq(data_fungi_mini,
-      nperm = 100, only_plot_significant = TRUE, pval = 0.2,
+      nperm = 20, only_plot_significant = TRUE, pval = 0.2,
       sam_variables = c("Time", "Height", "Tree_name")
     ) &
       theme(

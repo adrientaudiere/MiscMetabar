@@ -221,7 +221,8 @@ Please cite \href{https://github.com/torognes/vsearch}{vsearch} and
 \examples{
 \dontshow{if (MiscMetabar::is_vsearch_installed()) withAutoprint(\{ # examplesIf}
 \donttest{
-data_fungi_mini_new <- assign_vsearch_lca(data_fungi_mini,
+data_f10 <- prune_taxa(taxa_names(data_fungi_mini)[1:10], data_fungi_mini)
+data_fungi_mini_new <- assign_vsearch_lca(data_f10,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
   lca_cutoff = 0.9, behavior = "add_to_phyloseq"
 )
@@ -240,7 +241,7 @@ data_fungi_mini_new3 <- assign_vsearch_lca(data_fungi_mini,
 
 \donttest{
 ## return_taxtab with seq2search (a DNAStringSet or a matrix)
-seqs_to_assign <- refseq(data_fungi_mini)
+seqs_to_assign <- refseq(data_fungi_mini)[1:10]
 tax_mat <- assign_vsearch_lca(seq2search = seqs_to_assign,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
   behavior = "return_taxtab"

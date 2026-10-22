@@ -366,10 +366,10 @@ reads_build_phyloseq <- function(
 #' [is_swarm_installed()] to check availability. This function is mainly a
 #' wrapper of the work of others: please cite
 #' [vsearch](https://github.com/torognes/vsearch)
-#' (\url{https://pubmed.ncbi.nlm.nih.gov/27781170}),
+#' (\doi{10.7717/peerj.2584}),
 #' [SWARM](https://github.com/torognes/swarm)
 #' (\doi{10.1093/bioinformatics/btab493}) and/or
-#' [dada2](https://doi.org/10.1038/nmeth.3869) depending on the method used.
+#' dada2 (\doi{10.1038/nmeth.3869}) depending on the method used.
 #'
 #' @export
 #' @author Adrien Taudière

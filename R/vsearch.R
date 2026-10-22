@@ -356,7 +356,7 @@ vs_search_global <- function(
 #' @param swarm_args a one length character
 #'   element defining other parameters to  passed on to swarm (e.g. "--mismatch-penalty 4").
 #'   See other possible
-#'   methods in the [SWARM pdf manual](https://github.com/torognes/swarm/blob/master/man/swarm_manual.pdf)
+#'   methods in the [SWARM manual](https://github.com/torognes/swarm/blob/master/man/swarm.1)
 #' @param tax_adjust (Default 0) See the man page
 #'   of [merge_taxa_vec()] for more details.
 #'   To conserved the taxonomic rank of the most abundant ASV,
@@ -635,7 +635,7 @@ swarm_clustering <- function(
 #'   VSEARCH can be downloaded from
 #'   \url{https://github.com/torognes/vsearch}.
 #'   More information in the associated publication
-#'   \url{https://pubmed.ncbi.nlm.nih.gov/27781170}.
+#'   \doi{10.7717/peerj.2584}.
 #' @export
 #' @author Adrien Taudière
 #'
@@ -1237,7 +1237,7 @@ write_temp_fasta <- function(
 #' ## object. This is useful when you do not have (or do not need) a phyloseq
 #' ## object, e.g. to assign taxonomy to a set of ASV sequences extracted from
 #' ## a dada2 sequence table.
-#' seqs_to_assign <- refseq(data_fungi_mini)
+#' seqs_to_assign <- refseq(data_fungi_mini)[1:10]
 #' assign_sintax(seq2search = seqs_to_assign,
 #'   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
 #'   behavior = "return_cmd"
@@ -1632,7 +1632,8 @@ assign_sintax <- function(
 #' @seealso [assign_sintax()], [add_new_taxonomy_pq()]
 #' @examplesIf MiscMetabar::is_vsearch_installed()
 #' \donttest{
-#' data_fungi_mini_new <- assign_vsearch_lca(data_fungi_mini,
+#' data_f10 <- prune_taxa(taxa_names(data_fungi_mini)[1:10], data_fungi_mini)
+#' data_fungi_mini_new <- assign_vsearch_lca(data_f10,
 #'   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
 #'   lca_cutoff = 0.9, behavior = "add_to_phyloseq"
 #' )
@@ -1651,7 +1652,7 @@ assign_sintax <- function(
 #'
 #' \donttest{
 #' ## return_taxtab with seq2search (a DNAStringSet or a matrix)
-#' seqs_to_assign <- refseq(data_fungi_mini)
+#' seqs_to_assign <- refseq(data_fungi_mini)[1:10]
 #' tax_mat <- assign_vsearch_lca(seq2search = seqs_to_assign,
 #'   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
 #'   behavior = "return_taxtab"

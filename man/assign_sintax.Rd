@@ -171,7 +171,7 @@ left_join(
 ## object. This is useful when you do not have (or do not need) a phyloseq
 ## object, e.g. to assign taxonomy to a set of ASV sequences extracted from
 ## a dada2 sequence table.
-seqs_to_assign <- refseq(data_fungi_mini)
+seqs_to_assign <- refseq(data_fungi_mini)[1:10]
 assign_sintax(seq2search = seqs_to_assign,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
   behavior = "return_cmd"
