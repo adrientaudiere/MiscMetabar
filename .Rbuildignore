@@ -19,10 +19,11 @@
 ^\.claude$
 ^\.codefactor\.yml$
 ^\.entire$
-^Rplots\.pdf$
+Rplots\.pdf$
 ^CRAN-SUBMISSION$
 ^audits$
 ^dev$
 ^CONTEXT\.md$
 ^CLAUDE\.md$
 ^README\.html$
+^man/figures/logo\.svg$
