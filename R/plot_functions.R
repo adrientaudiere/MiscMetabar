@@ -3030,11 +3030,13 @@ biplot_pq <- function(
       axis.ticks = element_blank()
     ) +
     scale_color_manual(values = c(left_col, right_col), guide = "none") +
-    ylim(
-      c(
+    scale_y_continuous(
+      limits = c(
         layer_scales(p)$y$get_limits()[1] * ylim_modif[1],
         layer_scales(p)$y$get_limits()[2] * ylim_modif[2]
-      )
+      ),
+      # left side is stored as negative values
+      labels = abs
     )
 
   if (is.null(color_rank)) {
@@ -3128,7 +3130,7 @@ biplot_pq <- function(
           c("Samples" = "")
         }
       ) +
-      ylim(min_ab * 1.1, max_ab * 1.1)
+      scale_y_continuous(limits = c(min_ab * 1.1, max_ab * 1.1), labels = abs)
 
     if (is.null(color_rank)) {
       p <- p + scale_fill_manual(values = c(left_fill, right_fill))
