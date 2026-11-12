@@ -245,6 +245,7 @@ test_that("is_falco_installed works", {
 test_that("is_krona_installed works", {
   result <- is_krona_installed()
   expect_type(result, "logical")
+  expect_false(suppressWarnings(is_krona_installed("no_such_krona_tool")))
 })
 
 test_that("is_mumu_installed works", {

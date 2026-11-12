@@ -735,9 +735,11 @@ is_mumu_installed <- function(path = "mumu") {
 #' @author Adrien Taudière
 
 is_krona_installed <- function(path = "ktImportKrona") {
-  return(inherits(
-    try(system(paste0(path, " 2>&1"), intern = TRUE), silent = TRUE),
-    "try-error"
-  ))
+  return(
+    !inherits(
+      try(system(paste0(path, " 2>&1"), intern = TRUE), silent = TRUE),
+      "try-error"
+    )
+  )
 }
 ################################################################################
