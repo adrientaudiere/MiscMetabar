@@ -16,9 +16,8 @@ at the level of 0.16.8:
   in `@examplesIf` and do not run when the software is not installed.
 * Heavy test files are skipped on CRAN with a file-level `skip_on_cran()`.
 
-* win-builder R-devel (Windows Server 2022, 2026-10-22): examples 203 s,
-  tests 116 s; 0 errors, 0 warnings, 2 notes (the dev version number, and
-  an Rd link to the not-yet-published `bootpq`, since removed).
+* win-builder R-devel (Windows Server 2022, 2026-11-12): examples 198 s,
+  tests 119 s; 0 errors, 0 warnings, 1 note (the dev version number).
 
 ## R CMD check results
 
