@@ -16,6 +16,21 @@ test_that("dist_pos_control function works fine", {
   expect_length(dist_pos_control(enterotype, sam_name_factice), 2)
 })
 
+test_that("dist_pos_control compares samples whatever the orientation", {
+  taxa_in_rows <- prune_samples(sample_names(enterotype)[1:6], enterotype)
+  controls <- c("a", "a", "b", "b", "b", "c")
+  expect_no_warning(res <- dist_pos_control(taxa_in_rows, controls))
+  expect_equal(res, dist_pos_control(t(taxa_in_rows), controls))
+  otu <- t(as(otu_table(taxa_in_rows), "matrix"))
+  expect_equal(
+    res[[2]]$dist_control_samples,
+    c(
+      as.numeric(vegan::vegdist(otu[1:2, ])),
+      as.numeric(vegan::vegdist(otu[3:5, ]))
+    )
+  )
+})
+
 test_that("subset_taxa_tax_control function works fine", {
   skip_on_cran()
   res_seq <- suppressWarnings(subset_taxa_tax_control(
