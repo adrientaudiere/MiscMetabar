@@ -37,12 +37,12 @@ Examples that only need an external program (BLAST, vsearch, MMseqs2, MAFFT,
 Krona, fastp, cutadapt, mumu, ITSx, ITSxpress) run when it is installed, via
 `@examplesIf` or `if ()`.
 
-* win-builder R-devel (r90876 ucrt, 2026-11-12): examples 216 s, tests
+* win-builder R-devel (r90881 ucrt, 2026-11-13): examples 195 s, tests
   123 s; 0 errors, 0 warnings, 1 note (the dev version number).
-* R-hub (2026-11-12), `R CMD check --as-cran` with `--run-donttest`:
-  ubuntu-clang (R-devel r90876) examples 265 s + 420 s, tests 161 s;
-  ubuntu-gcc12 (R-devel r89874) examples 231 s + 372 s, tests 162 s;
-  windows (R-devel) OK. Status OK on all three.
+* R-hub (2026-11-13), `R CMD check --as-cran` with `--run-donttest`:
+  ubuntu-clang (R-devel r90876) examples 241 s + 397 s, tests 195 s;
+  ubuntu-gcc12 (R-devel r89874) examples 235 s + 400 s, tests 176 s.
+  Status OK on both.
 
 ## R CMD check results
 
