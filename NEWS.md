@@ -1,4 +1,4 @@
-# MiscMetabar 0.18.0 (Development version)
+# MiscMetabar 0.18.0
 
 * Examples: those that need an external program (BLAST, vsearch, MMseqs2, MAFFT, Krona, fastp, cutadapt, mumu, ITSx, ITSxpress) now run when the program is installed (`@examplesIf` or `if ()`) instead of never (`\dontrun{}`); short variants moved to `\donttest{}`, slower ones were removed, and the broken `\dontrun{}` examples of `add_new_taxonomy_pq()`, `psmelt_samples_pq()`, `simplify_taxo()` and `verify_fact_pq()` are fixed.
 * `adonis_pq()` now forwards its `by` argument to `vegan::adonis2()`. It was documented and accepted but silently dropped, so the `by` value used was always the `vegan::adonis2()` default. With vegan >= 2.7 that default became `by = NULL`, meaning `adonis_pq()` only reported the overall significance of the model instead of the per-term p-values expected from its own `by = "terms"` default. `comparpq::adonis_lpq()`, which forwards `by` to `adonis_pq()`, is fixed as well.
