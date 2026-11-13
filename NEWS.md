@@ -1,3 +1,5 @@
+# MiscMetabar 0.19.0 (Development version)
+
 # MiscMetabar 0.18.0
 
 * Examples: those that need an external program (BLAST, vsearch, MMseqs2, MAFFT, Krona, fastp, cutadapt, mumu, ITSx, ITSxpress) now run when the program is installed (`@examplesIf` or `if ()`) instead of never (`\dontrun{}`); short variants moved to `\donttest{}`, slower ones were removed, and the broken `\dontrun{}` examples of `add_new_taxonomy_pq()`, `psmelt_samples_pq()`, `simplify_taxo()` and `verify_fact_pq()` are fixed.
