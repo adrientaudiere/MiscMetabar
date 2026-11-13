@@ -117,13 +117,77 @@ to use `refseq` slot as query sequences against un custom database.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-blastpath <- "...YOUR_PATH_TO_BLAST..."
 blast_to_phyloseq(data_fungi,
   seq2search = system.file("extdata", "ex.fasta",
     package = "MiscMetabar", mustWork = TRUE
-  ),
-  blastpath = blastpath
+  )
 )
-} # }
+#>           Query name Query seq. length Taxa name Taxa seq. length
+#> 1     Eutypa_spinosa               467      ASV2              312
+#> 501  Eutypa_spinosa2               464      ASV2              312
+#> 1001 Eutypa_spinosa3               465      ASV2              312
+#> 2     Eutypa_spinosa               467   ASV1284              312
+#> 3     Eutypa_spinosa               467    ASV375              312
+#> 502  Eutypa_spinosa2               464   ASV1284              312
+#> 503  Eutypa_spinosa2               464    ASV375              312
+#> 1002 Eutypa_spinosa3               465   ASV1284              312
+#> 1003 Eutypa_spinosa3               465    ASV375              312
+#> 4     Eutypa_spinosa               467    ASV576              313
+#> 504  Eutypa_spinosa2               464    ASV576              313
+#> 1004 Eutypa_spinosa3               465    ASV576              313
+#> 5     Eutypa_spinosa               467    ASV541              312
+#> 505  Eutypa_spinosa2               464    ASV541              312
+#> 1005 Eutypa_spinosa3               465    ASV541              312
+#> 6     Eutypa_spinosa               467   ASV1323              312
+#> 7     Eutypa_spinosa               467   ASV1082              312
+#> 8     Eutypa_spinosa               467   ASV1027              312
+#> 506  Eutypa_spinosa2               464   ASV1323              312
+#> 507  Eutypa_spinosa2               464   ASV1082              312
+#> 508  Eutypa_spinosa2               464   ASV1027              312
+#> 1006 Eutypa_spinosa3               465   ASV1323              312
+#> 1007 Eutypa_spinosa3               465   ASV1082              312
+#> 1008 Eutypa_spinosa3               465   ASV1027              312
+#> 9     Eutypa_spinosa               467   ASV1616              313
+#> 10    Eutypa_spinosa               467    ASV634              312
+#> 509  Eutypa_spinosa2               464   ASV1616              313
+#> 510  Eutypa_spinosa2               464    ASV634              312
+#> 1009 Eutypa_spinosa3               465   ASV1616              313
+#> 1010 Eutypa_spinosa3               465    ASV634              312
+#> 11    Eutypa_spinosa               467    ASV962              313
+#> 511  Eutypa_spinosa2               464    ASV962              313
+#> 1011 Eutypa_spinosa3               465    ASV962              313
+#>      Alignment length % id. match  e-value bit score Query cover
+#> 1                 234      93.162 1.26e-95       342          50
+#> 501               234      93.162 1.25e-95       342          50
+#> 1001              234      93.162 1.26e-95       342          50
+#> 2                 234      92.308 2.73e-92       331          50
+#> 3                 234      92.308 2.73e-92       331          50
+#> 502               234      92.308 2.71e-92       331          50
+#> 503               234      92.308 2.71e-92       331          50
+#> 1002              234      92.308 2.72e-92       331          50
+#> 1003              234      92.308 2.72e-92       331          50
+#> 4                 235      91.915 3.53e-91       327          50
+#> 504               235      91.915 3.51e-91       327          50
+#> 1004              235      91.915 3.52e-91       327          50
+#> 5                 234      91.880 1.27e-90       326          50
+#> 505               234      91.880 1.26e-90       326          50
+#> 1005              234      91.880 1.26e-90       326          50
+#> 6                 234      91.453 5.91e-89       320          50
+#> 7                 235      91.489 5.91e-89       320          50
+#> 8                 234      91.453 5.91e-89       320          50
+#> 506               234      91.453 5.87e-89       320          50
+#> 507               235      91.489 5.87e-89       320          50
+#> 508               234      91.453 5.87e-89       320          50
+#> 1006              234      91.453 5.88e-89       320          50
+#> 1007              235      91.489 5.88e-89       320          50
+#> 1008              234      91.453 5.88e-89       320          50
+#> 9                 234      91.026 2.75e-87       315          50
+#> 10                234      91.026 2.75e-87       315          50
+#> 509               234      91.026 2.73e-87       315          50
+#> 510               234      91.026 2.73e-87       315          50
+#> 1009              234      91.026 2.74e-87       315          50
+#> 1010              234      91.026 2.74e-87       315          50
+#> 11                235      90.213 1.66e-84       305          50
+#> 511               235      90.213 1.64e-84       305          50
+#> 1011              235      90.213 1.65e-84       305          50
 ```

@@ -11,7 +11,8 @@ tax_datatable(
   physeq,
   abundance = TRUE,
   taxonomic_level = NULL,
-  modality = NULL,
+  fact = NULL,
+  modality = lifecycle::deprecated(),
   ...
 )
 ```
@@ -33,10 +34,15 @@ tax_datatable(
   (default: NULL) a vector of selected taxonomic level using their
   column numbers (e.g. taxonomic_level = 1:7)
 
+- fact:
+
+  (default: NULL) Name of a column in `physeq@sam_data` or a
+  factor/vector of length `nsamples(physeq)` to split OTU abundance by
+  level. Formerly `modality`.
+
 - modality:
 
-  (default: NULL) A sample modality to split OTU abundancy by level of
-  the modality
+  **\[deprecated\]** Use `fact` instead.
 
 - ...:
 
@@ -60,9 +66,9 @@ if (requireNamespace("DT")) {
     rowSums(GlobalPatterns@otu_table) > 10000
   ))
 
-  # Using modality
+  # Using fact
   tax_datatable(GlobalPatterns,
-    modality = GlobalPatterns@sam_data$SampleType
+    fact = "SampleType"
   )
 }
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'

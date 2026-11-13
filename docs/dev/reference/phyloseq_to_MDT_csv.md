@@ -91,13 +91,16 @@ files <- phyloseq_to_MDT_csv(clean_pq(data_fungi_mini), path = out_dir)
 #> Warning: ! Recommended Darwin Core sample terms missing from sample_data:
 #>   "decimalLatitude", "decimalLongitude", and "eventDate".
 #> ℹ Add them before GBIF MDT submission if available.
-#> MDT template files written to /tmp/RtmpzILWy0/mdt_csv
+#> MDT template files written to /tmp/Rtmp7j9BNw/mdt_csv
 file.exists(files)
 #> [1] TRUE TRUE TRUE
+
+# Tab-separated output (MDT-favored TSV)
+phyloseq_to_MDT_csv(data_fungi_mini, path = out_dir, sep = "\t")
+#> Warning: ! Recommended Darwin Core sample terms missing from sample_data:
+#>   "decimalLatitude", "decimalLongitude", and "eventDate".
+#> ℹ Add them before GBIF MDT submission if available.
+#> MDT template files written to /tmp/Rtmp7j9BNw/mdt_csv
 unlink(out_dir, recursive = TRUE)
 # }
-if (FALSE) { # \dontrun{
-# Tab-separated output (MDT-favored TSV)
-phyloseq_to_MDT_csv(data_fungi_mini, path = "mdt", sep = "\t")
-} # }
 ```

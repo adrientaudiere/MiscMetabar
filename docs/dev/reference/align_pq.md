@@ -148,12 +148,12 @@ ali <- align_pq(df, method = "decipher", verbose = TRUE)
 #> Clustering into groups by similarity:
 #> ================================================================================
 #> 
-#> Time difference of 0 secs
+#> Time difference of 0.02 secs
 #> 
 #> Aligning Sequences:
 #> ================================================================================
 #> 
-#> Time difference of 0.07 secs
+#> Time difference of 0.08 secs
 #> 
 #> Iteration 1 of 2:
 #> 
@@ -192,7 +192,7 @@ ali <- align_pq(df, method = "decipher", verbose = TRUE)
 #> Refining the alignment:
 #> ================================================================================
 #> 
-#> Time difference of 0.02 secs
+#> Time difference of 0.03 secs
 #> 
 #> ✔ 13 sequences aligned with decipher over 452 positions.
 ali
@@ -211,20 +211,24 @@ ali
 #> [13]   452 AAATGCGATAAGTAATGTGAATT...TAGGACTACCCGCTGAACTTA- ASV42
 # }
 
-if (FALSE) { # \dontrun{
-# The same alignment with MAFFT, much faster on large refseq slots
-ali_mafft <- align_pq(df, method = "mafft", verbose = TRUE)
+# \donttest{
+if (MiscMetabar::is_mafft_installed()) {
+  # The same alignment with MAFFT, much faster on large refseq slots
+  ali_mafft <- align_pq(df, method = "mafft", verbose = TRUE)
 
-# A more accurate (and slower) MAFFT strategy
-ali_linsi <- align_pq(df, method = "mafft", mafft_method = "localpair")
+  # A more accurate (and slower) MAFFT strategy; `exec` gives an explicit
+  # path to the executable
+  ali_linsi <- align_pq(df, method = "mafft", mafft_method = "localpair")
 
-# An explicit path to the executable
-ali <- align_pq(df, method = "mafft", exec = "/usr/local/bin/mafft")
+  # Sequences can also be given directly
+  align_pq(phyloseq::refseq(df), method = "mafft")
 
-# Sequences can also be given directly
-align_pq(phyloseq::refseq(df), method = "mafft")
-
-# Feed the alignment to a tree builder or write it to a FASTA file
-Biostrings::writeXStringSet(ali_mafft, "refseq_aligned.fasta")
-} # }
+  # Feed the alignment to a tree builder or write it to a FASTA file
+  Biostrings::writeXStringSet(ali_mafft, file.path(tempdir(), "refseq_aligned.fasta"))
+}
+#> /usr/bin/mafft --auto --maxiterate 0 --op 1.53 --ep 0  --thread -1 /tmp/Rtmp7j9BNw/mafft139bd2a7caad5.fas > /tmp/Rtmp7j9BNw/mafft139bd2451bc138.fas
+#> Error in align_with_mafft(dna, exec, mafft_method, thread, verbose, ...): mafft returned no alignment.
+#> ℹ Check that /usr/bin/mafft runs from a terminal.
+#> ℹ Use `verbose = TRUE` to see its output.
+# }
 ```

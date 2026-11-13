@@ -204,7 +204,6 @@ Adrien Taudière
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 ref_fasta <- Biostrings::readDNAStringSet(system.file("extdata",
   "mini_UNITE_fungi.fasta.gz",
   package = "MiscMetabar", mustWork = TRUE
@@ -214,6 +213,27 @@ ref_fasta <- Biostrings::readDNAStringSet(system.file("extdata",
 # The function searches with easy-search and parses SINTAX headers.
 res <- assign_mmseqs2(data_fungi_mini, ref_fasta = ref_fasta)
 head(res)
+#>   taxa_names Kingdom_mmseqs2 Phylum_mmseqs2  Class_mmseqs2   Order_mmseqs2
+#> 1       ASV7           Fungi  Basidiomycota Agaricomycetes Hymenochaetales
+#> 2       ASV8           Fungi  Basidiomycota Agaricomycetes      Agaricales
+#> 3      ASV12           Fungi  Basidiomycota Agaricomycetes  Trechisporales
+#> 4      ASV18           Fungi  Basidiomycota Agaricomycetes      Agaricales
+#> 5      ASV25           Fungi  Basidiomycota Agaricomycetes      Agaricales
+#> 6      ASV26           Fungi  Basidiomycota Agaricomycetes      Russulales
+#>                      Family_mmseqs2                       Genus_mmseqs2
+#> 1                    Schizoporaceae                         Hyphodontia
+#> 2                  Tricholomataceae Tricholomataceae_gen_Incertae_sedis
+#> 3 Trechisporales_fam_Incertae_sedis   Trechisporales_gen_Incertae_sedis
+#> 4                  Tricholomataceae Tricholomataceae_gen_Incertae_sedis
+#> 5                    Entolomataceae                            Entoloma
+#> 6                        Stereaceae                           Xylobolus
+#>          Species_mmseqs2
+#> 1 Hyphodontia_microspora
+#> 2    Tricholomataceae_sp
+#> 3      Trechisporales_sp
+#> 4    Tricholomataceae_sp
+#> 5            Entoloma_sp
+#> 6           Xylobolus_sp
 
 # Add taxonomy to phyloseq:
 physeq_new <- assign_mmseqs2(
@@ -221,5 +241,4 @@ physeq_new <- assign_mmseqs2(
   ref_fasta = ref_fasta,
   behavior = "add_to_phyloseq"
 )
-} # }
 ```

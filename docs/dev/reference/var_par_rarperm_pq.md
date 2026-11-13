@@ -130,12 +130,10 @@ if (requireNamespace("vegan")) {
     dbrda_computation = TRUE
   )
 }
-#> Warning: `var_par_rarperm_pq()` was deprecated in MiscMetabar 0.17.0.
-#> ℹ Please use `bootpq::var_par_rarperm_pq()` instead.
 #> Taxa are now in columns.
 #>   |                                                          |                                                  |   0%  |                                                          |=========================                         |  50%  |                                                          |==================================================| 100%
-# }
-if (FALSE) { # \dontrun{
+
 plot_var_part_pq(res_var_2)
-} # }
+
+# }
 ```

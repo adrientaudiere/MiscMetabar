@@ -171,9 +171,10 @@ Adrien Taudière
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-prelude <- install_itsx()
-d_its1 <- itsx_pq(data_fungi_mini, region = "ITS1", args_before_itsx = prelude)
+if (FALSE) { # MiscMetabar::is_itsx_installed()
+# ITSx often lives in a conda environment: pass the string returned by
+# install_itsx() as `args_before_itsx`.
+d_its1 <- itsx_pq(data_fungi_mini, region = "ITS1")
 table(d_its1@tax_table[, "ITSx_origin"], useNA = "ifany")
-} # }
+}
 ```

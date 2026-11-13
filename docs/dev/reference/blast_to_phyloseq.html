@@ -184,15 +184,79 @@ against un custom database.</p></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="va">blastpath</span> <span class="op">&lt;-</span> <span class="st">"...YOUR_PATH_TO_BLAST..."</span></span></span>
-<span class="r-in"><span><span class="fu">blast_to_phyloseq</span><span class="op">(</span><span class="va">data_fungi</span>,</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">blast_to_phyloseq</span><span class="op">(</span><span class="va">data_fungi</span>,</span></span>
 <span class="r-in"><span>  seq2search <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"ex.fasta"</span>,</span></span>
 <span class="r-in"><span>    package <span class="op">=</span> <span class="st">"MiscMetabar"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span>,</span></span>
-<span class="r-in"><span>  blastpath <span class="op">=</span> <span class="va">blastpath</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           Query name Query seq. length Taxa name Taxa seq. length</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     Eutypa_spinosa               467      ASV2              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 501  Eutypa_spinosa2               464      ASV2              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1001 Eutypa_spinosa3               465      ASV2              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     Eutypa_spinosa               467   ASV1284              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     Eutypa_spinosa               467    ASV375              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 502  Eutypa_spinosa2               464   ASV1284              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 503  Eutypa_spinosa2               464    ASV375              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1002 Eutypa_spinosa3               465   ASV1284              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1003 Eutypa_spinosa3               465    ASV375              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     Eutypa_spinosa               467    ASV576              313</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 504  Eutypa_spinosa2               464    ASV576              313</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1004 Eutypa_spinosa3               465    ASV576              313</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     Eutypa_spinosa               467    ASV541              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 505  Eutypa_spinosa2               464    ASV541              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1005 Eutypa_spinosa3               465    ASV541              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     Eutypa_spinosa               467   ASV1323              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     Eutypa_spinosa               467   ASV1082              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     Eutypa_spinosa               467   ASV1027              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 506  Eutypa_spinosa2               464   ASV1323              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 507  Eutypa_spinosa2               464   ASV1082              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 508  Eutypa_spinosa2               464   ASV1027              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1006 Eutypa_spinosa3               465   ASV1323              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1007 Eutypa_spinosa3               465   ASV1082              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1008 Eutypa_spinosa3               465   ASV1027              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     Eutypa_spinosa               467   ASV1616              313</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    Eutypa_spinosa               467    ASV634              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 509  Eutypa_spinosa2               464   ASV1616              313</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 510  Eutypa_spinosa2               464    ASV634              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1009 Eutypa_spinosa3               465   ASV1616              313</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1010 Eutypa_spinosa3               465    ASV634              312</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    Eutypa_spinosa               467    ASV962              313</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 511  Eutypa_spinosa2               464    ASV962              313</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1011 Eutypa_spinosa3               465    ASV962              313</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Alignment length % id. match  e-value bit score Query cover</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                 234      93.162 1.26e-95       342          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 501               234      93.162 1.25e-95       342          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1001              234      93.162 1.26e-95       342          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                 234      92.308 2.73e-92       331          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3                 234      92.308 2.73e-92       331          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 502               234      92.308 2.71e-92       331          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 503               234      92.308 2.71e-92       331          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1002              234      92.308 2.72e-92       331          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1003              234      92.308 2.72e-92       331          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                 235      91.915 3.53e-91       327          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 504               235      91.915 3.51e-91       327          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1004              235      91.915 3.52e-91       327          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                 234      91.880 1.27e-90       326          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 505               234      91.880 1.26e-90       326          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1005              234      91.880 1.26e-90       326          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                 234      91.453 5.91e-89       320          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                 235      91.489 5.91e-89       320          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8                 234      91.453 5.91e-89       320          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 506               234      91.453 5.87e-89       320          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 507               235      91.489 5.87e-89       320          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 508               234      91.453 5.87e-89       320          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1006              234      91.453 5.88e-89       320          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1007              235      91.489 5.88e-89       320          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1008              234      91.453 5.88e-89       320          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9                 234      91.026 2.75e-87       315          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                234      91.026 2.75e-87       315          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 509               234      91.026 2.73e-87       315          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 510               234      91.026 2.73e-87       315          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1009              234      91.026 2.74e-87       315          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1010              234      91.026 2.74e-87       315          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11                235      90.213 1.66e-84       305          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 511               235      90.213 1.64e-84       305          50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1011              235      90.213 1.65e-84       305          50</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

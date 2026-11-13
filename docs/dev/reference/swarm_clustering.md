@@ -68,8 +68,8 @@ swarm_clustering(
 
   a one length character element defining other parameters to passed on
   to swarm (e.g. "–mismatch-penalty 4"). See other possible methods in
-  the [SWARM pdf
-  manual](https://github.com/torognes/swarm/blob/master/man/swarm_manual.pdf)
+  the [SWARM
+  manual](https://github.com/torognes/swarm/blob/master/man/swarm.1)
 
 - tax_adjust:
 

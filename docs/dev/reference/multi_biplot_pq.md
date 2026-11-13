@@ -76,18 +76,5 @@ p <- multi_biplot_pq(data_fungi_abun, "Height")
 #> Cleaning suppress 7 taxa and 0 samples.
 #> Scale for y is already present.
 #> Adding another scale for y, which will replace the existing scale.
-lapply(p, print)
-
-
-
-#> $`High-Low`
-
-#> 
-#> $`High-Middle`
-
-#> 
-#> $`Low-Middle`
-
-#> 
 # }
 ```

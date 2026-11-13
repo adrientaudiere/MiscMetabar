@@ -246,30 +246,37 @@ invisibly, after running fastp.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="co"># Paired-end example</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Only build the commands, do not run them</span></span></span>
 <span class="r-in"><span><span class="fu">fastp</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  path_to_fastq <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  folder_output <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"qc_data"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  nproc <span class="op">=</span> <span class="fl">8</span>,</span></span>
-<span class="r-in"><span>  paired_end <span class="op">=</span> <span class="cn">TRUE</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Single-end example with extra options</span></span></span>
-<span class="r-in"><span><span class="fu">fastp</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  path_to_fastq <span class="op">=</span> <span class="st">"raw_data/"</span>,</span></span>
-<span class="r-in"><span>  folder_output <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"qc_data"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  nproc <span class="op">=</span> <span class="fl">8</span>,</span></span>
-<span class="r-in"><span>  paired_end <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>  extra_fastp_args <span class="op">=</span> <span class="st">"--merge --n_base_limit 5 --dedup"</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Only build the commands, do not run them</span></span></span>
-<span class="r-in"><span><span class="fu">fastp</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  path_to_fastq <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  cmd_is_run <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpwrUtcL/temp_libpath13913f132fe6a6/MiscMetabar/extdata/ex_R1_001.fastq.gz`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "fastp -i /tmp/RtmpwrUtcL/temp_libpath13913f132fe6a6/MiscMetabar/extdata/ex_R1_001.fastq.gz -o /tmp/Rtmp7j9BNw/qc_data/ex_R1_001.fastq.gz --thread 1 --qualified_quality_phred 20 --average_qual 20 --length_required 50 --cut_window_size 4 --cut_mean_quality 20 -I /tmp/RtmpwrUtcL/temp_libpath13913f132fe6a6/MiscMetabar/extdata/ex_R2_001.fastq.gz -O /tmp/Rtmp7j9BNw/qc_data/ex_R2_001.fastq.gz --detect_adapter_for_pe --correction --trim_poly_g --cut_front --cut_tail --html /tmp/Rtmp7j9BNw/qc_data/ex_R1_001.fastp.html --json /tmp/Rtmp7j9BNw/qc_data/ex_R1_001.fastp.json"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Single-end commands with extra options</span></span></span>
+<span class="r-in"><span><span class="fu">fastp</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  path_to_fastq <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  paired_end <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>  extra_fastp_args <span class="op">=</span> <span class="st">"--n_base_limit 5 --dedup"</span>,</span></span>
+<span class="r-in"><span>  folder_output <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"qc_data"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  cmd_is_run <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`/tmp/RtmpwrUtcL/temp_libpath13913f132fe6a6/MiscMetabar/extdata/ex_R1_001.fastq.gz`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "fastp -i /tmp/RtmpwrUtcL/temp_libpath13913f132fe6a6/MiscMetabar/extdata/ex_R1_001.fastq.gz -o /tmp/Rtmp7j9BNw/qc_data/ex_R1_001.fastq.gz --thread 1 --qualified_quality_phred 20 --average_qual 20 --length_required 50 --cut_window_size 4 --cut_mean_quality 20 --trim_poly_g --cut_front --cut_tail --html /tmp/Rtmp7j9BNw/qc_data/ex_R1_001.fastp.html --json /tmp/Rtmp7j9BNw/qc_data/ex_R1_001.fastp.json --n_base_limit 5 --dedup"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Run fastp on paired-end reads</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu">MiscMetabar</span><span class="fu">::</span><span class="fu"><a href="is_fastp_installed.html">is_fastp_installed</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">fastp</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    path_to_fastq <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    folder_output <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"qc_data"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    nproc <span class="op">=</span> <span class="fl">2</span>,</span></span>
+<span class="r-in"><span>    paired_end <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

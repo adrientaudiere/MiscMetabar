@@ -183,11 +183,21 @@ for your work.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/ntaxa-methods.html" class="external-link">ntaxa</a></span><span class="op">(</span><span class="va">data_fungi_sp_known</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/ntaxa-methods.html" class="external-link">ntaxa</a></span><span class="op">(</span><span class="va">data_fungi_sp_known</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 651</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/ntaxa-methods.html" class="external-link">ntaxa</a></span><span class="op">(</span><span class="fu">mumu_pq</span><span class="op">(</span><span class="va">data_fungi_sp_known</span><span class="op">)</span><span class="op">$</span><span class="va">new_physeq</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa and 1 samples.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start Vsearch usearch_global</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in rows.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Mumu algorithm</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 548</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/ntaxa-methods.html" class="external-link">ntaxa</a></span><span class="op">(</span><span class="fu">mumu_pq</span><span class="op">(</span><span class="va">data_fungi_sp_known</span>, extra_mumu_args <span class="op">=</span> <span class="st">"--minimum_match 90"</span><span class="op">)</span><span class="op">$</span><span class="va">new_physeq</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa and 1 samples.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Start Vsearch usearch_global</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in rows.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Mumu algorithm</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> mumu is runned with option(s)--minimum_match 90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 551</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -100,15 +100,49 @@ derep_fw
 #> $map: Map from reads to unique sequences:  890 14 2 246 797 ...
 #> 
 
-if (FALSE) { # \dontrun{
+# \donttest{
 filt_fastq_pe <- filter_trim(testFastqs_fw,
   testFastqs_rev,
-  output_fw = paste0(tempdir(), "/", "fw"),
-  output_rev = paste0(tempdir(), "rev")
+  output_fw = file.path(tempdir(), "fw"),
+  output_rev = file.path(tempdir(), "rev")
 )
+#> Creating output directory: /tmp/Rtmp7j9BNw/fw
+#> Creating output directory:/tmp/Rtmp7j9BNw/rev
 derep_fw_pe <- dada2::derepFastq(filt_fastq_pe[[1]])
 derep_rv_pe <- dada2::derepFastq(filt_fastq_pe[[2]])
 derep_fw_pe
+#> $sam1F.fastq.gz
+#> derep-class: R object describing dereplicated sequencing reads
+#> $uniques: 1500 reads in 896 unique sequences
+#>   Sequence lengths: min=250, median=250, max=250
+#> $quals: Quality matrix dimension:  896 250
+#>   Consensus quality scores: min=7, median=36, max=38
+#> $map: Map from reads to unique sequences:  4 155 627 265 5 ...
+#> 
+#> $sam2F.fastq.gz
+#> derep-class: R object describing dereplicated sequencing reads
+#> $uniques: 1500 reads in 909 unique sequences
+#>   Sequence lengths: min=250, median=250, max=250
+#> $quals: Quality matrix dimension:  909 250
+#>   Consensus quality scores: min=7, median=36, max=38
+#> $map: Map from reads to unique sequences:  890 14 2 246 797 ...
+#> 
 derep_rv_pe
-} # }
+#> $sam1R.fastq.gz
+#> derep-class: R object describing dereplicated sequencing reads
+#> $uniques: 1500 reads in 1373 unique sequences
+#>   Sequence lengths: min=250, median=250, max=250
+#> $quals: Quality matrix dimension:  1373 250
+#>   Consensus quality scores: min=7, median=34, max=38
+#> $map: Map from reads to unique sequences:  2 1029 664 983 156 ...
+#> 
+#> $sam2R.fastq.gz
+#> derep-class: R object describing dereplicated sequencing reads
+#> $uniques: 1500 reads in 1401 unique sequences
+#>   Sequence lengths: min=250, median=250, max=250
+#> $quals: Quality matrix dimension:  1401 250
+#>   Consensus quality scores: min=7, median=34, max=38
+#> $map: Map from reads to unique sequences:  1353 1171 1059 947 293 ...
+#> 
+# }
 ```

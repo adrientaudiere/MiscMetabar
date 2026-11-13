@@ -77,13 +77,19 @@ Adrien Taudière
 # Presence check (passes silently)
 verify_fact_pq(data_fungi_mini, fact = "Height")
 
-if (FALSE) { # \dontrun{
 # Missing column: error lists the available sam_data columns
-verify_fact_pq(data_fungi_mini, fact = "Heigth")
+try(verify_fact_pq(data_fungi_mini, fact = "Heigth"))
+#> Error in eval(expr, envir) : 
+#>   Column "Heigth" (argument `fact`) was not found in the sam_data slot of
+#> `physeq`.
+#> ℹ Available columns: "X", "Sample_names", "Tree_name", "Sample_id", "Height",
+#>   "Diameter", and "Time".
 
 # bifactor with more than two levels: error (Height has 3 levels)
-verify_fact_pq(data_fungi_mini, bifactor = "Height")
-} # }
+try(verify_fact_pq(data_fungi_mini, bifactor = "Height"))
+#> Error in eval(expr, envir) : 
+#>   The `bifactor` column "Height" must have exactly two levels, but has 3.
+#> ℹ Levels found: "High", "Low", and "Middle".
 
 # A genuine two-level column passes the bifactor check
 data_2h <- subset_samples_pq(

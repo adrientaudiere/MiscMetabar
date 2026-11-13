@@ -311,12 +311,13 @@ Adrien Taudière
 
 ``` r
 # \donttest{
-data_fungi_mini_new <- assign_vsearch_lca(data_fungi_mini,
+data_f10 <- prune_taxa(taxa_names(data_fungi_mini)[1:10], data_fungi_mini)
+data_fungi_mini_new <- assign_vsearch_lca(data_f10,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
   lca_cutoff = 0.9, behavior = "add_to_phyloseq"
 )
-# }
-if (FALSE) { # \dontrun{
+#> Cleaning suppress 0 taxa and 14 samples.
+
 data_fungi_mini_new2 <- assign_vsearch_lca(data_fungi_mini,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
   id = 0.6, behavior = "add_to_phyloseq", top_hits_only = FALSE
@@ -326,29 +327,5 @@ data_fungi_mini_new3 <- assign_vsearch_lca(data_fungi_mini,
   ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
   id = 0.5, behavior = "add_to_phyloseq", top_hits_only = FALSE, vote_algorithm = "rel_majority"
 )
-} # }
-
-# \donttest{
-## return_taxtab with seq2search (a DNAStringSet or a matrix)
-seqs_to_assign <- refseq(data_fungi_mini)
-tax_mat <- assign_vsearch_lca(seq2search = seqs_to_assign,
-  ref_fasta = system.file("extdata", "mini_UNITE_fungi.fasta.gz", package = "MiscMetabar"),
-  behavior = "return_taxtab"
-)
-head(tax_mat)
-#>       Kingdom Phylum          Class            Order        Family       
-#> ASV7  "Fungi" "Basidiomycota" "Agaricomycetes" "Russulales" "Stereaceae" 
-#> ASV8  "Fungi" "Basidiomycota" "Agaricomycetes" "Agaricales" "Amanitaceae"
-#> ASV12 "Fungi" "Basidiomycota" "Agaricomycetes" "Agaricales" "Amanitaceae"
-#> ASV18 "Fungi" "Basidiomycota" "Agaricomycetes" "Agaricales" "Amanitaceae"
-#> ASV25 "Fungi" "Basidiomycota" "Agaricomycetes" "Agaricales" "Amanitaceae"
-#> ASV26 "Fungi" "Basidiomycota" "Agaricomycetes" "Russulales" "Stereaceae" 
-#>       Genus            Species                   
-#> ASV7  "Xylobolus"      "Xylobolus_sp"            
-#> ASV8  "Zhuliangomyces" "Zhuliangomyces_illinitus"
-#> ASV12 "Zhuliangomyces" "Zhuliangomyces_illinitus"
-#> ASV18 "Zhuliangomyces" "Zhuliangomyces_illinitus"
-#> ASV25 "Zhuliangomyces" "Zhuliangomyces_illinitus"
-#> ASV26 "Xylobolus"      "Xylobolus_sp"            
 # }
 ```

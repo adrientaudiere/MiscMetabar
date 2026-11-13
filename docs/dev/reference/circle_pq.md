@@ -134,9 +134,14 @@ circle_pq(GP, "SampleType")
 #> Only 4 modalities are plot (44.44%). Use 'min_prop_mod' to plot more samples.
 #> Only 5 taxa are plot (41.67%). Use 'min_prop_tax' to plot more taxa
 
-# }
-if (FALSE) { # \dontrun{
+
 circle_pq(GP, "SampleType", add_nb_seq = FALSE)
+#> Only 4 modalities are plot (44.44%). Use 'min_prop_mod' to plot more samples.
+#> Only 10 taxa are plot (83.33%). Use 'min_prop_tax' to plot more taxa
+
 circle_pq(GP, "SampleType", taxa = "Class")
-} # }
+#> Only 4 modalities are plot (44.44%). Use 'min_prop_mod' to plot more samples.
+#> Only 4 taxa are plot (40%). Use 'min_prop_tax' to plot more taxa
+
+# }
 ```

@@ -69,12 +69,26 @@ Adrien Taudière
 # \donttest{
 if (requireNamespace("ggh4x")) {
   multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order", "Time")
-  multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order")
-  multitax_bar_pq(data_fungi_sp_known, "Phylum", "Class", "Order",
-    nb_seq = FALSE, log10trans = FALSE
-  )
 }
 #> Loading required namespace: ggh4x
+#> Warning: no non-missing arguments to min; returning Inf
+#> Warning: no non-missing arguments to max; returning -Inf
+#> Warning: no non-missing arguments to min; returning Inf
+#> Warning: no non-missing arguments to max; returning -Inf
+#> Warning: no non-missing arguments to min; returning Inf
+#> Warning: no non-missing arguments to max; returning -Inf
+#> Warning: no non-missing arguments to min; returning Inf
+#> Warning: no non-missing arguments to max; returning -Inf
+#> Warning: no non-missing arguments to min; returning Inf
+#> Warning: no non-missing arguments to max; returning -Inf
+#> Warning: no non-missing arguments to min; returning Inf
+#> Warning: no non-missing arguments to max; returning -Inf
+#> Warning: no non-missing arguments to min; returning Inf
+#> Warning: no non-missing arguments to max; returning -Inf
+#> Warning: no non-missing arguments to min; returning Inf
+#> Warning: no non-missing arguments to max; returning -Inf
+#> Warning: no non-missing arguments to min; returning Inf
+#> Warning: no non-missing arguments to max; returning -Inf
 
 # }
 ```

@@ -379,6 +379,10 @@
   : Compare samples in pairs using diversity and number of ASV including
   shared ASV.
 
+- [`diversity_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/diversity_pq.md)
+  : Compute alpha- or beta-diversity metrics on a phyloseq object via
+  ecodive
+
 - [`formattable_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/formattable_pq.md)
   : Create a visualization table to describe taxa distribution across a
   modality
@@ -574,7 +578,7 @@
 - [`distri_1_taxa()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/distri_1_taxa.md)
   : Distribution of sequences across a factor for one taxon
 - [`taxa_only_in_one_level()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/taxa_only_in_one_level.md)
-  : Show taxa which are present in only one given level of a modality
+  : Show taxa which are present in only one given level of a factor
 
 ## Improve reproducibility using [targets](https://books.ropensci.org/targets/) pipeline
 
@@ -588,6 +592,10 @@
 - [`itsx_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/itsx_pq.md)
   : Extract the ITS region of the sequences of a phyloseq object with
   ITSx
+
+- [`itsxpress_pq()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/itsxpress_pq.md)
+  : Trim FASTQ files to the ITS region with ITSxpress before DADA2
+  denoising
 
 - [`fastp()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/fastp.md)
   : Fastp: adapter detection, quality control and preprocessing of FASTQ
@@ -732,12 +740,16 @@
 
 - [`find_itsx()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/find_itsx.md)
   : Find the ITSx executable
+- [`find_itsxpress()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/find_itsxpress.md)
+  : Find the ITSxpress executable
 - [`find_mmseqs2()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/find_mmseqs2.md)
   : Find the MMseqs2 binary
 - [`find_vsearch()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/find_vsearch.md)
   : Find the vsearch binary
 - [`install_itsx()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/install_itsx.md)
   : Install ITSx in a conda environment
+- [`install_itsxpress()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/install_itsxpress.md)
+  : Install ITSxpress in a conda environment
 - [`install_mmseqs2()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/install_mmseqs2.md)
   : Install MMseqs2 from GitHub releases
 - [`install_vsearch()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/install_vsearch.md)
@@ -750,6 +762,8 @@
   : Test if fastp is installed.
 - [`is_itsx_installed()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_itsx_installed.md)
   : Test if ITSx is installed
+- [`is_itsxpress_installed()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_itsxpress_installed.md)
+  : Test if ITSxpress is installed
 - [`is_mmseqs2_installed()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_mmseqs2_installed.md)
   : Check whether MMseqs2 is installed and callable
 - [`is_falco_installed()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_falco_installed.md)

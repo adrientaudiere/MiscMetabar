@@ -124,29 +124,4 @@ if (requireNamespace("Rtsne")) {
 #> ! Sample coverage is 0, most estimators will return `NaN`.
 #> Joining with `by = join_by(Sample)`
 #> Joining with `by = join_by(Sample)`
-
-# \donttest{
-if (requireNamespace("Rtsne")) {
-  plot_tsne_pq(data_fungi_mini, fact = "Time") +
-    geom_label(aes(label = Sample_id, fill = Time))
-  plot_tsne_pq(data_fungi_mini,
-    fact = "Time", na_remove = FALSE,
-    force_factor = FALSE
-  )
-}
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Joining with `by = join_by(Sample)`
-#> Joining with `by = join_by(Sample)`
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Joining with `by = join_by(Sample)`
-#> Joining with `by = join_by(Sample)`
-
-# }
 ```

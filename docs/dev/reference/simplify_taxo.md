@@ -196,13 +196,26 @@ cbind(
 #> ASV105 "flaviporus"    "s__flaviporus"   
 #> ASV107 "raduloides"    "s:raduloides"    
 #> ASV108 "glandulosa"    "s__glandulosa"   
-if (FALSE) { # \dontrun{
+# \donttest{
 # Replace PR2 placeholder unknowns (_X, _XX, _XXX, _XXX_sp., Genus_sp.) with NA
+pq_pr2 <- data_fungi_mini
+pq_pr2@tax_table[1:4, "Genus"] <- c("Fungi_X", "Fungi_XX", "Agaricales_XXX", "Mycena")
+pq_pr2@tax_table[1:2, "Species"] <- c("Fungi_XXX_sp.", "Mycena_sp.")
 simplify_taxo(pq_pr2, pattern_to_NA = "_X+$|_sp\\.$")
+#> phyloseq-class experiment-level object
+#> otu_table()   OTU Table:         [ 45 taxa and 137 samples ]
+#> sample_data() Sample Data:       [ 137 samples by 7 sample variables ]
+#> tax_table()   Taxonomy Table:    [ 45 taxa by 12 taxonomic ranks ]
+#> refseq()      DNAStringSet:      [ 45 reference sequences ]
 # Apply pattern_to_NA only to the Species column
 simplify_taxo(pq_pr2,
   pattern_to_NA = "_X+$|_sp\\.$",
   ranks_for_pattern_to_NA = "Species"
 )
-} # }
+#> phyloseq-class experiment-level object
+#> otu_table()   OTU Table:         [ 45 taxa and 137 samples ]
+#> sample_data() Sample Data:       [ 137 samples by 7 sample variables ]
+#> tax_table()   Taxonomy Table:    [ 45 taxa by 12 taxonomic ranks ]
+#> refseq()      DNAStringSet:      [ 45 reference sequences ]
+# }
 ```

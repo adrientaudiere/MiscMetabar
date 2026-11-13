@@ -222,21 +222,4 @@ biplot_pq(data_fungi_2Height, "Height", merge_sample_by = "Height")
 #> Cleaning suppress 5 taxa and 0 samples.
 #> Scale for y is already present.
 #> Adding another scale for y, which will replace the existing scale.
-
-biplot_pq(data_fungi_2Height, "Height",
-  merge_sample_by = "Height",
-  split_by_sample = TRUE
-)
-#> The two modalities differ greatly (more than x2) in their number of sequences (1885 vs 10201). You may be interested by the parameter rarefy_after_merging
-#> Scale for y is already present.
-#> Adding another scale for y, which will replace the existing scale.
-
-biplot_pq(data_fungi_2Height, "Height",
-  merge_sample_by = "Height",
-  color_rank = "Order",
-  taxa_names_rank = "Genus"
-)
-#> Cleaning suppress 5 taxa and 0 samples.
-#> Scale for y is already present.
-#> Adding another scale for y, which will replace the existing scale.
 ```

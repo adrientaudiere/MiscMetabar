@@ -103,11 +103,22 @@ printed.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 filter_asv_blast(data_fungi_mini,
   fasta_for_db = system.file("extdata", "mini_UNITE_fungi.fasta.gz",
     package = "MiscMetabar"
   )
 )
-} # }
+#> Build the database from fasta_for_db
+#> Blast refseq from physeq object against the database
+#> Number of non-matching ASV 0
+#> Number of matching ASV 45
+#> Number of filtered-out ASV 42
+#> Number of kept ASV 3
+#> Number of kept samples 137
+#> Cleaning suppress 0 taxa and 120 samples.
+#> phyloseq-class experiment-level object
+#> otu_table()   OTU Table:         [ 3 taxa and 17 samples ]
+#> sample_data() Sample Data:       [ 17 samples by 7 sample variables ]
+#> tax_table()   Taxonomy Table:    [ 3 taxa by 18 taxonomic ranks ]
+#> refseq()      DNAStringSet:      [ 3 reference sequences ]
 ```

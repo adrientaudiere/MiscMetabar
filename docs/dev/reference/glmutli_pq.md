@@ -137,13 +137,6 @@ if (requireNamespace("glmulti")) {
       "Hill_0 ~ Hill_1 + Abundance + Time + Height",
       level = 1
     )
-  res_glmulti
-  res_glmulti_interaction <-
-    glmutli_pq(data_fungi_mini,
-      "Hill_0 ~ Abundance + Time + Height",
-      level = 2
-    )
-  res_glmulti_interaction
 }
 #> ! Sample coverage is 0, most estimators will return `NaN`.
 #> ! Sample coverage is 0, most estimators will return `NaN`.
@@ -156,45 +149,5 @@ if (requireNamespace("glmulti")) {
 #> TASK: Exhaustive screening of candidate set.
 #> Fitting...
 #> Completed.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Joining with `by = join_by(Sample)`
-#> Initialization...
-#> TASK: Exhaustive screening of candidate set.
-#> Fitting...
-#> 
-#> After 50 models:
-#> Best model: Hill_0~1+Abundance+Time+Time:Abundance+Height:Abundance
-#> Crit= 380.266307886255
-#> Mean crit= 439.149731147241
-#> Completed.
-#>                            estimates unconditional_interval nb_model
-#> HeightHigh:Time         1.021021e-03           4.896053e-06        8
-#> Abundance:HeightHigh    1.444574e-06           1.376218e-11        8
-#> HeightLow              -2.818502e-01           2.975283e-01       32
-#> HeightMiddle           -2.284000e-01           2.804621e-01       32
-#> HeightLow:Time         -4.802362e-02           7.037018e-03       32
-#> HeightMiddle:Time      -5.451488e-02           8.777216e-03       32
-#> Abundance:HeightLow     9.952410e-05           2.196739e-08       32
-#> Abundance:HeightMiddle  1.942462e-04           3.617651e-08       32
-#> Time                    1.927954e-01           1.152254e-02       32
-#> Abundance               4.367041e-04           3.508660e-08       32
-#> Abundance:Time         -3.131657e-05           1.596068e-10       32
-#>                         importance        alpha               variable
-#> HeightHigh:Time        0.006596239 4.348738e-03        HeightHigh:Time
-#> Abundance:HeightHigh   0.014891518 7.317402e-06   Abundance:HeightHigh
-#> HeightLow              0.293275977 1.076681e+00              HeightLow
-#> HeightMiddle           0.293275977 1.046605e+00           HeightMiddle
-#> HeightLow:Time         0.409654935 1.655170e-01         HeightLow:Time
-#> HeightMiddle:Time      0.409654935 1.848108e-01      HeightMiddle:Time
-#> Abundance:HeightLow    0.671985280 2.935384e-04    Abundance:HeightLow
-#> Abundance:HeightMiddle 0.671985280 3.755994e-04 Abundance:HeightMiddle
-#> Time                   0.900282159 2.125915e-01                   Time
-#> Abundance              0.933935731 3.708996e-04              Abundance
-#> Abundance:Time         0.967098115 2.508155e-05         Abundance:Time
 # }
 ```

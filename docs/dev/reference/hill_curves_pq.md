@@ -111,43 +111,11 @@ Adrien Taudière
 # \donttest{
 if (requireNamespace("vegan")) {
   hill_curves_pq(data_fungi_mini, merge_sample_by = "Time")
-  hill_curves_pq(data_fungi_mini, color_fac = "Time", plot_legend = FALSE)
-  hill_curves_pq(data_fungi_mini,
-    color_fac = "Time", plot_legend = FALSE,
-    nperm = 9, size_point = 1, linewidth = 0.5
-  )
-
-  hill_curves_pq(data_fungi_mini,
-    nperm = 9, plot_legend = FALSE, size_point = 1,
-    linewidth = 0.5
-  )
-  hill_curves_pq(data_fungi_mini, "Height",
-    q = c(0, 1, 2, 8), plot_legend = FALSE
-  )
-  hill_curves_pq(data_fungi_mini, "Height",
-    q = c(0, 0.5, 1, 2, 4, 8),
-    nperm = 9
-  )
-  hill_curves_pq(data_fungi_mini, "Height", nperm = 9, wrap_factor = FALSE)
-
-  data_fungi_mini@sam_data$H_T <- paste0(
-    data_fungi_mini@sam_data$Height,
-    "_", data_fungi_mini@sam_data$Time
-  )
-  merge_samples2(data_fungi_mini, "H_T")
-  hill_curves_pq(data_fungi_mini, "H_T", color_fac = "Time", nperm = 9)
 }
 #> 17 were discarded due to NA in variables present in formula.
 #> At least one sample name start with a zero.
 #>     That can be a problem for some phyloseq functions such as
 #>     plot_bar and psmelt.
-#> 47 were discarded due to NA in variables present in formula.
-#> 47 were discarded due to NA in variables present in formula.
-#> 'nperm' >= set of all permutations: complete enumeration.
-#> Set of permutations < 'minperm'. Generating entire set.
-#> 47 were discarded due to NA in variables present in formula.
-#> 'nperm' >= set of all permutations: complete enumeration.
-#> Set of permutations < 'minperm'. Generating entire set.
 
 # }
 ```

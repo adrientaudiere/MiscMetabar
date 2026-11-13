@@ -106,21 +106,4 @@ if (requireNamespace("ggstatsplot")) {
 #> ! Sample coverage is 0, most estimators will return `NaN`.
 #> ! Sample coverage is 0, most estimators will return `NaN`.
 #> Joining with `by = join_by(Sample)`
-
-# \donttest{
-if (requireNamespace("ggstatsplot")) {
-  ggscatt_pq(data_fungi_mini, "Sample_id",
-    q = 0,
-    one_plot = FALSE
-  )
-}
-#> Taxa are now in columns.
-#> Taxa are now in rows.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> Joining with `by = join_by(Sample)`
-#> [[1]]
-
-#> 
-# }
 ```

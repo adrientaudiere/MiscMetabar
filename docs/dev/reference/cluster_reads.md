@@ -138,7 +138,7 @@ and
 [`is_swarm_installed()`](https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_swarm_installed.md)
 to check availability. This function is mainly a wrapper of the work of
 others: please cite [vsearch](https://github.com/torognes/vsearch)
-(<https://pubmed.ncbi.nlm.nih.gov/27781170>) and/or
+([doi:10.7717/peerj.2584](https://doi.org/10.7717/peerj.2584) ) and/or
 [SWARM](https://github.com/torognes/swarm)
 ([doi:10.1093/bioinformatics/btab493](https://doi.org/10.1093/bioinformatics/btab493)
 ).

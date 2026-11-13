@@ -59,17 +59,4 @@ if (requireNamespace("venneuler")) {
   venn_pq(enterotype, fact = "SeqTech")
 }
 #> Loading required namespace: venneuler
-
-# \donttest{
-if (requireNamespace("venneuler")) {
-  venn_pq(enterotype, fact = "ClinicalStatus")
-  venn_pq(enterotype, fact = "Nationality", print_values = FALSE)
-  venn_pq(enterotype, fact = "ClinicalStatus", print_values = FALSE) +
-    scale_fill_hue()
-  venn_pq(enterotype, fact = "ClinicalStatus", print_values = FALSE) +
-    scale_fill_hue()
-}
-
-
-# }
 ```

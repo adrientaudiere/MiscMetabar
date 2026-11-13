@@ -126,8 +126,11 @@ ref_fasta <- system.file("extdata",
   "mini_UNITE_fungi.fasta.gz",
   package = "MiscMetabar", mustWork = TRUE
 )
-add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "dada2")
-add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "dada2_2steps")
+# dada2 methods need a reference in dada2 format
+ref_dada2 <- file.path(tempdir(), "mini_UNITE_fungi_dada2.fasta")
+format2dada2(fasta_db = ref_fasta, output_path = ref_dada2)
+add_new_taxonomy_pq(data_fungi_mini, ref_dada2, method = "dada2")
+add_new_taxonomy_pq(data_fungi_mini, ref_dada2, method = "dada2_2steps")
 add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "sintax")
 add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "lca")
 add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "idtaxa")
@@ -144,7 +147,7 @@ dp <- add_new_taxonomy_pq(data_fungi_mini, ref_fasta,
 )
 dp_tophit <- add_new_taxonomy_pq(data_fungi_mini, ref_fasta,
   method = "blastn", min_id = 80, min_cover = 50, min_bit_score = 20,
-  min_e_value = 1e-20, method_algo = "top_hit"
+  min_e_value = 1e-20, method_algo = "top-hit"
 )
 } # }
 ```

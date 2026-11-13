@@ -135,10 +135,4 @@ if (requireNamespace("ggstatsplot")) {
 #> ℹ Set `drop = FALSE` to consider such groups for position adjustment purposes.
 
 # }
-if (FALSE) { # \dontrun{
-if (requireNamespace("ggstatsplot")) {
-  ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE)
-  ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE, rarefy_by_sample = TRUE)
-}
-} # }
 ```

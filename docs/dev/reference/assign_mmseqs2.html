@@ -283,8 +283,7 @@ Bioinformatics (2021).</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="va">ref_fasta</span> <span class="op">&lt;-</span> <span class="fu">Biostrings</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Biostrings/man/XStringSet-io.html" class="external-link">readDNAStringSet</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">ref_fasta</span> <span class="op">&lt;-</span> <span class="fu">Biostrings</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Biostrings/man/XStringSet-io.html" class="external-link">readDNAStringSet</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span></span>
 <span class="r-in"><span>  <span class="st">"mini_UNITE_fungi.fasta.gz"</span>,</span></span>
 <span class="r-in"><span>  package <span class="op">=</span> <span class="st">"MiscMetabar"</span>, mustWork <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span><span class="op">)</span></span></span>
@@ -293,6 +292,27 @@ Bioinformatics (2021).</p>
 <span class="r-in"><span><span class="co"># The function searches with easy-search and parses SINTAX headers.</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">assign_mmseqs2</span><span class="op">(</span><span class="va">data_fungi_mini</span>, ref_fasta <span class="op">=</span> <span class="va">ref_fasta</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   taxa_names Kingdom_mmseqs2 Phylum_mmseqs2  Class_mmseqs2   Order_mmseqs2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1       ASV7           Fungi  Basidiomycota Agaricomycetes Hymenochaetales</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2       ASV8           Fungi  Basidiomycota Agaricomycetes      Agaricales</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      ASV12           Fungi  Basidiomycota Agaricomycetes  Trechisporales</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      ASV18           Fungi  Basidiomycota Agaricomycetes      Agaricales</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      ASV25           Fungi  Basidiomycota Agaricomycetes      Agaricales</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      ASV26           Fungi  Basidiomycota Agaricomycetes      Russulales</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      Family_mmseqs2                       Genus_mmseqs2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1                    Schizoporaceae                         Hyphodontia</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                  Tricholomataceae Tricholomataceae_gen_Incertae_sedis</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 Trechisporales_fam_Incertae_sedis   Trechisporales_gen_Incertae_sedis</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4                  Tricholomataceae Tricholomataceae_gen_Incertae_sedis</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5                    Entolomataceae                            Entoloma</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                        Stereaceae                           Xylobolus</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          Species_mmseqs2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 Hyphodontia_microspora</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    Tricholomataceae_sp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      Trechisporales_sp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4    Tricholomataceae_sp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5            Entoloma_sp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6           Xylobolus_sp</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Add taxonomy to phyloseq:</span></span></span>
 <span class="r-in"><span><span class="va">physeq_new</span> <span class="op">&lt;-</span> <span class="fu">assign_mmseqs2</span><span class="op">(</span></span></span>
@@ -300,7 +320,6 @@ Bioinformatics (2021).</p>
 <span class="r-in"><span>  ref_fasta <span class="op">=</span> <span class="va">ref_fasta</span>,</span></span>
 <span class="r-in"><span>  behavior <span class="op">=</span> <span class="st">"add_to_phyloseq"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

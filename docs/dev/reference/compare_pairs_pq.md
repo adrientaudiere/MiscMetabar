@@ -10,11 +10,12 @@ For the moment refseq slot need to be not Null.
 compare_pairs_pq(
   physeq = NULL,
   bifactor = NULL,
-  modality = NULL,
+  fact = NULL,
   merge_sample_by = NULL,
   nb_min_seq = 0,
   veg_index = "shannon",
   na_remove = TRUE,
+  modality = lifecycle::deprecated(),
   ...
 )
 ```
@@ -32,10 +33,10 @@ compare_pairs_pq(
   (required) a factor (present in the `sam_data` slot of the physeq
   object) presenting the pair names
 
-- modality:
+- fact:
 
   the name of the column in the `sam_data` slot of the physeq object to
-  split samples by pairs
+  split samples by pairs. Formerly `modality`.
 
 - merge_sample_by:
 
@@ -56,9 +57,13 @@ compare_pairs_pq(
 - na_remove:
 
   (logical, default TRUE) If set to TRUE, remove samples with NA in the
-  variables set in bifactor, modality and merge_sample_by. NA in
-  variables are well managed even if na_remove = FALSE, so na_remove may
-  be useless.
+  variables set in bifactor, fact and merge_sample_by. NA in variables
+  are well managed even if na_remove = FALSE, so na_remove may be
+  useless.
+
+- modality:
+
+  **\[deprecated\]** Use `fact` instead.
 
 - ...:
 
@@ -94,10 +99,10 @@ compare_pairs_pq(data_fungi_mini_lh, bifactor = "Height", merge_sample_by = "Hei
 #> #   ratio_div_High_Low <dbl>
 compare_pairs_pq(data_fungi_mini_lh,
   bifactor = "Height",
-  merge_sample_by = "Height", modality = "Time"
+  merge_sample_by = "Height", fact = "Time"
 )
 #> Taxa are now in columns.
-#> 7 samples were discarded due to NA in variable modality.
+#> 7 samples were discarded due to NA in variable fact.
 #> Cleaning suppress 5 taxa and 0 samples.
 #> ! Function arguments cannot be checked because the package divent is not attached.
 #> → Add `CheckArguments=FALSE` to suppress this warning or run `library('divent')`.

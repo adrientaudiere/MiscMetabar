@@ -180,6 +180,7 @@ if (requireNamespace("patchwork", quietly = TRUE)) {
 }
 #> Cleaning suppress 31 taxa and 0 samples.
 #> Joining with `by = join_by(Sample)`
+#> Kruskal-Wallis test and Tukey letters not shown: a group has fewer than 5 samples (min = 3) or there are fewer than 30 samples in total (n = 6). Use `test_text = TRUE` to show them anyway.
 #> Taxa are now in columns.
 #> $alpha
 
@@ -188,12 +189,4 @@ if (requireNamespace("patchwork", quietly = TRUE)) {
 
 #> 
 # }
-if (FALSE) { # \dontrun{
-# Full overview with all panels (factor with 2 levels -> Venn).
-plot_overview_pq(data_fungi_mini, fact = "Height", one_plot = TRUE)
-
-# Numeric variable -> Hill scatter (ggscatt_pq) + gradient-colored
-# ordination/UMAP, Venn/UpSet automatically skipped.
-plot_overview_pq(data_fungi_mini, fact = "Time", add_umap = FALSE)
-} # }
 ```

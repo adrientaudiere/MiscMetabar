@@ -175,8 +175,8 @@ asv2otu(
 
   (default : "–fastidious") a one length character element defining
   other parameters to passed on to swarm See other possible methods in
-  the [SWARM pdf
-  manual](https://github.com/torognes/swarm/blob/master/man/swarm_manual.pdf)
+  the [SWARM
+  manual](https://github.com/torognes/swarm/blob/master/man/swarm.1)
 
 - mmseqs2path:
 
@@ -221,7 +221,7 @@ clusters. By default tax_adjust = 0. See the man page of
 
 VSEARCH can be downloaded from <https://github.com/torognes/vsearch>.
 More information in the associated publication
-<https://pubmed.ncbi.nlm.nih.gov/27781170>.
+[doi:10.7717/peerj.2584](https://doi.org/10.7717/peerj.2584) .
 
 ## See also
 
@@ -254,7 +254,7 @@ if (requireNamespace("DECIPHER")) {
 #> Clustering sequences by 9-mer similarity:
 #> ================================================================================
 #> 
-#> Time difference of 0.07 secs
+#> Time difference of 0.08 secs
 #> 
 #> Clusters via relatedness sorting: 100% (0% exclusively)
 #> Clusters via rare 3-mers: 100% (0% exclusively)
@@ -265,20 +265,14 @@ if (requireNamespace("DECIPHER")) {
 #> sample_data() Sample Data:       [ 137 samples by 7 sample variables ]
 #> tax_table()   Taxonomy Table:    [ 32 taxa by 12 taxonomic ranks ]
 #> refseq()      DNAStringSet:      [ 32 reference sequences ]
-# }
-if (FALSE) { # \dontrun{
-if (requireNamespace("DECIPHER")) {
-  postcluster_pq(data_fungi_mini, method_clusterize = "longest")
-
-  if (MiscMetabar::is_swarm_installed()) {
-    d_swarm <- postcluster_pq(data_fungi_mini, method = "swarm")
-  }
-  if (MiscMetabar::is_vsearch_installed()) {
-    d_vs <- postcluster_pq(data_fungi_mini, method = "vsearch")
-  }
-  if (MiscMetabar::is_mmseqs2_installed()) {
-    d_mm <- postcluster_pq(data_fungi_mini, method = "mmseqs2")
-  }
+if (MiscMetabar::is_swarm_installed()) {
+  d_swarm <- postcluster_pq(data_fungi_mini, method = "swarm")
 }
-} # }
+if (MiscMetabar::is_vsearch_installed()) {
+  d_vs <- postcluster_pq(data_fungi_mini, method = "vsearch")
+}
+if (MiscMetabar::is_mmseqs2_installed()) {
+  d_mm <- postcluster_pq(data_fungi_mini, method = "mmseqs2")
+}
+# }
 ```

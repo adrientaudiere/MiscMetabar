@@ -6,8 +6,11 @@ For each Hill diversity order in `q`, draws a bar at the group mean (±1
 SE) with jittered individual points. A Kruskal-Wallis test is reported
 in the subtitle; when the global effect is significant, Tukey HSD
 pairwise comparisons produce compact letter displays above the bars.
-When every group has a single sample, the test is not computed (the
-subtitle says so) and no letters are drawn. Multiple values of `q` are
+When at least one group has fewer than 5 samples, or when there are
+fewer than 30 samples in total, the test and its letters are not shown
+(a message says so) unless `test_text = TRUE`: on such small samples the
+p-value is unstable and the test has little power. When every group has
+a single sample, the test is never computed. Multiple values of `q` are
 assembled into a
 [patchwork](https://patchwork.data-imaginist.com/reference/patchwork-package.html)
 layout automatically.
@@ -47,7 +50,8 @@ m <- mean(x, na.rm = TRUE)
   error_bar_alpha = 0.35,
   point_alpha = 0.5,
   letters_below_bar = FALSE,
-  sig_symbol = "∅",
+  sig_symbol = "Ø",
+  test_text = FALSE,
   ...
 )
 ```
@@ -186,13 +190,20 @@ m <- mean(x, na.rm = TRUE)
 
 - sig_symbol:
 
-  Character symbol (default `"∅"`, the empty set, evoking the absence of
-  a pairwise comparison) used, when several values of `q` are drawn, to
-  flag the panels for which Tukey HSD pairwise comparisons were not run
-  (no global Kruskal-Wallis significance). The symbol is appended to the
-  panel subtitle and explained once in the shared figure caption. The
-  "Error bars" / "letters from Tukey HSD" caption is set a single time
-  for the whole figure rather than repeated on every panel.
+  Character symbol (default `"Ø"`, a slashed O evoking the empty set and
+  the absence of a pairwise comparison) used, when several values of `q`
+  are drawn, to flag the panels for which Tukey HSD pairwise comparisons
+  were not run (no global Kruskal-Wallis significance). The symbol is
+  appended to the panel subtitle and explained once in the shared figure
+  caption. The "Error bars" / "letters from Tukey HSD" caption is set a
+  single time for the whole figure rather than repeated on every panel.
+
+- test_text:
+
+  Logical. Show the Kruskal-Wallis subtitle and the Tukey letters even
+  on small samples (at least one group with fewer than 5 samples, or
+  fewer than 30 samples in total), where they are hidden by default.
+  Default `FALSE`.
 
 - ...:
 
@@ -225,13 +236,4 @@ hill_bar_pq(data_fungi_mini, Height, q = 1)
 #> ! Sample coverage is 0, most estimators will return `NaN`.
 #> Joining with `by = join_by(Sample)`
 
-if (FALSE) { # \dontrun{
-hill_bar_pq(data_fungi_mini, Height, q = 0)
-hill_bar_pq(data_fungi_mini, Height, q = c(0, 2), ncol = 2)
-hill_bar_pq(data_fungi_mini, Height,
-  q = c(0, 2),
-  y_labs = c(Hill_0 = "Richness", Hill_2 = "Simpson diversity")
-)
-hill_bar_pq(data_fungi_mini, Height, add_letters = FALSE)
-} # }
 ```

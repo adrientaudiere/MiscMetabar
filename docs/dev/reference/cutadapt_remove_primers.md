@@ -121,7 +121,7 @@ Adrien Taudière
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
+if (FALSE) { # tolower(Sys.info()[["sysname"]]) != "windows" && MiscMetabar::is_cutadapt_installed()
 cutadapt_remove_primers(system.file("extdata", package = "MiscMetabar"),
   "TTC",
   "GAA",
@@ -158,7 +158,5 @@ cutadapt_remove_primers(
   cutadapt_args = "-e 0.01",
   cmd_is_run = FALSE
 )
-
-unlink(tempdir(), recursive = TRUE)
-} # }
+}
 ```

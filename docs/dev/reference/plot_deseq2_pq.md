@@ -149,14 +149,6 @@ if (requireNamespace("DESeq2")) {
   plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
     tax_table = GP@tax_table, color_rank = "Kingdom"
   )
-  plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
-    tax_table = GP@tax_table, color_rank = "Kingdom",
-    pval = 0.7
-  )
-  plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
-    tax_table = GP@tax_table, color_rank = "Class",
-    select_taxa = c("522457", "271582")
-  )
 }
 #> Loading required namespace: DESeq2
 #> converting counts to integer mode
@@ -166,8 +158,6 @@ if (requireNamespace("DESeq2")) {
 #> mean-dispersion relationship
 #> final dispersion estimates
 #> fitting model and testing
-#> None taxa present significant distribution pattern through
-#>               contrast.
-#> [1] "None taxa present significant distribution pattern through\n             contrast."
+
 # }
 ```

@@ -380,12 +380,13 @@ Please cite <a href="https://github.com/torognes/vsearch" class="external-link">
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="va">data_fungi_mini_new</span> <span class="op">&lt;-</span> <span class="fu">assign_vsearch_lca</span><span class="op">(</span><span class="va">data_fungi_mini</span>,</span></span>
+<span class="r-in"><span><span class="va">data_f10</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/prune_taxa-methods.html" class="external-link">prune_taxa</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/taxa_names-methods.html" class="external-link">taxa_names</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span>, <span class="va">data_fungi_mini</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">data_fungi_mini_new</span> <span class="op">&lt;-</span> <span class="fu">assign_vsearch_lca</span><span class="op">(</span><span class="va">data_f10</span>,</span></span>
 <span class="r-in"><span>  ref_fasta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mini_UNITE_fungi.fasta.gz"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  lca_cutoff <span class="op">=</span> <span class="fl">0.9</span>, behavior <span class="op">=</span> <span class="st">"add_to_phyloseq"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 0 taxa and 14 samples.</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">data_fungi_mini_new2</span> <span class="op">&lt;-</span> <span class="fu">assign_vsearch_lca</span><span class="op">(</span><span class="va">data_fungi_mini</span>,</span></span>
 <span class="r-in"><span>  ref_fasta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mini_UNITE_fungi.fasta.gz"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  id <span class="op">=</span> <span class="fl">0.6</span>, behavior <span class="op">=</span> <span class="st">"add_to_phyloseq"</span>, top_hits_only <span class="op">=</span> <span class="cn">FALSE</span></span></span>
@@ -395,30 +396,6 @@ Please cite <a href="https://github.com/torognes/vsearch" class="external-link">
 <span class="r-in"><span>  ref_fasta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mini_UNITE_fungi.fasta.gz"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  id <span class="op">=</span> <span class="fl">0.5</span>, behavior <span class="op">=</span> <span class="st">"add_to_phyloseq"</span>, top_hits_only <span class="op">=</span> <span class="cn">FALSE</span>, vote_algorithm <span class="op">=</span> <span class="st">"rel_majority"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="co">## return_taxtab with seq2search (a DNAStringSet or a matrix)</span></span></span>
-<span class="r-in"><span><span class="va">seqs_to_assign</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/phyloseq/man/refseq-methods.html" class="external-link">refseq</a></span><span class="op">(</span><span class="va">data_fungi_mini</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">tax_mat</span> <span class="op">&lt;-</span> <span class="fu">assign_vsearch_lca</span><span class="op">(</span>seq2search <span class="op">=</span> <span class="va">seqs_to_assign</span>,</span></span>
-<span class="r-in"><span>  ref_fasta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"mini_UNITE_fungi.fasta.gz"</span>, package <span class="op">=</span> <span class="st">"MiscMetabar"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  behavior <span class="op">=</span> <span class="st">"return_taxtab"</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tax_mat</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       Kingdom Phylum          Class            Order        Family       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7  "Fungi" "Basidiomycota" "Agaricomycetes" "Russulales" "Stereaceae" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8  "Fungi" "Basidiomycota" "Agaricomycetes" "Agaricales" "Amanitaceae"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12 "Fungi" "Basidiomycota" "Agaricomycetes" "Agaricales" "Amanitaceae"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18 "Fungi" "Basidiomycota" "Agaricomycetes" "Agaricales" "Amanitaceae"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25 "Fungi" "Basidiomycota" "Agaricomycetes" "Agaricales" "Amanitaceae"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV26 "Fungi" "Basidiomycota" "Agaricomycetes" "Russulales" "Stereaceae" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       Genus            Species                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV7  "Xylobolus"      "Xylobolus_sp"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV8  "Zhuliangomyces" "Zhuliangomyces_illinitus"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV12 "Zhuliangomyces" "Zhuliangomyces_illinitus"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV18 "Zhuliangomyces" "Zhuliangomyces_illinitus"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV25 "Zhuliangomyces" "Zhuliangomyces_illinitus"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ASV26 "Xylobolus"      "Xylobolus_sp"            </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

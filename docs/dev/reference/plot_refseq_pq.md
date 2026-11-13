@@ -72,7 +72,18 @@ plot_refseq_pq(data_fungi_mini)
 #> Warning: Removed 336 rows containing missing values or values outside the scale range
 #> (`geom_point()`).
 
-if (FALSE) { # \dontrun{
+# \donttest{
 plot_refseq_pq(data_fungi_mini, q = c(2), first_n = 300)
-} # }
+#> Cleaning suppress 0 taxa (  ) and 0 sample(s) (  ).
+#> Number of non-matching ASV 0
+#> Number of matching ASV 45
+#> Number of filtered-out ASV 0
+#> Number of kept ASV 45
+#> Number of kept samples 137
+#> Warning: Removed 348 rows containing missing values or values outside the scale range
+#> (`geom_point()`).
+#> Warning: Removed 87 rows containing missing values or values outside the scale range
+#> (`geom_line()`).
+
+# }
 ```

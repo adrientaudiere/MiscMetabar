@@ -160,28 +160,35 @@ Adrien Taudière
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-# Paired-end example
-fastp(
-  path_to_fastq = system.file("extdata", package = "MiscMetabar"),
-  folder_output = file.path(tempdir(), "qc_data"),
-  nproc = 8,
-  paired_end = TRUE
-)
-
-# Single-end example with extra options
-fastp(
-  path_to_fastq = "raw_data/",
-  folder_output = file.path(tempdir(), "qc_data"),
-  nproc = 8,
-  paired_end = FALSE,
-  extra_fastp_args = "--merge --n_base_limit 5 --dedup"
-)
-
 # Only build the commands, do not run them
 fastp(
   path_to_fastq = system.file("extdata", package = "MiscMetabar"),
+  folder_output = file.path(tempdir(), "qc_data"),
   cmd_is_run = FALSE
 )
-} # }
+#> $`/tmp/RtmpwrUtcL/temp_libpath13913f132fe6a6/MiscMetabar/extdata/ex_R1_001.fastq.gz`
+#> [1] "fastp -i /tmp/RtmpwrUtcL/temp_libpath13913f132fe6a6/MiscMetabar/extdata/ex_R1_001.fastq.gz -o /tmp/Rtmp7j9BNw/qc_data/ex_R1_001.fastq.gz --thread 1 --qualified_quality_phred 20 --average_qual 20 --length_required 50 --cut_window_size 4 --cut_mean_quality 20 -I /tmp/RtmpwrUtcL/temp_libpath13913f132fe6a6/MiscMetabar/extdata/ex_R2_001.fastq.gz -O /tmp/Rtmp7j9BNw/qc_data/ex_R2_001.fastq.gz --detect_adapter_for_pe --correction --trim_poly_g --cut_front --cut_tail --html /tmp/Rtmp7j9BNw/qc_data/ex_R1_001.fastp.html --json /tmp/Rtmp7j9BNw/qc_data/ex_R1_001.fastp.json"
+#> 
+
+# Single-end commands with extra options
+fastp(
+  path_to_fastq = system.file("extdata", package = "MiscMetabar"),
+  paired_end = FALSE,
+  extra_fastp_args = "--n_base_limit 5 --dedup",
+  folder_output = file.path(tempdir(), "qc_data"),
+  cmd_is_run = FALSE
+)
+#> $`/tmp/RtmpwrUtcL/temp_libpath13913f132fe6a6/MiscMetabar/extdata/ex_R1_001.fastq.gz`
+#> [1] "fastp -i /tmp/RtmpwrUtcL/temp_libpath13913f132fe6a6/MiscMetabar/extdata/ex_R1_001.fastq.gz -o /tmp/Rtmp7j9BNw/qc_data/ex_R1_001.fastq.gz --thread 1 --qualified_quality_phred 20 --average_qual 20 --length_required 50 --cut_window_size 4 --cut_mean_quality 20 --trim_poly_g --cut_front --cut_tail --html /tmp/Rtmp7j9BNw/qc_data/ex_R1_001.fastp.html --json /tmp/Rtmp7j9BNw/qc_data/ex_R1_001.fastp.json --n_base_limit 5 --dedup"
+#> 
+
+# Run fastp on paired-end reads
+if (MiscMetabar::is_fastp_installed()) {
+  fastp(
+    path_to_fastq = system.file("extdata", package = "MiscMetabar"),
+    folder_output = file.path(tempdir(), "qc_data"),
+    nproc = 2,
+    paired_end = TRUE
+  )
+}
 ```

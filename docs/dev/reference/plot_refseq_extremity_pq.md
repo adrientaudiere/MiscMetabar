@@ -75,38 +75,4 @@ library("divent")
 res1 <- plot_refseq_extremity_pq(data_f, q = 1)
 names(res1)
 #> [1] "plot_start" "plot_last"  "df_start"   "df_end"    
-# \donttest{
-res1$plot_start
-#> Warning: Removed 1508 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
-#> Warning: Removed 377 rows containing missing values or values outside the scale range
-#> (`geom_line()`).
-
-res1$plot_last
-
-
-res2 <- plot_refseq_extremity_pq(data_f, first_n = 200, last_n = 100)
-res2$plot_start
-#> Warning: Removed 748 rows containing missing values or values outside the scale range
-#> (`geom_point()`).
-#> Warning: Removed 374 rows containing missing values or values outside the scale range
-#> (`geom_line()`).
-
-res2$plot_last
-
-
-plot_refseq_extremity_pq(data_f,
-  first_n = NULL,
-  last_n = 200,
-  min_width = 200,
-  q = c(3)
-)$plot_last
-#> Cleaning suppress 16 taxa ( ASV32 / ASV35 / ASV50 / ASV53 / ASV54 / ASV58 / ASV61 / ASV63 / ASV68 / ASV72 / ASV75 / ASV77 / ASV82 / ASV99 / ASV100 / ASV108 ) and 0 sample(s) (  ).
-#> Number of non-matching ASV 0
-#> Number of matching ASV 45
-#> Number of filtered-out ASV 16
-#> Number of kept ASV 29
-#> Number of kept samples 20
-
-# }
 ```

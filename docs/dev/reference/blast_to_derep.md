@@ -129,7 +129,6 @@ Adrien Taudière
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 # derep_list is the result of dada2::derepFastq()
 derep_list <- list(dada2::derepFastq(
   system.file("extdata", "ex.fastq",
@@ -142,5 +141,6 @@ blast_to_derep(
     package = "MiscMetabar"
   )
 )
-} # }
+#> None query sequences matched your phyloseq references sequences.
+#> NULL
 ```

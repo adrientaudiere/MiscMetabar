@@ -190,7 +190,7 @@ biplot_pq(data_fungi_low_high, fact = "Height", merge_sample_by = "Height")
 compare_pairs_pq(data_fungi_low_high,
   bifactor = "Height",
   merge_sample_by = "Height",
-  modality = "Time"
+  fact = "Time"
 )
 #> # A tibble: 4 × 13
 #>   modality nb_ASV_High nb_ASV_Low nb_shared_ASV div_High div_Low nb_shared_seq

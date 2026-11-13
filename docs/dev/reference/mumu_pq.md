@@ -107,9 +107,19 @@ Frédéric Mahé & Adrien Taudière <adrien.taudiere@zaclys.net>
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 ntaxa(data_fungi_sp_known)
+#> [1] 651
 ntaxa(mumu_pq(data_fungi_sp_known)$new_physeq)
+#> Cleaning suppress 0 taxa and 1 samples.
+#> Start Vsearch usearch_global
+#> Taxa are now in rows.
+#> Mumu algorithm
+#> [1] 548
 ntaxa(mumu_pq(data_fungi_sp_known, extra_mumu_args = "--minimum_match 90")$new_physeq)
-} # }
+#> Cleaning suppress 0 taxa and 1 samples.
+#> Start Vsearch usearch_global
+#> Taxa are now in rows.
+#> Mumu algorithm
+#> mumu is runned with option(s)--minimum_match 90
+#> [1] 551
 ```

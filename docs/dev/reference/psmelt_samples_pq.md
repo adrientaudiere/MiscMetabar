@@ -115,26 +115,18 @@ Adrien Taudière
 
 ``` r
 # \donttest{
-psm_tib <- psmelt_samples_pq(data_fungi_mini, hill_scales = c(0, 2, 7))
+data_f5 <- prune_samples(sample_names(data_fungi_mini)[1:5], data_fungi_mini)
+psm_tib <- psmelt_samples_pq(data_f5, hill_scales = c(0, 2, 7))
 #> Warning: The `hill_scales` argument of `psmelt_samples_pq()` is deprecated as of
 #> MiscMetabar 0.15.1.
 #> ℹ Please use the `q` argument instead.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
-#> ! Sample coverage is 0, most estimators will return `NaN`.
 #> Joining with `by = join_by(Sample)`
-# }
-if (FALSE) { # \dontrun{
-if (requireNamespace("ggstatsplot")) {
-  ggstatsplot::ggbetweenstats(psm_tib, Height, Hill_0)
-  ggstatsplot::ggbetweenstats(psm_tib, Height, Hill_7)
-}
-psm_tib_tax <- psmelt_samples_pq(data_fungi_mini, taxa_ranks = c("Class", "Family"))
+
+psm_tib_tax <- psmelt_samples_pq(data_f5, taxa_ranks = c("Class", "Family"))
+#> Joining with `by = join_by(Sample)`
 ggplot(filter(psm_tib_tax, Abundance > 2000), aes(y = Family, x = Abundance, fill = Time)) +
   geom_bar(stat = "identity") +
   facet_wrap(~Height)
-} # }
+
+# }
 ```

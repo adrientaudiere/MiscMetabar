@@ -647,13 +647,3 @@ Genus_species
 3 (6.7%)
 
 ¹ n (%)
-
-data_fungi_mini \|\>
-[filt_taxa_pq](https://adrientaudiere.github.io/MiscMetabar/dev/reference/filt_taxa_pq.md)(min_occurence
-= 2) \|\> tbl_sum_taxtable(taxonomic_rank =
-[c](https://rdrr.io/r/base/c.html)("Species", "Genus")) \#\> Cleaning
-suppress 0 taxa ( ) and 0 sample(s) ( ). \#\> Number of non-matching ASV
-0 \#\> Number of matching ASV 45 \#\> Number of filtered-out ASV 2 \#\>
-Number of kept ASV 43 \#\> Number of kept samples 137
-
-[TABLE]

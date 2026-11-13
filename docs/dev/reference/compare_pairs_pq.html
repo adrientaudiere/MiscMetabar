@@ -79,11 +79,12 @@ For the moment refseq slot need to be not Null."><meta property="og:image" conte
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">compare_pairs_pq</span><span class="op">(</span></span>
 <span>  physeq <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bifactor <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  modality <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  fact <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  merge_sample_by <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  nb_min_seq <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  veg_index <span class="op">=</span> <span class="st">"shannon"</span>,</span>
 <span>  na_remove <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  modality <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -102,9 +103,9 @@ using the <code>phyloseq</code> package.</p></dd>
 the physeq object) presenting the pair names</p></dd>
 
 
-<dt id="arg-modality">modality<a class="anchor" aria-label="anchor" href="#arg-modality"></a></dt>
+<dt id="arg-fact">fact<a class="anchor" aria-label="anchor" href="#arg-fact"></a></dt>
 <dd><p>the name of the column in the <code>sam_data</code>
-slot of the physeq object to split samples by pairs</p></dd>
+slot of the physeq object to split samples by pairs. Formerly <code>modality</code>.</p></dd>
 
 
 <dt id="arg-merge-sample-by">merge_sample_by<a class="anchor" aria-label="anchor" href="#arg-merge-sample-by"></a></dt>
@@ -127,9 +128,13 @@ to count the ASV/OTU</p></dd>
 
 <dt id="arg-na-remove">na_remove<a class="anchor" aria-label="anchor" href="#arg-na-remove"></a></dt>
 <dd><p>(logical, default TRUE) If set to TRUE, remove samples with
-NA in the variables set in bifactor, modality and merge_sample_by.
+NA in the variables set in bifactor, fact and merge_sample_by.
 NA in variables are well managed even if na_remove = FALSE, so na_remove may
 be useless.</p></dd>
+
+
+<dt id="arg-modality">modality<a class="anchor" aria-label="anchor" href="#arg-modality"></a></dt>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> Use <code>fact</code> instead.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -163,10 +168,10 @@ and diversity</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   ratio_div_High_Low &lt;dbl&gt;</span></span>
 <span class="r-in"><span><span class="fu">compare_pairs_pq</span><span class="op">(</span><span class="va">data_fungi_mini_lh</span>,</span></span>
 <span class="r-in"><span>  bifactor <span class="op">=</span> <span class="st">"Height"</span>,</span></span>
-<span class="r-in"><span>  merge_sample_by <span class="op">=</span> <span class="st">"Height"</span>, modality <span class="op">=</span> <span class="st">"Time"</span></span></span>
+<span class="r-in"><span>  merge_sample_by <span class="op">=</span> <span class="st">"Height"</span>, fact <span class="op">=</span> <span class="st">"Time"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Taxa are now in columns.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 7 samples were discarded due to NA in variable modality.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 7 samples were discarded due to NA in variable fact.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Cleaning suppress 5 taxa and 0 samples.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> Function arguments cannot be checked because the package <span style="color: #0000BB;">divent</span> is not attached.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → Add `CheckArguments=FALSE` to suppress this warning or run `library('divent')`.</span>

@@ -35,6 +35,5 @@ Adrien Taudière
 
 ``` r
 MiscMetabar::is_cutadapt_installed()
-#> Warning: running command 'bash /tmp/RtmpzILWy0/script_cutadapt.sh 2>&1' had status 1
-#> [1] TRUE
+#> [1] FALSE
 ```

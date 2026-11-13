@@ -225,7 +225,7 @@ amplicons, meaning that two amplicons will be grouped if they have <code>d</code
 <dt id="arg-swarm-args">swarm_args<a class="anchor" aria-label="anchor" href="#arg-swarm-args"></a></dt>
 <dd><p>(default : "–fastidious") a one length character
 element defining other parameters to  passed on to swarm See other possible
-methods in the <a href="https://github.com/torognes/swarm/blob/master/man/swarm_manual.pdf" class="external-link">SWARM pdf manual</a></p></dd>
+methods in the <a href="https://github.com/torognes/swarm/blob/master/man/swarm.1" class="external-link">SWARM manual</a></p></dd>
 
 
 <dt id="arg-mmseqs-path">mmseqs2path<a class="anchor" aria-label="anchor" href="#arg-mmseqs-path"></a></dt>
@@ -266,7 +266,8 @@ of <code><a href="merge_taxa_vec.html">merge_taxa_vec()</a></code>.</p>
     <p>VSEARCH can be downloaded from
 <a href="https://github.com/torognes/vsearch" class="external-link">https://github.com/torognes/vsearch</a>.
 More information in the associated publication
-<a href="https://pubmed.ncbi.nlm.nih.gov/27781170" class="external-link">https://pubmed.ncbi.nlm.nih.gov/27781170</a>.</p>
+<a href="https://doi.org/10.7717/peerj.2584" class="external-link">doi:10.7717/peerj.2584</a>
+.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -297,7 +298,7 @@ and <code><a href="mmseqs2_clustering.html">mmseqs2_clustering()</a></code></p><
 <span class="r-out co"><span class="r-pr">#&gt;</span> Clustering sequences by 9-mer similarity:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ================================================================================</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.07 secs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.08 secs</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Clusters via relatedness sorting: 100% (0% exclusively)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Clusters via rare 3-mers: 100% (0% exclusively)</span>
@@ -308,22 +309,16 @@ and <code><a href="mmseqs2_clustering.html">mmseqs2_clustering()</a></code></p><
 <span class="r-out co"><span class="r-pr">#&gt;</span> sample_data() Sample Data:       [ 137 samples by 7 sample variables ]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> tax_table()   Taxonomy Table:    [ 32 taxa by 12 taxonomic ranks ]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> refseq()      DNAStringSet:      [ 32 reference sequences ]</span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"DECIPHER"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu">postcluster_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, method_clusterize <span class="op">=</span> <span class="st">"longest"</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span>  <span class="kw">if</span> <span class="op">(</span><span class="fu">MiscMetabar</span><span class="fu">::</span><span class="fu"><a href="is_swarm_installed.html">is_swarm_installed</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>    <span class="va">d_swarm</span> <span class="op">&lt;-</span> <span class="fu">postcluster_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, method <span class="op">=</span> <span class="st">"swarm"</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="op">}</span></span></span>
-<span class="r-in"><span>  <span class="kw">if</span> <span class="op">(</span><span class="fu">MiscMetabar</span><span class="fu">::</span><span class="fu"><a href="is_vsearch_installed.html">is_vsearch_installed</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>    <span class="va">d_vs</span> <span class="op">&lt;-</span> <span class="fu">postcluster_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, method <span class="op">=</span> <span class="st">"vsearch"</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="op">}</span></span></span>
-<span class="r-in"><span>  <span class="kw">if</span> <span class="op">(</span><span class="fu">MiscMetabar</span><span class="fu">::</span><span class="fu"><a href="is_mmseqs2_installed.html">is_mmseqs2_installed</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>    <span class="va">d_mm</span> <span class="op">&lt;-</span> <span class="fu">postcluster_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, method <span class="op">=</span> <span class="st">"mmseqs2"</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="op">}</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu">MiscMetabar</span><span class="fu">::</span><span class="fu"><a href="is_swarm_installed.html">is_swarm_installed</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">d_swarm</span> <span class="op">&lt;-</span> <span class="fu">postcluster_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, method <span class="op">=</span> <span class="st">"swarm"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu">MiscMetabar</span><span class="fu">::</span><span class="fu"><a href="is_vsearch_installed.html">is_vsearch_installed</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">d_vs</span> <span class="op">&lt;-</span> <span class="fu">postcluster_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, method <span class="op">=</span> <span class="st">"vsearch"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu">MiscMetabar</span><span class="fu">::</span><span class="fu"><a href="is_mmseqs2_installed.html">is_mmseqs2_installed</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">d_mm</span> <span class="op">&lt;-</span> <span class="fu">postcluster_pq</span><span class="op">(</span><span class="va">data_fungi_mini</span>, method <span class="op">=</span> <span class="st">"mmseqs2"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

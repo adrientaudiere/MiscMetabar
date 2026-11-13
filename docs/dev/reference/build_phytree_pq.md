@@ -139,22 +139,6 @@ if (requireNamespace("phangorn")) {
   set.seed(22)
   df <- subset_taxa_pq(data_fungi_mini, taxa_sums(data_fungi_mini) > 9000)
   df_tree <- build_phytree_pq(df, nb_bootstrap = 2)
-  plot(df_tree$UPGMA)
-  phangorn::plotBS(df_tree$UPGMA, df_tree$UPGMA_bs, main = "UPGMA")
-  plot(df_tree$NJ, "unrooted")
-  plot(df_tree$ML)
-
-  phangorn::plotBS(df_tree$ML$tree, df_tree$ML_bs, p = 20, frame = "circle")
-  phangorn::plotBS(
-    df_tree$ML$tree,
-    df_tree$ML_bs,
-    p = 20,
-    frame = "circle",
-    method = "TBE"
-  )
-  plot(phangorn::consensusNet(df_tree$ML_bs))
-  plot(phangorn::consensusNet(df_tree$NJ_bs))
-  ps_tree <- merge_phyloseq(df, df_tree$ML$tree)
 }
 #> Cleaning suppress 0 taxa (  ) and 6 sample(s) ( AD26-005-H_S10_MERGED.fastq.gz / CB8-019-H_S70_MERGED.fastq.gz / DY5-004-H_S97_MERGED.fastq.gz / N23-002-B_S130_MERGED.fastq.gz / NVABM0244-M_S137_MERGED.fastq.gz / T28-ABM602-B_S162_MERGED.fastq.gz ).
 #> Number of non-matching ASV 0
@@ -170,21 +154,5 @@ if (requireNamespace("phangorn")) {
 #> optimize edge weights:  -4308.211 --> -4308.21 
 #> optimize topology:  -4308.21 --> -4308.21  NNI moves:  0 
 #> optimize edge weights:  -4308.21 --> -4308.21 
-
-
-
-
-
-
-
-
-#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
-#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
-#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
-#> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
-#> Also defined by ‘RNeXML’
 # }
 ```

@@ -128,7 +128,7 @@ This function is mainly a wrapper of the work of others. Please cite
 
 VSEARCH can be downloaded from <https://github.com/torognes/vsearch>.
 More information in the associated publication
-<https://pubmed.ncbi.nlm.nih.gov/27781170>.
+[doi:10.7717/peerj.2584](https://doi.org/10.7717/peerj.2584) .
 
 ## See also
 

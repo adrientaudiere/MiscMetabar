@@ -126,37 +126,4 @@ if (requireNamespace("treemapify")) {
 }
 #> Loading required namespace: treemapify
 #> Cleaning suppress 0 taxa and 5 samples.
-
-# \donttest{
-if (requireNamespace("treemapify")) {
-  treemap_pq(
-    clean_pq(subset_taxa(
-      data_fungi_sp_known,
-      Phylum == "Basidiomycota"
-    )),
-    "Order", "Class",
-    log10trans = FALSE
-  )
-  treemap_pq(
-    clean_pq(subset_taxa(
-      data_fungi_sp_known,
-      Phylum == "Basidiomycota"
-    )),
-    "Order", "Class",
-    nb_seq = FALSE, log10trans = FALSE
-  )
-  treemap_pq(
-    clean_pq(subset_taxa(
-      data_fungi_sp_known,
-      Phylum == "Basidiomycota"
-    )),
-    "Order", "Class",
-    show_count = TRUE, log10trans = FALSE
-  )
-}
-#> Cleaning suppress 0 taxa and 5 samples.
-#> Cleaning suppress 0 taxa and 5 samples.
-#> Cleaning suppress 0 taxa and 5 samples.
-
-# }
 ```

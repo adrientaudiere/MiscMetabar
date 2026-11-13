@@ -187,21 +187,4 @@ data_f <- prune_samples(
 p <- hill_pq(data_f, "Height", q = c(0, 1))
 #> 2 out of 2 Hill scales do not show any global trends with you factor Height. Tuckey HSD plot is not informative for those Hill scales. Letters are not printed for those Hill scales
 p[[1]] + theme(legend.position = "none")
-
-if (FALSE) { # \dontrun{
-if (requireNamespace("multcompView")) {
-  p2 <- hill_pq(data_fungi_mini, "Time",
-    correction_for_sample_size = FALSE,
-    letters = TRUE, add_points = TRUE,
-    plot_with_tuckey = FALSE
-  )
-  if (requireNamespace("patchwork")) {
-    patchwork::wrap_plots(p2, guides = "collect")
-  }
-  p3 <- hill_pq(data_fungi_mini, "Height",
-    letters = TRUE, vioplot = TRUE,
-    add_points = TRUE
-  )
-}
-} # }
 ```

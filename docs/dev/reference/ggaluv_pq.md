@@ -152,29 +152,4 @@ if (requireNamespace("ggalluvial")) {
   ggaluv_pq(data_fungi_mini)
 }
 #> Loading required namespace: ggalluvial
-
-# \donttest{
-if (requireNamespace("ggalluvial")) {
-  library(ggalluvial)
-  ggaluv_pq(data_fungi_mini)
-
-  ggaluv_pq(data_fungi_mini, type = "nb_taxa") +
-    geom_text(stat = "stratum", size = 1.8)
-
-  ggaluv_pq(data_fungi_mini,
-    wrap_factor = "Height",
-    by_sample = TRUE,
-    type = "nb_taxa"
-  ) +
-    facet_wrap("Height")
-
-  ggaluv_pq(data_fungi_mini,
-    width = 0.9, min.size = 10,
-    type = "nb_taxa", taxa_ranks = c("Phylum", "Class", "Order", "Family", "Genus")
-  ) + coord_flip() +
-    scale_x_discrete(limits = rev)
-}
-#> Warning: `group` has missing values; corresponding samples will be dropped
-
-# }
 ```

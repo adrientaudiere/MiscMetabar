@@ -121,19 +121,4 @@ if (requireNamespace("indicspecies")) {
 #> 10 ASV34 0.154  0.266  0.387  
 #> # ℹ 35 more rows
 # }
-if (FALSE) { # \dontrun{
-if (requireNamespace("indicspecies")) {
-  strassoc_pq(
-    subset_samples(data_fungi_mini, !is.na(Height)),
-    fact = "Height",
-    func = "A"
-  )
-  strassoc_pq(
-    subset_samples(data_fungi_mini, !is.na(Height)),
-    fact = "Height",
-    func = "IndVal.g",
-    nboot_ci = 99
-  )
-}
-} # }
 ```

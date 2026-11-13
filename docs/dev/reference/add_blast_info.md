@@ -61,11 +61,17 @@ Adrien Taudière
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
 add_blast_info(data_fungi_mini,
   fasta_for_db = system.file("extdata", "mini_UNITE_fungi.fasta.gz",
     package = "MiscMetabar"
   )
 )
-} # }
+#> Build the database from fasta_for_db
+#> Blast refseq from physeq object against the database
+#> Add 9 columns to taxonomic table
+#> phyloseq-class experiment-level object
+#> otu_table()   OTU Table:         [ 45 taxa and 137 samples ]
+#> sample_data() Sample Data:       [ 137 samples by 7 sample variables ]
+#> tax_table()   Taxonomy Table:    [ 45 taxa by 21 taxonomic ranks ]
+#> refseq()      DNAStringSet:      [ 45 reference sequences ]
 ```

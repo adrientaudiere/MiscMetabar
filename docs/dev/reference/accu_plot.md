@@ -138,21 +138,5 @@ GP <- rarefy_pq(subset_samples_pq(GP, sample_sums(GP) > 3000), replace = TRUE)
 #> Found more than one class "phylo" in cache; using the first, from namespace 'phyloseq'
 #> Also defined by ‘RNeXML’
 p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10)
-p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, step = 10)
-#> Warning: no non-missing arguments to max; returning -Inf
-
-p + theme(legend.position = "none")
-#> Warning: Removed 8 rows containing missing values or values outside the scale range
-#> (`geom_ribbon()`).
-#> Warning: Removed 8 rows containing missing values or values outside the scale range
-#> (`geom_line()`).
-
-
-p + xlim(c(0, 400))
-#> Warning: Removed 3256 rows containing missing values or values outside the scale range
-#> (`geom_ribbon()`).
-#> Warning: Removed 3256 rows containing missing values or values outside the scale range
-#> (`geom_line()`).
-
 # }
 ```

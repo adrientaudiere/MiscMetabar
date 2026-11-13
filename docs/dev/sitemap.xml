@@ -75,6 +75,7 @@
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/dist_pos_control.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/distri_1_taxa.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/divent_hill_matrix_pq.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/diversity_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/fac2col.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/fastp.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/fastq_to_fasta.html</loc></url>
@@ -83,6 +84,7 @@
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/filter_asv_blast.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/filter_trim.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/find_itsx.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/find_itsxpress.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/find_mmseqs2.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/find_vsearch.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/format2dada2.html</loc></url>
@@ -110,6 +112,7 @@
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/iNEXT_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/index.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/install_itsx.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/install_itsxpress.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/install_mmseqs2.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/install_vsearch.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_blastn_installed.html</loc></url>
@@ -117,6 +120,7 @@
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_falco_installed.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_fastp_installed.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_itsx_installed.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_itsxpress_installed.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_krona_installed.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_mafft_installed.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_mmseqs2_installed.html</loc></url>
@@ -125,6 +129,7 @@
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_swarm_installed.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/is_vsearch_installed.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/itsx_pq.html</loc></url>
+<url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/itsxpress_pq.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/krona.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/learn_idtaxa.html</loc></url>
 <url><loc>https://adrientaudiere.github.io/MiscMetabar/dev/reference/lefser_pq.html</loc></url>

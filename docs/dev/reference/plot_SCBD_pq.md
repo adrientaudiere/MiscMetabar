@@ -74,14 +74,5 @@ if (requireNamespace("adespatial")) {
 }
 #> Taxa are now in columns.
 
-if (requireNamespace("adespatial")) {
-  plot_SCBD_pq(data_fungi_mini,
-    tax_level = "Class", tax_col = "Phylum",
-    min_SCBD = 0
-  ) +
-    geom_jitter()
-}
-#> Taxa are now in columns.
-
 # }
 ```

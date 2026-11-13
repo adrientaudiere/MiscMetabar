@@ -121,8 +121,7 @@ if (requireNamespace("vegan")) {
 }
 #> Taxa are now in columns.
 
-# }
-if (FALSE) { # \dontrun{
+
 if (requireNamespace("vegan")) {
   res_var_2 <- var_par_rarperm_pq(
     data_fungi_woNA,
@@ -142,5 +141,11 @@ if (requireNamespace("vegan")) {
     show_quantiles = TRUE
   )
 }
-} # }
+#> Warning: `var_par_rarperm_pq()` was deprecated in MiscMetabar 0.17.0.
+#> ℹ Please use `bootpq::var_par_rarperm_pq()` instead.
+#> Taxa are now in columns.
+#>   |                                                          |                                                  |   0%  |                                                          |=========================                         |  50%  |                                                          |==================================================| 100%
+
+
+# }
 ```
