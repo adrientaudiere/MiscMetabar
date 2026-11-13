@@ -175,13 +175,6 @@ graph_test_pq <- function(
 #' \donttest{
 #' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE)
 #' }
-#' \dontrun{
-#' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = NULL)
-#' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "onedf")
-#' adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "margin")
-#' adonis_pq(enterotype, "SeqTech", dist_method = "jaccard")
-#' adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison")
-#' }
 #' @export
 #' @author Adrien Taudière
 #' @details
@@ -1677,8 +1670,7 @@ var_par_pq <-
 #'     dbrda_computation = TRUE
 #'   )
 #' }
-#' }
-#' \dontrun{
+#'
 #' plot_var_part_pq(res_var_2)
 #' }
 #' @details

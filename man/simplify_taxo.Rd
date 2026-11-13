@@ -83,8 +83,11 @@ cbind(
   )@tax_table[, "Species"],
   d_fm@tax_table[, "Species"]
 )
-\dontrun{
+\donttest{
 # Replace PR2 placeholder unknowns (_X, _XX, _XXX, _XXX_sp., Genus_sp.) with NA
+pq_pr2 <- data_fungi_mini
+pq_pr2@tax_table[1:4, "Genus"] <- c("Fungi_X", "Fungi_XX", "Agaricales_XXX", "Mycena")
+pq_pr2@tax_table[1:2, "Species"] <- c("Fungi_XXX_sp.", "Mycena_sp.")
 simplify_taxo(pq_pr2, pattern_to_NA = "_X+$|_sp\\\\.$")
 # Apply pattern_to_NA only to the Species column
 simplify_taxo(pq_pr2,

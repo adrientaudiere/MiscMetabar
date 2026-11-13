@@ -24,11 +24,8 @@
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows" && MiscMetabar::is_krona_installed()
 #' data("GlobalPatterns", package = "phyloseq")
 #' GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
-#' \dontrun{
-#' krona(GA, "Number.of.sequences.html")
-#' krona(GA, "Number.of.ASVs.html", nb_seq = FALSE)
-#' merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"))
-#' }
+#' krona(GA, file.path(tempdir(), "Number.of.sequences.html"))
+#' krona(GA, file.path(tempdir(), "Number.of.ASVs.html"), nb_seq = FALSE)
 #' @return A html file
 #' @export
 #' @seealso \code{\link{merge_krona}}
@@ -120,14 +117,12 @@ krona <-
 #' @param output path to the output file
 #'
 #' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows" && MiscMetabar::is_krona_installed()
-#' \dontrun{
 #' data("GlobalPatterns", package = "phyloseq")
 #' GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
-#' krona(GA, "Number.of.sequences.html", name = "Nb_seq_GP_acidobacteria")
-#' krona(GA, "Number.of.ASVs.html", nb_seq = FALSE, name = "Nb_asv_GP_acidobacteria")
-#' merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"), "mergeKrona.html")
-#' unlink(c("Number.of.sequences.html", "Number.of.ASVs.html", "mergeKrona.html"))
-#' }
+#' html_files <- file.path(tempdir(), c("Number.of.sequences.html", "Number.of.ASVs.html"))
+#' krona(GA, html_files[1], name = "Nb_seq_GP_acidobacteria")
+#' krona(GA, html_files[2], nb_seq = FALSE, name = "Nb_asv_GP_acidobacteria")
+#' merge_krona(html_files, file.path(tempdir(), "mergeKrona.html"))
 #' @return A html file
 #' @seealso \code{\link{krona}}
 #' @export

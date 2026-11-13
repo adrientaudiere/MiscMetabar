@@ -85,8 +85,7 @@ This function is mainly a wrapper of the work of others.
 Please cite cutadapt (\doi{10.14806/ej.17.1.200}).
 }
 \examples{
-\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows") withAutoprint(\{ # examplesIf}
-\dontrun{
+\dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows" && MiscMetabar::is_cutadapt_installed()) withAutoprint(\{ # examplesIf}
 cutadapt_remove_primers(system.file("extdata", package = "MiscMetabar"),
   "TTC",
   "GAA",
@@ -123,9 +122,6 @@ cutadapt_remove_primers(
   cutadapt_args = "-e 0.01",
   cmd_is_run = FALSE
 )
-
-unlink(tempdir(), recursive = TRUE)
-}
 \dontshow{\}) # examplesIf}
 }
 \author{

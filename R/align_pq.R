@@ -72,21 +72,21 @@
 #' ali
 #' }
 #'
-#' \dontrun{
-#' # The same alignment with MAFFT, much faster on large refseq slots
-#' ali_mafft <- align_pq(df, method = "mafft", verbose = TRUE)
+#' \donttest{
+#' if (MiscMetabar::is_mafft_installed()) {
+#'   # The same alignment with MAFFT, much faster on large refseq slots
+#'   ali_mafft <- align_pq(df, method = "mafft", verbose = TRUE)
 #'
-#' # A more accurate (and slower) MAFFT strategy
-#' ali_linsi <- align_pq(df, method = "mafft", mafft_method = "localpair")
+#'   # A more accurate (and slower) MAFFT strategy; `exec` gives an explicit
+#'   # path to the executable
+#'   ali_linsi <- align_pq(df, method = "mafft", mafft_method = "localpair")
 #'
-#' # An explicit path to the executable
-#' ali <- align_pq(df, method = "mafft", exec = "/usr/local/bin/mafft")
+#'   # Sequences can also be given directly
+#'   align_pq(phyloseq::refseq(df), method = "mafft")
 #'
-#' # Sequences can also be given directly
-#' align_pq(phyloseq::refseq(df), method = "mafft")
-#'
-#' # Feed the alignment to a tree builder or write it to a FASTA file
-#' Biostrings::writeXStringSet(ali_mafft, "refseq_aligned.fasta")
+#'   # Feed the alignment to a tree builder or write it to a FASTA file
+#'   Biostrings::writeXStringSet(ali_mafft, file.path(tempdir(), "refseq_aligned.fasta"))
+#' }
 #' }
 #' @export
 align_pq <- function(

@@ -48,16 +48,12 @@
 #' @return  the blast table
 #' @export
 #'
-#' @examples
-#' \dontrun{
-#' blastpath <- "...YOUR_PATH_TO_BLAST..."
+#' @examplesIf MiscMetabar::is_blastn_installed()
 #' blast_to_phyloseq(data_fungi,
 #'   seq2search = system.file("extdata", "ex.fasta",
 #'     package = "MiscMetabar", mustWork = TRUE
-#'   ),
-#'   blastpath = blastpath
+#'   )
 #' )
-#' }
 blast_to_phyloseq <- function(
   physeq,
   seq2search,
@@ -212,14 +208,12 @@ blast_to_phyloseq <- function(
 #'   slot as a database
 #' @return  a blast table
 #' @export
-#' @examples
-#' \dontrun{
+#' @examplesIf MiscMetabar::is_blastn_installed()
 #' blast_pq(data_fungi_mini,
 #'   fasta_for_db = system.file("extdata", "mini_UNITE_fungi.fasta.gz",
 #'     package = "MiscMetabar"
 #'   )
 #' )
-#' }
 blast_pq <- function(
   physeq,
   fasta_for_db = NULL,
@@ -449,14 +443,12 @@ blast_pq <- function(
 #' @return A new \code{\link[phyloseq]{phyloseq-class}} object, or NULL if no
 #'   taxa matched the blast database or if no taxa passed the filter criteria.
 #'   In either case, an informative message is printed.
-#' @examples
-#' \dontrun{
+#' @examplesIf MiscMetabar::is_blastn_installed()
 #' filter_asv_blast(data_fungi_mini,
 #'   fasta_for_db = system.file("extdata", "mini_UNITE_fungi.fasta.gz",
 #'     package = "MiscMetabar"
 #'   )
 #' )
-#' }
 filter_asv_blast <- function(
   physeq,
   fasta_for_db = NULL,
@@ -586,8 +578,7 @@ filter_taxa_blast <- filter_asv_blast
 #'   against un custom database and [MiscMetabar::blast_to_phyloseq()]  to use
 #'    `refseq` slot as a database
 #' @author Adrien Taudière
-#' @examples
-#' \dontrun{
+#' @examplesIf MiscMetabar::is_blastn_installed()
 #' # derep_list is the result of dada2::derepFastq()
 #' derep_list <- list(dada2::derepFastq(
 #'   system.file("extdata", "ex.fastq",
@@ -600,7 +591,6 @@ filter_taxa_blast <- filter_asv_blast
 #'     package = "MiscMetabar"
 #'   )
 #' )
-#' }
 blast_to_derep <- function(
   derep,
   seq2search,
@@ -779,14 +769,12 @@ blast_to_derep <- function(
 #' @export
 #'
 #' @author Adrien Taudière
-#' @examples
-#' \dontrun{
+#' @examplesIf MiscMetabar::is_blastn_installed()
 #' add_blast_info(data_fungi_mini,
 #'   fasta_for_db = system.file("extdata", "mini_UNITE_fungi.fasta.gz",
 #'     package = "MiscMetabar"
 #'   )
 #' )
-#' }
 add_blast_info <- function(
   physeq,
   fasta_for_db,
@@ -922,8 +910,7 @@ add_blast_info <- function(
 #' - If behavior == "add_to_phyloseq", return a new phyloseq object
 #' @export
 #' @author Adrien Taudière
-#' @examples
-#' \dontrun{
+#' @examplesIf MiscMetabar::is_blastn_installed()
 #' ref_fasta <- Biostrings::readDNAStringSet(system.file("extdata",
 #'   "mini_UNITE_fungi.fasta.gz",
 #'   package = "MiscMetabar", mustWork = TRUE
@@ -956,7 +943,6 @@ add_blast_info <- function(
 #'   behavior = "return_taxtab"
 #' )
 #' head(tax_mat)
-#' }
 assign_blastn <- function(
   physeq = NULL,
   ref_fasta = NULL,

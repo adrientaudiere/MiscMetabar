@@ -163,20 +163,14 @@ of \code{\link[=merge_taxa_vec]{merge_taxa_vec()}}.
 if (requireNamespace("DECIPHER")) {
   postcluster_pq(data_fungi_mini)
 }
+if (MiscMetabar::is_swarm_installed()) {
+  d_swarm <- postcluster_pq(data_fungi_mini, method = "swarm")
 }
-\dontrun{
-if (requireNamespace("DECIPHER")) {
-  postcluster_pq(data_fungi_mini, method_clusterize = "longest")
-
-  if (MiscMetabar::is_swarm_installed()) {
-    d_swarm <- postcluster_pq(data_fungi_mini, method = "swarm")
-  }
-  if (MiscMetabar::is_vsearch_installed()) {
-    d_vs <- postcluster_pq(data_fungi_mini, method = "vsearch")
-  }
-  if (MiscMetabar::is_mmseqs2_installed()) {
-    d_mm <- postcluster_pq(data_fungi_mini, method = "mmseqs2")
-  }
+if (MiscMetabar::is_vsearch_installed()) {
+  d_vs <- postcluster_pq(data_fungi_mini, method = "vsearch")
+}
+if (MiscMetabar::is_mmseqs2_installed()) {
+  d_mm <- postcluster_pq(data_fungi_mini, method = "mmseqs2")
 }
 }
 }

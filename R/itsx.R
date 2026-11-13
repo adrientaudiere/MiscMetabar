@@ -360,12 +360,11 @@ run_itsx_seqs <- function(
 #' fungi and other eukaryotes for analysis of environmental sequencing data.
 #' *Methods in Ecology and Evolution* 4: 914–919.
 #' \doi{10.1111/2041-210X.12073}
-#' @examples
-#' \dontrun{
-#' prelude <- install_itsx()
-#' d_its1 <- itsx_pq(data_fungi_mini, region = "ITS1", args_before_itsx = prelude)
+#' @examplesIf MiscMetabar::is_itsx_installed()
+#' # ITSx often lives in a conda environment: pass the string returned by
+#' # install_itsx() as `args_before_itsx`.
+#' d_its1 <- itsx_pq(data_fungi_mini, region = "ITS1")
 #' table(d_its1@tax_table[, "ITSx_origin"], useNA = "ifany")
-#' }
 #' @author Adrien Taudière
 #' @seealso [install_itsx()], [is_itsx_installed()], [cutadapt_remove_primers()]
 itsx_pq <- function(

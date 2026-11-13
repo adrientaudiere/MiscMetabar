@@ -16,8 +16,33 @@ at the level of 0.16.8:
   in `@examplesIf` and do not run when the software is not installed.
 * Heavy test files are skipped on CRAN with a file-level `skip_on_cran()`.
 
-* win-builder R-devel (Windows Server 2022, 2026-11-12): examples 198 s,
-  tests 119 s; 0 errors, 0 warnings, 1 note (the dev version number).
+## Examples in `\dontrun{}`
+
+The 22 help pages that keep a `\dontrun{}` block, by reason:
+
+* They download and install external software: `install_itsx()`,
+  `install_itsxpress()`, `install_mmseqs2()`, `install_vsearch()`.
+* They query a web service (FUNGuild, Open Tree of Life):
+  `add_funguild_info()`, `funguild_assign()`, `get_funguild_db()`,
+  `plot_guild_pq()`, `rotl_pq()`.
+* They need files the user provides or that an external program produces:
+  `lulu()`, `sam_data_matching_names()`.
+* They take from 6 s to several minutes, which the 10-minute check budget
+  cannot absorb: `add_new_taxonomy_pq()`, `ancombc_pq()`, `assign_dada2()`,
+  `assign_idtaxa()`, `hill_acc_pq()`, `hill_test_rarperm_pq()` (deprecated,
+  moved to bootpq), `iNEXT_pq()`, `learn_idtaxa()`, `plot_ancombc_pq()`,
+  `plot_volcano_pq()`, `signif_ancombc()`.
+
+Examples that only need an external program (BLAST, vsearch, MMseqs2, MAFFT,
+Krona, fastp, cutadapt, mumu, ITSx, ITSxpress) run when it is installed, via
+`@examplesIf` or `if ()`.
+
+* win-builder R-devel (r90876 ucrt, 2026-11-12): examples 216 s, tests
+  123 s; 0 errors, 0 warnings, 1 note (the dev version number).
+* R-hub (2026-11-12), `R CMD check --as-cran` with `--run-donttest`:
+  ubuntu-clang (R-devel r90876) examples 265 s + 420 s, tests 161 s;
+  ubuntu-gcc12 (R-devel r89874) examples 231 s + 372 s, tests 162 s;
+  windows (R-devel) OK. Status OK on all three.
 
 ## R CMD check results
 

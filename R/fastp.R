@@ -59,29 +59,30 @@
 #' (\doi{10.1093/bioinformatics/bty560}) if you use this function.
 #'
 #' @examples
-#' \dontrun{
-#' # Paired-end example
-#' fastp(
-#'   path_to_fastq = system.file("extdata", package = "MiscMetabar"),
-#'   folder_output = file.path(tempdir(), "qc_data"),
-#'   nproc = 8,
-#'   paired_end = TRUE
-#' )
-#'
-#' # Single-end example with extra options
-#' fastp(
-#'   path_to_fastq = "raw_data/",
-#'   folder_output = file.path(tempdir(), "qc_data"),
-#'   nproc = 8,
-#'   paired_end = FALSE,
-#'   extra_fastp_args = "--merge --n_base_limit 5 --dedup"
-#' )
-#'
 #' # Only build the commands, do not run them
 #' fastp(
 #'   path_to_fastq = system.file("extdata", package = "MiscMetabar"),
+#'   folder_output = file.path(tempdir(), "qc_data"),
 #'   cmd_is_run = FALSE
 #' )
+#'
+#' # Single-end commands with extra options
+#' fastp(
+#'   path_to_fastq = system.file("extdata", package = "MiscMetabar"),
+#'   paired_end = FALSE,
+#'   extra_fastp_args = "--n_base_limit 5 --dedup",
+#'   folder_output = file.path(tempdir(), "qc_data"),
+#'   cmd_is_run = FALSE
+#' )
+#'
+#' # Run fastp on paired-end reads
+#' if (MiscMetabar::is_fastp_installed()) {
+#'   fastp(
+#'     path_to_fastq = system.file("extdata", package = "MiscMetabar"),
+#'     folder_output = file.path(tempdir(), "qc_data"),
+#'     nproc = 2,
+#'     paired_end = TRUE
+#'   )
 #' }
 fastp <- function(
   path_to_fastq,

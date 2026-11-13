@@ -74,11 +74,9 @@ for your work.
 }
 \examples{
 \dontshow{if (MiscMetabar::is_mumu_installed()) withAutoprint(\{ # examplesIf}
-\dontrun{
 ntaxa(data_fungi_sp_known)
 ntaxa(mumu_pq(data_fungi_sp_known)$new_physeq)
 ntaxa(mumu_pq(data_fungi_sp_known, extra_mumu_args = "--minimum_match 90")$new_physeq)
-}
 \dontshow{\}) # examplesIf}
 }
 \references{

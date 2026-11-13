@@ -99,13 +99,6 @@ data(enterotype)
 \donttest{
 adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE)
 }
-\dontrun{
-adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = NULL)
-adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "onedf")
-adonis_pq(enterotype, "SeqTech*Enterotype", na_remove = TRUE, by = "margin")
-adonis_pq(enterotype, "SeqTech", dist_method = "jaccard")
-adonis_pq(enterotype, "SeqTech", dist_method = "robust.aitchison")
-}
 }
 \author{
 Adrien Taudière

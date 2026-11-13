@@ -593,8 +593,7 @@ accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
 #' data("GlobalPatterns", package = "phyloseq")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #' circle_pq(GP, "SampleType")
-#' }
-#' \dontrun{
+#'
 #' circle_pq(GP, "SampleType", add_nb_seq = FALSE)
 #' circle_pq(GP, "SampleType", taxa = "Class")
 #' }
@@ -1658,22 +1657,6 @@ multiplot <-
 #' )
 #' p <- hill_pq(data_f, "Height", q = c(0, 1))
 #' p[[1]] + theme(legend.position = "none")
-#' \dontrun{
-#' if (requireNamespace("multcompView")) {
-#'   p2 <- hill_pq(data_fungi_mini, "Time",
-#'     correction_for_sample_size = FALSE,
-#'     letters = TRUE, add_points = TRUE,
-#'     plot_with_tuckey = FALSE
-#'   )
-#'   if (requireNamespace("patchwork")) {
-#'     patchwork::wrap_plots(p2, guides = "collect")
-#'   }
-#'   p3 <- hill_pq(data_fungi_mini, "Height",
-#'     letters = TRUE, vioplot = TRUE,
-#'     add_points = TRUE
-#'   )
-#' }
-#' }
 #' @seealso [psmelt_samples_pq()] and [ggbetween_pq()]
 #' @references
 #' Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of
@@ -1968,12 +1951,6 @@ hill_pq <- function(
 #'   ))
 #'   p <- ggbetween_pq(data_f, fact = "Time", p.adjust.method = "BH")
 #'   p[[1]]
-#' }
-#' }
-#' \dontrun{
-#' if (requireNamespace("ggstatsplot")) {
-#'   ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE)
-#'   ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE, rarefy_by_sample = TRUE)
 #' }
 #' }
 #' @author Adrien Taudière
@@ -5420,8 +5397,7 @@ treemap_pq <- function(
 #'   )
 #'   plot_var_part_pq(res_var0)
 #' }
-#' }
-#' \dontrun{
+#'
 #' if (requireNamespace("vegan")) {
 #'   res_var_2 <- var_par_rarperm_pq(
 #'     data_fungi_woNA,
@@ -6126,7 +6102,7 @@ plot_refseq_extremity_pq <- function(
 #' @author Adrien Taudière
 #' @examples
 #' plot_refseq_pq(data_fungi_mini)
-#' \dontrun{
+#' \donttest{
 #' plot_refseq_pq(data_fungi_mini, q = c(2), first_n = 300)
 #' }
 #'
@@ -6412,36 +6388,6 @@ hill_curves_pq <- function(
 #' df_umap <- umap_pq(data_f, n_neighbors = 3)
 #' ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
 #'   geom_point(size = 2)
-#'
-#' \dontrun{
-#' df_uwot <- umap_pq(data_fungi_mini, pkg = "uwot")
-#' library(patchwork)
-#' physeq <- data_fungi_mini
-#' df_umap <- umap_pq(physeq, n_neighbors = 3)
-#' df_umap_tsne <- tsne_pq(data_fungi_mini)
-#' ((ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
-#'   geom_point(size = 2) +
-#'   ggtitle("UMAP")) +
-#'   (plot_ordination(physeq,
-#'     ordination = ordinate(physeq, method = "PCoA", distance = "bray"),
-#'     color = "Height"
-#'   ) + ggtitle("PCoA"))) /
-#'   ((ggplot(df_umap_tsne, aes(x = x_tsne, y = y_tsne, col = Height)) +
-#'     geom_point(size = 2) +
-#'     ggtitle("tsne")) +
-#'     (plot_ordination(physeq,
-#'       ordination = ordinate(physeq, method = "NMDS", distance = "bray"),
-#'       color = "Height"
-#'     ) + ggtitle("NMDS"))) +
-#'   patchwork::plot_layout(guides = "collect")
-#'
-#' (ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
-#'   geom_point(size = 2) +
-#'   ggtitle("umap::umap")) /
-#'   (ggplot(df_uwot, aes(x = x_umap, y = y_umap, col = Height)) +
-#'     geom_point(size = 2) +
-#'     ggtitle("uwot::umap2"))
-#' }
 #' @details
 #' UMAP is a **local** dimensionality-reduction technique: it preferentially
 #' preserves the neighbourhood structure of the original samples. It is
@@ -7527,15 +7473,6 @@ plot_ordination_pq <- function(
 #'
 #' @examples
 #' hill_bar_pq(data_fungi_mini, Height, q = 1)
-#' \dontrun{
-#' hill_bar_pq(data_fungi_mini, Height, q = 0)
-#' hill_bar_pq(data_fungi_mini, Height, q = c(0, 2), ncol = 2)
-#' hill_bar_pq(data_fungi_mini, Height,
-#'   q = c(0, 2),
-#'   y_labs = c(Hill_0 = "Richness", Hill_2 = "Simpson diversity")
-#' )
-#' hill_bar_pq(data_fungi_mini, Height, add_letters = FALSE)
-#' }
 #'
 #' @seealso [hill_pq()], [psmelt_samples_pq()], [ggbetween_pq()]
 hill_bar_pq <- function(

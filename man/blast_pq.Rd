@@ -84,13 +84,13 @@ a blast table
 Use the blast software.
 }
 \examples{
-\dontrun{
+\dontshow{if (MiscMetabar::is_blastn_installed()) withAutoprint(\{ # examplesIf}
 blast_pq(data_fungi_mini,
   fasta_for_db = system.file("extdata", "mini_UNITE_fungi.fasta.gz",
     package = "MiscMetabar"
   )
 )
-}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=blast_to_phyloseq]{blast_to_phyloseq()}} to use \code{refseq}

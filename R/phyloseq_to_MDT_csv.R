@@ -48,11 +48,10 @@
 #' out_dir <- file.path(tempdir(), "mdt_csv")
 #' files <- phyloseq_to_MDT_csv(clean_pq(data_fungi_mini), path = out_dir)
 #' file.exists(files)
-#' unlink(out_dir, recursive = TRUE)
-#' }
-#' \dontrun{
+#'
 #' # Tab-separated output (MDT-favored TSV)
-#' phyloseq_to_MDT_csv(data_fungi_mini, path = "mdt", sep = "\t")
+#' phyloseq_to_MDT_csv(data_fungi_mini, path = out_dir, sep = "\t")
+#' unlink(out_dir, recursive = TRUE)
 #' }
 phyloseq_to_MDT_csv <- function(
   physeq,

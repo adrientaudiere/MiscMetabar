@@ -1009,20 +1009,14 @@ track_wkflow_samples <- function(
 #' if (requireNamespace("DECIPHER")) {
 #'   postcluster_pq(data_fungi_mini)
 #' }
+#' if (MiscMetabar::is_swarm_installed()) {
+#'   d_swarm <- postcluster_pq(data_fungi_mini, method = "swarm")
 #' }
-#' \dontrun{
-#' if (requireNamespace("DECIPHER")) {
-#'   postcluster_pq(data_fungi_mini, method_clusterize = "longest")
-#'
-#'   if (MiscMetabar::is_swarm_installed()) {
-#'     d_swarm <- postcluster_pq(data_fungi_mini, method = "swarm")
-#'   }
-#'   if (MiscMetabar::is_vsearch_installed()) {
-#'     d_vs <- postcluster_pq(data_fungi_mini, method = "vsearch")
-#'   }
-#'   if (MiscMetabar::is_mmseqs2_installed()) {
-#'     d_mm <- postcluster_pq(data_fungi_mini, method = "mmseqs2")
-#'   }
+#' if (MiscMetabar::is_vsearch_installed()) {
+#'   d_vs <- postcluster_pq(data_fungi_mini, method = "vsearch")
+#' }
+#' if (MiscMetabar::is_mmseqs2_installed()) {
+#'   d_mm <- postcluster_pq(data_fungi_mini, method = "mmseqs2")
 #' }
 #' }
 #' @references
@@ -1734,11 +1728,9 @@ lulu_pq <- function(
 #' @export
 #' @seealso [lulu_pq()]
 #' @examplesIf MiscMetabar::is_mumu_installed()
-#' \dontrun{
 #' ntaxa(data_fungi_sp_known)
 #' ntaxa(mumu_pq(data_fungi_sp_known)$new_physeq)
 #' ntaxa(mumu_pq(data_fungi_sp_known, extra_mumu_args = "--minimum_match 90")$new_physeq)
-#' }
 #' @author Frédéric Mahé
 #'   & Adrien Taudière \email{adrien.taudiere@@zaclys.net}
 #' @references
@@ -3244,8 +3236,11 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #'   "mini_UNITE_fungi.fasta.gz",
 #'   package = "MiscMetabar", mustWork = TRUE
 #' )
-#' add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "dada2")
-#' add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "dada2_2steps")
+#' # dada2 methods need a reference in dada2 format
+#' ref_dada2 <- file.path(tempdir(), "mini_UNITE_fungi_dada2.fasta")
+#' format2dada2(fasta_db = ref_fasta, output_path = ref_dada2)
+#' add_new_taxonomy_pq(data_fungi_mini, ref_dada2, method = "dada2")
+#' add_new_taxonomy_pq(data_fungi_mini, ref_dada2, method = "dada2_2steps")
 #' add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "sintax")
 #' add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "lca")
 #' add_new_taxonomy_pq(data_fungi_mini, ref_fasta, method = "idtaxa")
@@ -3262,7 +3257,7 @@ select_one_sample <- function(physeq, sam_name, silent = FALSE) {
 #' )
 #' dp_tophit <- add_new_taxonomy_pq(data_fungi_mini, ref_fasta,
 #'   method = "blastn", min_id = 80, min_cover = 50, min_bit_score = 20,
-#'   min_e_value = 1e-20, method_algo = "top_hit"
+#'   min_e_value = 1e-20, method_algo = "top-hit"
 #' )
 #' }
 #' @author Adrien Taudière
@@ -4252,8 +4247,7 @@ physeq_or_string_to_dna <- function(physeq = NULL, dna_seq = NULL) {
 #' @export
 #' @author Adrien Taudière
 #'
-#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows"
-#' \dontrun{
+#' @examplesIf tolower(Sys.info()[["sysname"]]) != "windows" && MiscMetabar::is_cutadapt_installed()
 #' cutadapt_remove_primers(system.file("extdata", package = "MiscMetabar"),
 #'   "TTC",
 #'   "GAA",
@@ -4290,9 +4284,6 @@ physeq_or_string_to_dna <- function(physeq = NULL, dna_seq = NULL) {
 #'   cutadapt_args = "-e 0.01",
 #'   cmd_is_run = FALSE
 #' )
-#'
-#' unlink(tempdir(), recursive = TRUE)
-#' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
 #'   Please cite cutadapt (\doi{10.14806/ej.17.1.200}).
@@ -4496,13 +4487,8 @@ cutadapt_remove_primers <- function(
 #' \donttest{
 #' data_f5 <- prune_samples(sample_names(data_fungi_mini)[1:5], data_fungi_mini)
 #' psm_tib <- psmelt_samples_pq(data_f5, hill_scales = c(0, 2, 7))
-#' }
-#' \dontrun{
-#' if (requireNamespace("ggstatsplot")) {
-#'   ggstatsplot::ggbetweenstats(psm_tib, Height, Hill_0)
-#'   ggstatsplot::ggbetweenstats(psm_tib, Height, Hill_7)
-#' }
-#' psm_tib_tax <- psmelt_samples_pq(data_fungi_mini, taxa_ranks = c("Class", "Family"))
+#'
+#' psm_tib_tax <- psmelt_samples_pq(data_f5, taxa_ranks = c("Class", "Family"))
 #' ggplot(filter(psm_tib_tax, Abundance > 2000), aes(y = Family, x = Abundance, fill = Time)) +
 #'   geom_bar(stat = "identity") +
 #'   facet_wrap(~Height)

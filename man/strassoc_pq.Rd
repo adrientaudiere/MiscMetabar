@@ -78,21 +78,6 @@ if (requireNamespace("indicspecies")) {
   )
 }
 }
-\dontrun{
-if (requireNamespace("indicspecies")) {
-  strassoc_pq(
-    subset_samples(data_fungi_mini, !is.na(Height)),
-    fact = "Height",
-    func = "A"
-  )
-  strassoc_pq(
-    subset_samples(data_fungi_mini, !is.na(Height)),
-    fact = "Height",
-    func = "IndVal.g",
-    nboot_ci = 99
-  )
-}
-}
 }
 \seealso{
 \code{\link[=multipatt_pq]{multipatt_pq()}}, \code{\link[indicspecies:strassoc]{indicspecies::strassoc()}}

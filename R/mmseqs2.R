@@ -419,8 +419,7 @@ install_mmseqs2 <- function(
 #'   Mirdita M, Steinegger M, Breitwieser F, Soding J, Levy Karin E:
 #'   Fast and sensitive taxonomic assignment to metagenomic contigs.
 #'   Bioinformatics (2021).
-#' @examples
-#' \dontrun{
+#' @examplesIf MiscMetabar::is_mmseqs2_installed()
 #' ref_fasta <- Biostrings::readDNAStringSet(system.file("extdata",
 #'   "mini_UNITE_fungi.fasta.gz",
 #'   package = "MiscMetabar", mustWork = TRUE
@@ -437,7 +436,6 @@ install_mmseqs2 <- function(
 #'   ref_fasta = ref_fasta,
 #'   behavior = "add_to_phyloseq"
 #' )
-#' }
 assign_mmseqs2 <- function(
   physeq = NULL,
   ref_fasta = NULL,

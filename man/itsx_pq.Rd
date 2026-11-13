@@ -115,11 +115,12 @@ partial sequences (e.g. an ITS1 amplicon ending inside the 5.8S) it can
 be wrong, so check it before using \code{remove_other_origin}.
 }
 \examples{
-\dontrun{
-prelude <- install_itsx()
-d_its1 <- itsx_pq(data_fungi_mini, region = "ITS1", args_before_itsx = prelude)
+\dontshow{if (MiscMetabar::is_itsx_installed()) withAutoprint(\{ # examplesIf}
+# ITSx often lives in a conda environment: pass the string returned by
+# install_itsx() as `args_before_itsx`.
+d_its1 <- itsx_pq(data_fungi_mini, region = "ITS1")
 table(d_its1@tax_table[, "ITSx_origin"], useNA = "ifany")
-}
+\dontshow{\}) # examplesIf}
 }
 \references{
 Bengtsson-Palme J, Ryberg M, Hartmann M, et al. (2013). Improved software

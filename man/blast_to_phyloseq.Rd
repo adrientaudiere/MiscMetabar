@@ -84,15 +84,13 @@ the blast table
 Use the blast software.
 }
 \examples{
-\dontrun{
-blastpath <- "...YOUR_PATH_TO_BLAST..."
+\dontshow{if (MiscMetabar::is_blastn_installed()) withAutoprint(\{ # examplesIf}
 blast_to_phyloseq(data_fungi,
   seq2search = system.file("extdata", "ex.fasta",
     package = "MiscMetabar", mustWork = TRUE
-  ),
-  blastpath = blastpath
+  )
 )
-}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=blast_pq]{blast_pq()}} to use \code{refseq} slot as query sequences

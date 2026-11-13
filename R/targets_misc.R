@@ -166,11 +166,11 @@ rename_samples_otu_table <- function(physeq, names_of_samples) {
 #' derep_fw <- dada2::derepFastq(filt_fastq_fw[1])
 #' derep_fw
 #'
-#' \dontrun{
+#' \donttest{
 #' filt_fastq_pe <- filter_trim(testFastqs_fw,
 #'   testFastqs_rev,
-#'   output_fw = paste0(tempdir(), "/", "fw"),
-#'   output_rev = paste0(tempdir(), "rev")
+#'   output_fw = file.path(tempdir(), "fw"),
+#'   output_rev = file.path(tempdir(), "rev")
 #' )
 #' derep_fw_pe <- dada2::derepFastq(filt_fastq_pe[[1]])
 #' derep_rv_pe <- dada2::derepFastq(filt_fastq_pe[[2]])

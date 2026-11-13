@@ -92,8 +92,7 @@ if (requireNamespace("vegan")) {
     dbrda_computation = TRUE
   )
 }
-}
-\dontrun{
+
 plot_var_part_pq(res_var_2)
 }
 }

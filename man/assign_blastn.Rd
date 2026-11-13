@@ -145,7 +145,7 @@ ready for \code{\link[phyloseq:tax_table]{phyloseq::tax_table()}}
 Use the blast software.
 }
 \examples{
-\dontrun{
+\dontshow{if (MiscMetabar::is_blastn_installed()) withAutoprint(\{ # examplesIf}
 ref_fasta <- Biostrings::readDNAStringSet(system.file("extdata",
   "mini_UNITE_fungi.fasta.gz",
   package = "MiscMetabar", mustWork = TRUE
@@ -178,7 +178,7 @@ tax_mat <- assign_blastn(seq2search = seqs_to_assign,
   behavior = "return_taxtab"
 )
 head(tax_mat)
-}
+\dontshow{\}) # examplesIf}
 }
 \author{
 Adrien Taudière

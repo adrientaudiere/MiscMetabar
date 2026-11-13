@@ -54,15 +54,14 @@ Please cite \href{https://github.com/torognes/vsearch}{vsearch}.
 \dontshow{if (MiscMetabar::is_vsearch_installed()) withAutoprint(\{ # examplesIf}
 \donttest{
 data_fungi_nochim <- chimera_removal_vs(data_fungi)
-}
-\dontrun{
+
 # Adding a chimeric sequence for the example
 data_fungi_with_chim <- data_fungi
 data_fungi_with_chim@refseq["ASV1710"] <- Biostrings::xscat(
   Biostrings::subseq(data_fungi_with_chim@refseq[1], start = 1, end = 150),
   Biostrings::subseq(data_fungi_with_chim@refseq[4], start = 151, end = 300)
 )
-data_fungi_nochim <- chimera_removal_vs(data_fungi)
+data_fungi_nochim <- chimera_removal_vs(data_fungi_with_chim)
 
 # Higher value of abskew parameter is less stringent
 data_fungi_nochim_16 <- chimera_removal_vs(data_fungi,

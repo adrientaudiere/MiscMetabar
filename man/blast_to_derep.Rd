@@ -90,7 +90,7 @@ A blast table
 Use the blast software.
 }
 \examples{
-\dontrun{
+\dontshow{if (MiscMetabar::is_blastn_installed()) withAutoprint(\{ # examplesIf}
 # derep_list is the result of dada2::derepFastq()
 derep_list <- list(dada2::derepFastq(
   system.file("extdata", "ex.fastq",
@@ -103,7 +103,7 @@ blast_to_derep(
     package = "MiscMetabar"
   )
 )
-}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=blast_pq]{blast_pq()}} to use \code{refseq} slot as query sequences

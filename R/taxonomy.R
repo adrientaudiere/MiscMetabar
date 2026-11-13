@@ -499,7 +499,7 @@ format2sintax <- function(
 #' @return Either an object of class DNAStringSet or a vector of reformated names
 #' @seealso [format2dada2_species()], [format2sintax()]
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' f <- system.file("extdata", "mini_UNITE_fungi.fasta.gz",
 #'   package = "MiscMetabar"
 #' )

@@ -157,15 +157,6 @@ layout automatically.
 }
 \examples{
 hill_bar_pq(data_fungi_mini, Height, q = 1)
-\dontrun{
-hill_bar_pq(data_fungi_mini, Height, q = 0)
-hill_bar_pq(data_fungi_mini, Height, q = c(0, 2), ncol = 2)
-hill_bar_pq(data_fungi_mini, Height,
-  q = c(0, 2),
-  y_labs = c(Hill_0 = "Richness", Hill_2 = "Simpson diversity")
-)
-hill_bar_pq(data_fungi_mini, Height, add_letters = FALSE)
-}
 
 }
 \seealso{

@@ -88,14 +88,6 @@
 #'   plot_overview_pq(ps, fact = "Height", add_venn = FALSE, add_umap = FALSE)
 #' }
 #' }
-#' \dontrun{
-#' # Full overview with all panels (factor with 2 levels -> Venn).
-#' plot_overview_pq(data_fungi_mini, fact = "Height", one_plot = TRUE)
-#'
-#' # Numeric variable -> Hill scatter (ggscatt_pq) + gradient-colored
-#' # ordination/UMAP, Venn/UpSet automatically skipped.
-#' plot_overview_pq(data_fungi_mini, fact = "Time", add_umap = FALSE)
-#' }
 plot_overview_pq <- function(
   physeq,
   fact,

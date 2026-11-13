@@ -269,16 +269,17 @@ itsxpress_taxa_groups <- c(
 #'   region = "ITS2",
 #'   cmd_is_run = FALSE
 #' )
-#' \dontrun{
-#' prelude <- install_itsxpress()
-#' itsxpress_pq(
-#'   path_to_fastq = system.file("extdata", package = "MiscMetabar"),
-#'   folder_output = file.path(tempdir(), "itsxpress_out"),
-#'   region = "ITS1",
-#'   taxa = "Fungi",
-#'   nproc = 2,
-#'   args_before_itsxpress = prelude
-#' )
+#'
+#' # Run ITSxpress (the string returned by install_itsxpress() can be passed
+#' # as `args_before_itsxpress` when it lives in a conda environment)
+#' if (MiscMetabar::is_itsxpress_installed()) {
+#'   itsxpress_pq(
+#'     path_to_fastq = system.file("extdata", package = "MiscMetabar"),
+#'     folder_output = file.path(tempdir(), "itsxpress_out"),
+#'     region = "ITS1",
+#'     taxa = "Fungi",
+#'     nproc = 2
+#'   )
 #' }
 itsxpress_pq <- function(
   path_to_fastq,

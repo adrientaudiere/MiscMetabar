@@ -56,21 +56,6 @@
 #'   )
 #' }
 #' }
-#' \dontrun{
-#' if (requireNamespace("indicspecies")) {
-#'   strassoc_pq(
-#'     subset_samples(data_fungi_mini, !is.na(Height)),
-#'     fact = "Height",
-#'     func = "A"
-#'   )
-#'   strassoc_pq(
-#'     subset_samples(data_fungi_mini, !is.na(Height)),
-#'     fact = "Height",
-#'     func = "IndVal.g",
-#'     nboot_ci = 99
-#'   )
-#' }
-#' }
 strassoc_pq <- function(
   physeq,
   fact,

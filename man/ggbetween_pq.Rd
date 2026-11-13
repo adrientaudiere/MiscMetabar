@@ -88,12 +88,6 @@ if (requireNamespace("ggstatsplot")) {
   p[[1]]
 }
 }
-\dontrun{
-if (requireNamespace("ggstatsplot")) {
-  ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE)
-  ggbetween_pq(data_fungi, fact = "Height", one_plot = TRUE, rarefy_by_sample = TRUE)
-}
-}
 }
 \references{
 Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of

@@ -149,7 +149,7 @@ Fast and sensitive taxonomic assignment to metagenomic contigs.
 Bioinformatics (2021).
 }
 \examples{
-\dontrun{
+\dontshow{if (MiscMetabar::is_mmseqs2_installed()) withAutoprint(\{ # examplesIf}
 ref_fasta <- Biostrings::readDNAStringSet(system.file("extdata",
   "mini_UNITE_fungi.fasta.gz",
   package = "MiscMetabar", mustWork = TRUE
@@ -166,7 +166,7 @@ physeq_new <- assign_mmseqs2(
   ref_fasta = ref_fasta,
   behavior = "add_to_phyloseq"
 )
-}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=assign_blastn]{assign_blastn()}}, \code{\link[=assign_sintax]{assign_sintax()}}, \code{\link[=assign_vsearch_lca]{assign_vsearch_lca()}}

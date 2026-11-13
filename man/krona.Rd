@@ -55,11 +55,8 @@ you use this function.
 \dontshow{if (tolower(Sys.info()[["sysname"]]) != "windows" && MiscMetabar::is_krona_installed()) withAutoprint(\{ # examplesIf}
 data("GlobalPatterns", package = "phyloseq")
 GA <- subset_taxa(GlobalPatterns, Phylum == "Acidobacteria")
-\dontrun{
-krona(GA, "Number.of.sequences.html")
-krona(GA, "Number.of.ASVs.html", nb_seq = FALSE)
-merge_krona(c("Number.of.sequences.html", "Number.of.ASVs.html"))
-}
+krona(GA, file.path(tempdir(), "Number.of.sequences.html"))
+krona(GA, file.path(tempdir(), "Number.of.ASVs.html"), nb_seq = FALSE)
 \dontshow{\}) # examplesIf}
 }
 \seealso{

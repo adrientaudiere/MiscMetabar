@@ -82,8 +82,7 @@ if (requireNamespace("vegan")) {
   )
   plot_var_part_pq(res_var0)
 }
-}
-\dontrun{
+
 if (requireNamespace("vegan")) {
   res_var_2 <- var_par_rarperm_pq(
     data_fungi_woNA,

@@ -60,36 +60,6 @@ data_f <- prune_samples(
 df_umap <- umap_pq(data_f, n_neighbors = 3)
 ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
   geom_point(size = 2)
-
-\dontrun{
-df_uwot <- umap_pq(data_fungi_mini, pkg = "uwot")
-library(patchwork)
-physeq <- data_fungi_mini
-df_umap <- umap_pq(physeq, n_neighbors = 3)
-df_umap_tsne <- tsne_pq(data_fungi_mini)
-((ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
-  geom_point(size = 2) +
-  ggtitle("UMAP")) +
-  (plot_ordination(physeq,
-    ordination = ordinate(physeq, method = "PCoA", distance = "bray"),
-    color = "Height"
-  ) + ggtitle("PCoA"))) /
-  ((ggplot(df_umap_tsne, aes(x = x_tsne, y = y_tsne, col = Height)) +
-    geom_point(size = 2) +
-    ggtitle("tsne")) +
-    (plot_ordination(physeq,
-      ordination = ordinate(physeq, method = "NMDS", distance = "bray"),
-      color = "Height"
-    ) + ggtitle("NMDS"))) +
-  patchwork::plot_layout(guides = "collect")
-
-(ggplot(df_umap, aes(x = x_umap, y = y_umap, col = Height)) +
-  geom_point(size = 2) +
-  ggtitle("umap::umap")) /
-  (ggplot(df_uwot, aes(x = x_umap, y = y_umap, col = Height)) +
-    geom_point(size = 2) +
-    ggtitle("uwot::umap2"))
-}
 }
 \references{
 Jeon, H., Park, J., Shin, S., & Seo, J. (2026). Stop Misusing t-SNE and UMAP

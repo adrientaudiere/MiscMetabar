@@ -42,13 +42,11 @@
 #' # Presence check (passes silently)
 #' verify_fact_pq(data_fungi_mini, fact = "Height")
 #'
-#' \dontrun{
 #' # Missing column: error lists the available sam_data columns
-#' verify_fact_pq(data_fungi_mini, fact = "Heigth")
+#' try(verify_fact_pq(data_fungi_mini, fact = "Heigth"))
 #'
 #' # bifactor with more than two levels: error (Height has 3 levels)
-#' verify_fact_pq(data_fungi_mini, bifactor = "Height")
-#' }
+#' try(verify_fact_pq(data_fungi_mini, bifactor = "Height"))
 #'
 #' # A genuine two-level column passes the bifactor check
 #' data_2h <- subset_samples_pq(
