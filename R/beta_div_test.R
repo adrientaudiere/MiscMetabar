@@ -1152,9 +1152,11 @@ plot_ancombc_pq <-
           scale_color_manual(values = c("grey70", "grey20")) +
           theme(legend.position = "none"))
 
-      p <-
-        marg_vio /
-        (p + xlim(layer_scales(marg_vio)$x$get_limits())) +
+      p <- patchwork::wrap_plots(
+        marg_vio,
+        p + xlim(layer_scales(marg_vio)$x$get_limits()),
+        ncol = 1
+      ) +
         patchwork::plot_layout(heights = c(1, 7), axes = "collect")
     }
     return(p)
