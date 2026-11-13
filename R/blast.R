@@ -120,7 +120,7 @@ blast_to_phyloseq <- function(
     message(paste0("Temporary files are located at ", tempdir()))
   } else {
     unlink(paste0(tempdir(), "/", "blast_result.txt"))
-    unlink(list.files(tempdir(), pattern = "dbase"))
+    unlink(list.files(tempdir(), pattern = "dbase", full.names = TRUE))
     unlink(paste0(tempdir(), "/", "db.fasta"))
   }
 
@@ -324,7 +324,7 @@ blast_pq <- function(
     message(paste0("Temporary files are located at ", tempdir()))
   } else {
     unlink(paste0(tempdir(), "/", "blast_result.txt"))
-    unlink(list.files(tempdir(), pattern = "dbase"))
+    unlink(list.files(tempdir(), pattern = "dbase", full.names = TRUE))
     unlink(paste0(tempdir(), "/", "db.fasta"))
     unlink(paste0(tempdir(), "/", "temp.fasta"))
   }
@@ -674,7 +674,7 @@ blast_to_derep <- function(
     message(paste0("Temporary files are located at ", tempdir()))
   } else {
     unlink(paste0(tempdir(), "/", "blast_result.txt"))
-    unlink(list.files(tempdir(), pattern = "dbase"))
+    unlink(list.files(tempdir(), pattern = "dbase", full.names = TRUE))
     unlink(paste0(tempdir(), "/", "db.fasta"))
   }
 

@@ -40,6 +40,14 @@ if (inherits(blast_error_or_not, "try-error")) {
     expect_error(blast_to_phyloseq(data_fungi_mini, "inst/extdata/nil.fasta"))
   })
 
+  test_that("blast_pq cleans tempdir, not the working directory", {
+    withr::local_dir(withr::local_tempdir())
+    file.create("dbase.nsq")
+    blast_pq(data_fungi_mini, path_db)
+    expect_true(file.exists("dbase.nsq"))
+    expect_length(list.files(tempdir(), pattern = "dbase"), 0)
+  })
+
   test_that("blast_pq works fine", {
     expect_s3_class(
       blast_df <-
