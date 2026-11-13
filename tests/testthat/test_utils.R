@@ -261,6 +261,9 @@ test_that("is_vsearch_installed works", {
 test_that("is_cutadapt_installed works", {
   suppressWarnings(result <- is_cutadapt_installed())
   expect_type(result, "logical")
+  expect_false(is_cutadapt_installed(
+    args_before_cutadapt = "no_such_prelude_cmd && "
+  ))
 })
 
 test_that("is_swarm_installed works", {

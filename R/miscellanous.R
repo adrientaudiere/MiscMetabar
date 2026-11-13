@@ -538,16 +538,16 @@ is_cutadapt_installed <- function(
     paste0(args_before_cutadapt, " cutadapt -h"),
     paste0(tempdir(), "/script_cutadapt.sh")
   )
-  cutadapt_error_or_not <- try(
-    system(
-      paste0("bash ", tempdir(), "/script_cutadapt.sh 2>&1"),
-      intern = TRUE
-    ),
-    silent = TRUE
-  )
+  # A failing command only raises a warning, so the exit status is checked.
+  status <- suppressWarnings(system2(
+    "bash",
+    paste0(tempdir(), "/script_cutadapt.sh"),
+    stdout = FALSE,
+    stderr = FALSE
+  ))
   unlink(paste0(tempdir(), "/script_cutadapt.sh"))
 
-  return(!inherits(cutadapt_error_or_not, "try-error"))
+  return(identical(as.integer(status), 0L))
 }
 
 #' Test if falco is installed.
