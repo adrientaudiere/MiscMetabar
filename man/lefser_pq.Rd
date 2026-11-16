@@ -46,7 +46,7 @@ It is a wrapper of the \code{lefser::lefser()} and \code{lefser::lefserClades()}
 }}
 }
 \examples{
-\donttest{
+\dontshow{if (identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 if (requireNamespace("lefser") && requireNamespace("mia")) {
   res_lefse <- lefser_pq(data_fungi_mini,
     bifactor = "Height",
@@ -54,7 +54,7 @@ if (requireNamespace("lefser") && requireNamespace("mia")) {
   )
   lefser::lefserPlot(res_lefse)
 }
-}
+\dontshow{\}) # examplesIf}
 }
 \author{
 Adrien Taudière

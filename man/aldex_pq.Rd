@@ -35,7 +35,7 @@ It is a wrapper of the \code{ALDEx2::aldex()} function with default gamma=0.5.\i
 }}
 }
 \examples{
-\donttest{
+\dontshow{if (identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 if (requireNamespace("ALDEx2")) {
   res_aldex <- aldex_pq(data_fungi_mini,
     bifactor = "Height",
@@ -43,7 +43,7 @@ if (requireNamespace("ALDEx2")) {
   )
   ALDEx2::aldex.plot(res_aldex, type = "volcano")
 }
-}
+\dontshow{\}) # examplesIf}
 }
 \author{
 Adrien Taudière

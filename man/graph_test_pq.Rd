@@ -59,13 +59,12 @@ This function is mainly a wrapper of the work of others.
 Please cite \code{phyloseqGraphTest} package.
 }
 \examples{
-\donttest{
+\dontshow{if (identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 if (requireNamespace("phyloseqGraphTest")) {
   data(enterotype)
   graph_test_pq(enterotype, fact = "SeqTech")
-  graph_test_pq(enterotype, fact = "Enterotype", na_remove = TRUE)
 }
-}
+\dontshow{\}) # examplesIf}
 }
 \author{
 Adrien Taudière

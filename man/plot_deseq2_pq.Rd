@@ -76,7 +76,7 @@ Graphical representation of DESeq2 analysis.
 Please cite \code{DESeq2} package if you use chis function.
 }
 \examples{
-\donttest{
+\dontshow{if (identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 
 data("GlobalPatterns", package = "phyloseq")
 GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
@@ -89,7 +89,7 @@ if (requireNamespace("DESeq2")) {
     tax_table = GP@tax_table, color_rank = "Kingdom"
   )
 }
-}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[DESeq2]{DESeq}}

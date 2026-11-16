@@ -68,7 +68,7 @@ Please make a reference to \code{vegan::varpart()} if you
 use this function.
 }
 \examples{
-\donttest{
+\dontshow{if (identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 if (requireNamespace("vegan")) {
   data_fungi_woNA <- subset_samples(
     data_fungi_mini,
@@ -102,7 +102,7 @@ if (requireNamespace("vegan")) {
     show_quantiles = TRUE
   )
 }
-}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=var_par_rarperm_pq]{var_par_rarperm_pq()}}, \code{\link[=var_par_pq]{var_par_pq()}}

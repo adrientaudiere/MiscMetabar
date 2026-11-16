@@ -49,14 +49,14 @@ Please make a reference to \code{vegan::beta.div()} if you
 use this function.
 }
 \examples{
-\donttest{
+\dontshow{if (identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 if (requireNamespace("adespatial")) {
   plot_LCBD_pq(data_fungi_mini,
     nperm = 20, only_plot_significant = FALSE,
     pval = 0.2
   )
 }
-}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \link{LCBD_pq}, \code{\link[adespatial:beta.div]{adespatial::beta.div()}}

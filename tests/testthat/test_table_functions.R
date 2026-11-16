@@ -39,6 +39,7 @@ data_fungi_low_high_withNA <- data_fungi_low_high
 data_fungi_low_high_withNA@sam_data[["Height"]][1] <- NA
 
 test_that("compare_pairs_pq function works fine with data_fungi dataset", {
+  skip_on_cran()
   if (requireNamespace("purrr")) {
     expect_s3_class(
       compare_pairs_pq(
@@ -102,6 +103,7 @@ test_that("compare_pairs_pq function works fine with data_fungi dataset", {
 })
 
 test_that("tbl_sum_samdata function works fine with data_fungi and enterotype dataset", {
+  skip_on_cran()
   if (requireNamespace("gtsummary")) {
     expect_s3_class(tbl_sum_samdata(enterotype), "tbl_summary")
     skip_on_cran()

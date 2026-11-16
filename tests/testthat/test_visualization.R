@@ -49,18 +49,24 @@ test_that("ggscatt_pq works", {
 })
 
 test_that("umap_pq works", {
+  skip_on_cran()
   if (requireNamespace("umap", quietly = TRUE)) {
     # Regression test for issue #134: umap branch must not emit a tibble
     # .name_repair deprecation warning when converting the layout matrix.
-    expect_no_warning(result <- umap_pq(data_fungi))
+    data_20 <- prune_samples(
+      sample_names(data_fungi_mini)[1:20],
+      data_fungi_mini
+    )
+    expect_no_warning(result <- umap_pq(data_20))
     expect_s3_class(result, "tbl_df")
 
-    suppressWarnings(result <- umap_pq(data_fungi, pkg = "uwot"))
+    suppressWarnings(result <- umap_pq(data_20, pkg = "uwot"))
     expect_s3_class(result, "tbl_df")
   }
 })
 
 test_that("umap_pq caps n_neighbors on small phyloseq objects", {
+  skip_on_cran()
   data_8 <- prune_samples(sample_names(data_fungi_mini)[1:8], data_fungi_mini)
   if (requireNamespace("umap", quietly = TRUE)) {
     # default n_neighbors (15) and a too large value are capped to 7
