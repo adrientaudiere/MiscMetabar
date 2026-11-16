@@ -2,11 +2,32 @@
 
 This update gathers the changes of 0.17.0 (never submitted) and 0.18.0; see NEWS.md.
 
+## Resubmission
+
+In reply to the incoming check of 2026-11-14 (r-devel-windows-x86_64:
+examples 307 s, tests 198 s, overall 18 min), this resubmission shortens
+both stages:
+
+* Tests: the slowest tests now run on `data_fungi_mini` (or a 20-sample
+  subset of it) instead of `data_fungi`, and the bootstrap test of
+  `strassoc_pq()` uses 10 replicates instead of 99. Locally (Linux), the six
+  test files concerned went from 82 s to 22 s. The 13 slowest remaining tests
+  (about 29 s locally) are skipped on CRAN with `skip_on_cran()`; they still
+  run in our own checks; locally, the suite run as on CRAN went from 86 s to
+  53 s.
+* Examples: the 14 slowest R-only examples no longer run on CRAN (see
+  "Examples skipped on CRAN" below). Redundant calls were removed from the
+  examples of `circle_pq()` and `graph_test_pq()`, and `tbl_sum_samdata()`
+  uses `data_fungi_mini`.
+* win-builder R-devel (2026-11-16), before the 13 `skip_on_cran()` above:
+  360 s for examples and tests together instead of 505 s.
+
 ## Check time
 
 MiscMetabar was archived on 2026-05-19 for exceeding the 10-minute check
-budget, and 0.16.8 was accepted afterwards. This version keeps the check time
-at the level of 0.16.8:
+budget, and 0.16.8 was accepted afterwards. Before this resubmission, the
+check time of 0.18.0 was at the level of 0.16.8 (figures below predate the
+changes listed under "Resubmission"):
 
 * Local `R CMD check --as-cran --run-donttest` (R 4.6.1, Linux, 2026-10-22):
   524 s in total for 0.18.0 versus 533 s for 0.16.8 on the same machine,
@@ -33,23 +54,28 @@ The 22 help pages that keep a `\dontrun{}` block, by reason:
   moved to bootpq), `iNEXT_pq()`, `learn_idtaxa()`, `plot_ancombc_pq()`,
   `plot_volcano_pq()`, `signif_ancombc()`.
 
+## Examples skipped on CRAN
+
+To fit the check budget, 14 examples are wrapped in
+`@examplesIf identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")`.
+They run in our own checks (`devtools::check()` sets `NOT_CRAN`) and on the
+pkgdown website, but not on CRAN:
+
+* They load heavy Bioconductor or Suggests packages (ALDEx2, ggstatsplot,
+  lefser and mia, DESeq2) that are slow to load on Windows: `aldex_pq()`,
+  `ggbetween_pq()`, `lefser_pq()`, `plot_deseq2_pq()`.
+* They are the slowest of the remaining examples that need only R packages:
+  `accu_plot()`, `accu_samp_threshold()`, `circle_pq()`, `glmutli_pq()`,
+  `graph_test_pq()`, `LCBD_pq()`, `plot_LCBD_pq()`, `plot_SCBD_pq()`,
+  `plot_var_part_pq()`, `var_par_rarperm_pq()`.
+
 Examples that only need an external program (BLAST, vsearch, MMseqs2, MAFFT,
 Krona, fastp, cutadapt, mumu, ITSx, ITSxpress) run when it is installed, via
 `@examplesIf` or `if ()`.
 
-* win-builder R-devel (r90881 ucrt, 2026-11-13): examples 195 s, tests
-  123 s; 0 errors, 0 warnings, 1 note (the dev version number).
-* R-hub (2026-11-13), `R CMD check --as-cran` with `--run-donttest`:
-  ubuntu-clang (R-devel r90876) examples 241 s + 397 s, tests 195 s;
-  ubuntu-gcc12 (R-devel r89874) examples 235 s + 400 s, tests 176 s.
-  Status OK on both.
-
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
-
-* The NOTE is "Version contains large components (0.18.0.9000)" on the
-  development version; it disappears with the release version 0.18.0.
+0 errors | 0 warnings | 0 notes
 
 ## Known issue
 

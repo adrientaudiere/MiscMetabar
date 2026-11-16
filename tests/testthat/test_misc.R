@@ -3,8 +3,8 @@ data("enterotype")
 test_that("dist_bycol works fine", {
   expect_length(
     dist_bycol(
-      data_fungi@otu_table,
-      as_binary_otu_table(data_fungi)@otu_table
+      data_fungi_mini@otu_table,
+      as_binary_otu_table(data_fungi_mini)@otu_table
     ),
     2
   )

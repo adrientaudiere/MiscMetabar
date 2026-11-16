@@ -36,10 +36,10 @@ use this function.
 }
 \examples{
 if (requireNamespace("gtsummary")) {
-  tbl_sum_samdata(data_fungi) \%>\%
+  tbl_sum_samdata(data_fungi_mini) \%>\%
     gtsummary::as_kable()
 
-  summary_samdata <- tbl_sum_samdata(data_fungi,
+  summary_samdata <- tbl_sum_samdata(data_fungi_mini,
     include = c("Time", "Height"),
     type = list(Time ~ "continuous2", Height ~ "categorical"),
     statistic = list(Time ~ c("{median} ({p25}, {p75})", "{min}, {max}"))

@@ -77,7 +77,7 @@ Please make a reference to \code{ggstatsplot::ggbetweenstats()} if you
 use this function.
 }
 \examples{
-\donttest{
+\dontshow{if (identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 library("divent")
 if (requireNamespace("ggstatsplot")) {
   data_f <- clean_pq(prune_samples(
@@ -87,7 +87,7 @@ if (requireNamespace("ggstatsplot")) {
   p <- ggbetween_pq(data_f, fact = "Time", p.adjust.method = "BH")
   p[[1]]
 }
-}
+\dontshow{\}) # examplesIf}
 }
 \references{
 Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of

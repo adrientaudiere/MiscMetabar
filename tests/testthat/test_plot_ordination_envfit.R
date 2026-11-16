@@ -11,6 +11,7 @@ test_that("plot_ordination_pq returns a ggplot without envfit", {
 })
 
 test_that("add_envfit overlays vectors for a continuous variable", {
+  skip_on_cran()
   skip_if_not_installed("vegan")
   p0 <- suppressWarnings(suppressMessages(plot_ordination_pq(
     df_env,

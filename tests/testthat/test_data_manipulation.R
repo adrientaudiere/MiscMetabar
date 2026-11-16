@@ -60,9 +60,10 @@ test_that("merge_samples2 works with non-sum fun_otu", {
 })
 
 test_that("psmelt_samples_pq works", {
-  result <- psmelt_samples_pq(data_fungi)
+  skip_on_cran()
+  result <- psmelt_samples_pq(data_fungi_mini)
   expect_s3_class(result, "data.frame")
-  expect_identical(dim(result), c(185L, 13L))
+  expect_identical(dim(result), c(137L, 13L))
 })
 
 test_that("rarefy_sample_count_by_modality works", {

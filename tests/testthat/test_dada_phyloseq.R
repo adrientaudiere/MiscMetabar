@@ -109,6 +109,7 @@ test_that("physeq_or_string_to_dna works fine", {
 
 
 test_that("psmelt_samples_pq works fine", {
+  skip_on_cran()
   result <- psmelt_samples_pq(data_fungi_mini)
   expect_s3_class(result, "tbl_df")
   expect_true("Hill_0" %in% colnames(result))

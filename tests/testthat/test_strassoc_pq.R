@@ -16,8 +16,15 @@ test_that("strassoc_pq accepts other association indices", {
 })
 
 test_that("strassoc_pq returns a list of CI matrices with bootstrap", {
+  skip_on_cran()
   skip_if_not_installed("indicspecies")
-  res <- strassoc_pq(df_h, fact = "Height", func = "IndVal.g", nboot_ci = 99)
+  res <- strassoc_pq(
+    df_h,
+    fact = "Height",
+    func = "IndVal.g",
+    nboot_ci = 10,
+    alpha_ci = 0.2
+  )
   expect_type(res, "list")
   expect_true(all(c("lowerCI", "stat", "upperCI") %in% names(res)))
 })

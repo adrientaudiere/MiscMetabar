@@ -25,13 +25,10 @@
 #' @param ... Other params for be passed on to
 #'   [phyloseqGraphTest::graph_perm_test()] function
 #'
-#' @examples
-#' \donttest{
+#' @examplesIf identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #' if (requireNamespace("phyloseqGraphTest")) {
 #'   data(enterotype)
 #'   graph_test_pq(enterotype, fact = "SeqTech")
-#'   graph_test_pq(enterotype, fact = "Enterotype", na_remove = TRUE)
-#' }
 #' }
 #' @author Adrien Taudière
 #'
@@ -431,8 +428,7 @@ adonis_rarperm_pq <- function(
 #'   for more information
 #' @export
 #' @seealso [plot_LCBD_pq], [adespatial::beta.div()]
-#' @examples
-#' \donttest{
+#' @examplesIf identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #' if (requireNamespace("adespatial")) {
 #'   data_f <- clean_pq(prune_samples(
 #'     sample_names(data_fungi_sp_known)[1:10],
@@ -442,7 +438,6 @@ adonis_rarperm_pq <- function(
 #'   str(res)
 #'   length(res$LCBD)
 #'   length(res$SCBD)
-#' }
 #' }
 #'
 #' @author Adrien Taudière
@@ -485,14 +480,12 @@ LCBD_pq <- function(physeq, p_adjust_method = "BH", ...) {
 #' @export
 #' @seealso [LCBD_pq], [adespatial::beta.div()]
 #'
-#' @examples
-#' \donttest{
+#' @examplesIf identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #' if (requireNamespace("adespatial")) {
 #'   plot_LCBD_pq(data_fungi_mini,
 #'     nperm = 20, only_plot_significant = FALSE,
 #'     pval = 0.2
 #'   )
-#' }
 #' }
 #' @author Adrien Taudière
 #' @details
@@ -628,13 +621,11 @@ plot_LCBD_pq <- function(
 #' @export
 #' @seealso [LCBD_pq], [adespatial::beta.div()]
 #'
-#' @examples
-#' \donttest{
+#' @examplesIf identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #' if (requireNamespace("adespatial")) {
 #'   plot_SCBD_pq(data_fungi_mini) +
 #'     geom_text(aes(label = paste(Genus, Species)), hjust = 1, vjust = 2) +
 #'     xlim(c(0, NA))
-#' }
 #' }
 #'
 #' @author Adrien Taudière
@@ -1182,15 +1173,13 @@ plot_ancombc_pq <-
 #' @export
 #'
 #' @author Adrien Taudière
-#' @examples
-#' \donttest{
+#' @examplesIf identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #' if (requireNamespace("lefser") && requireNamespace("mia")) {
 #'   res_lefse <- lefser_pq(data_fungi_mini,
 #'     bifactor = "Height",
 #'     modalities = c("Low", "High")
 #'   )
 #'   lefser::lefserPlot(res_lefse)
-#' }
 #' }
 lefser_pq <- function(
   physeq,
@@ -1269,15 +1258,13 @@ lefser_pq <- function(
 #' @export
 #'
 #' @author Adrien Taudière
-#' @examples
-#' \donttest{
+#' @examplesIf identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #' if (requireNamespace("ALDEx2")) {
 #'   res_aldex <- aldex_pq(data_fungi_mini,
 #'     bifactor = "Height",
 #'     modalities = c("Low", "High")
 #'   )
 #'   ALDEx2::aldex.plot(res_aldex, type = "volcano")
-#' }
 #' }
 aldex_pq <- function(
   physeq,
@@ -1653,8 +1640,7 @@ var_par_pq <-
 #' @export
 #' @seealso [var_par_pq()], [vegan::varpart()], [plot_var_part_pq()]
 #' @author Adrien Taudière
-#' @examples
-#' \donttest{
+#' @examplesIf identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #' if (requireNamespace("vegan")) {
 #'   data_fungi_woNA <- subset_samples(
 #'     data_fungi_mini,
@@ -1672,7 +1658,6 @@ var_par_pq <-
 #' }
 #'
 #' plot_var_part_pq(res_var_2)
-#' }
 #' @details
 #' This function is mainly a wrapper of the work of others.
 #'   Please make a reference to `vegan::varpart()` if you
