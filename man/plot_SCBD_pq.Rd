@@ -46,14 +46,13 @@ Please make a reference to \code{vegan::beta.div()} if you
 use this function.
 }
 \examples{
-\donttest{
+\dontshow{if (identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 if (requireNamespace("adespatial")) {
   plot_SCBD_pq(data_fungi_mini) +
     geom_text(aes(label = paste(Genus, Species)), hjust = 1, vjust = 2) +
     xlim(c(0, NA))
 }
-}
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \link{LCBD_pq}, \code{\link[adespatial:beta.div]{adespatial::beta.div()}}

@@ -419,8 +419,7 @@ hill_test_rarperm_pq <- function(
 #'   (2019). From environmental DNA sequences to ecological conclusions: How
 #'   strong is the influence of methodological choices? *Journal of Biogeography*,
 #'   47. \doi{10.1111/jbi.13681}
-#' @examples
-#' \donttest{
+#' @examplesIf identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #' if (requireNamespace("glmulti")) {
 #'   library("divent")
 #'   res_glmulti <-
@@ -428,7 +427,6 @@ hill_test_rarperm_pq <- function(
 #'       "Hill_0 ~ Hill_1 + Abundance + Time + Height",
 #'       level = 1
 #'     )
-#' }
 #' }
 #' @details
 #' This function is mainly a wrapper of the work of others.

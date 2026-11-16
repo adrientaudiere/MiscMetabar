@@ -84,7 +84,7 @@ Please make a reference to \code{\link[glmulti:glmulti]{glmulti::glmulti()}} if 
 use this function.
 }
 \examples{
-\donttest{
+\dontshow{if (identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 if (requireNamespace("glmulti")) {
   library("divent")
   res_glmulti <-
@@ -93,7 +93,7 @@ if (requireNamespace("glmulti")) {
       level = 1
     )
 }
-}
+\dontshow{\}) # examplesIf}
 }
 \references{
 Alberdi, A., & Gilbert, M. T. P. (2019). A guide to the application of

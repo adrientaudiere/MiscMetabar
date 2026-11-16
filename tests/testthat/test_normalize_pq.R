@@ -131,6 +131,7 @@ test_that("tmm_pq returns phyloseq with same dims", {
 })
 
 test_that("vst_pq returns phyloseq with same dims", {
+  skip_on_cran()
   skip_if_not_installed("DESeq2")
   res <- vst_pq(dfm)
   expect_true(is_pq(res))

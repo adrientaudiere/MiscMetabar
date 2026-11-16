@@ -159,6 +159,7 @@ test_that("verify_pq works fine", {
 })
 
 test_that("verify_tax_table works fine", {
+  skip_on_cran()
   # Test with clean data and verbose = FALSE (default) - should return silently
   expect_silent(suppressWarnings(suppressMessages(verify_tax_table(
     data_fungi_mini

@@ -21,6 +21,21 @@
 \title{Deprecated function(s) in the MiscMetabar package}
 \usage{
 physeq_graph_test(...)
+adonis_phyloseq(...)
+clean_physeq(...)
+lulu_phyloseq(...)
+otu_circle(...)
+biplot_physeq(...)
+read_phyloseq(...)
+write_phyloseq(...)
+sankey_phyloseq(...)
+summary_plot_phyloseq(...)
+plot_deseq2_phyloseq(...)
+plot_edgeR_phyloseq(...)
+venn_phyloseq(...)
+ggVenn_phyloseq(...)
+hill_tuckey_phyloseq(...)
+hill_phyloseq(...)
 }
 \arguments{
 \item{...}{Parameters to be passed on to the modern version of the function}

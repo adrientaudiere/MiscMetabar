@@ -27,14 +27,14 @@ Note that as most bioinformatic pipeline discard singleton, accumulation curves 
 cannot be interpreted in the same way as with conventional biodiversity sampling techniques.
 }
 \examples{
-\donttest{
+\dontshow{if (identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 data("GlobalPatterns", package = "phyloseq")
 GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 GP <- rarefy_pq(subset_samples_pq(GP, sample_sums(GP) > 3000), replace = TRUE)
 p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10)
 
 val_threshold <- accu_samp_threshold(p)
-}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=accu_plot]{accu_plot()}}

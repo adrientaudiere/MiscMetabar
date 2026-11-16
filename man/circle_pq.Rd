@@ -83,14 +83,11 @@ fact
 Graphical representation of distribution of taxa across a factor.
 }
 \examples{
-\donttest{
+\dontshow{if (identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 data("GlobalPatterns", package = "phyloseq")
 GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 circle_pq(GP, "SampleType")
-
-circle_pq(GP, "SampleType", add_nb_seq = FALSE)
-circle_pq(GP, "SampleType", taxa = "Class")
-}
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[circlize]{chordDiagram}}

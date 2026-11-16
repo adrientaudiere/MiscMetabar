@@ -178,8 +178,7 @@ plot_edgeR_pq <-
 #' @export
 #' @details
 #'   Please cite `DESeq2` package if you use chis function.
-#' @examples
-#' \donttest{
+#' @examplesIf identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #'
 #' data("GlobalPatterns", package = "phyloseq")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
@@ -191,7 +190,6 @@ plot_edgeR_pq <-
 #'   plot_deseq2_pq(res, c("SampleType", "Soil", "Skin"),
 #'     tax_table = GP@tax_table, color_rank = "Kingdom"
 #'   )
-#' }
 #' }
 #' @author Adrien Taudière
 #'

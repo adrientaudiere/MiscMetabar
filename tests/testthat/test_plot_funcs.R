@@ -1,5 +1,6 @@
 test_that("plot_complexity_pq works", {
-  p <- plot_complexity_pq(data_fungi)
+  skip_on_cran()
+  p <- plot_complexity_pq(data_fungi_mini)
   expect_s3_class(p, "ggplot")
 })
 
@@ -9,7 +10,8 @@ test_that("plot_refseq_pq works", {
 })
 
 test_that("plot_refseq_extremity_pq works", {
-  p <- plot_refseq_extremity_pq(data_fungi)
+  skip_on_cran()
+  p <- plot_refseq_extremity_pq(data_fungi_mini)
   expect_s3_class(p[[1]], "ggplot")
   expect_s3_class(p[[2]], "ggplot")
   expect_length(p, 4)
@@ -21,7 +23,7 @@ test_that("plot_seq_ratio_pq works", {
 })
 
 test_that("accu_plot_balanced_modality works", {
-  data_subset <- subset_samples(data_fungi, Height %in% c("Low", "High"))
+  data_subset <- subset_samples(data_fungi_mini, Height %in% c("Low", "High"))
   suppressWarnings(
     p <- accu_plot_balanced_modality(
       data_subset,

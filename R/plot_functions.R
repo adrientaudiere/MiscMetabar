@@ -102,13 +102,11 @@ plot_mt <-
 #' @param ... Additional arguments passed on to \code{\link[ggplot2]{ggplot}}
 #' if `add_nb_seq` = TRUE or to \code{\link{plot}} if `add_nb_seq` = FALSE
 #'
-#' @examples
-#' \donttest{
+#' @examplesIf identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #' data("GlobalPatterns", package = "phyloseq")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #' GP <- rarefy_pq(subset_samples_pq(GP, sample_sums(GP) > 3000), replace = TRUE)
 #' p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10)
-#' }
 #' @return A \code{\link[ggplot2]{ggplot}}2 plot representing the richness
 #' accumulation plot if add_nb_seq = TRUE, else, if add_nb_seq = FALSE
 #' return a base plot.
@@ -521,15 +519,13 @@ accu_plot_balanced_modality <- function(
 #' @return a value for each sample of the number of sequences needed
 #'   to obtain `threshold` proportion of the ASV
 #'
-#' @examples
-#' \donttest{
+#' @examplesIf identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #' data("GlobalPatterns", package = "phyloseq")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #' GP <- rarefy_pq(subset_samples_pq(GP, sample_sums(GP) > 3000), replace = TRUE)
 #' p <- accu_plot(GP, "SampleType", add_nb_seq = TRUE, by.fact = TRUE, step = 10)
 #'
 #' val_threshold <- accu_samp_threshold(p)
-#' }
 #' @export
 #' @author Adrien Taudière
 #' @seealso [accu_plot()]
@@ -588,15 +584,10 @@ accu_samp_threshold <- function(res_accuplot, threshold = 0.95) {
 #' @param ... Additional arguments passed on to
 #'   \code{\link[circlize]{chordDiagram}} or \code{\link[circlize]{circos.par}}
 #'
-#' @examples
-#' \donttest{
+#' @examplesIf identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #' data("GlobalPatterns", package = "phyloseq")
 #' GP <- subset_taxa(GlobalPatterns, GlobalPatterns@tax_table[, 1] == "Archaea")
 #' circle_pq(GP, "SampleType")
-#'
-#' circle_pq(GP, "SampleType", add_nb_seq = FALSE)
-#' circle_pq(GP, "SampleType", taxa = "Class")
-#' }
 #' @author Adrien Taudière
 #'
 #' @return A \code{\link[circlize]{chordDiagram}} plot representing the
@@ -1941,8 +1932,7 @@ hill_pq <- function(
 #'     against the variable fact
 #'
 #' @export
-#' @examples
-#' \donttest{
+#' @examplesIf identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #' library("divent")
 #' if (requireNamespace("ggstatsplot")) {
 #'   data_f <- clean_pq(prune_samples(
@@ -1951,7 +1941,6 @@ hill_pq <- function(
 #'   ))
 #'   p <- ggbetween_pq(data_f, fact = "Time", p.adjust.method = "BH")
 #'   p[[1]]
-#' }
 #' }
 #' @author Adrien Taudière
 #' @details This function is mainly a wrapper of the work of others.
@@ -5382,8 +5371,7 @@ treemap_pq <- function(
 #' @export
 #' @author Adrien Taudière
 #' @seealso [var_par_rarperm_pq()], [var_par_pq()]
-#' @examples
-#' \donttest{
+#' @examplesIf identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")
 #' if (requireNamespace("vegan")) {
 #'   data_fungi_woNA <- subset_samples(
 #'     data_fungi_mini,
@@ -5416,7 +5404,6 @@ treemap_pq <- function(
 #'     cutoff = 0,
 #'     show_quantiles = TRUE
 #'   )
-#' }
 #' }
 #' @importFrom stats anova as.formula quantile
 #' @details

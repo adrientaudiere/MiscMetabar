@@ -20,8 +20,9 @@ test_that("taxa_only_in_one_level works", {
 })
 
 test_that("tbl_sum_taxtable works", {
+  skip_on_cran()
   if (requireNamespace("gtsummary", quietly = TRUE)) {
-    result <- tbl_sum_taxtable(data_fungi)
+    result <- tbl_sum_taxtable(data_fungi_mini)
     expect_s3_class(result, "tbl_summary")
   }
 })

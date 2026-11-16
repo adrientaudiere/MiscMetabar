@@ -30,7 +30,7 @@ A wrapper for the \code{\link[adespatial:beta.div]{adespatial::beta.div()}} func
 object.
 }
 \examples{
-\donttest{
+\dontshow{if (identical(Sys.getenv("NOT_CRAN"), "true") || identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 if (requireNamespace("adespatial")) {
   data_f <- clean_pq(prune_samples(
     sample_names(data_fungi_sp_known)[1:10],
@@ -41,8 +41,7 @@ if (requireNamespace("adespatial")) {
   length(res$LCBD)
   length(res$SCBD)
 }
-}
-
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \link{plot_LCBD_pq}, \code{\link[adespatial:beta.div]{adespatial::beta.div()}}
